@@ -4,13 +4,13 @@ import { forwardRef, type ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
-import { useStyles } from './ServiceTag.styles'
+import { useStyles } from './Service.styles'
 
-export const _ServiceTag = forwardRef<HTMLDivElement, BadgeServiceTagProps>(
+export const _Service = forwardRef<HTMLDivElement, BadgeServiceProps>(
 	({ hideTooltip, children, ...props }, ref) => {
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
-		const { t } = useTranslation(['common'])
+		const { t } = useTranslation('common')
 
 		const badge = (
 			<Badge classNames={classes} {...props} ref={ref}>
@@ -35,9 +35,9 @@ export const _ServiceTag = forwardRef<HTMLDivElement, BadgeServiceTagProps>(
 		)
 	}
 )
-_ServiceTag.displayName = 'Badge.ServiceTag'
+_Service.displayName = 'Badge.Service'
 
-export interface BadgeServiceTagProps extends BadgeProps {
+export interface BadgeServiceProps extends BadgeProps {
 	children: ReactNode
 	hideTooltip?: boolean
 }

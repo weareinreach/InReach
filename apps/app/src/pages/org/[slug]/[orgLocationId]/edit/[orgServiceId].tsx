@@ -64,7 +64,7 @@ const EditServicePage = () => {
 					{!!data && (
 						<Badge.Group>
 							{data.services.map((service) => (
-								<Badge.ServiceTag key={service.id}>{t(service.tsKey, { ns: service.tsNs })}</Badge.ServiceTag>
+								<Badge.Service key={service.id}>{t(service.tsKey, { ns: service.tsNs })}</Badge.Service>
 							))}
 						</Badge.Group>
 					)}

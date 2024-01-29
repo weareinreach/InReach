@@ -1,10 +1,8 @@
-import { Badge, type BadgeProps, ColorSwatch, rem, Text, Tooltip, useMantineTheme } from '@mantine/core'
-import compact from 'just-compact'
+import { Badge, type BadgeProps, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode } from 'react'
+import { forwardRef } from 'react'
 
-import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 
 import { useSharedStyles } from './styles'
@@ -13,8 +11,7 @@ export const _Verified = forwardRef<HTMLDivElement, BadgeVerifiedProps>(
 	({ hideTooltip, lastverified, ...props }, ref) => {
 		const { classes } = useSharedStyles('verified')
 		const theme = useMantineTheme()
-		const { t, i18n } = useTranslation(['common', 'attribute'])
-		const variants = useCustomVariant()
+		const { t, i18n } = useTranslation('common')
 
 		const leftSection = (
 			<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} height={20} />
@@ -22,14 +19,14 @@ export const _Verified = forwardRef<HTMLDivElement, BadgeVerifiedProps>(
 
 		const badge = (
 			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props}>
-				<Text>{t('verified-information')}</Text>
+				<Text>{t('badge.verified-information')}</Text>
 			</Badge>
 		)
 		const dateDisplay = lastverified instanceof Date ? lastverified : new Date(lastverified)
 		const dateString = DateTime.fromJSDate(dateDisplay)
 			.setLocale(i18n.resolvedLanguage ?? 'en')
 			.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
-		const label = t('verified-information-detail', { dateString })
+		const label = t('badge.verified-information-detail', { dateString })
 
 		const tooltipProps = {
 			label,

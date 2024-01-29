@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
 	},
-	"accessible-building_false": "This building is NOT wheelchair accessible",
-	"accessible-building_true": "This building is wheelchair accessible",
 	"account": "Account",
 	"add": "Add {{item}}",
 	"address": "Address",
@@ -23,12 +21,20 @@
 		"title": "Anti-hate commitment"
 	},
 	"badge": {
+		"accessible-building_false": "This building is NOT wheelchair accessible",
+		"accessible-building_true": "This building is wheelchair accessible",
+		"claimed": "Claimed",
 		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "Community served by this organization.",
 		"national-tool-tip": "Offers services throughout {{country}}.",
+		"privatePractice": "Private Practice",
 		"remote-tool-tip": "Available remotely",
 		"service-tool-tip": "Service(s) offered by this organization.",
-		"unclaimed-tool-tip": "This organization has not yet been claimed by a representative.<br/><link1>Claim this organization</link1> to build trust with our community, update your own information, and more."
+		"unclaimed": "Unclaimed",
+		"unclaimed-tool-tip": "This organization has not yet been claimed by a representative.<br/><link1>Claim this organization</link1> to build trust with our community, update your own information, and more.",
+		"verified-information": "Verified information",
+		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
@@ -40,7 +46,6 @@
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>This organization has not yet been claimed by a service provider.</title2>\n<textDarkGray>With a free InReach Service Provider account, you will soon be able to:</textDarkGray>"
 	},
-	"claimed": "Claimed",
 	"clear": "Clear",
 	"close": "Close",
 	"confirm-account": {
@@ -137,7 +142,6 @@
 		"open24": "Open 24 hours"
 	},
 	"in-reach-user": "InReach User",
-	"in-reach-verified-reviewer": "InReach Verified Reviewer",
 	"include": "Include",
 	"inreach": "InReach",
 	"inreach-copyright": "InReach, Inc. {{year}} • All rights reserved • InReach ❤️ Open Source",
@@ -237,7 +241,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>Read our full privacy policy for more information</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Privacy statement</title2>"],
-	"privatePractice": "Private Practice",
 	"profile": "Profile",
 	"questions": "Questions?",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
@@ -382,10 +385,7 @@
 	},
 	"take-action": "Take Action",
 	"uncheck-all": "Uncheck all",
-	"unclaimed": "Unclaimed",
 	"user-avatar": "User avatar",
-	"verified-information": "Verified information",
-	"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
 	"verify-account": {
 		"verified": "Account verified!",
 		"verified-body": "<Text>Your account has been verified! Please <LoginModal>login</LoginModal> to start using InReach's additional features.",

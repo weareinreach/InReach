@@ -15,23 +15,30 @@ import {
 	type TooltipProps,
 	useMantineTheme,
 } from '@mantine/core'
-import { type PolymorphicComponentProps } from '@mantine/utils'
 import { type TOptions } from 'i18next'
 import { DateTime } from 'luxon'
 import { merge } from 'merge-anything'
 import { Trans, useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useState } from 'react'
+import { type ReactNode, useState } from 'react'
 
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon, type IconList, isValidIcon } from '~ui/icon'
 import { ClaimOrgModal } from '~ui/modals/ClaimOrg'
 
+import { _Attribute } from './Attribute'
+import { _Claimed } from './Claimed'
+import { _Community } from './Community'
 import { _BadgeGroup } from './Group'
 import { _Leader } from './Leader'
 import { _National } from './National'
-import { _ServiceTag } from './ServiceTag'
+import { _PrivatePractice } from './PrivatePractice'
+import { _Remote } from './Remote'
+import { _Service } from './Service'
 import { _Verified } from './Verified'
+import { _VerifiedReviewer } from './VerifiedReviewer'
+
+// TODO: [IN-942] Clean out dead code after Badge instances have been updated.
 
 const badgeVariants: BadgeVariants = (theme, params) => {
 	switch (params.variant) {
@@ -179,17 +186,17 @@ const customVariants = [
 ] as const
 
 const customVariantMap = {
-	community: undefined,
-	service: undefined,
-	leader: 'outline',
-	verified: 'outline',
-	claimed: 'outline',
-	unclaimed: 'outline',
 	attribute: 'outline',
-	privatePractice: 'outline',
-	verifiedReviewer: 'outline',
-	remote: 'outline',
+	claimed: 'outline',
+	community: undefined,
+	leader: 'outline',
 	national: 'outline',
+	privatePractice: 'outline',
+	remote: 'outline',
+	service: undefined,
+	unclaimed: 'outline',
+	verified: 'outline',
+	verifiedReviewer: 'outline',
 } satisfies Record<CustomVariants, BadgeVariant | undefined>
 
 /** Badge variants `serviceTag` and `communityTag` are responsive - the sizing changes at the `sm` breakpoint. */
@@ -587,8 +594,14 @@ export type ServiceTagProps = {
 	hideTooltip?: boolean
 }
 
-Badge.ServiceTag = _ServiceTag
+Badge.Attribute = _Attribute
+Badge.Claimed = _Claimed
+Badge.Community = _Community
 Badge.Group = _BadgeGroup
 Badge.Leader = _Leader
 Badge.National = _National
+Badge.PrivatePractice = _PrivatePractice
+Badge.Remote = _Remote
+Badge.Service = _Service
 Badge.Verified = _Verified
+Badge.VerifiedReviewer = _VerifiedReviewer

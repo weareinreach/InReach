@@ -13,14 +13,15 @@ export const validateIcon = (icon: unknown): IconList => {
 	return 'carbon:unknown-filled'
 }
 
-const useStyles = createStyles((theme, { block }: IconStylesParams) => ({
+const useStyles = createStyles((theme, { block, color }: IconStylesParams) => ({
 	root: {
 		display: block ? 'block' : undefined,
+		color,
 	},
 }))
 
-export const Icon = memo(({ icon, block, className, ref, ...props }: CustomIconProps) => {
-	const { classes, cx } = useStyles({ block })
+export const Icon = memo(({ icon, block, className, ref, color, ...props }: CustomIconProps) => {
+	const { classes, cx } = useStyles({ block, color })
 	Iconify.displayName = 'Iconify'
 	return <Iconify ref={ref} icon={validateIcon(icon)} className={cx(classes.root, className)} {...props} />
 })
@@ -30,6 +31,7 @@ export type IconList = (typeof iconList)[number]
 interface IconStylesParams {
 	/** Sets `display: 'block'` */
 	block?: boolean
+	color?: string
 }
 interface CustomIconifyIconProps extends IconifyIconProps, IconStylesParams {
 	/** [Search available icons here](https://icon-sets.iconify.design/carbon/) */

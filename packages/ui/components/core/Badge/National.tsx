@@ -1,7 +1,7 @@
-import { Badge, type BadgeProps, ColorSwatch, rem, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import { Badge, type BadgeProps, rem, Tooltip, useMantineTheme } from '@mantine/core'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode } from 'react'
+import { forwardRef } from 'react'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
@@ -12,7 +12,7 @@ export const _National = forwardRef<HTMLDivElement, BadgeNationalProps>(
 	({ hideTooltip, countries, ...props }, ref) => {
 		const { classes } = useSharedStyles('national')
 		const theme = useMantineTheme()
-		const { t, i18n } = useTranslation(['common', 'attribute'])
+		const { t, i18n } = useTranslation('common')
 		const variants = useCustomVariant()
 
 		const leftSection = (

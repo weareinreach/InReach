@@ -4,14 +4,19 @@ import { commonTheme as theme } from '~ui/theme/common'
 
 import { Badge, BadgeGroup } from './index'
 
+const accessToken = process.env.STORYBOOK_FIGMA_ACCESS_TOKEN as string
+const figmaSpec = (url: `https://${string}`) => ({
+	type: 'figspec' as const,
+	url,
+	accessToken: process.env.STORYBOOK_FIGMA_ACCESS_TOKEN as string,
+})
 export default {
 	title: 'Design System/Tags and Badges',
 	component: Badge,
 	parameters: {
-		design: {
-			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8505&t=sleVeGl2lJv7Df18-4',
-		},
+		design: figmaSpec(
+			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8505&t=sleVeGl2lJv7Df18-4'
+		),
 	},
 	argTypes: {
 		variant: {
@@ -112,83 +117,74 @@ const groupParams = {
 
 export const Attribute = {
 	args: {
-		variant: 'attribute',
 		icon: 'carbon:piggy-bank',
-		tsKey: 'cost.cost-free',
-		tsNs: 'attribute',
+		children: 'Attribute Text',
 	},
 	argTypes: {
-		variant: {
-			options: ['attribute'],
-			control: 'select',
-		},
 		icon: {
 			options: ['carbon:piggy-bank', 'carbon:globe', 'carbon:accessibility', 'carbon:warning'],
 			control: 'select',
 		},
-		tsKey: {
-			options: ['cost-cost-free', 'additional-remote', 'additional-accessible', 'additional-not-accessible'],
-			control: 'select',
-		},
-		tsNs: {
-			options: ['attribute'],
-			control: 'select',
-		},
 	},
 	parameters: {
 		controls: {
-			include: ['icon', 'tsKey', 'tsNs', 'variant'],
+			include: ['icon'],
 		},
+		design: figmaSpec(
+			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?type=design&node-id=1566-7269&mode=design&t=P7ERsleiTj8PoFXM-4'
+		),
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.Attribute {...args} />,
+} satisfies StoryObj<typeof Badge.Attribute>
 
 export const Community = {
 	args: {
 		icon: '✊🏿',
-		tsKey: 'srvfocus.bipoc-comm',
-		variant: 'community',
+		children: 'BIPOC Community',
 	},
 	parameters: {
-		design: {
-			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8506&t=sleVeGl2lJv7Df18-4',
-		},
+		design: figmaSpec(
+			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?type=design&node-id=234-8506&mode=design&t=P7ERsleiTj8PoFXM-4'
+		),
 		controls: {
-			include: ['icon', 'tsKey', 'variant'],
+			include: ['icon'],
 		},
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.Community {...args} />,
+} satisfies StoryObj<typeof Badge.Community>
 
 export const CommunityGroup = {
 	args: {
-		badges: [
-			{
-				icon: '✊🏿',
-				tsKey: 'srvfocus.bipoc-comm',
-				variant: 'community',
-			},
-			{
-				icon: '💛',
-				tsKey: 'srvfocus.hiv-comm',
-				variant: 'community',
-			},
-			{
-				icon: '🗣',
-				tsKey: 'srvfocus.spanish-speakers',
-				variant: 'community',
-			},
+		children: [
+			<Badge.Community key='1' icon='✊🏿'>
+				BIPOC Community
+			</Badge.Community>,
+			<Badge.Community key='2' icon='💛'>
+				HIV Community
+			</Badge.Community>,
+			<Badge.Community key='3' icon='🗣'>
+				Spanish Speakers
+			</Badge.Community>,
 		],
+		withSeparator: true,
 	},
-	...groupParams,
-} satisfies GroupStory
+	parameters: {
+		controls: {
+			include: ['children', 'withSeparator'],
+		},
+		design: figmaSpec(
+			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?type=design&node-id=337-7074&mode=design&t=P7ERsleiTj8PoFXM-4'
+		),
+	},
+	render: (args) => <Badge.Group {...args} />,
+} satisfies StoryObj<typeof Badge.Group>
 
 export const Leader = {
 	args: {
-		variant: 'leader',
 		iconBg: theme.other.colors.tertiary.lightBlue,
 		icon: '️‍️‍🌎',
-		tsKey: 'orgleader.immigrant-led',
 		minify: false,
+		children: 'Immigrant-led',
 	},
 	argTypes: {
 		hideBg: {
@@ -202,17 +198,20 @@ export const Leader = {
 	},
 	parameters: {
 		controls: {
-			include: ['variant', 'color', 'icon', 'tsKey', 'minify', 'hideBg'],
+			include: ['color', 'icon', 'children', 'minify', 'hideBg'],
 		},
+		design: figmaSpec(
+			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?type=design&node-id=337-7072&mode=design&t=P7ERsleiTj8PoFXM-4'
+		),
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.Leader {...args} />,
+} satisfies StoryObj<typeof Badge.Leader>
 
 export const LeaderMini = {
 	args: {
-		variant: 'leader',
 		iconBg: theme.other.colors.tertiary.orange,
 		icon: '️‍️‍✊🏿',
-		tsKey: 'orgleader.black-led',
+		children: 'Black-led',
 		minify: true,
 	},
 	argTypes: {
@@ -227,47 +226,43 @@ export const LeaderMini = {
 	},
 	parameters: {
 		controls: {
-			include: ['variant', 'color', 'icon', 'tsKey', 'minify', 'hideBg'],
+			include: ['color', 'icon', 'children', 'minify', 'hideBg'],
 		},
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.Leader {...args} />,
+} satisfies StoryObj<typeof Badge.Leader>
 
 export const Service = {
 	args: {
-		tsKey: 'abortion-care.CATEGORYNAME',
-		variant: 'service',
+		children: 'Abortion Care',
 	},
 	parameters: {
-		design: {
-			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8508&t=sleVeGl2lJv7Df18-4',
-		},
+		design: figmaSpec(
+			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8508&t=sleVeGl2lJv7Df18-4'
+		),
 		controls: {
 			include: ['tsKey', 'variant'],
 		},
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.Service {...args} />,
+} satisfies StoryObj<typeof Badge.Service>
 
 export const ServiceGroup = {
 	args: {
-		badges: [
-			{
-				tsKey: 'abortion-care.CATEGORYNAME',
-				variant: 'service',
-			},
-			{
-				tsKey: 'education-and-employment.CATEGORYNAME',
-				variant: 'service',
-			},
-			{
-				tsKey: 'food.CATEGORYNAME',
-				variant: 'service',
-			},
+		children: [
+			<Badge.Service key='1'>Abortion Care</Badge.Service>,
+			<Badge.Service key='2'>Education and Employment</Badge.Service>,
+			<Badge.Service key='3'>Food</Badge.Service>,
 		],
 		withSeparator: false,
 	},
-	...groupParams,
-} satisfies GroupStory
+	parameters: {
+		controls: {
+			include: ['children', 'withSeparator'],
+		},
+	},
+	render: (args) => <Badge.Group {...args} />,
+} satisfies StoryObj<typeof Badge.Group>
 
 export const Verified = {
 	args: {
@@ -283,53 +278,52 @@ export const Verified = {
 
 export const Claimed = {
 	args: {
-		variant: 'claimed',
+		isClaimed: true,
+		hideTooltip: false,
 	},
 	parameters: {
 		controls: {
-			include: ['variant'],
+			include: ['isClaimed', 'hideTooltip'],
 		},
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.Claimed {...args} />,
+} satisfies StoryObj<typeof Badge.Claimed>
 
 export const Unclaimed = {
 	args: {
-		variant: 'unclaimed',
+		isClaimed: false,
+		hideTooltip: false,
 	},
 	parameters: {
 		controls: {
-			include: ['variant'],
+			include: ['isClaimed', 'hideTooltip'],
 		},
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.Claimed {...args} />,
+} satisfies StoryObj<typeof Badge.Claimed>
 
 export const PrivatePractice = {
-	args: {
-		variant: 'privatePractice',
-	},
+	args: {},
 	parameters: {
-		controls: {
-			include: ['variant'],
-		},
+		design: figmaSpec(
+			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?type=design&node-id=2908-7383&mode=design&t=P7ERsleiTj8PoFXM-4'
+		),
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.PrivatePractice {...args} />,
+} satisfies StoryObj<typeof Badge.PrivatePractice>
 
 export const VerifiedReviewer = {
-	args: {
-		variant: 'verifiedReviewer',
-	},
-	parameters: {
-		controls: {
-			include: ['variant'],
-		},
-	},
-} satisfies StoryDef
+	render: (args) => <Badge.VerifiedReviewer {...args} />,
+} satisfies StoryObj<typeof Badge.VerifiedReviewer>
 
 export const Remote = {
-	args: {
-		variant: 'remote',
+	render: (args) => <Badge.Remote {...args} />,
+	parameters: {
+		design: figmaSpec(
+			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?type=design&node-id=135-4631&mode=design&t=P7ERsleiTj8PoFXM-4'
+		),
 	},
-} satisfies StoryDef
+} satisfies StoryObj<typeof Badge.Remote>
 
 export const National = {
 	args: {

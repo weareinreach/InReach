@@ -1,4 +1,4 @@
-import { Badge, type BadgeProps, ColorSwatch, Text, Tooltip } from '@mantine/core'
+import { Badge, type BadgeProps, Text, Tooltip } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
@@ -6,21 +6,17 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
 import { useSharedStyles } from './styles'
 
-export const _Leader = forwardRef<HTMLDivElement, BadgeLeaderProps>(
-	({ iconBg, icon, minify, hideBg, hideTooltip, children, ...props }, ref) => {
+export const _Community = forwardRef<HTMLDivElement, BadgeCommunityProps>(
+	({ icon, hideTooltip, children, ...props }, ref) => {
 		const { classes } = useSharedStyles('leader')
 		const { t } = useTranslation('common')
 		const variants = useCustomVariant()
 
-		const leftSection = (
-			<ColorSwatch color={iconBg} radius={24} size={24}>
-				<span>{icon}</span>
-			</ColorSwatch>
-		)
+		const leftSection = icon
 
 		const badge = (
 			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props}>
-				{minify ? null : <Text fw={500}>{children}</Text>}
+				{typeof children === 'string' ? <Text fw={500}>{children}</Text> : children}
 			</Badge>
 		)
 
@@ -33,25 +29,18 @@ export const _Leader = forwardRef<HTMLDivElement, BadgeLeaderProps>(
 				px={16}
 				py={10}
 				events={{ hover: true, focus: true, touch: true }}
-				label={t('adjective.organization', { ns: 'common', adjective: children })}
-				disabled={!minify}
+				label={t('badge.community-tool-tip', { ns: 'common' })}
 			>
 				{badge}
 			</Tooltip>
 		)
 	}
 )
-_Leader.displayName = 'Badge.Leader'
+_Community.displayName = 'Badge.Community'
 
-export interface BadgeLeaderProps extends BadgeProps {
-	/** Background color for icon */
-	iconBg: string
+export interface BadgeCommunityProps extends BadgeProps {
 	/** Unicode emoji string */
 	icon: string
-	/** Show icon only? */
-	minify?: boolean
-	/** Hide light gray bg for mini */
-	hideBg?: boolean
 	hideTooltip?: boolean
 	children: ReactNode
 }
