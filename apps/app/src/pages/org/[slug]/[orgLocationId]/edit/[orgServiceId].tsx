@@ -12,6 +12,7 @@ import { checkServerPermissions } from '@weareinreach/auth'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 import { Badge } from '~ui/components/core/Badge'
+import { Section } from '~ui/components/core/Section'
 import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
 
 const FreetextObject = z
@@ -45,7 +46,7 @@ const EditServicePage = () => {
 		<>
 			<Grid.Col xs={12} sm={8} order={1}>
 				<Stack pt={24} align='flex-start' spacing={40}>
-					<Stack spacing={20} w='100%'>
+					<Stack spacing={8} w='100%'>
 						<InlineTextInput
 							component={TextInput<FormSchemaType>}
 							name='name.text'
@@ -68,6 +69,7 @@ const EditServicePage = () => {
 							))}
 						</Badge.Group>
 					)}
+					<Section.Divider title={t('service.get-help')}>{t('service.get-help')}</Section.Divider>
 				</Stack>
 			</Grid.Col>
 		</>

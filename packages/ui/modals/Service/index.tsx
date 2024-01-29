@@ -60,12 +60,63 @@ const useStyles = createStyles((theme) => ({
 
 const CONTACTS = ['phone', 'email', 'website'] as const
 
+const ModalText = ({ children }: ModalTextprops) => {
+	const { classes } = useStyles()
+	return (
+		<Text component='p' className={classes.blackText}>
+			{children}
+		</Text>
+	)
+}
+
+const SubSection = ({ title, children, li }: SubsectionProps) => {
+	const { t } = useTranslation('common')
+
+	return (
+		<Stack spacing={12}>
+			{title && <Title order={3}>{t(`service.${title}`)}</Title>}
+			{li ? (
+				<List>
+					{typeof li === 'string' ? (
+						<List.Item>
+							<Text>{li}</Text>
+						</List.Item>
+					) : (
+						li.map((item, i) => (
+							<List.Item key={i}>
+								<Text key={i}>{item}</Text>
+							</List.Item>
+						))
+					)}
+				</List>
+			) : (
+				children
+			)}
+		</Stack>
+	)
+}
+
+const SectionDivider = ({ title, children }: SectionProps) => {
+	const { classes } = useStyles()
+	const { t } = useTranslation('common')
+	if (!children || (Array.isArray(children) && children.length === 0)) return <></>
+
+	return (
+		<Stack spacing={24}>
+			<Box className={classes.sectionDivider}>
+				<Title order={3} fw={600}>
+					{t(`service.${title}`)}
+				</Title>
+			</Box>
+			{children}
+		</Stack>
+	)
+}
 const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ serviceId, ...props }, ref) => {
 	const slug = useSlug()
 	const { data, status } = api.service.forServiceModal.useQuery(serviceId)
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t, i18n } = useTranslation(orgId?.id ? ['common', 'attribute', orgId.id] : ['common', 'attribute'])
-	const { classes } = useStyles()
 	const [opened, handler] = useDisclosure(false)
 	const theme = useMantineTheme()
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
@@ -106,50 +157,6 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 				}}
 				icons={icons}
 			/>
-		)
-	}
-
-	const ModalText = ({ children }: ModalTextprops) => (
-		<Text component='p' className={classes.blackText}>
-			{children}
-		</Text>
-	)
-
-	const SubSection = ({ title, children, li }: SubsectionProps) => (
-		<Stack spacing={12}>
-			{title && <Title order={3}>{t(`service.${title}`)}</Title>}
-			{li ? (
-				<List>
-					{typeof li === 'string' ? (
-						<List.Item>
-							<Text>{li}</Text>
-						</List.Item>
-					) : (
-						li.map((item, i) => (
-							<List.Item key={i}>
-								<Text key={i}>{item}</Text>
-							</List.Item>
-						))
-					)}
-				</List>
-			) : (
-				children
-			)}
-		</Stack>
-	)
-
-	const SectionDivider = ({ title, children }: SectionProps) => {
-		if (!children || (Array.isArray(children) && children.length === 0)) return <></>
-
-		return (
-			<Stack spacing={24}>
-				<Box className={classes.sectionDivider}>
-					<Title order={3} fw={600}>
-						{t(`service.${title}`)}
-					</Title>
-				</Box>
-				{children}
-			</Stack>
 		)
 	}
 
