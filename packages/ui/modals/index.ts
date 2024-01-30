@@ -14,7 +14,7 @@ export * from './PrivacyStatement'
 export * from './QuickPromotion'
 export * from './ResetPassword'
 export * from './Review'
-export * from './Service'
+export * from './Service/index'
 export * from './ServiceFilter/index'
 export * from './UserSurvey/index'
 // codegen:end

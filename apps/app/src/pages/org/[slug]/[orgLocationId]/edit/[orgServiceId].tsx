@@ -1,7 +1,9 @@
-import { Grid, Stack } from '@mantine/core'
+import { createStyles, Grid, rem, Stack } from '@mantine/core'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
+import { Suspense } from 'react'
 import { useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
@@ -9,11 +11,14 @@ import { z } from 'zod'
 import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
+import { Badge } from '@weareinreach/ui/components/core/Badge'
+import { Section } from '@weareinreach/ui/components/core/Section'
+import { InlineTextInput } from '@weareinreach/ui/components/data-portal/InlineTextInput'
+import { ServiceSelect } from '@weareinreach/ui/components/data-portal/ServiceSelect'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { Badge } from '~ui/components/core/Badge'
-import { Section } from '~ui/components/core/Section'
-import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
+
+const DevTool = dynamic(() => import('@hookform/devtools').then((mod) => mod.DevTool), { ssr: false })
 
 const FreetextObject = z
 	.object({
@@ -25,53 +30,73 @@ const FreetextObject = z
 
 const FormSchema = z.object({
 	name: FreetextObject,
-	desription: FreetextObject,
-	services: z.object({ id: prefixedId('serviceTag'), tsKey: z.string(), tsNs: z.string() }).array(),
+	description: FreetextObject,
+	services: prefixedId('serviceTag').array(),
 	published: z.boolean(),
 	deleted: z.boolean(),
 })
+const isObject = (x: unknown): x is object => typeof x === 'object'
+
 type FormSchemaType = z.infer<typeof FormSchema>
 const EditServicePage = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]/[orgLocationId]/edit/[orgServiceId]'>()
 	const { data } = api.page.serviceEdit.useQuery({ id: router.query.orgServiceId ?? '' })
+	const { data: allServices } = api.service.getOptions.useQuery()
 	const form = useForm<FormSchemaType>({
-		values: data ? data : undefined,
+		values: data ? { ...data, services: data.services.map(({ id }) => id) } : undefined,
 	})
 
-	const nameIsDirty =
-		typeof form.formState.dirtyFields.name === 'object' ? form.formState.dirtyFields.name.text : false
+	const dirtyFields = {
+		name: isObject(form.formState.dirtyFields.name) ? form.formState.dirtyFields.name.text : false,
+		description: isObject(form.formState.dirtyFields.description)
+			? form.formState.dirtyFields.description.text
+			: false,
+		services: form.formState.dirtyFields.services ?? false,
+	}
 
+	const activeServices = form.watch('services') ?? []
 	return (
 		<>
 			<Grid.Col xs={12} sm={8} order={1}>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					<Stack spacing={8} w='100%'>
-						<InlineTextInput
-							component={TextInput<FormSchemaType>}
-							name='name.text'
-							control={form.control}
-							fontSize='h2'
-							data-isDirty={nameIsDirty}
-						/>
-						<InlineTextInput
-							component={Textarea<FormSchemaType>}
-							name='description.text'
-							control={form.control}
-							data-isDirty={nameIsDirty}
-							autosize
-						/>
+						<Suspense fallback='Loading'>
+							<InlineTextInput
+								component={TextInput<FormSchemaType>}
+								name='name.text'
+								control={form.control}
+								fontSize='h2'
+								data-isDirty={dirtyFields.name}
+							/>
+						</Suspense>
+						<Suspense fallback='Loading'>
+							<InlineTextInput
+								component={Textarea<FormSchemaType>}
+								name='description.text'
+								control={form.control}
+								data-isDirty={dirtyFields.description}
+								autosize
+							/>
+						</Suspense>
 					</Stack>
-					{!!data && (
-						<Badge.Group>
-							{data.services.map((service) => (
-								<Badge.Service key={service.id}>{t(service.tsKey, { ns: service.tsNs })}</Badge.Service>
-							))}
-						</Badge.Group>
-					)}
+					<Suspense fallback='Loading'>
+						<ServiceSelect name='services' control={form.control} data-isDirty={dirtyFields.services}>
+							<Badge.Group>
+								{activeServices.map((serviceId) => {
+									const service = allServices?.find((s) => s.id === serviceId)
+									if (!service) return null
+									return (
+										<Badge.Service key={service.id}>{t(service.tsKey, { ns: service.tsNs })}</Badge.Service>
+									)
+								})}
+							</Badge.Group>
+						</ServiceSelect>
+					</Suspense>
 					<Section.Divider title={t('service.get-help')}>{t('service.get-help')}</Section.Divider>
 				</Stack>
 			</Grid.Col>
+			<DevTool control={form.control} />
 		</>
 	)
 }
@@ -104,17 +129,10 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params, r
 	const ssg = await trpcServerClient({ session })
 	const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
 	const [i18n] = await Promise.all([
-		getServerSideTranslations(locale, [
-			'common',
-			'services',
-			'attribute',
-			'phone-type',
-			'country',
-			'gov-dist',
-			orgId,
-		]),
-		ssg.organization.getBySlug.prefetch({ slug }),
-		ssg.location.getById.prefetch({ id: orgLocationId }),
+		getServerSideTranslations(locale, ['common', 'services', 'attribute', orgId]),
+		ssg.page.serviceEdit.prefetch({ id: orgServiceId }),
+		ssg.component.ServiceSelect.prefetch(),
+		ssg.service.getOptions.prefetch(),
 	])
 	const props = {
 		session,
