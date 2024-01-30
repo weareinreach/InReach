@@ -14,4 +14,11 @@ export const componentRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	ServiceSelect: permissionedProcedure('updateOrgService').query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('ServiceSelect'),
+			() => import('./query.ServiceSelect.handler')
+		)
+		return handler(opts)
+	}),
 })
