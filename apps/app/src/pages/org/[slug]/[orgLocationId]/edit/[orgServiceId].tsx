@@ -27,11 +27,37 @@ const FreetextObject = z
 		ns: z.string().nullish(),
 	})
 	.nullish()
+const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()])
+type Literal = z.infer<typeof literalSchema>
+type Json = Literal | { [key: string]: Json } | Json[]
+const JsonSchema: z.ZodType<Json> = z.lazy(() =>
+	z.union([literalSchema, z.array(JsonSchema), z.record(JsonSchema)])
+)
 
 const FormSchema = z.object({
 	name: FreetextObject,
 	description: FreetextObject,
 	services: prefixedId('serviceTag').array(),
+	attributes: z
+		.object({
+			text: z
+				.object({
+					key: z.string(),
+					text: z.string(),
+					ns: z.string(),
+				})
+				.nullable(),
+			boolean: z.boolean().nullable(),
+			data: z.any(),
+			active: z.boolean(),
+			countryId: z.string().nullable(),
+			govDistId: z.string().nullable(),
+			languageId: z.string().nullable(),
+			category: z.string(),
+			attributeId: z.string(),
+			supplementId: z.string(),
+		})
+		.array(),
 	published: z.boolean(),
 	deleted: z.boolean(),
 })
@@ -41,11 +67,14 @@ type FormSchemaType = z.infer<typeof FormSchema>
 const EditServicePage = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]/[orgLocationId]/edit/[orgServiceId]'>()
+	const { data: attributeMap } = api.attribute.map.useQuery()
 	const { data } = api.page.serviceEdit.useQuery({ id: router.query.orgServiceId ?? '' })
 	const { data: allServices } = api.service.getOptions.useQuery()
 	const form = useForm<FormSchemaType>({
 		values: data ? { ...data, services: data.services.map(({ id }) => id) } : undefined,
 	})
+
+	console.log(form.getValues())
 
 	const dirtyFields = {
 		name: isObject(form.formState.dirtyFields.name) ? form.formState.dirtyFields.name.text : false,
@@ -94,6 +123,11 @@ const EditServicePage = () => {
 						</ServiceSelect>
 					</Suspense>
 					<Section.Divider title={t('service.get-help')}>{t('service.get-help')}</Section.Divider>
+					<Section.Divider title={t('service.clients-served')}>{t('service.clients-served')}</Section.Divider>
+					<Section.Divider title={t('service.cost')}>{t('service.cost')}</Section.Divider>
+					<Section.Divider title={t('service.eligibility')}>{t('service.eligibility')}</Section.Divider>
+					<Section.Divider title={t('service.languages')}>{t('service.languages')}</Section.Divider>
+					<Section.Divider title={t('service.extra-info')}>{t('service.extra-info')}</Section.Divider>
 				</Stack>
 			</Grid.Col>
 			<DevTool control={form.control} />

@@ -30,10 +30,13 @@ export const job20240131_target_population_attrib = {
 
 		// Do stuff
 
+		const attributeId = 'attr_01HNG5GDC5MXW30F32FWJNJ98C'
+		const categoryId = 'attc_01HNG5BPYJADWX4YFVNENS3TRD'
+
 		const targetPopCat = await prisma.attributeCategory.createMany({
 			data: [
 				{
-					id: 'attc_01HNG5BPYJADWX4YFVNENS3TRD',
+					id: categoryId,
 					name: 'Target Population',
 					tag: 'target-population',
 					active: true,
@@ -51,13 +54,14 @@ export const job20240131_target_population_attrib = {
 					text: 'Target Population - Other',
 				},
 			],
+			skipDuplicates: true,
 		})
 		log(`Created tKey: ${tPopAttrTKey.count}`)
 
 		const targetPopAttr = await prisma.attribute.createMany({
 			data: [
 				{
-					id: 'attr_01HNG5GDC5MXW30F32FWJNJ98C',
+					id: attributeId,
 					name: 'Target Population - Free Text',
 					tag: 'tpop-other',
 					tsKey: 'tpop.other',
@@ -65,9 +69,19 @@ export const job20240131_target_population_attrib = {
 					requireText: true,
 				},
 			],
+			skipDuplicates: true,
 		})
 		log(`Created attribute: ${targetPopAttr.count}`)
-
+		const attrToCat = await prisma.attributeToCategory.createMany({
+			data: [
+				{
+					attributeId,
+					categoryId,
+				},
+			],
+			skipDuplicates: true,
+		})
+		log(`Created Attribute/Category link: ${attrToCat.count}`)
 		/**
 		 * DO NOT REMOVE BELOW
 		 *
