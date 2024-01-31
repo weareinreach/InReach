@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import { z } from 'zod'
 
 import { createLoggerInstance } from '@weareinreach/util/logger'
-import { superjson, type SuperJSONResult } from '@weareinreach/util/transformer'
+import { isSuperJSONResult, superjson } from '@weareinreach/util/transformer'
 
 import { NullableJsonValue } from './zod'
 
@@ -63,9 +63,6 @@ type ActionMap = {
 	[k in ActionKeys]: (Prisma.PrismaAction | 'findUniqueOrThrow' | 'findFirstOrThrow')[]
 }
 
-const isSuperJSON = (data: unknown): data is SuperJSONResult =>
-	typeof data === 'object' && data !== null && Object.hasOwn(data, 'json')
-
 const hasSuppData = (result: unknown): result is Results => ResultSchema.safeParse(result).success
 const hasSuppDataArr = (result: unknown): result is Results[] =>
 	ResultSchema.array().safeParse(result).success
@@ -75,9 +72,10 @@ const hasJsonDataArr = (data: unknown): data is DataArray => DataArray.safeParse
 
 const processRead = (data?: z.infer<typeof NullableJsonValue>) => {
 	try {
-		if (isSuperJSON(data)) {
+		if (isSuperJSONResult(data)) {
 			return superjson.deserialize(data)
 		}
+		if (!data) return data
 		const output = superjson.parse(JSON.stringify(data))
 		return output ?? data
 	} catch (err) {
@@ -86,8 +84,11 @@ const processRead = (data?: z.infer<typeof NullableJsonValue>) => {
 	}
 }
 const processWrite = (data?: z.infer<typeof NullableJsonValue>) => {
-	if (data === Prisma.DbNull || data === Prisma.JsonNull || isSuperJSON(data)) {
+	if (data === Prisma.DbNull || data === Prisma.JsonNull || isSuperJSONResult(data)) {
 		return data
+	}
+	if (data === null) {
+		return Prisma.DbNull
 	}
 	return superjson.serialize(data) as unknown as z.infer<typeof NullableJsonValue>
 }
