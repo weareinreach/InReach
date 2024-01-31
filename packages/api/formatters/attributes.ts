@@ -15,10 +15,10 @@ export const formatAttributes = {
 				attribute: {
 					select: {
 						id: true,
-						tsKey: true,
-						tsNs: true,
-						icon: true,
-						iconBg: true,
+						// tsKey: true,
+						// tsNs: true,
+						// icon: true,
+						// iconBg: true,
 						categories: { select: { category: { select: { tag: true, ns: true } } } },
 					},
 				},
@@ -41,12 +41,13 @@ export const formatAttributes = {
 		const flat = data.flatMap(({ attribute, supplement }) => {
 			const { categories, ...rest } = attribute
 			const flatAttribs = categories.map(({ category }) => ({ ...rest, category: category.tag }))
-			return supplement.flatMap(({ id: supplementId, ...supp }) =>
+			return supplement.flatMap(({ id: supplementId, text, ...supp }) =>
 				flatAttribs.map(({ id: attributeId, ...attrib }) => ({
 					attributeId,
 					supplementId,
 					...attrib,
 					...supp,
+					text: text?.tsKey ?? null,
 				}))
 			)
 		})
@@ -57,16 +58,16 @@ export const formatAttributes = {
 type ReturnedData = {
 	attribute: {
 		id: string
-		tsKey: string
-		tsNs: string
+		// tsKey: string
+		// tsNs: string
 		categories: {
 			category: {
 				tag: string
 				ns: string
 			}
 		}[]
-		icon: string | null
-		iconBg: string | null
+		// icon: string | null
+		// iconBg: string | null
 	}
 	supplement: {
 		boolean: boolean | null

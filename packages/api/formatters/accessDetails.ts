@@ -15,7 +15,13 @@ export const formatAccessDetails = {
 						},
 					} as const)),
 			select: {
-				attribute: { select: { id: true, tsKey: true, tsNs: true } },
+				attribute: {
+					select: {
+						id: true,
+						// tsKey: true,
+						// tsNs: true
+					},
+				},
 				supplement: {
 					select: {
 						id: true,
@@ -52,8 +58,8 @@ export const formatAccessDetails = {
 type AccessDetailData = {
 	attribute: {
 		id: string
-		tsKey: string
-		tsNs: string
+		// tsKey: string
+		// tsNs: string
 	}
 	supplement: {
 		id: string
