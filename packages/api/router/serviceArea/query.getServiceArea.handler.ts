@@ -48,3 +48,4 @@ export const getServiceArea = async ({ ctx, input }: TRPCHandlerParams<TGetServi
 		handleError(error)
 	}
 }
+export default getServiceArea
