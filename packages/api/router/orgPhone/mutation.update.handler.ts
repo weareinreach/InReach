@@ -41,3 +41,4 @@ export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'p
 	})
 	return updatedRecord
 }
+export default update
