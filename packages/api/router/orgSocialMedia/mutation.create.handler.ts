@@ -1,17 +1,14 @@
-import { prisma } from '@weareinreach/db'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
+import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateSchema } from './mutation.create.schema'
 
 export const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protected'>) => {
-	const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
+	const prisma = getAuditedClient(ctx.actorId)
 	const newSocial = await prisma.orgSocialMedia.create({
-		data: {
-			...input,
-			auditLogs,
-		},
+		data: input,
 		select: { id: true },
 	})
 	return newSocial
 }
+export default create

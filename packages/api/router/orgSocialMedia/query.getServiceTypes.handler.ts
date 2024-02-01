@@ -21,3 +21,4 @@ export const getServiceTypes = async ({ ctx, input }: TRPCHandlerParams<TGetServ
 		handleError(error)
 	}
 }
+export default getServiceTypes

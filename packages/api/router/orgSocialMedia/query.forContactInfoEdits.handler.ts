@@ -41,3 +41,4 @@ export const forContactInfoEdits = async ({ input }: TRPCHandlerParams<TForConta
 		handleError(error)
 	}
 }
+export default forContactInfoEdits
