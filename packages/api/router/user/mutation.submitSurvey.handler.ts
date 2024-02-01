@@ -7,3 +7,4 @@ export const submitSurvey = async ({ input }: TRPCHandlerParams<TSubmitSurveySch
 	const survey = await prisma.userSurvey.create(input)
 	return survey.id
 }
+export default submitSurvey
