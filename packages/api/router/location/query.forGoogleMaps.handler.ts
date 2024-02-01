@@ -60,3 +60,4 @@ export const forGoogleMaps = async ({ input }: TRPCHandlerParams<TForGoogleMapsS
 		zoom,
 	}
 }
+export default forGoogleMaps

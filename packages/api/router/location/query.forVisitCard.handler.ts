@@ -41,3 +41,4 @@ export const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSch
 		return handleError(err)
 	}
 }
+export default forVisitCard

@@ -8,26 +8,24 @@ import { type TGetAlertsSchema } from './query.getAlerts.schema'
 
 export const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) => {
 	try {
-		const dbResult = await prisma.locationAttribute.findMany({
+		const dbResult = await prisma.attributeSupplement.findMany({
 			where: {
-				location: { id: input.id },
+				locationId: input.id,
 				attribute: { active: true, categories: { some: { category: { active: true, tag: 'alerts' } } } },
 				active: true,
-				supplement: { some: {} },
 			},
 			select: {
-				supplement: {
-					select: { text: { select: { tsKey: { select: { key: true, ns: true, text: true } } } } },
+				text: {
+					select: { tsKey: { select: { key: true, ns: true, text: true } } },
 				},
 				attribute: { select: { tag: true, icon: true } },
 			},
 		})
+
 		const reformatted = compact(
-			dbResult.flatMap(({ supplement, attribute }) => {
-				return supplement.map(({ text }) => {
-					if (!text?.tsKey) return
-					return { ...text.tsKey, ...attribute }
-				})
+			dbResult.flatMap(({ text, attribute }) => {
+				if (!text?.tsKey) return
+				return { ...text.tsKey, ...attribute }
 			})
 		)
 		return reformatted
@@ -35,3 +33,4 @@ export const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) 
 		handleError(error)
 	}
 }
+export default getAlerts

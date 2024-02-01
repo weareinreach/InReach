@@ -57,3 +57,4 @@ export const getByOrgId = async ({ ctx, input }: TRPCHandlerParams<TGetByOrgIdSc
 	if (locations.length === 0) throw new TRPCError({ code: 'NOT_FOUND' })
 	return locations
 }
+export default getByOrgId
