@@ -66,4 +66,5 @@ export * from './2023-11-21_add-missing-phones/index'
 export * from './2023-11-22_ad-hoc-updates/index'
 export * from './2023-11-22_update-alert-messages/index'
 export * from './2023-12-05_alert-messages'
+export * from './2024-02-01_add-missing-attributes/index'
 // codegen:end
