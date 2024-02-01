@@ -11,3 +11,4 @@ export const getByOrg = async ({ input }: TRPCHandlerParams<TGetByOrgSchema>) =>
 	})
 	return reviews
 }
+export default getByOrg

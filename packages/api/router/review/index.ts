@@ -1,117 +1,91 @@
-import { defineRouter, permissionedProcedure, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import {
+	defineRouter,
+	importHandler,
+	permissionedProcedure,
+	protectedProcedure,
+	publicProcedure,
+} from '~api/lib/trpc'
 
 import * as schema from './schemas'
 
-const HandlerCache: Partial<ReviewHandlerCache> = {}
+const NAMESPACE = 'review'
 
-type ReviewHandlerCache = {
-	create: typeof import('./mutation.create.handler').create
-	getCurrentUser: typeof import('./query.getCurrentUser.handler').getCurrentUser
-	getByOrg: typeof import('./query.getByOrg.handler').getByOrg
-	getByLocation: typeof import('./query.getByLocation.handler').getByLocation
-	getByService: typeof import('./query.getByService.handler').getByService
-	getByIds: typeof import('./query.getByIds.handler').getByIds
-	getByUser: typeof import('./query.getByUser.handler').getByUser
-	getAverage: typeof import('./query.getAverage.handler').getAverage
-	getFeatured: typeof import('./query.getFeatured.handler').getFeatured
-	hide: typeof import('./mutation.hide.handler').hide
-	unHide: typeof import('./mutation.unHide.handler').unHide
-	delete: typeof import('./mutation.delete.handler').deleteReview
-	unDelete: typeof import('./mutation.unDelete.handler').unDelete
-}
+const namespaced = (s: string) => `${NAMESPACE}.${s}`
 
 export const reviewRouter = defineRouter({
-	create: protectedProcedure.input(schema.ZCreateSchema).mutation(async ({ ctx, input }) => {
-		if (!HandlerCache.create)
-			HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
-		if (!HandlerCache.create) throw new Error('Failed to load handler')
-		return HandlerCache.create({ ctx, input })
+	create: protectedProcedure.input(schema.ZCreateSchema).mutation(async (opts) => {
+		const handler = await importHandler(namespaced('create'), () => import('./mutation.create.handler'))
+		return handler(opts)
 	}),
-	getCurrentUser: protectedProcedure.query(async ({ ctx }) => {
-		if (!HandlerCache.getCurrentUser)
-			HandlerCache.getCurrentUser = await import('./query.getCurrentUser.handler').then(
-				(mod) => mod.getCurrentUser
-			)
-		if (!HandlerCache.getCurrentUser) throw new Error('Failed to load handler')
-		return HandlerCache.getCurrentUser({ ctx })
+	getCurrentUser: protectedProcedure.query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getCurrentUser'),
+			() => import('./query.getCurrentUser.handler')
+		)
+		return handler(opts)
 	}),
-	getByOrg: publicProcedure.input(schema.ZGetByOrgSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getByOrg)
-			HandlerCache.getByOrg = await import('./query.getByOrg.handler').then((mod) => mod.getByOrg)
-		if (!HandlerCache.getByOrg) throw new Error('Failed to load handler')
-		return HandlerCache.getByOrg({ ctx, input })
+	getByOrg: publicProcedure.input(schema.ZGetByOrgSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('getByOrg'), () => import('./query.getByOrg.handler'))
+		return handler(opts)
 	}),
-	getByLocation: publicProcedure.input(schema.ZGetByLocationSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getByLocation)
-			HandlerCache.getByLocation = await import('./query.getByLocation.handler').then(
-				(mod) => mod.getByLocation
-			)
-		if (!HandlerCache.getByLocation) throw new Error('Failed to load handler')
-		return HandlerCache.getByLocation({ ctx, input })
+	getByLocation: publicProcedure.input(schema.ZGetByLocationSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getByLocation'),
+			() => import('./query.getByLocation.handler')
+		)
+		return handler(opts)
 	}),
-	getByService: publicProcedure.input(schema.ZGetByServiceSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getByService)
-			HandlerCache.getByService = await import('./query.getByService.handler').then((mod) => mod.getByService)
-		if (!HandlerCache.getByService) throw new Error('Failed to load handler')
-		return HandlerCache.getByService({ ctx, input })
+	getByService: publicProcedure.input(schema.ZGetByServiceSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getByService'),
+			() => import('./query.getByService.handler')
+		)
+		return handler(opts)
 	}),
 	/** Returns user reviews ready for public display. Takes reviewer's privacy preferences in to account */
-	getByIds: publicProcedure.input(schema.ZGetByIdsSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getByIds)
-			HandlerCache.getByIds = await import('./query.getByIds.handler').then((mod) => mod.getByIds)
-		if (!HandlerCache.getByIds) throw new Error('Failed to load handler')
-		return HandlerCache.getByIds({ ctx, input })
+	getByIds: publicProcedure.input(schema.ZGetByIdsSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('getByIds'), () => import('./query.getByIds.handler'))
+		return handler(opts)
 	}),
 	getByUser: permissionedProcedure('viewUserReviews')
 		.input(schema.ZGetByUserSchema)
-		.query(async ({ ctx, input }) => {
-			if (!HandlerCache.getByUser)
-				HandlerCache.getByUser = await import('./query.getByUser.handler').then((mod) => mod.getByUser)
-			if (!HandlerCache.getByUser) throw new Error('Failed to load handler')
-			return HandlerCache.getByUser({ ctx, input })
+		.query(async (opts) => {
+			const handler = await importHandler(namespaced('getByUser'), () => import('./query.getByUser.handler'))
+			return handler(opts)
 		}),
 	hide: permissionedProcedure('hideUserReview')
 		.input(schema.ZHideSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.hide)
-				HandlerCache.hide = await import('./mutation.hide.handler').then((mod) => mod.hide)
-			if (!HandlerCache.hide) throw new Error('Failed to load handler')
-			return HandlerCache.hide({ ctx, input })
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('hide'), () => import('./mutation.hide.handler'))
+			return handler(opts)
 		}),
 	unHide: permissionedProcedure('unHideUserReview')
 		.input(schema.ZUnHideSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.unHide)
-				HandlerCache.unHide = await import('./mutation.unHide.handler').then((mod) => mod.unHide)
-			if (!HandlerCache.unHide) throw new Error('Failed to load handler')
-			return HandlerCache.unHide({ ctx, input })
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('unHide'), () => import('./mutation.unHide.handler'))
+			return handler(opts)
 		}),
 	delete: permissionedProcedure('deleteUserReview')
 		.input(schema.ZDeleteSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.delete)
-				HandlerCache.delete = await import('./mutation.delete.handler').then((mod) => mod.deleteReview)
-			if (!HandlerCache.delete) throw new Error('Failed to load handler')
-			return HandlerCache.delete({ ctx, input })
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('delete'), () => import('./mutation.delete.handler'))
+			return handler(opts)
 		}),
 	unDelete: permissionedProcedure('undeleteUserReview')
 		.input(schema.ZUnDeleteSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.unDelete)
-				HandlerCache.unDelete = await import('./mutation.unDelete.handler').then((mod) => mod.unDelete)
-			if (!HandlerCache.unDelete) throw new Error('Failed to load handler')
-			return HandlerCache.unDelete({ ctx, input })
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('unDelete'), () => import('./mutation.unDelete.handler'))
+			return handler(opts)
 		}),
-	getAverage: publicProcedure.input(schema.ZGetAverageSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getAverage)
-			HandlerCache.getAverage = await import('./query.getAverage.handler').then((mod) => mod.getAverage)
-		if (!HandlerCache.getAverage) throw new Error('Failed to load handler')
-		return HandlerCache.getAverage({ ctx, input })
+	getAverage: publicProcedure.input(schema.ZGetAverageSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('getAverage'), () => import('./query.getAverage.handler'))
+		return handler(opts)
 	}),
-	getFeatured: publicProcedure.input(schema.ZGetFeaturedSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getFeatured)
-			HandlerCache.getFeatured = await import('./query.getFeatured.handler').then((mod) => mod.getFeatured)
-		if (!HandlerCache.getFeatured) throw new Error('Failed to load handler')
-		return HandlerCache.getFeatured({ ctx, input })
+	getFeatured: publicProcedure.input(schema.ZGetFeaturedSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getFeatured'),
+			() => import('./query.getFeatured.handler')
+		)
+		return handler(opts)
 	}),
 })
