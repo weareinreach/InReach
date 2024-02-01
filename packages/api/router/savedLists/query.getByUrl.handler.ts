@@ -16,3 +16,4 @@ export const getByUrl = async ({ input }: TRPCHandlerParams<TGetByUrlSchema>) =>
 
 	return list
 }
+export default getByUrl
