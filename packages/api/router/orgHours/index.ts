@@ -1,76 +1,61 @@
-import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
+import { defineRouter, importHandler, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 
 import * as schema from './schemas'
 
-const HandlerCache: Partial<OrgHoursHandlerCache> = {}
-type OrgHoursHandlerCache = {
-	create: typeof import('./mutation.create.handler').create
-	update: typeof import('./mutation.update.handler').update
-	createMany: typeof import('./mutation.createMany.handler').createMany
-	processDrawer: typeof import('./mutation.processDrawer.handler').processDrawer
-	getTz: typeof import('./query.getTz.handler').getTz
-	forHoursDisplay: typeof import('./query.forHoursDisplay.handler').forHoursDisplay
-	forHoursDrawer: typeof import('./query.forHoursDrawer.handler').forHoursDrawer
-}
+const NAMESPACE = 'orgHours'
+
+const namespaced = (s: string) => `${NAMESPACE}.${s}`
 
 export const orgHoursRouter = defineRouter({
 	create: permissionedProcedure('createNewHours')
 		.input(schema.ZCreateSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.create)
-				HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
-			if (!HandlerCache.create) throw new Error('Failed to load handler')
-			return HandlerCache.create({ ctx, input })
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('create'), () => import('./mutation.create.handler'))
+			return handler(opts)
 		}),
 	createMany: permissionedProcedure('createNewHours')
-		.input(schema.ZCreateManySchema().inputSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.createMany)
-				HandlerCache.createMany = await import('./mutation.createMany.handler').then((mod) => mod.createMany)
-			if (!HandlerCache.createMany) throw new Error('Failed to load handler')
-			return HandlerCache.createMany({ ctx, input })
+		.input(schema.ZCreateManySchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('createMany'),
+				() => import('./mutation.createMany.handler')
+			)
+			return handler(opts)
 		}),
 	update: permissionedProcedure('updateHours')
 		.input(schema.ZUpdateSchema)
-		.mutation(async ({ input, ctx }) => {
-			if (!HandlerCache.update)
-				HandlerCache.update = await import('./mutation.update.handler').then((mod) => mod.update)
-			if (!HandlerCache.update) throw new Error('Failed to load handler')
-			return HandlerCache.update({ ctx, input })
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('update'), () => import('./mutation.update.handler'))
+			return handler(opts)
 		}),
 	processDrawer: permissionedProcedure('updateHours')
 		.input(schema.ZProcessDrawerSchema)
-		.mutation(async ({ input, ctx }) => {
-			if (!HandlerCache.processDrawer)
-				HandlerCache.processDrawer = await import('./mutation.processDrawer.handler').then(
-					(mod) => mod.processDrawer
-				)
-			if (!HandlerCache.processDrawer) throw new Error('Failed to load handler')
-			return HandlerCache.processDrawer({ ctx, input })
-		}),
-	getTz: publicProcedure.input(schema.ZGetTzSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getTz)
-			HandlerCache.getTz = await import('./query.getTz.handler').then((mod) => mod.getTz)
-		if (!HandlerCache.getTz) throw new Error('Failed to load handler')
-		return HandlerCache.getTz({ ctx, input })
-	}),
-	forHoursDisplay: publicProcedure.input(schema.ZForHoursDisplaySchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.forHoursDisplay)
-			HandlerCache.forHoursDisplay = await import('./query.forHoursDisplay.handler').then(
-				(mod) => mod.forHoursDisplay
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('processDrawer'),
+				() => import('./mutation.processDrawer.handler')
 			)
-		if (!HandlerCache.forHoursDisplay) throw new Error('Failed to load handler')
-		return HandlerCache.forHoursDisplay({ ctx, input })
+			return handler(opts)
+		}),
+	getTz: publicProcedure.input(schema.ZGetTzSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('getTz'), () => import('./query.getTz.handler'))
+		return handler(opts)
+	}),
+	forHoursDisplay: publicProcedure.input(schema.ZForHoursDisplaySchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('forHoursDisplay'),
+			() => import('./query.forHoursDisplay.handler')
+		)
+		return handler(opts)
 	}),
 	forHoursDrawer: publicProcedure
 		// permissionedProcedure('updateHours')
 		.input(schema.ZForHoursDrawerSchema)
-		.query(async ({ ctx, input }) => {
-			if (!HandlerCache.forHoursDrawer)
-				HandlerCache.forHoursDrawer = await import('./query.forHoursDrawer.handler').then(
-					(mod) => mod.forHoursDrawer
-				)
-			if (!HandlerCache.forHoursDrawer) throw new Error('Failed to load handler')
-			return HandlerCache.forHoursDrawer({ ctx, input })
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('forHoursDrawer'),
+				() => import('./query.forHoursDrawer.handler')
+			)
+			return handler(opts)
 		}),
 })

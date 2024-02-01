@@ -32,3 +32,4 @@ export const getTz = async ({ input }: TRPCHandlerParams<TGetTzSchema>) => {
 	if (!result) throw new TRPCError({ code: 'NOT_FOUND' })
 	return result
 }
+export default getTz
