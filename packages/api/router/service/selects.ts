@@ -30,22 +30,18 @@ export const select = {
 					},
 				},
 			},
-			supplement: {
+			id: true,
+			country: globalSelect.country(),
+			language: {
 				select: {
-					id: true,
-					country: globalSelect.country(),
-					language: {
-						select: {
-							languageName: true,
-							nativeName: true,
-						},
-					},
-					text: globalSelect.freeText(),
-					govDist: globalSelect.govDistExpanded(),
-					boolean: true,
-					data: true,
+					languageName: true,
+					nativeName: true,
 				},
 			},
-		} satisfies Prisma.ServiceAttributeSelect
+			text: globalSelect.freeText(),
+			govDist: globalSelect.govDistExpanded(),
+			boolean: true,
+			data: true,
+		} satisfies Prisma.AttributeSupplementSelect
 	},
 }

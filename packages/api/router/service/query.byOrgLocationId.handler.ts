@@ -112,12 +112,7 @@ export const byOrgLocationId = async ({ input }: TRPCHandlerParams<TByOrgLocatio
 					},
 				},
 			},
-			accessDetails: {
-				where: {
-					active: true,
-				},
-				select: select.attributes(),
-			},
+
 			locations: {
 				where: {
 					active: true,
@@ -146,3 +141,4 @@ export const byOrgLocationId = async ({ input }: TRPCHandlerParams<TByOrgLocatio
 	})
 	return results
 }
+export default byOrgLocationId

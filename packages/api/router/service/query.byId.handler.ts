@@ -112,12 +112,6 @@ export const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
 					},
 				},
 			},
-			accessDetails: {
-				where: {
-					active: true,
-				},
-				select: select.attributes(),
-			},
 			locations: {
 				where: {
 					active: true,
@@ -146,3 +140,4 @@ export const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
 	})
 	return result
 }
+export default byId

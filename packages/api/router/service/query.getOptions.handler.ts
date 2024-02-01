@@ -19,3 +19,4 @@ export const getOptions = async () => {
 	})
 	return result
 }
+export default getOptions

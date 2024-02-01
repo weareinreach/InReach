@@ -11,21 +11,6 @@ export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceMo
 		select: {
 			id: true,
 			services: { select: { tag: { select: { tsKey: true } } }, where: { tag: { active: true } } },
-			accessDetails: {
-				where: { active: true },
-
-				select: {
-					attribute: { select: { id: true } },
-					supplement: {
-						where: { active: true },
-						select: {
-							id: true,
-							data: true,
-							text: { select: { key: true, tsKey: { select: { text: true } } } },
-						},
-					},
-				},
-			},
 			serviceName: {
 				select: {
 					key: true,
@@ -56,5 +41,26 @@ export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceMo
 			},
 		},
 	})
-	return result
+
+	const transformed = {
+		...result,
+		attributes: result.attributes
+			.filter(({ attribute }) =>
+				attribute.categories.every(({ category }) => category.tag !== 'service-access-instructions')
+			)
+			.map(({ attribute, ...supplement }) => ({
+				attribute,
+				supplement,
+			})),
+		accessDetails: result.attributes
+			.filter(({ attribute }) =>
+				attribute.categories.some(({ category }) => category.tag === 'service-access-instructions')
+			)
+			.map(({ attribute, ...supplement }) => ({
+				attribute,
+				supplement,
+			})),
+	}
+	return transformed
 }
+export default forServiceModal
