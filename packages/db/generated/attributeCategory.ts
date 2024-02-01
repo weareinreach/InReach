@@ -11,6 +11,7 @@ export const attributeCategory = [
 	{ id: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R', tag: 'service-focus', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX', tag: 'service-provider-options', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P', tag: 'system', icon: null, ns: 'attribute' },
+	{ id: 'attc_01HNG5BPYJADWX4YFVNENS3TRD', tag: 'target-population', icon: null, ns: 'attribute' },
 ] as const
 
 export type AttributeCategory = (typeof attributeCategory)[number]
