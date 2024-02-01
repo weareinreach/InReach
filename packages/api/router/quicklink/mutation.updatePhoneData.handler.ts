@@ -1,7 +1,4 @@
-import flush from 'just-flush'
-
 import { getAuditedClient } from '@weareinreach/db'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdatePhoneDataSchema } from './mutation.updatePhoneData.schema'

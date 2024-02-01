@@ -1,5 +1,4 @@
 import { getAuditedClient } from '@weareinreach/db'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TDeleteSchema } from './mutation.delete.schema'

@@ -1,10 +1,6 @@
 import { z } from 'zod'
 
-import { Prisma } from '@weareinreach/db'
-import { CreateBase } from '~api/schemaBase/create'
-import { GenerateAuditLog } from '~api/schemas/create/auditLog'
 import { prefixedId } from '~api/schemas/idPrefix'
-import { createManyRequired, createOneSeparateLog } from '~api/schemas/nestedOps'
 
 export const ZCreateAndSaveItemSchema = z
 	.object({

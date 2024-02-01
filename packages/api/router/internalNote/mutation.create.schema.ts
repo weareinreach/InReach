@@ -2,8 +2,6 @@ import flush from 'just-flush'
 import { z } from 'zod'
 
 import { generateId, Prisma } from '@weareinreach/db'
-import { CreateBase } from '~api/schemaBase/create'
-import { GenerateAuditLog } from '~api/schemas/create/auditLog'
 import { prefixedId } from '~api/schemas/idPrefix'
 
 const nonEmptyString = z

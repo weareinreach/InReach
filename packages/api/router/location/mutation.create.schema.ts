@@ -1,8 +1,6 @@
 import { z } from 'zod'
 
 import { createGeoFields, Prisma } from '@weareinreach/db'
-import { CreateBase } from '~api/schemaBase/create'
-import { AuditLogSchema } from '~api/schemas/create/auditLog'
 import { prefixedId } from '~api/schemas/idPrefix'
 import { createManyRequired } from '~api/schemas/nestedOps'
 
