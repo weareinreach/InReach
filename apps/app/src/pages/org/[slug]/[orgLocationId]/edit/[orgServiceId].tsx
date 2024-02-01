@@ -3,20 +3,23 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
-import { Suspense } from 'react'
-import { useForm } from 'react-hook-form'
+import { Suspense, useEffect, useState } from 'react'
+import { type Path, useFieldArray, useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
+import { type Merge } from 'type-fest'
 import { z } from 'zod'
 
 import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
+import { generateId } from '@weareinreach/db/lib/idGen'
 import { Badge } from '@weareinreach/ui/components/core/Badge'
 import { Section } from '@weareinreach/ui/components/core/Section'
 import { InlineTextInput } from '@weareinreach/ui/components/data-portal/InlineTextInput'
 import { ServiceSelect } from '@weareinreach/ui/components/data-portal/ServiceSelect'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+import { Button } from '~ui/components/core/Button'
 
 const DevTool = dynamic(() => import('@hookform/devtools').then((mod) => mod.DevTool), { ssr: false })
 
@@ -27,6 +30,10 @@ const FreetextObject = z
 		ns: z.string().nullish(),
 	})
 	.nullish()
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MapValue<A> = A extends Map<any, infer V> ? V : never
+
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()])
 type Literal = z.infer<typeof literalSchema>
 type Json = Literal | { [key: string]: Json } | Json[]
@@ -73,8 +80,9 @@ const EditServicePage = () => {
 	const form = useForm<FormSchemaType>({
 		values: data ? { ...data, services: data.services.map(({ id }) => id) } : undefined,
 	})
+	const attribFields = useFieldArray({ control: form.control, name: 'attributes', keyName: '_rhfId' })
 
-	console.log(form.getValues())
+	console.log(`🚀 ~ EditServicePage ~ attribFields:`, attribFields.fields)
 
 	const dirtyFields = {
 		name: isObject(form.formState.dirtyFields.name) ? form.formState.dirtyFields.name.text : false,
@@ -83,8 +91,58 @@ const EditServicePage = () => {
 			: false,
 		services: form.formState.dirtyFields.services ?? false,
 	}
-
+	const dataAttributes = form.watch('attributes') ?? []
 	const activeServices = form.watch('services') ?? []
+
+	type AttrSectionKeys = 'clientsServed' | 'cost' | 'eligibility' | 'languages' | 'additionalInfo'
+	type AttrSectionVals = Merge<
+		FormSchemaType['attributes'][number],
+		{ _rhfName: Path<FormSchemaType>; _rhfLabel: string }
+	>
+
+	const attributeBase: {
+		[key in AttrSectionKeys]: AttrSectionVals[]
+	} = {
+		clientsServed: [],
+		cost: [],
+		eligibility: [],
+		languages: [],
+		additionalInfo: [],
+	}
+	const [attributes, setAttributes] = useState(attributeBase)
+
+	useEffect(() => {
+		if (!attributeMap) return
+		const attrToSet = attributeBase
+
+		for (const [i, item] of dataAttributes.entries()) {
+			const attribDef = attributeMap.get(item.attributeId)
+
+			console.log(`🚀 ~ useEffect ~ attribDef:`, attribDef)
+
+			if (!attribDef) continue
+
+			const attribNs = attribDef.tsKey.split('.').length
+				? (attribDef.tsKey.split('.').shift() as string)
+				: attribDef.tsKey
+			console.log(`🚀 ~ useEffect ~ attribNs:`, attribNs)
+
+			switch (attribNs) {
+				case 'tpop': {
+					attrToSet.clientsServed.push({
+						...item,
+						_rhfName: `attributes.${i}.text.text`,
+						_rhfLabel: 'Target Population',
+					})
+					break
+				}
+			}
+		}
+		setAttributes(attrToSet)
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dataAttributes, attributeMap])
+
 	return (
 		<>
 			<Grid.Col xs={12} sm={8} order={1}>
@@ -123,13 +181,50 @@ const EditServicePage = () => {
 						</ServiceSelect>
 					</Suspense>
 					<Section.Divider title={t('service.get-help')}>{t('service.get-help')}</Section.Divider>
-					<Section.Divider title={t('service.clients-served')}>{t('service.clients-served')}</Section.Divider>
+					<Section.Divider title={t('service.clients-served')}>
+						{attributes.clientsServed.length ? (
+							attributes.clientsServed.map(({ _rhfName, _rhfLabel, ...item }) => (
+								<InlineTextInput
+									key={item.supplementId}
+									component={Textarea<FormSchemaType>}
+									name={_rhfName}
+									control={form.control}
+									label={_rhfLabel}
+									data-isDirty={form.getFieldState(_rhfName).isDirty}
+									autosize
+								/>
+							))
+						) : (
+							<Button
+								onClick={() => {
+									attribFields.append({
+										attributeId: 'attr_01HNG5GDC5MXW30F32FWJNJ98C',
+										supplementId: generateId('attributeSupplement'),
+										boolean: null,
+										active: true,
+										countryId: null,
+										govDistId: null,
+										languageId: null,
+										category: '',
+										text: {
+											text: '',
+											key: '',
+											ns: '',
+										},
+									})
+								}}
+							>
+								{t('add', { item: '$t(service.clients-served)' })}
+							</Button>
+						)}
+					</Section.Divider>
 					<Section.Divider title={t('service.cost')}>{t('service.cost')}</Section.Divider>
 					<Section.Divider title={t('service.eligibility')}>{t('service.eligibility')}</Section.Divider>
 					<Section.Divider title={t('service.languages')}>{t('service.languages')}</Section.Divider>
 					<Section.Divider title={t('service.extra-info')}>{t('service.extra-info')}</Section.Divider>
 				</Stack>
 			</Grid.Col>
+			{/* @ts-expect-error Hush, devtool. */}
 			<DevTool control={form.control} />
 		</>
 	)
