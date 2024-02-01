@@ -39,7 +39,7 @@
 		"@changesets/cli": "2.27.1",
 		"@turbo/gen": "1.12.2",
 		"@types/lint-staged": "13.3.0",
-		"@types/node": "20.11.14",
+		"@types/node": "20.11.15",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.1.1",
