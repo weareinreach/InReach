@@ -1,7 +1,6 @@
 import compact from 'just-compact'
 
-import { generateNestedFreeText, prisma } from '@weareinreach/db'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
+import { generateNestedFreeText, getAuditedClient } from '@weareinreach/db'
 import {
 	connectOneId,
 	connectOrDisconnectId,
@@ -13,6 +12,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TUpsertManySchema } from './mutation.upsertMany.schema'
 
 export const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySchema, 'protected'>) => {
+	const prisma = getAuditedClient(ctx.actorId)
 	const { orgId, data } = input
 
 	const existing = await prisma.orgEmail.findMany({
@@ -25,14 +25,8 @@ export const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySc
 		data.map(
 			({ title, services: servicesArr, locations: locationsArr, description, id: passedId, ...record }) => {
 				const before = passedId ? existing.find(({ id }) => id === passedId) : undefined
-				const servicesBefore = before?.services.map(({ serviceId }) => ({ serviceId })) ?? []
-				const locationsBefore = before?.locations.map(({ orgLocationId }) => ({ orgLocationId })) ?? []
-				const auditLogs = CreateAuditLog({
-					actorId: ctx.actorId,
-					operation: before ? 'UPDATE' : 'CREATE',
-					from: before,
-					to: record,
-				})
+				const servicesBefore = before?.services?.map(({ serviceId }) => ({ serviceId })) ?? []
+				const locationsBefore = before?.locations?.map(({ orgLocationId }) => ({ orgLocationId })) ?? []
 				const id = passedId ?? ctx.generateId('orgEmail')
 
 				const services = servicesArr.map((serviceId) => ({ serviceId }))
@@ -46,7 +40,6 @@ export const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySc
 						title: connectOneId(title),
 						services: createManyOptional(services),
 						locations: createManyOptional(locations),
-						auditLogs,
 						description: description
 							? generateNestedFreeText({ orgId, text: description, type: 'emailDesc', itemId: id })
 							: undefined,
@@ -70,7 +63,6 @@ export const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySc
 									},
 								}
 							: undefined,
-						auditLogs,
 					},
 				})
 			}
@@ -78,3 +70,4 @@ export const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySc
 	)
 	return upserts
 }
+export default upsertMany

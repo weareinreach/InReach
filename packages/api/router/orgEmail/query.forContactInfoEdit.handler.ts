@@ -42,11 +42,15 @@ export const forContactInfoEdit = async ({ ctx, input }: TRPCHandlerParams<TForC
 		})
 		const transformed = result.map(({ description, title, ...record }) => ({
 			...record,
-			title: title ? { key: title?.key.key } : null,
-			description: description ? { key: description?.tsKey.key, defaultText: description?.tsKey.text } : null,
+			title: title ? { key: title?.key?.key } : null,
+			description: description
+				? { key: description?.tsKey?.key, defaultText: description?.tsKey?.text }
+				: null,
 		}))
 		return transformed
 	} catch (error) {
 		handleError(error)
 	}
 }
+
+export default forContactInfoEdit
