@@ -14,3 +14,4 @@ export const getNameFromSlug = async ({ input }: TRPCHandlerParams<TGetNameFromS
 	})
 	return result
 }
+export default getNameFromSlug

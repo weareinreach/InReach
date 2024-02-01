@@ -30,21 +30,18 @@ export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisS
 				},
 				select: {
 					attribute: { select: { tag: true } },
-					supplement: { select: { text: { select: { tsKey: { select: { key: true, text: true } } } } } },
+					text: { select: { tsKey: { select: { key: true, text: true } } } },
 				},
 			},
 			services: {
 				select: {
-					accessDetails: {
+					attributes: {
 						where: {
-							active: true,
-							attribute: { active: true },
+							attribute: { categories: { some: { category: { tag: 'service-access-instructions' } } } },
 						},
 						select: {
 							attribute: { select: { tag: true } },
-							supplement: {
-								select: { data: true },
-							},
+							data: true,
 						},
 					},
 					services: {
@@ -65,19 +62,17 @@ export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisS
 		const serviceTags: Record<'tsKey' | 'tsNs', string>[] = []
 		const accessInstructions: Record<'tag' | 'access_type' | 'access_value', string>[] = []
 
-		for (const { accessDetails, services: service } of services) {
+		for (const { attributes, services: service } of services) {
 			for (const { tag } of service) {
 				serviceTags.push(tag)
 			}
-			for (const { attribute, supplement } of accessDetails) {
-				for (const { data } of supplement) {
-					const parsedData = AccessInstructionSchema.parse(
-						isSuperJSON(data)
-							? superjson.deserialize<{ access_type: string; access_value: string }>(data)
-							: data
-					)
-					accessInstructions.push({ tag: attribute.tag, ...parsedData })
-				}
+			for (const { attribute, data } of attributes) {
+				const parsedData = AccessInstructionSchema.parse(
+					isSuperJSON(data)
+						? superjson.deserialize<{ access_type: string; access_value: string }>(data)
+						: data
+				)
+				accessInstructions.push({ tag: attribute.tag, ...parsedData })
 			}
 		}
 
@@ -86,10 +81,10 @@ export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisS
 			name,
 			description: { ...description?.tsKey },
 			targetPop: attributes
-				.map(({ attribute, supplement }) => ({
+				.map(({ attribute, text }) => ({
 					tag: attribute.tag,
-					text: supplement.at(0)?.text?.tsKey.text,
-					tsKey: supplement.at(0)?.text?.tsKey.key,
+					text: text?.tsKey?.text,
+					tsKey: text?.tsKey?.key,
 				}))
 				.at(0),
 			services: serviceTags,
@@ -99,3 +94,4 @@ export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisS
 
 	return formattedData
 }
+export default getIntlCrisis

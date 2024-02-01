@@ -36,26 +36,11 @@ covered_areas AS (
 attributes AS (
 SELECT * FROM (
 	SELECT
-		la. "locationId" AS "id",
-		la. "attributeId"
-	FROM "LocationAttribute" la
+		attr. "locationId" AS "id",
+		attr. "attributeId"
+	FROM "AttributeSupplement" attr
 	JOIN filters on true
-	WHERE la.active AND la."attributeId" = ANY(filters.attribute)
-	UNION ALL
-	SELECT
-		l.id,
-		oa. "attributeId"
-	FROM "OrganizationAttribute" oa
-		JOIN filters on true
-		INNER JOIN "OrgLocation" l ON l. "orgId" = oa. "organizationId" AND l.published AND NOT l.deleted
-	WHERE oa.active AND oa."attributeId" = ANY(filters.attribute)
-	UNION ALL
-	SELECT ols. "orgLocationId" AS "id",
-		sa. "attributeId"
-	FROM "OrgLocationService" ols
-		JOIN filters on true
-		INNER JOIN "ServiceAttribute" sa ON ols. "serviceId" = sa. "orgServiceId" AND sa.active AND sa."attributeId" = ANY(filters.attribute)
-	WHERE  ols.active
+	WHERE attr.active AND attr."attributeId" = ANY(filters.attribute)
 ) at
 	GROUP BY id, "attributeId"
 	ORDER BY id, "attributeId"
@@ -312,3 +297,4 @@ export const searchDistance = async ({ input }: TRPCHandlerParams<TSearchDistanc
 	})
 	return { orgs: orderedResults, resultCount: orgs.total }
 }
+export default searchDistance
