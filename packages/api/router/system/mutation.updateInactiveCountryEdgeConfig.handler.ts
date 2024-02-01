@@ -50,3 +50,4 @@ export const updateInactiveCountryEdgeConfig = async () => {
 	const result = await updateEdgeConfig.json()
 	return result
 }
+export default updateInactiveCountryEdgeConfig
