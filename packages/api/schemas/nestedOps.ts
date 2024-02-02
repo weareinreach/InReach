@@ -4,8 +4,6 @@ import omit from 'just-omit'
 import pick from 'just-pick'
 import invariant from 'tiny-invariant'
 
-import { auditLogLinkAction, CreateAuditLog, GenerateAuditLog } from './create/auditLog'
-
 /**
  * `*************`
  *
@@ -43,7 +41,6 @@ export const createManyWithAudit = <T extends Array<any>>(data: T | undefined, a
 		: ({
 				create: compact(data).map((record) => ({
 					...record,
-					auditLogs: CreateAuditLog({ actorId, operation: 'CREATE', to: record }),
 				})),
 			} as const)
 /** Individual create record */
@@ -61,7 +58,6 @@ export const createOneWithAudit = <T extends Record<string, any>>(data: T | unde
 		: ({
 				create: {
 					...data,
-					auditLogs: CreateAuditLog({ actorId, operation: 'CREATE', to: data }),
 				},
 			} as const)
 
@@ -148,17 +144,7 @@ export const linkManyWithAudit = <T extends object>(
 			skipDuplicates: true,
 		},
 	}
-	const logs = data.map((record) => {
-		const to = opts?.auditDataKeys ? pick(record, opts.auditDataKeys) : auditLogLinkAction
-		const linkIds = opts?.auditDataKeys ? omit(record, opts.auditDataKeys) : record
-		const log = GenerateAuditLog({
-			actorId,
-			operation: 'LINK',
-			to,
-			...linkIds,
-		})
-		return log
-	})
+	const logs = null
 
 	return [links, logs] as const
 }
@@ -173,14 +159,7 @@ export const createOneSeparateLog = <T extends object>(
 		create: data,
 	}
 
-	const to = opts?.auditDataKeys ? pick(data, opts.auditDataKeys) : auditLogLinkAction
-	const linkIds = opts?.auditDataKeys ? omit(data, opts.auditDataKeys) : data
-	const log = GenerateAuditLog({
-		actorId,
-		operation: 'LINK',
-		to,
-		...linkIds,
-	})
+	const log = null
 
 	return [links, log] as const
 }
@@ -191,11 +170,7 @@ export const deleteOneSeparateLog = <T extends object>(data: T | undefined, acto
 		delete: data,
 	}
 
-	const log = GenerateAuditLog({
-		actorId,
-		operation: 'UNLINK',
-		to: data,
-	})
+	const log = null
 
 	return [links, log] as const
 }

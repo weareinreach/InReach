@@ -122,12 +122,7 @@ const serviceSelect = {
 			},
 		},
 	},
-	accessDetails: {
-		where: {
-			active: true,
-		},
-		select: attributes.select,
-	},
+
 	locations: {
 		where: {
 			location: isPublic,
