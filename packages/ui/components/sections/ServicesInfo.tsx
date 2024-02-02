@@ -56,7 +56,7 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 						position='apart'
 						noWrap
 						className={classes.group}
-						onMouseOver={() => apiUtils.service.byId.prefetch({ id: service.id })}
+						onMouseOver={() => apiUtils.service.forServiceModal.prefetch(service.id)}
 					>
 						{service.offersRemote && !hideRemoteBadges ? (
 							<Group spacing={8} align='center'>
@@ -114,7 +114,7 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 					id: service.id,
 					tsNs: service.serviceName?.tsNs,
 					tsKey: service.serviceName?.tsKey,
-					defaultText: service.serviceName?.tsKey.text,
+					defaultText: service.serviceName?.tsKey?.text,
 					offersRemote: service.offersRemote,
 				})
 			)
@@ -127,7 +127,7 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 						id: service.id,
 						tsNs: service.serviceName?.tsNs,
 						tsKey: service.serviceName?.tsKey,
-						defaultText: service.serviceName?.tsKey.text,
+						defaultText: service.serviceName?.tsKey?.text,
 						offersRemote: service.offersRemote,
 					}),
 				])

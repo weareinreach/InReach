@@ -171,65 +171,64 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 		const baseDetails: AccessDetails = { publicTransit: [] }
 
 		const { publicTransit } = accessDetails.reduce((details, { supplement }) => {
-			supplement.forEach(({ data, text, id }) => {
-				const parsed = supplementSchema.accessInstructions.safeParse(data)
-				if (parsed.success) {
-					const { access_type, access_value } = parsed.data
-					switch (access_type) {
-						case 'publicTransit': {
-							if (!text) break
-							const { key, options } = getFreeText(text)
-							details[access_type].push(<ModalText key={id}>{t(key, options)}</ModalText>)
-							break
-						}
-						case 'email': {
-							contactData.emails.push({
-								id,
-								title: null,
-								description: null,
-								email: parsed.data.access_value,
-								// legacyDesc: parsed.data.instructions,
-								// firstName: null,
-								// lastName: null,
-								primary: false,
-								locationOnly: false,
-								serviceOnly: false,
-							})
-							break
-						}
-						case 'phone': {
-							const country = locations.find(({ location }) => Boolean(location.country))?.location.country
-								.cca2
-							if (!country) break
-							contactData.phones.push({
-								id,
-								number: parsed.data.access_value,
-								phoneType: null,
-								country,
-								primary: false,
-								locationOnly: false,
-								ext: null,
-								description: null,
-							})
-							break
-						}
-						case 'link':
-						case 'file': {
-							contactData.websites.push({
-								id,
-								description: null,
-								isPrimary: false,
-								// orgLocationId: null,
-								orgLocationOnly: false,
-								url: parsed.data.access_value,
-							})
-						}
+			const { data, text, id } = supplement
+			const parsed = supplementSchema.accessInstructions.safeParse(data)
+			if (parsed.success) {
+				const { access_type, access_value } = parsed.data
+				switch (access_type) {
+					case 'publicTransit': {
+						if (!text) break
+						const { key, options } = getFreeText(text)
+						details[access_type].push(<ModalText key={id}>{t(key, options)}</ModalText>)
+						break
 					}
-
-					const accessKey = CONTACTS.find((category) => category === access_type)
-					if (accessKey) details[accessKey] ||= <Text key={id}>{access_value}</Text>
+					case 'email': {
+						contactData.emails.push({
+							id,
+							title: null,
+							description: null,
+							email: parsed.data.access_value,
+							// legacyDesc: parsed.data.instructions,
+							// firstName: null,
+							// lastName: null,
+							primary: false,
+							locationOnly: false,
+							serviceOnly: false,
+						})
+						break
+					}
+					case 'phone': {
+						const country = locations.find(({ location }) => Boolean(location.country))?.location?.country
+							?.cca2
+						if (!country) break
+						contactData.phones.push({
+							id,
+							number: parsed.data.access_value,
+							phoneType: null,
+							country,
+							primary: false,
+							locationOnly: false,
+							ext: null,
+							description: null,
+						})
+						break
+					}
+					case 'link':
+					case 'file': {
+						contactData.websites.push({
+							id,
+							description: null,
+							isPrimary: false,
+							// orgLocationId: null,
+							orgLocationOnly: false,
+							url: parsed.data.access_value,
+						})
+					}
 				}
-			})
+
+				const accessKey = CONTACTS.find((category) => category === access_type)
+				if (accessKey) details[accessKey] ||= <Text key={id}>{access_value}</Text>
+			}
 			return details
 		}, baseDetails)
 
@@ -272,25 +271,21 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 						const type = tsKey.split('.').pop() as string
 						switch (type) {
 							case 'elig-age': {
-								for (const { data, id } of supplement) {
-									const parsed = supplementSchema.age.safeParse(data)
-									if (!parsed.success) continue
-									const { min, max } = parsed.data
-									const context = min && max ? 'range' : min ? 'min' : 'max'
-									subsections[namespace]['age'] = (
-										<ModalText key={id}>
-											{t('service.elig-age', { ns: 'common', context, min, max })}
-										</ModalText>
-									)
-								}
+								const { data, id } = supplement
+								const parsed = supplementSchema.age.safeParse(data)
+								if (!parsed.success) break
+								const { min, max } = parsed.data
+								const context = min && max ? 'range' : min ? 'min' : 'max'
+								subsections[namespace]['age'] = (
+									<ModalText key={id}>{t('service.elig-age', { ns: 'common', context, min, max })}</ModalText>
+								)
 								break
 							}
 							case 'other-describe': {
-								for (const { text, id } of supplement) {
-									if (!text) continue
-									const { key, options } = getFreeText(text)
-									subsections.clientsServed.targetPop.push(<ModalText key={id}>{t(key, options)}</ModalText>)
-								}
+								const { text, id } = supplement
+								if (!text) break
+								const { key, options } = getFreeText(text)
+								subsections.clientsServed.targetPop.push(<ModalText key={id}>{t(key, options)}</ModalText>)
 
 								break
 							}
@@ -302,20 +297,19 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 						if (!isValidIcon(icon)) break
 						const costDetails: CostDetails = { description: [] }
 
-						supplement.forEach(({ text, data, id }) => {
-							if (text) {
-								const { key, options } = getFreeText(text)
-								costDetails.description.push(<ModalText key={id}>{t(key, options)}</ModalText>)
-							}
-							const parsed = supplementSchema.cost.safeParse(data)
-							if (parsed.success) {
-								const { cost, currency } = parsed.data
-								costDetails.price = new Intl.NumberFormat(i18n.language, {
-									style: 'currency',
-									currency: currency ?? undefined,
-								}).format(cost)
-							}
-						})
+						const { text, data, id } = supplement
+						if (text) {
+							const { key, options } = getFreeText(text)
+							costDetails.description.push(<ModalText key={id}>{t(key, options)}</ModalText>)
+						}
+						const parsed = supplementSchema.cost.safeParse(data)
+						if (parsed.success) {
+							const { cost, currency } = parsed.data
+							costDetails.price = new Intl.NumberFormat(i18n.language, {
+								style: 'currency',
+								currency: currency ?? undefined,
+							}).format(cost)
+						}
 
 						const { price, description } = costDetails
 						const badgeProps = { icon, tsKey, tsNs, tProps: { price: price ?? undefined } }
@@ -331,11 +325,10 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 					}
 
 					case 'lang': {
-						supplement.forEach(({ language }) => {
-							if (!language) return
-							const { languageName } = language
-							subsections[namespace].push(languageName)
-						})
+						const { language } = supplement
+						if (!language) break
+						const { languageName } = language
+						subsections[namespace].push(languageName)
 						break
 					}
 					case 'additional': {
@@ -449,7 +442,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 					component='button'
 					ref={ref}
 					onClick={() => {
-						serviceModalEvent.opened({ serviceId, serviceName: serviceName?.tsKey.text, orgSlug: slug })
+						serviceModalEvent.opened({ serviceId, serviceName: serviceName?.tsKey?.text, orgSlug: slug })
 						handler.open()
 					}}
 					{...props}

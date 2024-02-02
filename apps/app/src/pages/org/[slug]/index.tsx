@@ -77,7 +77,7 @@ const OrganizationPage = ({
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
-			enabled: !!data?.id && data?.locations.length > 1,
+			enabled: !!data?.id && data?.locations?.length > 1,
 			select: (data) => data.length !== 0,
 		}
 	)
@@ -210,15 +210,18 @@ const OrganizationPage = ({
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					{hasAlerts &&
-						alertData.map((alert) => (
-							<AlertMessage
-								key={alert.key}
-								iconKey={alert.icon}
-								ns={organizationId}
-								textKey={alert.key}
-								defaultText={alert.text}
-							/>
-						))}
+						alertData.map((alert) => {
+							if (!alert.key) return null
+							return (
+								<AlertMessage
+									key={alert.key}
+									iconKey={alert.icon}
+									ns={organizationId}
+									textKey={alert.key}
+									defaultText={alert.text}
+								/>
+							)
+						})}
 					<ListingBasicInfo
 						data={{
 							name: data.name,

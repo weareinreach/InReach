@@ -26,7 +26,70 @@ export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceMo
 				where: { location: globalWhere.isPublic() },
 				select: { location: { select: { country: { select: { cca2: true } } } } },
 			},
-			attributes: { select: select.attributes() },
+			attributes: {
+				select: {
+					attribute: {
+						select: {
+							id: true,
+							tsKey: true,
+							tsNs: true,
+							icon: true,
+							iconBg: true,
+							showOnLocation: true,
+							categories: {
+								select: {
+									category: {
+										select: {
+											tag: true,
+											icon: true,
+										},
+									},
+								},
+							},
+							_count: {
+								select: {
+									parents: true,
+									children: true,
+								},
+							},
+						},
+					},
+					id: true,
+					country: {
+						select: {
+							cca2: true,
+							cca3: true,
+							id: true,
+							name: true,
+							dialCode: true,
+							flag: true,
+							tsKey: true,
+							tsNs: true,
+						},
+					},
+					language: {
+						select: {
+							languageName: true,
+							nativeName: true,
+						},
+					},
+					text: {
+						select: {
+							key: true,
+							ns: true,
+							tsKey: {
+								select: {
+									text: true,
+								},
+							},
+						},
+					},
+					govDist: { select: { tsKey: true, tsNs: true, abbrev: true, id: true } },
+					boolean: true,
+					data: true,
+				},
+				where: { active: true },
+			},
 			hours: { where: { active: true }, select: { _count: true } },
 			description: {
 				select: {

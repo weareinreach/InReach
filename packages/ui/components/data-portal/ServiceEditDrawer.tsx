@@ -276,7 +276,7 @@ interface Attribute {
 		govDistId?: string | null
 		languageId?: string | null
 		text: FreeText | null
-	}[]
+	}
 }
 interface FormData {
 	id: string
@@ -312,6 +312,6 @@ interface FormData {
 			id: string
 			data: unknown
 			text: { id?: string; key: string; ns: string; tsKey: { text: string; crowdinId: number | null } } | null
-		}[]
+		}
 	}[]
 }

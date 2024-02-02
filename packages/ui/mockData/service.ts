@@ -19,14 +19,6 @@ export const service = {
 		path: ['service', 'getParentName'],
 		response: { name: 'Parent Organization Name' },
 	}),
-	byId: getTRPCMock({
-		path: ['service', 'byId'],
-		type: 'query',
-		response: async () => {
-			const { default: data } = await import('./json/service.byId.json')
-			return data
-		},
-	}),
 	getNames: getTRPCMock({
 		path: ['service', 'getNames'],
 		response: async () => {
