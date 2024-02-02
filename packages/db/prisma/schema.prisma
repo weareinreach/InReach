@@ -810,7 +810,7 @@ model OrgService {
   //@@schema("org")
 
   @@index([organizationId(sort: Asc)])
-  @@index([organizationId, published, deleted])
+  @@index([organizationId, published(sort: Desc), deleted])
   @@index([published, deleted])
 }
 
@@ -836,6 +836,9 @@ model ServiceArea {
   @@index([organizationId])
   @@index([orgLocationId])
   @@index([orgServiceId])
+  @@index([active, organizationId])
+  @@index([active, orgLocationId])
+  @@index([active, orgServiceId])
 }
 
 /// User reviews/ratings of organization
@@ -1043,6 +1046,7 @@ model AttributeSupplement {
   @@index([attributeId, organizationId])
   @@index([attributeId, serviceId])
   @@index([attributeId, userId])
+  @@index([active, attributeId])
 }
 
 model AttributeSupplementDataSchema {
@@ -2022,6 +2026,7 @@ model OrgLocationService {
   @@index([serviceId, active])
   @@index([orgLocationId])
   @@index([serviceId])
+  @@index([active, serviceId])
 }
 
 /// Link tags to services
@@ -2055,6 +2060,7 @@ model ServiceAreaCountry {
 
   @@id([serviceAreaId, countryId])
   @@index([serviceAreaId, active])
+  @@index([active, serviceAreaId])
   @@index([serviceAreaId, countryId, active])
   @@index([serviceAreaId])
   @@index([countryId])
@@ -2073,6 +2079,7 @@ model ServiceAreaDist {
 
   @@id([serviceAreaId, govDistId])
   @@index([serviceAreaId, active])
+  @@index([active, serviceAreaId])
   @@index([serviceAreaId])
   @@index([govDistId])
   @@index([serviceAreaId, govDistId, active])
