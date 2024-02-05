@@ -1,11 +1,12 @@
 {
 	"banner": {
 		"donate": "帮助所有人免费使用 InReach。 <DonateLink> 立即捐款！</DonateLink>💝",
-		"redesign": "在我们的博客上阅读有关InReach应用程序重新设计发布的信息。 <Link>了解更多。</Link>"
+		"redesign": "请访问我们的博客，了解InReach应用程序重新设计的发布情况。 <Link>了解更多。</Link>",
+		"tmf": "<TMFLink>用 #TransMascFutures 🏳️‍⚧️ 分享跨性别群体的快乐</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>倾听我们用户的心声</Title1>",
-		"who-we-are": "<Title1>我们是谁</Title1>\n<Text>我们是一家以跨性别为主导的科技非营利组织，旨在增加多元化 LGBTQ+ 社区的资源获取。</Text>\n<Link>了解更多关于我们的信息。</Link>"
+		"who-we-are": "<Title1>我们是谁</Title1>\n<Text>我们是一家跨界领导的科技非营利组织，为多样化的 LGBTQ+ 社区提供更多资源渠道。</Text>\n<Link>进一步了解我们。</Link>"
 	},
 	"hero": {
 		"community": {
@@ -13,13 +14,13 @@
 			"1": "LGBTQ+ 移民",
 			"2": "LGBTQ+ 难民",
 			"3": "LGBTQ+ 青年",
-			"4": "变性人社区",
+			"4": "跨性别者社区",
 			"5": "LGBTQ+ BIPOC 社区",
-			"6": "LGBTQ+ 青少年的护理人员"
+			"6": "LGBTQ+ 青少年的看护者"
 		},
-		"find-resources": "<Text>使用 inReach 查找已验证 </Text><Service></Service><Text> for </Text><Community></Community><Text> 。</Text>",
+		"find-resources": "<Text>使用 inReach 查找经过验证的 </Text><Community></Community><Text> 的 </Text><Service></Service><Text> 。</Text>",
 		"heading": "查找 LGBTQ+ 资源。",
-		"privacy-disclaimer": "您的答案是匿名的，与您作为个人用户无关。阅读我们的 <Link>隐私政策</Link> 以了解更多信息。",
+		"privacy-disclaimer": "您的答案是匿名的，与您个人用户无关。阅读我们的 <Link>隐私政策</Link> 以了解更多信息。",
 		"services": {
 			"0": "医疗护理",
 			"1": "社区支持",
@@ -32,13 +33,13 @@
 			"8": "法律帮助",
 			"9": "翻译"
 		},
-		"subheading": "欢迎来到世界上第一个将面临迫害或歧视的TLGBQ+（变性人、女同性恋、男同性恋、双性恋、酷儿和更多身份）人群与经过验证的安全资源相匹配的科技平台。"
+		"subheading": "欢迎来到世界上第一个将面临迫害或歧视的TLGBQ+（变性人、女同性恋、男同性恋、双性恋、酷儿和更多身份）与安全、经过验证的资源相匹配的技术平台。"
 	},
 	"values": {
-		"free": "<Title2>永久免费 🔑</Title2>\n<Text>我们的技术平台 100% 免费提供给所有人，以确保 InReach 随时提供安全帮助。</Text>\n<LinkFree>捐款以帮助我们保持平台免费。</LinkFree>",
-		"innovative": "<Title2>创新：引导：</Title2>\n<Text>我们是世界上第一个符合LGBTQ+面临迫害或歧视的人的科技平台。 独立核实的资源。</Text>\n<LinkInnovative>查看我们的源代码和贡献。</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"free": "<Title2>永久免费 🔑</Title2>\n<Text>我们的技术平台对所有人100％免费，以确保随时可以获得安全的帮助。</Text>\n<LinkFree>捐款以帮助我们保持平台免费。</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>我们是世界上第一个为面临迫害或歧视的LGBTQ+人群提供安全、独立验证的资源的技术平台。</Text>\n<LinkInnovative>查看我们的源代码并做出贡献。</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>我们认为 LGBTQ+ 平等需要跨性别司法、难民正义、种族正义、生殖正义、语言正义等等。</Text>\n<LinkIntersect>详细了解我们的审查流程。</LinkIntersect>",
 		"our-values": "我们的价值观",
-		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>我们知道在线匿名可能是LGBTQ+ 人的生死问题。 这就是为什么我们的应用旨在保护用户在线的保密和安全。</Text>\n<LinkSafety>了解更多关于我们隐私政策的信息</LinkSafety>"
+		"safety-first": "<Title2>安全第一 🔒</Title2>\n<Text>我们知道在线匿名对于 LGBTQ+ 人群来说可能是一个生死攸关的问题。这就是为什么我们的应用程序旨在保护用户的在线机密性和安全的原因。</Text>\n<LinkSafety>进一步了解我们的隐私政策。</LinkSafety>"
 	}
 }

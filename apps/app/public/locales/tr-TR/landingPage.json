@@ -1,7 +1,8 @@
 {
 	"banner": {
 		"donate": "inReach\"in herkes için ücretsiz olmasına yardımcı olun. <DonateLink>Şimdi bağış yap!</DonateLink>💝",
-		"redesign": "Blogumuzda inReach Uygulamasının yeniden tasarımının lansmanı hakkında bilgi edinin. <Link>Daha fazla bilgi edinin.</Link>"
+		"redesign": "Blogumuzda inReach Uygulamasının yeniden tasarımının lansmanı hakkında bilgi edinin. <Link>Daha fazla bilgi edinin.</Link>",
+		"tmf": "<TMFLink>#TransMascFutures ile trans neşesini yayın 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Kullanıcılarımızdan dinleyin</Title1>",

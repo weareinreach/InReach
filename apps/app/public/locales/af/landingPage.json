@@ -1,7 +1,8 @@
 {
 	"banner": {
 		"donate": "Help keep InReach free for everyone. <DonateLink>Donate now!</DonateLink> 💝",
-		"redesign": "Lees oor die bekendstelling van die InReach App-herontwerp op ons blog. <Link>Kom meer te wete.</Link>"
+		"redesign": "Lees oor die bekendstelling van die InReach App-herontwerp op ons blog. <Link>Kom meer te wete.</Link>",
+		"tmf": "<TMFLink>Spread trans joy with #TransMascFutures 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Hoor van ons gebruikers</Title1>",
