@@ -1,11 +1,11 @@
 {
 	"ABW": {
 		"name": "アルバ",
-		"demonym_other": "アルバン"
+		"demonym_other": "アルバ人"
 	},
 	"AFG": {
 		"name": "アフガニスタン",
-		"demonym_other": "アフガン人"
+		"demonym_other": "アフガニスタン人"
 	},
 	"AGO": {
 		"name": "アンゴラ",
@@ -13,7 +13,7 @@
 	},
 	"AIA": {
 		"name": "アンギラ",
-		"demonym_other": "アンギリア人"
+		"demonym_other": "アンギラ人"
 	},
 	"ALA": {
 		"name": "オーランド諸島",
@@ -49,7 +49,7 @@
 	},
 	"ATF": {
 		"name": "フランス領南方および南極地域",
-		"demonym_other": "フランス語"
+		"demonym_other": "フランス人"
 	},
 	"ATG": {
 		"name": "アンティグアバーブーダ",
@@ -65,7 +65,7 @@
 	},
 	"AZE": {
 		"name": "アゼルバイジャン",
-		"demonym_other": "アゼルバイジャン"
+		"demonym_other": "アゼルバイジャン人"
 	},
 	"BDI": {
 		"name": "ブルンジ",
@@ -96,7 +96,7 @@
 	},
 	"BHR": {
 		"name": "バーレーン",
-		"demonym_other": "バーレーンの"
+		"demonym_other": "バーレーン人"
 	},
 	"BHS": {
 		"name": "バハマ",
@@ -140,7 +140,7 @@
 	},
 	"BTN": {
 		"name": "ブータン",
-		"demonym_other": "ブータン語"
+		"demonym_other": "ブータン人"
 	},
 	"BVT": {
 		"name": "ブーベ島"
@@ -163,7 +163,7 @@
 	},
 	"CHE": {
 		"name": "スイス",
-		"demonym_other": "スイス"
+		"demonym_other": "スイス人"
 	},
 	"CHL": {
 		"name": "チリ",
@@ -171,7 +171,7 @@
 	},
 	"CHN": {
 		"name": "中国",
-		"demonym_other": "中国語"
+		"demonym_other": "中国人"
 	},
 	"CIV": {
 		"name": "コートジボワール",
@@ -187,7 +187,7 @@
 	},
 	"COG": {
 		"name": "コンゴ共和国",
-		"demonym_other": "Congolese"
+		"demonym_other": "コンゴ人"
 	},
 	"COK": {
 		"name": "クック諸島",
@@ -242,20 +242,20 @@
 		"demonym_other": "ジブチ"
 	},
 	"DMA": {
-		"name": "ドミニカ国",
+		"name": "ドミニカ",
 		"demonym_other": "ドミニカ人"
 	},
 	"DNK": {
 		"name": "デンマーク",
-		"demonym_other": "デンマーク語"
+		"demonym_other": "デンマーク人"
 	},
 	"DOM": {
 		"name": "ドミニカ共和国",
-		"demonym_other": "ドミニク語"
+		"demonym_other": "ドミニカ人"
 	},
 	"DZA": {
 		"name": "アルジェリア",
-		"demonym_other": "アルジェリア"
+		"demonym_other": "アルジェリア人"
 	},
 	"ECU": {
 		"name": "エクアドル",
@@ -271,11 +271,11 @@
 	},
 	"ESH": {
 		"name": "西サハラ",
-		"demonym_other": "サハラウィ人"
+		"demonym_other": "サハラ人"
 	},
 	"ESP": {
 		"name": "スペイン",
-		"demonym_other": "スペイン語"
+		"demonym_other": "スペイン人"
 	},
 	"EST": {
 		"name": "エストニア",
@@ -299,7 +299,7 @@
 	},
 	"FRA": {
 		"name": "フランス",
-		"demonym_other": "フランス語"
+		"demonym_other": "フランス人"
 	},
 	"FRO": {
 		"name": "フェロー諸島",
@@ -315,11 +315,11 @@
 	},
 	"GBR": {
 		"name": "イギリス",
-		"demonym_other": "英国の"
+		"demonym_other": "イギリス人"
 	},
 	"GEO": {
-		"name": "ジョージア州",
-		"demonym_other": "グルジア人"
+		"name": "ジョージア",
+		"demonym_other": "ジョージア人"
 	},
 	"GGY": {
 		"name": "Guernsey",
@@ -355,7 +355,7 @@
 	},
 	"GRC": {
 		"name": "ギリシャ",
-		"demonym_other": "ギリシア人"
+		"demonym_other": "ギリシャ人"
 	},
 	"GRD": {
 		"name": "グレナダ",
@@ -470,7 +470,7 @@
 	},
 	"KGZ": {
 		"name": "キルギス",
-		"demonym_other": "キルギス"
+		"demonym_other": "キルギス人"
 	},
 	"KHM": {
 		"name": "カンボジア",
@@ -497,8 +497,8 @@
 		"demonym_other": "ラオス人"
 	},
 	"LBN": {
-		"name": "Lebanon",
-		"demonym_other": "レバノン"
+		"name": "レバノン",
+		"demonym_other": "レバノン人"
 	},
 	"LBR": {
 		"name": "リベリア",
@@ -538,7 +538,7 @@
 	},
 	"MAC": {
 		"name": "マカオ",
-		"demonym_other": "中国語"
+		"demonym_other": "中国人"
 	},
 	"MAF": {
 		"name": "セント・マーチン",

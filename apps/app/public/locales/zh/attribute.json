@@ -59,9 +59,9 @@
 		"teens": "定义为 12-18 岁的青少年",
 		"trans-youth": "为跨性别青年提供的机会",
 		"trans-youth-caregivers": "为跨性别青年护理人员提供的机会",
-		"transfeminine": "为变性人社区提供的机会",
-		"transgender": "为跨性别者社区服务的机会（对于不合规或非二元社区，使用性别不一致或非二元特性）",
-		"transmasculine": "为跨男性社区提供服务的机会",
+		"transfeminine": "为跨女性群体提供的机会",
+		"transgender": "为跨性别者群体服务的机会（对于不合规或非二元社区，使用性别不一致或非二元特性）",
+		"transmasculine": "为跨男性群体提供的机会",
 		"unaccompanied-minors": "为无人陪伴的未成年人提供的机会",
 		"undocumented": "为无证移民提供的机会"
 	},
@@ -96,7 +96,7 @@
 	},
 	"orgleader": {
 		"CATEGORYNAME": "组织领导",
-		"bipoc-led": "bipoc-LED",
+		"bipoc-led": "黑人，原住民或有色人种领导的",
 		"black-led": "黑人领导的",
 		"immigrant-led": "移民者领导的",
 		"trans-led": "跨性别者领导的",
@@ -117,18 +117,18 @@
 	"srvfocus": {
 		"CATEGORYNAME": "服务重点",
 		"asylum-seekers": "寻求庇护者",
-		"bipoc-comm": "BIPOC 群体",
+		"bipoc-comm": "黑人，原住民和有色人种群体",
 		"caregivers": "护工群体",
 		"disabled": "残疾人群体",
 		"elder": "专注于老人",
-		"gender-nc": "性别不合格",
+		"gender-nc": "性别表现不一致",
 		"hiv-comm": "艾滋患者群体",
 		"immigrant-comm": "移民群体",
 		"incarcerated": "被监禁的群体",
 		"lgbtq-youth-focus": "LGBTQ+ 青年",
 		"resettled-refugees": "重新安置的难民",
 		"spanish-speakers": "西班牙语使用者",
-		"trans-comm": "跨性别社区",
+		"trans-comm": "跨性别群体",
 		"trans-fem": "跨性别女性/跨性别女性",
 		"trans-masc": "跨性别男人/跨性别男性",
 		"trans-youth-focus": "跨性别青年",
@@ -147,7 +147,7 @@
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "服务提供商选项",
-		"case-mananger": "个案经理",
+		"case-mananger": "个案负责人",
 		"community-org": "社区组织的志愿者/工作人员",
 		"friend-family": "N/A（代表朋友/家人看看）",
 		"govt-agency": "政府机构",
@@ -159,6 +159,6 @@
 		"social-worker": "社会工作者",
 		"student-club": "学生俱乐部负责人/管理员",
 		"teacher": "老师",
-		"therapist-counselor": "治疗师/辅导员"
+		"therapist-counselor": "治疗师/咨询师"
 	}
 }

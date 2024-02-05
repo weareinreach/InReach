@@ -2,15 +2,15 @@
 	"body": {
 		"accept-country": "Observe que só podemos aceitar organizações localizadas nos EUA, México e Canadá no momento.",
 		"additional-info": "Informação Adicional",
-		"intro-text": "Obrigado pelo seu interesse em contribuir com o aplicativo inReach! Use este formulário para sugerir uma organização (por exemplo, organizações sem fins lucrativos, organizações de base ou comunitárias, sistemas de saúde, consultório particular etc.) que você acha que deveria ser incluída. Tudo bem se você não tiver todas as informações solicitadas pelo formulário. Basta preencher o que você sabe e nós faremos o resto! Agradecemos sua inscrição e agradecemos por ajudar a aumentar o acesso a recursos seguros e verificados para a comunidade diversificada LGBTQ+. Todas as organizações sugeridas estão sujeitas à revisão por voluntários treinados da inReach antes da publicação no inReach.",
+		"intro-text": "Obrigado pelo seu interesse em contribuir com o aplicativo inReach! Use este formulário para sugerir uma organização (por exemplo, organizações sem fins lucrativos, organizações comunitárias, sistemas de saúde, consultório particular etc.) que você acha que deveria ser incluída. Tudo bem se você não tiver todas as informações solicitadas pelo formulário. Basta preencher o que você sabe e nós faremos o resto! Agradecemos sua inscrição e agradecemos por ajudar a aumentar o acesso a recursos seguros e verificados para a comunidade diversificada LGBTQ+. Todas as organizações sugeridas estão sujeitas à revisão por voluntários treinados da inReach antes da publicação no inReach.",
 		"required-info": "Informações necessárias",
 		"subject-review": "Todas as organizações sugeridas estão sujeitas à análise da inReach antes da publicação.",
 		"suggest-org": "Sugira uma organização"
 	},
 	"form": {
-		"btn-community": "Adicione foco (s) na comunidade LGBTQ+",
+		"btn-community": "Adicione foco(s) na comunidade LGBTQ+",
 		"btn-save-changes": "Salvar alterações",
-		"btn-service": "Adicionar tipo (s) de serviço",
+		"btn-service": "Adicionar tipo(s) de serviço",
 		"btn-submit": "Enviar nova organização",
 		"community-focus": "Essa organização fornece serviços focados em comunidades LGBTQ+ específicas?",
 		"error-exists-active": "<Link>{{org}}</Link> já está listado no inReach. Use este formulário somente para sugerir novas organizações.",
