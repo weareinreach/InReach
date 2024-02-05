@@ -1,7 +1,8 @@
 {
 	"banner": {
 		"donate": "Help keep InReach free for everyone. <DonateLink>Donate now!</DonateLink> 💝",
-		"redesign": "Basahin ang tungkol sa paglulunsad ng muling idisenyo ng inReach App sa aming blog. <Link>Matuto nang higit pa.</Link>"
+		"redesign": "Basahin ang tungkol sa paglulunsad ng muling idisenyo ng inReach App sa aming blog. <Link>Matuto nang higit pa.</Link>",
+		"tmf": "<TMFLink>Spread trans joy with #TransMascFutures 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Pakinggan mula sa aming mga gumagamit</Title1>",

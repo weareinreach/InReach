@@ -1,7 +1,8 @@
 {
 	"banner": {
 		"donate": "Help keep InReach free for everyone. <DonateLink>Donate now!</DonateLink> 💝",
-		"redesign": "Li sou lansman de InReach App Redesign a sou blog nou an. <Link>Aprann plis.</Link>"
+		"redesign": "Li sou lansman de InReach App Redesign a sou blog nou an. <Link>Aprann plis.</Link>",
+		"tmf": "<TMFLink>Spread trans joy with #TransMascFutures 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Koute itilizatè nou an</Title1>",
