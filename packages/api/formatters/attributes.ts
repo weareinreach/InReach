@@ -15,6 +15,7 @@ export const formatAttributes = {
 				attribute: {
 					select: {
 						id: true,
+						tag: true,
 						// tsKey: true,
 						// tsNs: true,
 						// icon: true,
@@ -32,58 +33,58 @@ export const formatAttributes = {
 				boolean: true,
 			},
 		}) as const,
-	process: (data: ReturnedData, separateAccessDetails?: boolean) => {
-		if (!separateAccessDetails) {
-			const flat = data.flatMap(({ attribute, ...supplement }) => {
-				const { categories, ...rest } = attribute
-				const flatAttribs = categories.map(({ category }) => ({ ...rest, category: category.tag }))
-				const { id: supplementId, text, ...supp } = supplement
-				return flatAttribs.map(({ id: attributeId, ...attrib }) => ({
-					attributeId,
-					supplementId,
-					...attrib,
-					...supp,
-					text: text?.tsKey ?? null,
-				}))
-			})
-			return flat
-		} else {
-			const output: ReturnSegmented = {
-				attributes: [],
-				accessDetails: [],
-			}
-			for (const { attribute, ...supplement } of data) {
-				const { categories, ...rest } = attribute
-				const flatAttribs = categories.map(({ category }) => ({ ...rest, category: category.tag }))
-				const { id: supplementId, text, ...supp } = supplement
-				for (const { id: attributeId, ...attrib } of flatAttribs) {
-					if (attrib.category === 'service-access-instructions') {
-						output.accessDetails.push({
-							attributeId,
-							supplementId,
-							...attrib,
-							...supp,
-							text: text?.tsKey ?? null,
-						})
-					} else {
-						output.attributes.push({
-							attributeId,
-							supplementId,
-							...attrib,
-							...supp,
-							text: text?.tsKey ?? null,
-						})
-					}
+	process: (data: ReturnedData) => {
+		const flat = data.flatMap(({ attribute, ...supplement }) => {
+			const { categories, ...rest } = attribute
+			const flatAttribs = categories.map(({ category }) => ({ ...rest, category: category.tag }))
+			const { id: supplementId, text, ...supp } = supplement
+			return flatAttribs.map(({ id: attributeId, ...attrib }) => ({
+				attributeId,
+				supplementId,
+				...attrib,
+				...supp,
+				text: text?.tsKey ?? null,
+			}))
+		})
+		return flat
+	},
+	processAndSeparateAccessDetails: (data: ReturnedData) => {
+		const output: ReturnSegmented = {
+			attributes: [],
+			accessDetails: [],
+		}
+		for (const { attribute, ...supplement } of data) {
+			const { categories, ...rest } = attribute
+			const flatAttribs = categories.map(({ category }) => ({ ...rest, category: category.tag }))
+			const { id: supplementId, text, ...supp } = supplement
+			for (const { id: attributeId, ...attrib } of flatAttribs) {
+				if (attrib.category === 'service-access-instructions') {
+					output.accessDetails.push({
+						attributeId,
+						supplementId,
+						...attrib,
+						...supp,
+						text: text?.tsKey ?? null,
+					})
+				} else {
+					output.attributes.push({
+						attributeId,
+						supplementId,
+						...attrib,
+						...supp,
+						text: text?.tsKey ?? null,
+					})
 				}
 			}
-			return output
 		}
+		return output
 	},
 }
 
 type ReturnedData = {
 	attribute: {
 		id: string
+		tag: string
 		// tsKey: string
 		// tsNs: string
 		categories: {
@@ -124,6 +125,7 @@ type DataOutput = {
 	govDistId: string | null
 	languageId: string | null
 	category: string
+	tag: string
 	attributeId: string
 	supplementId: string
 }

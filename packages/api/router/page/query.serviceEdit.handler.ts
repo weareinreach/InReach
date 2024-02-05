@@ -65,11 +65,12 @@ export const serviceEdit = async ({ ctx, input }: TRPCHandlerParams<TServiceEdit
 			phones,
 			// accessDetails,
 			hours,
-			attributes,
+			attributes: rawAttributes,
 			locations,
 			...rest
 		} = result
 
+		const { attributes, accessDetails } = formatAttributes.processAndSeparateAccessDetails(rawAttributes)
 		return {
 			name: serviceName?.tsKey,
 			description: description?.tsKey,
@@ -83,7 +84,8 @@ export const serviceEdit = async ({ ctx, input }: TRPCHandlerParams<TServiceEdit
 			locations: locations?.map(({ orgLocationId }) => orgLocationId),
 			// accessDetails: formatAccessDetails.process(accessDetails),
 			// attributes: formatAttributes.process(attributes),
-			...formatAttributes.process(attributes, true),
+			attributes,
+			accessDetails,
 			...rest,
 		}
 	} catch (error) {

@@ -16,23 +16,46 @@ export const map = async ({ ctx: _ }: TRPCHandlerParams<undefined>) => {
 				tsNs: true,
 				icon: true,
 				iconBg: true,
+				tag: true,
+				requireBoolean: true,
+				requireData: true,
+				requireDataSchema: true,
+				requireGeo: true,
+				requireLanguage: true,
+				requireText: true,
 			},
 		})
 		if (!result) return null
-		const mapped = new Map<string, MapValue>(
-			result.map(({ id, ...rest }) => [id, filterObj(rest, (_key, value) => Boolean(value)) as MapValue])
+		const byId = new Map<string, MapById>(
+			result.map(({ id, ...rest }) => [id, filterObj(rest, (_key, value) => value !== null) as MapById])
 		)
-		return mapped
+		const byTag = new Map<string, MapByTag>(
+			result.map(({ tag, ...rest }) => [tag, filterObj(rest, (_key, value) => value !== null) as MapByTag])
+		)
+		return { byId, byTag }
 	} catch (error) {
 		handleError(error)
 	}
 }
 
-type MapValue = {
+interface MapValueBase {
 	tsKey: string
 	tsNs: string
 	icon?: string
 	iconBg?: string
+	requireBoolean: boolean
+	requireData: boolean
+	requireDataSchema: object
+	requireGeo: boolean
+	requireLanguage: boolean
+	requireText: boolean
+}
+
+interface MapById extends MapValueBase {
+	tag: string
+}
+interface MapByTag extends MapValueBase {
+	id: string
 }
 
 export default map
