@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
-import { Suspense, useEffect, useState } from 'react'
+import { type ReactNode, Suspense, useEffect, useState } from 'react'
 import { type Path, useFieldArray, useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
 import { type Merge } from 'type-fest'
@@ -101,7 +101,7 @@ const EditServicePage = () => {
 	>
 
 	const attributeBase: {
-		[key in AttrSectionKeys]: AttrSectionVals[]
+		[key in AttrSectionKeys]: ReactNode[]
 	} = {
 		clientsServed: [],
 		cost: [],
@@ -111,12 +111,14 @@ const EditServicePage = () => {
 	}
 	const [attributes, setAttributes] = useState(attributeBase)
 
+	console.log(`🚀 ~ EditServicePage ~ attributes:`, attributes)
+
 	useEffect(() => {
 		if (!attributeMap) return
 		const attrToSet = attributeBase
 
 		for (const [i, item] of dataAttributes.entries()) {
-			const attribDef = attributeMap.get(item.attributeId)
+			const attribDef = attributeMap.byId.get(item.attributeId)
 
 			console.log(`🚀 ~ useEffect ~ attribDef:`, attribDef)
 
@@ -129,12 +131,32 @@ const EditServicePage = () => {
 
 			switch (attribNs) {
 				case 'tpop': {
-					attrToSet.clientsServed.push({
-						...item,
-						_rhfName: `attributes.${i}.text.text`,
-						_rhfLabel: 'Target Population',
-					})
+					// attrToSet.clientsServed.push({
+					// 	...item,
+					// 	_rhfName: `attributes.${i}.text.text`,
+					// 	_rhfLabel: 'Target Population',
+					// })
+					attrToSet.clientsServed.push(
+						<InlineTextInput
+							key={item.supplementId}
+							component={Textarea<FormSchemaType>}
+							name={`attributes.${i}.text.text`}
+							control={form.control}
+							label='Target Population'
+							data-isDirty={form.getFieldState(`attributes.${i}.text.text`).isDirty}
+							autosize
+						/>
+					)
 					break
+				}
+				case 'cost': {
+					if (attribDef.tag === 'cost-free')
+						// attrToSet.cost.push({
+						// 	...item,
+						// 	_rhfName: `attributes.${i}`,
+						// 	_rhfLabel: 'Cost',
+						// })
+						break
 				}
 			}
 		}
@@ -183,17 +205,18 @@ const EditServicePage = () => {
 					<Section.Divider title={t('service.get-help')}>{t('service.get-help')}</Section.Divider>
 					<Section.Divider title={t('service.clients-served')}>
 						{attributes.clientsServed.length ? (
-							attributes.clientsServed.map(({ _rhfName, _rhfLabel, ...item }) => (
-								<InlineTextInput
-									key={item.supplementId}
-									component={Textarea<FormSchemaType>}
-									name={_rhfName}
-									control={form.control}
-									label={_rhfLabel}
-									data-isDirty={form.getFieldState(_rhfName).isDirty}
-									autosize
-								/>
-							))
+							// attributes.clientsServed.map(({ _rhfName, _rhfLabel, ...item }) => (
+							// 	<InlineTextInput
+							// 		key={item.supplementId}
+							// 		component={Textarea<FormSchemaType>}
+							// 		name={_rhfName}
+							// 		control={form.control}
+							// 		label={_rhfLabel}
+							// 		data-isDirty={form.getFieldState(_rhfName).isDirty}
+							// 		autosize
+							// 	/>
+							// ))
+							attributes.clientsServed
 						) : (
 							<Button
 								onClick={() => {
