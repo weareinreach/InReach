@@ -20,6 +20,7 @@ pnpm-lock.yaml
 .DS_Store
 .eslintignore
 prisma/data-migrations/**/*.json
+prisma/migrations/**/*.sql
 seed/recon/corrections/*.json
 seed/recon/output/**/*.json
 seed/recon/input/**/*.json

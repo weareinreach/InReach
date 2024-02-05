@@ -6,8 +6,6 @@ import { allAttributes } from '@weareinreach/db/generated/allAttributes'
 import { idString, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
 import { createManyRequired } from '~api/schemas/nestedOps'
 
-import { AuditLogSchema } from './auditLog'
-
 export const LinkOrgLocationServiceSchema = z.object({
 	orgLocationId: idString,
 	serviceId: idString,
@@ -65,9 +63,8 @@ export const CreateManyOrgLocationSchema = () => {
 			orgId: z.string(),
 		})
 	)
-	const dataParser = parser.transform(({ actorId, data, operation }) => {
+	const dataParser = parser.transform(({ data }) => {
 		const dataOut: Prisma.OrgLocationCreateManyInput[] = []
-		const auditLogs: Prisma.AuditLogCreateManyInput[] = []
 
 		for (const record of data) {
 			const id = generateId('orgLocation')
@@ -78,17 +75,8 @@ export const CreateManyOrgLocationSchema = () => {
 					...generateGeoFields({ longitude: record.to.longitude, latitude: record.to.latitude }),
 				})
 			)
-			auditLogs.push(
-				Prisma.validator<Prisma.AuditLogCreateManyInput>()({
-					actorId,
-					operation,
-					from: JsonInputOrNullSuperJSON.parse(record.from),
-					to: JsonInputOrNullSuperJSON.parse(record.to),
-					orgLocationId: id,
-				})
-			)
 		}
-		return { data: dataOut, auditLogs }
+		return { data: dataOut }
 	})
 
 	return { dataParser, inputSchema }
@@ -98,15 +86,14 @@ export const CreateOrgLocationSchema = () => {
 	const { dataParser: parser, inputSchema } = MutationBase(
 		z.object({ orgId: z.string(), ...createOrgBaseFields, ...OrgLocationLinksSchema })
 	)
-	const dataParser = parser.transform(({ actorId, to }) => {
+	const dataParser = parser.transform(({ to }) => {
 		const { emails, phones, services, ...dataTo } = to
-		const linkAuditLogs: Prisma.AuditLogUncheckedCreateWithoutOrgLocationInput[] = []
+
 		const serviceLinks = (
 			!services
 				? undefined
 				: createManyRequired(
 						services.map(({ serviceId }) => {
-							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', serviceId }))
 							return { serviceId }
 						})
 					)
@@ -117,7 +104,6 @@ export const CreateOrgLocationSchema = () => {
 				? undefined
 				: createManyRequired(
 						emails.map(({ orgEmailId }) => {
-							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', orgEmailId }))
 							return { orgEmailId }
 						})
 					)
@@ -127,16 +113,10 @@ export const CreateOrgLocationSchema = () => {
 				? undefined
 				: createManyRequired(
 						phones.map(({ phoneId }) => {
-							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', phoneId }))
 							return { phoneId }
 						})
 					)
 		) satisfies Prisma.OrgLocationPhoneCreateNestedManyWithoutLocationInput | undefined
-		const auditEntry = AuditLogSchema.parse({
-			actorId,
-			operation: 'CREATE',
-			to: dataTo,
-		})
 
 		return Prisma.validator<Prisma.OrgLocationCreateArgs>()({
 			data: {
@@ -145,11 +125,6 @@ export const CreateOrgLocationSchema = () => {
 				emails: emailLinks,
 				phones: phoneLinks,
 				services: serviceLinks,
-				auditLogs: {
-					createMany: {
-						data: [auditEntry, ...linkAuditLogs],
-					},
-				},
 			},
 		})
 	})
@@ -157,92 +132,92 @@ export const CreateOrgLocationSchema = () => {
 	return { dataParser, inputSchema }
 }
 
-export const EditOrgLocationSchema = z
-	.object({
-		id: z.string(),
-		data: z
-			.object({
-				name: z.string(),
-				street1: z.string(),
-				street2: z.string().nullable(),
-				city: z.string(),
-				postCode: z.string().nullable(),
-				primary: z.boolean(),
-				mailOnly: z.boolean().default(false),
-				longitude: z.number().nullable(),
-				latitude: z.number().nullable(),
-				geoJSON: Geometry,
-				geoWKT: z.string().nullable(),
-				published: z.boolean(),
-				deleted: z.boolean(),
-				checkMigration: z.boolean(),
-				accessible: z.object({
-					supplementId: z.string().optional(),
-					boolean: z.boolean().nullish(),
-				}),
-				countryId: z.string().nullable(),
-				govDistId: z.string().nullable(),
-				services: z.string().array(),
-			})
-			.partial(),
-	})
-	.transform(({ id, data }) => {
-		const { accessible, countryId, govDistId, services, ...rest } = data
+// export const EditOrgLocationSchema = z
+// 	.object({
+// 		id: z.string(),
+// 		data: z
+// 			.object({
+// 				name: z.string(),
+// 				street1: z.string(),
+// 				street2: z.string().nullable(),
+// 				city: z.string(),
+// 				postCode: z.string().nullable(),
+// 				primary: z.boolean(),
+// 				mailOnly: z.boolean().default(false),
+// 				longitude: z.number().nullable(),
+// 				latitude: z.number().nullable(),
+// 				geoJSON: Geometry,
+// 				geoWKT: z.string().nullable(),
+// 				published: z.boolean(),
+// 				deleted: z.boolean(),
+// 				checkMigration: z.boolean(),
+// 				accessible: z.object({
+// 					supplementId: z.string().optional(),
+// 					boolean: z.boolean().nullish(),
+// 				}),
+// 				countryId: z.string().nullable(),
+// 				govDistId: z.string().nullable(),
+// 				services: z.string().array(),
+// 			})
+// 			.partial(),
+// 	})
+// 	.transform(({ id, data }) => {
+// 		const { accessible, countryId, govDistId, services, ...rest } = data
 
-		const accessibleAttrId = allAttributes.find(({ tag }) => tag === 'wheelchair-accessible')?.id
+// 		const accessibleAttrId = allAttributes.find(({ tag }) => tag === 'wheelchair-accessible')?.id
 
-		const updateAccessibility = accessible?.boolean !== undefined && accessibleAttrId
+// 		const updateAccessibility = accessible?.boolean !== undefined && accessibleAttrId
 
-		return Prisma.validator<Prisma.OrgLocationUpdateArgs>()({
-			where: { id },
-			data: {
-				...rest,
-				...(updateAccessibility
-					? accessible.boolean !== null
-						? {
-								attributes: {
-									upsert: {
-										where: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
-										create: {
-											attribute: { connect: { id: accessibleAttrId } },
-											supplement: { create: { boolean: accessible.boolean } },
-										},
-										update: {
-											supplement: {
-												upsert: {
-													where: { id: accessible.supplementId ?? '' },
-													create: { boolean: accessible.boolean },
-													update: { boolean: accessible.boolean },
-												},
-											},
-										},
-									},
-								},
-							}
-						: {
-								attributes: {
-									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
-								},
-							}
-					: {}),
-				...(countryId
-					? {
-							country: { connect: { id: countryId } },
-						}
-					: {}),
-				...(govDistId
-					? {
-							govDist: { connect: { id: govDistId } },
-						}
-					: {}),
-				...(services
-					? {
-							services: {
-								createMany: { data: services.map((serviceId) => ({ serviceId })), skipDuplicates: true },
-								deleteMany: { NOT: { serviceId: { in: services } } },
-							},
-						}
-					: {}),
-			},
-		})
-	})
+// 		return Prisma.validator<Prisma.OrgLocationUpdateArgs>()({
+// 			where: { id },
+// 			data: {
+// 				...rest,
+// 				...(updateAccessibility
+// 					? accessible.boolean !== null
+// 						? {
+// 								attributes: {
+// 									upsert: {
+// 										where: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
+// 										create: {
+// 											attribute: { connect: { id: accessibleAttrId } },
+// 											supplement: { create: { boolean: accessible.boolean } },
+// 										},
+// 										update: {
+// 											supplement: {
+// 												upsert: {
+// 													where: { id: accessible.supplementId ?? '' },
+// 													create: { boolean: accessible.boolean },
+// 													update: { boolean: accessible.boolean },
+// 												},
+// 											},
+// 										},
+// 									},
+// 								},
+// 							}
+// 						: {
+// 								attributes: {
+// 									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
+// 								},
+// 							}
+// 					: {}),
+// 				...(countryId
+// 					? {
+// 							country: { connect: { id: countryId } },
+// 						}
+// 					: {}),
+// 				...(govDistId
+// 					? {
+// 							govDist: { connect: { id: govDistId } },
+// 						}
+// 					: {}),
+// 				...(services
+// 					? {
+// 							services: {
+// 								createMany: { data: services.map((serviceId) => ({ serviceId })), skipDuplicates: true },
+// 								deleteMany: { NOT: { serviceId: { in: services } } },
+// 							},
+// 						}
+// 					: {}),
+// 			},
+// 		})
+// 	})

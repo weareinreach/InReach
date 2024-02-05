@@ -52,3 +52,4 @@ export const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdSchema>)
 	})
 	return location
 }
+export default getById

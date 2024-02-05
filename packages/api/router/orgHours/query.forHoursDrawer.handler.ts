@@ -65,3 +65,4 @@ export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawe
 	})
 	return intervalResults
 }
+export default forHoursDrawer

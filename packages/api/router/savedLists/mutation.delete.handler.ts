@@ -1,21 +1,12 @@
-import { TRPCError } from '@trpc/server'
-
-import { prisma } from '@weareinreach/db'
+import { getAuditedClient } from '@weareinreach/db'
+import { checkListOwnership } from '~api/lib/checkListOwnership'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TDeleteSchema } from './mutation.delete.schema'
 
 export const deleteList = async ({ ctx, input }: TRPCHandlerParams<TDeleteSchema, 'protected'>) => {
-	const list = await prisma.userSavedList.findUniqueOrThrow({
-		where: {
-			id: input.id,
-		},
-		select: { id: true, ownedById: true },
-	})
-
-	if (list.ownedById !== ctx.session.user.id) {
-		throw new TRPCError({ code: 'UNAUTHORIZED', message: 'List does not belong to user' })
-	}
+	const prisma = getAuditedClient(ctx.actorId)
+	checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
 
 	const result = await prisma.userSavedList.delete({
 		where: {
@@ -28,3 +19,4 @@ export const deleteList = async ({ ctx, input }: TRPCHandlerParams<TDeleteSchema
 	})
 	return result
 }
+export default deleteList

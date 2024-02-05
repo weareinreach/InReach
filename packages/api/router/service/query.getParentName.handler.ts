@@ -26,3 +26,4 @@ export const getParentName = async ({ input }: TRPCHandlerParams<TGetParentNameS
 		}
 	}
 }
+export default getParentName

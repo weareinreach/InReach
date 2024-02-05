@@ -16,3 +16,4 @@ export const getIdFromSlug = async ({ input }: TRPCHandlerParams<TGetIdFromSlugS
 	await writeSlugCache(slug, orgId.id)
 	return orgId
 }
+export default getIdFromSlug

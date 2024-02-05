@@ -7,3 +7,4 @@ export const getAllForRecord = async ({ input }: TRPCHandlerParams<TGetAllForRec
 	const results = prisma.internalNote.findMany({ where: input })
 	return results
 }
+export default getAllForRecord

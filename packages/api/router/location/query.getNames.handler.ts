@@ -16,3 +16,4 @@ export const getNames = async ({ input }: TRPCHandlerParams<TGetNamesSchema>) =>
 
 	return results
 }
+export default getNames

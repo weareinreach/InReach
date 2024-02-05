@@ -13,3 +13,4 @@ export const getOrgPermissions = async ({ ctx }: TRPCHandlerParams<undefined, 'p
 	})
 	return permissions
 }
+export default getOrgPermissions

@@ -16,3 +16,4 @@ export const getByUser = async ({ input }: TRPCHandlerParams<TGetByUserSchema, '
 	})
 	return reviews
 }
+export default getByUser

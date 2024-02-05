@@ -14,3 +14,4 @@ export const getCurrentUser = async ({ ctx }: TRPCHandlerParams<undefined, 'prot
 	})
 	return reviews
 }
+export default getCurrentUser

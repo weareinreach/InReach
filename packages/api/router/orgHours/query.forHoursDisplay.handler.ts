@@ -59,3 +59,4 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 	const grouped = groupBy(intervalResults, ({ dayIndex }) => dayIndex)
 	return grouped
 }
+export default forHoursDisplay

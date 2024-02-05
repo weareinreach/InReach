@@ -18,3 +18,4 @@ export const confirmAccount = async ({ input }: TRPCHandlerParams<TConfirmAccoun
 	})
 	return response
 }
+export default confirmAccount

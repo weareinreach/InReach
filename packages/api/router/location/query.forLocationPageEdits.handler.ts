@@ -52,9 +52,43 @@ export const forLocationPageEdits = async ({ input }: TRPCHandlerParams<TForLoca
 								},
 							},
 						},
-						supplement: {
+						id: true,
+						country: {
+							select: {
+								cca2: true,
+								cca3: true,
+								id: true,
+								name: true,
+								dialCode: true,
+								flag: true,
+								tsKey: true,
+								tsNs: true,
+							},
+						},
+						language: {
+							select: {
+								languageName: true,
+								nativeName: true,
+							},
+						},
+						text: {
+							select: {
+								key: true,
+								ns: true,
+								tsKey: {
+									select: {
+										text: true,
+									},
+								},
+							},
+						},
+						govDist: {
 							select: {
 								id: true,
+								name: true,
+								slug: true,
+								iso: true,
+								abbrev: true,
 								country: {
 									select: {
 										cca2: true,
@@ -67,24 +101,16 @@ export const forLocationPageEdits = async ({ input }: TRPCHandlerParams<TForLoca
 										tsNs: true,
 									},
 								},
-								language: {
+								govDistType: {
 									select: {
-										languageName: true,
-										nativeName: true,
+										tsKey: true,
+										tsNs: true,
 									},
 								},
-								text: {
-									select: {
-										key: true,
-										ns: true,
-										tsKey: {
-											select: {
-												text: true,
-											},
-										},
-									},
-								},
-								govDist: {
+								isPrimary: true,
+								tsKey: true,
+								tsNs: true,
+								parent: {
 									select: {
 										id: true,
 										name: true,
@@ -112,42 +138,12 @@ export const forLocationPageEdits = async ({ input }: TRPCHandlerParams<TForLoca
 										isPrimary: true,
 										tsKey: true,
 										tsNs: true,
-										parent: {
-											select: {
-												id: true,
-												name: true,
-												slug: true,
-												iso: true,
-												abbrev: true,
-												country: {
-													select: {
-														cca2: true,
-														cca3: true,
-														id: true,
-														name: true,
-														dialCode: true,
-														flag: true,
-														tsKey: true,
-														tsNs: true,
-													},
-												},
-												govDistType: {
-													select: {
-														tsKey: true,
-														tsNs: true,
-													},
-												},
-												isPrimary: true,
-												tsKey: true,
-												tsNs: true,
-											},
-										},
 									},
 								},
-								boolean: true,
-								data: true,
 							},
 						},
+						boolean: true,
+						data: true,
 					},
 				},
 				reviews: {
@@ -162,3 +158,4 @@ export const forLocationPageEdits = async ({ input }: TRPCHandlerParams<TForLoca
 		handleError(error)
 	}
 }
+export default forLocationPageEdits

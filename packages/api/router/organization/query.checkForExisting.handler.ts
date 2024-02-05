@@ -19,3 +19,4 @@ export const checkForExisting = async ({ input }: TRPCHandlerParams<TCheckForExi
 	})
 	return result
 }
+export default checkForExisting

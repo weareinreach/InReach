@@ -58,7 +58,7 @@ export const forServiceDrawer = async ({ input }: TRPCHandlerParams<TForServiceD
 				name: {
 					tsNs: service.serviceName?.ns,
 					tsKey: service.serviceName?.key,
-					defaultText: service.serviceName?.tsKey.text,
+					defaultText: service.serviceName?.tsKey?.text,
 				},
 				locations: service.locations.map(({ location }) => location.name),
 				attributes: service.attributes.map(({ attribute }) => {
@@ -88,3 +88,4 @@ type ServItem = {
 	locations: (string | null)[]
 	attributes: { id: string; tsKey: string; tsNs: string }[]
 }
+export default forServiceDrawer

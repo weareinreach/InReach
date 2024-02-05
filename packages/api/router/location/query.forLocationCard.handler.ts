@@ -52,3 +52,4 @@ export const forLocationCard = async ({ input }: TRPCHandlerParams<TForLocationC
 
 	return transformed
 }
+export default forLocationCard

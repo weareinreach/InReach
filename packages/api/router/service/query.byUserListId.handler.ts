@@ -112,12 +112,7 @@ export const byUserListId = async ({ ctx, input }: TRPCHandlerParams<TByUserList
 					},
 				},
 			},
-			accessDetails: {
-				where: {
-					active: true,
-				},
-				select: select.attributes(),
-			},
+
 			locations: {
 				where: {
 					active: true,
@@ -147,3 +142,4 @@ export const byUserListId = async ({ ctx, input }: TRPCHandlerParams<TByUserList
 
 	return results
 }
+export default byUserListId

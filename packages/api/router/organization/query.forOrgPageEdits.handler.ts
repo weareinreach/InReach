@@ -44,3 +44,4 @@ export const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEd
 
 	return reformatted
 }
+export default forOrgPageEdits

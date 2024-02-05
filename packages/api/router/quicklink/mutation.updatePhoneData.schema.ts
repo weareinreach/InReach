@@ -5,15 +5,6 @@ import { prefixedId } from '~api/schemas/idPrefix'
 export const ZUpdatePhoneDataSchema = z
 	.object({
 		id: z.string(),
-		from: z
-			.object({
-				serviceOnly: z.boolean().optional(),
-				locationOnly: z.boolean().optional(),
-				locations: z.string().array(),
-				services: z.string().array(),
-				published: z.boolean().optional(),
-			})
-			.partial(),
 		to: z.object({
 			serviceOnly: z.boolean().optional(),
 			locationOnly: z.boolean().optional(),

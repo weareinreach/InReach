@@ -33,3 +33,4 @@ export const updateAttributesBasic = async ({
 		handleError(error)
 	}
 }
+export default updateAttributesBasic

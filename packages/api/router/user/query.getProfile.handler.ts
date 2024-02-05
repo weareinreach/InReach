@@ -18,3 +18,4 @@ export const getProfile = async ({ ctx }: TRPCHandlerParams<undefined, 'protecte
 	})
 	return profile
 }
+export default getProfile

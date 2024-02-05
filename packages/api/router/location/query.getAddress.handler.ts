@@ -18,7 +18,8 @@ export const getAddress = async ({ input }: TRPCHandlerParams<TGetAddressSchema>
 			attributes: {
 				select: {
 					attribute: { select: { id: true, tsKey: true, tsNs: true } },
-					supplement: { select: { id: true, boolean: true } },
+					id: true,
+					boolean: true,
 				},
 				where: { attribute: { tag: 'wheelchair-accessible' } },
 			},
@@ -31,10 +32,8 @@ export const getAddress = async ({ input }: TRPCHandlerParams<TGetAddressSchema>
 	})
 	const { id, attributes, services, ...rest } = result
 
-	const accessibleAttribute = attributes.find(({ supplement }) => Boolean(supplement.length))
-	const { id: supplementId, boolean } = accessibleAttribute
-		? accessibleAttribute.supplement.find(({ id }) => Boolean(id)) ?? {}
-		: { id: undefined, boolean: undefined }
+	const accessibleAttribute = attributes.find((supplement) => Boolean(supplement.id))
+	const { id: supplementId, boolean } = accessibleAttribute ?? {}
 
 	const transformedResult = {
 		id,
@@ -50,3 +49,4 @@ export const getAddress = async ({ input }: TRPCHandlerParams<TGetAddressSchema>
 
 	return transformedResult
 }
+export default getAddress

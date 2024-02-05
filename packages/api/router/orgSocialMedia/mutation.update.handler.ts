@@ -27,3 +27,4 @@ export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'p
 	})
 	return updated
 }
+export default update

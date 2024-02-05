@@ -121,22 +121,18 @@ export const attributes = {
 				},
 			},
 		},
-		supplement: {
+		id: true,
+		country: countryWithoutGeo,
+		language: {
 			select: {
-				id: true,
-				country: countryWithoutGeo,
-				language: {
-					select: {
-						languageName: true,
-						nativeName: true,
-					},
-				},
-				text: freeText,
-				govDist: govDistWithoutGeo,
-				boolean: true,
-				data: true,
+				languageName: true,
+				nativeName: true,
 			},
 		},
+		text: freeText,
+		govDist: govDistWithoutGeo,
+		boolean: true,
+		data: true,
 	},
 } satisfies Prisma.OrgService$attributesArgs
 
@@ -198,22 +194,18 @@ export const attributesByName = (tags: string[]) =>
 					},
 				},
 			},
-			supplement: {
+			id: true,
+			country: countryWithoutGeo,
+			language: {
 				select: {
-					id: true,
-					country: countryWithoutGeo,
-					language: {
-						select: {
-							languageName: true,
-							nativeName: true,
-						},
-					},
-					text: freeText,
-					govDist: govDistWithoutGeo,
-					boolean: true,
-					data: true,
+					languageName: true,
+					nativeName: true,
 				},
 			},
+			text: freeText,
+			govDist: govDistWithoutGeo,
+			boolean: true,
+			data: true,
 		},
 	}) satisfies Prisma.OrgService$attributesArgs
 

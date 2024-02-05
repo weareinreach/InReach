@@ -7,3 +7,4 @@ export const byId = async ({ input }: TRPCHandlerParams<TByIdSchema, 'protected'
 	const result = await prisma.internalNote.findFirstOrThrow({ where: { id: input } })
 	return result
 }
+export default byId

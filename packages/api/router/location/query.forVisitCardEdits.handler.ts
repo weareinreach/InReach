@@ -40,3 +40,4 @@ export const forVisitCardEdits = async ({ input }: TRPCHandlerParams<TForVisitCa
 		return handleError(err)
 	}
 }
+export default forVisitCardEdits

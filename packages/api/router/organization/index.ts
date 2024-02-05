@@ -1,219 +1,145 @@
-import { defineRouter, permissionedProcedure, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import {
+	defineRouter,
+	importHandler,
+	permissionedProcedure,
+	protectedProcedure,
+	publicProcedure,
+} from '~api/lib/trpc'
 
 import * as schema from './schemas'
 
-const HandlerCache: Partial<OrganizationHandlerCache> = {}
+const NAMESPACE = 'organization'
 
-type OrganizationHandlerCache = {
-	//
-	// QUERIES
-	//
-	// #region Queries
-	getById: typeof import('./query.getById.handler').getById
-	getBySlug: typeof import('./query.getBySlug.handler').getBySlug
-	getIdFromSlug: typeof import('./query.getIdFromSlug.handler').getIdFromSlug
-	searchName: typeof import('./query.searchName.handler').searchName
-	searchDistance: typeof import('./query.searchDistance.handler').searchDistance
-	getNameFromSlug: typeof import('./query.getNameFromSlug.handler').getNameFromSlug
-	isSaved: typeof import('./query.isSaved.handler').isSaved
-	suggestionOptions: typeof import('./query.suggestionOptions.handler').suggestionOptions
-	checkForExisting: typeof import('./query.checkForExisting.handler').checkForExisting
-	generateSlug: typeof import('./query.generateSlug.handler').generateSlug
-	forOrgPage: typeof import('./query.forOrgPage.handler').forOrgPage
-	forLocationPage: typeof import('./query.forLocationPage.handler').forLocationPage
-	slugRedirect: typeof import('./query.slugRedirect.handler').slugRedirect
-	getIntlCrisis: typeof import('./query.getIntlCrisis.handler').getIntlCrisis
-	getNatlCrisis: typeof import('./query.getNatlCrisis.handler').getNatlCrisis
-	forOrganizationTable: typeof import('./query.forOrganizationTable.handler').forOrganizationTable
-	forOrgPageEdits: typeof import('./query.forOrgPageEdits.handler').forOrgPageEdits
-	getAttributes: typeof import('./query.getAttributes.handler').getAttributes
-	getAlerts: typeof import('./query.getAlerts.handler').getAlerts
-	forBadgeEditModal: typeof import('./query.forBadgeEditModal.handler').forBadgeEditModal
-	// #endregion
-
-	//
-	// MUTATIONS
-	//
-	// #region Mutations
-	createNewQuick: typeof import('./mutation.createNewQuick.handler').createNewQuick
-	createNewSuggestion: typeof import('./mutation.createNewSuggestion.handler').createNewSuggestion
-	attachAttribute: typeof import('./mutation.attachAttribute.handler').attachAttribute
-	updateBasic: typeof import('./mutation.updateBasic.handler').updateBasic
-	updateAttributesBasic: typeof import('./mutation.updateAttributesBasic.handler').updateAttributesBasic
-	// #endregion
-}
+const namespaced = (s: string) => `${NAMESPACE}.${s}`
 
 export const orgRouter = defineRouter({
 	//
 	// QUERIES
 	//
 	// #region Queries
-	getById: publicProcedure.input(schema.ZGetByIdSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getById)
-			HandlerCache.getById = await import('./query.getById.handler').then((mod) => mod.getById)
-
-		if (!HandlerCache.getById) throw new Error('Failed to load handler')
-		return HandlerCache.getById({ ctx, input })
+	getById: publicProcedure.input(schema.ZGetByIdSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('getById'), () => import('./query.getById.handler'))
+		return handler(opts)
 	}),
-	getBySlug: publicProcedure.input(schema.ZGetBySlugSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getBySlug)
-			HandlerCache.getBySlug = await import('./query.getBySlug.handler').then((mod) => mod.getBySlug)
-
-		if (!HandlerCache.getBySlug) throw new Error('Failed to load handler')
-		return HandlerCache.getBySlug({ ctx, input })
+	getBySlug: publicProcedure.input(schema.ZGetBySlugSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('getBySlug'), () => import('./query.getBySlug.handler'))
+		return handler(opts)
 	}),
-	getIdFromSlug: publicProcedure.input(schema.ZGetIdFromSlugSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getIdFromSlug)
-			HandlerCache.getIdFromSlug = await import('./query.getIdFromSlug.handler').then(
-				(mod) => mod.getIdFromSlug
-			)
-
-		if (!HandlerCache.getIdFromSlug) throw new Error('Failed to load handler')
-		return HandlerCache.getIdFromSlug({ ctx, input })
+	getIdFromSlug: publicProcedure.input(schema.ZGetIdFromSlugSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getIdFromSlug'),
+			() => import('./query.getIdFromSlug.handler')
+		)
+		return handler(opts)
 	}),
-	searchName: publicProcedure.input(schema.ZSearchNameSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.searchName)
-			HandlerCache.searchName = await import('./query.searchName.handler').then((mod) => mod.searchName)
-
-		if (!HandlerCache.searchName) throw new Error('Failed to load handler')
-		return HandlerCache.searchName({ ctx, input })
+	searchName: publicProcedure.input(schema.ZSearchNameSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('searchName'), () => import('./query.searchName.handler'))
+		return handler(opts)
 	}),
-	searchDistance: publicProcedure.input(schema.ZSearchDistanceSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.searchDistance)
-			HandlerCache.searchDistance = await import('./query.searchDistance.handler').then(
-				(mod) => mod.searchDistance
-			)
-
-		if (!HandlerCache.searchDistance) throw new Error('Failed to load handler')
-		return HandlerCache.searchDistance({ ctx, input })
+	searchDistance: publicProcedure.input(schema.ZSearchDistanceSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('searchDistance'),
+			() => import('./query.searchDistance.handler')
+		)
+		return handler(opts)
 	}),
-	getNameFromSlug: publicProcedure.input(schema.ZGetNameFromSlugSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getNameFromSlug)
-			HandlerCache.getNameFromSlug = await import('./query.getNameFromSlug.handler').then(
-				(mod) => mod.getNameFromSlug
-			)
-
-		if (!HandlerCache.getNameFromSlug) throw new Error('Failed to load handler')
-		return HandlerCache.getNameFromSlug({ ctx, input })
+	getNameFromSlug: publicProcedure.input(schema.ZGetNameFromSlugSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getNameFromSlug'),
+			() => import('./query.getNameFromSlug.handler')
+		)
+		return handler(opts)
 	}),
-	isSaved: publicProcedure.input(schema.ZIsSavedSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.isSaved)
-			HandlerCache.isSaved = await import('./query.isSaved.handler').then((mod) => mod.isSaved)
-
-		if (!HandlerCache.isSaved) throw new Error('Failed to load handler')
-		return HandlerCache.isSaved({ ctx, input })
+	isSaved: publicProcedure.input(schema.ZIsSavedSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('isSaved'), () => import('./query.isSaved.handler'))
+		return handler(opts)
 	}),
 	suggestionOptions: publicProcedure.query(async () => {
-		if (!HandlerCache.suggestionOptions)
-			HandlerCache.suggestionOptions = await import('./query.suggestionOptions.handler').then(
-				(mod) => mod.suggestionOptions
-			)
-
-		if (!HandlerCache.suggestionOptions) throw new Error('Failed to load handler')
-		return HandlerCache.suggestionOptions()
+		const handler = await importHandler(
+			namespaced('suggestionOptions'),
+			() => import('./query.suggestionOptions.handler')
+		)
+		return handler()
 	}),
-	checkForExisting: publicProcedure.input(schema.ZCheckForExistingSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.checkForExisting)
-			HandlerCache.checkForExisting = await import('./query.checkForExisting.handler').then(
-				(mod) => mod.checkForExisting
-			)
-
-		if (!HandlerCache.checkForExisting) throw new Error('Failed to load handler')
-		return HandlerCache.checkForExisting({ ctx, input })
+	checkForExisting: publicProcedure.input(schema.ZCheckForExistingSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('checkForExisting'),
+			() => import('./query.checkForExisting.handler')
+		)
+		return handler(opts)
 	}),
-	generateSlug: protectedProcedure.input(schema.ZGenerateSlugSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.generateSlug)
-			HandlerCache.generateSlug = await import('./query.generateSlug.handler').then((mod) => mod.generateSlug)
-
-		if (!HandlerCache.generateSlug) throw new Error('Failed to load handler')
-		return HandlerCache.generateSlug({ ctx, input })
+	generateSlug: protectedProcedure.input(schema.ZGenerateSlugSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('generateSlug'),
+			() => import('./query.generateSlug.handler')
+		)
+		return handler(opts)
 	}),
-	forOrgPage: publicProcedure.input(schema.ZForOrgPageSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.forOrgPage)
-			HandlerCache.forOrgPage = await import('./query.forOrgPage.handler').then((mod) => mod.forOrgPage)
-
-		if (!HandlerCache.forOrgPage) throw new Error('Failed to load handler')
-		return HandlerCache.forOrgPage({ ctx, input })
+	forOrgPage: publicProcedure.input(schema.ZForOrgPageSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('forOrgPage'), () => import('./query.forOrgPage.handler'))
+		return handler(opts)
 	}),
-	forLocationPage: publicProcedure.input(schema.ZForLocationPageSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.forLocationPage)
-			HandlerCache.forLocationPage = await import('./query.forLocationPage.handler').then(
-				(mod) => mod.forLocationPage
-			)
-
-		if (!HandlerCache.forLocationPage) throw new Error('Failed to load handler')
-		return HandlerCache.forLocationPage({ ctx, input })
+	forLocationPage: publicProcedure.input(schema.ZForLocationPageSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('forLocationPage'),
+			() => import('./query.forLocationPage.handler')
+		)
+		return handler(opts)
 	}),
-	slugRedirect: publicProcedure.input(schema.ZSlugRedirectSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.slugRedirect)
-			HandlerCache.slugRedirect = await import('./query.slugRedirect.handler').then((mod) => mod.slugRedirect)
-
-		if (!HandlerCache.slugRedirect) throw new Error('Failed to load handler')
-		return HandlerCache.slugRedirect({ ctx, input })
+	slugRedirect: publicProcedure.input(schema.ZSlugRedirectSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('slugRedirect'),
+			() => import('./query.slugRedirect.handler')
+		)
+		return handler(opts)
 	}),
-	getIntlCrisis: publicProcedure.input(schema.ZGetIntlCrisisSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getIntlCrisis)
-			HandlerCache.getIntlCrisis = await import('./query.getIntlCrisis.handler').then(
-				(mod) => mod.getIntlCrisis
-			)
-
-		if (!HandlerCache.getIntlCrisis) throw new Error('Failed to load handler')
-		return HandlerCache.getIntlCrisis({ ctx, input })
+	getIntlCrisis: publicProcedure.input(schema.ZGetIntlCrisisSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getIntlCrisis'),
+			() => import('./query.getIntlCrisis.handler')
+		)
+		return handler(opts)
 	}),
-	getNatlCrisis: publicProcedure.input(schema.ZGetNatlCrisisSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getNatlCrisis)
-			HandlerCache.getNatlCrisis = await import('./query.getNatlCrisis.handler').then(
-				(mod) => mod.getNatlCrisis
-			)
-
-		if (!HandlerCache.getNatlCrisis) throw new Error('Failed to load handler')
-		return HandlerCache.getNatlCrisis({ ctx, input })
+	getNatlCrisis: publicProcedure.input(schema.ZGetNatlCrisisSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getNatlCrisis'),
+			() => import('./query.getNatlCrisis.handler')
+		)
+		return handler(opts)
 	}),
-	forOrganizationTable: publicProcedure
-		.input(schema.ZForOrganizationTableSchema)
-		.query(async ({ ctx, input }) => {
-			if (!HandlerCache.forOrganizationTable)
-				HandlerCache.forOrganizationTable = await import('./query.forOrganizationTable.handler').then(
-					(mod) => mod.forOrganizationTable
-				)
-
-			if (!HandlerCache.forOrganizationTable) throw new Error('Failed to load handler')
-			return HandlerCache.forOrganizationTable({ ctx, input })
-		}),
-	forOrgPageEdits: publicProcedure.input(schema.ZForOrgPageEditsSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.forOrgPageEdits)
-			HandlerCache.forOrgPageEdits = await import('./query.forOrgPageEdits.handler').then(
-				(mod) => mod.forOrgPageEdits
-			)
-
-		if (!HandlerCache.forOrgPageEdits) throw new Error('Failed to load handler')
-		return HandlerCache.forOrgPageEdits({ ctx, input })
+	forOrganizationTable: publicProcedure.input(schema.ZForOrganizationTableSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('forOrganizationTable'),
+			() => import('./query.forOrganizationTable.handler')
+		)
+		return handler(opts)
 	}),
-	getAttributes: publicProcedure.input(schema.ZGetAttributesSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getAttributes)
-			HandlerCache.getAttributes = await import('./query.getAttributes.handler').then(
-				(mod) => mod.getAttributes
-			)
-
-		if (!HandlerCache.getAttributes) throw new Error('Failed to load handler')
-		return HandlerCache.getAttributes({ ctx, input })
+	forOrgPageEdits: publicProcedure.input(schema.ZForOrgPageEditsSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('forOrgPageEdits'),
+			() => import('./query.forOrgPageEdits.handler')
+		)
+		return handler(opts)
 	}),
-	getAlerts: publicProcedure.input(schema.ZGetAlertsSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getAlerts)
-			HandlerCache.getAlerts = await import('./query.getAlerts.handler').then((mod) => mod.getAlerts)
-
-		if (!HandlerCache.getAlerts) throw new Error('Failed to load handler')
-		return HandlerCache.getAlerts({ ctx, input })
+	getAttributes: publicProcedure.input(schema.ZGetAttributesSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getAttributes'),
+			() => import('./query.getAttributes.handler')
+		)
+		return handler(opts)
 	}),
-	forBadgeEditModal: publicProcedure.input(schema.ZForBadgeEditModalSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.forBadgeEditModal)
-			HandlerCache.forBadgeEditModal = await import('./query.forBadgeEditModal.handler').then(
-				(mod) => mod.forBadgeEditModal
-			)
-
-		if (!HandlerCache.forBadgeEditModal) throw new Error('Failed to load handler')
-		return HandlerCache.forBadgeEditModal({ ctx, input })
+	getAlerts: publicProcedure.input(schema.ZGetAlertsSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('getAlerts'), () => import('./query.getAlerts.handler'))
+		return handler(opts)
 	}),
+	forBadgeEditModal: publicProcedure.input(schema.ZForBadgeEditModalSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('forBadgeEditModal'),
+			() => import('./query.forBadgeEditModal.handler')
+		)
+		return handler(opts)
+	}),
+
 	// #endregion
 
 	//
@@ -221,54 +147,48 @@ export const orgRouter = defineRouter({
 	//
 	// #region Mutations
 	createNewQuick: permissionedProcedure('createNewOrgQuick')
-		.input(schema.ZCreateNewQuickSchema().inputSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.createNewQuick)
-				HandlerCache.createNewQuick = await import('./mutation.createNewQuick.handler').then(
-					(mod) => mod.createNewQuick
-				)
-			if (!HandlerCache.createNewQuick) throw new Error('Failed to load handler')
-			return HandlerCache.createNewQuick({ ctx, input })
+		.input(schema.ZCreateNewQuickSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('createNewQuick'),
+				() => import('./mutation.createNewQuick.handler')
+			)
+			return handler(opts)
 		}),
-	createNewSuggestion: protectedProcedure
-		.input(schema.ZCreateNewSuggestionSchema().inputSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.createNewSuggestion)
-				HandlerCache.createNewSuggestion = await import('./mutation.createNewSuggestion.handler').then(
-					(mod) => mod.createNewSuggestion
-				)
-			if (!HandlerCache.createNewSuggestion) throw new Error('Failed to load handler')
-			return HandlerCache.createNewSuggestion({ ctx, input })
-		}),
+	createNewSuggestion: protectedProcedure.input(schema.ZCreateNewSuggestionSchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('createNewSuggestion'),
+			() => import('./mutation.createNewSuggestion.handler')
+		)
+		return handler(opts)
+	}),
 	attachAttribute: permissionedProcedure('attachOrgAttributes')
-		.input(schema.ZAttachAttributeSchema().inputSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.attachAttribute)
-				HandlerCache.attachAttribute = await import('./mutation.attachAttribute.handler').then(
-					(mod) => mod.attachAttribute
-				)
-			if (!HandlerCache.attachAttribute) throw new Error('Failed to load handler')
-			return HandlerCache.attachAttribute({ ctx, input })
+		.input(schema.ZAttachAttributeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('attachAttribute'),
+				() => import('./mutation.attachAttribute.handler')
+			)
+			return handler(opts)
 		}),
 	updateBasic: permissionedProcedure('createNewOrgQuick')
 		.input(schema.ZUpdateBasicSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.updateBasic)
-				HandlerCache.updateBasic = await import('./mutation.updateBasic.handler').then(
-					(mod) => mod.updateBasic
-				)
-			if (!HandlerCache.updateBasic) throw new Error('Failed to load handler')
-			return HandlerCache.updateBasic({ ctx, input })
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('updateBasic'),
+				() => import('./mutation.updateBasic.handler')
+			)
+			return handler(opts)
 		}),
 	updateAttributesBasic: permissionedProcedure('attachOrgAttributes')
 		.input(schema.ZUpdateAttributesBasicSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.updateAttributesBasic)
-				HandlerCache.updateAttributesBasic = await import('./mutation.updateAttributesBasic.handler').then(
-					(mod) => mod.updateAttributesBasic
-				)
-			if (!HandlerCache.updateAttributesBasic) throw new Error('Failed to load handler')
-			return HandlerCache.updateAttributesBasic({ ctx, input })
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('updateAttributesBasic'),
+				() => import('./mutation.updateAttributesBasic.handler')
+			)
+			return handler(opts)
 		}),
+
 	// #endregion
 })

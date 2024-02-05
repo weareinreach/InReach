@@ -3,7 +3,6 @@ import { z } from 'zod'
 
 import { generateId, Prisma } from '@weareinreach/db'
 
-import { GenerateAuditLog } from './auditLog'
 import { CreationManyBase } from '../common'
 
 const CreateOrgHoursBase = z.object({
@@ -26,18 +25,16 @@ export const CreateOrgHoursSchema = CreateOrgHoursBase.transform((data) =>
 )
 export const CreateManyOrgHours = () => {
 	const { dataParser: parser, inputSchema } = CreationManyBase(CreateOrgHoursBase.array())
-	const dataParser = parser.transform(({ actorId, operation, data: parsedData }) => {
+	const dataParser = parser.transform(({ data: parsedData }) => {
 		const orgHours: Prisma.OrgHoursCreateManyInput[] = []
-		const auditLogs: Prisma.AuditLogCreateManyInput[] = []
+
 		for (const item of parsedData) {
 			const id = generateId('orgHours')
-			const audit = GenerateAuditLog({ actorId, operation, to: item, orgHoursId: id })
+
 			orgHours.push({ id, ...item })
-			auditLogs.push(audit)
 		}
 		return {
 			orgHours: { data: orgHours, skipDuplicates: true },
-			auditLogs: { data: auditLogs, skipDuplicates: true },
 		}
 	})
 	return { dataParser, inputSchema }

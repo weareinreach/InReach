@@ -69,7 +69,7 @@ export const getEmailData = async ({ input }: TRPCHandlerParams<TGetEmailDataSch
 				slug,
 				emailId,
 				...rest,
-				description: description?.tsKey.text,
+				description: description?.tsKey?.text,
 				attachedLocations: attachedLocations.map(({ location }) => location.id),
 				attachedServices: attachedServices.map(({ service }) => service.id),
 				locations,
@@ -82,3 +82,4 @@ export const getEmailData = async ({ input }: TRPCHandlerParams<TGetEmailDataSch
 		totalResults,
 	}
 }
+export default getEmailData

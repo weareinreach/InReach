@@ -20,3 +20,4 @@ export const forBadgeEditModal = async ({ ctx, input }: TRPCHandlerParams<TForBa
 		handleError(error)
 	}
 }
+export default forBadgeEditModal

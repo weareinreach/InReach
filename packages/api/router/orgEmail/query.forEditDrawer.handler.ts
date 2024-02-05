@@ -36,3 +36,4 @@ export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDr
 		handleError(error)
 	}
 }
+export default forEditDrawer

@@ -44,3 +44,4 @@ export const byOrgId = async ({ input }: TRPCHandlerParams<TByOrgIdSchema>) => {
 	})
 	return results
 }
+export default byOrgId

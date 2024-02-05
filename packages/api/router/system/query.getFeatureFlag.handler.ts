@@ -12,3 +12,4 @@ export const getFeatureFlag = async ({ input }: TRPCHandlerParams<TGetFeatureFla
 
 	return { flag: result }
 }
+export default getFeatureFlag

@@ -42,15 +42,16 @@ export const get = async ({ input }: TRPCHandlerParams<TGetSchema>) => {
 	const transformedResult = result.map(
 		({ description, locations, organization, phoneType, services, ...record }) => ({
 			...record,
-			description: description?.tsKey.text,
+			description: description?.tsKey?.text,
 			locations: locations?.map(({ location }) => ({ ...location })),
 			organization: { ...organization?.organization },
 			phoneType,
 			services: services?.map(({ service }) => ({
 				id: service.id,
-				serviceName: service.serviceName?.tsKey.text,
+				serviceName: service.serviceName?.tsKey?.text,
 			})),
 		})
 	)
 	return transformedResult
 }
+export default get
