@@ -33,24 +33,18 @@ export const formatAccessDetails = {
 			},
 		}) as const,
 	process: (data: AccessDetailData) => {
-		return data.flatMap(({ attribute, supplement }) => {
+		return data.flatMap(({ attribute, ...supplement }) => {
 			const { id: attrId, ...attrib } = attribute
-			if (supplement.length) {
-				return supplement.map(({ id: suppId, data, text, ...supp }) => {
-					const parsedData = AccessSchema.safeParse(
-						isSuperJSONResult(data) ? superjson.deserialize(data) : data
-					)
-					return {
-						attrId,
-						...attrib,
-						suppId,
-						data: parsedData.success ? parsedData.data : null,
-						text: text?.tsKey ?? null,
-						...supp,
-					}
-				})
+			const { id: suppId, data, text, ...supp } = supplement
+			const parsedData = AccessSchema.safeParse(isSuperJSONResult(data) ? superjson.deserialize(data) : data)
+			return {
+				attrId,
+				...attrib,
+				suppId,
+				data: parsedData.success ? parsedData.data : null,
+				text: text?.tsKey ?? null,
+				...supp,
 			}
-			return { attrId, suppId: '', data: null, text: null, ...attrib }
 		})
 	},
 }
@@ -61,15 +55,13 @@ type AccessDetailData = {
 		// tsKey: string
 		// tsNs: string
 	}
-	supplement: {
-		id: string
-		data: Prisma.JsonValue
-		text: {
-			tsKey: {
-				text: string
-				key: string
-				ns: string
-			}
-		} | null
-	}[]
+	id: string
+	data: Prisma.JsonValue
+	text: {
+		tsKey: {
+			text: string
+			key: string
+			ns: string
+		}
+	} | null
 }[]
