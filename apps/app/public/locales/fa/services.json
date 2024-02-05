@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Abortion Care",
+		"CATEGORYNAME": "مراقبتهای مربوط به سقط جنین",
 		"abortion-providers": "ارائه دهندگان سقط جنین",
 		"financial-assistance": "کمک مالی",
 		"lodging-assistance": "کمک های اسکان",
@@ -23,8 +23,8 @@
 		"computers-and-internet": "کامپیوتر و اینترنت"
 	},
 	"crisis-support": {
-		"CATEGORYNAME": "Crisis Support",
-		"crisis-support": "Crisis Support"
+		"CATEGORYNAME": "پشتیبانی بحران",
+		"crisis-support": "پشتیبانی بحران"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "آموزش و اشتغال",
@@ -37,12 +37,12 @@
 		"scholarships": "بورس های تحصیلی"
 	},
 	"food": {
-		"CATEGORYNAME": "Food",
+		"CATEGORYNAME": "غذا",
 		"food": "مواد غذایی",
 		"food-assistance": "کمک های غذایی"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "مسکن",
 		"drop-in-centers-for-lgbtq-youth": "مراکز رها کردن برای جوانان LGBTQ",
 		"emergency-housing": "مسکن اضطراری",
 		"housing-information-and-referrals": "اطلاعات مسکن و ارجاع",
@@ -52,16 +52,16 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "بهداشت و پوشاک",
 		"clothes": "لباس",
-		"gender-affirming-items": "Gender affirming items",
+		"gender-affirming-items": "موارد تایید کننده جنسیت",
 		"gender-neutral-bathrooms": "حمام های خنثی جنسیتی",
 		"haircuts-and-stylists": "کوتاهی مو و سبک",
 		"hygiene": "رده: بهداشت"
 	},
 	"international-support": {
-		"CATEGORTYNAME": "International Support",
-		"financial-assistance": "Financial Assistance",
-		"mental-health": "Mental Health",
-		"resettlement-assistance": "Resettlement Assistance"
+		"CATEGORTYNAME": "پشتیبانی بین المللی",
+		"financial-assistance": "کمک مالی",
+		"mental-health": "سلامت روان",
+		"resettlement-assistance": "کمک به اسکان مجدد"
 	},
 	"legal": {
 		"CATEGORYNAME": "حقوقی",
@@ -73,9 +73,9 @@
 		"employment-authorization": "مجوز استخدام",
 		"family-petitions": "دادخواست های خانوادگی",
 		"immigration-detention": "بازداشت مهاجرت",
-		"legal-advice": "Legal advice",
+		"legal-advice": "مشاوره حقوقی",
 		"legal-hotlines": "خطوط تماس حقوقی",
-		"name-and-gender-change": "Name and gender marker change",
+		"name-and-gender-change": "تغییر نشانگر نام و جنسیت",
 		"refugee-claim": "ادعای پناهندگی",
 		"residency": "دستیاری",
 		"special-immigrant-juvenile-status-sijs": "وضعیت ویژه نوجوانان مهاجر (SIJS)",
@@ -83,11 +83,11 @@
 		"u-visa": "ویزای U"
 	},
 	"mail": {
-		"CATEGORYNAME": "Mail",
+		"CATEGORYNAME": "ایمیل",
 		"mail": "نامه"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medical",
+		"CATEGORYNAME": "پزشکی",
 		"covid-19-services": "خدمات کووید-19",
 		"dental-care": "مراقبت از دندان",
 		"hiv-and-sexual-health": "اچ آی وی و سلامت جنسی",
