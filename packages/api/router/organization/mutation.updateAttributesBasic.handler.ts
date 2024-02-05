@@ -1,4 +1,4 @@
-import { getAuditedClient } from '@weareinreach/db'
+import { generateId, getAuditedClient } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -13,13 +13,17 @@ export const updateAttributesBasic = async ({
 
 		const result = await prisma.$transaction(async (tx) => {
 			const { count: added } = input.createdVals
-				? await tx.organizationAttribute.createMany({
-						data: input.createdVals.map((id) => ({ organizationId: input.id, attributeId: id })),
+				? await tx.attributeSupplement.createMany({
+						data: input.createdVals.map((id) => ({
+							id: generateId('attributeSupplement'),
+							organizationId: input.id,
+							attributeId: id,
+						})),
 						skipDuplicates: true,
 					})
 				: { count: 0 }
 			const { count: removed } = input.deletedVals
-				? await tx.organizationAttribute.deleteMany({
+				? await tx.attributeSupplement.deleteMany({
 						where: {
 							organizationId: input.id,
 							attributeId: { in: input.deletedVals },

@@ -6,7 +6,7 @@ import { type TForBadgeEditModalSchema } from './query.forBadgeEditModal.schema'
 
 export const forBadgeEditModal = async ({ ctx, input }: TRPCHandlerParams<TForBadgeEditModalSchema>) => {
 	try {
-		const data = await prisma.organizationAttribute.findMany({
+		const data = await prisma.attributeSupplement.findMany({
 			where: {
 				organizationId: input.id,
 				attribute: { categories: { some: { category: { tag: input.badgeType } } } },
