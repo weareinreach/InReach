@@ -1,117 +1,94 @@
-import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import {
+	adminProcedure,
+	defineRouter,
+	importHandler,
+	protectedProcedure,
+	publicProcedure,
+} from '~api/lib/trpc'
 
 import * as schema from './schemas'
 
-const HandlerCache: Partial<UserHandlerCache> = {}
+const NAMESPACE = 'user'
 
-type UserHandlerCache = {
-	create: typeof import('./mutation.create.handler').create
-	adminCreate: typeof import('./mutation.adminCreate.handler').adminCreate
-	submitSurvey: typeof import('./mutation.submitSurvey.handler').submitSurvey
-	getProfile: typeof import('./query.getProfile.handler').getProfile
-	getPermissions: typeof import('./query.getPermissions.handler').getPermissions
-	getOrgPermissions: typeof import('./query.getOrgPermissions.handler').getOrgPermissions
-	getLocationPermissions: typeof import('./query.getLocationPermissions.handler').getLocationPermissions
-	surveyOptions: typeof import('./query.surveyOptions.handler').surveyOptions
-	forgotPassword: typeof import('./mutation.forgotPassword.handler').forgotPassword
-	confirmAccount: typeof import('./mutation.confirmAccount.handler').confirmAccount
-	resetPassword: typeof import('./mutation.resetPassword.handler').resetPassword
-	deleteAccount: typeof import('./mutation.deleteAccount.handler').deleteAccount
-}
+const namespaced = (s: string) => `${NAMESPACE}.${s}`
 
 export const userRouter = defineRouter({
-	create: publicProcedure.input(schema.ZCreateSchema).mutation(async ({ ctx, input }) => {
-		if (!HandlerCache.create)
-			HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
-		if (!HandlerCache.create) throw new Error('Failed to load handler')
-		return HandlerCache.create({ ctx, input })
+	create: publicProcedure.input(schema.ZCreateSchema).mutation(async (opts) => {
+		const handler = await importHandler(namespaced('create'), () => import('./mutation.create.handler'))
+		return handler(opts)
 	}),
-	adminCreate: adminProcedure
-		.input(schema.ZAdminCreateSchema().inputSchema)
-		.mutation(async ({ ctx, input }) => {
-			if (!HandlerCache.adminCreate)
-				HandlerCache.adminCreate = await import('./mutation.adminCreate.handler').then(
-					(mod) => mod.adminCreate
-				)
-			if (!HandlerCache.adminCreate) throw new Error('Failed to load handler')
-			return HandlerCache.adminCreate({ ctx, input })
-		}),
-	submitSurvey: publicProcedure.input(schema.ZSubmitSurveySchema).mutation(async ({ ctx, input }) => {
-		if (!HandlerCache.submitSurvey)
-			HandlerCache.submitSurvey = await import('./mutation.submitSurvey.handler').then(
-				(mod) => mod.submitSurvey
-			)
-		if (!HandlerCache.submitSurvey) throw new Error('Failed to load handler')
-		return HandlerCache.submitSurvey({ ctx, input })
+	adminCreate: adminProcedure.input(schema.ZAdminCreateSchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('adminCreate'),
+			() => import('./mutation.adminCreate.handler')
+		)
+		return handler(opts)
 	}),
-	getProfile: protectedProcedure.query(async ({ ctx }) => {
-		if (!HandlerCache.getProfile)
-			HandlerCache.getProfile = await import('./query.getProfile.handler').then((mod) => mod.getProfile)
-		if (!HandlerCache.getProfile) throw new Error('Failed to load handler')
-		return HandlerCache.getProfile({ ctx })
+	submitSurvey: publicProcedure.input(schema.ZSubmitSurveySchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('submitSurvey'),
+			() => import('./mutation.submitSurvey.handler')
+		)
+		return handler(opts)
 	}),
-	getPermissions: protectedProcedure.query(async ({ ctx }) => {
-		if (!HandlerCache.getPermissions)
-			HandlerCache.getPermissions = await import('./query.getPermissions.handler').then(
-				(mod) => mod.getPermissions
-			)
-		if (!HandlerCache.getPermissions) throw new Error('Failed to load handler')
-		return HandlerCache.getPermissions({ ctx })
+	getProfile: protectedProcedure.query(async (opts) => {
+		const handler = await importHandler(namespaced('getProfile'), () => import('./query.getProfile.handler'))
+		return handler(opts)
 	}),
-	getOrgPermissions: protectedProcedure.query(async ({ ctx }) => {
-		if (!HandlerCache.getOrgPermissions)
-			HandlerCache.getOrgPermissions = await import('./query.getOrgPermissions.handler').then(
-				(mod) => mod.getOrgPermissions
-			)
-		if (!HandlerCache.getOrgPermissions) throw new Error('Failed to load handler')
-		return HandlerCache.getOrgPermissions({ ctx })
+	getPermissions: protectedProcedure.query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getPermissions'),
+			() => import('./query.getPermissions.handler')
+		)
+		return handler(opts)
 	}),
-	getLocationPermissions: protectedProcedure.query(async ({ ctx }) => {
-		if (!HandlerCache.getLocationPermissions)
-			HandlerCache.getLocationPermissions = await import('./query.getLocationPermissions.handler').then(
-				(mod) => mod.getLocationPermissions
-			)
-		if (!HandlerCache.getLocationPermissions) throw new Error('Failed to load handler')
-		return HandlerCache.getLocationPermissions({ ctx })
+	getOrgPermissions: protectedProcedure.query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getOrgPermissions'),
+			() => import('./query.getOrgPermissions.handler')
+		)
+		return handler(opts)
+	}),
+	getLocationPermissions: protectedProcedure.query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getLocationPermissions'),
+			() => import('./query.getLocationPermissions.handler')
+		)
+		return handler(opts)
 	}),
 	surveyOptions: publicProcedure.query(async () => {
-		if (!HandlerCache.surveyOptions)
-			HandlerCache.surveyOptions = await import('./query.surveyOptions.handler').then(
-				(mod) => mod.surveyOptions
-			)
-		if (!HandlerCache.surveyOptions) throw new Error('Failed to load handler')
-		return HandlerCache.surveyOptions()
+		const handler = await importHandler(
+			namespaced('surveyOptions'),
+			() => import('./query.surveyOptions.handler')
+		)
+		return handler()
 	}),
-	forgotPassword: publicProcedure.input(schema.ZForgotPasswordSchema).mutation(async ({ ctx, input }) => {
-		if (!HandlerCache.forgotPassword)
-			HandlerCache.forgotPassword = await import('./mutation.forgotPassword.handler').then(
-				(mod) => mod.forgotPassword
-			)
-		if (!HandlerCache.forgotPassword) throw new Error('Failed to load handler')
-		return HandlerCache.forgotPassword({ ctx, input })
+	forgotPassword: publicProcedure.input(schema.ZForgotPasswordSchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('forgotPassword'),
+			() => import('./mutation.forgotPassword.handler')
+		)
+		return handler(opts)
 	}),
-	confirmAccount: publicProcedure.input(schema.ZConfirmAccountSchema).mutation(async ({ ctx, input }) => {
-		if (!HandlerCache.confirmAccount)
-			HandlerCache.confirmAccount = await import('./mutation.confirmAccount.handler').then(
-				(mod) => mod.confirmAccount
-			)
-		if (!HandlerCache.confirmAccount) throw new Error('Failed to load handler')
-		return HandlerCache.confirmAccount({ ctx, input })
+	confirmAccount: publicProcedure.input(schema.ZConfirmAccountSchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('confirmAccount'),
+			() => import('./mutation.confirmAccount.handler')
+		)
+		return handler(opts)
 	}),
-	resetPassword: publicProcedure.input(schema.ZResetPasswordSchema).mutation(async ({ ctx, input }) => {
-		if (!HandlerCache.resetPassword)
-			HandlerCache.resetPassword = await import('./mutation.resetPassword.handler').then(
-				(mod) => mod.resetPassword
-			)
-		if (!HandlerCache.resetPassword) throw new Error('Failed to load handler')
-		return HandlerCache.resetPassword({ ctx, input })
+	resetPassword: publicProcedure.input(schema.ZResetPasswordSchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('resetPassword'),
+			() => import('./mutation.resetPassword.handler')
+		)
+		return handler(opts)
 	}),
 	deleteAccount: protectedProcedure.input(schema.ZDeleteAccountSchema).mutation(async ({ input, ctx }) => {
-		if (!HandlerCache.deleteAccount)
-			HandlerCache.deleteAccount = await import('./mutation.deleteAccount.handler').then(
-				(mod) => mod.deleteAccount
-			)
-		if (!HandlerCache.deleteAccount) throw new Error('Failed to load handler')
-		return HandlerCache.deleteAccount({ ctx, input })
+		const handler = await importHandler(
+			namespaced('deleteAccount'),
+			() => import('./mutation.deleteAccount.handler')
+		)
+		return handler({ input, ctx })
 	}),
 })

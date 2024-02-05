@@ -43,25 +43,19 @@ export const getNatlCrisis = async ({ input }: TRPCHandlerParams<TGetNatlCrisisS
 							},
 						},
 					},
-					accessDetails: {
-						where: {
-							active: true,
-							attribute: { active: true },
-						},
-						select: {
-							attribute: { select: { tag: true } },
-							supplement: {
-								select: { data: true, text: { select: { tsKey: { select: { key: true, text: true } } } } },
-							},
-						},
-					},
 					attributes: {
 						where: { active: true },
 						select: {
+							data: true,
+							text: { select: { tsKey: { select: { key: true, text: true } } } },
 							attribute: {
 								select: {
 									icon: true,
 									tsKey: true,
+									tag: true,
+									categories: {
+										select: { category: { select: { tag: true } } },
+									},
 								},
 							},
 						},
@@ -78,19 +72,19 @@ export const getNatlCrisis = async ({ input }: TRPCHandlerParams<TGetNatlCrisisS
 		const attributeTags: (Record<'tsKey', string> & { icon: string | null })[] = []
 		const accessInstructions: Record<string, string | null | undefined>[] = []
 		let descriptionText: Record<'key' | 'text', string> | null = null
-		for (const { accessDetails, attributes, description } of services) {
+		for (const { attributes, description } of services) {
 			if (description) descriptionText = description.tsKey
-			for (const { attribute } of attributes) {
-				attributeTags.push(attribute)
-			}
-			for (const { attribute, supplement } of accessDetails) {
-				for (const { data, text } of supplement) {
+			for (const { attribute, data, text } of attributes) {
+				if (attribute.categories.find(({ category }) => category.tag === 'service-access-instructions')) {
 					const parsedData = AccessInstructionSchema.parse(
 						isSuperJSON(data)
 							? superjson.deserialize<{ access_type: string; access_value: string }>(data)
 							: data
 					)
 					accessInstructions.push({ tag: attribute.tag, ...parsedData, ...text?.tsKey })
+				} else {
+					const { tsKey, icon } = attribute
+					attributeTags.push({ tsKey, icon })
 				}
 			}
 		}
@@ -106,3 +100,4 @@ export const getNatlCrisis = async ({ input }: TRPCHandlerParams<TGetNatlCrisisS
 
 	return formattedData
 }
+export default getNatlCrisis

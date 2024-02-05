@@ -3,7 +3,6 @@ import { z } from 'zod'
 import { Prisma } from '@weareinreach/db'
 
 import { CreationBase } from '../common'
-import { CreateAuditLog } from '../create/auditLog'
 
 const createNewSchema = z.object({
 	name: z.string(),
@@ -18,7 +17,6 @@ export const CreateNew = () => {
 			data: {
 				name: data.name,
 				description: data.description,
-				auditLogs: CreateAuditLog({ actorId, operation, to: data }),
 			},
 		})
 	)

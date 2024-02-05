@@ -55,3 +55,4 @@ export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInf
 	}))
 	return transformed
 }
+export default forContactInfo

@@ -32,3 +32,4 @@ export const generateSlug = async ({ input }: TRPCHandlerParams<TGenerateSlugSch
 	const slug = await uniqueSlug(input)
 	return slug
 }
+export default generateSlug

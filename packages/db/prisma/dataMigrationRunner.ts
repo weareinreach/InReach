@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-env */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
 	Listr,
@@ -34,6 +35,9 @@ const jobs = new Listr<Context>(
 		{
 			title: 'Determine jobs to run',
 			task: async (ctx, task) => {
+				if (process.env.GITHUB_ACTION) {
+					return task.skip('Skipping migrations on GitHub Actions')
+				}
 				const jobs = await prisma.dataMigration.findMany({
 					select: { jobId: true },
 				})

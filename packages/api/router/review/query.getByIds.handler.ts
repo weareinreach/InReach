@@ -99,3 +99,4 @@ export const getByIds = async ({ input }: TRPCHandlerParams<TGetByIdsSchema>) =>
 	})
 	return filteredResults
 }
+export default getByIds

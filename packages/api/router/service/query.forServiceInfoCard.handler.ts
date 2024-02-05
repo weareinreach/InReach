@@ -44,3 +44,4 @@ export const forServiceInfoCard = async ({ input }: TRPCHandlerParams<TForServic
 	}))
 	return transformed
 }
+export default forServiceInfoCard

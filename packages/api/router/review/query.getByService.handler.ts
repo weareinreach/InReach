@@ -12,3 +12,4 @@ export const getByService = async ({ input }: TRPCHandlerParams<TGetByServiceSch
 	})
 	return reviews
 }
+export default getByService

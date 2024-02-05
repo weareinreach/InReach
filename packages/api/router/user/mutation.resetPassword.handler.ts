@@ -8,3 +8,4 @@ export const resetPassword = async ({ input }: TRPCHandlerParams<TResetPasswordS
 	const response = await cognitoResetPassword({ code, email, password })
 	return response
 }
+export default resetPassword

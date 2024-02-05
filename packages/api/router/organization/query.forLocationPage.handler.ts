@@ -28,3 +28,4 @@ export const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationP
 
 	return reformatted
 }
+export default forLocationPage

@@ -10,14 +10,6 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 		where: { id: input },
 		select: {
 			id: true,
-			accessDetails: {
-				select: {
-					attribute: { select: { id: true, tsKey: true, tsNs: true } },
-					supplement: {
-						select: { id: true, text: globalSelect.freeText({ withCrowdinId: true }), data: true },
-					},
-				},
-			},
 			attributes: {
 				select: {
 					attribute: {
@@ -29,18 +21,15 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 							categories: { select: { category: { select: { tag: true } } } },
 						},
 					},
-					supplement: {
-						select: {
-							id: true,
-							active: true,
-							data: true,
-							boolean: true,
-							countryId: true,
-							govDistId: true,
-							languageId: true,
-							text: globalSelect.freeText({ withCrowdinId: true }),
-						},
-					},
+
+					id: true,
+					active: true,
+					data: true,
+					boolean: true,
+					countryId: true,
+					govDistId: true,
+					languageId: true,
+					text: globalSelect.freeText({ withCrowdinId: true }),
 				},
 			},
 			description: globalSelect.freeText({ withCrowdinId: true }),
@@ -61,7 +50,7 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 			serviceName: globalSelect.freeText({ withCrowdinId: true }),
 		},
 	})
-	const { attributes, phones, emails, locations, services, serviceAreas, accessDetails, ...rest } = result
+	const { attributes, phones, emails, locations, services, serviceAreas, ...rest } = result
 	const transformed = {
 		...rest,
 		phones: phones.map(({ phone }) => phone.id),
@@ -75,28 +64,27 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 					districts: serviceAreas.districts.map(({ govDist }) => govDist.id),
 				}
 			: null,
-		attributes: attributes.map(({ attribute, supplement }) => {
-			const { categories, ...attr } = attribute
-			return {
-				attribute: { ...attr, categories: categories.map(({ category }) => category.tag) },
-				supplement: supplement.map(({ data, ...rest }) => {
-					if (data) {
-						return { ...rest, data: transformer.parse(JSON.stringify(data)) }
-					}
-					return { ...rest, data }
-				}),
-			}
-		}),
-		accessDetails: accessDetails.map(({ attribute, supplement }) => ({
-			attribute,
-			supplement: supplement.map(({ data, ...rest }) => {
-				if (data) {
-					return { ...rest, data: transformer.parse(JSON.stringify(data)) }
+		attributes: attributes
+			.filter(({ attribute }) =>
+				attribute.categories.every(({ category }) => category.tag !== 'service-access-instructions')
+			)
+			.map(({ attribute, ...supplement }) => {
+				const { categories, ...attr } = attribute
+				return {
+					attribute: { ...attr, categories: categories.map(({ category }) => category.tag) },
+					supplement,
 				}
-				return { ...rest, data }
 			}),
-		})),
+		accessDetails: attributes
+			.filter(({ attribute }) =>
+				attribute.categories.some(({ category }) => category.tag === 'service-access-instructions')
+			)
+			.map(({ attribute, ...supplement }) => ({
+				attribute,
+				supplement,
+			})),
 	}
 
 	return transformed
 }
+export default forServiceEditDrawer

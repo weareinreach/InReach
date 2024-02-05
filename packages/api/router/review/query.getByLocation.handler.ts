@@ -12,3 +12,4 @@ export const getByLocation = async ({ input }: TRPCHandlerParams<TGetByLocationS
 	})
 	return reviews
 }
+export default getByLocation

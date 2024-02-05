@@ -1,4 +1,5 @@
 // codegen:start {preset: barrel, include: ./*.ts, exclude: refreshPermissions.ts}
+export * from './checkListOwnership'
 export * from './context'
 export * from './encodeUrl'
 export * from './errorHandler'

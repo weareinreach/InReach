@@ -1,20 +1,12 @@
-import { prisma } from '@weareinreach/db'
+import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TCreateSchema, ZCreateSchema } from './mutation.create.schema'
+import { type TCreateSchema } from './mutation.create.schema'
 
 export const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protected'>) => {
-	const inputData = {
-		actorId: ctx.session.user.id,
-		operation: 'CREATE',
-		data: input,
-	}
-	const { internalNote, auditLog } = ZCreateSchema().dataParser.parse(inputData)
+	const prisma = getAuditedClient(ctx.actorId)
+	const { id } = await prisma.internalNote.create(input)
 
-	const results = await prisma.$transaction(async (tx) => {
-		const note = await tx.internalNote.create(internalNote)
-		const log = await tx.auditLog.create(auditLog)
-		return { note, log }
-	})
-	return results.note.id
+	return { id }
 }
+export default create

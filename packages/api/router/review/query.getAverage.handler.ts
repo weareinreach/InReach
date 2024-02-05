@@ -32,3 +32,4 @@ export const getAverage = async ({ input }: TRPCHandlerParams<TGetAverageSchema>
 	})
 	return { average: result._avg.rating, count: result._count.rating }
 }
+export default getAverage

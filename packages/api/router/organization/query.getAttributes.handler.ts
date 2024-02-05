@@ -8,7 +8,7 @@ const getAttributesFromDb = async (input: TGetAttributesSchema) => {
 	const { id, slug, category, includeUnsupported } = input
 	const orgId =
 		id ?? (await prisma.organization.findUniqueOrThrow({ where: { slug }, select: { id: true } })).id
-	const result = await prisma.organizationAttribute.findMany({
+	const result = await prisma.attributeSupplement.findMany({
 		where: {
 			attribute: {
 				active: true,
@@ -32,21 +32,16 @@ const getAttributesFromDb = async (input: TGetAttributesSchema) => {
 					},
 				},
 			},
-			supplement: {
-				where: { active: true },
-				select: {
-					id: true,
-					data: true,
-					boolean: true,
-					text: { select: { key: true, ns: true, tsKey: { select: { text: true } } } },
-					country: { select: { cca2: true, id: true, tsKey: true, tsNs: true } },
-					govDist: { select: { abbrev: true, id: true, tsKey: true, tsNs: true } },
-					language: { select: { id: true, languageName: true, nativeName: true } },
-				},
-			},
+			id: true,
+			data: true,
+			boolean: true,
+			text: { select: { key: true, ns: true, tsKey: { select: { text: true } } } },
+			country: { select: { cca2: true, id: true, tsKey: true, tsNs: true } },
+			govDist: { select: { abbrev: true, id: true, tsKey: true, tsNs: true } },
+			language: { select: { id: true, languageName: true, nativeName: true } },
 		},
 	})
-	const flattened = result.flatMap(({ attribute, supplement }) => {
+	const flattened = result.flatMap(({ attribute, ...supplement }) => {
 		const { categories, ...attributeData } = attribute
 		return categories.map(({ category }) => ({
 			categoryId: category.id,
@@ -85,7 +80,7 @@ const groupByCategory = (result: DatabaseResult) => {
 				},
 			]
 		}
-		prev[existingIdx]?.attributes.push(attribute)
+		prev[existingIdx]?.attributes?.push(attribute)
 		return prev
 	}, [])
 	return grouped
@@ -100,3 +95,4 @@ export const getAttributes = async ({ input }: TRPCHandlerParams<TGetAttributesS
 		handleError(error)
 	}
 }
+export default getAttributes

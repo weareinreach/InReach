@@ -25,7 +25,7 @@ export default {
 				},
 			},
 		},
-		msw: [service.forServiceInfoCard, service.getParentName, service.byId],
+		msw: [service.forServiceInfoCard, service.getParentName, service.forServiceModal],
 		rqDevtools: true,
 	},
 	decorators: [StorybookGridDouble],

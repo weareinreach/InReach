@@ -46,7 +46,7 @@ export const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasic
 		if (update && input.description && existing.description) {
 			const stringId =
 				existing.description.tsKey.crowdinId ||
-				(await getStringIdByKey(existing.description?.tsKey.key, true))
+				(await getStringIdByKey(existing.description?.tsKey?.key, true))
 			if (stringId) {
 				if (isVercelProd) {
 					await crowdinApi.sourceStringsApi.editString(projectId, stringId, [
@@ -64,3 +64,4 @@ export const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasic
 		handleError(error)
 	}
 }
+export default updateBasic

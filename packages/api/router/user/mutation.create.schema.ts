@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 import { generateId, Prisma } from '@weareinreach/db'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { prefixedId } from '~api/schemas/idPrefix'
 import { connectOne, connectOneRequired } from '~api/schemas/nestedOps'
 
@@ -72,14 +71,7 @@ export const ZCreateSchema = z
 
 		return {
 			prisma: Prisma.validator<Prisma.UserCreateArgs>()({
-				data: {
-					...record,
-					auditLogs: CreateAuditLog({
-						actorId: id,
-						operation: 'CREATE',
-						to: record,
-					}),
-				},
+				data: record,
 				select: { id: true },
 			}),
 

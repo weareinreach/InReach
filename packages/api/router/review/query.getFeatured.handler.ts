@@ -111,3 +111,4 @@ export const getFeatured = async ({ input }: TRPCHandlerParams<TGetFeaturedSchem
 	})
 	return filteredResults
 }
+export default getFeatured

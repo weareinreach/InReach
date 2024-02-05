@@ -12,3 +12,4 @@ export const getPermissions = async ({ ctx }: TRPCHandlerParams<undefined, 'prot
 	})
 	return permissions
 }
+export default getPermissions

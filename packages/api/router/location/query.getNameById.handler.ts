@@ -10,3 +10,4 @@ export const getNameById = async ({ input }: TRPCHandlerParams<TGetNameByIdSchem
 	})
 	return result
 }
+export default getNameById

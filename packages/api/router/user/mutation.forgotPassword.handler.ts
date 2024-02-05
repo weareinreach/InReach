@@ -7,3 +7,4 @@ export const forgotPassword = async ({ input }: TRPCHandlerParams<TForgotPasswor
 	const response = await cognitoForgotPassword(input)
 	return response
 }
+export default forgotPassword

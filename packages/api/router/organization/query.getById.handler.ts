@@ -23,3 +23,4 @@ export const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdSchema>)
 
 	return reformatted
 }
+export default getById

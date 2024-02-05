@@ -53,3 +53,4 @@ export const surveyOptions = async () => {
 
 	return { community, countries, ethnicity, immigration, sog }
 }
+export default surveyOptions
