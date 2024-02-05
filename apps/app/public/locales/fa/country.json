@@ -2,27 +2,27 @@
 	"ABW": {
 		"name": "آروبا",
 		"demonym_one": "اهل اروبا",
-		"demonym_other": "آروبانس"
+		"demonym_other": "اهالی آروبا"
 	},
 	"AFG": {
 		"name": "افغانستان",
-		"demonym_one": "افغانی",
-		"demonym_other": "افغانها"
+		"demonym_one": "افغانستانی",
+		"demonym_other": "افغانستانی ها"
 	},
 	"AGO": {
 		"name": "آنگولا",
-		"demonym_one": "آنگولا",
-		"demonym_other": "آنگولا ها"
+		"demonym_one": "آنگولایی",
+		"demonym_other": "آنگولایی ها"
 	},
 	"AIA": {
 		"name": "آنگویلا",
-		"demonym_one": "آنگویلیان",
+		"demonym_one": "آنگویلایی ها",
 		"demonym_other": "آنگویلیایی‌ها"
 	},
 	"ALA": {
-		"name": "جزایر آلاند",
-		"demonym_one": "آلاندیش",
-		"demonym_other": "رده: استان آلاندرز"
+		"name": "جزایر آلند",
+		"demonym_one": "آلندی",
+		"demonym_other": "الندی ها"
 	},
 	"ALB": {
 		"name": "آلباني",
@@ -32,12 +32,12 @@
 	"AND": {
 		"name": "آندورا",
 		"demonym_one": "آندورا",
-		"demonym_other": "آندورا"
+		"demonym_other": "آندورایی"
 	},
 	"ARE": {
 		"name": "امارات متحده عربی",
 		"demonym_one": "اماراتی",
-		"demonym_other": "اماراتیها"
+		"demonym_other": "اماراتی ها"
 	},
 	"ARG": {
 		"name": "آرژانتین",
@@ -55,19 +55,19 @@
 		"demonym_other": "ساموئی های آمریکایی"
 	},
 	"ATA": {
-		"name": "قطب جنوب",
+		"name": "جنوبگان",
 		"demonym_one": "جنوبگان",
-		"demonym_other": "جنوبگان"
+		"demonym_other": "جنوبگان ها"
 	},
 	"ATF": {
-		"name": "سرزمین های جنوبی و قطب جنوب فرانسه",
+		"name": "سرزمین های جنوبی و جنوب فرانسه",
 		"demonym_one": "فرانسوی",
 		"demonym_other": "فرانسوی"
 	},
 	"ATG": {
 		"name": "آنتیگوا و باربودا",
 		"demonym_one": "آنتیگوان، باربودان",
-		"demonym_other": "آنتیگوانز، باربودان"
+		"demonym_other": "آنتیگوان ها، باربودایی ها"
 	},
 	"AUS": {
 		"name": "استرالیا",
@@ -129,33 +129,33 @@
 	},
 	"BIH": {
 		"name": "رده: بوسنی و هرزگوین",
-		"demonym_one": "بوسنیایی, هرزگووینیان",
-		"demonym_other": "بوسنیایی‌ها, هرزگووینیان"
+		"demonym_one": "بوسنیایی ها, هرزگووینی ها",
+		"demonym_other": "بوسنیایی‌ها، هرزگووینی ها"
 	},
 	"BLM": {
-		"name": "سنت بارثلمی",
-		"demonym_one": "جزایر سنت بارتلمی",
-		"demonym_other": "رده: جزایر سنت بارثلمی"
+		"name": "سنت بارتلمی",
+		"demonym_one": "اهل جزایر سنت بارتلمی",
+		"demonym_other": "اهالی جزایر سنت بارتلمی"
 	},
 	"BLR": {
 		"name": "بلاروس",
 		"demonym_one": "بلاروسی",
-		"demonym_other": "بلاروسی"
+		"demonym_other": "بلاروسی ها"
 	},
 	"BLZ": {
 		"name": "بلیز",
-		"demonym_one": "بلیزآن",
+		"demonym_one": "اهل بلیز",
 		"demonym_other": "بلیزیایی‌ها"
 	},
 	"BMU": {
 		"name": "برمودا",
-		"demonym_one": "برمودیان",
-		"demonym_other": "برمودا"
+		"demonym_one": "برمودایی",
+		"demonym_other": "برمودایی ها"
 	},
 	"BOL": {
 		"name": "بوليوي",
 		"demonym_one": "بولیویایی",
-		"demonym_other": "بوليوي ها"
+		"demonym_other": "بوليويایی ها"
 	},
 	"BRA": {
 		"name": "برزیل",
@@ -164,8 +164,8 @@
 	},
 	"BRB": {
 		"name": "باربادوس",
-		"demonym_one": "بربادیان",
-		"demonym_other": "بربادیان"
+		"demonym_one": "بربادوسی",
+		"demonym_other": "بربادوسی ها"
 	},
 	"BRN": {
 		"name": "برونئی",
@@ -201,7 +201,7 @@
 		"demonym_other": "جزایر کوکوس"
 	},
 	"CHE": {
-		"name": "Switzerland",
+		"name": "سوئیس",
 		"demonym_one": "سوئیس",
 		"demonym_other": "سوئیس"
 	},
@@ -232,8 +232,8 @@
 	},
 	"COG": {
 		"name": "جمهوری کنگو",
-		"demonym_one": "Congolese",
-		"demonym_other": "Congolese"
+		"demonym_one": "کنگو",
+		"demonym_other": "اهل کنگو"
 	},
 	"COK": {
 		"name": "رده: جزایر کوک",
@@ -312,8 +312,8 @@
 	},
 	"DOM": {
 		"name": "جمهوری دومینیکن",
-		"demonym_one": "Dominican",
-		"demonym_other": "Dominicans"
+		"demonym_one": "دومینیکن",
+		"demonym_other": "اهل دومینیکن"
 	},
 	"DZA": {
 		"name": "الجزاير",
@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "فرانسه",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "فرانسوی",
+		"demonym_other": "فرانسوی"
 	},
 	"FRO": {
 		"name": "جزایر فارو",
@@ -396,12 +396,12 @@
 		"demonym_other": "انگلیسی"
 	},
 	"GEO": {
-		"name": "Georgia",
+		"name": "گرجستان",
 		"demonym_one": "گرجی",
 		"demonym_other": "گرجی ها"
 	},
 	"GGY": {
-		"name": "Guernsey",
+		"name": "گرنزی",
 		"demonym_one": "جزیره کانال",
 		"demonym_other": "رده: جزیره‌نشینان کانال"
 	},
@@ -446,7 +446,7 @@
 		"demonym_other": "يوناني ها"
 	},
 	"GRD": {
-		"name": "Grenada",
+		"name": "گرانادا",
 		"demonym_one": "گرنادا",
 		"demonym_other": "گرنادیایی‌ها"
 	},
@@ -520,8 +520,8 @@
 	},
 	"IOT": {
 		"name": "رده: قلمرو بریتانیا در اقیانوس هند",
-		"demonym_one": "Indian",
-		"demonym_other": "Indians"
+		"demonym_one": "هندی",
+		"demonym_other": "هندی ها"
 	},
 	"IRL": {
 		"name": "ايرلند",
@@ -559,9 +559,9 @@
 		"demonym_other": "جامایکان"
 	},
 	"JEY": {
-		"name": "Jersey",
-		"demonym_one": "Channel Islander",
-		"demonym_other": "Channel Islanders"
+		"name": "جرسی",
+		"demonym_one": "اهل جزیره مانش",
+		"demonym_other": "اهالی جزیره مانش"
 	},
 	"JOR": {
 		"name": "اردن",
@@ -619,7 +619,7 @@
 		"demonym_other": "لائوتی‌ها"
 	},
 	"LBN": {
-		"name": "Lebanon",
+		"name": "لبنان",
 		"demonym_one": "لبنانی",
 		"demonym_other": "لبنانی"
 	},
@@ -670,8 +670,8 @@
 	},
 	"MAC": {
 		"name": "ماکائو",
-		"demonym_one": "Chinese",
-		"demonym_other": "Chinese"
+		"demonym_one": "چيني",
+		"demonym_other": "چيني"
 	},
 	"MAF": {
 		"name": "سنت مارتین",
@@ -704,7 +704,7 @@
 		"demonym_other": "مالدیوان‌ها"
 	},
 	"MEX": {
-		"name": "Mexico",
+		"name": "مکزیک",
 		"demonym_one": "مکزيکي",
 		"demonym_other": "مکزيکي ها"
 	},
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "مارتينيک",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "فرانسوی",
+		"demonym_other": "فرانسوی"
 	},
 	"MUS": {
 		"name": "موریس",
@@ -825,8 +825,8 @@
 	},
 	"NLD": {
 		"name": "هلند",
-		"demonym_one": "Dutch",
-		"demonym_other": "Dutch"
+		"demonym_one": "هلندی",
+		"demonym_other": "هلندی"
 	},
 	"NOR": {
 		"name": "نروژ",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "رئونیون",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "فرانسوی",
+		"demonym_other": "فرانسوی"
 	},
 	"ROU": {
 		"name": "رومانی",
@@ -978,8 +978,8 @@
 	},
 	"SJM": {
 		"name": "سوالبارد و یان ماین",
-		"demonym_one": "Norwegian",
-		"demonym_other": "Norwegians"
+		"demonym_one": "نروژی",
+		"demonym_other": "نروژی ها"
 	},
 	"SLB": {
 		"name": "جزایر سلیمان",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "سنت پیر و میکلون",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "فرانسوی",
+		"demonym_other": "فرانسوی"
 	},
 	"SRB": {
 		"name": "صربستان",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "جزایر کوچک حاشیه‌ای ایالات متحده",
-		"demonym_one": "American",
-		"demonym_other": "Americans"
+		"demonym_one": "آمریکایی",
+		"demonym_other": "آمریکایی ها"
 	},
 	"UNK": {
 		"name": "کوزوو",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "ایالات متحدهٔ امریکا",
-		"demonym_one": "American",
-		"demonym_other": "Americans"
+		"demonym_one": "آمریکایی",
+		"demonym_other": "آمریکایی ها"
 	},
 	"UZB": {
 		"name": "ازبکستان",
@@ -1178,8 +1178,8 @@
 	},
 	"VAT": {
 		"name": "شهر واتیکان",
-		"demonym_one": "Italian",
-		"demonym_other": "Italians"
+		"demonym_one": "ایتالیایی",
+		"demonym_other": "ایتالیایی ها"
 	},
 	"VCT": {
 		"name": "سنت وینسنت و گرنادین‌ها",
@@ -1198,8 +1198,8 @@
 	},
 	"VIR": {
 		"name": "جزایر ویرجین ایالات متحده",
-		"demonym_one": "Virgin Islander",
-		"demonym_other": "Virgin Islanders"
+		"demonym_one": "جزیره ویرجین",
+		"demonym_other": "ساکنان جزایر ویرجین"
 	},
 	"VNM": {
 		"name": "ويتنام",

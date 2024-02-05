@@ -1,10 +1,10 @@
 {
 	"about-us": "关于我们",
 	"access": {
-		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+		"sms-with-body": "将文本 <strong>{{body}}</strong> 更改为 {{code}}"
 	},
-	"accessible-building_false": "这栋建筑不适合轮椅使用者",
-	"accessible-building_true": "这栋建筑适合轮椅使用者",
+	"accessible-building_false": "该建筑不适合轮椅通行",
+	"accessible-building_true": "该建筑适合轮椅通行",
 	"account": "账户",
 	"add": "添加 {{item}}",
 	"address": "地址",
@@ -19,16 +19,16 @@
 	"alert-title-instructions": "输入消息的标题...",
 	"all-service-category": "全部 {{serviceCategory}}",
 	"anti-hate": {
-		"body": "使用 inReach，即表示您同意不会将此资源信息用于有害、基于仇恨、仇视同性恋、变性人、仇外心理和/或种族主义的议程或评论。",
+		"body": "使用 InReach 即表示您同意不将此资源信息用于有害、仇恨、仇视同性恋、仇视变性人、仇视外国人和/或种族主义的目的或评论。",
 		"title": "反仇恨承诺"
 	},
 	"badge": {
-		"claimed-tool-tip": "经核实的代表声称该组织。 <link1>了解更多。</link1>",
-		"community-tool-tip": "该组织所服务的社区。",
-		"national-tool-tip": "在 {{country}} 内提供服务。",
+		"claimed-tool-tip": "该组织已被一名经过验证的代表认领。<br/><link1>了解更多。</link1>",
+		"community-tool-tip": "该组织服务的社区。",
+		"national-tool-tip": "在{{country}} 各地提供服务。",
 		"remote-tool-tip": "可远程使用",
 		"service-tool-tip": "该组织提供的服务。",
-		"unclaimed-tool-tip": "尚未有代表宣称拥有该组织。 <link1>声明此组织</link1> 以建立与我们社区的信任、更新您自己的信息等。"
+		"unclaimed-tool-tip": "该组织尚未被代表认领。<br/><link1>认领该组织</link1>可与我们的社区建立信任，更新您自己的信息等。"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "返回 <u>{{page}}</u>",
@@ -37,16 +37,16 @@
 	"can-help-people-in": "可以帮助位于 {{location}} 内任何地方的人",
 	"cancel": "取消",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 认领您的组织简介页面并在Inach上与您的受众建立信任</textUtility1>\n<textUtility1>:writing_hand_mediark_skin_tone: 更新您组织在Inach上的信息</textUtility1>\n<textUtility1><textUtility1> :incoming_envelle: 邀请其他工作人员加入您的组织，在Inach</textUtility1>\n<textUtility1>🔑 获取未来功能的访问权限，专门为附属服务提供商在 Inach</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>服务提供商尚未宣称该组织。</title2>\n<textDarkGray>您可以声称该组织为服务提供商，以：</textDarkGray>"
+		"list": "<textUtility1>🔗在 InReach 上申请您组织的简介页面并与受众建立信任关系</textUtility1>。\n<textUtility1>✍🏾 在 InReach 上更新您组织的信息</textUtility1>。\n<textUtility1>📨 邀请其他员工在 InReach 上加入您的组织</textUtility1>。\n<textUtility1>🔑 获得 InReach 上专为附属服务提供商构建的未来功能</textUtility1>。",
+		"title": "<emojiLg>🏠</emojiLg>。\n<title2>该组织尚未被服务提供商认领。</title2>\n<textDarkGray>拥有免费的 InReach 服务提供商帐户，您将很快能够：</textDarkGray>"
 	},
-	"claimed": "已申领",
+	"claimed": "已索赔的",
 	"clear": "清除",
 	"close": "关闭",
 	"confirm-account": {
-		"click-verify": "点击此处确认您的 inReach 账户",
-		"message": "点击以下链接确认您的账户：",
-		"subject": "确认您的账户"
+		"click-verify": "单击此处验证您的 InReach 帐户",
+		"message": "单击以下链接确认您的帐户：",
+		"subject": "确认您的帐户"
 	},
 	"connect": "连接",
 	"contact": "联系我们",
@@ -54,29 +54,29 @@
 	"cookie-consent": {
 		"approve-all": "全部批准",
 		"approve-selected": "审批选定的",
-		"body": "我们在此网站上使用 cookie 和第三方服务。其中有些是必不可少的，其他人帮助我们改善您的浏览体验。 详情请查看我们的 <PrivacyLink>隐私声明</PrivacyLink>",
-		"intro": "我们使用必要的 cookie 来使我们的网站正常工作。 我们想要设置额外的 cookie 来了解网站的使用情况，改进网站并记住您的设置。",
-		"item-basic": "站点功能所需的 cookie",
-		"item-ga4": "内部海运使用分析",
+		"body": "我们在本网站上使用 Cookie 和第三方服务。其中一些是必不可少的，另一些则可以帮助我们改善您的浏览体验。有关更多信息，请参阅我们的 <PrivacyLink>隐私声明</PrivacyLink> 。",
+		"intro": "我们使用必要的 Cookie 来使我们的网站正常运行。我们想设置额外的 Cookie，以了解网站使用情况、改进网站并记住您的设置。",
+		"item-basic": "网站功能所必需的 Cookie",
+		"item-ga4": "InReach 内部使用分析",
 		"modal-title": "Cookies 设置"
 	},
 	"count": {
-		"result_other": "{{count}} 个结果"
+		"result_other": "{{count}} 结果"
 	},
 	"country-select": "选择一个国家",
 	"create-new-list": "创建新清单",
 	"crisis-support": {
-		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
-		"intl-these-verified": "这些已验证的资源可以帮助世界上任何地方的LGBTQ+社区。",
-		"intl-we-recommend": "我们建议这些国际资源",
-		"natl-find-help-now": "立即查找帮助",
-		"natl-these-verified": "<Text>这些已验证的资源可以帮助美国的LGBTQ+社区。 这些服务是 <strong>远程可用，保密，</strong> 和 <strong>免费</strong>。</Text>",
+		"intl-stay-safe": "<Title3>📣 请保持在线安全</Title3>\n<Text>访问任何这些网站 <strong>都可能会在您的计算机或浏览器上留下记录</strong>，就像任何网站访问后一样。请采取措施避免在您所在的地区出现不安全的情况。</Text>",
+		"intl-these-verified": "这些经过验证的资源可以为世界各地的 LGBTQ+ 社区提供帮助。",
+		"intl-we-recommend": "我们推荐这些国际资源",
+		"natl-find-help-now": "立即寻求帮助",
+		"natl-these-verified": "<Text>这些经过验证的资源可以帮助美国的 LGBTQ+ 社区。这些服务是 <strong>远程可用、机密的、</strong> 和 <strong>免费</strong>。</Text>",
 		"outside-service-area": "InReach 不在 {{country}} 中运行",
 		"who-this-serves": "<Text><strong> 此资源服务于谁：</strong> {{targetPop}}</Text>"
 	},
-	"current-location": "当前所在地",
+	"current-location": "当前位置",
 	"delete-account": "删除你的账户？",
-	"delete-account-password": "输入您的账户密码进行确认。",
+	"delete-account-password": "输入您的帐户密码进行确认。",
 	"direct": {
 		"email": "直接发送电子邮件",
 		"phone": "直拨电话",
@@ -84,9 +84,9 @@
 	},
 	"disclaimer": "免责声明",
 	"donate": {
-		"hover": "今日捐赠以帮助所有人保持Inach免费。",
-		"popup": "帮助所有人保持无障碍连接",
-		"to-inreach": "捐赠给Inach :hear_with_ribbon："
+		"hover": "立即捐款，帮助所有人免费使用 InReach",
+		"popup": "帮助所有人免费使用 InReach",
+		"to-inreach": "捐赠给 InReach 💝"
 	},
 	"dont-have-account": "没有账号？",
 	"download-app": "下载该应用程序",
@@ -101,9 +101,9 @@
 		"401-title": "您必须登录才能做到这一点。",
 		"403-body": "您没有权限访问此页面。如果您觉得您到达此页面有误，请联系您的主管。",
 		"403-title": "403： 禁止",
-		"404-body": "很抱歉，您正在寻找的页面不存在或已被移动。 在下面开始搜索，为您所在地区的不同的LGBTQ+社区找到安全、验证的资源。",
+		"404-body": "很抱歉，您要查找的页面不存在或已被移动。请在下方开始搜索，为您所在地区的多元化 LGBTQ+ 社区寻找安全、经过验证的资源。",
 		"404-title": "404: 找不到页面。",
-		"500-body": "很抱歉，我们的服务器出了错。 请稍后再试，或开始搜索下面的搜索，以便在您的区域内找到安全、已验证的LGBTQ+资源。",
+		"500-body": "很抱歉，我们的服务器出了点问题。请稍后重试，或在下方开始搜索，查找您所在地区的安全、经过验证的 LGBTQ+ 资源。",
 		"500-title": "500：出错了。",
 		"oh-no": "哦不！",
 		"try-again-text": "<Text>出了点问题！请再试一次。</Text>"
@@ -117,41 +117,41 @@
 	"find-x": "找到 {{value}}",
 	"footer": {
 		"anti-hate": "反仇恨的承诺",
-		"digital-accessibility": "数字可访问性",
+		"digital-accessibility": "数字无障碍环境",
 		"disclaimer": "免责声明",
 		"privacy-statement": "隐私声明",
 		"share-feedback": "分享反馈",
 		"subscribe-newsletter": "订阅我们的时事通讯",
 		"suggest-org": "推荐一个组织",
-		"tagline": "寻找 LGBTQ+ 资源。<br/>\n到达安全地带。<br/>\n找到归属感。",
+		"tagline": "寻找 LGBTQ+ 资源。<br/>\n到达安全地带。<br/>\n寻找归属感。",
 		"vetting-process": "审核流程"
 	},
 	"forgot-password": "忘记密码？",
 	"form-error-enter-valid-email": "请输入有效的电子邮件地址。",
 	"form-error-password-blank": "密码不能为空。",
 	"form-error-password-req": "您的密码不符合要求，请重试。",
-	"go-to-x": "转到 {{value}}",
+	"go-to-x": "前往 {{value}}",
 	"hours": {
 		"closed": "已关闭",
 		"open24": "24小时打开"
 	},
 	"in-reach-user": "inReach 用户",
-	"in-reach-verified-reviewer": "inReach 经过验证的审阅者",
+	"in-reach-verified-reviewer": "InReach 已认证的审核者",
 	"include": "包括",
 	"inreach": "InReach",
 	"inreach-copyright": "inReach, Inc. {{year}} • 版权所有 • inReach ❤️ 开源",
 	"inreach-logo": "InReach 徽标",
-	"inreach-org": "inreach.org",
+	"inreach-org": "InReach.org",
 	"language": "语言",
 	"language_all-other": "所有其他语言",
 	"language_choose": "请选择一种语言",
 	"language_common": "常用语言",
-	"law-practice-other": "法律实践领域",
-	"law-practice-other-placeholder": "请指定您的法律执业领域",
+	"law-practice-other": "法律执业领域",
+	"law-practice-other-placeholder": "请注明您的法律执业领域",
 	"link-copied": "链接已复制到剪贴板",
 	"list": {
 		"added": "资源已保存到列表： {{name}}",
-		"create-new": "创建新列表",
+		"create-new": "创建新清单",
 		"create-new-sub": "只有您和与您共享资源的任何人才能看到您的已保存资源列表。",
 		"create-new-sub2": "按类别、一周中的某一天或此列表适用于的任何人命名您的列表。",
 		"created": "已创建新列表： {{name}}",
@@ -173,8 +173,8 @@
 	"message_text": "消息文本",
 	"message_title": "消息标题",
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>无障碍声明</title2>\n<textDarkGray>inReach 的开源技术专为包括残障用户在内的多元化 LGBTQ+ 社区而打造。</textDarkGray>\n<textDarkGray>免费的 InReach 应用程序可在网络（台式机和移动设备）以及原生 iOS 和安卓上使用。从我们发布最新的重新设计（2023 年 6 月）开始，InReach 将努力满足 <linkAccessibility>项《网页内容无障碍指南》(WCAG) 的 AA 级标准。</linkAccessibility></textDarkGray>\n<textDarkGray>在 inReach，我们努力使我们的技术平台可供尽可能多的用户和设备使用，这与我们的使命一致，即为所有面临迫害或歧视的 LGBTQ+ 人群提供服务。</textDarkGray>",
-		"disclaimer": "<stack16>\n<title2>inReach 免责声明</title2>\n<textReg>InReach 团队将尽最大努力确认本网站上列出的服务提供商的资格和基本事实。但是，我们无法保证任何此类提供商的可行性或能力。因此，inReach对本网站上列出的提供商的行为不承担任何责任，与任何此类提供商联系的用户自行承担风险。</textReg>\n</stack16>"
+		"accessibility": "<stack16>\n<title2>无障碍声明</title2>\n<textDarkGray>inReach 的开源技术专为包括残障用户在内的多元化 LGBTQ+ 社区而构建。</textDarkGray>\n<textDarkGray>免费的 InReach 应用程序可在网页(桌面和移动设备) 以及原生 iOS 和安卓系统上使用。从我们最新的重新设计(2023年6月) 的发布开始，inReach将努力满足 <linkAccessibility>网络内容无障碍指南(WCAG) 的AA级标准。</linkAccessibility></textDarkGray>\n<textDarkGray>在 InReach，我们努力让尽可能多的用户和设备访问我们的技术平台，这符合我们的使命，即为所有面临迫害或歧视的 LGBTQ+ 人群提供服务。</textDarkGray>",
+		"disclaimer": "<stack16>\n<title2>inReach 免责声明</title2>\n<textReg>InReach 团队将尽最大努力确认本网站上列出的服务提供商的资格和基本事实。但是，我们无法保证任何此类提供商的可行性或能力。因此，InReach对本网站上列出的提供商的行为不承担任何责任，与任何此类提供商联系的用户风险自负。</textReg>\n</stack16>"
 	},
 	"modal-more-options": {
 		"exclude": "排除那些... 的资源",
@@ -183,16 +183,16 @@
 	"more": {
 		"options": "更多选项"
 	},
-	"no-reviews": "还没有评论",
+	"no-reviews": "该组织尚未提交任何评论。成为第一个分享您的经验的人！",
 	"none-apply": "这些都不适用于我",
 	"offices-and-locations": "办公室和地点",
 	"org-image": "组织照片",
 	"organization": "组织",
-	"other-specify": "其他（请注明）",
+	"other-specify": "其他 (请具体说明)",
 	"page-title": {
-		"base": "{{title}} -inReach",
+		"base": "{{- title}} - InReach",
 		"edit-mode": "{{- title}} [编辑模式] - InReach",
-		"search-results": "搜寻结果"
+		"search-results": "搜索结果"
 	},
 	"password": "密码",
 	"password-confirm": "确认密码",
@@ -209,8 +209,8 @@
 	},
 	"password-reset-success": "<Text>请使用 <LoginModal>登录</LoginModal> 使用您的新密码</Text>",
 	"password-saved": "密码已保存！",
-	"photo-count_interval": "(0) [还没有照片。]; (1) [{{count}} 张照片] ;( 2-inf) [{{count}} 张照片]",
-	"photo_interval": "(0) [还没有照片]; (2-inf) [查看全部 {{count}} 张照片];",
+	"photo-count_interval": "(0)[还没有照片。];(1)[{{count}} 照片];(2-inf)[{{count}} 照片]",
+	"photo_interval": "(0)[还没有照片];(2-inf)[查看全部 {{count}} 照片];",
 	"please-specify": "请具体说明",
 	"portal-module": {
 		"service-area": "服务区"
@@ -220,25 +220,25 @@
 	"privacy-policy": "隐私政策",
 	"privacy-statement": "隐私声明",
 	"privacy-statement-body": [
-		"<textDarkGrayCentered>在 inReach，我们认识到，对于许多 LGBTQ+ 人来说，保持在线匿名性是生死攸关的问题。这就是为什么免费的 inReach 应用程序（我们的网络应用程序、原生 iOS 应用程序和原生 Android 应用程序）旨在优先保护用户的在线安全和机密性的原因。</textDarkGrayCentered>",
+		"<textDarkGrayCentered>在inReach，我们认识到，对于许多LGBTQ+人群来说，保持在线匿名性是一个生死攸关的问题。这就是为什么免费的 inReach 应用程序（我们的网络应用程序、原生 iOS 应用程序和原生 Android 应用程序）旨在优先保护用户的在线安全和机密性的原因。</textDarkGrayCentered>",
 		"<title2>用户人口统计数据</title2>",
-		"<textDarkGray><strong>我们不需要任何个人身份信息即可使用免费的 InReach 应用程序。</strong></textDarkGray>",
-		"<textDarkGray>选择创建免费Inach用户帐户的用户有 <strong>选项</strong> 通过匿名在线调查分享以下人口信息：</textDarkGray>",
-		"<textDarkGray><listGroup><listItem>出生年份</listItem>\n<listItem>原籍国</listItem>\n<listItem>LGBTQ+ 身份(性取向和性别认同)</listItem>\n<listItem>种族/族裔</listItem>\n<listItem>移民状况</listItem>\n<listItem>当前地点</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>所有此敏感信息都是匿名存储的，没有连接到任何单个用户或用户帐户。*</strong></textDarkGray>",
-		"<textUtility4>（*唯一的例外是本地社区审阅者用户帐户类型，它利用收集的任何人口统计信息来增强本地社区审阅者的志愿服务体验和影响力。对于 Local Community Reviewer 账户，我们需要位置信息，所有其他人口统计信息都是可选的，但会与他们的用户记录相关联。只有当本地社区审阅者选择通过其帐户隐私设置将其设置为可见时，这些数据才会在 inReach 员工之外可见。分享面向公众的个人资料将有助于其他用户对您的评论更有信心。）</textUtility4>",
-		"<textDarkGray>了解我们的用户统计数据可以帮助我们量化我们的影响、筹集资金和评估未来的产品决策。我们感谢用户自愿与我们分享这些信息，我们采取这些措施来保护您的隐私和匿名性。</textDarkGray>",
+		"<textDarkGray><strong>我们不需要任何个人身份信息即可使用免费的 inReach 应用程序。</strong></textDarkGray>",
+		"<textDarkGray>选择创建免费 inReach 用户账户的用户有 <strong>选项</strong> 通过匿名在线调查分享以下人口统计信息：</textDarkGray>",
+		"<textDarkGray><listGroup><listItem>出生年份</listItem>\n<listItem>原籍国</listItem>\n<listItem>LGBTQ+ 身份(性取向和性别认同)</listItem>\n<listItem>种族/民族</listItem>\n<listItem>移民身份</listItem>\n<listItem>当前所在地</listItem></listGroup></textDarkGray>",
+		"<textDarkGray><strong>所有这些敏感信息都是匿名存储的，与任何个人用户或用户账户无关。*</strong></textDarkGray>",
+		"<textUtility4>(*唯一的例外是本地社区审核者用户帐户类型，它利用收集的任何人口统计信息来增强本地社区审核者的志愿服务体验和影响力。对于本地社区审核者帐户，我们需要位置和所有其他人口统计信息是可选的，但会与其用户记录相关联。只有当本地社区审核者选择通过其帐户隐私设置使其可见时，此数据才会在 InReach 员工之外可见。共享面向公众的个人资料将有助于其他用户对您的评论更有信心。)</textUtility4>",
+		"<textDarkGray>了解我们的用户人口统计可以帮助我们量化我们的影响力、筹集资金和评估未来的产品决策。我们感谢用户自愿与我们分享这些信息，我们采取这些措施来保护您的隐私和匿名性。</textDarkGray>",
 		"<textDarkGray><title2>网站使用情况分析</title2></textDarkGray>",
-		"<textDarkGray>inReach 使用 <linkUmami>Umami</linkUmami>（一种以隐私为重点的谷歌分析替代方案）来匿名分析和跟踪汇总的应用程序使用数据（例如，用户搜索和其他行为）。 <linkUmamiGDPR>Umami 符合 GDPR</linkUmamiGDPR> ，不收集任何个人身份信息，并对收集的所有数据进行匿名处理。用户无法被识别，也永远不会被跨网站跟踪。</textDarkGray>",
-		"<textDarkGray>还使用Vercel Analytics来分析网络生命值和性能。 Vercel Analytics提供站点使用信息，不与任何个别访客或IP地址关联或相关联。 数据点的记录是匿名的，分析功能不收集或存储能使Vercel在页面上重建浏览会话或识别用户的信息。</textDarkGray>"
+		"<textDarkGray>inReach 使用谷歌分析来匿名分析和跟踪应用程序的总体使用数据(例如，用户搜索和其他行为)。Google Analytics 符合 GDPR，不收集任何个人身份信息，也不会对收集的所有数据进行匿名化。无法识别用户，也永远不会在网站上跟踪用户。</textDarkGray>",
+		"<textDarkGray>inReach 还使用 Vercel Analytics 来分析网络指标和性能。Vercel Analytics 提供网站使用信息，不绑定或关联任何个人访客或 IP 地址。数据点的记录是匿名的，分析功能不会收集或存储使Vercel能够跨页面重构浏览会话或识别用户的信息。</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>阅读我们的完整隐私政策以获取更多信息</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>隐私声明</title2>"],
-	"privatePractice": "私人诊所",
+	"privatePractice": "私人执业",
 	"profile": "个人档案",
 	"questions": "有问题吗？",
-	"quick-promo-body": "<textUtility1>💚 保存并共享个性化资源列表</textUtility1>\n<textUtility1>:speech_cloon: 在组织上留下公开评级/评论</textUtility1>\n<textUtility1>🏠 推荐您所在区域的组织</textUtility1>\n<textUtility1>🔗 认领您的组织简介页 (即将到来)</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>您需要登录才能做到这一点。</title2>\n<textDarkGray>您可以使用免费的Inach账户解锁额外功能：</textDarkGray>",
+	"quick-promo-body": "<textUtility1>💚 保存并共享个性化资源清单</textUtility1>\n<textUtility1>💬 对组织进行公开评分/评论</textUtility1>\n<textUtility1>🏠 推荐您所在地区的组织</textUtility1>\n<textUtility1>🔗 申领贵组织的资料页面(即将上线！) </textUtility1>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>你需要登录才能这样做。</title2>\n<textDarkGray>使用免费的 inReach 账号你可以解锁其他功能：</textDarkGray>",
 	"remote-services": "远程可用的服务",
 	"remote-services-page-title": "远程服务",
 	"reset-password": "重置你的密码",
@@ -260,7 +260,7 @@
 		"location-placeholder-searchby": "通过城市或邮政编码搜索...",
 		"look-up-org": "按名称查找组织",
 		"no-results": "未找到任何结果。请再试一次。",
-		"no-results-adjust": "未找到搜索结果。请尝试调整您选定的位置或过滤器。",
+		"no-results-adjust": "未找到与您的搜索相关的结果。尝试调整您选择的位置或过滤器。",
 		"organization-placeholder": "输入组织名称...",
 		"organization-placeholder-searchby": "按组织名称搜索...",
 		"suggest-resource": "找不到？<1>建议一个你认为应该包括的组织</1>。"
@@ -294,37 +294,37 @@
 	"show-less": "少显示",
 	"show-more": "显示更多",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>欢迎来到世界上第一个将面临迫害或歧视的 LGBTQ+ 人群与安全、经过验证的资源进行匹配的科技平台。</textDarkGray>\n</group>",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>欢迎来到世界上第一个为面临迫害或歧视的 LGBTQ+ 人群提供安全、经过验证的资源的技术平台。</textDarkGray>\n</group>",
 		"lcr-error1": "很遗憾，您不符合成为本地社区审阅者的当前资格要求。\n<Switch>点击此处创建标准账户。</Switch>",
-		"lcr-error2": "你必须阅读和查看 <Link><strong>本地社区评论者</strong></Link> 页面。",
-		"lcr-screen1": "请选择所有适用项",
-		"lcr-screen1a": "我有在社区中使用本地服务的亲身经历。",
+		"lcr-error2": "您必须阅读并查看 <Link><strong>本地社区审核员</strong></Link> 页面。",
+		"lcr-screen1": "请选择所有适用的选项",
+		"lcr-screen1a": "我有在社区中获得本地服务的亲身经历。",
 		"lcr-screen1b": "我有帮助LGBTQ+客户访问我所在社区的本地服务的经验。",
-		"lcr-screen1c": "我有帮助 LGBTQ+ 亲人/家庭成员在我的社区获得本地服务的经验。",
+		"lcr-screen1c": "我有帮助LGBTQ+亲人/家庭成员在我的社区获得本地服务的经验。",
 		"lcr-screen1none": "这些都不适用于我。",
-		"lcr-screen2": "你在哪个国家？",
-		"lcr-screen2a": "美国（包括领土）",
+		"lcr-screen2": "您位于哪个国家/地区？",
+		"lcr-screen2a": "美国 (包括领土)",
 		"lcr-screen2b": "加拿大",
 		"lcr-screen2c": "墨西哥",
 		"lcr-screen2none": "以上都不是",
-		"lcr-screen3": "我已经查看了 inReach 网站上的 <Link><strong>Local Community Reviewer</strong></Link> 页面，我符合要求。",
+		"lcr-screen3": "我已经查看了 InReach 网站上的 <Link><strong>本地社区评论家</strong></Link> 页面，我符合要求。",
 		"modal-body": [
 			"<title3>你想创建什么类型的账户？</title3>",
-			"<group>\n<button data-option='individual'>个人</button>\n<button data-option='provider'>专业/提供者</button>\n<button data-option='lcr'>本地社区评论者</button>\n</group>",
-			"<loginLink>已经有账户了吗？</loginLink>"
+			"<group>\n<button data-option='individual'>个人</button>\n<button data-option='provider'>专业人士/提供商</button>\n<button data-option='lcr'>本地社区评论家</button>\n</group>",
+			"<loginLink>已有帐号？</loginLink>"
 		],
-		"name-use-any": "使用任何你熟悉的名字。",
+		"name-use-any": "使用您喜欢的任何名称。",
 		"name_alias": "姓名或别名",
 		"name_full": "全名",
 		"placeholder-name_alias": "输入姓名或别名...",
 		"placeholder-name_full": "输入全名...",
-		"select-law-practice": "你在哪里执业？",
+		"select-law-practice": "您在哪里从事法律工作？",
 		"select-service-provider": "你在哪里工作或做志愿者？",
 		"specify-work-volunteer": "请注明你在哪里工作或做志愿者",
 		"success": "你已经注册了一个账户！",
 		"user-exists-body": "该电子邮件地址已经注册。",
 		"user-exists-header": "你可能已经有一个账户。",
-		"verify-email": "在开始使用新帐户之前，必须验证您的电子邮件地址。检查您的收件箱，然后单击消息中的链接。"
+		"verify-email": "在开始使用新账户之前，您必须验证您的电子邮件地址。检查您的收件箱，然后单击消息中的链接。"
 	},
 	"sign-up-free": "免费注册",
 	"social": {
@@ -336,18 +336,18 @@
 		"linkedin": "领英",
 		"tiktok": "抖音",
 		"twitter": "推特",
-		"youtube": "YouT"
+		"youtube": "YouTube"
 	},
 	"sort": {
-		"bipoc": "BIPOC 社区",
+		"bipoc": "黑人，原住民和有色人种群体",
 		"by-lgbtq-focus": "按 LGBTQ+ 社区关注度排序",
-		"hiv": "HIV+ 社区",
+		"hiv": "艾滋患者群体",
 		"immigrants": "移民",
 		"spanish-speakers": "西班牙语使用者",
-		"transgender": "变性人社区",
+		"transgender": "跨性别者社区",
 		"youth": "青年"
 	},
-	"step-x-y": "第 {{x}} 步（共 {{y}}步）",
+	"step-x-y": "{{y}} 的第 {{x}} 步",
 	"submit": "提交",
 	"submit-review": "提交评论",
 	"subscribe-to-newsletter": "订阅时事通讯",
@@ -356,9 +356,9 @@
 	"survey": {
 		"birthyear-req-value": "年份必须介于 {{year1}} 和 {{year2}}之间，即2005年",
 		"finish": "完成",
-		"launch-item1": "<Bold>我们为什么问？</Bold> 了解我们的用户统计数据可以帮助我们量化我们的影响、筹集资金和评估未来的产品决策。",
-		"launch-item2": "<Bold>Safety-first：</Bold> 您的答案是匿名存储的，与您作为个人用户或您的用户帐户无关。",
-		"launch-title": "请花几分钟在我们的匿名用户调查中向我们介绍一下您自己。",
+		"launch-item1": "<Bold>我们为什么要问？</Bold> 了解我们的用户人口统计可以帮助我们量化我们的影响力、筹集资金和评估未来的产品决策。",
+		"launch-item2": "<Bold>安全第一：</Bold> 您的答案是匿名存储的，与作为个人用户的您或您的用户帐户无关。",
+		"launch-title": "请花几分钟时间在我们的匿名用户调查中向我们介绍一下您自己。",
 		"not-right-now": "现在不行",
 		"question-1-title": "你会如何形容自己？",
 		"question-2-placeholder": "输入国家...",
@@ -378,10 +378,10 @@
 	"unclaimed": "无人认领",
 	"user-avatar": "用户头像",
 	"verified-information": "已验证的信息",
-	"verified-information-detail": "此页面上的信息最近一次更新 {{dateString}}.InReach 优先考虑准确性和用户安全，并至少每 6 个月更新一次所有信息。有关我们审核流程的更多信息，请访问我们在 Inreach.org 上的 “审核流程” 页面。",
+	"verified-information-detail": "此页面上的信息上次更新时间 {{dateString}}.InReach 将准确性和用户安全放在首位，并定期更新所有信息。有关我们的审核流程的更多信息，请访问Inreach.org上的审核流程页面。",
 	"verify-account": {
 		"verified": "账户已验证！",
-		"verified-body": "<Text>您的账户已通过验证！请 <LoginModal>登录</LoginModal> 开始使用 inReach 的其他功能。",
+		"verified-body": "<Text>您的账户已通过验证！请 <LoginModal>登录</LoginModal> 开始使用 inReach 的附加功能。",
 		"verifying": "正在验证账户..."
 	},
 	"view-list": "查看清单",

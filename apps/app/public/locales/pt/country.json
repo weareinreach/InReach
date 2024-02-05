@@ -1,7 +1,7 @@
 {
 	"ABW": {
 		"name": "Aruba",
-		"demonym_one": "arubana",
+		"demonym_one": "Arubane",
 		"demonym_other": "Arubanos"
 	},
 	"AFG": {
@@ -11,13 +11,13 @@
 	},
 	"AGO": {
 		"name": "Angola",
-		"demonym_one": "angolano",
-		"demonym_other": "Angolanos"
+		"demonym_one": "Angolane",
+		"demonym_other": "Angolanes"
 	},
 	"AIA": {
 		"name": "Anguilla",
 		"demonym_one": "Anguilliano",
-		"demonym_other": "Anguillianos"
+		"demonym_other": "Anguillianes"
 	},
 	"ALA": {
 		"name": "Ilhas Åland",
@@ -27,7 +27,7 @@
 	"ALB": {
 		"name": "Albânia",
 		"demonym_one": "albanesa",
-		"demonym_other": "albanesas"
+		"demonym_other": "Albaneses"
 	},
 	"AND": {
 		"name": "Andorra",
@@ -42,7 +42,7 @@
 	"ARG": {
 		"name": "Argentina",
 		"demonym_one": "argentina",
-		"demonym_other": "Argentinos"
+		"demonym_other": "Argentines"
 	},
 	"ARM": {
 		"name": "Armênia",
@@ -72,7 +72,7 @@
 	"AUS": {
 		"name": "Austrália",
 		"demonym_one": "australiano",
-		"demonym_other": "Australianos"
+		"demonym_other": "Australianes"
 	},
 	"AUT": {
 		"name": "Áustria",
@@ -86,7 +86,7 @@
 	},
 	"BDI": {
 		"name": "Burúndi",
-		"demonym_one": "Burundiano",
+		"demonym_one": "Burundiane",
 		"demonym_other": "Burundineses"
 	},
 	"BEL": {

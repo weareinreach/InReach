@@ -2,7 +2,7 @@
 	"abortion-care": {
 		"CATEGORYNAME": "中絶ケア",
 		"abortion-providers": "中絶プロバイダー",
-		"financial-assistance": "財政援助",
+		"financial-assistance": "経済的支援",
 		"lodging-assistance": "宿泊アシスタンス",
 		"mail-order-services": "通信販売サービス",
 		"mental-health-support": "メンタルヘルスサポート",
@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "コミュニティサポート",
-		"community-social-groups": "コミュニティと社会集団",
+		"community-social-groups": "コミュニティと社会グループ",
 		"cultural-centers": "文化センター",
 		"lgbtq-centers": "LGBTQ センター",
 		"reception-services": "レセプションサービス",
@@ -30,19 +30,19 @@
 		"CATEGORYNAME": "教育と雇用",
 		"career-counseling": "キャリアカウンセリング",
 		"educational-support-for-lgbtq-youth": "LGBTQの若者への教育支援",
-		"english-classes": "英語クラス",
-		"language-classes": "語学クラス",
+		"english-classes": "英語の授業",
+		"language-classes": "語学の授業",
 		"leadership-training-and-professional-development": "リーダーシップトレーニングと専門能力開発",
 		"libraries": "図書館",
 		"scholarships": "奨学金"
 	},
 	"food": {
-		"CATEGORYNAME": "Comida",
+		"CATEGORYNAME": "食べ物",
 		"food": "食べ物",
 		"food-assistance": "食糧援助"
 	},
 	"housing": {
-		"CATEGORYNAME": "僅用於中文",
+		"CATEGORYNAME": "住宅",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQの若者のためのドロップインセンター",
 		"emergency-housing": "緊急住宅",
 		"housing-information-and-referrals": "住宅情報と紹介",
@@ -50,17 +50,17 @@
 		"trans-housing": "トランスハウジング"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "衛生と服装",
-		"clothes": "服",
+		"CATEGORYNAME": "衛生および衣服",
+		"clothes": "衣装",
 		"gender-affirming-items": "性別を肯定しているアイテム",
 		"gender-neutral-bathrooms": "ジェンダーニュートラルなバスルーム",
 		"haircuts-and-stylists": "ヘアカットとスタイリスト",
 		"hygiene": "衛生"
 	},
 	"international-support": {
-		"CATEGORTYNAME": "国際サポート",
-		"financial-assistance": "金融支援",
-		"mental-health": "精神的健康",
+		"CATEGORTYNAME": "国際的なサポート",
+		"financial-assistance": "経済的支援",
+		"mental-health": "メンタルヘルス",
 		"resettlement-assistance": "再定住支援"
 	},
 	"legal": {
@@ -104,8 +104,8 @@
 		"trans-health-youth-care": "トランス健康 - 青少年ケア"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "精神的健康",
-		"bipoc-support-groups": "BIPOC サポートグループ",
+		"CATEGORYNAME": "メンタルヘルス",
+		"bipoc-support-groups": "BIPOC（黒人、先住民、有色人種）支援グループ",
 		"hotlines": "ホットライン",
 		"private-therapy-and-counseling": "プライベートセラピーとカウンセリング",
 		"psychological-evaluations-for-asylum-claim": "庇護申請の心理的評価",
@@ -113,7 +113,7 @@
 		"substance-use": "薬物使用",
 		"support-for-caregivers-of-trans-youth": "トランスジェンダーの若者の介護者への支援",
 		"support-for-conversion-therapy-survivors": "転向療法生存者への支援",
-		"support-groups": "サポートグループ",
+		"support-groups": "支援グループ",
 		"trans-support-groups": "トランスサポートグループ"
 	},
 	"sports-and-entertainment": {
@@ -127,7 +127,7 @@
 		"transport-relo-support": "トランス位置変換サポート"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "翻訳と解釈",
+		"CATEGORYNAME": "翻訳と通訳",
 		"for-healthcare": "ヘルスケア用",
 		"for-legal-services": "法務サービス用",
 		"general-translation-and-interpretation": "一般的な翻訳と通訳"

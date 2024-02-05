@@ -724,7 +724,7 @@
 	},
 	"IOT": {
 		"name": "Британская Территория в Индийском океане",
-		"demonym_one": "Индиец",
+		"demonym_one": "Индиец/Индианка",
 		"demonym_few": "Индийца",
 		"demonym_many": "Индийцев",
 		"demonym_other": "Индийцев"
@@ -863,7 +863,7 @@
 		"demonym_other": "Лаосца"
 	},
 	"LBN": {
-		"name": "Лебанон",
+		"name": "Ливан",
 		"demonym_one": "Ливанец",
 		"demonym_few": "Ливанцев",
 		"demonym_many": "Ливанцев",
@@ -934,7 +934,7 @@
 	},
 	"MAC": {
 		"name": "Макао",
-		"demonym_one": "Китайцев",
+		"demonym_one": "Китаец/Китаянка",
 		"demonym_few": "Китайца",
 		"demonym_many": "Китайцев",
 		"demonym_other": "Китайцев"
@@ -1067,10 +1067,10 @@
 	},
 	"MTQ": {
 		"name": "Мартиника",
-		"demonym_one": "Француза",
-		"demonym_few": "Французов",
-		"demonym_many": "Французев",
-		"demonym_other": "Француза"
+		"demonym_one": "Француз/Француженка",
+		"demonym_few": "Француза",
+		"demonym_many": "Французов",
+		"demonym_other": "Французов"
 	},
 	"MUS": {
 		"name": "Маврикий",
@@ -1151,7 +1151,7 @@
 	},
 	"NLD": {
 		"name": "Нидерланды",
-		"demonym_one": "Жителя Кюрасао",
+		"demonym_one": "Голландец/Голландка",
 		"demonym_few": "Жителей Кюрасао",
 		"demonym_many": "Жителя Кюрасао",
 		"demonym_other": "Жителя Кюрасао"
@@ -1364,10 +1364,10 @@
 	},
 	"SJM": {
 		"name": "Шпицберген и Ян-Майен",
-		"demonym_one": "Ниуэанец",
-		"demonym_few": "Ниуэанцев",
-		"demonym_many": "Ниуэанца",
-		"demonym_other": "Ниуэанца"
+		"demonym_one": "Норвежец/Норвежка",
+		"demonym_few": "Норвежца",
+		"demonym_many": "Норвежцев",
+		"demonym_other": "Норвежцев"
 	},
 	"SLB": {
 		"name": "Соломоновы острова",
@@ -1630,10 +1630,10 @@
 	},
 	"USA": {
 		"name": "Соединённые Штаты Америки",
-		"demonym_one": "Американец",
-		"demonym_few": "Американцев",
-		"demonym_many": "Американца",
-		"demonym_other": "Американца"
+		"demonym_one": "Американец/Американка",
+		"demonym_few": "Американца",
+		"demonym_many": "Американцев",
+		"demonym_other": "Американцев"
 	},
 	"UZB": {
 		"name": "Узбекистан",
@@ -1644,7 +1644,7 @@
 	},
 	"VAT": {
 		"name": "Ватикан",
-		"demonym_one": "Итальянец",
+		"demonym_one": "Итальянец/Итальянка",
 		"demonym_few": "Итальянца",
 		"demonym_many": "Итальянцев",
 		"demonym_other": "Итальянцев"
@@ -1672,10 +1672,10 @@
 	},
 	"VIR": {
 		"name": "Виргинские Острова (США)",
-		"demonym_one": "Виргинец",
-		"demonym_few": "Виргинцев",
-		"demonym_many": "Виргинца",
-		"demonym_other": "Виргинца"
+		"demonym_one": "Житель Виргинских островов",
+		"demonym_few": "Жителя Виргинских островов",
+		"demonym_many": "Жителей Виргинских островов",
+		"demonym_other": "Жителей Виргинских островов"
 	},
 	"VNM": {
 		"name": "Вьетнам",
