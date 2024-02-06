@@ -281,7 +281,7 @@ export const Badge = ({ hideTooltip, ...props }: CustomBadgeProps & { children?:
 				return minify ? null : <Text fw={500}>{t(tsKey, { ns: 'attribute' })}</Text>
 			}
 			case 'verified': {
-				return <Text>{t('verified-information')}</Text>
+				return <Text>{t('badge.verified-information')}</Text>
 			}
 			case 'attribute': {
 				const { tsKey, tsNs, tProps, variant: _variant, ...rest } = props
@@ -299,16 +299,16 @@ export const Badge = ({ hideTooltip, ...props }: CustomBadgeProps & { children?:
 				return t(tsKey, { ns: 'services', ...tProps })
 			}
 			case 'claimed': {
-				return <Text>{t('claimed')}</Text>
+				return <Text>{t('badge.claimed')}</Text>
 			}
 			case 'unclaimed': {
-				return <Text>{t('unclaimed')}</Text>
+				return <Text>{t('badge.unclaimed')}</Text>
 			}
 			case 'privatePractice': {
-				return <Text>{t('privatePractice')}</Text>
+				return <Text>{t('badge.privatePractice')}</Text>
 			}
 			case 'verifiedReviewer': {
-				return <Text color={theme.other.colors.secondary.darkGray}>{t('in-reach-verified-reviewer')}</Text>
+				return <Text color={theme.other.colors.secondary.darkGray}>{t('badge.verified-reviewer')}</Text>
 			}
 			default: {
 				return props.children
@@ -366,7 +366,7 @@ export const Badge = ({ hideTooltip, ...props }: CustomBadgeProps & { children?:
 				const dateString = DateTime.fromJSDate(lastVerified)
 					.setLocale(i18n.resolvedLanguage ?? 'en')
 					.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
-				const label = t('verified-information-detail', { dateString })
+				const label = t('badge.verified-information-detail', { dateString })
 
 				return {
 					label,
