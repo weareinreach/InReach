@@ -14,8 +14,8 @@ Sentry.init({
 			maskAllText: true,
 			blockAllMedia: true,
 		}),
-		new Sentry.BrowserTracing(),
-		new Sentry.BrowserProfilingIntegration(),
+		Sentry.browserTracingIntegration(),
+		Sentry.browserProfilingIntegration(),
 	],
 	enabled: isVercelProd,
 	// Adjust this value in production, or use tracesSampler for greater control
