@@ -21,4 +21,40 @@ export const componentRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	EditModeBar: permissionedProcedure('createNewOrgQuick')
+		.input(schema.ZEditModeBarSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('EditModeBar'),
+				() => import('./query.EditModeBar.handler')
+			)
+			return handler(opts)
+		}),
+	EditModeBarReverify: permissionedProcedure('createNewOrgQuick')
+		.input(schema.ZEditModeBarReverifySchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('reverify'),
+				() => import('./mutation.EditModeBarReverify.handler')
+			)
+			return handler(opts)
+		}),
+	EditModeBarDelete: permissionedProcedure('createNewOrgQuick')
+		.input(schema.ZEditModeBarDeleteSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('EditModeBarDelete'),
+				() => import('./mutation.EditModeBarDelete.handler')
+			)
+			return handler(opts)
+		}),
+	EditModeBarPublish: permissionedProcedure('createNewOrgQuick')
+		.input(schema.ZEditModeBarPublishSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('EditModeBarPublish'),
+				() => import('./mutation.EditModeBarPublish.handler')
+			)
+			return handler(opts)
+		}),
 })

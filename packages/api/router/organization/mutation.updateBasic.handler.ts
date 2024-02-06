@@ -42,6 +42,10 @@ export const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasic
 		const update = await prisma.organization.update({
 			where: { id: input.id },
 			data,
+			select: {
+				name: true,
+				slug: true,
+			},
 		})
 		if (update && input.description && existing.description) {
 			const stringId =
