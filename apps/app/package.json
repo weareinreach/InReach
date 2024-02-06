@@ -70,6 +70,7 @@
 		"@weareinreach/ui": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"cookies-next": "4.1.1",
+		"crud-object-diff": "2.3.6",
 		"dayjs": "1.11.10",
 		"embla-carousel-autoplay": "7.1.0",
 		"embla-carousel-react": "7.1.0",

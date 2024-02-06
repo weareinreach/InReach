@@ -32,6 +32,7 @@
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"alex": "11.0.1",
+		"crud-object-diff": "2.3.6",
 		"geo-tz": "8.0.1",
 		"geolib": "3.3.4",
 		"just-compact": "3.2.0",
