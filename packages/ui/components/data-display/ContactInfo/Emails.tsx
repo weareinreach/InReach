@@ -80,7 +80,6 @@ const EmailsDisplay = ({ parentId = '', passedData, direct, locationOnly, servic
 }
 
 const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
-	const output: ReactElement[] = []
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(orgId?.id ? ['common', orgId.id, 'user-title'] : ['common', 'user-title'])
@@ -89,9 +88,9 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	const { classes } = useCommonStyles()
 	const { data } = api.orgEmail.forContactInfoEdit.useQuery({ parentId })
 
-	if (!data?.length) return null
+	// if (!data?.length) return null
 
-	for (const email of data) {
+	const output = data?.map((email) => {
 		const { primary, title, description, email: address, published, deleted, id } = email
 
 		const desc = title
@@ -140,13 +139,19 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 				{renderItem().desc}
 			</Stack>
 		)
-		output.push(item)
-	}
+		return item
+	})
+
 	return (
 		<Stack spacing={12}>
 			<Title order={3}>{t('words.email')}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
+				<Stack spacing={4}>
+					<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+						<Text variant={variants.Text.utility3}>➕ Create new</Text>
+					</EmailDrawer>
+				</Stack>
 			</Stack>
 		</Stack>
 	)

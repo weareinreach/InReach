@@ -74,6 +74,24 @@ export const locationRouter = defineRouter({
 		const handler = await importHandler(namespaced('getAlerts'), () => import('./query.getAlerts.handler'))
 		return handler(opts)
 	}),
+	forVisitCardEdits: permissionedProcedure('createNewLocation')
+		.input(schema.ZForVisitCardEditsSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('forVisitCardEdits'),
+				() => import('./query.forVisitCardEdits.handler')
+			)
+			return handler(opts)
+		}),
+	forLocationPageEdits: permissionedProcedure('createNewLocation')
+		.input(schema.ZForLocationPageEditsSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('forLocationPageEdits'),
+				() => import('./query.forLocationPageEdits.handler')
+			)
+			return handler(opts)
+		}),
 	// #endregion
 	//
 	// MUTATIONS

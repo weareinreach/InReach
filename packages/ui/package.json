@@ -8,6 +8,7 @@
 		"build": "pnpm build:icons",
 		"build:icons": "tsx ./icon/buildIcons.ts",
 		"chromatic": "chromatic",
+		"clean:cache": " rm -fr node_modules/.cache/sb-manager node_modules/.cache/storybook node_modules/.cache/webpack",
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"dev": "pnpm with-env storybook dev -p 6006 --no-open",
 		"dev:fast": "pnpm dev",

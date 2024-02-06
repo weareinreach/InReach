@@ -1,4 +1,4 @@
-import { Skeleton, Stack, Text, Title } from '@mantine/core'
+import { Divider, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { memo } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -8,7 +8,9 @@ import { type ApiOutput } from '@weareinreach/api'
 import { BadgeGroup, type CustomBadgeProps } from '~ui/components/core/Badge'
 import { Rating } from '~ui/components/core/Rating'
 import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
-import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useFormattedAddress } from '~ui/hooks/useFormattedAddress'
+import { BadgeEdit } from '~ui/modals/BadgeEdit'
 
 export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	const { t, ready: i18nReady } = useTranslation(data.id)
@@ -78,10 +80,10 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 })
 ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 
-export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
+export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
-
+	const theme = useMantineTheme()
 	const leaderAttributes = attributes.filter(({ attribute }) =>
 		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
 	)
@@ -91,18 +93,28 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 		)
 	)
 
+	const leaderBadges = (): CustomBadgeProps[] => {
+		if (leaderAttributes.length) {
+			return leaderAttributes.map(({ attribute }) => ({
+				variant: 'leader',
+				icon: attribute.icon ?? '',
+				iconBg: attribute.iconBg ?? '#FFF',
+				tsKey: attribute.tsKey,
+			}))
+		} else {
+			return [
+				{
+					variant: 'leader',
+					icon: '➕',
+					iconBg: '#FFF',
+					tsKey: 'Add leader badge',
+				},
+			]
+		}
+	}
+
 	const infoBadges = () => {
 		const output: CustomBadgeProps[] = []
-		if (leaderAttributes.length) {
-			leaderAttributes.forEach((entry) =>
-				output.push({
-					variant: 'leader',
-					icon: entry.attribute.icon ?? '',
-					iconBg: entry.attribute.iconBg ?? '#FFF',
-					tsKey: entry.attribute.tsKey,
-				})
-			)
-		}
 		if (data.lastVerified)
 			output.push({
 				variant: 'verified',
@@ -130,24 +142,45 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 					fontSize='h2'
 					data-isDirty={form.formState.dirtyFields['name']}
 				/>
-				<BadgeGroup badges={infoBadges()} withSeparator />
-				<InlineTextInput
-					component={Textarea}
-					name='description'
-					control={form.control}
-					autosize
-					data-isDirty={form.formState.dirtyFields['description']}
-				/>
-				<BadgeGroup badges={focusedCommBadges} />
+				<Group noWrap spacing={8}>
+					{!location && (
+						<>
+							<BadgeEdit orgId={data.id} badgeType='organization-leadership' component='a'>
+								<BadgeGroup badges={leaderBadges()} withSeparator />
+							</BadgeEdit>
+							<Divider
+								w={4}
+								size={4}
+								style={{ borderRadius: '50%' }}
+								color={theme.other.colors.secondary.black}
+							/>
+						</>
+					)}
+					<BadgeGroup badges={infoBadges()} withSeparator />
+				</Group>
+				{!location && (
+					<>
+						<InlineTextInput
+							component={Textarea}
+							name='description'
+							control={form.control}
+							autosize
+							data-isDirty={form.formState.dirtyFields['description']}
+						/>
+						<BadgeEdit orgId={data.id} badgeType='service-focus' component='a'>
+							<BadgeGroup badges={focusedCommBadges} />
+						</BadgeEdit>
+					</>
+				)}
 			</Stack>
 		</form>
 	)
 }
 ListingBasicEdit.displayName = 'ListingBasicEdit'
 
-export const ListingBasicInfo = ({ data, edit }: ListingBasicInfoProps) =>
-	edit ? <ListingBasicEdit data={data} /> : <ListingBasicDisplay data={data} />
-export type ListingBasicInfoProps = { edit?: boolean } & OrgInfoProps
+export const ListingBasicInfo = ({ edit, ...props }: ListingBasicInfoProps) =>
+	edit ? <ListingBasicEdit {...props} /> : <ListingBasicDisplay {...props} />
+export type ListingBasicInfoProps = { edit?: boolean; location?: boolean } & OrgInfoProps
 
 export interface OrgInfoProps {
 	data: {

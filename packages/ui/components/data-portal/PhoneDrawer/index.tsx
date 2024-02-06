@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form'
 import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
 
+import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
@@ -28,7 +29,7 @@ import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	drawerContent: {
 		borderRadius: `${rem(32)} 0 0 0`,
 		minWidth: '40vw',
@@ -49,14 +50,20 @@ const FormSchema = z.object({
 	serviceOnly: z.boolean(),
 })
 type FormSchema = z.infer<typeof FormSchema>
-const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...props }, ref) => {
+const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, createNew, ...props }, ref) => {
 	const { t } = useTranslation(['phone-type'])
+	const [phoneId] = useState(createNew ? generateId('orgPhone') : id)
 	const { id: orgId } = useOrgInfo()
 	const apiUtils = api.useUtils()
-	const { isFetching } = api.orgPhone.forEditDrawer.useQuery(
-		{ id },
+	const { data: initialData, isFetching } = api.orgPhone.forEditDrawer.useQuery(
+		{ id: phoneId },
 		{
-			select: (data) => ({ ...data, orgId: orgId ?? '' }),
+			enabled: !!orgId || !createNew,
+			select: (data) => {
+				if (!data) return data
+				const parsedPhone = parsePhoneNumber(data.number, data.country)
+				return { ...data, number: parsedPhone?.number ?? data.number }
+			},
 		}
 	)
 	const { data: phoneTypes } = api.fieldOpt.phoneTypes.useQuery(undefined, {
@@ -69,13 +76,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 	const { classes } = useStyles()
 	const { control, handleSubmit, formState, reset, getValues, watch } = useForm<FormSchema>({
 		resolver: zodResolver(FormSchema),
-		// values: data,
-		defaultValues: async () => {
-			const data = await apiUtils.orgPhone.forEditDrawer.fetch({ id })
-			if (!data) throw new Error('Failed to fetch data')
-			const parsedPhone = parsePhoneNumber(data.number, data.country)
-			return { ...data, number: parsedPhone?.number ?? data.number }
-		},
+		values: initialData ? initialData : undefined,
 	})
 	const { isDirty: formIsDirty } = formState
 	const [isSaved, setIsSaved] = useState(formIsDirty)
@@ -143,9 +144,9 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 							</Group>
 						</Drawer.Header>
 						<Drawer.Body>
-							<LoadingOverlay visible={isFetching} />
+							<LoadingOverlay visible={isFetching && !createNew} />
 							<Stack spacing={24} align='center'>
-								<Title order={2}>Edit Phone</Title>
+								<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Phone`}</Title>
 								<Stack spacing={24} align='flex-start' w='100%'>
 									<PhoneNumberEntry
 										label='Phone Number'
@@ -219,6 +220,13 @@ _PhoneDrawer.displayName = 'PhoneDrawer'
 
 export const PhoneDrawer = createPolymorphicComponent<'button', PhoneDrawerProps>(_PhoneDrawer)
 
-interface PhoneDrawerProps {
+type PhoneDrawerProps = PhoneDrawerExisting | PhoneDrawerNew
+
+interface PhoneDrawerExisting {
 	id: string
+	createNew?: never
+}
+interface PhoneDrawerNew {
+	id?: never
+	createNew: true
 }

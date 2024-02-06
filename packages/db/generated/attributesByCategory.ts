@@ -887,6 +887,26 @@ export const attributesByCategory = [
 			},
 		],
 	},
+	{
+		id: 'attc_01HNG5BPYJADWX4YFVNENS3TRD',
+		tag: 'target-population',
+		icon: null,
+		ns: 'attribute',
+		attributes: [
+			{
+				attribute: {
+					id: 'attr_01HNG5GDC5MXW30F32FWJNJ98C',
+					icon: null,
+					tag: 'tpop-other',
+					tsKey: 'tpop.other',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+		],
+	},
 ] as const
 
 export type AttributesByCategory = (typeof attributesByCategory)[number]

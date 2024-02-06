@@ -65,6 +65,12 @@ const useStyles = createStyles((theme) => ({
 		height: rem(16),
 		width: rem(16),
 	},
+	overlay: {
+		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
+		borderRadius: rem(16),
+		margin: rem(-8),
+		padding: rem(8),
+	},
 }))
 
 const FormSchema = z.object({

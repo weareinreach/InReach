@@ -1,20 +1,21 @@
+import { useEventEmitter } from 'ahooks'
 import { createContext, type Dispatch, type SetStateAction, useRef, useState } from 'react'
 
 export const EditModeContext = createContext<EditContext | null>(null)
 
 export const EditModeProvider = ({ children }: { children: React.ReactNode }) => {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
-	const editModeRef = useRef<EditModeRef>({
-		handleEditSubmit: (handler: () => void) => handler(),
-		canSave: false,
-	})
+	const events = useEventEmitter<'save'>()
 
 	const contextValue = {
 		unsaved: {
 			set: setHasUnsavedChanges,
 			state: hasUnsavedChanges,
 		},
-		...editModeRef.current,
+		saveEvent: {
+			save: () => events.emit('save'),
+			subscribe: events.useSubscription,
+		},
 	}
 
 	return <EditModeContext.Provider value={contextValue}>{children}</EditModeContext.Provider>
@@ -25,8 +26,8 @@ type EditContext = {
 		set: Dispatch<SetStateAction<boolean>>
 		state: boolean
 	}
-} & EditModeRef
-type EditModeRef = {
-	handleEditSubmit: (handler: () => void) => void
-	canSave: boolean
+	saveEvent: {
+		save: () => void
+		subscribe: ReturnType<typeof useEventEmitter<'save'>>['useSubscription']
+	}
 }

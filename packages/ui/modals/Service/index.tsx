@@ -31,7 +31,7 @@ import { getFreeText, useSlug } from '~ui/hooks'
 import { isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { ModalTitle, type ModalTitleProps } from './ModalTitle'
+import { ModalTitle, type ModalTitleProps } from '../ModalTitle'
 
 const useStyles = createStyles((theme) => ({
 	sectionDivider: {

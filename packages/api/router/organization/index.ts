@@ -132,6 +132,14 @@ export const orgRouter = defineRouter({
 		const handler = await importHandler(namespaced('getAlerts'), () => import('./query.getAlerts.handler'))
 		return handler(opts)
 	}),
+	forBadgeEditModal: publicProcedure.input(schema.ZForBadgeEditModalSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('forBadgeEditModal'),
+			() => import('./query.forBadgeEditModal.handler')
+		)
+		return handler(opts)
+	}),
+
 	// #endregion
 
 	//
@@ -172,5 +180,15 @@ export const orgRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	updateAttributesBasic: permissionedProcedure('attachOrgAttributes')
+		.input(schema.ZUpdateAttributesBasicSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('updateAttributesBasic'),
+				() => import('./mutation.updateAttributesBasic.handler')
+			)
+			return handler(opts)
+		}),
+
 	// #endregion
 })

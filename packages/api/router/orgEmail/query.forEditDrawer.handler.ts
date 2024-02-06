@@ -6,7 +6,7 @@ import { type TForEditDrawerSchema } from './query.forEditDrawer.schema'
 
 export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	try {
-		const result = await prisma.orgEmail.findUniqueOrThrow({
+		const result = await prisma.orgEmail.findUnique({
 			where: input,
 			select: {
 				id: true,
@@ -23,6 +23,7 @@ export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDr
 				titleId: true,
 			},
 		})
+		if (!result) return null
 		const { description, ...rest } = result
 
 		const reformatted = {

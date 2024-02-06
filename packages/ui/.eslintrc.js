@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unused-modules */
 module.exports = {
 	extends: ['@weareinreach/eslint-config/storybook', '@weareinreach/eslint-config/next'],
 	// overrides: [
@@ -12,6 +11,14 @@ module.exports = {
 	// 		},
 	// 	},
 	// ],
+	overrides: [
+		{
+			files: ['./**/*.stories.*'],
+			rules: {
+				'node/no-process-env': 'off',
+			},
+		},
+	],
 	root: true,
 	ignorePatterns: ['storybook-static/'],
 }

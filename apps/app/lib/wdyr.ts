@@ -1,15 +1,19 @@
+/* eslint-disable node/no-process-env */
 /// <reference types="@welldone-software/why-did-you-render" />
 import React from 'react'
 
-// eslint-disable-next-line node/no-process-env
-if (process.env.NODE_ENV === 'development' && !!process.env.WDYR) {
+if (
+	process.env.NODE_ENV === 'development' &&
+	(!!process.env.WDYR || process.env.NEXT_PUBLIC_WDYR === 'true')
+) {
 	if (typeof window !== 'undefined') {
 		const loadWdyr = async () => {
+			console.info('[WDYR] Loading plugin...')
 			const { default: whyDidYouRender } = await import('@welldone-software/why-did-you-render')
 			whyDidYouRender(React, {
-				trackAllPureComponents: true,
+				trackAllPureComponents: false,
 				include: [/.*/],
-				exclude: [/.*mantine.*/i],
+				exclude: [/.*(?:mantine|ReactQueryDevtoolsPanel).*/i],
 				logOnDifferentValues: false,
 				logOwnerReasons: true,
 				collapseGroups: true,

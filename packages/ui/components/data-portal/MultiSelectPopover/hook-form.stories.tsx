@@ -1,9 +1,27 @@
+import { DevTool } from '@hookform/devtools'
 import { type Meta, type StoryObj } from '@storybook/react'
+import { useForm } from 'react-hook-form'
+import { type FieldValues } from 'react-hook-form'
 
-import { MultiSelectPopover } from './MultiSelectPopover'
+import { MultiSelectPopover, type MultiSelectPopoverProps } from './hook-form'
+
+type FormSchema = {
+	formValue: string[]
+}
+
+const StoryRender = <T extends FieldValues>(args: MultiSelectPopoverProps<T>) => {
+	const form = useForm<T>()
+
+	return (
+		<>
+			<MultiSelectPopover {...args} control={form.control} />
+			<DevTool control={form.control} />
+		</>
+	)
+}
 
 export default {
-	title: 'Data Portal/Fields/Multi Select Popover',
+	title: 'Data Portal/Fields/Multi Select Popover (Hook Form)',
 	component: MultiSelectPopover,
 	args: {
 		data: [
@@ -13,6 +31,7 @@ export default {
 			{ value: '4', label: 'four four four four four' },
 		],
 		label: 'Dropdown target text',
+		name: 'formValue',
 	},
 	argTypes: {
 		onChange: { action: 'Updated Values' },
@@ -36,4 +55,6 @@ export default {
 
 type StoryDef = StoryObj<typeof MultiSelectPopover>
 
-export const Default = {} satisfies StoryDef
+export const Default = {
+	render: (args) => <StoryRender {...args} />,
+} satisfies StoryDef

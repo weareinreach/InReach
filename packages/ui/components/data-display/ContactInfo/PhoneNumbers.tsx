@@ -79,7 +79,6 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 }
 
 const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
-	const output: ReactElement[] = []
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(orgId?.id ? ['common', 'phone-type', orgId.id] : ['common', 'phone-type'])
@@ -88,12 +87,10 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	const theme = useMantineTheme()
 	const { classes } = useCommonStyles()
 
-	if (!data?.length) return null
-
-	for (const phone of data) {
+	const output = data?.map((phone) => {
 		const { country, ext, number, phoneType, primary, description } = phone
 		const parsedPhone = parsePhoneNumber(number, country)
-		if (!parsedPhone) continue
+		if (!parsedPhone) return null
 		if (ext) parsedPhone.setExt(ext)
 
 		const phoneNumber = parsedPhone.formatNational()
@@ -146,13 +143,18 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 				{itemDisplay.desc}
 			</Stack>
 		)
-		primary ? output.unshift(item) : output.push(item)
-	}
+		return item
+	})
 	return (
 		<Stack spacing={12}>
 			<Title order={3}>{t('words.phone')}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
+				<Stack spacing={4}>
+					<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+						<Text variant={variants.Text.utility3}>➕ Create new</Text>
+					</PhoneDrawer>
+				</Stack>
 			</Stack>
 		</Stack>
 	)

@@ -20,4 +20,11 @@ export const useStyles = createStyles((theme) => ({
 	addNewText: {
 		color: theme.other.colors.secondary.teal,
 	},
+	overlay: {
+		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
+		borderRadius: rem(16),
+		margin: rem(-4),
+		padding: rem(4),
+		...theme.fn.hover({ cursor: 'pointer' }),
+	},
 }))

@@ -1104,6 +1104,18 @@ export const allAttributes = [
 		showOnLocation: null,
 	},
 	{
+		id: 'attr_01HNG5GDC5MXW30F32FWJNJ98C',
+		tag: 'tpop-other',
+		name: 'Target Population - Free Text',
+		icon: null,
+		iconBg: null,
+		tsNs: 'attribute',
+		tsKey: 'tpop.other',
+		active: true,
+		filterType: null,
+		showOnLocation: null,
+	},
+	{
 		id: 'attr_01GW2HHFVPSYBCYF37B44WP6CZ',
 		tag: 'trans-comm',
 		name: 'Trans Community',

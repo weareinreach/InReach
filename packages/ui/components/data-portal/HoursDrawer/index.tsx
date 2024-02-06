@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
@@ -218,7 +217,13 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 
 	return (
 		<>
-			<Drawer.Root onClose={handler.close} opened={opened} position='right'>
+			<Drawer.Root
+				onClose={handler.close}
+				opened={opened}
+				position='right'
+				zIndex={10001}
+				keepMounted={false}
+			>
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<Drawer.Header>
@@ -260,9 +265,8 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			</Drawer.Root>
 
 			<Stack>
-				<Box component='button' onClick={handler.open} ref={ref} {...props} />
+				<Box component='button' onClick={handler.open} ref={ref} className={classes.overlay} {...props} />
 			</Stack>
-			<DevTool control={form.control} />
 		</>
 	)
 })

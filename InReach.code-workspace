@@ -16,106 +16,106 @@
 			"prisma.prisma",
 			"riccardoforina.storybook-helper",
 			"unifiedjs.vscode-mdx",
-			"yzhang.markdown-all-in-one"
-		]
+			"yzhang.markdown-all-in-one",
+		],
 	},
 	"folders": [
 		{
 			"name": "🚀 InReach App (@weareinreach/app)",
-			"path": "./apps/app"
+			"path": "./apps/app",
 		},
 		{
 			"name": "📦 Shared UI (@weareinreach/ui)",
-			"path": "./packages/ui"
+			"path": "./packages/ui",
 		},
 		{
 			"name": "📦 Centralized database (@weareinreach/db)",
-			"path": "./packages/db"
+			"path": "./packages/db",
 		},
 		{
 			"name": "📦 tRPC API (@weareinreach/api)",
-			"path": "./packages/api"
+			"path": "./packages/api",
 		},
 		{
 			"name": "🤷🏻 Analytics (@weareinreach/analytics)",
-			"path": "./packages/analytics"
+			"path": "./packages/analytics",
 		},
 		{
 			"name": "🔐 Authentication (@weareinreach/auth)",
-			"path": "./packages/auth"
+			"path": "./packages/auth",
 		},
 		{
 			"name": "🛠️ Utilities (@weareinreach/util)",
-			"path": "./packages/util"
+			"path": "./packages/util",
 		},
 		{
 			"name": "📦 Crowdin Client (@weareinreach/crowdin)",
-			"path": "./packages/crowdin"
+			"path": "./packages/crowdin",
 		},
 		{
 			"name": "⚙️ Environment Variables (@weareinreach/env)",
-			"path": "./packages/env"
+			"path": "./packages/env",
 		},
 		{
 			"name": "⚙️ Shared configs (@weareinreach/config)",
-			"path": "./packages/config"
+			"path": "./packages/config",
 		},
 		{
 			"name": "⚙️ ESLint Config (@weareinreach/eslint-config)",
-			"path": "./packages/eslint-config"
+			"path": "./packages/eslint-config",
 		},
 		{
 			"name": "🚀 InReach main site (@weareinreach/web)",
-			"path": "./apps/web"
+			"path": "./apps/web",
 		},
 		{
 			"name": "✨ InReach (root)",
-			"path": "./"
+			"path": "./",
 		},
 		{
 			"name": "🐑 AWS Lambdas",
-			"path": "./lambdas"
+			"path": "./lambdas",
 		},
 		{
 			"name": "🛠️ Patched packages",
-			"path": "./patches"
+			"path": "./patches",
 		},
 		{
 			"name": "📚 Documentation (@weareinreach/docs)",
-			"path": "./docs"
+			"path": "./docs",
 		},
 		{
 			"name": "🐳 Docker",
-			"path": "./docker"
-		}
+			"path": "./docker",
+		},
 	],
 	"settings": {
 		"[javascript]": {
 			"editor.autoClosingBrackets": "languageDefined",
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
 		},
 		"[javascriptreact]": {
 			"editor.autoClosingBrackets": "languageDefined",
 			"editor.autoClosingOvertype": "always",
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
 		},
 		"[json]": {
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
 		},
 		"[jsonc]": {
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
 		},
 		"[prisma]": {
 			"editor.defaultFormatter": "Prisma.prisma",
 			"editor.formatOnSave": true,
-			"editor.formatOnSaveMode": "file"
+			"editor.formatOnSaveMode": "file",
 		},
 		"[typescript]": {
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
 		},
 		"[typescriptreact]": {
 			"editor.autoClosingBrackets": "languageDefined",
-			"editor.defaultFormatter": "esbenp.prettier-vscode"
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
 		},
 		"[yaml]": {
 			"editor.defaultFormatter": "redhat.vscode-yaml",
@@ -123,44 +123,44 @@
 			"editor.formatOnPaste": true,
 			"editor.formatOnSave": true,
 			"editor.formatOnType": true,
-			"editor.insertSpaces": true
+			"editor.insertSpaces": true,
 		},
 		"debug.javascript.terminalOptions": {
-			"skipFiles": ["<node_internals>/**/*", "**/node_modules/**/*@babel*/*"]
+			"skipFiles": ["<node_internals>/**/*", "**/node_modules/**/*@babel*/*"],
 		},
 		"editor.codeActionsOnSave": {
-			"source.fixAll.eslint": "explicit"
+			"source.fixAll.eslint": "explicit",
 		},
 		"editor.formatOnSave": true,
 		"editor.tabSize": 2,
 		"eslint.lintTask.enable": true,
 		"eslint.options": {
-			"cache": true
+			"cache": true,
 		},
 		"eslint.ignoreUntitled": true,
 		"eslint.nodeEnv": "development",
 		"eslint.rules.customizations": [
 			{
 				"rule": "import/order",
-				"severity": "off"
+				"severity": "off",
 			},
 			{
 				"rule": "import/newline-after-import",
-				"severity": "off"
+				"severity": "off",
 			},
 			{
 				"rule": "import/no-extraneous-dependencies",
-				"severity": "off"
+				"severity": "off",
 			},
 			{
 				"rule": "@typescript-eslint/consistent-type-imports",
-				"severity": "off"
+				"severity": "off",
 			},
 			{
 				"rule": "@typescript-eslint/no-unused-vars",
-				"severity": "info"
+				"severity": "info",
 			},
-			{ "rule": "sort-imports", "severity": "off" }
+			{ "rule": "sort-imports", "severity": "off" },
 		],
 		"eslint.useESLintClass": true,
 		"explorer.decorations.badges": true,
@@ -168,13 +168,13 @@
 		"explorer.fileNesting.enabled": true,
 		"explorer.fileNesting.expand": false,
 		"explorer.fileNesting.patterns": {
-			"*.tsx": "${capture}.ts, ${capture}.stories.tsx",
+			"*.tsx": "${capture}.ts, ${capture}.stories.tsx, ${capture}.styles.ts, ${capture}.styles.tsx",
 			"*.ts": "${capture}.ts, ${capture}.stories.tsx",
 			"*eslintrc.js": ".eslintignore, .eslintcache",
 			"package.json": "pnpm-lock*.yaml, pnpm-workspace.yaml, .nvmrc",
 			"*prettierrc.js": ".prettierignore, .prettiercache, .editorconfig",
 			"vercel.json": ".vercelignore",
-			"README.md": "LICENSE.md"
+			"README.md": "LICENSE.md",
 		},
 		"files.exclude": {
 			".next/": true,
@@ -192,7 +192,7 @@
 			"packages/": true,
 			"patches/": true,
 			"storybook-static/": true,
-			"lambdas/": true
+			"lambdas/": true,
 		},
 		"files.watcherExclude": {
 			"**/.git/objects/**": true,
@@ -205,12 +205,12 @@
 			"**/storybook-static/**": true,
 			"**/zod-schemas/**": true,
 			"**/.turbo/**": true,
-			"**/generated/**": true
+			"**/generated/**": true,
 		},
 		"search.exclude": {
 			"**/node_modules": true,
 			"**/*.code-search": true,
-			"pnpm-lock.yaml": true
+			"pnpm-lock.yaml": true,
 		},
 		"i18n-ally.annotationInPlace": false,
 		"i18n-ally.defaultNamespace": "common",
@@ -220,11 +220,11 @@
 		"i18n-ally.extract.ignored": [
 			"1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]}",
 			"${theme.spacing.md}px ${theme.spacing.md}px",
-			"0 ${theme.spacing.sm}px"
+			"0 ${theme.spacing.sm}px",
 		],
 		"i18n-ally.extract.ignoredByFiles": {
 			"../../packages/ui/.storybook/i18next.ts": ["*"],
-			"**/packages/db/**/*.ts": ["*"]
+			"**/packages/db/**/*.ts": ["*"],
 		},
 		"i18n-ally.extract.keygenStrategy": "slug",
 		"i18n-ally.extract.keygenStyle": "kebab-case",
@@ -245,18 +245,18 @@
 		"json.format.enable": true,
 		"json.validate.enable": true,
 		"markdownlint.config": {
-			"MD033": false
+			"MD033": false,
 		},
 		"prettier.resolveGlobalModules": false,
 		"sonarlint.connectedMode.project": {
 			"connectionId": "InReach",
-			"projectKey": "weareinreach_InReach"
+			"projectKey": "weareinreach_InReach",
 		},
 		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
 		"typescript.preferences.importModuleSpecifier": "non-relative",
 		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
 		"typescript.enablePromptUseWorkspaceTsdk": true,
-		"typescript.workspaceSymbols.scope": "allOpenProjects"
+		"typescript.workspaceSymbols.scope": "allOpenProjects",
 	},
 	"launch": {
 		"configurations": [
@@ -265,7 +265,7 @@
 				"request": "launch",
 				"type": "chrome",
 				"url": "http://localhost:3000",
-				"webRoot": "${workspaceFolder}"
+				"webRoot": "${workspaceFolder}",
 			},
 			{
 				"name": "Attach by Process ID",
@@ -274,7 +274,7 @@
 				"skipFiles": ["<node_internals>/**/*", "${workspaceFolder}/node_modules/**/*"],
 				"type": "node",
 				"autoAttachChildProcesses": true,
-				"restart": true
+				"restart": true,
 			},
 			{
 				"name": "Attach to :9229",
@@ -283,7 +283,7 @@
 				"skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**/*"],
 				"type": "node",
 				"autoAttachChildProcesses": true,
-				"restart": true
+				"restart": true,
 			},
 			{
 				"disableNetworkCache": true,
@@ -296,7 +296,7 @@
 				"url": "http://localhost:3000",
 				"userDataDir": true,
 				"webRoot": "${workspaceFolder}",
-				"sourceMaps": true
+				"sourceMaps": true,
 			},
 			{
 				"command": "pnpm dev",
@@ -305,11 +305,11 @@
 				"serverReadyAction": {
 					"action": "startDebugging",
 					"name": "Launch Brave",
-					"pattern": "http://localhost:([0-9]+)"
+					"pattern": "http://localhost:([0-9]+)",
 				},
 				"skipFiles": ["<node_internals>/**/*", "${workspaceFolder}/node_modules/**/*"],
 				"sourceMaps": true,
-				"type": "node-terminal"
+				"type": "node-terminal",
 			},
 			{
 				"command": "yarn dev",
@@ -318,11 +318,11 @@
 				"serverReadyAction": {
 					"action": "debugWithChrome",
 					"pattern": "(?:(.*?\bserver.*ready\b)|(.*?\bready.*server\b)).*(\bhttps?://.+\b)",
-					"uriFormat": "%s"
+					"uriFormat": "%s",
 				},
 				"sourceMaps": true,
-				"type": "node-terminal"
-			}
-		]
-	}
+				"type": "node-terminal",
+			},
+		],
+	},
 }

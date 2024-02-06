@@ -36,7 +36,7 @@ const getOrgId = async (phoneId: string) => {
 
 export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	try {
-		const result = await prisma.orgPhone.findUniqueOrThrow({
+		const result = await prisma.orgPhone.findUnique({
 			where: input,
 			select: {
 				id: true,
@@ -53,6 +53,7 @@ export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerS
 				country: { select: { cca2: true } },
 			},
 		})
+		if (!result) return null
 		const orgId = await getOrgId(input.id)
 		const { country, description, ...rest } = result
 

@@ -75,7 +75,6 @@ const WebsitesDisplay = ({ parentId = '', passedData, direct, locationOnly, webs
 }
 
 const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
-	const output: ReactElement[] = []
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
@@ -86,14 +85,12 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	// eslint-disable-next-line no-useless-escape
 	const domainExtract = /https?:\/\/([^:\/\n?]+)/
 
-	if (!data?.length) return null
-
-	for (const website of data) {
+	const output = data?.map((website) => {
 		const { id, url, description, published, deleted } = website
 		const urlMatch = url.match(domainExtract)
 		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
-		if (!isExternal(url)) continue
-		if (!urlBase) continue
+		if (!isExternal(url)) return null
+		if (!urlBase) return null
 		const desc = description?.key
 			? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
 			: urlBase
@@ -122,16 +119,17 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 				{renderItem()}
 			</WebsiteDrawer>
 		)
-		output.push(item)
-	}
-
-	if (!output.length) return null
+		return item
+	})
 
 	return (
 		<Stack spacing={12}>
-			<Title order={3}>{t('website', { count: output.length })}</Title>
+			<Title order={3}>{t('website', { count: output?.length ?? 1 })}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
+				<WebsiteDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+					<Text variant={variants.Text.utility3}>➕ Create new</Text>
+				</WebsiteDrawer>
 			</Stack>
 		</Stack>
 	)

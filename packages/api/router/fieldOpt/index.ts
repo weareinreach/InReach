@@ -16,6 +16,7 @@ type FieldOptHandlerCache = {
 	countryGovDistMap: typeof import('./query.countryGovDistMap.handler').countryGovDistMap
 	getSubDistricts: typeof import('./query.getSubDistricts.handler').getSubDistricts
 	govDists: typeof import('./query.govDists.handler').govDists
+	orgBadges: typeof import('./query.orgBadges.handler').orgBadges
 }
 export const fieldOptRouter = defineRouter({
 	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
@@ -111,5 +112,11 @@ export const fieldOptRouter = defineRouter({
 			HandlerCache.govDists = await import('./query.govDists.handler').then((mod) => mod.govDists)
 		if (!HandlerCache.govDists) throw new Error('Failed to load handler')
 		return HandlerCache.govDists({ ctx, input })
+	}),
+	orgBadges: publicProcedure.input(schema.ZOrgBadgesSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.orgBadges)
+			HandlerCache.orgBadges = await import('./query.orgBadges.handler').then((mod) => mod.orgBadges)
+		if (!HandlerCache.orgBadges) throw new Error('Failed to load handler')
+		return HandlerCache.orgBadges({ ctx, input })
 	}),
 })
