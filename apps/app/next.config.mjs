@@ -47,6 +47,7 @@ const nextConfig = {
 		// outputFileTracingRoot: path.join(__dirname, '../../'),
 		// instrumentationHook: true,
 		webpackBuildWorker: true,
+		serverComponentsExternalPackages: ['@sentry/profiling-node'],
 	},
 	eslint: {
 		ignoreDuringBuilds: !isVercelProd,
