@@ -9,7 +9,10 @@ import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { MobileNav } from '~ui/components/core/MobileNav'
 import { UserMenu } from '~ui/components/core/UserMenu'
-import { useCustomVariant, useEditMode, useScreenSize } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useEditMode } from '~ui/hooks/useEditMode'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
+import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -57,16 +60,66 @@ const useStyles = createStyles((theme) => ({
 const EditModeBar = () => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
-	const { canSave, handleEditSubmit } = useEditMode()
+	const apiUtils = api.useUtils()
+	const { unsaved, saveEvent } = useEditMode()
 	const { t } = useTranslation('common')
-	const router = useRouter()
-	const { orgLocationId, slug } = router.query
-	const { data, isLoading } = api.misc.forEditNavbar.useQuery(
-		orgLocationId ? { orgLocationId: orgLocationId as string } : { slug: slug as string },
-		{
-			enabled: typeof orgLocationId === 'string' || typeof slug === 'string',
+	const router = useRouter<
+		| '/org/[slug]/edit'
+		| '/org/[slug]/[orgLocationId]/edit'
+		| '/org/[slug]/[orgLocationId]/edit/[orgServiceId]'
+	>()
+	const { orgLocationId, slug, orgServiceId } = router.query
+
+	const apiQuery = (() => {
+		switch (true) {
+			case typeof orgServiceId === 'string': {
+				return { orgServiceId, orgLocationId: undefined, slug: undefined }
+			}
+			case typeof orgLocationId === 'string': {
+				return { orgLocationId, orgServiceId: undefined, slug: undefined }
+			}
+			default: {
+				return { slug: slug as string, orgLocationId: undefined, orgServiceId: undefined }
+			}
 		}
-	)
+	})()
+
+	const { data } = api.component.EditModeBar.useQuery(apiQuery, {
+		enabled: typeof orgLocationId === 'string' || typeof slug === 'string',
+	})
+	const reverifyNotification = useNewNotification({
+		displayText: 'Organization reverification date has been updated.',
+		icon: 'success',
+	})
+	const reverify = api.component.EditModeBarReverify.useMutation({
+		onSuccess: () => {
+			apiUtils.organization.invalidate()
+			apiUtils.component.EditModeBar.invalidate()
+			reverifyNotification()
+		},
+	})
+	const publishedNotification = useNewNotification({
+		displayText: `Published status has been set to: ${!data?.published}`,
+		icon: 'success',
+	})
+	const publish = api.component.EditModeBarPublish.useMutation({
+		onSuccess: () => {
+			apiUtils.organization.invalidate()
+			apiUtils.component.EditModeBar.invalidate()
+			publishedNotification()
+		},
+	})
+	const deletedNotification = useNewNotification({
+		displayText: `Deleted status has been set to: ${!data?.deleted}`,
+		icon: 'success',
+	})
+	const updateDeleted = api.component.EditModeBarDelete.useMutation({
+		onSuccess: () => {
+			apiUtils.organization.invalidate()
+			apiUtils.component.EditModeBar.invalidate()
+			deletedNotification()
+		},
+	})
 
 	return (
 		<Group position='apart' noWrap className={classes.editBar}>
@@ -78,34 +131,43 @@ const EditModeBar = () => {
 			</UnstyledButton>
 			<Group noWrap>
 				<UnstyledButton
-					disabled={!canSave}
+					disabled={!unsaved.state}
 					className={classes.editBarButtonText}
-					onClick={() => handleEditSubmit(() => console.log('save action from toolbar'))}
+					onClick={() => {
+						console.log('save clicked')
+						saveEvent.save()
+					}}
 				>
 					<Group noWrap spacing={8}>
 						<Icon
 							icon='mdi:content-save'
 							height={20}
-							color={canSave ? theme.other.colors.primary.allyGreen : undefined}
+							color={!unsaved.state ? theme.other.colors.primary.allyGreen : undefined}
 						/>
 						{t('words.save-changes')}
 					</Group>
 				</UnstyledButton>
 				{slug && !orgLocationId && (
-					<UnstyledButton className={classes.editBarButtonText}>
+					<UnstyledButton className={classes.editBarButtonText} onClick={() => reverify.mutate({ slug })}>
 						<Group noWrap spacing={8}>
 							<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} height={20} />
 							{t('words.reverify')}
 						</Group>
 					</UnstyledButton>
 				)}
-				<UnstyledButton className={classes.editBarButtonText}>
+				<UnstyledButton
+					className={classes.editBarButtonText}
+					onClick={() => publish.mutate({ ...apiQuery, published: !data?.published })}
+				>
 					<Group noWrap spacing={8}>
 						<Icon icon={data?.published ? 'carbon:view-off' : 'carbon:view-filled'} height={20} />
 						{t(data?.published ? 'words.unpublish' : 'words.publish')}
 					</Group>
 				</UnstyledButton>
-				<UnstyledButton className={classes.editBarButtonText}>
+				<UnstyledButton
+					className={classes.editBarButtonText}
+					onClick={() => updateDeleted.mutate({ ...apiQuery, deleted: !data?.deleted })}
+				>
 					<Group noWrap spacing={8}>
 						<Icon icon={data?.deleted ? 'fluent-mdl2:remove-from-trash' : 'carbon:trash-can'} height={20} />
 						{t(data?.deleted ? 'words.restore' : 'words.delete')}
