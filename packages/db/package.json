@@ -78,7 +78,7 @@
 		"eslint": "8.56.0",
 		"google-auth-library": "9.6.2",
 		"google-spreadsheet": "4.1.1",
-		"googleapis": "131.0.0",
+		"googleapis": "132.0.0",
 		"inquirer": "9.2.14",
 		"inquirer-autocomplete-prompt": "3.0.1",
 		"just-compact": "3.2.0",
