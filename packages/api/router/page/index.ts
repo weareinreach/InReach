@@ -16,4 +16,13 @@ export const pageRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	LocationEditUpdate: permissionedProcedure('updateLocation')
+		.input(schema.ZLocationEditUpdateSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('LocationEditUpdate'),
+				() => import('./mutation.LocationEditUpdate.handler')
+			)
+			return handler(opts)
+		}),
 })

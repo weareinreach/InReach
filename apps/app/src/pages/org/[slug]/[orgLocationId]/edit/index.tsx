@@ -1,5 +1,6 @@
 import { DevTool } from '@hookform/devtools'
-import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, Title, useMantineTheme } from '@mantine/core'
+import { createStyles, Grid, Stack, Tabs, Title } from '@mantine/core'
+import { compareArrayVals } from 'crud-object-diff'
 import { type InferGetServerSidePropsType, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -43,6 +44,7 @@ type FormSchema = z.infer<typeof formSchema>
 const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
 	organizationId,
 }) => {
+	const apiUtils = api.useUtils()
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]/[orgLocationId]'>()
 	const { query } = router.isReady ? router : { query: { slug: '', orgLocationId: '' } }
@@ -82,10 +84,19 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const photosRef = useRef<HTMLDivElement>(null)
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
+	const updateLocation = api.page.LocationEditUpdate.useMutation({
+		onSuccess: () => {
+			apiUtils.location.forLocationPageEdits.invalidate()
+		},
+	})
 	const { unsaved, saveEvent } = useEditMode()
 	saveEvent.subscribe(() => {
 		const values = formMethods.getValues()
-		console.log('save clicked', { values })
+		const services = compareArrayVals([defaultFormValues?.services ?? [], values?.services ?? []])
+		updateLocation.mutate({
+			...values,
+			services,
+		})
 	})
 	useEffect(() => {
 		const { isDirty } = formMethods.formState
