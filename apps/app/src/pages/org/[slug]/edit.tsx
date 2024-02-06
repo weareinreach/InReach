@@ -17,21 +17,22 @@ import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
+import { useEditMode } from '@weareinreach/ui/hooks/useEditMode'
 import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const formSchema = z
-	.object({
-		name: z.string(),
-		description: z.string(),
-	})
-	.partial()
+const formSchema = z.object({
+	id: z.string(),
+	name: z.string().optional(),
+	description: z.string().optional(),
+})
 type FormSchema = z.infer<typeof formSchema>
 
 const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
 	const router = useRouter<'/org/[slug]'>()
+	const apiUtils = api.useUtils()
 	const {
 		query: { slug: pageSlug },
 	} = router.isReady ? router : { query: { slug: '' } }
@@ -39,18 +40,40 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		{ slug: pageSlug },
 		{ enabled: router.isReady }
 	)
+	const updateBasic = api.organization.updateBasic.useMutation({
+		onSuccess: (newData) => {
+			if (data && newData && data.slug !== newData.slug) {
+				router.replace({ pathname: router.pathname, query: { ...router.query, slug: newData.slug } })
+			}
+			apiUtils.organization.forOrgPageEdits.invalidate()
+		},
+	})
 
 	const formMethods = useForm<FormSchema>({
 		values: {
+			id: data?.id ?? '',
 			name: data?.name,
 			description: data?.description?.tsKey?.text,
 		},
 	})
+
+	const { unsaved, saveEvent } = useEditMode()
+	saveEvent.subscribe(() => {
+		const values = formMethods.getValues()
+		updateBasic.mutate(values)
+	})
+	useEffect(() => {
+		const { isDirty } = formMethods.formState
+		if (unsaved.state !== isDirty) {
+			unsaved.set(isDirty)
+		}
+	}, [formMethods.formState, unsaved])
+
 	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
-			enabled: !!data?.id && data?.locations.length > 1,
+			enabled: !!data?.id && data?.locations?.length > 1,
 			select: (data) => data.length !== 0,
 		}
 	)
@@ -138,7 +161,7 @@ export const getServerSideProps = async ({
 	const ssg = await trpcServerClient({ session })
 	const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
 
-	const [i18n] = await Promise.allSettled([
+	const [i18n] = await Promise.all([
 		getServerSideTranslations(locale, compact(['common', 'services', 'attribute', 'phone-type', orgId?.id])),
 		ssg.organization.forOrgPageEdits.prefetch({ slug }),
 		ssg.fieldOpt.countries.prefetch({ activeForOrgs: true }),
@@ -146,7 +169,7 @@ export const getServerSideProps = async ({
 	const props = {
 		session,
 		trpcState: ssg.dehydrate(),
-		...(i18n.status === 'fulfilled' ? i18n.value : {}),
+		...i18n,
 	}
 
 	return {

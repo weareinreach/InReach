@@ -14,16 +14,17 @@ import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
+import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover/hook-form'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { useEditMode } from '@weareinreach/ui/hooks/useEditMode'
 import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { MultiSelectPopover } from '~ui/components/data-portal/MultiSelectPopover/hook-form'
 
 const useStyles = createStyles((theme) => ({
 	tabsList: {
@@ -33,12 +34,11 @@ const useStyles = createStyles((theme) => ({
 		backgroundColor: theme.other.colors.secondary.white,
 	},
 }))
-const formSchema = z
-	.object({
-		name: z.string().nullable(),
-		services: z.string().array(),
-	})
-	.partial()
+const formSchema = z.object({
+	id: z.string(),
+	name: z.string().nullable().optional(),
+	services: z.string().array().optional(),
+})
 type FormSchema = z.infer<typeof formSchema>
 const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
 	organizationId,
@@ -68,7 +68,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 		}
 	)
 	const defaultFormValues = data
-		? { name: data.name, services: data.services.map(({ serviceId }) => serviceId) }
+		? { id: data.id, name: data.name, services: data.services.map(({ serviceId }) => serviceId) }
 		: undefined
 
 	const formMethods = useForm<FormSchema>({
@@ -82,6 +82,17 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const photosRef = useRef<HTMLDivElement>(null)
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
+	const { unsaved, saveEvent } = useEditMode()
+	saveEvent.subscribe(() => {
+		const values = formMethods.getValues()
+		console.log('save clicked', { values })
+	})
+	useEffect(() => {
+		const { isDirty } = formMethods.formState
+		if (unsaved.state !== isDirty) {
+			unsaved.set(isDirty)
+		}
+	}, [formMethods.formState, unsaved])
 	useEffect(() => {
 		if (data && status === 'success' && orgData && orgDataStatus === 'success') setLoading(false)
 	}, [data, status, orgData, orgDataStatus])
