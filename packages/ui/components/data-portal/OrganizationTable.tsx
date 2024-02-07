@@ -1,4 +1,5 @@
 import { ActionIcon, createStyles, Group, rem, Text, Tooltip, useMantineTheme } from '@mantine/core'
+// import { ReactTableDevtools } from '@tanstack/react-table-devtools'
 import { DateTime } from 'luxon'
 import {
 	MantineReactTable,
@@ -12,10 +13,11 @@ import {
 	useMantineReactTable,
 } from 'mantine-react-table'
 import { type Route } from 'nextjs-routes'
-import { type Dispatch, type SetStateAction, useMemo, useRef, useState } from 'react'
+import { type Dispatch, type SetStateAction, useEffect, useMemo, useRef, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -28,6 +30,11 @@ const useStyles = createStyles((theme) => ({
 	},
 	bottomBar: {
 		paddingTop: rem(20),
+	},
+	devTool: {
+		'& *': {
+			backgroundColor: '#132337',
+		},
 	},
 }))
 
@@ -187,8 +194,8 @@ const RowAction = ({ row }: RowActionProps) => {
 
 export const OrganizationTable = () => {
 	const { classes } = useStyles()
+	const variants = useCustomVariant()
 	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(undefined, {
-		placeholderData: [],
 		select: (data) => data.map(({ locations, ...rest }) => ({ ...rest, subRows: locations })),
 		refetchOnWindowFocus: false,
 	})
@@ -204,14 +211,35 @@ export const OrganizationTable = () => {
 				enableResizing: true,
 				minSize: 250,
 				enableColumnFilter: false,
-				Cell: ({ cell, row }) =>
-					row.original.published ? (
-						cell.getValue<string>()
-					) : (
-						<Group spacing={8}>
-							{cell.getValue<string>()} <Icon icon='carbon:view-off' />
+				Cell: ({ cell, row }) => {
+					const isSubRow = row.parentId !== undefined
+					const isPublished = row.original.published
+					const isExpanded = row.getIsExpanded()
+					const getTextVariant = () => {
+						switch (true) {
+							case !isPublished && isExpanded: {
+								return variants.Text.utility3darkGray
+							}
+							case !isPublished: {
+								return variants.Text.utility4darkGray
+							}
+							case isExpanded: {
+								return variants.Text.utility3
+							}
+							default: {
+								return variants.Text.utility4
+							}
+						}
+					}
+					const textVariant = getTextVariant()
+
+					return (
+						<Group spacing={8} pl={isSubRow ? 16 : 0}>
+							<Text variant={textVariant}>{cell.getValue<string>()}</Text>
+							{!isPublished && <Icon icon='carbon:view-off' />}
 						</Group>
-					),
+					)
+				},
 			},
 			{
 				accessorKey: 'lastVerified',
@@ -239,6 +267,7 @@ export const OrganizationTable = () => {
 				filterVariant: 'date-range',
 				enableColumnFilterModes: false,
 				size: 150,
+				sortingFn: 'datetime',
 			},
 			{
 				accessorKey: 'updatedAt',
@@ -313,9 +342,17 @@ export const OrganizationTable = () => {
 	const [sorting, setSorting] = useState<MRT_SortingState>([
 		{ id: 'deleted', desc: false },
 		{ id: 'published', desc: true },
-		{ id: 'name', desc: false },
+		// { id: 'name', desc: false },
 	])
 	const rowVirtualizerInstanceRef = useRef<MRT_Virtualizer<HTMLDivElement, HTMLTableRowElement>>(null)
+	useEffect(() => {
+		try {
+			//scroll to the top of the table when the sorting changes
+			rowVirtualizerInstanceRef.current?.scrollToIndex(0)
+		} catch (e) {
+			console.error(e)
+		}
+	}, [sorting])
 	// #endregion
 
 	// #region Table Setup
@@ -325,28 +362,37 @@ export const OrganizationTable = () => {
 		data: data ?? [],
 		// #endregion
 		// #region Enable features / Table options
-		columnFilterDisplayMode: 'popover',
-		enableColumnFilterModes: true,
-		enableGlobalFilterModes: true,
+
 		enableColumnResizing: false,
 		enableFacetedValues: true,
-		enablePagination: false,
 		enablePinning: true,
 		enableRowActions: true,
 		enableRowNumbers: false,
-		enableRowVirtualization: true,
 		enableExpanding: true,
-		enableMultiRowSelection: true,
-		enableRowSelection: (row) => !row.getParentRow(),
+		// enableMultiRowSelection: true,
+		// enableRowSelection: (row) => !row.getParentRow(),
+		enableMultiRowSelection: false,
+		enableRowSelection: false,
 		enableHiding: true,
-		getRowId: (originalRow) => originalRow.id,
-		isMultiSortEvent: () => true,
-		maxLeafRowFilterDepth: 0,
+		// getRowId: (originalRow) => originalRow.id,
 		positionGlobalFilter: 'left',
 		rowCount: data?.length ?? 0,
-		rowVirtualizerInstanceRef,
-		rowVirtualizerProps: { overscan: 10, estimateSize: () => 56 },
 		// #endregion
+		// #region Filtering/Sorting
+		columnFilterDisplayMode: 'popover',
+		enableColumnFilterModes: true,
+		enableGlobalFilterModes: true,
+		isMultiSortEvent: () => true,
+		maxLeafRowFilterDepth: 0,
+		// #endregion
+
+		// #region Virtualization
+		enablePagination: false,
+		enableRowVirtualization: true,
+		rowVirtualizerInstanceRef,
+		rowVirtualizerProps: { overscan: 10, estimateSize: () => 45 },
+		// #endregion
+
 		// #region State
 		initialState: {
 			columnPinning: { left: ['mrt-row-expand', 'mrt-row-select', 'mrt-row-actions', 'name'] },
@@ -372,7 +418,7 @@ export const OrganizationTable = () => {
 		mantinePaperProps: { miw: '85%' },
 		mantineProgressProps: ({ isTopToolbar }) => ({ style: { display: isTopToolbar ? 'block' : 'none' } }),
 		mantineSelectCheckboxProps: ({ row }) => ({ style: { display: row.getCanSelect() ? 'block' : 'none' } }),
-		mantineTableBodyProps: { mah: '60vh' },
+		mantineTableContainerProps: { mah: '60vh' },
 		mantineTableBodyCellProps: ({ row }) => ({
 			sx: (theme) => ({
 				textDecoration: row.original.deleted ? 'line-through' : 'none',
@@ -398,7 +444,12 @@ export const OrganizationTable = () => {
 	})
 	// #endregion
 
-	return <MantineReactTable table={table} />
+	return (
+		<>
+			<MantineReactTable table={table} />
+			{/* <ReactTableDevtools table={table} panelProps={{ className: classes.devTool }} containerElement='div' /> */}
+		</>
+	)
 }
 
 interface ToolbarButtonsProps {

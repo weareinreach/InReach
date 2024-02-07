@@ -386,6 +386,12 @@
 	"take-action": "Take Action",
 	"uncheck-all": "Uncheck all",
 	"user-avatar": "User avatar",
+	"user-menu": {
+		"admin-options": "Admin Options",
+		"data-portal": "Data Portal Home",
+		"edit-page": "Edit this page",
+		"user-options": "User Options"
+	},
 	"verify-account": {
 		"verified": "Account verified!",
 		"verified-body": "<Text>Your account has been verified! Please <LoginModal>login</LoginModal> to start using InReach's additional features.",

@@ -1,9 +1,8 @@
-/* eslint-disable import/no-unused-modules */
 import { type DefaultSession, type DefaultUser, type User } from 'next-auth/core/types'
 import { type DefaultJWT } from 'next-auth/jwt'
 
-export { getServerSession, checkPermissions, checkServerPermissions } from './next-auth/get-session'
-
+export { getServerSession, checkServerPermissions } from './next-auth/session.server'
+export { checkPermissions } from './next-auth/session.browser'
 export type { Session } from 'next-auth'
 
 export * from './lib'

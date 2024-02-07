@@ -8,17 +8,16 @@ import {
 	UnstyledButton,
 } from '@mantine/core'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
+import { checkPermissions } from '@weareinreach/auth'
 import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-// import { LoginModalLauncher } from '~ui/modals/Login'
-// import { SignupModalLauncher } from '~ui/modals/SignUp'
 
-// import { UserAvatar } from './UserAvatar'
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const LoginModalLauncher = dynamic(() =>
 	import('~ui/modals/LoginSignUp').then((mod) => mod.LoginModalLauncher)
@@ -70,10 +69,31 @@ const useStyles = createStyles((theme) => ({
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
+	const router = useRouter()
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 	const variant = useCustomVariant()
 
 	const isLoading = status === 'loading'
+	const canAccessDataPortal = checkPermissions({
+		session,
+		permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
+		has: 'some',
+	})
+	const editablePaths: (typeof router.pathname)[] = ['/org/[slug]', '/org/[slug]/[orgLocationId]']
+	const isEditablePage = editablePaths.includes(router.pathname)
+	const getEditPathname = (): typeof router.pathname => {
+		switch (router.pathname) {
+			case '/org/[slug]': {
+				return '/org/[slug]/edit'
+			}
+			case '/org/[slug]/[orgLocationId]': {
+				return '/org/[slug]/[orgLocationId]/edit'
+			}
+			default: {
+				return router.pathname
+			}
+		}
+	}
 
 	if ((session?.user && status === 'authenticated') || isLoading) {
 		return (
@@ -104,6 +124,25 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 						</UnstyledButton>
 					</Menu.Target>
 					<Menu.Dropdown>
+						{canAccessDataPortal && (
+							<>
+								<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
+								<Menu.Item component={Link} href='/admin' target='_self'>
+									{t('user-menu.data-portal')}
+								</Menu.Item>
+								{isEditablePage && (
+									<Menu.Item
+										component={Link}
+										onClick={() => router.replace({ pathname: getEditPathname(), query: router.query })}
+										target='_self'
+									>
+										{t('user-menu.edit-page')}
+									</Menu.Item>
+								)}
+								<Menu.Divider />
+								<Menu.Label>{t('user-menu.user-options')}</Menu.Label>
+							</>
+						)}
 						<Menu.Item component={Link} href='/account/saved' target='_self'>
 							{t('words.saved')}
 						</Menu.Item>

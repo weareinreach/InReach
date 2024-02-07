@@ -126,11 +126,19 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 
 		return output
 	}
-	const focusedCommBadges: CustomBadgeProps[] = focusedCommunities.map(({ attribute }) => ({
-		variant: 'community',
-		tsKey: attribute.tsKey,
-		icon: attribute.icon ?? '',
-	}))
+	const focusedCommBadges: CustomBadgeProps[] = focusedCommunities.length
+		? focusedCommunities.map(({ attribute }) => ({
+				variant: 'community',
+				tsKey: attribute.tsKey,
+				icon: attribute.icon ?? '',
+			}))
+		: [
+				{
+					variant: 'community',
+					icon: '➕',
+					tsKey: 'Add Focused Community badge(s)',
+				},
+			]
 
 	return (
 		<form autoComplete='off' style={{ width: '100%' }}>
