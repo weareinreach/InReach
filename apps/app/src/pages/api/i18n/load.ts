@@ -92,7 +92,7 @@ export default async function handler(req: NextRequest) {
 		return new Response(JSON.stringify(data), {
 			status: 200,
 			headers: {
-				'Cache-Control': 'public, s-maxage=1, stale-while-revalidate=3600',
+				'Cache-Control': 's-maxage=1, public, stale-while-revalidate=3600',
 			},
 		})
 	} catch (error) {
