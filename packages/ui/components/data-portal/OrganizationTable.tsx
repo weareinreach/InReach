@@ -367,7 +367,7 @@ export const OrganizationTable = () => {
 		enablePagination: false,
 		enableRowVirtualization: true,
 		rowVirtualizerInstanceRef,
-		// rowVirtualizerProps: { overscan: 25, debug: true, estimateSize: () => 45 },
+		rowVirtualizerProps: { overscan: 10, estimateSize: () => 45 },
 		// #endregion
 
 		// #region State
