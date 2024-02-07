@@ -3,6 +3,15 @@
 	"version": "0.100.0",
 	"private": true,
 	"license": "GPL-3.0-only",
+	"exports": {
+		".": {
+			"browser": "./index.browser.ts",
+			"default": "./index.ts"
+		},
+		"./*": {
+			"default": "./*"
+		}
+	},
 	"main": "./index.ts",
 	"types": "./index.ts",
 	"scripts": {

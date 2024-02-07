@@ -1,7 +1,7 @@
 import { createServerSideHelpers } from '@trpc/react-query/server'
 import { type GetServerSidePropsContext, type NextApiRequest, type NextApiResponse } from 'next'
 
-import { getServerSession } from '@weareinreach/auth/next-auth/get-session'
+import { getServerSession } from '@weareinreach/auth/next-auth/session.server'
 import { type Session } from '@weareinreach/auth/next-auth/types'
 import { transformer } from '@weareinreach/util/transformer'
 import { createContextInner } from '~api/lib/context'
