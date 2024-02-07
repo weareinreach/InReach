@@ -17,6 +17,7 @@ import { type Dispatch, type SetStateAction, useEffect, useMemo, useRef, useStat
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -193,6 +194,7 @@ const RowAction = ({ row }: RowActionProps) => {
 
 export const OrganizationTable = () => {
 	const { classes } = useStyles()
+	const variants = useCustomVariant()
 	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(undefined, {
 		select: (data) => data.map(({ locations, ...rest }) => ({ ...rest, subRows: locations })),
 		refetchOnWindowFocus: false,
@@ -209,14 +211,35 @@ export const OrganizationTable = () => {
 				enableResizing: true,
 				minSize: 250,
 				enableColumnFilter: false,
-				Cell: ({ cell, row }) =>
-					row.original.published ? (
-						cell.getValue<string>()
-					) : (
-						<Group spacing={8}>
-							{cell.getValue<string>()} <Icon icon='carbon:view-off' />
+				Cell: ({ cell, row }) => {
+					const isSubRow = row.parentId !== undefined
+					const isPublished = row.original.published
+					const isExpanded = row.getIsExpanded()
+					const getTextVariant = () => {
+						switch (true) {
+							case !isPublished && isExpanded: {
+								return variants.Text.utility3darkGray
+							}
+							case !isPublished: {
+								return variants.Text.utility4darkGray
+							}
+							case isExpanded: {
+								return variants.Text.utility3
+							}
+							default: {
+								return variants.Text.utility4
+							}
+						}
+					}
+					const textVariant = getTextVariant()
+
+					return (
+						<Group spacing={8} pl={isSubRow ? 16 : 0}>
+							<Text variant={textVariant}>{cell.getValue<string>()}</Text>
+							{!isPublished && <Icon icon='carbon:view-off' />}
 						</Group>
-					),
+					)
+				},
 			},
 			{
 				accessorKey: 'lastVerified',
