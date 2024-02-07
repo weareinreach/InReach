@@ -97,7 +97,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	)
 }
 
-export default api.withTRPC(appWithTranslation(MyApp, { i18n: nextI18nConfig.i18n }))
+export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig))
 
 export type NextPageWithOptions<Props = unknown, InitialProps = Props> = NextPage<Props, InitialProps> & {
 	omitGrid?: boolean
