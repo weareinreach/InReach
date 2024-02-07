@@ -59,7 +59,7 @@ export default createNextApiHandler({
 			const ONE_DAY_IN_SECONDS = 60 * 60 * 24
 			return {
 				headers: {
-					'Cache-Control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
+					'Cache-Control': `public, s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
 				},
 			}
 		}
