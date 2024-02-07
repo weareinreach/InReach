@@ -387,7 +387,10 @@
 	"uncheck-all": "Uncheck all",
 	"user-avatar": "User avatar",
 	"user-menu": {
-		"data-portal": "Data Portal"
+		"admin-options": "Admin Options",
+		"data-portal": "Data Portal Home",
+		"edit-page": "Edit this page",
+		"user-options": "User Options"
 	},
 	"verify-account": {
 		"verified": "Account verified!",
