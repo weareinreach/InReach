@@ -91,6 +91,9 @@ export default async function handler(req: NextRequest) {
 		// res.status(200).json(data)
 		return new Response(JSON.stringify(data), {
 			status: 200,
+			headers: {
+				'Cache-Control': 's-maxage=1, stale-while-revalidate=3600',
+			},
 		})
 	} catch (error) {
 		log.error(error)

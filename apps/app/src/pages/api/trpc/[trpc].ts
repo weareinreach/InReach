@@ -55,10 +55,11 @@ export default createNextApiHandler({
 		const isQuery = type === 'query'
 
 		if (ctx?.res && !shouldSkip && allOk && isQuery) {
+			console.debug('[tRPC] Setting Cache headers in response.')
 			const ONE_DAY_IN_SECONDS = 60 * 60 * 24
 			return {
 				headers: {
-					'cache-control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
+					'Cache-Control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
 				},
 			}
 		}
