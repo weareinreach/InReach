@@ -1,6 +1,6 @@
 import { Container, createStyles, Flex, Group, rem, UnstyledButton, useMantineTheme } from '@mantine/core'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import { type NextRouter, useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { navbarEvent } from '@weareinreach/analytics/events'
@@ -120,10 +120,29 @@ const EditModeBar = () => {
 			deletedNotification()
 		},
 	})
+	const getExitEditPathname = (): NextRouter['pathname'] => {
+		switch (router.pathname) {
+			case '/org/[slug]/edit': {
+				return '/org/[slug]'
+			}
+			case '/org/[slug]/[orgLocationId]/edit': {
+				return '/org/[slug]/[orgLocationId]'
+			}
+			case '/org/[slug]/[orgLocationId]/edit/[orgServiceId]': {
+				return '/org/[slug]/[orgLocationId]'
+			}
+			default: {
+				return router.pathname
+			}
+		}
+	}
 
 	return (
 		<Group position='apart' noWrap className={classes.editBar}>
-			<UnstyledButton className={classes.editBarButtonText} onClick={router.back}>
+			<UnstyledButton
+				className={classes.editBarButtonText}
+				onClick={() => router.replace({ pathname: getExitEditPathname(), query: router.query })}
+			>
 				<Group noWrap spacing={8}>
 					<Icon icon='carbon:arrow-left' height={20} />
 					{t('exit.edit-mode')}
