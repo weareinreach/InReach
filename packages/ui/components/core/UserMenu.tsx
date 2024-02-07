@@ -11,14 +11,12 @@ import dynamic from 'next/dynamic'
 import { signOut, useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
+import { checkPermissions } from '@weareinreach/auth'
 import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-// import { LoginModalLauncher } from '~ui/modals/Login'
-// import { SignupModalLauncher } from '~ui/modals/SignUp'
 
-// import { UserAvatar } from './UserAvatar'
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const LoginModalLauncher = dynamic(() =>
 	import('~ui/modals/LoginSignUp').then((mod) => mod.LoginModalLauncher)
@@ -74,6 +72,11 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	const variant = useCustomVariant()
 
 	const isLoading = status === 'loading'
+	const canAccessDataPortal = checkPermissions({
+		session,
+		permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
+		has: 'some',
+	})
 
 	if ((session?.user && status === 'authenticated') || isLoading) {
 		return (
@@ -104,6 +107,11 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 						</UnstyledButton>
 					</Menu.Target>
 					<Menu.Dropdown>
+						{canAccessDataPortal && (
+							<Menu.Item component={Link} href='/admin' target='_self'>
+								{t('user-menu.data-portal')}
+							</Menu.Item>
+						)}
 						<Menu.Item component={Link} href='/account/saved' target='_self'>
 							{t('words.saved')}
 						</Menu.Item>
