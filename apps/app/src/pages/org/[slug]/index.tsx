@@ -23,34 +23,13 @@ import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+import { nsFormatter } from '~app/utils/nsFormatter'
 
 const GoogleMap = dynamic(() =>
 	import('@weareinreach/ui/components/core/GoogleMap').then((mod) => mod.GoogleMap)
 )
-const LoadingState = () => (
-	<>
-		<Grid.Col sm={8} order={1} pb={40}>
-			{/* Toolbar */}
-			<Skeleton h={48} w='100%' radius={8} />
-			<Stack pt={24} align='flex-start' spacing={40}>
-				{/* Listing Basic */}
-				<Skeleton h={260} w='100%' />
-				{/* Body */}
-				<Skeleton h={520} w='100%' />
-				{/* Tab panels */}
-			</Stack>
-		</Grid.Col>
-		<Grid.Col order={2}>
-			<Stack spacing={40}>
-				{/* Contact Card */}
-				<Skeleton h={520} w='100%' />
-				{/* Visit Card  */}
-				<Skeleton h={260} w='100%' />
-			</Stack>
-		</Grid.Col>
-	</>
-)
 
+const formatNS = nsFormatter(['common', 'services', 'attribute', 'phone-type'])
 const useStyles = createStyles((theme) => ({
 	tabsList: {
 		position: 'sticky',
@@ -67,11 +46,7 @@ const OrganizationPage = ({
 	const router = useRouter<'/org/[slug]'>()
 	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
 	// const { query } = router
-	const {
-		t,
-		i18n,
-		ready: i18nReady,
-	} = useTranslation(['common', 'services', 'attribute', 'phone-type', ...(orgId ? [orgId] : [])])
+	const { t, i18n, ready: i18nReady } = useTranslation(formatNS(orgId))
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
@@ -94,15 +69,14 @@ const OrganizationPage = ({
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (i18nReady && data && status === 'success') {
+		if (i18nReady && data && status === 'success' && !router.isFallback) {
 			setLoading(false)
 			if (data.locations?.length > 1) setActiveTab('locations')
 		}
-	}, [data, status, i18nReady])
+	}, [data, status, i18nReady, router.isFallback])
 
 	useEffect(() => {
-		data?.id &&
-			i18n.reloadResources(i18n.resolvedLanguage, ['common', 'services', 'attribute', 'phone-type', data.id])
+		orgId && i18n.reloadResources(i18n.resolvedLanguage, formatNS(orgId))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -287,9 +261,7 @@ export const getStaticProps = async ({
 		if (!orgId) return { notFound: true }
 
 		const [i18n] = await Promise.allSettled([
-			orgId
-				? getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId])
-				: getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type']),
+			getServerSideTranslations(locale, formatNS(orgId)),
 			ssg.organization.forOrgPage.prefetch({ slug }),
 		])
 		// await ssg.organization.getBySlug.prefetch({ slug })

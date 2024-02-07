@@ -7,8 +7,6 @@ import { type Namespaces } from '@weareinreach/db/generated/namespaces'
 
 import i18nextConfig from '../../next-i18next.config.mjs'
 
-// type ArrayElementOrSelf<T> = T extends Array<infer U> ? U[] : T[]
-
 type Namespace = LiteralUnion<Namespaces, string>
 type NamespaceSSR = string | string[] | undefined
 export const getServerSideTranslations = async (
