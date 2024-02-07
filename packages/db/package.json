@@ -61,7 +61,7 @@
 	"devDependencies": {
 		"@octokit/core": "5.1.0",
 		"@terraformer/wkt": "2.2.0",
-		"@turbo/gen": "1.12.2",
+		"@turbo/gen": "1.12.3",
 		"@turf/helpers": "6.5.0",
 		"@types/eslint": "8.56.2",
 		"@types/inquirer": "9.0.7",
@@ -76,7 +76,7 @@
 		"dotenv": "16.4.1",
 		"dotenv-cli": "7.3.0",
 		"eslint": "8.56.0",
-		"google-auth-library": "9.6.2",
+		"google-auth-library": "9.6.3",
 		"google-spreadsheet": "4.1.1",
 		"googleapis": "132.0.0",
 		"inquirer": "9.2.14",
