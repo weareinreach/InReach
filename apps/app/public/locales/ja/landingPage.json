@@ -2,7 +2,7 @@
 	"banner": {
 		"donate": "<DonateLink>今すぐ寄付しよう!</DonateLink>💝",
 		"redesign": "InReachアプリの再設計の開始については、ブログをご覧ください。 <Link>もっと詳しく.</Link>",
-		"tmf": "<TMFLink>#TransMascFutures 🏳️‍⚧️</TMFLink>"
+		"tmf": "#TransMascFutures 🏳️‍⚧️"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>ユーザーからの意見を聞く</Title1>",

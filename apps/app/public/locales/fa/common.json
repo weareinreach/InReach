@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
 	},
-	"accessible-building_false": "این ساختمان صندلی چرخدار در دسترس نیست",
-	"accessible-building_true": "این ساختمان ویلچر قابل دسترسی است",
 	"account": "حساب",
 	"add": "افزودن {{item}}",
 	"address": "آدرس",
@@ -13,22 +11,30 @@
 		"organization": "{{adjective}} سازمان"
 	},
 	"agree-disclaimer": "با کلیک کردن بر روی \"{{action}}\" شما موافقت می کنید <link1>سیاست حفظ حریم خصوصی</link1> و <link2>شرایط استفاده</link2>.",
-	"alert-message": "Alert message",
+	"alert-message": "پیام هشدار",
 	"alert-message-1": "<strong>سیاست COVID-19:</strong> با توجه به اینکه اخبار و بهترین شیوه های پیشگیری از COVID-19 هر روز به سرعت تغییر می کند، Whitman-Walker Health همچنان خدمات خود را به روز می کند تا منعکس کننده توصیه های پیشگیری باشد. لطفاً برای به روزترین اطلاعات، وب سایت آنها را بررسی کنید.",
-	"alert-message-instructions": "Enter the alert message",
-	"alert-title-instructions": "Enter a title for the message...",
+	"alert-message-instructions": "پیام هشدار را وارد کنید",
+	"alert-title-instructions": "عنوان پیام را وارد کنید...",
 	"all-service-category": "همه {{serviceCategory}}",
 	"anti-hate": {
 		"body": "با استفاده از InReach، شما موافقت می کنید که از این اطلاعات منابع برای برنامه های مضر، نفرت محور، همجنسگرا، ترانسفوبیک، بیگانه هراسی و/یا نژادپرستانه استفاده نخواهید کرد.",
 		"title": "تعهد ضد نفرت"
 	},
 	"badge": {
+		"accessible-building_false": "This building is NOT wheelchair accessible",
+		"accessible-building_true": "This building is wheelchair accessible",
+		"claimed": "Claimed",
 		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "جامعه خدمت شده توسط این سازمان.",
 		"national-tool-tip": "Offers services throughout {{country}}.",
+		"privatePractice": "تمرین خصوصی",
 		"remote-tool-tip": "از راه دور موجود است",
 		"service-tool-tip": "خدمات (های) ارائه شده توسط این سازمان.",
-		"unclaimed-tool-tip": "این سازمان هنوز توسط یک نماینده ادعا نشده‌است. <link1>ادعای این سازمان</link1> برای ایجاد اعتماد با جامعه ما، به روز رسانی اطلاعات خود و موارد دیگر."
+		"unclaimed": "Unclaimed",
+		"unclaimed-tool-tip": "این سازمان هنوز توسط یک نماینده ادعا نشده‌است. <link1>ادعای این سازمان</link1> برای ایجاد اعتماد با جامعه ما، به روز رسانی اطلاعات خود و موارد دیگر.",
+		"verified-information": "Verified information",
+		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "بازگشت به <u>{{page}}</u>",
@@ -40,7 +46,6 @@
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>این سازمان هنوز توسط یک ارائه دهنده خدمات ادعا نشده است.</title2>\n<textDarkGray>شما می توانید این سازمان را به عنوان ارائه دهنده خدمات ادعا کنید:</textDarkGray>"
 	},
-	"claimed": "ادعا شده",
 	"clear": "پاک کردن",
 	"close": "بستن",
 	"confirm-account": {
@@ -137,7 +142,6 @@
 		"open24": "Open 24 hours"
 	},
 	"in-reach-user": "کاربر INREACH",
-	"in-reach-verified-reviewer": "InReach تایید داور",
 	"include": "شامل",
 	"inreach": "InReach",
 	"inreach-copyright": "InReach، Inc. {{year}} • کلیه حقوق محفوظ است • InReach ❤️ منبع باز",
@@ -235,7 +239,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>برای اطلاعات بیشتر سیاست حفظ حریم خصوصی کامل ما را بخوانید</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>بیانیه حریم خصوصی</title2>"],
-	"privatePractice": "تمرین خصوصی",
 	"profile": "مشخصات",
 	"questions": "سوال؟",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
@@ -376,10 +379,13 @@
 	},
 	"take-action": "اقدام کنید",
 	"uncheck-all": "علامت همه را بردارید",
-	"unclaimed": "بلامعارض",
 	"user-avatar": "آواتار کاربر",
-	"verified-information": "اطلاعات تایید شده",
-	"verified-information-detail": "اطلاعات در این صفحه آخرین به روز شد {{dateString}}. InReach دقت و ایمنی کاربر را اولویت بندی می کند و تمام اطلاعات را حداقل هر 6 ماه یک بار به روز می کند. برای کسب اطلاعات بیشتر در مورد روند بررسی ما، لطفاً به صفحه فرآیند بررسی ما در Inreach.org مراجعه کنید.",
+	"user-menu": {
+		"admin-options": "Admin Options",
+		"data-portal": "Data Portal Home",
+		"edit-page": "Edit this page",
+		"user-options": "User Options"
+	},
 	"verify-account": {
 		"verified": "حساب کاربری تأیید شد!",
 		"verified-body": "<Text>حساب شما تأیید شده است! لطفا <LoginModal>ورود</LoginModal> برای شروع با استفاده از ویژگی های اضافی InReach است.",

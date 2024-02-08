@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
 	},
-	"accessible-building_false": "Ang gusaling ito ay HINDI mapupuntahan ang wheelchair",
-	"accessible-building_true": "Mapupuntahan ang gusaling ito sa wheelchair",
 	"account": "Account",
 	"add": "Magdagdag ng {{item}}",
 	"address": "Address",
@@ -23,12 +21,20 @@
 		"title": "Anti-poot na pangako"
 	},
 	"badge": {
+		"accessible-building_false": "This building is NOT wheelchair accessible",
+		"accessible-building_true": "This building is wheelchair accessible",
+		"claimed": "Claimed",
 		"claimed-tool-tip": "Ang organisasyong ito ay inaangkin ng isang na-verify na kinatawan. <link1>Matuto nang higit pa.</link1>",
 		"community-tool-tip": "Komunidad na pinaglilingkuran ng organisasyong ito.",
 		"national-tool-tip": "Offers services throughout {{country}}.",
+		"privatePractice": "Private Practice",
 		"remote-tool-tip": "Magagamit nang malayuan",
 		"service-tool-tip": "(Mga) serbisyo na inaalok ng samahang ito.",
-		"unclaimed-tool-tip": "Ang organisasyong ito ay hindi pa inaangkin ng isang kinatawan. <link1>Kunin ang samahang ito</link1> upang bumuo ng tiwala sa aming komunidad, i-update ang iyong sariling impormasyon, at higit pa."
+		"unclaimed": "Unclaimed",
+		"unclaimed-tool-tip": "Ang organisasyong ito ay hindi pa inaangkin ng isang kinatawan. <link1>Kunin ang samahang ito</link1> upang bumuo ng tiwala sa aming komunidad, i-update ang iyong sariling impormasyon, at higit pa.",
+		"verified-information": "Verified information",
+		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Bumalik sa <u>{{page}}</u>",
@@ -40,7 +46,6 @@
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Ang samahang ito ay hindi pa inaangkin ng isang service provider.</title2>\n<textDarkGray>Maaari mong i-claim ang samahang ito bilang isang service provider sa:</textDarkGray>"
 	},
-	"claimed": "Inaangkin",
 	"clear": "Malinaw",
 	"close": "Isara",
 	"confirm-account": {
@@ -137,7 +142,6 @@
 		"open24": "Open 24 hours"
 	},
 	"in-reach-user": "InReach User",
-	"in-reach-verified-reviewer": "inReach Beripikadong Reviewer",
 	"include": "Isama",
 	"inreach": "InReach",
 	"inreach-copyright": "inReach, Inc. {{year}} • Nakalaan ang lahat ng karapatan • inReach ❤️ Open Source",
@@ -235,7 +239,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>Basahin ang aming buong patakaran sa privacy para sa karagdagang impormasyon</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Pahayag sa privacy</title2>"],
-	"privatePractice": "Pribadong Practice",
 	"profile": "Profile",
 	"questions": "Mga Tanong?",
 	"quick-promo-body": "<textUtility1>💚 I-save at ibahagi ang mga personalized na listahan ng mapagkukunan</textUtility1>\n<textUtility1>💬 Mag-iwan ng pampublikong rating/review sa mga organisasyon</textUtility1>\n<textUtility1>🏠 Magmungkahi ng mga organisasyon sa iyong lugar</textUtility1>\n<textUtility1>🔗 I-claim ang pahina ng profile ng iyong samahan (Malapit na!)</textUtility1>",
@@ -376,10 +379,13 @@
 	},
 	"take-action": "Gumawa ng Aksyon",
 	"uncheck-all": "Alisan ng tsek ang lahat",
-	"unclaimed": "Hindi inaangkin",
 	"user-avatar": "Avatar ng gumagamit",
-	"verified-information": "Na-verify na impormasyon",
-	"verified-information-detail": "Ang impormasyon sa pahinang ito ay huling na-update {{dateString}}. InReach prioritizes katumpakan at kaligtasan ng gumagamit, at ina-update ang lahat ng impormasyon ng hindi bababa sa isang beses sa bawat 6 na buwan. Para sa karagdagang impormasyon sa aming proseso ng pag-vetting, mangyaring bisitahin ang aming pahina ng Proseso ng Pag-vetting sa InReach.org.",
+	"user-menu": {
+		"admin-options": "Admin Options",
+		"data-portal": "Data Portal Home",
+		"edit-page": "Edit this page",
+		"user-options": "User Options"
+	},
 	"verify-account": {
 		"verified": "Na-verify ang account!",
 		"verified-body": "<Text>Na-verify na ang iyong account! Mangyaring <LoginModal>login</LoginModal> upang simulan ang paggamit ng mga karagdagang tampok ng inReach.",

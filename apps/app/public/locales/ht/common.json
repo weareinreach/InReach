@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
 	},
-	"accessible-building_false": "Bilding sa a PA chèz woulant aksesib",
-	"accessible-building_true": "Bilding sa a se chèz woulant aksesib",
 	"account": "Kont",
 	"add": "Ajoute {{item}}",
 	"address": "Adrès",
@@ -23,12 +21,20 @@
 		"title": "Angajman anti-rayi"
 	},
 	"badge": {
+		"accessible-building_false": "This building is NOT wheelchair accessible",
+		"accessible-building_true": "This building is wheelchair accessible",
+		"claimed": "Claimed",
 		"claimed-tool-tip": "Òganizasyon sa a te reklame pa yon reprezantan verifye. <link1>Aprann plis.</link1>",
 		"community-tool-tip": "Kominote ki te sèvi nan òganizasyon sa a.",
 		"national-tool-tip": "Offers services throughout {{country}}.",
+		"privatePractice": "Private Practice",
 		"remote-tool-tip": "Disponib adistans",
 		"service-tool-tip": "Sèvis (yo) ofri nan òganizasyon sa a.",
-		"unclaimed-tool-tip": "Òganizasyon sa a pa gen ankò yo te reklame pa yon reprezantan. <link1>Reklame òganizasyon sa a</link1> pou konstwi konfyans ak kominote nou an, mete ajou pwòp enfòmasyon ou, ak plis ankò."
+		"unclaimed": "Unclaimed",
+		"unclaimed-tool-tip": "Òganizasyon sa a pa gen ankò yo te reklame pa yon reprezantan. <link1>Reklame òganizasyon sa a</link1> pou konstwi konfyans ak kominote nou an, mete ajou pwòp enfòmasyon ou, ak plis ankò.",
+		"verified-information": "Verified information",
+		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Tounen pou <u>{{page}}</u>",
@@ -40,7 +46,6 @@
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Òganizasyon sa a poko reklame pa yon founisè sèvis.</title2>\n<textDarkGray>Ou ka reklame òganizasyon sa a kòm yon founisè sèvis nan:</textDarkGray>"
 	},
-	"claimed": "Reklame",
 	"clear": "Klè",
 	"close": "Fèmen",
 	"confirm-account": {
@@ -137,7 +142,6 @@
 		"open24": "Open 24 hours"
 	},
 	"in-reach-user": "InREACH Itilizatè",
-	"in-reach-verified-reviewer": "InREACH verifye Reviewer",
 	"include": "Enkli",
 	"inreach": "InReach",
 	"inreach-copyright": "InReach, Inc {{year}} • Tout dwa rezève • InREACH ❤️ Sous louvri",
@@ -235,7 +239,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>Li politik plen vi prive nou an pou plis enfòmasyon</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Deklarasyon sou enfòmasyon prive</title2>"],
-	"privatePractice": "Prive Pratike",
 	"profile": "Wofil",
 	"questions": "Kesyon?",
 	"quick-promo-body": "<textUtility1>💚 Sove ak pataje lis resous pèsonalize</textUtility1>\n<textUtility1>💬 Kite piblik Rating/revize sou òganizasyon</textUtility1>\n<textUtility1>🏠 Sijere òganizasyon nan zòn ou an</textUtility1>\n<textUtility1>🔗 Reklame paj pwofil òganizasyon ou an (Vini byento!)</textUtility1>",
@@ -376,10 +379,13 @@
 	},
 	"take-action": "Pran Aksyon",
 	"uncheck-all": "Dezaktive tout",
-	"unclaimed": "Reklame",
 	"user-avatar": "Itilizatè avatar",
-	"verified-information": "Verifye enfòmasyon",
-	"verified-information-detail": "Enfòmasyon ki nan paj sa a te mete ajou dènye {{dateString}}. InReach priyorite presizyon ak sekirite itilizatè, ak mete ajou tout enfòmasyon omwen yon fwa chak 6 mwa. Pou plis enfòmasyon sou pwosesis revizyon nou an, tanpri vizite nou an Pwosesis Vetting paj sou Inreach.org.",
+	"user-menu": {
+		"admin-options": "Admin Options",
+		"data-portal": "Data Portal Home",
+		"edit-page": "Edit this page",
+		"user-options": "User Options"
+	},
 	"verify-account": {
 		"verified": "Kont verifye!",
 		"verified-body": "<Text>Kont ou te verifye! Tanpri <LoginModal>login</LoginModal> yo kòmanse lè l sèvi avèk karakteristik adisyonèl InReach la.",
