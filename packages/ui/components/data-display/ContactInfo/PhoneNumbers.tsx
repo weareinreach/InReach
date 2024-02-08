@@ -1,7 +1,8 @@
-import { Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { type ReactElement } from 'react'
 
+import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { PhoneDrawer } from '~ui/components/data-portal/PhoneDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -79,16 +80,26 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 }
 
 const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
+	const theme = useMantineTheme()
+	const variants = useCustomVariant()
+	const { classes } = useCommonStyles()
 	const slug = useSlug()
+	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(orgId?.id ? ['common', 'phone-type', orgId.id] : ['common', 'phone-type'])
-	const variants = useCustomVariant()
 	const { data } = api.orgPhone.forContactInfoEdit.useQuery({ parentId })
-	const theme = useMantineTheme()
-	const { classes } = useCommonStyles()
-
+	const isLocation = isIdFor('orgLocation', parentId)
+	const { data: linkablePhones } = api.orgPhone.getLinkOptions.useQuery(
+		{ slug, locationId: parentId },
+		{
+			enabled: isLocation,
+		}
+	)
+	const linkToLocation = api.orgPhone.locationLink.useMutation({
+		onSuccess: () => apiUtils.orgPhone.invalidate(),
+	})
 	const output = data?.map((phone) => {
-		const { country, ext, number, phoneType, primary, description } = phone
+		const { country, ext, number, phoneType, primary: _primary, description } = phone
 		const parsedPhone = parsePhoneNumber(number, country)
 		if (!parsedPhone) return null
 		if (ext) parsedPhone.setExt(ext)
@@ -145,16 +156,75 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		)
 		return item
 	})
+
+	const addOrLink = isLocation ? (
+		<Menu keepMounted withinPortal>
+			<Menu.Target>
+				<Link variant={variants.Link.inlineInverted}>
+					<Group noWrap spacing={4}>
+						<Icon icon='carbon:document-add' height={20} />
+						<Text variant={variants.Text.utility3}>Link or create new...</Text>
+					</Group>
+				</Link>
+			</Menu.Target>
+			<Menu.Dropdown>
+				{linkablePhones?.map(({ id, deleted, description, number, phoneType, published }) => {
+					const phoneTextVariant =
+						!published && deleted
+							? variants.Text.utility3darkGrayStrikethru
+							: deleted
+								? variants.Text.utility3darkGrayStrikethru
+								: variants.Text.utility3
+					const descTextVariant =
+						!published && deleted
+							? variants.Text.utility4darkGrayStrikethru
+							: deleted
+								? variants.Text.utility4darkGrayStrikethru
+								: variants.Text.utility4
+					return (
+						<Menu.Item
+							key={id}
+							onClick={() =>
+								linkToLocation.mutate({ orgLocationId: parentId, orgPhoneId: id, action: 'link' })
+							}
+						>
+							<Group noWrap>
+								<Icon icon='carbon:link' />
+								<Stack spacing={0}>
+									<Text variant={phoneTextVariant}>{number}</Text>
+									{Boolean(phoneType) && <Text variant={descTextVariant}>{phoneType}</Text>}
+									<Text variant={descTextVariant}>{description}</Text>
+								</Stack>
+							</Group>
+						</Menu.Item>
+					)
+				})}
+				<Menu.Divider />
+				<Menu.Item key='new'>
+					<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+						<Group noWrap>
+							<Icon icon='carbon:add-alt' />
+							<Text variant={variants.Text.utility3}>Create new</Text>
+						</Group>
+					</PhoneDrawer>
+				</Menu.Item>
+			</Menu.Dropdown>
+		</Menu>
+	) : (
+		<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+			<Group noWrap>
+				<Icon icon='carbon:add' />
+				<Text variant={variants.Text.utility3}>Create new</Text>
+			</Group>
+		</PhoneDrawer>
+	)
+
 	return (
 		<Stack spacing={12}>
 			<Title order={3}>{t('words.phone')}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
-				<Stack spacing={4}>
-					<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-						<Text variant={variants.Text.utility3}>➕ Create new</Text>
-					</PhoneDrawer>
-				</Stack>
+				<Stack spacing={4}>{addOrLink}</Stack>
 			</Stack>
 		</Stack>
 	)

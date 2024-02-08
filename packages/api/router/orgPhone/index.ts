@@ -58,4 +58,22 @@ export const orgPhoneRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	getLinkOptions: permissionedProcedure('updatePhone')
+		.input(schema.ZGetLinkOptionsSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('getLinkOptions'),
+				() => import('./query.getLinkOptions.handler')
+			)
+			return handler(opts)
+		}),
+	locationLink: permissionedProcedure('updatePhone')
+		.input(schema.ZLocationLinkSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('locationLink'),
+				() => import('./mutation.locationLink.handler')
+			)
+			return handler(opts)
+		}),
 })

@@ -14,6 +14,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -25,7 +26,6 @@ import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
-import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -40,17 +40,19 @@ const FormSchema = z.object({
 	id: z.string(),
 	number: z.string(),
 	ext: z.string().nullish(),
-	primary: z.boolean(),
+	primary: z.boolean().optional(),
 	published: z.boolean(),
-	deleted: z.boolean(),
+	deleted: z.boolean().default(false),
 	countryId: z.string(),
 	phoneTypeId: z.string().nullable(),
 	description: z.string().nullable(),
-	locationOnly: z.boolean(),
-	serviceOnly: z.boolean(),
+	locationOnly: z.boolean().optional(),
+	serviceOnly: z.boolean().optional(),
+	linkLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, createNew, ...props }, ref) => {
+	const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 	const { t } = useTranslation(['phone-type'])
 	const [phoneId] = useState(createNew ? generateId('orgPhone') : id)
 	const { id: orgId } = useOrgInfo()
@@ -59,11 +61,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, crea
 		{ id: phoneId },
 		{
 			enabled: !!orgId || !createNew,
-			select: (data) => {
-				if (!data) return data
-				const parsedPhone = parsePhoneNumber(data.number, data.country)
-				return { ...data, number: parsedPhone?.number ?? data.number }
-			},
 		}
 	)
 	const { data: phoneTypes } = api.fieldOpt.phoneTypes.useQuery(undefined, {
@@ -74,25 +71,43 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, crea
 	const [modalOpened, modalHandler] = useDisclosure(false)
 
 	const { classes } = useStyles()
-	const { control, handleSubmit, formState, reset, getValues, watch } = useForm<FormSchema>({
+	const {
+		control,
+		handleSubmit,
+		formState,
+		reset,
+		getValues,
+		watch,
+		setValue: setFormValue,
+	} = useForm<FormSchema>({
 		resolver: zodResolver(FormSchema),
 		values: initialData ? initialData : undefined,
 	})
 	const { isDirty: formIsDirty } = formState
 	const [isSaved, setIsSaved] = useState(formIsDirty)
+	const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 	const siteUpdate = api.orgPhone.update.useMutation({
 		onSettled: (data) => {
 			apiUtils.orgPhone.forEditDrawer.invalidate()
 			apiUtils.orgPhone.forContactInfoEdit.invalidate()
-			const parsedPhone = parsePhoneNumber(data?.number ?? '')
-			reset({ ...data, number: parsedPhone?.number ?? data?.number })
+			reset(data)
 		},
 		onSuccess: () => {
 			setIsSaved(true)
 		},
 	})
 	// const isSaved = /*siteUpdate.isSuccess &&*/ !formState.isDirty
-
+	const unlinkFromLocation = api.orgPhone.locationLink.useMutation({
+		onSuccess: () => apiUtils.orgPhone.invalidate(),
+	})
+	useEffect(() => {
+		if (createNew) {
+			setFormValue('published', true)
+			if (hasLocationId !== null) {
+				setFormValue('linkLocationId', hasLocationId)
+			}
+		}
+	}, [createNew, hasLocationId, setFormValue])
 	useEffect(() => {
 		if (isSaved && formIsDirty) {
 			setIsSaved(false)
@@ -112,13 +127,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, crea
 	}
 	return (
 		<>
-			<Drawer.Root
-				onClose={handleClose}
-				opened={drawerOpened}
-				position='right'
-				zIndex={10001}
-				keepMounted={false}
-			>
+			<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<form
@@ -164,10 +173,27 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, crea
 									{values.phoneTypeId === null && (
 										<TextInput label='Description' name='description' control={control} />
 									)}
-									<Stack>
-										<Checkbox label='Published' name='published' control={control} />
-										<Checkbox label='Deleted' name='deleted' control={control} />
-									</Stack>
+									<Group noWrap position='apart' w='100%'>
+										<Stack>
+											<Checkbox label='Published' name='published' control={control} />
+											<Checkbox label='Deleted' name='deleted' control={control} />
+										</Stack>
+										{hasLocationId !== null && (
+											<Button
+												leftIcon={<Icon icon='carbon:unlink' />}
+												onClick={() =>
+													unlinkFromLocation.mutate({
+														orgPhoneId: phoneId,
+														orgLocationId: hasLocationId,
+														action: 'unlink',
+													})
+												}
+												disabled={createNew}
+											>
+												Unlink from this location
+											</Button>
+										)}
+									</Group>
 								</Stack>
 							</Stack>
 						</Drawer.Body>
