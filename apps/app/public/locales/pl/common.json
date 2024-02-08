@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Tekst <strong>{{body}}</strong> do {{code}}"
 	},
-	"accessible-building_false": "Ten budynek NIE jest przystosowany dla wózków inwalidzkich",
-	"accessible-building_true": "Ten budynek jest przystosowany dla wózków inwalidzkich",
 	"account": "Konto",
 	"add": "Dodaj {{item}}",
 	"address": "Adres",
@@ -23,12 +21,20 @@
 		"title": "Zaangażowanie przeciwko nienawiści"
 	},
 	"badge": {
+		"accessible-building_false": "Ten budynek NIE jest przystosowany dla wózków inwalidzkich",
+		"accessible-building_true": "Ten budynek jest przystosowany dla wózków inwalidzkich",
+		"claimed": "Domniemana",
 		"claimed-tool-tip": "Organizacja została zgłoszona przez zweryfikowanego przedstawiciela. <link1>Dowiedz się więcej.</link1>",
 		"community-tool-tip": "Społeczność obsługiwana przez tę organizację.",
 		"national-tool-tip": "Oferuje usługi w całym {{country}}.",
+		"privatePractice": "Prywatna praktyka",
 		"remote-tool-tip": "Dostępne zdalnie",
 		"service-tool-tip": "Usługi oferowane przez tę organizację.",
-		"unclaimed-tool-tip": "Organizacja ta nie została jeszcze zgłoszona przez przedstawiciela. <link1>Zgłoś tę organizację</link1> , aby zbudować zaufanie do naszej społeczności, zaktualizować własne informacje, i więcej."
+		"unclaimed": "Nieodebrane",
+		"unclaimed-tool-tip": "Organizacja ta nie została jeszcze zgłoszona przez przedstawiciela. <link1>Zgłoś tę organizację</link1> , aby zbudować zaufanie do naszej społeczności, zaktualizować własne informacje, i więcej.",
+		"verified-information": "Zweryfikowane informacje",
+		"verified-information-detail": "Informacje na tej stronie zostały ostatnio zaktualizowane {{dateString}}. Połącz priorytety z dokładnością i bezpieczeństwem użytkownika i regularnie aktualizuje wszystkie informacje. Aby uzyskać więcej informacji na temat naszego procesu weryfikacji, odwiedź naszą stronę procesu Vetting Process na InReach.org.",
+		"verified-reviewer": "Dotrzyj do zweryfikowanego recenzenta"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Wróć do <u>{{page}}</u>",
@@ -40,7 +46,6 @@
 		"list": "<textUtility1>🔗 Odbierz stronę profilu swojej organizacji i buduj zaufanie do swoich odbiorców na Inach</textUtility1>\n<textUtility1>:writing_hand_średnie, dark_skin_tone: Zaktualizuj informacje o swojej organizacji na InReach</textUtility1>\n<textUtility1>📨 Zaproś innych pracowników, aby dołączyli do swojej organizacji na InReach</textUtility1>\n<textUtility1>🔑 Uzyskaj dostęp do przyszłych funkcji stworzonych specjalnie dla powiązanych dostawców usług na InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Ta organizacja nie została jeszcze zgłoszona przez usługodawcę.</title2>\n<textDarkGray>Możesz ubiegać się o tę organizację jako usługodawcę do:</textDarkGray>"
 	},
-	"claimed": "Twierdził",
 	"clear": "Wyczyść",
 	"close": "Zamknij",
 	"confirm-account": {
@@ -139,7 +144,6 @@
 		"open24": "Otwarte 24 godziny"
 	},
 	"in-reach-user": "Użytkownik inReach",
-	"in-reach-verified-reviewer": "Zweryfikowany recenzent inReach",
 	"include": "Uwzględnij",
 	"inreach": "InReach",
 	"inreach-copyright": "inReach, Inc. {{year}} • Wszelkie prawa zastrzeżone • inReach ❤️ Open Source",
@@ -237,7 +241,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>Przeczytaj naszą pełną politykę prywatności, aby uzyskać więcej informacji</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Polityka prywatności</title2>"],
-	"privatePractice": "Prywatna praktyka",
 	"profile": "Profil",
 	"questions": "Pytania?",
 	"quick-promo-body": "<textUtility1>💚 Zapisz i udostępnij spersonalizowane listy zasobów</textUtility1>\n<textUtility1>💬 Pozostaw publiczną ocenę/recenzje na organizacjach</textUtility1>\n<textUtility1>🏠 Suggest Organizations in your area</textUtility1>\n<textUtility1>🔗 Odbierz stronę profilową swojej organizacji (Już wkrótce!</textUtility1>",
@@ -378,10 +381,13 @@
 	},
 	"take-action": "Podejmij działania",
 	"uncheck-all": "Odznacz wszystkie",
-	"unclaimed": "Nieodebrane",
 	"user-avatar": "Avatar użytkownika",
-	"verified-information": "Zweryfikowane informacje",
-	"verified-information-detail": "Informacje na tej stronie zostały ostatnio zaktualizowane {{dateString}}. InReach priorytetowo traktuje dokładność i bezpieczeństwo użytkowników oraz aktualizuje wszystkie informacje co najmniej raz na 6 miesięcy. Aby uzyskać więcej informacji na temat naszego procesu weryfikacji, odwiedź naszą stronę Procedura weryfikacji na stronie InReach.org.",
+	"user-menu": {
+		"admin-options": "Opcje administratora",
+		"data-portal": "Strona główna portalu danych",
+		"edit-page": "Edytuj tę stronę",
+		"user-options": "Opcje użytkownika"
+	},
 	"verify-account": {
 		"verified": "Konto zweryfikowane!",
 		"verified-body": "<Text>Twoje konto zostało zweryfikowane! Proszę <LoginModal>zalogować się</LoginModal> , aby zacząć korzystać z dodatkowych funkcji inReach.",

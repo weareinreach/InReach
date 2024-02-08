@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "<strong>{{body}}</strong> を {{code}} にテキスト"
 	},
-	"accessible-building_false": "この建物は車椅子ではご利用いただけません",
-	"accessible-building_true": "この建物は車椅子利用可能です",
 	"account": "アカウント",
 	"add": "{{item}}を追加",
 	"address": "住所",
@@ -23,12 +21,20 @@
 		"title": "反ヘイトへの取り組み"
 	},
 	"badge": {
+		"accessible-building_false": "この建物は車椅子ではご利用いただけません",
+		"accessible-building_true": "この建物は車椅子利用可能です",
+		"claimed": "請求済み",
 		"claimed-tool-tip": "この組織は確認済みの代理人によって申し立てられています。 <link1>もっと詳しく.</link1>",
 		"community-tool-tip": "この組織がサービスを提供するコミュニティ。",
 		"national-tool-tip": "{{country}} 全域でサービスを提供しています。",
+		"privatePractice": "プライベート練習",
 		"remote-tool-tip": "リモートで利用可能",
 		"service-tool-tip": "この組織が提供するサービス。",
-		"unclaimed-tool-tip": "この組織はまだ代表者による申請を受けていません。<br/><link1>この組織に申請して</link1> コミュニティとの信頼関係を築き、自分の情報を更新するなどしてください。"
+		"unclaimed": "未請求",
+		"unclaimed-tool-tip": "この組織はまだ代表者による申請を受けていません。<br/><link1>この組織に申請して</link1> コミュニティとの信頼関係を築き、自分の情報を更新するなどしてください。",
+		"verified-information": "認証された情報",
+		"verified-information-detail": "このページの情報は最後に更新されました {{dateString}}. InReach は正確さとユーザーの安全性を優先し、すべての情報を定期的に更新します。 審査プロセスの詳細については、InReach.org の Vetting Processページ をご覧ください。",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "<u>{{page}}</u>に戻る",
@@ -40,7 +46,6 @@
 		"list": "<textUtility1>🔗 組織のプロフィールページを要求し、InReach でオーディエンスと信頼関係を構築する</textUtility1>\n<textUtility1>✍🏾 組織のInReach に関する情報を更新する</textUtility1>\n<textUtility1>📨 InReach であなたの組織に参加するために他のスタッフを招待する</textUtility1>\n<textUtility1>🔑 InReach の関連サービスプロバイダー専用に構築された将来の機能へのアクセスを得る</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>この組織はまだサービスプロバイダーから申請されていません。</title2>\n<textDarkGray>この組織をサービスプロバイダーとして申請できるのは、以下のとおりです。</textDarkGray>"
 	},
-	"claimed": "請求済み",
 	"clear": "削除",
 	"close": "閉じる",
 	"confirm-account": {
@@ -136,7 +141,6 @@
 		"open24": "24時間オープン"
 	},
 	"in-reach-user": "InReachのユーザー",
-	"in-reach-verified-reviewer": "InReach認証済みレビュアー",
 	"include": "含める",
 	"inreach": "InReach",
 	"inreach-copyright": "InReach, Inc. {{year}} • 無断複写・転載を禁じます • inReach ❤️ オープンソース",
@@ -234,7 +238,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>詳細については、当社の個人情報保護方針をお読みください。</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>個人情報保護方針</title2>"],
-	"privatePractice": "プライベート・プラクティス",
 	"profile": "プロフィール",
 	"questions": "質問?",
 	"quick-promo-body": "<textUtility1>💚 パーソナライズされたリソースリストを保存して共有する</textUtility1>\n<textUtility1>💬 公開評価/組織レビューを残す</textUtility1>\n<textUtility1>🏠 お住まいの地域の組織を提案する</textUtility1>\n<textUtility1>🔗 組織のプロフィールページを入手する (近日公開予定!</textUtility1>",
@@ -375,10 +378,13 @@
 	},
 	"take-action": "行動を起こす",
 	"uncheck-all": "すべてのチェックを外す",
-	"unclaimed": "請求なし",
 	"user-avatar": "ユーザーアバター",
-	"verified-information": "認証済み情報",
-	"verified-information-detail": "このページの最終更新日は {{dateString}}です。inReachは正確性とユーザーの安全を優先し、すべての情報を定期的に更新しています。当社の審査プロセスの詳細については、InReach.orgの該当ページをご覧ください。",
+	"user-menu": {
+		"admin-options": "管理者オプション",
+		"data-portal": "データポータルのホーム",
+		"edit-page": "このページを編集",
+		"user-options": "ユーザーオプション"
+	},
 	"verify-account": {
 		"verified": "アカウントが認証されました。",
 		"verified-body": "<Text>アカウントが認証されました！inReachの追加機能を使用するには、 <LoginModal>ログイン</LoginModal> が必要です。",

@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
 	},
-	"accessible-building_false": "دا ودانۍ د ویلچیر لاسرسی نلري",
-	"accessible-building_true": "دا ودانۍ ویلچیر د لاسرسي وړ ده",
 	"account": "ګڼون",
 	"add": "{{item}}اضافه کړئ",
 	"address": "پته",
@@ -23,12 +21,20 @@
 		"title": "د نفرت ضد ژمنتیا"
 	},
 	"badge": {
+		"accessible-building_false": "This building is NOT wheelchair accessible",
+		"accessible-building_true": "This building is wheelchair accessible",
+		"claimed": "Claimed",
 		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "ټولنه د دې سازمان لخوا خدمت شوی.",
 		"national-tool-tip": "Offers services throughout {{country}}.",
+		"privatePractice": "Private Practice",
 		"remote-tool-tip": "په لرې ډول شتون لري",
 		"service-tool-tip": "د دې سازمان لخوا وړاندیز شوي خدمتونه.",
-		"unclaimed-tool-tip": "دا سازمان لا تر اوسه د یوه استازي لخوا ادعا نه ده شوې. <link1>د دې سازمان ادعا وکړئ</link1> زموږ د ټولنې سره باور رامینځته کولو لپاره، خپل معلومات تازه کړئ، او نور ډیر څه."
+		"unclaimed": "Unclaimed",
+		"unclaimed-tool-tip": "دا سازمان لا تر اوسه د یوه استازي لخوا ادعا نه ده شوې. <link1>د دې سازمان ادعا وکړئ</link1> زموږ د ټولنې سره باور رامینځته کولو لپاره، خپل معلومات تازه کړئ، او نور ډیر څه.",
+		"verified-information": "Verified information",
+		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "بېرته <u>{{page}}</u>ته",
@@ -40,7 +46,6 @@
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>دا سازمان لاهم د خدمت چمتو کونکي لخوا ادعا نه ده شوې.</title2>\n<textDarkGray>تاسو کولی شئ دا سازمان د خدمت چمتو کونکي په توګه ادعا وکړئ:</textDarkGray>"
 	},
-	"claimed": "ادعا شوې",
 	"clear": "پاک",
 	"close": "بندول",
 	"confirm-account": {
@@ -137,7 +142,6 @@
 		"open24": "Open 24 hours"
 	},
 	"in-reach-user": "کارن ریچ",
-	"in-reach-verified-reviewer": "د INREACH تایید شوی بیاکتنه",
 	"include": "شاملول",
 	"inreach": "InReach",
 	"inreach-copyright": "InREACH، Inc. {{year}} • ټول حقونه خوندي دي • inREACH ❤️ خلاص سرچینه",
@@ -235,7 +239,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>د نورو معلوماتو لپاره زموږ د محرمیت بشپړ تګلاره ولولئ</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>د محرمیت بیان</title2>"],
-	"privatePractice": "شخصي تمرین",
 	"profile": "پيژند",
 	"questions": "پوښتنې؟",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
@@ -376,10 +379,13 @@
 	},
 	"take-action": "اقدام وکړئ",
 	"uncheck-all": "ټول چیک کړئ",
-	"unclaimed": "بې ادعا",
 	"user-avatar": "کارن اوتار",
-	"verified-information": "تایید شوي معلومات",
-	"verified-information-detail": "پدې پا onه کې معلومات وروستی ځل تازه شوي {{dateString}}. InREACH دقت او د کارونکي خوندیتوب ته لومړیتوب ورکوي، او لږترلږه په هرو 6 میاشتو کې یو ځل ټول معلومات تازه کوي. زموږ د ارزونې پروسې په اړه د نورو معلوماتو لپاره، مهرباني وکړئ زموږ څخه لیدنه وکړئ د ارزونې پروسې پا pageه په InReach.org.",
+	"user-menu": {
+		"admin-options": "Admin Options",
+		"data-portal": "Data Portal Home",
+		"edit-page": "Edit this page",
+		"user-options": "User Options"
+	},
 	"verify-account": {
 		"verified": "حساب تایید شوی!",
 		"verified-body": "<Text>ستاسو حساب تایید شوی! مهرباني وکړئ <LoginModal>ننوتل</LoginModal> د InREACH اضافي ب usingو کارولو پیل کولو لپاره.",

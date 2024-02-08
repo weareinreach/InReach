@@ -1,12 +1,12 @@
 {
 	"banner": {
-		"donate": "Help keep InReach free for everyone. <DonateLink>Donate now!</DonateLink> 💝",
-		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>",
-		"tmf": "<TMFLink>Spread trans joy with #TransMascFutures 🏳️‍⚧️</TMFLink>"
+		"donate": "به رایگان نگه داشتن InReach برای همه کمک کنید. <DonateLink>هم اکنون اهدا کنید!</DonateLink>💝",
+		"redesign": "درباره راه‌اندازی طراحی مجدد برنامه inReach در وبلاگ ما بخوانید. <Link>بیشتر بدانید</Link>",
+		"tmf": "<TMFLink> شادی تراجنسیتی ها را با #TransMascFutures گسترش دهید 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>از کاربران ما بشنوید</Title1>",
-		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
+		"who-we-are": "<Title1>ما چه کسی هستیم</Title1>\n<Text>ما یک جامعه ناسودبری هستیم که توسط ترنسجندرها مدیریت میشود و برای افزایش دسترسی به منابع برای جامعه متنوع تراجنسیتی فعالیت میکند.</Text>\n<Link>درباره ما بیشتر بدانید.</Link>"
 	},
 	"hero": {
 		"community": {
@@ -18,14 +18,14 @@
 			"5": "جوامع LGBTQ+BIPOC",
 			"6": "مراقبان از LGBTQ+جوانان"
 		},
-		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"find-resources": "<Text>تایید شده </Text><Service></Service><Text> برای </Text><Community></Community><Text> با inReach.</Text>",
 		"heading": "منابع LGBTQ+را پیدا کنید.",
 		"privacy-disclaimer": "پاسخ شما ناشناس است و به عنوان یک کاربر شخصی به شما متصل نیست. برای کسب اطلاعات بیشتر، <Link>سیاست حفظ حریم خصوصی</Link> ما را بخوانید.",
 		"services": {
 			"0": "مراقبت های پزشکی",
 			"1": "حمایت جامعه",
 			"2": "مراقبت های سلامت روان",
-			"3": "education",
+			"3": "تحصیلات",
 			"4": "استخدام",
 			"5": "غذا",
 			"6": "مسکن",

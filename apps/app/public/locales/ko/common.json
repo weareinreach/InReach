@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "텍스트 <strong>{{body}}</strong> ~ {{code}}"
 	},
-	"accessible-building_false": "이 건물은 휠체어로 출입 할수없습니다.",
-	"accessible-building_true": "이 건물은 휠체어 출입이 가능합니다.",
 	"account": "계정",
 	"add": "{{item}}추가",
 	"address": "주소",
@@ -23,12 +21,20 @@
 		"title": "증오 방지 약속"
 	},
 	"badge": {
+		"accessible-building_false": "이 건물은 휠체어로 출입 할수없습니다.",
+		"accessible-building_true": "이 건물은 휠체어 출입이 가능합니다.",
+		"claimed": "주장함",
 		"claimed-tool-tip": "이 단체는 검증된 대리인에 의해 소유권을 주장했습니다.<br/><link1>더 알아보기.</link1>",
 		"community-tool-tip": "이 단체에서 서비스를 제공하는 공동체.",
 		"national-tool-tip": "{{country}} 전역에 서비스를 제공합니다",
+		"privatePractice": "개인병원",
 		"remote-tool-tip": "원격으로 사용 가능합니다",
 		"service-tool-tip": "이 단체에서 제공하는 서비스.",
-		"unclaimed-tool-tip": "이 단체는 아직 대리인에 의해 청구되지 않았습니다.<br/><link1>이 단체에 대한 주장</link1> 공동체와의 신뢰 구축, 자체 정보 업데이트와 더할수입니다."
+		"unclaimed": "Unclaimed",
+		"unclaimed-tool-tip": "이 단체는 아직 대리인에 의해 청구되지 않았습니다.<br/><link1>이 단체에 대한 주장</link1> 공동체와의 신뢰 구축, 자체 정보 업데이트와 더할수입니다.",
+		"verified-information": "Verified information",
+		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "<u>{{page}}</u>로 돌아가기",
@@ -40,7 +46,6 @@
 		"list": "<textUtility1>🔗 InReach에서 단체의 프로필 페이지를 주장하고 청중과 신뢰를 쌓습니다 </textUtility1>\n<textUtility1> ✍🏾 InReach에 대한 단체의 정보 업데이트 하십시오 </textUtility1>\n<textUtility1>📨 InReach에서 다른 직원을 단체에 가입시키십시오 </textUtility1>\n<textUtility1>🔑 InReach의 제휴 서비스 공급자를 위해 특별히 제작된 향후 기능에 대한 겁근 권한 획득</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>이 다체 아직 서비스 제공업체로부터 주장을 되지 않았습니다.</title2>\n<textDarkGray>InReach Service Provider 무료 계정을 사용하면 곧 다음을 수행할 수 있습니다:</textDarkGray>"
 	},
-	"claimed": "주장함",
 	"clear": "지우기",
 	"close": "닫기",
 	"confirm-account": {
@@ -136,7 +141,6 @@
 		"open24": "24시간 영업"
 	},
 	"in-reach-user": "InReach 사용자",
-	"in-reach-verified-reviewer": "InReach 검증된 검토자",
 	"include": "포함하기",
 	"inreach": "InReach",
 	"inreach-copyright": "InReach, Inc. {{year}} • 판권 소유 • InReach ❤️ 오픈 소스",
@@ -234,7 +238,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>개인정보 보호정책 전문을 더 자세히 읽어보십시오.</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>개인정보 보호정책</title2>"],
-	"privatePractice": "개인병원",
 	"profile": "프로필",
 	"questions": "질문 있으세요?",
 	"quick-promo-body": "<textUtility1>💚 개인화된 리소스 목록 저장과 공유하십시오</textUtility1>\n<textUtility1>💬 단체에 대한 공개 평점/후기 남기기</textUtility1>\n<textUtility1>🏠 해당 지역의 단체 추천</textUtility1>\n<textUtility1>🔗 단체 프로필 페이지 소유권 신청 (개봉박두!)</textUtility1>",
@@ -375,10 +378,13 @@
 	},
 	"take-action": "행동을 취하다",
 	"uncheck-all": "모두 선택 취소",
-	"unclaimed": "청구되지 않았습니다",
 	"user-avatar": "사용자 아바타",
-	"verified-information": "검증된 정보",
-	"verified-information-detail": "이 페이지의 정보는 마지막으로 업데이트되었습니다. {{dateString}}. InReach는 정확성과 사용자 안전을 우선시하며 최소 정기적으로 모든 정보를 업데이트합니다.심사 절차에 대한 자세한 내용은 InReach.org의 심사 프로세스 페이지를 참조하십시오.",
+	"user-menu": {
+		"admin-options": "관리자 옵션",
+		"data-portal": "데이터 포털 홈",
+		"edit-page": "이 페이지 편집",
+		"user-options": "사용자 옵션"
+	},
 	"verify-account": {
 		"verified": "계정이 확인되었습니다!",
 		"verified-body": "<Text>계정이 확인되었습니다! InReach의 부가 기능을 사용하려면 <LoginModal>로그인</LoginModal> 번을 클릭하십시오.",
