@@ -24,7 +24,7 @@ export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 
 		/** Check multiple permissions */
 		if (Array.isArray(meta.hasPerm)) {
-			if (meta.hasPerm.every((perm) => ctx.session?.user.permissions.includes(perm))) {
+			if (meta.hasPerm.every((perm) => ctx.session?.user?.permissions?.includes(perm))) {
 				return true
 			}
 			return false
@@ -51,7 +51,9 @@ export const checkRole = (allowedRoles: string[], userRoles: string[]) => {
 
 export const isAdmin = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user) return reject()
-	if (!(checkRole(['dataAdmin', 'sysadmin', 'root'], ctx.session?.user.roles) && checkPermissions(meta, ctx)))
+	if (
+		!(checkRole(['dataAdmin', 'sysadmin', 'root'], ctx.session?.user?.roles) && checkPermissions(meta, ctx))
+	)
 		return reject()
 
 	return next({
@@ -66,7 +68,7 @@ export const isStaff = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user) return reject()
 	if (
 		!(
-			checkRole(['dataManager', 'dataAdmin', 'sysadmin', 'system', 'root'], ctx.session?.user.roles) &&
+			checkRole(['dataManager', 'dataAdmin', 'sysadmin', 'system', 'root'], ctx.session?.user?.roles) &&
 			checkPermissions(meta, ctx)
 		)
 	)
