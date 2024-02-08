@@ -263,7 +263,6 @@ export const getServerSideProps = async ({
 			'phone-type',
 			'country',
 			'gov-dist',
-			orgId,
 		]),
 		ssg.organization.getBySlug.prefetch({ slug }),
 		ssg.location.forLocationPageEdits.prefetch({ id }),
