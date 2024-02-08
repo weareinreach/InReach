@@ -17,7 +17,6 @@ import { useRouter } from 'next/router'
 import { forwardRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
-import invariant from 'tiny-invariant'
 import { z } from 'zod'
 
 import { generateId } from '@weareinreach/db/lib/idGen'
@@ -41,6 +40,7 @@ const FormSchema = z.object({
 	id: z.string(),
 	orgId: z.string(),
 	descriptionId: z.string().nullish(),
+	linkLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 const useStyles = createStyles(() => ({
@@ -51,7 +51,7 @@ const useStyles = createStyles(() => ({
 }))
 export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
-		const router = useRouter<'/org/[slug]/edit'>()
+		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 		const [emailId] = useState(createNew ? generateId('orgEmail') : id)
 		const { id: orgId } = useOrgInfo()
 		const { data: initialData, isFetching } = api.orgEmail.forEditDrawer.useQuery(
@@ -65,13 +65,21 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const apiUtils = api.useUtils()
-		const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
+		const {
+			control,
+			handleSubmit,
+			formState,
+			reset,
+			getValues,
+			setValue: setFormValue,
+		} = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
 			values: initialData ? initialData : undefined,
 		})
 
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
+		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 
 		const emailUpdate = api.orgEmail.update.useMutation({
 			onSettled: (data) => {
@@ -83,6 +91,14 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 				setIsSaved(true)
 			},
 		})
+		const unlinkFromLocation = api.orgEmail.locationLink.useMutation({
+			onSuccess: () => apiUtils.orgEmail.invalidate(),
+		})
+		useEffect(() => {
+			if (createNew && hasLocationId !== null) {
+				setFormValue('linkLocationId', hasLocationId)
+			}
+		}, [createNew, hasLocationId, setFormValue])
 		useEffect(() => {
 			if (isSaved && formIsDirty) {
 				setIsSaved(false)
@@ -97,13 +113,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 		}
 		return (
 			<>
-				<Drawer.Root
-					onClose={handleClose}
-					opened={drawerOpened}
-					position='right'
-					zIndex={10001}
-					keepMounted={false}
-				>
+				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
 						<form
@@ -140,10 +150,27 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 										</Group>
 
 										<TextInput label='Description' name='description' control={control} />
-										<Stack>
-											<Checkbox label='Published' name='published' control={control} />
-											<Checkbox label='Deleted' name='deleted' control={control} />
-										</Stack>
+										<Group noWrap position='apart' w='100%'>
+											<Stack>
+												<Checkbox label='Published' name='published' control={control} />
+												<Checkbox label='Deleted' name='deleted' control={control} />
+											</Stack>
+											{hasLocationId !== null && (
+												<Button
+													leftIcon={<Icon icon='carbon:unlink' />}
+													onClick={() =>
+														unlinkFromLocation.mutate({
+															orgEmailId: emailId,
+															orgLocationId: hasLocationId,
+															action: 'unlink',
+														})
+													}
+													disabled={createNew}
+												>
+													Unlink from this location
+												</Button>
+											)}
+										</Group>
 									</Stack>
 								</Stack>
 							</Drawer.Body>

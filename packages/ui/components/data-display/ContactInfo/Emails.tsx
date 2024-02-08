@@ -1,7 +1,9 @@
-import { Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
 import { type ReactElement } from 'react'
 
+import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { EmailDrawer } from '~ui/components/data-portal/EmailDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -81,17 +83,26 @@ const EmailsDisplay = ({ parentId = '', passedData, direct, locationOnly, servic
 
 const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	const slug = useSlug()
+	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(orgId?.id ? ['common', orgId.id, 'user-title'] : ['common', 'user-title'])
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const { classes } = useCommonStyles()
 	const { data } = api.orgEmail.forContactInfoEdit.useQuery({ parentId })
-
-	// if (!data?.length) return null
+	const isLocation = isIdFor('orgLocation', parentId)
+	const { data: linkableEmails } = api.orgEmail.getLinkOptions.useQuery(
+		{ slug, locationId: parentId },
+		{
+			enabled: isLocation,
+		}
+	)
+	const linkToLocation = api.orgEmail.locationLink.useMutation({
+		onSuccess: () => apiUtils.orgEmail.invalidate(),
+	})
 
 	const output = data?.map((email) => {
-		const { primary, title, description, email: address, published, deleted, id } = email
+		const { primary: _primary, title, description, email: address, published, deleted, id } = email
 
 		const desc = title
 			? t(title.key, { ns: 'user-title' })
@@ -142,16 +153,76 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		return item
 	})
 
+	const addOrLink = isLocation ? (
+		<Menu keepMounted>
+			<Menu.Target>
+				<Link variant={variants.Link.inlineInverted}>
+					<Group noWrap spacing={4}>
+						<Icon icon='carbon:document-add' height={20} />
+						<Text variant={variants.Text.utility3}>Link or create new...</Text>
+					</Group>
+				</Link>
+			</Menu.Target>
+			<Menu.Dropdown>
+				{linkableEmails?.map(({ id, deleted, description, email, firstName, lastName, published }) => {
+					const emailTextVariant =
+						!published && deleted
+							? variants.Text.utility3darkGrayStrikethru
+							: deleted
+								? variants.Text.utility3darkGrayStrikethru
+								: variants.Text.utility3
+					const descTextVariant =
+						!published && deleted
+							? variants.Text.utility4darkGrayStrikethru
+							: deleted
+								? variants.Text.utility4darkGrayStrikethru
+								: variants.Text.utility4
+					return (
+						<Menu.Item
+							key={id}
+							onClick={() =>
+								linkToLocation.mutate({ orgLocationId: parentId, orgEmailId: id, action: 'link' })
+							}
+						>
+							<Group noWrap>
+								<Icon icon='carbon:link' />
+								<Stack spacing={0}>
+									<Text variant={emailTextVariant}>{email}</Text>
+									{(Boolean(firstName) || Boolean(lastName)) && (
+										<Text variant={descTextVariant}>{compact([firstName, lastName]).join(' ')}</Text>
+									)}
+									<Text variant={descTextVariant}>{description}</Text>
+								</Stack>
+							</Group>
+						</Menu.Item>
+					)
+				})}
+				<Menu.Divider />
+				<Menu.Item key='new'>
+					<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+						<Group noWrap>
+							<Icon icon='carbon:add-alt' />
+							<Text variant={variants.Text.utility3}>Create new</Text>
+						</Group>
+					</EmailDrawer>
+				</Menu.Item>
+			</Menu.Dropdown>
+		</Menu>
+	) : (
+		<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+			<Group noWrap>
+				<Icon icon='carbon:add' />
+				<Text variant={variants.Text.utility3}>Create new</Text>
+			</Group>
+		</EmailDrawer>
+	)
+
 	return (
 		<Stack spacing={12}>
 			<Title order={3}>{t('words.email')}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
-				<Stack spacing={4}>
-					<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-						<Text variant={variants.Text.utility3}>➕ Create new</Text>
-					</EmailDrawer>
-				</Stack>
+				<Stack spacing={4}>{addOrLink}</Stack>
 			</Stack>
 		</Stack>
 	)

@@ -59,4 +59,22 @@ export const orgEmailRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	getLinkOptions: permissionedProcedure('updateEmail')
+		.input(schema.ZGetLinkOptionsSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('getLinkOptions'),
+				() => import('./query.getLinkOptions.handler')
+			)
+			return handler(opts)
+		}),
+	locationLink: permissionedProcedure('updateEmail')
+		.input(schema.ZLocationLinkSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('locationLink'),
+				() => import('./mutation.locationLink.handler')
+			)
+			return handler(opts)
+		}),
 })
