@@ -154,7 +154,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	})
 
 	const addOrLink = isLocation ? (
-		<Menu keepMounted>
+		<Menu keepMounted withinPortal>
 			<Menu.Target>
 				<Link variant={variants.Link.inlineInverted}>
 					<Group noWrap spacing={4}>

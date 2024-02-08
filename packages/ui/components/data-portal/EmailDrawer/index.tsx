@@ -95,8 +95,11 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 			onSuccess: () => apiUtils.orgEmail.invalidate(),
 		})
 		useEffect(() => {
-			if (createNew && hasLocationId !== null) {
-				setFormValue('linkLocationId', hasLocationId)
+			if (createNew) {
+				setFormValue('published', true)
+				if (hasLocationId !== null) {
+					setFormValue('linkLocationId', hasLocationId)
+				}
 			}
 		}, [createNew, hasLocationId, setFormValue])
 		useEffect(() => {
