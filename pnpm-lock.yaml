@@ -699,6 +699,9 @@ importers:
       geolib:
         specifier: 3.3.4
         version: 3.3.4
+      js-object-utils:
+        specifier: 1.4.2
+        version: 1.4.2
       just-compact:
         specifier: 3.2.0
         version: 3.2.0
@@ -17489,6 +17492,10 @@ packages:
 
   /js-cookie@2.2.1:
     resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
+    dev: false
+
+  /js-object-utils@1.4.2:
+    resolution: {integrity: sha512-aiA9l6dk+jhLZ0AriWig8C+ZFeKvz4UiyjaLl+4mSPmdB0ZFzNB74k6wYaq51VG3V7F5KDzq8DYEITmcGoslkQ==}
     dev: false
 
   /js-tokens@4.0.0:

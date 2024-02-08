@@ -35,6 +35,7 @@
 		"crud-object-diff": "2.3.6",
 		"geo-tz": "8.0.1",
 		"geolib": "3.3.4",
+		"js-object-utils": "1.4.2",
 		"just-compact": "3.2.0",
 		"just-filter-object": "3.2.0",
 		"just-flush": "2.3.0",

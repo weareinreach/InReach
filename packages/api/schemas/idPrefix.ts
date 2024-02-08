@@ -8,3 +8,4 @@ export const prefixedId = (model: IdPrefix | IdPrefix[]) => {
 		: new RegExp(`^${idPrefix[model]}_\\w+$`)
 	return z.string().regex(regEx)
 }
+export { idPrefix, type IdPrefix }
