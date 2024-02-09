@@ -389,6 +389,7 @@ model UserMail {
   @@index([toUserId])
   @@index([fromUserId])
   @@index([responseToId])
+  @@index([fromUserId, toUserId])
 }
 
 /// Main organization definition
@@ -449,6 +450,8 @@ model Organization {
   @@index([name(sort: Asc)])
   @@index([published, deleted])
   @@index([slug])
+  @@index([slug, published, deleted])
+  @@index([id, published(sort: Desc), deleted])
 }
 
 model SlugRedirect {
@@ -501,6 +504,7 @@ model OrgEmail {
 
   @@index([lastName(sort: Asc), firstName])
   @@index([email])
+  @@index([id, published(sort: Desc), deleted])
 }
 
 /// Org phone numbers - can be general or location specific
@@ -543,7 +547,9 @@ model OrgPhone {
   updatedAt DateTime @updatedAt
 
   internalNotes InternalNote[]
+
   //@@schema("org")
+  @@index([id, published(sort: Desc), deleted])
 }
 
 /// Organization's social media links
@@ -558,13 +564,12 @@ model OrgSocialMedia {
   service   SocialMediaService @relation(fields: [serviceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   serviceId String
 
-  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organization   Organization?            @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String?
+  locations      OrgLocationSocialMedia[]
 
-  orgLocation     OrgLocation? @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgLocationId   String?
   /// associated only with location and not overall organization (for large orgs w/ multiple locations)
-  orgLocationOnly Boolean      @default(false)
+  orgLocationOnly Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -574,7 +579,7 @@ model OrgSocialMedia {
 
   @@index([serviceId])
   @@index([organizationId])
-  @@index([orgLocationId])
+  @@index([id, published(sort: Desc), deleted])
 }
 
 model OrgWebsite {
@@ -589,9 +594,9 @@ model OrgWebsite {
   organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String?
 
-  orgLocation     OrgLocation? @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgLocationId   String?
-  orgLocationOnly Boolean      @default(false)
+  services        OrgServiceWebsite[]
+  locations       OrgLocationWebsite[]
+  orgLocationOnly Boolean              @default(false)
 
   languages OrgWebsiteLanguage[]
 
@@ -602,7 +607,7 @@ model OrgWebsite {
   //@@schema("org")
 
   @@index([organizationId])
-  @@index([orgLocationId])
+  @@index([id, published(sort: Desc), deleted])
 }
 
 /// Org location information
@@ -646,12 +651,12 @@ model OrgLocation {
   allowedEditors LocationPermission[]
 
   emails       OrgLocationEmail[] /// if location specific
-  websites     OrgWebsite[] /// if location specific
   phones       OrgLocationPhone[] /// if location specific
   photos       OrgPhoto[]
   services     OrgLocationService[]
   serviceAreas ServiceArea?
-  socialMedia  OrgSocialMedia[] /// if location specific
+  socialMedia  OrgLocationSocialMedia[]
+  websites     OrgLocationWebsite[]
 
   // Outside API connections
   outsideApi    OutsideAPI[]
@@ -672,10 +677,8 @@ model OrgLocation {
   @@index([orgId])
   @@index([countryId])
   @@index([govDistId])
-  @@index([published, deleted])
   @@index([orgId, id, geo])
-  @@index([published])
-  @@index([deleted])
+  @@index([id, published(sort: Desc), deleted])
 }
 
 /// Organization photos
@@ -701,6 +704,7 @@ model OrgPhoto {
 
   @@index([orgId])
   @@index([orgLocationId])
+  @@index([id, published(sort: Desc), deleted])
 }
 
 /// Organization location/service hours
@@ -745,6 +749,7 @@ model OrgHours {
   @@index([orgLocId])
   @@index([orgServiceId])
   @@index([organizationId])
+  @@index([id, active])
 }
 
 model FreeText {
@@ -769,6 +774,7 @@ model FreeText {
 
   @@unique([key, ns])
   @@index([key])
+  @@index([ns, key])
 }
 
 /// Organization's offered services - access instructions & details
@@ -799,6 +805,7 @@ model OrgService {
   organizationId String?
   locations      OrgLocationService[]
   userLists      SavedService[]
+  websites       OrgServiceWebsite[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -811,7 +818,7 @@ model OrgService {
 
   @@index([organizationId(sort: Asc)])
   @@index([organizationId, published(sort: Desc), deleted])
-  @@index([published, deleted])
+  @@index([id, published(sort: Desc), deleted])
 }
 
 model ServiceArea {
@@ -1132,6 +1139,7 @@ model ServiceTagToCategory {
   active   Boolean  @default(true)
 
   @@id([categoryId, serviceTagId])
+  @@index([serviceTagId, categoryId])
 }
 
 /// Phone number descriptors
@@ -1697,6 +1705,7 @@ model RolePermission {
   //@@schema("relation")
 
   @@id([roleId, permissionId])
+  @@index([permissionId, roleId])
 }
 
 /// Assign permissions to user
@@ -1712,6 +1721,7 @@ model UserPermission {
   //@@schema("relation")
 
   @@id([userId, permissionId])
+  @@index([permissionId, userId])
 }
 
 /// Associate User to Org - w/ contact info
@@ -1735,6 +1745,7 @@ model UserToOrganization {
   //@@schema("relation")
 
   @@id([userId, organizationId])
+  @@index([organizationId, userId])
 }
 
 /// For certain permissions, attach Organization
@@ -1757,6 +1768,8 @@ model OrganizationPermission {
   //@@schema("relation")
 
   @@id([userId, permissionId, organizationId])
+  @@index([organizationId, userId])
+  @@index([userId, organizationId])
 }
 
 /// For certain permissions, attach Organization
@@ -1777,6 +1790,8 @@ model LocationPermission {
   //@@schema("relation")
 
   @@id([userId, permissionId, orgLocationId])
+  @@index([orgLocationId, userId])
+  @@index([userId, orgLocationId])
 }
 
 //
@@ -1820,6 +1835,7 @@ model ListSharedWith {
   //@@schema("relation")
 
   @@id([userId, listId])
+  @@index([listId, userId])
 }
 
 /// Organizations saved to list
@@ -1833,6 +1849,7 @@ model SavedOrganization {
   //@@schema("relation")
 
   @@id([listId, organizationId])
+  @@index([organizationId, listId])
 }
 
 /// Services saved to list
@@ -1846,6 +1863,7 @@ model SavedService {
   //@@schema("relation")
 
   @@id([listId, serviceId])
+  @@index([serviceId, listId])
 }
 
 /// Role assigned to user
@@ -1861,6 +1879,7 @@ model AssignedRole {
   //@@schema("relation")
 
   @@id([userId, roleId])
+  @@index([roleId, userId])
 }
 
 /// Link community to anon user survey
@@ -1911,6 +1930,7 @@ model OrganizationPhone {
   //@@schema("relation")
 
   @@id([organizationId, phoneId])
+  @@index([phoneId, organizationId])
 }
 
 model OrganizationEmail {
@@ -1924,6 +1944,7 @@ model OrganizationEmail {
   //@@schema("relation")
 
   @@id([orgEmailId, organizationId])
+  @@index([organizationId, orgEmailId])
 }
 
 /// Link multiple languages to a website entry
@@ -1938,6 +1959,7 @@ model OrgWebsiteLanguage {
   //@@schema("relation")
 
   @@id([orgWebsiteId, languageId])
+  @@index([languageId, orgWebsiteId])
 }
 
 /// Link multiple languages to a phone number
@@ -1952,6 +1974,7 @@ model OrgPhoneLanguage {
   //@@schema("relation")
 
   @@id([orgPhoneId, languageId])
+  @@index([languageId, orgPhoneId])
 }
 
 /// Link phone numbers to services
@@ -1966,6 +1989,7 @@ model OrgServicePhone {
   //@@schema("relation")
 
   @@id([orgPhoneId, serviceId])
+  @@index([serviceId, orgPhoneId])
 }
 
 /// Link emails to services
@@ -1980,6 +2004,21 @@ model OrgServiceEmail {
   //@@schema("relation")
 
   @@id([orgEmailId, serviceId])
+  @@index([serviceId, orgEmailId])
+}
+
+/// Link website to service
+model OrgServiceWebsite {
+  website      OrgWebsite @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgWebsiteId String
+  service      OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId    String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([orgWebsiteId, serviceId])
+  @@index([serviceId, orgWebsiteId])
 }
 
 /// Link emails to locations
@@ -1994,6 +2033,7 @@ model OrgLocationEmail {
   //@@schema("relation")
 
   @@id([orgEmailId, orgLocationId])
+  @@index([orgLocationId, orgEmailId])
 }
 
 model OrgLocationPhone {
@@ -2007,6 +2047,7 @@ model OrgLocationPhone {
   //@@schema("relation")
 
   @@id([orgLocationId, phoneId])
+  @@index([phoneId, orgLocationId])
 }
 
 /// Link services to organizations
@@ -2027,6 +2068,34 @@ model OrgLocationService {
   @@index([orgLocationId])
   @@index([serviceId])
   @@index([active, serviceId])
+}
+
+/// Link website to location
+model OrgLocationWebsite {
+  location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId String
+  website       OrgWebsite  @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgWebsiteId  String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([orgLocationId, orgWebsiteId])
+  @@index([orgWebsiteId, orgLocationId])
+}
+
+/// Link Social Media to Location
+model OrgLocationSocialMedia {
+  location      OrgLocation    @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId String
+  socialMedia   OrgSocialMedia @relation(fields: [socialMediaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  socialMediaId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([orgLocationId, socialMediaId])
+  @@index([socialMediaId, orgLocationId])
 }
 
 /// Link tags to services

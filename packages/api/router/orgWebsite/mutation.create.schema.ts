@@ -32,7 +32,7 @@ export const ZCreateSchema = z
 			orgLocationOnly,
 			description,
 			organization: connectOneId(organizationId),
-			orgLocation: connectOneId(orgLocationId),
+			locations: orgLocationId ? { create: { orgLocationId } } : undefined,
 		})
 	})
 export type TCreateSchema = z.infer<typeof ZCreateSchema>

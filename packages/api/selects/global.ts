@@ -100,7 +100,7 @@ export const globalSelect = {
 				languages: { select: { language: this.language() } },
 				url: true,
 				isPrimary: true,
-				orgLocationId: true,
+				locations: { select: { orgLocationId: true } },
 				orgLocationOnly: true,
 			},
 		} satisfies Prisma.OrgWebsiteDefaultArgs

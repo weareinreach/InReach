@@ -18,7 +18,7 @@ export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'p
 			published: true,
 			serviceId: true,
 			organizationId: true,
-			orgLocationId: true,
+			locations: { select: { orgLocationId: true } },
 			orgLocationOnly: true,
 			service: {
 				select: { id: true, name: true, logoIcon: true },

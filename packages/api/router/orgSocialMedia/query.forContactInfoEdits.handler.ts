@@ -10,7 +10,7 @@ const whereId = (input: TForContactInfoEditsSchema): Prisma.OrgSocialMediaWhereI
 			return { organization: { id: input.parentId } }
 		}
 		case isIdFor('orgLocation', input.parentId): {
-			return { orgLocation: { id: input.parentId } }
+			return { locations: { some: { location: { id: input.parentId } } } }
 		}
 		default: {
 			return {}
