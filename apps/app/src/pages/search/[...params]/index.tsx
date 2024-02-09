@@ -1,5 +1,6 @@
 /* eslint-disable i18next/no-literal-string */
 import {
+	Box,
 	createStyles,
 	Divider,
 	Grid,
@@ -15,7 +16,7 @@ import compare from 'just-compare'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
 import { type JSX, memo, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
@@ -32,6 +33,7 @@ import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
+import { Link } from '~ui/components/core/Link'
 // import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
 // import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 
@@ -61,6 +63,27 @@ const useStyles = createStyles((theme) => ({
 		gap: rem(40),
 		[theme.fn.largerThan('sm')]: {
 			gap: rem(48),
+		},
+	},
+	banner: {
+		backgroundColor: theme.other.colors.secondary.cornflower,
+		...theme.other.utilityFonts.utility1,
+		color: theme.other.colors.secondary.white,
+		width: '100vw',
+		height: rem(52),
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		textAlign: 'center',
+		position: 'absolute',
+		[theme.fn.largerThan('sm')]: {
+			marginTop: rem(-40),
+		},
+		[theme.fn.largerThan('xl')]: {
+			marginTop: rem(-20),
+		},
+		[theme.fn.smallerThan('sm')]: {
+			height: rem(80),
 		},
 	},
 }))
@@ -187,13 +210,39 @@ const SearchResults = () => {
 	}, [])
 
 	if (error) return <>Error</>
+	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
 
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-			<Grid.Col xs={12} sm={12} pb={30}>
+			{showAlertMessage && (
+				<Box className={classes.banner}>
+					<Text variant={variants.Text.utility1white}>
+						<Trans
+							i18nKey='alerts.search-page-legislative-map'
+							ns='common'
+							components={{
+								ATLink: (
+									<Link
+										external
+										variant={variants.Link.inheritStyle}
+										href='https://www.erininthemorning.com/p/erins-2024-anti-trans-legislative'
+										target='_blank'
+									></Link>
+								),
+							}}
+						/>
+					</Text>
+				</Box>
+			)}
+			<Grid.Col
+				xs={12}
+				sm={12}
+				pb={30}
+				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
+			>
 				<Group spacing={20} w='100%' className={classes.searchControls}>
 					<Group maw={{ md: '50%', base: '100%' }} w='100%'>
 						<SearchBox
