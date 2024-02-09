@@ -10,7 +10,7 @@ const whereId = (input: TForContactInfoEditSchema): Prisma.OrgWebsiteWhereInput 
 			return { organization: { id: input.parentId } }
 		}
 		case isIdFor('orgLocation', input.parentId): {
-			return { orgLocation: { id: input.parentId } }
+			return { locations: { some: { location: { id: input.parentId } } } }
 		}
 
 		default: {
@@ -18,7 +18,7 @@ const whereId = (input: TForContactInfoEditSchema): Prisma.OrgWebsiteWhereInput 
 		}
 	}
 }
-export const forContactInfoEdit = async ({ ctx, input }: TRPCHandlerParams<TForContactInfoEditSchema>) => {
+export const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContactInfoEditSchema>) => {
 	try {
 		const result = await prisma.orgWebsite.findMany({
 			where: {
