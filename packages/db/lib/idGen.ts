@@ -1,6 +1,19 @@
 import { type Prisma } from '@prisma/client'
 import { Ulid } from 'id128'
 
+/**
+ * Tables that are not in the idPrefix or excludedTables
+ *
+ * If the type resolves to `never`, then everything is good. Otherwise, it will resolve to the missing table
+ * name(s)
+ *
+ * This is for utility purposes.
+ */
+type _TablesNotInIdPrefix = Exclude<
+	Prisma.ModelName,
+	Capitalize<keyof typeof idPrefix> | (typeof excludedTables)[number]
+>
+
 export const idPrefix = {
 	account: 'acct',
 	attribute: 'attr',
@@ -114,23 +127,16 @@ const excludedTables = [
 	'OrgServiceTag',
 	'ServiceAreaCountry',
 	'ServiceAreaDist',
-	'OrganizationAttribute',
-	'LocationAttribute',
-	'ServiceAttribute',
-	'ServiceAccessAttribute',
 	'AttributeToCategory',
 	'ServiceCategoryDefaultAttribute',
 	'ServiceTagDefaultAttribute',
 	'orgsearchresults',
-	'attributeandcategory',
-	'servicetagcategory',
 	'VerificationToken',
 	'TranslationNamespace',
 	'TranslationKey',
 	'OutsideAPIService',
 	'OrganizationPhone',
 	'OrganizationEmail',
-	'UserAttribute',
 	'AttributeNesting',
 	'ServiceTagNesting',
 	'ServiceTagCountry',
@@ -139,4 +145,7 @@ const excludedTables = [
 	'user_access_token',
 	'AuditTrail',
 	'ServiceTagToCategory',
+	'OrgLocationSocialMedia',
+	'OrgLocationWebsite',
+	'OrgServiceWebsite',
 ] as const // satisfies Prisma.ModelName[]

@@ -32,7 +32,7 @@ export const CreateOrgWebsiteSchema = z
 			orgLocationOnly,
 			description,
 			organization: connectOneId(organizationId),
-			orgLocation: connectOneId(orgLocationId),
+			locations: orgLocationId ? { create: { orgLocationId } } : undefined,
 		})
 	})
 
@@ -43,9 +43,7 @@ export const CreateNestedOrgWebsiteSchema = z
 	.array()
 	.transform((data) =>
 		Prisma.validator<
-			Prisma.Enumerable<
-				Prisma.OrgWebsiteCreateManyOrganizationInput | Prisma.OrgWebsiteCreateManyOrgLocationInput
-			>
+			Prisma.Enumerable<Prisma.OrgWebsiteCreateManyOrganizationInput | Prisma.OrgWebsite$locationsArgs>
 		>()(data)
 	)
 

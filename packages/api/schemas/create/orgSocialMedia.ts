@@ -25,7 +25,7 @@ export const CreateNestedOrgSocialMediaSchema = z
 	.transform((data) =>
 		Prisma.validator<
 			Prisma.Enumerable<
-				Prisma.OrgSocialMediaCreateManyOrganizationInput | Prisma.OrgSocialMediaCreateManyOrgLocationInput
+				Prisma.OrgSocialMediaCreateManyOrganizationInput | Prisma.OrgSocialMedia$locationsArgs
 			>
 		>()(data)
 	)
