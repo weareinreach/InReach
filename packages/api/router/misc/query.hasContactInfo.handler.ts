@@ -74,8 +74,8 @@ const whereId = (
 					locations: { some: { location: { id: input, ...isPublic } } },
 					...isPublic,
 				},
-				socialMedia: { locations: { every: { location: { id: input, ...isPublic }, ...isPublic } } },
-				website: { locations: { every: { location: { id: input, ...isPublic }, ...isPublic } } },
+				socialMedia: { locations: { every: { location: { id: input, ...isPublic } } }, ...isPublic },
+				website: { locations: { every: { location: { id: input, ...isPublic } } }, ...isPublic },
 			}
 		}
 		case isIdFor('orgService', input): {

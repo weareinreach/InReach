@@ -51,12 +51,9 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const { slug, orgLocationId } = query
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
-	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query, {
-		enabled: router.isReady,
-	})
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
-	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
-		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
+	const { data: isSaved } = api.savedList.isSaved.useQuery(data?.organization?.id ?? '', {
+		enabled: status === 'success' && Boolean(data?.organization?.id),
 	})
 	const { data: alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },
@@ -105,9 +102,9 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 		}
 	}, [formMethods.formState, unsaved])
 	useEffect(() => {
-		if (data && status === 'success' && orgData && orgDataStatus === 'success') setLoading(false)
-	}, [data, status, orgData, orgDataStatus])
-	if (loading || !data || !orgData) return <OrgLocationPageLoading />
+		if (data && status === 'success') setLoading(false)
+	}, [data, status])
+	if (loading || !data) return <OrgLocationPageLoading />
 
 	const {
 		// emails,
@@ -123,7 +120,9 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	return (
 		<>
 			<Head>
-				<title>{t('page-title.edit-mode', { ns: 'common', title: `${orgData.name} - ${data.name}` })}</title>
+				<title>
+					{t('page-title.edit-mode', { ns: 'common', title: `${data.organization.name} - ${data.name}` })}
+				</title>
 			</Head>
 			<FormProvider {...formMethods}>
 				<Grid.Col xs={12} sm={8} order={1}>
@@ -131,14 +130,14 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 						breadcrumbProps={{
 							option: 'back',
 							backTo: 'dynamicText',
-							backToText: orgData.name,
+							backToText: data.organization.name,
 							onClick: () =>
 								router.push({
 									pathname: '/org/[slug]/edit',
-									query: { slug: orgData.slug },
+									query: { slug: data.organization.slug },
 								}),
 						}}
-						organizationId={orgData.id}
+						organizationId={data.organization.id}
 						saved={Boolean(isSaved)}
 					/>
 					<Stack pt={24} align='flex-start' spacing={40}>
@@ -147,21 +146,21 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 								<AlertMessage
 									key={alert.key}
 									iconKey={alert.icon}
-									ns={orgData.id}
+									ns={data.organization.id}
 									textKey={alert.key}
 									defaultText={alert.text}
 								/>
 							))}
 						<ListingBasicInfo
 							data={{
-								name: data.name || orgData.name,
+								name: data.name || data.organization.name,
 								id: data.id,
 								slug,
 								locations: [data],
 								description,
-								lastVerified: orgData.lastVerified,
+								lastVerified: data.organization.lastVerified,
 								attributes,
-								isClaimed: orgData.isClaimed,
+								isClaimed: data.organization.isClaimed,
 							}}
 							edit
 							location
@@ -264,7 +263,6 @@ export const getServerSideProps = async ({
 			'country',
 			'gov-dist',
 		]),
-		ssg.organization.getBySlug.prefetch({ slug }),
 		ssg.location.forLocationPageEdits.prefetch({ id }),
 		ssg.location.getAlerts.prefetch({ id }),
 	])
