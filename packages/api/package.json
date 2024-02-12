@@ -24,7 +24,7 @@
 		"@trpc/next": "10.45.1",
 		"@trpc/react-query": "10.45.1",
 		"@trpc/server": "10.45.1",
-		"@vercel/edge-config": "0.4.1",
+		"@vercel/edge-config": "1.0.0",
 		"@vercel/kv": "1.0.1",
 		"@weareinreach/auth": "workspace:*",
 		"@weareinreach/crowdin": "workspace:*",
