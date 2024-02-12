@@ -1,4 +1,4 @@
-import { diff as objectDiff, type StringIndexableObject } from 'js-object-utils'
+import { diff as objectDiff, type StringIndexableObject } from 'useful-typescript-functions'
 
 import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'

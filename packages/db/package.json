@@ -62,7 +62,7 @@
 		"@octokit/core": "5.1.0",
 		"@terraformer/wkt": "2.2.0",
 		"@turbo/gen": "1.12.3",
-		"@turf/helpers": "6.5.0",
+		"@turf/helpers": "7.0.0-alpha.113",
 		"@types/eslint": "8.56.2",
 		"@types/inquirer": "9.0.7",
 		"@types/inquirer-autocomplete-prompt": "3.0.3",
