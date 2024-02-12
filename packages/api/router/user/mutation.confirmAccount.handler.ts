@@ -1,4 +1,4 @@
-import { confirmAccount as cognitoConfirmAccount } from '@weareinreach/auth/lib/confirmAccount'
+import { confirmAccount as cognitoConfirmAccount } from '@weareinreach/auth/confirmAccount'
 import { prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 

@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server'
 
-import { deleteAccount as cognitoDeleteAccount } from '@weareinreach/auth/lib/deleteAccount'
-import { userLogin } from '@weareinreach/auth/lib/userLogin'
-import { userSignOut } from '@weareinreach/auth/lib/userLogout'
+import { deleteAccount as cognitoDeleteAccount } from '@weareinreach/auth/deleteAccount'
+import { userLogin } from '@weareinreach/auth/userLogin'
+import { userSignOut } from '@weareinreach/auth/userLogout'
 import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 

@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server'
 
-import { createCognitoUser } from '@weareinreach/auth/lib/createUser'
+import { createCognitoUser } from '@weareinreach/auth/createUser'
 import { getAuditedClient, Prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 

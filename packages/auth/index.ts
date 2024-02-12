@@ -1,4 +1,4 @@
-import { type DefaultSession, type DefaultUser, type User } from 'next-auth/core/types'
+import { type DefaultSession, type DefaultUser, type User } from 'next-auth'
 import { type DefaultJWT } from 'next-auth/jwt'
 
 export { getServerSession, checkServerPermissions } from './next-auth/session.server'
@@ -13,7 +13,7 @@ export * from './lib'
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-declare module 'next-auth/core/types' {
+declare module 'next-auth' {
 	export interface Session extends DefaultSession {
 		user: User
 	}

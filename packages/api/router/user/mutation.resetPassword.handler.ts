@@ -1,4 +1,4 @@
-import { resetPassword as cognitoResetPassword } from '@weareinreach/auth/lib/resetPassword'
+import { resetPassword as cognitoResetPassword } from '@weareinreach/auth/resetPassword'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TResetPasswordSchema } from './mutation.resetPassword.schema'
