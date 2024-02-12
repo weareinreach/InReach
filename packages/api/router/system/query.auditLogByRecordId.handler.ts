@@ -1,6 +1,5 @@
-import { diff as objectDiff, type StringIndexableObject } from 'useful-typescript-functions'
-
 import { prisma } from '@weareinreach/db'
+import { diff as objectDiff, type StringIndexableObject } from '@weareinreach/util/diff'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
