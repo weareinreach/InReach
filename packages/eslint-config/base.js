@@ -1,4 +1,11 @@
 /* eslint-disable node/no-process-env */
+const tsconfigGlobs = [
+	'./packages/*/tsconfig.json',
+	'./apps/*/tsconfig.json',
+	'./lambdas/*/tsconfig.json',
+	'./tsconfig.json',
+]
+
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
 	plugins: ['codegen', 'turbo', 'node', 'deprecation', /*'import',*/ '@tanstack/query'],
@@ -107,7 +114,7 @@ const config = {
 	},
 	overrides: [
 		{
-			files: ['**/index.tsx?'],
+			files: ['./**/index.tsx?'],
 			rules: {
 				'import/no-unused-modules': 0,
 			},
@@ -126,7 +133,7 @@ const config = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		EXPERIMENTAL_useProjectService: true,
-		project: ['./packages/*/tsconfig.json', './apps/*/tsconfig.json', './tsconfig.json'],
+		project: tsconfigGlobs,
 		emitDecoratorMetadata: true,
 		ecmaVersion: 2020,
 	},
@@ -144,7 +151,7 @@ const config = {
 			node: true,
 			typescript: {
 				alwaysTryTypes: true,
-				project: ['./packages/*/tsconfig.json', './apps/*/tsconfig.json', './tsconfig.json'],
+				project: tsconfigGlobs,
 			},
 		},
 	},
