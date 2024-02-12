@@ -57,7 +57,7 @@
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
-		"aws-jwt-verify": "4.0.0",
+		"aws-jwt-verify": "4.0.1",
 		"tiny-invariant": "1.3.1",
 		"tslog": "4.9.2",
 		"zod": "3.22.4"
