@@ -22,5 +22,23 @@ export const systemRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	auditLogByActorId: permissionedProcedure('viewUserReviews')
+		.input(schema.ZAuditLogByActorIdSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('auditLogByActorId'),
+				() => import('./query.auditLogByActorId.handler')
+			)
+			return handler(opts)
+		}),
+	auditLogByRecordId: permissionedProcedure('viewUserReviews')
+		.input(schema.ZAuditLogByRecordIdSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('auditLogByRecordId'),
+				() => import('./query.auditLogByRecordId.handler')
+			)
+			return handler(opts)
+		}),
 	// userRoles: userRoleSubRouter,
 })

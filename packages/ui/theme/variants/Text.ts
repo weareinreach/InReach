@@ -33,6 +33,13 @@ export const Text = {
 			color: theme.other.colors.secondary.darkGray,
 		},
 	}),
+	utility3darkGrayStrikethru: (theme) => ({
+		root: {
+			...theme.other.utilityFonts.utility3,
+			color: theme.other.colors.secondary.darkGray,
+			textDecoration: 'line-through',
+		},
+	}),
 	utility4darkGray: (theme) => ({
 		root: {
 			...theme.other.utilityFonts.utility4,

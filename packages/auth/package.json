@@ -10,6 +10,35 @@
 		},
 		"./*": {
 			"default": "./*"
+		},
+		"./confirmAccount": {
+			"default": "./lib/confirmAccount.ts"
+		},
+		"./createUser": {
+			"default": "./lib/createUser.ts"
+		},
+		"./deleteAccount": {
+			"default": "./lib/deleteAccount.ts"
+		},
+		"./forgotPassword": {
+			"default": "./lib/forgotPassword.ts"
+		},
+		"./next-auth/session": {
+			"browser": "./next-auth/session.browser.ts",
+			"default": "./next-auth/session.server.ts"
+		},
+		"./next-auth/types": {
+			"default": "./next-auth/types.ts",
+			"types": "./next-auth/types.ts"
+		},
+		"./resetPassword": {
+			"default": "./lib/resetPassword.ts"
+		},
+		"./userLogin": {
+			"default": "./lib/userLogin.ts"
+		},
+		"./userLogout": {
+			"default": "./lib/userLogout.ts"
 		}
 	},
 	"main": "./index.ts",

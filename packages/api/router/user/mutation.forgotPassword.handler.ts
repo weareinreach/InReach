@@ -1,4 +1,4 @@
-import { forgotPassword as cognitoForgotPassword } from '@weareinreach/auth/lib/forgotPassword'
+import { forgotPassword as cognitoForgotPassword } from '@weareinreach/auth/forgotPassword'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForgotPasswordSchema } from './mutation.forgotPassword.schema'

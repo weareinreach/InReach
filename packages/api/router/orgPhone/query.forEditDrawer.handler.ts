@@ -1,3 +1,5 @@
+import parsePhoneNumber, { isSupportedCountry } from 'libphonenumber-js'
+
 import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
@@ -55,15 +57,33 @@ export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerS
 		})
 		if (!result) return null
 		const orgId = await getOrgId(input.id)
-		const { country, description, ...rest } = result
+		const { country, description, number, ext, ...rest } = result
 
-		const reformatted = {
-			...rest,
-			description: description ? description?.tsKey?.text : null,
-			orgId,
-			country: country?.cca2,
+		const parsedPhone = parsePhoneNumber(number, isSupportedCountry(country.cca2) ? country.cca2 : undefined)
+
+		if (typeof parsedPhone !== 'undefined') {
+			if (ext) {
+				parsedPhone.setExt(ext)
+			}
+
+			return {
+				...rest,
+				number: parsedPhone.formatNational(),
+				ext,
+				description: description ? description?.tsKey?.text : null,
+				orgId,
+				country: country?.cca2,
+			}
+		} else {
+			return {
+				...rest,
+				number,
+				ext,
+				description: description ? description?.tsKey?.text : null,
+				orgId,
+				country: country?.cca2,
+			}
 		}
-		return reformatted
 	} catch (error) {
 		handleError(error)
 	}

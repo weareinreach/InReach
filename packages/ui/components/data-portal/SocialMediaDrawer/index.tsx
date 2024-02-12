@@ -13,6 +13,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { type ComponentPropsWithoutRef, forwardRef, type ReactElement, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
@@ -40,13 +41,13 @@ const FormSchema = z.object({
 	deleted: z.boolean(),
 	serviceId: z.string(),
 	organizationId: prefixedId('organization').nullable(),
-	orgLocationId: prefixedId('orgLocation').nullable(),
 	orgLocationOnly: z.boolean(),
 	service: z.object({
 		id: prefixedId('socialMediaService'),
 		name: z.string(),
 		logoIcon: z.string(),
 	}),
+	linkLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 interface ItemProps extends ComponentPropsWithoutRef<'div'> {
@@ -65,6 +66,7 @@ SelectItem.displayName = 'SelectItem'
 
 const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
+		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 		const [socialId] = useState(createNew ? generateId('orgSocialMedia') : id)
 		const { data, isFetching } = api.orgSocialMedia.forEditDrawer.useQuery(
 			{ id: socialId },
@@ -73,7 +75,14 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
-		const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
+		const {
+			control,
+			handleSubmit,
+			formState,
+			reset,
+			getValues,
+			setValue: setFormValue,
+		} = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
 			values: data ? data : undefined,
 		})
@@ -99,6 +108,18 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 				setIsSaved(true)
 			},
 		})
+		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
+		const unlinkFromLocation = api.orgSocialMedia.locationLink.useMutation({
+			onSuccess: () => apiUtils.orgSocialMedia.invalidate(),
+		})
+		useEffect(() => {
+			if (createNew) {
+				setFormValue('published', true)
+				if (hasLocationId !== null) {
+					setFormValue('linkLocationId', hasLocationId)
+				}
+			}
+		}, [createNew, hasLocationId, setFormValue])
 		useEffect(() => {
 			if (isSaved && formIsDirty) {
 				setIsSaved(false)
@@ -113,13 +134,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 		}
 		return (
 			<>
-				<Drawer.Root
-					onClose={handleClose}
-					opened={drawerOpened}
-					position='right'
-					zIndex={10001}
-					keepMounted={false}
-				>
+				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
 						<form
@@ -158,10 +173,27 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 											itemComponent={SelectItem}
 										/>
 										<TextInput label='Website URL' required name='url' control={control} />
-										<Stack>
-											<Checkbox label='Published' name='published' control={control} />
-											<Checkbox label='Deleted' name='deleted' control={control} />
-										</Stack>
+										<Group noWrap position='apart' w='100%'>
+											<Stack>
+												<Checkbox label='Published' name='published' control={control} />
+												<Checkbox label='Deleted' name='deleted' control={control} />
+											</Stack>
+											{hasLocationId !== null && (
+												<Button
+													leftIcon={<Icon icon='carbon:unlink' />}
+													onClick={() =>
+														unlinkFromLocation.mutate({
+															orgSocialMediaId: socialId,
+															orgLocationId: hasLocationId,
+															action: 'unlink',
+														})
+													}
+													disabled={createNew}
+												>
+													Unlink from this location
+												</Button>
+											)}
+										</Group>
 									</Stack>
 								</Stack>
 							</Drawer.Body>

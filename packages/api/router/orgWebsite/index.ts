@@ -43,4 +43,22 @@ export const orgWebsiteRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	getLinkOptions: permissionedProcedure('updateOrgWebsite')
+		.input(schema.ZGetLinkOptionsSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('getLinkOptions'),
+				() => import('./query.getLinkOptions.handler')
+			)
+			return handler(opts)
+		}),
+	locationLink: permissionedProcedure('updateOrgWebsite')
+		.input(schema.ZLocationLinkSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('locationLink'),
+				() => import('./mutation.locationLink.handler')
+			)
+			return handler(opts)
+		}),
 })

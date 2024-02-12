@@ -2,7 +2,6 @@
 import { type StorybookConfig } from '@storybook/nextjs'
 import isChromatic from 'chromatic/isChromatic'
 import dotenv from 'dotenv'
-// @ts-expect-error It is a valid package..
 import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import { mergeAndConcat } from 'merge-anything'
 import { type PropItem } from 'react-docgen-typescript'
@@ -114,7 +113,7 @@ const config: StorybookConfig = {
 			const plugin = new I18NextHMRPlugin({
 				localesDir: path.resolve(__dirname, '../../../apps/app/public/locales'),
 			})
-
+			// @ts-expect-error It doesn't like the i18nHMRPlugin for some reason...
 			Array.isArray(config.plugins) ? config.plugins.push(plugin) : (config.plugins = [plugin])
 		}
 

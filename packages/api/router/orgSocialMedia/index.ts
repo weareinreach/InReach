@@ -52,4 +52,22 @@ export const orgSocialMediaRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	getLinkOptions: permissionedProcedure('updateSocialMedia')
+		.input(schema.ZGetLinkOptionsSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('getLinkOptions'),
+				() => import('./query.getLinkOptions.handler')
+			)
+			return handler(opts)
+		}),
+	locationLink: permissionedProcedure('updateSocialMedia')
+		.input(schema.ZLocationLinkSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('locationLink'),
+				() => import('./mutation.locationLink.handler')
+			)
+			return handler(opts)
+		}),
 })

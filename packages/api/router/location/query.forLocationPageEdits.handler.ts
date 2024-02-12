@@ -151,9 +151,28 @@ export const forLocationPageEdits = async ({ input }: TRPCHandlerParams<TForLoca
 					select: { id: true },
 				},
 				services: { select: { serviceId: true } },
+				organization: {
+					select: {
+						id: true,
+						name: true,
+						slug: true,
+						lastVerified: true,
+						allowedEditors: { where: { authorized: true }, select: { userId: true } },
+					},
+				},
 			},
 		})
-		return location
+		const { organization, ...record } = location
+		const { allowedEditors, ...org } = organization
+		const formatted = {
+			...record,
+			organization: {
+				...org,
+				isClaimed: allowedEditors.length !== 0,
+			},
+		}
+
+		return formatted
 	} catch (error) {
 		handleError(error)
 	}

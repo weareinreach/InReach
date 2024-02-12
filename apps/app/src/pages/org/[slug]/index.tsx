@@ -264,7 +264,6 @@ export const getStaticProps = async ({
 			getServerSideTranslations(locale, formatNS(orgId)),
 			ssg.organization.forOrgPage.prefetch({ slug }),
 		])
-		// await ssg.organization.getBySlug.prefetch({ slug })
 
 		const props = {
 			trpcState: ssg.dehydrate(),

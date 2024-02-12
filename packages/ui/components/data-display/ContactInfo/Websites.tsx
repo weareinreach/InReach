@@ -1,7 +1,8 @@
-import { Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { type ReactElement } from 'react'
 
+import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { WebsiteDrawer } from '~ui/components/data-portal/WebsiteDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -76,12 +77,25 @@ const WebsitesDisplay = ({ parentId = '', passedData, direct, locationOnly, webs
 
 const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	const slug = useSlug()
+	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
+
 	const { classes } = useCommonStyles()
 	const { data } = api.orgWebsite.forContactInfoEdit.useQuery({ parentId })
+	const isLocation = isIdFor('orgLocation', parentId)
+	const { data: linkableWebsites } = api.orgWebsite.getLinkOptions.useQuery(
+		{
+			slug,
+			locationId: parentId,
+		},
+		{ enabled: isLocation }
+	)
+	const linkToLocation = api.orgWebsite.locationLink.useMutation({
+		onSuccess: () => apiUtils.orgWebsite.invalidate(),
+	})
 	// eslint-disable-next-line no-useless-escape
 	const domainExtract = /https?:\/\/([^:\/\n?]+)/
 
@@ -122,14 +136,73 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		return item
 	})
 
+	const addOrLink = isLocation ? (
+		<Menu keepMounted withinPortal>
+			<Menu.Target>
+				<Link variant={variants.Link.inlineInverted}>
+					<Group noWrap spacing={4}>
+						<Icon icon='carbon:document-add' height={20} />
+						<Text variant={variants.Text.utility3}>Link or create new...</Text>
+					</Group>
+				</Link>
+			</Menu.Target>
+			<Menu.Dropdown>
+				{linkableWebsites?.map(({ id, deleted, description, url, published }) => {
+					const urlTextVariant =
+						!published && deleted
+							? variants.Text.utility3darkGrayStrikethru
+							: deleted
+								? variants.Text.utility3darkGrayStrikethru
+								: variants.Text.utility3
+					const descTextVariant =
+						!published && deleted
+							? variants.Text.utility4darkGrayStrikethru
+							: deleted
+								? variants.Text.utility4darkGrayStrikethru
+								: variants.Text.utility4
+					return (
+						<Menu.Item
+							key={id}
+							onClick={() =>
+								linkToLocation.mutate({ orgLocationId: parentId, orgWebsiteId: id, action: 'link' })
+							}
+						>
+							<Group noWrap>
+								<Icon icon='carbon:link' />
+								<Stack spacing={0}>
+									<Text variant={urlTextVariant}>{url}</Text>
+									<Text variant={descTextVariant}>{description}</Text>
+								</Stack>
+							</Group>
+						</Menu.Item>
+					)
+				})}
+				<Menu.Divider />
+				<Menu.Item key='new'>
+					<WebsiteDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+						<Group noWrap>
+							<Icon icon='carbon:add-alt' />
+							<Text variant={variants.Text.utility3}>Create new</Text>
+						</Group>
+					</WebsiteDrawer>
+				</Menu.Item>
+			</Menu.Dropdown>
+		</Menu>
+	) : (
+		<WebsiteDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+			<Group noWrap>
+				<Icon icon='carbon:add' />
+				<Text variant={variants.Text.utility3}>Create new</Text>
+			</Group>
+		</WebsiteDrawer>
+	)
+
 	return (
 		<Stack spacing={12}>
 			<Title order={3}>{t('website', { count: output?.length ?? 1 })}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
-				<WebsiteDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-					<Text variant={variants.Text.utility3}>➕ Create new</Text>
-				</WebsiteDrawer>
+				{addOrLink}
 			</Stack>
 		</Stack>
 	)
