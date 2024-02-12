@@ -13,6 +13,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { forwardRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
@@ -36,10 +37,13 @@ const FormSchema = z.object({
 	description: z.string().optional(),
 	published: z.boolean(),
 	deleted: z.boolean(),
+	linkLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
+		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
+
 		const [websiteId] = useState(createNew ? generateId('orgWebsite') : id)
 		const { data, isFetching } = api.orgWebsite.forEditDrawer.useQuery(
 			{ id: websiteId },
@@ -48,7 +52,14 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
-		const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
+		const {
+			control,
+			handleSubmit,
+			formState,
+			reset,
+			getValues,
+			setValue: setFormValue,
+		} = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
 			values: data ? data : undefined,
 		})
@@ -56,6 +67,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
+		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 
 		const siteUpdate = api.orgWebsite.update.useMutation({
 			onSettled: (data) => {
@@ -67,6 +79,18 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 				setIsSaved(true)
 			},
 		})
+
+		const unlinkFromLocation = api.orgWebsite.locationLink.useMutation({
+			onSuccess: () => apiUtils.orgWebsite.invalidate(),
+		})
+		useEffect(() => {
+			if (createNew) {
+				setFormValue('published', true)
+				if (hasLocationId !== null) {
+					setFormValue('linkLocationId', hasLocationId)
+				}
+			}
+		}, [createNew, hasLocationId, setFormValue])
 		useEffect(() => {
 			if (isSaved && formIsDirty) {
 				setIsSaved(false)
@@ -81,13 +105,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 		}
 		return (
 			<>
-				<Drawer.Root
-					onClose={handleClose}
-					opened={drawerOpened}
-					position='right'
-					zIndex={10001}
-					keepMounted={false}
-				>
+				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
 						<form
@@ -119,10 +137,27 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 									<Stack spacing={24} align='flex-start' w='100%'>
 										<TextInput label='Website URL' required name='url' control={control} />
 										<TextInput label='Description' name='description' control={control} />
-										<Stack>
-											<Checkbox label='Published' name='published' control={control} />
-											<Checkbox label='Deleted' name='deleted' control={control} />
-										</Stack>
+										<Group noWrap position='apart' w='100%'>
+											<Stack>
+												<Checkbox label='Published' name='published' control={control} />
+												<Checkbox label='Deleted' name='deleted' control={control} />
+											</Stack>
+											{hasLocationId !== null && (
+												<Button
+													leftIcon={<Icon icon='carbon:unlink' />}
+													onClick={() =>
+														unlinkFromLocation.mutate({
+															orgWebsiteId: websiteId,
+															orgLocationId: hasLocationId,
+															action: 'unlink',
+														})
+													}
+													disabled={createNew}
+												>
+													Unlink from this location
+												</Button>
+											)}
+										</Group>
 									</Stack>
 								</Stack>
 							</Drawer.Body>
