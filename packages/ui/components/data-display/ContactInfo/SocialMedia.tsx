@@ -1,10 +1,12 @@
-import { Group, List, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Group, List, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
+import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { Link } from '~ui/components/core/Link'
 import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { SocialMediaDrawer } from '~ui/components/data-portal/SocialMediaDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -39,11 +41,93 @@ const SocialMediaDisplay = ({ parentId = '', passedData, locationOnly }: SocialM
 }
 
 const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
+	const apiUtils = api.useUtils()
+	const slug = useSlug()
 	const { data } = api.orgSocialMedia.forContactInfoEdits.useQuery({ parentId })
 	const { t } = useTranslation(['common'])
 	const { classes } = useCommonStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
+	const isLocation = isIdFor('orgLocation', parentId)
+	const { data: linkableSocials } = api.orgSocialMedia.getLinkOptions.useQuery(
+		{ slug, locationId: parentId },
+		{
+			enabled: isLocation,
+		}
+	)
+	const linkToLocation = api.orgSocialMedia.locationLink.useMutation({
+		onSuccess: () => apiUtils.orgSocialMedia.invalidate(),
+	})
+	const addOrLink = isLocation ? (
+		<Menu keepMounted withinPortal>
+			<Menu.Target>
+				<Link variant={variants.Link.inlineInverted}>
+					<Group noWrap spacing={4}>
+						<Icon icon='carbon:document-add' height={20} />
+						<Text variant={variants.Text.utility3}>Link or create new...</Text>
+					</Group>
+				</Link>
+			</Menu.Target>
+			<Menu.Dropdown>
+				{linkableSocials?.map(({ id, deleted, service, published, url }) => {
+					const socialTextVariant =
+						!published && deleted
+							? variants.Text.utility3darkGrayStrikethru
+							: deleted
+								? variants.Text.utility3darkGrayStrikethru
+								: variants.Text.utility3
+					const descTextVariant =
+						!published && deleted
+							? variants.Text.utility4darkGrayStrikethru
+							: deleted
+								? variants.Text.utility4darkGrayStrikethru
+								: variants.Text.utility4
+					return (
+						<Menu.Item
+							key={id}
+							onClick={() =>
+								linkToLocation.mutate({ orgLocationId: parentId, orgSocialMediaId: id, action: 'link' })
+							}
+						>
+							<Group noWrap>
+								<Icon icon='carbon:link' />
+								<Stack spacing={0}>
+									<Group noWrap spacing={8}>
+										<Icon icon={service.logoIcon} />
+										<Text variant={socialTextVariant}>{service.name}</Text>
+									</Group>
+
+									<Text variant={descTextVariant}>{url}</Text>
+								</Stack>
+							</Group>
+						</Menu.Item>
+					)
+				})}
+				<Menu.Divider />
+				<Menu.Item key='new'>
+					<SocialMediaDrawer
+						key='new'
+						component={Link}
+						external
+						variant={variants.Link.inlineInverted}
+						createNew
+					>
+						<Group noWrap>
+							<Icon icon='carbon:add-alt' />
+							<Text variant={variants.Text.utility3}>Create new</Text>
+						</Group>
+					</SocialMediaDrawer>
+				</Menu.Item>
+			</Menu.Dropdown>
+		</Menu>
+	) : (
+		<SocialMediaDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+			<Group noWrap>
+				<Icon icon='carbon:add' />
+				<Text variant={variants.Text.utility3}>Create new</Text>
+			</Group>
+		</SocialMediaDrawer>
+	)
 
 	return (
 		<Stack spacing={12}>
@@ -100,19 +184,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 							</List.Item>
 						)
 					})}
-					<List.Item>
-						<SocialMediaDrawer
-							key='new'
-							component={Link}
-							external
-							variant={variants.Link.inlineInverted}
-							createNew
-						>
-							<Group noWrap spacing={8}>
-								<Text variant={variants.Text.utility3}>➕ Create new</Text>
-							</Group>
-						</SocialMediaDrawer>
-					</List.Item>
+					<List.Item>{addOrLink}</List.Item>
 				</List>
 			</Stack>
 		</Stack>
