@@ -15,6 +15,9 @@
 	"alert-message-1": "<strong>COVID-19政策：</strong> 随着针对COVID-19预防工作的新闻和最佳做法每天都在迅速变化。 Whitman-Walker Health 继续更新其服务，以反映预防方面的建议。 请检查他们的网站获取最新信息。",
 	"alert-message-instructions": "输入提示信息",
 	"alert-title-instructions": "输入消息的标题...",
+	"alerts": {
+		"search-page-legislative-map": "这张<ATLink>反变性立法风险地图</ATLink>显示了美国 50 个州和华盛顿特区两年内反变性法律的风险。"
+	},
 	"all-service-category": "全部 {{serviceCategory}}",
 	"anti-hate": {
 		"body": "使用 InReach 即表示您同意不将此资源信息用于有害、仇恨、仇视同性恋、仇视变性人、仇视外国人和/或种族主义的目的或评论。",

@@ -15,6 +15,9 @@
 	"alert-message-1": "<strong>COVID-19:</strong> Новые изменения и методы борьбы с COVID-19 каждый день меняются. Медицинский центр медицинский центр Уитмена-Уокер предоставляет услуги с учетом рекомендаций по профилактике заболевания. Пожалуйста, ознакомьтесь с наиболее актуальной информацией на сайте медицинского центра.",
 	"alert-message-instructions": "Введите текст оповещения",
 	"alert-title-instructions": "Введите заголовок оповещения",
+	"alerts": {
+		"search-page-legislative-map": "Эта <ATLink>карта антитранс-законодательных рисков</ATLink> показывает двухлетний риск антитранс-законов во всех 50 штатах и округе Колумбия."
+	},
 	"all-service-category": "Все {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Пользуясь ресурсами InReach, вы соглашаетесь не использовать предоставляемую информацию в неинформативных целях гомофобного, трансфобного, ксенофобного и/или расистского характера.",
@@ -66,9 +69,9 @@
 		"modal-title": "Настройки файлов cookies"
 	},
 	"count": {
-		"result_one": "{{count}} результат",
 		"result_few": "{{count}} результатов",
 		"result_many": "{{count}} результатов",
+		"result_one": "{{count}} результат",
 		"result_other": "{{count}} результата"
 	},
 	"country-select": "Выберите страну",
@@ -198,7 +201,7 @@
 	"other-specify": "Иное (просьба указать)",
 	"page-title": {
 		"base": "{{title}} - InReach",
-		"edit-mode": "{{- title}} [РЕЖИМ] - Вход",
+		"edit-mode": "{{- title}} [РЕЖИМ РЕДАКТИРОВАНИЯ] — InReach",
 		"search-results": "Результаты поиска"
 	},
 	"password": "Пароль",
@@ -217,10 +220,14 @@
 	"password-reset-success": "<Text>Пожалуйста, <LoginModal>войдите,</LoginModal> используя ваш новый пароль.</Text>",
 	"password-saved": "Пароль сохранен!",
 	"photo-count_interval": "(0)[Еще нет фотографий.];(1)[{{count}} фото];(2-inf)[{{count}} фото]",
+	"photo_few": "Фото",
 	"photo_interval": "(0)[Еще нет фотографий];(2-inf)[{{count}} фотографий];",
+	"photo_many": "Фото",
+	"photo_one": "Фото",
+	"photo_other": "Фото",
 	"please-specify": "Просьба указать",
 	"portal-module": {
-		"service-area": "Область обслуживания"
+		"service-area": "Зона обслуживания"
 	},
 	"powered-by-vercel": "При поддержке Vercel",
 	"prefer-not-to-say": "Предпочитаю не указывать",
@@ -252,10 +259,18 @@
 	"resource-saved": "Ресурс сохранен.",
 	"resources": "Ресурсы",
 	"retry": "Повторить",
+	"review-count_few": "{{count}} отзыва",
 	"review-count_interval": "(0)[Нет отзывов];",
+	"review-count_many": "{{count}} отзывов",
+	"review-count_one": "{{count}} отзыв",
+	"review-count_other": "{{count}} отзывов",
 	"review-not-empty": "Отзыв не может быть пустым",
 	"review-note": "Ваш новый рейтинг не будет сохранен, пока вы не напишите отзыв и не нажмете кнопку «Отправить».",
 	"review-resource": "Оставить отзыв на этот ресурс",
+	"review_few": "Отзывов",
+	"review_many": "Отзывов",
+	"review_one": "Отзыв",
+	"review_other": "Отзыва",
 	"safety-exit": "Безопасный выход из системы",
 	"save": "Сохранить",
 	"save-changes": "Сохранить изменения",
@@ -394,7 +409,15 @@
 		"verifying": "Проверка учетной записи"
 	},
 	"view-list": "Посмотреть список",
+	"view-x-result_few": "Посмотреть {{count}} результатов",
+	"view-x-result_many": "Посмотреть {{count}} результатов",
+	"view-x-result_one": "Просмотр результата {{count}}",
+	"view-x-result_other": "Посмотреть {{count}} результата",
 	"visit": "Посетить",
+	"website_few": "Сайтов",
+	"website_many": "Сайтов",
+	"website_one": "Сайт",
+	"website_other": "Сайта",
 	"welcome-name": "Добро пожаловать, {{name}}!",
 	"words": {
 		"accept": "Принять",
@@ -443,25 +466,5 @@
 		"unpublish": "Снять с публикации",
 		"website": "Сайт",
 		"yes": "Да"
-	},
-	"photo_one": "Фото",
-	"photo_few": "Фото",
-	"photo_many": "Фото",
-	"photo_other": "Фото",
-	"review-count_one": "{{count}} отзыв",
-	"review-count_few": "{{count}} отзыва",
-	"review-count_many": "{{count}} отзывов",
-	"review-count_other": "{{count}} отзывов",
-	"review_one": "Отзыв",
-	"review_few": "Отзывов",
-	"review_many": "Отзывов",
-	"review_other": "Отзыва",
-	"view-x-result_one": "Просмотр результата {{count}}",
-	"view-x-result_few": "Посмотреть {{count}} результатов",
-	"view-x-result_many": "Посмотреть {{count}} результатов",
-	"view-x-result_other": "Посмотреть {{count}} результата",
-	"website_one": "Сайт",
-	"website_few": "Сайтов",
-	"website_many": "Сайтов",
-	"website_other": "Сайта"
+	}
 }
