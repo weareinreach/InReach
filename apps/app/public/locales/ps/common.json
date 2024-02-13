@@ -17,6 +17,9 @@
 	"alert-message-1": "<strong>COVID-19 پالیسي:</strong> هره ورځ د COVID-19 مخنیوي لپاره خبرونو او غوره کړنو سره، د ویټمن - واکر روغتیا د مخنیوي وړاندیزونو منعکس کولو لپاره د دوی خدماتو تازه کولو ته دوام ورکوي. مهرباني وکړئ د خورا تازه معلوماتو لپاره د دوی ویب پا checkه وګورئ.",
 	"alert-message-instructions": "Enter the alert message",
 	"alert-title-instructions": "Enter a title for the message...",
+	"alerts": {
+		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
+	},
 	"all-service-category": "ټول {{serviceCategory}}",
 	"anti-hate": {
 		"body": "د InReach په کارولو سره، تاسو موافق یاست چې تاسو به د دې سرچینې معلومات د زیان رسونکي، نفرت پراساس، هوموفوبیک، ټرانسفوبیک، زینوفوبیک، او/یا توکمپالنې اجنډا یا تبصرې لپاره ونه کاروئ.",

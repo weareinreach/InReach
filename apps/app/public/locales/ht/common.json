@@ -17,6 +17,9 @@
 	"alert-message-1": "<strong>Règleman COVID-19:</strong> Avèk nouvèl ak pi bon pratik pou prevansyon COVID-19 chanje rapidman chak jou, Whitman-Walker Health kontinye mete ajou sèvis yo pou reflete rekòmandasyon prevansyon yo. Tanpri tcheke sit entènèt yo pou enfòmasyon ki pi monte-a-dat.",
 	"alert-message-instructions": "Enter the alert message",
 	"alert-title-instructions": "Enter a title for the message...",
+	"alerts": {
+		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
+	},
 	"all-service-category": "tout {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Lè l sèvi avèk InReach, ou dakò ke ou pa pral sèvi ak enfòmasyon sa a resous pou danjere, rayi ki baze sou, omofob, transfobik, ksenofob, ak/oswa ajanda rasis oswa Book.",

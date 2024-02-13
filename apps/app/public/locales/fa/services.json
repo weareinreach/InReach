@@ -3,10 +3,10 @@
 		"CATEGORYNAME": "مراقبتهای مربوط به سقط جنین",
 		"abortion-providers": "ارائه دهندگان سقط جنین",
 		"financial-assistance": "کمک مالی",
-		"lodging-assistance": "کمک های اسکان",
+		"lodging-assistance": "کمک به اسکان",
 		"mail-order-services": "خدمات سفارش پستی",
 		"mental-health-support": "حمایت از سلامت روان",
-		"travel-assistance": "کمک سفر"
+		"travel-assistance": "کمک مسافرتی"
 	},
 	"community-support": {
 		"CATEGORYNAME": "پشتیبانی جامعه",
@@ -14,9 +14,9 @@
 		"cultural-centers": "مراکز فرهنگی",
 		"lgbtq-centers": "مراکز دگرباشان جنسی",
 		"reception-services": "خدمات پذیرش",
-		"reentry-services": "خدمات ورود مجدد",
+		"reentry-services": "خدمات حبس و ورود مجدد",
 		"spiritual-support": "حمایت معنوی",
-		"sponsors": "حمایت مالی مهاجرت"
+		"sponsors": "حمایت مالی مهاجرتی"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "کامپیوتر و اینترنت",
@@ -29,24 +29,24 @@
 	"education-and-employment": {
 		"CATEGORYNAME": "آموزش و اشتغال",
 		"career-counseling": "مشاوره شغلی",
-		"educational-support-for-lgbtq-youth": "پشتیبانی آموزشی برای جوانان دگرباشان جنسی",
+		"educational-support-for-lgbtq-youth": "پشتیبانی آموزشی برای جوانان دگرباش جنسی",
 		"english-classes": "کلاس های زبان انگلیسی",
 		"language-classes": "کلاس های زبان",
 		"leadership-training-and-professional-development": "آموزش رهبری و توسعه حرفه ای",
-		"libraries": "کتابخانه",
-		"scholarships": "بورس های تحصیلی"
+		"libraries": "کتابخانه ها",
+		"scholarships": "بورسیه ها"
 	},
 	"food": {
 		"CATEGORYNAME": "غذا",
-		"food": "مواد غذایی",
+		"food": "غذا",
 		"food-assistance": "کمک های غذایی"
 	},
 	"housing": {
 		"CATEGORYNAME": "مسکن",
-		"drop-in-centers-for-lgbtq-youth": "مراکز رها کردن برای جوانان LGBTQ",
+		"drop-in-centers-for-lgbtq-youth": "مراکز مراجعه برای جوانان دگرباش جنسی",
 		"emergency-housing": "مسکن اضطراری",
-		"housing-information-and-referrals": "اطلاعات مسکن و ارجاع",
-		"short-term-housing": "مسکن کوتاه مدت",
+		"housing-information-and-referrals": "اطلاعات مسکن و ارجاعات",
+		"short-term-housing": "مسکن موقت",
 		"trans-housing": "مسکن ترانس"
 	},
 	"hygiene-and-clothing": {
@@ -70,11 +70,11 @@
 		"crime-and-discrimination": "جرم و تبعیض",
 		"deferred-action-for-childhood-arrivals-daca": "اقدام معوق برای ورود به دوران کودکی (DACA)",
 		"deportation-or-removal": "اخراج یا برکناری",
-		"employment-authorization": "مجوز استخدام",
+		"employment-authorization": "مجوز کار",
 		"family-petitions": "دادخواست های خانوادگی",
-		"immigration-detention": "بازداشت مهاجرت",
+		"immigration-detention": "بازداشت مهاجرتی",
 		"legal-advice": "مشاوره حقوقی",
-		"legal-hotlines": "خطوط تماس حقوقی",
+		"legal-hotlines": "خط تلفن اضطراری حقوقی",
 		"name-and-gender-change": "تغییر نشانگر نام و جنسیت",
 		"refugee-claim": "ادعای پناهندگی",
 		"residency": "دستیاری",
@@ -84,27 +84,27 @@
 	},
 	"mail": {
 		"CATEGORYNAME": "ایمیل",
-		"mail": "نامه"
+		"mail": "ایمیل"
 	},
 	"medical": {
 		"CATEGORYNAME": "پزشکی",
 		"covid-19-services": "خدمات کووید-19",
-		"dental-care": "مراقبت از دندان",
+		"dental-care": "مراقبت از بهداشت دندان",
 		"hiv-and-sexual-health": "اچ آی وی و سلامت جنسی",
 		"medical-clinics": "کلینیک های پزشکی",
-		"obgyn-services": "خدمات OBGYN",
+		"obgyn-services": "خدمات زنان و زایمان",
 		"physical-evaluations-for-asylum-claim": "ارزیابی فیزیکی برای درخواست پناهندگی",
 		"physical-evaluations-for-refugee-claim": "ارزیابی فیزیکی برای تقاضای پناهندگی",
-		"trans-health": "سلامت ترانس",
+		"trans-health": "سلامت تراجنسیتی ها",
 		"trans-health-gender-affirming-surgery": "سلامت ترانس - جراحی تأیید جنسیت",
-		"trans-health-hormone-and-surgery-letters": "سلامت ترانس - نامه های هورمون و جراحی",
-		"trans-health-hormone-therapy": "سلامت ترانس - هورمون درمانی",
-		"trans-health-primary-care": "سلامت ترانس - مراقبت های اولیه",
-		"trans-health-speech-therapy": "سلامت ترانس - گفتاردرمانی",
-		"trans-health-youth-care": "Trans health - youth care"
+		"trans-health-hormone-and-surgery-letters": "سلامت تراجنسیتی ها - نامه های هورمون و جراحی",
+		"trans-health-hormone-therapy": "سلامت تراجنسیتی ها - هورمون درمانی",
+		"trans-health-primary-care": "سلامت تراجنسیتی ها - مراقبت های اولیه",
+		"trans-health-speech-therapy": "سلامت تراجنسیتی ها - گفتاردرمانی",
+		"trans-health-youth-care": "سلامت تراجنسیتی ها-مراقبت از جوانان"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "سلامت روان",
 		"bipoc-support-groups": "گروه های پشتیبانی BIPOC",
 		"hotlines": "خطوط تلفن",
 		"private-therapy-and-counseling": "مشاوره و درمان خصوصی",
@@ -122,12 +122,12 @@
 		"sports-and-entertainment": "ورزش و سرگرمی"
 	},
 	"trans-focused-services": {
-		"CATEGORYNAME": "Trans Focused Services",
-		"transport-gacare": "Transportation for gender affirming care",
-		"transport-relo-support": "Trans relocation support"
+		"CATEGORYNAME": "خدمات متمرکز برای تراجنسیتی ها",
+		"transport-gacare": "حمل و نقل برای مراقبت های مربوط به تصحیح جنسیت",
+		"transport-relo-support": "پشتیبانی از جابجایی تراجنسیتی ها"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "ترجمه و تفسیر",
 		"for-healthcare": "برای مراقبت های بهداشتی",
 		"for-legal-services": "برای خدمات حقوقی",
 		"general-translation-and-interpretation": "ترجمه و تفسیر عمومی"

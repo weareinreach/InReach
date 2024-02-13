@@ -17,6 +17,9 @@
 	"alert-message-1": "<strong>COVID-19 policy:</strong> With news and best practices for COVID-19 prevention changing rapidly each day, Whitman-Walker Health continues to update their services to reflect prevention recommendations. Please check their website for the most up-to-date information.",
 	"alert-message-instructions": "Enter the alert message",
 	"alert-title-instructions": "Enter a title for the message...",
+	"alerts": {
+		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
+	},
 	"all-service-category": "Zote {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Kwa kutumia InReach, unakubali kwamba hautatumia habari hii ya rasilimali kwa ajenda hatari, chuki, chuki ya jinsia moja, transphobic, chuki wageni, na/au ajenda za ubaguzi wa rangi au maoni.",
