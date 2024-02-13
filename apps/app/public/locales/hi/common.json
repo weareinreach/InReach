@@ -17,6 +17,9 @@
 	"alert-message-1": "<strong>COVID-19 नीति:</strong> COVID-19 की रोकथाम के लिए समाचार और सर्वोत्तम प्रथाओं के साथ हर दिन तेजी से बदल रहा है, व्हिटमैन-वॉकर हेल्थ रोकथाम की सिफारिशों को प्रतिबिंबित करने के लिए अपनी सेवाओं को अपडेट करना जारी रखता है। नवीनतम जानकारी के लिए कृपया उनकी वेबसाइट देखें।",
 	"alert-message-instructions": "Enter the alert message",
 	"alert-title-instructions": "Enter a title for the message...",
+	"alerts": {
+		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
+	},
 	"all-service-category": "सभी {{serviceCategory}}",
 	"anti-hate": {
 		"body": "इनरीच का उपयोग करके, आप सहमत हैं कि आप इस संसाधन जानकारी का उपयोग हानिकारक, नफ़रत आधारित, होमोफोबिक, ट्रांसफ़ोबिक, ज़ेनोफ़ोबिक और/या नस्लवादी एजेंडा या कमेंट्री के लिए नहीं करेंगे।",

@@ -13,10 +13,13 @@
 		"organization": "{{adjective}} سازمان"
 	},
 	"agree-disclaimer": "با کلیک کردن بر روی \"{{action}}\" شما موافقت می کنید <link1>سیاست حفظ حریم خصوصی</link1> و <link2>شرایط استفاده</link2>.",
-	"alert-message": "Alert message",
+	"alert-message": "پیام هشدار",
 	"alert-message-1": "<strong>سیاست COVID-19:</strong> با توجه به اینکه اخبار و بهترین شیوه های پیشگیری از COVID-19 هر روز به سرعت تغییر می کند، Whitman-Walker Health همچنان خدمات خود را به روز می کند تا منعکس کننده توصیه های پیشگیری باشد. لطفاً برای به روزترین اطلاعات، وب سایت آنها را بررسی کنید.",
-	"alert-message-instructions": "Enter the alert message",
-	"alert-title-instructions": "Enter a title for the message...",
+	"alert-message-instructions": "پیام هشدار را وارد کنید",
+	"alert-title-instructions": "عنوان پیام را وارد کنید...",
+	"alerts": {
+		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
+	},
 	"all-service-category": "همه {{serviceCategory}}",
 	"anti-hate": {
 		"body": "با استفاده از InReach، شما موافقت می کنید که از این اطلاعات منابع برای برنامه های مضر، نفرت محور، همجنسگرا، ترانسفوبیک، بیگانه هراسی و/یا نژادپرستانه استفاده نخواهید کرد.",

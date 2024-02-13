@@ -17,6 +17,9 @@
 	"alert-message-1": "<strong>Política da COVID-19:</strong> Com as notícias e as melhores práticas para a prevenção da COVID-19 mudando rapidamente a cada dia, a Whitman-Walker Health continua atualizando seus serviços para refletir as recomendações de prevenção. Verifique o site deles para obter as informações mais atualizadas.",
 	"alert-message-instructions": "Digite a mensagem de alerta",
 	"alert-title-instructions": "Digite um título para a mensagem...",
+	"alerts": {
+		"search-page-legislative-map": "Este mapa de risco legislativo <ATLink>anti-trans</ATLink> mostra o risco de 2 anos para as leis anti-trans em todos os 50 estados e D.C."
+	},
 	"all-service-category": "Todos os {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Ao usar o inReach, você concorda que não usará essas informações de recursos para agendas ou comentários nocivos, baseados no ódio, homofóbicos, transfóbicos, xenófobos e/ou racistas.",
@@ -83,11 +86,11 @@
 		"phone": "Telefone direto",
 		"website": "Site direto"
 	},
-	"disclaimer": "Aviso de responsabilidade",
+	"disclaimer": "Isenção de responsabilidade",
 	"donate": {
-		"hover": "Doe hoje para ajudar a manter o Alcance grátis para todos",
+		"hover": "Faça uma doação hoje para ajudar a manter o inReach gratuito para todos",
 		"popup": "Ajude a manter o InReach gratuito para todos",
-		"to-inreach": "Doe para o Alcance 💝"
+		"to-inreach": "Doe para o InReach 💝"
 	},
 	"dont-have-account": "Não tem uma conta?",
 	"download-app": "Baixe o aplicativo",
@@ -130,11 +133,11 @@
 	"forgot-password": "Esqueceu a senha?",
 	"form-error-enter-valid-email": "Insira um endereço de e-mail válido.",
 	"form-error-password-blank": "A senha não pode ficar em branco.",
-	"form-error-password-req": "Sua senha não atende aos requisitos, tente novamente.",
+	"form-error-password-req": "Sua senha não cumpre os requisitos. Por favor, tente novamente.",
 	"go-to-x": "Vá para {{value}}",
 	"hours": {
 		"closed": "Fechado",
-		"open24": "Abra 24 horas"
+		"open24": "Aberto 24 horas"
 	},
 	"in-reach-user": "Usuário inReach",
 	"in-reach-verified-reviewer": "Avaliador verificado pela inReach",
@@ -145,7 +148,7 @@
 	"inreach-org": "InReach.org",
 	"language": "Idioma",
 	"language_all-other": "Todos os outros idiomas",
-	"language_choose": "Escolha um idioma",
+	"language_choose": "Por favor, escolha um idioma",
 	"language_common": "Idiomas comuns",
 	"law-practice-other": "Área de prática jurídica",
 	"law-practice-other-placeholder": "Especifique sua área de atuação jurídica",
@@ -221,7 +224,7 @@
 	"privacy-policy": "Política de privacidade",
 	"privacy-statement": "Declaração de privacidade",
 	"privacy-statement-body": [
-		"<textDarkGrayCentered>Na inReach, reconhecemos que preservar o anonimato on-line é um problema de vida ou morte para muitas pessoas LGBTQ+. É por isso que o aplicativo gratuito inReach (nosso aplicativo web, aplicativo iOS nativo e aplicativo nativo para Android) foi projetado para priorizar a proteção da segurança e confidencialidade on-line dos usuários.</textDarkGrayCentered>",
+		"<textDarkGrayCentered>Na InReach, reconhecemos que preservar o anonimato online é uma questão de vida ou morte para muitas pessoas LGBTQ+. É por isso que o aplicativo InReach gratuito (nosso aplicativo Web, aplicativo iOS nativo e aplicativo Android nativo) foi projetado para priorizar a proteção da segurança e confidencialidade dos usuários on-line.</textDarkGrayCentered>",
 		"<title2>Dados demográficos do usuário</title2>",
 		"<textDarkGray><strong>Não exigimos nenhuma informação de identificação pessoal para usar o aplicativo gratuito inReach.</strong></textDarkGray>",
 		"<textDarkGray>Usuários que optam por criar uma conta gratuita de InReach têm <strong>a opção</strong> de compartilhar as seguintes informações demográficas por meio de uma pesquisa anônima on-line:</textDarkGray>",
@@ -261,7 +264,7 @@
 		"location-placeholder-searchby": "Procurar por cidade ou CEP...",
 		"look-up-org": "Procure uma organização pelo nome",
 		"no-results": "Nenhum resultado encontrado. Por favor, tente novamente.",
-		"no-results-adjust": "Nenhum resultado encontrado para sua pesquisa. Tente ajustar a localização selecionada ou filtros.",
+		"no-results-adjust": "Nenhum resultado encontrado. Tente ajustar a localização selecionada ou filtros.",
 		"organization-placeholder": "Insira o nome da organização...",
 		"organization-placeholder-searchby": "Pesquisar por nome da organização...",
 		"suggest-resource": "Não consegue encontrá-lo? <1>Sugira uma organização</1> que você acha que deveria ser incluída."
