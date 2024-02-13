@@ -51,12 +51,10 @@ const plugins = () => {
 	}
 	if (process.env.NODE_ENV === 'development') {
 		if (isBrowser) {
-			// @ts-expect-error - yelling about declaration file
 			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
 				pluginsToUse.push(new HMRPlugin({ webpack: { client: true } }))
 			)
 		} else {
-			// @ts-expect-error - yelling about declaration file
 			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
 				pluginsToUse.push(new HMRPlugin({ webpack: { server: true } }))
 			)

@@ -34,6 +34,9 @@
 		"./resetPassword": {
 			"default": "./lib/resetPassword.ts"
 		},
+		"./server": {
+			"default": "./server.ts"
+		},
 		"./userLogin": {
 			"default": "./lib/userLogin.ts"
 		},
