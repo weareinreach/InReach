@@ -3,8 +3,11 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { transformer } from '@weareinreach/util/transformer'
+import { Link } from '~ui/components/core'
 import { Badge, BadgeGroup } from '~ui/components/core/Badge'
-import { useCustomVariant, useScreenSize } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useEditMode } from '~ui/hooks/useEditMode'
+import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ServiceModal } from '~ui/modals/Service'
@@ -33,6 +36,7 @@ const useServiceSectionStyles = createStyles((theme) => ({
 
 const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
+	const { isEditMode } = useEditMode()
 	const { slug } = router.isReady ? router.query : { slug: '' }
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug }, { enabled: router.isReady })
 	const { t } = useTranslation(orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services'])
@@ -48,32 +52,56 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 				<Badge variant='service' tsKey={category} />
 			)}
 			<Stack spacing={0}>
-				{services.map((service) => (
-					<ServiceModal
-						key={service.id}
-						serviceId={service.id}
-						component={Group}
-						position='apart'
-						noWrap
-						className={classes.group}
-						onMouseOver={() => apiUtils.service.forServiceModal.prefetch(service.id)}
-					>
-						{service.offersRemote && !hideRemoteBadges ? (
-							<Group spacing={8} align='center'>
+				{services.map((service) => {
+					const children = (
+						<>
+							{' '}
+							{service.offersRemote && !hideRemoteBadges ? (
+								<Group spacing={8} align='center'>
+									<Text variant={variants.Text.utility1}>
+										{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
+									</Text>
+									<Badge variant='remote' />
+								</Group>
+							) : (
 								<Text variant={variants.Text.utility1}>
 									{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
 								</Text>
-								<Badge variant='remote' />
-							</Group>
-						) : (
-							<Text variant={variants.Text.utility1}>
-								{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
-							</Text>
-						)}
+							)}
+							<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
+						</>
+					)
 
-						<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
-					</ServiceModal>
-				))}
+					return isEditMode ? (
+						<Link
+							href={{
+								pathname: '/org/[slug]/[orgLocationId]/edit/[orgServiceId]',
+								query: {
+									slug,
+									orgLocationId: router.query.orgLocationId as string,
+									orgServiceId: service.id,
+								},
+							}}
+							variant={variants.Link.inheritStyle}
+						>
+							<Group noWrap position='apart' className={classes.group}>
+								{children}
+							</Group>
+						</Link>
+					) : (
+						<ServiceModal
+							key={service.id}
+							serviceId={service.id}
+							component={Group}
+							position='apart'
+							noWrap
+							className={classes.group}
+							onMouseOver={() => apiUtils.service.forServiceModal.prefetch(service.id)}
+						>
+							{children}
+						</ServiceModal>
+					)
+				})}
 			</Stack>
 		</Stack>
 	)
