@@ -1,100 +1,65 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
-	createStyles,
 	Drawer,
 	List,
 	Modal,
-	rem,
 	Stack,
 	Text,
-	Textarea,
 	Title,
 } from '@mantine/core'
-import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode, useEffect, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
+import { Textarea, TextInput } from 'react-hook-form-mantine'
 
-import { BadgeGroup, type ServiceTagProps } from '~ui/components/core/Badge'
+import { Badge, BadgeGroup, type ServiceTagProps } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
+import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { DataViewer } from '~ui/other/DataViewer'
 
-import { InlineTextInput } from './InlineTextInput'
+import { FormSchema, type TFormSchema } from './schemas'
+import { useStyles } from './styles'
+import { InlineTextInput } from '../InlineTextInput'
 
-const useStyles = createStyles((theme) => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-	drawerBody: {
-		padding: `${rem(40)} ${rem(32)}`,
-		'&:not(:only-child)': {
-			paddingTop: rem(40),
-		},
-	},
-	badgeGroup: {
-		width: '100%',
-		cursor: 'pointer',
-		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
-		borderRadius: rem(8),
-		padding: rem(4),
-	},
-	tealText: {
-		color: theme.other.colors.secondary.teal,
-	},
-	dottedCard: {
-		border: `${rem(1)} dashed ${theme.other.colors.secondary.teal}`,
-		borderRadius: rem(16),
-		padding: rem(20),
-	},
-}))
+const isObject = (x: unknown): x is object => typeof x === 'object'
+
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
 	({ serviceId, ...props }, ref) => {
 		const [drawerOpened, drawerHandler] = useDisclosure(true)
 		const [serviceModalOpened, serviceModalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
-		const form = useForm<FormData>()
 		const variants = useCustomVariant()
 		const { t } = useTranslation(['country', 'gov-dist'])
 		// #region Get existing data/populate form
 		const { data, isLoading } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
 		})
-
-		useEffect(() => {
-			if (data && !isLoading) {
-				form.setValues(data)
-				form.resetDirty()
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [data, isLoading])
+		const form = useForm<TFormSchema>({
+			resolver: zodResolver(FormSchema),
+			values: data,
+		})
+		const dirtyFields = {
+			name: isObject(form.formState.dirtyFields.name) ? form.formState.dirtyFields.name.text : false,
+			description: isObject(form.formState.dirtyFields.description)
+				? form.formState.dirtyFields.description.text
+				: false,
+			services: form.formState.dirtyFields.services ?? false,
+		}
 
 		// #endregion
 
 		// #region Get all available service options & filter selected
 		const { data: allServices } = api.service.getOptions.useQuery(undefined, { refetchOnWindowFocus: false })
 
-		const serviceBadges: ServiceTagProps[] = useMemo(() => {
-			if (!form.values.services?.length || !allServices) return []
-
-			return compact(
-				form.values.services.map(({ id }) => {
-					const service = allServices.find((item) => item.id === id)
-					if (service) {
-						return {
-							variant: 'service',
-							tsKey: service.tsKey,
-						}
-					}
-				})
-			)
-		}, [form.values.services, allServices])
+		const activeServices = form.watch('services') ?? []
 
 		// #endregion
 
@@ -104,7 +69,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		})
 		const serviceAreas = () => {
 			const serviceAreaObj: Record<string, ReactNode[]> = {}
-			const { countries, districts } = form.values.serviceAreas ?? {}
+			const { countries, districts } = form.watch('serviceAreas') ?? {}
 			if (!geoMap) return null
 			const countryIdRegex = /^ctry_.*/
 			const distIdRegex = /^gdst_.*/
@@ -174,7 +139,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 					continue
 				}
 			}
-			return Object.entries(serviceAreaObj).map(([key, value]) => {
+			return Object.entries(serviceAreaObj)?.map(([key, value]) => {
 				const country = geoMap.get(key)
 				if (!country) return null
 				return (
@@ -200,25 +165,34 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 						</Drawer.Header>
 						<Drawer.Body className={classes.drawerBody}>
 							<Stack>
-								<InlineTextInput fontSize='h2' {...form.getInputProps('serviceName.tsKey.text')} />
 								<InlineTextInput
-									component={Textarea}
-									fontSize='utility4'
-									autosize
-									{...form.getInputProps('description.tsKey.text')}
+									component={TextInput<TFormSchema>}
+									name='name.text'
+									control={form.control}
+									fontSize='h2'
+									data-isDirty={dirtyFields.name}
 								/>
-								{Boolean(serviceBadges.length) && (
-									<>
-										<BadgeGroup
-											badges={serviceBadges}
-											onClick={serviceModalHandler.open}
-											className={classes.badgeGroup}
-										/>
-										<Modal opened={serviceModalOpened} onClose={serviceModalHandler.close} withCloseButton>
-											Tag edit screen
-										</Modal>
-									</>
-								)}
+								<InlineTextInput
+									fontSize='utility4'
+									component={Textarea<TFormSchema>}
+									name='description.text'
+									control={form.control}
+									data-isDirty={dirtyFields.description}
+									autosize
+								/>
+								<ServiceSelect name='services' control={form.control} data-isDirty={dirtyFields.services}>
+									<Badge.Group>
+										{activeServices.map((serviceId) => {
+											const service = allServices?.find((s) => s.id === serviceId)
+											if (!service) return null
+											return (
+												<Badge.Service key={service.id}>
+													{t(service.tsKey, { ns: service.tsNs })}
+												</Badge.Service>
+											)
+										})}
+									</Badge.Group>
+								</ServiceSelect>
 								{/* <Card> */}
 								<Stack className={classes.dottedCard}>
 									<Title order={2} className={classes.tealText}>
