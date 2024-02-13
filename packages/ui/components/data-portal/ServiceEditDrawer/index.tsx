@@ -17,7 +17,7 @@ import { forwardRef, type ReactNode, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
 
-import { Badge, BadgeGroup, type ServiceTagProps } from '~ui/components/core/Badge'
+import { Badge } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
 import { useCustomVariant } from '~ui/hooks'
