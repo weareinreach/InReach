@@ -62,7 +62,7 @@
 	"devDependencies": {
 		"@octokit/core": "5.1.0",
 		"@terraformer/wkt": "2.2.0",
-		"@turbo/gen": "1.12.3",
+		"@turbo/gen": "1.12.4",
 		"@turf/helpers": "7.0.0-alpha.113",
 		"@types/eslint": "8.56.2",
 		"@types/inquirer": "9.0.7",
@@ -74,7 +74,7 @@
 		"@types/terraformer__wkt": "2.0.2",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
-		"dotenv": "16.4.3",
+		"dotenv": "16.4.4",
 		"dotenv-cli": "7.3.0",
 		"eslint": "8.56.0",
 		"google-auth-library": "9.6.3",
