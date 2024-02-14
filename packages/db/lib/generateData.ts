@@ -39,6 +39,7 @@ const tasks = new Listr<Context>(
 						defineJob('Service Categories', job.generateServiceCategories),
 						defineJob('Language lists', job.generateLanguageFiles),
 						defineJob('Translation Namespaces', job.generateNamespaces),
+						defineJob('Attribute Supplement Data Schemas', job.generateDataSchemas),
 					],
 					{ concurrent: true }
 				),

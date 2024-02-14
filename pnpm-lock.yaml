@@ -961,6 +961,9 @@ importers:
       id128:
         specifier: 1.6.6
         version: 1.6.6
+      json-schema-to-zod:
+        specifier: 2.0.14
+        version: 2.0.14
       kysely:
         specifier: 0.27.2
         version: 0.27.2

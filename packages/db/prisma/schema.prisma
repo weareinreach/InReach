@@ -1062,6 +1062,7 @@ model AttributeSupplementDataSchema {
   name       String
   active     Boolean @default(true)
   definition Json
+  schema     Json
   // entryComponent String?
 
   createdAt DateTime @default(now())
