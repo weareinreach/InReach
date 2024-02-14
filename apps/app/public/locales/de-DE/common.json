@@ -15,6 +15,9 @@
 	"alert-message-1": "<strong>COVID-19 Richtlinie:</strong> Mit Neuigkeiten und Best Practices für die COVID-19 Prävention ändern sich jeden Tag schnell Whitman-Walker Health aktualisiert ihre Dienstleistungen weiter, um die Präventionsempfehlungen wiederzugeben. Bitte schauen Sie auf ihrer Website nach, um die aktuellsten Informationen zu erhalten.",
 	"alert-message-instructions": "Geben Sie die Warnmeldung ein",
 	"alert-title-instructions": "Geben Sie einen Titel für die Nachricht ein...",
+	"alerts": {
+		"search-page-legislative-map": "Diese <ATLink>Anti-Trans gesetzgebende Risikokarte</ATLink> zeigt das 2-jährige Risiko für Anti-Trans-Gesetze in allen 50 Staaten und D.C."
+	},
 	"all-service-category": "Alle {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Durch die Verwendung von InReach erklären Sie sich damit einverstanden, dass Sie diese Informationen nicht für schädliche, haßbasierte, homophobe, transphobische, fremdenfeindliche und/oder rassistische Agenden oder Kommentare verwenden.",

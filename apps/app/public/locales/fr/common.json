@@ -15,6 +15,9 @@
 	"alert-message-1": "<strong>Politique COVID-19 :</strong> Avec les nouvelles et les meilleures pratiques pour la prévention COVID-19 changeant rapidement chaque jour, Whitman-Walker Health continue de mettre à jour ses services afin de refléter les recommandations de prévention. Veuillez consulter leur site web pour obtenir les informations les plus à jour.",
 	"alert-message-instructions": "Entrer le message d'alerte",
 	"alert-title-instructions": "Entrer un titre pour le message...",
+	"alerts": {
+		"search-page-legislative-map": "Cette carte de risque législatif <ATLink>anti-trans</ATLink> montre le risque de 2 ans pour les lois anti-trans dans les 50 états et D.C."
+	},
 	"all-service-category": "Tous les {{serviceCategory}}",
 	"anti-hate": {
 		"body": "En utilisant InReach, vous convenez de ne pas utiliser ces informations à des fins malveillantes, haineuses, homophobes, transphobes, xénophobes et/ou racistes.",

@@ -15,6 +15,9 @@
 	"alert-message-1": "Patakaran sa <strong>COVID-19:</strong> Sa mga balita at pinakamahusay na kasanayan para sa pag-iwas sa COVID-19 na mabilis na nagbabago bawat araw, patuloy na ina-update ng Whitman-Walker Health ang kanilang mga serbisyo upang maipakita ang mga rekomendasyon sa pag-iwas. Mangyaring suriin ang kanilang website para sa pinaka-up-to-date na impormasyon.",
 	"alert-message-instructions": "Enter the alert message",
 	"alert-title-instructions": "Enter a title for the message...",
+	"alerts": {
+		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
+	},
 	"all-service-category": "Lahat ng {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Sa pamamagitan ng paggamit ng inReach, sumasang-ayon ka na hindi mo gagamitin ang impormasyong ito para sa mapanganib, nakabatay sa poot, homophobic, transphobic, xenophobic, at/o racist agenda o komentaryo.",
