@@ -1,19 +1,12 @@
 import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ComponentPropsWithoutRef, forwardRef, type MouseEventHandler, useEffect, useState } from 'react'
+import { type ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 import { type FieldPath, useFormContext } from 'react-hook-form'
-import {
-	Radio,
-	type RadioGroupProps,
-	Select,
-	type SelectProps,
-	TextInput,
-	type TextInputProps,
-} from 'react-hook-form-mantine'
-import { type LiteralUnion, type TupleToUnion } from 'type-fest'
+import { NumberInput, Radio, Select, TextInput } from 'react-hook-form-mantine'
+import { type TupleToUnion } from 'type-fest'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { countries } from '@weareinreach/api/router/fieldOpt/query.countries.handler'
+import { type FieldAttributes, FieldType } from '@weareinreach/db/zod_util/attributeSupplement'
 import { Button } from '~ui/components/core/Button'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -42,65 +35,54 @@ const SuppText = () => {
 	)
 }
 
-const dataSchemas = ['numMinMaxOrRange', 'numRange', 'numMin', 'numMax', 'number'] as const
-type DataSchema = TupleToUnion<typeof dataSchemas>
-
-const isDataSchema = (schema: string): schema is DataSchema => dataSchemas.includes(schema as DataSchema)
-
 const SuppData = ({ schema }: SuppDataProps) => {
 	const { control } = useFormContext<FormSchema>()
-	if (!isDataSchema(schema)) {
-		console.error('Invalid schema', schema)
-		throw new Error('Invalid schema')
-	}
-	console.log('SuppData')
-	// useEffect(() => {
-	// 	if (!form.values.supplement?.data) {
-	// 		form.setFieldValue('supplement.data', {})
-	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [form.values.supplement])
-	const body = (() => {
-		switch (schema) {
-			case 'numMax':
-			case 'numMin':
-			case 'number': {
-				const label = schema === 'numMax' ? 'Max' : schema === 'numMin' ? 'Min' : 'Amount'
-				const key = schema === 'numMax' ? 'max' : schema === 'numMin' ? 'min' : 'number'
-				return <TextInput label={label} {...{ control, name: `data.${key}` }} />
+
+	const renderField = (schema: FieldAttributes) => {
+		const { type, name: dataKey, ...schemaProps } = schema
+		const baseProps = {
+			...schemaProps,
+			name: `data.${dataKey}` as const,
+			control,
+		}
+		switch (type) {
+			case FieldType.text: {
+				return <TextInput {...baseProps} />
 			}
-			case 'numRange':
-			case 'numMinMaxOrRange': {
-				return (
-					<Group>
-						<TextInput w='25%' label='Min' {...{ control, name: `data.min` }} />
-						<TextInput w='25%' label='Max' {...{ control, name: `data.max` }} />
-					</Group>
-				)
+			case FieldType.select: {
+				const { options } = schema
+				return <Select {...baseProps} data={options} />
+			}
+			case FieldType.number: {
+				return <NumberInput {...baseProps} type='number' />
+			}
+			case FieldType.currency: {
+				return <NumberInput {...baseProps} type='number' />
 			}
 		}
-	})()
+	}
 
 	return (
-		<Group>
-			{body}
-			{/* <Button onClick={() => handler(form.values.supplement?.data)}>
-				{t('words.add', { ns: 'common' })}
-			</Button> */}
-		</Group>
+		<Stack>
+			{schema.flatMap((schema) => {
+				if (Array.isArray(schema)) {
+					return <Group noWrap>{schema.map(renderField)}</Group>
+				} else {
+					return renderField(schema)
+				}
+			})}
+		</Stack>
 	)
 }
 interface SuppDataProps {
-	schema: LiteralUnion<DataSchema, string>
+	// schema: LiteralUnion<DataSchema, string>
+	schema: FieldAttributes[] | FieldAttributes[][]
 }
 
 const SuppLang = () => {
 	const { control } = useFormContext<FormSchema>()
-	const { t } = useTranslation('common')
-	const [listOptions, setListOptions] = useState<LangList[] | undefined>()
-	api.fieldOpt.languages.useQuery(undefined, {
-		onSuccess: (data) =>
-			setListOptions(data.map(({ id, languageName }) => ({ value: id, label: languageName }))),
+	const { data: listOptions } = api.fieldOpt.languages.useQuery(undefined, {
+		select: (data) => data.map(({ id, languageName }) => ({ value: id, label: languageName })),
 	})
 	return (
 		<Group>
@@ -110,11 +92,6 @@ const SuppLang = () => {
 			</Button> */}
 		</Group>
 	)
-}
-
-interface LangList {
-	value: string
-	label: string
 }
 
 const GeoItem = forwardRef<HTMLDivElement, GeoItemProps>(({ flag, label, ...props }, ref) => {
