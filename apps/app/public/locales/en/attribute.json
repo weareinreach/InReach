@@ -9,6 +9,7 @@
 		"private-practice": "Private Practice",
 		"religiously-affiliated": "Is religiously affiliated",
 		"time-walk-in": "Has Walk-In Hours",
+		"wheelchair-accessible": "Accessible",
 		"wheelchair-accessible_false": "Not Accessible",
 		"wheelchair-accessible_true": "Accessible"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Eligibility Requirements",
+		"elig-age": "Age eligibility",
 		"elig-age_max": "Under {{max}}",
 		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "System",
 		"incompatible-info": "Incompatible Information"
+	},
+	"tpop": {
+		"other": "Target Population - Other"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Law Practice Options",
