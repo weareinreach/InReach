@@ -73,7 +73,7 @@ export const job20240214_attribute_supplement_schemas = {
 			},
 			{
 				data: {
-					definition: { key: 'min', label: 'Min', name: 'min', type: FieldType.number },
+					definition: [{ key: 'min', label: 'Min', name: 'min', type: FieldType.number }],
 					// tag: 'numMin',
 				},
 				where: {
@@ -82,7 +82,7 @@ export const job20240214_attribute_supplement_schemas = {
 			},
 			{
 				data: {
-					definition: { key: 'max', label: 'Max', name: 'max', type: FieldType.number },
+					definition: [{ key: 'max', label: 'Max', name: 'max', type: FieldType.number }],
 					// tag: 'numMax',
 				},
 				where: {
@@ -91,7 +91,7 @@ export const job20240214_attribute_supplement_schemas = {
 			},
 			{
 				data: {
-					definition: { key: 'num', label: 'Number', name: 'num', type: FieldType.number },
+					definition: [{ key: 'num', label: 'Number', name: 'num', type: FieldType.number }],
 					// tag: 'number',
 				},
 				where: {
@@ -100,12 +100,14 @@ export const job20240214_attribute_supplement_schemas = {
 			},
 			{
 				data: {
-					definition: {
-						key: 'incompatible',
-						label: 'Incompatible',
-						name: 'incompatible',
-						type: FieldType.text,
-					},
+					definition: [
+						{
+							key: 'incompatible',
+							label: 'Incompatible',
+							name: 'incompatible',
+							type: FieldType.text,
+						},
+					],
 					// tag: 'incompatibleData',
 				},
 				where: {
@@ -114,7 +116,7 @@ export const job20240214_attribute_supplement_schemas = {
 			},
 			{
 				data: {
-					definition: { key: 'other', label: 'Other', name: 'other', type: FieldType.text },
+					definition: [{ key: 'other', label: 'Other', name: 'other', type: FieldType.text }],
 					// tag: 'otherDescribe',
 				},
 				where: {
@@ -135,7 +137,7 @@ export const job20240214_attribute_supplement_schemas = {
 		 *
 		 * This writes a record to the DB to register that this migration has run successfully.
 		 */
-		// await jobPostRunner(jobDef)
+		await jobPostRunner(jobDef)
 	},
 	def: jobDef,
 } satisfies MigrationJob
