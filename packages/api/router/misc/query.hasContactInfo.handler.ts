@@ -125,3 +125,4 @@ export const hasContactInfo = async ({ input }: TRPCHandlerParams<THasContactInf
 		handleError(error)
 	}
 }
+export default hasContactInfo

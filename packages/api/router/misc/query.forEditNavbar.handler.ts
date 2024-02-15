@@ -22,3 +22,4 @@ export const forEditNavbar = async ({ input }: TRPCHandlerParams<TForEditNavbarS
 		handleError(error)
 	}
 }
+export default forEditNavbar

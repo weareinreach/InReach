@@ -46,3 +46,4 @@ interface CountryGovDistMapItem {
 	children: CountryGovDistMapItemBasic[]
 	parent?: CountryGovDistMapItemBasic & { parent?: CountryGovDistMapItemBasic }
 }
+export default countryGovDistMap

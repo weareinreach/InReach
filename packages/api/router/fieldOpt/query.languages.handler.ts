@@ -18,3 +18,4 @@ export const languages = async ({ input }: TRPCHandlerParams<TLanguagesSchema>) 
 	})
 	return results
 }
+export default languages

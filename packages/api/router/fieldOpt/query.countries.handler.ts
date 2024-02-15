@@ -24,3 +24,4 @@ export const countries = async ({ input }: TRPCHandlerParams<TCountriesSchema>) 
 	type CountryResult = (typeof result)[number][]
 	return result as CountryResult
 }
+export default countries
