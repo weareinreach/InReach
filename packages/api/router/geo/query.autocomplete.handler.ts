@@ -36,3 +36,4 @@ export const autocomplete = async ({ input }: TRPCHandlerParams<TAutocompleteSch
 	const parsedData = autocompleteResponse.parse(data)
 	return googleAPIResponseHandler(parsedData, data)
 }
+export default autocomplete

@@ -15,3 +15,4 @@ export const getCountryTranslation = async ({ input }: TRPCHandlerParams<TGetCou
 		handleError(error)
 	}
 }
+export default getCountryTranslation
