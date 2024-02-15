@@ -30,3 +30,4 @@ export const getSubDistricts = async ({ input }: TRPCHandlerParams<TGetSubDistri
 		handleError(error)
 	}
 }
+export default getSubDistricts

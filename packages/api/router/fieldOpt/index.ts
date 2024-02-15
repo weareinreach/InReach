@@ -1,23 +1,10 @@
-import { defineRouter, publicProcedure } from '~api/lib/trpc'
+import { defineRouter, importHandler, publicProcedure } from '~api/lib/trpc'
 
 import * as schema from './schemas'
 
-const HandlerCache: Partial<FieldOptHandlerCache> = {}
+const NAMESPACE = 'fieldOpt'
 
-type FieldOptHandlerCache = {
-	govDistsByCountry: typeof import('./query.govDistsByCountry.handler').govDistsByCountry
-	govDistsByCountryNoSub: typeof import('./query.govDistsByCountryNoSub.handler').govDistsByCountryNoSub
-	phoneTypes: typeof import('./query.phoneTypes.handler').phoneTypes
-	attributesByCategory: typeof import('./query.attributesByCategory.handler').attributesByCategory
-	attributeCategories: typeof import('./query.attributeCategories.handler').attributeCategories
-	languages: typeof import('./query.languages.handler').languages
-	countries: typeof import('./query.countries.handler').countries
-	userTitle: typeof import('./query.userTitle.handler').userTitle
-	countryGovDistMap: typeof import('./query.countryGovDistMap.handler').countryGovDistMap
-	getSubDistricts: typeof import('./query.getSubDistricts.handler').getSubDistricts
-	govDists: typeof import('./query.govDists.handler').govDists
-	orgBadges: typeof import('./query.orgBadges.handler').orgBadges
-}
+const namespaced = (s: string) => `${NAMESPACE}.${s}`
 export const fieldOptRouter = defineRouter({
 	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
 	govDistsByCountry: publicProcedure
@@ -26,97 +13,75 @@ export const fieldOptRouter = defineRouter({
 				'All government districts by country (active for org listings). Gives 2 levels of sub-districts',
 		})
 		.input(schema.ZGovDistsByCountrySchema)
-		.query(async ({ ctx, input }) => {
-			if (!HandlerCache.govDistsByCountry)
-				HandlerCache.govDistsByCountry = await import('./query.govDistsByCountry.handler').then(
-					(mod) => mod.govDistsByCountry
-				)
-			if (!HandlerCache.govDistsByCountry) throw new Error('Failed to load handler')
-			return HandlerCache.govDistsByCountry({ ctx, input })
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('govDistsByCountry'),
+				() => import('./query.govDistsByCountry.handler')
+			)
+			return handler(opts)
 		}),
 	govDistsByCountryNoSub: publicProcedure
 		.meta({
 			description: 'All government districts by country (active for org listings).',
 		})
 		.input(schema.ZGovDistsByCountryNoSubSchema)
-		.query(async ({ ctx, input }) => {
-			if (!HandlerCache.govDistsByCountryNoSub)
-				HandlerCache.govDistsByCountryNoSub = await import('./query.govDistsByCountryNoSub.handler').then(
-					(mod) => mod.govDistsByCountryNoSub
-				)
-			if (!HandlerCache.govDistsByCountryNoSub) throw new Error('Failed to load handler')
-			return HandlerCache.govDistsByCountryNoSub({ ctx, input })
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('govDistsByCountryNoSub'),
+				() => import('./query.govDistsByCountryNoSub.handler')
+			)
+			return handler(opts)
 		}),
 	phoneTypes: publicProcedure.query(async () => {
-		if (!HandlerCache.phoneTypes)
-			HandlerCache.phoneTypes = await import('./query.phoneTypes.handler').then((mod) => mod.phoneTypes)
-		if (!HandlerCache.phoneTypes) throw new Error('Failed to load handler')
-		return HandlerCache.phoneTypes()
+		const handler = await importHandler(namespaced('phoneTypes'), () => import('./query.phoneTypes.handler'))
+		return handler()
 	}),
-	attributesByCategory: publicProcedure
-		.input(schema.ZAttributesByCategorySchema)
-		.query(async ({ ctx, input }) => {
-			if (!HandlerCache.attributesByCategory)
-				HandlerCache.attributesByCategory = await import('./query.attributesByCategory.handler').then(
-					(mod) => mod.attributesByCategory
-				)
-			if (!HandlerCache.attributesByCategory) throw new Error('Failed to load handler')
-			return HandlerCache.attributesByCategory({ ctx, input })
-		}),
-	attributeCategories: publicProcedure
-		.input(schema.ZAttributeCategoriesSchema)
-		.query(async ({ ctx, input }) => {
-			if (!HandlerCache.attributeCategories)
-				HandlerCache.attributeCategories = await import('./query.attributeCategories.handler').then(
-					(mod) => mod.attributeCategories
-				)
-			if (!HandlerCache.attributeCategories) throw new Error('Failed to load handler')
-			return HandlerCache.attributeCategories({ ctx, input })
-		}),
-	languages: publicProcedure.input(schema.ZLanguagesSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.languages)
-			HandlerCache.languages = await import('./query.languages.handler').then((mod) => mod.languages)
-		if (!HandlerCache.languages) throw new Error('Failed to load handler')
-		return HandlerCache.languages({ ctx, input })
+	attributesByCategory: publicProcedure.input(schema.ZAttributesByCategorySchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('attributesByCategory'),
+			() => import('./query.attributesByCategory.handler')
+		)
+		return handler(opts)
 	}),
-	countries: publicProcedure.input(schema.ZCountriesSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.countries)
-			HandlerCache.countries = await import('./query.countries.handler').then((mod) => mod.countries)
-		if (!HandlerCache.countries) throw new Error('Failed to load handler')
-		return HandlerCache.countries({ ctx, input })
+	attributeCategories: publicProcedure.input(schema.ZAttributeCategoriesSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('attributeCategories'),
+			() => import('./query.attributeCategories.handler')
+		)
+		return handler(opts)
+	}),
+	languages: publicProcedure.input(schema.ZLanguagesSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('languages'), () => import('./query.languages.handler'))
+		return handler(opts)
+	}),
+	countries: publicProcedure.input(schema.ZCountriesSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('countries'), () => import('./query.countries.handler'))
+		return handler(opts)
 	}),
 	userTitle: publicProcedure.query(async () => {
-		if (!HandlerCache.userTitle)
-			HandlerCache.userTitle = await import('./query.userTitle.handler').then((mod) => mod.userTitle)
-		if (!HandlerCache.userTitle) throw new Error('Failed to load handler')
-		return HandlerCache.userTitle()
+		const handler = await importHandler(namespaced('userTitle'), () => import('./query.userTitle.handler'))
+		return handler()
 	}),
 	countryGovDistMap: publicProcedure.query(async () => {
-		if (!HandlerCache.countryGovDistMap)
-			HandlerCache.countryGovDistMap = await import('./query.countryGovDistMap.handler').then(
-				(mod) => mod.countryGovDistMap
-			)
-		if (!HandlerCache.countryGovDistMap) throw new Error('Failed to load handler')
-		return HandlerCache.countryGovDistMap()
+		const handler = await importHandler(
+			namespaced('countryGovDistMap'),
+			() => import('./query.countryGovDistMap.handler')
+		)
+		return handler()
 	}),
-	getSubDistricts: publicProcedure.input(schema.ZGetSubDistrictsSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.getSubDistricts)
-			HandlerCache.getSubDistricts = await import('./query.getSubDistricts.handler').then(
-				(mod) => mod.getSubDistricts
-			)
-		if (!HandlerCache.getSubDistricts) throw new Error('Failed to load handler')
-		return HandlerCache.getSubDistricts({ ctx, input })
+	getSubDistricts: publicProcedure.input(schema.ZGetSubDistrictsSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getSubDistricts'),
+			() => import('./query.getSubDistricts.handler')
+		)
+		return handler(opts)
 	}),
-	govDists: publicProcedure.input(schema.ZGovDistsSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.govDists)
-			HandlerCache.govDists = await import('./query.govDists.handler').then((mod) => mod.govDists)
-		if (!HandlerCache.govDists) throw new Error('Failed to load handler')
-		return HandlerCache.govDists({ ctx, input })
+	govDists: publicProcedure.input(schema.ZGovDistsSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('govDists'), () => import('./query.govDists.handler'))
+		return handler(opts)
 	}),
-	orgBadges: publicProcedure.input(schema.ZOrgBadgesSchema).query(async ({ ctx, input }) => {
-		if (!HandlerCache.orgBadges)
-			HandlerCache.orgBadges = await import('./query.orgBadges.handler').then((mod) => mod.orgBadges)
-		if (!HandlerCache.orgBadges) throw new Error('Failed to load handler')
-		return HandlerCache.orgBadges({ ctx, input })
+	orgBadges: publicProcedure.input(schema.ZOrgBadgesSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('orgBadges'), () => import('./query.orgBadges.handler'))
+		return handler(opts)
 	}),
 })

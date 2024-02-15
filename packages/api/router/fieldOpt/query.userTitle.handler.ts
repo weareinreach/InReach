@@ -7,3 +7,4 @@ export const userTitle = async () => {
 	})
 	return results
 }
+export default userTitle

@@ -12,3 +12,4 @@ export const phoneTypes = async () => {
 	})
 	return result
 }
+export default phoneTypes
