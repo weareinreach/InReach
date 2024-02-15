@@ -13,20 +13,18 @@ export type RpcSuccessResponse<Data> = {
 		data: Data | SuperJSONResult
 	}
 }
-
+type ErrorObject = {
+	message: string
+	code: number
+	data: {
+		code: string
+		httpStatus: number
+		stack: string
+		path: string //TQuery
+	}
+}
 export type RpcErrorResponse = {
-	error:
-		| {
-				message: string
-				code: number
-				data: {
-					code: string
-					httpStatus: number
-					stack: string
-					path: string //TQuery
-				}
-		  }
-		| SuperJSONResult
+	error: ErrorObject | SuperJSONResult
 }
 
 // According to JSON-RPC 2.0 and tRPC documentation.
