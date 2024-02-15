@@ -1,29 +1,30 @@
-import flush from 'just-flush'
-import { type SetOptional } from 'type-fest'
-
 import { prisma } from '@weareinreach/db'
-import { type AttributesByCategory } from '@weareinreach/db/client'
+import { type FieldAttributes } from '@weareinreach/db/zod_util/attributeSupplement'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TAttributesByCategorySchema } from './query.attributesByCategory.schema'
+import { fieldAttributesSchema, type TAttributesByCategorySchema } from './query.attributesByCategory.schema'
 
 export const attributesByCategory = async ({ input }: TRPCHandlerParams<TAttributesByCategorySchema>) => {
-	const where = Array.isArray(input)
-		? { categoryName: { in: input } }
-		: typeof input === 'string'
-			? { categoryName: input }
-			: undefined
+	console.log(input)
 	const result = await prisma.attributesByCategory.findMany({
-		where,
+		where: {
+			categoryName: Array.isArray(input?.categoryName) ? { in: input.categoryName } : input?.categoryName,
+			canAttachTo: input?.canAttachTo?.length ? { hasSome: input.canAttachTo } : undefined,
+		},
 		orderBy: [{ categoryName: 'asc' }, { attributeName: 'asc' }],
 	})
 
-	const flushedResults = result.map((item) =>
-		flush<FlushedAttributesByCategory>(item)
-	) as FlushedAttributesByCategory[]
+	const flushedResults = result.map((item) => {
+		const { dataSchema, ...rest } = item
+
+		const parsedDataSchema = fieldAttributesSchema.safeParse(dataSchema)
+
+		return {
+			...rest,
+			dataSchema: parsedDataSchema.success
+				? (parsedDataSchema.data as FieldAttributes[] | FieldAttributes[][])
+				: null,
+		}
+	})
 	return flushedResults
 }
-type FlushedAttributesByCategory = SetOptional<
-	AttributesByCategory,
-	'interpolationValues' | 'icon' | 'iconBg' | 'badgeRender' | 'dataSchema' | 'dataSchemaName'
->
