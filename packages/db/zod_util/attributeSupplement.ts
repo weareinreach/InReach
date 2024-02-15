@@ -139,7 +139,7 @@ export enum FieldType {
 	number = 'number',
 	currency = 'currency',
 }
-interface BaseFieldAttributes {
+export interface BaseFieldAttributes {
 	key: string
 	label: string
 	name: string
@@ -147,17 +147,17 @@ interface BaseFieldAttributes {
 	required?: boolean
 }
 
-interface TextFieldAttributes extends BaseFieldAttributes {
+export interface TextFieldAttributes extends BaseFieldAttributes {
 	type: FieldType.text
 }
-interface SelectFieldAttributes extends BaseFieldAttributes {
+export interface SelectFieldAttributes extends BaseFieldAttributes {
 	type: FieldType.select
 	options: { value: string; label: string }[]
 }
-interface NumberFieldAttributes extends BaseFieldAttributes {
+export interface NumberFieldAttributes extends BaseFieldAttributes {
 	type: FieldType.number
 }
-interface CurrencyFieldAttributes extends BaseFieldAttributes {
+export interface CurrencyFieldAttributes extends BaseFieldAttributes {
 	type: FieldType.currency
 }
 export type FieldAttributes =

@@ -1,9 +1,8 @@
 import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { type ComponentPropsWithoutRef, forwardRef, useState } from 'react'
-import { type FieldPath, useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import { NumberInput, Radio, Select, TextInput } from 'react-hook-form-mantine'
-import { type TupleToUnion } from 'type-fest'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { type FieldAttributes, FieldType } from '@weareinreach/db/zod_util/attributeSupplement'
@@ -26,7 +25,6 @@ const SuppBoolean = () => {
 
 const SuppText = () => {
 	const { control } = useFormContext<FormSchema>()
-	const { t } = useTranslation('common')
 	return (
 		<Stack>
 			<TextInput {...{ control, name: 'text' }} />
@@ -118,10 +116,10 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 	const [secondarySearch, onSecondarySearch] = useState<string | null>(null)
 	const [tertiarySearch, onTertiarySearch] = useState<string | null>(null)
 
-	const [finalValue, setFinalValue] = useState<string | null>(null)
-	const [fieldName, setFieldName] = useState<FieldPath<FormSchema> | undefined>(
-		countryOnly ? 'countryId' : undefined
-	)
+	// const [finalValue, setFinalValue] = useState<string | null>(null)
+	// const [fieldName, setFieldName] = useState<FieldPath<FormSchema> | undefined>(
+	// 	countryOnly ? 'countryId' : undefined
+	// )
 
 	const { data: countryList, ...countries } = api.fieldOpt.countries.useQuery(undefined, {
 		enabled: countryOnly ?? false,
