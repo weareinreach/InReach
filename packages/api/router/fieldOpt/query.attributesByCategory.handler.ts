@@ -28,3 +28,4 @@ export const attributesByCategory = async ({ input }: TRPCHandlerParams<TAttribu
 	})
 	return flushedResults
 }
+export default attributesByCategory

@@ -58,3 +58,4 @@ export const govDistsByCountry = async ({ input }: TRPCHandlerParams<TGovDistsBy
 	})
 	return data
 }
+export default govDistsByCountry
