@@ -210,8 +210,8 @@ importers:
         specifier: 10.45.1
         version: 10.45.1
       '@vercel/analytics':
-        specifier: 1.1.4
-        version: 1.1.4
+        specifier: 1.2.0
+        version: 1.2.0(next@14.1.0)(react@18.2.0)
       '@vercel/edge-config':
         specifier: 1.0.0
         version: 1.0.0(@opentelemetry/api@1.7.0)(typescript@5.3.3)
@@ -1198,8 +1198,8 @@ importers:
         specifier: 7.33.2
         version: 7.33.2(eslint@8.56.0)
       eslint-plugin-storybook:
-        specifier: 0.7.0
-        version: 0.7.0(eslint@8.56.0)(typescript@5.3.3)
+        specifier: 0.8.0
+        version: 0.8.0(eslint@8.56.0)(typescript@5.3.3)
       eslint-plugin-turbo:
         specifier: 1.12.4
         version: 1.12.4(eslint@8.56.0)
@@ -10737,9 +10737,19 @@ packages:
       crypto-js: 4.2.0
     dev: false
 
-  /@vercel/analytics@1.1.4:
-    resolution: {integrity: sha512-CVzw3SLcPSc31tRDLLqDGqWQCv6/ylpEZnW7AYMvtvRsO2Q8hmjBVOqvo2Ok6MZnYf262O8c86LB2K9vK1/ZbQ==}
+  /@vercel/analytics@1.2.0(next@14.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-Q9hduY6+i73Is1m57Y3OlawleeYVi4cvuh/0j6IwmSndMOE4+BKkMwjnwz+7xnqfZCanipIG6+q+zHalH9X0Zg==}
+    peerDependencies:
+      next: '>= 13 || 13'
+      react: ^18 || ^19 || 18
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
     dependencies:
+      next: 14.1.0(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
       server-only: 0.0.1
     dev: false
 
@@ -14460,9 +14470,9 @@ packages:
       string.prototype.matchall: 4.0.10
     dev: true
 
-  /eslint-plugin-storybook@0.7.0(eslint@8.56.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-lmvnszv3Xyd0TcxFLoDfLOaVN5v0vKwZh7ZDDY9xCeT/+knHn1ZnktHVO4tun/xVj8aBMYynXpBk0DIiWWRnww==}
-    engines: {node: 12.x || 14.x || >= 16}
+  /eslint-plugin-storybook@0.8.0(eslint@8.56.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-CZeVO5EzmPY7qghO2t64oaFM+8FTaD4uzOEjHKp516exyTKo+skKAL9GI3QALS2BXhyALJjNtwbmr1XinGE8bA==}
+    engines: {node: '>= 18'}
     peerDependencies:
       eslint: '>=6'
     dependencies:
