@@ -57,7 +57,7 @@
 		"@trpc/next": "10.45.1",
 		"@trpc/react-query": "10.45.1",
 		"@trpc/server": "10.45.1",
-		"@vercel/analytics": "1.1.4",
+		"@vercel/analytics": "1.2.0",
 		"@vercel/edge-config": "1.0.0",
 		"@vercel/kv": "1.0.1",
 		"@vercel/speed-insights": "1.0.10",
