@@ -2306,8 +2306,9 @@ view AttributesByCategory {
   requireBoolean      Boolean
   requireData         Boolean
   dataSchemaName      String?
-  dataSchema          Json?
+  formSchema          Json?
   canAttachTo         AttributeAttachment[]
+  dataSchema          Json?
 
   @@unique([categoryId, attributeId])
   @@map("attributes_by_category")
