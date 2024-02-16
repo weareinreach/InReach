@@ -13,7 +13,7 @@ import {
 	Text,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import Ajv from 'ajv'
+import { type JSONSchemaType } from 'ajv'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useMemo, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -41,9 +41,6 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		const { t } = useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 
-		const form = useForm<FormSchema>({
-			resolver: zodResolver(formSchema),
-		})
 		const selectAttrRef = useRef<HTMLInputElement>(null)
 		// #region tRPC
 		const utils = api.useUtils()
@@ -93,15 +90,23 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			null
 		)
 		const [supplements, setSupplements] = useState<SupplementFieldsNeeded>(supplementDefaults)
+		const [supplementSchema, setSupplementSchema] = useState<JSONSchemaType<unknown> | null>(null)
 		const saveAttributes = api.organization.attachAttribute.useMutation()
 		// #endregion
 
 		// #region Handlers
+		const form = useForm<FormSchema>({
+			resolver: zodResolver(formSchema),
+		})
+
 		const selectHandler = (e: string | null) => {
 			console.log('selectHandler', e)
 			if (e === null) {
 				setSupplements(supplementDefaults)
 				setSelectedAttr(null)
+				if (supplementSchema !== null) {
+					setSupplementSchema(null)
+				}
 				return
 			}
 			const item = attributesByCategory?.find(({ value }) => value === e)
@@ -119,6 +124,9 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						data: requireData ?? false,
 					}
 					setSupplements(suppRequired)
+					if (requireData && item.dataSchema) {
+						setSupplementSchema(item.dataSchema)
+					}
 
 					return
 				}
@@ -182,8 +190,8 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						</Stack>
 						{supplements.boolean && <Supplement.Boolean />}
 						{supplements.text && <Supplement.Text />}
-						{supplements.data && selectedAttr?.dataSchema && (
-							<Supplement.Data schema={selectedAttr.dataSchema} />
+						{supplements.data && selectedAttr?.formSchema && (
+							<Supplement.Data formSchema={selectedAttr.formSchema} dataSchema={selectedAttr.dataSchema} />
 						)}
 						{supplements.language && <Supplement.Language />}
 						{supplements.geo && <Supplement.Geo />}
