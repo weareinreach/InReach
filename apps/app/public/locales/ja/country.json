@@ -77,7 +77,7 @@
 	},
 	"BEN": {
 		"name": "ベナン",
-		"demonym_other": "ベナン"
+		"demonym_other": "ベナン人"
 	},
 	"BES": {
 		"name": "カリブ海オランダ"
@@ -147,7 +147,7 @@
 	},
 	"BWA": {
 		"name": "ボツワナ",
-		"demonym_other": "バツワナ"
+		"demonym_other": "バツワナ人"
 	},
 	"CAF": {
 		"name": "中央アフリカ共和国",
@@ -175,7 +175,7 @@
 	},
 	"CIV": {
 		"name": "コートジボワール",
-		"demonym_other": "コートジボワー人"
+		"demonym_other": "コートジボワール人"
 	},
 	"CMR": {
 		"name": "カメルーン",
@@ -227,7 +227,7 @@
 	},
 	"CYP": {
 		"name": "キプロス",
-		"demonym_other": "キプロス"
+		"demonym_other": "キプロス人"
 	},
 	"CZE": {
 		"name": "チェコ",
@@ -410,11 +410,11 @@
 	},
 	"IMN": {
 		"name": "マン島",
-		"demonym_other": "マンクス"
+		"demonym_other": "マン島人"
 	},
 	"IND": {
 		"name": "インド",
-		"demonym_other": "インディアン"
+		"demonym_other": "インド人"
 	},
 	"IOT": {
 		"name": "イギリス領インド洋地域",
@@ -422,7 +422,7 @@
 	},
 	"IRL": {
 		"name": "アイルランド",
-		"demonym_other": "アイルランド語"
+		"demonym_other": "アイルランド人"
 	},
 	"IRN": {
 		"name": "イラン",
@@ -510,7 +510,7 @@
 	},
 	"LCA": {
 		"name": "セントルシア",
-		"demonym_other": "セントルシアン"
+		"demonym_other": "セントルシア人"
 	},
 	"LIE": {
 		"name": "リヒテンシュタイン",
@@ -522,7 +522,7 @@
 	},
 	"LSO": {
 		"name": "レソト",
-		"demonym_other": "バソト"
+		"demonym_other": "レソト人"
 	},
 	"LTU": {
 		"name": "リトアニア",
@@ -542,7 +542,7 @@
 	},
 	"MAF": {
 		"name": "セント・マーチン",
-		"demonym_other": "セント・マーチン・アイランダーズ"
+		"demonym_other": "セント・マーチン人"
 	},
 	"MAR": {
 		"name": "モロッコ",
@@ -550,7 +550,7 @@
 	},
 	"MCO": {
 		"name": "モナコ",
-		"demonym_other": "モネガスク人"
+		"demonym_other": "モナコ人"
 	},
 	"MDA": {
 		"name": "モルドバ",
@@ -558,7 +558,7 @@
 	},
 	"MDG": {
 		"name": "マダガスカル",
-		"demonym_other": "マダガスカル"
+		"demonym_other": "マダガスカル人"
 	},
 	"MDV": {
 		"name": "モルディブ",
@@ -570,7 +570,7 @@
 	},
 	"MHL": {
 		"name": "マーシャル諸島",
-		"demonym_other": "マーシャル語"
+		"demonym_other": "マーシャル諸島人"
 	},
 	"MKD": {
 		"name": "北マケドニア",
@@ -582,15 +582,15 @@
 	},
 	"MLT": {
 		"name": "マルタ",
-		"demonym_other": "マルタ語"
+		"demonym_other": "マルタ人"
 	},
 	"MMR": {
 		"name": "ミャンマー",
-		"demonym_other": "バマース"
+		"demonym_other": "ビルマ人"
 	},
 	"MNE": {
 		"name": "モンテネグロ",
-		"demonym_other": "モンテネグリン"
+		"demonym_other": "モンテネグロ人"
 	},
 	"MNG": {
 		"name": "モンゴル",
@@ -614,7 +614,7 @@
 	},
 	"MTQ": {
 		"name": "マルティニーク",
-		"demonym_other": "フランス語"
+		"demonym_other": "フランス人"
 	},
 	"MUS": {
 		"name": "モーリシャス",
@@ -646,7 +646,7 @@
 	},
 	"NFK": {
 		"name": "ノーフォーク島",
-		"demonym_other": "ノーフォーク・アイランダーズ"
+		"demonym_other": "ノーフォーク島人"
 	},
 	"NGA": {
 		"name": "ナイジェリア",
@@ -670,7 +670,7 @@
 	},
 	"NPL": {
 		"name": "ネパール",
-		"demonym_other": "ネパール語"
+		"demonym_other": "ネパール人"
 	},
 	"NRU": {
 		"name": "ナウル",
@@ -682,7 +682,7 @@
 	},
 	"OMN": {
 		"name": "オマーン",
-		"demonym_other": "オマーン"
+		"demonym_other": "オマーン人"
 	},
 	"PAK": {
 		"name": "パキスタン",
@@ -714,7 +714,7 @@
 	},
 	"POL": {
 		"name": "ポーランド",
-		"demonym_other": "ポーランド語"
+		"demonym_other": "ポーランド人"
 	},
 	"PRI": {
 		"name": "プエルトリコ",
@@ -726,7 +726,7 @@
 	},
 	"PRT": {
 		"name": "ポルトガル",
-		"demonym_other": "ポルトガル語"
+		"demonym_other": "ポルトガル人"
 	},
 	"PRY": {
 		"name": "パラグアイ",
@@ -770,7 +770,7 @@
 	},
 	"SEN": {
 		"name": "セネガル",
-		"demonym_other": "セネガル"
+		"demonym_other": "セネガル人"
 	},
 	"SGP": {
 		"name": "シンガポール",
@@ -825,7 +825,7 @@
 	},
 	"SUR": {
 		"name": "スリナム",
-		"demonym_other": "スリナム"
+		"demonym_other": "スリナム人"
 	},
 	"SVK": {
 		"name": "スロバキア",
@@ -837,11 +837,11 @@
 	},
 	"SWE": {
 		"name": "スウェーデン",
-		"demonym_other": "スウェーデンの"
+		"demonym_other": "スウェーデン人"
 	},
 	"SWZ": {
 		"name": "エスワティニ",
-		"demonym_other": "スワジス"
+		"demonym_other": "エスワティニ人"
 	},
 	"SXM": {
 		"name": "シント・マールテン",
@@ -900,7 +900,7 @@
 		"demonym_other": "チュニジア人"
 	},
 	"TUR": {
-		"name": "七面鳥",
+		"name": "トルコ",
 		"demonym_other": "トルコ人"
 	},
 	"TUV": {
@@ -925,7 +925,7 @@
 	},
 	"UMI": {
 		"name": "合衆国領有小離島",
-		"demonym_other": "<unk>"
+		"demonym_other": "アメリカ人"
 	},
 	"UNK": {
 		"name": "コソボ",
@@ -936,16 +936,16 @@
 		"demonym_other": "ウルグアイ人"
 	},
 	"USA": {
-		"name": "米国",
-		"demonym_other": "<unk>"
+		"name": "アメリカ",
+		"demonym_other": "アメリカ人"
 	},
 	"UZB": {
 		"name": "ウズベキスタン",
 		"demonym_other": "ウズベキスタン人"
 	},
 	"VAT": {
-		"name": "バチカン市",
-		"demonym_other": "イタリア"
+		"name": "バチカン市国",
+		"demonym_other": "イタリア人"
 	},
 	"VCT": {
 		"name": "セントビンセントおよびグレナディーン諸島",
@@ -961,15 +961,15 @@
 	},
 	"VIR": {
 		"name": "アメリカ領バージン諸島",
-		"demonym_other": "ヴァージン諸島"
+		"demonym_other": "ヴァージン諸島人"
 	},
 	"VNM": {
 		"name": "ベトナム",
-		"demonym_other": "ベトナム語"
+		"demonym_other": "ベトナム人"
 	},
 	"VUT": {
 		"name": "バヌアツ",
-		"demonym_other": "ニバヌアツ"
+		"demonym_other": "バヌアツ人\n\n"
 	},
 	"WLF": {
 		"name": "ワリスフツナ諸島",
