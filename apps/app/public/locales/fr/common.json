@@ -33,11 +33,11 @@
 		"privatePractice": "Cabinet privé",
 		"remote-tool-tip": "Disponible à distance",
 		"service-tool-tip": "Les service (s) offert(s) par cette organisation.",
-		"unclaimed": "Unclaimed",
+		"unclaimed": "Non réclamé",
 		"unclaimed-tool-tip": "Cette organisation n'a pas encore été revendiquée par un représentant. <link>Revendiquer cette organisation</link> pour établir la confiance avec notre communauté, mettre à jour vos propres informations, et plus encore.",
-		"verified-information": "Verified information",
-		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
-		"verified-reviewer": "InReach Verified Reviewer"
+		"verified-information": "Informations vérifiées",
+		"verified-information-detail": "Les informations sur cette page ont été mises à jour pour la dernière fois {{dateString}}. InReach donne la priorité à la précision et à la sécurité des utilisateur.e.s, et met à jour toutes les informations régulièrement. Pour de plus amples renseignements sur notre processus de vérification, veuillez consulter notre page Processus de vérification sur InReach.org.",
+		"verified-reviewer": "Évaluateur.e vérifié.e d'InReach"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Retour à <u>{{page}}</u>",
@@ -387,7 +387,7 @@
 		"admin-options": "Options d'administration",
 		"data-portal": "Accueil Portail de Données",
 		"edit-page": "Modifier cette page",
-		"user-options": "Options de l'utilisateur"
+		"user-options": "Options de l'utilisateur.e"
 	},
 	"verify-account": {
 		"verified": "Compte vérifié !",

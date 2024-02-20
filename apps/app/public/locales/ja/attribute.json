@@ -1,14 +1,14 @@
 {
 	"additional": {
 		"CATEGORYNAME": "追加情報",
-		"at-capacity": "定員に達した時点で",
+		"at-capacity": "定員に達しているもの",
 		"geo-near-public-transit": "近くの公共交通機関",
 		"geo-public-transit-description": "公共交通機関/特定の道順",
-		"has-confidentiality-policy": "守秘義務ポリシーがあります",
+		"has-confidentiality-policy": "機密保持方針があるもの",
 		"offers-remote-services": "リモート",
 		"private-practice": "プライベート練習",
 		"religiously-affiliated": "宗教に関係している",
-		"time-walk-in": "ウォークイン時間あり",
+		"time-walk-in": "事前予約なしでの受け入れ時間あり",
 		"wheelchair-accessible_false": "アクセス不可",
 		"wheelchair-accessible_true": "アクセシブル"
 	},
@@ -25,7 +25,7 @@
 		"api": "アジア系及び太平洋諸島系コミュニティに役立つ機会",
 		"asexual": "無性愛者コミュニティに役立つ機会",
 		"asia-immigrant": "アジア諸国出身の人々に役立つ機会",
-		"asylee": "亡命者（庇護資格を与えられた者）に役立つ機会",
+		"asylee": "亡命者（亡命許可を与えられた者）に役立つ機会",
 		"asylum-seeker": "{{country}} からの亡命を求める人に役立つ機会",
 		"bipoc": "黒人、先住民、有色人種に役立つ機会",
 		"bisexual": "バイセクシュアルコミュニティに役立つ機会",
@@ -80,12 +80,12 @@
 		"elig-age_min": "{{min}} 以上",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "その他 (自由記述)",
-		"req-medical-insurance": "医療保険が必要",
-		"req-photo-id": "写真付き身分証明書が必要",
-		"req-proof-of-age": "年齢証明が必要",
-		"req-proof-of-income": "収入証明書が必要",
-		"req-proof-of-residence": "居住証明書が必要",
-		"req-referral": "紹介が必要です",
+		"req-medical-insurance": "医療保険が必要なもの",
+		"req-photo-id": "写真付き身分証明書が必要なもの",
+		"req-proof-of-age": "年齢証明が必要なもの",
+		"req-proof-of-income": "収入証明書が必要なもの",
+		"req-proof-of-residence": "居住証明書が必要なもの",
+		"req-referral": "紹介を受ける必要があるもの",
 		"time-appointment-required": "時間指定の予約が必要です"
 	},
 	"lang": {
@@ -96,7 +96,7 @@
 	},
 	"orgleader": {
 		"CATEGORYNAME": "組織リーダーシップ",
-		"bipoc-led": "バイポック（黒人、先住民、有色人種）主導",
+		"bipoc-led": "BIPOC（黒人、先住民、有色人種）主導",
 		"black-led": "黒人主導",
 		"immigrant-led": "移民主導",
 		"trans-led": "トランスジェンダー主導",
@@ -115,7 +115,7 @@
 		"accesswhatsapp": "アクセス方法 - WhatsApp"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "サービスフォーカス",
+		"CATEGORYNAME": "サービスの対象者",
 		"asylum-seekers": "亡命希望者",
 		"bipoc-comm": "BIPOC（黒人、先住民、有色人種）コミュニティ",
 		"caregivers": "介護者コミュニティ",
