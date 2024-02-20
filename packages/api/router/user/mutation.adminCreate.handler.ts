@@ -1,22 +1,14 @@
-import { type z } from 'zod'
-
-import { createCognitoUser } from '@weareinreach/auth/lib/createUser'
-import { prisma } from '@weareinreach/db'
+import { createCognitoUser } from '@weareinreach/auth/createUser'
+import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TAdminCreateSchema, ZAdminCreateSchema } from './mutation.adminCreate.schema'
+import { type TAdminCreateSchema } from './mutation.adminCreate.schema'
 
 export const adminCreate = async ({ ctx, input }: TRPCHandlerParams<TAdminCreateSchema, 'protected'>) => {
-	const inputData = {
-		actorId: ctx.session.user.id,
-		operation: 'CREATE',
-		data: input,
-	} satisfies z.input<ReturnType<typeof ZAdminCreateSchema>['dataParser']>
-
-	const recordData = ZAdminCreateSchema().dataParser.parse(inputData)
+	const prisma = getAuditedClient(ctx.actorId)
 	const newUser = await prisma.$transaction(async (tx) => {
-		const user = await tx.user.create(recordData.prisma)
-		const cognitoUser = await createCognitoUser(recordData.cognito)
+		const user = await tx.user.create(input.prisma)
+		const cognitoUser = await createCognitoUser(input.cognito)
 		return {
 			user,
 			cognitoUser,
@@ -24,3 +16,4 @@ export const adminCreate = async ({ ctx, input }: TRPCHandlerParams<TAdminCreate
 	})
 	return newUser
 }
+export default adminCreate

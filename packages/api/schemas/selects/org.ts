@@ -116,7 +116,7 @@ const orgWebsiteInclude = {
 		languages: { select: { language: languageSelect } },
 		url: true,
 		isPrimary: true,
-		orgLocationId: true,
+		locations: { select: { orgLocationId: true } },
 		orgLocationOnly: true,
 	},
 } satisfies Prisma.Organization$websitesArgs
@@ -171,9 +171,6 @@ const orgServiceTagInclude = {
 	select: { tag: serviceTagInclude },
 } satisfies Prisma.OrgServiceTagDefaultArgs
 
-const serviceAccessInclude = {
-	select: attributeInclude.select,
-} satisfies Prisma.ServiceAccessAttributeDefaultArgs
 const reviewIds = {
 	where: {
 		visible: true,
@@ -192,7 +189,6 @@ const orgServiceInclude = (ctx: Omit<Context, 'prisma'>) =>
 			attributes: attributeInclude,
 			serviceAreas: serviceAreaInclude,
 			services: orgServiceTagInclude,
-			accessDetails: serviceAccessInclude,
 			reviews: reviewIds,
 			phones: phoneSelectPublic,
 			emails: orgEmailInclude,
@@ -219,11 +215,11 @@ const photoSelect = {
 } satisfies Prisma.OrgLocation$photosArgs
 
 const userListSelect = (ctx: Omit<Context, 'prisma'>) => {
-	if (!ctx.session?.user.id) return undefined
+	if (!ctx.session?.user?.id) return undefined
 	return {
 		where: {
 			list: {
-				ownedById: ctx.session?.user.id,
+				ownedById: ctx.session?.user?.id,
 			},
 		},
 		select: {
@@ -245,14 +241,15 @@ export const orgLocationInclude = (ctx: Omit<Context, 'prisma'>) =>
 			country: countryWithoutGeo,
 			attributes: attributeInclude,
 			emails: orgEmailInclude,
-			websites: orgWebsiteInclude,
+			// websites: orgWebsiteInclude,
+			websites: { select: { website: orgWebsiteInclude } },
 			phones: phoneSelectPublic,
 			photos: photoSelect,
 			hours: hoursSelect,
 			reviews: reviewIds,
 			services: orgLocationServiceInclude(ctx),
 			serviceAreas: serviceAreaInclude,
-			socialMedia: orgSocialMediaInclude,
+			socialMedia: { select: { socialMedia: orgSocialMediaInclude } },
 			description: freeText,
 			name: true,
 			street1: true,
@@ -364,8 +361,8 @@ const selectAttrib = {
 		// },
 	},
 } satisfies {
-	select: Prisma.OrganizationAttributeSelect | Prisma.ServiceAttributeSelect
-	where: Prisma.OrganizationAttributeWhereInput | Prisma.ServiceAttributeWhereInput
+	select: Prisma.AttributeSupplementSelect
+	where: Prisma.AttributeSupplementWhereInput
 }
 const selectServ = {
 	select: {

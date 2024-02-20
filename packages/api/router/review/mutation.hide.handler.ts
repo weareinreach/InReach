@@ -1,22 +1,16 @@
-import { prisma } from '@weareinreach/db'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
+import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type THideSchema } from './mutation.hide.schema'
 
 export const hide = async ({ ctx, input }: TRPCHandlerParams<THideSchema, 'protected'>) => {
+	const prisma = getAuditedClient(ctx.actorId)
 	const visible = false
 
 	const result = await prisma.orgReview.update({
 		where: { id: input.id },
 		data: {
 			visible,
-			auditLogs: CreateAuditLog({
-				actorId: ctx.actorId,
-				operation: 'UPDATE',
-				from: { visible: !visible },
-				to: { visible },
-			}),
 		},
 		select: {
 			id: true,
@@ -25,3 +19,4 @@ export const hide = async ({ ctx, input }: TRPCHandlerParams<THideSchema, 'prote
 	})
 	return result
 }
+export default hide

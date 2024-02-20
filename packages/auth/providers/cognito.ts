@@ -1,5 +1,5 @@
-import { type Provider } from 'next-auth/providers'
 import Credentials from 'next-auth/providers/credentials'
+import { type Provider } from 'next-auth/providers/index'
 
 import { userLogin } from '~auth/lib/userLogin'
 

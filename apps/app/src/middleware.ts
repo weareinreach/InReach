@@ -1,8 +1,10 @@
+import { track } from '@vercel/analytics/server'
 import { get } from '@vercel/edge-config'
 import { type NextMiddleware, type NextRequest, NextResponse } from 'next/server'
 
 export const middleware: NextMiddleware = async (req: NextRequest) => {
 	const res = NextResponse.next()
+	track('geo', { ...req.geo })
 
 	if (!req.cookies.has('inreach-session')) {
 		res.cookies.set({

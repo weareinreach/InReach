@@ -20,3 +20,4 @@ export const slugRedirect = async ({ input }: TRPCHandlerParams<TSlugRedirectSch
 	}
 	return { redirectTo: null }
 }
+export default slugRedirect

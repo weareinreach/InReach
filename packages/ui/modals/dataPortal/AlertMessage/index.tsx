@@ -12,8 +12,8 @@ import {
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
+import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
-import { useTranslation } from 'react-i18next'
 import z from 'zod'
 
 import { ModalTitle } from '~ui/modals'
@@ -40,7 +40,7 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 	return (
 		<>
 			<Modal
-				title={<ModalTitle breadcrumb={{ option: 'close', onClick: () => close() }} />}
+				title={<ModalTitle breadcrumb={{ option: 'close', onClick: close }} />}
 				opened={opened}
 				onClose={close}
 			>

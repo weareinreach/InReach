@@ -1,24 +1,19 @@
 import { z } from 'zod'
 
 import { generateId, generateNestedFreeText, Prisma } from '@weareinreach/db'
-import { CreateBase } from '~api/schemaBase/create'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { connectOneId } from '~api/schemas/nestedOps'
 
-export const ZCreateSchema = () => {
-	const { dataParser: parser, inputSchema } = CreateBase(
-		z.object({
-			orgId: z.string(),
-			data: z.object({
-				serviceName: z.string(),
-				description: z.string().optional(),
-				organizationId: z.string(),
-				published: z.boolean().optional(),
-			}),
-		})
-	)
-
-	const dataParser = parser.transform(({ data: parsedData, actorId, operation }) => {
+export const ZCreateSchema = z
+	.object({
+		orgId: z.string(),
+		data: z.object({
+			serviceName: z.string(),
+			description: z.string().optional(),
+			organizationId: z.string(),
+			published: z.boolean().optional(),
+		}),
+	})
+	.transform((parsedData) => {
 		const { orgId, data } = parsedData
 		const id = generateId('orgService')
 		const serviceName = generateNestedFreeText({
@@ -40,10 +35,8 @@ export const ZCreateSchema = () => {
 			organization,
 			published,
 		}
-		const auditLogs = CreateAuditLog({ actorId, operation, to: recordData })
 
-		return Prisma.validator<Prisma.OrgServiceCreateArgs>()({ data: { ...recordData, auditLogs } })
+		return Prisma.validator<Prisma.OrgServiceCreateArgs>()({ data: recordData })
 	})
-	return { dataParser, inputSchema }
-}
-export type TCreateSchema = z.infer<ReturnType<typeof ZCreateSchema>['inputSchema']>
+
+export type TCreateSchema = z.infer<typeof ZCreateSchema>

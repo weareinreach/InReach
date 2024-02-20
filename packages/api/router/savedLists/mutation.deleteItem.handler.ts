@@ -1,22 +1,57 @@
-import { type z } from 'zod'
-
-import { prisma } from '@weareinreach/db'
+import { getAuditedClient } from '@weareinreach/db'
+import { checkListOwnership } from '~api/lib/checkListOwnership'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TDeleteItemSchema, ZDeleteItemSchema } from './mutation.deleteItem.schema'
+import { type TDeleteItemSchema } from './mutation.deleteItem.schema'
 
 export const deleteItem = async ({ ctx, input }: TRPCHandlerParams<TDeleteItemSchema, 'protected'>) => {
-	const { dataParser } = ZDeleteItemSchema()
+	const prisma = getAuditedClient(ctx.actorId)
+	const { id, organizationId, serviceId } = input
+	checkListOwnership({ listId: id, userId: ctx.session.user.id })
 
-	const inputData = {
-		actorId: ctx.session.user.id,
-		ownedById: ctx.session.user.id,
-		operation: 'UNLINK',
-		data: input,
-	} satisfies z.input<typeof dataParser>
-	const data = dataParser.parse(inputData)
+	const result = await prisma.userSavedList.update({
+		where: {
+			id,
+			ownedById: ctx.session.user.id,
+		},
 
-	const result = await prisma.userSavedList.update(data)
+		data: {
+			...(organizationId
+				? {
+						organizations: {
+							delete: {
+								listId_organizationId: {
+									listId: id,
+									organizationId,
+								},
+							},
+						},
+					}
+				: {}),
+			...(serviceId
+				? {
+						services: {
+							delete: {
+								listId_serviceId: {
+									listId: id,
+									serviceId,
+								},
+							},
+						},
+					}
+				: {}),
+		},
+		select: {
+			id: true,
+			name: true,
+			organizations: {
+				select: { organizationId: true },
+			},
+			services: {
+				select: { serviceId: true },
+			},
+		},
+	})
 	const flattenedResult = {
 		...result,
 		organizations: result.organizations.map((x) => x.organizationId),
@@ -24,3 +59,4 @@ export const deleteItem = async ({ ctx, input }: TRPCHandlerParams<TDeleteItemSc
 	}
 	return flattenedResult
 }
+export default deleteItem

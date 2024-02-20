@@ -75,7 +75,7 @@ export const getPhoneData = async ({ input }: TRPCHandlerParams<TGetPhoneDataSch
 				slug,
 				phoneId,
 				...rest,
-				description: description?.tsKey.text,
+				description: description?.tsKey?.text,
 				attachedLocations: attachedLocations.map(({ location }) => location.id),
 				attachedServices: attachedServices.map(({ service }) => service.id),
 				locations,
@@ -88,3 +88,4 @@ export const getPhoneData = async ({ input }: TRPCHandlerParams<TGetPhoneDataSch
 		totalResults,
 	}
 }
+export default getPhoneData

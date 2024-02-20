@@ -32,3 +32,4 @@ export const getByParent = async ({ input }: TRPCHandlerParams<TGetByParentSchem
 	})
 	return result
 }
+export default getByParent

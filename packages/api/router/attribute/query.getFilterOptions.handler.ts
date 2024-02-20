@@ -23,3 +23,4 @@ export const getFilterOptions = async () => {
 
 	return result
 }
+export default getFilterOptions

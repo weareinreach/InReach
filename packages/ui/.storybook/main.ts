@@ -2,6 +2,7 @@
 import { type StorybookConfig } from '@storybook/nextjs'
 import isChromatic from 'chromatic/isChromatic'
 import dotenv from 'dotenv'
+import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import { mergeAndConcat } from 'merge-anything'
 import { type PropItem } from 'react-docgen-typescript'
 
@@ -9,7 +10,6 @@ import path, { dirname, join } from 'path'
 
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') })
 
-const filePattern = '*.stories.@(ts|tsx)'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -21,7 +21,15 @@ const getAbsolutePath = (value: string) => {
 const publicStatic = path.resolve(__dirname, '../../../apps/app/public')
 
 const config: StorybookConfig = {
-	stories: [`../(components|hooks|icon|layouts|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
+	stories: [
+		'../components/**/*.stories.{ts,tsx}',
+		'../hooks/**/*.stories.{ts,tsx}',
+		'../icon/**/*.stories.{ts,tsx}',
+		'../layouts/**/*.stories.{ts,tsx}',
+		'../modals/**/*.stories.{ts,tsx}',
+		'../other/**/*.stories.{ts,tsx}',
+		'../other/**/*.mdx',
+	],
 	staticDirs: [
 		{
 			from: '../../../apps/app/public',
@@ -38,6 +46,7 @@ const config: StorybookConfig = {
 		getAbsolutePath('@storybook/addon-designs'),
 		getAbsolutePath('storybook-addon-pseudo-states'),
 		getAbsolutePath('@storybook/addon-interactions'),
+		'@storybook/addon-webpack5-compiler-swc',
 	],
 	framework: {
 		name: '@storybook/nextjs',
@@ -89,16 +98,25 @@ const config: StorybookConfig = {
 						'mockAuthStates.ts'
 					),
 					'next-i18next': 'react-i18next',
+					'msw/native': path.resolve(__dirname, '../node_modules/msw/lib/native/index.mjs'),
 				},
-				roots: Array.isArray(config.resolve?.roots)
-					? [...config.resolve.roots, publicStatic]
-					: [publicStatic],
+				roots: [publicStatic],
 			},
 			stats: {
 				colors: true,
 			},
 			devtool: options.configType === 'DEVELOPMENT' ? 'eval-source-map' : undefined,
 		}
+
+		/** I18 HMR */
+		if (options.configType === 'DEVELOPMENT') {
+			const plugin = new I18NextHMRPlugin({
+				localesDir: path.resolve(__dirname, '../../../apps/app/public/locales'),
+			})
+			// @ts-expect-error It doesn't like the i18nHMRPlugin for some reason...
+			Array.isArray(config.plugins) ? config.plugins.push(plugin) : (config.plugins = [plugin])
+		}
+
 		const mergedConfig = mergeAndConcat(config, configAdditions)
 		return mergedConfig
 	},
@@ -109,6 +127,9 @@ const config: StorybookConfig = {
 		? {
 				SKIP_ENV_VALIDATION: 'true',
 			}
-		: { NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string },
+		: {
+				NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string,
+				STORYBOOK_PROJECT_ROOT: path.resolve(__dirname, '../'),
+			},
 }
 export default config

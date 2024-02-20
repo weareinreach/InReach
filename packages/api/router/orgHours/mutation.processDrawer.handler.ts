@@ -1,12 +1,13 @@
 import { Interval } from 'luxon'
 
-import { prisma } from '@weareinreach/db'
+import { getAuditedClient } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TProcessDrawerSchema } from './mutation.processDrawer.schema'
 
-export const processDrawer = async ({ input }: TRPCHandlerParams<TProcessDrawerSchema>) => {
+export const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDrawerSchema, 'protected'>) => {
+	const prisma = getAuditedClient(ctx.actorId)
 	try {
 		const results = {
 			created: 0,
@@ -54,3 +55,4 @@ export const processDrawer = async ({ input }: TRPCHandlerParams<TProcessDrawerS
 		handleError(error)
 	}
 }
+export default processDrawer

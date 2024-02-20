@@ -12,13 +12,13 @@ const whereId = (input: TForContactInfoSchema, isSingleLoc?: boolean): Prisma.Or
 				? {
 						OR: [
 							{ organization: { id: input.parentId, ...isPublic } },
-							{ orgLocation: { organization: { id: input.parentId, ...isPublic } } },
+							{ locations: { every: { location: { organization: { id: input.parentId, ...isPublic } } } } },
 						],
 					}
 				: { organization: { id: input.parentId, ...isPublic } }
 		}
 		case isIdFor('orgLocation', input.parentId): {
-			return { orgLocation: { id: input.parentId, ...isPublic } }
+			return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
 		}
 		default: {
 			return {}
@@ -44,13 +44,15 @@ export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInf
 			id: true,
 			url: true,
 			username: true,
-			service: { select: { name: true } },
+			service: { select: { name: true, logoIcon: true } },
 			orgLocationOnly: true,
 		},
 	})
 	const transformed = result.map(({ service, ...record }) => ({
 		...record,
 		service: service?.name,
+		serviceIcon: service?.logoIcon,
 	}))
 	return transformed
 }
+export default forContactInfo

@@ -13,3 +13,4 @@ export const getLocationPermissions = async ({ ctx }: TRPCHandlerParams<undefine
 	})
 	return permissions
 }
+export default getLocationPermissions

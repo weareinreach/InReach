@@ -23,6 +23,7 @@ jobs:
       OVERRIDE_CI: true
       FORCE_COLOR: true
       SKIP_ENV_VALIDATION: true
+      HUSKY: 0
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -31,13 +32,13 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
-      - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
+      - uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3.0.0
         name: Install pnpm
         id: pnpm-install
         with:
           run_install: false
       - name: Install Node.js
-        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -49,7 +50,7 @@ jobs:
 
       # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
-        uses: chromaui/action@80bf5911f28005ed208f15b7268843b79ca0e23a # v10
+        uses: chromaui/action@c9067691aca4a28d6fbb40d9eea6e144369fbcae # v10
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

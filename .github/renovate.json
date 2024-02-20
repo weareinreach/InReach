@@ -8,6 +8,12 @@
 			"groupName": "patched packages",
 			"matchPackageNames": ["@crowdin/ota-client", "trpc-panel", "msw-storybook-addon"],
 			"matchUpdateTypes": ["major", "minor", "patch"]
+		},
+		{
+			"enabled": false,
+			"groupName": "Ignored Versions",
+			"matchCurrentVersion": "0.9.2",
+			"matchPackageNames": ["@t3-oss/env-nextjs"]
 		}
 	],
 	"semanticCommitScope": "{{parentDir}}"

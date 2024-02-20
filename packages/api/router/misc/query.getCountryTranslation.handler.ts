@@ -10,9 +10,9 @@ export const getCountryTranslation = async ({ input }: TRPCHandlerParams<TGetCou
 			where: { cca2: input.cca2 },
 			select: { name: true, tsKey: true, tsNs: true },
 		})
-
 		return result
 	} catch (error) {
 		handleError(error)
 	}
 }
+export default getCountryTranslation

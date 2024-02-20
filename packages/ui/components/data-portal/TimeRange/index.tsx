@@ -3,6 +3,7 @@ import { DateTime, Interval } from 'luxon'
 import { useEffect, useState } from 'react'
 import { type FieldValues, useController, type UseControllerProps, useFormContext } from 'react-hook-form'
 
+import { convertToLuxonWeekday } from '@weareinreach/util/luxon/weekday'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 
@@ -50,8 +51,16 @@ export const TimeRange = <T extends FieldValues>({
 
 	useEffect(() => {
 		if (!openValue || !closeValue) return
-		const start = DateTime.fromFormat(openValue, 'HH:mm').set({ weekYear, weekNumber, weekday: dayIndex })
-		const end = DateTime.fromFormat(closeValue, 'HH:mm').set({ weekYear, weekNumber, weekday: dayIndex })
+		const start = DateTime.fromFormat(openValue, 'HH:mm').set({
+			weekYear,
+			weekNumber,
+			weekday: convertToLuxonWeekday(dayIndex),
+		})
+		const end = DateTime.fromFormat(closeValue, 'HH:mm').set({
+			weekYear,
+			weekNumber,
+			weekday: convertToLuxonWeekday(dayIndex),
+		})
 
 		const updatedValue = value
 			? interval

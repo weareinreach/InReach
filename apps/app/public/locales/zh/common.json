@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "将文本 <strong>{{body}}</strong> 更改为 {{code}}"
 	},
-	"accessible-building_false": "该建筑不适合轮椅通行",
-	"accessible-building_true": "该建筑适合轮椅通行",
 	"account": "账户",
 	"add": "添加 {{item}}",
 	"address": "地址",
@@ -26,12 +24,20 @@
 		"title": "反仇恨承诺"
 	},
 	"badge": {
+		"accessible-building_false": "这座建筑无法使用轮椅",
+		"accessible-building_true": "这座建筑适合轮椅使用者通行",
+		"claimed": "已索赔的",
 		"claimed-tool-tip": "该组织已被一名经过验证的代表认领。<br/><link1>了解更多。</link1>",
 		"community-tool-tip": "该组织服务的社区。",
 		"national-tool-tip": "在{{country}} 各地提供服务。",
+		"privatePractice": "私人执业",
 		"remote-tool-tip": "可远程使用",
 		"service-tool-tip": "该组织提供的服务。",
-		"unclaimed-tool-tip": "该组织尚未被代表认领。<br/><link1>认领该组织</link1>可与我们的社区建立信任，更新您自己的信息等。"
+		"unclaimed": "未认领的",
+		"unclaimed-tool-tip": "该组织尚未被代表认领。<br/><link1>认领该组织</link1>可与我们的社区建立信任，更新您自己的信息等。",
+		"verified-information": "已验证的信息",
+		"verified-information-detail": "此页信息的最后更新时间为 {{dateString}}。InReach 将准确性和用户安全放在首位，并定期更新所有信息。 有关我们审核程序的更多信息，请访问 InReach.org 上的审核程序页面。",
+		"verified-reviewer": "进入已验证的审核者"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "返回 <u>{{page}}</u>",
@@ -43,7 +49,6 @@
 		"list": "<textUtility1>🔗在 InReach 上申请您组织的简介页面并与受众建立信任关系</textUtility1>。\n<textUtility1>✍🏾 在 InReach 上更新您组织的信息</textUtility1>。\n<textUtility1>📨 邀请其他员工在 InReach 上加入您的组织</textUtility1>。\n<textUtility1>🔑 获得 InReach 上专为附属服务提供商构建的未来功能</textUtility1>。",
 		"title": "<emojiLg>🏠</emojiLg>。\n<title2>该组织尚未被服务提供商认领。</title2>\n<textDarkGray>拥有免费的 InReach 服务提供商帐户，您将很快能够：</textDarkGray>"
 	},
-	"claimed": "已索赔的",
 	"clear": "清除",
 	"close": "关闭",
 	"confirm-account": {
@@ -139,7 +144,6 @@
 		"open24": "24小时打开"
 	},
 	"in-reach-user": "inReach 用户",
-	"in-reach-verified-reviewer": "InReach 已认证的审核者",
 	"include": "包括",
 	"inreach": "InReach",
 	"inreach-copyright": "inReach, Inc. {{year}} • 版权所有 • inReach ❤️ 开源",
@@ -237,7 +241,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>阅读我们的完整隐私政策以获取更多信息</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>隐私声明</title2>"],
-	"privatePractice": "私人执业",
 	"profile": "个人档案",
 	"questions": "有问题吗？",
 	"quick-promo-body": "<textUtility1>💚 保存并共享个性化资源清单</textUtility1>\n<textUtility1>💬 对组织进行公开评分/评论</textUtility1>\n<textUtility1>🏠 推荐您所在地区的组织</textUtility1>\n<textUtility1>🔗 申领贵组织的资料页面(即将上线！) </textUtility1>",
@@ -378,10 +381,13 @@
 	},
 	"take-action": "采取行动",
 	"uncheck-all": "全部取消选中",
-	"unclaimed": "无人认领",
 	"user-avatar": "用户头像",
-	"verified-information": "已验证的信息",
-	"verified-information-detail": "此页面上的信息上次更新时间 {{dateString}}.InReach 将准确性和用户安全放在首位，并定期更新所有信息。有关我们的审核流程的更多信息，请访问Inreach.org上的审核流程页面。",
+	"user-menu": {
+		"admin-options": "管理选项",
+		"data-portal": "数据门户主页",
+		"edit-page": "编辑此页面",
+		"user-options": "用户选项"
+	},
 	"verify-account": {
 		"verified": "账户已验证！",
 		"verified-body": "<Text>您的账户已通过验证！请 <LoginModal>登录</LoginModal> 开始使用 inReach 的附加功能。",

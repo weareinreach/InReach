@@ -8,7 +8,33 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TSearchDistanceSchema } from './query.searchDistance.schema'
 
 const searchOrgByDistance = async (params: TSearchDistanceSchema) => {
-	const { lat, lon, dist, skip, take, services: serviceFilter, attributes: attributeFilter, unit } = params
+	const { lat, lon, dist, skip, take, services: serviceFilter, attributes: attribsToFilter, unit } = params
+
+	const attributeFilter: AttributeFilters = {
+		include: [],
+		exclude: [],
+	}
+	if (!!attribsToFilter && attribsToFilter.length) {
+		const attributeDefs = await prisma.attribute.findMany({
+			select: {
+				id: true,
+				filterType: true,
+			},
+		})
+		for (const attrib of attribsToFilter) {
+			const def = attributeDefs.find((d) => d.id === attrib)
+			if (def) {
+				if (def.filterType === 'EXCLUDE') {
+					attributeFilter.exclude.push(attrib)
+				} else {
+					attributeFilter.include.push(attrib)
+				}
+			}
+		}
+	}
+
+	const hasAttribFilter = !!attributeFilter.include.length || !!attributeFilter.exclude.length
+	const hasServiceFilter = !!serviceFilter?.length
 
 	const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
 
@@ -19,13 +45,17 @@ WITH points AS (
 		ST_Point(${lon}, ${lat}, 4326) AS degrees
 ),
 filters(
-	attribute, service
+	attribute_inc,attribute_exc, service
 ) AS (
-	VALUES (ARRAY[${
-		attributeFilter?.length ? Prisma.sql`${Prisma.join(attributeFilter, ',')}` : Prisma.empty
-	}]::text[], ARRAY[${
-		serviceFilter?.length ? Prisma.sql`${Prisma.join(serviceFilter, ',')}` : Prisma.empty
-	}]::text[])
+	VALUES (
+		ARRAY[${
+			attributeFilter.include.length ? Prisma.sql`${Prisma.join(attributeFilter.include, ',')}` : Prisma.empty
+		}]::text[],
+		ARRAY[${
+			attributeFilter.exclude.length ? Prisma.sql`${Prisma.join(attributeFilter.exclude, ',')}` : Prisma.empty
+		}]::text[],
+		ARRAY[${serviceFilter?.length ? Prisma.sql`${Prisma.join(serviceFilter, ',')}` : Prisma.empty}]::text[]
+	)
 ),
 covered_areas AS (
 	SELECT
@@ -34,31 +64,30 @@ covered_areas AS (
 	WHERE ST_CoveredBy((select degrees from points), g.geo)
 ),
 attributes AS (
-SELECT * FROM (
-	SELECT
-		la. "locationId" AS "id",
-		la. "attributeId"
-	FROM "LocationAttribute" la
-	JOIN filters on true
-	WHERE la.active AND la."attributeId" = ANY(filters.attribute)
-	UNION ALL
-	SELECT
-		l.id,
-		oa. "attributeId"
-	FROM "OrganizationAttribute" oa
-		JOIN filters on true
-		INNER JOIN "OrgLocation" l ON l. "orgId" = oa. "organizationId" AND l.published AND NOT l.deleted
-	WHERE oa.active AND oa."attributeId" = ANY(filters.attribute)
-	UNION ALL
-	SELECT ols. "orgLocationId" AS "id",
-		sa. "attributeId"
-	FROM "OrgLocationService" ols
-		JOIN filters on true
-		INNER JOIN "ServiceAttribute" sa ON ols. "serviceId" = sa. "orgServiceId" AND sa.active AND sa."attributeId" = ANY(filters.attribute)
-	WHERE  ols.active
-) at
-	GROUP BY id, "attributeId"
-	ORDER BY id, "attributeId"
+	SELECT *
+	FROM (
+			SELECT attr. "locationId" AS "locId",
+				attr."organizationId" as "orgId",
+				attr. "attributeId"
+			FROM "AttributeSupplement" attr
+				JOIN filters on true
+
+			WHERE attr.active
+				AND ${
+					!!attributeFilter.include.length && !!attributeFilter.exclude.length
+						? Prisma.sql`(attr. "attributeId" = ANY(filters.attribute_inc)
+				OR NOT attr. "attributeId" = ANY(filters.attribute_exc))`
+						: attributeFilter.exclude.length
+							? Prisma.sql`NOT attr. "attributeId" = ANY(filters.attribute_exc)`
+							: Prisma.sql`attr. "attributeId" = ANY(filters.attribute_inc)`
+				}
+		) at
+	GROUP BY "locId",
+		"orgId",
+		"attributeId"
+	ORDER BY "locId",
+		"orgId",
+		"attributeId"
 ),
 services AS (
 	SELECT ost. "tagId",
@@ -78,6 +107,7 @@ service_area as (
 	SELECT
 		country."geoDataId" as "countryGeoId",
 		district."geoDataId" as "districtGeoId",
+		district.slug AS "districtSlug",
 		country.cca3 as "cca3",
 		sa."organizationId",
 		sa."orgLocationId"
@@ -86,7 +116,20 @@ service_area as (
 		 LEFT JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id AND sad.active
 		 LEFT JOIN "Country" country ON country.id = sac. "countryId"
 		 LEFT JOIN "GovDist" district ON district.id = sad. "govDistId"
-	WHERE sa.active AND sa."organizationId" is not null
+	WHERE sa.active
+		AND sa."organizationId" is not null
+		AND (
+				country."geoDataId" is not null
+				OR district."geoDataId" is not null
+			)
+		AND (country."geoDataId" = ANY(
+					SELECT id
+					FROM covered_areas
+				)
+			OR district."geoDataId" = ANY(
+					SELECT id
+					FROM covered_areas
+				))
 )
 	SELECT
 		*,
@@ -95,12 +138,12 @@ service_area as (
 		SELECT
 			loc. "orgId",
 			${
-				serviceFilter?.length
+				hasServiceFilter
 					? Prisma.sql`ARRAY_REMOVE(ARRAY_AGG(DISTINCT services. "tagId"), NULL) AS "matchedServices",`
 					: Prisma.empty
 			}
 			${
-				attributeFilter?.length
+				hasAttribFilter
 					? Prisma.sql`ARRAY_REMOVE(
 				ARRAY_AGG(DISTINCT attributes. "attributeId"),
 				NULL
@@ -112,20 +155,22 @@ service_area as (
 					ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int
 				)
 			) AS distance,
-			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL) AS "national"
+			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL) AS "national",
+			ARRAY_LENGTH(ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL),1) is not NULL AS "isNational",
+			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3) || ARRAY_AGG( DISTINCT sa."districtSlug"), NULL) AS "serviceAreas"
 		FROM "OrgLocation" loc
 			INNER JOIN "Organization" org ON org.id = loc. "orgId"
 			LEFT JOIN service_area sa ON  sa. "organizationId" = loc. "orgId"
 			${
-				serviceFilter?.length
+				hasServiceFilter
 					? Prisma.sql`
 		INNER JOIN services ON services."organizationId" = loc."orgId"`
 					: Prisma.empty
 			}
 		${
-			attributeFilter?.length
+			hasAttribFilter
 				? Prisma.sql`
-		INNER JOIN attributes ON attributes.id = loc.id`
+		INNER JOIN attributes ON attributes."locId" = loc.id OR attributes."orgId" = org.id`
 				: Prisma.empty
 		}
 	WHERE
@@ -165,9 +210,10 @@ type SearchResult = {
 	matchedAttributes?: string[]
 	distance: string
 	national: string[]
+	isNational: boolean
+	serviceAreas: string[]
 	total: string
 }
-
 const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultIds: string[] }) => {
 	const { resultIds, lat: latitude, lon: longitude } = input
 	const results = await prisma.organization.findMany({
@@ -308,3 +354,9 @@ export const searchDistance = async ({ input }: TRPCHandlerParams<TSearchDistanc
 	})
 	return { orgs: orderedResults, resultCount: orgs.total }
 }
+
+type AttributeFilters = {
+	include: string[]
+	exclude: string[]
+}
+export default searchDistance

@@ -9,12 +9,10 @@ import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-// import { getEnv } from '@weareinreach/env'
-// import { prisma } from '@weareinreach/db/client'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 // import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
-import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
+import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
 import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
@@ -22,36 +20,16 @@ import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
+import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+import { nsFormatter } from '~app/utils/nsFormatter'
 
 const GoogleMap = dynamic(() =>
 	import('@weareinreach/ui/components/core/GoogleMap').then((mod) => mod.GoogleMap)
 )
-const LoadingState = () => (
-	<>
-		<Grid.Col sm={8} order={1} pb={40}>
-			{/* Toolbar */}
-			<Skeleton h={48} w='100%' radius={8} />
-			<Stack pt={24} align='flex-start' spacing={40}>
-				{/* Listing Basic */}
-				<Skeleton h={260} w='100%' />
-				{/* Body */}
-				<Skeleton h={520} w='100%' />
-				{/* Tab panels */}
-			</Stack>
-		</Grid.Col>
-		<Grid.Col order={2}>
-			<Stack spacing={40}>
-				{/* Contact Card */}
-				<Skeleton h={520} w='100%' />
-				{/* Visit Card  */}
-				<Skeleton h={260} w='100%' />
-			</Stack>
-		</Grid.Col>
-	</>
-)
 
+const formatNS = nsFormatter(['common', 'services', 'attribute', 'phone-type'])
 const useStyles = createStyles((theme) => ({
 	tabsList: {
 		position: 'sticky',
@@ -61,21 +39,20 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const OrganizationPage = ({
+	slug,
+	organizationId: orgId,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const router = useRouter<'/org/[slug]'>()
 	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
 	// const { query } = router
-	const {
-		t,
-		i18n,
-		ready: i18nReady,
-	} = useTranslation(['common', 'services', 'attribute', 'phone-type', ...(data?.id ? [data.id] : [])])
+	const { t, i18n, ready: i18nReady } = useTranslation(formatNS(orgId))
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
-			enabled: !!data?.id && data?.locations.length > 1,
+			enabled: !!data?.id && data?.locations?.length > 1,
 			select: (data) => data.length !== 0,
 		}
 	)
@@ -92,19 +69,18 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (i18nReady && data && status === 'success') {
+		if (i18nReady && data && status === 'success' && !router.isFallback) {
 			setLoading(false)
 			if (data.locations?.length > 1) setActiveTab('locations')
 		}
-	}, [data, status, i18nReady])
+	}, [data, status, i18nReady, router.isFallback])
 
 	useEffect(() => {
-		data?.id &&
-			i18n.reloadResources(i18n.resolvedLanguage, ['common', 'services', 'attribute', 'phone-type', data.id])
+		orgId && i18n.reloadResources(i18n.resolvedLanguage, formatNS(orgId))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	if (loading || !data || router.isFallback) return <LoadingState />
+	if (loading || !data || router.isFallback) return <OrgPageLoading />
 
 	const { userLists, attributes, description, reviews, locations, isClaimed, id: organizationId } = data
 
@@ -208,17 +184,19 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					{hasAlerts &&
-						alertData.map((alert) => (
-							<AlertMessage
-								key={alert.key}
-								iconKey={alert.icon}
-								ns={organizationId}
-								textKey={alert.key}
-								defaultText={alert.text}
-							/>
-						))}
+						alertData.map((alert) => {
+							if (!alert.key) return null
+							return (
+								<AlertMessage
+									key={alert.key}
+									iconKey={alert.icon}
+									ns={organizationId}
+									textKey={alert.key}
+									defaultText={alert.text}
+								/>
+							)
+						})}
 					<ListingBasicInfo
-						role='org'
 						data={{
 							name: data.name,
 							id: data.id,
@@ -279,20 +257,17 @@ export const getStaticProps = async ({
 			}
 		}
 
-		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
+		const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
 		if (!orgId) return { notFound: true }
 
 		const [i18n] = await Promise.allSettled([
-			orgId
-				? getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId?.id])
-				: getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type']),
+			getServerSideTranslations(locale, formatNS(orgId)),
 			ssg.organization.forOrgPage.prefetch({ slug }),
 		])
-		// await ssg.organization.getBySlug.prefetch({ slug })
 
 		const props = {
 			trpcState: ssg.dehydrate(),
-			organizationId: orgId?.id,
+			organizationId: orgId,
 			slug,
 			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		}

@@ -1,4 +1,4 @@
-import { resetPassword as cognitoResetPassword } from '@weareinreach/auth/lib/resetPassword'
+import { resetPassword as cognitoResetPassword } from '@weareinreach/auth/resetPassword'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TResetPasswordSchema } from './mutation.resetPassword.schema'
@@ -8,3 +8,4 @@ export const resetPassword = async ({ input }: TRPCHandlerParams<TResetPasswordS
 	const response = await cognitoResetPassword({ code, email, password })
 	return response
 }
+export default resetPassword

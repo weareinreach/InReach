@@ -43,7 +43,7 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 	const { animateCSS, fireEvent } = useShake({ variant: 1 })
 	const [opened, handler] = useDisclosure(false)
 	const { isMobile } = useScreenSize()
-	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 
 	const successMessage = (
 		<Group>

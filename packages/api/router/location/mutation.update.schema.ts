@@ -49,26 +49,20 @@ export const ZUpdateSchema = z
 						? {
 								attributes: {
 									upsert: {
-										where: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
+										where: { id: accessible.supplementId ?? '' },
 										create: {
 											attribute: { connect: { id: accessibleAttrId } },
-											supplement: { create: { boolean: accessible.boolean } },
+											boolean: accessible.boolean,
 										},
 										update: {
-											supplement: {
-												upsert: {
-													where: { id: accessible.supplementId ?? '' },
-													create: { boolean: accessible.boolean },
-													update: { boolean: accessible.boolean },
-												},
-											},
+											boolean: accessible.boolean,
 										},
 									},
 								},
 							}
 						: {
 								attributes: {
-									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
+									delete: { id: accessible.supplementId ?? '' },
 								},
 							}
 					: {}),

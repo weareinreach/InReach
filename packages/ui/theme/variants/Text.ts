@@ -33,10 +33,24 @@ export const Text = {
 			color: theme.other.colors.secondary.darkGray,
 		},
 	}),
+	utility3darkGrayStrikethru: (theme) => ({
+		root: {
+			...theme.other.utilityFonts.utility3,
+			color: theme.other.colors.secondary.darkGray,
+			textDecoration: 'line-through',
+		},
+	}),
 	utility4darkGray: (theme) => ({
 		root: {
 			...theme.other.utilityFonts.utility4,
 			color: theme.other.colors.secondary.darkGray,
+		},
+	}),
+	utility4darkGrayStrikethru: (theme) => ({
+		root: {
+			...theme.other.utilityFonts.utility4,
+			color: theme.other.colors.secondary.darkGray,
+			textDecoration: 'line-through',
 		},
 	}),
 	darkGray: (theme) => ({
@@ -44,7 +58,37 @@ export const Text = {
 			color: theme.other.colors.secondary.darkGray,
 		},
 	}),
+	darkGrayStrikethru: (theme) => ({
+		root: {
+			color: theme.other.colors.secondary.darkGray,
+			textDecoration: 'line-through',
+		},
+	}),
 	utility1white: (theme) => ({
 		root: { ...theme.other.utilityFonts.utility1, color: theme.other.colors.secondary.white },
+	}),
+	coolGray: (theme) => ({
+		root: {
+			color: theme.other.colors.tertiary.coolGray,
+		},
+	}),
+	coolGrayStrikethru: (theme) => ({
+		root: {
+			textDecoration: 'line-through',
+			color: theme.other.colors.tertiary.coolGray,
+		},
+	}),
+	utility4coolGray: (theme) => ({
+		root: {
+			...theme.other.utilityFonts.utility4,
+			color: theme.other.colors.tertiary.coolGray,
+		},
+	}),
+	utility4coolGrayStrikethru: (theme) => ({
+		root: {
+			...theme.other.utilityFonts.utility4,
+			color: theme.other.colors.tertiary.coolGray,
+			textDecoration: 'line-through',
+		},
 	}),
 } satisfies VariantObj

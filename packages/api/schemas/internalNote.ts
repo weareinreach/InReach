@@ -3,7 +3,6 @@ import { z } from 'zod'
 
 import { generateId, Prisma } from '@weareinreach/db'
 import { CreationBase, nonEmptyString, prefixedUlid } from '~api/schemas/common'
-import { GenerateAuditLog } from '~api/schemas/create/auditLog'
 
 const idFields = {
 	attributeId: prefixedUlid.optional(),
@@ -96,17 +95,8 @@ export const CreateNote = () => {
 				data: { id, text, ...trimmedLinks },
 				select: { id: true },
 			})
-			const auditLog = Prisma.validator<Prisma.AuditLogCreateArgs>()({
-				data: GenerateAuditLog({
-					actorId,
-					operation,
-					to: { text, ...trimmedLinks },
-					internalNoteId: id,
-					...trimmedLinks,
-				}),
-				select: { id: true },
-			})
-			return { internalNote, auditLog }
+
+			return { internalNote }
 		})
 	return { dataParser, inputSchema }
 }

@@ -1,14 +1,15 @@
 import { TRPCError } from '@trpc/server'
 
-import { deleteAccount as cognitoDeleteAccount } from '@weareinreach/auth/lib/deleteAccount'
-import { userLogin } from '@weareinreach/auth/lib/userLogin'
-import { userSignOut } from '@weareinreach/auth/lib/userLogout'
-import { prisma } from '@weareinreach/db'
+import { deleteAccount as cognitoDeleteAccount } from '@weareinreach/auth/deleteAccount'
+import { userLogin } from '@weareinreach/auth/userLogin'
+import { userSignOut } from '@weareinreach/auth/userLogout'
+import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TDeleteAccountSchema } from './mutation.deleteAccount.schema'
 
 export const deleteAccount = async ({ ctx, input }: TRPCHandlerParams<TDeleteAccountSchema, 'protected'>) => {
+	const prisma = getAuditedClient(ctx.actorId)
 	const { email } = ctx.session.user
 	const cognitoSession = await userLogin(email, input)
 	if (cognitoSession.success) {
@@ -27,3 +28,4 @@ export const deleteAccount = async ({ ctx, input }: TRPCHandlerParams<TDeleteAcc
 	}
 	throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Incorrect credentials' })
 }
+export default deleteAccount

@@ -1,5 +1,5 @@
 import { DateTime, Interval } from 'luxon'
-import superjson from 'superjson'
+import superjson, { type SuperJSONResult } from 'superjson'
 
 superjson.registerCustom<DateTime, string>(
 	{
@@ -17,7 +17,9 @@ superjson.registerCustom(
 	},
 	'LuxonInterval'
 )
+export const isSuperJSONResult = (data: unknown): data is SuperJSONResult =>
+	!!data && typeof data === 'object' && !Array.isArray(data) && 'json' in data
 
-export { type SuperJSONResult } from 'superjson/dist/types'
+export { type SuperJSONResult }
 export const transformer = superjson
 export { superjson }

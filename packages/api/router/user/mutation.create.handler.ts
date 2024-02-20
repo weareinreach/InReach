@@ -1,12 +1,13 @@
 import { TRPCError } from '@trpc/server'
 
-import { createCognitoUser } from '@weareinreach/auth/lib/createUser'
-import { Prisma, prisma } from '@weareinreach/db'
+import { createCognitoUser } from '@weareinreach/auth/createUser'
+import { getAuditedClient, Prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateSchema } from './mutation.create.schema'
 
 export const create = async ({ input }: TRPCHandlerParams<TCreateSchema>) => {
+	const prisma = getAuditedClient(input.prisma.data.id)
 	try {
 		const newUser = await prisma.$transaction(async (tx) => {
 			const user = await tx.user.create(input.prisma)
@@ -24,3 +25,4 @@ export const create = async ({ input }: TRPCHandlerParams<TCreateSchema>) => {
 		throw error
 	}
 }
+export default create

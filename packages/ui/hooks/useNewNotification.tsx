@@ -20,10 +20,11 @@ export const useStyles = createStyles((theme) => ({
 export const iconList = {
 	heartFilled: { code: 'carbon:favorite-filled', color: undefined },
 	heartEmpty: { code: 'carbon:favorite', color: undefined },
-	info: { code: 'carbon:information-filled', color: commonTheme.other?.colors.secondary.cornflower },
-	warning: { code: 'carbon:warning-filled', color: commonTheme.other?.colors.tertiary.red },
+	info: { code: 'carbon:information-filled', color: commonTheme.other.colors.secondary.cornflower },
+	warning: { code: 'carbon:warning-filled', color: commonTheme.other.colors.tertiary.red },
 	added: { code: 'carbon:add-filled', color: undefined },
 	deleted: { code: 'carbon:delete', color: undefined },
+	success: { code: 'carbon:checkmark-filled', color: commonTheme.other.colors.primary.allyGreen },
 } as const
 
 export const InstantFeedback = ({ displayText, link }: NotificationInnerProps) => {

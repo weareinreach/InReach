@@ -3,7 +3,7 @@ import { type Context } from '~api/lib'
 import { globalSelect, globalWhere } from '~api/selects/global'
 
 export const select = {
-	attributes(): Prisma.LocationAttributeDefaultArgs {
+	attributes(): Prisma.AttributeSupplementDefaultArgs {
 		return {
 			select: {
 				attribute: {
@@ -32,22 +32,18 @@ export const select = {
 						},
 					},
 				},
-				supplement: {
+				id: true,
+				country: globalSelect.country(),
+				language: {
 					select: {
-						id: true,
-						country: globalSelect.country(),
-						language: {
-							select: {
-								languageName: true,
-								nativeName: true,
-							},
-						},
-						text: globalSelect.freeText(),
-						govDist: globalSelect.govDistBasic(),
-						boolean: true,
-						data: true,
+						languageName: true,
+						nativeName: true,
 					},
 				},
+				text: globalSelect.freeText(),
+				govDist: globalSelect.govDistBasic(),
+				boolean: true,
+				data: true,
 			},
 		}
 	},
@@ -115,11 +111,10 @@ export const select = {
 						attributes: this.attributes(),
 						serviceAreas: globalSelect.serviceArea(),
 						services: { select: { tag: globalSelect.serviceTags() } },
-						accessDetails: this.attributes(),
 						reviews: { where: { visible: true, deleted: false }, select: { id: true } },
 						phones: { where: { phone: globalWhere.isPublic() }, ...this.orgPhone() },
 						emails: { where: { email: globalWhere.isPublic() }, ...this.orgEmail() },
-						userLists: ctx.session?.user.id
+						userLists: ctx.session?.user?.id
 							? {
 									where: { list: { ownedById: ctx.session.user.id } },
 									select: { list: { select: { id: true, name: true } } },

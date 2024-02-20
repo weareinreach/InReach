@@ -1,7 +1,9 @@
 import { defineRouter } from '~api/lib/trpc'
+import { pageRouter } from '~api/router/page'
 
 import { attributeRouter } from './attribute'
 import { authRouter } from './auth'
+import { componentRouter } from './component'
 import { fieldOptRouter } from './fieldOpt'
 import { geoRouter } from './geo'
 import { internalNoteRouter } from './internalNote'
@@ -25,6 +27,7 @@ import { userRouter } from './user'
 export const appRouter = defineRouter({
 	attribute: attributeRouter,
 	auth: authRouter,
+	component: componentRouter,
 	fieldOpt: fieldOptRouter,
 	geo: geoRouter,
 	internalNote: internalNoteRouter,
@@ -37,6 +40,7 @@ export const appRouter = defineRouter({
 	orgPhoto: orgPhotoRouter,
 	orgWebsite: orgWebsiteRouter,
 	orgSocialMedia: orgSocialMediaRouter,
+	page: pageRouter,
 	quicklink: quickLinkRouter,
 	review: reviewRouter,
 	savedList: savedListRouter,

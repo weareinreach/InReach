@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Text <strong>{{body}}</strong> zu {{code}}"
 	},
-	"accessible-building_false": "Dieses Gebäude ist NICHT rollstuhlgerecht",
-	"accessible-building_true": "Dieses Gebäude ist rollstuhlgerecht",
 	"account": "Konto",
 	"add": "{{item}} hinzufügen",
 	"address": "Adresse",
@@ -26,12 +24,20 @@
 		"title": "Anti-Hass-Engagement"
 	},
 	"badge": {
+		"accessible-building_false": "Dieses Gebäude ist NICHT rollstuhlgerecht",
+		"accessible-building_true": "Dieses Gebäude ist rollstuhlgerecht",
+		"claimed": "Beansprucht",
 		"claimed-tool-tip": "Diese Organisation wurde von einem verifizierten Vertreter beansprucht.<br/><link1>Erfahren Sie mehr.</link1>",
 		"community-tool-tip": "Community von dieser Organisation.",
 		"national-tool-tip": "Bietet Dienstleistungen in {{country}}.",
+		"privatePractice": "Private Praxis",
 		"remote-tool-tip": "Entfernt verfügbar",
 		"service-tool-tip": "Dienste(n) von dieser Organisation angeboten.",
-		"unclaimed-tool-tip": "Diese Organisation wurde noch nicht von einem Vertreter beansprucht.<br/><link1>Fordere diese Organisation</link1> an, um Vertrauen mit unserer Community zu schaffen, aktualisiere deine eigenen Informationen und mehr."
+		"unclaimed": "Unbeansprucht",
+		"unclaimed-tool-tip": "Diese Organisation wurde noch nicht von einem Vertreter beansprucht.<br/><link1>Fordere diese Organisation</link1> an, um Vertrauen mit unserer Community zu schaffen, aktualisiere deine eigenen Informationen und mehr.",
+		"verified-information": "Verifizierte Informationen",
+		"verified-information-detail": "Die Informationen auf dieser Seite wurden zuletzt aktualisiert {{dateString}}. InReach priorisiert Genauigkeit und Benutzersicherheit und aktualisiert alle Informationen regelmäßig. Für weitere Informationen zu unserem Überprüfungsprozess besuchen Sie bitte unsere Vetting Process Seite auf InReach.org.",
+		"verified-reviewer": "InReach geprüfter Prüfer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Zurück zu <u>{{page}}</u>",
@@ -43,7 +49,6 @@
 		"list": "<textUtility1>🔗 Fordere die Profilseite deiner Organisation an und baue Vertrauen mit deinem Publikum auf InReach</textUtility1>\n<textUtility1>:writing_hand_medium dark_skin_tone: Aktualisiere die Informationen deiner Organisation über InReach</textUtility1>\n<textUtility1>📨 Lade andere Mitarbeiter ein, um deiner Organisation auf InReach</textUtility1>\n\n<textUtility1>🔑 Erhalte Zugriff auf zukünftige Features, die speziell für angeschlossene Dienstleister auf InReach</textUtility1> erstellt wurden.",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Diese Organisation wurde noch nicht von einem Dienstleister beansprucht.</title2>\n<textDarkGray>Mit einem kostenlosen InReach Service Providerkonto können Sie bald folgendes tun:</textDarkGray>"
 	},
-	"claimed": "Beansprucht",
 	"clear": "Leeren",
 	"close": "Schließen",
 	"confirm-account": {
@@ -140,7 +145,6 @@
 		"open24": "24 Stunden geöffnet"
 	},
 	"in-reach-user": "InReach Benutzer",
-	"in-reach-verified-reviewer": "InReach geprüfter Prüfer",
 	"include": "Einschließen",
 	"inreach": "InReach",
 	"inreach-copyright": "InReach, Inc. {{year}} • Alle Rechte vorbehalten • InReach ❤️ Open Source",
@@ -238,7 +242,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>Lesen Sie unsere vollständige Datenschutzrichtlinie für weitere Informationen</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Datenschutzerklärung</title2>"],
-	"privatePractice": "Private Praxis",
 	"profile": "Profil",
 	"questions": "Fragen?",
 	"quick-promo-body": "<textUtility1>💚 Speichern und teilen Sie personalisierte Ressourcenlisten</textUtility1>\n<textUtility1>:speech_ballon: Verlassen Sie öffentliche Bewertungen von Organisationen</textUtility1>\n\n<textUtility1>🏠 Vorschläge Organisationen in Ihrer Region</textUtility1>\n<textUtility1>🔗 Berechnen Sie die Profilseite Ihrer Organisation (bald kommen!</textUtility1>",
@@ -379,10 +382,13 @@
 	},
 	"take-action": "Aktion ergreifen",
 	"uncheck-all": "Alles abwählen",
-	"unclaimed": "Unbeansprucht",
 	"user-avatar": "Benutzer Avatar",
-	"verified-information": "Verifizierte Informationen",
-	"verified-information-detail": "Die Informationen auf dieser Seite wurden zuletzt aktualisiert {{dateString}}. InReach priorisiert Genauigkeit und Benutzersicherheit und aktualisiert alle Informationen regelmäßig. Für weitere Informationen zu unserem Überprüfungsprozess besuchen Sie bitte unsere Vetting Process Seite auf InReach.org.",
+	"user-menu": {
+		"admin-options": "Admin-Optionen",
+		"data-portal": "Datenportal-Startseite",
+		"edit-page": "Diese Seite bearbeiten",
+		"user-options": "Benutzeroptionen"
+	},
 	"verify-account": {
 		"verified": "Konto überprüft!",
 		"verified-body": "<Text>Ihr Konto wurde überprüft! Bitte <LoginModal>melden Sie sich</LoginModal> an, um weitere Funktionen von InReach zu verwenden.",

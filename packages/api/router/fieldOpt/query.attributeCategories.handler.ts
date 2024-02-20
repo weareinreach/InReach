@@ -17,3 +17,4 @@ export const attributeCategories = async ({ input }: TRPCHandlerParams<TAttribut
 	})
 	return results
 }
+export default attributeCategories

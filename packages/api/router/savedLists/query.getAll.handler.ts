@@ -20,3 +20,4 @@ export const getAll = async ({ ctx }: TRPCHandlerParams<undefined, 'protected'>)
 	})
 	return lists
 }
+export default getAll

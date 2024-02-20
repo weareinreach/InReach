@@ -131,3 +131,37 @@ export const AttSuppSchemas = {
 }
 
 export type AttributeSupplementSchemas = keyof typeof AttSuppSchemas
+/** Dynamic Fields for Supplement Data Schemas */
+
+export enum FieldType {
+	text = 'text',
+	select = 'select',
+	number = 'number',
+	currency = 'currency',
+}
+export interface BaseFieldAttributes {
+	key: string
+	label: string
+	name: string
+	type: FieldType
+	required?: boolean
+}
+
+export interface TextFieldAttributes extends BaseFieldAttributes {
+	type: FieldType.text
+}
+export interface SelectFieldAttributes extends BaseFieldAttributes {
+	type: FieldType.select
+	options: { value: string; label: string }[]
+}
+export interface NumberFieldAttributes extends BaseFieldAttributes {
+	type: FieldType.number
+}
+export interface CurrencyFieldAttributes extends BaseFieldAttributes {
+	type: FieldType.currency
+}
+export type FieldAttributes =
+	| TextFieldAttributes
+	| SelectFieldAttributes
+	| NumberFieldAttributes
+	| CurrencyFieldAttributes

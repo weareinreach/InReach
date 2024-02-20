@@ -66,3 +66,4 @@ export const getServiceLocationData = async ({ input }: TRPCHandlerParams<TGetSe
 		totalResults,
 	}
 }
+export default getServiceLocationData

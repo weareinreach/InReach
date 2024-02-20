@@ -9,14 +9,15 @@ const isVercelProd = process.env.VERCEL_ENV === 'production'
 Sentry.init({
 	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.sentry.io/6751163',
 	integrations: [
-		new Sentry.Replay({
+		Sentry.replayIntegration({
 			// Additional Replay configuration goes in here, for example:
 			maskAllText: true,
 			blockAllMedia: true,
 		}),
-		new Sentry.BrowserTracing(),
-		new Sentry.BrowserProfilingIntegration(),
+		Sentry.browserTracingIntegration(),
+		Sentry.browserProfilingIntegration(),
 	],
+	enabled: isVercelProd,
 	// Adjust this value in production, or use tracesSampler for greater control
 	tracesSampleRate: isVercelProd ? 0.5 : 1.0,
 

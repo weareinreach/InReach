@@ -9,6 +9,7 @@ import {
 	rem,
 	Stack,
 	Text,
+	Textarea,
 	Title,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
@@ -24,7 +25,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { DataViewer } from '~ui/other/DataViewer'
 
-import { InlineTextarea, InlineTextInput } from './InlineTextInput'
+import { InlineTextInput } from './InlineTextInput'
 
 const useStyles = createStyles((theme) => ({
 	drawerContent: {
@@ -200,7 +201,8 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 						<Drawer.Body className={classes.drawerBody}>
 							<Stack>
 								<InlineTextInput fontSize='h2' {...form.getInputProps('serviceName.tsKey.text')} />
-								<InlineTextarea
+								<InlineTextInput
+									component={Textarea}
 									fontSize='utility4'
 									autosize
 									{...form.getInputProps('description.tsKey.text')}
@@ -274,7 +276,7 @@ interface Attribute {
 		govDistId?: string | null
 		languageId?: string | null
 		text: FreeText | null
-	}[]
+	}
 }
 interface FormData {
 	id: string
@@ -310,6 +312,6 @@ interface FormData {
 			id: string
 			data: unknown
 			text: { id?: string; key: string; ns: string; tsKey: { text: string; crowdinId: number | null } } | null
-		}[]
+		}
 	}[]
 }

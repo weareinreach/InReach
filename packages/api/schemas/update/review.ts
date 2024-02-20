@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 import { Prisma } from '@weareinreach/db'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
 
 type UpdateOrg = Prisma.OrgReviewUpdateArgs
 
@@ -9,17 +8,11 @@ const ReviewUpdateActor = { id: z.string(), actorId: z.string() }
 
 export const ReviewVisibility = z
 	.object({ ...ReviewUpdateActor, visible: z.boolean() })
-	.transform(({ id, actorId, visible }) =>
+	.transform(({ id, visible }) =>
 		Prisma.validator<UpdateOrg>()({
 			where: { id },
 			data: {
 				visible,
-				auditLogs: CreateAuditLog({
-					actorId,
-					operation: 'UPDATE',
-					from: { visible: !visible },
-					to: { visible },
-				}),
 			},
 			select: {
 				id: true,
@@ -30,17 +23,11 @@ export const ReviewVisibility = z
 
 export const ReviewToggleDelete = z
 	.object({ ...ReviewUpdateActor, deleted: z.boolean() })
-	.transform(({ id, actorId, deleted }) =>
+	.transform(({ id, deleted }) =>
 		Prisma.validator<UpdateOrg>()({
 			where: { id },
 			data: {
 				deleted,
-				auditLogs: CreateAuditLog({
-					actorId,
-					operation: 'UPDATE',
-					from: { deleted: !deleted },
-					to: { deleted },
-				}),
 			},
 			select: {
 				id: true,

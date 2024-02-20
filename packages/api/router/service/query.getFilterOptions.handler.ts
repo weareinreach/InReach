@@ -40,3 +40,4 @@ export const getFilterOptions = async () => {
 	}))
 	return transformed
 }
+export default getFilterOptions

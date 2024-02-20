@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
 	},
-	"accessible-building_false": "Hierdie gebou is NIE toeganklik vir rolstoele nie",
-	"accessible-building_true": "Hierdie gebou is toeganklik vir rolstoele",
 	"account": "Rekening",
 	"add": "Voeg {{item}}",
 	"address": "Adres",
@@ -26,12 +24,20 @@
 		"title": "Anti-haat verbintenis"
 	},
 	"badge": {
+		"accessible-building_false": "This building is NOT wheelchair accessible",
+		"accessible-building_true": "This building is wheelchair accessible",
+		"claimed": "Claimed",
 		"claimed-tool-tip": "Hierdie organisasie is deur 'n geverifieerde verteenwoordiger geëis. <link1>Kom meer te wete.</link1>",
 		"community-tool-tip": "Gemeenskap bedien deur hierdie organisasie.",
 		"national-tool-tip": "Offers services throughout {{country}}.",
+		"privatePractice": "Private Practice",
 		"remote-tool-tip": "Beskikbaar op afstand",
 		"service-tool-tip": "Diens (s) wat deur hierdie organisasie aangebied word.",
-		"unclaimed-tool-tip": "Hierdie organisasie is nog nie deur 'n verteenwoordiger geëis nie. <link1>Eis hierdie organisasie</link1> om vertroue met ons gemeenskap op te bou, jou eie inligting op te dateer, en meer."
+		"unclaimed": "Unclaimed",
+		"unclaimed-tool-tip": "Hierdie organisasie is nog nie deur 'n verteenwoordiger geëis nie. <link1>Eis hierdie organisasie</link1> om vertroue met ons gemeenskap op te bou, jou eie inligting op te dateer, en meer.",
+		"verified-information": "Verified information",
+		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Terug na <u>{{page}}</u>",
@@ -43,7 +49,6 @@
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Hierdie organisasie is nog nie deur 'n diensverskaffer geëis nie.</title2>\n<textDarkGray>U kan hierdie organisasie as diensverskaffer aanspraak maak op:</textDarkGray>"
 	},
-	"claimed": "Beweer",
 	"clear": "Duidelik",
 	"close": "Sluit",
 	"confirm-account": {
@@ -140,7 +145,6 @@
 		"open24": "Open 24 hours"
 	},
 	"in-reach-user": "InReach-gebruiker",
-	"in-reach-verified-reviewer": "InReach-geverifieerde beoordelaar",
 	"include": "Insluit",
 	"inreach": "InReach",
 	"inreach-copyright": "InReach, Inc. {{year}} • Alle regte voorbehou • inReach ❤️ Open Source",
@@ -238,7 +242,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>Lees ons volledige privaatheidsbeleid vir meer inligting</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Privaatheidsverklaring</title2>"],
-	"privatePractice": "Privaat praktyk",
 	"profile": "Profiel",
 	"questions": "Vrae?",
 	"quick-promo-body": "<textUtility1>💚 Stoor en deel persoonlike hulpbronlyste</textUtility1>\n<textUtility1>💬 Laat openbare gradering/resensies oor organisasies</textUtility1>\n<textUtility1>🏠 Stel organisasies in u omgewing voor</textUtility1>\n<textUtility1>🔗 Eis die profielbladsy van u organisasie op (binnekort!)</textUtility1>",
@@ -379,10 +382,13 @@
 	},
 	"take-action": "Neem aksie",
 	"uncheck-all": "Ontmerk alles",
-	"unclaimed": "Onopgeëiste",
 	"user-avatar": "Gebruiker avatar",
-	"verified-information": "Geverifieerde inligting",
-	"verified-information-detail": "Die inligting op hierdie bladsy is laas opgedateer {{dateString}}. InReach prioritiseer akkuraatheid en gebruikersveiligheid, en werk alle inligting ten minste een keer elke 6 maande op. Vir meer inligting oor ons keuringsproses, besoek asseblief ons Ketting Proses-bladsy op InReach.org.",
+	"user-menu": {
+		"admin-options": "Admin Options",
+		"data-portal": "Data Portal Home",
+		"edit-page": "Edit this page",
+		"user-options": "User Options"
+	},
 	"verify-account": {
 		"verified": "Rekening geverifieer!",
 		"verified-body": "<Text>Jou rekening is geverifieer! Asseblief <LoginModal>login</LoginModal> om te begin met behulp van InReach se bykomende funksies.",

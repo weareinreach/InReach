@@ -6,6 +6,7 @@ import HttpBackend from 'i18next-http-backend'
 import intervalPlural from 'i18next-intervalplural-postprocessor'
 // import LocalStorageBackend from 'i18next-localstorage-backend'
 import MultiBackend from 'i18next-multiload-backend-adapter'
+import compact from 'just-compact'
 
 import path from 'path'
 
@@ -13,7 +14,7 @@ import path from 'path'
 import { localeList } from '@weareinreach/db/generated/locales.mjs'
 
 const isBrowser = typeof window !== 'undefined'
-const isDev = process.env.NODE_ENV !== 'production'
+const isDev = process.env.NODE_ENV !== 'production' && !process.env.CI
 const isVerbose = !!process.env.NEXT_VERBOSE
 // const Keys = z.record(z.string())
 
@@ -41,6 +42,29 @@ const multi = new MultiBackend(null, {
 		allowMultiLoading: true,
 	},
 })
+
+const plugins = () => {
+	/** @type {any[]} */
+	const pluginsToUse = [intervalPlural, LanguageDetector]
+	if (isBrowser) {
+		pluginsToUse.push(ChainedBackend)
+	}
+	if (process.env.NODE_ENV === 'development') {
+		if (isBrowser) {
+			// @ts-expect-error - yelling about declaration file
+			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
+				pluginsToUse.push(new HMRPlugin({ webpack: { client: true } }))
+			)
+		} else {
+			// @ts-expect-error - yelling about declaration file
+			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
+				pluginsToUse.push(new HMRPlugin({ webpack: { server: true } }))
+			)
+		}
+	}
+
+	return compact(pluginsToUse)
+}
 
 /** @type {import('next-i18next').UserConfig} */
 const config = {
@@ -76,7 +100,7 @@ const config = {
 		backends: isBrowser ? [multi] : [],
 	},
 	serializeConfig: false,
-	use: isBrowser ? [ChainedBackend, intervalPlural, LanguageDetector] : [intervalPlural, LanguageDetector],
+	use: plugins(),
 	maxParallelReads: 20,
 	joinArrays: '',
 	interpolation: {

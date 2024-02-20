@@ -22,3 +22,4 @@ export const searchName = async ({ input }: TRPCHandlerParams<TSearchNameSchema>
 	const shaped = orgIds.map(({ name, ...rest }) => ({ value: name, label: name, ...rest }))
 	return shaped
 }
+export default searchName

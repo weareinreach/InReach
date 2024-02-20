@@ -1,102 +1,73 @@
 import { prisma } from '@weareinreach/db'
-import { transformer } from '@weareinreach/util/transformer'
+import { formatAttributes } from '~api/formatters/attributes'
+import { formatHours } from '~api/formatters/hours'
 import { globalSelect } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForServiceEditDrawerSchema } from './query.forServiceEditDrawer.schema'
 
+const freeTextSelect = {
+	select: { tsKey: { select: { key: true, text: true, ns: true, crowdinId: true } } },
+} as const
 export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServiceEditDrawerSchema>) => {
 	const result = await prisma.orgService.findUniqueOrThrow({
 		where: { id: input },
 		select: {
 			id: true,
-			accessDetails: {
-				select: {
-					attribute: { select: { id: true, tsKey: true, tsNs: true } },
-					supplement: {
-						select: { id: true, text: globalSelect.freeText({ withCrowdinId: true }), data: true },
-					},
-				},
-			},
-			attributes: {
-				select: {
-					attribute: {
-						select: {
-							id: true,
-							tsKey: true,
-							tsNs: true,
-							icon: true,
-							categories: { select: { category: { select: { tag: true } } } },
-						},
-					},
-					supplement: {
-						select: {
-							id: true,
-							active: true,
-							data: true,
-							boolean: true,
-							countryId: true,
-							govDistId: true,
-							languageId: true,
-							text: globalSelect.freeText({ withCrowdinId: true }),
-						},
-					},
-				},
-			},
-			description: globalSelect.freeText({ withCrowdinId: true }),
+			published: true,
+			deleted: true,
+			attributes: formatAttributes.prismaSelect(true),
+			description: freeTextSelect,
 			phones: { select: { phone: { select: { id: true } } } },
 			emails: { select: { email: { select: { id: true } } } },
-			locations: { select: { location: { select: { id: true } } } },
-			hours: { select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true } },
-			services: { select: { tag: { select: { id: true, primaryCategoryId: true } } } },
+			locations: { select: { orgLocationId: true } },
+			hours: formatHours.prismaSelect(true),
+			services: { select: { tag: { select: { id: true, tsKey: true, tsNs: true } } } },
 			serviceAreas: {
 				select: {
 					id: true,
-					countries: { select: { country: { select: { id: true } } } },
-					districts: { select: { govDist: { select: { id: true } } } },
+					countries: { select: { countryId: true } },
+					districts: { select: { govDistId: true } },
 				},
 			},
-			published: true,
-			deleted: true,
-			serviceName: globalSelect.freeText({ withCrowdinId: true }),
+
+			serviceName: freeTextSelect,
 		},
 	})
-	const { attributes, phones, emails, locations, services, serviceAreas, accessDetails, ...rest } = result
+	const {
+		attributes: rawAttributes,
+		phones,
+		emails,
+		locations,
+		services,
+		serviceAreas,
+		hours,
+		description,
+		serviceName,
+		...rest
+	} = result
+	const { attributes, accessDetails } = formatAttributes.processAndSeparateAccessDetails(rawAttributes)
+
 	const transformed = {
 		...rest,
+		name: serviceName?.tsKey,
+		description: description?.tsKey,
 		phones: phones.map(({ phone }) => phone.id),
 		emails: emails.map(({ email }) => email.id),
-		locations: locations.map(({ location }) => location.id),
-		services: services.map(({ tag }) => ({ id: tag.id, primaryCategoryId: tag.primaryCategoryId })),
+		locations: locations.map(({ orgLocationId }) => orgLocationId),
+		services: services.map(({ tag }) => tag.id),
+		hours: formatHours.process(hours),
 		serviceAreas: serviceAreas
 			? {
 					id: serviceAreas.id,
-					countries: serviceAreas.countries.map(({ country }) => country.id),
-					districts: serviceAreas.districts.map(({ govDist }) => govDist.id),
+					countries: serviceAreas.countries.map(({ countryId }) => countryId),
+					districts: serviceAreas.districts.map(({ govDistId }) => govDistId),
 				}
 			: null,
-		attributes: attributes.map(({ attribute, supplement }) => {
-			const { categories, ...attr } = attribute
-			return {
-				attribute: { ...attr, categories: categories.map(({ category }) => category.tag) },
-				supplement: supplement.map(({ data, ...rest }) => {
-					if (data) {
-						return { ...rest, data: transformer.parse(JSON.stringify(data)) }
-					}
-					return { ...rest, data }
-				}),
-			}
-		}),
-		accessDetails: accessDetails.map(({ attribute, supplement }) => ({
-			attribute,
-			supplement: supplement.map(({ data, ...rest }) => {
-				if (data) {
-					return { ...rest, data: transformer.parse(JSON.stringify(data)) }
-				}
-				return { ...rest, data }
-			}),
-		})),
+		attributes,
+		accessDetails,
 	}
 
 	return transformed
 }
+export default forServiceEditDrawer

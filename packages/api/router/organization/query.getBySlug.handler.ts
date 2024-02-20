@@ -24,3 +24,4 @@ export const getBySlug = async ({ ctx, input }: TRPCHandlerParams<TGetBySlugSche
 
 	return reformatted
 }
+export default getBySlug

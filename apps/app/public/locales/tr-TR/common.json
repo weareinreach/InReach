@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Metin <strong>{{body}}</strong> - {{code}}"
 	},
-	"accessible-building_false": "Bu bina tekerlekli sandalye erişimine uygun DEĞİLDİR",
-	"accessible-building_true": "Bu bina tekerlekli sandalye erişimine uygundur",
 	"account": "Hesap",
 	"add": "{{item}}ekle",
 	"address": "Adres",
@@ -26,12 +24,20 @@
 		"title": "Nefret karşıtı taahhüt"
 	},
 	"badge": {
+		"accessible-building_false": "Bu bina tekerlekli sandalye erişimine uygun DEĞİLDİR",
+		"accessible-building_true": "Bu bina tekerlekli sandalye erişimine uygundur",
+		"claimed": "İddia Edildi",
 		"claimed-tool-tip": "Bu organizasyon doğrulanmış bir temsilci tarafından talep edildi.<br/><link1>Daha fazla bilgi edinin.</link1>",
 		"community-tool-tip": "Bu organizasyon tarafından hizmet verilen topluluk.",
 		"national-tool-tip": "{{country}}genelinde hizmet sunar.",
+		"privatePractice": "Özel Muayenehane",
 		"remote-tool-tip": "Uzaktan kullanılabilir",
 		"service-tool-tip": "Bu kuruluş tarafından sunulan hizmet (ler).",
-		"unclaimed-tool-tip": "Bu organizasyon henüz bir temsilci tarafından talep edilmedi.<br/><link1>Topluluğumuzla güven oluşturmak, kendi bilgilerinizi güncellemek ve daha fazlasını yapmak için bu kuruluşu</link1> talep edin."
+		"unclaimed": "Talep edilmemiş",
+		"unclaimed-tool-tip": "Bu organizasyon henüz bir temsilci tarafından talep edilmedi.<br/><link1>Topluluğumuzla güven oluşturmak, kendi bilgilerinizi güncellemek ve daha fazlasını yapmak için bu kuruluşu</link1> talep edin.",
+		"verified-information": "Doğrulanmış bilgi",
+		"verified-information-detail": "Bu sayfadaki bilgiler en son güncellendi {{dateString}}. inReach doğruluğa ve kullanıcı güvenliğine öncelik verir ve tüm bilgileri düzenli olarak günceller. İnceleme sürecimiz hakkında daha fazla bilgi için lütfen InReach.org adresindeki İnceleme Süreci sayfamızı ziyaret edin.",
+		"verified-reviewer": "inReach Doğrulanmış İnceleyici"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "<u>{{page}}</u>'e geri dön",
@@ -43,7 +49,6 @@
 		"list": "<textUtility1>🔗 Kuruluşunuzun profil sayfasını talep edin ve inReach</textUtility1>\n<textUtility1>üzerinden hedef kitlenizle güven oluşturun ✍🏾 Kuruluşunuzun bilgilerini inReach</textUtility1>\n<textUtility1>📨 Kuruluşunuzun bilgilerini inReach'te kuruluşunuza katılmaya davet edin</textUtility1>\n<textUtility1>🔑 inReach</textUtility1>üzerinde bağlı hizmet sağlayıcıları için özel olarak oluşturulmuş gelecekteki özelliklere erişim kazanın",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Bu kuruluş henüz bir servis sağlayıcı tarafından talep edilmemiştir.</title2>\n<textDarkGray>Ücretsiz bir inReach Hizmet Sağlayıcısı hesabıyla, yakında şunları yapabileceksiniz:</textDarkGray>"
 	},
-	"claimed": "İddia Edildi",
 	"clear": "Temiz",
 	"close": "Kapat",
 	"confirm-account": {
@@ -140,7 +145,6 @@
 		"open24": "24 saat açık"
 	},
 	"in-reach-user": "inReach Kullanıcısı",
-	"in-reach-verified-reviewer": "inReach Doğrulanmış İnceleyici",
 	"include": "Dahil",
 	"inreach": "InReach",
 	"inreach-copyright": "inReach, Inc. {{year}} • Tüm hakları saklıdır • inReach ❤️ Açık Kaynak",
@@ -238,7 +242,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>Daha fazla bilgi için tam gizlilik politikamızı okuyun</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Gizlilik bildirimi</title2>"],
-	"privatePractice": "Özel Muayenehane",
 	"profile": "Profil",
 	"questions": "Sorular?",
 	"quick-promo-body": "<textUtility1>💚 Kişiselleştirilmiş kaynak listelerini kaydedin ve paylaşın</textUtility1>\n<textUtility1>💬 Kuruluşlar hakkında halka açık derecelendirme/incelemeler bırakın</textUtility1>\n<textUtility1>🏠 Bölgenizdeki kuruluşları önerin</textUtility1>\n<textUtility1>🔗 Kuruluşunuzun profil sayfasını talep edin (Çok yakında!)</textUtility1>",
@@ -379,10 +382,13 @@
 	},
 	"take-action": "Harekete Geçin",
 	"uncheck-all": "Tümünün işaretini kaldırın",
-	"unclaimed": "Talep edilmemiş",
 	"user-avatar": "Kullanıcı avatarı",
-	"verified-information": "Doğrulanmış bilgi",
-	"verified-information-detail": "Bu sayfadaki bilgiler en son güncellendi {{dateString}}. inReach doğruluğa ve kullanıcı güvenliğine öncelik verir ve tüm bilgileri düzenli olarak günceller. İnceleme sürecimiz hakkında daha fazla bilgi için lütfen InReach.org adresindeki İnceleme Süreci sayfamızı ziyaret edin.",
+	"user-menu": {
+		"admin-options": "Yönetici Seçenekleri",
+		"data-portal": "Veri Portalı Ana Sayfası",
+		"edit-page": "Bu sayfayı düzenle",
+		"user-options": "Kullanıcı Seçenekleri"
+	},
 	"verify-account": {
 		"verified": "Hesap doğrulandı!",
 		"verified-body": "<Text>Hesabınız doğrulandı! inReach'in ek özelliklerini kullanmaya başlamak için lütfen <LoginModal>oturum açın</LoginModal> .",

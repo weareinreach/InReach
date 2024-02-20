@@ -16,3 +16,4 @@ export const geoByPlaceId = async ({ input }: TRPCHandlerParams<TGeoByPlaceIdSch
 	const parsedData = geocodeResponse.parse(data)
 	return googleAPIResponseHandler(parsedData, data)
 }
+export default geoByPlaceId

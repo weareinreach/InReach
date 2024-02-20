@@ -165,7 +165,7 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [router.query.r])
 
-		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 
 		const bodyReset = (
 			<Stack align='center' spacing={24}>

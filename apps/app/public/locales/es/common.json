@@ -3,8 +3,6 @@
 	"access": {
 		"sms-with-body": "Texto <strong>{{body}}</strong> a {{code}}"
 	},
-	"accessible-building_false": "Este edificio NO es accesible en silla de ruedas",
-	"accessible-building_true": "Este edificio es accesible en silla de ruedas",
 	"account": "Cuenta",
 	"add": "Añadir {{item}}",
 	"address": "Dirección",
@@ -26,12 +24,20 @@
 		"title": "Compromiso antiodio"
 	},
 	"badge": {
+		"accessible-building_false": "Este edificio NO es accesible en silla de ruedas",
+		"accessible-building_true": "Este edificio es accesible en silla de ruedas",
+		"claimed": "Reclamado",
 		"claimed-tool-tip": "Esta organización ha sido reclamada por un representante verificado.<br/><link1>Más información.</link1>",
 		"community-tool-tip": "Comunidad atendida por esta organización.",
 		"national-tool-tip": "Ofrece servicios en {{country}}.",
+		"privatePractice": "Práctica privada",
 		"remote-tool-tip": "Disponible de forma remota",
 		"service-tool-tip": "Servicio(s) ofrecido(s) por esta organización.",
-		"unclaimed-tool-tip": "Esta organización aún no ha sido reclamada por un representante.<br/><link1>Reclama a esta organización</link1> para generar confianza con nuestra comunidad, actualizar tu propia información y más."
+		"unclaimed": "Unclaimed",
+		"unclaimed-tool-tip": "Esta organización aún no ha sido reclamada por un representante.<br/><link1>Reclama a esta organización</link1> para generar confianza con nuestra comunidad, actualizar tu propia información y más.",
+		"verified-information": "Verified information",
+		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Volver a <u>{{page}}</u>",
@@ -43,7 +49,6 @@
 		"list": "<textUtility1>🔗 Reclama la página de perfil de tu organización y crea confianza con tu audiencia en InReach</textUtility1>\n<textUtility1>✍🏾 Actualiza la información de tu organización en InReach</textUtility1>\n<textUtility1>📨 Invita a otro personal a unirse a tu organización en InReach</textUtility1>\n<textUtility1>🔑 Obtener acceso a futuras características construidas específicamente para proveedores de servicios afiliados en InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Esta organización aún no ha sido reclamada por un proveedor de servicios.</title2>\n<textDarkGray>Con una cuenta gratuita de Proveedor de Servicios de InReach, pronto podrá:</textDarkGray>"
 	},
-	"claimed": "Reclamado",
 	"clear": "Claro",
 	"close": "Cerrar",
 	"confirm-account": {
@@ -140,7 +145,6 @@
 		"open24": "Abierto 24 horas"
 	},
 	"in-reach-user": "InReach usuario",
-	"in-reach-verified-reviewer": "InReach revisor verificado",
 	"include": "Incluye",
 	"inreach": "InReach",
 	"inreach-copyright": "InReach, Inc. {{year}} • Todos los derechos reservados • InReach ❤️ Código Abierto",
@@ -238,7 +242,6 @@
 	],
 	"privacy-statement-foot": "<linkPolicy>Lea nuestra política de privacidad completa para obtener más información</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Declaración de privacidad</title2>"],
-	"privatePractice": "Práctica privada",
 	"profile": "Perfil",
 	"questions": "¿Preguntas?",
 	"quick-promo-body": "<textUtility1>💚 Guardar y compartir listas de recursos personalizados</textUtility1>\n<textUtility1>: speech _balloon: Dejar calificaciones/opiniones públicas sobre las organizaciones</textUtility1>\n<textUtility1>🏠 Sugerir organizaciones en tu área</textUtility1>\n<textUtility1>🔗 Reclamar la página de perfil de su organización (¡pronto!)</textUtility1>",
@@ -379,10 +382,13 @@
 	},
 	"take-action": "Tomar acción",
 	"uncheck-all": "Desmarcar todo",
-	"unclaimed": "Sin reclamar",
 	"user-avatar": "Avatar de usuario",
-	"verified-information": "Información verificada",
-	"verified-information-detail": "La información de esta página fue actualizada por última vez {{dateString}}. InReach prioriza la exactitud y la seguridad de le usuarie, y actualiza toda la información al menos una vez cada 6 meses. Para más información sobre nuestro proceso de selección, por favor visita nuestra página del Proceso de Verificación en InReach.org.",
+	"user-menu": {
+		"admin-options": "Opciones de Admin",
+		"data-portal": "Portal de Datos Inicio",
+		"edit-page": "Editar esta página",
+		"user-options": "Opciones de usuario"
+	},
 	"verify-account": {
 		"verified": "¡Cuenta Verificada!",
 		"verified-body": "<Text>¡Tu cuenta ha sido verificada! Por favor, <LoginModal>inicia sesión</LoginModal> para empezar a usar las características adicionales de InReach.",

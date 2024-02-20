@@ -16,7 +16,7 @@ Sentry.init({
 	// Adjust this value in production, or use tracesSampler for greater control
 	tracesSampleRate: isVercelProd ? 0.5 : 1.0,
 	profilesSampleRate: isVercelProd ? 0.5 : 1.0,
-
+	enabled: isVercelProd,
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: !!process.env.SENTRY_DEBUG,
 	// instrumenter: 'otel',

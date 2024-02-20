@@ -24,3 +24,4 @@ export const getOne = async ({ input }: TRPCHandlerParams<TGetOneSchema>) => {
 	})
 	return result
 }
+export default getOne

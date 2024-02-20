@@ -3,15 +3,17 @@ name: PR Labels
 
 on:
   pull_request:
-    types: [opened, labeled, unlabeled, synchronize, reopened, edited]
+    types: [opened, labeled, unlabeled, synchronize, reopened, edited, ready_for_review, review_requested]
 
 jobs:
   pr_labels:
     name: 🏭 Verify labels
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: 🏷 Verify PR has a valid label
-        uses: mheap/github-action-required-labels@4e9ef4ce8c697cf55716ecbf7f13a3d9e0b6ac6a # v5
+        uses: mheap/github-action-required-labels@80a96a4863886addcbc9f681b5b295ba7f5424e1 # v5
         with:
           labels: 'breaking-change, bugfix, documentation, enhancement, refactor, performance, new-feature, maintenance, ci, dependencies, translations, changelog-ignore, release'
           mode: minimum
@@ -19,6 +21,8 @@ jobs:
   pr_wip_check:
     runs-on: ubuntu-latest
     name: 🏭 Check for blocking labels
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: 🏷 Check PR for a merge-blocking label
         uses: tim-actions/wip-check@8c84f5987215d49440b86475062d61e4f099e1b7 # main branch
@@ -29,9 +33,11 @@ jobs:
     name: 🏭 Label PR With Repo(s)
     runs-on: ubuntu-latest
     if: contains(fromJson('["main", "l10_*"]'), github.base_ref) != true
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: 🏷 Apply repo labels
-        uses: tinkurlab/monorepo-pr-labeler-action@6242ef35f78e617d14982c66ab715fa400b7ab25 # 4.1.4
+        uses: tinkurlab/monorepo-pr-labeler-action@026d1e71df075b29ee3986875bfbb8a5b5d969f1 # 4.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_DIRS: 'apps|packages|lambas'
@@ -42,6 +48,8 @@ jobs:
     name: 🏭 Add misc PR labels
     runs-on: ubuntu-latest
     if: github.base_ref != 'main'
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: Kodiak squash merge
         uses: actions-ecosystem/action-add-labels@18f1af5e3544586314bbe15c0273249c770b2daf # v1

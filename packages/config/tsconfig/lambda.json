@@ -1,15 +1,16 @@
 {
+	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
-		"target": "es2020",
-		"strict": true,
-		"preserveConstEnums": true,
-		"noEmit": true,
-		"sourceMap": false,
-		"module": "node",
-		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"isolatedModules": true
+		"isolatedModules": true,
+		"module": "NodeNext",
+		"moduleResolution": "Bundler",
+		"noEmit": true,
+		"preserveConstEnums": true,
+		"skipLibCheck": true,
+		"sourceMap": false,
+		"strict": true,
+		"target": "es2020"
 	}
 }

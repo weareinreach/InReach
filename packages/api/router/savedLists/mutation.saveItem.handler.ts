@@ -1,22 +1,46 @@
-import { type z } from 'zod'
-
-import { prisma } from '@weareinreach/db'
+import { getAuditedClient } from '@weareinreach/db'
+import { checkListOwnership } from '~api/lib/checkListOwnership'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TSaveItemSchema, ZSaveItemSchema } from './mutation.saveItem.schema'
+import { type TSaveItemSchema } from './mutation.saveItem.schema'
 
 export const saveItem = async ({ ctx, input }: TRPCHandlerParams<TSaveItemSchema, 'protected'>) => {
-	const { dataParser } = ZSaveItemSchema()
+	const prisma = getAuditedClient(ctx.actorId)
+	const { id, organizationId, serviceId } = input
 
-	const inputData = {
-		actorId: ctx.session.user.id,
-		ownedById: ctx.session.user.id,
-		operation: 'LINK',
-		data: input,
-	} satisfies z.input<typeof dataParser>
-	const data = dataParser.parse(inputData)
+	checkListOwnership({ listId: id, userId: ctx.session.user.id })
 
-	const result = await prisma.userSavedList.update(data)
+	const result = await prisma.userSavedList.update({
+		where: {
+			id,
+			ownedById: ctx.session.user.id,
+		},
+		data: {
+			...(organizationId
+				? {
+						organizations: {
+							create: {
+								organizationId,
+							},
+						},
+					}
+				: {}),
+			...(serviceId
+				? {
+						services: {
+							create: {
+								serviceId,
+							},
+						},
+					}
+				: {}),
+		},
+		select: {
+			services: { select: { serviceId: true } },
+			organizations: { select: { organizationId: true } },
+			id: true,
+		},
+	})
 	const flattenedResult = {
 		...result,
 		organizations: result.organizations.map((x) => x.organizationId),
@@ -24,3 +48,4 @@ export const saveItem = async ({ ctx, input }: TRPCHandlerParams<TSaveItemSchema
 	}
 	return flattenedResult
 }
+export default saveItem

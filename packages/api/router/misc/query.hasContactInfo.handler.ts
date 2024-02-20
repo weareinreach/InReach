@@ -24,7 +24,7 @@ const whereId = (
 			const phoneEmailLoc = {
 				locations: { some: { location: { organization: { id: input, ...isPublic } } } },
 			}
-			const smWebLoc = { orgLocation: { organization: { id: input, ...isPublic } } }
+			const smWebLoc = { locations: { some: { location: { organization: { id: input, ...isPublic } } } } }
 
 			return isSingleLoc
 				? {
@@ -74,8 +74,8 @@ const whereId = (
 					locations: { some: { location: { id: input, ...isPublic } } },
 					...isPublic,
 				},
-				socialMedia: { orgLocation: { id: input, ...isPublic }, ...isPublic },
-				website: { orgLocation: { id: input, ...isPublic }, ...isPublic },
+				socialMedia: { locations: { every: { location: { id: input, ...isPublic } } }, ...isPublic },
+				website: { locations: { every: { location: { id: input, ...isPublic } } }, ...isPublic },
 			}
 		}
 		case isIdFor('orgService', input): {
@@ -125,3 +125,4 @@ export const hasContactInfo = async ({ input }: TRPCHandlerParams<THasContactInf
 		handleError(error)
 	}
 }
+export default hasContactInfo

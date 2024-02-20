@@ -67,7 +67,7 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [success, verifyAccount.isLoading, opened, error, parsedData.success])
 
-		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 
 		const bodyWorking = (
 			<Stack align='center' spacing={24}>

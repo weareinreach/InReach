@@ -1,6 +1,7 @@
 import { DateTime, Interval } from 'luxon'
 
 import { isIdFor, prisma, type Prisma } from '@weareinreach/db'
+import { convertToLuxonWeekday } from '@weareinreach/util/luxon/weekday'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForHoursDrawerSchema } from './query.forHoursDrawer.schema'
@@ -45,12 +46,12 @@ export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawe
 
 		const interval = Interval.fromDateTimes(
 			DateTime.fromJSDate(start, { zone: tz ?? 'America/New_York' }).set({
-				weekday: dayIndex,
+				weekday: convertToLuxonWeekday(dayIndex),
 				weekYear,
 				weekNumber,
 			}),
 			DateTime.fromJSDate(end, { zone: tz ?? 'America/New_York' }).set({
-				weekday: dayIndex,
+				weekday: convertToLuxonWeekday(dayIndex),
 				weekYear,
 				weekNumber,
 			})
@@ -64,3 +65,4 @@ export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawe
 	})
 	return intervalResults
 }
+export default forHoursDrawer

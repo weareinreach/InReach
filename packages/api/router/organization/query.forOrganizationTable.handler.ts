@@ -30,3 +30,4 @@ export const forOrganizationTable = async ({ input }: TRPCHandlerParams<TForOrga
 	})
 	return results
 }
+export default forOrganizationTable

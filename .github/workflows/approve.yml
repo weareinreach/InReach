@@ -1,4 +1,4 @@
-name: 'PR Auto Approve'
+name: '🤖 PR Auto Approve'
 on:
   pull_request:
     types: [review_requested]
@@ -10,8 +10,9 @@ permissions:
   statuses: read
 
 jobs:
-  check:
+  auto-approve:
     runs-on: ubuntu-latest
+    name: '🤖 PR Auto Approve'
     steps:
       - uses: github/privileged-requester@f8d60d9344e1c10976aad5c1af0c7c977badd677 # v2.1.0
         if: ${{ github.event.requested_reviewer.login == 'InReach-svc'}}

@@ -1,4 +1,4 @@
-import { prisma } from '@weareinreach/db'
+import { {{#if isMutation}}getAuditedClient{{else}}prisma{{/if}} } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 {{#if createSchema}}
@@ -6,14 +6,18 @@ import { type T{{pascalCase name}}Schema } from './{{operation}}.{{name}}.schema
 {{/if}}
 
 {{#if createSchema}}
-export const {{name}} = async ({ctx, input}: TRPCHandlerParams<T{{pascalCase name}}Schema>) => {
+export const {{name}} = async ({ctx, input}: TRPCHandlerParams<T{{pascalCase name}}Schema{{#if isMutation}}, 'protected'{{/if}}>) => {
 {{else}}
 export const {{name}} = async ({ctx}: TRPCHandlerParams<undefined>) => {
 {{/if}}
 	try {
+		{{#if isMutation}}
+		const prisma = getAuditedClient(ctx.actorId)
+		{{/if}}
 
 
 	} catch (error) {
 		handleError(error)
 	}
 }
+export default {{name}}
