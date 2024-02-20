@@ -62,16 +62,16 @@
 	"cookie-consent": {
 		"approve-all": "Разрешить доступ ко всем cookies",
 		"approve-selected": "Разрешить доступ к выбранным cookies",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"body": "На этом сайте мы используем файлы cookie и услуги третьих лиц. Некоторые из них необходимы, другие помогают нам улучшить ваш опыт просмотра. Пожалуйста, ознакомьтесь с нашим <PrivacyLink>Заявлением о конфиденциальности</PrivacyLink> для получения дополнительной информации.",
 		"intro": "Мы используем необходимые cookies для функциональной работы нашего сайта. Мы предлагаем установить дополнительные cookies для анализа использования сайта, улучшения его работы и записи ваших настроек.",
 		"item-basic": "Необходимые основные функции",
 		"item-ga4": "Для внутреннего использования в InReach",
 		"modal-title": "Настройки файлов cookies"
 	},
 	"count": {
+		"result_one": "{{count}} результат",
 		"result_few": "{{count}} результатов",
 		"result_many": "{{count}} результатов",
-		"result_one": "{{count}} результат",
 		"result_other": "{{count}} результата"
 	},
 	"country-select": "Выберите страну",
@@ -220,11 +220,7 @@
 	"password-reset-success": "<Text>Пожалуйста, <LoginModal>войдите,</LoginModal> используя ваш новый пароль.</Text>",
 	"password-saved": "Пароль сохранен!",
 	"photo-count_interval": "(0)[Еще нет фотографий.];(1)[{{count}} фото];(2-inf)[{{count}} фото]",
-	"photo_few": "Фото",
 	"photo_interval": "(0)[Еще нет фотографий];(2-inf)[{{count}} фотографий];",
-	"photo_many": "Фото",
-	"photo_one": "Фото",
-	"photo_other": "Фото",
 	"please-specify": "Просьба указать",
 	"portal-module": {
 		"service-area": "Зона обслуживания"
@@ -259,18 +255,10 @@
 	"resource-saved": "Ресурс сохранен.",
 	"resources": "Ресурсы",
 	"retry": "Повторить",
-	"review-count_few": "{{count}} отзыва",
 	"review-count_interval": "(0)[Нет отзывов];",
-	"review-count_many": "{{count}} отзывов",
-	"review-count_one": "{{count}} отзыв",
-	"review-count_other": "{{count}} отзывов",
 	"review-not-empty": "Отзыв не может быть пустым",
 	"review-note": "Ваш новый рейтинг не будет сохранен, пока вы не напишите отзыв и не нажмете кнопку «Отправить».",
 	"review-resource": "Оставить отзыв на этот ресурс",
-	"review_few": "Отзывов",
-	"review_many": "Отзывов",
-	"review_one": "Отзыв",
-	"review_other": "Отзыва",
 	"safety-exit": "Безопасный выход из системы",
 	"save": "Сохранить",
 	"save-changes": "Сохранить изменения",
@@ -398,8 +386,8 @@
 	"uncheck-all": "Снять все флажки",
 	"user-avatar": "Аватар пользователя",
 	"user-menu": {
-		"admin-options": "Админ параметры",
-		"data-portal": "Data Portal Главная",
+		"admin-options": "Параметры администратора",
+		"data-portal": "Домашний портал данных",
 		"edit-page": "Редактировать эту страницу",
 		"user-options": "Настройки пользователя"
 	},
@@ -409,15 +397,7 @@
 		"verifying": "Проверка учетной записи"
 	},
 	"view-list": "Посмотреть список",
-	"view-x-result_few": "Посмотреть {{count}} результатов",
-	"view-x-result_many": "Посмотреть {{count}} результатов",
-	"view-x-result_one": "Просмотр результата {{count}}",
-	"view-x-result_other": "Посмотреть {{count}} результата",
 	"visit": "Посетить",
-	"website_few": "Сайтов",
-	"website_many": "Сайтов",
-	"website_one": "Сайт",
-	"website_other": "Сайта",
 	"welcome-name": "Добро пожаловать, {{name}}!",
 	"words": {
 		"accept": "Принять",
@@ -466,5 +446,25 @@
 		"unpublish": "Снять с публикации",
 		"website": "Сайт",
 		"yes": "Да"
-	}
+	},
+	"photo_one": "Фото",
+	"photo_few": "Фото",
+	"photo_many": "Фото",
+	"photo_other": "Фото",
+	"review-count_one": "{{count}} отзыв",
+	"review-count_few": "{{count}} отзыва",
+	"review-count_many": "{{count}} отзывов",
+	"review-count_other": "{{count}} отзывов",
+	"review_one": "Отзыв",
+	"review_few": "Отзывов",
+	"review_many": "Отзывов",
+	"review_other": "Отзыва",
+	"view-x-result_one": "Просмотр результата {{count}}",
+	"view-x-result_few": "Посмотреть {{count}} результатов",
+	"view-x-result_many": "Посмотреть {{count}} результатов",
+	"view-x-result_other": "Посмотреть {{count}} результата",
+	"website_one": "Сайт",
+	"website_few": "Сайтов",
+	"website_many": "Сайтов",
+	"website_other": "Сайта"
 }
