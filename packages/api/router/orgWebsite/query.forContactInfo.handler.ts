@@ -20,7 +20,7 @@ const whereId = (input: TForContactInfoSchema, isSingleLoc?: boolean): Prisma.Or
 			// 		}
 		}
 		case isIdFor('orgLocation', input.parentId): {
-			return { locations: { every: { location: { id: input.parentId, ...isPublic } } } }
+			return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
 		}
 
 		default: {
