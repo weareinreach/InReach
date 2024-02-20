@@ -10,16 +10,16 @@ const whereId = (input: TForContactInfoSchema, isSingleLoc?: boolean): Prisma.Or
 	switch (true) {
 		case isIdFor('organization', input.parentId): {
 			return isSingleLoc
-				? {
+				? { organization: { id: input.parentId, ...isPublic } }
+				: {
 						OR: [
 							{ organization: { id: input.parentId, ...isPublic } },
 							{ locations: { every: { location: { organization: { id: input.parentId, ...isPublic } } } } },
 						],
 					}
-				: { organization: { id: input.parentId, ...isPublic } }
 		}
 		case isIdFor('orgLocation', input.parentId): {
-			return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
+			return { locations: { every: { location: { id: input.parentId, ...isPublic } } } }
 		}
 
 		default: {
@@ -35,13 +35,16 @@ export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInf
 			})
 		: 0
 	const isSingleLoc = locCount === 1
+	console.log('location count', locCount)
+	const where = {
+		...isPublic,
+		...whereId(input, isSingleLoc),
+		...(input.locationOnly !== undefined ? { orgLocationOnly: input.locationOnly } : {}),
+	}
+	console.dir(where, { depth: 10 })
 
 	const result = await prisma.orgWebsite.findMany({
-		where: {
-			...isPublic,
-			...whereId(input, isSingleLoc),
-			...(input.locationOnly !== undefined ? { orgLocationOnly: input.locationOnly } : {}),
-		},
+		where,
 		select: {
 			id: true,
 			url: true,

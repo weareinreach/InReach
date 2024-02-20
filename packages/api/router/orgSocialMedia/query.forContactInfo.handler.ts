@@ -9,13 +9,13 @@ const whereId = (input: TForContactInfoSchema, isSingleLoc?: boolean): Prisma.Or
 	switch (true) {
 		case isIdFor('organization', input.parentId): {
 			return isSingleLoc
-				? {
+				? { organization: { id: input.parentId, ...isPublic } }
+				: {
 						OR: [
 							{ organization: { id: input.parentId, ...isPublic } },
 							{ locations: { every: { location: { organization: { id: input.parentId, ...isPublic } } } } },
 						],
 					}
-				: { organization: { id: input.parentId, ...isPublic } }
 		}
 		case isIdFor('orgLocation', input.parentId): {
 			return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
