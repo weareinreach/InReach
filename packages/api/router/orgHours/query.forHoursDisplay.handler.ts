@@ -37,18 +37,19 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 
 	const { weekYear, weekNumber } = DateTime.now()
 	const intervalResults = result.map(({ start, end, tz, dayIndex, ...rest }) => {
-		const interval = Interval.fromDateTimes(
-			DateTime.fromJSDate(start, { zone: tz ?? 'America/New_York' }).set({
-				weekday: convertToLuxonWeekday(dayIndex),
-				weekYear,
-				weekNumber,
-			}),
-			DateTime.fromJSDate(end, { zone: tz ?? 'America/New_York' }).set({
-				weekday: convertToLuxonWeekday(start > end ? dayIndex + 1 : dayIndex),
-				weekYear,
-				weekNumber,
-			})
-		).toISO()
+		const shouldAddDay = start > end
+
+		const open = DateTime.fromJSDate(start, { zone: tz ?? 'America/New_York' }).set({
+			weekday: convertToLuxonWeekday(dayIndex),
+			weekYear,
+			weekNumber,
+		})
+		const close = DateTime.fromJSDate(end, { zone: tz ?? 'America/New_York' }).set({
+			weekday: convertToLuxonWeekday(shouldAddDay ? (dayIndex === 6 ? 0 : dayIndex + 1) : dayIndex),
+			weekYear,
+			weekNumber: shouldAddDay && dayIndex === 6 ? weekNumber + 1 : weekNumber,
+		})
+		const interval = Interval.fromDateTimes(open, close).toISO()
 		return {
 			tz,
 			dayIndex,
