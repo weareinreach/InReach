@@ -8,14 +8,15 @@ const isPublic = globalWhere.isPublic()
 const getWhereId = (input: TForContactInfoSchema, isSingleLoc?: boolean): Prisma.OrgPhoneWhereInput => {
 	switch (true) {
 		case isIdFor('organization', input.parentId): {
-			return isSingleLoc
-				? { organization: { organization: { id: input.parentId, ...isPublic } } }
-				: {
-						OR: [
-							{ organization: { organization: { id: input.parentId, ...isPublic } } },
-							{ locations: { some: { location: { organization: { id: input.parentId, ...isPublic } } } } },
-						],
-					}
+			return { organization: { organization: { id: input.parentId, ...isPublic } } }
+			// return isSingleLoc
+			// 	? { organization: { organization: { id: input.parentId, ...isPublic } } }
+			// 	: {
+			// 			OR: [
+			// 				{ organization: { organization: { id: input.parentId, ...isPublic } } },
+			// 				{ locations: { some: { location: { organization: { id: input.parentId, ...isPublic } } } } },
+			// 			],
+			// 		}
 		}
 		case isIdFor('orgLocation', input.parentId): {
 			return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
