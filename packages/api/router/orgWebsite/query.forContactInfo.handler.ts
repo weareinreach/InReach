@@ -36,13 +36,11 @@ export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInf
 			})
 		: 0
 	const isSingleLoc = locCount === 1
-	console.log('location count', locCount)
 	const where = {
 		...isPublic,
 		...whereId(input, isSingleLoc),
 		...(input.locationOnly !== undefined ? { orgLocationOnly: input.locationOnly } : {}),
 	}
-	console.dir(where, { depth: 10 })
 
 	const result = await prisma.orgWebsite.findMany({
 		where,
