@@ -9,7 +9,7 @@ export const attributesByCategory = async ({ input }: TRPCHandlerParams<TAttribu
 	const result = await prisma.attributesByCategory.findMany({
 		where: {
 			categoryName: Array.isArray(input?.categoryName) ? { in: input.categoryName } : input?.categoryName,
-			canAttachTo: input?.canAttachTo?.length ? { hasSome: input.canAttachTo } : undefined,
+			// canAttachTo: input?.canAttachTo?.length ? { hasSome: input.canAttachTo } : undefined,
 		},
 		orderBy: [{ categoryName: 'asc' }, { attributeName: 'asc' }],
 	})
