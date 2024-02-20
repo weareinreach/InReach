@@ -228,7 +228,7 @@ const SearchResults = () => {
 									<Link
 										external
 										variant={variants.Link.inheritStyle}
-										href='https://www.erininthemorning.com/p/erins-2024-anti-trans-legislative'
+										href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-96f'
 										target='_blank'
 									></Link>
 								),
