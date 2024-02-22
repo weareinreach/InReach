@@ -105,38 +105,52 @@ services AS (
 ),
 service_area as (
 	SELECT
-		country."geoDataId" as "countryGeoId",
-		district."geoDataId" as "districtGeoId",
-		district.slug AS "districtSlug",
-		country.cca3 as "cca3",
-		sa."organizationId",
-		sa."orgLocationId"
-	FROM "ServiceArea" sa
-		 LEFT JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id AND sac.active
-		 LEFT JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id AND sad.active
-		 LEFT JOIN "Country" country ON country.id = sac. "countryId"
-		 LEFT JOIN "GovDist" district ON district.id = sad. "govDistId"
-	WHERE sa.active
-		AND sa."organizationId" is not null
-		AND (
-				country."geoDataId" is not null
-				OR district."geoDataId" is not null
+	 (CASE
+			WHEN sa."organizationId" IS NOT NULL THEN sa."organizationId"
+			WHEN sa."orgLocationId" IS NOT NULL THEN (SELECT "orgId" FROM "OrgLocation" loc WHERE loc.id = sa."orgLocationId" )
+			WHEN sa."orgServiceId" IS NOT NULL THEN COALESCE((SELECT DISTINCT loc."orgId" FROM "OrgLocationService" ols LEFT JOIN "OrgLocation" loc ON ols."orgLocationId" = loc.id WHERE ols."serviceId" = sa."orgServiceId"),
+				(SELECT os."organizationId" FROM "OrgService" os WHERE os.id = sa."orgServiceId")
 			)
-		AND (country."geoDataId" = ANY(
-					SELECT id
-					FROM covered_areas
-				)
-			OR district."geoDataId" = ANY(
-					SELECT id
-					FROM covered_areas
-				))
+		END
+		) AS "orgId",
+		ARRAY_agg(DISTINCT CASE
+			WHEN country."geoDataId" IS NOT NULL THEN country."geoDataId"
+			WHEN district."geoDataId" IS NOT NULL THEN district."geoDataId"
+		END) AS "geoId",
+		array_remove(array_agg(DISTINCT district.slug), NULL) AS "matchedDistricts",
+		array_remove(array_agg(DISTINCT country.cca3),NULL) AS "matchedCountries"
+	FROM "ServiceArea" sa
+		LEFT JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id
+		AND sac.active
+		LEFT JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id
+		AND sad.active
+		LEFT JOIN "Country" country ON country.id = sac. "countryId" AND country. "geoDataId" = ANY(
+				SELECT id
+				FROM covered_areas
+			)
+		LEFT JOIN "GovDist" district ON district.id = sad. "govDistId" AND district. "geoDataId" = ANY(
+				SELECT id
+				FROM covered_areas
+			)
+	WHERE sa.active
+		AND (
+			country. "geoDataId" = ANY(
+				SELECT id
+				FROM covered_areas
+			)
+			OR district. "geoDataId" = ANY(
+				SELECT id
+				FROM covered_areas
+			)
+		)
+		GROUP BY "orgId"
 )
 	SELECT
 		*,
 		COUNT(*) OVER ()::int AS total
 	FROM (
 		SELECT
-			loc. "orgId",
+			org.id,
 			${
 				hasServiceFilter
 					? Prisma.sql`ARRAY_REMOVE(ARRAY_AGG(DISTINCT services. "tagId"), NULL) AS "matchedServices",`
@@ -155,16 +169,14 @@ service_area as (
 					ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int
 				)
 			) AS distance,
-			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL) AS "national",
-			ARRAY_LENGTH(ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL),1) is not NULL AS "isNational",
-			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3) || ARRAY_AGG( DISTINCT sa."districtSlug"), NULL) AS "serviceAreas"
-		FROM "OrgLocation" loc
-			INNER JOIN "Organization" org ON org.id = loc. "orgId"
-			LEFT JOIN service_area sa ON  sa. "organizationId" = loc. "orgId"
+			sa."matchedCountries" AS "national"
+		FROM "Organization" org
+			INNER JOIN "OrgLocation" loc ON org.id = loc. "orgId"
+			LEFT JOIN service_area sa ON sa. "orgId" = org.id
 			${
 				hasServiceFilter
 					? Prisma.sql`
-		INNER JOIN services ON services."organizationId" = loc."orgId"`
+		INNER JOIN services ON services."organizationId" = org.id`
 					: Prisma.empty
 			}
 		${
@@ -176,15 +188,14 @@ service_area as (
 	WHERE
 		(
 			ST_DWithin(ST_Transform(loc.geo, 3857), (SELECT meters FROM points), ${searchRadius})
-			OR sa."countryGeoId"  = ANY(SELECT id FROM covered_areas)
-			OR sa."districtGeoId" = ANY(SELECT id FROM covered_areas)
+			OR sa."geoId" && ARRAY(SELECT id FROM covered_areas)
 		)
 		AND loc.published
 		AND org.published
 		AND NOT loc.deleted
 		AND NOT org.deleted
 	GROUP BY
-		loc."orgId"
+		org.id, sa."matchedCountries"
 	ORDER BY
 		distance
 	) result
@@ -197,21 +208,21 @@ OFFSET ${skip}`
 	const formattedResults = results.map((result) => {
 		if (parseInt(result.total) !== total) total = parseInt(result.total)
 		return {
-			id: result.orgId,
+			id: result.id,
 			distMeters: parseInt(result.distance),
-			national: result.national,
+			national: result.national ?? [],
 		}
 	})
 	return { results: formattedResults, total }
 }
 type SearchResult = {
-	orgId: string
+	id: string
 	matchedServices?: string[]
 	matchedAttributes?: string[]
 	distance: string
-	national: string[]
-	isNational: boolean
-	serviceAreas: string[]
+	national: string[] | null
+	// isNational: boolean
+	// serviceAreas: string[]
 	total: string
 }
 const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultIds: string[] }) => {
