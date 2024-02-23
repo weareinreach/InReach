@@ -2,7 +2,7 @@
 	"banner": {
 		"donate": "Pomóż utrzymać dostęp do darmo dla wszystkich. <DonateLink>Wesprzyj teraz!</DonateLink>💝",
 		"redesign": "Przeczytaj o uruchomieniu przeprojektowania aplikacji inReach na naszym blogu. <Link>Dowiedz się więcej.</Link>",
-		"tmf": "Rozpowszechnianie trans radości z #TransMascFutures 🏳️‍⚧️"
+		"tmf": "<TMFLink>Rozpowszechnianie trans radości z #TransMascFutures 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Posłuchaj od naszych użytkowników</Title1>",

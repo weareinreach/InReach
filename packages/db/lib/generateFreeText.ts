@@ -49,92 +49,49 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 		}),
 	}
 }
-export const generateNestedFreeText = <T extends GenerateFreeTextType>({
-	orgId: orgSlug,
-	itemId,
-	text,
-	type,
-	freeTextId,
-}: GenerateFreeTextParams<T>) => {
-	const key = (() => {
-		switch (type) {
-			case 'orgDesc': {
-				return createKey([orgSlug, 'description'])
-			}
-			case 'attSupp': {
-				invariant(itemId)
-				return createKey([orgSlug, 'attribute', itemId])
-			}
-			case 'svcName': {
-				invariant(itemId)
-				return createKey([orgSlug, itemId, 'name'])
-			}
-			case 'websiteDesc':
-			case 'phoneDesc':
-			case 'emailDesc':
-			case 'svcDesc': {
-				invariant(itemId)
-				return createKey([orgSlug, itemId, 'description'])
-			}
-		}
-	})()
-	invariant(key, 'Error creating key')
-	const ns = namespaces.orgData
+export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: GenerateFreeTextParams<T>) => {
+	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		create: {
-			id: freeTextId ?? generateId('freeText'),
-			tsKey: { create: { key, text, namespace: { connect: { name: ns } } } },
+			id: freeText.id,
+			tsKey: {
+				create: {
+					key: translationKey.key,
+					text: translationKey.text,
+					namespace: { connect: { name: translationKey.ns } },
+				},
+			},
 		},
 	}
 }
 
-export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>({
-	orgId: orgSlug,
-	itemId,
-	text,
-	type,
-	freeTextId,
-}: GenerateFreeTextParams<T>) => {
-	const key = (() => {
-		switch (type) {
-			case 'orgDesc': {
-				return createKey([orgSlug, 'description'])
-			}
-			case 'attSupp': {
-				invariant(itemId)
-				return createKey([orgSlug, 'attribute', itemId])
-			}
-			case 'svcName': {
-				invariant(itemId)
-				return createKey([orgSlug, itemId, 'name'])
-			}
-			case 'websiteDesc':
-			case 'phoneDesc':
-			case 'emailDesc':
-			case 'svcDesc': {
-				invariant(itemId)
-				return createKey([orgSlug, itemId, 'description'])
-			}
-		}
-	})()
-	invariant(key, 'Error creating key')
-	const ns = namespaces.orgData
-
-	const id = freeTextId ?? generateId('freeText')
+export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
+	args: GenerateFreeTextParams<T>
+): Prisma.FreeTextUpdateOneWithoutOrgEmailNestedInput => {
+	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		upsert: {
-			where: { id },
+			// where: { id: freeText.id },
 			create: {
-				id,
-				tsKey: { create: { key, text, namespace: { connect: { name: ns } } } },
+				id: freeText.id,
+				tsKey: {
+					create: {
+						key: translationKey.key,
+						text: translationKey.text,
+						namespace: { connect: { name: translationKey.ns } },
+					},
+				},
 			},
 			update: {
 				tsKey: {
-					upsert: {
-						where: { key },
-						create: { key, text, namespace: { connect: { name: ns } } },
-						update: { text },
-					},
+					// upsert: {
+					// 	create: {
+					// 		key: translationKey.key,
+					// 		text: translationKey.text,
+					// 		namespace: { connect: { name: translationKey.ns } },
+					// 	},
+					update: { text: translationKey.text },
+					// },
 				},
 			},
 		},
