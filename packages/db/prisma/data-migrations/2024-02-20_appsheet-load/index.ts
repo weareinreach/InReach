@@ -81,7 +81,7 @@ export const job20240220_appsheet_load = {
 					i++
 				}
 			},
-			{ timeout: 180_000 }
+			{ timeout: 600_000 }
 		)
 
 		const handledSuggestions = await prisma.suggestion.updateMany(data.handledSuggestions)
