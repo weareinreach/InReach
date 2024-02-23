@@ -70,7 +70,7 @@
 	},
 	"count": {
 		"result_one": "{{count}} результат",
-		"result_few": "{{count}} результатів",
+		"result_few": "{{count}} Результати",
 		"result_many": "{{count}} результатів",
 		"result_other": "{{count}} результатів"
 	},
