@@ -45,27 +45,30 @@ export const job20240221_attach_orphan_text = {
 				],
 			},
 		})
-		await prisma.$transaction(async (tx) => {
-			for (const item of data) {
-				const recordToAttachTo = item.key.split('.')[1]
-				if (typeof recordToAttachTo !== 'string') {
-					throw new Error('Unable to get record to attach to')
+		await prisma.$transaction(
+			async (tx) => {
+				for (const item of data) {
+					const recordToAttachTo = item.key.split('.')[1]
+					if (typeof recordToAttachTo !== 'string') {
+						throw new Error('Unable to get record to attach to')
+					}
+					if (isIdFor('orgPhone', recordToAttachTo)) {
+						const result = await tx.orgPhone.update({
+							where: { id: recordToAttachTo },
+							data: { descriptionId: item.id },
+						})
+						log(`Attached orphan text ${item.key} to ${result.id}`)
+					} else if (isIdFor('orgEmail', recordToAttachTo)) {
+						const result = await tx.orgEmail.update({
+							where: { id: recordToAttachTo },
+							data: { descriptionId: item.id },
+						})
+						log(`Attached orphan text ${item.key} to ${result.id}`)
+					}
 				}
-				if (isIdFor('orgPhone', recordToAttachTo)) {
-					const result = await tx.orgPhone.update({
-						where: { id: recordToAttachTo },
-						data: { descriptionId: item.id },
-					})
-					log(`Attached orphan text ${item.key} to ${result.id}`)
-				} else if (isIdFor('orgEmail', recordToAttachTo)) {
-					const result = await tx.orgEmail.update({
-						where: { id: recordToAttachTo },
-						data: { descriptionId: item.id },
-					})
-					log(`Attached orphan text ${item.key} to ${result.id}`)
-				}
-			}
-		})
+			},
+			{ timeout: 180_000 }
+		)
 
 		/**
 		 * DO NOT REMOVE BELOW
