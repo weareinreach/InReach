@@ -6,6 +6,7 @@ import superjson from 'superjson'
 import fs from 'fs'
 import path from 'path'
 
+import { socialParser } from '@weareinreach/util/social-parser'
 import { type Prisma, prisma } from '~db/client'
 import { generateNestedFreeText, generateNestedFreeTextUpsert } from '~db/lib/generateFreeText'
 import { generateId, isIdFor } from '~db/lib/idGen'
@@ -14,8 +15,8 @@ import { JsonInputOrNull, accessInstructions as zAccessInstructions } from '~db/
 
 import { DataFile, JoinFile } from './!schemas'
 
-const rawData = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'load.json'), 'utf8'))
-const rawJoins = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'joins.json'), 'utf8'))
+const rawData = JSON.parse(fs.readFileSync(path.resolve(__dirname, '!load.json'), 'utf8'))
+const rawJoins = JSON.parse(fs.readFileSync(path.resolve(__dirname, '!joins.json'), 'utf8'))
 
 const parsedData = DataFile.safeParse(rawData)
 const parsedJoins = JoinFile.safeParse(rawJoins)
@@ -134,8 +135,8 @@ const prep = async () => {
 	const existingLocations = await prisma.orgLocation.findMany({ include: { serviceAreas: true } })
 	const locationMap = new Map(existingLocations.map(({ id, ...rest }) => [id, rest]))
 	const geoCache = new Map<string, { lat: number; lon: number }>()
-	if (fs.existsSync(path.resolve(__dirname, 'geocache.json'))) {
-		const cacheData = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'geocache.json'), 'utf8')) as [
+	if (fs.existsSync(path.resolve(__dirname, '!geocache.json'))) {
+		const cacheData = JSON.parse(fs.readFileSync(path.resolve(__dirname, '!geocache.json'), 'utf8')) as [
 			string,
 			{ lat: number; lon: number },
 		][]
@@ -147,7 +148,10 @@ const prep = async () => {
 		}
 	}
 
-	return { attributeMap, countryMap, govDistMap, orgMap, locationMap, geoCache }
+	const socialMediaServices = await prisma.socialMediaService.findMany({ select: { id: true, name: true } })
+	const socialMediaMap = new Map(socialMediaServices.map(({ name, id }) => [name.toLowerCase(), id]))
+
+	return { attributeMap, countryMap, govDistMap, orgMap, locationMap, geoCache, socialMediaMap }
 }
 
 function throttleApiCalls<T>(fn: () => Promise<T>): () => Promise<T> {
@@ -166,7 +170,7 @@ function throttleApiCalls<T>(fn: () => Promise<T>): () => Promise<T> {
 }
 
 const run = async () => {
-	const { attributeMap, countryMap, govDistMap, orgMap, locationMap, geoCache } = await prep()
+	const { attributeMap, countryMap, govDistMap, orgMap, locationMap, geoCache, socialMediaMap } = await prep()
 	if (!parsedData.success || !parsedJoins.success) {
 		if (!parsedData.success) console.error(parsedData.error.format())
 		if (!parsedJoins.success) console.error(parsedJoins.error.format())
@@ -178,7 +182,7 @@ const run = async () => {
 	const idMap = new Map<string, string>()
 
 	for (const org of data.organization) {
-		if (org['reviewed?'] !== false) {
+		if (org['reviewed?'] !== true) {
 			console.info(`Skipping ${org.Name} (${org.id}) --> Not ready for upload`)
 			continue
 		}
@@ -284,7 +288,65 @@ const run = async () => {
 				upsert: { where: { id }, create: { id, url: org.URL }, update: { url: org.URL } },
 			}
 		}
-
+		const socialMedias = data.orgSocial.filter(({ organizationId }) => organizationId === org.id)
+		if (socialMedias.length) {
+			record.organization.create.socialMedia = {
+				createMany: {
+					data: compact(
+						socialMedias.map(({ id, url, ...rest }) => {
+							const smId = isIdFor('orgSocialMedia', id) ? id : generateId('orgSocialMedia')
+							const service = socialParser.detectProfile(url)
+							if (!service) {
+								return
+							}
+							const username = socialParser.getProfileId(service, url)
+							const sanitizedUrl = socialParser.sanitize(service, url)
+							const serviceId = socialMediaMap.get(service)
+							if (!serviceId) {
+								throw new Error(`Social media service ${service} not found`)
+							}
+							return { id: smId, serviceId, url: sanitizedUrl, username, legacyId: id, published: true }
+						})
+					),
+					skipDuplicates: true,
+				},
+			}
+			record.organization.update.socialMedia = {
+				upsert: compact(
+					socialMedias.map(({ id, url, ...rest }) => {
+						const smId = isIdFor('orgSocialMedia', id) ? id : generateId('orgSocialMedia')
+						const service = socialParser.detectProfile(url)
+						if (!service) {
+							return
+						}
+						const username = socialParser.getProfileId(service, url)
+						const serviceId = socialMediaMap.get(service)
+						const sanitizedUrl = socialParser.sanitize(service, url)
+						if (!serviceId) {
+							throw new Error(`Social media service ${service} not found`)
+						}
+						return {
+							where: { id: smId },
+							create: {
+								id: smId,
+								legacyId: id,
+								serviceId,
+								url: sanitizedUrl,
+								username,
+								published: true,
+							},
+							update: {
+								legacyId: id,
+								serviceId,
+								url: sanitizedUrl,
+								username,
+								published: true,
+							},
+						}
+					})
+				),
+			}
+		}
 		const locations = data.orgLocation.filter(({ organizationId }) => organizationId === org.id)
 		const locationIds = locations.map(({ id }) => id)
 
@@ -816,8 +878,8 @@ const run = async () => {
 		output.records.push(record)
 	}
 	console.log(geoCache.size)
-	fs.writeFileSync(path.resolve(__dirname, 'geocache.json'), JSON.stringify([...geoCache.entries()]))
-	fs.writeFileSync(path.resolve(__dirname, 'data.json'), JSON.stringify(output))
+	fs.writeFileSync(path.resolve(__dirname, '!geocache.json'), JSON.stringify([...geoCache.entries()]))
+	fs.writeFileSync(path.resolve(__dirname, '!data.json'), JSON.stringify(output))
 }
 
 run()
