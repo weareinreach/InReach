@@ -275,7 +275,8 @@ const run = async () => {
 				})
 			}
 		}
-
+		record.organization.create.attributes = { connectOrCreate: organizationAttributes.connectOrCreate }
+		record.organization.update.attributes = { upsert: organizationAttributes.upsert }
 		if (org.URL) {
 			const existingWebsite = await prisma.orgWebsite.findFirst({
 				where: { organizationId: orgId },
