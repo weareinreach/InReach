@@ -8,9 +8,21 @@ export const confirmAccount = async ({ input }: TRPCHandlerParams<TConfirmAccoun
 	const { code, email } = input
 	const response = await cognitoConfirmAccount(email, code)
 
+	const { id } = await prisma.user.findFirstOrThrow({
+		where: {
+			email: {
+				equals: email,
+				mode: 'insensitive',
+			},
+		},
+		select: {
+			id: true,
+		},
+	})
+
 	await prisma.user.update({
 		where: {
-			email,
+			id,
 		},
 		data: {
 			emailVerified: new Date(),
