@@ -7,8 +7,6 @@
 		"//#clean": {
 			"cache": false
 		},
-		"//#docker:down": {},
-		"//#docker:up": {},
 		"//#lint:pkg": {
 			"cache": false
 		},
@@ -58,6 +56,8 @@
 			"dependsOn": ["^db:generate", "^db:deploy", "^db:dataMigrate"],
 			"persistent": true
 		},
+		"docker:down": {},
+		"docker:up": {},
 		"format": {
 			"dependsOn": ["^db:generate"],
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"]

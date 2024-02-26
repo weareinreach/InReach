@@ -57,6 +57,9 @@ importers:
       '@types/node':
         specifier: 20.11.20
         version: 20.11.20
+      '@types/yargs':
+        specifier: 17.0.32
+        version: 17.0.32
       '@weareinreach/config':
         specifier: workspace:*
         version: link:packages/config
@@ -66,9 +69,15 @@ importers:
       boxen:
         specifier: 7.1.1
         version: 7.1.1
+      docker-compose:
+        specifier: 0.24.6
+        version: 0.24.6
       dotenv:
         specifier: 16.4.5
         version: 16.4.5
+      dotenv-expand:
+        specifier: 11.0.6
+        version: 11.0.6
       husky:
         specifier: 9.0.11
         version: 9.0.11
@@ -105,6 +114,9 @@ importers:
       typesync:
         specifier: 0.12.1
         version: 0.12.1(typescript@5.3.3)
+      yargs:
+        specifier: 17.7.2
+        version: 17.7.2
 
   apps/app:
     dependencies:
@@ -13963,6 +13975,13 @@ packages:
     resolution: {integrity: sha512-c68LpLbO+7kP/b1Hr1qs8/BJ09F5khZGTxqxZuhzxpmwJKOgRFHJWIb9/KmqnqHhLdO55aOxFH/EGBvUQbL/RQ==}
     dev: true
 
+  /docker-compose@0.24.6:
+    resolution: {integrity: sha512-VidlUyNzXMaVsuM79sjSvwC4nfojkP2VneL+Zfs538M2XFnffZDhx6veqnz/evCNIYGyz5O+1fgL6+g0NLWTBA==}
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      yaml: 2.3.4
+    dev: true
+
   /doctrine@2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
@@ -14087,6 +14106,13 @@ packages:
   /dotenv-expand@10.0.0:
     resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
     engines: {node: '>=12'}
+    dev: true
+
+  /dotenv-expand@11.0.6:
+    resolution: {integrity: sha512-8NHi73otpWsZGBSZwwknTXS5pqMOrk9+Ssrna8xCaxkzEpU9OTf9R5ArQGVw03//Zmk9MOwLPng9WwndvpAJ5g==}
+    engines: {node: '>=12'}
+    dependencies:
+      dotenv: 16.4.5
     dev: true
 
   /dotenv@16.0.3:
