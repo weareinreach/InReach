@@ -9,7 +9,7 @@
 			"outputMode": "new-only"
 		},
 		"db:deploy": {
-			"dependsOn": ["db:generate"],
+			"dependsOn": ["db:generate", "^docker:up"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
 			"inputs": ["./prisma/migrations/**/*"],
 			"outputMode": "new-only"
@@ -31,7 +31,7 @@
 		},
 		"generate:data": {
 			"cache": false,
-			"dependsOn": ["db:dataMigrate"],
+			"dependsOn": ["db:dataMigrate", "^docker:up"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
 			"outputs": ["./generated/**"]
 		},
