@@ -23,6 +23,7 @@
 		"lib/devmsg.ts",
 		"lib/prepare.ts",
 		"@types/**/*.ts",
-		"./*.ts"
+		"./*.ts",
+		"./docker/*.ts"
 	]
 }

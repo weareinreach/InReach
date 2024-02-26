@@ -13,8 +13,9 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@vercel/edge-config": "1.0.2",
+		"@vercel/edge-config": "1.1.0",
 		"luxon": "3.4.4",
+		"social-links": "1.14.0",
 		"superjson": "2.2.1",
 		"tslog": "4.9.2"
 	},
