@@ -37,11 +37,11 @@
 		"@next/bundle-analyzer": "14.1.0",
 		"@types/eslint": "8.56.3",
 		"@types/node": "20.11.20",
-		"@types/react": "18.2.58",
+		"@types/react": "18.2.59",
 		"@types/react-dom": "18.2.19",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
-		"eslint": "8.56.0",
+		"eslint": "8.57.0",
 		"typescript": "5.3.3"
 	}
 }
