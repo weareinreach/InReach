@@ -21,6 +21,8 @@
 		"db:reset": "pnpm with-env prisma migrate reset",
 		"db:run-seed": "echo 'No seed script defined'",
 		"db:seed": "pnpm with-env prisma db seed",
+		"db:snap:capture": "pnpm with-env snaplet snapshot create",
+		"db:snap:restore": "pnpm with-env snaplet snapshot restore --latest",
 		"db:studio": "pnpm with-env prisma studio",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown . && prisma format",
 		"format:all": "pnpm format:export && pnpm format:generated",
