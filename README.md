@@ -56,7 +56,7 @@
 
 **InReach** is the world’s first tech platform matching LGBTQ+ people facing persecution and discrimination with safe, verified resources.
 
-The InReach App is available on web (desktop and mobile), and native iOS and Android. Over 9,000 services across the U.S. are currently listed, with new verified services added every day by trained volunteers. InReach’s open-source technology instantly matches LGBTQ+ people in need with independently verified safe housing, medical and mental health care, immigration and other legal help, meal assistance, education and employment, translation, community and spiritual support, and more critical services. InReach is a comprehensive, digital one-stop-shop for all intersectional community needs, with listed verified services for LGBTQ+ asylum seekers, refugees and other immigrants, BIPOC communities, transgender folks, youth and caregivers, and more. The InReach App is free for everyone – including lawyers, case managers, social workers, and other service providers and community organizations searching for affirming resource referrals for LGBTQ+ clients. 
+The InReach App is available on web (desktop and mobile), and native iOS and Android. Over 9,000 services across the U.S. are currently listed, with new verified services added every day by trained volunteers. InReach’s open-source technology instantly matches LGBTQ+ people in need with independently verified safe housing, medical and mental health care, immigration and other legal help, meal assistance, education and employment, translation, community and spiritual support, and more critical services. InReach is a comprehensive, digital one-stop-shop for all intersectional community needs, with listed verified services for LGBTQ+ asylum seekers, refugees and other immigrants, BIPOC communities, transgender folks, youth and caregivers, and more. The InReach App is free for everyone – including lawyers, case managers, social workers, and other service providers and community organizations searching for affirming resource referrals for LGBTQ+ clients.
 
 <!-- <details>
 <summary>Screenshots</summary>
@@ -84,6 +84,8 @@ The InReach App is available on web (desktop and mobile), and native iOS and And
 
 ### Prerequisites
 
+#### pnpm
+
 This project uses [`pnpm`](https://pnpm.io/) to manage packages. To install, run the command:
 
 ```bash
@@ -91,6 +93,10 @@ npm -g install pnpm
 ```
 
 or follow the instructions on [pnpm's installation page](https://pnpm.io/installation).
+
+#### Docker
+
+Docker (& docker compose) are used for local databases. Instructions to install Docker [can be found here](https://docs.docker.com/get-docker/)
 
 ### Installation
 
@@ -104,20 +110,25 @@ pnpm install
 
 ```bash
 InReach/
+├── @types/                       # Shared TypeScript types/overrides
 ├── apps/
 │   ├── app/                      # InReach Application
 │   └── web/                      # InReach Main Site
 ├── docker/                       # Docker compose file for local DB instance
+├── lambdas/
+│   ├── cognito-messaging/        # AWS Lambda to generate Cognito emails
+│   └── cognito-user-migrate/     # AWS Lambda for user migration
 ├── packages/
+│   ├── analytics/                # Analytic event handling
 │   ├── api/                      # tRPC API route definitions
 │   ├── auth/                     # NextAuth settings
-│   ├── aws-user-migrate/         # AWS Lambda for user migration
 │   ├── config/                   # Other shared configs
+│   ├── crowdin/                  # Crowdin API/OTA
 │   ├── db/                       # Prisma DB schema & other db scripts
+│   ├── env/                      # Environment variable validation
 │   ├── eslint-config/            # Custom ESlint configuration
-│   ├── i18next-crowdin-backend/  # Crowdin plugin for translation delivery
-│   ├── types/                    # Shared TypeScript types
-│   └── ui/                       # React components shared between apps
+│   ├── ui/                       # React components shared between apps
+│   └── util/                     # Misc utility scripts/modules
 └── patches/                      # Patched npm packages
 ```
 
