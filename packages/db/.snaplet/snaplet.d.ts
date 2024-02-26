@@ -2086,7 +2086,7 @@ type SubsetTarget<TSelectedTable extends SelectedTable> = {
 	/**
 	 * The order on which your target will be filtered useful with rowLimit parameter
 	 *
-	 * @example orderBy: `"User"."createdAt" desc`
+	 * @example OrderBy: `"User"."createdAt" desc`
 	 */
 	orderBy?: string
 } & (
@@ -2094,7 +2094,7 @@ type SubsetTarget<TSelectedTable extends SelectedTable> = {
 			/**
 			 * The where filter to be applied on the target
 			 *
-			 * @example where: `"_prisma_migrations"."name" IN ('migration1', 'migration2')`
+			 * @example Where: `"_prisma_migrations"."name" IN ('migration1', 'migration2')`
 			 */
 			where: string
 	  } & Partial<ExclusiveRowLimitPercent>)
@@ -2125,10 +2125,8 @@ type FollowNullableRelationsOptions<TSelectedTable extends SelectedTable> =
 	// Or can be a mix of $default and table specific definition
 	| ({ $default: boolean } & {
 			// If it's a table specific definition and the table has relationships
-			[TTable in SelectedTablesWithRelationsIds<
-				TSelectedTable['id']
-			>]?: // It's either a boolean or a mix of $default and relationship specific definition
-			| boolean
+			[TTable in SelectedTablesWithRelationsIds<TSelectedTable['id']>]?:  // It's either a boolean or a mix of $default and relationship specific definition
+				| boolean
 				| {
 						[Key in GetSelectedTableRelationsKeys<TTable> | '$default']?: boolean
 				  }
@@ -2143,10 +2141,8 @@ type MaxCyclesLoopOptions<TSelectedTable extends SelectedTable> =
 	// Or can be a mix of $default and table specific definition
 	| ({ $default: number } & {
 			// If it's a table specific definition and the table has relationships
-			[TTable in SelectedTablesWithRelationsIds<
-				TSelectedTable['id']
-			>]?: // It's either a number or a mix of $default and relationship specific definition
-			| number
+			[TTable in SelectedTablesWithRelationsIds<TSelectedTable['id']>]?:  // It's either a number or a mix of $default and relationship specific definition
+				| number
 				| {
 						[Key in GetSelectedTableRelationsKeys<TTable> | '$default']?: number
 				  }
@@ -2161,10 +2157,8 @@ type MaxChildrenPerNodeOptions<TSelectedTable extends SelectedTable> =
 	// Or can be a mix of $default and table specific definition
 	| ({ $default: number } & {
 			// If it's a table specific definition and the table has relationships
-			[TTable in SelectedTablesWithRelationsIds<
-				TSelectedTable['id']
-			>]?: // It's either a number or a mix of $default and relationship specific definition
-			| number
+			[TTable in SelectedTablesWithRelationsIds<TSelectedTable['id']>]?:  // It's either a number or a mix of $default and relationship specific definition
+				| number
 				| {
 						[Key in GetSelectedTableRelationsKeys<TTable> | '$default']?: number
 				  }
@@ -2255,8 +2249,8 @@ type VirtualForeignKey<TTFkTable extends SelectedTable, TTargetTable extends Sel
 
 type IntrospectConfig<TSelectedTable extends SelectedTable> = {
 	/**
-	 * Allows you to declare virtual foreign keys that are not present as foreign keys in the database. But
-	 * are still used and enforced by the application.
+	 * Allows you to declare virtual foreign keys that are not present as foreign keys in the database. But are
+	 * still used and enforced by the application.
 	 */
 	virtualForeignKeys?: Array<VirtualForeignKey<TSelectedTable, TSelectedTable>>
 }
