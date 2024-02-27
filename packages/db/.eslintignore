@@ -4,3 +4,4 @@ zod-schemas/
 kysely-vercel/
 ___*.ts
 _queries/
+.snaplet/

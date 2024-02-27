@@ -10,11 +10,12 @@ export const slugRedirect = async ({ input }: TRPCHandlerParams<TSlugRedirectSch
 	if (cached) {
 		return { redirectTo: cached }
 	}
-	const { slug: primarySlug } = await prisma.organization.findFirstOrThrow({
-		where: { OR: [{ slug: input }, { oldSlugs: { some: { from: input } } }], ...isPublic },
-		select: { slug: true },
-	})
-	if (primarySlug !== input) {
+	const { slug: primarySlug } =
+		(await prisma.organization.findFirst({
+			where: { OR: [{ slug: input }, { oldSlugs: { some: { from: input } } }], ...isPublic },
+			select: { slug: true },
+		})) ?? {}
+	if (primarySlug && primarySlug !== input) {
 		await writeSlugRedirectCache(input, primarySlug)
 		return { redirectTo: primarySlug }
 	}

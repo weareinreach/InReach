@@ -11,7 +11,7 @@
 			"cache": false
 		},
 		"build": {
-			"dependsOn": ["^build", "^build:icons"],
+			"dependsOn": ["^db:generate", "^generate:data", "^build", "^build:icons"],
 			"env": [
 				"NODE_ENV",
 				"DATABASE_URL",
@@ -53,14 +53,18 @@
 		"deploy:aws": {},
 		"dev": {
 			"cache": false,
-			"dependsOn": ["^db:generate", "^db:deploy", "^db:dataMigrate"],
+			"dependsOn": ["^db:generate", "^generate:data", "^db:deploy", "^db:dataMigrate"],
 			"persistent": true
 		},
+		"docker:down": {},
+		"docker:up": {},
 		"format": {
 			"dependsOn": ["^db:generate"],
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"]
 		},
-		"generate:data": {},
+		"generate:data": {
+			"dependsOn": ["^db:generate"]
+		},
 		"lint": {
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"]
 		},
@@ -68,7 +72,7 @@
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"]
 		},
 		"post-install": {
-			"dependsOn": ["^generate:data", "^build:icons", "//#lint:pkg"]
+			"dependsOn": ["^build:icons", "//#lint:pkg"]
 		},
 		"sb:build": {},
 		"type-check": {

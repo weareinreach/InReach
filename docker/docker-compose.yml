@@ -1,45 +1,97 @@
 version: '3.9'
-
+name: inreach
 services:
+  # PostgreSQL
   db:
-    image: postgis/postgis:15-3.3
-    restart: always
+    image: postgis/postgis:15-3.4
+    container_name: InReach-PostgreSQL
+    restart: unless-stopped
+    pull_policy: always
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: md5
+      POSTGRES_INITDB_ARGS: --auth=md5
     volumes:
       - dbdata:/var/lib/postgresql/data
     ports:
       - 5432:5432
-
+  # php-adminer (https://www.adminer.org/en/)
   adminer:
     image: adminer
-    restart: always
+    container_name: InReach-adminer
+    pull_policy: always
+    restart: unless-stopped
     ports:
       - 8080:8080
+
+  # pgAdmin4
   pgAdmin:
     image: dpage/pgadmin4
     pull_policy: always
-    container_name: postgres-pgAdmin
+    restart: unless-stopped
+    container_name: InReach-pgAdmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: hello@inreach.org
       PGADMIN_DEFAULT_PASSWORD: pgadmin
       PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
       - 5050:80
+    configs:
+      - source: pgAdmin-servers
+        target: /pgadmin4/servers.json
+      - source: pgAdmin-pgpass
+        target: /pgpass
 
+  # Redis server
   redis:
-    image: redis:7
-    restart: always
+    image: redis/redis-stack-server:6.2.6-v6
+    pull_policy: always
+    restart: unless-stopped
+    container_name: InReach-redis
     ports:
       - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass password
     volumes:
       - cache:/data
+  # Redis serverless proxy (to emulate @vercel/kv)
+  redis-serverless-http:
+    container_name: InReach-redis-serverless-proxy
+    image: hiett/serverless-redis-http:latest
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      - redis
+    ports:
+      - '8079:80'
+    environment:
+      SRH_MODE: env
+      SRH_TOKEN: 7fkVoJi4o/NtjkBTCVPXg4jSC/9Ib6H/ZCmUZfcy0IQ=
+      SRH_CONNECTION_STRING: 'redis://redis:6379'
+  redis-insight:
+    container_name: InReach-redis-insight
+    image: redislabs/redisinsight:latest
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      - redis
+    ports:
+      - 8001:5540
+    volumes:
+      - redis_insight:/db
+
+configs:
+  pgAdmin-pgpass:
+    content: db:5432:*:user:password
+  pgAdmin-servers:
+    content: |
+      {"Servers":{"1":{"Group":"InReach","Host":"db","MaintenanceDB":"postgres","Name":"InReach Docker","Passfile":"/pgpass","Port":5432,"Username":"user"}}}
+
 volumes:
   dbdata: {}
   pgadmin: {}
   cache:
     driver: local
+  redis_insight: {}

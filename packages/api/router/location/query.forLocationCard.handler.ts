@@ -19,6 +19,7 @@ export const forLocationCard = async ({ input }: TRPCHandlerParams<TForLocationC
 			postCode: true,
 			latitude: true,
 			longitude: true,
+			notVisitable: true,
 			country: { select: { cca2: true } },
 			govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
 			phones: {
