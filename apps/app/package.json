@@ -9,7 +9,7 @@
 		"build:prebuild": "SKIP_ENV_VALIDATION=true tsx ./lib/prebuild.ts",
 		"clean:node": "rm -rf ./node_modules/ || true && rm -rf ./.next || true",
 		"predev": "pnpm -w docker:up",
-		"dev": "next dev",
+		"dev": "pnpm with-env next dev",
 		"postdev": "pnpm -w docker:down",
 		"dev:verbose": "NEXT_VERBOSE=1 next dev",
 		"format": "prettier --write --ignore-unknown .",

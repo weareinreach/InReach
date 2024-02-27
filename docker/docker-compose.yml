@@ -54,7 +54,6 @@ services:
     container_name: InReach-redis
     ports:
       - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass password
     volumes:
       - cache:/data
   # Redis serverless proxy (to emulate @vercel/kv)
@@ -71,6 +70,17 @@ services:
       SRH_MODE: env
       SRH_TOKEN: 7fkVoJi4o/NtjkBTCVPXg4jSC/9Ib6H/ZCmUZfcy0IQ=
       SRH_CONNECTION_STRING: 'redis://redis:6379'
+  redis-insight:
+    container_name: InReach-redis-insight
+    image: redislabs/redisinsight:latest
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      - redis
+    ports:
+      - 8001:5540
+    volumes:
+      - redis_insight:/db
 
 configs:
   pgAdmin-pgpass:
@@ -84,3 +94,4 @@ volumes:
   pgadmin: {}
   cache:
     driver: local
+  redis_insight: {}
