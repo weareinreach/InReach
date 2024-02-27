@@ -78,7 +78,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 	})
 
 	useEffect(() => {
-		if (mapIsReady && map && data?.latitude && data?.longitude && canGetCenter) {
+		if (mapIsReady && map && data?.latitude && data?.longitude && canGetCenter && !data?.notVisitable) {
 			mapMarker.add({
 				map,
 				id: data.id,
@@ -251,7 +251,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 					<Stack spacing={12}>
 						<Title order={2}>{data.name}</Title>
 						<List {...listProps}>
-							<List.Item>{formattedAddress}</List.Item>
+							{!data.notVisitable && <List.Item>{formattedAddress}</List.Item>}
 							{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
 						</List>
 					</Stack>
