@@ -61,7 +61,7 @@
 		"zod": "3.22.4"
 	},
 	"devDependencies": {
-		"@octokit/core": "5.1.0",
+		"@octokit/core": "6.0.1",
 		"@snaplet/copycat": "5.0.0",
 		"@snaplet/seed": "0.89.0",
 		"@terraformer/wkt": "2.2.0",
