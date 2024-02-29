@@ -203,6 +203,7 @@ export const SearchBox = ({
 
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: notBlank(locationSearch) && !isOrgSearch,
+		cacheTime: 0,
 		onSuccess: (data) => {
 			const DEFAULT_RADIUS = 200
 			const DEFAULT_UNIT = 'mi'
