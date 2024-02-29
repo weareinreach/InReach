@@ -138,6 +138,7 @@ export const SearchBox = ({
 	initialValue = '',
 	pinToLeft,
 	placeholderTextKey,
+	resetInitialValue,
 }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
@@ -231,7 +232,15 @@ export const SearchBox = ({
 				<Loader size={32} mr={16} />
 			</Group>
 		) : form.values.search?.length > 0 ? (
-			<Group spacing={4} noWrap className={classes.rightIcon} onClick={() => form.reset()}>
+			<Group
+				spacing={4}
+				noWrap
+				className={classes.rightIcon}
+				onClick={() => {
+					form.values.search = ''
+					resetInitialValue?.()
+				}}
+			>
 				<Text>{t('clear')}</Text>
 				<Icon icon='carbon:close' />
 			</Group>
@@ -377,6 +386,7 @@ type SearchBoxProps = {
 	initialValue?: string
 	pinToLeft?: boolean
 	placeholderTextKey?: string
+	resetInitialValue?: () => void
 }
 type FormValues = {
 	search: string
