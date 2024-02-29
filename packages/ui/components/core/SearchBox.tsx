@@ -144,7 +144,7 @@ export const SearchBox = ({
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
-	const form = useForm<FormValues>(initialValue ? { initialValues: { search: initialValue } } : undefined)
+	const form = useForm<FormValues>({ initialValues: { search: initialValue } })
 	const [search] = useDebouncedValue(form.values.search, 400)
 	const [locationSearch, setLocationSearch] = useLocationSearch()
 	const { isLoading, setLoading } = loadingManager
@@ -237,6 +237,7 @@ export const SearchBox = ({
 				noWrap
 				className={classes.rightIcon}
 				onClick={() => {
+					form.reset()
 					form.values.search = ''
 					resetInitialValue?.()
 				}}
