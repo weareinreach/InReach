@@ -122,7 +122,7 @@ jobs:
       - name: Commit files
         id: commit-files
         if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
-        uses: peter-evans/create-pull-request@b1ddad2c994a25fbc81a28b3ec0e368bb2021c50 # v6
+        uses: peter-evans/create-pull-request@a4f52f8033a6168103c2538976c07b467e8163bc # v6
         with:
           token: ${{ secrets.GH_ACT_PAT }}
           commit-message: Updated translations from Crowdin
