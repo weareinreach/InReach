@@ -54,7 +54,7 @@ jobs:
         run: pnpm install
 
       - name: Restore next build
-        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4
+        uses: actions/cache@ab5e6d0c87105b4c9c2047343972218f562e4319 # v4
         id: restore-build-cache
         env:
           cache-name: cache-next-build
