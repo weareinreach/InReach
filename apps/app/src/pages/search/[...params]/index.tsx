@@ -19,7 +19,6 @@ import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
 import { type JSX, memo, useEffect, useMemo, useState } from 'react'
-import { Form } from 'react-hook-form'
 import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
