@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Abortion Care",
+		"CATEGORYNAME": "Swen Avòtman",
 		"abortion-providers": "Founisè avòtman",
 		"financial-assistance": "Asistans finansye",
 		"lodging-assistance": "Asistans lojman",
@@ -23,8 +23,8 @@
 		"computers-and-internet": "Odinatè ak entènèt"
 	},
 	"crisis-support": {
-		"CATEGORYNAME": "Crisis Support",
-		"crisis-support": "Crisis Support"
+		"CATEGORYNAME": "Sipò pou kriz",
+		"crisis-support": "Sipò pou kriz"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Edikasyon ak Travay",
@@ -37,12 +37,12 @@
 		"scholarships": "Bousdetid"
 	},
 	"food": {
-		"CATEGORYNAME": "Food",
+		"CATEGORYNAME": "Manje",
 		"food": "Manje",
 		"food-assistance": "Asistans manje"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "Lojman",
 		"drop-in-centers-for-lgbtq-youth": "Drop-nan sant pou jèn LGBTQ",
 		"emergency-housing": "Lojman Ijans",
 		"housing-information-and-referrals": "Enfòmasyon sou lojman ak referans",
@@ -52,16 +52,16 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Ijyèn ak Rad",
 		"clothes": "Rad",
-		"gender-affirming-items": "Gender affirming items",
+		"gender-affirming-items": "Atik ki afime sèks",
 		"gender-neutral-bathrooms": "Sèks-net twalèt",
 		"haircuts-and-stylists": "Koup cheve ak stilist",
 		"hygiene": "Ijyèn"
 	},
 	"international-support": {
-		"CATEGORTYNAME": "International Support",
-		"financial-assistance": "Financial Assistance",
-		"mental-health": "Mental Health",
-		"resettlement-assistance": "Resettlement Assistance"
+		"CATEGORTYNAME": "Sipò entènasyonal",
+		"financial-assistance": "Asistans Finansye",
+		"mental-health": "Sante mantal",
+		"resettlement-assistance": "Asistans pou reyentegrasyon"
 	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
@@ -73,9 +73,9 @@
 		"employment-authorization": "Otorizasyon travay",
 		"family-petitions": "Petisyon fanmi",
 		"immigration-detention": "Imigrasyon detansyon",
-		"legal-advice": "Legal advice",
+		"legal-advice": "Konsèy legal",
 		"legal-hotlines": "Liy dirèk legal",
-		"name-and-gender-change": "Name and gender marker change",
+		"name-and-gender-change": "Chanjman non ak makè sèks",
 		"refugee-claim": "Reklamasyon Refijye",
 		"residency": "Rezidans",
 		"special-immigrant-juvenile-status-sijs": "Estati Jivenil Imigran Espesyal (SIJS)",
@@ -87,7 +87,7 @@
 		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medical",
+		"CATEGORYNAME": "Medikal",
 		"covid-19-services": "Sèvis COVID-19",
 		"dental-care": "Swen dantè",
 		"hiv-and-sexual-health": "VIH ak sante seksyèl",
@@ -101,10 +101,10 @@
 		"trans-health-hormone-therapy": "Trans sante - terapi òmòn",
 		"trans-health-primary-care": "Trans sante - swen prensipal",
 		"trans-health-speech-therapy": "Trans sante - terapi lapawòl",
-		"trans-health-youth-care": "Trans health - youth care"
+		"trans-health-youth-care": "Trans sante - swen pou jèn"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "Sante mantal",
 		"bipoc-support-groups": "Gwoup sipò BIPOC",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Prive terapi ak konsèy",
@@ -122,12 +122,12 @@
 		"sports-and-entertainment": "Espò ak amizman"
 	},
 	"trans-focused-services": {
-		"CATEGORYNAME": "Trans Focused Services",
-		"transport-gacare": "Transportation for gender affirming care",
-		"transport-relo-support": "Trans relocation support"
+		"CATEGORYNAME": "Sèvis Trans Konsantre",
+		"transport-gacare": "Transpò pou swen afime sèks",
+		"transport-relo-support": "Sipò demenajman Trans"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "Tradiksyon ak Entèpretasyon",
 		"for-healthcare": "Pou swen sante",
 		"for-legal-services": "Pou sèvis legal",
 		"general-translation-and-interpretation": "Tradiksyon jeneral ak entèpretasyon"
