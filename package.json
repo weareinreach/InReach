@@ -39,9 +39,9 @@
 	},
 	"devDependencies": {
 		"@changesets/cli": "2.27.1",
-		"@turbo/gen": "1.12.4",
+		"@turbo/gen": "1.12.5",
 		"@types/lint-staged": "13.3.0",
-		"@types/node": "20.11.24",
+		"@types/node": "20.11.25",
 		"@types/yargs": "17.0.32",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
@@ -58,8 +58,8 @@
 		"prettier-plugin-prisma": "5.0.0",
 		"sherif": "0.8.1",
 		"tsx": "4.7.1",
-		"turbo": "1.12.4",
-		"typescript": "5.3.3",
+		"turbo": "1.12.5",
+		"typescript": "5.4.2",
 		"typesync": "0.12.1",
 		"yargs": "17.7.2"
 	},
