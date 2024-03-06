@@ -41,6 +41,17 @@ yargs(hideBin(process.argv))
 		'Stop docker containers',
 		() => {},
 		async () => {
-			await compose.downAll({ config: dockerComposeFile, callback: (chunk) => console.log(chunk.toString()) })
+			try {
+				await compose.ps({ config: dockerComposeFile })
+
+				await compose.downAll({
+					config: dockerComposeFile,
+					callback: (chunk) => console.log(chunk.toString()),
+				})
+			} catch (err) {
+				if (err instanceof Error) {
+					console.error(err.message)
+				}
+			}
 		}
 	).argv
