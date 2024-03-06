@@ -1,7 +1,7 @@
 {
 	"about-us": "Sobre nós",
 	"access": {
-		"sms-with-body": "Texto <strong>{{body}}</strong> para {{code}}"
+		"sms-with-body": "Envie sms com <strong>{{body}}</strong> para {{code}}"
 	},
 	"account": "Conta",
 	"add": "Adicionar {{item}}",
@@ -12,7 +12,7 @@
 	},
 	"agree-disclaimer": "Ao clicar em \"{{action}}\", você concorda com a Política de Privacidade <link1></link1> e <link2>Termos de Uso</link2>da inReach.",
 	"alert-message": "Mensagem de alerta",
-	"alert-message-1": "<strong>Política da COVID-19:</strong> Com as notícias e as melhores práticas para a prevenção da COVID-19 mudando rapidamente a cada dia, a Whitman-Walker Health continua atualizando seus serviços para refletir as recomendações de prevenção. Verifique o site deles para obter as informações mais atualizadas.",
+	"alert-message-1": "<strong>Política da COVID-19:</strong> Com as notícias e as melhores práticas para a prevenção da COVID-19 mudando rapidamente a cada dia, a Whitman-Walker Health continua atualizando seus serviços para refletir as recomendações de prevenção. Verifique o site da Whitman-Walker para obter as informações mais atualizadas.",
 	"alert-message-instructions": "Digite a mensagem de alerta",
 	"alert-title-instructions": "Digite um título para a mensagem...",
 	"alerts": {
@@ -24,12 +24,12 @@
 		"title": "Compromisso anti-ódio"
 	},
 	"badge": {
-		"accessible-building_false": "Este edifício NÃO é acessível a cadeira de rodas",
+		"accessible-building_false": "Este edifício NÃO é acessível a cadeiras de rodas",
 		"accessible-building_true": "Este prédio é acessível a cadeira de rodas",
 		"claimed": "Reivindicado",
 		"claimed-tool-tip": "Essa organização foi reivindicada por um representante verificado. <link1>Saiba mais.</link1>",
 		"community-tool-tip": "Comunidade atendida por esta organização.",
-		"national-tool-tip": "Oferece serviços ao longo do {{country}}.",
+		"national-tool-tip": "Oferece serviços em {{country}}.",
 		"privatePractice": "Prática Privada",
 		"remote-tool-tip": "Disponível remotamente",
 		"service-tool-tip": "Serviço (s) oferecido (s) por esta organização.",
@@ -37,7 +37,7 @@
 		"unclaimed-tool-tip": "Essa organização ainda não foi reivindicada por um representante. <link1>Reivindique esta organização</link1> para criar confiança com nossa comunidade, atualizar suas próprias informações e muito mais.",
 		"verified-information": "Informação verificada",
 		"verified-information-detail": "A informação nesta página foi atualizada pela última vez pelo {{dateString}}. Alcançar prioriza a precisão e a segurança do usuário e atualiza todas as informações regularmente. Para obter mais informações sobre o nosso processo de verificação, por favor visite a página do processo de Vetting em InReach.org.",
-		"verified-reviewer": "Alcançar Revisor Verificado"
+		"verified-reviewer": "Revisor Verificado por InReach"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Voltar para <u>{{page}}</u>",
@@ -52,7 +52,7 @@
 	"clear": "Claro",
 	"close": "Fechar",
 	"confirm-account": {
-		"click-verify": "Clique aqui para confirmar sua conta inReach",
+		"click-verify": "Clique aqui para confirmar a sua conta InReach",
 		"message": "Clique no link a seguir para confirmar sua conta:",
 		"subject": "Confirme sua conta"
 	},
@@ -75,7 +75,7 @@
 	"country-select": "Escolha um país",
 	"create-new-list": "Criar nova lista",
 	"crisis-support": {
-		"intl-stay-safe": "<Title3>📣 Por favor, mantenha-se segure on-line</Title3>\n<Text>Visitar qualquer um desses sites <strong>pode deixar registros no seu computador ou navegador</strong>, assim como qualquer site que você visita. Por favor, tome as medidas necessárias para evitar situações inseguras em sua área.</Text>",
+		"intl-stay-safe": "<Title3>📣 Por favor, mantenha-se em segurança on-line</Title3>\n<Text>Visitar qualquer um desses sites <strong>pode deixar registros no seu computador ou navegador</strong>, assim como qualquer site que você visita. Por favor, tome as medidas necessárias para evitar situações inseguras em sua área.</Text>",
 		"intl-these-verified": "Estes recursos verificados podem ajudar a comunidade LGBTQ+ em qualquer lugar do mundo.",
 		"intl-we-recommend": "Recomendamos esses recursos internacionais",
 		"natl-find-help-now": "Encontre ajuda agora",
