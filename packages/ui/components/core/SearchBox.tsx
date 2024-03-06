@@ -141,12 +141,13 @@ export const SearchBox = ({
 	initialValue = '',
 	pinToLeft,
 	placeholderTextKey,
+	resetInitialValue,
 }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
-	const form = useForm<FormValues>(initialValue ? { initialValues: { search: initialValue } } : undefined)
+	const form = useForm<FormValues>({ initialValues: { search: initialValue } })
 	const [search] = useDebouncedValue(form.values.search, 400)
 	const [locationSearch, setLocationSearch] = useLocationSearch()
 	const { isLoading, setLoading } = loadingManager
@@ -234,7 +235,16 @@ export const SearchBox = ({
 				<Loader size={32} mr={16} />
 			</Group>
 		) : form.values.search?.length > 0 ? (
-			<Group spacing={4} noWrap className={classes.rightIcon} onClick={() => form.reset()}>
+			<Group
+				spacing={4}
+				noWrap
+				className={classes.rightIcon}
+				onClick={() => {
+					form.reset()
+					form.values.search = ''
+					resetInitialValue?.()
+				}}
+			>
 				<Text>{t('clear')}</Text>
 				<Icon icon='carbon:close' />
 			</Group>
@@ -380,6 +390,7 @@ type SearchBoxProps = {
 	initialValue?: string
 	pinToLeft?: boolean
 	placeholderTextKey?: string
+	resetInitialValue?: () => void
 }
 type FormValues = {
 	search: string

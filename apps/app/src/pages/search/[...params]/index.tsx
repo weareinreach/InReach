@@ -249,6 +249,9 @@ const SearchResults = () => {
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
+							resetInitialValue={() => {
+								searchStateActions.setSearchTerm('')
+							}}
 						/>
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
