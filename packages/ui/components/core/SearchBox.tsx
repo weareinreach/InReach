@@ -35,6 +35,9 @@ import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+const DEFAULT_RADIUS = 200
+const DEFAULT_UNIT = 'mi'
+
 const useStyles = createStyles((theme) => ({
 	autocompleteContainer: {
 		width: '100%',
@@ -201,29 +204,29 @@ export const SearchBox = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
 
-	api.geo.geoByPlaceId.useQuery(locationSearch, {
+	const { data: locationResult } = api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: notBlank(locationSearch) && !isOrgSearch,
-		onSuccess: (data) => {
-			const DEFAULT_RADIUS = 200
-			const DEFAULT_UNIT = 'mi'
-			if (!data.result) return
-			const params = SearchParamsSchema.safeParse([
-				data.result.country,
-				data.result.geometry.location.lng,
-				data.result.geometry.location.lat,
-				DEFAULT_RADIUS,
-				DEFAULT_UNIT,
-			])
-			if (!params.success) return
-			router.push({
-				pathname: '/search/[...params]',
-				query: {
-					params: params.data.map((val) => val.toString()),
-				},
-			})
-			setLoading(false)
-		},
 	})
+
+	useEffect(() => {
+		if (!locationResult?.result) return
+		const params = SearchParamsSchema.safeParse([
+			locationResult.result.country,
+			locationResult.result.geometry.location.lng,
+			locationResult.result.geometry.location.lat,
+			DEFAULT_RADIUS,
+			DEFAULT_UNIT,
+		])
+		if (!params.success) return
+		router.push({
+			pathname: '/search/[...params]',
+			query: {
+				params: params.data.map((val) => val.toString()),
+			},
+		})
+		setLoading(false)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [locationResult])
 
 	const rightIcon =
 		isLoading || searchLoading ? (
