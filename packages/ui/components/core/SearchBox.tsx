@@ -35,6 +35,9 @@ import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+const DEFAULT_RADIUS = 200
+const DEFAULT_UNIT = 'mi'
+
 const useStyles = createStyles((theme) => ({
 	autocompleteContainer: {
 		width: '100%',
@@ -138,12 +141,13 @@ export const SearchBox = ({
 	initialValue = '',
 	pinToLeft,
 	placeholderTextKey,
+	resetInitialValue,
 }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
-	const form = useForm<FormValues>(initialValue ? { initialValues: { search: initialValue } } : undefined)
+	const form = useForm<FormValues>({ initialValues: { search: initialValue } })
 	const [search] = useDebouncedValue(form.values.search, 400)
 	const [locationSearch, setLocationSearch] = useLocationSearch()
 	const { isLoading, setLoading } = loadingManager
@@ -201,29 +205,29 @@ export const SearchBox = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
 
-	api.geo.geoByPlaceId.useQuery(locationSearch, {
+	const { data: locationResult } = api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: notBlank(locationSearch) && !isOrgSearch,
-		onSuccess: (data) => {
-			const DEFAULT_RADIUS = 200
-			const DEFAULT_UNIT = 'mi'
-			if (!data.result) return
-			const params = SearchParamsSchema.safeParse([
-				data.result.country,
-				data.result.geometry.location.lng,
-				data.result.geometry.location.lat,
-				DEFAULT_RADIUS,
-				DEFAULT_UNIT,
-			])
-			if (!params.success) return
-			router.push({
-				pathname: '/search/[...params]',
-				query: {
-					params: params.data.map((val) => val.toString()),
-				},
-			})
-			setLoading(false)
-		},
 	})
+
+	useEffect(() => {
+		if (!locationResult?.result) return
+		const params = SearchParamsSchema.safeParse([
+			locationResult.result.country,
+			locationResult.result.geometry.location.lng,
+			locationResult.result.geometry.location.lat,
+			DEFAULT_RADIUS,
+			DEFAULT_UNIT,
+		])
+		if (!params.success) return
+		router.push({
+			pathname: '/search/[...params]',
+			query: {
+				params: params.data.map((val) => val.toString()),
+			},
+		})
+		setLoading(false)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [locationResult])
 
 	const rightIcon =
 		isLoading || searchLoading ? (
@@ -231,7 +235,16 @@ export const SearchBox = ({
 				<Loader size={32} mr={16} />
 			</Group>
 		) : form.values.search?.length > 0 ? (
-			<Group spacing={4} noWrap className={classes.rightIcon} onClick={() => form.reset()}>
+			<Group
+				spacing={4}
+				noWrap
+				className={classes.rightIcon}
+				onClick={() => {
+					form.reset()
+					form.values.search = ''
+					resetInitialValue?.()
+				}}
+			>
 				<Text>{t('clear')}</Text>
 				<Icon icon='carbon:close' />
 			</Group>
@@ -377,6 +390,7 @@ type SearchBoxProps = {
 	initialValue?: string
 	pinToLeft?: boolean
 	placeholderTextKey?: string
+	resetInitialValue?: () => void
 }
 type FormValues = {
 	search: string
