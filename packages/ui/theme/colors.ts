@@ -291,11 +291,4 @@ export const customColors = {
 
 /** Merge custom color names with Mantine's presets */
 type ExtendedCustomColors = CustomColors | DefaultMantineColor
-type CustomColorDefinitions = Record<ExtendedCustomColors, Tuple<string, 10>>
-
-/** Global declaration to add custom colors */
-declare module '@mantine/core' {
-	export interface MantineThemeColorsOverride {
-		colors: CustomColorDefinitions
-	}
-}
+export type CustomColorDefinitions = Record<ExtendedCustomColors, Tuple<string, 10>>
