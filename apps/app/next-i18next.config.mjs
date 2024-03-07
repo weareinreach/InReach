@@ -10,7 +10,8 @@ import compact from 'just-compact'
 
 import path from 'path'
 
-// @ts-expect-error - yelling about declaration file
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { localeList } from '@weareinreach/db/generated/locales.mjs'
 
 const isBrowser = typeof window !== 'undefined'
