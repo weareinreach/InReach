@@ -52,6 +52,6 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"prettier": "3.2.5",
-		"typescript": "5.4.2"
+		"typescript": "5.3.3"
 	}
 }
