@@ -52,10 +52,10 @@ const nextConfig = {
 		serverComponentsExternalPackages: ['@sentry/profiling-node'],
 	},
 	eslint: {
-		ignoreDuringBuilds: !isVercelProd || !isRenovatePR,
+		ignoreDuringBuilds: !(isVercelProd || isRenovatePR),
 	},
 	typescript: {
-		ignoreBuildErrors: !isVercelProd || !isRenovatePR,
+		ignoreBuildErrors: !(isVercelProd || isRenovatePR),
 	},
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
