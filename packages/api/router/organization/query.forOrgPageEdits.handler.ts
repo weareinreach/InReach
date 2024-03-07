@@ -20,6 +20,7 @@ export const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEd
 			allowedEditors: { where: { authorized: true }, select: { userId: true } },
 			description: freeText,
 			attributes,
+
 			reviews: {
 				select: { id: true },
 			},
@@ -32,6 +33,7 @@ export const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEd
 					postCode: true,
 					country: { select: { cca2: true } },
 					govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+					notVisitable: true,
 				},
 			},
 		},
