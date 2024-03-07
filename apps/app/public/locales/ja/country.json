@@ -17,7 +17,7 @@
 	},
 	"ALA": {
 		"name": "オーランド諸島",
-		"demonym_other": "オーランド人"
+		"demonym_other": "オーランド諸島人"
 	},
 	"ALB": {
 		"name": "アルバニア",
@@ -84,7 +84,7 @@
 	},
 	"BFA": {
 		"name": "ブルキナファソ",
-		"demonym_other": "ブルキナビ"
+		"demonym_other": "ブルキナファソ人"
 	},
 	"BGD": {
 		"name": "バングラデシュ",
@@ -159,7 +159,7 @@
 	},
 	"CCK": {
 		"name": "ココス (キーリング) 諸島",
-		"demonym_other": "ココスアイランダーズ"
+		"demonym_other": "ココス諸島人"
 	},
 	"CHE": {
 		"name": "スイス",
@@ -203,7 +203,7 @@
 	},
 	"CPV": {
 		"name": "カーボベルデ",
-		"demonym_other": "ケープ・ヴェルディアン"
+		"demonym_other": "カーボベルデ人"
 	},
 	"CRI": {
 		"name": "コスタリカ",
@@ -219,7 +219,7 @@
 	},
 	"CXR": {
 		"name": "クリスマス島",
-		"demonym_other": "クリスマスアイランダーズ"
+		"demonym_other": "クリスマス島人"
 	},
 	"CYM": {
 		"name": "ケイマン諸島",
@@ -239,7 +239,7 @@
 	},
 	"DJI": {
 		"name": "ジブチ",
-		"demonym_other": "ジブチ"
+		"demonym_other": "ジブチ人"
 	},
 	"DMA": {
 		"name": "ドミニカ",
@@ -303,7 +303,7 @@
 	},
 	"FRO": {
 		"name": "フェロー諸島",
-		"demonym_other": "フェロー語"
+		"demonym_other": "フェロー諸島人"
 	},
 	"FSM": {
 		"name": "ミクロネシア",
@@ -311,7 +311,7 @@
 	},
 	"GAB": {
 		"name": "ガボン",
-		"demonym_other": "ガボン語"
+		"demonym_other": "ガボン人"
 	},
 	"GBR": {
 		"name": "イギリス",
@@ -323,7 +323,7 @@
 	},
 	"GGY": {
 		"name": "Guernsey",
-		"demonym_other": "チャンネル・アイランダーズ"
+		"demonym_other": "チャンネル諸島人"
 	},
 	"GHA": {
 		"name": "ガーナ",
@@ -359,11 +359,11 @@
 	},
 	"GRD": {
 		"name": "グレナダ",
-		"demonym_other": "グレナディア人"
+		"demonym_other": "グレナダ人"
 	},
 	"GRL": {
 		"name": "グリーンランド",
-		"demonym_other": "グリーンランダーズ"
+		"demonym_other": "グリーンランド人"
 	},
 	"GTM": {
 		"name": "グアテマラ",
@@ -374,7 +374,7 @@
 	},
 	"GUM": {
 		"name": "グアム島",
-		"demonym_other": "グアマニア人"
+		"demonym_other": "グアム人"
 	},
 	"GUY": {
 		"name": "ガイアナ",
@@ -386,7 +386,7 @@
 	},
 	"HMD": {
 		"name": "ハード島とマクドナルド諸島",
-		"demonym_other": "ハード島とマクドナルド・アイランダーズ"
+		"demonym_other": "ハード島とマクドナルド諸島人"
 	},
 	"HND": {
 		"name": "ホンジュラス",
@@ -450,7 +450,7 @@
 	},
 	"JEY": {
 		"name": "ジャージー",
-		"demonym_other": "チャネル諸島人"
+		"demonym_other": "チャンネル諸島人"
 	},
 	"JOR": {
 		"name": "ヨルダン",
@@ -478,11 +478,11 @@
 	},
 	"KIR": {
 		"name": "キリバス",
-		"demonym_other": "I-キリバティス"
+		"demonym_other": "キリバス人"
 	},
 	"KNA": {
-		"name": "セントキッツ・ネイビス",
-		"demonym_other": "キッティシャンまたはネビシアン"
+		"name": "セントクリストファー・ネイビス",
+		"demonym_other": "セントクリストファー島人及びネイビス島人"
 	},
 	"KOR": {
 		"name": "韓国",
@@ -630,7 +630,7 @@
 	},
 	"MYT": {
 		"name": "マヨット",
-		"demonym_other": "マホラン"
+		"demonym_other": "マヨット人"
 	},
 	"NAM": {
 		"name": "ナミビア",
@@ -662,7 +662,7 @@
 	},
 	"NLD": {
 		"name": "オランダ",
-		"demonym_other": "オランダ語"
+		"demonym_other": "オランダ人"
 	},
 	"NOR": {
 		"name": "ノルウェー",
@@ -801,11 +801,11 @@
 	},
 	"SMR": {
 		"name": "サンマリノ",
-		"demonym_other": "サンマリネ"
+		"demonym_other": "サンマノ人"
 	},
 	"SOM": {
 		"name": "ソマリア",
-		"demonym_other": "ソマリア"
+		"demonym_other": "ソマリア人"
 	},
 	"SPM": {
 		"name": "サンピエール島とミクロン島",
@@ -845,11 +845,11 @@
 	},
 	"SXM": {
 		"name": "シント・マールテン",
-		"demonym_other": "セントマーチンズ"
+		"demonym_other": "シントマールテン人"
 	},
 	"SYC": {
-		"name": "セイシェル",
-		"demonym_other": "セイシェル"
+		"name": "セーシェル",
+		"demonym_other": "セーシェル人"
 	},
 	"SYR": {
 		"name": "シリア",
@@ -857,7 +857,7 @@
 	},
 	"TCA": {
 		"name": "タークス・カイコス諸島",
-		"demonym_other": "タークス・カイコス諸島民"
+		"demonym_other": "タークス・カイコス諸島人"
 	},
 	"TCD": {
 		"name": "チャド",
@@ -949,7 +949,7 @@
 	},
 	"VCT": {
 		"name": "セントビンセントおよびグレナディーン諸島",
-		"demonym_other": "セントビンセンティアンズ"
+		"demonym_other": "セントビンセント人"
 	},
 	"VEN": {
 		"name": "ベネズエラ",
@@ -973,7 +973,7 @@
 	},
 	"WLF": {
 		"name": "ワリスフツナ諸島",
-		"demonym_other": "ウォリス・フツナ諸島民"
+		"demonym_other": "ウォリス・フツナ諸島人"
 	},
 	"WSM": {
 		"name": "サモア",

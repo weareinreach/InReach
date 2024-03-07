@@ -40,6 +40,7 @@ export const forOrgPage = async ({ ctx, input }: TRPCHandlerParams<TForOrgPageSc
 					postCode: true,
 					country: { select: { cca2: true } },
 					govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+					notVisitable: true,
 				},
 			},
 		},

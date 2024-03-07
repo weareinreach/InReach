@@ -1,8 +1,8 @@
 {
 	"banner": {
-		"donate": "Help keep InReach free for everyone. <DonateLink>Donate now!</DonateLink> 💝",
+		"donate": "Ede kenbe InReach gratis pou tout moun. <DonateLink>Fè don kounye a!</DonateLink>💝",
 		"redesign": "Li sou lansman de InReach App Redesign a sou blog nou an. <Link>Aprann plis.</Link>",
-		"tmf": "<TMFLink>Spread trans joy with #TransMascFutures 🏳️‍⚧️</TMFLink>"
+		"tmf": "<TMFLink>Gaye trans lajwa ak #TransMascFutures 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Koute itilizatè nou an</Title1>",
@@ -25,7 +25,7 @@
 			"0": "swen medikal",
 			"1": "sipò kominote",
 			"2": "swen sante mantal",
-			"3": "education",
+			"3": "edikasyon",
 			"4": "travay",
 			"5": "manje",
 			"6": "lojman",
