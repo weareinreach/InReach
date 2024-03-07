@@ -20,7 +20,11 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	const isSingleLoc = locations?.length === 1
 	const location = isSingleLoc ? locations[0] : undefined
 
-	const addressLine = <Text variant={variants.Text.utility2darkGray}>{useFormattedAddress(location)}</Text>
+	const formattedAddress = useFormattedAddress(location)
+
+	const addressLine = location?.notVisitable ? null : (
+		<Text variant={variants.Text.utility2darkGray}>{formattedAddress}</Text>
+	)
 
 	const leaderAttributes = attributes.filter(({ attribute }) =>
 		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
