@@ -17,7 +17,6 @@ import {
 	type InputStylesParams,
 	type InputWrapperProps,
 	type InputWrapperStylesNames,
-	type MantineThemeOther,
 	type MantineThemeOverride,
 	type ModalProps,
 	type ModalStylesNames,
@@ -125,7 +124,7 @@ const themeCustomObj = {
 	animations: {
 		shake,
 	},
-} as const satisfies MantineThemeOther
+} as const //satisfies MantineThemeOther
 
 export const commonTheme = {
 	colorScheme: 'light',
