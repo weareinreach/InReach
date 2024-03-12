@@ -75,8 +75,8 @@ export const DonateModal = () => {
 	}, [router.query.isMobileApp])
 
 	const isSupportPage = router.pathname === '/support'
-	const showPopover = !isSupportPage && (opened || !showEmoji)
 	const isMainPage = router.pathname === '/'
+	const showPopover = !(isSupportPage || isMainPage) && (opened || !showEmoji)
 
 	return (
 		<>

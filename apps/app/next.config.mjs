@@ -18,6 +18,8 @@ const isVercelProd = process.env.VERCEL_ENV === 'production'
 const isLocalDev =
 	process.env.NODE_ENV === 'development' && !['preview', 'production'].includes(process.env.VERCEL_ENV)
 const shouldAnalyze = process.env.ANALYZE === 'true'
+const renovateRegex = /^renovate\/.*$/
+const isRenovatePR = renovateRegex.test(process.env.VERCEL_GIT_COMMIT_REF)
 
 const withRoutes = routes({ outDir: './src/types' })
 const withBundleAnalyzer = bundleAnalyze({ enabled: shouldAnalyze, openAnalyzer: false })
@@ -50,16 +52,16 @@ const nextConfig = {
 		serverComponentsExternalPackages: ['@sentry/profiling-node'],
 	},
 	eslint: {
-		ignoreDuringBuilds: !isVercelProd,
+		ignoreDuringBuilds: !(isVercelProd || isRenovatePR),
+	},
+	typescript: {
+		ignoreBuildErrors: !(isVercelProd || isRenovatePR),
 	},
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
 	},
 	rewrites: async () => [{ source: '/search', destination: '/' }],
 
-	typescript: {
-		ignoreBuildErrors: !isVercelProd,
-	},
 	sentry: {
 		// For all available options, see:
 		// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
