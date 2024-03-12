@@ -34,10 +34,11 @@ const useBaseStyles = createStyles((theme) => ({
 const useFontSize = ({ fontSize, classNames }: InlineEditProps) => {
 	const { classes } = useStyles()
 	const { classes: baseClasses, cx } = useBaseStyles()
+	const fontClass = fontSize ? classes[fontSize] : undefined
 	return {
 		...classNames,
 		input: fontSize
-			? cx(classNames?.input, classes[fontSize], baseClasses.input)
+			? cx(classNames?.input, fontClass, baseClasses.input)
 			: cx(classNames?.input, baseClasses.input),
 	}
 }
@@ -52,7 +53,8 @@ const _InlineTextInput = forwardRef<HTMLInputElement, InlineEditProps>(
 _InlineTextInput.displayName = 'InlineEdit'
 export const InlineTextInput = createPolymorphicComponent<'input', InlineEditProps>(_InlineTextInput)
 
-type FontSizes = keyof ReturnType<typeof useStyles>['classes']
+type FontStyles = ReturnType<typeof useStyles>['classes']
+type FontSizes = keyof FontStyles
 
 interface InlineEditProps extends TextInputProps {
 	fontSize?: FontSizes
