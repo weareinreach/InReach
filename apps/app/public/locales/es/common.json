@@ -37,7 +37,7 @@
 		"unclaimed-tool-tip": "Esta organización aún no ha sido reclamada por un representante.<br/><link1>Reclama a esta organización</link1> para generar confianza con nuestra comunidad, actualizar tu propia información y más.",
 		"verified-information": "Información verificada",
 		"verified-information-detail": "La última vez que la información en esta página fue actualizada fue {{dateString}}. InReach prioriza exactitud de nuestra información y el bienestar de nuestros usuarios, y por lo tanto actualiza la información regularmente. Para más información de nuestro proceso de revisión, por favor visite nuestra de pagina de Procesos de Revisión en InReach.org.",
-		"verified-reviewer": "InReach Verified Reviewer"
+		"verified-reviewer": "Revisor verificado de InReach"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Volver a <u>{{page}}</u>",
