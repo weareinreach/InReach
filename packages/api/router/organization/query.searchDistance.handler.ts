@@ -118,7 +118,7 @@ service_area as (
 			WHEN district."geoDataId" IS NOT NULL THEN district."geoDataId"
 		END) AS "geoId",
 		array_remove(array_agg(DISTINCT district.slug), NULL) AS "matchedDistricts",
-		array_remove(array_agg(DISTINCT country.cca3),NULL) AS "matchedCountries"
+		array_remove(array_agg(DISTINCT country.cca2),NULL) AS "matchedCountries"
 	FROM "ServiceArea" sa
 		LEFT JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id
 		AND sac.active
