@@ -163,10 +163,13 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 	if (data && status === 'success') {
 		const { serviceName, services, hours, accessDetails, attributes, description, locations } = data
 
-		const serviceBadges: ServiceTagProps[] = services.map(({ tag }) => ({
-			tsKey: tag.tsKey,
-			variant: 'service',
-		}))
+		const serviceBadges = (
+			<Badge.Group>
+				{services.map(({ tag }) => (
+					<Badge.Service key={tag.tsKey}>{t(tag.tsKey, { ns: 'services' })}</Badge.Service>
+				))}
+			</Badge.Group>
+		)
 
 		const baseDetails: AccessDetails = { publicTransit: [] }
 
@@ -395,8 +398,8 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 					title={<ServiceModalTitle />}
 					opened={opened}
 					onClose={() => handler.close()}
-					zIndex={100}
 					fullScreen={isMobile}
+					withinPortal
 				>
 					<Stack spacing={24}>
 						<Stack spacing={16}>
@@ -410,7 +413,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 								<Text>{t(description.key, { ns: orgId?.id, defaultValue: description.tsKey.text })}</Text>
 							)}
 						</Stack>
-						<BadgeGroup badges={serviceBadges} />
+						{serviceBadges}
 						{(hasContactInfo(contactData) || Boolean(hours.length)) && (
 							<SectionDivider title='get-help'>
 								{hasContactInfo(contactData) && (

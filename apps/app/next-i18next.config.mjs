@@ -73,31 +73,33 @@ const config = {
 	},
 	defaultNS: 'common',
 	localePath: path.resolve('./public/locales'),
-	fallbackLng: ['en'],
+	fallbackLng: 'en',
 	reloadOnPrerender: isDev,
 	debug: isDev && isBrowser && isVerbose,
 	partialBundledLanguages: true,
 	nonExplicitSupportedLngs: true,
 	cleanCode: true,
-	react: {
-		useSuspense: false,
-		bindI18nStore: 'added loaded',
-		bindI18n: 'languageChanged loaded',
-	},
+	// react: {
+	// 	useSuspense: false,
+	// 	bindI18nStore: 'added loaded',
+	// 	bindI18n: 'languageChanged loaded',
+	// },
 
-	backend: {
-		backendOptions: [
-			{
-				backend: HttpBackend,
-				// debounceInterval: 200,
-				backendOption: {
-					loadPath: getUrl(apiPath),
-					allowMultiLoading: true,
-				},
-			},
-		],
-		backends: isBrowser ? [multi] : [],
-	},
+	backend: isBrowser
+		? {
+				backendOptions: [
+					{
+						backend: HttpBackend,
+						// debounceInterval: 200,
+						backendOption: {
+							loadPath: getUrl(apiPath),
+							allowMultiLoading: true,
+						},
+					},
+				],
+				backends: [multi],
+			}
+		: undefined,
 	serializeConfig: false,
 	use: plugins(),
 	maxParallelReads: 20,
