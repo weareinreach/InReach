@@ -1,4 +1,4 @@
-import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
+import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 // import compact from 'just-compact'
 import { type GetStaticPaths, type GetStaticPropsContext, type NextPage } from 'next'

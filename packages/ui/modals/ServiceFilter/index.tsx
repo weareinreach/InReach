@@ -14,7 +14,6 @@ import {
 	Checkbox as VanillaCheckbox,
 } from '@mantine/core'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type BaseSyntheticEvent, type MouseEvent, useEffect, useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
@@ -44,8 +43,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 	const { t } = useTranslation(['common', 'services'])
 	const [opened, setOpened] = useState(false)
 	const theme = useMantineTheme()
-	const router = useRouter()
-	const { searchStateActions } = useSearchState()
+	const { searchStateActions, searchState } = useSearchState()
 
 	// #region Media Queries
 	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
@@ -58,11 +56,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 	// #endregion
 
-	const preSelected = Array.isArray(router.query.s)
-		? router.query.s
-		: typeof router.query.s === 'string'
-			? [router.query.s]
-			: []
+	const preSelected = searchState.services
 	const form = useForm<{ selected: string[] }>({
 		values: { selected: preSelected },
 	})

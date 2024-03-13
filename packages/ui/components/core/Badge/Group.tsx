@@ -1,5 +1,5 @@
 import { Divider, List, type ListProps, useMantineTheme } from '@mantine/core'
-import { Children, type ReactNode } from 'react'
+import { Children, isValidElement, type ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
@@ -17,9 +17,11 @@ export const _BadgeGroup = ({ withSeparator, children, ...props }: BadgeGroupPro
 			m={0}
 			{...props}
 		>
-			{Children.map(children, (child, idx) => (
-				<List.Item key={idx}>{child}</List.Item>
-			))}
+			{Children.map(children, (child, idx) => {
+				const { key } = isValidElement(child) ? child : { key: idx }
+
+				return <List.Item key={key}>{child}</List.Item>
+			})}
 		</List>
 	)
 }
