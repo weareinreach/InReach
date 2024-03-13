@@ -1,4 +1,4 @@
-import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
+import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticPropsContext, type InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
@@ -46,7 +46,7 @@ const OrganizationPage = ({
 	const router = useRouter<'/org/[slug]'>()
 	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
 	// const { query } = router
-	const { t, i18n, ready: i18nReady } = useTranslation(formatNS(orgId))
+	const { t } = useTranslation(formatNS(orgId))
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
@@ -69,16 +69,16 @@ const OrganizationPage = ({
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (i18nReady && data && status === 'success' && !router.isFallback) {
+		if (data && status === 'success' && !router.isFallback) {
 			setLoading(false)
 			if (data.locations?.length > 1) setActiveTab('locations')
 		}
-	}, [data, status, i18nReady, router.isFallback])
+	}, [data, status, router.isFallback])
 
-	useEffect(() => {
-		orgId && i18n.reloadResources(i18n.resolvedLanguage, formatNS(orgId))
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	// useEffect(() => {
+	// 	orgId && i18n.reloadResources(i18n.resolvedLanguage)
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [])
 
 	if (loading || !data || router.isFallback) return <OrgPageLoading />
 

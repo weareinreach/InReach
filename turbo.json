@@ -72,7 +72,7 @@
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"]
 		},
 		"post-install": {
-			"dependsOn": ["^build:icons", "//#lint:pkg"]
+			"dependsOn": ["^build:icons", "^db:generate", "//#lint:pkg"]
 		},
 		"sb:build": {},
 		"type-check": {

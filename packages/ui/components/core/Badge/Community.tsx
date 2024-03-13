@@ -8,7 +8,7 @@ import { useSharedStyles } from './styles'
 
 export const _Community = forwardRef<HTMLDivElement, BadgeCommunityProps>(
 	({ icon, hideTooltip, children, ...props }, ref) => {
-		const { classes } = useSharedStyles('leader')
+		const { classes } = useSharedStyles('community')
 		const { t } = useTranslation('common')
 		const variants = useCustomVariant()
 

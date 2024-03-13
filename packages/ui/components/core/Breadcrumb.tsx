@@ -113,7 +113,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 				return t('close')
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [option, backTo, backToText])
+	}, [option, backTo, backToText, isMobile])
 
 	return (
 		<UnstyledButton className={classes.root} onClick={clickHandler}>

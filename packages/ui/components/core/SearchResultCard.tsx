@@ -6,7 +6,7 @@ import { type ApiOutput } from '@weareinreach/api'
 import { useCustomVariant } from '~ui/hooks'
 
 import { ActionButtons } from './ActionButtons'
-import { BadgeGroup, type CustomBadgeProps } from './Badge'
+import { Badge } from './Badge'
 import { Link } from './Link'
 
 const useStyles = createStyles((theme) => ({
@@ -64,30 +64,34 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 	const { hovered, ref: hoverRef } = useHover()
 
 	if (!i18nReady) return <SearchResultLoading />
-	const leaderBadges: CustomBadgeProps[] = orgLeader.map(({ icon, iconBg, tsKey }) => ({
-		variant: 'leader',
-		icon: icon ?? '',
-		iconBg: iconBg ?? '#FFFFFF',
-		tsKey,
-		minify: true,
-		hideBg: true,
-	}))
-	const focusBadges: CustomBadgeProps[] = orgFocus.map(({ icon, tsKey }) => ({
-		variant: 'community',
-		icon: icon ?? '',
-		tsKey,
-	}))
-	const serviceTags: CustomBadgeProps[] = serviceCategories.map(({ tsKey }) => ({
-		variant: 'service',
-		tsKey,
-	}))
 
-	if (national.length) {
-		leaderBadges.push({
-			variant: 'national',
-			tsKey: national,
-		})
-	}
+	const leaderBadgeGroup =
+		orgLeader.length || national.length ? (
+			<Badge.Group>
+				{orgLeader.map(({ icon, iconBg, id, tsKey }) => (
+					<Badge.Leader key={id} minify hideBg {...{ icon: icon ?? '', iconBg: iconBg ?? '#FFFFFF' }}>
+						{t(tsKey, { ns: 'attribute' })}
+					</Badge.Leader>
+				))}
+				{national.length ? <Badge.National countries={national} /> : null}
+			</Badge.Group>
+		) : null
+	const communityFocusBadgeGroup = orgFocus.length ? (
+		<Badge.Group>
+			{orgFocus.map(({ icon, id, tsKey }) => (
+				<Badge.Community key={id} icon={icon ?? ''}>
+					{t(tsKey, { ns: 'attribute' })}
+				</Badge.Community>
+			))}
+		</Badge.Group>
+	) : null
+	const serviceBadgeGroup = serviceCategories.length ? (
+		<Badge.Group>
+			{serviceCategories.map(({ id, tsKey }) => (
+				<Badge.Service key={id}>{t(tsKey, { ns: 'services' })}</Badge.Service>
+			))}
+		</Badge.Group>
+	) : null
 
 	const cityList = (cities: string[]) => {
 		//check for duplicates and be case insensitive, before switching
@@ -142,7 +146,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 								{name}
 								<Space w={4} display='inline-block' />
 							</Link>
-							<BadgeGroup badges={leaderBadges} />
+							{leaderBadgeGroup}
 						</Title>
 						<ActionButtons iconKey='save' organizationId={result.id} />
 					</Group>
@@ -161,8 +165,8 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 						</Stack>
 					</Link>
 				</Stack>
-				<BadgeGroup badges={focusBadges} />
-				<BadgeGroup badges={serviceTags} />
+				{communityFocusBadgeGroup}
+				{serviceBadgeGroup}
 			</Stack>
 			<Divider my={40} />
 		</>
@@ -173,9 +177,6 @@ export const SearchResultCard = (props: SearchResultCardProps) =>
 	props.loading ? <SearchResultLoading /> : <SearchResultData {...props} />
 
 export type SearchResultCardProps = SearchResultHasData | SearchResultLoading
-// {
-// 	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
-// }
 
 type SearchResultHasData = {
 	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
