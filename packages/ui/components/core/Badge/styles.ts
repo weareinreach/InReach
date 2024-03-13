@@ -106,6 +106,6 @@ type SharedStyles =
 	| 'attribute'
 	| 'remote'
 
-type CustomBadgeStyles = Partial<{ [className in BadgeStylesNames]: CSSObject }>
+// type CustomBadgeStyles = Partial<{ [className in BadgeStylesNames]: CSSObject }>
 
-type UseSharedStyles = (variant: SharedStyles) => CustomBadgeStyles
+// type UseSharedStyles = (variant: SharedStyles) => CustomBadgeStyles
