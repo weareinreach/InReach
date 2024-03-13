@@ -21,12 +21,12 @@ export const _National = forwardRef<HTMLDivElement, BadgeNationalProps>(
 				height={24}
 				width={24}
 				color={theme.other.colors.secondary.black}
-				style={{ marginBottom: rem(-12) }}
+				// style={{ marginBottom: rem(-4) }}
 			/>
 		)
 
 		const badge = (
-			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props} />
+			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} h={40} {...props} />
 		)
 
 		const listFormatter = new Intl.ListFormat(i18n.resolvedLanguage, {
