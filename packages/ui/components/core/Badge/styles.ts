@@ -7,6 +7,8 @@ export const useSharedStyles = (variant: SharedStyles) => {
 			case 'national': {
 				return {
 					leftSection: {
+						alignSelf: 'center',
+						lineHeight: variant === 'national' ? 0 : undefined,
 						'& *': {
 							fontSize: theme.fontSizes.xs,
 							borderRadius: theme.radius.xl,
@@ -14,7 +16,7 @@ export const useSharedStyles = (variant: SharedStyles) => {
 							width: rem(24),
 							margin: 0,
 							textAlign: 'center',
-							paddingBottom: rem(4),
+							paddingBottom: variant === 'leader' ? rem(4) : 0,
 							color: theme.other.colors.secondary.black,
 						},
 					},
@@ -104,6 +106,6 @@ type SharedStyles =
 	| 'attribute'
 	| 'remote'
 
-type CustomBadgeStyles = Partial<{ [className in BadgeStylesNames]: CSSObject }>
+// type CustomBadgeStyles = Partial<{ [className in BadgeStylesNames]: CSSObject }>
 
-type UseSharedStyles = (variant: SharedStyles) => CustomBadgeStyles
+// type UseSharedStyles = (variant: SharedStyles) => CustomBadgeStyles

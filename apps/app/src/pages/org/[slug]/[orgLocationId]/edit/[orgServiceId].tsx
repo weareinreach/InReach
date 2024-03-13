@@ -1,12 +1,12 @@
-import { createStyles, Grid, rem, Stack } from '@mantine/core'
+import { Grid, Stack } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
 import { type ReactNode, Suspense, useEffect, useState } from 'react'
-import { type Path, useFieldArray, useForm } from 'react-hook-form'
+import { /*type Path,*/ useFieldArray, useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
-import { type Merge } from 'type-fest'
+// import { type Merge } from 'type-fest'
 import { z } from 'zod'
 
 import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
@@ -31,8 +31,7 @@ const FreetextObject = z
 	})
 	.nullish()
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MapValue<A> = A extends Map<any, infer V> ? V : never
+// type MapValue<A> = A extends Map<any, infer V> ? V : never
 
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()])
 type Literal = z.infer<typeof literalSchema>
@@ -95,10 +94,10 @@ const EditServicePage = () => {
 	const activeServices = form.watch('services') ?? []
 
 	type AttrSectionKeys = 'clientsServed' | 'cost' | 'eligibility' | 'languages' | 'additionalInfo'
-	type AttrSectionVals = Merge<
-		FormSchemaType['attributes'][number],
-		{ _rhfName: Path<FormSchemaType>; _rhfLabel: string }
-	>
+	// type AttrSectionVals = Merge<
+	// 	FormSchemaType['attributes'][number],
+	// 	{ _rhfName: Path<FormSchemaType>; _rhfLabel: string }
+	// >
 
 	const attributeBase: {
 		[key in AttrSectionKeys]: ReactNode[]
@@ -264,7 +263,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params, r
 		})
 		.safeParse(params)
 	if (!urlParams.success) return { notFound: true }
-	const { slug, orgLocationId, orgServiceId } = urlParams.data
+	const { slug, orgLocationId: _, orgServiceId } = urlParams.data
 	const session = await checkServerPermissions({
 		ctx: { req, res },
 		permissions: ['dataPortalBasic'],

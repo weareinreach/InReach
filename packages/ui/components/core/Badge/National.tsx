@@ -1,4 +1,4 @@
-import { Badge, type BadgeProps, rem, Tooltip, useMantineTheme } from '@mantine/core'
+import { Badge, type BadgeProps, Tooltip, useMantineTheme } from '@mantine/core'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
@@ -16,17 +16,11 @@ export const _National = forwardRef<HTMLDivElement, BadgeNationalProps>(
 		const variants = useCustomVariant()
 
 		const leftSection = (
-			<Icon
-				icon='carbon:globe'
-				height={24}
-				width={24}
-				color={theme.other.colors.secondary.black}
-				style={{ marginBottom: rem(-12) }}
-			/>
+			<Icon icon='carbon:globe' height={24} width={24} color={theme.other.colors.secondary.black} />
 		)
 
 		const badge = (
-			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props} />
+			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} h={40} {...props} />
 		)
 
 		const listFormatter = new Intl.ListFormat(i18n.resolvedLanguage, {

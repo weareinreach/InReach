@@ -1,4 +1,4 @@
-import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
+import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticPropsContext, type InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'

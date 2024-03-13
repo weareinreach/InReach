@@ -19,7 +19,15 @@ export const _Leader = forwardRef<HTMLDivElement, BadgeLeaderProps>(
 		)
 
 		const badge = (
-			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props}>
+			<Badge
+				variant='outline'
+				classNames={classes}
+				ref={ref}
+				leftSection={leftSection}
+				{...props}
+				{...(minify ? { 'data-minify': true } : {})}
+				{...(hideBg ? { 'data-hidebg': true } : {})}
+			>
 				{minify ? null : <Text fw={500}>{children}</Text>}
 			</Badge>
 		)
