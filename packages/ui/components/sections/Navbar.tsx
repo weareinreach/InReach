@@ -28,7 +28,7 @@ const useStyles = createStyles((theme) => ({
 		top: 0,
 		left: 0,
 		right: 0,
-		zIndex: 1000,
+		zIndex: 150,
 		backgroundColor: theme.other.colors.secondary.white,
 	},
 	mobileNav: {
