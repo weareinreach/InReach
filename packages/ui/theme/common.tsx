@@ -523,7 +523,7 @@ export const commonTheme = {
 			defaultProps: (theme) => {
 				return {
 					radius: theme.radius.xl,
-					centered: true,
+					// centered: true,
 					size: 'auto',
 					withCloseButton: false,
 				} satisfies Partial<ModalProps>
@@ -533,10 +533,9 @@ export const commonTheme = {
 					content: {
 						padding: '0px !important',
 						maxWidth: rem(600),
-						[theme.fn.largerThan('sm')]: {
-							maxHeight: em(800),
-							minWidth: em(600),
-						},
+						// [theme.fn.largerThan('sm')]: {
+						// 	minWidth: em(600),
+						// },
 					},
 					header: {
 						margin: 0,
