@@ -20,7 +20,6 @@ import {
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type JSX, type MouseEventHandler, useEffect, useState } from 'react'
 
@@ -217,8 +216,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		const { t } = useTranslation(['common', 'attribute'])
 		const [opened, setOpened] = useState(false)
 		const theme = useMantineTheme()
-		const router = useRouter()
-		const { searchStateActions } = useSearchState()
+		const { searchStateActions, searchState } = useSearchState()
 
 		const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 		const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
@@ -233,11 +231,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		type FilterValue = AttributeFilter & { checked: boolean }
 
 		const form = useForm<FilterValue[]>({ initialValues: [] })
-		const preSelected = Array.isArray(router.query.a)
-			? router.query.a
-			: typeof router.query.a === 'string'
-				? [router.query.a]
-				: []
+		const preSelected = searchState.attributes
 
 		const generateInitialData = (opts?: { clear?: boolean }) => {
 			if (!moreFilterOptionData) return []

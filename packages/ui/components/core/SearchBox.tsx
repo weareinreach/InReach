@@ -147,12 +147,12 @@ export const SearchBox = ({
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
-	const form = useForm<FormValues>({ initialValues: { search: initialValue } })
-	const [search] = useDebouncedValue(form.values.search, 400)
 	const [locationSearch, setLocationSearch] = useLocationSearch()
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
-	const { searchStateActions } = useSearchState()
+	const { searchStateActions, searchState } = useSearchState()
+	const form = useForm<FormValues>({ initialValues: { search: searchState.searchTerm || initialValue } })
+	const [search] = useDebouncedValue(form.values.search, 400)
 
 	// tRPC functions
 	const { data: orgSearchData, isFetching: orgSearchLoading } = api.organization.searchName.useQuery(
