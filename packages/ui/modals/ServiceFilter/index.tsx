@@ -29,7 +29,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useAccordionStyles, useModalStyles, useStyles } from './styles'
 
-export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilterProps) => {
+export const ServiceFilter = ({ resultCount, isFetching, current, disabled }: ServiceFilterProps) => {
 	const { data: serviceOptionData } = api.service.getFilterOptions.useQuery(undefined, {
 		select: (data) =>
 			data.map(({ id, tsKey, tsNs, services }) => ({
@@ -63,8 +63,9 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 		: typeof router.query.s === 'string'
 			? [router.query.s]
 			: []
+
 	const form = useForm<{ selected: string[] }>({
-		values: { selected: preSelected },
+		values: { selected: current ? current : preSelected },
 	})
 	const servicesByCategory = useMemo(
 		() =>
@@ -305,5 +306,6 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 interface ServiceFilterProps {
 	resultCount?: number
 	isFetching?: boolean
+	current?: string[]
 	disabled?: boolean
 }

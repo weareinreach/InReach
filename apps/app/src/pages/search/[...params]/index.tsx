@@ -255,7 +255,11 @@ const SearchResults = () => {
 						/>
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
-						<ServiceFilter resultCount={resultCount} isFetching={searchIsFetching} />
+						<ServiceFilter
+							resultCount={resultCount}
+							isFetching={searchIsFetching}
+							current={searchState.services}
+						/>
 						{/* @ts-expect-error `component` prop not needed.. */}
 						<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
 							{t('more.filters')}
