@@ -73,7 +73,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 	const variant = useCustomVariant()
 
-	const isLoading = status === 'loading'
+	const isLoading = status === 'loading' || router.isFallback
 	const canAccessDataPortal = checkPermissions({
 		session,
 		permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
@@ -174,7 +174,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 						signOut({ callbackUrl: '/' })
 					}}
 				>
-					{t('log-out')}
+					{!router.isFallback && t('log-out')}
 				</UnstyledButton>
 			</Group>
 		)
