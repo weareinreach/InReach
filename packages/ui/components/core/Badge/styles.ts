@@ -48,6 +48,27 @@ export const useSharedStyles = (variant: SharedStyles) => {
 					},
 				}
 			}
+			case 'community': {
+				return {
+					root: {
+						backgroundColor: theme.other.colors.secondary.white,
+						borderColor: theme.other.colors.tertiary.coolGray,
+					},
+					inner: {
+						fontSize: theme.fontSizes.sm,
+						[theme.fn.largerThan('sm')]: {
+							fontSize: theme.fontSizes.md,
+						},
+					},
+					leftSection: {
+						fontSize: theme.fontSizes.sm,
+						marginRight: rem(6),
+						[theme.fn.largerThan('sm')]: {
+							fontSize: theme.fontSizes.md,
+						},
+					},
+				}
+			}
 			case 'privatePractice':
 			case 'claimed':
 			case 'unclaimed':
@@ -98,6 +119,7 @@ export const useSharedStyles = (variant: SharedStyles) => {
 type SharedStyles =
 	| 'national'
 	| 'leader'
+	| 'community'
 	| 'privatePractice'
 	| 'claimed'
 	| 'unclaimed'
