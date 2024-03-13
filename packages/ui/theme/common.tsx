@@ -533,9 +533,10 @@ export const commonTheme = {
 					content: {
 						padding: '0px !important',
 						maxWidth: rem(600),
-						// [theme.fn.largerThan('sm')]: {
-						// 	minWidth: em(600),
-						// },
+						minWidth: '90vw',
+						[theme.fn.largerThan('sm')]: {
+							minWidth: em(600),
+						},
 					},
 					header: {
 						margin: 0,
