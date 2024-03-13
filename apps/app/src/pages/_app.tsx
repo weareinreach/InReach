@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
-import { appWithTranslation } from 'next-i18next'
+import { appWithTranslation, type UserConfig } from 'next-i18next'
 import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 
@@ -97,7 +97,14 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	)
 }
 
-export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig))
+const emptyInitialI18NextConfig: UserConfig = {
+	i18n: {
+		defaultLocale: nextI18nConfig.i18n.defaultLocale,
+		locales: nextI18nConfig.i18n.locales,
+	},
+}
+
+export default api.withTRPC(appWithTranslation(MyApp, emptyInitialI18NextConfig))
 
 export type NextPageWithOptions<Props = unknown, InitialProps = Props> = NextPage<Props, InitialProps> & {
 	omitGrid?: boolean

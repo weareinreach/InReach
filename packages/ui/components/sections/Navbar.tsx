@@ -203,6 +203,7 @@ export const Navbar = () => {
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const { isMobile, isTablet } = useScreenSize()
+	const router = useRouter()
 
 	return isMobile || isTablet ? (
 		<MobileNav className={classes.mobileNav} />
@@ -215,7 +216,7 @@ export const Navbar = () => {
 							src={InReachLogo}
 							width={100}
 							height={38}
-							alt={t('inreach-logo', { defaultValue: 'InReach logo' })}
+							alt={!router.isFallback ? t('inreach-logo', { defaultValue: 'InReach logo' }) : 'InReach logo'}
 							style={{ margin: 0 }}
 						/>
 					</Link>
@@ -223,7 +224,7 @@ export const Navbar = () => {
 						<UserMenu />
 						<Link href='https://www.google.com' target='_self' variant={variants.Link.inheritStyle}>
 							<Button variant='accent' onClick={navbarEvent.safetyExit} id='safety-exit'>
-								{t('safety-exit')}
+								{!router.isFallback && t('safety-exit')}
 							</Button>
 						</Link>
 					</Group>

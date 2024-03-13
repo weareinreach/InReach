@@ -1,5 +1,6 @@
 import { Avatar, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
+import router from 'next/router'
 import { type User } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
@@ -61,7 +62,7 @@ export const UserAvatar = ({
 			}
 		}
 	}
-	const showLoadingState = loading || (useLoggedIn && status === 'loading' && !session)
+	const showLoadingState = loading || (useLoggedIn && status === 'loading' && !session) || router.isFallback
 	if (showLoadingState) {
 		return (
 			<Group className={classes.group}>
