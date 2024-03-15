@@ -83,7 +83,13 @@ export const MultiSelectPopover = <T extends FieldValues>({
 					</UnstyledButton>
 				</Popover.Target>
 				<Popover.Dropdown>
-					<ScrollArea.Autosize mah={250} placeholder={null}>
+					<ScrollArea.Autosize
+						mah={250}
+						placeholder={null}
+						// TODO: Typescript wants these two properties all of a sudden -- why?
+						onPointerEnterCapture={undefined}
+						onPointerLeaveCapture={undefined}
+					>
 						<Checkbox.Group
 							error={fieldState.error?.message}
 							value={value}
