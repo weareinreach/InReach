@@ -3,7 +3,13 @@ import { JsonViewer, type JsonViewerProps } from '@textea/json-viewer'
 
 export const DataViewer = ({ value, enableClipboard, dontCollapse, ...props }: DataViewerProps) => (
 	<Card>
-		<ScrollArea.Autosize mah='50vh' placeholder={null}>
+		<ScrollArea.Autosize
+			mah='50vh'
+			placeholder={null}
+			// TODO: Typescript wants these two properties all of a sudden -- why?
+			onPointerEnterCapture={undefined}
+			onPointerLeaveCapture={undefined}
+		>
 			<JsonViewer
 				value={value}
 				quotesOnKeys={false}
