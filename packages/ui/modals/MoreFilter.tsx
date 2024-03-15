@@ -371,6 +371,9 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 							placeholder={null}
 							classNames={{ viewport: accordionClasses.scrollArea }}
 							mah={scrollAreaMaxHeight}
+							// TODO: Typescript wants these two properties all of a sudden -- why?
+							onPointerEnterCapture={undefined}
+							onPointerLeaveCapture={undefined}
 						>
 							<Stack className={classes.sectionLabel} spacing={4} mt={0}>
 								<Title order={3}>{t('modal-more-options.include')}</Title>
