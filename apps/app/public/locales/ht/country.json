@@ -1,7 +1,7 @@
 {
 	"ABW": {
 		"name": "Aruba",
-		"demonym_one": "Azouba",
+		"demonym_one": "Aruba",
 		"demonym_other": "Aruban"
 	},
 	"AFG": {
@@ -22,12 +22,12 @@
 	"ALA": {
 		"name": "Zile land",
 		"demonym_one": "Relandish",
-		"demonym_other": "Relanders"
+		"demonym_other": "Alandè"
 	},
 	"ALB": {
 		"name": "Albani",
 		"demonym_one": "Albanyen",
-		"demonym_other": "Albanyen"
+		"demonym_other": "Albanyen yo"
 	},
 	"AND": {
 		"name": "Andorra",
@@ -35,32 +35,32 @@
 		"demonym_other": "Andorrans"
 	},
 	"ARE": {
-		"name": "Emira Arab Ini",
+		"name": "United Arab Emirates",
 		"demonym_one": "Emirati",
 		"demonym_other": "Emiratis"
 	},
 	"ARG": {
 		"name": "Ajantin",
 		"demonym_one": "Argentinean",
-		"demonym_other": "Argentineans"
+		"demonym_other": "Argentinean yo"
 	},
 	"ARM": {
 		"name": "Ameni",
 		"demonym_one": "Amenyen",
-		"demonym_other": "Amenyen"
+		"demonym_other": "Amenyen yo"
 	},
 	"ASM": {
 		"name": "Samoa Ameriken",
 		"demonym_one": "Samoan Ameriken",
-		"demonym_other": "Samoans Ameriken"
+		"demonym_other": "Samoan Ameriken yo"
 	},
 	"ATA": {
-		"name": "Antatik",
+		"name": "Antartika",
 		"demonym_one": "Antarktikan",
 		"demonym_other": "Antatik"
 	},
 	"ATF": {
-		"name": "Franse Sid ak Antatik Tè",
+		"name": "Franse Sid ak Tè Antatik yo",
 		"demonym_one": "franse",
 		"demonym_other": "franse"
 	},
@@ -87,12 +87,12 @@
 	"BDI": {
 		"name": "Burundi",
 		"demonym_one": "Burundian",
-		"demonym_other": "Burundians"
+		"demonym_other": "Burundian yo"
 	},
 	"BEL": {
 		"name": "Bèljik",
 		"demonym_one": "Bèlj",
-		"demonym_other": "Bèljyen"
+		"demonym_other": "Bèljyen yo"
 	},
 	"BEN": {
 		"name": "Benen",
