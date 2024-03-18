@@ -3,7 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { DonateModal } from './index'
 
 export default {
-	title: 'Components/Core/Donate',
+	title: 'Design System/Donate',
 	component: DonateModal,
 	parameters: {
 		layoutWrapper: 'centeredFullscreen',

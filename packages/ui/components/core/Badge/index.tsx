@@ -520,19 +520,20 @@ interface BadgeStylesParams {
 	minify?: boolean
 	hideBg?: boolean
 }
+interface BadgeOtherProps extends Omit<BadgeProps, 'variant'> {
+	/** Preset designs */
+	variant?:
+		| Exclude<CustomVariants, 'leader' | 'verified' | 'attribute' | 'community' | 'service' | 'national'>
+		| 'outline'
+	/**
+	 * Item rendered on the left side of the badge. Should be either an emoji unicode string or an Icon
+	 * component
+	 */
+	leftSection?: ReactNode
+	hideTooltip?: boolean
+}
 export type CustomBadgeProps =
-	| (Omit<BadgeProps, 'variant'> & {
-			/** Preset designs */
-			variant?:
-				| Exclude<CustomVariants, 'leader' | 'verified' | 'attribute' | 'community' | 'service' | 'national'>
-				| 'outline'
-			/**
-			 * Item rendered on the left side of the badge. Should be either an emoji unicode string or an Icon
-			 * component
-			 */
-			leftSection?: ReactNode
-			hideTooltip?: boolean
-	  })
+	| BadgeOtherProps
 	| LeaderBadgeProps
 	| VerifiedBadgeProps
 	| AttributeTagProps
