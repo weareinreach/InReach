@@ -97,16 +97,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	)
 }
 
-const i18NextSSRConfig: UserConfig = {
-	i18n: {
-		defaultLocale: nextI18nConfig.i18n.defaultLocale,
-		locales: nextI18nConfig.i18n.locales,
-	},
-	interpolation: nextI18nConfig.interpolation,
-	use: nextI18nConfig.use,
-}
-
-export default api.withTRPC(appWithTranslation(MyApp, i18NextSSRConfig))
+export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig))
 
 export type NextPageWithOptions<Props = unknown, InitialProps = Props> = NextPage<Props, InitialProps> & {
 	omitGrid?: boolean
