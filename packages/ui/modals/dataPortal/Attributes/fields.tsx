@@ -27,7 +27,7 @@ const SuppText = () => {
 	const { control } = useFormContext<FormSchema>()
 	return (
 		<Stack>
-			<TextInput {...{ control, name: 'text' }} />
+			<TextInput label='Text' {...{ control, name: 'text' }} />
 			{/* <Button onClick={handler}>{t('words.add', { ns: 'common' })}</Button> */}
 		</Stack>
 	)

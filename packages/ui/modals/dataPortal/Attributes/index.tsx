@@ -16,9 +16,10 @@ import { useDisclosure } from '@mantine/hooks'
 import { type JSONSchemaType } from 'ajv'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useMemo, useRef, useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, useForm, useFormState } from 'react-hook-form'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { generateId } from '@weareinreach/db/lib/idGen'
 import { Button } from '~ui/components/core/Button'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
@@ -37,7 +38,7 @@ const supplementDefaults = {
 type SupplementFieldsNeeded = { [K in keyof typeof supplementDefaults]: boolean }
 
 const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
-	({ restrictCategories, attachesTo, ...props }, ref) => {
+	({ restrictCategories, attachesTo, parentRecord, ...props }, ref) => {
 		const { t } = useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 
@@ -97,13 +98,20 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		// #region Handlers
 		const form = useForm<FormSchema>({
 			resolver: zodResolver(formSchema),
+			mode: 'all',
+
+			defaultValues: {
+				id: generateId('attributeSupplement'),
+				...parentRecord,
+			},
 		})
+		const formState = useFormState({ control: form.control })
 
 		const selectHandler = (e: string | null) => {
-			console.log('selectHandler', e)
 			if (e === null) {
 				setSupplements(supplementDefaults)
 				setSelectedAttr(null)
+				form.resetField('attributeId')
 				if (supplementSchema !== null) {
 					setSupplementSchema(null)
 				}
@@ -128,7 +136,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						setSupplementSchema(item.dataSchema)
 					}
 
-					return
+					// return
 				}
 				form.setValue('attributeId', item.value)
 				selectAttrRef.current && (selectAttrRef.current.value = '')
@@ -136,7 +144,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		}
 
 		const submitHandler = () => {
-			//TODO: [IN-871] Create submit handler - convert tRPC organization.attachAttribute to be able to handle multiple items & accept org, serv, loc
+			saveAttributes.mutate(form.getValues())
 		}
 
 		// #endregion
@@ -191,11 +199,13 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						{supplements.boolean && <Supplement.Boolean />}
 						{supplements.text && <Supplement.Text />}
 						{supplements.data && selectedAttr?.formSchema && (
-							<Supplement.Data formSchema={selectedAttr.formSchema} dataSchema={selectedAttr.dataSchema} />
+							<Supplement.Data schema={selectedAttr.formSchema} />
 						)}
 						{supplements.language && <Supplement.Language />}
 						{supplements.geo && <Supplement.Geo />}
-						{!needsSupplement && <Button>{t('words.save', { ns: 'common' })}</Button>}
+						<Button onClick={form.handleSubmit(submitHandler)} type='submit'>
+							{t('words.save', { ns: 'common' })}
+						</Button>
 					</Stack>
 				</Modal>
 				<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
@@ -211,4 +221,5 @@ export const AttributeModal = createPolymorphicComponent<'button', AttributeModa
 export interface AttributeModalProps extends ButtonProps {
 	restrictCategories?: string[]
 	attachesTo?: ApiOutput['fieldOpt']['attributesByCategory'][number]['canAttachTo']
+	parentRecord: { organizationId: string } | { serviceId: string } | { locationId: string }
 }

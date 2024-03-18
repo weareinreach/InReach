@@ -7,7 +7,9 @@ import { generateId } from '@weareinreach/db/lib/idGen'
 export const formSchema = z.object({
 	id: prefixedId('attributeSupplement').default(generateId('attributeSupplement')),
 	attributeId: prefixedId('attribute'),
-	value: z.string(),
+	organizationId: prefixedId('organization').optional(),
+	serviceId: prefixedId('orgService').optional(),
+	locationId: prefixedId('orgLocation').optional(),
 	countryId: z.string().optional(),
 	govDistId: z.string().optional(),
 	languageId: z.string().optional(),

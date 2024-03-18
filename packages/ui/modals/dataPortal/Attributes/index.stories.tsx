@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
+import { organization } from '~ui/mockData/organization'
 
 import { AttributeModal } from './index'
 
@@ -12,7 +13,7 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
-		msw: [...allFieldOptHandlers],
+		msw: [...allFieldOptHandlers, organization.attachAttribute],
 		rqDevtools: true,
 	},
 	args: {
@@ -28,5 +29,6 @@ export const AllCategories = {} satisfies StoryDef
 export const AttachesToService = {
 	args: {
 		attachesTo: ['SERVICE'],
+		parentRecord: { serviceId: 'osvc_123456' },
 	},
 } satisfies StoryDef
