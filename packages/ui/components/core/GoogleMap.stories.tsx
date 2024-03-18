@@ -19,7 +19,7 @@ const MapWithMarkers = ({ locationIds, height, width }: GoogleMapProps) => {
 	)
 	useEffect(() => {
 		if (!isLoading && data && mapIsReady) {
-			const markers: google.maps.Marker[] = []
+			const markers: google.maps.marker.AdvancedMarkerElement[] = []
 			for (const location of data.locations) {
 				actionLogger({
 					id: location.id,
