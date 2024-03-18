@@ -9,7 +9,7 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 	const [map, setMap] = useState<google.maps.Map>()
 	const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow>()
 	const [isReady, setIsReady] = useState(false)
-	const [markers, marker] = useMap<string, google.maps.Marker>()
+	const [markers, marker] = useMap<string, google.maps.marker.AdvancedMarkerElement>()
 
 	const mapEvents = {
 		ready: useEventEmitter<boolean>(),
@@ -38,7 +38,7 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 				infoWindow.close()
 				if (cameraRef.current.center) map.panTo(cameraRef.current.center)
 			})
-			markers.forEach((marker) => marker.setMap(map))
+			markers.forEach((marker) => (marker.map = map))
 
 			return () => {
 				google.maps.event.removeListener(infoListener)
@@ -67,9 +67,9 @@ export interface MapEvents {
 	initialPropsSet: EventEmitter<boolean>
 }
 export interface MarkerState {
-	set: (key: string, value: google.maps.Marker) => void
-	setAll: (value: Iterable<readonly [string, google.maps.Marker]>) => void
-	get: (key: string) => google.maps.Marker | undefined
+	set: (key: string, value: google.maps.marker.AdvancedMarkerElement) => void
+	setAll: (value: Iterable<readonly [string, google.maps.marker.AdvancedMarkerElement]>) => void
+	get: (key: string) => google.maps.marker.AdvancedMarkerElement | undefined
 	remove: (key: string) => void
 	reset: () => void
 }
@@ -83,5 +83,5 @@ interface GoogleMapContextValue {
 	mapEvents: MapEvents
 	camera: google.maps.CameraOptions
 	marker: MarkerState
-	markers: Map<string, google.maps.Marker>
+	markers: Map<string, google.maps.marker.AdvancedMarkerElement>
 }

@@ -8,4 +8,5 @@ export * from './2024-02-20_appsheet-load/index'
 export * from './2024-02-23_add-missing-website'
 export * from './2024-03-08_update-alerts-and-org-urls/index'
 export * from './2024-03-11_hide-locations'
+export * from './2024-03-15_update-dead-links/index'
 // codegen:end

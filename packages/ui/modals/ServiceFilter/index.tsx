@@ -260,6 +260,9 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 						placeholder={null}
 						classNames={{ viewport: accordionClasses.scrollArea }}
 						mah={scrollAreaMaxHeight}
+						// TODO: Typescript wants these two properties all of a sudden -- why?
+						onPointerEnterCapture={undefined}
+						onPointerLeaveCapture={undefined}
 					>
 						{filterList}
 					</ScrollArea.Autosize>

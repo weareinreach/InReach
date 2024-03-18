@@ -90,7 +90,13 @@ export const MultiSelectPopover = ({
 					</UnstyledButton>
 				</Popover.Target>
 				<Popover.Dropdown>
-					<ScrollArea.Autosize mah={250} placeholder={null}>
+					<ScrollArea.Autosize
+						mah={250}
+						placeholder={null}
+						// TODO: Typescript wants these two properties all of a sudden -- why?
+						onPointerEnterCapture={undefined}
+						onPointerLeaveCapture={undefined}
+					>
 						{items.map((props, index) => (
 							<Checkbox
 								key={props.value}
