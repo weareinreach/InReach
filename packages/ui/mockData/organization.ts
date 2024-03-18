@@ -146,4 +146,11 @@ export const organization = {
 			removed: input.deletedVals?.length ?? 0,
 		}),
 	}),
+	attachAttribute: getTRPCMock({
+		path: ['organization', 'attachAttribute'],
+		type: 'mutation',
+		response: () => ({
+			id: 'atts_NEW0ID',
+		}),
+	}),
 } satisfies MockHandlerObject<'organization'> & { searchDistanceLongTitle: HttpHandler }
