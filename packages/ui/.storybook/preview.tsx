@@ -38,9 +38,9 @@ initializeMsw({
 		if (url.startsWith('/trpc' || '/api')) {
 			console.error(`Unhandled ${method} request to ${url}.
 
-        This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
-        If you wish to mock an error response, please refer to this guide: https://mswjs.io/docs/recipes/mocking-error-responses
-      `)
+				This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
+				If you wish to mock an error response, please refer to this guide: https://mswjs.io/docs/recipes/mocking-error-responses
+			`)
 		}
 	},
 })
@@ -134,14 +134,13 @@ type PseudoStates =
 	| 'link'
 	| 'target'
 
-type DesignParams = { name?: string } & (
-	| {
-			type: 'figma'
-			url: `https://${string}`
-	  }
-	| {
-			type: 'figspec'
-			url: `https://${string}`
-			accessToken: string
-	  }
-)
+type DesignParams = ({ name?: string } & DesignFigma) | DesignFigspec
+type DesignFigma = {
+	type: 'figma'
+	url: `https://${string}`
+}
+type DesignFigspec = {
+	type: 'figspec'
+	url: `https://${string}`
+	accessToken: string
+}

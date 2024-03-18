@@ -17,5 +17,5 @@
 		"keepClassNames": false
 	},
 	"minify": false,
-	"sourceMaps": true
+	"sourceMaps": false
 }
