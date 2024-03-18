@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import compact from 'just-compact'
-import omit from 'just-omit'
-import pick from 'just-pick'
 import invariant from 'tiny-invariant'
 
 /**
@@ -33,16 +31,7 @@ export const createManyOptional = <T extends Array<any>>(data: T | undefined) =>
 					skipDuplicates: true,
 				},
 			}
-/** Array to individual nested create records with individual Audit Logs */
 
-export const createManyWithAudit = <T extends Array<any>>(data: T | undefined, actorId: string) =>
-	!data
-		? undefined
-		: ({
-				create: compact(data).map((record) => ({
-					...record,
-				})),
-			} as const)
 /** Individual create record */
 export const createOne = <T extends Record<string, any>>(data: T | undefined) =>
 	!data
@@ -50,17 +39,6 @@ export const createOne = <T extends Record<string, any>>(data: T | undefined) =>
 		: ({
 				create: data,
 			} as const)
-/** Individual create record with audit log */
-
-export const createOneWithAudit = <T extends Record<string, any>>(data: T | undefined, actorId: string) =>
-	!data
-		? undefined
-		: ({
-				create: {
-					...data,
-				},
-			} as const)
-
 export const connectOne = <T extends Record<string, any>>(data: T | undefined) =>
 	!data
 		? undefined
@@ -128,49 +106,4 @@ export const connectOneRequired = <T extends Record<string, any>>(data: T) => {
 	return {
 		connect: data,
 	}
-}
-type LinkManyOptions<T> = {
-	auditDataKeys?: Array<keyof T extends string ? keyof T : never>
-}
-export const linkManyWithAudit = <T extends object>(
-	data: T[] | undefined,
-	actorId: string,
-	opts?: LinkManyOptions<T>
-) => {
-	if (!data) return [undefined, []] as const
-	const links = {
-		createMany: {
-			data,
-			skipDuplicates: true,
-		},
-	}
-	const logs = null
-
-	return [links, logs] as const
-}
-
-export const createOneSeparateLog = <T extends object>(
-	data: T | undefined,
-	actorId: string,
-	opts?: LinkManyOptions<T>
-) => {
-	if (!data) return [undefined, undefined] as const
-	const links = {
-		create: data,
-	}
-
-	const log = null
-
-	return [links, log] as const
-}
-
-export const deleteOneSeparateLog = <T extends object>(data: T | undefined, actorId: string) => {
-	if (!data) return [undefined, undefined] as const
-	const links = {
-		delete: data,
-	}
-
-	const log = null
-
-	return [links, log] as const
 }
