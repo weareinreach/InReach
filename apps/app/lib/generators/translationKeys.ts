@@ -62,9 +62,9 @@ export const generateTranslationKeys = async (task: PassedTask) => {
 					if (typeof value !== 'string') throw new Error('Invalid nested plural item')
 					outputData[`${item.key}_${key}`] = value
 				}
-			} else {
-				outputData[item.key] = item.text
-			}
+			} //else {
+			if (item.ns === 'attribute') outputData[item.key] = item.text
+			//}
 		}
 		const filename = `${localePath}/${namespace.name}.json`
 
