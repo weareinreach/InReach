@@ -701,6 +701,9 @@ importers:
       '@weareinreach/util':
         specifier: workspace:*
         version: link:../util
+      ajv:
+        specifier: 8.12.0
+        version: 8.12.0
       alex:
         specifier: 11.0.1
         version: 11.0.1
@@ -977,6 +980,9 @@ importers:
       id128:
         specifier: 1.6.6
         version: 1.6.6
+      json-schema-to-zod:
+        specifier: 2.0.14
+        version: 2.0.14
       kysely:
         specifier: 0.27.3
         version: 0.27.3
@@ -1273,6 +1279,9 @@ importers:
       ajv:
         specifier: 8.12.0
         version: 8.12.0
+      ajv-errors:
+        specifier: 3.0.0
+        version: 3.0.0(ajv@8.12.0)
       alex:
         specifier: 11.0.1
         version: 11.0.1
@@ -11583,6 +11592,14 @@ packages:
       resize-observer-polyfill: 1.5.1
       screenfull: 5.2.0
       tslib: 2.6.2
+    dev: false
+
+  /ajv-errors@3.0.0(ajv@8.12.0):
+    resolution: {integrity: sha512-V3wD15YHfHz6y0KdhYFjyy9vWtEVALT9UrxfN3zqlI6dMioHnJrqOYfyPKol3oqrnCM9uwkcdCwkJ0WUcbLMTQ==}
+    peerDependencies:
+      ajv: ^8.0.1
+    dependencies:
+      ajv: 8.12.0
     dev: false
 
   /ajv-formats@2.1.1(ajv@8.12.0):
