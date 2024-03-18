@@ -40,10 +40,10 @@ export const useGoogleMapMarker = () => {
 		add({ id, lat, lng, name, address, slug, locationId }: AddMarkerParams) {
 			if (!mapIsReady) throw new Error('map is not ready')
 			const position = new google.maps.LatLng({ lat, lng })
-			const newMarker = marker.get(id) ?? new google.maps.Marker()
+			const newMarker = marker.get(id) ?? new google.maps.marker.AdvancedMarkerElement()
 
-			newMarker.setMap(map)
-			newMarker.setPosition(position)
+			newMarker.map = map
+			newMarker.position = position
 
 			const infoBoxNode = document.createElement('div')
 			infoBoxNode.id = id
@@ -78,7 +78,7 @@ export const useGoogleMapMarker = () => {
 		remove(markerId: string) {
 			const markerItem = marker.get(markerId)
 			if (!markerItem) return false
-			markerItem.setMap(null)
+			markerItem.map = null
 			google.maps.event.clearInstanceListeners(markerItem)
 			marker.remove(markerId)
 			return true
