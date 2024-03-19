@@ -18,13 +18,8 @@ import { forwardRef, type JSX, type ReactNode } from 'react'
 import { serviceModalEvent } from '@weareinreach/analytics/events'
 import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 import { AlertMessage } from '~ui/components/core/AlertMessage'
-import {
-	type AttributeTagProps,
-	Badge,
-	BadgeGroup,
-	type CommunityTagProps,
-	type ServiceTagProps,
-} from '~ui/components/core/Badge'
+import { type AttributeTagProps, Badge, BadgeGroup, type CommunityTagProps } from '~ui/components/core/Badge'
+import { Section } from '~ui/components/core/Section'
 import { ContactInfo, hasContactInfo, Hours } from '~ui/components/data-display'
 import { type PassedDataObject } from '~ui/components/data-display/ContactInfo/types'
 import { getFreeText, useSlug } from '~ui/hooks'
@@ -114,44 +109,6 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 			{children}
 		</Text>
 	)
-
-	const SubSection = ({ title, children, li }: SubsectionProps) => (
-		<Stack spacing={12}>
-			{title && <Title order={3}>{t(`service.${title}`)}</Title>}
-			{li ? (
-				<List>
-					{typeof li === 'string' ? (
-						<List.Item>
-							<Text>{li}</Text>
-						</List.Item>
-					) : (
-						li.map((item, i) => (
-							<List.Item key={i}>
-								<Text key={i}>{item}</Text>
-							</List.Item>
-						))
-					)}
-				</List>
-			) : (
-				children
-			)}
-		</Stack>
-	)
-
-	const SectionDivider = ({ title, children }: SectionProps) => {
-		if (!children || (Array.isArray(children) && children.length === 0)) return <></>
-
-		return (
-			<Stack spacing={24}>
-				<Box className={classes.sectionDivider}>
-					<Title order={3} fw={600}>
-						{t(`service.${title}`)}
-					</Title>
-				</Box>
-				{children}
-			</Stack>
-		)
-	}
 
 	const contactData: PassedDataObject = {
 		phones: [],
@@ -320,9 +277,9 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 
 						if (description.length > 0)
 							subsections[namespace].push(
-								<SubSection key={id} title='cost-details'>
+								<Section.Sub key={id} title={t('service.cost-details')}>
 									{description}
-								</SubSection>
+								</Section.Sub>
 							)
 						break
 					}
@@ -364,33 +321,59 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 
 		if (eligibility.age)
 			eligibilityItems.push(
-				<SubSection key='ages' title='ages'>
+				<Section.Sub key='ages' title={t('service.ages')}>
 					{eligibility.age}
-				</SubSection>
+				</Section.Sub>
 			)
 
 		if (eligibility.requirements.length > 0)
-			eligibilityItems.push(<SubSection key='req' title='requirements' li={eligibility.requirements} />)
+			eligibilityItems.push(
+				<Section.Sub key='req' title={t('service.requirements')}>
+					<List>
+						{eligibility.requirements.map((text, i) => (
+							<List.Item key={`${i}-${text}`}>{text}</List.Item>
+						))}
+					</List>
+				</Section.Sub>
+			)
 
 		if (eligibility.freeText.length > 0)
 			eligibilityItems.push(
-				<SubSection key='addtnl' title='additional-info'>
+				<Section.Sub key='addtnl' title={t('service.additional-info')}>
 					{eligibility.freeText}
-				</SubSection>
+				</Section.Sub>
 			)
 
-		const languages = lang.length === 0 ? undefined : <SubSection title='languages' li={lang} />
+		const languages =
+			lang.length === 0 ? undefined : (
+				<Section.Sub title={t('service.languages')}>
+					<List>
+						{lang.map((lang, i) => (
+							<List.Item key={`${i}-${lang}`}>{lang}</List.Item>
+						))}
+					</List>
+				</Section.Sub>
+			)
 
 		const extraInfo: JSX.Element[] = []
 
 		if (miscWithIcons.length > 0)
 			extraInfo.push(
-				<SubSection key='miscbadges'>
+				<Section.Sub key='miscbadges'>
 					<BadgeGroup badges={miscWithIcons} withSeparator={false} />
-				</SubSection>
+				</Section.Sub>
 			)
 
-		if (misc.length > 0) extraInfo.push(<SubSection key='misc' title='additional-info' li={misc} />)
+		if (misc.length > 0)
+			extraInfo.push(
+				<Section.Sub key='misc' title={t('service.additional-info')}>
+					<List>
+						{misc.map((text, i) => (
+							<List.Item key={`${i}-${text}`}>{text}</List.Item>
+						))}
+					</List>
+				</Section.Sub>
+			)
 
 		return (
 			<>
@@ -415,30 +398,30 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 						</Stack>
 						{serviceBadges}
 						{(hasContactInfo(contactData) || Boolean(hours.length)) && (
-							<SectionDivider title='get-help'>
+							<Section.Divider title={t('service.get-help')}>
 								{hasContactInfo(contactData) && (
 									<ContactInfo passedData={contactData} direct order={['phone', 'email', 'website']} />
 								)}
 								{Boolean(hours.length) && <Hours parentId={serviceId} label='service' />}
-							</SectionDivider>
+							</Section.Divider>
 						)}
 						{(Boolean(clientsServed.srvfocus.length) || Boolean(clientsServed.targetPop.length)) && (
-							<SectionDivider title='clients-served'>
+							<Section.Divider title={t('service.clients-served')}>
 								{Boolean(clientsServed.srvfocus.length) && (
-									<SubSection title='community-focus'>
+									<Section.Sub title={t('service.community-focus')}>
 										<BadgeGroup badges={clientsServed.srvfocus} withSeparator={false} />
-									</SubSection>
+									</Section.Sub>
 								)}
 								{Boolean(clientsServed.targetPop.length) && (
-									<SubSection title='target-population'>{clientsServed.targetPop}</SubSection>
+									<Section.Sub title={t('service.target-population')}>{clientsServed.targetPop}</Section.Sub>
 								)}
-							</SectionDivider>
+							</Section.Divider>
 						)}
-						<SectionDivider title='cost'>{cost}</SectionDivider>
-						<SectionDivider title='eligibility'>{eligibilityItems}</SectionDivider>
-						<SectionDivider title='languages'>{languages}</SectionDivider>
-						<SectionDivider title='additional-info'>{extraInfo}</SectionDivider>
-						<SectionDivider title='transit-directions'>{publicTransit}</SectionDivider>
+						<Section.Divider title={t('service.cost')}>{cost}</Section.Divider>
+						<Section.Divider title={t('service.eligibility')}>{eligibilityItems}</Section.Divider>
+						<Section.Divider title={t('service.languages')}>{languages}</Section.Divider>
+						<Section.Divider title={t('service.additional-info')}>{extraInfo}</Section.Divider>
+						<Section.Divider title={t('service.transit-directions')}>{publicTransit}</Section.Divider>
 					</Stack>
 				</Modal>
 				<Box
