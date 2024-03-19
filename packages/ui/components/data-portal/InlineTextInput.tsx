@@ -34,7 +34,7 @@ const useBaseStyles = createStyles((theme) => ({
 const useFontSize = ({ fontSize, classNames }: InlineEditProps) => {
 	const { classes } = useStyles()
 	const { classes: baseClasses, cx } = useBaseStyles()
-	const fontClass = fontSize ? classes[fontSize] : undefined
+	const fontClass = fontSize ? classes[fontSize as keyof typeof classes] : undefined
 	return {
 		...classNames,
 		input: fontSize
