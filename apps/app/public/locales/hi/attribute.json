@@ -9,6 +9,7 @@
 		"private-practice": "Private Practice",
 		"religiously-affiliated": "धार्मिक रूप से संबद्ध है",
 		"time-walk-in": "इसमें वॉक-इन ऑवर्स हैं",
+		"wheelchair-accessible": "Accessible",
 		"wheelchair-accessible_false": "ऐक्सेसिबल नहीं",
 		"wheelchair-accessible_true": "एक्सेस करने योग्य"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "पात्रता आवश्यकताएँ",
+		"elig-age": "Age eligibility",
 		"elig-age_max": "Under {{max}}",
 		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "सिस्टम",
 		"incompatible-info": "असंगत जानकारी"
+	},
+	"tpop": {
+		"other": "Target Population - Other"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "लॉ प्रैक्टिस के विकल्प",

@@ -9,6 +9,7 @@
 		"private-practice": "تمرین خصوصی",
 		"religiously-affiliated": "وابسته به مذهب است",
 		"time-walk-in": "ساعت پیاده‌ روی دارد",
+		"wheelchair-accessible": "قابل دسترسی",
 		"wheelchair-accessible_false": "قابل دسترسی نیست",
 		"wheelchair-accessible_true": "قابل دسترسی"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "الزامات واجد شرایط بودن",
+		"elig-age": "Age eligibility",
 		"elig-age_max": "زیر {{max}}",
 		"elig-age_min": "{{min}} و قدیمی تر",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "سیستم",
 		"incompatible-info": "اطلاعات ناسازگار"
+	},
+	"tpop": {
+		"other": "Target Population - Other"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "گزینه های تمرین قانون",

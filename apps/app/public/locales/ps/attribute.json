@@ -9,6 +9,7 @@
 		"private-practice": "Private Practice",
 		"religiously-affiliated": "په مذهبي ډول تړاو لري",
 		"time-walk-in": "په ساعتونو کې واک لري",
+		"wheelchair-accessible": "Accessible",
 		"wheelchair-accessible_false": "د لاسرسي وړ ندی",
 		"wheelchair-accessible_true": "د لاسرسي وړ"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "د وړتیا اړتیاوې",
+		"elig-age": "Age eligibility",
 		"elig-age_max": "Under {{max}}",
 		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "سیستم",
 		"incompatible-info": "نامناسبه معلومات"
+	},
+	"tpop": {
+		"other": "Target Population - Other"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "د قانون تمرین اختیارونه",
