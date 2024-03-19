@@ -10,10 +10,12 @@ import { Rating } from '~ui/components/core/Rating'
 import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useFormattedAddress } from '~ui/hooks/useFormattedAddress'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { BadgeEdit } from '~ui/modals/BadgeEdit'
 
 export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
-	const { t, ready: i18nReady } = useTranslation(data.id)
+	const { id: orgId } = useOrgInfo()
+	const { t, ready: i18nReady } = useTranslation(orgId)
 	const variants = useCustomVariant()
 	const { attributes, isClaimed, locations, description, id } = data
 

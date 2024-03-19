@@ -4,7 +4,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs'
-import { ProfilingIntegration } from '@sentry/profiling-node'
+import { nodeProfilingIntegration } from '@sentry/profiling-node'
 
 import { prisma } from '@weareinreach/db'
 
@@ -23,6 +23,6 @@ Sentry.init({
 	integrations: [
 		new Sentry.Integrations.RequestData(),
 		new Sentry.Integrations.Prisma({ client: prisma }),
-		new ProfilingIntegration(),
+		nodeProfilingIntegration(),
 	],
 })

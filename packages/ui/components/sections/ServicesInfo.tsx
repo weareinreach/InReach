@@ -43,37 +43,40 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	return (
 		<Stack spacing={8}>
 			{Array.isArray(category) ? (
-				<BadgeGroup badges={category.map((tsKey) => ({ variant: 'service', tsKey }))} />
+				<Badge.Group>
+					{category.map((tsKey) => (
+						<Badge.Service key={tsKey}>{t(tsKey, { ns: 'services' })}</Badge.Service>
+					))}
+				</Badge.Group>
 			) : (
-				<Badge variant='service' tsKey={category} />
+				<Badge.Service>{t(category, { ns: 'services' })}</Badge.Service>
 			)}
 			<Stack spacing={0}>
-				{services.map((service) => (
-					<ServiceModal
-						key={service.id}
-						serviceId={service.id}
-						component={Group}
-						position='apart'
-						noWrap
-						className={classes.group}
-						onMouseOver={() => apiUtils.service.forServiceModal.prefetch(service.id)}
-					>
-						{service.offersRemote && !hideRemoteBadges ? (
-							<Group spacing={8} align='center'>
-								<Text variant={variants.Text.utility1}>
-									{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
-								</Text>
-								<Badge variant='remote' />
-							</Group>
-						) : (
-							<Text variant={variants.Text.utility1}>
-								{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
-							</Text>
-						)}
+				{services.map((service) => {
+					const serviceName = t(service.tsKey, { ns: orgId?.id, defaultValue: service.defaultText })
+					return (
+						<ServiceModal
+							key={service.id}
+							serviceId={service.id}
+							component={Group}
+							position='apart'
+							noWrap
+							className={classes.group}
+							onMouseOver={() => apiUtils.service.forServiceModal.prefetch(service.id)}
+						>
+							{service.offersRemote && !hideRemoteBadges ? (
+								<Group spacing={8} align='center'>
+									<Text variant={variants.Text.utility1}>{serviceName}</Text>
+									<Badge.Remote />
+								</Group>
+							) : (
+								<Text variant={variants.Text.utility1}>{serviceName}</Text>
+							)}
 
-						<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
-					</ServiceModal>
-				))}
+							<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
+						</ServiceModal>
+					)
+				})}
 			</Stack>
 		</Stack>
 	)
@@ -82,8 +85,8 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 type ServItem = {
 	id: string
 	tsNs: string
-	tsKey?: string
-	defaultText?: string
+	tsKey: string
+	defaultText: string
 	offersRemote: boolean
 }
 
@@ -114,7 +117,7 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 					id: service.id,
 					tsNs: service.serviceName?.tsNs,
 					tsKey: service.serviceName?.tsKey,
-					defaultText: service.serviceName?.tsKey?.text,
+					defaultText: service.serviceName?.defaultText,
 					offersRemote: service.offersRemote,
 				})
 			)
@@ -127,7 +130,7 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 						id: service.id,
 						tsNs: service.serviceName?.tsNs,
 						tsKey: service.serviceName?.tsKey,
-						defaultText: service.serviceName?.tsKey?.text,
+						defaultText: service.serviceName?.defaultText,
 						offersRemote: service.offersRemote,
 					}),
 				])

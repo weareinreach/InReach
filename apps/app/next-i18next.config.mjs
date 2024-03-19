@@ -35,14 +35,26 @@ const getUrl = (path) => {
 
 const apiPath = '/api/i18n/load?lng={{lng}}&ns={{ns}}'
 
-const multi = new MultiBackend(null, {
-	backend: HttpBackend,
-	// debounceInterval: 200,
-	backendOption: {
-		loadPath: getUrl(apiPath),
-		allowMultiLoading: true,
+const backendConfig = {
+	CrowdinOTA: {
+		backend: HttpBackend,
+		// debounceInterval: 200,
+		backendOption: {
+			loadPath: getUrl(apiPath),
+			allowMultiLoading: true,
+		},
 	},
-})
+	LocalHTTP: {
+		backend: HttpBackend,
+		backendOption: {
+			loadPath: getUrl('/locales/{{lng}}/{{ns}}.json'),
+			allowMultiLoading: true,
+		},
+	},
+}
+
+const CrowdinOTA = new MultiBackend(null, backendConfig.CrowdinOTA)
+const LocalHTTP = new MultiBackend(null, backendConfig.LocalHTTP)
 
 const plugins = () => {
 	/** @type {any[]} */
@@ -87,17 +99,8 @@ const config = {
 
 	backend: isBrowser
 		? {
-				backendOptions: [
-					{
-						backend: HttpBackend,
-						// debounceInterval: 200,
-						backendOption: {
-							loadPath: getUrl(apiPath),
-							allowMultiLoading: true,
-						},
-					},
-				],
-				backends: [multi],
+				backendOptions: [backendConfig.CrowdinOTA, backendConfig.LocalHTTP],
+				backends: [CrowdinOTA, LocalHTTP],
 			}
 		: undefined,
 	serializeConfig: false,

@@ -14,6 +14,7 @@ export const appLog = new Logger({
 	prettyErrorLoggerNameDelimiter: '',
 	prettyLogTimeZone: isDev ? 'local' : 'UTC',
 	minLevel: verboseLogging ? 0 : 3,
+	hideLogPositionForProduction: true,
 })
 
 export const createLoggerInstance = (name: string, opts?: Omit<ISettingsParam<unknown>, 'name'>) =>
