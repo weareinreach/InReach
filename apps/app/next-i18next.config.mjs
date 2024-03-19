@@ -46,10 +46,16 @@ const multi = new MultiBackend(null, {
 
 const plugins = () => {
 	/** @type {any[]} */
-	const pluginsToUse = [intervalPlural, LanguageDetector]
-	if (isBrowser) {
-		pluginsToUse.push(ChainedBackend)
-	}
+	const pluginsToUse = [
+		intervalPlural,
+		LanguageDetector,
+		/* added multi & ChaninedBackend for server */
+		multi,
+		ChainedBackend,
+	]
+	// if (isBrowser) {
+	// 	pluginsToUse.push(ChainedBackend)
+	// }
 	if (process.env.NODE_ENV === 'development') {
 		if (isBrowser) {
 			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
@@ -85,21 +91,19 @@ const config = {
 	// 	bindI18n: 'languageChanged loaded',
 	// },
 
-	backend: isBrowser
-		? {
-				backendOptions: [
-					{
-						backend: HttpBackend,
-						// debounceInterval: 200,
-						backendOption: {
-							loadPath: getUrl(apiPath),
-							allowMultiLoading: true,
-						},
-					},
-				],
-				backends: [multi],
-			}
-		: undefined,
+	backend: {
+		backendOptions: [
+			{
+				backend: HttpBackend,
+				// debounceInterval: 200,
+				backendOption: {
+					loadPath: getUrl(apiPath),
+					allowMultiLoading: true,
+				},
+			},
+		],
+		backends: [multi],
+	},
 	serializeConfig: false,
 	use: plugins(),
 	maxParallelReads: 20,
