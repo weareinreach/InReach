@@ -9,6 +9,7 @@
 		"private-practice": "Private Practice",
 		"religiously-affiliated": "Ay relihiyosong kaakibat",
 		"time-walk-in": "May Walk-In Oras",
+		"wheelchair-accessible": "Accessible",
 		"wheelchair-accessible_false": "Hindi maa-access",
 		"wheelchair-accessible_true": "Naa-access"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Mga Kinakailangan sa Pagiging Karapat-dapat",
+		"elig-age": "Age eligibility",
 		"elig-age_max": "Under {{max}}",
 		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "Sistema",
 		"incompatible-info": "Hindi katugmang Impormasyon"
+	},
+	"tpop": {
+		"other": "Target Population - Other"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Mga Pagpipilian sa Pagsasanay sa B",

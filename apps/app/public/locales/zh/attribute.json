@@ -9,6 +9,7 @@
 		"private-practice": "私人执业",
 		"religiously-affiliated": "是有宗教附属的",
 		"time-walk-in": "有无需预约的时间",
+		"wheelchair-accessible": "无障碍",
 		"wheelchair-accessible_false": "无法访问",
 		"wheelchair-accessible_true": "可访问"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "资格要求",
+		"elig-age": "年龄资格",
 		"elig-age_max": "低于 {{max}}",
 		"elig-age_min": "{{min}} 岁及以上",
 		"elig-age_range": "{{min}} 至{{max}} 之间",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "系统",
 		"incompatible-info": "不兼容的信息"
+	},
+	"tpop": {
+		"other": "目标人群 - 其他"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "法律实践选项",

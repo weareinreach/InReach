@@ -9,6 +9,7 @@
 		"private-practice": "Prywatna praktyka",
 		"religiously-affiliated": "Jest religijnie powiązany",
 		"time-walk-in": "Ma godziny Walk-In",
+		"wheelchair-accessible": "Dostępny",
 		"wheelchair-accessible_false": "Brak dostępu dla wózków inwalidzkich",
 		"wheelchair-accessible_true": "Dostępny"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Wymagania kwalifikacyjne",
+		"elig-age": "Kwalifikowalność do wieku",
 		"elig-age_max": "Pod {{max}}",
 		"elig-age_min": "{{min}} i starsze",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "System",
 		"incompatible-info": "Informacje niezgodne"
+	},
+	"tpop": {
+		"other": "Populacja docelowa – inne"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Opcje praktyki prawniczej",

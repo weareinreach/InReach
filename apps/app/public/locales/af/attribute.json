@@ -9,6 +9,7 @@
 		"private-practice": "Private Practice",
 		"religiously-affiliated": "Is godsdienstig geaffilieer",
 		"time-walk-in": "Het inloop-ure",
+		"wheelchair-accessible": "Accessible",
 		"wheelchair-accessible_false": "Nie toeganklik nie",
 		"wheelchair-accessible_true": "Toeganklik"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Geskiktheidsvereistes",
+		"elig-age": "Age eligibility",
 		"elig-age_max": "Under {{max}}",
 		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "Stelsel",
 		"incompatible-info": "Onverenigbare inligting"
+	},
+	"tpop": {
+		"other": "Target Population - Other"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Regspraktyk Opsies",

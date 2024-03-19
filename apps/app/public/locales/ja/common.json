@@ -27,7 +27,7 @@
 		"accessible-building_false": "この建物は車椅子ではご利用いただけません",
 		"accessible-building_true": "この建物は車椅子利用可能です",
 		"claimed": "請求済み",
-		"claimed-tool-tip": "この組織は確認済みの代理人によって申し立てられています。 <link1>もっと詳しく.</link1>",
+		"claimed-tool-tip": "<link1>この組織は確認済みの代理人によって申し立てられています。 <link1>もっと詳しく.</link1>",
 		"community-tool-tip": "この組織がサービスを提供するコミュニティ。",
 		"national-tool-tip": "{{country}} 全域でサービスを提供しています。",
 		"privatePractice": "プライベート練習",
@@ -347,7 +347,7 @@
 	"sort": {
 		"bipoc": "BIPOC（黒人、先住民、有色人種）コミュニティ",
 		"by-lgbtq-focus": "LGBTQ+ コミュニティフォーカスの順に並べ替え",
-		"hiv": "HIVコミュニティ",
+		"hiv": "HIV陽性者のコミュニティ",
 		"immigrants": "移民",
 		"spanish-speakers": "スペイン語話者",
 		"transgender": "トランスジェンダー・コミュニティ",

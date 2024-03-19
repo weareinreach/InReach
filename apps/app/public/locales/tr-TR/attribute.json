@@ -9,6 +9,7 @@
 		"private-practice": "Özel Muayenehane",
 		"religiously-affiliated": "Dini olarak bağlı",
 		"time-walk-in": "Giriş Saatleri Var",
+		"wheelchair-accessible": "Erişilebilir",
 		"wheelchair-accessible_false": "Erişilebilir Değil",
 		"wheelchair-accessible_true": "Erişilebilir"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Uygunluk Koşulları",
+		"elig-age": "Yaş uygunluğu",
 		"elig-age_max": "{{max}}altında",
 		"elig-age_min": "{{min}} ve daha eski",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "SİSTEMİ",
 		"incompatible-info": "Uyumsuz Bilgiler"
+	},
+	"tpop": {
+		"other": "Hedef Nüfus - Diğer"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Hukuk Uygulama Seçenekleri",
