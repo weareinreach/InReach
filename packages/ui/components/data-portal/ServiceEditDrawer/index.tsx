@@ -4,8 +4,8 @@ import {
 	type ButtonProps,
 	createPolymorphicComponent,
 	Drawer,
+	Group,
 	List,
-	Modal,
 	Stack,
 	Text,
 	Title,
@@ -19,6 +19,8 @@ import { Textarea, TextInput } from 'react-hook-form-mantine'
 
 import { Badge } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
+import { Button } from '~ui/components/core/Button'
+import { Section } from '~ui/components/core/Section'
 import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -37,7 +39,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const [serviceModalOpened, serviceModalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
-		const { t } = useTranslation(['country', 'gov-dist'])
+		const { t } = useTranslation(['common', 'gov-dist'])
 		// #region Get existing data/populate form
 		const { data, isLoading } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
@@ -79,23 +81,14 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 					const array = serviceAreaObj[country]
 					const countryDetails = geoMap.get(country)
 					if (!countryDetails) continue
-					if (!Array.isArray(array)) {
-						serviceAreaObj[country] = [
-							<List.Item key={country}>
-								<Text variant={variants.Text.utility4}>
-									All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
-								</Text>
-							</List.Item>,
-						]
-					} else {
-						array.push(
-							<List.Item key={country}>
-								<Text variant={variants.Text.utility4}>
-									All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
-								</Text>
-							</List.Item>
-						)
-					}
+					const item = (
+						<List.Item key={country}>
+							<Text variant={variants.Text.utility4}>
+								All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
+							</Text>
+						</List.Item>
+					)
+					Array.isArray(array) ? array.push(item) : (serviceAreaObj[country] = [item])
 				}
 			}
 			if (districts?.length) {
@@ -108,34 +101,22 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 					const parent = govDist.parent?.id ?? ''
 					const parentDist = geoMap.get(parent)
 					if (!distIdRegex.test(parent) || !parentDist) {
-						Array.isArray(array)
-							? array.push(
-									<List.Item key={district}>
-										<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
-									</List.Item>
-								)
-							: (serviceAreaObj[country] = [
-									<List.Item key={district}>
-										<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
-									</List.Item>,
-								])
+						const item = (
+							<List.Item key={district}>
+								<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
+							</List.Item>
+						)
+						Array.isArray(array) ? array.push(item) : (serviceAreaObj[country] = [item])
 						continue
 					}
-					Array.isArray(array)
-						? array.push(
-								<List.Item key={district}>
-									<Text variant={variants.Text.utility4}>
-										{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
-									</Text>
-								</List.Item>
-							)
-						: (serviceAreaObj[country] = [
-								<List.Item key={district}>
-									<Text variant={variants.Text.utility4}>
-										{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
-									</Text>
-								</List.Item>,
-							])
+					const item = (
+						<List.Item key={district}>
+							<Text variant={variants.Text.utility4}>
+								{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
+							</Text>
+						</List.Item>
+					)
+					Array.isArray(array) ? array.push(item) : (serviceAreaObj[country] = [item])
 					continue
 				}
 			}
@@ -161,12 +142,18 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
 						<Drawer.Header>
-							<Breadcrumb option='close' onClick={drawerHandler.close} />
+							<Group position='apart' w='100%'>
+								<Breadcrumb option='close' onClick={drawerHandler.close} />
+								<Button variant={variants.Button.primaryLg} leftIcon={<Icon icon='carbon:save' />}>
+									Save
+								</Button>
+							</Group>
 						</Drawer.Header>
 						<Drawer.Body className={classes.drawerBody}>
 							<Stack>
 								<InlineTextInput
 									component={TextInput<TFormSchema>}
+									label='Service Name'
 									name='name.text'
 									control={form.control}
 									fontSize='h2'
@@ -175,33 +162,43 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 								<InlineTextInput
 									fontSize='utility4'
 									component={Textarea<TFormSchema>}
+									label='Description'
 									name='description.text'
 									control={form.control}
 									data-isDirty={dirtyFields.description}
 									autosize
 								/>
-								<ServiceSelect name='services' control={form.control} data-isDirty={dirtyFields.services}>
-									<Badge.Group>
-										{activeServices.map((serviceId) => {
-											const service = allServices?.find((s) => s.id === serviceId)
-											if (!service) return null
-											return (
-												<Badge.Service key={service.id}>
-													{t(service.tsKey, { ns: service.tsNs })}
-												</Badge.Service>
-											)
-										})}
-									</Badge.Group>
-								</ServiceSelect>
+								<Stack spacing={10}>
+									<Text variant={variants.Text.utility1}>Services</Text>
+									<ServiceSelect name='services' control={form.control} data-isDirty={dirtyFields.services}>
+										<Badge.Group>
+											{activeServices.map((serviceId) => {
+												const service = allServices?.find((s) => s.id === serviceId)
+												if (!service) return null
+												return (
+													<Badge.Service key={service.id}>
+														{t(service.tsKey, { ns: service.tsNs })}
+													</Badge.Service>
+												)
+											})}
+										</Badge.Group>
+									</ServiceSelect>
+								</Stack>
 								{/* <Card> */}
+
+								<Text variant={variants.Text.utility1}>Coverage Area</Text>
 								<Stack className={classes.dottedCard}>
-									<Title order={2} className={classes.tealText}>
-										Coverage Area
-									</Title>
 									{serviceAreas()}
 									{/* {Boolean(geoMap?.size) && } */}
 								</Stack>
-								{/* </Card> */}
+								<Section.Divider title={t('service.get-help')}>{t('service.get-help')}</Section.Divider>
+								<Section.Divider title={t('service.clients-served')}>
+									{t('service.clients-served')}
+								</Section.Divider>
+								<Section.Divider title={t('service.cost')}>{t('service.cost')}</Section.Divider>
+								<Section.Divider title={t('service.eligibility')}>{t('service.eligibility')}</Section.Divider>
+								<Section.Divider title={t('service.languages')}>{t('service.languages')}</Section.Divider>
+								<Section.Divider title={t('service.extra-info')}>{t('service.extra-info')}</Section.Divider>
 							</Stack>
 						</Drawer.Body>
 					</Drawer.Content>
