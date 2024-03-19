@@ -43,10 +43,18 @@ export default async function handler(req: NextRequest) {
 		for (const lang of langs) {
 			try {
 				const nsFileMap = sourceFiles(lang)
-				if (lang === 'en') continue
 				const databaseFile = sourceFiles(lang).databaseStrings
 				const cached = await redisReadCache(namespaces, lang, otaManifestTimestamp)
 				const langResult = new Map<string, object | string>(cached)
+
+				if (lang === 'en') {
+					for (const ns of namespaces) {
+						if (Object.keys(nsFileMap).includes(ns)) {
+							const strings = await import(`../../../../public/locales/en/${ns}.json`)
+							langResult.set(ns, strings)
+						}
+					}
+				}
 
 				const fetchCrowdin = async (ns: string) => {
 					const crowdinSpan = tracer.startSpan('Crowdin OTA', undefined, context.active())
