@@ -9,6 +9,7 @@
 		"private-practice": "개인병원",
 		"religiously-affiliated": "종교적으로 소속되어 있습니다.",
 		"time-walk-in": "예약 필요 없는 시간 있습니다",
+		"wheelchair-accessible": "접근 가능합니다",
 		"wheelchair-accessible_false": "접근가능 아닙니다",
 		"wheelchair-accessible_true": "접근 가능합니다"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "자격 조건",
+		"elig-age": "연령 자격",
 		"elig-age_max": "{{max}}미만",
 		"elig-age_min": "{{min}}과 이상",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "시스템",
 		"incompatible-info": "양립할 수 없는 정보"
+	},
+	"tpop": {
+		"other": "대상 인구 - 기타"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "법률 업무 선택권",
