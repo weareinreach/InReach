@@ -84,7 +84,7 @@ const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((prop
 										{Object.entries(data).map(([key, value]) => {
 											return (
 												<Stack key={key}>
-													<Badge variant='service' tsKey={key} />
+													<Badge.Service>{t(key)}</Badge.Service>
 													<Stack>
 														{value.map(({ id, locations, name, attributes }) => {
 															return (

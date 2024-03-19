@@ -62,12 +62,9 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 
 	const remoteSection = data.remote && (
 		<Stack spacing={12}>
-			<Badge
-				variant='attribute'
-				tsNs='attribute'
-				tsKey={data.remote.tsKey}
-				icon={validateIcon(data.remote.icon)}
-			/>
+			<Badge.Attribute icon={validateIcon(data.remote.icon)}>
+				{t(data.remote.tsKey, { ns: 'attribute' })}
+			</Badge.Attribute>
 			<Text variant={variants.Text.utility2}>{t('remote-services')}</Text>
 		</Stack>
 	)
@@ -155,12 +152,9 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 	const remoteSection = data.remote && (
 		<Stack spacing={12}>
-			<Badge
-				variant='attribute'
-				tsNs='attribute'
-				tsKey={data.remote.tsKey}
-				icon={validateIcon(data.remote.icon)}
-			/>
+			<Badge.Attribute icon={validateIcon(data.remote.icon)}>
+				{t(data.remote.tsKey, { ns: 'attribute' })}
+			</Badge.Attribute>
 			<Text variant={variants.Text.utility2}>{t('remote-services')}</Text>
 		</Stack>
 	)

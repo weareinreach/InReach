@@ -91,7 +91,7 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 					</Text>
 				) : null}
 			</Stack>
-			{verifiedUser && <Badge variant='verifiedReviewer' />}
+			{verifiedUser && <Badge.VerifiedReviewer />}
 		</Stack>
 	)
 }

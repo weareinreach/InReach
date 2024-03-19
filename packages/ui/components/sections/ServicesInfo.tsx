@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { transformer } from '@weareinreach/util/transformer'
-import { Badge, BadgeGroup } from '~ui/components/core/Badge'
+import { Badge } from '~ui/components/core/Badge'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'

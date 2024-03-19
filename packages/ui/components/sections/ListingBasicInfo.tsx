@@ -1,11 +1,11 @@
 import { Divider, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { memo } from 'react'
+import { memo, type ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { BadgeGroup, type CustomBadgeProps } from '~ui/components/core/Badge'
+import { Badge } from '~ui/components/core/Badge'
 import { Rating } from '~ui/components/core/Rating'
 import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -38,33 +38,33 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	)
 
 	const infoBadges = () => {
-		const output: CustomBadgeProps[] = []
+		const output: ReactNode[] = []
 		if (leaderAttributes.length) {
 			leaderAttributes.forEach((entry) =>
-				output.push({
-					variant: 'leader',
-					icon: entry.attribute.icon ?? '',
-					iconBg: entry.attribute.iconBg ?? '#FFF',
-					tsKey: entry.attribute.tsKey,
-				})
+				output.push(
+					<Badge.Leader
+						key={entry.id}
+						icon={entry.attribute.icon ?? ''}
+						iconBg={entry.attribute.iconBg ?? '#FFF'}
+					>
+						{t(entry.attribute.tsKey)}
+					</Badge.Leader>
+				)
 			)
 		}
 		if (data.lastVerified)
-			output.push({
-				variant: 'verified',
-				lastverified: data.lastVerified.toString(),
-			})
-		output.push({
-			variant: isClaimed ? 'claimed' : 'unclaimed',
-		})
+			output.push(
+				<Badge.Verified key={data.lastVerified.toString()} lastverified={data.lastVerified.toString()} />
+			)
+		output.push(<Badge.Claimed isClaimed={isClaimed} />)
 
 		return output
 	}
-	const focusedCommBadges: CustomBadgeProps[] = focusedCommunities.map(({ attribute }) => ({
-		variant: 'community',
-		tsKey: attribute.tsKey,
-		icon: attribute.icon ?? '',
-	}))
+	const focusedCommBadges: ReactNode[] = focusedCommunities.map(({ attribute }) => (
+		<Badge.Community key={attribute.id} icon={attribute.icon ?? ''}>
+			{t(attribute.tsKey)}
+		</Badge.Community>
+	))
 
 	const descriptionSection =
 		description && description.key ? (
@@ -78,15 +78,17 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 			<Title order={2}>{data.name}</Title>
 			{isSingleLoc && <Rating recordId={data.id} noMargin />}
 			{addressLine}
-			<BadgeGroup badges={infoBadges()} withSeparator />
+			<Badge.Group withSeparator>{infoBadges()}</Badge.Group>
 			{descriptionSection}
-			<BadgeGroup badges={focusedCommBadges} />
+			<Badge.Group>{focusedCommBadges}</Badge.Group>
 		</Stack>
 	)
 })
 ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 
 export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
+	const { id: orgId } = useOrgInfo()
+	const { t, ready: i18nReady } = useTranslation(orgId)
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
 	const theme = useMantineTheme()
@@ -99,52 +101,38 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 		)
 	)
 
-	const leaderBadges = (): CustomBadgeProps[] => {
+	const leaderBadges = (): ReactNode[] => {
 		if (leaderAttributes.length) {
-			return leaderAttributes.map(({ attribute }) => ({
-				variant: 'leader',
-				icon: attribute.icon ?? '',
-				iconBg: attribute.iconBg ?? '#FFF',
-				tsKey: attribute.tsKey,
-			}))
+			return leaderAttributes.map(({ attribute }) => (
+				<Badge.Leader key={attribute.id} icon={attribute.icon ?? ''} iconBg={attribute.iconBg ?? '#FFF'}>
+					{t(attribute.tsKey)}
+				</Badge.Leader>
+			))
 		} else {
 			return [
-				{
-					variant: 'leader',
-					icon: '➕',
-					iconBg: '#FFF',
-					tsKey: 'Add leader badge',
-				},
+				<Badge.Leader icon='➕' iconBg='#FFF'>
+					Add leader badge
+				</Badge.Leader>,
 			]
 		}
 	}
 
 	const infoBadges = () => {
-		const output: CustomBadgeProps[] = []
+		const output: ReactNode[] = []
 		if (data.lastVerified)
-			output.push({
-				variant: 'verified',
-				lastverified: data.lastVerified.toString(),
-			})
-		output.push({
-			variant: isClaimed ? 'claimed' : 'unclaimed',
-		})
-
+			output.push(
+				<Badge.Verified key={data.lastVerified.toString()} lastverified={data.lastVerified.toString()} />
+			)
+		output.push(<Badge.Claimed isClaimed={isClaimed} />)
 		return output
 	}
-	const focusedCommBadges: CustomBadgeProps[] = focusedCommunities.length
-		? focusedCommunities.map(({ attribute }) => ({
-				variant: 'community',
-				tsKey: attribute.tsKey,
-				icon: attribute.icon ?? '',
-			}))
-		: [
-				{
-					variant: 'community',
-					icon: '➕',
-					tsKey: 'Add Focused Community badge(s)',
-				},
-			]
+	const focusedCommBadges: ReactNode[] = focusedCommunities.length
+		? focusedCommunities.map(({ attribute }) => (
+				<Badge.Community key={attribute.id} icon={attribute.icon ?? ''}>
+					{t(attribute.tsKey)}
+				</Badge.Community>
+			))
+		: [<Badge.Community icon='➕'>Add Focused Community badge(s)</Badge.Community>]
 
 	return (
 		<form autoComplete='off' style={{ width: '100%' }}>
@@ -160,7 +148,7 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 					{!location && (
 						<>
 							<BadgeEdit orgId={data.id} badgeType='organization-leadership' component='a'>
-								<BadgeGroup badges={leaderBadges()} withSeparator />
+								<Badge.Group withSeparator>{leaderBadges()}</Badge.Group>
 							</BadgeEdit>
 							<Divider
 								w={4}
@@ -170,7 +158,7 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 							/>
 						</>
 					)}
-					<BadgeGroup badges={infoBadges()} withSeparator />
+					<Badge.Group withSeparator>{infoBadges()}</Badge.Group>
 				</Group>
 				{!location && (
 					<>
@@ -182,7 +170,7 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 							data-isDirty={form.formState.dirtyFields['description']}
 						/>
 						<BadgeEdit orgId={data.id} badgeType='service-focus' component='a'>
-							<BadgeGroup badges={focusedCommBadges} />
+							<Badge.Group>{focusedCommBadges}</Badge.Group>
 						</BadgeEdit>
 					</>
 				)}
