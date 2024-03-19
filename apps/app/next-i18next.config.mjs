@@ -58,16 +58,10 @@ const LocalHTTP = new MultiBackend(null, backendConfig.LocalHTTP)
 
 const plugins = () => {
 	/** @type {any[]} */
-	const pluginsToUse = [
-		intervalPlural,
-		LanguageDetector,
-		/* added multi & ChaninedBackend for server */
-		CrowdinOTA,
-		ChainedBackend,
-	]
-	// if (isBrowser) {
-	// 	pluginsToUse.push(ChainedBackend)
-	// }
+	const pluginsToUse = [intervalPlural, LanguageDetector]
+	if (isBrowser) {
+		pluginsToUse.push(ChainedBackend)
+	}
 	if (process.env.NODE_ENV === 'development') {
 		if (isBrowser) {
 			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
@@ -103,19 +97,12 @@ const config = {
 	// 	bindI18n: 'languageChanged loaded',
 	// },
 
-	backend: {
-		// backendOptions: [
-		// 	{
-		// 		backend: HttpBackend,
-		// 		// debounceInterval: 200,
-		// 		backendOption: {
-		// 			loadPath: getUrl(apiPath),
-		// 			allowMultiLoading: true,
-		// 		},
-		// 	},
-		// ],
-		backends: [CrowdinOTA, LocalHTTP],
-	},
+	backend: isBrowser
+		? {
+				backendOptions: [backendConfig.CrowdinOTA, backendConfig.LocalHTTP],
+				backends: [CrowdinOTA, LocalHTTP],
+			}
+		: undefined,
 	serializeConfig: false,
 	use: plugins(),
 	maxParallelReads: 20,
