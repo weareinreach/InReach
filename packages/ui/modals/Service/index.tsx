@@ -18,7 +18,7 @@ import { forwardRef, type JSX, type ReactNode } from 'react'
 import { serviceModalEvent } from '@weareinreach/analytics/events'
 import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 import { AlertMessage } from '~ui/components/core/AlertMessage'
-import { type AttributeTagProps, Badge, BadgeGroup, type CommunityTagProps } from '~ui/components/core/Badge'
+import { Badge } from '~ui/components/core/Badge'
 import { Section } from '~ui/components/core/Section'
 import { ContactInfo, hasContactInfo, Hours } from '~ui/components/data-display'
 import { type PassedDataObject } from '~ui/components/data-display/ContactInfo/types'
@@ -222,7 +222,11 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 					/** Clients served */
 					case 'srvfocus': {
 						if (typeof icon === 'string' && attribute._count.parents === 0) {
-							subsections.clientsServed[namespace].push({ icon, tsKey, variant: 'community' })
+							subsections.clientsServed[namespace].push(
+								<Badge.Community key={id} icon={icon}>
+									{t(tsKey, { ns: tsNs })}
+								</Badge.Community>
+							)
 						}
 						break
 					}
@@ -272,8 +276,11 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 						}
 
 						const { price, description } = costDetails
-						const badgeProps = { icon, tsKey, tsNs, tProps: { price: price ?? undefined } }
-						subsections[namespace].push(<Badge key={id} variant='attribute' {...badgeProps} />)
+						subsections[namespace].push(
+							<Badge.Attribute key={id} icon={icon} style={{ justifyContent: 'start' }}>
+								{t(tsKey, { price, ns: tsNs })}
+							</Badge.Attribute>
+						)
 
 						if (description.length > 0)
 							subsections[namespace].push(
@@ -298,12 +305,11 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 							)
 						else {
 							isValidIcon(icon)
-								? subsections[`miscWithIcons`].push({
-										tsKey,
-										icon,
-										tsNs,
-										variant: 'attribute',
-									})
+								? subsections[`miscWithIcons`].push(
+										<Badge.Attribute key={id} icon={icon}>
+											{t(tsKey, { ns: tsNs })}
+										</Badge.Attribute>
+									)
 								: subsections['misc'].push(t(tsKey, { ns: tsNs }))
 						}
 						break
@@ -360,7 +366,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 		if (miscWithIcons.length > 0)
 			extraInfo.push(
 				<Section.Sub key='miscbadges'>
-					<BadgeGroup badges={miscWithIcons} withSeparator={false} />
+					<Badge.Group withSeparator={false}>{miscWithIcons}</Badge.Group>
 				</Section.Sub>
 			)
 
@@ -409,7 +415,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 							<Section.Divider title={t('service.clients-served')}>
 								{Boolean(clientsServed.srvfocus.length) && (
 									<Section.Sub title={t('service.community-focus')}>
-										<BadgeGroup badges={clientsServed.srvfocus} withSeparator={false} />
+										<Badge.Group withSeparator={false}>{clientsServed.srvfocus}</Badge.Group>
 									</Section.Sub>
 								)}
 								{Boolean(clientsServed.targetPop.length) && (
@@ -464,7 +470,7 @@ type Attributes = {
 	cost: JSX.Element[]
 	lang: string[]
 	clientsServed: {
-		srvfocus: CommunityTagProps[]
+		srvfocus: JSX.Element[]
 		targetPop: JSX.Element[]
 	}
 	atCapacity?: JSX.Element
@@ -474,7 +480,7 @@ type Attributes = {
 		freeText: JSX.Element[]
 	}
 	misc: string[]
-	miscWithIcons: AttributeTagProps[]
+	miscWithIcons: JSX.Element[]
 }
 
 type AccessDetails = {

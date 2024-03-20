@@ -33,7 +33,9 @@ export const NationalCard = ({
 				<Stack spacing={16}>
 					{community?.tsKey && (
 						// @ts-expect-error props are too complicated right now.
-						<Badge variant='community' tsKey={community.tsKey} icon={community.icon ?? ''} hideToolTip />
+						<Badge.Community icon={community.icon ?? ''} hideToolTip>
+							{t(community.tsKey, { ns: 'attribute' })}
+						</Badge.Community>
 					)}
 					<Title order={2}>{name}</Title>
 					{!!description?.key && !!description?.text && (
