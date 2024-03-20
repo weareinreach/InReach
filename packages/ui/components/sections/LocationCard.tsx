@@ -176,7 +176,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 							<Title order={3}>{t('services', { ns: 'common' })}</Title>
 							<Badge.Group>
 								{remoteServCategories.map((tsKey) => (
-									<Badge.Service key={tsKey}>{t(tsKey, { ns: 'service' })}</Badge.Service>
+									<Badge.Service key={tsKey}>{t(tsKey, { ns: 'services' })}</Badge.Service>
 								))}
 							</Badge.Group>
 						</Stack>
@@ -254,7 +254,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 							<Title order={3}>{t('services', { ns: 'common' })}</Title>
 							<Badge.Group>
 								{data.services.map((tsKey) => (
-									<Badge.Service key={tsKey}>{t(tsKey, { ns: 'service' })}</Badge.Service>
+									<Badge.Service key={tsKey}>{t(tsKey, { ns: 'services' })}</Badge.Service>
 								))}
 							</Badge.Group>
 						</Stack>
