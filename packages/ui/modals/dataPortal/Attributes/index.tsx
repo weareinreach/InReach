@@ -111,50 +111,53 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				}
 			},
 		})
-		api.fieldOpt.attributesByCategory.useQuery(attrCat, {
-			enabled: Boolean(attrCat),
-			refetchOnWindowFocus: false,
-			onSuccess: (data) => {
-				const selected = form.values.selected?.map(({ value }) => value) ?? []
-				const items = data.map(
-					({
-						attributeId,
-						attributeKey,
-						interpolationValues,
-						icon,
-						iconBg,
-						badgeRender,
-						requireBoolean,
-						requireGeo,
-						requireData,
-						requireLanguage,
-						requireText,
-						dataSchemaName,
-						dataSchema,
-						attributeName,
-					}) => ({
-						value: attributeId,
-						label: attributeName,
-						tKey: attributeKey,
-						interpolationValues,
-						icon: icon ?? undefined,
-						iconBg: iconBg ?? undefined,
-						variant: badgeRender ?? undefined,
-						requireBoolean,
-						requireGeo,
-						requireData,
-						requireLanguage,
-						requireText,
-						dataSchemaName,
-						dataSchema,
-					})
-				)
-				form.setFieldValue(
-					'attributes',
-					items.filter(({ value }) => !selected.includes(value))
-				)
-			},
-		})
+		api.fieldOpt.attributesByCategory.useQuery(
+			{ categoryName: attrCat },
+			{
+				enabled: Boolean(attrCat),
+				refetchOnWindowFocus: false,
+				onSuccess: (data) => {
+					const selected = form.values.selected?.map(({ value }) => value) ?? []
+					const items = data.map(
+						({
+							attributeId,
+							attributeKey,
+							interpolationValues,
+							icon,
+							iconBg,
+							badgeRender,
+							requireBoolean,
+							requireGeo,
+							requireData,
+							requireLanguage,
+							requireText,
+							dataSchemaName,
+							dataSchema,
+							attributeName,
+						}) => ({
+							value: attributeId,
+							label: attributeName,
+							tKey: attributeKey,
+							interpolationValues,
+							icon: icon ?? undefined,
+							iconBg: iconBg ?? undefined,
+							variant: badgeRender ?? undefined,
+							requireBoolean,
+							requireGeo,
+							requireData,
+							requireLanguage,
+							requireText,
+							dataSchemaName,
+							dataSchema,
+						})
+					)
+					form.setFieldValue(
+						'attributes',
+						items.filter(({ value }) => !selected.includes(value))
+					)
+				},
+			}
+		)
 		const saveAttributes = api.organization.attachAttribute.useMutation()
 		// #endregion
 
@@ -269,7 +272,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				case 'ATTRIBUTE': {
 					return (
 						<Group key={value} spacing={4}>
-							<Badge variant='attribute' tsNs='attribute' tsKey={tKey} icon={icon ?? ''} />
+							<Badge.Attribute icon={icon ?? ''}>{t(tKey, { ns: 'attribute' })}</Badge.Attribute>
 							<Icon icon='carbon:close-filled' onClick={() => removeHandler(value)} />
 						</Group>
 					)
@@ -277,7 +280,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				case 'COMMUNITY': {
 					return (
 						<Group key={value} spacing={4}>
-							<Badge variant='community' tsKey={tKey} icon={icon ?? ''} />
+							<Badge.Community icon={icon ?? ''}>{t(tKey, { ns: 'attribute' })}</Badge.Community>
 							<Icon icon='carbon:close-filled' onClick={() => removeHandler(value)} />
 						</Group>
 					)
@@ -285,7 +288,9 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				case 'LEADER': {
 					return (
 						<Group key={value} spacing={4}>
-							<Badge variant='leader' tsKey={tKey} icon={icon ?? ''} iconBg={iconBg ?? ''} />
+							<Badge.Leader icon={icon ?? ''} iconBg={iconBg ?? ''}>
+								{t(tKey, { ns: 'attribute' })}
+							</Badge.Leader>
 							<Icon icon='carbon:close-filled' onClick={() => removeHandler(value)} />
 						</Group>
 					)

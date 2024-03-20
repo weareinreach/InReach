@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { BadgeGroup } from '~ui/components/core/Badge'
+import { Badge } from '~ui/components/core/Badge'
 import { Link } from '~ui/components/core/Link'
 import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant } from '~ui/hooks'
@@ -174,25 +174,19 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 						</Stack>
 						<Stack spacing={12}>
 							<Title order={3}>{t('services', { ns: 'common' })}</Title>
-							<BadgeGroup
-								badges={remoteServCategories.map((tsKey) => ({
-									variant: 'service',
-									tsKey,
-								}))}
-							/>
+							<Badge.Group>
+								{remoteServCategories.map((tsKey) => (
+									<Badge.Service key={tsKey}>{t(tsKey, { ns: 'services' })}</Badge.Service>
+								))}
+							</Badge.Group>
 						</Stack>
 
 						<Group spacing={24}>
-							<BadgeGroup
-								badges={[
-									{
-										variant: 'attribute',
-										tsNs: 'attribute',
-										tsKey: 'additional.offers-remote-services',
-										icon: 'carbon:globe',
-									},
-								]}
-							/>
+							<Badge.Group>
+								<Badge.Attribute icon='carbon:globe'>
+									{t('additional.offers-remote-services', { ns: 'attribute' })}
+								</Badge.Attribute>
+							</Badge.Group>
 						</Group>
 					</Stack>
 				</Card>
@@ -258,24 +252,22 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 					{hasServices && (
 						<Stack spacing={12}>
 							<Title order={3}>{t('services', { ns: 'common' })}</Title>
-							<BadgeGroup
-								badges={data.services.map((tsKey) => ({
-									variant: 'service',
-									tsKey,
-								}))}
-							/>
+							<Badge.Group>
+								{data.services.map((tsKey) => (
+									<Badge.Service key={tsKey}>{t(tsKey, { ns: 'services' })}</Badge.Service>
+								))}
+							</Badge.Group>
 						</Stack>
 					)}
 					<Group spacing={24}>
 						{hasAttributes && (
-							<BadgeGroup
-								badges={data.attributes.map((attribute) => ({
-									variant: 'attribute',
-									tsNs: attribute.tsNs,
-									tsKey: attribute.tsKey,
-									icon: attribute.icon as IconList,
-								}))}
-							/>
+							<Badge.Group>
+								{data.attributes.map((attribute) => (
+									<Badge.Attribute icon={attribute.icon as IconList} key={attribute.tsKey}>
+										{t(attribute.tsKey, { ns: attribute.tsNs })}
+									</Badge.Attribute>
+								))}
+							</Badge.Group>
 						)}
 						<Rating hideCount recordId={data.id} />
 					</Group>

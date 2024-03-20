@@ -2,7 +2,7 @@ import { Card, createStyles, rem, Skeleton, Stack, Text, Title, useMantineTheme 
 import { Trans, useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { BadgeGroup } from '~ui/components/core/Badge'
+import { Badge } from '~ui/components/core/Badge'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
@@ -33,14 +33,13 @@ export const InternationalCard = ({
 			<Card className={classes.cardShadow}>
 				<Stack spacing={16}>
 					{Boolean(services?.length) && (
-						<BadgeGroup
-							badges={services?.map(({ tsKey }, i) => ({
-								variant: 'service',
-								tsKey,
-								hideTooltip: true,
-								key: `${i}-${tsKey}`,
-							}))}
-						/>
+						<Badge.Group>
+							{services?.map(({ tsKey }, i) => (
+								<Badge.Service key={`${i}-${tsKey}`} hideTooltip>
+									{t(tsKey, { ns: 'services' })}
+								</Badge.Service>
+							))}
+						</Badge.Group>
 					)}
 					<Title order={2}>{name}</Title>
 					{!!description.key && !!description.text && (

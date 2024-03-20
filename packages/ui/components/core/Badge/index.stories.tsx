@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { commonTheme as theme } from '~ui/theme/common'
 
-import { Badge, BadgeGroup } from './index'
+import { Badge } from './index'
 
 const accessToken = process.env.STORYBOOK_FIGMA_ACCESS_TOKEN as string
 const figmaSpec = (url: `https://${string}`) => ({
@@ -18,91 +18,12 @@ export default {
 			'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8505&t=sleVeGl2lJv7Df18-4'
 		),
 	},
-	argTypes: {
-		variant: {
-			options: [
-				'commmunity',
-				'service',
-				'leader',
-				'verified',
-				'claimed',
-				'unclaimed',
-				'attribute',
-				'verifiedUser',
-				'remote',
-				'national',
-			],
-			control: 'select',
-		},
-		iconBg: {
-			control: {
-				type: 'color',
-				if: {
-					arg: 'variant',
-					eq: 'leader',
-				},
-			},
-		},
-		icon: {
-			control: {
-				if: {
-					arg: 'variant',
-					eq: ['leader', 'attribute', 'community', 'community'],
-				},
-			},
-		},
-		tsKey: {
-			control: {
-				if: {
-					arg: 'variant',
-					eq: ['leader', 'attribute'],
-				},
-			},
-		},
-		minify: {
-			control: {
-				if: {
-					arg: 'variant',
-					eq: 'leader',
-				},
-			},
-		},
-		hideBg: {
-			control: {
-				if: {
-					arg: 'variant',
-					eq: 'leader',
-				},
-			},
-		},
-		lastverified: {
-			control: {
-				if: {
-					arg: 'variant',
-					eq: 'verified',
-				},
-			},
-		},
-		tsNs: {
-			control: {
-				if: {
-					if: {
-						arg: 'variant',
-						eq: 'attribute',
-					},
-				},
-			},
-		},
-	},
 } satisfies Meta<typeof Badge>
 type StoryDef = StoryObj<typeof Badge>
-type GroupStory = StoryObj<typeof BadgeGroup>
+type GroupStory = StoryObj<typeof Badge.Group>
 
 const groupParams = {
 	argTypes: {
-		badges: {
-			control: 'object',
-		},
 		withSeparator: {
 			control: 'boolean',
 		},
@@ -112,7 +33,7 @@ const groupParams = {
 			include: ['badges', 'withSeparator'],
 		},
 	},
-	render: (args) => <BadgeGroup {...args} />,
+	render: (args) => <Badge.Group {...args} />,
 } satisfies GroupStory
 
 export const Attribute = {
