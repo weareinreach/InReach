@@ -314,7 +314,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 
 						const { price, description } = costDetails
 						subsections[namespace].push(
-							<Badge.Attribute key={id} icon={icon}>
+							<Badge.Attribute key={id} icon={icon} style={{ justifyContent: 'start' }}>
 								{t(tsKey, { price, ns: tsNs })}
 							</Badge.Attribute>
 						)
