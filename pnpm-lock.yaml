@@ -1066,8 +1066,8 @@ importers:
         specifier: 4.1.1
         version: 4.1.1(google-auth-library@9.7.0)
       googleapis:
-        specifier: 133.0.0
-        version: 133.0.0
+        specifier: 134.0.0
+        version: 134.0.0
       inquirer:
         specifier: 9.2.16
         version: 9.2.16
@@ -13156,6 +13156,7 @@ packages:
   /clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+    requiresBuild: true
     dev: true
 
   /clsx@1.1.1:
@@ -13941,6 +13942,7 @@ packages:
 
   /defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
+    requiresBuild: true
     dependencies:
       clone: 1.0.4
     dev: true
@@ -16626,8 +16628,8 @@ packages:
       - supports-color
     dev: true
 
-  /googleapis@133.0.0:
-    resolution: {integrity: sha512-6xyc49j+x7N4smawJs/q1i7mbSkt6SYUWWd9RbsmmDW7gRv+mhwZ4xT+XkPihZcNyo/diF//543WZq4szdS74w==}
+  /googleapis@134.0.0:
+    resolution: {integrity: sha512-o8LhD1754W6MHWtpwAPeP1WUHgNxuMxCnLMDFlMKAA5kCMTNqX9/eaTXnkkAIv6YRfoKMQ6D1vyR6/biXuhE9g==}
     engines: {node: '>=14.0.0'}
     dependencies:
       google-auth-library: 9.7.0
