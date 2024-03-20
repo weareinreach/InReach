@@ -15,7 +15,9 @@ import { BadgeEdit } from '~ui/modals/BadgeEdit'
 
 export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	const { id: orgId } = useOrgInfo()
-	const { t, ready: i18nReady } = useTranslation(orgId)
+	const { t, ready: i18nReady } = useTranslation(
+		orgId ? ['services', 'attribute', orgId] : ['services', 'attribute']
+	)
 	const variants = useCustomVariant()
 	const { attributes, isClaimed, locations, description, id } = data
 
@@ -47,7 +49,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 						icon={entry.attribute.icon ?? ''}
 						iconBg={entry.attribute.iconBg ?? '#FFF'}
 					>
-						{t(entry.attribute.tsKey)}
+						{t(entry.attribute.tsKey, { ns: entry.attribute.tsNs })}
 					</Badge.Leader>
 				)
 			)
@@ -62,7 +64,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	}
 	const focusedCommBadges: ReactNode[] = focusedCommunities.map(({ attribute }) => (
 		<Badge.Community key={attribute.id} icon={attribute.icon ?? ''}>
-			{t(attribute.tsKey)}
+			{t(attribute.tsKey, { ns: attribute.tsNs })}
 		</Badge.Community>
 	))
 
@@ -129,7 +131,7 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const focusedCommBadges: ReactNode[] = focusedCommunities.length
 		? focusedCommunities.map(({ attribute }) => (
 				<Badge.Community key={attribute.id} icon={attribute.icon ?? ''}>
-					{t(attribute.tsKey)}
+					{t(attribute.tsKey, { ns: attribute.tsNs })}
 				</Badge.Community>
 			))
 		: [<Badge.Community icon='➕'>Add Focused Community badge(s)</Badge.Community>]
