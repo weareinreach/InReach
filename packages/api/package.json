@@ -67,7 +67,7 @@
 		"prettier": "3.2.5",
 		"trpc-client-devtools-link": "0.2.1-next",
 		"trpc-panel": "1.3.4",
-		"type-fest": "4.13.0",
+		"type-fest": "4.13.1",
 		"typescript": "5.4.2"
 	},
 	"peerDependencies": {
