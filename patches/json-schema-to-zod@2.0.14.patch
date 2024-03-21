@@ -1,0 +1,28 @@
+diff --git a/dist/cjs/parsers/parseNot.js b/dist/cjs/parsers/parseNot.js
+index 43c2d410d17ab08e194e1227ea2536666d8d6508..5c300332e6b94b8737c5c0fc3ae87d3631e92bc0 100644
+--- a/dist/cjs/parsers/parseNot.js
++++ b/dist/cjs/parsers/parseNot.js
+@@ -3,9 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.parseNot = void 0;
+ const parseSchema_js_1 = require("./parseSchema.js");
+ const parseNot = (schema, refs) => {
+-    return `z.any().refine((value) => !${(0, parseSchema_js_1.parseSchema)(schema.not, {
+-        ...refs,
+-        path: [...refs.path, "not"],
+-    })}.safeParse(value).success, "Invalid input: Should NOT be valid against schema")`;
++  return `z.never()`;
+ };
+ exports.parseNot = parseNot;
+diff --git a/dist/esm/parsers/parseNot.js b/dist/esm/parsers/parseNot.js
+index 4aa11ba9febf80de210c07b72c0991d447f03838..6acaeb0e48751c14ba2ee05dd49767ec99f80774 100644
+--- a/dist/esm/parsers/parseNot.js
++++ b/dist/esm/parsers/parseNot.js
+@@ -1,7 +1,4 @@
+ import { parseSchema } from "./parseSchema.js";
+ export const parseNot = (schema, refs) => {
+-    return `z.any().refine((value) => !${parseSchema(schema.not, {
+-        ...refs,
+-        path: [...refs.path, "not"],
+-    })}.safeParse(value).success, "Invalid input: Should NOT be valid against schema")`;
++  return `z.never()`;
+ };
