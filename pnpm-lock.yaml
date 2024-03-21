@@ -789,6 +789,9 @@ importers:
       eslint:
         specifier: 8.57.0
         version: 8.57.0
+      i18next:
+        specifier: 23.10.1
+        version: 23.10.1
       inquirer-search-list:
         specifier: 1.2.6
         version: 1.2.6
