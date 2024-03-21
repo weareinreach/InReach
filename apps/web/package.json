@@ -42,6 +42,6 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.57.0",
-		"typescript": "5.4.2"
+		"typescript": "5.4.3"
 	}
 }

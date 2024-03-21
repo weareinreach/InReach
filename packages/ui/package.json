@@ -168,7 +168,7 @@
 		"tsconfig-paths-webpack-plugin": "4.1.0",
 		"tsx": "4.7.1",
 		"type-fest": "4.13.1",
-		"typescript": "5.4.2",
+		"typescript": "5.4.3",
 		"webpack": "5.91.0",
 		"zod": "3.22.4"
 	},
