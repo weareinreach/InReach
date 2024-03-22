@@ -43,6 +43,60 @@ const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
 )
 
+const stateRiskLevels: Record<string, string> = {
+	AL: 'alerts.search-page-high-risk-state',
+	AR: 'alerts.search-page-high-risk-state',
+	LA: 'alerts.search-page-high-risk-state',
+	MO: 'alerts.search-page-high-risk-state',
+	MS: 'alerts.search-page-high-risk-state',
+	NE: 'alerts.search-page-high-risk-state',
+	OH: 'alerts.search-page-high-risk-state',
+	SC: 'alerts.search-page-high-risk-state',
+	TX: 'alerts.search-page-high-risk-state',
+	WV: 'alerts.search-page-high-risk-state',
+	KS: 'alerts.search-page-high-risk-state',
+	MT: 'alerts.search-page-high-risk-state',
+	ND: 'alerts.search-page-high-risk-state',
+	OK: 'alerts.search-page-high-risk-state',
+	TN: 'alerts.search-page-high-risk-state',
+	FL: 'alerts.search-page-high-risk-state',
+	AK: 'alerts.search-page-med-risk-state',
+	GA: 'alerts.search-page-med-risk-state',
+	IA: 'alerts.search-page-med-risk-state',
+	ID: 'alerts.search-page-med-risk-state',
+	IN: 'alerts.search-page-med-risk-state',
+	KY: 'alerts.search-page-med-risk-state',
+	NC: 'alerts.search-page-med-risk-state',
+	SD: 'alerts.search-page-med-risk-state',
+	UT: 'alerts.search-page-med-risk-state',
+	WY: 'alerts.search-page-med-risk-state',
+	AZ: 'alerts.search-page-low-risk-state',
+	DE: 'alerts.search-page-low-risk-state',
+	ME: 'alerts.search-page-low-risk-state',
+	MI: 'alerts.search-page-low-risk-state',
+	NH: 'alerts.search-page-low-risk-state',
+	NV: 'alerts.search-page-low-risk-state',
+	PA: 'alerts.search-page-low-risk-state',
+	RI: 'alerts.search-page-low-risk-state',
+	VA: 'alerts.search-page-low-risk-state',
+	WI: 'alerts.search-page-low-risk-state',
+	CA: 'alerts.search-page-most-protective-state',
+	CO: 'alerts.search-page-most-protective-state',
+	CT: 'alerts.search-page-most-protective-state',
+	DC: 'alerts.search-page-most-protective-state',
+	HI: 'alerts.search-page-most-protective-state',
+	IL: 'alerts.search-page-most-protective-state',
+	MA: 'alerts.search-page-most-protective-state',
+	MD: 'alerts.search-page-most-protective-state',
+	MN: 'alerts.search-page-most-protective-state',
+	NJ: 'alerts.search-page-most-protective-state',
+	NM: 'alerts.search-page-most-protective-state',
+	NY: 'alerts.search-page-most-protective-state',
+	OR: 'alerts.search-page-most-protective-state',
+	VT: 'alerts.search-page-most-protective-state',
+	WA: 'alerts.search-page-most-protective-state',
+}
+
 const PageIndexSchema = z.coerce.number().default(1)
 
 const useStyles = createStyles((theme) => ({
@@ -86,7 +140,56 @@ const useStyles = createStyles((theme) => ({
 			height: rem(80),
 		},
 	},
+	searchBanner: {
+		backgroundColor: theme.other.colors.tertiary.lightPink,
+		...theme.other.utilityFonts.utility1,
+		color: theme.other.colors.secondary.black,
+		width: '100%',
+		maxWidth: '100%',
+		height: rem(52),
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		textAlign: 'center',
+		position: 'relative',
+		borderRadius: rem(8),
+		padding: `0 ${rem(16)}`,
+		marginBottom: rem(32),
+		[theme.fn.largerThan('sm')]: {
+			marginTop: rem(-40),
+		},
+		[theme.fn.largerThan('xl')]: {
+			marginTop: rem(-20),
+		},
+		[theme.fn.smallerThan('sm')]: {
+			height: rem(80),
+		},
+	},
+	emoji: {
+		marginRight: rem(8), // Add margin to separate emoji from text
+	},
 }))
+
+const highRiskStates = [
+	'AL',
+	'AR',
+	'LA',
+	'MO',
+	'MS',
+	'NE',
+	'OH',
+	'SC',
+	'TX',
+	'WV',
+	'KS',
+	'MT',
+	'ND',
+	'OK',
+	'TN',
+	'FL',
+]
+const medRiskStates = ['AK', 'GA', 'IA', 'ID', 'IN', 'KY', 'NC', 'SD', 'UT', 'WY']
+const lowRiskStates = ['AZ', 'DE', 'ME', 'MI', 'NH', 'NV', 'PA', 'RI', 'VA', 'WI']
 
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
@@ -174,6 +277,12 @@ const SearchResults = () => {
 		}
 	}, [data, loadingPage])
 
+	const [stateInUS, setStateInUS] = useState<string>('')
+
+	useEffect(() => {
+		setStateInUS(searchState.searchTerm?.split(', ')[1] || '')
+	}, [searchState.searchTerm])
+
 	useEffect(
 		() => {
 			if (typeof router.query.page === 'string' && searchState.page !== router.query.page)
@@ -210,14 +319,15 @@ const SearchResults = () => {
 	}, [])
 
 	if (error) return <>Error</>
-	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
+	const showCountryAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
+	const showStateAlertMessage = true
 
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-			{showAlertMessage && (
+			{showCountryAlertMessage && (
 				<Box className={classes.banner}>
 					<Text variant={variants.Text.utility1white}>
 						<Trans
@@ -237,11 +347,35 @@ const SearchResults = () => {
 					</Text>
 				</Box>
 			)}
+
+			{showStateAlertMessage && (
+				<Box className={classes.banner}>
+					<Text variant={variants.Text.utility1white}>
+						<Trans
+							i18nKey='alerts.search-page-legislative-map'
+							ns='common'
+							components={{
+								ATLink: (
+									<Link
+										external
+										variant={variants.Link.inheritStyle}
+										href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-96f'
+										target='_blank'
+									></Link>
+								),
+							}}
+						/>
+					</Text>
+				</Box>
+			)}
+
 			<Grid.Col
 				xs={12}
 				sm={12}
 				pb={30}
-				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
+				{...(showCountryAlertMessage || showStateAlertMessage
+					? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } }
+					: {})}
 			>
 				<Group spacing={20} w='100%' className={classes.searchControls}>
 					<Group maw={{ md: '50%', base: '100%' }} w='100%'>
@@ -249,8 +383,8 @@ const SearchResults = () => {
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
-							resetInitialValue={() => {
-								searchStateActions.setSearchTerm('')
+							setSearchValue={(newValue: string) => {
+								searchStateActions.setSearchTerm(newValue)
 							}}
 						/>
 					</Group>
@@ -283,16 +417,42 @@ const SearchResults = () => {
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 				/>
 			</Grid.Col>
-			<Grid.Col xs={12} sm={8} md={8}>
-				{data?.resultCount === 0 && crisisResults ? (
-					<NoResults data={crisisResults} />
-				) : (
-					<>
-						{resultDisplay}
-						<Pagination total={getSearchResultPageCount(data?.resultCount)} />
-					</>
-				)}
-			</Grid.Col>
+			<>
+				<Grid.Col xs={12} sm={8} md={8}>
+					{data?.resultCount === 0 && crisisResults ? (
+						<NoResults data={crisisResults} />
+					) : (
+						<>
+							{stateRiskLevels[stateInUS] && (
+								<div>
+									<Box className={classes.searchBanner}>
+										<div className={classes.emoji}>🔔</div>
+										<Text variant={variants.Text.utility1}>
+											<Trans
+												i18nKey={stateRiskLevels[stateInUS]}
+												ns='common'
+												components={{
+													ATLink: (
+														<Link
+															external
+															variant={variants.Link.inheritStyle}
+															href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-96f'
+															target='_blank'
+														></Link>
+													),
+												}}
+											/>
+										</Text>
+									</Box>
+								</div>
+							)}
+
+							{resultDisplay}
+							<Pagination total={getSearchResultPageCount(data?.resultCount)} />
+						</>
+					)}
+				</Grid.Col>
+			</>
 		</>
 	)
 }

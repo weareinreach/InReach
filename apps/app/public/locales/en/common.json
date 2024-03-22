@@ -16,7 +16,11 @@
 	"alert-message-instructions": "Enter the alert message",
 	"alert-title-instructions": "Enter a title for the message...",
 	"alerts": {
-		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
+		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C.",
+		"search-page-high-risk-state": "This state is a <ATLink>high-risk state</ATLink> for anti-trans legislation. Contact providers for more information.",
+		"search-page-med-risk-state": "This state is a <ATLink>moderate-risk state</ATLink> for anti-trans legislation. Contact providers for more information.",
+		"search-page-low-risk-state": "This state is a <ATLink>low-risk state</ATLink> for anti-trans legislation.",
+		"search-page-most-protective-state": "This state is <ATLink>one of the most protective states</ATLink> for transgender, nonbinary and gender non-conforming people."
 	},
 	"all-service-category": "All {{serviceCategory}}",
 	"anti-hate": {
