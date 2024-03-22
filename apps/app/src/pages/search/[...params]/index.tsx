@@ -43,9 +43,18 @@ const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
 )
 
-const stateRiskLevels: Record<string, string> = {
+const stateRiskLevels = {
+	FL: 'alerts.search-page-do-not-fly-florida',
+	KS: 'alerts.search-page-high-risk-state',
+	MT: 'alerts.search-page-high-risk-state',
+	OK: 'alerts.search-page-high-risk-state',
+	ND: 'alerts.search-page-high-risk-state',
+	TN: 'alerts.search-page-high-risk-state',
+	UT: 'alerts.search-page-high-risk-state',
 	AL: 'alerts.search-page-high-risk-state',
 	AR: 'alerts.search-page-high-risk-state',
+	IA: 'alerts.search-page-high-risk-state',
+	IN: 'alerts.search-page-high-risk-state',
 	LA: 'alerts.search-page-high-risk-state',
 	MO: 'alerts.search-page-high-risk-state',
 	MS: 'alerts.search-page-high-risk-state',
@@ -54,27 +63,18 @@ const stateRiskLevels: Record<string, string> = {
 	SC: 'alerts.search-page-high-risk-state',
 	TX: 'alerts.search-page-high-risk-state',
 	WV: 'alerts.search-page-high-risk-state',
-	KS: 'alerts.search-page-high-risk-state',
-	MT: 'alerts.search-page-high-risk-state',
-	ND: 'alerts.search-page-high-risk-state',
-	OK: 'alerts.search-page-high-risk-state',
-	TN: 'alerts.search-page-high-risk-state',
-	FL: 'alerts.search-page-high-risk-state',
 	AK: 'alerts.search-page-med-risk-state',
 	GA: 'alerts.search-page-med-risk-state',
-	IA: 'alerts.search-page-med-risk-state',
 	ID: 'alerts.search-page-med-risk-state',
-	IN: 'alerts.search-page-med-risk-state',
 	KY: 'alerts.search-page-med-risk-state',
 	NC: 'alerts.search-page-med-risk-state',
+	NH: 'alerts.search-page-med-risk-state',
 	SD: 'alerts.search-page-med-risk-state',
-	UT: 'alerts.search-page-med-risk-state',
 	WY: 'alerts.search-page-med-risk-state',
 	AZ: 'alerts.search-page-low-risk-state',
 	DE: 'alerts.search-page-low-risk-state',
 	ME: 'alerts.search-page-low-risk-state',
 	MI: 'alerts.search-page-low-risk-state',
-	NH: 'alerts.search-page-low-risk-state',
 	NV: 'alerts.search-page-low-risk-state',
 	PA: 'alerts.search-page-low-risk-state',
 	RI: 'alerts.search-page-low-risk-state',
@@ -96,6 +96,23 @@ const stateRiskLevels: Record<string, string> = {
 	VT: 'alerts.search-page-most-protective-state',
 	WA: 'alerts.search-page-most-protective-state',
 }
+const protectiveStates = [
+	'CA',
+	'CO',
+	'CT',
+	'DC',
+	'HI',
+	'IL',
+	'MA',
+	'MD',
+	'MN',
+	'NJ',
+	'NM',
+	'NY',
+	'OR',
+	'VT',
+	'WA',
+]
 
 const PageIndexSchema = z.coerce.number().default(1)
 
@@ -141,7 +158,6 @@ const useStyles = createStyles((theme) => ({
 		},
 	},
 	searchBanner: {
-		backgroundColor: theme.other.colors.tertiary.lightPink,
 		...theme.other.utilityFonts.utility1,
 		color: theme.other.colors.secondary.black,
 		width: '100%',
@@ -425,7 +441,14 @@ const SearchResults = () => {
 						<>
 							{stateRiskLevels[stateInUS] && (
 								<div>
-									<Box className={classes.searchBanner}>
+									<Box
+										className={classes.searchBanner}
+										style={{
+											backgroundColor: protectiveStates.includes(stateInUS)
+												? theme.other.colors.tertiary.lightGreen
+												: theme.other.colors.tertiary.lightPink,
+										}}
+									>
 										<div className={classes.emoji}>🔔</div>
 										<Text variant={variants.Text.utility1}>
 											<Trans

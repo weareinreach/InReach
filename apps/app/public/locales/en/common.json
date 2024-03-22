@@ -17,6 +17,7 @@
 	"alert-title-instructions": "Enter a title for the message...",
 	"alerts": {
 		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C.",
+		"search-page-do-not-fly-florida": "Please be aware there is a <ATLink>travel advisory alert</ATLink> for the LGBTQ+ community in Florida.",
 		"search-page-high-risk-state": "This state is a <ATLink>high-risk state</ATLink> for anti-trans legislation. Contact providers for more information.",
 		"search-page-med-risk-state": "This state is a <ATLink>moderate-risk state</ATLink> for anti-trans legislation. Contact providers for more information.",
 		"search-page-low-risk-state": "This state is a <ATLink>low-risk state</ATLink> for anti-trans legislation.",
