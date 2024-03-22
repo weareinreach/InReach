@@ -63,6 +63,7 @@ const colors = {
 		coolGray: '#d9d9d9',
 		red: '#C05C4A',
 		pink: '#D4A1BA',
+		lightPink: '#F2E1E9',
 		lightBlue: '#79ADD7',
 		purple: '#705890',
 		darkBlue: '#3c4e8f',
