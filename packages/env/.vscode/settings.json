@@ -1,0 +1,6 @@
+{
+	"sonarlint.connectedMode.project": {
+		"connectionId": "inreach",
+		"projectKey": "weareinreach_InReach"
+	}
+}
