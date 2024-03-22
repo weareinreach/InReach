@@ -56,14 +56,9 @@ export const ServiceFilter = ({ resultCount, isFetching, current, disabled }: Se
 	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 	// #endregion
 
-	const preSelected = Array.isArray(router.query.s)
-		? router.query.s
-		: typeof router.query.s === 'string'
-			? [router.query.s]
-			: []
-
+	const preSelected = searchState.services
 	const form = useForm<{ selected: string[] }>({
-		values: { selected: current ? current : preSelected },
+		values: { selected: preSelected },
 	})
 	const servicesByCategory = useMemo(
 		() =>
