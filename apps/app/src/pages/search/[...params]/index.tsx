@@ -186,27 +186,6 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const highRiskStates = [
-	'AL',
-	'AR',
-	'LA',
-	'MO',
-	'MS',
-	'NE',
-	'OH',
-	'SC',
-	'TX',
-	'WV',
-	'KS',
-	'MT',
-	'ND',
-	'OK',
-	'TN',
-	'FL',
-]
-const medRiskStates = ['AK', 'GA', 'IA', 'ID', 'IN', 'KY', 'NC', 'SD', 'UT', 'WY']
-const lowRiskStates = ['AZ', 'DE', 'ME', 'MI', 'NH', 'NV', 'PA', 'RI', 'VA', 'WI']
-
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
 	const { searchState, searchStateActions } = useSearchState()
