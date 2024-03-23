@@ -43,7 +43,7 @@ const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
 )
 
-const stateRiskLevels = {
+const stateRiskLevels: Record<string, string> = {
 	FL: 'alerts.search-page-do-not-fly-florida',
 	KS: 'alerts.search-page-high-risk-state',
 	MT: 'alerts.search-page-high-risk-state',
@@ -162,19 +162,19 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.secondary.black,
 		width: '100%',
 		maxWidth: '100%',
-		height: rem(52),
+		height: 'auto',
 		display: 'flex',
-		alignItems: 'center',
+		alignItems: 'flex-start',
 		justifyContent: 'center',
 		textAlign: 'center',
 		position: 'relative',
 		borderRadius: rem(8),
-		padding: `0 ${rem(16)}`,
+		padding: `${rem(12)} ${rem(16)} ${rem(16)}`,
 		marginBottom: rem(32),
 		[theme.fn.largerThan('sm')]: {
 			marginTop: rem(-40),
 		},
-		[theme.fn.largerThan('xl')]: {
+		[theme.fn.largerThan('md')]: {
 			marginTop: rem(-20),
 		},
 		[theme.fn.smallerThan('sm')]: {
@@ -182,7 +182,9 @@ const useStyles = createStyles((theme) => ({
 		},
 	},
 	emoji: {
-		marginRight: rem(8), // Add margin to separate emoji from text
+		marginRight: rem(8),
+		verticalAlign: 'top',
+		display: 'block',
 	},
 }))
 
@@ -424,7 +426,7 @@ const SearchResults = () => {
 										className={classes.searchBanner}
 										style={{
 											backgroundColor: protectiveStates.includes(stateInUS)
-												? theme.other.colors.tertiary.lightGreen
+												? theme.fn.lighten(theme.other.colors.secondary.cornflower, 0.3)
 												: theme.other.colors.tertiary.lightPink,
 										}}
 									>
