@@ -277,7 +277,11 @@ const SearchResults = () => {
 	const [stateInUS, setStateInUS] = useState<string>('')
 
 	useEffect(() => {
-		setStateInUS(searchState.searchTerm?.split(', ')[1] || '')
+		if (searchState.searchTerm?.slice(-3) == 'USA') {
+			setStateInUS(searchState.searchTerm?.split(', ')[1] || '')
+		} else {
+			setStateInUS('')
+		}
 	}, [searchState.searchTerm])
 
 	useEffect(
@@ -426,12 +430,18 @@ const SearchResults = () => {
 										className={classes.searchBanner}
 										style={{
 											backgroundColor: protectiveStates.includes(stateInUS)
-												? theme.fn.lighten(theme.other.colors.secondary.cornflower, 0.3)
-												: theme.other.colors.tertiary.lightPink,
+												? theme.other.colors.secondary.cornflower
+												: theme.fn.lighten(theme.other.colors.tertiary.pink, 0.3),
 										}}
 									>
 										<div className={classes.emoji}>🔔</div>
-										<Text variant={variants.Text.utility1}>
+										<Text
+											variant={
+												protectiveStates.includes(stateInUS)
+													? variants.Text.utility1white
+													: variants.Text.utility1
+											}
+										>
 											<Trans
 												i18nKey={stateRiskLevels[stateInUS]}
 												ns='common'
