@@ -1,7 +1,6 @@
 import { prisma } from '@weareinreach/db'
 import { formatAttributes } from '~api/formatters/attributes'
 import { formatHours } from '~api/formatters/hours'
-import { globalSelect } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForServiceEditDrawerSchema } from './query.forServiceEditDrawer.schema'
@@ -20,7 +19,9 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 			description: freeTextSelect,
 			phones: { select: { phone: { select: { id: true } } } },
 			emails: { select: { email: { select: { id: true } } } },
-			locations: { select: { orgLocationId: true } },
+			locations: {
+				select: { orgLocationId: true, location: { select: { country: { select: { cca2: true } } } } },
+			},
 			hours: formatHours.prismaSelect(true),
 			services: { select: { tag: { select: { id: true, tsKey: true, tsNs: true } } } },
 			serviceAreas: {

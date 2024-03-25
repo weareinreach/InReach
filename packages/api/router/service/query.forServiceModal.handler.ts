@@ -3,7 +3,6 @@ import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForServiceModalSchema } from './query.forServiceModal.schema'
-import { select } from './selects'
 
 export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceModalSchema>) => {
 	const result = await prisma.orgService.findUniqueOrThrow({
@@ -36,22 +35,8 @@ export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceMo
 							icon: true,
 							iconBg: true,
 							showOnLocation: true,
-							categories: {
-								select: {
-									category: {
-										select: {
-											tag: true,
-											icon: true,
-										},
-									},
-								},
-							},
-							_count: {
-								select: {
-									parents: true,
-									children: true,
-								},
-							},
+							categories: { select: { category: { select: { tag: true, icon: true } } } },
+							_count: { select: { parents: true, children: true } },
 						},
 					},
 					id: true,
