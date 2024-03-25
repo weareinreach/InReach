@@ -7,12 +7,12 @@ export const userLogin: UserLogin = async (email, password) => {
 		AuthFlow: AuthFlowType.USER_PASSWORD_AUTH,
 		ClientId,
 		AuthParameters: {
-			USERNAME: email,
+			USERNAME: email.toLowerCase(),
 			PASSWORD: password,
-			SECRET_HASH: generateHash(email),
+			SECRET_HASH: generateHash(email.toLowerCase()),
 		},
 	})
-	return parseAuthResponse(response, email)
+	return parseAuthResponse(response, email.toLowerCase())
 }
 
 type UserLogin = (email: string, password: string) => Promise<AuthResult>
