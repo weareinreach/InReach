@@ -6,7 +6,7 @@ import { connectOne, connectOneRequired } from '~api/schemas/nestedOps'
 
 export const ZCreateSchema = z
 	.object({
-		id: prefixedId('user').default(generateId('user')),
+		id: prefixedId('user').optional(),
 		email: z.string().email().toLowerCase(),
 		password: z.string(),
 		name: z.string().optional(),
@@ -48,12 +48,13 @@ export const ZCreateSchema = z
 			})
 			.optional(),
 	})
-	.transform(({ id, name, email, password, image, active, currentCity, ...data }) => {
+	.transform(({ id: providedId, name, email, password, image, active, currentCity, ...data }) => {
 		const userType = connectOneRequired({ type: data.userType })
 		const langPref = connectOne({ localeCode: data.language })
 		const currentCountry = connectOne(data.currentCountry)
 		const currentGovDist = connectOne(data.currentGovDist)
 		const { lawPractice, otherLawPractice, servProvider, servProviderOther, location } = data
+		const id = providedId ?? generateId('user')
 		const record = {
 			id,
 			name,
