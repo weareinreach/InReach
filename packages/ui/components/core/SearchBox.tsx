@@ -19,6 +19,7 @@ import { Trans, useTranslation } from 'next-i18next'
 import {
 	type Dispatch,
 	forwardRef,
+	type KeyboardEventHandler,
 	type ReactNode,
 	type SetStateAction,
 	useDebugValue,
@@ -350,6 +351,15 @@ export const SearchBox = ({
 		}
 	}
 
+	const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+		if (event.key === 'Enter') {
+			const topItem = results[0]
+			if (topItem) {
+				selectionHandler(topItem)
+			}
+		}
+	}
+
 	return (
 		<Autocomplete
 			classNames={{
@@ -365,6 +375,7 @@ export const SearchBox = ({
 			dropdownPosition='bottom'
 			radius='xl'
 			onItemSubmit={selectionHandler}
+			onKeyDown={handleKeyDown}
 			disabled={isLoading}
 			label={label}
 			withinPortal
