@@ -11,11 +11,11 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useEffect, useMemo } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 import { useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
+import invariant from 'tiny-invariant'
 
 import { Badge } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
@@ -25,6 +25,7 @@ import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { processAccessInstructions, processAttributes } from '~ui/modals/Service/processor'
 import { DataViewer } from '~ui/other/DataViewer'
 
 import { FormSchema, type TFormSchema } from './schemas'
@@ -36,12 +37,11 @@ const isObject = (x: unknown): x is object => typeof x === 'object'
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
 	({ serviceId, ...props }, ref) => {
 		const [drawerOpened, drawerHandler] = useDisclosure(true)
-		const [serviceModalOpened, serviceModalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
 		const { t } = useTranslation(['common', 'gov-dist'])
 		// #region Get existing data/populate form
-		const { data, isLoading } = api.service.forServiceEditDrawer.useQuery(serviceId, {
+		const { data } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
 		})
 		const form = useForm<TFormSchema>({
@@ -76,48 +76,53 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			const countryIdRegex = /^ctry_.*/
 			const distIdRegex = /^gdst_.*/
 
-			if (countries?.length) {
-				for (const country of countries) {
-					const array = serviceAreaObj[country]
-					const countryDetails = geoMap.get(country)
-					if (!countryDetails) continue
-					const item = (
-						<List.Item key={country}>
-							<Text variant={variants.Text.utility4}>
-								All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
-							</Text>
-						</List.Item>
-					)
-					Array.isArray(array) ? array.push(item) : (serviceAreaObj[country] = [item])
-				}
+			const processCountry = (country: string) => {
+				serviceAreaObj[country] ??= []
+				const array = serviceAreaObj[country]
+				invariant(array)
+				const countryDetails = geoMap.get(country)
+				if (!countryDetails) return
+				const item = (
+					<List.Item key={country}>
+						<Text variant={variants.Text.utility4}>
+							All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
+						</Text>
+					</List.Item>
+				)
+				array.push(item)
 			}
-			if (districts?.length) {
-				for (const district of districts) {
-					const govDist = geoMap.get(district)
-					if (!govDist) continue
-					const country = govDist.parent?.parent?.id ?? govDist.parent?.id ?? ''
-					if (!countryIdRegex.test(country)) continue
-					const array = serviceAreaObj[country]
-					const parent = govDist.parent?.id ?? ''
-					const parentDist = geoMap.get(parent)
-					if (!distIdRegex.test(parent) || !parentDist) {
-						const item = (
-							<List.Item key={district}>
-								<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
-							</List.Item>
-						)
-						Array.isArray(array) ? array.push(item) : (serviceAreaObj[country] = [item])
-						continue
-					}
-					const item = (
+			const processDistrict = (district: string) => {
+				const govDist = geoMap.get(district)
+				const country = govDist?.parent?.parent?.id ?? govDist?.parent?.id ?? ''
+				if (!countryIdRegex.test(country) || !govDist) return
+				serviceAreaObj[country] ??= []
+				const array = serviceAreaObj[country]
+				invariant(array)
+				const parent = govDist.parent?.id ?? ''
+				const parentDist = geoMap.get(parent)
+				const item =
+					!distIdRegex.test(parent) || !parentDist ? (
+						<List.Item key={district}>
+							<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
+						</List.Item>
+					) : (
 						<List.Item key={district}>
 							<Text variant={variants.Text.utility4}>
 								{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
 							</Text>
 						</List.Item>
 					)
-					Array.isArray(array) ? array.push(item) : (serviceAreaObj[country] = [item])
-					continue
+				array.push(item)
+			}
+
+			if (countries?.length) {
+				for (const country of countries) {
+					processCountry(country)
+				}
+			}
+			if (districts?.length) {
+				for (const district of districts) {
+					processDistrict(district)
 				}
 			}
 			return Object.entries(serviceAreaObj)?.map(([key, value]) => {
@@ -135,6 +140,16 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		}
 
 		// #endregion
+
+		if (!data) return null
+
+		// const { getHelp, publicTransit } = data
+		// 	? processAccessInstructions({
+		// 			accessDetails: data?.accessDetails,
+		// 			locations: data?.locations,
+		// 			t,
+		// 		})
+		// 	: { getHelp: null, publicTransit: null }
 
 		return (
 			<>
