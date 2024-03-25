@@ -350,7 +350,7 @@ export const SearchBox = ({
 		}
 	}
 
-	const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
+	const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
 		if (event.key === 'Enter') {
 			const topItem = results[0]
 			if (topItem) {
