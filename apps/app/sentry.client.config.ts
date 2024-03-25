@@ -14,7 +14,7 @@ Sentry.init({
 			maskAllText: true,
 			blockAllMedia: true,
 		}),
-		Sentry.browserTracingIntegration(),
+		Sentry.browserTracingIntegration({ enableInp: true }),
 		Sentry.browserProfilingIntegration(),
 	],
 	enabled: isVercelProd,

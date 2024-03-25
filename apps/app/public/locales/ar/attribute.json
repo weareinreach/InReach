@@ -9,6 +9,7 @@
 		"private-practice": "تدريب خاص",
 		"religiously-affiliated": "منتسب دينيا",
 		"time-walk-in": "له مباريات في الساعات",
+		"wheelchair-accessible": "متيسر",
 		"wheelchair-accessible_false": "لا يمكن الوصول إليها",
 		"wheelchair-accessible_true": "متيسر"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "متطلبات الأهلية",
+		"elig-age": "الأهلية للعمر",
 		"elig-age_max": "تحت {{max}}",
 		"elig-age_min": "{{min}} وأقدم",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "النظام",
 		"incompatible-info": "معلومات غير متوافقة"
+	},
+	"tpop": {
+		"other": "السكان المستهدفون - غير ذلك"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "خيارات الممارسة القانونية",

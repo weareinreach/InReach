@@ -9,6 +9,7 @@
 		"private-practice": "Частная практика",
 		"religiously-affiliated": "Религиозно-ориентированный",
 		"time-walk-in": "Без предварительной записи",
+		"wheelchair-accessible": "Доступно",
 		"wheelchair-accessible_false": "Не оборудованный пандусом",
 		"wheelchair-accessible_true": "Оборудованный пандусом"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Требования",
+		"elig-age": "Право на возраст",
 		"elig-age_max": "До {{max}}",
 		"elig-age_min": "{{min}} и старше",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "Система",
 		"incompatible-info": "Несовместимая информация"
+	},
+	"tpop": {
+		"other": "Целевое население - Другое"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Юридическая практика",

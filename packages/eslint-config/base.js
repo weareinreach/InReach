@@ -15,8 +15,8 @@ const config = {
 		// 'plugin:turbo/recommended',
 		'plugin:@tanstack/eslint-plugin-query/recommended',
 		'plugin:@typescript-eslint/recommended',
+		// 'plugin:@typescript-eslint/recommended-type-checked',
 		'plugin:import/typescript',
-		'prettier',
 	],
 	rules: {
 		'@typescript-eslint/consistent-type-assertions': [
@@ -111,6 +111,9 @@ const config = {
 		'no-return-await': 'off',
 		'@typescript-eslint/return-await': 'off',
 		'deprecation/deprecation': 'warn',
+		// // temp downgrade these
+		// '@typescript-eslint/no-floating-promises': 'warn',
+		// '@typescript-eslint/no-misused-promises': 'warn',
 	},
 	overrides: [
 		{
@@ -121,7 +124,7 @@ const config = {
 		},
 		{
 			files: ['./**/*.{js,mjs,cjs}'],
-			parserOptions: { project: null },
+			parserOptions: { project: true },
 			rules: {
 				'@typescript-eslint/require-await': 'off',
 				'@typescript-eslint/return-await': 'off',
@@ -133,9 +136,9 @@ const config = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		EXPERIMENTAL_useProjectService: true,
-		project: tsconfigGlobs,
-		emitDecoratorMetadata: true,
-		ecmaVersion: 2020,
+		// project: tsconfigGlobs,
+		// emitDecoratorMetadata: true,
+		// ecmaVersion: 2020,
 	},
 	ignorePatterns: ['!.*', 'node_modules', 'dist/', '.next/'],
 	settings: {

@@ -89,16 +89,15 @@ export const SearchStateProvider = ({ children, initState }: SearchStateProvider
 		</SearchStateContext.Provider>
 	)
 }
+type RouteParams = {
+	params: string[]
+	page: string
+	a?: string[]
+	s?: string[]
+	sort?: string[]
+}
 
-type GetRoute = () =>
-	| {
-			params: string[]
-			page: string
-			a?: string[]
-			s?: string[]
-			sort?: string[]
-	  }
-	| undefined
+type GetRoute = () => RouteParams | undefined
 
 export interface SearchStateContext {
 	searchState: State & { attributes: string[]; services: string[]; getRoute: GetRoute }

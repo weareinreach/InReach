@@ -9,6 +9,7 @@
 		"private-practice": "Приватна практика",
 		"religiously-affiliated": "Релігійно афілійований",
 		"time-walk-in": "Має прогулянку годин",
+		"wheelchair-accessible": "Доступний",
 		"wheelchair-accessible_false": "Недоступний",
 		"wheelchair-accessible_true": "Доступний"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Вимоги до прийнятності",
+		"elig-age": "Вікова придатність",
 		"elig-age_max": "Under {{max}}",
 		"elig-age_min": "{{min}} і старші",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "Система",
 		"incompatible-info": "Несумісна інформація"
+	},
+	"tpop": {
+		"other": "Цільове населення - інше"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Варіанти юридичної практики",

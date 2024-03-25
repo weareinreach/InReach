@@ -9,6 +9,7 @@
 		"private-practice": "Cabinet privé",
 		"religiously-affiliated": "Est affilié à une religion",
 		"time-walk-in": "A des heures d'ouverture sans rendez-vous",
+		"wheelchair-accessible": "Accessible",
 		"wheelchair-accessible_false": "Non Accessible",
 		"wheelchair-accessible_true": "Accessible"
 	},
@@ -76,6 +77,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Critères d'admissibilité",
+		"elig-age": "Éligibilité à l'âge",
 		"elig-age_max": "Plus jeune que {{max}}",
 		"elig-age_min": "{{min}} et plus",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "Système",
 		"incompatible-info": "Informations incompatibles"
+	},
+	"tpop": {
+		"other": "Population cible - Autres"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Options de cabinets d'avocat",

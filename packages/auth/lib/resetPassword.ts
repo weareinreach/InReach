@@ -5,8 +5,8 @@ export const resetPassword = async ({ code, email, password }: ResetPasswordPara
 		ClientId,
 		ConfirmationCode: code,
 		Password: password,
-		Username: email,
-		SecretHash: generateHash(email),
+		Username: email.toLowerCase(),
+		SecretHash: generateHash(email.toLowerCase()),
 	})
 	return response
 }

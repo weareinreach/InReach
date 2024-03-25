@@ -21,7 +21,7 @@ const AccessTokenSchema = z
 		exp: z.number(),
 		iat: z.number(),
 		jti: z.string(),
-		username: z.string(),
+		username: z.string().toLowerCase(),
 	})
 	.passthrough()
 
@@ -38,7 +38,7 @@ const IdTokenSchema = z
 		exp: z.number(),
 		iat: z.number(),
 		jti: z.string(),
-		email: z.string(),
+		email: z.string().toLowerCase(),
 	})
 	.passthrough()
 

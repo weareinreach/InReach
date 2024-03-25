@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 
 import { useSharedStyles } from './styles'
@@ -10,6 +11,7 @@ import { useSharedStyles } from './styles'
 export const _Verified = forwardRef<HTMLDivElement, BadgeVerifiedProps>(
 	({ hideTooltip, lastverified, ...props }, ref) => {
 		const { classes } = useSharedStyles('verified')
+		const variants = useCustomVariant()
 		const theme = useMantineTheme()
 		const { t, i18n } = useTranslation('common')
 
@@ -32,6 +34,7 @@ export const _Verified = forwardRef<HTMLDivElement, BadgeVerifiedProps>(
 			label,
 			multiline: true,
 			maw: { base: '90vw', xs: 600 },
+			variant: variants.Tooltip.utility1,
 		}
 
 		return hideTooltip ? (

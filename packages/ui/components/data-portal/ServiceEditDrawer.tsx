@@ -18,7 +18,7 @@ import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode, useEffect, useMemo } from 'react'
 
-import { BadgeGroup, type ServiceTagProps } from '~ui/components/core/Badge'
+import { Badge } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -80,21 +80,15 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		// #region Get all available service options & filter selected
 		const { data: allServices } = api.service.getOptions.useQuery(undefined, { refetchOnWindowFocus: false })
 
-		const serviceBadges: ServiceTagProps[] = useMemo(() => {
-			if (!form.values.services?.length || !allServices) return []
-
-			return compact(
-				form.values.services.map(({ id }) => {
-					const service = allServices.find((item) => item.id === id)
-					if (service) {
-						return {
-							variant: 'service',
-							tsKey: service.tsKey,
+		const serviceBadges: ReactNode[] =
+			!form.values.services?.length || !allServices
+				? []
+				: form.values.services.map(({ id }) => {
+						const service = allServices.find((item) => item.id === id)
+						if (service) {
+							return <Badge.Service key={id}>{t(service.tsKey, { ns: service.tsNs })}</Badge.Service>
 						}
-					}
-				})
-			)
-		}, [form.values.services, allServices])
+					})
 
 		// #endregion
 
@@ -209,11 +203,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 								/>
 								{Boolean(serviceBadges.length) && (
 									<>
-										<BadgeGroup
-											badges={serviceBadges}
-											onClick={serviceModalHandler.open}
-											className={classes.badgeGroup}
-										/>
+										<Badge.Group onClick={serviceModalHandler.open} className={classes.badgeGroup}>
+											{serviceBadges}
+										</Badge.Group>
 										<Modal opened={serviceModalOpened} onClose={serviceModalHandler.close} withCloseButton>
 											Tag edit screen
 										</Modal>

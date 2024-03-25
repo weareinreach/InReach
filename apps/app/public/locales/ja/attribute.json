@@ -9,6 +9,7 @@
 		"private-practice": "プライベート練習",
 		"religiously-affiliated": "宗教に関係している",
 		"time-walk-in": "事前予約なしでの受け入れ時間あり",
+		"wheelchair-accessible": "アクセス可能",
 		"wheelchair-accessible_false": "アクセス不可",
 		"wheelchair-accessible_true": "アクセシブル"
 	},
@@ -72,10 +73,11 @@
 	},
 	"crisis-support-community": {
 		"elders": "高齢者",
-		"general-lgbtq": "一般的なLGBTQ+"
+		"general-lgbtq": "LGBTQ+全般"
 	},
 	"eligibility": {
 		"CATEGORYNAME": "資格要件",
+		"elig-age": "対象年齢",
 		"elig-age_max": "{{max}} 未満",
 		"elig-age_min": "{{min}} 以上",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -137,6 +139,9 @@
 	"sys": {
 		"CATEGORYNAME": "システム",
 		"incompatible-info": "互換性のない情報"
+	},
+	"tpop": {
+		"other": "ターゲット数 - その他"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "法律実務オプション",
