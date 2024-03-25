@@ -62,6 +62,7 @@ const useStyles = createStyles((theme) => ({
 		'&:hover': {
 			cursor: 'pointer',
 		},
+		marginRight: rem(18),
 	},
 	leftIcon: {
 		color: theme.other.colors.secondary.black,
@@ -233,7 +234,7 @@ export const SearchBox = ({
 	const rightIcon =
 		isLoading || searchLoading ? (
 			<Group>
-				<Loader size={32} mr={16} />
+				<Loader size={32} mr={40} />
 			</Group>
 		) : form.values.search?.length > 0 ? (
 			<Group
