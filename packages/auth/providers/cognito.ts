@@ -15,7 +15,7 @@ export const cognitoCredentialProvider: Provider = Credentials({
 	authorize: async (credentials, req) => {
 		if (!credentials?.email || !credentials?.password) return null
 
-		const cognitoSession = await userLogin(credentials.email, credentials.password)
+		const cognitoSession = await userLogin(credentials.email.toLowerCase(), credentials.password)
 		if (cognitoSession.success === true) {
 			return cognitoSession.user
 		}

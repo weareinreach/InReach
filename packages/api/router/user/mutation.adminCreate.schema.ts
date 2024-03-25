@@ -8,7 +8,7 @@ import { connectOne, connectOneRequired, createManyOptional } from '~api/schemas
 export const ZAdminCreateSchema = z
 	.object({
 		id: prefixedId('user').default(generateId('user')),
-		email: z.string().email(),
+		email: z.string().email().toLowerCase(),
 		password: z.string(),
 		name: z.string().optional(),
 		image: z.string().url().optional(),

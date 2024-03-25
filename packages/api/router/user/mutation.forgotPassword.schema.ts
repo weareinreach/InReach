@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const ZForgotPasswordSchema = z
 	.object({
-		email: z.string().email(),
+		email: z.string().email().toLowerCase(),
 		cognitoMessage: z.string(),
 		cognitoSubject: z.string(),
 	})
