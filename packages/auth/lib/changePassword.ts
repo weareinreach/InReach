@@ -11,14 +11,14 @@ export const changePasswordResponse: ChangePasswordResponse = async (
 		ChallengeName: ChallengeNameType.NEW_PASSWORD_REQUIRED,
 		ClientId,
 		ChallengeResponses: {
-			USERNAME: email,
+			USERNAME: email.toLowerCase(),
 			NEW_PASSWORD: newPassword,
 			SECRET_HASH: generateHash(email),
 		},
 		Session: challengeSession,
 	})
 
-	return parseAuthResponse(response, email)
+	return parseAuthResponse(response, email.toLowerCase())
 }
 
 type ChangePasswordResponse = (

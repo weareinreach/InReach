@@ -17,10 +17,10 @@ export const refreshSession = async (userId: string) => {
 		ClientId,
 		AuthParameters: {
 			REFRESH_TOKEN: RefreshToken,
-			SECRET_HASH: generateHash(email),
+			SECRET_HASH: generateHash(email.toLowerCase()),
 		},
 	})
-	const parsedReponse = await parseAuthResponse(response, email)
+	const parsedReponse = await parseAuthResponse(response, email.toLowerCase())
 	if (parsedReponse.success !== true) {
 		throw new Error('Unable to refresh token')
 	}

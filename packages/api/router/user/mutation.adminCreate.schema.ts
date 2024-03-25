@@ -7,8 +7,8 @@ import { connectOne, connectOneRequired, createManyOptional } from '~api/schemas
 
 export const ZAdminCreateSchema = z
 	.object({
-		id: prefixedId('user').default(generateId('user')),
-		email: z.string().email(),
+		id: prefixedId('user').optional(),
+		email: z.string().email().toLowerCase(),
 		password: z.string(),
 		name: z.string().optional(),
 		image: z.string().url().optional(),
@@ -70,14 +70,14 @@ export const ZAdminCreateSchema = z
 			.optional(),
 	})
 	.transform((data) => {
-		const { id, name, email, password, image, cogintoSubject, cognitoMessage } = data
+		const { id: providedId, name, email, password, image, cogintoSubject, cognitoMessage } = data
 		const permissions = createManyOptional(data?.permissions)
 		const orgPermission = createManyOptional(data?.orgPermission)
 		const locationPermission = createManyOptional(data?.locationPermission)
 		const roles = createManyOptional(data?.roles)
 		const userType = connectOneRequired({ type: data.userType })
 		const langPref = connectOne({ localeCode: data.language })
-
+		const id = providedId ?? generateId('user')
 		const scalarData = {
 			id,
 			name,

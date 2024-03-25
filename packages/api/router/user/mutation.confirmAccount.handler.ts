@@ -11,7 +11,7 @@ export const confirmAccount = async ({ input }: TRPCHandlerParams<TConfirmAccoun
 	const { id } = await prisma.user.findFirstOrThrow({
 		where: {
 			email: {
-				equals: email,
+				equals: email.toLowerCase(),
 				mode: 'insensitive',
 			},
 		},

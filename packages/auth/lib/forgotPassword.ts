@@ -4,7 +4,7 @@ import { ClientId, cognito, generateHash } from './cognitoClient'
 import { getBaseUrl } from './getBaseUrl'
 
 const ForgotPasswordSchema = z.object({
-	email: z.string().email(),
+	email: z.string().email().toLowerCase(),
 	subject: z.string().default('Reset your password'),
 	message: z.string().default('Click the following link to reset your password:'),
 })
@@ -13,8 +13,8 @@ export const forgotPassword = async (data: ForgotPasswordParams) => {
 
 	const response = await cognito.forgotPassword({
 		ClientId,
-		Username: email,
-		SecretHash: generateHash(email),
+		Username: email.toLowerCase(),
+		SecretHash: generateHash(email.toLowerCase()),
 		ClientMetadata: { baseUrl: getBaseUrl(), message, subject },
 	})
 

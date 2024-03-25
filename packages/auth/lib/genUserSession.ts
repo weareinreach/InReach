@@ -4,7 +4,7 @@ import { prisma } from '@weareinreach/db'
 
 export const generateUserSession = async (email: string /*id: string*/): Promise<User> => {
 	const userRecord = await prisma.user.findUniqueOrThrow({
-		where: { email },
+		where: { email: email.toLowerCase() },
 		select: {
 			id: true,
 			email: true,
