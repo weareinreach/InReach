@@ -10,7 +10,7 @@ import { type TDeleteAccountSchema } from './mutation.deleteAccount.schema'
 
 export const deleteAccount = async ({ ctx, input }: TRPCHandlerParams<TDeleteAccountSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
-	const { email } = ctx.session.user
+	const email = ctx.session.user.email.toLowerCase()
 	const cognitoSession = await userLogin(email, input)
 	if (cognitoSession.success) {
 		const successful = await prisma.$transaction(async (tx) => {

@@ -4,7 +4,7 @@ export const confirmAccount = async (email: string, code: string) => {
 	const response = await cognito.confirmSignUp({
 		ClientId,
 		ConfirmationCode: code,
-		Username: email,
+		Username: email.toLowerCase(),
 		SecretHash: generateHash(email),
 	})
 	return response
