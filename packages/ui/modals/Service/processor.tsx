@@ -13,13 +13,25 @@ import { isValidIcon } from '~ui/icon'
 
 import { ModalText } from './ModalText'
 
+type AccessDetailsAPI =
+	| ApiOutput['service']['forServiceModal']['accessDetails']
+	| ApiOutput['service']['forServiceEditDrawer']['accessDetails']
+
+type LocationsAPI =
+	| ApiOutput['service']['forServiceModal']['locations']
+	| ApiOutput['service']['forServiceEditDrawer']['locations']
+
+type AttributesAPI =
+	| ApiOutput['service']['forServiceModal']['attributes']
+	| ApiOutput['service']['forServiceEditDrawer']['attributes']
+
 export const processAccessInstructions = ({
 	accessDetails,
 	locations,
 	t,
 }: {
-	accessDetails: ApiOutput['service']['forServiceModal']['accessDetails']
-	locations: ApiOutput['service']['forServiceModal']['locations']
+	accessDetails: AccessDetailsAPI
+	locations: LocationsAPI
 	t: TFunction
 }): AccessInstructionsOutput => {
 	const output: AccessInstructionsOutput = {
@@ -32,8 +44,8 @@ export const processAccessInstructions = ({
 		publicTransit: null,
 	}
 
-	for (const { supplement } of accessDetails) {
-		const { data, text, id } = supplement
+	for (const item of accessDetails) {
+		const { data, text, supplementId: id } = item
 		const parsed = accessInstructions.getAll().safeParse(data)
 		if (parsed.success) {
 			const { access_type, access_value } = parsed.data
@@ -100,7 +112,7 @@ export const processAttributes = ({
 	locale = 'en',
 	t,
 }: {
-	attributes: ApiOutput['service']['forServiceModal']['attributes']
+	attributes: AttributesAPI
 	locale: string
 	t: TFunction
 }): AttributesOutput => {
@@ -118,8 +130,8 @@ export const processAttributes = ({
 		misc: [],
 		miscWithIcons: [],
 	}
-	for (const { attribute, supplement } of attributes) {
-		const { tsKey, icon, tsNs, id } = attribute
+	for (const attribute of attributes) {
+		const { tsKey, icon, tsNs, supplementId: id } = attribute
 		const namespace = tsKey.split('.').shift() as string
 
 		switch (namespace) {
@@ -139,7 +151,7 @@ export const processAttributes = ({
 				const type = tsKey.split('.').pop() as string
 				switch (type) {
 					case 'elig-age': {
-						const { data, id } = supplement
+						const { data } = attribute
 						const parsed = attributeSupplementSchema.numMinMaxOrRange.safeParse(data)
 						if (!parsed.success) break
 						const { min, max } = parsed.data
@@ -150,7 +162,7 @@ export const processAttributes = ({
 						break
 					}
 					case 'other-describe': {
-						const { text, id } = supplement
+						const { text } = attribute
 						if (!text) break
 						const { key, options } = getFreeText(text)
 						output.clientsServed.targetPop.push(<ModalText key={id}>{t(key, options)}</ModalText>)
@@ -168,7 +180,7 @@ export const processAttributes = ({
 					description: ReactNode[]
 				} = { description: [] }
 
-				const { text, data, id } = supplement
+				const { text, data } = attribute
 				if (text) {
 					const { key, options } = getFreeText(text)
 					costDetails.description.push(<ModalText key={id}>{t(key, options)}</ModalText>)
@@ -199,7 +211,7 @@ export const processAttributes = ({
 			}
 
 			case 'lang': {
-				const { language } = supplement
+				const { language } = attribute
 				if (!language) break
 				const { languageName } = language
 				output.lang.push(languageName)

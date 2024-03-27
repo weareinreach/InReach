@@ -21,6 +21,8 @@ import { Badge } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { Section } from '~ui/components/core/Section'
+import { ContactInfo, hasContactInfo } from '~ui/components/data-display/ContactInfo'
+import { Hours } from '~ui/components/data-display/Hours'
 import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -39,7 +41,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const [drawerOpened, drawerHandler] = useDisclosure(true)
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
-		const { t } = useTranslation(['common', 'gov-dist'])
+		const { t, i18n } = useTranslation(['common', 'gov-dist'])
 		// #region Get existing data/populate form
 		const { data } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
@@ -143,13 +145,19 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 
 		if (!data) return null
 
-		// const { getHelp, publicTransit } = data
-		// 	? processAccessInstructions({
-		// 			accessDetails: data?.accessDetails,
-		// 			locations: data?.locations,
-		// 			t,
-		// 		})
-		// 	: { getHelp: null, publicTransit: null }
+		const { getHelp, publicTransit } = data
+			? processAccessInstructions({
+					accessDetails: data?.accessDetails,
+					locations: data?.locations,
+					t,
+				})
+			: { getHelp: null, publicTransit: null }
+
+		const attributes = processAttributes({
+			attributes: data.attributes,
+			locale: i18n.resolvedLanguage ?? 'en',
+			t,
+		})
 
 		return (
 			<>
@@ -206,14 +214,55 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									{serviceAreas()}
 									{/* {Boolean(geoMap?.size) && } */}
 								</Stack>
-								<Section.Divider title={t('service.get-help')}>{t('service.get-help')}</Section.Divider>
-								<Section.Divider title={t('service.clients-served')}>
-									{t('service.clients-served')}
+								<Section.Divider title={t('service.get-help')}>
+									{hasContactInfo(getHelp) && (
+										<ContactInfo passedData={getHelp} direct order={['phone', 'email', 'website']} />
+									)}
+									{Boolean(data.hours) && <Hours parentId={serviceId} label='service' data={data.hours} />}
 								</Section.Divider>
-								<Section.Divider title={t('service.cost')}>{t('service.cost')}</Section.Divider>
-								<Section.Divider title={t('service.eligibility')}>{t('service.eligibility')}</Section.Divider>
-								<Section.Divider title={t('service.languages')}>{t('service.languages')}</Section.Divider>
-								<Section.Divider title={t('service.extra-info')}>{t('service.extra-info')}</Section.Divider>
+								<Section.Divider title={t('service.clients-served')}>
+									<Section.Sub title={t('service.community-focus')}>
+										{attributes.clientsServed.srvfocus}
+									</Section.Sub>
+									<Section.Sub title={t('service.target-population')}>
+										{attributes.clientsServed.targetPop}
+									</Section.Sub>
+								</Section.Divider>
+								<Section.Divider title={t('service.cost')}>{attributes.cost}</Section.Divider>
+								<Section.Divider title={t('service.eligibility')}>
+									<Section.Sub title={t('service.ages')}>{attributes.eligibility.age}</Section.Sub>
+									<Section.Sub title={t('service.requirements')}>
+										<List>
+											{attributes.eligibility.requirements.map((text, i) => (
+												<List.Item key={`${i}-${text}`}>{text}</List.Item>
+											))}
+										</List>
+									</Section.Sub>
+									<Section.Sub title={t('service.additional-info')}>
+										{attributes.eligibility.freeText}
+									</Section.Sub>
+								</Section.Divider>
+								<Section.Divider title={t('service.languages')}>
+									<Section.Sub title={t('service.languages')}>
+										<List>
+											{attributes.lang.map((lang, i) => (
+												<List.Item key={`${i}-${lang}`}>{lang}</List.Item>
+											))}
+										</List>
+									</Section.Sub>
+								</Section.Divider>
+								<Section.Divider title={t('service.extra-info')}>
+									<Section.Sub key='miscbadges'>
+										<Badge.Group withSeparator={false}>{attributes.miscWithIcons}</Badge.Group>
+									</Section.Sub>
+									<Section.Sub key='misc' title={t('service.additional-info')}>
+										<List>
+											{attributes.misc.map((text, i) => (
+												<List.Item key={`${i}-${text}`}>{text}</List.Item>
+											))}
+										</List>
+									</Section.Sub>
+								</Section.Divider>
 							</Stack>
 						</Drawer.Body>
 					</Drawer.Content>

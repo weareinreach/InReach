@@ -4,6 +4,7 @@ import { Button } from '~ui/components/core/Button'
 import { component } from '~ui/mockData/component'
 import { fieldOpt } from '~ui/mockData/fieldOpt'
 import { organization } from '~ui/mockData/organization'
+import { orgHours } from '~ui/mockData/orgHours'
 import { service } from '~ui/mockData/service'
 
 import { ServiceEditDrawer } from './index'
@@ -31,6 +32,7 @@ export default {
 			fieldOpt.govDistsByCountry,
 			fieldOpt.countryGovDistMap,
 			component.ServiceSelect,
+			orgHours.forHoursDisplay,
 		],
 	},
 	args: {
