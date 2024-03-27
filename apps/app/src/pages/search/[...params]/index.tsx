@@ -23,6 +23,8 @@ import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
+import { CountryAlertBanner } from '@weareinreach/ui/components/core/AlertBanner/CountryAlertBanner.stories'
+import { StateAlertBanner } from '@weareinreach/ui/components/core/AlertBanner/StateAlertBanner.stories'
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
@@ -42,77 +44,6 @@ const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').th
 const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
 )
-
-const stateRiskLevels: Record<string, string> = {
-	FL: 'alerts.search-page-do-not-fly-florida',
-	KS: 'alerts.search-page-high-risk-state',
-	MT: 'alerts.search-page-high-risk-state',
-	OK: 'alerts.search-page-high-risk-state',
-	ND: 'alerts.search-page-high-risk-state',
-	TN: 'alerts.search-page-high-risk-state',
-	UT: 'alerts.search-page-high-risk-state',
-	AL: 'alerts.search-page-high-risk-state',
-	AR: 'alerts.search-page-high-risk-state',
-	IA: 'alerts.search-page-high-risk-state',
-	IN: 'alerts.search-page-high-risk-state',
-	LA: 'alerts.search-page-high-risk-state',
-	MO: 'alerts.search-page-high-risk-state',
-	MS: 'alerts.search-page-high-risk-state',
-	NE: 'alerts.search-page-high-risk-state',
-	OH: 'alerts.search-page-high-risk-state',
-	SC: 'alerts.search-page-high-risk-state',
-	TX: 'alerts.search-page-high-risk-state',
-	WV: 'alerts.search-page-high-risk-state',
-	AK: 'alerts.search-page-med-risk-state',
-	GA: 'alerts.search-page-med-risk-state',
-	ID: 'alerts.search-page-med-risk-state',
-	KY: 'alerts.search-page-med-risk-state',
-	NC: 'alerts.search-page-med-risk-state',
-	NH: 'alerts.search-page-med-risk-state',
-	SD: 'alerts.search-page-med-risk-state',
-	WY: 'alerts.search-page-med-risk-state',
-	AZ: 'alerts.search-page-low-risk-state',
-	DE: 'alerts.search-page-low-risk-state',
-	ME: 'alerts.search-page-low-risk-state',
-	MI: 'alerts.search-page-low-risk-state',
-	NV: 'alerts.search-page-low-risk-state',
-	PA: 'alerts.search-page-low-risk-state',
-	RI: 'alerts.search-page-low-risk-state',
-	VA: 'alerts.search-page-low-risk-state',
-	WI: 'alerts.search-page-low-risk-state',
-	CA: 'alerts.search-page-most-protective-state',
-	CO: 'alerts.search-page-most-protective-state',
-	CT: 'alerts.search-page-most-protective-state',
-	DC: 'alerts.search-page-most-protective-state',
-	HI: 'alerts.search-page-most-protective-state',
-	IL: 'alerts.search-page-most-protective-state',
-	MA: 'alerts.search-page-most-protective-state',
-	MD: 'alerts.search-page-most-protective-state',
-	MN: 'alerts.search-page-most-protective-state',
-	NJ: 'alerts.search-page-most-protective-state',
-	NM: 'alerts.search-page-most-protective-state',
-	NY: 'alerts.search-page-most-protective-state',
-	OR: 'alerts.search-page-most-protective-state',
-	VT: 'alerts.search-page-most-protective-state',
-	WA: 'alerts.search-page-most-protective-state',
-}
-const protectiveStates = [
-	'CA',
-	'CO',
-	'CT',
-	'DC',
-	'HI',
-	'IL',
-	'MA',
-	'MD',
-	'MN',
-	'NJ',
-	'NM',
-	'NY',
-	'OR',
-	'VT',
-	'WA',
-]
 
 const PageIndexSchema = z.coerce.number().default(1)
 
@@ -156,35 +87,6 @@ const useStyles = createStyles((theme) => ({
 		[theme.fn.smallerThan('sm')]: {
 			height: rem(80),
 		},
-	},
-	searchBanner: {
-		...theme.other.utilityFonts.utility1,
-		color: theme.other.colors.secondary.black,
-		width: '100%',
-		maxWidth: '100%',
-		height: 'auto',
-		display: 'flex',
-		alignItems: 'flex-start',
-		justifyContent: 'center',
-		textAlign: 'center',
-		position: 'relative',
-		borderRadius: rem(8),
-		padding: `${rem(12)} ${rem(16)} ${rem(16)}`,
-		marginBottom: rem(32),
-		[theme.fn.largerThan('sm')]: {
-			marginTop: rem(-40),
-		},
-		[theme.fn.largerThan('md')]: {
-			marginTop: rem(-20),
-		},
-		[theme.fn.smallerThan('sm')]: {
-			height: rem(80),
-		},
-	},
-	emoji: {
-		marginRight: rem(8),
-		verticalAlign: 'top',
-		display: 'block',
 	},
 }))
 
@@ -321,7 +223,7 @@ const SearchResults = () => {
 
 	if (error) return <>Error</>
 	const showCountryAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
-	const showStateAlertMessage = true
+	const showStateAlertMessage = country === 'US'
 
 	return (
 		<>
@@ -329,45 +231,10 @@ const SearchResults = () => {
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
 			{showCountryAlertMessage && (
-				<Box className={classes.banner}>
-					<Text variant={variants.Text.utility1white}>
-						<Trans
-							i18nKey='alerts.search-page-legislative-map'
-							ns='common'
-							components={{
-								ATLink: (
-									<Link
-										external
-										variant={variants.Link.inheritStyle}
-										href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-cd3'
-										target='_blank'
-									></Link>
-								),
-							}}
-						/>
-					</Text>
-				</Box>
-			)}
-
-			{showStateAlertMessage && (
-				<Box className={classes.banner}>
-					<Text variant={variants.Text.utility1white}>
-						<Trans
-							i18nKey='alerts.search-page-legislative-map'
-							ns='common'
-							components={{
-								ATLink: (
-									<Link
-										external
-										variant={variants.Link.inheritStyle}
-										href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-96f'
-										target='_blank'
-									></Link>
-								),
-							}}
-						/>
-					</Text>
-				</Box>
+				<CountryAlertBanner
+					variant={variants.Text.utility1white}
+					variantInheritStyle={variants.Link.inheritStyle}
+				></CountryAlertBanner>
 			)}
 
 			<Grid.Col
@@ -424,43 +291,14 @@ const SearchResults = () => {
 						<NoResults data={crisisResults} />
 					) : (
 						<>
-							{stateRiskLevels[stateInUS] && (
-								<div>
-									<Box
-										className={classes.searchBanner}
-										style={{
-											backgroundColor: protectiveStates.includes(stateInUS)
-												? theme.other.colors.secondary.cornflower
-												: theme.fn.lighten(theme.other.colors.tertiary.pink, 0.3),
-										}}
-									>
-										<div className={classes.emoji}>🔔</div>
-										<Text
-											variant={
-												protectiveStates.includes(stateInUS)
-													? variants.Text.utility1white
-													: variants.Text.utility1
-											}
-										>
-											<Trans
-												i18nKey={stateRiskLevels[stateInUS]}
-												ns='common'
-												components={{
-													ATLink: (
-														<Link
-															external
-															variant={variants.Link.inheritStyle}
-															href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-96f'
-															target='_blank'
-														></Link>
-													),
-												}}
-											/>
-										</Text>
-									</Box>
-								</div>
-							)}
-
+							<StateAlertBanner
+								stateInUS={stateInUS}
+								variantInheritStyle={variants.Link.inheritStyle}
+								variantBlack={variants.Text.utility1}
+								variantWhite={variants.Text.utility1white}
+								infoColor={theme.other.colors.secondary.cornflower}
+								warningColor={theme.fn.lighten(theme.other.colors.tertiary.pink, 0.3)}
+							></StateAlertBanner>
 							{resultDisplay}
 							<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 						</>
