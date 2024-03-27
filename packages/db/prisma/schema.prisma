@@ -771,6 +771,7 @@ model FreeText {
   updatedAt DateTime @updatedAt
 
   //@@schema("org")
+  LocationAlert LocationAlert[]
 
   @@unique([key, ns])
   @@index([key])
@@ -1281,6 +1282,7 @@ model Country {
 
   internalNotes InternalNote[]
   //@@schema("system")
+  LocationAlert LocationAlert[]
 
   @@unique([tsKey, tsNs])
   @@unique([demonymKey, demonymNs])
@@ -1333,6 +1335,7 @@ model GovDist {
 
   internalNotes InternalNote[]
   //@@schema("system")
+  LocationAlert LocationAlert[]
 
   @@unique([tsKey, tsNs])
   @@index([countryId])
@@ -1382,6 +1385,23 @@ model GeoData {
   @@index([abbrev])
   @@index([iso, abbrev])
   @@index([iso, adminLevel])
+}
+
+model LocationAlert {
+  id     String   @id @default(cuid())
+  active Boolean  @default(true)
+  text   FreeText @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  textId String
+
+  country   Country? @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId String?
+  govDist   GovDist? @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistId String?
+
+  @@index([countryId, textId])
+  @@index([govDistId, textId])
+  @@index([active, countryId, textId])
+  @@index([active, govDistId, textId])
 }
 
 /// Languages - ETF BCP 47 language tag
