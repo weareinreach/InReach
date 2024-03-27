@@ -57,4 +57,13 @@ export const componentRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	LocationBasedAlertBanner: publicProcedure
+		.input(schema.ZLocationBasedAlertBannerSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('LocationBasedAlertBanner'),
+				() => import('./query.LocationBasedAlertBanner.handler')
+			)
+			return handler(opts)
+		}),
 })
