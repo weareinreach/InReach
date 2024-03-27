@@ -39,7 +39,7 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 		attributes: rawAttributes,
 		phones,
 		emails,
-		locations,
+		// locations,
 		services,
 		serviceAreas,
 		hours,
@@ -55,7 +55,7 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 		description: description?.tsKey,
 		phones: phones.map(({ phone }) => phone.id),
 		emails: emails.map(({ email }) => email.id),
-		locations: locations.map(({ orgLocationId }) => orgLocationId),
+		// locations: locations.map(({ orgLocationId }) => orgLocationId),
 		services: services.map(({ tag }) => tag.id),
 		hours: formatHours.process(hours),
 		serviceAreas: serviceAreas
