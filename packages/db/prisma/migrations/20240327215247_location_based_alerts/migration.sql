@@ -1,8 +1,16 @@
+-- CreateEnum
+CREATE TYPE "LocationAlertLevel" AS ENUM(
+	'INFO',
+	'WARN',
+	'CRITICAL'
+);
+
 -- CreateTable
 CREATE TABLE "LocationAlert"(
 	"id" text NOT NULL,
 	"active" boolean NOT NULL DEFAULT TRUE,
 	"textId" text NOT NULL,
+	"level" "LocationAlertLevel" NOT NULL,
 	"countryId" text,
 	"govDistId" text,
 	CONSTRAINT "LocationAlert_pkey" PRIMARY KEY ("id")

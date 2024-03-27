@@ -1388,10 +1388,11 @@ model GeoData {
 }
 
 model LocationAlert {
-  id     String   @id @default(cuid())
-  active Boolean  @default(true)
-  text   FreeText @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id     String             @id @default(cuid())
+  active Boolean            @default(true)
+  text   FreeText           @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   textId String
+  level  LocationAlertLevel
 
   country   Country? @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   countryId String?
@@ -1402,6 +1403,12 @@ model LocationAlert {
   @@index([govDistId, textId])
   @@index([active, countryId, textId])
   @@index([active, govDistId, textId])
+}
+
+enum LocationAlertLevel {
+  INFO
+  WARN
+  CRITICAL
 }
 
 /// Languages - ETF BCP 47 language tag
