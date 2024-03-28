@@ -9,8 +9,9 @@ import { type AppProps, type NextWebVitalsMetric } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 import { type Session } from 'next-auth'
-import { appWithTranslation, type UserConfig } from 'next-i18next'
+import { appWithTranslation } from 'next-i18next'
 import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 
@@ -51,26 +52,23 @@ export function reportWebVitals(stats: NextWebVitalsMetric) {
 	appEvent.webVitals(stats)
 }
 
+const PageContent = ({ Component, ...pageProps }: AppPropsWithGridSwitch) => {
+	const router = useRouter()
+	const autoResetState = Component.autoResetState ? { key: router.asPath } : {}
+	return Component.omitGrid ? (
+		<Component {...autoResetState} {...pageProps} />
+	) : (
+		<BodyGrid>
+			<Component {...autoResetState} {...pageProps} />
+		</BodyGrid>
+	)
+}
+
 const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	const {
-		Component,
-		pageProps: { session, ...pageProps },
+		pageProps: { session },
 	} = appProps
-
-	const router = useRouter()
-
 	const { isMobile, isTablet } = useScreenSize()
-
-	const autoResetState = Component.autoResetState ? { key: router.asPath } : {}
-
-	const PageContent = () =>
-		Component.omitGrid ? (
-			<Component {...autoResetState} {...pageProps} />
-		) : (
-			<BodyGrid>
-				<Component {...autoResetState} {...pageProps} />
-			</BodyGrid>
-		)
 
 	return (
 		<>
@@ -80,9 +78,14 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 			<Providers session={session}>
 				<DefaultSeo {...defaultSEO} />
 				<GoogleAnalytics trackPageViews defaultConsent='granted' />
+				<Script id='gtm_conversion'>
+					{`
+						gtag?.('config','G-RL8CR7T4EP')
+					`}
+				</Script>
 				<PageLoadProgress />
 				<Navbar />
-				<PageContent />
+				<PageContent {...appProps} />
 				{(isMobile || isTablet) && <Space h={80} />}
 				<Footer />
 				<Notifications transitionDuration={500} />
