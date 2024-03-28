@@ -27,6 +27,7 @@ import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { AttributeModal } from '~ui/modals/dataPortal/Attributes'
 import { processAccessInstructions, processAttributes } from '~ui/modals/Service/processor'
 import { DataViewer } from '~ui/other/DataViewer'
 
@@ -167,9 +168,20 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 						<Drawer.Header>
 							<Group position='apart' w='100%'>
 								<Breadcrumb option='close' onClick={drawerHandler.close} />
-								<Button variant={variants.Button.primaryLg} leftIcon={<Icon icon='carbon:save' />}>
-									Save
-								</Button>
+								<Group>
+									<AttributeModal
+										component={Button}
+										variant={variants.Button.secondaryLg}
+										leftIcon={<Icon icon='carbon:add-filled' />}
+										parentRecord={{ serviceId: data.id }}
+										attachesTo={['SERVICE']}
+									>
+										Add Attribute
+									</AttributeModal>
+									<Button variant={variants.Button.primaryLg} leftIcon={<Icon icon='carbon:save' />}>
+										Save
+									</Button>
+								</Group>
 							</Group>
 						</Drawer.Header>
 						<Drawer.Body className={classes.drawerBody}>
@@ -218,7 +230,10 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									{hasContactInfo(getHelp) && (
 										<ContactInfo passedData={getHelp} direct order={['phone', 'email', 'website']} />
 									)}
-									{Boolean(data.hours) && <Hours parentId={serviceId} label='service' data={data.hours} />}
+									{publicTransit}
+									{Boolean(Object.values(data.hours).length) && (
+										<Hours parentId={serviceId} label='service' data={data.hours} />
+									)}
 								</Section.Divider>
 								<Section.Divider title={t('service.clients-served')}>
 									<Section.Sub title={t('service.community-focus')}>
@@ -283,70 +298,4 @@ export const ServiceEditDrawer = createPolymorphicComponent<'button', ServiceEdi
 
 interface ServiceEditDrawerProps extends ButtonProps {
 	serviceId: string
-}
-
-interface FreeText {
-	id?: string
-	key: string
-	ns: string
-	tsKey: {
-		text: string | null
-		crowdinId: number | null
-	}
-}
-interface Attribute {
-	attribute: {
-		categories?: string[]
-		id: string
-		tsKey: string
-		tsNs: string
-		icon?: string | null
-	}
-	supplement: {
-		id: string
-		active?: boolean
-		data: unknown
-		boolean?: boolean | null
-		countryId?: string | null
-		govDistId?: string | null
-		languageId?: string | null
-		text: FreeText | null
-	}
-}
-interface FormData {
-	id: string
-	published: boolean
-	deleted: boolean
-	serviceName: FreeText | null
-	description: FreeText | null
-	hours: {
-		id: string
-		dayIndex: number
-		start: Date
-		end: Date
-		closed: boolean
-		tz: string | null
-	}[]
-	phones: string[]
-	emails: string[]
-	locations: string[]
-	services: {
-		id: string
-		primaryCategoryId: string
-	}[]
-	serviceAreas: {
-		id: string
-		countries: string[]
-		districts: string[]
-	} | null
-	attributes: Attribute[]
-	accessDetails: {
-		id?: string
-		attribute: { id: string; tsKey: string; tsNs: string }
-		supplement: {
-			id: string
-			data: unknown
-			text: { id?: string; key: string; ns: string; tsKey: { text: string; crowdinId: number | null } } | null
-		}
-	}[]
 }
