@@ -29,6 +29,7 @@ export const idPrefix = {
 	govDistType: 'gdty',
 	internalNote: 'note',
 	language: 'lang',
+	locationAlert: 'alrt',
 	organization: 'orgn',
 	orgEmail: 'oeml',
 	orgHours: 'ohrs',

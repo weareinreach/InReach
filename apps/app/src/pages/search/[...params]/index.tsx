@@ -23,6 +23,8 @@ import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
+import { CountryAlertBanner } from '@weareinreach/ui/components/core/AlertBanner/CountryAlertBanner.stories'
+import { StateAlertBanner } from '@weareinreach/ui/components/core/AlertBanner/StateAlertBanner.stories'
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
@@ -174,6 +176,16 @@ const SearchResults = () => {
 		}
 	}, [data, loadingPage])
 
+	const [stateInUS, setStateInUS] = useState<string>('')
+
+	useEffect(() => {
+		if (searchState.searchTerm?.slice(-3) == 'USA') {
+			setStateInUS(searchState.searchTerm?.split(', ')[1] || '')
+		} else {
+			setStateInUS('')
+		}
+	}, [searchState.searchTerm])
+
 	useEffect(
 		() => {
 			if (typeof router.query.page === 'string' && searchState.page !== router.query.page)
@@ -210,38 +222,28 @@ const SearchResults = () => {
 	}, [])
 
 	if (error) return <>Error</>
-	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
+	const showCountryAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
+	const showStateAlertMessage = country === 'US'
 
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-			{showAlertMessage && (
-				<Box className={classes.banner}>
-					<Text variant={variants.Text.utility1white}>
-						<Trans
-							i18nKey='alerts.search-page-legislative-map'
-							ns='common'
-							components={{
-								ATLink: (
-									<Link
-										external
-										variant={variants.Link.inheritStyle}
-										href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-cd3'
-										target='_blank'
-									></Link>
-								),
-							}}
-						/>
-					</Text>
-				</Box>
+			{showCountryAlertMessage && (
+				<CountryAlertBanner
+					variant={variants.Text.utility1white}
+					variantInheritStyle={variants.Link.inheritStyle}
+				></CountryAlertBanner>
 			)}
+
 			<Grid.Col
 				xs={12}
 				sm={12}
 				pb={30}
-				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
+				{...(showCountryAlertMessage || showStateAlertMessage
+					? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } }
+					: {})}
 			>
 				<Group spacing={20} w='100%' className={classes.searchControls}>
 					<Group maw={{ md: '50%', base: '100%' }} w='100%'>
@@ -249,13 +251,17 @@ const SearchResults = () => {
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
-							resetInitialValue={() => {
-								searchStateActions.setSearchTerm('')
+							setSearchValue={(newValue: string) => {
+								searchStateActions.setSearchTerm(newValue)
 							}}
 						/>
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
-						<ServiceFilter resultCount={resultCount} isFetching={searchIsFetching} />
+						<ServiceFilter
+							resultCount={resultCount}
+							isFetching={searchIsFetching}
+							current={searchState.services}
+						/>
 						{/* @ts-expect-error `component` prop not needed.. */}
 						<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
 							{t('more.filters')}
@@ -279,16 +285,26 @@ const SearchResults = () => {
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 				/>
 			</Grid.Col>
-			<Grid.Col xs={12} sm={8} md={8}>
-				{data?.resultCount === 0 && crisisResults ? (
-					<NoResults data={crisisResults} />
-				) : (
-					<>
-						{resultDisplay}
-						<Pagination total={getSearchResultPageCount(data?.resultCount)} />
-					</>
-				)}
-			</Grid.Col>
+			<>
+				<Grid.Col xs={12} sm={8} md={8}>
+					{data?.resultCount === 0 && crisisResults ? (
+						<NoResults data={crisisResults} />
+					) : (
+						<>
+							<StateAlertBanner
+								stateInUS={stateInUS}
+								variantInheritStyle={variants.Link.inheritStyle}
+								variantBlack={variants.Text.utility1}
+								variantWhite={variants.Text.utility1white}
+								infoColor={theme.other.colors.secondary.cornflower}
+								warningColor={theme.fn.lighten(theme.other.colors.tertiary.pink, 0.3)}
+							></StateAlertBanner>
+							{resultDisplay}
+							<Pagination total={getSearchResultPageCount(data?.resultCount)} />
+						</>
+					)}
+				</Grid.Col>
+			</>
 		</>
 	)
 }

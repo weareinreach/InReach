@@ -143,7 +143,7 @@ export const SearchBox = ({
 	initialValue = '',
 	pinToLeft,
 	placeholderTextKey,
-	resetInitialValue,
+	setSearchValue: setSearchValue,
 }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
@@ -181,6 +181,7 @@ export const SearchBox = ({
 			(!autocompleteData?.results?.length && autocompleteLoading && notBlank(search))
 		) {
 			setSearchLoading(true)
+			setSearchValue?.(search)
 			setResults([{ value: search, label: search, fetching: true }])
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -244,7 +245,7 @@ export const SearchBox = ({
 				onClick={() => {
 					form.reset()
 					form.values.search = ''
-					resetInitialValue?.()
+					setSearchValue?.('')
 				}}
 			>
 				<Text>{t('clear')}</Text>
@@ -402,7 +403,7 @@ type SearchBoxProps = {
 	initialValue?: string
 	pinToLeft?: boolean
 	placeholderTextKey?: string
-	resetInitialValue?: () => void
+	setSearchValue?: (newValue: string) => void
 }
 type FormValues = {
 	search: string
