@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { transformer } from '@weareinreach/util/transformer'
 import { Link } from '~ui/components/core'
 import { Badge } from '~ui/components/core/Badge'
+import { ServiceEditDrawer } from '~ui/components/data-portal/ServiceEditDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useEditMode } from '~ui/hooks/useEditMode'
 import { useScreenSize } from '~ui/hooks/useScreenSize'
@@ -73,21 +74,11 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 					)
 
 					return isEditMode ? (
-						<Link
-							href={{
-								pathname: '/org/[slug]/[orgLocationId]/edit/[orgServiceId]',
-								query: {
-									slug,
-									orgLocationId: router.query.orgLocationId as string,
-									orgServiceId: service.id,
-								},
-							}}
-							variant={variants.Link.inheritStyle}
-						>
+						<ServiceEditDrawer key={service.id} serviceId={service.id} variant={variants.Link.inheritStyle}>
 							<Group noWrap position='apart' className={classes.group}>
 								{children}
 							</Group>
-						</Link>
+						</ServiceEditDrawer>
 					) : (
 						<ServiceModal
 							key={service.id}
