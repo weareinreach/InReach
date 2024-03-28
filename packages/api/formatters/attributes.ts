@@ -1,3 +1,5 @@
+import { type Simplify } from 'type-fest'
+
 import { type Prisma } from '@weareinreach/db'
 
 export const formatAttributes = {
@@ -16,19 +18,35 @@ export const formatAttributes = {
 					select: {
 						id: true,
 						tag: true,
-						// tsKey: true,
-						// tsNs: true,
-						// icon: true,
-						// iconBg: true,
-						categories: { select: { category: { select: { tag: true, ns: true } } } },
+						tsKey: true,
+						tsNs: true,
+						icon: true,
+						iconBg: true,
+						showOnLocation: true,
+						categories: { select: { category: { select: { tag: true, icon: true, ns: true } } } },
+						_count: { select: { parents: true, children: true } },
 					},
 				},
 				active: true,
 				countryId: true,
+				country: {
+					select: {
+						cca2: true,
+						id: true,
+						name: true,
+					},
+				},
 				data: true,
 				govDistId: true,
+				govDist: { select: { tsKey: true, tsNs: true, abbrev: true, id: true } },
 				id: true,
 				languageId: true,
+				language: {
+					select: {
+						languageName: true,
+						nativeName: true,
+					},
+				},
 				text: { select: { tsKey: { select: { key: true, text: true, ns: true } } } },
 				boolean: true,
 			},
@@ -82,54 +100,102 @@ export const formatAttributes = {
 }
 
 type ReturnedData = {
+	boolean: boolean | null
 	attribute: {
 		id: string
+		_count: {
+			children: number
+			parents: number
+		}
 		tag: string
-		// tsKey: string
-		// tsNs: string
+		tsKey: string
+		tsNs: string
 		categories: {
 			category: {
 				tag: string
 				ns: string
+				icon: string | null
 			}
 		}[]
-		// icon: string | null
-		// iconBg: string | null
+		icon: string | null
+		iconBg: string | null
+		showOnLocation: boolean | null
 	}
-	boolean: boolean | null
-	id: string
+	country: {
+		id: string
+		name: string
+		cca2: string
+	} | null
+	govDist: {
+		id: string
+		tsKey: string
+		tsNs: string
+		abbrev: string | null
+	} | null
+	language: {
+		languageName: string
+		nativeName: string
+	} | null
 	data: Prisma.JsonValue
+	id: string
 	active: boolean
 	text: {
 		tsKey: {
 			key: string
-			text: string
 			ns: string
+			text: string
 		}
 	} | null
-	countryId: string | null
 	govDistId: string | null
+	countryId: string | null
 	languageId: string | null
 }[]
 
 type DataOutput = {
-	text: {
-		key: string
-		text: string
-		ns: string
-	} | null
-	boolean: boolean | null
-	data: Prisma.JsonValue
-	active: boolean
-	countryId: string | null
-	govDistId: string | null
-	languageId: string | null
-	category: string
-	tag: string
+	// ids
 	attributeId: string
 	supplementId: string
+	// attribute
+	category: string
+	_count: {
+		children: number
+		parents: number
+	}
+	tag: string
+	tsKey: string
+	tsNs: string
+	icon: string | null
+	iconBg: string | null
+	showOnLocation: boolean | null
+	// supplement
+	boolean: boolean | null
+	country: {
+		id: string
+		name: string
+		cca2: string
+	} | null
+	govDist: {
+		id: string
+		tsKey: string
+		tsNs: string
+		abbrev: string | null
+	} | null
+	language: {
+		languageName: string
+		nativeName: string
+	} | null
+	data: Prisma.JsonValue
+	active: boolean
+	govDistId: string | null
+	countryId: string | null
+	languageId: string | null
+	text: {
+		key: string
+		ns: string
+		text: string
+	} | null
 }
 type ReturnSegmented = {
-	attributes: DataOutput[]
-	accessDetails: DataOutput[]
+	attributes: Simplify<DataOutput>[]
+	accessDetails: Simplify<DataOutput>[]
 }

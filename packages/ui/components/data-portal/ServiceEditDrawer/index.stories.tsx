@@ -1,11 +1,13 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
+import { component } from '~ui/mockData/component'
 import { fieldOpt } from '~ui/mockData/fieldOpt'
 import { organization } from '~ui/mockData/organization'
+import { orgHours } from '~ui/mockData/orgHours'
 import { service } from '~ui/mockData/service'
 
-import { ServiceEditDrawer } from './ServiceEditDrawer'
+import { ServiceEditDrawer } from './index'
 
 export default {
 	title: 'Data Portal/Drawers/Service Edit',
@@ -29,6 +31,8 @@ export default {
 			service.getOptions,
 			fieldOpt.govDistsByCountry,
 			fieldOpt.countryGovDistMap,
+			component.ServiceSelect,
+			orgHours.forHoursDisplay,
 		],
 	},
 	args: {

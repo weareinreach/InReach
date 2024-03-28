@@ -1,0 +1,352 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	Drawer,
+	Group,
+	List,
+	Stack,
+	Text,
+	Title,
+} from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { useTranslation } from 'next-i18next'
+import { forwardRef, type ReactNode } from 'react'
+import { useForm } from 'react-hook-form'
+import { Textarea, TextInput } from 'react-hook-form-mantine'
+import invariant from 'tiny-invariant'
+
+import { Badge } from '~ui/components/core/Badge'
+import { Breadcrumb } from '~ui/components/core/Breadcrumb'
+import { Button } from '~ui/components/core/Button'
+import { Section } from '~ui/components/core/Section'
+import { ContactInfo, hasContactInfo } from '~ui/components/data-display/ContactInfo'
+import { Hours } from '~ui/components/data-display/Hours'
+import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
+import { useCustomVariant } from '~ui/hooks'
+import { Icon } from '~ui/icon'
+import { trpc as api } from '~ui/lib/trpcClient'
+import { processAccessInstructions, processAttributes } from '~ui/modals/Service/processor'
+import { DataViewer } from '~ui/other/DataViewer'
+
+import { FormSchema, type TFormSchema } from './schemas'
+import { useStyles } from './styles'
+import { InlineTextInput } from '../InlineTextInput'
+
+const isObject = (x: unknown): x is object => typeof x === 'object'
+
+const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
+	({ serviceId, ...props }, ref) => {
+		const [drawerOpened, drawerHandler] = useDisclosure(true)
+		const { classes } = useStyles()
+		const variants = useCustomVariant()
+		const { t, i18n } = useTranslation(['common', 'gov-dist'])
+		// #region Get existing data/populate form
+		const { data } = api.service.forServiceEditDrawer.useQuery(serviceId, {
+			refetchOnWindowFocus: false,
+		})
+		const form = useForm<TFormSchema>({
+			resolver: zodResolver(FormSchema),
+			values: data,
+		})
+		const dirtyFields = {
+			name: isObject(form.formState.dirtyFields.name) ? form.formState.dirtyFields.name.text : false,
+			description: isObject(form.formState.dirtyFields.description)
+				? form.formState.dirtyFields.description.text
+				: false,
+			services: form.formState.dirtyFields.services ?? false,
+		}
+
+		// #endregion
+
+		// #region Get all available service options & filter selected
+		const { data: allServices } = api.service.getOptions.useQuery(undefined, { refetchOnWindowFocus: false })
+
+		const activeServices = form.watch('services') ?? []
+
+		// #endregion
+
+		// #region Get service area options
+		const { data: geoMap } = api.fieldOpt.countryGovDistMap.useQuery(undefined, {
+			refetchOnWindowFocus: false,
+		})
+		const serviceAreas = () => {
+			const serviceAreaObj: Record<string, ReactNode[]> = {}
+			const { countries, districts } = form.watch('serviceAreas') ?? {}
+			if (!geoMap) return null
+			const countryIdRegex = /^ctry_.*/
+			const distIdRegex = /^gdst_.*/
+
+			const processCountry = (country: string) => {
+				serviceAreaObj[country] ??= []
+				const array = serviceAreaObj[country]
+				invariant(array)
+				const countryDetails = geoMap.get(country)
+				if (!countryDetails) return
+				const item = (
+					<List.Item key={country}>
+						<Text variant={variants.Text.utility4}>
+							All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
+						</Text>
+					</List.Item>
+				)
+				array.push(item)
+			}
+			const processDistrict = (district: string) => {
+				const govDist = geoMap.get(district)
+				const country = govDist?.parent?.parent?.id ?? govDist?.parent?.id ?? ''
+				if (!countryIdRegex.test(country) || !govDist) return
+				serviceAreaObj[country] ??= []
+				const array = serviceAreaObj[country]
+				invariant(array)
+				const parent = govDist.parent?.id ?? ''
+				const parentDist = geoMap.get(parent)
+				const item =
+					!distIdRegex.test(parent) || !parentDist ? (
+						<List.Item key={district}>
+							<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
+						</List.Item>
+					) : (
+						<List.Item key={district}>
+							<Text variant={variants.Text.utility4}>
+								{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
+							</Text>
+						</List.Item>
+					)
+				array.push(item)
+			}
+
+			if (countries?.length) {
+				for (const country of countries) {
+					processCountry(country)
+				}
+			}
+			if (districts?.length) {
+				for (const district of districts) {
+					processDistrict(district)
+				}
+			}
+			return Object.entries(serviceAreaObj)?.map(([key, value]) => {
+				const country = geoMap.get(key)
+				if (!country) return null
+				return (
+					<Stack key={country.id} spacing={0}>
+						<Title order={3}>{t(country.tsKey, { ns: country.tsNs })}</Title>
+						<List className={classes.badgeGroup} icon={<Icon icon='carbon:checkmark' height={14} />}>
+							{value}
+						</List>
+					</Stack>
+				)
+			})
+		}
+
+		// #endregion
+
+		if (!data) return null
+
+		const { getHelp, publicTransit } = data
+			? processAccessInstructions({
+					accessDetails: data?.accessDetails,
+					locations: data?.locations,
+					t,
+				})
+			: { getHelp: null, publicTransit: null }
+
+		const attributes = processAttributes({
+			attributes: data.attributes,
+			locale: i18n.resolvedLanguage ?? 'en',
+			t,
+		})
+
+		return (
+			<>
+				<Drawer.Root onClose={drawerHandler.close} opened={drawerOpened} position='right'>
+					<Drawer.Overlay />
+					<Drawer.Content className={classes.drawerContent}>
+						<Drawer.Header>
+							<Group position='apart' w='100%'>
+								<Breadcrumb option='close' onClick={drawerHandler.close} />
+								<Button variant={variants.Button.primaryLg} leftIcon={<Icon icon='carbon:save' />}>
+									Save
+								</Button>
+							</Group>
+						</Drawer.Header>
+						<Drawer.Body className={classes.drawerBody}>
+							<Stack>
+								<InlineTextInput
+									component={TextInput<TFormSchema>}
+									label='Service Name'
+									name='name.text'
+									control={form.control}
+									fontSize='h2'
+									data-isDirty={dirtyFields.name}
+								/>
+								<InlineTextInput
+									fontSize='utility4'
+									component={Textarea<TFormSchema>}
+									label='Description'
+									name='description.text'
+									control={form.control}
+									data-isDirty={dirtyFields.description}
+									autosize
+								/>
+								<Stack spacing={10}>
+									<Text variant={variants.Text.utility1}>Services</Text>
+									<ServiceSelect name='services' control={form.control} data-isDirty={dirtyFields.services}>
+										<Badge.Group>
+											{activeServices.map((serviceId) => {
+												const service = allServices?.find((s) => s.id === serviceId)
+												if (!service) return null
+												return (
+													<Badge.Service key={service.id}>
+														{t(service.tsKey, { ns: service.tsNs })}
+													</Badge.Service>
+												)
+											})}
+										</Badge.Group>
+									</ServiceSelect>
+								</Stack>
+								{/* <Card> */}
+
+								<Text variant={variants.Text.utility1}>Coverage Area</Text>
+								<Stack className={classes.dottedCard}>
+									{serviceAreas()}
+									{/* {Boolean(geoMap?.size) && } */}
+								</Stack>
+								<Section.Divider title={t('service.get-help')}>
+									{hasContactInfo(getHelp) && (
+										<ContactInfo passedData={getHelp} direct order={['phone', 'email', 'website']} />
+									)}
+									{Boolean(data.hours) && <Hours parentId={serviceId} label='service' data={data.hours} />}
+								</Section.Divider>
+								<Section.Divider title={t('service.clients-served')}>
+									<Section.Sub title={t('service.community-focus')}>
+										{attributes.clientsServed.srvfocus}
+									</Section.Sub>
+									<Section.Sub title={t('service.target-population')}>
+										{attributes.clientsServed.targetPop}
+									</Section.Sub>
+								</Section.Divider>
+								<Section.Divider title={t('service.cost')}>{attributes.cost}</Section.Divider>
+								<Section.Divider title={t('service.eligibility')}>
+									<Section.Sub title={t('service.ages')}>{attributes.eligibility.age}</Section.Sub>
+									<Section.Sub title={t('service.requirements')}>
+										<List>
+											{attributes.eligibility.requirements.map((text, i) => (
+												<List.Item key={`${i}-${text}`}>{text}</List.Item>
+											))}
+										</List>
+									</Section.Sub>
+									<Section.Sub title={t('service.additional-info')}>
+										{attributes.eligibility.freeText}
+									</Section.Sub>
+								</Section.Divider>
+								<Section.Divider title={t('service.languages')}>
+									<Section.Sub title={t('service.languages')}>
+										<List>
+											{attributes.lang.map((lang, i) => (
+												<List.Item key={`${i}-${lang}`}>{lang}</List.Item>
+											))}
+										</List>
+									</Section.Sub>
+								</Section.Divider>
+								<Section.Divider title={t('service.extra-info')}>
+									<Section.Sub key='miscbadges'>
+										<Badge.Group withSeparator={false}>{attributes.miscWithIcons}</Badge.Group>
+									</Section.Sub>
+									<Section.Sub key='misc' title={t('service.additional-info')}>
+										<List>
+											{attributes.misc.map((text, i) => (
+												<List.Item key={`${i}-${text}`}>{text}</List.Item>
+											))}
+										</List>
+									</Section.Sub>
+								</Section.Divider>
+							</Stack>
+						</Drawer.Body>
+					</Drawer.Content>
+				</Drawer.Root>
+				<Stack>
+					<DataViewer value={data} />
+					<Box component='button' onClick={drawerHandler.open} ref={ref} {...props} />
+				</Stack>
+			</>
+		)
+	}
+)
+_ServiceEditDrawer.displayName = 'ServiceEditDrawer'
+
+export const ServiceEditDrawer = createPolymorphicComponent<'button', ServiceEditDrawerProps>(
+	_ServiceEditDrawer
+)
+
+interface ServiceEditDrawerProps extends ButtonProps {
+	serviceId: string
+}
+
+interface FreeText {
+	id?: string
+	key: string
+	ns: string
+	tsKey: {
+		text: string | null
+		crowdinId: number | null
+	}
+}
+interface Attribute {
+	attribute: {
+		categories?: string[]
+		id: string
+		tsKey: string
+		tsNs: string
+		icon?: string | null
+	}
+	supplement: {
+		id: string
+		active?: boolean
+		data: unknown
+		boolean?: boolean | null
+		countryId?: string | null
+		govDistId?: string | null
+		languageId?: string | null
+		text: FreeText | null
+	}
+}
+interface FormData {
+	id: string
+	published: boolean
+	deleted: boolean
+	serviceName: FreeText | null
+	description: FreeText | null
+	hours: {
+		id: string
+		dayIndex: number
+		start: Date
+		end: Date
+		closed: boolean
+		tz: string | null
+	}[]
+	phones: string[]
+	emails: string[]
+	locations: string[]
+	services: {
+		id: string
+		primaryCategoryId: string
+	}[]
+	serviceAreas: {
+		id: string
+		countries: string[]
+		districts: string[]
+	} | null
+	attributes: Attribute[]
+	accessDetails: {
+		id?: string
+		attribute: { id: string; tsKey: string; tsNs: string }
+		supplement: {
+			id: string
+			data: unknown
+			text: { id?: string; key: string; ns: string; tsKey: { text: string; crowdinId: number | null } } | null
+		}
+	}[]
+}

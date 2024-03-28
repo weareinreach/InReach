@@ -1,5 +1,6 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
+	"experimentalUI": true,
 	"globalDependencies": ["./packages/config/tsconfig/base.json"],
 	"globalDotEnv": [".env"],
 	"globalEnv": ["NODE_ENV"],

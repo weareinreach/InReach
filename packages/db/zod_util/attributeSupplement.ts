@@ -79,7 +79,10 @@ export const accessInstructions = {
 		access_type: z.literal(''),
 		...commonAccessInstructions,
 	}),
-
+	publicTransport: z.object({
+		access_type: z.literal('publicTransit'),
+		...commonAccessInstructions,
+	}),
 	getAll: function () {
 		return z.discriminatedUnion('access_type', [
 			this.email,
@@ -91,6 +94,7 @@ export const accessInstructions = {
 			this.sms,
 			this.whatsapp,
 			this.blank,
+			this.publicTransport,
 		])
 	},
 }
@@ -104,6 +108,7 @@ export type AccessInstructions = {
 	sms: z.infer<typeof accessInstructions.sms>
 	whatsapp: z.infer<typeof accessInstructions.whatsapp>
 	blank: z.infer<typeof accessInstructions.blank>
+	publicTransport: z.infer<typeof accessInstructions.publicTransport>
 	getAll: () => z.infer<ReturnType<typeof accessInstructions.getAll>>
 }
 

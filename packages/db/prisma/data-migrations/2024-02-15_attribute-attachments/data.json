@@ -1,0 +1,1396 @@
+[
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "at-capacity"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "geo-near-public-transit"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "geo-public-transit-description"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "has-confidentiality-policy"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "offers-remote-services"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "private-practice"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "religiously-affiliated"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "time-walk-in"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "wheelchair-accessible"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "info"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "warn"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "adults"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "africa-immigrant"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "african-american"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "api"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "asexual"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "asia-immigrant"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "asylee"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "asylum-seeker"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "bipoc"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "bisexual"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "black"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "citizens"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "conversion-therapy-survivors"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "daca-recipient-seeker"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "detained-immigrant"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "disabled"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "gay"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "gender-nonconforming"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "hiv-aids"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "homeless"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "human-trafficking-survivor"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "intersex"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "language-speakers"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "latin-america-immigrant"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "latinx"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "lesbian"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "lgbtq-youth"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "lgbtq-youth-caregivers"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "middle-east-immigrant"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "muslim"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "native-american-two-spirit"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "nonbinary"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "queer"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "refugee"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "residents-green-card-holders"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "seniors"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "sex-workers"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "teens"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "transfeminine"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "transgender"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "transmasculine"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "trans-youth"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "trans-youth-caregivers"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "unaccompanied-minors"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "undocumented"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "cost-fees"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "cost-free"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "elders"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "general-lgbtq"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "elig-age"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "other-describe"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "req-medical-insurance"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "req-photo-id"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "req-proof-of-age"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "req-proof-of-income"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "req-proof-of-residence"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "req-referral"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "time-appointment-required"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "all-languages-by-interpreter"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "american-sign-language"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE",
+        "ORGANIZATION",
+        "LOCATION"
+      ]
+    },
+    "where": {
+      "tag": "lang-offered"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION"
+      ]
+    },
+    "where": {
+      "tag": "bipoc-led"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION"
+      ]
+    },
+    "where": {
+      "tag": "black-led"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION"
+      ]
+    },
+    "where": {
+      "tag": "immigrant-led"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION"
+      ]
+    },
+    "where": {
+      "tag": "trans-led"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION"
+      ]
+    },
+    "where": {
+      "tag": "women-led"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accessemail"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accessfile"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accesslink"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accesslocation"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accessphone"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accesspublictransit"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accesssms"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accesstext"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "accesswhatsapp"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "asylum-seekers"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "bipoc-comm"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "caregivers-focus"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "disabled-focus"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "elder-focus"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "gender-nc"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "hiv-comm"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "immigrant-comm"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "incarcerated-focus"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "lgbtq-youth-focus"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "resettled-refugees"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "spanish-speakers"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "trans-comm"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "trans-fem"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "trans-masc"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "trans-youth-focus"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "women-focus"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "LOCATION",
+        "ORGANIZATION",
+        "SERVICE",
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "incompatible-info"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "SERVICE"
+      ]
+    },
+    "where": {
+      "tag": "tpop-other"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "corp-law-firm"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "law-other"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "law-school-clinic"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "legal-nonprofit"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.case-mananger"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.community-org"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.friend-family"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.govt-agency"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.grassroots-direct"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.healthcare"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.lawyer"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.other"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.paralegal"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.social-worker"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.student-club"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.teacher"
+    }
+  },
+  {
+    "data": {
+      "canAttachTo": [
+        "USER"
+      ]
+    },
+    "where": {
+      "tag": "userserviceprovider.therapist-counselor"
+    }
+  }
+]

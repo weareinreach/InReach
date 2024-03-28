@@ -1,10 +1,11 @@
 import { z } from 'zod'
 
-import { JsonInputOrNull } from '@weareinreach/db'
-import { prefixedId } from '~api/schemas/idPrefix'
+import { JsonInputOrNull } from '@weareinreach/api/schemas/common'
+import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
+import { generateId } from '@weareinreach/db/lib/idGen'
 
-export const ZAttachAttributeSchema = z.object({
-	id: prefixedId('attributeSupplement'),
+export const formSchema = z.object({
+	id: prefixedId('attributeSupplement').default(generateId('attributeSupplement')),
 	attributeId: prefixedId('attribute'),
 	organizationId: prefixedId('organization').optional(),
 	serviceId: prefixedId('orgService').optional(),
@@ -16,5 +17,4 @@ export const ZAttachAttributeSchema = z.object({
 	boolean: z.coerce.boolean().optional(),
 	data: JsonInputOrNull.optional(),
 })
-
-export type TAttachAttributeSchema = z.infer<typeof ZAttachAttributeSchema>
+export type FormSchema = z.infer<typeof formSchema>

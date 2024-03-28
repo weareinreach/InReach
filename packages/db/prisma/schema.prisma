@@ -997,6 +997,7 @@ model Attribute {
   requireData       Boolean                        @default(false)
   requireDataSchema AttributeSupplementDataSchema? @relation(fields: [requiredSchemaId], references: [id])
   requiredSchemaId  String?
+  canAttachTo       AttributeAttachment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1005,6 +1006,13 @@ model Attribute {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
+}
+
+enum AttributeAttachment {
+  ORGANIZATION
+  LOCATION
+  SERVICE
+  USER
 }
 
 enum FilterType {
@@ -1062,6 +1070,7 @@ model AttributeSupplementDataSchema {
   name       String
   active     Boolean @default(true)
   definition Json
+  schema     Json
   // entryComponent String?
 
   createdAt DateTime @default(now())
@@ -2297,6 +2306,8 @@ view AttributesByCategory {
   requireBoolean      Boolean
   requireData         Boolean
   dataSchemaName      String?
+  formSchema          Json?
+  canAttachTo         AttributeAttachment[]
   dataSchema          Json?
 
   @@unique([categoryId, attributeId])
