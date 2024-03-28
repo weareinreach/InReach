@@ -12,16 +12,16 @@
 	"AGO": {
 		"name": "Angola",
 		"demonym_one": "Angolè",
-		"demonym_other": "Angolans"
+		"demonym_other": "Angolan yo"
 	},
 	"AIA": {
 		"name": "Anguilla",
 		"demonym_one": "Anguillian",
-		"demonym_other": "Anguillians"
+		"demonym_other": "Anguillian yo"
 	},
 	"ALA": {
 		"name": "Zile land",
-		"demonym_one": "Relandish",
+		"demonym_one": "Aalndè",
 		"demonym_other": "Alandè"
 	},
 	"ALB": {
@@ -35,7 +35,7 @@
 		"demonym_other": "Andorrans"
 	},
 	"ARE": {
-		"name": "United Arab Emirates",
+		"name": "Arab ini Emirate yo",
 		"demonym_one": "Emirati",
 		"demonym_other": "Emiratis"
 	},
@@ -145,12 +145,12 @@
 	"BLZ": {
 		"name": "Beliz",
 		"demonym_one": "Belizean",
-		"demonym_other": "Belizeans"
+		"demonym_other": "Belizean yo"
 	},
 	"BMU": {
 		"name": "Bermuda",
 		"demonym_one": "Bermudian",
-		"demonym_other": "Bermudians"
+		"demonym_other": "Bermudian yo"
 	},
 	"BOL": {
 		"name": "Bolivi",
@@ -169,7 +169,7 @@
 	},
 	"BRN": {
 		"name": "Brunei",
-		"demonym_one": "Bruneian",
+		"demonym_one": "Bruneyan",
 		"demonym_other": "Bruneyan"
 	},
 	"BTN": {
@@ -197,7 +197,7 @@
 	},
 	"CCK": {
 		"name": "Zile Cocos (Keeling)",
-		"demonym_one": "Cocos Islander",
+		"demonym_one": "Rezidan ile Coco",
 		"demonym_other": "Cocos Islanders"
 	},
 	"CHE": {
@@ -238,7 +238,7 @@
 	"COK": {
 		"name": "Zile Cook yo",
 		"demonym_one": "Kwit Islander",
-		"demonym_other": "Kwit zile"
+		"demonym_other": "Zileyen Cook yo"
 	},
 	"COL": {
 		"name": "Kolonbi",
@@ -366,14 +366,14 @@
 		"demonym_other": "Fijians"
 	},
 	"FLK": {
-		"name": "Falkland Islands",
-		"demonym_one": "Falkland Islander",
-		"demonym_other": "Falkland Island"
+		"name": "Zile Falkland",
+		"demonym_one": "Zileyen Falkland",
+		"demonym_other": "Falkland"
 	},
 	"FRA": {
 		"name": "Lafrans",
 		"demonym_one": "franse",
-		"demonym_other": "franse"
+		"demonym_other": "Franse"
 	},
 	"FRO": {
 		"name": "Zile Faroe",
@@ -388,7 +388,7 @@
 	"GAB": {
 		"name": "Gabon",
 		"demonym_one": "Gabonese",
-		"demonym_other": "Gabonese"
+		"demonym_other": "Gabonèz"
 	},
 	"GBR": {
 		"name": "Wayòm Ini",
@@ -398,62 +398,62 @@
 	"GEO": {
 		"name": "Georgia",
 		"demonym_one": "Georgian",
-		"demonym_other": "Jòjyen"
+		"demonym_other": "Georgian"
 	},
 	"GGY": {
 		"name": "Guernsey",
-		"demonym_one": "Chèn Islander",
-		"demonym_other": "Chèn Island"
+		"demonym_one": "Chèn Zileyen",
+		"demonym_other": "Chèn Zileyen yo"
 	},
 	"GHA": {
 		"name": "Gana",
 		"demonym_one": "Ghanaian",
-		"demonym_other": "Ghanaians"
+		"demonym_other": "Ghanaian yo"
 	},
 	"GIB": {
 		"name": "Gibraltar",
 		"demonym_one": "Gibraltarian",
-		"demonym_other": "Gibraltarians"
+		"demonym_other": "Gibraltarian yo"
 	},
 	"GIN": {
 		"name": "Gine",
 		"demonym_one": "Ginean",
-		"demonym_other": "Gineans"
+		"demonym_other": "Ginean yo"
 	},
 	"GLP": {
 		"name": "Gwadloup",
 		"demonym_one": "Gwadloup",
-		"demonym_other": "Gwadloup"
+		"demonym_other": "Gwadloupeyen yo"
 	},
 	"GMB": {
 		"name": "Gambia",
 		"demonym_one": "ganbyen",
-		"demonym_other": "Gambians"
+		"demonym_other": "Gambian yo"
 	},
 	"GNB": {
 		"name": "Gine-Bissau",
 		"demonym_one": "Gine-Bissauan",
-		"demonym_other": "Gine-Bissauans"
+		"demonym_other": "Gine-Bissauan yo"
 	},
 	"GNQ": {
 		"name": "Gine ekwateryal",
 		"demonym_one": "Ginean ekwateryal",
-		"demonym_other": "Gineans ekwateryal"
+		"demonym_other": "Ginean ekwateryal yo"
 	},
 	"GRC": {
 		"name": "Lagrès",
 		"demonym_one": "Grèk",
-		"demonym_other": "Grèk"
+		"demonym_other": "Grèk yo"
 	},
 	"GRD": {
 		"name": "Grenada",
 		"demonym_one": "Grenadye",
-		"demonym_other": "Grenadye"
+		"demonym_other": "Grenadye yo"
 	},
 	"GRL": {
 		"name": "Greenland",
 		"demonym_one": "Greenlandic",
-		"demonym_other": "Greenlanders"
+		"demonym_other": "Greenlander yo"
 	},
 	"GTM": {
 		"name": "Guatemala",
@@ -476,17 +476,17 @@
 	"HKG": {
 		"name": "Hong Kong",
 		"demonym_one": "Hong Kong",
-		"demonym_other": "Hong Kongers"
+		"demonym_other": "Hong Kongè yo"
 	},
 	"HMD": {
-		"name": "Tande Island ak McDonald Islands",
-		"demonym_one": "Tande ak McDonald Islander",
-		"demonym_other": "Tande ak zile McDonald"
+		"name": "Zile Heard ak Zile McDonald",
+		"demonym_one": "Heard ak McDonald Zileyen",
+		"demonym_other": "Zileyen Heard ak McDonald yo"
 	},
 	"HND": {
-		"name": "Ondiras",
-		"demonym_one": "Ondiras",
-		"demonym_other": "Ondiras"
+		"name": "Honduras",
+		"demonym_one": "Honduran",
+		"demonym_other": "Honduran yo"
 	},
 	"HRV": {
 		"name": "Croatia",
@@ -505,7 +505,7 @@
 	},
 	"IDN": {
 		"name": "Indonesi",
-		"demonym_one": "Endonezyen",
+		"demonym_one": "Indonesian",
 		"demonym_other": "Indonesian yo"
 	},
 	"IMN": {
@@ -540,8 +540,8 @@
 	},
 	"ISL": {
 		"name": "Islann",
-		"demonym_one": "Icelander",
-		"demonym_other": "Icelanders"
+		"demonym_one": "Icelandè",
+		"demonym_other": "Icelandè yo"
 	},
 	"ISR": {
 		"name": "Izrayèl",
@@ -641,12 +641,12 @@
 	"LIE": {
 		"name": "Liechtenstein",
 		"demonym_one": "Liechtensteiner",
-		"demonym_other": "Liechtensteiners"
+		"demonym_other": "Liechtensteiner yo"
 	},
 	"LKA": {
 		"name": "Sri Lanka",
 		"demonym_one": "Sri Lankan",
-		"demonym_other": "Sri Lankan"
+		"demonym_other": "Sri Lankan yo"
 	},
 	"LSO": {
 		"name": "Lesotho",
@@ -656,7 +656,7 @@
 	"LTU": {
 		"name": "Lityani",
 		"demonym_one": "Lityanyen",
-		"demonym_other": "Lithuanians"
+		"demonym_other": "Lithuanian yo"
 	},
 	"LUX": {
 		"name": "Liksanbou",
@@ -691,7 +691,7 @@
 	"MDA": {
 		"name": "Moldavi",
 		"demonym_one": "Moldavi",
-		"demonym_other": "Moldavi"
+		"demonym_other": "Moldavi yo"
 	},
 	"MDG": {
 		"name": "Madagascar",
@@ -701,22 +701,22 @@
 	"MDV": {
 		"name": "Maldiv",
 		"demonym_one": "Maldivan",
-		"demonym_other": "Maldivans"
+		"demonym_other": "Maldivan yo"
 	},
 	"MEX": {
 		"name": "Meksik",
 		"demonym_one": "Meksiken",
-		"demonym_other": "Meksiken"
+		"demonym_other": "Meksiken yo"
 	},
 	"MHL": {
-		"name": "Zile Marshall",
+		"name": "Zile Marshall yo",
 		"demonym_one": "Marshallese",
 		"demonym_other": "Marshallese"
 	},
 	"MKD": {
 		"name": "Nò Masedwan",
 		"demonym_one": "Masedonyen",
-		"demonym_other": "Masedonyen"
+		"demonym_other": "Masedonyen yo"
 	},
 	"MLI": {
 		"name": "Mali",
@@ -736,7 +736,7 @@
 	"MNE": {
 		"name": "Montenegwo",
 		"demonym_one": "Montenegwo",
-		"demonym_other": "Montenegrins"
+		"demonym_other": "Montenegrin yo"
 	},
 	"MNG": {
 		"name": "Mongoli",
@@ -761,7 +761,7 @@
 	"MSR": {
 		"name": "Montserrat",
 		"demonym_one": "Montserratian",
-		"demonym_other": "Montserratians"
+		"demonym_other": "Montserratian yo"
 	},
 	"MTQ": {
 		"name": "Matinik",
@@ -776,17 +776,17 @@
 	"MWI": {
 		"name": "Malawi",
 		"demonym_one": "Malawi",
-		"demonym_other": "Malawi"
+		"demonym_other": "Malawi yo"
 	},
 	"MYS": {
 		"name": "Malezi",
 		"demonym_one": "Malaysyen",
-		"demonym_other": "Malaysyen"
+		"demonym_other": "Malaysyen yo"
 	},
 	"MYT": {
 		"name": "Mayotte",
 		"demonym_one": "Mahoran",
-		"demonym_other": "Mahorans"
+		"demonym_other": "Mahoran yo"
 	},
 	"NAM": {
 		"name": "Namibi",
@@ -794,37 +794,37 @@
 		"demonym_other": "Namibyen"
 	},
 	"NCL": {
-		"name": "Nouvo Caledonia",
+		"name": "Nouvèl Caledonia",
 		"demonym_one": "Nouvo Caledonian",
 		"demonym_other": "Nouvo kaledonyen"
 	},
 	"NER": {
 		"name": "Nijè",
 		"demonym_one": "Nijeryen",
-		"demonym_other": "Nijeryen"
+		"demonym_other": "Nijeryen yo"
 	},
 	"NFK": {
-		"name": "Norfolk Island",
-		"demonym_one": "Norfolk Islander",
-		"demonym_other": "Zile Norfolk"
+		"name": "Zile Norfolk",
+		"demonym_one": "IlZile Norfolk",
+		"demonym_other": "Zileyen Norfolk"
 	},
 	"NGA": {
 		"name": "Nijerya",
 		"demonym_one": "Nijeryen",
-		"demonym_other": "Nijeryen"
+		"demonym_other": "Nijeryen yo"
 	},
 	"NIC": {
 		"name": "Nikaragwa",
 		"demonym_one": "Nikaragweyen",
-		"demonym_other": "Nikaragwa"
+		"demonym_other": "Nikaragwa yo"
 	},
 	"NIU": {
 		"name": "Niue",
 		"demonym_one": "Niuean",
-		"demonym_other": "Niueans"
+		"demonym_other": "Niuean yo"
 	},
 	"NLD": {
-		"name": "Netherlands",
+		"name": "Nelandè yo",
 		"demonym_one": "Olandè",
 		"demonym_other": "Olandè"
 	},
@@ -841,7 +841,7 @@
 	"NRU": {
 		"name": "Nauru",
 		"demonym_one": "Nauruan",
-		"demonym_other": "Nauruans"
+		"demonym_other": "Nauruan yo"
 	},
 	"NZL": {
 		"name": "New Zeland",
