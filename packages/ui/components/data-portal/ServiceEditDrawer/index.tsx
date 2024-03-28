@@ -29,7 +29,6 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { AttributeModal } from '~ui/modals/dataPortal/Attributes'
 import { processAccessInstructions, processAttributes } from '~ui/modals/Service/processor'
-import { DataViewer } from '~ui/other/DataViewer'
 
 import { FormSchema, type TFormSchema } from './schemas'
 import { useStyles } from './styles'
@@ -39,7 +38,7 @@ const isObject = (x: unknown): x is object => typeof x === 'object'
 
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
 	({ serviceId, ...props }, ref) => {
-		const [drawerOpened, drawerHandler] = useDisclosure(true)
+		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
@@ -283,7 +282,6 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 					</Drawer.Content>
 				</Drawer.Root>
 				<Stack>
-					<DataViewer value={data} />
 					<Box component='button' onClick={drawerHandler.open} ref={ref} {...props} />
 				</Stack>
 			</>

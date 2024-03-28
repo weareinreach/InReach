@@ -131,7 +131,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							option: 'back',
 							backTo: 'dynamicText',
 							backToText: data.organization.name,
-							onClick: () =>
+							onClick: async () =>
 								router.push({
 									pathname: '/org/[slug]/edit',
 									query: { slug: data.organization.slug },
