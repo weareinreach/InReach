@@ -37,7 +37,7 @@
 		"@next/bundle-analyzer": "14.1.4",
 		"@types/eslint": "8.56.7",
 		"@types/node": "20.12.2",
-		"@types/react": "18.2.73",
+		"@types/react": "18.2.74",
 		"@types/react-dom": "18.2.23",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
