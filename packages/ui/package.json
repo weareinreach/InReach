@@ -118,7 +118,7 @@
 		"@types/luxon": "3.4.2",
 		"@types/node": "20.12.2",
 		"@types/probe-image-size": "7.2.4",
-		"@types/react": "18.2.73",
+		"@types/react": "18.2.74",
 		"@types/react-dom": "18.2.23",
 		"@types/terraformer__wkt": "2.0.3",
 		"@weareinreach/api": "workspace:*",
