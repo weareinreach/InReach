@@ -50,9 +50,7 @@ const ServiceAreaItem = ({
 	const removeServiceArea = api.serviceArea.delFromArea.useMutation({
 		onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(serviceId),
 	})
-	console.log({ serviceAreaId, countryId, govDistId, serviceId })
 	if (!serviceAreaId || !(countryId || govDistId)) {
-		console.log('just returning children only')
 		return children
 	}
 
@@ -70,13 +68,6 @@ const ServiceAreaItem = ({
 			{children}
 		</Group>
 	)
-}
-interface ServiceAreaItemProps {
-	serviceId: string
-	serviceAreaId?: string
-	countryId?: string
-	govDistId?: string
-	children: ReactNode
 }
 
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
@@ -119,9 +110,6 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			{ activeForOrgs: true },
 			{ refetchOnWindowFocus: false }
 		)
-		const removeServiceArea = api.serviceArea.delFromArea.useMutation({
-			onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(serviceId),
-		})
 		const serviceAreas = () => {
 			const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 			const serviceAreaObj: Record<string, ReactNode[]> = {}
@@ -362,4 +350,12 @@ export const ServiceEditDrawer = createPolymorphicComponent<'button', ServiceEdi
 
 interface ServiceEditDrawerProps extends ButtonProps {
 	serviceId: string
+}
+
+interface ServiceAreaItemProps {
+	serviceId: string
+	serviceAreaId?: string
+	countryId?: string
+	govDistId?: string
+	children: ReactNode
 }
