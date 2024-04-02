@@ -52,7 +52,7 @@ export function reportWebVitals(stats: NextWebVitalsMetric) {
 	appEvent.webVitals(stats)
 }
 
-const PageContent = ({ Component, ...pageProps }: AppPropsWithGridSwitch) => {
+const PageContent = ({ Component, pageProps }: AppPropsWithGridSwitch) => {
 	const router = useRouter()
 	const autoResetState = Component.autoResetState ? { key: router.asPath } : {}
 	return Component.omitGrid ? (
