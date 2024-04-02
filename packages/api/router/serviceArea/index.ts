@@ -19,4 +19,13 @@ export const serviceAreaRouter = defineRouter({
 			const handler = await importHandler(namespaced('update'), () => import('./mutation.update.handler'))
 			return handler(opts)
 		}),
+	addToArea: permissionedProcedure('updateOrgService')
+		.input(schema.ZAddToAreaSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('addToArea'),
+				() => import('./mutation.addToArea.handler')
+			)
+			return handler(opts)
+		}),
 })
