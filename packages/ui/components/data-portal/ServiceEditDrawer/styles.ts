@@ -13,7 +13,6 @@ export const useStyles = createStyles((theme) => ({
 	},
 	badgeGroup: {
 		width: '100%',
-		cursor: 'pointer',
 		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
 		borderRadius: rem(8),
 		padding: rem(4),

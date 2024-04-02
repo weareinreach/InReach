@@ -43,22 +43,24 @@ export const ServiceSelect = <T extends FieldValues>({
 
 	const serviceGroups = data ? (
 		<Checkbox.Group {...{ name, control, defaultValue, rules, shouldUnregister }}>
-			<Stack spacing={0}>
+			<Stack spacing={16}>
 				{data.map((category) => (
-					<Stack spacing={0} key={category.tsKey}>
-						<Text variant={variants.Text.utility1}>{t(category.tsKey)}</Text>
-						{category.services.map((service) => (
-							<Checkbox.Item
-								pl={16}
-								size='xs'
-								key={`${category.tsKey}-${service.id}`}
-								value={service.id}
-								label={t(service.tsKey)}
-								classNames={{
-									label: classes.checkboxLabel,
-								}}
-							/>
-						))}
+					<Stack spacing={8} key={category.tsKey}>
+						<Title order={3}>{t(category.tsKey)}</Title>
+						<Stack spacing={0}>
+							{category.services.map((service) => (
+								<Checkbox.Item
+									pl={16}
+									size='xs'
+									key={`${category.tsKey}-${service.id}`}
+									value={service.id}
+									label={t(service.tsKey)}
+									classNames={{
+										label: classes.checkboxLabel,
+									}}
+								/>
+							))}
+						</Stack>
 					</Stack>
 				))}
 			</Stack>
