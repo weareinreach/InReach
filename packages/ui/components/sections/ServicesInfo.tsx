@@ -74,7 +74,12 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 					)
 
 					return isEditMode ? (
-						<ServiceEditDrawer key={service.id} serviceId={service.id} variant={variants.Link.inheritStyle}>
+						<ServiceEditDrawer
+							key={service.id}
+							serviceId={service.id}
+							variant={variants.Link.inlineInverted}
+							component={Link}
+						>
 							<Group noWrap position='apart' className={classes.group}>
 								{children}
 							</Group>
