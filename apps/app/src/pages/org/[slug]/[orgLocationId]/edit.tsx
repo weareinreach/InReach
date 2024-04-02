@@ -195,6 +195,10 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							<Stack spacing={40} pt={40}>
 								<Stack spacing={20} ref={servicesRef}>
 									<Stack spacing={8}>
+										<Title order={3}>{'Associated services'}</Title>
+										<ServicesInfoCard parentId={data.id} />
+									</Stack>
+									<Stack spacing={8}>
 										<Title order={3}>{'Associate service(s) to this location'}</Title>
 										{/*<MultiSelectPopover
 											label='Services available'
@@ -203,10 +207,6 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 											name='services'
 											indicateWhenDirty
 						/>*/}
-									</Stack>
-									<Stack spacing={8}>
-										<Title order={3}>{'Associated services'}</Title>
-										<ServicesInfoCard parentId={data.id} />
 									</Stack>
 								</Stack>
 								<div ref={photosRef}>
@@ -248,14 +248,14 @@ export const getServerSideProps = async ({
 	if (!session) {
 		return {
 			redirect: {
-				destination: '/',
+				destination: `/org/${slug}/${id}`,
 				permanent: false,
 			},
 		}
 	}
 	const ssg = await trpcServerClient({ session })
 	const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
-	const [i18n] = await Promise.all([
+	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, [
 			'common',
 			'services',
@@ -263,15 +263,19 @@ export const getServerSideProps = async ({
 			'phone-type',
 			'country',
 			'gov-dist',
+			orgId,
 		]),
 		ssg.location.forLocationPageEdits.prefetch({ id }),
 		ssg.location.getAlerts.prefetch({ id }),
 	])
+
+	const translations = i18n.status === 'fulfilled' ? i18n.value : {}
+
 	const props = {
 		organizationId: orgId,
 		session,
 		trpcState: ssg.dehydrate(),
-		...i18n,
+		...translations,
 	}
 
 	return {

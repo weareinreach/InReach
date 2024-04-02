@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
+	ActionIcon,
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
@@ -9,6 +10,7 @@ import {
 	Stack,
 	Text,
 	Title,
+	Tooltip,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
@@ -27,6 +29,7 @@ import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { CoverageArea } from '~ui/modals/CoverageArea'
 import { AttributeModal } from '~ui/modals/dataPortal/Attributes'
 import { processAccessInstructions, processAttributes } from '~ui/modals/Service/processor'
 
@@ -36,12 +39,53 @@ import { InlineTextInput } from '../InlineTextInput'
 
 const isObject = (x: unknown): x is object => typeof x === 'object'
 
+const ServiceAreaItem = ({
+	serviceId,
+	serviceAreaId,
+	countryId,
+	govDistId,
+	children,
+}: ServiceAreaItemProps) => {
+	const apiUtils = api.useUtils()
+	const removeServiceArea = api.serviceArea.delFromArea.useMutation({
+		onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(serviceId),
+	})
+	console.log({ serviceAreaId, countryId, govDistId, serviceId })
+	if (!serviceAreaId || !(countryId || govDistId)) {
+		console.log('just returning children only')
+		return children
+	}
+
+	const actionHandler = () => {
+		removeServiceArea.mutate({ serviceAreaId, countryId, govDistId })
+	}
+
+	return (
+		<Group noWrap spacing={0}>
+			<Tooltip label='Delete'>
+				<ActionIcon onClick={actionHandler}>
+					<Icon icon='carbon:trash-can' />
+				</ActionIcon>
+			</Tooltip>
+			{children}
+		</Group>
+	)
+}
+interface ServiceAreaItemProps {
+	serviceId: string
+	serviceAreaId?: string
+	countryId?: string
+	govDistId?: string
+	children: ReactNode
+}
+
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
 	({ serviceId, ...props }, ref) => {
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
+		const apiUtils = api.useUtils()
 		// #region Get existing data/populate form
 		const { data } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
@@ -71,30 +115,39 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const { data: geoMap } = api.fieldOpt.countryGovDistMap.useQuery(undefined, {
 			refetchOnWindowFocus: false,
 		})
+		const { data: countryMap } = api.fieldOpt.ccaMap.useQuery(
+			{ activeForOrgs: true },
+			{ refetchOnWindowFocus: false }
+		)
+		const removeServiceArea = api.serviceArea.delFromArea.useMutation({
+			onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(serviceId),
+		})
 		const serviceAreas = () => {
+			const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 			const serviceAreaObj: Record<string, ReactNode[]> = {}
 			const { countries, districts } = form.watch('serviceAreas') ?? {}
 			if (!geoMap) return null
 			const countryIdRegex = /^ctry_.*/
 			const distIdRegex = /^gdst_.*/
 
-			const processCountry = (country: string) => {
-				serviceAreaObj[country] ??= []
-				const array = serviceAreaObj[country]
+			const processCountry = (countryId: string) => {
+				serviceAreaObj[countryId] ??= []
+				const array = serviceAreaObj[countryId]
 				invariant(array)
-				const countryDetails = geoMap.get(country)
-				if (!countryDetails) return
+				const cca2 = countryMap?.byId.get(countryId)
+				if (!cca2) return
+				const serviceAreaId = data?.serviceAreas?.id
 				const item = (
-					<List.Item key={country}>
-						<Text variant={variants.Text.utility4}>
-							All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
-						</Text>
+					<List.Item key={countryId}>
+						<ServiceAreaItem {...{ serviceId, serviceAreaId, countryId }}>
+							<Text variant={variants.Text.utility4}>All of {countryTranslation.of(cca2)}</Text>
+						</ServiceAreaItem>
 					</List.Item>
 				)
 				array.push(item)
 			}
-			const processDistrict = (district: string) => {
-				const govDist = geoMap.get(district)
+			const processDistrict = (govDistId: string) => {
+				const govDist = geoMap.get(govDistId)
 				const country = govDist?.parent?.parent?.id ?? govDist?.parent?.id ?? ''
 				if (!countryIdRegex.test(country) || !govDist) return
 				serviceAreaObj[country] ??= []
@@ -102,18 +155,19 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 				invariant(array)
 				const parent = govDist.parent?.id ?? ''
 				const parentDist = geoMap.get(parent)
-				const item =
-					!distIdRegex.test(parent) || !parentDist ? (
-						<List.Item key={district}>
-							<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
-						</List.Item>
-					) : (
-						<List.Item key={district}>
+				const serviceAreaId = data?.serviceAreas?.id
+				const item = (
+					<List.Item key={govDistId}>
+						<ServiceAreaItem {...{ serviceId, serviceAreaId, govDistId }}>
 							<Text variant={variants.Text.utility4}>
-								{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
+								{!distIdRegex.test(parent) || !parentDist
+									? t(govDist.tsKey, { ns: govDist.tsNs })
+									: `${t(parentDist.tsKey, { ns: parentDist.tsNs })} - ${t(govDist.tsKey, { ns: govDist.tsNs })}`}
 							</Text>
-						</List.Item>
-					)
+						</ServiceAreaItem>
+					</List.Item>
+				)
+
 				array.push(item)
 			}
 
@@ -128,12 +182,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 				}
 			}
 			return Object.entries(serviceAreaObj)?.map(([key, value]) => {
-				const country = geoMap.get(key)
+				const country = countryMap?.byId.get(key)
 				if (!country) return null
 				return (
-					<Stack key={country.id} spacing={0}>
-						<Title order={3}>{t(country.tsKey, { ns: country.tsNs })}</Title>
-						<List className={classes.badgeGroup} icon={<Icon icon='carbon:checkmark' height={14} />}>
+					<Stack key={key} spacing={0}>
+						<Title order={3}>{countryTranslation.of(country)}</Title>
+						<List className={classes.badgeGroup} listStyleType='none'>
 							{value}
 						</List>
 					</Stack>
@@ -158,6 +212,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			locale: i18n.resolvedLanguage ?? 'en',
 			t,
 		})
+		const coverageModalServiceArea = data.serviceAreas?.id ?? { orgServiceId: serviceId }
 
 		return (
 			<>
@@ -223,6 +278,17 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 								<Text variant={variants.Text.utility1}>Coverage Area</Text>
 								<Stack className={classes.dottedCard}>
 									{serviceAreas()}
+									<CoverageArea
+										serviceArea={coverageModalServiceArea}
+										onSuccessAction={() => {
+											apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
+											apiUtils.service.forServiceModal.invalidate(serviceId)
+										}}
+										component={Button}
+										variant={variants.Button.secondarySm}
+									>
+										Add new service area
+									</CoverageArea>
 									{/* {Boolean(geoMap?.size) && } */}
 								</Stack>
 								<Section.Divider title={t('service.get-help')}>
