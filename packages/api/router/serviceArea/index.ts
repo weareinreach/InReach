@@ -28,4 +28,13 @@ export const serviceAreaRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	delFromArea: permissionedProcedure('updateOrgService')
+		.input(schema.ZDelFromAreaSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('delFromArea'),
+				() => import('./mutation.delFromArea.handler')
+			)
+			return handler(opts)
+		}),
 })

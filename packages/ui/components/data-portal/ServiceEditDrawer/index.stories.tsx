@@ -6,6 +6,7 @@ import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
 import { organization } from '~ui/mockData/organization'
 import { orgHours } from '~ui/mockData/orgHours'
 import { service } from '~ui/mockData/service'
+import { serviceArea } from '~ui/mockData/serviceArea'
 
 import { ServiceEditDrawer } from './index'
 
@@ -31,6 +32,8 @@ export default {
 			service.getOptions,
 			component.ServiceSelect,
 			orgHours.forHoursDisplay,
+			serviceArea.addToArea,
+			serviceArea.delFromArea,
 			...allFieldOptHandlers,
 		],
 	},
@@ -38,6 +41,7 @@ export default {
 		component: Button,
 		children: 'Open Drawer',
 		variant: 'inlineInvertedUtil1',
+		serviceId: 'osvc_123456789000000',
 	},
 } satisfies Meta<typeof ServiceEditDrawer>
 

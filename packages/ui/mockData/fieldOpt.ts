@@ -234,6 +234,17 @@ export const fieldOpt = {
 			}
 		},
 	}),
+	ccaMap: getTRPCMock({
+		path: ['fieldOpt', 'ccaMap'],
+		response: async ({ activeForOrgs }) => {
+			const { default: data } = await import('./json/fieldOpt.ccaMap.json')
+			const dataToUse = activeForOrgs ? data.true : data.false
+			return {
+				byId: new Map(Object.entries(dataToUse.byId)),
+				byCCA: new Map(Object.entries(dataToUse.byCCA)),
+			}
+		},
+	}),
 } satisfies MockHandlerObject<'fieldOpt'>
 
 export const allFieldOptHandlers = Object.values(fieldOpt)

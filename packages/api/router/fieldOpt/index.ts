@@ -84,4 +84,8 @@ export const fieldOptRouter = defineRouter({
 		const handler = await importHandler(namespaced('orgBadges'), () => import('./query.orgBadges.handler'))
 		return handler(opts)
 	}),
+	ccaMap: publicProcedure.input(schema.ZCcaMapSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('ccaMap'), () => import('./query.ccaMap.handler'))
+		return handler(opts)
+	}),
 })

@@ -27,4 +27,9 @@ export const serviceArea = {
 		type: 'mutation',
 		response: () => ({ result: 'added' }),
 	}),
+	delFromArea: getTRPCMock({
+		path: ['serviceArea', 'delFromArea'],
+		type: 'mutation',
+		response: () => ({ result: 'deleted' }),
+	}),
 } satisfies MockHandlerObject<'serviceArea'>
