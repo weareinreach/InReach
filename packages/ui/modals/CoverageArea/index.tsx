@@ -49,7 +49,6 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 			{
 				select: (data) =>
 					data.map(({ id, cca2 }) => ({ value: id, label: countryTranslation.of(cca2), cca2 })) ?? [],
-				placeholderData: [],
 			}
 		)
 		const { data: dataDistrict } = api.fieldOpt.govDists.useQuery(
