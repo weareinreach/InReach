@@ -9,7 +9,7 @@ import { type AppProps, type NextWebVitalsMetric } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import Script from 'next/script'
+// import Script from 'next/script'
 import { type Session } from 'next-auth'
 import { appWithTranslation } from 'next-i18next'
 import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
@@ -78,11 +78,13 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 			<Providers session={session}>
 				<DefaultSeo {...defaultSEO} />
 				<GoogleAnalytics trackPageViews defaultConsent='granted' />
-				<Script id='gtm_conversion'>
+				{/* <Script id='gtm_conversion'>
 					{`
+					if (window.gtag) {
 						gtag?.('config','G-RL8CR7T4EP')
+					}
 					`}
-				</Script>
+				</Script> */}
 				<PageLoadProgress />
 				<Navbar />
 				<PageContent {...appProps} />
