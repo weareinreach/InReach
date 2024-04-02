@@ -116,7 +116,7 @@ jobs:
           echo "$(cat /home/runner/work/InReach/InReach/apps/app/.next/analyze/__bundle_analysis_comment.txt)" >> $GITHUB_STEP_SUMMARY
 
       - name: Find Comment
-        uses: peter-evans/find-comment@d5fe37641ad8451bdd80312415672ba26c86575e # v3
+        uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3
         if: success() && github.event.number
         id: fc
         with:
