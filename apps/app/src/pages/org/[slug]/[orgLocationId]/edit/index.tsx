@@ -131,11 +131,12 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							option: 'back',
 							backTo: 'dynamicText',
 							backToText: data.organization.name,
-							onClick: async () =>
+							onClick: async () => {
 								router.push({
 									pathname: '/org/[slug]/edit',
 									query: { slug: data.organization.slug },
-								}),
+								})
+							},
 						}}
 						organizationId={data.organization.id}
 						saved={Boolean(isSaved)}
@@ -195,13 +196,13 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 								<Stack spacing={20} ref={servicesRef}>
 									<Stack spacing={8}>
 										<Title order={3}>{'Associate service(s) to this location'}</Title>
-										<MultiSelectPopover
+										{/*<MultiSelectPopover
 											label='Services available'
 											data={orgServices}
 											control={formMethods.control}
 											name='services'
 											indicateWhenDirty
-										/>
+						/>*/}
 									</Stack>
 									<Stack spacing={8}>
 										<Title order={3}>{'Associated services'}</Title>
