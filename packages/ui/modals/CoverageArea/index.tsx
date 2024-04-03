@@ -25,7 +25,7 @@ const reduceDistType = (data: { tsNs: string; tsKey: string }[] | undefined, t: 
 		prev.add(translated)
 		return prev
 	}, new Set<string>())
-	return [...valueSet].sort().join('/')
+	return [...valueSet].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
 }
 
 const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(

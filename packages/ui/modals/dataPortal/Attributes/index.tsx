@@ -1,21 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
-	Group,
 	Select as MantineSelect,
 	Modal,
 	Skeleton,
 	Stack,
-	Text,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { type JSONSchemaType } from 'ajv'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, useMemo, useRef, useState } from 'react'
-import { FormProvider, useForm, useFormState } from 'react-hook-form'
+import { forwardRef, type ReactNode, useMemo, useRef, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { generateId } from '@weareinreach/db/lib/idGen'
@@ -43,7 +39,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 
 		const selectAttrRef = useRef<HTMLInputElement>(null)
 		// #region tRPC
-		const utils = api.useUtils()
+		// const utils = api.useUtils()
 		const [attrCat, setAttrCat] = useState<string | null>()
 		const { data: attributesByCategory, ...attributesByCategoryApi } =
 			api.fieldOpt.attributesByCategory.useQuery(undefined, {
@@ -90,7 +86,6 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			null
 		)
 		const [supplements, setSupplements] = useState<SupplementFieldsNeeded>(supplementDefaults)
-		const [supplementSchema, setSupplementSchema] = useState<JSONSchemaType<unknown> | null>(null)
 		const saveAttributes = api.organization.attachAttribute.useMutation()
 		// #endregion
 
@@ -104,16 +99,13 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				...parentRecord,
 			},
 		})
-		const formState = useFormState({ control: form.control })
+		// const formState = useFormState({ control: form.control })
 
 		const selectHandler = (e: string | null) => {
 			if (e === null) {
 				setSupplements(supplementDefaults)
 				setSelectedAttr(null)
 				form.resetField('attributeId')
-				if (supplementSchema !== null) {
-					setSupplementSchema(null)
-				}
 				return
 			}
 			const item = attributesByCategory?.find(({ value }) => value === e)
@@ -131,11 +123,6 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						data: requireData ?? false,
 					}
 					setSupplements(suppRequired)
-					if (requireData && item.dataSchema) {
-						setSupplementSchema(item.dataSchema)
-					}
-
-					// return
 				}
 				form.setValue('attributeId', item.value)
 				selectAttrRef.current && (selectAttrRef.current.value = '')
@@ -150,7 +137,14 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 
 		// #region Title & Selected items display
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
-		const needsSupplement = Object.values(supplements).includes(true)
+		// const needsSupplement = Object.values(supplements).includes(true)
+
+		const inputContainerWithSkeleton = (children: ReactNode) => (
+			<Skeleton visible={!!attrCat && attributesByCategoryApi.isLoading} radius='md'>
+				{children}
+			</Skeleton>
+		)
+
 		return (
 			<FormProvider {...form}>
 				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
@@ -188,11 +182,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								ref={selectAttrRef}
 								clearable
 								onChange={selectHandler}
-								inputContainer={(children) => (
-									<Skeleton visible={!!attrCat && attributesByCategoryApi.isLoading} radius='md'>
-										{children}
-									</Skeleton>
-								)}
+								inputContainer={inputContainerWithSkeleton}
 							/>
 						</Stack>
 						{supplements.boolean && <Supplement.Boolean />}

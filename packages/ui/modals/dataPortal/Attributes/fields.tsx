@@ -105,16 +105,16 @@ const GeoItem = forwardRef<HTMLDivElement, GeoItemProps>(({ flag, label, ...prop
 GeoItem.displayName = 'GeoItem'
 
 const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
-	const { control, ...form } = useFormContext<FormSchema>()
+	// const { control } = useFormContext<FormSchema>()
 	const { t } = useTranslation(['country', 'gov-dist'])
 	// const [primaryList, setPrimaryList] = useState<GeoList[] | undefined>()
 	const [secondaryList, setSecondaryList] = useState<GeoList['districts'] | undefined>()
 	const [tertiaryList, setTertiaryList] = useState<
 		NonNullable<GeoList['districts']>[number]['subDistricts'] | undefined
 	>()
-	const [primarySearch, onPrimarySearch] = useState<string | null>(null)
-	const [secondarySearch, onSecondarySearch] = useState<string | null>(null)
-	const [tertiarySearch, onTertiarySearch] = useState<string | null>(null)
+	const [primarySearch, setPrimarySearch] = useState<string | null>(null)
+	const [secondarySearch, setSecondarySearch] = useState<string | null>(null)
+	const [tertiarySearch, setTertiarySearch] = useState<string | null>(null)
 
 	// const [finalValue, setFinalValue] = useState<string | null>(null)
 	// const [fieldName, setFieldName] = useState<FieldPath<FormSchema> | undefined>(
@@ -137,33 +137,6 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 	})
 	const primaryList = countryOnly ? countryList : distByCountryList
 
-	// useEffect(() => {
-	// 	if (form.values.supplement?.govDistId && secondaryList) {
-	// 		const secondarySelected = secondaryList.find(({ id }) => id === form.values.supplement?.govDistId)
-	// 		if (secondarySelected && secondarySelected.subDistricts.length) {
-	// 			form.setFieldValue('supplement.subDistId', undefined)
-	// 			onTertiarySearch('')
-	// 			setTertiaryList(secondarySelected.subDistricts)
-	// 		} else if (secondarySelected && !secondarySelected.subDistricts.length) {
-	// 			setTertiaryList(undefined)
-	// 		}
-	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [form.values.supplement?.govDistId])
-
-	// useEffect(() => {
-	// 	if (form.values.supplement?.countryId && !countryOnly && primaryList) {
-	// 		const primarySelected = primaryList.find(({ value }) => value === form.values.supplement?.countryId)
-	// 		if (primarySelected && primarySelected.districts?.length) {
-	// 			setSecondaryList(primarySelected.districts)
-	// 		} else if (primarySelected && !primarySelected.districts?.length) {
-	// 			onSecondarySearch('')
-	// 			setSecondaryList(undefined)
-	// 		}
-	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [form.values.supplement?.countryId, countryOnly])
-
 	if (!primaryList && !countries.isSuccess) return <>Loading...</>
 	return (
 		<Stack>
@@ -172,7 +145,7 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					data={primaryList}
 					searchable
 					searchValue={primarySearch ?? undefined}
-					onSearchChange={onPrimarySearch}
+					onSearchChange={setPrimarySearch}
 					itemComponent={GeoItem}
 					// control={control}
 					name='countryId'
@@ -186,7 +159,7 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					}))}
 					searchable
 					searchValue={secondarySearch ?? undefined}
-					onSearchChange={onSecondarySearch}
+					onSearchChange={setSecondarySearch}
 					itemComponent={GeoItem}
 					// control={control}
 					name='govDistId'
@@ -201,7 +174,7 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					}))}
 					searchable
 					searchValue={tertiarySearch ?? undefined}
-					onSearchChange={onTertiarySearch}
+					onSearchChange={setTertiarySearch}
 					itemComponent={GeoItem}
 					// {...form.getInputProps('supplement.subDistId')}
 				/>

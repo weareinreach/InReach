@@ -23,7 +23,7 @@ export const SelectionItem = forwardRef<HTMLDivElement, SelectionItemProps>(
 				>
 					{icon && isValidIcon(icon) && <Icon icon={icon} width={18} />}
 					{icon && !isValidIcon(icon) && <Text>{icon}</Text>}
-					{label && label}
+					{label}
 				</Group>
 			</div>
 		)

@@ -38,7 +38,7 @@ const queryAttributesByCategory: MockAPIHandler<'fieldOpt', 'attributesByCategor
 		})
 	}
 
-	return attributesByCategory as ApiOutput['fieldOpt']['attributesByCategory']
+	return attributesByCategory
 }
 
 const queryLanguages: MockAPIHandler<'fieldOpt', 'languages'> = async (query) => {
