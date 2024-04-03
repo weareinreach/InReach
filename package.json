@@ -41,7 +41,7 @@
 		"@changesets/cli": "2.27.1",
 		"@turbo/gen": "1.13.2",
 		"@types/lint-staged": "13.3.0",
-		"@types/node": "20.12.2",
+		"@types/node": "20.12.3",
 		"@types/yargs": "17.0.32",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
