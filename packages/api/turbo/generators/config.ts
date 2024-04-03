@@ -55,7 +55,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
 		actions: (data) => {
 			if (!data) throw new Error('No data')
 			data.isMutation = data.operation === 'mutation'
-			const basePath = "router/{{routerDir}}/{{operation}}.{{name}}"
+			const basePath = 'router/{{routerDir}}/{{operation}}.{{name}}'
 			const actions: PlopTypes.Actions = []
 
 			actions.push({

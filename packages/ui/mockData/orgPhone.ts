@@ -4,7 +4,7 @@ export const orgPhone = {
 	get: getTRPCMock({
 		path: ['orgPhone', 'get'],
 		response: async () => {
-			const { default: data } = await import("./json/orgPhone.get.json")
+			const { default: data } = await import('./json/orgPhone.get.json')
 			return data
 		},
 	}),
@@ -25,7 +25,7 @@ export const orgPhone = {
 		path: ['orgPhone', 'forContactInfo'],
 		type: 'query',
 		response: async ({ locationOnly }) => {
-			const { default: data } = await import("./json/orgPhone.forContactInfo.json")
+			const { default: data } = await import('./json/orgPhone.forContactInfo.json')
 
 			return locationOnly !== undefined ? data.filter((record) => record.locationOnly === locationOnly) : data
 		},
@@ -34,7 +34,7 @@ export const orgPhone = {
 		path: ['orgPhone', 'forEditDrawer'],
 		type: 'query',
 		response: async () => {
-			const { default: data } = await import("./json/orgPhone.forEditDrawer.json")
+			const { default: data } = await import('./json/orgPhone.forEditDrawer.json')
 			return data
 		},
 	}),
@@ -42,7 +42,7 @@ export const orgPhone = {
 		path: ['orgPhone', 'forContactInfoEdit'],
 		type: 'query',
 		response: async () => {
-			const { default: data } = await import("./json/orgPhone.forContactInfoEdit.json")
+			const { default: data } = await import('./json/orgPhone.forContactInfoEdit.json')
 			return data
 		},
 	}),
