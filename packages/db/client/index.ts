@@ -39,7 +39,7 @@ prisma.$use(superjsonMiddleware)
 const queryLogger = createPrismaQueryEventHandler({
 	queryDuration: true,
 	format: true,
-	indent: `\t`,
+	indent: "\t",
 	// linesBetweenQueries: 2,
 	language: 'pl/sql',
 	logger: (data) => log.info(`\n${data}`),

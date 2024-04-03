@@ -26,13 +26,13 @@ yargs(hideBin(process.argv))
 		() => {},
 		async () => {
 			if (process.env.DATABASE_URL && postgresLocalUrlRegex.test(process.env.DATABASE_URL)) {
-				console.log(`Starting docker...`)
+				console.log("Starting docker...")
 				await compose.upAll({
 					config: dockerComposeFile,
 					callback: (chunk) => console.log(chunk.toString()),
 				})
 			} else {
-				console.log(`Skipping docker start, DATABASE_URL is not set to a local address`)
+				console.log("Skipping docker start, DATABASE_URL is not set to a local address")
 			}
 		}
 	)

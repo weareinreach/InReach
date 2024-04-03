@@ -59,7 +59,7 @@ const jobs = new Listr<Context>(
 					task.output = `${jobNamesToRun.length} migrations to run:\n▸ ${jobNamesToRun.join('\n▸ ')}`
 					task.title = `Pending migrations: ${jobNamesToRun.length}`
 				} else {
-					task.title = `No pending migrations to apply.`
+					task.title = "No pending migrations to apply."
 				}
 			},
 

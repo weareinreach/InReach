@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => ({
 		animation: `${bounce(16)} 1.75s 5`,
 	},
 	shrink: {
-		transition: `all 0.5s ease-in-out`,
+		transition: "all 0.5s ease-in-out",
 		padding: '0 !important',
 		borderRadius: '100% !important',
 		width: rem(48),

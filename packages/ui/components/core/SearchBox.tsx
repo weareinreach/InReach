@@ -94,7 +94,7 @@ const useStyles = createStyles((theme) => ({
 		minWidth: 'fit-content',
 	},
 	pinToLeft: {
-		left: `0 !important`,
+		left: "0 !important",
 	},
 }))
 

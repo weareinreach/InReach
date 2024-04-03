@@ -431,7 +431,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 							<Stack spacing={0} w='100%'>
 								<Text variant={variants.Text.utility1}>Show on org?</Text>
 								<Checkbox
-									label={`Show this location's address on the organiation page`}
+									label={"Show this location's address on the organiation page"}
 									classNames={{ label: classes.radioLabel }}
 									{...form.getInputProps('data.published', { type: 'checkbox' })}
 								/>
@@ -439,7 +439,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 							<Stack spacing={0} w='100%'>
 								<Text variant={variants.Text.utility1}>Mailing address only?</Text>
 								<Checkbox
-									label={`This is NOT a physical location`}
+									label={"This is NOT a physical location"}
 									classNames={{ label: classes.radioLabel }}
 									{...form.getInputProps('data.mailOnly', { type: 'checkbox' })}
 								/>
