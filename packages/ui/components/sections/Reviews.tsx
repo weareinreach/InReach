@@ -29,28 +29,30 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	)
 
 	const ratingProps = {
-		recordId: validateString(orgServiceId) || validateString(orgLocationId) || organizationId?.id,
+		recordId: validateString(orgServiceId) ?? validateString(orgLocationId) ?? organizationId?.id,
 	}
 
 	const reviews =
 		data && status === 'success'
 			? data.map((review) => {
 					const { user, reviewText, verifiedUser, createdAt, id } = review
-					if (!reviewText) return null
-					const props = {
+					if (!reviewText) {
+						return null
+					}
+					const reviewProps = {
 						user,
 						reviewText,
-						reviewDate: createdAt,
 						verifiedUser,
+						reviewDate: createdAt,
 					}
-					return <UserReview key={id} {...props} />
+					return <UserReview key={id} {...reviewProps} />
 				})
-			: props.reviews.map((_, idx) => (
+			: props.reviews.map(({ id }) => (
 					<UserReview
-						key={idx}
+						key={`ph-${id}`}
 						reviewText=''
 						reviewDate={new Date()}
-						verifiedUser={Boolean(Math.round(Math.random()))}
+						verifiedUser={false}
 						forceLoading
 					/>
 				))

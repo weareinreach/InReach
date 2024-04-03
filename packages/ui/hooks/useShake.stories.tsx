@@ -7,14 +7,12 @@ const DemoComponent = ({ variant }: UseShakeProps) => {
 	const { animateCSS, fireEvent, shakeRef } = useShake({ variant })
 
 	return (
-		<>
-			<Center>
-				<Stack spacing={100} w={400} align='center'>
-					<Box h={300} w={300} style={{ backgroundColor: 'blue' }} className={animateCSS} ref={shakeRef} />
-					<Button onClick={fireEvent}>Animate!</Button>
-				</Stack>
-			</Center>
-		</>
+		<Center>
+			<Stack spacing={100} w={400} align='center'>
+				<Box h={300} w={300} style={{ backgroundColor: 'blue' }} className={animateCSS} ref={shakeRef} />
+				<Button onClick={fireEvent}>Animate!</Button>
+			</Stack>
+		</Center>
 	)
 }
 
