@@ -16,6 +16,7 @@ export const govDists = async ({ input }: TRPCHandlerParams<TGovDistsSchema>) =>
 				country: { select: { cca2: true } },
 				govDistType: { select: { tsKey: true, tsNs: true } },
 			},
+			orderBy: { tsKey: 'asc' },
 		})
 		return results
 	} catch (error) {

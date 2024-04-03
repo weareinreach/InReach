@@ -2,6 +2,7 @@ import { createStyles, List, rem, Skeleton, Stack, Table, Text, Title } from '@m
 import { Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
+import { type ApiOutput } from '@weareinreach/api'
 import { HoursDrawer } from '~ui/components/data-portal/HoursDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useLocalizedDays } from '~ui/hooks/useLocalizedDays'
@@ -39,11 +40,13 @@ const nullObj = {
 	6: [],
 }
 
-export const Hours = ({ parentId, label = 'regular', edit }: HoursProps) => {
+export const Hours = ({ parentId, label = 'regular', edit, data: passedData }: HoursProps) => {
 	const { t, i18n } = useTranslation('common')
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
-	const { data, isLoading } = api.orgHours.forHoursDisplay.useQuery(parentId)
+	const { data, isLoading } = passedData
+		? { data: passedData, isLoading: false }
+		: api.orgHours.forHoursDisplay.useQuery(parentId)
 	const dayMap = useLocalizedDays(i18n.resolvedLanguage)
 	if (!data && !isLoading) return null
 
@@ -106,4 +109,5 @@ export interface HoursProps {
 	parentId: string
 	label?: keyof typeof labelKeys
 	edit?: boolean
+	data?: ApiOutput['orgHours']['forHoursDisplay']
 }

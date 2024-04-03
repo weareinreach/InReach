@@ -22,4 +22,14 @@ export const serviceArea = {
 			},
 		}),
 	}),
+	addToArea: getTRPCMock({
+		path: ['serviceArea', 'addToArea'],
+		type: 'mutation',
+		response: () => ({ result: 'added' }),
+	}),
+	delFromArea: getTRPCMock({
+		path: ['serviceArea', 'delFromArea'],
+		type: 'mutation',
+		response: () => ({ result: 'deleted' }),
+	}),
 } satisfies MockHandlerObject<'serviceArea'>

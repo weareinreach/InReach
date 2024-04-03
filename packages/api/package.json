@@ -61,6 +61,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"dotenv-cli": "7.4.1",
 		"eslint": "8.57.0",
+		"i18next": "23.10.1",
 		"inquirer-search-list": "1.2.6",
 		"just-pascal-case": "3.2.0",
 		"next": "14.1.4",
@@ -71,6 +72,7 @@
 		"typescript": "5.4.3"
 	},
 	"peerDependencies": {
+		"i18next": "23.10.1",
 		"next": ">=13"
 	}
 }

@@ -34,6 +34,9 @@ patchedDependencies:
   '@crowdin/ota-client@1.0.0':
     hash: refrge56ym5gomc3tkglzjdymy
     path: patches/@crowdin__ota-client@1.0.0.patch
+  json-schema-to-zod@2.0.14:
+    hash: m6gxyy33n5omrqal5wlfjbvve4
+    path: patches/json-schema-to-zod@2.0.14.patch
   social-links@1.14.0:
     hash: vsl4v34ksjh5tzibzra6h65ytm
     path: patches/social-links@1.14.0.patch
@@ -786,6 +789,9 @@ importers:
       eslint:
         specifier: 8.57.0
         version: 8.57.0
+      i18next:
+        specifier: 23.10.1
+        version: 23.10.1
       inquirer-search-list:
         specifier: 1.2.6
         version: 1.2.6
@@ -982,7 +988,7 @@ importers:
         version: 1.6.6
       json-schema-to-zod:
         specifier: 2.0.14
-        version: 2.0.14
+        version: 2.0.14(patch_hash=m6gxyy33n5omrqal5wlfjbvve4)
       kysely:
         specifier: 0.27.3
         version: 0.27.3
@@ -1299,7 +1305,7 @@ importers:
         version: 3.3.4
       json-schema-to-zod:
         specifier: 2.0.14
-        version: 2.0.14
+        version: 2.0.14(patch_hash=m6gxyy33n5omrqal5wlfjbvve4)
       just-compact:
         specifier: 3.2.0
         version: 3.2.0
@@ -18753,10 +18759,11 @@ packages:
       valid-url: 1.0.9
     dev: true
 
-  /json-schema-to-zod@2.0.14:
+  /json-schema-to-zod@2.0.14(patch_hash=m6gxyy33n5omrqal5wlfjbvve4):
     resolution: {integrity: sha512-Pp9wg1/AcMw5KA1RA7t6ybUTIes1yX0vp8PeE48cPnddHb+ZZWbAKPaFXVf4Pif4XSbo9u9i/hIzBcS1UHK/TA==}
     hasBin: true
     dev: false
+    patched: true
 
   /json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
