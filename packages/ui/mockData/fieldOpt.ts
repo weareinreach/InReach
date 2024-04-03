@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { type $Enums } from '@weareinreach/db'
 import { getTRPCMock, type MockAPIHandler, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 const queryAttributeCategories: MockAPIHandler<'fieldOpt', 'attributeCategories'> = async (query) => {
@@ -12,13 +13,32 @@ const queryAttributeCategories: MockAPIHandler<'fieldOpt', 'attributeCategories'
 }
 
 const queryAttributesByCategory: MockAPIHandler<'fieldOpt', 'attributesByCategory'> = async (query) => {
-	const attributesByCategory = (await import('./json/fieldOpt.attributesByCategory.json')).default
-	if (typeof query === 'string' || Array.isArray(query)) {
-		return attributesByCategory.filter(({ categoryName }) =>
-			Array.isArray(query) ? query.includes(categoryName) : query === categoryName
-		) as ApiOutput['fieldOpt']['attributesByCategory']
+	const attributesByCategory = (await import('./json/fieldOpt.attributesByCategory.json'))
+		.default as ApiOutput['fieldOpt']['attributesByCategory']
+
+	if (query?.categoryName || query?.canAttachTo?.length) {
+		const canAttachSet = new Set(query.canAttachTo)
+		const catNameSet = new Set(Array.isArray(query.categoryName) ? query.categoryName : [query.categoryName])
+		return attributesByCategory.filter(({ canAttachTo, categoryName }) => {
+			let match = false
+
+			if (query.canAttachTo?.length) {
+				for (const item of canAttachTo) {
+					if (canAttachSet.has(item as $Enums.AttributeAttachment)) {
+						match = true
+						break
+					}
+				}
+			}
+			if (query.categoryName) {
+				match = catNameSet.has(categoryName)
+			}
+
+			return match
+		})
 	}
-	return attributesByCategory as ApiOutput['fieldOpt']['attributesByCategory']
+
+	return attributesByCategory
 }
 
 const queryLanguages: MockAPIHandler<'fieldOpt', 'languages'> = async (query) => {
@@ -211,6 +231,17 @@ export const fieldOpt = {
 					const { default: data } = await import('./json/fieldOpt.orgBadges.service-focus.json')
 					return data
 				}
+			}
+		},
+	}),
+	ccaMap: getTRPCMock({
+		path: ['fieldOpt', 'ccaMap'],
+		response: async ({ activeForOrgs }) => {
+			const { default: data } = await import('./json/fieldOpt.ccaMap.json')
+			const dataToUse = activeForOrgs ? data.true : data.false
+			return {
+				byId: new Map(Object.entries(dataToUse.byId)),
+				byCCA: new Map(Object.entries(dataToUse.byCCA)),
 			}
 		},
 	}),

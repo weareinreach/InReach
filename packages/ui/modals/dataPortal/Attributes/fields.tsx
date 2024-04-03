@@ -1,130 +1,95 @@
-import { Group, Radio, Select, Stack, Text, TextInput } from '@mantine/core'
+import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ComponentPropsWithoutRef, forwardRef, type MouseEventHandler, useEffect, useState } from 'react'
-import { type LiteralUnion, type TupleToUnion } from 'type-fest'
+import { type ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { NumberInput, Radio, Select, TextInput } from 'react-hook-form-mantine'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { type FieldAttributes, FieldType } from '@weareinreach/db/zod_util/attributeSupplement'
 import { Button } from '~ui/components/core/Button'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useFormContext } from './context'
+import { type FormSchema } from './schema'
 
-const SuppBoolean = ({ handler }: SuppBooleanProps) => {
-	const form = useFormContext()
-
+const SuppBoolean = () => {
+	const { control } = useFormContext<FormSchema>()
 	return (
-		<Radio.Group
-			value={
-				form.values.supplement?.boolean === undefined
-					? undefined
-					: form.values.supplement.boolean
-						? 'true'
-						: 'false'
-			}
-			onChange={handler}
-		>
+		<Radio.Group<FormSchema> name='boolean' control={control}>
 			<Group>
-				<Radio value='true' label='True/Yes' />
-				<Radio value='false' label='False/No' />
+				<Radio.Item value={true} label='True/Yes' />
+				<Radio.Item value={false} label='False/No' />
 			</Group>
 		</Radio.Group>
 	)
 }
-interface SuppBooleanProps {
-	handler: (value: string) => void
-}
 
-const SuppText = ({ handler }: SuppTextProps) => {
-	const form = useFormContext()
-	const { t } = useTranslation('common')
+const SuppText = () => {
+	const { control } = useFormContext<FormSchema>()
 	return (
 		<Stack>
-			<TextInput {...form.getInputProps('supplement.text')} />
-			<Button onClick={handler}>{t('words.add', { ns: 'common' })}</Button>
+			<TextInput label='Text' {...{ control, name: 'text' }} />
+			{/* <Button onClick={handler}>{t('words.add', { ns: 'common' })}</Button> */}
 		</Stack>
 	)
 }
-interface SuppTextProps {
-	handler: MouseEventHandler<HTMLButtonElement>
-}
 
-const dataSchemas = ['numMinMaxOrRange', 'numRange', 'numMin', 'numMax', 'number'] as const
-type DataSchema = TupleToUnion<typeof dataSchemas>
+const SuppData = ({ schema }: SuppDataProps) => {
+	const { control } = useFormContext<FormSchema>()
 
-const isDataSchema = (schema: string): schema is DataSchema => dataSchemas.includes(schema as DataSchema)
-
-const SuppData = ({ handler, schema }: SuppDataProps) => {
-	const form = useFormContext()
-	const { t } = useTranslation('common')
-	if (!isDataSchema(schema)) throw new Error('Invalid schema')
-	console.log('SuppData')
-	useEffect(() => {
-		if (!form.values.supplement?.data) {
-			form.setFieldValue('supplement.data', {})
+	const renderField = (schema: FieldAttributes) => {
+		const { type, name: dataKey, ...schemaProps } = schema
+		const baseProps = {
+			...schemaProps,
+			name: `data.${dataKey}` as const,
+			control,
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [form.values.supplement])
-	const body = (() => {
-		switch (schema) {
-			case 'numMax':
-			case 'numMin':
-			case 'number': {
-				const label = schema === 'numMax' ? 'Max' : schema === 'numMin' ? 'Min' : 'Amount'
-				const key = schema === 'numMax' ? 'max' : schema === 'numMin' ? 'min' : 'number'
-				return <TextInput label={label} {...form.getInputProps(`supplement.data.${key}`)} />
+		switch (type) {
+			case FieldType.text: {
+				return <TextInput {...baseProps} />
 			}
-			case 'numRange':
-			case 'numMinMaxOrRange': {
-				return (
-					<Group>
-						<TextInput w='25%' label='Min' {...form.getInputProps(`supplement.data.min`)} />
-						<TextInput w='25%' label='Max' {...form.getInputProps(`supplement.data.max`)} />
-					</Group>
-				)
+			case FieldType.select: {
+				const { options } = schema
+				return <Select {...baseProps} data={options} />
+			}
+			case FieldType.number: {
+				return <NumberInput {...baseProps} type='number' />
+			}
+			case FieldType.currency: {
+				return <NumberInput {...baseProps} type='number' />
 			}
 		}
-	})()
+	}
 
 	return (
-		<Group>
-			{body}
-			<Button onClick={() => handler(form.values.supplement?.data)}>
-				{t('words.add', { ns: 'common' })}
-			</Button>
-		</Group>
+		<Stack>
+			{schema.flatMap((schema) => {
+				if (Array.isArray(schema)) {
+					return <Group noWrap>{schema.map(renderField)}</Group>
+				} else {
+					return renderField(schema)
+				}
+			})}
+		</Stack>
 	)
 }
 interface SuppDataProps {
-	handler: (data?: object) => void //MouseEventHandler<HTMLButtonElement>
-	schema: LiteralUnion<DataSchema, string>
+	// schema: LiteralUnion<DataSchema, string>
+	schema: FieldAttributes[] | FieldAttributes[][]
 }
 
-const SuppLang = ({ handler }: SuppLangProps) => {
-	const form = useFormContext()
-	const { t } = useTranslation('common')
-	const [listOptions, setListOptions] = useState<LangList[] | undefined>()
-	api.fieldOpt.languages.useQuery(undefined, {
-		onSuccess: (data) =>
-			setListOptions(data.map(({ id, languageName }) => ({ value: id, label: languageName }))),
+const SuppLang = () => {
+	const { control } = useFormContext<FormSchema>()
+	const { data: listOptions } = api.fieldOpt.languages.useQuery(undefined, {
+		select: (data) => data.map(({ id, languageName }) => ({ value: id, label: languageName })),
 	})
 	return (
 		<Group>
-			{listOptions && (
-				<Select data={listOptions} searchable {...form.getInputProps('supplement.languageId')} />
-			)}
-			<Button onClick={() => handler(form.values.supplement?.languageId)}>
+			{listOptions && <Select data={listOptions} searchable name='languageId' {...{ control }} />}
+			{/* <Button onClick={() => handler(form.values.supplement?.languageId)}>
 				{t('words.add', { ns: 'common' })}
-			</Button>
+			</Button> */}
 		</Group>
 	)
-}
-
-interface SuppLangProps {
-	handler: (value?: string) => void
-}
-interface LangList {
-	value: string
-	label: string
 }
 
 const GeoItem = forwardRef<HTMLDivElement, GeoItemProps>(({ flag, label, ...props }, ref) => {
@@ -139,107 +104,86 @@ const GeoItem = forwardRef<HTMLDivElement, GeoItemProps>(({ flag, label, ...prop
 })
 GeoItem.displayName = 'GeoItem'
 
-const SuppGeo = ({ handler, countryOnly }: SuppGeoProps) => {
-	const form = useFormContext()
+const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
+	// const { control } = useFormContext<FormSchema>()
 	const { t } = useTranslation(['country', 'gov-dist'])
-	const [primaryList, setPrimaryList] = useState<GeoList[] | undefined>()
+	// const [primaryList, setPrimaryList] = useState<GeoList[] | undefined>()
 	const [secondaryList, setSecondaryList] = useState<GeoList['districts'] | undefined>()
 	const [tertiaryList, setTertiaryList] = useState<
 		NonNullable<GeoList['districts']>[number]['subDistricts'] | undefined
 	>()
-	const [primarySearch, onPrimarySearch] = useState<string | undefined>()
-	const [secondarySearch, onSecondarySearch] = useState<string | undefined>()
-	const [tertiarySearch, onTertiarySearch] = useState<string | undefined>()
-	const countries = api.fieldOpt.countries.useQuery(undefined, {
-		enabled: Boolean(countryOnly),
-		onSuccess: (data) =>
-			setPrimaryList(data.map(({ id, name, flag }) => ({ value: id, label: name, flag: flag ?? undefined }))),
+	const [primarySearch, setPrimarySearch] = useState<string | null>(null)
+	const [secondarySearch, setSecondarySearch] = useState<string | null>(null)
+	const [tertiarySearch, setTertiarySearch] = useState<string | null>(null)
+
+	// const [finalValue, setFinalValue] = useState<string | null>(null)
+	// const [fieldName, setFieldName] = useState<FieldPath<FormSchema> | undefined>(
+	// 	countryOnly ? 'countryId' : undefined
+	// )
+
+	const { data: countryList, ...countries } = api.fieldOpt.countries.useQuery(undefined, {
+		enabled: countryOnly ?? false,
+		select: (data) => data.map(({ id, name, flag }) => ({ value: id, label: name, flag: flag ?? undefined })),
 	})
-	api.fieldOpt.govDistsByCountry.useQuery(undefined, {
+	const { data: distByCountryList } = api.fieldOpt.govDistsByCountry.useQuery(undefined, {
 		enabled: !countryOnly,
-		onSuccess: (data) => {
-			setPrimaryList(
-				data.map(({ id, tsKey, tsNs, flag, govDist }) => ({
-					value: id,
-					label: t(tsKey, { ns: tsNs }),
-					flag: flag ?? undefined,
-					districts: govDist,
-				}))
-			)
-		},
+		select: (data) =>
+			data.map(({ id, tsKey, tsNs, flag, govDist }) => ({
+				value: id,
+				label: t(tsKey, { ns: tsNs }),
+				flag: flag ?? undefined,
+				districts: govDist,
+			})),
 	})
-
-	useEffect(() => {
-		if (form.values.supplement?.govDistId && secondaryList) {
-			const secondarySelected = secondaryList.find(({ id }) => id === form.values.supplement?.govDistId)
-			if (secondarySelected && secondarySelected.subDistricts.length) {
-				form.setFieldValue('supplement.subDistId', undefined)
-				onTertiarySearch('')
-				setTertiaryList(secondarySelected.subDistricts)
-			} else if (secondarySelected && !secondarySelected.subDistricts.length) {
-				setTertiaryList(undefined)
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [form.values.supplement?.govDistId])
-
-	useEffect(() => {
-		if (form.values.supplement?.countryId && !countryOnly && primaryList) {
-			const primarySelected = primaryList.find(({ value }) => value === form.values.supplement?.countryId)
-			if (primarySelected && primarySelected.districts?.length) {
-				setSecondaryList(primarySelected.districts)
-			} else if (primarySelected && !primarySelected.districts?.length) {
-				onSecondarySearch('')
-				setSecondaryList(undefined)
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [form.values.supplement?.countryId, countryOnly])
+	const primaryList = countryOnly ? countryList : distByCountryList
 
 	if (!primaryList && !countries.isSuccess) return <>Loading...</>
 	return (
 		<Stack>
 			{primaryList && (
-				<Select
+				<MantineSelect
 					data={primaryList}
 					searchable
-					searchValue={primarySearch}
-					onSearchChange={onPrimarySearch}
+					searchValue={primarySearch ?? undefined}
+					onSearchChange={setPrimarySearch}
 					itemComponent={GeoItem}
-					{...form.getInputProps('supplement.countryId')}
+					// control={control}
+					name='countryId'
 				/>
 			)}
 			{secondaryList && (
-				<Select
+				<MantineSelect
 					data={secondaryList.map(({ id, tsKey, tsNs }) => ({
 						value: id,
 						label: t(tsKey, { ns: tsNs }) satisfies string,
 					}))}
 					searchable
-					searchValue={secondarySearch}
-					onSearchChange={onSecondarySearch}
+					searchValue={secondarySearch ?? undefined}
+					onSearchChange={setSecondarySearch}
 					itemComponent={GeoItem}
-					{...form.getInputProps('supplement.govDistId')}
+					// control={control}
+					name='govDistId'
+					// {...form.getInputProps('supplement.govDistId')}
 				/>
 			)}
 			{tertiaryList && (
-				<Select
+				<MantineSelect
 					data={tertiaryList.map(({ id, tsKey, tsNs }) => ({
 						value: id,
 						label: t(tsKey, { ns: tsNs }) satisfies string,
 					}))}
 					searchable
-					searchValue={tertiarySearch}
-					onSearchChange={onTertiarySearch}
+					searchValue={tertiarySearch ?? undefined}
+					onSearchChange={setTertiarySearch}
 					itemComponent={GeoItem}
-					{...form.getInputProps('supplement.subDistId')}
+					// {...form.getInputProps('supplement.subDistId')}
 				/>
 			)}
 			<Button
-				onClick={() => {
-					const { govDistId, countryId } = form.values.supplement ?? {}
-					handler(govDistId ? { govDistId } : { countryId })
-				}}
+			// onClick={() => {
+			// 	const { govDistId, countryId } = form.values.supplement ?? {}
+			// 	handler(govDistId ? { govDistId } : { countryId })
+			// }}
 			>
 				{t('words.add', { ns: 'common' })}
 			</Button>
@@ -247,7 +191,6 @@ const SuppGeo = ({ handler, countryOnly }: SuppGeoProps) => {
 	)
 }
 interface SuppGeoProps {
-	handler: (value?: { govDistId?: string; countryId?: string }) => void
 	countryOnly?: boolean
 }
 

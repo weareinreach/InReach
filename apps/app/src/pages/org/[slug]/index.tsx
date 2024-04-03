@@ -10,7 +10,6 @@ import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
-// import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -40,11 +39,12 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const OrganizationPage = ({
-	slug,
+	slug: passedSlug,
 	organizationId: orgId,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const router = useRouter<'/org/[slug]'>()
-	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
+	const slug = passedSlug ?? router.query.slug
+	const { data, status } = api.organization.forOrgPage.useQuery({ slug })
 	// const { query } = router
 	const { t } = useTranslation(formatNS(orgId))
 	const [activeTab, setActiveTab] = useState<string | null>('services')
@@ -155,7 +155,7 @@ const OrganizationPage = ({
 				<>
 					{isTablet && <Divider />}
 					<Stack ref={ref} miw='100%'>
-						{width && (
+						{Boolean(width) && (
 							<GoogleMap
 								locationIds={locations.map(({ id }) => id)}
 								width={width}
@@ -244,7 +244,6 @@ export const getStaticProps = async ({
 }: GetStaticPropsContext<RoutedQuery<'/org/[slug]'>>) => {
 	if (!params) return { notFound: true }
 	const { slug } = params
-
 	const ssg = await trpcServerClient({ session: null })
 	try {
 		const redirect = await ssg.organization.slugRedirect.fetch(slug)

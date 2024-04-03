@@ -3,8 +3,12 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { transformer } from '@weareinreach/util/transformer'
+import { Link } from '~ui/components/core'
 import { Badge } from '~ui/components/core/Badge'
-import { useCustomVariant, useScreenSize } from '~ui/hooks'
+import { ServiceEditDrawer } from '~ui/components/data-portal/ServiceEditDrawer'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useEditMode } from '~ui/hooks/useEditMode'
+import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ServiceModal } from '~ui/modals/Service'
@@ -33,6 +37,7 @@ const useServiceSectionStyles = createStyles((theme) => ({
 
 const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
+	const { isEditMode } = useEditMode()
 	const { slug } = router.isReady ? router.query : { slug: '' }
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug }, { enabled: router.isReady })
 	const { t } = useTranslation(orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services'])
@@ -54,7 +59,32 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 			<Stack spacing={0}>
 				{services.map((service) => {
 					const serviceName = t(service.tsKey, { ns: orgId?.id, defaultValue: service.defaultText })
-					return (
+					const children = (
+						<>
+							{service.offersRemote && !hideRemoteBadges ? (
+								<Group spacing={8} align='center'>
+									<Text variant={variants.Text.utility1}>{serviceName}</Text>
+									<Badge.Remote />
+								</Group>
+							) : (
+								<Text variant={variants.Text.utility1}>{serviceName}</Text>
+							)}
+							<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
+						</>
+					)
+
+					return isEditMode ? (
+						<ServiceEditDrawer
+							key={service.id}
+							serviceId={service.id}
+							variant={variants.Link.inlineInverted}
+							component={Link}
+						>
+							<Group noWrap position='apart' className={classes.group}>
+								{children}
+							</Group>
+						</ServiceEditDrawer>
+					) : (
 						<ServiceModal
 							key={service.id}
 							serviceId={service.id}
@@ -64,16 +94,7 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 							className={classes.group}
 							onMouseOver={() => apiUtils.service.forServiceModal.prefetch(service.id)}
 						>
-							{service.offersRemote && !hideRemoteBadges ? (
-								<Group spacing={8} align='center'>
-									<Text variant={variants.Text.utility1}>{serviceName}</Text>
-									<Badge.Remote />
-								</Group>
-							) : (
-								<Text variant={variants.Text.utility1}>{serviceName}</Text>
-							)}
-
-							<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
+							{children}
 						</ServiceModal>
 					)
 				})}

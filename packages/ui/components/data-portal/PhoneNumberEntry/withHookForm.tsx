@@ -29,13 +29,16 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	label = 'Phone Number',
 	required,
 }: PhoneNumberEntryProps<T>) => {
-	const { data: countryList } = api.fieldOpt.countries.useQuery(
+	const { data: countryData } = api.fieldOpt.countries.useQuery(
 		{ activeForOrgs: true },
 		{
-			initialData: [],
 			select: (data) => transformCountryList(data),
 		}
 	)
+	const countryList = useMemo(() => {
+		if (!countryData) return []
+		return countryData
+	}, [countryData])
 	const validCountries = countryList.map(({ data }) => data.cca2)
 
 	const {

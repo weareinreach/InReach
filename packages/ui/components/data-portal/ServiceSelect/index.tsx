@@ -1,11 +1,10 @@
-import { Box, type BoxProps, createStyles, Drawer, Group, rem, Stack, Text, Title } from '@mantine/core'
+import { Box, type BoxProps, createStyles, Drawer, Group, rem, Stack, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { type FieldValues, type UseControllerProps, useFormState } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
-import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
@@ -38,27 +37,28 @@ export const ServiceSelect = <T extends FieldValues>({
 	const { data } = api.component.ServiceSelect.useQuery()
 	const { classes } = useStyles()
 	const { t } = useTranslation('services')
-	const variants = useCustomVariant()
 	const form = useFormState({ control, name })
 
 	const serviceGroups = data ? (
 		<Checkbox.Group {...{ name, control, defaultValue, rules, shouldUnregister }}>
-			<Stack spacing={0}>
+			<Stack spacing={16}>
 				{data.map((category) => (
-					<Stack spacing={0} key={category.tsKey}>
-						<Text variant={variants.Text.utility1}>{t(category.tsKey)}</Text>
-						{category.services.map((service) => (
-							<Checkbox.Item
-								pl={16}
-								size='xs'
-								key={`${category.tsKey}-${service.id}`}
-								value={service.id}
-								label={t(service.tsKey)}
-								classNames={{
-									label: classes.checkboxLabel,
-								}}
-							/>
-						))}
+					<Stack spacing={8} key={category.tsKey}>
+						<Title order={3}>{t(category.tsKey)}</Title>
+						<Stack spacing={0}>
+							{category.services.map((service) => (
+								<Checkbox.Item
+									pl={16}
+									size='xs'
+									key={`${category.tsKey}-${service.id}`}
+									value={service.id}
+									label={t(service.tsKey)}
+									classNames={{
+										label: classes.checkboxLabel,
+									}}
+								/>
+							))}
+						</Stack>
 					</Stack>
 				))}
 			</Stack>

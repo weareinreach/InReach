@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { Grid, Stack } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { t } from 'i18next'
@@ -127,7 +126,6 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 							)}
 						</Stack>
 					</Stack>
-					<DevTool control={formMethods.control} placement='bottom-right' id='page' />
 				</Grid.Col>
 			</FormProvider>
 		</>

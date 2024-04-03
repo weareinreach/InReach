@@ -113,7 +113,6 @@ const config: StorybookConfig = {
 			const plugin = new I18NextHMRPlugin({
 				localesDir: path.resolve(__dirname, '../../../apps/app/public/locales'),
 			})
-			// @ts-expect-error It doesn't like the i18nHMRPlugin for some reason...
 			Array.isArray(config.plugins) ? config.plugins.push(plugin) : (config.plugins = [plugin])
 		}
 
