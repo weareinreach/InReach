@@ -59,12 +59,15 @@ export const generateTranslationKeys = async (task: PassedTask) => {
 		for (const item of namespace.keys) {
 			if (item.interpolation && isObject(item.interpolationValues)) {
 				for (const [key, value] of Object.entries(item.interpolationValues)) {
-					if (typeof value !== 'string') throw new Error('Invalid nested plural item')
+					if (typeof value !== 'string') {
+						throw new Error('Invalid nested plural item')
+					}
 					outputData[`${item.key}_${key}`] = value
 				}
-			} //else {
-			if (item.ns === 'attribute') outputData[item.key] = item.text
-			//}
+			}
+			if (item.ns === 'attribute') {
+				outputData[item.key] = item.text
+			}
 		}
 		const filename = `${localePath}/${namespace.name}.json`
 
@@ -72,7 +75,9 @@ export const generateTranslationKeys = async (task: PassedTask) => {
 		if (fs.existsSync(filename)) {
 			existingFile = flatten(JSON.parse(fs.readFileSync(filename, 'utf-8')))
 		}
-		if (!isOutput(existingFile)) throw new Error("tried to load file, but it's empty")
+		if (!isOutput(existingFile)) {
+			throw new Error("tried to load file, but it's empty")
+		}
 		// const existingLength = Object.keys(existingFile).length
 		const existingLength = countKeys(existingFile)
 		let outputFile: Output = unflatten(Object.assign(existingFile, outputData), { overwrite: true })

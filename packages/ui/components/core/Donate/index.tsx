@@ -3,7 +3,7 @@ import { useDisclosure, useTimeout } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'
 import { Button } from '~ui/components/core/Button'
@@ -49,7 +49,7 @@ export const DonateModal = () => {
 	}, 10_000)
 	const buttonPosition = isMobile ? { bottom: rem(80), right: rem(12) } : { bottom: rem(40), right: rem(40) }
 
-	const buttonHandler = () => {
+	const buttonHandler = useCallback(() => {
 		donateEvent.click()
 		if (isMobile) {
 			if (!showEmoji || opened) {
@@ -67,7 +67,8 @@ export const DonateModal = () => {
 		} else {
 			modalHandler.open()
 		}
-	}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 	useEffect(() => {
 		start()
 		// eslint-disable-next-line react-hooks/exhaustive-deps

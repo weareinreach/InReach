@@ -36,14 +36,16 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 		data && status === 'success'
 			? data.map((review) => {
 					const { user, reviewText, verifiedUser, createdAt, id } = review
-					if (!reviewText) return null
-					const props = {
+					if (!reviewText) {
+						return null
+					}
+					const reviewProps = {
 						user,
 						reviewText,
-						reviewDate: createdAt,
 						verifiedUser,
+						reviewDate: createdAt,
 					}
-					return <UserReview key={id} {...props} />
+					return <UserReview key={id} {...reviewProps} />
 				})
 			: props.reviews.map(({ id }) => (
 					<UserReview
