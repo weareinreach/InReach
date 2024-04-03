@@ -65,6 +65,15 @@ const schemas = {
 		instructions: z.string().optional(),
 	}),
 }
+const numMinMaxOrRange = z
+	.union([
+		z.object({ min: z.number(), max: z.never().optional() }),
+		z.object({ min: z.never().optional(), max: z.number() }),
+		z.object({ min: z.number(), max: z.number() }),
+	])
+	.refine(({ min, max }) => (min && max ? min < max : true), {
+		message: 'min must be less than  max',
+	})
 
 /**
  * Job export - this variable MUST be UNIQUE
@@ -258,14 +267,18 @@ export const job20240403_access_instruction_schemas = {
 			},
 		]
 
-		const updateDefinitions = await prisma.$transaction(
-			updateData.map(({ where, schemaId }) =>
+		const updateDefinitions = await prisma.$transaction([
+			...updateData.map(({ where, schemaId }) =>
 				prisma.attribute.update({
 					where: { id: where },
 					data: { requiredSchemaId: schemaId },
 				})
-			)
-		)
+			),
+			prisma.attributeSupplementDataSchema.update({
+				where: { id: 'asds_01GYX872BWWCGTZREHDT2AFF9D' },
+				data: { schema: JsonInputOrNull.parse(zodToJsonSchema(numMinMaxOrRange)) },
+			}),
+		])
 		log(`Updated ${updateDefinitions.length} Attribute records.`)
 
 		/**
