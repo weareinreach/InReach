@@ -1,11 +1,10 @@
-import { Box, type BoxProps, createStyles, Drawer, Group, rem, Stack, Text, Title } from '@mantine/core'
+import { Box, type BoxProps, createStyles, Drawer, Group, rem, Stack, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { type FieldValues, type UseControllerProps, useFormState } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
-import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
@@ -38,7 +37,6 @@ export const ServiceSelect = <T extends FieldValues>({
 	const { data } = api.component.ServiceSelect.useQuery()
 	const { classes } = useStyles()
 	const { t } = useTranslation('services')
-	const variants = useCustomVariant()
 	const form = useFormState({ control, name })
 
 	const serviceGroups = data ? (

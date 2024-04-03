@@ -6,7 +6,7 @@ import { formatMessage } from '~db/prisma/common'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
 import { JsonInputOrNull } from '~db/zod_util'
-import { type FieldAttributes, FieldType } from '~db/zod_util/attributeSupplement'
+import { FieldType } from '~db/zod_util/attributeSupplement'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {

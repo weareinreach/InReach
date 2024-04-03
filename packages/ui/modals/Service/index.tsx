@@ -32,8 +32,6 @@ import { ModalTitle, type ModalTitleProps } from '../ModalTitle'
  * - Validate data display against finalized data structure.
  */
 
-const CONTACTS = ['phone', 'email', 'website'] as const
-
 const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ serviceId, ...props }, ref) => {
 	const slug = useSlug()
 	const { data, status } = api.service.forServiceModal.useQuery(serviceId)
