@@ -224,6 +224,12 @@
 		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
 		"typescript.enablePromptUseWorkspaceTsdk": true,
 		"typescript.workspaceSymbols.scope": "allOpenProjects",
+		"sonarlint.connectedMode.project": {
+			"connectionId": "inreach",
+			"projectKey": "weareinreach_InReach",
+		},
+		"sonarlint.output.showAnalyzerLogs": true,
+		"sonarlint.output.showVerboseLogs": false,
 	},
 	"launch": {
 		"configurations": [
