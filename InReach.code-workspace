@@ -19,6 +19,7 @@
 			"figma.figma-vscode-extension",
 			"yoavbls.pretty-ts-errors",
 			"quick-lint.quick-lint-js",
+			"sonarsource.sonarlint-vscode",
 		],
 	},
 	"folders": [
