@@ -1,6 +1,15 @@
 version = 1
 
-exclude_patterns = ["docs/database"]
+exclude_patterns = [
+	"**/generated/**",
+	"*.code-workspace",
+	"packages/db/.snaplet/**",
+	"packages/db/prisma/data-migrations/**",
+	"packages/db/prisma/migrations/**",
+	"packages/db/prisma/views/**",
+	"packages/ui/icon/iconList.ts",
+	"packages/ui/mockData/json/**",
+]
 
 [[analyzers]]
 	enabled = true
