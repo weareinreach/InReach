@@ -63,11 +63,7 @@ const EditModeBar = () => {
 	const apiUtils = api.useUtils()
 	const { unsaved, saveEvent } = useEditMode()
 	const { t } = useTranslation('common')
-	const router = useRouter<
-		| '/org/[slug]/edit'
-		| '/org/[slug]/[orgLocationId]/edit'
-		| '/org/[slug]/[orgLocationId]/edit/[orgServiceId]'
-	>()
+	const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 	const { orgLocationId, slug, orgServiceId } = router.query
 
 	const apiQuery = (() => {
@@ -126,9 +122,6 @@ const EditModeBar = () => {
 				return '/org/[slug]'
 			}
 			case '/org/[slug]/[orgLocationId]/edit': {
-				return '/org/[slug]/[orgLocationId]'
-			}
-			case '/org/[slug]/[orgLocationId]/edit/[orgServiceId]': {
 				return '/org/[slug]/[orgLocationId]'
 			}
 			default: {
@@ -233,11 +226,4 @@ export const Navbar = () => {
 			</Container>
 		</>
 	)
-}
-
-type NavbarProps = {
-	editMode?: boolean
-	editModeRef?: {
-		handleEditSubmit: (handler: () => void) => void
-	}
 }
