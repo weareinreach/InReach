@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
@@ -209,7 +208,6 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 					</Stack>
 				</Modal>
 				<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
-				<DevTool control={form.control} placement='top-left' />
 			</FormProvider>
 		)
 	}

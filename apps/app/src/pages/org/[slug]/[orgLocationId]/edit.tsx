@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { createStyles, Grid, Stack, Tabs, Title } from '@mantine/core'
 import { compareArrayVals } from 'crud-object-diff'
 import { type InferGetServerSidePropsType, type NextPage } from 'next'
@@ -225,7 +224,6 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 						<VisitCard locationId={data.id} edit />
 					</Stack>
 				</Grid.Col>
-				<DevTool control={formMethods.control} />
 			</FormProvider>
 		</>
 	)
