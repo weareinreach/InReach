@@ -7,7 +7,7 @@ import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 const NotFound = () => {
-	const [isLoading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false)
 	const { t } = useTranslation('common')
 
 	return (
@@ -32,7 +32,7 @@ const NotFound = () => {
 						<Center>
 							<SearchBox
 								type='location'
-								loadingManager={{ isLoading, setLoading }}
+								loadingManager={{ isLoading: loading, setLoading }}
 								placeholderTextKey='search.location-placeholder-searchby'
 							/>
 						</Center>
@@ -40,7 +40,7 @@ const NotFound = () => {
 					<Tabs.Panel value='name' m={0}>
 						<SearchBox
 							type='organization'
-							loadingManager={{ isLoading, setLoading }}
+							loadingManager={{ isLoading: loading, setLoading }}
 							placeholderTextKey='search.organization-placeholder-searchby'
 						/>
 					</Tabs.Panel>

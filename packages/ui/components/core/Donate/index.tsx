@@ -56,7 +56,11 @@ export const DonateModal = () => {
 				handler.close()
 			}
 			if (isMobileApp) {
-				window.open('https://inreach.kindful.com/embeds/9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b', '_blank')
+				window.open(
+					'https://inreach.kindful.com/embeds/9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b',
+					'_blank',
+					'noopener'
+				)
 			} else {
 				modalHandler.open()
 			}

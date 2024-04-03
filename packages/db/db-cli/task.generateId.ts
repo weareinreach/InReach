@@ -7,8 +7,8 @@ const filterKeys = (input) => {
 	const regex = new RegExp(`.*${input}.*`, 'i')
 	const matches: string[] = []
 
-	for (const str of Object.keys(idPrefix).sort()) {
-		const match = str.match(regex)
+	for (const str of Object.keys(idPrefix).sort((a, b) => a.localeCompare(b))) {
+		const match = regex.exec(str)
 		if (match) {
 			matches.push(...match)
 		}

@@ -39,7 +39,9 @@ export const forServiceInfoCard = async ({ input }: TRPCHandlerParams<TForServic
 		serviceName: serviceName
 			? { tsKey: serviceName.key, tsNs: serviceName.ns, defaultText: serviceName.tsKey.text }
 			: null,
-		serviceCategories: [...new Set(services.map(({ tag }) => tag.primaryCategory.tsKey))].sort(),
+		serviceCategories: [...new Set(services.map(({ tag }) => tag.primaryCategory.tsKey))].sort((a, b) =>
+			a.localeCompare(b)
+		),
 		offersRemote: attributes.length > 0,
 	}))
 	return transformed

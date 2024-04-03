@@ -16,11 +16,7 @@ import { Icon } from '../icon'
 const StoryDemo = ({ icon = 'heartFilled', displayText, link }: UseNotificationProps) => {
 	const showNotification = useNewNotification({ icon, displayText, link })
 
-	return (
-		<>
-			<Button onClick={() => showNotification()}>Click to activate notification</Button>
-		</>
-	)
+	return <Button onClick={showNotification}>Click to activate notification</Button>
 }
 
 const NotificationPreviewComp = ({ icon = 'heartFilled', ...others }: UseNotificationProps) => {

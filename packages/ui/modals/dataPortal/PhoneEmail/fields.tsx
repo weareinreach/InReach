@@ -26,11 +26,7 @@ export const PhoneTypeSelect = () => {
 	})
 
 	//TODO: Alter dropdown component to match figma design
-	return (
-		<>
-			<Select data={options} {...form.getInputProps('phoneTypeId')} />
-		</>
-	)
+	return <Select data={options} {...form.getInputProps('phoneTypeId')} />
 }
 
 // #endregion
@@ -44,7 +40,7 @@ interface BasicSelect {
 }
 
 const compareArrays = (arr1: unknown[] = [], arr2: unknown[] = []) =>
-	JSON.stringify(arr1.sort()) === JSON.stringify(arr2.sort())
+	JSON.stringify(arr1.toSorted()) === JSON.stringify(arr2.toSorted())
 
 export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 	const form = useFormContext()

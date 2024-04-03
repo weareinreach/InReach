@@ -77,7 +77,7 @@ export const generateTranslationKeys = async (task: PassedTask) => {
 		const existingLength = countKeys(existingFile)
 		let outputFile: Output = unflatten(Object.assign(existingFile, outputData), { overwrite: true })
 		outputFile = Object.keys(outputFile)
-			.sort()
+			.sort((a, b) => a.localeCompare(b))
 			.reduce((obj: Record<string, string>, key) => {
 				obj[key] = outputFile[key] as string
 				return obj
