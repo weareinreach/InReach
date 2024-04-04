@@ -31,6 +31,7 @@ import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { createWktFromLatLng } from '~ui/lib/geotools'
@@ -180,6 +181,8 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const variants = useCustomVariant()
 	const apiUtils = api.useUtils()
 
+	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+
 	// #region Get initial address
 	const { data, isLoading } = api.location.getAddress.useQuery(locationId ?? '', {
 		enabled: Boolean(locationId),
@@ -243,6 +246,8 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		onSuccess: () => {
 			apiUtils.location.getAddress.invalidate(locationId ?? '')
 			setIsSaved(true)
+			notifySave()
+			setTimeout(() => handler.close(), 500)
 		},
 	})
 	function handleUpdate() {
