@@ -2,6 +2,7 @@ import { Card, createStyles, rem, Stack, Text, Title, useMantineTheme } from '@m
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
+import invariant from 'tiny-invariant'
 
 import { Badge } from '~ui/components/core/Badge'
 import { GoogleMap } from '~ui/components/core/GoogleMap'
@@ -14,8 +15,8 @@ import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { validateIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-export const VisitCard = (props: VisitCardProps) =>
-	props.edit ? <VisitCardEdit {...props} /> : <VisitCardDisplay {...props} />
+export const VisitCard = ({ edit = false, ...props }: VisitCardProps & { edit?: boolean }) =>
+	edit ? <VisitCardEdit {...props} /> : <VisitCardDisplay {...props} />
 
 const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	const { isMobile } = useScreenSize()
@@ -31,21 +32,34 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	const formattedAddress = useFormattedAddress(data)
 
 	useEffect(() => {
-		if (data?.latitude && data?.longitude && data?.name && formattedAddress && mapIsReady && map) {
-			mapMarker.add({
-				map,
-				id: locationId,
-				lat: data.latitude,
-				lng: data.longitude,
-				name: data.name,
-				address: formattedAddress,
-			})
+		if (map && mapIsReady) {
+			const lat = data?.latitude
+			const lng = data?.longitude
+			const name = data?.name
+			try {
+				invariant(lat)
+				invariant(lng)
+				invariant(name)
+				invariant(formattedAddress)
+
+				mapMarker.add({
+					map,
+					lat,
+					lng,
+					name,
+					id: locationId,
+					address: formattedAddress,
+				})
+				return () => {
+					mapMarker.remove(locationId)
+				}
+			} catch (error) {
+				console.error(error)
+				return void 0
+			}
 		}
-		return () => {
-			mapMarker.remove(locationId)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId])
+		return () => void 0
+	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId, mapMarker])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
@@ -97,7 +111,6 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 
 	return isTablet ? body : <Card>{body}</Card>
 }
-// TODO: [IN-785] Create variant for Remote/Unpublished address
 
 const useEditStyles = createStyles((theme) => ({
 	overlay: {
@@ -122,22 +135,36 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	const { data } = api.location.forVisitCardEdits.useQuery(locationId)
 
 	const formattedAddress = useFormattedAddress(data)
+
 	useEffect(() => {
-		if (data?.latitude && data?.longitude && data?.name && formattedAddress && mapIsReady && map) {
-			mapMarker.add({
-				map,
-				id: locationId,
-				lat: data.latitude,
-				lng: data.longitude,
-				name: data.name,
-				address: formattedAddress,
-			})
+		if (map && mapIsReady) {
+			const lat = data?.latitude
+			const lng = data?.longitude
+			const name = data?.name
+			try {
+				invariant(lat)
+				invariant(lng)
+				invariant(name)
+				invariant(formattedAddress)
+
+				mapMarker.add({
+					map,
+					lat,
+					lng,
+					name,
+					id: locationId,
+					address: formattedAddress,
+				})
+				return () => {
+					mapMarker.remove(locationId)
+				}
+			} catch (error) {
+				console.error(error)
+				return void 0
+			}
 		}
-		return () => {
-			mapMarker.remove(locationId)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId])
+		return () => void 0
+	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId, mapMarker])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
@@ -186,5 +213,4 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 export interface VisitCardProps {
 	locationId: string
-	edit?: boolean
 }
