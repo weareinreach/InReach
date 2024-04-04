@@ -1,11 +1,12 @@
-import { createStyles, List, rem, Skeleton, Stack, Table, Text, Title } from '@mantine/core'
+import { createStyles, Group, List, rem, Skeleton, Stack, Table, Text, Title } from '@mantine/core'
 import { Interval } from 'luxon'
-import { useTranslation } from 'next-i18next'
+import { type TFunction, useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { HoursDrawer } from '~ui/components/data-portal/HoursDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useLocalizedDays } from '~ui/hooks/useLocalizedDays'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const labelKeys = {
@@ -40,6 +41,15 @@ const nullObj = {
 	6: [],
 }
 
+const formatHourLine = ({ closed, interval, t }: FormatHourLineProps) => {
+	if (closed) {
+		return t('hours.closed')
+	}
+	return interval.toDuration('hours').valueOf() === OPEN_24_MILLISECONDS
+		? t('hours.open24')
+		: interval.toFormat('hh:mm a')
+}
+
 export const Hours = ({ parentId, label = 'regular', edit, data: passedData }: HoursProps) => {
 	const { t, i18n } = useTranslation('common')
 	const variants = useCustomVariant()
@@ -48,12 +58,14 @@ export const Hours = ({ parentId, label = 'regular', edit, data: passedData }: H
 		? { data: passedData, isLoading: false }
 		: api.orgHours.forHoursDisplay.useQuery(parentId)
 	const dayMap = useLocalizedDays(i18n.resolvedLanguage)
-	if (!data && !isLoading) return null
+	if (!data && !isLoading && !edit) {
+		return null
+	}
 
 	const labelKey = labelKeys[label]
 	const timezone: string | null = null
 
-	const hourTable = Object.entries(data ?? nullObj).map(([dayIdx, data]) => {
+	const hourTable = Object.entries(data ?? nullObj).map(([dayIdx, hourRecord]) => {
 		return (
 			<tr key={dayIdx}>
 				<td className={classes.dow}>
@@ -61,18 +73,14 @@ export const Hours = ({ parentId, label = 'regular', edit, data: passedData }: H
 				</td>
 				<td className={classes.hours}>
 					<List listStyleType='none'>
-						{data.map(({ id, interval: intervalISO, closed }) => {
+						{hourRecord.map(({ id, interval: intervalISO, closed }) => {
 							const interval = Interval.fromISO(intervalISO)
+
+							const textToDisplay = formatHourLine({ interval, closed, t })
 
 							return (
 								<List.Item key={id}>
-									<Text>
-										{closed
-											? t('hours.closed')
-											: interval.toDuration('hours').valueOf() === OPEN_24_MILLISECONDS
-												? t('hours.open24')
-												: interval.toFormat('hh:mm a')}
-									</Text>
+									<Text>{textToDisplay}</Text>
 								</List.Item>
 							)
 						})}
@@ -81,6 +89,16 @@ export const Hours = ({ parentId, label = 'regular', edit, data: passedData }: H
 			</tr>
 		)
 	})
+
+	const body =
+		edit && !data ? (
+			<Group noWrap>
+				<Icon icon='carbon:add-filled' />
+				<Text>Add opening hours</Text>
+			</Group>
+		) : (
+			<tbody>{hourTable}</tbody>
+		)
 
 	return (
 		<Skeleton visible={isLoading}>
@@ -92,7 +110,7 @@ export const Hours = ({ parentId, label = 'regular', edit, data: passedData }: H
 				{edit ? (
 					<Table>
 						<HoursDrawer locationId={parentId} component='a'>
-							<tbody>{hourTable}</tbody>
+							{body}
 						</HoursDrawer>
 					</Table>
 				) : (
@@ -110,4 +128,10 @@ export interface HoursProps {
 	label?: keyof typeof labelKeys
 	edit?: boolean
 	data?: ApiOutput['orgHours']['forHoursDisplay']
+}
+
+interface FormatHourLineProps {
+	closed: boolean
+	interval: Interval
+	t: TFunction
 }
