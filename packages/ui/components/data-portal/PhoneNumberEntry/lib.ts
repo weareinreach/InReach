@@ -15,5 +15,7 @@ export const transformCountryList = (data: ApiOutput['fieldOpt']['countries']) =
 				return -1
 			} else if (topCountries.includes(b.data.cca2) && !topCountries.includes(a.data.cca2)) {
 				return 1
-			} else return a.data.cca2.localeCompare(b.data.cca2)
+			} else {
+				return a.data.cca2.localeCompare(b.data.cca2)
+			}
 		})

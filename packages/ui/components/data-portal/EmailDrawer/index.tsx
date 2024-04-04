@@ -14,7 +14,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
@@ -52,7 +52,12 @@ const useStyles = createStyles(() => ({
 export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
-		const [emailId] = useState(createNew ? generateId('orgEmail') : id)
+		const emailId = useMemo(() => {
+			if (createNew || !id) {
+				return generateId('orgEmail')
+			}
+			return id
+		}, [createNew, id])
 		const { id: orgId } = useOrgInfo()
 		const { data: initialData, isFetching } = api.orgEmail.forEditDrawer.useQuery(
 			{ id: emailId },
@@ -74,7 +79,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 			setValue: setFormValue,
 		} = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
-			values: initialData ? initialData : undefined,
+			values: initialData ?? undefined,
 		})
 
 		const { isDirty: formIsDirty } = formState
@@ -107,13 +112,40 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 				setIsSaved(false)
 			}
 		}, [formIsDirty, isSaved])
-		const handleClose = () => {
+		const handleClose = useCallback(() => {
 			if (formState.isDirty) {
 				return modalHandler.open()
 			} else {
 				return drawerHandler.close()
 			}
-		}
+		}, [formState.isDirty, drawerHandler, modalHandler])
+
+		const handleUnlink = useCallback(() => {
+			if (hasLocationId) {
+				unlinkFromLocation.mutate({
+					orgEmailId: emailId,
+					orgLocationId: hasLocationId,
+					action: 'unlink',
+				})
+			}
+		}, [emailId, hasLocationId, unlinkFromLocation])
+
+		const handleSaveFromModal = useCallback(() => {
+			const valuesToSubmit = getValues()
+			emailUpdate.mutate(valuesToSubmit, {
+				onSuccess: () => {
+					modalHandler.close()
+					drawerHandler.close()
+				},
+			})
+		}, [getValues, emailUpdate, modalHandler, drawerHandler])
+
+		const handleCloseAndDiscard = useCallback(() => {
+			reset()
+			modalHandler.close()
+			drawerHandler.close()
+		}, [reset, modalHandler, drawerHandler])
+
 		return (
 			<>
 				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
@@ -161,13 +193,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 											{hasLocationId !== null && (
 												<Button
 													leftIcon={<Icon icon='carbon:unlink' />}
-													onClick={() =>
-														unlinkFromLocation.mutate({
-															orgEmailId: emailId,
-															orgLocationId: hasLocationId,
-															action: 'unlink',
-														})
-													}
+													onClick={handleUnlink}
 													disabled={createNew}
 												>
 													Unlink from this location
@@ -185,25 +211,11 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={emailUpdate.isLoading}
-											onClick={() => {
-												emailUpdate.mutate(getValues(), {
-													onSuccess: () => {
-														modalHandler.close()
-														drawerHandler.close()
-													},
-												})
-											}}
+											onClick={handleSaveFromModal}
 										>
 											Save
 										</Button>
-										<Button
-											variant='secondaryLg'
-											onClick={() => {
-												reset()
-												modalHandler.close()
-												drawerHandler.close()
-											}}
-										>
+										<Button variant='secondaryLg' onClick={handleCloseAndDiscard}>
 											Discard
 										</Button>
 									</Group>
@@ -222,9 +234,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 _EmailDrawer.displayName = 'EmailDrawer'
 
 export const EmailDrawer = createPolymorphicComponent<'button', EmailDrawerProps>(_EmailDrawer)
-// interface EmailDrawerProps {
-// 	id: string
-// }
+
 type EmailDrawerProps = EmailDrawerExisting | EmailDrawerNew
 interface EmailDrawerExisting {
 	id: string
