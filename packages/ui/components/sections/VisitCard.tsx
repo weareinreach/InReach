@@ -186,4 +186,5 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 export interface VisitCardProps {
 	locationId: string
+	edit?: boolean
 }
