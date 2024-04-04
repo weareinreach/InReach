@@ -29,28 +29,31 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	const { data } = api.location.forVisitCard.useQuery(locationId)
 
 	const formattedAddress = useFormattedAddress(data)
+
 	useEffect(() => {
-		if (data && data.latitude && data.longitude && data.name && formattedAddress && mapIsReady && map) {
+		if (data?.latitude && data?.longitude && data?.name && formattedAddress && mapIsReady && map) {
 			mapMarker.add({
+				map,
 				id: locationId,
 				lat: data.latitude,
 				lng: data.longitude,
 				name: data.name,
 				address: formattedAddress,
-				map: map,
 			})
 		}
 		return () => {
 			mapMarker.remove(locationId)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, formattedAddress, map, mapIsReady])
+	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
 	// )
 
-	if (!data) return null
+	if (!data) {
+		return null
+	}
 
 	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
@@ -101,6 +104,8 @@ const useEditStyles = createStyles((theme) => ({
 		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
 		borderRadius: rem(16),
 		margin: rem(-8),
+	},
+	overlayInner: {
 		padding: rem(8),
 	},
 }))
@@ -118,33 +123,41 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 	const formattedAddress = useFormattedAddress(data)
 	useEffect(() => {
-		if (data && data.latitude && data.longitude && data.name && formattedAddress && mapIsReady && map) {
+		if (data?.latitude && data?.longitude && data?.name && formattedAddress && mapIsReady && map) {
 			mapMarker.add({
+				map,
 				id: locationId,
 				lat: data.latitude,
 				lng: data.longitude,
 				name: data.name,
 				address: formattedAddress,
-				map: map,
 			})
 		}
 		return () => {
 			mapMarker.remove(locationId)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, formattedAddress, map, mapIsReady])
+	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
 	// )
 
-	if (!data) return null
+	if (!data) {
+		return null
+	}
 
 	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
 			<Title order={3}>{t('address', { context: data.remote ? 'physical' : undefined })}</Title>
-			<AddressDrawer locationId={locationId} external component={Link} variant={variants.Link.inlineInverted}>
-				<Text className={classes.overlay}>{formattedAddress}</Text>
+			<AddressDrawer
+				locationId={locationId}
+				external
+				component={Link}
+				variant={variants.Link.inlineInverted}
+				className={classes.overlay}
+			>
+				<Text className={classes.overlayInner}>{formattedAddress}</Text>
 			</AddressDrawer>
 			<GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />
 		</Stack>
@@ -165,20 +178,6 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 			{address}
 			{remoteSection}
 			<Hours parentId={locationId} edit />
-			{/* TODO: [IN-807] Validate accessibility data points before enabling.
-			<Stack spacing={12} align='flex-start'>
-				<Badge
-					variant='attribute'
-					tsNs='attribute'
-					tsKey='additional.wheelchair-accessible'
-					tProps={{ context: `${isAccessible}` }}
-					icon={isAccessible ? 'carbon:accessibility' : 'carbon:warning'}
-					style={{ marginLeft: 0 }}
-				/>
-				<Text variant={variants.Text.utility2}>
-					{t('accessible-building', { context: `${isAccessible}` })}
-				</Text>
-			</Stack> */}
 		</Stack>
 	)
 
