@@ -1,11 +1,10 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { organization } from '~ui/mockData/organization'
 import { review } from '~ui/mockData/review'
 import { savedList } from '~ui/mockData/savedList'
 
-import { ActionButtons as ActionButtonsComponent } from './ActionButtons'
+import { ActionButtons as ActionButtonsComponent } from './index'
 
 export default {
 	title: 'Design System/Action Buttons',
