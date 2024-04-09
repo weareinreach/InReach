@@ -7,7 +7,7 @@ export const useGoogleMaps = (): UseGoogleMapsReturn => {
 	if (!context) {
 		throw new Error('useGoogleMaps must be used within a GoogleMapsProvider')
 	}
-	if (context.map && context.isReady && context.infoWindow) {
+	if (context.isReady) {
 		return {
 			map: context.map,
 			infoWindow: context.infoWindow,
