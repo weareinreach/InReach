@@ -21,7 +21,7 @@ import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import filterObject from 'just-filter-object'
 import { useTranslation } from 'next-i18next'
-import { createContext, forwardRef, useContext, useEffect, useState } from 'react'
+import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
 import { z } from 'zod'
 
@@ -250,13 +250,13 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			setTimeout(() => handler.close(), 500)
 		},
 	})
-	function handleUpdate() {
+	const handleUpdate = useCallback(() => {
 		const changesOnly = filterObject(form.values.data, (key) => form.isDirty(`data.${key}`))
 
 		updateLocation.mutate(
 			FormSchema.transform(schemaTransform).parse({ id: form.values.id, data: changesOnly })
 		)
-	}
+	}, [form, updateLocation])
 
 	useEffect(() => {
 		if (isSaved && isSaved === form.isDirty()) {
@@ -329,17 +329,23 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 
 	// #region Dropdown item components/handling
 
-	function handleAutocompleteSelection(item: AutocompleteItem) {
-		if (!item.placeId) {
-			return
-		}
-		setGooglePlaceId(item.placeId)
-	}
+	const handleAutocompleteSelection = useCallback(
+		(item: AutocompleteItem) => {
+			if (!item.placeId) {
+				return
+			}
+			setGooglePlaceId(item.placeId)
+		},
+		[setGooglePlaceId]
+	)
 
-	function handleAutocompleteChange(val: string) {
-		setSearchTerm(val)
-		form.getInputProps('data.street1').onChange(val)
-	}
+	const handleAutocompleteChange = useCallback(
+		(val: string) => {
+			setSearchTerm(val)
+			form.getInputProps('data.street1').onChange(val)
+		},
+		[setSearchTerm, form]
+	)
 
 	// #endregion
 
