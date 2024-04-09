@@ -54,11 +54,12 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 				)
 			)
 		}
-		if (data.lastVerified)
+		if (data.lastVerified) {
 			output.push(
 				<Badge.Verified key={data.lastVerified.toString()} lastverified={data.lastVerified.toString()} />
 			)
-		output.push(<Badge.Claimed isClaimed={isClaimed} />)
+		}
+		output.push(<Badge.Claimed isClaimed={isClaimed} key='claimed-org' />)
 
 		return output
 	}
@@ -69,7 +70,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	))
 
 	const descriptionSection =
-		description && description.key ? (
+		description !== null ? (
 			<Skeleton visible={!i18nReady}>
 				<Text py={12}>{t(description.key, { ns: id, defaultValue: description.tsKey.text })}</Text>
 			</Skeleton>
@@ -90,7 +91,7 @@ ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 
 export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const { id: orgId } = useOrgInfo()
-	const { t, ready: i18nReady } = useTranslation(orgId)
+	const { t } = useTranslation(orgId)
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
 	const theme = useMantineTheme()
@@ -105,14 +106,14 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 
 	const leaderBadges = (): ReactNode[] => {
 		if (leaderAttributes.length) {
-			return leaderAttributes.map(({ attribute }) => (
-				<Badge.Leader key={attribute.id} icon={attribute.icon ?? ''} iconBg={attribute.iconBg ?? '#FFF'}>
+			return leaderAttributes.map(({ attribute, id }) => (
+				<Badge.Leader key={id} icon={attribute.icon ?? ''} iconBg={attribute.iconBg ?? '#FFF'}>
 					{t(attribute.tsKey)}
 				</Badge.Leader>
 			))
 		} else {
 			return [
-				<Badge.Leader icon='➕' iconBg='#FFF'>
+				<Badge.Leader icon='➕' iconBg='#FFF' key='add-new-leader-badge'>
 					Add leader badge
 				</Badge.Leader>,
 			]
@@ -121,11 +122,12 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 
 	const infoBadges = () => {
 		const output: ReactNode[] = []
-		if (data.lastVerified)
+		if (data.lastVerified) {
 			output.push(
 				<Badge.Verified key={data.lastVerified.toString()} lastverified={data.lastVerified.toString()} />
 			)
-		output.push(<Badge.Claimed isClaimed={isClaimed} />)
+		}
+		output.push(<Badge.Claimed isClaimed={isClaimed} key='claimed-org' />)
 		return output
 	}
 	const focusedCommBadges: ReactNode[] = focusedCommunities.length
@@ -134,7 +136,11 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 					{t(attribute.tsKey, { ns: attribute.tsNs })}
 				</Badge.Community>
 			))
-		: [<Badge.Community icon='➕'>Add Focused Community badge(s)</Badge.Community>]
+		: [
+				<Badge.Community icon='➕' key='add-new-community-badge'>
+					Add Focused Community badge(s)
+				</Badge.Community>,
+			]
 
 	return (
 		<form autoComplete='off' style={{ width: '100%' }}>

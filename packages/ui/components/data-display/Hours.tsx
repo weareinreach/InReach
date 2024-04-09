@@ -97,7 +97,9 @@ export const Hours = ({ parentId, label = 'regular', edit, data: passedData }: H
 				<Text>Add opening hours</Text>
 			</Group>
 		) : (
-			<tbody>{hourTable}</tbody>
+			<Table>
+				<tbody>{hourTable}</tbody>
+			</Table>
 		)
 
 	return (
@@ -108,11 +110,9 @@ export const Hours = ({ parentId, label = 'regular', edit, data: passedData }: H
 					<Text variant={variants.Text.utility4darkGray}>{timezone}</Text>
 				</div>
 				{edit ? (
-					<Table>
-						<HoursDrawer locationId={parentId} component='a'>
-							{body}
-						</HoursDrawer>
-					</Table>
+					<HoursDrawer locationId={parentId} component='a'>
+						{body}
+					</HoursDrawer>
 				) : (
 					<Table>
 						<tbody>{hourTable}</tbody>

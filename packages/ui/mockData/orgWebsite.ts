@@ -27,9 +27,9 @@ export const orgWebsite = {
 	update: getTRPCMock({
 		path: ['orgWebsite', 'update'],
 		type: 'mutation',
-		response: async (input) => {
+		response: async ({ data: { orgLocationId: _locId, organizationId: _orgId, ...inputData } }) => {
 			const { default: data } = await import('./json/orgWebsite.forEditDrawer.json')
-			return { ...data, ...input.data, createdAt: new Date(data.createdAt), updatedAt: new Date(Date.now()) }
+			return { ...data, ...inputData, createdAt: new Date(data.createdAt), updatedAt: new Date(Date.now()) }
 		},
 	}),
 	forContactInfoEdit: getTRPCMock({
