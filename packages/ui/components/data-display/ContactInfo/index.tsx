@@ -48,7 +48,9 @@ export const ContactInfo = ({
 }
 
 export const hasContactInfo = (data: PassedDataObject | null | undefined): data is PassedDataObject => {
-	if (!data) return false
+	if (!data) {
+		return false
+	}
 	const { websites, phones, emails, socialMedia } = data
 	return Boolean(websites.length || phones.length || emails.length || socialMedia.length)
 }

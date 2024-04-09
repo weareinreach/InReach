@@ -14,7 +14,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
@@ -22,10 +22,12 @@ import { z } from 'zod'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	drawerContent: {
 		borderRadius: `${rem(32)} 0 0 0`,
 		minWidth: '40vw',
@@ -33,21 +35,35 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const FormSchema = z.object({
-	url: z.string().url(),
-	description: z.string().optional(),
-	published: z.boolean(),
-	deleted: z.boolean(),
-	linkLocationId: z.string().nullish(),
+	url: z.string().url('Invalid URL. Must start with either "https://" or "http://"'),
+	description: z.string().nullish(),
+	published: z.boolean().default(true),
+	deleted: z.boolean().default(false),
+	orgLocationId: z.string().nullish(),
+	organizationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
+		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
+		const { id: organizationId } = useOrgInfo()
+		const websiteId = useMemo(() => {
+			if (createNew || !id) {
+				return generateId('orgWebsite')
+			}
+			return id
+		}, [createNew, id])
 
-		const [websiteId] = useState(createNew ? generateId('orgWebsite') : id)
-		const { data, isFetching } = api.orgWebsite.forEditDrawer.useQuery(
+		const { data: websiteData, isFetching } = api.orgWebsite.forEditDrawer.useQuery(
 			{ id: websiteId },
-			{ enabled: !createNew }
+			{
+				enabled: !createNew,
+				// select: (returnedData) => ({
+				// 	...returnedData,
+				// 	...(createNew && hasLocationId && { orgLocationId: hasLocationId }),
+				// }),
+			}
 		)
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
@@ -61,22 +77,38 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			setValue: setFormValue,
 		} = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
-			values: data ? data : undefined,
+			values: websiteData
+				? {
+						...websiteData,
+						orgLocationId: hasLocationId,
+						organizationId: websiteData.organizationId ?? organizationId,
+					}
+				: undefined,
+			defaultValues: {
+				orgLocationId: hasLocationId ?? '',
+				organizationId: organizationId ?? '',
+				url: '',
+				published: true,
+				deleted: false,
+			},
 		})
 		const apiUtils = api.useUtils()
 
+		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
-		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 
 		const siteUpdate = api.orgWebsite.update.useMutation({
 			onSettled: (data) => {
-				apiUtils.orgWebsite.forEditDrawer.invalidate()
-				apiUtils.orgWebsite.forContactInfoEdit.invalidate()
+				apiUtils.orgWebsite.invalidate()
 				reset(data)
 			},
 			onSuccess: () => {
 				setIsSaved(true)
+				notifySave()
+				modalHandler.close()
+				setTimeout(() => drawerHandler.close(), 500)
 			},
 		})
 
@@ -84,25 +116,51 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			onSuccess: () => apiUtils.orgWebsite.invalidate(),
 		})
 		useEffect(() => {
-			if (createNew) {
+			console.log('useEffect', { createNew, hasLocationId, organizationId })
+
+			if (createNew && organizationId) {
 				setFormValue('published', true)
+				setFormValue('organizationId', organizationId)
 				if (hasLocationId !== null) {
-					setFormValue('linkLocationId', hasLocationId)
+					setFormValue('orgLocationId', hasLocationId)
 				}
 			}
-		}, [createNew, hasLocationId, setFormValue])
+		}, [createNew, hasLocationId, setFormValue, organizationId])
 		useEffect(() => {
 			if (isSaved && formIsDirty) {
 				setIsSaved(false)
 			}
 		}, [formIsDirty, isSaved])
-		const handleClose = () => {
+		const handleClose = useCallback(() => {
 			if (formState.isDirty) {
 				return modalHandler.open()
 			} else {
 				return drawerHandler.close()
 			}
-		}
+		}, [formState.isDirty, drawerHandler, modalHandler])
+
+		const handleUnlink = useCallback(
+			() =>
+				hasLocationId &&
+				unlinkFromLocation.mutate({
+					orgWebsiteId: websiteId,
+					orgLocationId: hasLocationId,
+					action: 'unlink',
+				}),
+			[unlinkFromLocation, websiteId, hasLocationId]
+		)
+
+		const handleSaveFromModal = useCallback(() => {
+			const valuesToSubmit = getValues()
+			siteUpdate.mutate({ id: websiteId, data: valuesToSubmit })
+		}, [getValues, siteUpdate, websiteId])
+
+		const handleCloseAndDiscard = useCallback(() => {
+			reset()
+			modalHandler.close()
+			drawerHandler.close()
+		}, [reset, modalHandler, drawerHandler])
+
 		return (
 			<>
 				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
@@ -135,8 +193,8 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 								<Stack spacing={24} align='center'>
 									<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Website`}</Title>
 									<Stack spacing={24} align='flex-start' w='100%'>
-										<TextInput label='Website URL' required name='url' control={control} />
-										<TextInput label='Description' name='description' control={control} />
+										<TextInput label='Website URL' required name='url' type='url' control={control} />
+										{/* <TextInput label='Description' name='description' control={control} /> */}
 										<Group noWrap position='apart' w='100%'>
 											<Stack>
 												<Checkbox label='Published' name='published' control={control} />
@@ -145,13 +203,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 											{hasLocationId !== null && (
 												<Button
 													leftIcon={<Icon icon='carbon:unlink' />}
-													onClick={() =>
-														unlinkFromLocation.mutate({
-															orgWebsiteId: websiteId,
-															orgLocationId: hasLocationId,
-															action: 'unlink',
-														})
-													}
+													onClick={handleUnlink}
 													disabled={createNew}
 												>
 													Unlink from this location
@@ -169,28 +221,11 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={siteUpdate.isLoading}
-											onClick={() => {
-												siteUpdate.mutate(
-													{ id: websiteId, data: getValues() },
-													{
-														onSuccess: () => {
-															modalHandler.close()
-															drawerHandler.close()
-														},
-													}
-												)
-											}}
+											onClick={handleSaveFromModal}
 										>
 											Save
 										</Button>
-										<Button
-											variant='secondaryLg'
-											onClick={() => {
-												reset()
-												modalHandler.close()
-												drawerHandler.close()
-											}}
-										>
+										<Button variant='secondaryLg' onClick={handleCloseAndDiscard}>
 											Discard
 										</Button>
 									</Group>

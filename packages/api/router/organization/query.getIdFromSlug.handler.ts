@@ -9,7 +9,9 @@ import { type TGetIdFromSlugSchema } from './query.getIdFromSlug.schema'
 export const getIdFromSlug = async ({ ctx, input }: TRPCHandlerParams<TGetIdFromSlugSchema>) => {
 	const { slug } = input
 	const cachedId = await readSlugCache(slug)
-	if (cachedId) return { id: cachedId }
+	if (cachedId) {
+		return { id: cachedId }
+	}
 	const canSeeUnpublished =
 		ctx.session !== null &&
 		checkPermissions({

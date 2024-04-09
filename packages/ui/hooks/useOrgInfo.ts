@@ -24,7 +24,9 @@ export const useOrgInfo = () => {
 	}, [pageSlug, slug])
 
 	useEffect(() => {
-		if (data && !isLoading && data.id !== orgId) setOrgId(data.id)
+		if (data && !isLoading && data.id !== orgId) {
+			setOrgId(data.id)
+		}
 	}, [data, isLoading, orgId])
 
 	return { id: orgId, slug }
