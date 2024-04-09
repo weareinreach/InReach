@@ -2,7 +2,7 @@ import { useEventEmitter, useMap } from 'ahooks'
 import { type EventEmitter } from 'ahooks/lib/useEventEmitter'
 import { createContext, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 
-export const GoogleMapContext = createContext<GoogleMapContextValue | null>(null)
+export const GoogleMapContext = createContext<GoogleMapContext | null>(null)
 GoogleMapContext.displayName = 'GoogleMapContext'
 
 export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
@@ -10,11 +10,14 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 	const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow>()
 	const [isReady, setIsReady] = useState(false)
 	const [markers, marker] = useMap<string, google.maps.marker.AdvancedMarkerElement>()
-
-	const mapEvents = {
-		ready: useEventEmitter<boolean>(),
-		initialPropsSet: useEventEmitter<boolean>(),
-	}
+	const eventEmitter = useEventEmitter<boolean>()
+	const mapEvents = useMemo(
+		() => ({
+			ready: eventEmitter,
+			initialPropsSet: eventEmitter,
+		}),
+		[eventEmitter]
+	)
 	const mapEventRef = useRef<MapEvents>(mapEvents)
 	const initialCamera = useMemo(() => {
 		return {
@@ -32,33 +35,57 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (map && infoWindow) {
 			const infoListener = google.maps.event.addListener(infoWindow, 'closeclick', () => {
-				if (cameraRef.current.center) map.panTo(cameraRef.current.center)
+				if (cameraRef.current.center) {
+					map.panTo(cameraRef.current.center)
+				}
 			})
 			const mapListener = google.maps.event.addListener(map, 'click', () => {
 				infoWindow.close()
-				if (cameraRef.current.center) map.panTo(cameraRef.current.center)
+				if (cameraRef.current.center) {
+					map.panTo(cameraRef.current.center)
+				}
 			})
-			markers.forEach((marker) => (marker.map = map))
+			markers.forEach((singleMarker) => (singleMarker.map = map))
 
 			return () => {
 				google.maps.event.removeListener(infoListener)
 				google.maps.event.removeListener(mapListener)
 			}
 		}
+		return () => void 0
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [map, infoWindow])
-	const contextValue = {
-		map,
-		infoWindow,
-		setMap,
-		setInfoWindow,
-		isReady,
-		mapEvents,
-		camera: cameraRef.current,
-		marker,
-		markers,
-	}
 
+	const mapIsReady = typeof map !== 'undefined' && typeof infoWindow !== 'undefined'
+
+	const contextValue: ContextValue<typeof mapIsReady> = useMemo(
+		() =>
+			mapIsReady
+				? {
+						map,
+						infoWindow,
+						setMap,
+						setInfoWindow,
+						mapEvents,
+						marker,
+						markers,
+						isReady: true,
+						camera: cameraRef.current,
+					}
+				: {
+						setMap,
+						setInfoWindow,
+						mapEvents,
+						marker,
+						markers,
+						map: undefined,
+						infoWindow: undefined,
+						isReady: false,
+						camera: cameraRef.current,
+					},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[isReady]
+	)
 	return <GoogleMapContext.Provider value={contextValue}>{children}</GoogleMapContext.Provider>
 }
 
@@ -74,14 +101,27 @@ export interface MarkerState {
 	reset: () => void
 }
 
-interface GoogleMapContextValue {
-	map: google.maps.Map | undefined
-	infoWindow: google.maps.InfoWindow | undefined
+interface GoogleMapContextBase {
 	setMap: (map: google.maps.Map) => void
 	setInfoWindow: (infoWindow: google.maps.InfoWindow) => void
-	isReady: boolean
 	mapEvents: MapEvents
 	camera: google.maps.CameraOptions
 	marker: MarkerState
 	markers: Map<string, google.maps.marker.AdvancedMarkerElement>
 }
+
+interface GoogleMapReadyContext extends GoogleMapContextBase {
+	map: google.maps.Map
+	infoWindow: google.maps.InfoWindow
+	isReady: true
+}
+interface GoogleMapNotReadyContext extends GoogleMapContextBase {
+	map: undefined
+	infoWindow: undefined
+	isReady: false
+}
+
+type GoogleMapContext = GoogleMapReadyContext | GoogleMapNotReadyContext
+type ContextValue<TReady extends boolean> = TReady extends true
+	? GoogleMapReadyContext
+	: GoogleMapNotReadyContext
