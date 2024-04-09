@@ -749,6 +749,9 @@ importers:
       nanoid:
         specifier: 5.0.7
         version: 5.0.7
+      remeda:
+        specifier: 1.58.0
+        version: 1.58.0
       slugify:
         specifier: 1.6.6
         version: 1.6.6
@@ -23954,6 +23957,10 @@ packages:
   /remeda@1.57.1:
     resolution: {integrity: sha512-CHrQFjgGw7y7d5WDDG21nzES2Z3Ae+s1ZjVAYjLOsoCceM1EMzVrSd4dx+Eb3QooR16tbbHeJhzk0q8qsaquTg==}
     dev: true
+
+  /remeda@1.58.0:
+    resolution: {integrity: sha512-YZT2U7B6fpZfOYVsT4bJT9SKXhh+jdzMmtoMX2u4+xro/bIXXaloDslnpAOHC4UHGsYegNMbi6hlXrdIzH45kA==}
+    dev: false
 
   /remove-accents@0.4.2:
     resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
