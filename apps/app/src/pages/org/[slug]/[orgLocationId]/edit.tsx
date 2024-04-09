@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type GetServerSidePropsContext } from 'nextjs-routes'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -41,7 +41,7 @@ const formSchema = z.object({
 })
 type FormSchema = z.infer<typeof formSchema>
 const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
-	organizationId,
+	organizationId: _organizationId,
 }) => {
 	const apiUtils = api.useUtils()
 	const { t } = useTranslation()
@@ -58,13 +58,16 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
 	)
-	const { data: orgServices } = api.service.getNames.useQuery(
-		{ organizationId },
-		{
-			select: (data) => data.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
-			refetchOnWindowFocus: false,
-		}
-	)
+
+	// for use with MultiSelectPopover
+
+	// const { data: orgServices } = api.service.getNames.useQuery(
+	// 	{ organizationId },
+	// 	{
+	// 		select: (returnedData) => returnedData.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
+	// 		refetchOnWindowFocus: false,
+	// 	}
+	// )
 	const defaultFormValues = data
 		? { id: data.id, name: data.name, services: data.services.map(({ serviceId }) => serviceId) }
 		: undefined
@@ -101,9 +104,32 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 		}
 	}, [formMethods.formState, unsaved])
 	useEffect(() => {
-		if (data && status === 'success') setLoading(false)
+		if (data && status === 'success') {
+			setLoading(false)
+		}
 	}, [data, status])
-	if (loading || !data) return <OrgLocationPageLoading />
+
+	const tabHandler = useCallback((tab: string) => {
+		setActiveTab(tab)
+		switch (tab) {
+			case 'services': {
+				servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+			case 'photos': {
+				photosRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+			case 'reviews': {
+				reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+		}
+	}, [])
+
+	if (loading || !data) {
+		return <OrgLocationPageLoading />
+	}
 
 	const {
 		// emails,
@@ -130,7 +156,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							option: 'back',
 							backTo: 'dynamicText',
 							backToText: data.organization.name,
-							onClick: async () => {
+							onClick: () => {
 								router.push({
 									pathname: '/org/[slug]/edit',
 									query: { slug: data.organization.slug },
@@ -153,39 +179,19 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							))}
 						<ListingBasicInfo
 							data={{
-								name: data.name || data.organization.name,
-								id: data.id,
 								slug,
-								locations: [data],
 								description,
-								lastVerified: data.organization.lastVerified,
 								attributes,
+								name: data.name ?? data.organization.name,
+								id: data.id,
+								locations: [data],
+								lastVerified: data.organization.lastVerified,
 								isClaimed: data.organization.isClaimed,
 							}}
 							edit
 							location
 						/>
-						<Tabs
-							w='100%'
-							value={activeTab}
-							onTabChange={(tab) => {
-								setActiveTab(tab)
-								switch (tab) {
-									case 'services': {
-										servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
-										break
-									}
-									case 'photos': {
-										photosRef.current?.scrollIntoView({ behavior: 'smooth' })
-										break
-									}
-									case 'reviews': {
-										reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
-										break
-									}
-								}
-							}}
-						>
+						<Tabs w='100%' value={activeTab} onTabChange={tabHandler}>
 							<Tabs.List className={classes.tabsList}>
 								<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 								<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
@@ -236,7 +242,9 @@ export const getServerSideProps = async ({
 	res,
 }: GetServerSidePropsContext<'/org/[slug]/[orgLocationId]/edit'>) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: prefixedId('orgLocation') }).safeParse(params)
-	if (!urlParams.success) return { notFound: true }
+	if (!urlParams.success) {
+		return { notFound: true }
+	}
 	const { slug, orgLocationId: id } = urlParams.data
 	const session = await checkServerPermissions({
 		ctx: { req, res },
