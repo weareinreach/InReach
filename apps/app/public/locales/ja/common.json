@@ -180,7 +180,7 @@
 	"message_text": "メッセージの本文",
 	"message_title": "メッセージタイトル",
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>アクセシビリティに関する声明</title2>\n<textDarkGray>InReach のオープンソース テクノロジーは、障害のあるユーザーを含む多様な LGBTQ+ コミュニティ向けに構築されています。</textDarkGray>\n<textDarkGray>無料の InReach アプリは、Web (デスクトップおよびモバイル)、ネイティブアプリ iOS および Android で利用できます。最新の再設計 (2023 年 6 月) の開始から、InReach は Web コンテンツ アクセシビリティ ガイドライン (WCAG) レベルの <linkAccessibility>AA 基準を満たすよう努めています。</linkAccessibility></textDarkGray>\n<textDarkGray>InReach では、迫害や差別に直面している全ての LGBTQ+ の人々にサービスを提供するという使命に沿って、できるだけ多くのユーザーやデバイスがテクノロジー プラットフォームにアクセスできるよう努めています。</textDarkGray>",
+		"accessibility": "<stack16>\n<title2>アクセシビリティに関する声明</title2>\n<textDarkGray>InReach のオープンソーステクノロジーは、障がいのあるユーザーを含む、多様な LGBTQ+ コミュニティ向けに設計されています。</textDarkGray>\n<textDarkGray>無料の InReach アプリは、Web (デスクトップおよびモバイル)、ネイティブアプリ iOS および Android でご利用いただけます。最新の再設計 (2023 年 6 月) の開始から、InReach は Web コンテンツ アクセシビリティ ガイドライン (WCAG) レベルの <linkAccessibility>AA 基準を満たすよう努めています。</linkAccessibility></textDarkGray>\n<textDarkGray>InReach では、迫害や差別に直面している全ての LGBTQ+ の人々にサービスを提供するという使命に基づき、より多くのユーザーやデバイスがテクノロジープラットフォームにアクセスできるよう、努めています。</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>inReach免責事項</title2>\n<textReg>inReachは、このウェブサイトに掲載されているサービスプロバイダーに関する適格性と基本情報を確認しています。ただし、プロバイダーの存続や支援能力を保証することはできません。したがって、InReachは、本ウェブサイトに掲載されているプロバイダーの行為について一切の責任を負わず、プロバイダーに連絡する際は自己責任で行ってください。</textReg>\n</stack16>"
 	},
 	"modal-more-options": {
@@ -231,7 +231,7 @@
 		"<title2>ユーザ統計データ</title2>",
 		"<textDarkGray><strong>無料のInReachアプリを使用するにあたり、個人を特定できる情報を提供する必要はありません。</strong></textDarkGray>",
 		"<textDarkGray>InReachユーザーアカウント作成を選択したユーザーには、匿名のオンラインアンケートを通じて以下の統計情報を提供するオプション <strong></strong> があります。</textDarkGray>",
-		"<textDarkGray><listGroup><listItem>誕生年</listItem>\n<listItem>出身国</listItem>\n<listItem>LGBTQ+アイデンティティ（性的思考および性自認）</listItem>\n<listItem>人種/民族</listItem>\n<listItem>在留資格</listItem>\n<listItem>現在地</listItem></listGroup></textDarkGray>",
+		"<textDarkGray><listGroup><listItem>誕生年</listItem>\n<listItem>出身国</listItem>\n<listItem>LGBTQ+アイデンティティ（性的指向および性自認）</listItem>\n<listItem>人種/民族</listItem>\n<listItem>在留資格</listItem>\n<listItem>現在地</listItem></listGroup></textDarkGray>",
 		"<textDarkGray><strong>この機密情報はすべて匿名で保存され、ユーザー個人、またはユーザーアカウントには関連付けられません。*</strong></textDarkGray>",
 		"<textUtility4>(*唯一の例外は、ローカルコミュニティレビュアーのユーザーアカウントタイプです。これは、収集された統計情報を活用して、Local Community Reviewerのボランティア活動とその影響力を高めます。Local Community Reviewer アカウントの場合、位置情報は必須であり、その他の統計情報は任意ですが、それらの情報はユーザー記録に関連付けられます。このデータは、ローカルコミュニティレビュー担当者がアカウントの個人情報設定で公開することを選択した場合にのみ、inReachスタッフ以外にも公開されます。プロフィールを公開すると、他のユーザーがあなたのレビューに信頼できるようになります。）</textUtility4>",
 		"<textDarkGray>ユーザー層を把握することは、影響の定量化、資金調達、将来の製品決定に関する評価に役立ちます。ユーザーの自発的な情報提供に感謝し、私たちは利用者の個人情報と匿名性を保護するために措置を講じています。</textDarkGray>",
