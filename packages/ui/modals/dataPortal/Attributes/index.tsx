@@ -16,6 +16,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { type ApiOutput } from '@weareinreach/api'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Button } from '~ui/components/core/Button'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
@@ -36,10 +37,10 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 	({ restrictCategories, attachesTo, parentRecord, ...props }, ref) => {
 		const { t } = useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
-
+		const showAddedNotification = useNewNotification({ icon: 'added', displayText: 'Added Attribute' })
 		const selectAttrRef = useRef<HTMLInputElement>(null)
 		// #region tRPC
-		// const utils = api.useUtils()
+		const apiUtils = api.useUtils()
 		const [attrCat, setAttrCat] = useState<string | null>()
 		const { data: attributesByCategory, ...attributesByCategoryApi } =
 			api.fieldOpt.attributesByCategory.useQuery(undefined, {
@@ -86,7 +87,15 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			null
 		)
 		const [supplements, setSupplements] = useState<SupplementFieldsNeeded>(supplementDefaults)
-		const saveAttributes = api.organization.attachAttribute.useMutation()
+		const saveAttributes = api.organization.attachAttribute.useMutation({
+			onSuccess: () => {
+				if (parentRecord.serviceId) {
+					apiUtils.service.forServiceEditDrawer.invalidate(parentRecord.serviceId)
+				}
+				showAddedNotification()
+				handler.close()
+			},
+		})
 		// #endregion
 
 		// #region Handlers
@@ -209,5 +218,8 @@ export const AttributeModal = createPolymorphicComponent<'button', AttributeModa
 export interface AttributeModalProps extends ButtonProps {
 	restrictCategories?: string[]
 	attachesTo?: ApiOutput['fieldOpt']['attributesByCategory'][number]['canAttachTo']
-	parentRecord: { organizationId: string } | { serviceId: string } | { locationId: string }
+	parentRecord:
+		| { organizationId: string; serviceId?: never; locationId?: never }
+		| { serviceId: string; organizationId?: never; locationId?: never }
+		| { locationId: string; serviceId?: never; organizationId?: never }
 }

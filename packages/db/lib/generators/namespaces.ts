@@ -1,12 +1,9 @@
-import { prisma } from '~db/client'
-import { type ListrTask } from '~db/lib/generateData'
+import { type Context, type ListrTask } from '~db/lib/generateData'
 
-import { writeOutput } from './common'
-
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const camelize = (s: string) => s.replace(/-./g, (x) => x[1]!.toUpperCase())
 
-export const generateNamespaces = async (task: ListrTask) => {
+export const generateNamespaces = async (ctx: Context, task: ListrTask) => {
+	const { prisma, writeOutput } = ctx
 	const data = await prisma.translationNamespace.findMany({
 		select: {
 			name: true,
