@@ -1,6 +1,7 @@
 import { Card, createStyles, Group, rem, Skeleton, Stack, Text } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 import { transformer } from '@weareinreach/util/transformer'
 import { Link } from '~ui/components/core'
@@ -45,6 +46,12 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 
 	const variants = useCustomVariant()
 	const apiUtils = api.useUtils()
+
+	const preloadService = useCallback(
+		(serviceId: string) => () => apiUtils.service.forServiceModal.prefetch(serviceId),
+		[apiUtils.service.forServiceModal]
+	)
+
 	return (
 		<Stack spacing={8}>
 			{Array.isArray(category) ? (
@@ -92,7 +99,7 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 							position='apart'
 							noWrap
 							className={classes.group}
-							onMouseOver={() => apiUtils.service.forServiceModal.prefetch(service.id)}
+							onMouseOver={preloadService(service.id)}
 						>
 							{children}
 						</ServiceModal>
@@ -132,7 +139,9 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 
 		if (serviceMap.has(key)) {
 			const serviceSet = serviceMap.get(key)
-			if (!serviceSet) continue
+			if (!serviceSet) {
+				continue
+			}
 			serviceSet.add(
 				transformer.stringify({
 					id: service.id,
@@ -165,12 +174,12 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 
 	const sections = sectionArray.map(([key, value]) => {
 		const valSet = [...value]
-		const services = valSet.map((item) => transformer.parse<ServItem>(item))
+		const serviceList = valSet.map((item) => transformer.parse<ServItem>(item))
 		return (
 			<ServiceSection
 				key={key.join('-')}
 				category={key}
-				services={services}
+				services={serviceList}
 				{...(hideRemoteBadges ? { hideRemoteBadges } : {})}
 			/>
 		)

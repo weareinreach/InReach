@@ -1,7 +1,4 @@
-import { prisma } from '~db/client'
-import { type ListrTask } from '~db/lib/generateData'
-
-import { writeOutput } from './common'
+import { type Context, type ListrTask } from '~db/lib/generateData'
 
 /**
  * List of locales to move to the top of the language lists - will affect locale switcher & language selection
@@ -10,7 +7,8 @@ import { writeOutput } from './common'
 // const langsToTop = ['en', 'es', 'fr', 'ar', 'ru', 'zh']
 
 // TODO: [IN-791] Clean up language list - remove duplicates & narrow down to primary langs only
-export const generateLanguageFiles = async (task: ListrTask) => {
+export const generateLanguageFiles = async (ctx: Context, task: ListrTask) => {
+	const { prisma, writeOutput } = ctx
 	const languages = await prisma.language.findMany({
 		select: {
 			nativeName: true,

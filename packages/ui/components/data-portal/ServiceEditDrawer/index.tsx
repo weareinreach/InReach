@@ -14,7 +14,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode } from 'react'
+import { forwardRef, type ReactNode, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
 import invariant from 'tiny-invariant'
@@ -50,12 +50,15 @@ const ServiceAreaItem = ({
 	const removeServiceArea = api.serviceArea.delFromArea.useMutation({
 		onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(serviceId),
 	})
+
+	const actionHandler = useCallback(() => {
+		if (serviceAreaId) {
+			removeServiceArea.mutate({ serviceAreaId, countryId, govDistId })
+		}
+	}, [countryId, govDistId, removeServiceArea, serviceAreaId])
+
 	if (!serviceAreaId || !(countryId || govDistId)) {
 		return children
-	}
-
-	const actionHandler = () => {
-		removeServiceArea.mutate({ serviceAreaId, countryId, govDistId })
 	}
 
 	return (
@@ -114,7 +117,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 			const serviceAreaObj: Record<string, ReactNode[]> = {}
 			const { countries, districts } = form.watch('serviceAreas') ?? {}
-			if (!geoMap) return null
+			if (!geoMap) {
+				return null
+			}
 			const countryIdRegex = /^ctry_.*/
 			const distIdRegex = /^gdst_.*/
 
@@ -123,7 +128,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 				const array = serviceAreaObj[countryId]
 				invariant(array)
 				const cca2 = countryMap?.byId.get(countryId)
-				if (!cca2) return
+				if (!cca2) {
+					return
+				}
 				const serviceAreaId = data?.serviceAreas?.id
 				const item = (
 					<List.Item key={countryId}>
@@ -137,7 +144,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			const processDistrict = (govDistId: string) => {
 				const govDist = geoMap.get(govDistId)
 				const country = govDist?.parent?.parent?.id ?? govDist?.parent?.id ?? ''
-				if (!countryIdRegex.test(country) || !govDist) return
+				if (!countryIdRegex.test(country) || !govDist) {
+					return
+				}
 				serviceAreaObj[country] ??= []
 				const array = serviceAreaObj[country]
 				invariant(array)
@@ -171,7 +180,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			}
 			return Object.entries(serviceAreaObj)?.map(([key, value]) => {
 				const country = countryMap?.byId.get(key)
-				if (!country) return null
+				if (!country) {
+					return null
+				}
 				return (
 					<Stack key={key} spacing={0}>
 						<Title order={3}>{countryTranslation.of(country)}</Title>
@@ -184,8 +195,13 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		}
 
 		// #endregion
-
-		if (!data) return null
+		const coverageModalSuccessHandler = useCallback(() => {
+			apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
+			apiUtils.service.forServiceModal.invalidate(serviceId)
+		}, [apiUtils.service.forServiceEditDrawer, apiUtils.service.forServiceModal, serviceId])
+		if (!data) {
+			return null
+		}
 
 		const { getHelp, publicTransit } = data
 			? processAccessInstructions({
@@ -249,9 +265,11 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									<Text variant={variants.Text.utility1}>Services</Text>
 									<ServiceSelect name='services' control={form.control} data-isDirty={dirtyFields.services}>
 										<Badge.Group>
-											{activeServices.map((serviceId) => {
-												const service = allServices?.find((s) => s.id === serviceId)
-												if (!service) return null
+											{activeServices.map((activeServiceId) => {
+												const service = allServices?.find((s) => s.id === activeServiceId)
+												if (!service) {
+													return null
+												}
 												return (
 													<Badge.Service key={service.id}>
 														{t(service.tsKey, { ns: service.tsNs })}
@@ -268,10 +286,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									{serviceAreas()}
 									<CoverageArea
 										serviceArea={coverageModalServiceArea}
-										onSuccessAction={() => {
-											apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
-											apiUtils.service.forServiceModal.invalidate(serviceId)
-										}}
+										onSuccessAction={coverageModalSuccessHandler}
 										component={Button}
 										variant={variants.Button.secondarySm}
 									>
