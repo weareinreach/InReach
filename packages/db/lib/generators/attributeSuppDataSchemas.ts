@@ -1,11 +1,9 @@
 import { type JsonSchemaObject, jsonSchemaToZod } from 'json-schema-to-zod'
 
-import { prisma } from '~db/client'
-import { type ListrTask } from '~db/lib/generateData'
+import { type Context, type ListrTask } from '~db/lib/generateData'
 
-import { writeOutput } from './common'
-
-export const generateDataSchemas = async (task: ListrTask) => {
+export const generateDataSchemas = async (ctx: Context, task: ListrTask) => {
+	const { prisma, writeOutput } = ctx
 	const data = await prisma.attributeSupplementDataSchema.findMany({
 		where: {
 			active: true,
