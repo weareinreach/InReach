@@ -36,8 +36,8 @@ const SuppText = () => {
 const SuppData = ({ schema }: SuppDataProps) => {
 	const { control } = useFormContext<FormSchema>()
 
-	const renderField = (schema: FieldAttributes) => {
-		const { type, name: dataKey, ...schemaProps } = schema
+	const renderField = (formSchema: FieldAttributes) => {
+		const { type, name: dataKey, ...schemaProps } = formSchema
 		const baseProps = {
 			...schemaProps,
 			name: `data.${dataKey}` as const,
@@ -48,7 +48,7 @@ const SuppData = ({ schema }: SuppDataProps) => {
 				return <TextInput {...baseProps} />
 			}
 			case FieldType.select: {
-				const { options } = schema
+				const { options } = formSchema
 				return <Select {...baseProps} data={options} />
 			}
 			case FieldType.number: {
@@ -57,16 +57,19 @@ const SuppData = ({ schema }: SuppDataProps) => {
 			case FieldType.currency: {
 				return <NumberInput {...baseProps} type='number' />
 			}
+			default: {
+				return null
+			}
 		}
 	}
 
 	return (
 		<Stack>
-			{schema.flatMap((schema) => {
-				if (Array.isArray(schema)) {
-					return <Group noWrap>{schema.map(renderField)}</Group>
+			{schema.flatMap((schemaItem) => {
+				if (Array.isArray(schemaItem)) {
+					return <Group noWrap>{schemaItem.map(renderField)}</Group>
 				} else {
-					return renderField(schema)
+					return renderField(schemaItem)
 				}
 			})}
 		</Stack>
@@ -137,7 +140,9 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 	})
 	const primaryList = countryOnly ? countryList : distByCountryList
 
-	if (!primaryList && !countries.isSuccess) return <>Loading...</>
+	if (!primaryList && !countries.isSuccess) {
+		return <>Loading...</>
+	}
 	return (
 		<Stack>
 			{primaryList && (
