@@ -9,6 +9,7 @@ export default {
 	component: ManagementTable,
 	args: {
 		data: userManagement.forUserManagementTable(),
+		columns: userManagement.forUserManagementColumns(),
 	},
 } satisfies Meta<typeof ManagementTable>
 

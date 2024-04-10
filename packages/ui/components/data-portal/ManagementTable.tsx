@@ -1,7 +1,6 @@
-import { Button, Group, NativeSelect, Stack } from '@mantine/core'
+import { Button, Group, NativeSelect, Stack, Text } from '@mantine/core'
 import {
 	MantineReactTable,
-	type MRT_ColumnDef,
 	MRT_GlobalFilterTextInput,
 	type MRT_Icons,
 	MRT_TablePagination,
@@ -10,57 +9,32 @@ import {
 
 import { Icon } from '~ui/icon'
 
-type Person = {
-	name: string
-	email: string
-	appUserType: string
-	role: string
-	updatedAt: string
-	createdAt: string
-}
-
 type ManagementTableProps = {
-	data: Person[]
+	data: Array<object>
+	columns: Array<object>
 }
 
-const columns: MRT_ColumnDef<Person>[] = [
-	{
-		accessorKey: 'name',
-		header: 'Name',
-	},
-	{
-		accessorKey: 'email',
-		header: 'Email',
-	},
-	{
-		accessorKey: 'appUserType',
-		header: 'App User Type',
-	},
-	{ accessorKey: 'role', header: 'Back-end user type' },
-	{
-		accessorKey: 'updatedAt',
-		header: 'Last updated',
-	},
-	{
-		accessorKey: 'createdAt',
-		header: 'Created At',
-	},
-]
+const useColumns = (props: ManagementTableProps) => {
+	return props.columns
+}
 
+//I'll eventually want to pass in props as the documentation recommends it. -Christina
 const customIcons: Partial<MRT_Icons> = {
-	//TODO: Fill in icons
+	IconSortAscending: () => <Icon icon={'carbon:chevron-up'} color='black' />,
+	IconSortDescending: () => <Icon icon={'carbon:chevron-down'} color='black' />,
 }
 
 export const ManagementTable = (props: ManagementTableProps) => {
-	const table = useMantineReactTable<Person>({
-		columns,
+	const table = useMantineReactTable({
+		columns: useColumns(props),
 		data: props.data,
+		icons: customIcons,
 		enableGlobalFilter: true,
 		enableFilterMatchHighlighting: false,
 		positionGlobalFilter: 'left',
 		enableRowSelection: true,
 		mantineSearchTextInputProps: {
-			placeholder: 'Enter Name', //label?
+			placeholder: 'Enter Name',
 			sx: { minWidth: '734px', height: '48px' },
 		},
 		initialState: {
@@ -80,6 +54,9 @@ export const ManagementTable = (props: ManagementTableProps) => {
 
 	return (
 		<Stack>
+			<Text size='16px' fw={500} style={{ marginBottom: '-1rem' }}>
+				Total: {props.data.length}
+			</Text>
 			<Group
 				noWrap={true}
 				position='left'
@@ -92,7 +69,6 @@ export const ManagementTable = (props: ManagementTableProps) => {
 				<NativeSelect
 					rightSection={<Icon icon='carbon:chevron-down' />}
 					data={['Data Entry Teams']}
-					size='xs'
 					styles={{
 						root: {
 							width: '208px',
@@ -109,7 +85,7 @@ export const ManagementTable = (props: ManagementTableProps) => {
 							width: '48px',
 							height: '48px',
 							padding: '12px',
-							marginTop: '28px',
+							marginTop: '10px',
 						},
 						label: { color: 'black' },
 					}}

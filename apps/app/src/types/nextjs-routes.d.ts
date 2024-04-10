@@ -19,6 +19,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/account/reviews">
     | StaticRoute<"/account/saved">
     | StaticRoute<"/admin">
+    | StaticRoute<"/admin/management">
     | StaticRoute<"/admin/quicklink/email">
     | StaticRoute<"/admin/quicklink">
     | StaticRoute<"/admin/quicklink/phone">
