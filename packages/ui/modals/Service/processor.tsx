@@ -147,6 +147,7 @@ export const processAttributes = ({
 				break
 			}
 			/** Target Population & Eligibility Requirements */
+			case 'tpop':
 			case 'eligibility': {
 				const type = tsKey.split('.').pop() as string
 				switch (type) {
@@ -161,6 +162,7 @@ export const processAttributes = ({
 						)
 						break
 					}
+					case 'other':
 					case 'other-describe': {
 						const { text } = attribute
 						if (!text) break
