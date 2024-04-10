@@ -1,5 +1,4 @@
 import { MantineProvider, Stack, Text, Title } from '@mantine/core'
-import { useWhyDidYouUpdate } from 'ahooks'
 import { useRouter } from 'next/router'
 import { type Route } from 'nextjs-routes'
 import { useCallback, useMemo } from 'react'
@@ -49,7 +48,7 @@ export const useGoogleMapMarker = () => {
 			if (!mapIsReady) {
 				throw new Error('map is not ready')
 			}
-			console.trace('adding new marker', { id, lat, lng, name, address, slug, locationId })
+
 			const position = new google.maps.LatLng({ lat, lng })
 			const newMarker = marker.get(id) ?? new google.maps.marker.AdvancedMarkerElement()
 
@@ -109,13 +108,6 @@ export const useGoogleMapMarker = () => {
 		() => ({ get: getMarker, add: addMarker, remove: removeMarker }),
 		[addMarker, getMarker, removeMarker]
 	)
-	useWhyDidYouUpdate('useGoogleMapMarker', {
-		router,
-		infoWindow,
-		map,
-		mapIsReady,
-		clickHandler: markerInfoBoxLinkClickHandler,
-	})
 
 	return markerFns
 }

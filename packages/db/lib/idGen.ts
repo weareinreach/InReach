@@ -92,8 +92,7 @@ export const isIdFor = (table: Uncapitalize<Tables>, id: string) => {
  * @returns A table-prefixed ID
  */
 export const generateId = (table: IdPrefix, seedTime?: Date | number) => {
-	const seedNum =
-		typeof seedTime === 'undefined' ? undefined : typeof seedTime === 'number' ? seedTime : seedTime.valueOf()
+	const seedNum = seedTime instanceof Date ? seedTime.valueOf() : seedTime
 	const prefix = idPrefix[table]
 
 	const id = Ulid.generate({ time: seedNum }).toCanonical()

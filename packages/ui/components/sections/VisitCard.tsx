@@ -135,12 +135,9 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	const { data } = api.location.forVisitCardEdits.useQuery(locationId)
 
 	const formattedAddress = useFormattedAddress(data)
-
 	useEffect(() => {
 		if (map && mapIsReady) {
-			const lat = data?.latitude
-			const lng = data?.longitude
-			const name = data?.name
+			const { name, latitude: lat, longitude: lng } = data ?? {}
 			try {
 				invariant(lat)
 				invariant(lng)
@@ -164,7 +161,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 			}
 		}
 		return () => void 0
-	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId, mapMarker])
+	}, [data, formattedAddress, map, mapIsReady, locationId, mapMarker])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
