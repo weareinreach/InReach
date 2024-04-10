@@ -10,7 +10,7 @@ const ParamSchema = z.tuple([
 	z.coerce.number().gte(-180).lte(180).describe('longitude'),
 	z.coerce.number().gte(-90).lte(90).describe('latitude'),
 	z.coerce.number().describe('distance'),
-	z.literal('mi').or(z.literal('km')).describe(`'mi' or 'km'`),
+	z.literal('mi').or(z.literal('km')).describe("'mi' or 'km'"),
 ])
 
 interface MarkItem {

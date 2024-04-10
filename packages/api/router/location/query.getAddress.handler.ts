@@ -27,6 +27,7 @@ export const getAddress = async ({ input }: TRPCHandlerParams<TGetAddressSchema>
 			longitude: true,
 			mailOnly: true,
 			published: true,
+			notVisitable: true,
 			services: { select: { serviceId: true } },
 		},
 	})

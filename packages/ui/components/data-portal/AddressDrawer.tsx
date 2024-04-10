@@ -16,12 +16,12 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { useForm, type UseFormReturnType, zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import filterObject from 'just-filter-object'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, useEffect, useState } from 'react'
+import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
 import { z } from 'zod'
 
@@ -31,6 +31,7 @@ import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { createWktFromLatLng } from '~ui/lib/geotools'
@@ -91,6 +92,7 @@ const FormSchema = z.object({
 			deleted: z.coerce.boolean(),
 			countryId: z.string().nullable(),
 			govDistId: z.string().nullable(),
+			notVisitable: z.coerce.boolean().default(false),
 			accessible: z
 				.object({
 					supplementId: z.string(),
@@ -102,6 +104,8 @@ const FormSchema = z.object({
 		.partial(),
 })
 
+const FormContext = createContext<UseFormReturnType<FormSchema> | null>(null)
+
 const schemaTransform = ({ id, data }: FormSchema) => ({
 	id,
 	data: {
@@ -109,11 +113,57 @@ const schemaTransform = ({ id, data }: FormSchema) => ({
 		name: data.name === null ? undefined : data.name,
 	},
 })
+const matchText = (
+	result: string,
+	textToMatch: string | undefined | null,
+	classes: ReturnType<typeof useStyles>['classes']
+) => {
+	if (!textToMatch) {
+		return result
+	}
+	const matcher = new RegExp(`(${textToMatch})`, 'ig')
+	const replaced = reactStringReplace(result, matcher, (match, i) => (
+		<span key={i} className={classes.matchedText}>
+			{match}
+		</span>
+	))
+	return replaced
+}
+
+const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
+	({ value, subheading, placeId: _placeId, ...others }: AutocompleteItem, ref) => {
+		const { classes, cx } = useStyles()
+		const form = useContext(FormContext)
+		if (!form) {
+			return null
+		}
+		return (
+			<div ref={ref} {...others}>
+				<Text className={classes.unmatchedText} truncate>
+					{matchText(value, form.values.data?.street1 ?? '', classes)}
+				</Text>
+				<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
+					{subheading}
+				</Text>
+			</div>
+		)
+	}
+)
+AutoCompleteItem.displayName = 'AutoCompleteItem'
+
+const CountryItem = forwardRef<HTMLDivElement, CountryItem>(({ label, flag, ...props }, ref) => {
+	return (
+		<div ref={ref} {...props}>
+			<Text>{`${flag} ${label}`}</Text>
+		</div>
+	)
+})
+CountryItem.displayName = 'CountryItem'
 
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
-	const [_search, setSearch] = useState<string>('')
-	const [search] = useDebouncedValue(_search, 200)
+	const [searchTerm, setSearchTerm] = useState<string>('')
+	const [search] = useDebouncedValue(searchTerm, 200)
 	const [results, setResults] = useState<ApiOutput['geo']['autocomplete']['results']>()
 	const [govDistOpts, setGovDistOpts] = useState<{ value: string; label: string }[]>([])
 	const [countryOpts, setCountryOpts] = useState<CountryItem[]>([])
@@ -125,10 +175,13 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		transformValues: FormSchema.transform(schemaTransform).parse,
 	})
 	const { id: organizationId } = useOrgInfo()
-	const { t } = useTranslation(['attribute', 'country', 'gov-dist'])
-	const { classes, cx } = useStyles()
+	const { t, i18n } = useTranslation(['attribute', 'gov-dist'])
+	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
+	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const apiUtils = api.useUtils()
+
+	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 
 	// #region Get initial address
 	const { data, isLoading } = api.location.getAddress.useQuery(locationId ?? '', {
@@ -150,7 +203,8 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		{ organizationId: organizationId ?? '' },
 		{
 			// !fix when issue resolved.
-			select: (data) => data.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
+			select: (returnedData) =>
+				returnedData.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
 			enabled: Boolean(organizationId),
 			refetchOnWindowFocus: false,
 		}
@@ -164,10 +218,10 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	useEffect(() => {
 		if (govDistsByCountry) {
 			setCountryOpts(
-				govDistsByCountry.map(({ id, flag, tsNs, tsKey }) => ({
-					value: id,
+				govDistsByCountry.map(({ id, flag, cca2 }) => ({
 					flag,
-					label: t(tsKey, { ns: tsNs }),
+					value: id,
+					label: countryTranslation.of(cca2) ?? cca2,
 				}))
 			)
 			if (!form.values?.data?.countryId) {
@@ -192,15 +246,17 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		onSuccess: () => {
 			apiUtils.location.getAddress.invalidate(locationId ?? '')
 			setIsSaved(true)
+			notifySave()
+			setTimeout(() => handler.close(), 500)
 		},
 	})
-	const handleUpdate = () => {
+	const handleUpdate = useCallback(() => {
 		const changesOnly = filterObject(form.values.data, (key) => form.isDirty(`data.${key}`))
 
 		updateLocation.mutate(
 			FormSchema.transform(schemaTransform).parse({ id: form.values.id, data: changesOnly })
 		)
-	}
+	}, [form, updateLocation])
 
 	useEffect(() => {
 		if (isSaved && isSaved === form.isDirty()) {
@@ -272,48 +328,29 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	// #endregion
 
 	// #region Dropdown item components/handling
-	const matchText = (result: string, textToMatch?: string) => {
-		if (!textToMatch) return result
-		const matcher = new RegExp(`(${textToMatch})`, 'ig')
-		const replaced = reactStringReplace(result, matcher, (match, i) => (
-			<span key={i} className={classes.matchedText}>
-				{match}
-			</span>
-		))
-		return replaced
-	}
-	const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
-		({ value, subheading, placeId, ...others }: AutocompleteItem, ref) => {
-			return (
-				<div ref={ref} {...others}>
-					<Text className={classes.unmatchedText} truncate>
-						{matchText(value, form.values.data?.street1 ?? '')}
-					</Text>
-					<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
-						{subheading}
-					</Text>
-				</div>
-			)
-		}
-	)
-	AutoCompleteItem.displayName = 'AutoCompleteItem'
-	const handleAutocompleteSelection = (item: AutocompleteItem) => {
-		if (!item.placeId) return
-		setGooglePlaceId(item.placeId)
-	}
 
-	const CountryItem = forwardRef<HTMLDivElement, CountryItem>(({ label, flag, ...props }, ref) => {
-		return (
-			<div ref={ref} {...props}>
-				<Text>{`${flag} ${label}`}</Text>
-			</div>
-		)
-	})
-	CountryItem.displayName = 'CountryItem'
+	const handleAutocompleteSelection = useCallback(
+		(item: AutocompleteItem) => {
+			if (!item.placeId) {
+				return
+			}
+			setGooglePlaceId(item.placeId)
+		},
+		[setGooglePlaceId]
+	)
+
+	const handleAutocompleteChange = useCallback(
+		(val: string) => {
+			setSearchTerm(val)
+			form.getInputProps('data.street1').onChange(val)
+		},
+		[setSearchTerm, form]
+	)
+
 	// #endregion
 
 	return (
-		<>
+		<FormContext.Provider value={form}>
 			<Drawer.Root onClose={handler.close} opened={opened} position='right'>
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
@@ -344,10 +381,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 										withinPortal
 										onItemSubmit={handleAutocompleteSelection}
 										{...form.getInputProps('data.street1')}
-										onChange={(val) => {
-											setSearch(val)
-											form.getInputProps('data.street1').onChange(val)
-										}}
+										onChange={handleAutocompleteChange}
 									/>
 									<TextInput {...form.getInputProps('data.street2')} />
 								</Stack>
@@ -429,17 +463,17 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								{...form.getInputProps('data.services')}
 							/>
 							<Stack spacing={0} w='100%'>
-								<Text variant={variants.Text.utility1}>Show on org?</Text>
+								<Text variant={variants.Text.utility1}>Hide address from public?</Text>
 								<Checkbox
-									label={`Show this location's address on the organiation page`}
+									label={"DO NOT show this location's address to the public"}
 									classNames={{ label: classes.radioLabel }}
-									{...form.getInputProps('data.published', { type: 'checkbox' })}
+									{...form.getInputProps('data.notVisitable', { type: 'checkbox' })}
 								/>
 							</Stack>
 							<Stack spacing={0} w='100%'>
 								<Text variant={variants.Text.utility1}>Mailing address only?</Text>
 								<Checkbox
-									label={`This is NOT a physical location`}
+									label={'This is NOT a physical location'}
 									classNames={{ label: classes.radioLabel }}
 									{...form.getInputProps('data.mailOnly', { type: 'checkbox' })}
 								/>
@@ -452,7 +486,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			<Stack>
 				<Box component='button' onClick={handler.open} ref={ref} {...props} />
 			</Stack>
-		</>
+		</FormContext.Provider>
 	)
 })
 _AddressDrawer.displayName = 'AddressDrawer'

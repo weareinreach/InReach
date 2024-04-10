@@ -47,7 +47,10 @@ export const ContactInfo = ({
 	return <Stack spacing={gap}>{items}</Stack>
 }
 
-export const hasContactInfo = (data: PassedDataObject) => {
+export const hasContactInfo = (data: PassedDataObject | null | undefined): data is PassedDataObject => {
+	if (!data) {
+		return false
+	}
 	const { websites, phones, emails, socialMedia } = data
 	return Boolean(websites.length || phones.length || emails.length || socialMedia.length)
 }

@@ -10,7 +10,7 @@ import {
 import { getBaseUrl } from './getBaseUrl'
 
 const CreateUserSchema = z.object({
-	email: z.string().email(),
+	email: z.string().email().toLowerCase(),
 	password: z.string(),
 	databaseId: z.string(),
 	subject: z.string().default('Confirm your account'),
@@ -30,9 +30,9 @@ export const createCognitoUser = async (data: CreateCognitoUserParams) => {
 
 	const response = await cognito.signUp({
 		ClientId: ClientId,
-		Username: email,
+		Username: email.toLowerCase(),
 		Password: password,
-		SecretHash: generateHash(email),
+		SecretHash: generateHash(email.toLowerCase()),
 		UserAttributes: [
 			{
 				Name: COGNITO_CUSTOMID_FIELDNAME,
@@ -40,7 +40,7 @@ export const createCognitoUser = async (data: CreateCognitoUserParams) => {
 			},
 			{
 				Name: COGNITO_EMAIL_FIELDNAME,
-				Value: email,
+				Value: email.toLowerCase(),
 			},
 		],
 		ClientMetadata: { baseUrl: getBaseUrl(), message, subject },

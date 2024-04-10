@@ -11,7 +11,6 @@ export default {
 	component: VisitCard,
 	args: {
 		locationId: 'locationId',
-		published: true,
 	},
 	decorators: [StorybookGridSingle],
 	parameters: {
@@ -30,9 +29,3 @@ export const Mobile = {
 		},
 	},
 } satisfies StoryDef
-
-// export const Remote = {} satisfies StoryDef
-
-// export const RemoteWithPhysicalAddress = {
-
-// } satisfies StoryDef

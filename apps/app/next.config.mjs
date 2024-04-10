@@ -106,8 +106,6 @@ const nextConfig = {
 			)
 		}
 
-		config.devtool = 'eval-source-map'
-
 		if (!isLocalDev) {
 			config.plugins.push(
 				new webpack.DefinePlugin({

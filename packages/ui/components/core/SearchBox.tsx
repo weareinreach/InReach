@@ -19,6 +19,7 @@ import { Trans, useTranslation } from 'next-i18next'
 import {
 	type Dispatch,
 	forwardRef,
+	type KeyboardEventHandler,
 	type ReactNode,
 	type SetStateAction,
 	useDebugValue,
@@ -61,6 +62,7 @@ const useStyles = createStyles((theme) => ({
 		'&:hover': {
 			cursor: 'pointer',
 		},
+		marginRight: rem(18),
 	},
 	leftIcon: {
 		color: theme.other.colors.secondary.black,
@@ -92,7 +94,7 @@ const useStyles = createStyles((theme) => ({
 		minWidth: 'fit-content',
 	},
 	pinToLeft: {
-		left: `0 !important`,
+		left: '0 !important',
 	},
 }))
 
@@ -232,7 +234,7 @@ export const SearchBox = ({
 	const rightIcon =
 		isLoading || searchLoading ? (
 			<Group>
-				<Loader size={32} mr={16} />
+				<Loader size={32} mr={40} />
 			</Group>
 		) : form.values.search?.length > 0 ? (
 			<Group
@@ -348,6 +350,15 @@ export const SearchBox = ({
 		}
 	}
 
+	const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+		if (event.key === 'Enter') {
+			const topItem = results[0]
+			if (topItem) {
+				selectionHandler(topItem)
+			}
+		}
+	}
+
 	return (
 		<Autocomplete
 			classNames={{
@@ -363,6 +374,7 @@ export const SearchBox = ({
 			dropdownPosition='bottom'
 			radius='xl'
 			onItemSubmit={selectionHandler}
+			onKeyDown={handleKeyDown}
 			disabled={isLoading}
 			label={label}
 			withinPortal

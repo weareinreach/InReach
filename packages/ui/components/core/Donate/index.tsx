@@ -3,7 +3,7 @@ import { useDisclosure, useTimeout } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'
 import { Button } from '~ui/components/core/Button'
@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => ({
 		animation: `${bounce(16)} 1.75s 5`,
 	},
 	shrink: {
-		transition: `all 0.5s ease-in-out`,
+		transition: 'all 0.5s ease-in-out',
 		padding: '0 !important',
 		borderRadius: '100% !important',
 		width: rem(48),
@@ -49,21 +49,26 @@ export const DonateModal = () => {
 	}, 10_000)
 	const buttonPosition = isMobile ? { bottom: rem(80), right: rem(12) } : { bottom: rem(40), right: rem(40) }
 
-	const buttonHandler = () => {
+	const buttonHandler = useCallback(() => {
 		donateEvent.click()
 		if (isMobile) {
 			if (!showEmoji || opened) {
 				handler.close()
 			}
 			if (isMobileApp) {
-				window.open('https://inreach.kindful.com/embeds/9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b', '_blank')
+				window.open(
+					'https://inreach.kindful.com/embeds/9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b',
+					'_blank',
+					'noopener'
+				)
 			} else {
 				modalHandler.open()
 			}
 		} else {
 			modalHandler.open()
 		}
-	}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 	useEffect(() => {
 		start()
 		// eslint-disable-next-line react-hooks/exhaustive-deps

@@ -29,13 +29,18 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	label = 'Phone Number',
 	required,
 }: PhoneNumberEntryProps<T>) => {
-	const { data: countryList } = api.fieldOpt.countries.useQuery(
+	const { data: countryData } = api.fieldOpt.countries.useQuery(
 		{ activeForOrgs: true },
 		{
-			initialData: [],
-			select: (data) => transformCountryList(data),
+			select: transformCountryList,
 		}
 	)
+	const countryList = useMemo(() => {
+		if (!countryData) {
+			return []
+		}
+		return countryData
+	}, [countryData])
 	const validCountries = countryList.map(({ data }) => data.cca2)
 
 	const {
@@ -53,31 +58,31 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		...propsCountrySelect
 	} = countrySelect
 	const phoneNumbControl = useController<T>({
-		name: peName,
 		control,
+		name: peName,
 		defaultValue: peDefaultValue,
 		rules: peRules,
 		shouldUnregister: peShouldUnregister,
 	})
-	// const phoneNumber = phoneNumbControl.field.value
-	const phoneNumber = useWatch({ name: peName, control })
 
 	const countryControl = useController<T>({
-		name: csName,
 		control,
+		name: csName,
 		defaultValue: csDefaultValue,
 		rules: csRules,
 		shouldUnregister: csShouldUnregister,
 	})
-	// const selectedCountry = countryControl.field.value
-	const selectedCountry = useWatch({ name: csName, control })
+
+	const [phoneNumber, selectedCountry] = useWatch({ name: [peName, csName], control })
 
 	const { classes: countrySelectClasses } = useCountrySelectStyles()
 	const { classes: phoneEntryClasses } = usePhoneEntryStyles()
 
 	const activeCountry = useMemo(() => {
 		const result = countryList?.find(({ value }) => value === selectedCountry)?.data.cca2
-		if (result && isCountryCode(result)) return result
+		if (result && isCountryCode(result)) {
+			return result
+		}
 		return undefined
 	}, [selectedCountry, countryList])
 
@@ -118,43 +123,46 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 			{...propsCountrySelect}
 		/>
 	)
-	return (
-		<>
-			<PhoneInput<TextInputProps, T>
-				// country={activeCountry}
-				defaultCountry={DEFAULT_COUNTRY}
-				inputComponent={TextInput}
-				rightSection={countrySelection}
-				rightSectionWidth={56}
-				classNames={phoneEntryClasses}
-				name={peName}
-				control={control}
-				label={label}
-				required={required}
-				error={
-					phoneNumbControl.fieldState.error ? (
-						<>
-							{/* @ts-expect-error -> name prop is okay. */}
-							<ErrorMessage errors={phoneNumbControl.formState.errors} name={peName} as='span' />
-						</>
-					) : undefined
+
+	const fieldHasError = phoneNumbControl.fieldState.error !== undefined
+
+	const errors = fieldHasError ? (
+		<ErrorMessage
+			errors={phoneNumbControl.formState.errors}
+			// @ts-expect-error -> 'name' is FINE.
+			name={peName}
+			as='span'
+		/>
+	) : undefined
+	const phoneValidationRules = {
+		validate: {
+			invalidCountry: (number?: string) => {
+				if (number) {
+					const parsed = parsePhoneNumber(number)
+					if (parsed?.country) {
+						return validCountries.includes(parsed.country) ?? `Country not enabled: ${parsed.country}`
+					}
 				}
-				rules={{
-					validate: {
-						invalidCountry: (number?: string) => {
-							if (number) {
-								const parsed = parsePhoneNumber(number)
-								if (parsed && parsed.country) {
-									return validCountries.includes(parsed.country) || `Country not enabled: ${parsed.country}`
-								}
-							}
-							return true
-						},
-					},
-				}}
-				{...propsPhoneInput}
-			/>
-		</>
+				return true
+			},
+		},
+	}
+
+	return (
+		<PhoneInput<TextInputProps, T>
+			defaultCountry={DEFAULT_COUNTRY}
+			inputComponent={TextInput}
+			rightSection={countrySelection}
+			rightSectionWidth={56}
+			classNames={phoneEntryClasses}
+			name={peName}
+			control={control}
+			label={label}
+			required={required}
+			error={errors}
+			rules={phoneValidationRules}
+			{...propsPhoneInput}
+		/>
 	)
 }
 

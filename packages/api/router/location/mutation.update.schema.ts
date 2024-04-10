@@ -30,6 +30,7 @@ export const ZUpdateSchema = z
 				countryId: prefixedId('country').nullable(),
 				govDistId: prefixedId('govDist').nullable(),
 				services: z.string().array(),
+				notVisitable: z.boolean(),
 			})
 			.partial(),
 	})
@@ -40,32 +41,33 @@ export const ZUpdateSchema = z
 
 		const updateAccessibility = accessible?.boolean !== undefined && accessibleAttrId
 
+		const attributes =
+			accessible?.boolean !== null
+				? {
+						attributes: {
+							upsert: {
+								where: { id: accessible?.supplementId ?? '' },
+								create: {
+									attribute: { connect: { id: accessibleAttrId } },
+									boolean: accessible?.boolean,
+								},
+								update: {
+									boolean: accessible?.boolean,
+								},
+							},
+						},
+					}
+				: {
+						attributes: {
+							delete: { id: accessible.supplementId ?? '' },
+						},
+					}
+
 		return Prisma.validator<Prisma.OrgLocationUpdateArgs>()({
 			where: { id },
 			data: {
 				...rest,
-				...(updateAccessibility
-					? accessible.boolean !== null
-						? {
-								attributes: {
-									upsert: {
-										where: { id: accessible.supplementId ?? '' },
-										create: {
-											attribute: { connect: { id: accessibleAttrId } },
-											boolean: accessible.boolean,
-										},
-										update: {
-											boolean: accessible.boolean,
-										},
-									},
-								},
-							}
-						: {
-								attributes: {
-									delete: { id: accessible.supplementId ?? '' },
-								},
-							}
-					: {}),
+				...(updateAccessibility ? attributes : {}),
 				...(countryId
 					? {
 							country: { connect: { id: countryId } },

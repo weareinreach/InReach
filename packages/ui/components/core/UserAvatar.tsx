@@ -1,6 +1,6 @@
 import { Avatar, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
-import router from 'next/router'
+import { useRouter } from 'next/router'
 import { type User } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
@@ -35,6 +35,7 @@ export const UserAvatar = ({
 	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
 	const theme = useMantineTheme()
+	const router = useRouter()
 
 	const subText = () => {
 		if (!user && useLoggedIn && subheading !== undefined) {
