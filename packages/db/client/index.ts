@@ -12,8 +12,7 @@ const verboseLogging = Boolean(
 )
 
 declare global {
-	// allow global `var` declarations
-	// eslint-disable-next-line no-var
+	// eslint-disable-next-line no-var -- allow global `var` declarations
 	var prisma: PrismaClient<typeof clientOptions> | undefined
 }
 
@@ -56,7 +55,7 @@ const generateClient = () => {
 const prisma = global.prisma ?? generateClient()
 
 if (process.env.NODE_ENV !== 'production') {
-	global.prisma = prisma
+	global.prisma ??= prisma
 }
 export { prisma }
 export type * from '@prisma/client'

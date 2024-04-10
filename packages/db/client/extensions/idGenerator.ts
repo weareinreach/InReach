@@ -16,25 +16,21 @@ export const idGeneratorExtension = Prisma.defineExtension({
 			if (isApplicableModel(model)) {
 				switch (operation) {
 					case 'create': {
-						if (args.data && !args.data.id) {
-							args.data.id = generateId(model)
+						if (args.data) {
+							args.data.id ??= generateId(model)
 						}
 						break
 					}
 					case 'createMany': {
 						if (Array.isArray(args.data)) {
-							for (const item of args.data) {
-								if (!item.id) {
-									item.id = generateId(model)
-								}
-							}
+							args.data.forEach((item: Record<string, unknown>) => {
+								item.id ??= generateId(model)
+							})
 						}
 						break
 					}
 					case 'upsert': {
-						if (args.create && !args.create.id) {
-							args.create.id = generateId(model)
-						}
+						args.create.id ??= generateId(model)
 						break
 					}
 				}
