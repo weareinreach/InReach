@@ -2,6 +2,7 @@ import {
 	adminProcedure,
 	defineRouter,
 	importHandler,
+	permissionedProcedure,
 	protectedProcedure,
 	publicProcedure,
 } from '~api/lib/trpc'
@@ -91,4 +92,13 @@ export const userRouter = defineRouter({
 		)
 		return handler({ input, ctx })
 	}),
+	forUserTable: permissionedProcedure('viewAllUsers')
+		.input(schema.ZForUserTableSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('forUserTable'),
+				() => import('./query.forUserTable.handler')
+			)
+			return handler(opts)
+		}),
 })
