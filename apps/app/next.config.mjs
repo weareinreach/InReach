@@ -2,7 +2,9 @@
 
 import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
+import { RelativeCiAgentWebpackPlugin } from '@relative-ci/agent'
 import { withSentryConfig } from '@sentry/nextjs'
+import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import routes from 'nextjs-routes/config'
 
 import path from 'path'
@@ -84,6 +86,9 @@ const nextConfig = {
 	webpack: (config, { dev, isServer, webpack }) => {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
+			if (!dev) {
+				config.plugins.push(new RelativeCiAgentWebpackPlugin())
+			}
 		}
 		if (dev && !isServer) {
 			/** WDYR */
@@ -97,12 +102,11 @@ const nextConfig = {
 				return entries
 			}
 			/** I18 HMR */
-			import('i18next-hmr/webpack').then(({ I18NextHMRPlugin }) =>
-				config.plugins.push(
-					new I18NextHMRPlugin({
-						localesDir: path.resolve(__dirname, 'public/static/locales'),
-					})
-				)
+
+			config.plugins.push(
+				new I18NextHMRPlugin({
+					localesDir: path.resolve(__dirname, './public/locales'),
+				})
 			)
 		}
 
