@@ -27,7 +27,7 @@
 		"@weareinreach/ui": "workspace:*",
 		"dayjs": "1.11.10",
 		"embla-carousel-react": "7.1.0",
-		"i18next": "23.11.0",
+		"i18next": "23.11.1",
 		"next": "14.2.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
@@ -35,13 +35,13 @@
 	},
 	"devDependencies": {
 		"@next/bundle-analyzer": "14.2.0",
-		"@types/eslint": "8.56.7",
-		"@types/node": "20.12.6",
-		"@types/react": "18.2.75",
-		"@types/react-dom": "18.2.24",
+		"@types/eslint": "8.56.8",
+		"@types/node": "20.12.7",
+		"@types/react": "18.2.77",
+		"@types/react-dom": "18.2.25",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.57.0",
-		"typescript": "5.4.4"
+		"typescript": "5.4.5"
 	}
 }
