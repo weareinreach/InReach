@@ -73,14 +73,18 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
 			enabled: !!data?.id && data?.locations?.length > 1,
-			select: (data) => data.length !== 0,
+			select: (result) => result.length !== 0,
 		}
 	)
 	const { ref, width } = useElementSize()
 	useEffect(() => {
-		if (data && status === 'success') setLoading(false)
+		if (data && status === 'success') {
+			setLoading(false)
+		}
 	}, [data, status])
-	if (loading || !data) return <OrgPageLoading />
+	if (loading || !data) {
+		return <OrgPageLoading />
+	}
 
 	const { attributes, description, slug, locations, isClaimed } = data
 
@@ -94,10 +98,10 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 					<Stack pt={24} align='flex-start' spacing={40}>
 						<ListingBasicInfo
 							data={{
-								name: data.name,
 								id: data.id,
-								slug,
+								name: data.name,
 								lastVerified: data.lastVerified,
+								slug,
 								attributes,
 								description,
 								locations,
@@ -138,7 +142,9 @@ export const getServerSideProps = async ({
 	req,
 	res,
 }: GetServerSidePropsContext<RoutedQuery<'/org/[slug]'>>) => {
-	if (!params) return { notFound: true }
+	if (!params) {
+		return { notFound: true }
+	}
 	const { slug } = params
 
 	const session = await checkServerPermissions({

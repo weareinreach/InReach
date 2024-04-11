@@ -1,4 +1,5 @@
-import { Prisma } from '~db/client'
+import { Prisma } from '@prisma/client'
+
 import { generateId, idPrefix } from '~db/lib/idGen'
 
 const applicableModels = Object.keys(idPrefix) as (keyof typeof idPrefix)[]

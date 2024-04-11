@@ -1,9 +1,7 @@
 import { z } from 'zod'
 
-import { prisma, Prisma } from '~db/client'
-import { formatMessage } from '~db/prisma/common'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
-import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
+import { type JobDef } from '~db/prisma/jobPreRun'
 
 import data from './data.json'
 
@@ -32,7 +30,8 @@ const jobDef: JobDef = {
  */
 export const job20240215_attribute_attachments = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
-	task: async (_ctx, task) => {
+	task: async (ctx, task) => {
+		const { createLogger, formatMessage, jobPostRunner, prisma } = ctx
 		/** Create logging instance */
 		createLogger(task, jobDef.jobId)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
