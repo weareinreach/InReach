@@ -86,9 +86,9 @@ const nextConfig = {
 	webpack: (config, { dev, isServer, webpack }) => {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
-			if (!dev) {
-				config.plugins.push(new RelativeCiAgentWebpackPlugin())
-			}
+		}
+		if (!dev && !isServer) {
+			config.plugins.push(new RelativeCiAgentWebpackPlugin())
 		}
 		if (dev && !isServer) {
 			/** WDYR */
