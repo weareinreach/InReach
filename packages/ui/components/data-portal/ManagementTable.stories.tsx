@@ -1,15 +1,15 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { userManagement } from '~ui/mockData/userManagement'
+import { user } from '~ui/mockData/user'
 
 import { ManagementTable } from './ManagementTable'
 
 export default {
 	title: 'Data Portal/Tables/User Management',
 	component: ManagementTable,
-	args: {
-		data: userManagement.forUserManagementTable(),
-		columns: userManagement.forUserManagementColumns(),
+	parameters: {
+		msw: [user.forUserTable],
+		rqDevtools: true,
 	},
 } satisfies Meta<typeof ManagementTable>
 

@@ -1,33 +1,72 @@
 import { Button, Group, NativeSelect, Stack, Text } from '@mantine/core'
 import {
 	MantineReactTable,
+	type MRT_ColumnDef,
 	MRT_GlobalFilterTextInput,
 	type MRT_Icons,
 	MRT_TablePagination,
 	useMantineReactTable,
 } from 'mantine-react-table'
+import { useMemo } from 'react'
 
+import { type ApiOutput } from '@weareinreach/api'
 import { Icon } from '~ui/icon'
+import { trpc as api } from '~ui/lib/trpcClient'
 
-type ManagementTableProps = {
-	data: Array<object>
-	columns: Array<object>
-}
-
-const useColumns = (props: ManagementTableProps) => {
-	return props.columns
-}
-
-//I'll eventually want to pass in props as the documentation recommends it. -Christina
 const customIcons: Partial<MRT_Icons> = {
 	IconSortAscending: () => <Icon icon={'carbon:chevron-up'} color='black' />,
 	IconSortDescending: () => <Icon icon={'carbon:chevron-down'} color='black' />,
 }
 
-export const ManagementTable = (props: ManagementTableProps) => {
+export const ManagementTable = () => {
+	const { data: userData } = api.user.forUserTable.useQuery()
+
+	const columns = useMemo<MRT_ColumnDef<UserDataRecord>[]>(
+		() => [
+			{
+				accessorKey: 'name',
+				header: 'Name',
+			},
+			{
+				accessorKey: 'email',
+				header: 'Email',
+			},
+			{
+				accessorKey: 'emailVerified',
+				header: 'Email Verified',
+				Cell: ({ cell }) => {
+					const cellValue = cell.getValue()
+					if (cellValue instanceof Date) {
+						return cellValue.toISOString()
+					}
+					return null
+				},
+			},
+			{
+				accessorKey: 'updatedAt',
+				header: 'Last updated',
+				Cell: ({ cell }) => {
+					return cell.getValue<Date>().toISOString()
+				},
+			},
+			{
+				accessorKey: 'createdAt',
+				header: 'Created At',
+				Cell: ({ cell }) => {
+					return cell.getValue<Date>().toISOString()
+				},
+			},
+			{
+				accessorKey: 'active',
+				header: 'Active',
+			},
+		],
+		[]
+	)
+
 	const table = useMantineReactTable({
-		columns: useColumns(props),
-		data: props.data,
+		columns,
+		data: userData ?? [],
 		icons: customIcons,
 		enableGlobalFilter: true,
 		enableFilterMatchHighlighting: false,
@@ -55,7 +94,7 @@ export const ManagementTable = (props: ManagementTableProps) => {
 	return (
 		<Stack>
 			<Text size='16px' fw={500} style={{ marginBottom: '-1rem' }}>
-				Total: {props.data.length}
+				Total: {userData?.length ?? 0}
 			</Text>
 			<Group
 				noWrap={true}
@@ -100,3 +139,5 @@ export const ManagementTable = (props: ManagementTableProps) => {
 		</Stack>
 	)
 }
+
+type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>[number]
