@@ -1,12 +1,9 @@
 import { type z } from 'zod'
 
-import { prisma } from '~db/client'
 import { generateNestedFreeText, generateNestedFreeTextUpsert } from '~db/lib/generateFreeText'
-import { generateId } from '~db/lib/idGen'
 import { generateUniqueSlug } from '~db/lib/slugGen'
-import { downloadFromDatastore, formatMessage } from '~db/prisma/common'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
-import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
+import { type JobDef } from '~db/prisma/jobPreRun'
 import { accessInstructions } from '~db/zod_util/attributeSupplement'
 
 import {
@@ -30,7 +27,8 @@ const jobDef: JobDef = {
  */
 export const job20240315_update_dead_links = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
-	task: async (_ctx, task) => {
+	task: async (ctx, task) => {
+		const { createLogger, downloadFromDatastore, generateId, formatMessage, jobPostRunner, prisma } = ctx
 		/** Create logging instance */
 		createLogger(task, jobDef.jobId)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
