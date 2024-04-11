@@ -1,4 +1,5 @@
 import { Divider, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import orderBy from 'just-order-by'
 import { useTranslation } from 'next-i18next'
 import { memo, type ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -95,20 +96,38 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
 	const theme = useMantineTheme()
-	const leaderAttributes = attributes.filter(({ attribute }) =>
-		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
+	const leaderAttributes = orderBy(
+		attributes.filter(({ attribute }) =>
+			attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
+		),
+		[
+			{
+				property(record) {
+					return record.attribute.tsKey
+				},
+				order: 'asc',
+			},
+		]
 	)
-	const focusedCommunities = attributes.filter(({ attribute }) =>
-		attribute.categories.some(
-			({ category }) => category.tag === 'service-focus' && attribute._count.parents === 0
-		)
+	const focusedCommunities = orderBy(
+		attributes.filter(({ attribute }) =>
+			attribute.categories.some(({ category }) => category.tag === 'service-focus')
+		),
+		[
+			{
+				property(record) {
+					return record.attribute.tsKey
+				},
+				order: 'asc',
+			},
+		]
 	)
 
 	const leaderBadges = (): ReactNode[] => {
 		if (leaderAttributes.length) {
 			return leaderAttributes.map(({ attribute, id }) => (
 				<Badge.Leader key={id} icon={attribute.icon ?? ''} iconBg={attribute.iconBg ?? '#FFF'}>
-					{t(attribute.tsKey)}
+					{t(attribute.tsKey, { ns: attribute.tsNs })}
 				</Badge.Leader>
 			))
 		} else {
@@ -190,7 +209,10 @@ ListingBasicEdit.displayName = 'ListingBasicEdit'
 
 export const ListingBasicInfo = ({ edit, ...props }: ListingBasicInfoProps) =>
 	edit ? <ListingBasicEdit {...props} /> : <ListingBasicDisplay {...props} />
-export type ListingBasicInfoProps = { edit?: boolean; location?: boolean } & OrgInfoProps
+export interface ListingBasicInfoProps extends OrgInfoProps {
+	edit?: boolean
+	location?: boolean
+}
 
 export interface OrgInfoProps {
 	data: {

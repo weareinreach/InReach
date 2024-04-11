@@ -1,5 +1,6 @@
+import { Prisma } from '@prisma/client'
+
 import { isSuperJSONResult, superjson } from '@weareinreach/util/transformer'
-import { Prisma } from '~db/client'
 
 const deserialize = (data: unknown) => (isSuperJSONResult(data) ? superjson.deserialize(data) : data)
 

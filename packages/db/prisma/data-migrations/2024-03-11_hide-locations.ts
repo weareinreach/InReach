@@ -1,9 +1,8 @@
 import { z } from 'zod'
 
-import { prisma } from '~db/client'
-import { downloadFromDatastore, formatMessage } from '~db/prisma/common'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
-import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
+import { type JobDef } from '~db/prisma/jobPreRun'
+
 /** Define the job metadata here. */
 const jobDef: JobDef = {
 	jobId: '2024-03-11_hide-locations',
@@ -19,7 +18,8 @@ const DeactivateIdsSchema = z.array(z.string())
  */
 export const job20240311_hide_locations = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
-	task: async (_ctx, task) => {
+	task: async (ctx, task) => {
+		const { createLogger, downloadFromDatastore, formatMessage, jobPostRunner, prisma } = ctx
 		/** Create logging instance */
 		createLogger(task, jobDef.jobId)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
