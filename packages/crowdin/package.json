@@ -39,7 +39,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@crowdin/crowdin-api-client": "1.33.0",
+		"@crowdin/crowdin-api-client": "1.33.1",
 		"@crowdin/ota-client": "1.0.0",
 		"@opentelemetry/api": "1.8.0",
 		"@vercel/kv": "1.0.1",
@@ -52,6 +52,6 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"prettier": "3.2.5",
-		"typescript": "5.4.4"
+		"typescript": "5.4.5"
 	}
 }
