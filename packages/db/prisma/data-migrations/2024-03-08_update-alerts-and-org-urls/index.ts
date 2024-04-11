@@ -1,11 +1,9 @@
 import { z } from 'zod'
 
-import { prisma, Prisma } from '~db/client'
-import { generateId } from '~db/lib/idGen'
+import { Prisma } from '~db/client'
 import { generateUniqueSlug } from '~db/lib/slugGen'
-import { downloadFromDatastore, formatMessage } from '~db/prisma/common'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
-import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
+import { type JobDef } from '~db/prisma/jobPreRun'
 /** Define the job metadata here. */
 const jobDef: JobDef = {
 	jobId: '2024-03-08_update-alerts-and-org-urls',
@@ -51,7 +49,8 @@ const LinkUpdateSchema = z.object({
  */
 export const job20240308_update_alerts_and_org_urls = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
-	task: async (_ctx, task) => {
+	task: async (ctx, task) => {
+		const { createLogger, downloadFromDatastore, generateId, formatMessage, jobPostRunner, prisma } = ctx
 		/** Create logging instance */
 		createLogger(task, jobDef.jobId)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
