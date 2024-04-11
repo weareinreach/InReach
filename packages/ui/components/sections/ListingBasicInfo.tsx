@@ -108,7 +108,7 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 		if (leaderAttributes.length) {
 			return leaderAttributes.map(({ attribute, id }) => (
 				<Badge.Leader key={id} icon={attribute.icon ?? ''} iconBg={attribute.iconBg ?? '#FFF'}>
-					{t(attribute.tsKey)}
+					{t(attribute.tsKey, { ns: attribute.tsNs })}
 				</Badge.Leader>
 			))
 		} else {
