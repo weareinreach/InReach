@@ -1,4 +1,5 @@
 import { Divider, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import orderBy from 'just-order-by'
 import { useTranslation } from 'next-i18next'
 import { memo, type ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -95,13 +96,31 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
 	const theme = useMantineTheme()
-	const leaderAttributes = attributes.filter(({ attribute }) =>
-		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
+	const leaderAttributes = orderBy(
+		attributes.filter(({ attribute }) =>
+			attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
+		),
+		[
+			{
+				property(record) {
+					return record.attribute.tsKey
+				},
+				order: 'asc',
+			},
+		]
 	)
-	const focusedCommunities = attributes.filter(({ attribute }) =>
-		attribute.categories.some(
-			({ category }) => category.tag === 'service-focus' && attribute._count.parents === 0
-		)
+	const focusedCommunities = orderBy(
+		attributes.filter(({ attribute }) =>
+			attribute.categories.some(({ category }) => category.tag === 'service-focus')
+		),
+		[
+			{
+				property(record) {
+					return record.attribute.tsKey
+				},
+				order: 'asc',
+			},
+		]
 	)
 
 	const leaderBadges = (): ReactNode[] => {

@@ -1324,6 +1324,9 @@ importers:
       just-map-values:
         specifier: 3.2.0
         version: 3.2.0
+      just-order-by:
+        specifier: 1.0.0
+        version: 1.0.0
       libphonenumber-js:
         specifier: 1.10.60
         version: 1.10.60
@@ -5649,7 +5652,7 @@ packages:
     dependencies:
       '@mantine/ssr': 6.0.21(@emotion/react@11.11.4)(@emotion/server@11.11.0)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/styles': 6.0.21(@emotion/react@11.11.4)(react-dom@18.2.0)(react@18.2.0)
-      next: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -6055,7 +6058,7 @@ packages:
       next: ^13.0.0 || ^14.0.0 || 13
       react: ^18.2.0 || 18
     dependencies:
-      next: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       third-party-capital: 1.0.20
 
@@ -10343,7 +10346,7 @@ packages:
       '@trpc/client': 10.45.2(@trpc/server@10.45.2)
       '@trpc/react-query': 10.45.2(@tanstack/react-query@4.36.1)(@trpc/client@10.45.2)(@trpc/server@10.45.2)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.45.2
-      next: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -19027,6 +19030,10 @@ packages:
     resolution: {integrity: sha512-Js7+HxDOGcB3RhI38Mird/RgyMf3t0DAJFda1QWqqlAKTa36NeSYIufJXxrZUbysFTRcTOFcoMCiFK5FwCoI7Q==}
     dev: false
 
+  /just-order-by@1.0.0:
+    resolution: {integrity: sha512-m83kcBMoX43jRLDzR6J7NzIpEEpMmMmh0xwVSMKpXObIFh6ejxpQ02HXc9gCq5cFWHbL5gZ3yRHRGYgMGpoUnA==}
+    dev: false
+
   /just-pascal-case@3.2.0:
     resolution: {integrity: sha512-B0PW5mgJrsGmXdvDLxC2Kdfyie74m+mRO+iCjJ+Es0Jl5kcQwVfB0qb/qiDOCE3m0XUOo1SdZBWzUlNCO9zreg==}
     dev: true
@@ -20982,7 +20989,7 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.15.5
-      next: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
       oauth: 0.9.15
       openid-client: 5.6.5
       preact: 10.19.7
@@ -21006,7 +21013,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       i18next: 23.11.0
       i18next-fs-backend: 2.3.1
-      next: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-i18next: 14.1.0(i18next@23.11.0)(react-dom@18.2.0)(react@18.2.0)
 
@@ -21059,7 +21066,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: true
 
   /next@14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1WTaXeSrUwlz/XcnhGTY7+8eiaFvdet5z9u3V2jb+Ek1vFo0VhHKSAIJvDWfQpttWjnyw14kBeq28TPq7bTeEQ==}
@@ -21118,7 +21124,7 @@ packages:
       next: '*'
     dependencies:
       chokidar: 3.6.0
-      next: 14.1.4(@opentelemetry/api@1.8.0)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /nice-try@1.0.5:
