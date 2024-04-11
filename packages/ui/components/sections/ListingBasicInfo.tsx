@@ -209,7 +209,10 @@ ListingBasicEdit.displayName = 'ListingBasicEdit'
 
 export const ListingBasicInfo = ({ edit, ...props }: ListingBasicInfoProps) =>
 	edit ? <ListingBasicEdit {...props} /> : <ListingBasicDisplay {...props} />
-export type ListingBasicInfoProps = { edit?: boolean; location?: boolean } & OrgInfoProps
+export interface ListingBasicInfoProps extends OrgInfoProps {
+	edit?: boolean
+	location?: boolean
+}
 
 export interface OrgInfoProps {
 	data: {
