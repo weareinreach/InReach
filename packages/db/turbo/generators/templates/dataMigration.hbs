@@ -38,7 +38,7 @@ export const job{{dateConcat}}_{{forVar shortDescription}} = {
 		 *
 		 * This writes a record to the DB to register that this migration has run successfully.
 		 */
-		await jobPostRunner(jobDef, prisma)
+		await jobPostRunner(jobDef)
 	},
 	def: jobDef,
 } satisfies MigrationJob
