@@ -108,6 +108,7 @@
 		"@hookform/devtools": "4.3.1",
 		"@playwright/test": "1.43.0",
 		"@prisma/nextjs-monorepo-workaround-plugin": "5.12.1",
+		"@relative-ci/agent": "4.2.6",
 		"@tanstack/react-query-devtools": "4.36.1",
 		"@tanstack/react-table-devtools": "8.15.3",
 		"@total-typescript/ts-reset": "0.5.1",
