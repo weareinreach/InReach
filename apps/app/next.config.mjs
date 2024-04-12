@@ -26,8 +26,7 @@ const isRenovatePR = renovateRegex.test(process.env.VERCEL_GIT_COMMIT_REF)
 const withRoutes = routes({ outDir: './src/types' })
 const withBundleAnalyzer = bundleAnalyze({ enabled: shouldAnalyze, openAnalyzer: false })
 /**
- * @typedef {import('@sentry/nextjs/types/config/types').ExportedNextConfig} NextConfig
- * @type {NextConfig}
+ * @type {import('next').NextConfig}
  */
 const nextConfig = {
 	i18n: i18nConfig.i18n,
