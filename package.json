@@ -56,14 +56,14 @@
 		"prettier-plugin-jsdoc": "1.3.0",
 		"prettier-plugin-packagejson": "2.5.0",
 		"prettier-plugin-prisma": "5.0.0",
-		"sherif": "0.8.1",
+		"sherif": "0.8.4",
 		"tsx": "4.7.2",
 		"turbo": "1.13.2",
 		"typescript": "5.4.5",
 		"typesync": "0.12.1",
 		"yargs": "17.7.2"
 	},
-	"packageManager": "pnpm@8.15.6",
+	"packageManager": "pnpm@8.15.7",
 	"engines": {
 		"node": "^20.0.0",
 		"pnpm": "^8.10.5"
