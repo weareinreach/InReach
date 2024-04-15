@@ -17,11 +17,9 @@ export const getServerSideTranslations = async (
 	namespacesRequired: Namespace | Namespace[] = defaultNamespace,
 	extraLocales?: string[] | false
 ) => {
-	const namespaceSet = new Set(
-		...(Array.isArray(namespacesRequired) ? namespacesRequired : [namespacesRequired])
-	)
+	const namespaceArray = Array.isArray(namespacesRequired) ? namespacesRequired : [namespacesRequired]
+	const namespaceSet = new Set(namespaceArray)
 	namespaceSet.add('common')
-
 	const namespacesToLoad = Array.from(namespaceSet)
 
 	return serverSideTranslations(locale, namespacesToLoad, i18nextConfig, extraLocales)

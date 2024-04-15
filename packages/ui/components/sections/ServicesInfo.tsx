@@ -40,8 +40,10 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { isEditMode } = useEditMode()
 	const { slug } = router.isReady ? router.query : { slug: '' }
-	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug }, { enabled: router.isReady })
-	const { t } = useTranslation(orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services'])
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const namespaces = orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services']
+
+	const { t } = useTranslation(namespaces)
 	const { classes } = useServiceSectionStyles()
 
 	const variants = useCustomVariant()
@@ -57,7 +59,9 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 			{Array.isArray(category) ? (
 				<Badge.Group>
 					{category.map((tsKey) => (
-						<Badge.Service key={tsKey}>{t(tsKey, { ns: 'services' })}</Badge.Service>
+						<Badge.Service key={`(${category.join('-')}).${tsKey}`}>
+							{t(tsKey, { ns: 'services' })}
+						</Badge.Service>
 					))}
 				</Badge.Group>
 			) : (
