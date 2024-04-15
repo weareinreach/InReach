@@ -22,13 +22,12 @@ export default {
 				},
 			},
 		},
-		msw: [organization.getIdFromSlug, orgEmail.forContactInfoEdit, orgEmail.forEditDrawer],
+		msw: [organization.getIdFromSlug, orgEmail.forContactInfoEdit, orgEmail.forEditDrawer, orgEmail.update],
 	},
 	args: {
 		component: Button,
 		children: 'Open Drawer',
 		variant: 'inlineInvertedUtil1',
-		id: 'oeml_01GVH3VEVDX7QVQ4QA4C1XXVN3',
 	},
 } satisfies Meta<typeof EmailDrawer>
 
@@ -36,7 +35,11 @@ type StoryDef = StoryObj<typeof EmailDrawer>
 
 export const WithData = {
 	args: {
-		locationId: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
+		id: 'oeml_01GVH3VEVDX7QVQ4QA4C1XXVN3',
 	},
 } satisfies StoryDef
-export const WithoutData = {} satisfies StoryDef
+export const WithoutData = {
+	args: {
+		createNew: true,
+	},
+} satisfies StoryDef

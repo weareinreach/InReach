@@ -1,4 +1,4 @@
-import { createContext, type ReactNode, useReducer } from 'react'
+import { createContext, type ReactNode, useCallback, useMemo, useReducer } from 'react'
 import { type SetRequired } from 'type-fest'
 import { z } from 'zod'
 
@@ -57,7 +57,7 @@ const createActionCreators = (dispatch: React.Dispatch<Action>): ActionCreators 
 	setAttributes: (payload: string[]) => dispatch({ type: 'SET_ATTRIBUTES', payload }),
 	setServices: (payload: string[]) => dispatch({ type: 'SET_SERVICES', payload }),
 	setSearchTerm: (payload: string) => dispatch({ type: 'SET_SEARCHTERM', payload }),
-	setExtended: (payload: string) => dispatch({ type: 'SET_EXTENDED', payload: payload }),
+	setExtended: (payload: string) => dispatch({ type: 'SET_EXTENDED', payload }),
 	setSort: (payload: string[]) => dispatch({ type: 'SET_SORT', payload }),
 	setSearchState: (payload: z.input<typeof SearchStateSchema>) =>
 		dispatch({ type: 'SET_SEARCHSTATE', payload: SearchStateSchema.parse(payload) }),
@@ -68,7 +68,7 @@ SearchStateContext.displayName = 'SearchStateContext'
 export const SearchStateProvider = ({ children, initState }: SearchStateProviderProps) => {
 	const [state, dispatch] = useReducer(searchStateReducer, { ...initialState, ...initState })
 
-	const getRoute = () => {
+	const getRoute = useCallback(() => {
 		if (state.params.length) {
 			return {
 				params: state.params,
@@ -78,16 +78,23 @@ export const SearchStateProvider = ({ children, initState }: SearchStateProvider
 				...(state.sort.length ? { sort: state.sort } : {}),
 			}
 		}
-	}
+		return undefined
+	}, [state.a, state.page, state.params, state.s, state.sort])
 
-	const searchStateActions = { ...createActionCreators(dispatch), getRoute }
-	const searchState = { ...state, attributes: state.a, services: state.s, getRoute }
-
-	return (
-		<SearchStateContext.Provider value={{ searchState, searchStateActions }}>
-			{children}
-		</SearchStateContext.Provider>
+	const contextValue = useMemo(
+		() => ({
+			searchState: {
+				...state,
+				attributes: state.a,
+				services: state.s,
+				getRoute,
+			},
+			searchStateActions: { ...createActionCreators(dispatch), getRoute },
+		}),
+		[getRoute, state]
 	)
+
+	return <SearchStateContext.Provider value={contextValue}>{children}</SearchStateContext.Provider>
 }
 type RouteParams = {
 	params: string[]

@@ -9,6 +9,19 @@
 			"type": "chrome",
 			"url": "http://localhost:3000",
 			"userDataDir": false
+		},
+		{
+			"name": "Attach to Arc",
+			"type": "chrome",
+			"request": "attach",
+			"port": 9222,
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}",
+			"resolveSourceMapLocations": [
+				"${workspaceFolder}/**",
+				"!${workspaceFolder:✨ InReach (root)}node_modules/**"
+			],
+			"smartStep": true
 		}
 	]
 }
