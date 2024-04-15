@@ -2,6 +2,7 @@ import { Container, createStyles, Flex, Group, rem, UnstyledButton, useMantineTh
 import Image from 'next/image'
 import { type NextRouter, useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 import { navbarEvent } from '@weareinreach/analytics/events'
 import InReachLogo from '~ui/assets/inreach.svg'
@@ -12,7 +13,6 @@ import { UserMenu } from '~ui/components/core/UserMenu'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useEditMode } from '~ui/hooks/useEditMode'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
-import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -21,15 +21,15 @@ const useStyles = createStyles((theme) => ({
 		minHeight: rem(64),
 		boxShadow: theme.shadows.xs,
 		marginBottom: rem(40),
-		[theme.fn.smallerThan('sm')]: {
-			display: 'none',
-		},
 		position: 'sticky',
 		top: 0,
 		left: 0,
 		right: 0,
 		zIndex: 150,
 		backgroundColor: theme.other.colors.secondary.white,
+		[theme.fn.smallerThan('sm')]: {
+			display: 'none',
+		},
 	},
 	mobileNav: {
 		[theme.fn.largerThan('sm')]: {
@@ -116,7 +116,7 @@ const EditModeBar = () => {
 			deletedNotification()
 		},
 	})
-	const getExitEditPathname = (): NextRouter['pathname'] => {
+	const getExitEditPathname = useCallback((): NextRouter['pathname'] => {
 		switch (router.pathname) {
 			case '/org/[slug]/edit': {
 				return '/org/[slug]'
@@ -128,14 +128,28 @@ const EditModeBar = () => {
 				return router.pathname
 			}
 		}
-	}
+	}, [router.pathname])
+
+	const handleExitEditMode = useCallback(() => {
+		router.replace({ pathname: getExitEditPathname(), query: router.query })
+	}, [getExitEditPathname, router])
+
+	const handleReverify = useCallback(() => {
+		slug && reverify.mutate({ slug })
+	}, [reverify, slug])
+
+	const handlePublishToggle = useCallback(
+		() => publish.mutate({ ...apiQuery, published: !data?.published }),
+		[publish, apiQuery, data?.published]
+	)
+	const handleDeleteToggle = useCallback(
+		() => updateDeleted.mutate({ ...apiQuery, deleted: !data?.deleted }),
+		[updateDeleted, apiQuery, data?.deleted]
+	)
 
 	return (
 		<Group position='apart' noWrap className={classes.editBar}>
-			<UnstyledButton
-				className={classes.editBarButtonText}
-				onClick={() => router.replace({ pathname: getExitEditPathname(), query: router.query })}
-			>
+			<UnstyledButton className={classes.editBarButtonText} onClick={handleExitEditMode}>
 				<Group noWrap spacing={8}>
 					<Icon icon='carbon:arrow-left' height={20} />
 					{t('exit.edit-mode')}
@@ -145,10 +159,7 @@ const EditModeBar = () => {
 				<UnstyledButton
 					disabled={!unsaved.state}
 					className={classes.editBarButtonText}
-					onClick={() => {
-						console.log('save clicked')
-						saveEvent.save()
-					}}
+					onClick={saveEvent.save}
 				>
 					<Group noWrap spacing={8}>
 						<Icon
@@ -160,26 +171,20 @@ const EditModeBar = () => {
 					</Group>
 				</UnstyledButton>
 				{slug && !orgLocationId && (
-					<UnstyledButton className={classes.editBarButtonText} onClick={() => reverify.mutate({ slug })}>
+					<UnstyledButton className={classes.editBarButtonText} onClick={handleReverify}>
 						<Group noWrap spacing={8}>
 							<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} height={20} />
 							{t('words.reverify')}
 						</Group>
 					</UnstyledButton>
 				)}
-				<UnstyledButton
-					className={classes.editBarButtonText}
-					onClick={() => publish.mutate({ ...apiQuery, published: !data?.published })}
-				>
+				<UnstyledButton className={classes.editBarButtonText} onClick={handlePublishToggle}>
 					<Group noWrap spacing={8}>
 						<Icon icon={data?.published ? 'carbon:view-off' : 'carbon:view-filled'} height={20} />
 						{t(data?.published ? 'words.unpublish' : 'words.publish')}
 					</Group>
 				</UnstyledButton>
-				<UnstyledButton
-					className={classes.editBarButtonText}
-					onClick={() => updateDeleted.mutate({ ...apiQuery, deleted: !data?.deleted })}
-				>
+				<UnstyledButton className={classes.editBarButtonText} onClick={handleDeleteToggle}>
 					<Group noWrap spacing={8}>
 						<Icon icon={data?.deleted ? 'fluent-mdl2:remove-from-trash' : 'carbon:trash-can'} height={20} />
 						{t(data?.deleted ? 'words.restore' : 'words.delete')}
@@ -195,13 +200,10 @@ export const Navbar = () => {
 	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
-	const { isMobile, isTablet } = useScreenSize()
 	const router = useRouter()
-
-	return isMobile || isTablet ? (
-		<MobileNav className={classes.mobileNav} />
-	) : (
+	return (
 		<>
+			<MobileNav className={classes.mobileNav} />
 			<Container className={classes.desktopNav} fluid maw='100%'>
 				<Flex justify='space-between' align='center' pt={5}>
 					<Link href='/' target='_self' py={8}>
@@ -209,7 +211,7 @@ export const Navbar = () => {
 							src={InReachLogo}
 							width={100}
 							height={38}
-							alt={!router.isFallback ? t('inreach-logo', { defaultValue: 'InReach logo' }) : 'InReach logo'}
+							alt={t('inreach-logo', { defaultValue: 'InReach logo' })}
 							style={{ margin: 0 }}
 						/>
 					</Link>

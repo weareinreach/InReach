@@ -22,34 +22,8 @@ export const FormSchema = z.object({
 	name: FreetextObject,
 	description: FreetextObject,
 	services: prefixedId('serviceTag').array(),
-	attributes: z
-		.object({
-			text: z
-				.object({
-					key: z.string(),
-					text: z.string(),
-					ns: z.string(),
-				})
-				.nullable(),
-			boolean: z.boolean().nullable(),
-			data: z.any(),
-			active: z.boolean(),
-			countryId: z.string().nullable(),
-			govDistId: z.string().nullable(),
-			languageId: z.string().nullable(),
-			category: z.string(),
-			attributeId: z.string(),
-			supplementId: z.string(),
-		})
-		.array(),
-	serviceAreas: z
-		.object({
-			id: prefixedId('serviceArea'),
-			countries: prefixedId('country').array(),
-			districts: prefixedId('govDist').array(),
-		})
-		.nullable(),
-	published: z.boolean(),
-	deleted: z.boolean(),
+	published: z.boolean().optional().default(true),
+	deleted: z.boolean().optional().default(false),
+	organizationId: prefixedId('organization'),
 })
 export type TFormSchema = z.infer<typeof FormSchema>

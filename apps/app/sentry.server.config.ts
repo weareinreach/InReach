@@ -11,15 +11,15 @@ import { prisma } from '@weareinreach/db'
 const isVercelProd = process.env.VERCEL_ENV === 'production'
 
 Sentry.init({
-	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.sentry.io/6751163',
-
-	// Adjust this value in production, or use tracesSampler for greater control
-	tracesSampleRate: isVercelProd ? 0.5 : 1.0,
-	profilesSampleRate: isVercelProd ? 0.5 : 1.0,
+	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.us.sentry.io/6751163',
 	enabled: isVercelProd,
-	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: !!process.env.SENTRY_DEBUG,
-	// instrumenter: 'otel',
+	// Tracing rates
+	tracesSampleRate: 0.5,
+	profilesSampleRate: 0.5,
+	// uncomment the line below to enable Spotlight (https://spotlightjs.com)
+	spotlight: process.env.NODE_ENV === 'development',
+
 	integrations: [
 		new Sentry.Integrations.RequestData(),
 		new Sentry.Integrations.Prisma({ client: prisma }),

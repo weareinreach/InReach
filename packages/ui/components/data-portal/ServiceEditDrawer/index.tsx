@@ -7,14 +7,16 @@ import {
 	Drawer,
 	Group,
 	List,
+	Modal,
 	Stack,
 	Text,
 	Title,
 	Tooltip,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { compareArrayVals } from 'crud-object-diff'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useCallback } from 'react'
+import { forwardRef, type ReactNode, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
 import invariant from 'tiny-invariant'
@@ -26,7 +28,9 @@ import { Section } from '~ui/components/core/Section'
 import { ContactInfo, hasContactInfo } from '~ui/components/data-display/ContactInfo'
 import { Hours } from '~ui/components/data-display/Hours'
 import { ServiceSelect } from '~ui/components/data-portal/ServiceSelect'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { CoverageArea } from '~ui/modals/CoverageArea'
@@ -75,7 +79,10 @@ const ServiceAreaItem = ({
 
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
 	({ serviceId, ...props }, ref) => {
+		const { id: organizationId } = useOrgInfo()
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
+		const [modalOpened, modalHandler] = useDisclosure(false)
+		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
@@ -86,8 +93,15 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		})
 		const form = useForm<TFormSchema>({
 			resolver: zodResolver(FormSchema),
-			values: data,
+			values: data ? { ...data, organizationId: organizationId ?? '' } : undefined,
 		})
+
+		useEffect(() => {
+			if (organizationId && organizationId !== form.getValues().organizationId) {
+				form.setValue('organizationId', organizationId)
+			}
+		}, [form, organizationId])
+
 		const dirtyFields = {
 			name: isObject(form.formState.dirtyFields.name) ? form.formState.dirtyFields.name.text : false,
 			description: isObject(form.formState.dirtyFields.description)
@@ -113,10 +127,47 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			{ activeForOrgs: true },
 			{ refetchOnWindowFocus: false }
 		)
+		const serviceUpsert = api.service.upsert.useMutation({
+			onSuccess: () => {
+				apiUtils.location.forLocationPageEdits.invalidate()
+				apiUtils.service.invalidate()
+				notifySave()
+				setTimeout(() => {
+					drawerHandler.close()
+					modalHandler.close()
+				}, 500)
+			},
+		})
+
+		const handleSave = useCallback(() => {
+			const { name, description, ...baseValues } = form.getValues()
+			const serviceChanges = compareArrayVals<string>([data?.services ?? [], baseValues.services])
+
+			serviceUpsert.mutate({
+				...baseValues,
+				services: serviceChanges,
+				name: name?.text,
+				description: description?.text,
+			})
+		}, [data?.services, form, serviceUpsert])
+		const handleCloseAndDiscard = useCallback(() => {
+			form.reset()
+			drawerHandler.close()
+			modalHandler.close()
+		}, [drawerHandler, form, modalHandler])
+		const handleClose = useCallback(() => {
+			if (form.formState.isDirty) {
+				return modalHandler.open()
+			} else {
+				return drawerHandler.close()
+			}
+		}, [form, drawerHandler, modalHandler])
+
 		const serviceAreas = () => {
 			const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 			const serviceAreaObj: Record<string, ReactNode[]> = {}
-			const { countries, districts } = form.watch('serviceAreas') ?? {}
+
+			const { countries, districts } = data?.serviceAreas ?? {}
 			if (!geoMap) {
 				return null
 			}
@@ -220,12 +271,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 
 		return (
 			<>
-				<Drawer.Root onClose={drawerHandler.close} opened={drawerOpened} position='right'>
+				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right'>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
 						<Drawer.Header>
 							<Group position='apart' w='100%'>
-								<Breadcrumb option='close' onClick={drawerHandler.close} />
+								<Breadcrumb option='close' onClick={handleClose} />
 								<Group>
 									<AttributeModal
 										component={Button}
@@ -236,7 +287,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									>
 										Add Attribute
 									</AttributeModal>
-									<Button variant={variants.Button.primaryLg} leftIcon={<Icon icon='carbon:save' />}>
+									<Button
+										variant={variants.Button.primaryLg}
+										leftIcon={<Icon icon='carbon:save' />}
+										loading={serviceUpsert.isLoading}
+										onClick={handleSave}
+									>
 										Save
 									</Button>
 								</Group>
@@ -348,6 +404,24 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 								</Section.Divider>
 							</Stack>
 						</Drawer.Body>
+						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
+							<Stack align='center'>
+								<Text>You have unsaved changes</Text>
+								<Group noWrap>
+									<Button
+										variant='primary-icon'
+										leftIcon={<Icon icon='carbon:save' />}
+										loading={serviceUpsert.isLoading}
+										onClick={handleSave}
+									>
+										Save
+									</Button>
+									<Button variant='secondaryLg' onClick={handleCloseAndDiscard}>
+										Discard
+									</Button>
+								</Group>
+							</Stack>
+						</Modal>
 					</Drawer.Content>
 				</Drawer.Root>
 				<Stack>
