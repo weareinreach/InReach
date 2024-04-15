@@ -22,6 +22,7 @@ import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { useEditMode } from '@weareinreach/ui/hooks/useEditMode'
+import { useNewNotification } from '@weareinreach/ui/hooks/useNewNotification'
 import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -41,7 +42,7 @@ const formSchema = z.object({
 })
 type FormSchema = z.infer<typeof formSchema>
 const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
-	organizationId: _organizationId,
+	organizationId,
 }) => {
 	const apiUtils = api.useUtils()
 	const { t } = useTranslation()
@@ -50,6 +51,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const { slug, orgLocationId } = query
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
+	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
 	const { data: isSaved } = api.savedList.isSaved.useQuery(data?.organization?.id ?? '', {
 		enabled: status === 'success' && Boolean(data?.organization?.id),
@@ -61,13 +63,14 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 
 	// for use with MultiSelectPopover
 
-	// const { data: orgServices } = api.service.getNames.useQuery(
-	// 	{ organizationId },
-	// 	{
-	// 		select: (returnedData) => returnedData.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
-	// 		refetchOnWindowFocus: false,
-	// 	}
-	// )
+	const { data: orgServices } = api.service.getNames.useQuery(
+		{ organizationId },
+		{
+			select: (returnedData) =>
+				returnedData.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
+			refetchOnWindowFocus: false,
+		}
+	)
 	const defaultFormValues = data
 		? { id: data.id, name: data.name, services: data.services.map(({ serviceId }) => serviceId) }
 		: undefined
@@ -86,17 +89,21 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const updateLocation = api.page.LocationEditUpdate.useMutation({
 		onSuccess: () => {
 			apiUtils.location.forLocationPageEdits.invalidate()
+			notifySave()
 		},
 	})
 	const { unsaved, saveEvent } = useEditMode()
-	saveEvent.subscribe(() => {
+
+	const saveSubscription = useCallback(() => {
 		const values = formMethods.getValues()
 		const services = compareArrayVals([defaultFormValues?.services ?? [], values?.services ?? []])
 		updateLocation.mutate({
 			...values,
 			services,
 		})
-	})
+	}, [defaultFormValues?.services, formMethods, updateLocation])
+
+	saveEvent.subscribe(saveSubscription)
 	useEffect(() => {
 		const { isDirty } = formMethods.formState
 		if (unsaved.state !== isDirty) {
@@ -200,18 +207,18 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							<Stack spacing={40} pt={40}>
 								<Stack spacing={20} ref={servicesRef}>
 									<Stack spacing={8}>
-										<Title order={3}>{'Associated services'}</Title>
-										<ServicesInfoCard parentId={data.id} />
-									</Stack>
-									<Stack spacing={8}>
 										<Title order={3}>{'Associate service(s) to this location'}</Title>
-										{/*<MultiSelectPopover
+										<MultiSelectPopover
 											label='Services available'
 											data={orgServices}
 											control={formMethods.control}
 											name='services'
 											indicateWhenDirty
-						/>*/}
+										/>
+									</Stack>
+									<Stack spacing={8}>
+										<Title order={3}>{'Associated services'}</Title>
+										<ServicesInfoCard parentId={data.id} />
 									</Stack>
 								</Stack>
 								<div ref={photosRef}>

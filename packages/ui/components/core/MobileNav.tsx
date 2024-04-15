@@ -1,6 +1,7 @@
 import { createStyles, rem, Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
@@ -68,7 +69,37 @@ export const MobileNav = ({ className }: { className?: string }) => {
 	const router = useRouter()
 	const { searchState } = useSearchState()
 
-	const showSearch = searchState.params?.length && router.pathname !== '/search/[...params]'
+	const showSearch = Boolean(searchState.params?.length) && router.pathname !== '/search/[...params]'
+
+	const handleTabChange = useCallback(
+		(tab: TabName) => {
+			switch (tab) {
+				case 'search': {
+					const query = searchState.getRoute()
+					if (query && showSearch) {
+						router.push({
+							pathname: '/search/[...params]',
+							query,
+						})
+					} else {
+						router.push('/')
+					}
+					break
+				}
+				case 'saved':
+					router.push('/account/saved')
+					break
+				case 'account':
+					router.push('/account')
+					break
+				case 'support':
+					router.push('/support')
+					break
+				default:
+			}
+		},
+		[router, searchState, showSearch]
+	)
 
 	return (
 		<Tabs
@@ -76,52 +107,30 @@ export const MobileNav = ({ className }: { className?: string }) => {
 			className={className}
 			classNames={{ ...classes }}
 			defaultValue='search'
-			onTabChange={(tab) => {
-				switch (tab) {
-					case 'search': {
-						const query = searchState.getRoute()
-						if (query && showSearch) {
-							router.push({
-								pathname: '/search/[...params]',
-								query,
-							})
-						} else {
-							router.push('/')
-						}
-						break
-					}
-					case 'saved':
-						router.push('/account/saved')
-						break
-					case 'account':
-						router.push('/account')
-						break
-					case 'support':
-						router.push('/support')
-						break
-					default:
-				}
-			}}
+			onTabChange={handleTabChange}
 		>
 			<Tabs.List position='apart'>
-				<Tabs.Tab
-					value='search'
-					icon={<Icon icon={showSearch ? 'carbon:search' : 'carbon:home'} height={20} />}
-				>
-					{t(showSearch ? 'words.search' : 'words.home')}
-				</Tabs.Tab>{' '}
+				{showSearch ? (
+					<Tabs.Tab value='search' icon={<Icon icon={'carbon:search'} height={20} />}>
+						{t('words.search')}
+					</Tabs.Tab>
+				) : (
+					<Tabs.Tab value='search' icon={<Icon icon={'carbon:home'} height={20} />}>
+						{t('words.home', { defaultValue: 'Home' })}
+					</Tabs.Tab>
+				)}
 				<Tabs.Tab value='saved' icon={<Icon icon='carbon:favorite' height={20} />}>
-					{t('words.saved')}
+					{t('words.saved', { defaultValue: 'Saved' })}
 				</Tabs.Tab>
 				<Tabs.Tab value='account' icon={<Icon icon='carbon:user' height={20} />}>
-					{t('words.account')}
+					{t('words.account', { defaultValue: 'Account' })}
 				</Tabs.Tab>
 				<Tabs.Tab value='support' icon={<Icon icon='carbon:help' height={20} />}>
-					{t('words.support')}
+					{t('words.support', { defaultValue: 'Support' })}
 				</Tabs.Tab>
 			</Tabs.List>
 		</Tabs>
 	)
 }
 
-// type NavItems = keyof typeof navItems
+type TabName = 'search' | 'saved' | 'account' | 'support'
