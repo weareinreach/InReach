@@ -29,6 +29,10 @@
 			"cache": false,
 			"dependsOn": []
 		},
+		"db:studio": {
+			"cache": false,
+			"persistent": true
+		},
 		"generate:data": {
 			"cache": false,
 			"dependsOn": ["db:dataMigrate", "^docker:up"],

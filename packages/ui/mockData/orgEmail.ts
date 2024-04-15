@@ -1,4 +1,4 @@
-import { getTRPCMock, type MockDataObject, type MockHandlerObject } from '~ui/lib/getTrpcMock'
+import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 export const orgEmail = {
 	get: getTRPCMock({
