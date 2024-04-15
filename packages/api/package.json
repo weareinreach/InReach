@@ -74,6 +74,6 @@
 	},
 	"peerDependencies": {
 		"i18next": "23.11.2",
-		"next": ">=13"
+		"next": "14.2.1"
 	}
 }
