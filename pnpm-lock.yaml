@@ -195,6 +195,9 @@ importers:
       '@sentry/browser':
         specifier: 7.110.0
         version: 7.110.0
+      '@sentry/integrations':
+        specifier: 7.110.0
+        version: 7.110.0
       '@sentry/nextjs':
         specifier: 7.110.0
         version: 7.110.0(next@14.2.0)(react@18.2.0)

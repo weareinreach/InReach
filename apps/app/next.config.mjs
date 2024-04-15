@@ -62,26 +62,6 @@ const nextConfig = {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
 	},
 	rewrites: async () => [{ source: '/search', destination: '/' }],
-
-	sentry: {
-		// For all available options, see:
-		// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-		// Upload a larger set of source maps for prettier stack traces (increases build time)
-		widenClientFileUpload: true,
-
-		// Transpiles SDK to be compatible with IE11 (increases bundle size)
-		transpileClientSDK: false,
-
-		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-		tunnelRoute: '/monitoring',
-
-		// Hides source maps from generated client bundles
-		hideSourceMaps: !isLocalDev,
-
-		// Automatically tree-shake Sentry logger statements to reduce bundle size
-		disableLogger: isVercelProd || isVercelActiveDev,
-	},
 	webpack: (config, { dev, isServer, webpack }) => {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
@@ -115,6 +95,7 @@ const nextConfig = {
 					__SENTRY_DEBUG__: false,
 					__RRWEB_EXCLUDE_CANVAS__: true,
 					__RRWEB_EXCLUDE_IFRAME__: true,
+					__RRWEB_EXCLUDE_SHADOW_DOM__: true,
 				})
 			)
 		}
@@ -152,15 +133,39 @@ function defineNextConfig(config) {
  * @returns {T}
  */
 const defineSentryConfig = (nextConfig) =>
-	withSentryConfig(nextConfig, {
-		// For all available options, see:
-		// https://github.com/getsentry/sentry-webpack-plugin#options
+	withSentryConfig(
+		nextConfig,
+		{
+			// For all available options, see:
+			// https://github.com/getsentry/sentry-webpack-plugin#options
 
-		// Suppresses source map uploading logs during build
-		silent: !process.env.SENTRY_DEBUG,
-		org: 'weareinreach',
-		project: 'inreach-app',
-	})
+			// Suppresses source map uploading logs during build
+			silent: !process.env.SENTRY_DEBUG,
+			org: 'weareinreach',
+			project: 'inreach-app',
+		},
+		{
+			// For all available options, see:
+			// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-// export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
-export default defineSentryConfig(defineNextConfig(nextConfig))
+			// Upload a larger set of source maps for prettier stack traces (increases build time)
+			widenClientFileUpload: true,
+
+			// Transpiles SDK to be compatible with IE11 (increases bundle size)
+			transpileClientSDK: false,
+
+			// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
+			tunnelRoute: '/monitoring',
+
+			// Hides source maps from generated client bundles
+			hideSourceMaps: !isLocalDev,
+
+			// Automatically tree-shake Sentry logger statements to reduce bundle size
+			disableLogger: isVercelProd || isVercelActiveDev,
+			automaticVercelMonitors: true,
+			autoInstrumentMiddleware: true,
+		}
+	)
+
+export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
+// export default defineSentryConfig(defineNextConfig(nextConfig))
