@@ -8,11 +8,24 @@ import { type Namespaces } from '@weareinreach/db/generated/namespaces'
 import i18nextConfig from '../../next-i18next.config.mjs'
 
 type Namespace = LiteralUnion<Namespaces, string>
-type NamespaceSSR = string | string[] | undefined
+
+const defaultNamespace = (
+	typeof i18nextConfig.defaultNS === 'string' ? i18nextConfig.defaultNS : 'common'
+) satisfies Namespace
+
 export const getServerSideTranslations = async (
 	locale = 'en',
-	namespacesRequired: Namespace | Namespace[] = i18nextConfig.defaultNS as DefaultNamespace,
+	namespacesRequired: Namespace | Namespace[] = defaultNamespace,
 	extraLocales?: string[] | false
-) => serverSideTranslations(locale, namespacesRequired as NamespaceSSR, i18nextConfig, extraLocales)
+) => {
+	const namespaceSet = new Set(
+		...(Array.isArray(namespacesRequired) ? namespacesRequired : [namespacesRequired])
+	)
+	namespaceSet.add('common')
+
+	const namespacesToLoad = Array.from(namespaceSet)
+
+	return serverSideTranslations(locale, namespacesToLoad, i18nextConfig, extraLocales)
+}
 
 export { i18nextConfig }
