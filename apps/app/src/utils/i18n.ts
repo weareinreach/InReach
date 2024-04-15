@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-imports */
-import { type DefaultNamespace } from 'i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type LiteralUnion } from 'type-fest'
 
