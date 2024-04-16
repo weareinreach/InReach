@@ -12,7 +12,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
-import { forwardRef, useEffect } from 'react'
+import { forwardRef, type MouseEvent, useCallback, useEffect } from 'react'
 
 import { Breadcrumb, type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
@@ -46,7 +46,9 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 				: {
 						option: 'close',
 						onClick: () => {
-							if (typeof onClose === 'function') onClose()
+							if (typeof onClose === 'function') {
+								onClose()
+							}
 							handler.close()
 						},
 					}
@@ -59,14 +61,23 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 			</Group>
 		)
 
+		const handleClose = useCallback(() => {
+			if (noClose) {
+				handler.close()
+			}
+		}, [noClose, handler])
+
+		const handleOpen = useCallback(
+			(e: MouseEvent<HTMLButtonElement>) => {
+				e.stopPropagation()
+				handler.open()
+			},
+			[handler]
+		)
+
 		return (
 			<>
-				<Modal
-					title={modalTitle}
-					opened={opened}
-					onClose={() => (noClose ? null : handler.close())}
-					fullScreen={isMobile}
-				>
+				<Modal title={modalTitle} opened={opened} onClose={handleClose} fullScreen={isMobile}>
 					<Stack align='center' spacing={24}>
 						<Stack align='center' spacing={16}>
 							<Trans
@@ -104,17 +115,7 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
 					</Stack>
 				</Modal>
-				{!autoLaunch && (
-					<Box
-						component='button'
-						ref={ref}
-						onClick={(e) => {
-							e.stopPropagation()
-							handler.open()
-						}}
-						{...props}
-					/>
-				)}
+				{!autoLaunch && <Box component='button' ref={ref} onClick={handleOpen} {...props} />}
 			</>
 		)
 	}
