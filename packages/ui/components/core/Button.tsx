@@ -1,9 +1,9 @@
 import {
-	type ButtonProps,
 	type ButtonStylesNames,
 	createStyles,
 	type CSSObject,
 	Button as MantineButton,
+	type ButtonProps as MantineButtonProps,
 	type MantineTheme,
 	rem,
 } from '@mantine/core'
@@ -165,13 +165,13 @@ const customVariants = [
 	'accent-icon',
 ] as const
 
-export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', CustomButtonProps>>(
+export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', ButtonProps>>(
 	(props, ref) => {
 		const isCustom = (customVariants as ReadonlyArray<string>).includes(props.variant ?? 'filled')
 
 		const { classes: baseClasses } = useVariantStyles({ variant: props.variant ?? 'filled' })
 
-		const { children, variant, classNames, ...others } = props as ButtonProps
+		const { children, variant, classNames, ...others } = props as MantineButtonProps
 
 		const mantineVariant = isCustom ? undefined : (variant as ButtonVariant)
 
@@ -194,7 +194,7 @@ interface ButtonStylesParams {
 	variant?: CustomVariants | 'filled' | 'outline'
 }
 
-interface CustomButtonProps extends ButtonProps {
+export interface ButtonProps extends MantineButtonProps {
 	/** Button style/design */
 	variant?: CustomVariants | 'filled' | 'outline'
 	/** Label Text */
@@ -208,6 +208,6 @@ interface CustomButtonProps extends ButtonProps {
 	loading?: boolean
 }
 type CustomVariants = (typeof customVariants)[number] | keyof VariantNames['Button']
-type ButtonVariant = ButtonProps['variant']
+type ButtonVariant = MantineButtonProps['variant']
 type CustomButtonStyles = Partial<{ [className in ButtonStylesNames]: CSSObject }>
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => CustomButtonStyles
