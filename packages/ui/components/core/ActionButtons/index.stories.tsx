@@ -32,6 +32,7 @@ export default {
 				},
 			},
 		},
+		nextAuthMock: { session: 'noAuth' },
 	},
 } satisfies Meta<typeof ActionButtonsComponent>
 
@@ -43,10 +44,9 @@ export const Save = {
 			session: 'userPic',
 		},
 	},
-	args: {
-		iconKey: 'save',
-	},
-}
+	args: { itemId: 'orgn_1234', itemName: 'Test item name' },
+	render: (args) => <ActionButtonsComponent.Save {...args} />,
+} satisfies StoryObj<typeof ActionButtonsComponent.Save>
 
 export const SaveLoggedOut = {
 	parameters: {
@@ -54,38 +54,33 @@ export const SaveLoggedOut = {
 			session: 'noAuth',
 		},
 	},
-	args: {
-		iconKey: 'save',
-	},
-} satisfies StoryDef
+	args: { itemId: 'orgn_1234', itemName: 'Test item name' },
+	render: (args) => <ActionButtonsComponent.Save {...args} />,
+} satisfies StoryObj<typeof ActionButtonsComponent.Save>
 
 export const SavedToSingleList = {
-	args: {
-		iconKey: 'save',
-	},
 	parameters: {
 		nextAuthMock: {
 			session: 'userPic',
 		},
 		msw: [savedList.isSavedSingle, savedList.deleteItem, organization.getIdFromSlug],
 	},
-} satisfies StoryDef
+	args: { itemId: 'orgn_1234', itemName: 'Test item name' },
+	render: (args) => <ActionButtonsComponent.Save {...args} />,
+} satisfies StoryObj<typeof ActionButtonsComponent.Save>
 export const SavedToMultipleLists = {
-	args: {
-		iconKey: 'save',
-	},
 	parameters: {
 		nextAuthMock: {
 			session: 'userPic',
 		},
 		msw: [savedList.isSavedMultiple, savedList.getAll, savedList.deleteItem, organization.getIdFromSlug],
 	},
-} satisfies StoryDef
+	args: { itemId: 'orgn_1234', itemName: 'Test item name' },
+	render: (args) => <ActionButtonsComponent.Save {...args} />,
+} satisfies StoryObj<typeof ActionButtonsComponent.Save>
 export const Share = {
-	args: {
-		iconKey: 'share',
-	},
-} satisfies StoryDef
+	render: (args) => <ActionButtonsComponent.Share {...args} />,
+} satisfies StoryObj<typeof ActionButtonsComponent.Share>
 export const Print = {
 	args: {
 		iconKey: 'print',

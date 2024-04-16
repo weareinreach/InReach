@@ -27,6 +27,9 @@ import { CreateNewList } from '~ui/modals/CreateNewList'
 import { QuickPromotionModal } from '~ui/modals/QuickPromotion'
 import { ReviewModal } from '~ui/modals/Review'
 
+import { Save } from './Save'
+import { Share } from './Share'
+
 const useStyles = createStyles((theme) => ({
 	button: {
 		display: 'flex',
@@ -507,6 +510,8 @@ export const ActionButtons = ({
 const Loading = () => <Skeleton h={22} w={70} radius={8} />
 
 ActionButtons.Loading = Loading
+ActionButtons.Save = Save
+ActionButtons.Share = Share
 
 interface ActionButtonProps {
 	/**

@@ -145,7 +145,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 		const handleRefetchAvailableLists = useCallback(() => refetchAvailableLists(), [refetchAvailableLists])
 
 		const DisplayedInfo = (
-			<Group>
+			<Group spacing={0}>
 				<Icon icon={buttonIcon} color={iconColor} {...(menuItem ? {} : { height: 24, width: 24 })} />
 				{!omitLabel && (
 					<Text
@@ -215,7 +215,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 		)
 	}
 )
-Save.displayName = 'ActionButton.Save'
+Save.displayName = 'ActionButtons.Save'
 
 export interface ActionButtonSaveProps {
 	itemId: string
