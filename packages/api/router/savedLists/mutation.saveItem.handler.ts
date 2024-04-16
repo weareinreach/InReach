@@ -1,4 +1,4 @@
-import { getAuditedClient } from '@weareinreach/db'
+import { getAuditedClient, isIdFor } from '@weareinreach/db'
 import { checkListOwnership } from '~api/lib/checkListOwnership'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -6,7 +6,7 @@ import { type TSaveItemSchema } from './mutation.saveItem.schema'
 
 export const saveItem = async ({ ctx, input }: TRPCHandlerParams<TSaveItemSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
-	const { id, organizationId, serviceId } = input
+	const { id, itemId } = input
 
 	checkListOwnership({ listId: id, userId: ctx.session.user.id })
 
@@ -16,24 +16,21 @@ export const saveItem = async ({ ctx, input }: TRPCHandlerParams<TSaveItemSchema
 			ownedById: ctx.session.user.id,
 		},
 		data: {
-			...(organizationId
+			...(isIdFor('organization', itemId)
 				? {
 						organizations: {
 							create: {
-								organizationId,
+								organizationId: itemId,
 							},
 						},
 					}
-				: {}),
-			...(serviceId
-				? {
+				: {
 						services: {
 							create: {
-								serviceId,
+								serviceId: itemId,
 							},
 						},
-					}
-				: {}),
+					}),
 		},
 		select: {
 			services: { select: { serviceId: true } },
