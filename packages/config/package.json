@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@types/node": "20.12.7",
-		"@weareinreach/eslint-config": "0.100.0",
+		"@weareinreach/eslint-config": "workspace:*",
 		"alex": "11.0.1",
 		"next-i18next": "15.3.0",
 		"typescript": "5.4.5"
