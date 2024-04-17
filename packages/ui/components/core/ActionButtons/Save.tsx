@@ -1,11 +1,11 @@
-import { Box, type ButtonProps, Center, Group, Menu, Text, useMantineTheme } from '@mantine/core'
+import { Box, Center, Group, Menu, Text, useMantineTheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { type ComponentPropsWithRef, forwardRef, useCallback, useMemo } from 'react'
 
 import { type ApiInput } from '@weareinreach/api'
-import { Button } from '~ui/components/core/Button'
+import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -145,7 +145,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 		const handleRefetchAvailableLists = useCallback(() => refetchAvailableLists(), [refetchAvailableLists])
 
 		const DisplayedInfo = (
-			<Group spacing={0}>
+			<Group spacing={0} noWrap>
 				<Icon icon={buttonIcon} color={iconColor} {...(menuItem ? {} : { height: 24, width: 24 })} />
 				{!omitLabel && (
 					<Text
@@ -160,7 +160,11 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 		)
 
 		if (!isLoggedIn) {
-			return <QuickPromotionModal {...modalProps}>{DisplayedInfo}</QuickPromotionModal>
+			return (
+				<QuickPromotionModal {...modalProps} {...rest}>
+					{DisplayedInfo}
+				</QuickPromotionModal>
+			)
 		}
 
 		if (isSaved && savedToSingleList) {
@@ -217,7 +221,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 )
 Save.displayName = 'ActionButtons.Save'
 
-export interface ActionButtonSaveProps {
+export interface ActionButtonSaveProps extends ButtonProps {
 	itemId: string
 	itemName: string
 	menuItem?: boolean

@@ -27,6 +27,7 @@ import { CreateNewList } from '~ui/modals/CreateNewList'
 import { QuickPromotionModal } from '~ui/modals/QuickPromotion'
 import { ReviewModal } from '~ui/modals/Review'
 
+import { OverflowMenu } from './Menu'
 import { Print } from './Print'
 import { Review } from './Review'
 import { Save } from './Save'
@@ -516,6 +517,7 @@ ActionButtons.Save = Save
 ActionButtons.Share = Share
 ActionButtons.Print = Print
 ActionButtons.Review = Review
+ActionButtons.Menu = OverflowMenu
 
 interface ActionButtonProps {
 	/**

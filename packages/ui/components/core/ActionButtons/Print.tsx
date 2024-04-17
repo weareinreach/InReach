@@ -1,4 +1,4 @@
-import { Box, Text, useMantineTheme } from '@mantine/core'
+import { Box, Group, Text, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 
@@ -14,14 +14,16 @@ export const Print = forwardRef<HTMLButtonElement, PrintProps>(({ omitLabel, ...
 
 	return (
 		<Box component={Button} ref={ref} onClick={window.print} className={classes.button} {...props}>
-			<Icon
-				icon='carbon:printer'
-				color={theme.other.colors.secondary.black}
-				className={classes.icon}
-				height={24}
-				width={24}
-			/>
-			{!omitLabel && <Text className={classes.text}>{t('words.print')}</Text>}
+			<Group spacing={0} noWrap>
+				<Icon
+					icon='carbon:printer'
+					color={theme.other.colors.secondary.black}
+					className={classes.icon}
+					height={24}
+					width={24}
+				/>
+				{!omitLabel && <Text className={classes.text}>{t('words.print')}</Text>}
+			</Group>
 		</Box>
 	)
 })

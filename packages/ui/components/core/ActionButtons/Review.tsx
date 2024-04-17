@@ -1,4 +1,4 @@
-import { Box, Text, useMantineTheme } from '@mantine/core'
+import { Box, Group, Text, useMantineTheme } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useMemo } from 'react'
@@ -25,14 +25,16 @@ export const Review = forwardRef<HTMLButtonElement, ReviewProps>(({ omitLabel, .
 
 	return (
 		<Box component={BaseComponent} ref={ref} className={classes.button} {...props}>
-			<Icon
-				icon='carbon:star'
-				color={theme.other.colors.secondary.black}
-				className={classes.icon}
-				height={24}
-				width={24}
-			/>
-			{!omitLabel && <Text className={classes.text}>{t('words.review')}</Text>}
+			<Group spacing={0} noWrap>
+				<Icon
+					icon='carbon:star'
+					color={theme.other.colors.secondary.black}
+					className={classes.icon}
+					height={24}
+					width={24}
+				/>
+				{!omitLabel && <Text className={classes.text}>{t('words.review')}</Text>}
+			</Group>
 		</Box>
 	)
 })

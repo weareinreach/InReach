@@ -1,4 +1,4 @@
-import { Box, Text, useMantineTheme } from '@mantine/core'
+import { Box, Group, Text, useMantineTheme } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -36,14 +36,16 @@ export const Share = forwardRef<HTMLButtonElement, ShareProps>(({ omitLabel, ...
 
 	return (
 		<Box component={Button} ref={ref} onClick={handleCopy} className={classes.button} {...props}>
-			<Icon
-				icon='carbon:share'
-				color={theme.other.colors.secondary.black}
-				className={classes.icon}
-				height={24}
-				width={24}
-			/>
-			{!omitLabel && <Text className={classes.text}>{t('words.share')}</Text>}
+			<Group spacing={0} noWrap>
+				<Icon
+					icon='carbon:share'
+					color={theme.other.colors.secondary.black}
+					className={classes.icon}
+					height={24}
+					width={24}
+				/>
+				{!omitLabel && <Text className={classes.text}>{t('words.share')}</Text>}
+			</Group>
 		</Box>
 	)
 })
