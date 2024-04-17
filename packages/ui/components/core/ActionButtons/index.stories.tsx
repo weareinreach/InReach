@@ -82,20 +82,16 @@ export const Share = {
 	render: (args) => <ActionButtonsComponent.Share {...args} />,
 } satisfies StoryObj<typeof ActionButtonsComponent.Share>
 export const Print = {
-	args: {
-		iconKey: 'print',
-	},
-} satisfies StoryDef
+	render: (args) => <ActionButtonsComponent.Print {...args} />,
+} satisfies StoryObj<typeof ActionButtonsComponent.Print>
 export const Delete = {
 	args: {
 		iconKey: 'delete',
 	},
 } satisfies StoryDef
 export const Review = {
-	args: {
-		iconKey: 'review',
-	},
-} satisfies StoryDef
+	render: (args) => <ActionButtonsComponent.Review {...args} />,
+} satisfies StoryObj<typeof ActionButtonsComponent.Review>
 export const More = {
 	parameters: {
 		nextAuthMock: {

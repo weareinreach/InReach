@@ -27,6 +27,8 @@ import { CreateNewList } from '~ui/modals/CreateNewList'
 import { QuickPromotionModal } from '~ui/modals/QuickPromotion'
 import { ReviewModal } from '~ui/modals/Review'
 
+import { Print } from './Print'
+import { Review } from './Review'
 import { Save } from './Save'
 import { Share } from './Share'
 
@@ -512,6 +514,8 @@ const Loading = () => <Skeleton h={22} w={70} radius={8} />
 ActionButtons.Loading = Loading
 ActionButtons.Save = Save
 ActionButtons.Share = Share
+ActionButtons.Print = Print
+ActionButtons.Review = Review
 
 interface ActionButtonProps {
 	/**

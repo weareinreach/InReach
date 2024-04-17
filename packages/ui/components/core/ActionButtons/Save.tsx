@@ -193,7 +193,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 				keepMounted
 			>
 				<Menu.Target>
-					<Box ref={ref} component={Button} {...rest}>
+					<Box ref={ref} component={Button} className={baseClassname} radius='md' {...rest}>
 						{DisplayedInfo}
 					</Box>
 				</Menu.Target>
