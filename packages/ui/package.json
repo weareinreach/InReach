@@ -126,7 +126,7 @@
 		"@weareinreach/auth": "workspace:*",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/db": "workspace:*",
-		"@weareinreach/eslint-config": "0.100.0",
+		"@weareinreach/eslint-config": "workspace:*",
 		"@welldone-software/why-did-you-render": "8.0.1",
 		"chromatic": "11.3.0",
 		"css-loader": "6.11.0",

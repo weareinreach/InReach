@@ -77,7 +77,7 @@
 		"@types/pg": "8.11.5",
 		"@types/terraformer__wkt": "2.0.3",
 		"@weareinreach/config": "workspace:*",
-		"@weareinreach/eslint-config": "0.100.0",
+		"@weareinreach/eslint-config": "workspace:*",
 		"dotenv": "16.4.5",
 		"dotenv-cli": "7.4.1",
 		"eslint": "8.57.0",
