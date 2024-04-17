@@ -63,7 +63,9 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
 
-	if (!i18nReady) return <SearchResultLoading />
+	if (!i18nReady) {
+		return <SearchResultLoading />
+	}
 
 	const leaderBadgeGroup =
 		orgLeader.length || national.length ? (
@@ -125,6 +127,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 				return `${visibleItems.join(', ')} ${moreText}`
 			}
 		}
+		return null
 	}
 
 	return (
@@ -135,8 +138,8 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 						<Title
 							order={2}
 							className={classes.hoverText}
-							data-hovered={hovered ? hovered : undefined}
 							mb={12}
+							{...(hovered && { 'data-hovered': hovered })}
 						>
 							<Link
 								href={{ pathname: '/org/[slug]', query: { slug } }}
@@ -148,7 +151,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 							</Link>
 							{leaderBadgeGroup}
 						</Title>
-						<ActionButtons iconKey='save' organizationId={result.id} />
+						<ActionButtons.Save itemId={result.id} itemName={result.name} />
 					</Group>
 					<Link
 						href={{ pathname: '/org/[slug]', query: { slug } }}

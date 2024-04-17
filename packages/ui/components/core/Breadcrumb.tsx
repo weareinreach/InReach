@@ -1,7 +1,7 @@
 import { createStyles, Group, rem, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type MouseEventHandler, useMemo } from 'react'
+import { type MouseEventHandler, useCallback, useMemo } from 'react'
 
 import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { useSearchState } from '~ui/hooks/useSearchState'
@@ -43,25 +43,25 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	const { searchStateActions } = useSearchState()
 	const { isMobile } = useScreenSize()
 
-	const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
-		if (typeof onClick === 'function') return onClick(e)
-
-		if (option === 'back') {
-			switch (backTo) {
-				case 'search': {
-					const query = searchStateActions.getRoute()
-					if (query) {
-						router.push({
-							pathname: '/search/[...params]',
-							query,
-						})
+	const clickHandler: MouseEventHandler<HTMLButtonElement> = useCallback(
+		(e) => {
+			if (typeof onClick === 'function') {
+				onClick(e)
+			} else if (option === 'back') {
+				switch (backTo) {
+					case 'search': {
+						const query = searchStateActions.getRoute()
+						if (query) {
+							router.push({
+								pathname: '/search/[...params]',
+								query,
+							})
+						}
+						break
 					}
-					break
-				}
-				case 'dynamicText': {
-					if (router.pathname.startsWith('/org/[slug]/[orgLocationId]')) {
+					case 'dynamicText': {
 						const { orgLocationId, slug } = router.query
-						if (isString(slug, orgLocationId)) {
+						if (router.pathname.startsWith('/org/[slug]/[orgLocationId]') && isString(slug, orgLocationId)) {
 							router.push({
 								pathname: router.pathname.endsWith('/edit') ? '/org/[slug]/edit' : '/org/[slug]',
 								query: { slug },
@@ -70,8 +70,9 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 					}
 				}
 			}
-		}
-	}
+		},
+		[backTo, onClick, option, router, searchStateActions]
+	)
 
 	const icons = {
 		close: 'carbon:close',
@@ -117,7 +118,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 
 	return (
 		<UnstyledButton className={classes.root} onClick={clickHandler}>
-			<Group spacing={8}>
+			<Group spacing={8} noWrap>
 				<Icon
 					icon={iconRender}
 					height={24}
@@ -133,11 +134,16 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 }
 
 export const isValidBreadcrumbProps = (props: PossibleBreadcrumbProps): props is BreadcrumbProps => {
-	if (props.option === 'close') return true
-	else if (props.option === 'back') {
+	if (props.option === 'close') {
+		return true
+	} else if (props.option === 'back') {
 		if (props.backTo === 'dynamicText') {
-			if (typeof props.onClick === 'function' && typeof props.backToText === 'string') return true
-		} else if (props.backTo === 'none' || props.backTo === 'search') return true
+			if (typeof props.onClick === 'function' && typeof props.backToText === 'string') {
+				return true
+			}
+		} else if (props.backTo === 'none' || props.backTo === 'search') {
+			return true
+		}
 	}
 	return false
 }
