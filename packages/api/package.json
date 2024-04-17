@@ -59,7 +59,7 @@
 		"@types/node": "20.12.7",
 		"@types/terraformer__wkt": "2.0.3",
 		"@weareinreach/config": "workspace:*",
-		"@weareinreach/eslint-config": "0.100.0",
+		"@weareinreach/eslint-config": "workspace:*",
 		"dotenv-cli": "7.4.1",
 		"eslint": "8.57.0",
 		"i18next": "23.11.2",
