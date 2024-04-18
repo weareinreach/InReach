@@ -1,7 +1,6 @@
 import { type TFunction } from 'next-i18next'
 import { type ReactNode } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { attributeSupplementSchema } from '@weareinreach/db/generated/attributeSupplementSchema'
 import { accessInstructions } from '@weareinreach/db/zod_util/attributeSupplement'
 import { AlertMessage } from '~ui/components/core/AlertMessage'
@@ -12,18 +11,24 @@ import { getFreeText } from '~ui/hooks/useFreeText'
 import { isValidIcon } from '~ui/icon'
 
 import { ModalText } from './ModalText'
-
-type AccessDetailsAPI =
-	| ApiOutput['service']['forServiceModal']['accessDetails']
-	| ApiOutput['service']['forServiceEditDrawer']['accessDetails']
-
-type LocationsAPI =
-	| ApiOutput['service']['forServiceModal']['locations']
-	| ApiOutput['service']['forServiceEditDrawer']['locations']
-
-type AttributesAPI =
-	| ApiOutput['service']['forServiceModal']['attributes']
-	| ApiOutput['service']['forServiceEditDrawer']['attributes']
+import {
+	type CostAttribOutput,
+	type EligAgeAttribOutput,
+	type EligOtherAttribOutput,
+	processCostAttrib,
+	processEligAgeAttrib,
+	processEligOtherAttrib,
+	processEmailAccess,
+	processLinkAccess,
+	processPhoneAccess,
+	processPublicTransit,
+	processSrvFocusAttrib,
+	processTargetPopAttrib,
+	type PublicTransitReturn,
+	type SrvFocusAttribOutput,
+	type TargetPopAttribOutput,
+} from './processors'
+import { type AccessDetailsAPI, type AttributesAPI, type LocationsAPI } from './types'
 
 export const processAccessInstructions = ({
 	accessDetails,
@@ -41,65 +46,41 @@ export const processAccessInstructions = ({
 			websites: [],
 			socialMedia: [],
 		},
-		publicTransit: null,
+		publicTransit: [],
 	}
 
 	for (const item of accessDetails) {
-		const { data, text, supplementId: id } = item
-		const parsed = accessInstructions.getAll().safeParse(data)
-		if (parsed.success) {
-			const { access_type, access_value } = parsed.data
-			switch (access_type) {
-				case 'publicTransit': {
-					if (!text) break
-					const { key, options } = getFreeText(text)
-					output.publicTransit = <ModalText key={id}>{t(key, options)}</ModalText>
-					break
+		const parsed = accessInstructions.getAll().safeParse(item.data)
+		if (!parsed.success) {
+			break
+		}
+		const { access_type } = parsed.data
+		switch (access_type) {
+			case 'publicTransit': {
+				output.publicTransit.push(processPublicTransit(item, t))
+				break
+			}
+			case 'email': {
+				const processedEmail = processEmailAccess(item)
+				if (processedEmail) {
+					output.getHelp.emails.push(processedEmail)
 				}
-				case 'email': {
-					if (access_value)
-						output.getHelp.emails.push({
-							id,
-							title: null,
-							description: null,
-							email: access_value,
-							// legacyDesc: parsed.data.instructions,
-							// firstName: null,
-							// lastName: null,
-							primary: false,
-							locationOnly: false,
-							serviceOnly: false,
-						})
-					break
+				break
+			}
+			case 'phone': {
+				const processedPhone = processPhoneAccess(item, locations)
+				if (processedPhone) {
+					output.getHelp.phones.push(processedPhone)
 				}
-				case 'phone': {
-					const country = locations.find(({ location }) => Boolean(location.country))?.location?.country?.cca2
-					if (!country) break
-					if (access_value)
-						output.getHelp.phones.push({
-							id,
-							number: access_value,
-							phoneType: null,
-							country,
-							primary: false,
-							locationOnly: false,
-							ext: null,
-							description: null,
-						})
-					break
+				break
+			}
+			case 'link':
+			case 'file': {
+				const processedLink = processLinkAccess(item)
+				if (processedLink) {
+					output.getHelp.websites.push(processedLink)
 				}
-				case 'link':
-				case 'file': {
-					if (access_value)
-						output.getHelp.websites.push({
-							id,
-							description: null,
-							isPrimary: false,
-							// orgLocationId: null,
-							orgLocationOnly: false,
-							url: access_value,
-						})
-				}
+				break
 			}
 		}
 	}
@@ -111,10 +92,12 @@ export const processAttributes = ({
 	attributes,
 	locale = 'en',
 	t,
+	isEditMode = false,
 }: {
 	attributes: AttributesAPI
 	locale: string
 	t: TFunction
+	isEditMode?: boolean
 }): AttributesOutput => {
 	const output: AttributesOutput = {
 		clientsServed: {
@@ -137,92 +120,79 @@ export const processAttributes = ({
 		switch (namespace) {
 			/** Clients served */
 			case 'srvfocus': {
-				if (typeof icon === 'string' && attribute._count.parents === 0) {
-					output.clientsServed.srvfocus.push(
-						<Badge.Community key={id} icon={icon}>
-							{t(tsKey, { ns: tsNs })}
-						</Badge.Community>
-					)
+				const srvFocusItem = processSrvFocusAttrib(attribute, t, isEditMode)
+				console.log(srvFocusItem, attribute)
+				if (srvFocusItem) {
+					output.clientsServed.srvfocus.push(srvFocusItem)
 				}
 				break
 			}
 			/** Target Population & Eligibility Requirements */
-			case 'tpop':
+			case 'tpop': {
+				const tpopItem = processTargetPopAttrib(attribute, t)
+				if (tpopItem) {
+					output.clientsServed.targetPop.push(tpopItem)
+				}
+				break
+			}
+
 			case 'eligibility': {
 				const type = tsKey.split('.').pop() as string
 				switch (type) {
 					case 'elig-age': {
-						const { data } = attribute
-						const parsed = attributeSupplementSchema.numMinMaxOrRange.safeParse(data)
-						if (!parsed.success) break
-						const { min, max } = parsed.data
-						const context = min && max ? 'range' : min ? 'min' : 'max'
-						output.eligibility.age = (
-							<ModalText key={id}>{t('service.elig-age', { ns: 'common', context, min, max })}</ModalText>
-						)
+						const eligAgeItem = processEligAgeAttrib(attribute, t)
+						if (!eligAgeItem) {
+							break
+						}
+						if (!output.eligibility.age) {
+							output.eligibility.age = eligAgeItem
+						}
+						// TODO: Do something to ensure that only one of these attributes is set
+
 						break
 					}
 					case 'other':
 					case 'other-describe': {
-						const { text } = attribute
-						if (!text) break
-						const { key, options } = getFreeText(text)
-						output.clientsServed.targetPop.push(<ModalText key={id}>{t(key, options)}</ModalText>)
-
+						const eligOtherItem = processEligOtherAttrib(attribute, t)
+						if (eligOtherItem) {
+							output.eligibility.requirements.push(eligOtherItem)
+						}
 						break
+					}
+					default: {
+						output.eligibility.requirements.push({
+							id: attribute.supplementId,
+							active: attribute.active,
+							childProps: { children: t(attribute.tsKey, { ns: attribute.tsNs }) },
+							editable: false,
+						})
 					}
 				}
 
 				break
 			}
 			case 'cost': {
-				if (!isValidIcon(icon)) break
-				const costDetails: {
-					price?: number | string
-					description: ReactNode[]
-				} = { description: [] }
-
-				const { text, data } = attribute
-				if (text) {
-					const { key, options } = getFreeText(text)
-					costDetails.description.push(<ModalText key={id}>{t(key, options)}</ModalText>)
+				const costItem = processCostAttrib(attribute, t, locale)
+				console.log(costItem, attribute)
+				if (costItem) {
+					output.cost.push(costItem)
 				}
-				const parsed = attributeSupplementSchema.currency.safeParse(data)
-				if (parsed.success) {
-					const { cost, currency } = parsed.data
-					costDetails.price = new Intl.NumberFormat(locale, {
-						style: 'currency',
-						currency: currency ?? undefined,
-					}).format(cost)
-				}
-
-				const { price, description } = costDetails
-				output.cost.push(
-					<Badge.Attribute key={id} icon={icon} style={{ justifyContent: 'start' }}>
-						{t(tsKey, { price, ns: tsNs })}
-					</Badge.Attribute>
-				)
-
-				if (description.length > 0)
-					output.cost.push(
-						<Section.Sub key={id} title={t('service.cost-details')}>
-							{description}
-						</Section.Sub>
-					)
 				break
 			}
 
 			case 'lang': {
 				const { language } = attribute
-				if (!language) break
+				if (!language) {
+					break
+				}
 				const { languageName } = language
 				output.lang.push(languageName)
 				break
 			}
 			case 'additional': {
-				if (tsKey.includes('at-capacity'))
+				if (tsKey.includes('at-capacity')) {
 					output.atCapacity = <AlertMessage textKey={'service.at-capacity'} iconKey='information' />
-				else {
+				} else {
 					isValidIcon(icon)
 						? output.miscWithIcons.push(
 								<Badge.Attribute key={id} icon={icon}>
@@ -242,22 +212,22 @@ export const processAttributes = ({
 }
 interface AccessInstructionsOutput {
 	getHelp: PassedDataObject
-	publicTransit: ReactNode
+	publicTransit: PublicTransitReturn[]
 }
 interface AttributesOutput {
 	directEmail?: string
 	directPhone?: string
 	directWebsite?: string
-	cost: ReactNode[]
+	cost: CostAttribOutput[]
 	lang: string[]
 	clientsServed: {
-		srvfocus: ReactNode[]
-		targetPop: ReactNode[]
+		srvfocus: SrvFocusAttribOutput[]
+		targetPop: TargetPopAttribOutput[]
 	}
 	atCapacity?: ReactNode
 	eligibility: {
-		age?: ReactNode
-		requirements: string[]
+		age?: EligAgeAttribOutput
+		requirements: EligOtherAttribOutput[]
 		freeText: ReactNode[]
 	}
 	misc: string[]

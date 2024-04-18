@@ -12,11 +12,12 @@ import {
 	Text,
 	Title,
 	Tooltip,
+	useMantineTheme,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { compareArrayVals } from 'crud-object-diff'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useCallback, useEffect } from 'react'
+import { forwardRef, type ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
 import invariant from 'tiny-invariant'
@@ -35,6 +36,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { CoverageArea } from '~ui/modals/CoverageArea'
 import { AttributeModal } from '~ui/modals/dataPortal/Attributes'
+import { ModalText } from '~ui/modals/Service/ModalText'
 import { processAccessInstructions, processAttributes } from '~ui/modals/Service/processor'
 
 import { FormSchema, type TFormSchema } from './schemas'
@@ -75,6 +77,92 @@ const ServiceAreaItem = ({
 			{children}
 		</Group>
 	)
+}
+
+const AttributeEditWrapper = ({ active, id, children, editable }: AttributeEditWrapperProps) => {
+	const theme = useMantineTheme()
+	const [confirmModalOpen, confirmModalHandler] = useDisclosure(false)
+	const apiUtils = api.useUtils()
+	const toggleOrDeleteAttribute = api.component.AttributeEditWrapper.useMutation({
+		onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(),
+	})
+	const handleToggle = useCallback(
+		() => toggleOrDeleteAttribute.mutate({ id, action: 'toggleActive' }),
+		[id, toggleOrDeleteAttribute]
+	)
+	const handleDelete = useCallback(
+		() => toggleOrDeleteAttribute.mutate({ id, action: 'delete' }),
+		[id, toggleOrDeleteAttribute]
+	)
+	const handleEdit = useCallback(() => {
+		alert('To be implemented later')
+	}, [])
+	const editIcon = useMemo(() => {
+		if (editable) {
+			return (
+				<Tooltip label='Edit'>
+					<ActionIcon onClick={handleEdit}>
+						<Icon icon='carbon:edit' color={theme.other.colors.secondary.black} />
+					</ActionIcon>
+				</Tooltip>
+			)
+		}
+		return (
+			<Tooltip label='Not Editable'>
+				<ActionIcon disabled>
+					<Icon icon='carbon:edit-off' />
+				</ActionIcon>
+			</Tooltip>
+		)
+	}, [editable, handleEdit, theme.other.colors.secondary.black])
+
+	const activeToggleIcon = useMemo(() => {
+		if (active) {
+			return (
+				<Tooltip label='Deactivate'>
+					<ActionIcon onClick={handleToggle}>
+						<Icon icon='carbon:view' color={theme.other.colors.secondary.black} />
+					</ActionIcon>
+				</Tooltip>
+			)
+		}
+		return (
+			<Tooltip label='Activate'>
+				<ActionIcon onClick={handleToggle}>
+					<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} />
+				</ActionIcon>
+			</Tooltip>
+		)
+	}, [active, handleToggle, theme.other.colors.secondary.black, theme.other.colors.secondary.darkGray])
+
+	return (
+		<Group noWrap spacing={8}>
+			<Group noWrap spacing={0}>
+				{editIcon}
+				{activeToggleIcon}
+				<Modal opened={confirmModalOpen} onClose={confirmModalHandler.close} title='Delete Attribute'>
+					<Text>Are you sure you want to delete this attribute?</Text>
+					<Group noWrap>
+						<Button onClick={confirmModalHandler.close}>Cancel</Button>
+						<Button onClick={handleDelete}>Delete</Button>
+					</Group>
+				</Modal>
+				<Tooltip label='Delete'>
+					<ActionIcon onClick={confirmModalHandler.open}>
+						<Icon icon='carbon:trash-can' color={theme.other.colors.secondary.black} />
+					</ActionIcon>
+				</Tooltip>
+			</Group>
+			{typeof children === 'string' ? <ModalText>{children}</ModalText> : children}
+		</Group>
+	)
+}
+
+interface AttributeEditWrapperProps {
+	id: string
+	children: ReactNode
+	active: boolean
+	editable?: boolean
 }
 
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
@@ -163,7 +251,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			}
 		}, [form, drawerHandler, modalHandler])
 
-		const serviceAreas = () => {
+		const serviceAreas = useMemo(() => {
 			const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 			const serviceAreaObj: Record<string, ReactNode[]> = {}
 
@@ -243,7 +331,16 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 					</Stack>
 				)
 			})
-		}
+		}, [
+			classes.badgeGroup,
+			countryMap?.byId,
+			data?.serviceAreas,
+			geoMap,
+			i18n.language,
+			serviceId,
+			t,
+			variants.Text.utility4,
+		])
 
 		// #endregion
 		const coverageModalSuccessHandler = useCallback(() => {
@@ -265,6 +362,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const attributes = processAttributes({
 			attributes: data.attributes,
 			locale: i18n.resolvedLanguage ?? 'en',
+			isEditMode: true,
 			t,
 		})
 		const coverageModalServiceArea = data.serviceAreas?.id ?? { orgServiceId: serviceId }
@@ -335,11 +433,10 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 										</Badge.Group>
 									</ServiceSelect>
 								</Stack>
-								{/* <Card> */}
 
 								<Text variant={variants.Text.utility1}>Coverage Area</Text>
 								<Stack className={classes.dottedCard}>
-									{serviceAreas()}
+									{serviceAreas}
 									<CoverageArea
 										serviceArea={coverageModalServiceArea}
 										onSuccessAction={coverageModalSuccessHandler}
@@ -354,28 +451,61 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									{hasContactInfo(getHelp) && (
 										<ContactInfo passedData={getHelp} direct order={['phone', 'email', 'website']} />
 									)}
-									{publicTransit}
+									{publicTransit?.map(
+										(publicTransitProps) =>
+											publicTransitProps && <AttributeEditWrapper {...publicTransitProps} />
+									)}
 									{Boolean(Object.values(data.hours).length) && (
 										<Hours parentId={serviceId} label='service' data={data.hours} />
 									)}
 								</Section.Divider>
 								<Section.Divider title={t('service.clients-served')}>
 									<Section.Sub title={t('service.community-focus')}>
-										{attributes.clientsServed.srvfocus}
+										{attributes.clientsServed.srvfocus.map(({ childProps, ...wrapperProps }) => (
+											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+												<Badge.Community {...childProps} />
+											</AttributeEditWrapper>
+										))}
 									</Section.Sub>
 									<Section.Sub title={t('service.target-population')}>
-										{attributes.clientsServed.targetPop}
+										{attributes.clientsServed.targetPop.map(({ childProps, ...wrapperProps }) => (
+											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+												<ModalText {...childProps} />
+											</AttributeEditWrapper>
+										))}
 									</Section.Sub>
 								</Section.Divider>
-								<Section.Divider title={t('service.cost')}>{attributes.cost}</Section.Divider>
+								<Section.Divider title={t('service.cost')}>
+									{attributes.cost.map(({ badgeProps, detailProps, ...wrapperProps }) => (
+										<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+											{badgeProps && <Badge.Attribute {...badgeProps} />}
+											{detailProps && (
+												<Section.Sub title={t('service.cost-details')}>
+													<ModalText {...detailProps} />
+												</Section.Sub>
+											)}
+										</AttributeEditWrapper>
+									))}
+								</Section.Divider>
 								<Section.Divider title={t('service.eligibility')}>
-									<Section.Sub title={t('service.ages')}>{attributes.eligibility.age}</Section.Sub>
+									<Section.Sub title={t('service.ages')}>
+										{attributes.eligibility.age && (
+											<AttributeEditWrapper
+												key={attributes.eligibility.age.id}
+												id={attributes.eligibility.age.id}
+												active={attributes.eligibility.age.active}
+												editable
+											>
+												<ModalText>{attributes.eligibility.age.children}</ModalText>
+											</AttributeEditWrapper>
+										)}
+									</Section.Sub>
 									<Section.Sub title={t('service.requirements')}>
-										<List>
-											{attributes.eligibility.requirements.map((text, i) => (
-												<List.Item key={`${i}-${text}`}>{text}</List.Item>
-											))}
-										</List>
+										{attributes.eligibility.requirements.map(({ childProps, ...wrapperProps }) => (
+											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+												{childProps.children}
+											</AttributeEditWrapper>
+										))}
 									</Section.Sub>
 									<Section.Sub title={t('service.additional-info')}>
 										{attributes.eligibility.freeText}
