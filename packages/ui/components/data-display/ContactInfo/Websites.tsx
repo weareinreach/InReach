@@ -1,6 +1,7 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { type ReactElement, useCallback } from 'react'
+import invariant from 'tiny-invariant'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
@@ -13,10 +14,18 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { useCommonStyles } from './common.styles'
 import { type WebsitesProps } from './types'
 
+const anyTrue = (...args: boolean[]) => args.some((x) => x)
+
 export const Websites = ({ edit, ...props }: WebsitesProps) =>
 	edit ? <WebsitesEdit {...props} /> : <WebsitesDisplay {...props} />
 
-const WebsitesDisplay = ({ parentId = '', passedData, direct, locationOnly, websiteDesc }: WebsitesProps) => {
+const WebsitesDisplay = ({
+	parentId = '',
+	passedData,
+	direct = false,
+	locationOnly = false,
+	websiteDesc,
+}: WebsitesProps) => {
 	const output: ReactElement[] = []
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
@@ -26,46 +35,35 @@ const WebsitesDisplay = ({ parentId = '', passedData, direct, locationOnly, webs
 		{ parentId, locationOnly },
 		{ enabled: !passedData }
 	)
-
+	let showDirectHeading = false
 	const domainExtract = /https?:\/\/([^:/\n?]+)/
 
 	const componentData = passedData ?? data
 
-	if (!componentData?.length) {
-		return null
-	}
-
-	for (const website of componentData) {
+	for (const website of componentData ?? []) {
 		const { id, url, orgLocationOnly, description, isPrimary } = website
 		const urlMatch = url.match(domainExtract)
 		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
-		if (!isExternal(url)) {
+
+		if (anyTrue(!isExternal(url), !urlBase, locationOnly && !orgLocationOnly)) {
 			continue
 		}
-		if (!urlBase) {
-			continue
-		}
-		if (locationOnly && !orgLocationOnly) {
-			continue
-		}
+		invariant(isExternal(url))
+		invariant(urlBase)
 
 		if (direct) {
-			return (
-				<Stack spacing={12}>
-					<Title order={3}>{t('direct.website')}</Title>
-					<Link external href={url} variant={variants.Link.inlineInverted}>
-						{urlBase}
-					</Link>
-				</Stack>
-			)
+			showDirectHeading = true
 		}
 
 		const desc =
 			websiteDesc && description
 				? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
 				: urlBase
+
+		const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
+
 		const item = (
-			<Link external key={id} href={url} variant={variants.Link.inline}>
+			<Link external key={id} href={url} variant={linkVariant}>
 				{desc}
 			</Link>
 		)
@@ -76,9 +74,11 @@ const WebsitesDisplay = ({ parentId = '', passedData, direct, locationOnly, webs
 		return null
 	}
 
+	const headingContent = showDirectHeading ? t('direct.website') : t('website', { count: output.length })
+
 	return (
 		<Stack spacing={12}>
-			<Title order={3}>{t('website', { count: output.length })}</Title>
+			<Title order={3}>{headingContent}</Title>
 			{output}
 		</Stack>
 	)
