@@ -1,7 +1,7 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
-import { type ReactElement, useMemo } from 'react'
+import { type ReactElement, useCallback, useMemo } from 'react'
 import invariant from 'tiny-invariant'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
@@ -124,7 +124,40 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	const linkToLocation = api.orgEmail.locationLink.useMutation({
 		onSuccess: () => apiUtils.orgEmail.invalidate(),
 	})
-
+	const getTextVariant = useCallback(
+		(kind: 'email' | 'desc', published: boolean, deleted: boolean) => {
+			const isEmail = kind === 'email'
+			if (deleted) {
+				return isEmail ? variants.Text.utility3darkGrayStrikethru : variants.Text.utility4darkGrayStrikethru
+			}
+			if (!published) {
+				return isEmail ? variants.Text.utility3darkGray : variants.Text.utility4darkGray
+			}
+			return isEmail ? variants.Text.utility3 : variants.Text.utility4
+		},
+		[
+			variants.Text.utility3,
+			variants.Text.utility3darkGray,
+			variants.Text.utility3darkGrayStrikethru,
+			variants.Text.utility4,
+			variants.Text.utility4darkGray,
+			variants.Text.utility4darkGrayStrikethru,
+		]
+	)
+	const handleLinkToLocation = useCallback(
+		({
+			orgLocationId,
+			orgEmailId,
+			action,
+		}: {
+			orgLocationId: string
+			orgEmailId: string
+			action: 'link' | 'unlink'
+		}) =>
+			() =>
+				linkToLocation.mutate({ orgLocationId, orgEmailId, action }),
+		[linkToLocation]
+	)
 	const output = data?.map((email) => {
 		const { primary: _primary, title, description, email: address, published, deleted, id } = email
 
@@ -194,24 +227,13 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 			</Menu.Target>
 			<Menu.Dropdown>
 				{linkableEmails?.map(({ id, deleted, description, email, firstName, lastName, published }) => {
-					const emailTextVariant =
-						!published && deleted
-							? variants.Text.utility3darkGrayStrikethru
-							: deleted
-								? variants.Text.utility3darkGrayStrikethru
-								: variants.Text.utility3
-					const descTextVariant =
-						!published && deleted
-							? variants.Text.utility4darkGrayStrikethru
-							: deleted
-								? variants.Text.utility4darkGrayStrikethru
-								: variants.Text.utility4
+					const emailTextVariant = getTextVariant('email', published, deleted)
+					const descTextVariant = getTextVariant('desc', published, deleted)
+
 					return (
 						<Menu.Item
 							key={id}
-							onClick={() =>
-								linkToLocation.mutate({ orgLocationId: parentId, orgEmailId: id, action: 'link' })
-							}
+							onClick={handleLinkToLocation({ orgLocationId: parentId, orgEmailId: id, action: 'link' })}
 						>
 							<Group noWrap>
 								<Icon icon='carbon:link' />
