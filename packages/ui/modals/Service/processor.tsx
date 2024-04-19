@@ -1,30 +1,26 @@
 import { type TFunction } from 'next-i18next'
-import { type ReactNode } from 'react'
 
-import { attributeSupplementSchema } from '@weareinreach/db/generated/attributeSupplementSchema'
 import { accessInstructions } from '@weareinreach/db/zod_util/attributeSupplement'
-import { AlertMessage } from '~ui/components/core/AlertMessage'
-import { Badge } from '~ui/components/core/Badge'
-import { Section } from '~ui/components/core/Section'
 import { type PassedDataObject } from '~ui/components/data-display/ContactInfo/types'
-import { getFreeText } from '~ui/hooks/useFreeText'
-import { isValidIcon } from '~ui/icon'
 
-import { ModalText } from './ModalText'
 import {
+	type AdditionalAttribOutput,
 	type CostAttribOutput,
 	type EligAgeAttribOutput,
 	type EligOtherAttribOutput,
+	type LangAttribOutput,
+	processAdditionalAttrib,
 	processCostAttrib,
 	processEligAgeAttrib,
 	processEligOtherAttrib,
 	processEmailAccess,
+	processLangAttrib,
 	processLinkAccess,
 	processPhoneAccess,
 	processPublicTransit,
 	processSrvFocusAttrib,
 	processTargetPopAttrib,
-	type PublicTransitReturn,
+	type PublicTransitOutput,
 	type SrvFocusAttribOutput,
 	type TargetPopAttribOutput,
 } from './processors'
@@ -34,10 +30,12 @@ export const processAccessInstructions = ({
 	accessDetails,
 	locations,
 	t,
+	locale = 'en',
 }: {
 	accessDetails: AccessDetailsAPI
 	locations: LocationsAPI
 	t: TFunction
+	locale: string
 }): AccessInstructionsOutput => {
 	const output: AccessInstructionsOutput = {
 		getHelp: {
@@ -57,7 +55,10 @@ export const processAccessInstructions = ({
 		const { access_type } = parsed.data
 		switch (access_type) {
 			case 'publicTransit': {
-				output.publicTransit.push(processPublicTransit(item, t))
+				const publicTransitItem = processPublicTransit(item, t, locale)
+				if (publicTransitItem) {
+					output.publicTransit.push(publicTransitItem)
+				}
 				break
 			}
 			case 'email': {
@@ -105,23 +106,21 @@ export const processAttributes = ({
 			targetPop: [],
 		},
 		cost: [],
+		atCapacity: false,
 		eligibility: {
 			requirements: [],
-			freeText: [],
 		},
 		lang: [],
 		misc: [],
 		miscWithIcons: [],
 	}
 	for (const attribute of attributes) {
-		const { tsKey, icon, tsNs, supplementId: id } = attribute
-		const namespace = tsKey.split('.').shift() as string
+		const namespace = attribute.tsKey.split('.').shift() as string
 
 		switch (namespace) {
 			/** Clients served */
 			case 'srvfocus': {
-				const srvFocusItem = processSrvFocusAttrib(attribute, t, isEditMode)
-				console.log(srvFocusItem, attribute)
+				const srvFocusItem = processSrvFocusAttrib(attribute, t, locale, isEditMode)
 				if (srvFocusItem) {
 					output.clientsServed.srvfocus.push(srvFocusItem)
 				}
@@ -129,7 +128,7 @@ export const processAttributes = ({
 			}
 			/** Target Population & Eligibility Requirements */
 			case 'tpop': {
-				const tpopItem = processTargetPopAttrib(attribute, t)
+				const tpopItem = processTargetPopAttrib(attribute, t, locale)
 				if (tpopItem) {
 					output.clientsServed.targetPop.push(tpopItem)
 				}
@@ -137,23 +136,22 @@ export const processAttributes = ({
 			}
 
 			case 'eligibility': {
-				const type = tsKey.split('.').pop() as string
+				const type = attribute.tsKey.split('.').pop() as string
 				switch (type) {
 					case 'elig-age': {
-						const eligAgeItem = processEligAgeAttrib(attribute, t)
-						if (!eligAgeItem) {
-							break
-						}
-						if (!output.eligibility.age) {
+						const eligAgeItem = processEligAgeAttrib(attribute, t, locale)
+
+						if (eligAgeItem && !output.eligibility.age) {
 							output.eligibility.age = eligAgeItem
 						}
+
 						// TODO: Do something to ensure that only one of these attributes is set
 
 						break
 					}
 					case 'other':
 					case 'other-describe': {
-						const eligOtherItem = processEligOtherAttrib(attribute, t)
+						const eligOtherItem = processEligOtherAttrib(attribute, t, locale)
 						if (eligOtherItem) {
 							output.eligibility.requirements.push(eligOtherItem)
 						}
@@ -163,7 +161,7 @@ export const processAttributes = ({
 						output.eligibility.requirements.push({
 							id: attribute.supplementId,
 							active: attribute.active,
-							childProps: { children: t(attribute.tsKey, { ns: attribute.tsNs }) },
+							childProps: { children: t(attribute.tsKey, { ns: attribute.tsNs, lng: locale }) },
 							editable: false,
 						})
 					}
@@ -173,7 +171,6 @@ export const processAttributes = ({
 			}
 			case 'cost': {
 				const costItem = processCostAttrib(attribute, t, locale)
-				console.log(costItem, attribute)
 				if (costItem) {
 					output.cost.push(costItem)
 				}
@@ -181,25 +178,22 @@ export const processAttributes = ({
 			}
 
 			case 'lang': {
-				const { language } = attribute
-				if (!language) {
-					break
+				const langItem = processLangAttrib(attribute)
+				if (langItem) {
+					output.lang.push(langItem)
 				}
-				const { languageName } = language
-				output.lang.push(languageName)
 				break
 			}
 			case 'additional': {
-				if (tsKey.includes('at-capacity')) {
-					output.atCapacity = <AlertMessage textKey={'service.at-capacity'} iconKey='information' />
-				} else {
-					isValidIcon(icon)
-						? output.miscWithIcons.push(
-								<Badge.Attribute key={id} icon={icon}>
-									{t(tsKey, { ns: tsNs })}
-								</Badge.Attribute>
-							)
-						: output.misc.push(t(tsKey, { ns: tsNs }))
+				const additionalItem = processAdditionalAttrib(attribute, t, locale, isEditMode)
+				if (additionalItem?.badgeProps) {
+					output.miscWithIcons.push(additionalItem)
+				}
+				if (additionalItem?.detailProps) {
+					output.misc.push(additionalItem)
+				}
+				if (additionalItem?.atCapacity) {
+					output.atCapacity = additionalItem?.atCapacity
 				}
 				break
 			}
@@ -212,24 +206,23 @@ export const processAttributes = ({
 }
 interface AccessInstructionsOutput {
 	getHelp: PassedDataObject
-	publicTransit: PublicTransitReturn[]
+	publicTransit: PublicTransitOutput[]
 }
 interface AttributesOutput {
 	directEmail?: string
 	directPhone?: string
 	directWebsite?: string
 	cost: CostAttribOutput[]
-	lang: string[]
+	lang: LangAttribOutput[]
 	clientsServed: {
 		srvfocus: SrvFocusAttribOutput[]
 		targetPop: TargetPopAttribOutput[]
 	}
-	atCapacity?: ReactNode
+	atCapacity: boolean
 	eligibility: {
 		age?: EligAgeAttribOutput
 		requirements: EligOtherAttribOutput[]
-		freeText: ReactNode[]
 	}
-	misc: string[]
-	miscWithIcons: ReactNode[]
+	misc: AdditionalAttribOutput[]
+	miscWithIcons: AdditionalAttribOutput[]
 }

@@ -4,12 +4,17 @@ import { getFreeText } from '~ui/hooks/useFreeText'
 
 import { type AttributeRecord } from '../types'
 
-export const processTargetPopAttrib = (record: AttributeRecord, t: TFunction): TargetPopAttribReturn => {
+export const processTargetPopAttrib = (
+	record: AttributeRecord,
+	t: TFunction,
+	locale: string
+): TargetPopAttribReturn => {
+	const lng = locale
 	const { text, supplementId: id, active } = record
 	if (!text) {
 		return null
 	}
-	const { key, options } = getFreeText(text)
+	const { key, options } = getFreeText(text, { lng })
 
 	return {
 		id,

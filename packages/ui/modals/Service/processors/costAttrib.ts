@@ -12,14 +12,13 @@ export const processCostAttrib = (
 	locale: string
 ): CostAttribReturn => {
 	const { text, data, supplementId: id, active, icon, tsKey, tsNs } = record
-	console.log(text, data, icon)
 	if (!isValidIcon(icon)) {
 		return null
 	}
 	let badgeProps = null
 	let detailProps = null
 	if (text) {
-		const { key, options } = getFreeText(text)
+		const { key, options } = getFreeText(text, { lng: locale })
 		detailProps = {
 			children: t(key, options),
 		}
@@ -39,7 +38,7 @@ export const processCostAttrib = (
 	}
 	badgeProps = {
 		icon,
-		children: t(tsKey, { price: getPriceDetails(), ns: tsNs }),
+		children: t(tsKey, { price: getPriceDetails(), ns: tsNs, lng: locale }),
 	}
 
 	return {

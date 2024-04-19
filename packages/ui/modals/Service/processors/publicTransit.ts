@@ -4,12 +4,17 @@ import { getFreeText } from '~ui/hooks/useFreeText'
 
 import { type AccessDetailRecord } from '../types'
 
-export const processPublicTransit = (record: AccessDetailRecord, t: TFunction): PublicTransitReturn => {
+export const processPublicTransit = (
+	record: AccessDetailRecord,
+	t: TFunction,
+	locale: string
+): PublicTransitReturn => {
+	const lng = locale
 	const { text, active, supplementId } = record
 	if (!text) {
 		return null
 	}
-	const { key, options } = getFreeText(text)
+	const { key, options } = getFreeText(text, { lng })
 
 	return {
 		id: supplementId,

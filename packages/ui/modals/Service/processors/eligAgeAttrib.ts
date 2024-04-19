@@ -4,7 +4,12 @@ import { attributeSupplementSchema } from '@weareinreach/db/generated/attributeS
 
 import { type AttributeRecord } from '../types'
 
-export const processEligAgeAttrib = (record: AttributeRecord, t: TFunction): EligAgeAttribReturn => {
+export const processEligAgeAttrib = (
+	record: AttributeRecord,
+	t: TFunction,
+	locale: string
+): EligAgeAttribReturn => {
+	const lng = locale
 	const { data, supplementId: id, active } = record
 	const parsed = attributeSupplementSchema.numMinMaxOrRange.safeParse(data)
 	if (!parsed.success) {
@@ -24,7 +29,7 @@ export const processEligAgeAttrib = (record: AttributeRecord, t: TFunction): Eli
 	return {
 		id,
 		active,
-		children: t('service.elig-age', { ns: 'common', context: getContext(), min, max }),
+		children: t('service.elig-age', { ns: 'common', context: getContext(), min, max, lng }),
 		editable: true,
 	}
 }
