@@ -355,8 +355,8 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			? processAccessInstructions({
 					accessDetails: data?.accessDetails,
 					locations: data?.locations,
-					t,
 					locale: i18n.language,
+					t,
 				})
 			: { getHelp: null, publicTransit: null }
 
