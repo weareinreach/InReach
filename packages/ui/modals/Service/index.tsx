@@ -32,39 +32,25 @@ const ServiceModalTitle = ({ handler, isMobile, serviceId, slug }: ServiceModalT
 	const { orgLocationId } = router.query
 	const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
 	const { data, status } = api.service.getParentName.useQuery(apiQuery)
-
-	if (isMobile || status === 'loading') {
-		return (
-			<ModalTitle breadcrumb={{ option: 'back', backTo: 'none', onClick: handler.close }} icons={icons} />
-		)
-	}
-
-	if (data && status === 'success') {
-		return (
-			<ModalTitle
-				breadcrumb={{
-					option: 'back',
-					backTo: 'dynamicText',
-					backToText: data.name as string,
-					onClick: handler.close,
-				}}
-				icons={icons}
-				serviceId={serviceId}
-			/>
-		)
-	}
-
-	return (
+	const renderModalTitle = (backToText?: string | null) => (
 		<ModalTitle
 			breadcrumb={{
 				option: 'back',
-				backTo: 'dynamicText',
-				backToText: '...',
+				backTo: backToText ? 'dynamicText' : 'none',
 				onClick: handler.close,
+				...(backToText && { backToText }),
 			}}
 			icons={icons}
+			serviceId={serviceId}
 		/>
 	)
+	if (isMobile || status === 'loading') {
+		return renderModalTitle()
+	}
+	if (data && status === 'success') {
+		return renderModalTitle(data.name)
+	}
+	return renderModalTitle()
 }
 interface ServiceModalTitleProps {
 	handler: ReturnType<typeof useDisclosure>[1]
