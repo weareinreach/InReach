@@ -36,6 +36,9 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 				invariant(itemId)
 				return createKey([orgId, itemId, 'description'])
 			}
+			default: {
+				return null
+			}
 		}
 	})()
 	const ns = namespaces.orgData
@@ -67,7 +70,7 @@ export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: Gen
 
 export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
 	args: GenerateFreeTextParams<T>
-): Prisma.FreeTextUpdateOneWithoutOrgEmailNestedInput => {
+) => {
 	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		upsert: {
