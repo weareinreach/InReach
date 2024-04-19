@@ -1,7 +1,8 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
-import { type ReactElement } from 'react'
+import { type ReactElement, useMemo } from 'react'
+import invariant from 'tiny-invariant'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
@@ -15,11 +16,18 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { useCommonStyles } from './common.styles'
 import { type EmailsProps } from './types'
 
+const anyTrue = (...args: boolean[]) => args.some((x) => x)
+
 export const Emails = ({ edit, ...props }: EmailsProps) =>
 	edit ? <EmailsEdit {...props} /> : <EmailsDisplay {...props} />
 
-const EmailsDisplay = ({ parentId = '', passedData, direct, locationOnly, serviceOnly }: EmailsProps) => {
-	const output: ReactElement[] = []
+const EmailsDisplay = ({
+	parentId = '',
+	passedData,
+	direct,
+	locationOnly = false,
+	serviceOnly = false,
+}: EmailsProps) => {
 	const { id: orgId } = useOrgInfo()
 	const { t } = useTranslation(orgId ? ['common', orgId, 'user-title'] : ['common', 'user-title'])
 	const variants = useCustomVariant()
@@ -27,56 +35,72 @@ const EmailsDisplay = ({ parentId = '', passedData, direct, locationOnly, servic
 		{ parentId, locationOnly, serviceOnly },
 		{ enabled: !passedData }
 	)
-	let k = 0
+	const componentData = useMemo(() => passedData ?? data ?? [], [data, passedData])
+	const { output: content, showDirectHeading: shouldShowDirectHeading } = useMemo(() => {
+		const output: ReactElement[] = []
+		let showDirectHeading = false
+		for (const email of componentData) {
+			const {
+				id,
+				primary,
+				title,
+				description,
+				email: address,
+				locationOnly: showLocOnly = false,
+				serviceOnly: showServOnly = false,
+			} = email
+			const href = `mailto:${address}`
+			if (anyTrue(locationOnly && !showLocOnly, serviceOnly && !showServOnly, !isExternal(href))) {
+				continue
+			}
+			invariant(isExternal(href))
+			if (direct) {
+				showDirectHeading = true
+			}
+			const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
 
-	const componentData = passedData ? passedData : data
+			const desc = (() => {
+				if (title) {
+					return t(title.key, { ns: 'user-title' })
+				}
+				if (description?.key) {
+					return t(description.key, { defaultValue: description.defaultText, ns: orgId })
+				}
 
-	if (!componentData?.length) return null
+				return null
+			})()
 
-	for (const email of componentData) {
-		const {
-			primary,
-			title,
-			description,
-			email: address,
-			locationOnly: showLocOnly,
-			serviceOnly: showServOnly,
-		} = email
-		if ((locationOnly && !showLocOnly) || (serviceOnly && !showServOnly)) continue
-
-		const href = `mailto:${address}`
-		if (!isExternal(href)) continue
-		if (direct) {
-			return (
-				<Stack spacing={12}>
-					<Title order={3}>{t('direct.email')}</Title>
-					<Link external href={href} variant={variants.Link.inlineInverted}>
+			const item = (
+				<Stack spacing={4} key={id}>
+					<Link external href={href} variant={linkVariant}>
 						{address}
 					</Link>
+					{desc && <Text variant={variants.Text.utility4darkGray}>{desc}</Text>}
 				</Stack>
 			)
+			primary ? output.unshift(item) : output.push(item)
 		}
-		const desc = title
-			? t(title.key, { ns: 'user-title' })
-			: description?.key
-				? t(description.key, { defaultValue: description.defaultText, ns: orgId })
-				: undefined
-
-		const item = (
-			<Stack spacing={4} key={k}>
-				<Link key={k} external href={href} variant={variants.Link.inlineInverted}>
-					{address}
-				</Link>
-				{desc && <Text variant={variants.Text.utility4darkGray}>{desc}</Text>}
-			</Stack>
-		)
-		primary ? output.unshift(item) : output.push(item)
-		k++
+		return { output, showDirectHeading }
+	}, [
+		componentData,
+		direct,
+		locationOnly,
+		orgId,
+		serviceOnly,
+		t,
+		variants.Link.inline,
+		variants.Link.inlineInverted,
+		variants.Text.utility4darkGray,
+	])
+	if (!content.length) {
+		return null
 	}
+	const headingContent = shouldShowDirectHeading ? t('direct.email') : t('words.email')
+
 	return (
 		<Stack spacing={12}>
-			<Title order={3}>{t('words.email')}</Title>
-			{output}
+			<Title order={3}>{headingContent}</Title>
+			{content}
 		</Stack>
 	)
 }
@@ -84,8 +108,8 @@ const EmailsDisplay = ({ parentId = '', passedData, direct, locationOnly, servic
 const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	const slug = useSlug()
 	const apiUtils = api.useUtils()
-	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(orgId?.id ? ['common', orgId.id, 'user-title'] : ['common', 'user-title'])
+	const { id: orgId } = useOrgInfo()
+	const { t } = useTranslation(orgId ? ['common', orgId, 'user-title'] : ['common', 'user-title'])
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const { classes } = useCommonStyles()
@@ -104,11 +128,16 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	const output = data?.map((email) => {
 		const { primary: _primary, title, description, email: address, published, deleted, id } = email
 
-		const desc = title
-			? t(title.key, { ns: 'user-title' })
-			: description?.key
-				? t(description.key, { defaultValue: description.defaultText, ns: orgId?.id })
-				: undefined
+		const desc = (() => {
+			if (title) {
+				return t(title.key, { ns: 'user-title' })
+			}
+			if (description?.key) {
+				return t(description.key, { defaultValue: description.defaultText, ns: orgId })
+			}
+
+			return null
+		})()
 
 		const renderItem = () => {
 			switch (true) {

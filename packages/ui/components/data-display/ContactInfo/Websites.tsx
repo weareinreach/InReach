@@ -1,6 +1,6 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ReactElement, useCallback } from 'react'
+import { type ReactElement, useCallback, useMemo } from 'react'
 import invariant from 'tiny-invariant'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
@@ -26,7 +26,6 @@ const WebsitesDisplay = ({
 	locationOnly = false,
 	websiteDesc,
 }: WebsitesProps) => {
-	const output: ReactElement[] = []
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
@@ -35,51 +34,67 @@ const WebsitesDisplay = ({
 		{ parentId, locationOnly },
 		{ enabled: !passedData }
 	)
-	let showDirectHeading = false
-	const domainExtract = /https?:\/\/([^:/\n?]+)/
+	const domainExtract = useMemo(() => /https?:\/\/([^:/\n?]+)/, [])
 
-	const componentData = passedData ?? data
+	const componentData = useMemo(() => passedData ?? data ?? [], [data, passedData])
 
-	for (const website of componentData ?? []) {
-		const { id, url, orgLocationOnly, description, isPrimary } = website
-		const urlMatch = url.match(domainExtract)
-		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
+	const { output: content, showDirectHeading: shouldShowDirectHeading } = useMemo(() => {
+		const output: ReactElement[] = []
+		let showDirectHeading = false
 
-		if (anyTrue(!isExternal(url), !urlBase, locationOnly && !orgLocationOnly)) {
-			continue
+		for (const website of componentData) {
+			const { id, url, orgLocationOnly, description, isPrimary } = website
+			const urlMatch = url.match(domainExtract)
+			const urlBase = urlMatch?.length ? urlMatch[1] : undefined
+
+			if (anyTrue(!isExternal(url), !urlBase, locationOnly && !orgLocationOnly)) {
+				continue
+			}
+			invariant(isExternal(url))
+			invariant(urlBase)
+
+			if (direct) {
+				showDirectHeading = true
+			}
+
+			const desc =
+				websiteDesc && description
+					? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
+					: urlBase
+
+			const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
+
+			const item = (
+				<Link external key={id} href={url} variant={linkVariant}>
+					{desc}
+				</Link>
+			)
+			isPrimary ? output.unshift(item) : output.push(item)
 		}
-		invariant(isExternal(url))
-		invariant(urlBase)
-
-		if (direct) {
-			showDirectHeading = true
-		}
-
-		const desc =
-			websiteDesc && description
-				? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
-				: urlBase
-
-		const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
-
-		const item = (
-			<Link external key={id} href={url} variant={linkVariant}>
-				{desc}
-			</Link>
-		)
-		isPrimary ? output.unshift(item) : output.push(item)
-	}
-
-	if (!output.length) {
+		return { output, showDirectHeading }
+	}, [
+		componentData,
+		direct,
+		domainExtract,
+		locationOnly,
+		orgId?.id,
+		t,
+		variants.Link.inline,
+		variants.Link.inlineInverted,
+		websiteDesc,
+	])
+	if (!content.length) {
 		return null
 	}
 
-	const headingContent = showDirectHeading ? t('direct.website') : t('website', { count: output.length })
+	const headingContent = shouldShowDirectHeading
+		? t('direct.website')
+		: t('website', { count: content.length })
 
 	return (
 		<Stack spacing={12}>
 			<Title order={3}>{headingContent}</Title>
-			{output}
+			{content}
 		</Stack>
 	)
 }

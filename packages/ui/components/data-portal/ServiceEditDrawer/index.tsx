@@ -356,6 +356,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 					accessDetails: data?.accessDetails,
 					locations: data?.locations,
 					t,
+					locale: i18n.language,
 				})
 			: { getHelp: null, publicTransit: null }
 
@@ -478,12 +479,10 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 								<Section.Divider title={t('service.cost')}>
 									{attributes.cost.map(({ badgeProps, detailProps, ...wrapperProps }) => (
 										<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-											{badgeProps && <Badge.Attribute {...badgeProps} />}
-											{detailProps && (
-												<Section.Sub title={t('service.cost-details')}>
-													<ModalText {...detailProps} />
-												</Section.Sub>
-											)}
+											<Stack align='start' spacing={0}>
+												{badgeProps && <Badge.Attribute {...badgeProps} />}
+												{detailProps && <ModalText {...detailProps} />}
+											</Stack>
 										</AttributeEditWrapper>
 									))}
 								</Section.Divider>
@@ -507,29 +506,38 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 											</AttributeEditWrapper>
 										))}
 									</Section.Sub>
-									<Section.Sub title={t('service.additional-info')}>
-										{attributes.eligibility.freeText}
-									</Section.Sub>
 								</Section.Divider>
 								<Section.Divider title={t('service.languages')}>
 									<Section.Sub title={t('service.languages')}>
-										<List>
-											{attributes.lang.map((lang, i) => (
-												<List.Item key={`${i}-${lang}`}>{lang}</List.Item>
-											))}
-										</List>
+										{attributes.lang.map(({ childProps, ...wrapperProps }) => (
+											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+												<ModalText {...childProps} />
+											</AttributeEditWrapper>
+										))}
 									</Section.Sub>
 								</Section.Divider>
 								<Section.Divider title={t('service.extra-info')}>
 									<Section.Sub key='miscbadges'>
-										<Badge.Group withSeparator={false}>{attributes.miscWithIcons}</Badge.Group>
+										<Badge.Group withSeparator={false}>
+											{attributes.miscWithIcons.map(
+												({ badgeProps, ...wrapperProps }) =>
+													badgeProps && (
+														<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+															<Badge.Attribute {...badgeProps} />
+														</AttributeEditWrapper>
+													)
+											)}
+										</Badge.Group>
 									</Section.Sub>
 									<Section.Sub key='misc' title={t('service.additional-info')}>
-										<List>
-											{attributes.misc.map((text, i) => (
-												<List.Item key={`${i}-${text}`}>{text}</List.Item>
-											))}
-										</List>
+										{attributes.misc.map(
+											({ detailProps, ...wrapperProps }) =>
+												detailProps && (
+													<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+														{detailProps.children}
+													</AttributeEditWrapper>
+												)
+										)}
 									</Section.Sub>
 								</Section.Divider>
 							</Stack>
