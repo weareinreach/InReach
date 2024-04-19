@@ -50,7 +50,7 @@ export const processAccessInstructions = ({
 	for (const item of accessDetails) {
 		const parsed = accessInstructions.getAll().safeParse(item.data)
 		if (!parsed.success) {
-			break
+			continue
 		}
 		const { access_type } = parsed.data
 		switch (access_type) {
