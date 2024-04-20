@@ -61,4 +61,10 @@ export const orgWebsiteRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	upsert: permissionedProcedure('updateOrgWebsite')
+		.input(schema.ZUpsertSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('upsert'), () => import('./mutation.upsert.handler'))
+			return handler(opts)
+		}),
 })

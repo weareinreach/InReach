@@ -17,8 +17,8 @@ import { useRouter } from 'next/router'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
-import { z } from 'zod'
 
+import { type TUpsertSchema, ZUpsertSchema } from '@weareinreach/api/router/orgWebsite/mutation.upsert.schema'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
@@ -34,15 +34,6 @@ const useStyles = createStyles(() => ({
 	},
 }))
 
-const FormSchema = z.object({
-	url: z.string().url('Invalid URL. Must start with either "https://" or "http://"'),
-	description: z.string().nullish(),
-	published: z.boolean().default(true),
-	deleted: z.boolean().default(false),
-	orgLocationId: z.string().nullish(),
-	organizationId: z.string().nullish(),
-})
-type FormSchema = z.infer<typeof FormSchema>
 const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
@@ -75,16 +66,19 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			reset,
 			getValues,
 			setValue: setFormValue,
-		} = useForm<FormSchema>({
-			resolver: zodResolver(FormSchema),
-			values: websiteData
-				? {
-						...websiteData,
-						orgLocationId: hasLocationId,
-						organizationId: websiteData.organizationId ?? organizationId,
-					}
-				: undefined,
+		} = useForm<TUpsertSchema>({
+			resolver: zodResolver(ZUpsertSchema),
+			values:
+				websiteData && organizationId
+					? {
+							...websiteData,
+							operation: createNew ? 'create' : 'update',
+							orgLocationId: hasLocationId,
+							organizationId: websiteData.organizationId ?? organizationId,
+						}
+					: undefined,
 			defaultValues: {
+				operation: 'create',
 				orgLocationId: hasLocationId ?? '',
 				organizationId: organizationId ?? '',
 				url: '',
@@ -99,16 +93,16 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 
-		const siteUpdate = api.orgWebsite.update.useMutation({
-			onSettled: (data) => {
+		const siteUpdate = api.orgWebsite.upsert.useMutation({
+			onSettled: () => {
 				apiUtils.orgWebsite.invalidate()
-				reset(data)
 			},
 			onSuccess: () => {
 				setIsSaved(true)
 				notifySave()
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
+				reset({ id: generateId('orgWebsite') })
 			},
 		})
 
@@ -152,7 +146,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 
 		const handleSaveFromModal = useCallback(() => {
 			const valuesToSubmit = getValues()
-			siteUpdate.mutate({ id: websiteId, data: valuesToSubmit })
+			siteUpdate.mutate({ id: websiteId, ...valuesToSubmit })
 		}, [getValues, siteUpdate, websiteId])
 
 		const handleCloseAndDiscard = useCallback(() => {
@@ -169,7 +163,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 						<form
 							onSubmit={handleSubmit(
 								(data) => {
-									siteUpdate.mutate({ id: websiteId, data })
+									siteUpdate.mutate({ id: websiteId, ...data })
 								},
 								(error) => console.error(error)
 							)}
