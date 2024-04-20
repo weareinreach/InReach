@@ -87,6 +87,14 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		} = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
 			values: initialData ?? undefined,
+			defaultValues: {
+				id: '',
+				number: '',
+				countryId: '',
+				description: '',
+				published: true,
+				deleted: false,
+			},
 		})
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
