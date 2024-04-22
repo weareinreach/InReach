@@ -5,7 +5,8 @@ import { forwardRef } from 'react'
 const externalPrefixes = ['http', 'tel:', 'mailto:', 'sms:'] as const
 
 export const isExternal = (href: unknown): href is ExternalLink => {
-	const regex = new RegExp(`${externalPrefixes.map((prefix) => `(?:${prefix})|`)}`)
+	const regexChunk = (str: string) => `(?:${str})`
+	const regex = new RegExp(`${externalPrefixes.map(regexChunk).join('|')}`)
 	return Boolean(typeof href === 'string' && regex.test(href))
 }
 
