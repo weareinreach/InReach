@@ -1,9 +1,10 @@
 import { createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
-import { useMediaQuery, useViewportSize } from '@mantine/hooks'
+import { useDisclosure, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useRef, useState } from 'react'
 
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useScreenSize } from '~ui/hooks/useScreenSize'
 
 import { Badge } from './Badge'
 import { UserAvatar } from './UserAvatar'
@@ -28,19 +29,19 @@ const isTextTruncated = (event: HTMLParagraphElement | null) => {
 }
 
 export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLoading = false }: Props) => {
-	const [showMore, setShowMore] = useState(true)
-	const [showMoreLink, setShowMoreLink] = useState<boolean | undefined>()
+	const [showMore, showMoreHandler] = useDisclosure(true)
+	const [showMoreLink, setShowMoreLink] = useState(false)
 	const [initialLoad, setInitialLoad] = useState(true)
 	const reviewTextRef = useRef<HTMLParagraphElement | null>(null)
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
+	const { isMobile } = useScreenSize()
 	const viewportSize = useViewportSize()
 	const { t, ready } = useTranslation()
 
 	const showMoreText = showMore ? t('show-more') : t('show-less')
 
-	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`, false)
 	const clampValue = isMobile ? 3 : 2
 	const lineClamp = showMore ? clampValue : undefined
 
@@ -83,9 +84,7 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 						td='underline'
 						className={classes.showMore}
 						weight={theme.other.fontWeight.semibold}
-						onClick={() => {
-							setShowMore(!showMore)
-						}}
+						onClick={showMoreHandler.toggle}
 					>
 						{showMoreText}
 					</Text>

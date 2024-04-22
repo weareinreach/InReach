@@ -1,9 +1,10 @@
 import { createStyles, Flex, Menu, rem, Text, UnstyledButton, type UnstyledButtonProps } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef } from 'react'
+import { forwardRef, useCallback, useMemo } from 'react'
 
 import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
@@ -30,11 +31,12 @@ const useStyles = createStyles((theme) => ({
 const MenuTarget = forwardRef<HTMLButtonElement, UnstyledButtonProps & { activeLang: string | undefined }>(
 	({ activeLang, ...props }, ref) => {
 		const { classes } = useStyles()
+		const variants = useCustomVariant()
 		return (
 			<UnstyledButton ref={ref} {...props} className={classes.menuTarget}>
 				<Flex align='center' gap='xs'>
 					<Icon icon='carbon:translate' width={20} height={20} />
-					<Text sx={(theme) => ({ ...theme.other.utilityFonts.utility1 })}>{activeLang}</Text>
+					<Text variant={variants.Text.utility1}>{activeLang}</Text>
 				</Flex>
 			</UnstyledButton>
 		)
@@ -48,13 +50,28 @@ export const LangPicker = () => {
 	const router = useRouter()
 	const currentLanguage = router.locale
 
-	const activeLang = translatedLangs.find((lang) => lang.localeCode === currentLanguage)?.nativeName
+	const activeLang = useMemo(
+		() => translatedLangs.find((lang) => lang.localeCode === currentLanguage)?.nativeName,
+		[currentLanguage]
+	)
 
-	const langHandler = (newLocale: LocaleCodes) => {
-		const { pathname, asPath, query } = router
-		i18n.changeLanguage(newLocale)
-		router.replace({ pathname, query }, asPath, { locale: newLocale })
-	}
+	const langHandler = useCallback(
+		(newLocale: LocaleCodes) => () => {
+			const { pathname, asPath, query } = router
+			i18n.changeLanguage(newLocale)
+			router.replace({ pathname, query }, asPath, { locale: newLocale })
+		},
+		[i18n, router]
+	)
+	const menuChildren = useMemo(
+		() =>
+			translatedLangs.map((lang) => (
+				<Menu.Item key={lang.localeCode} onClick={langHandler(lang.localeCode)}>
+					{lang.nativeName}
+				</Menu.Item>
+			)),
+		[langHandler]
+	)
 
 	return (
 		<Menu
@@ -72,13 +89,7 @@ export const LangPicker = () => {
 			<Menu.Target>
 				<MenuTarget activeLang={activeLang} />
 			</Menu.Target>
-			<Menu.Dropdown>
-				{translatedLangs.map((lang) => (
-					<Menu.Item key={lang.localeCode} onClick={() => langHandler(lang.localeCode)}>
-						{lang.nativeName}
-					</Menu.Item>
-				))}
-			</Menu.Dropdown>
+			<Menu.Dropdown>{menuChildren}</Menu.Dropdown>
 		</Menu>
 	)
 }

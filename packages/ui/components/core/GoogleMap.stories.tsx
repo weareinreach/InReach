@@ -19,7 +19,6 @@ const MapWithMarkers = ({ locationIds, height, width }: GoogleMapProps) => {
 	)
 	useEffect(() => {
 		if (!isLoading && data && mapIsReady) {
-			const markers: google.maps.marker.AdvancedMarkerElement[] = []
 			for (const location of data.locations) {
 				actionLogger({
 					id: location.id,
@@ -27,19 +26,21 @@ const MapWithMarkers = ({ locationIds, height, width }: GoogleMapProps) => {
 					lat: location.latitude ?? 0,
 					lng: location.longitude ?? 0,
 				})
-				const newMarker = mapMarker.add({
+				mapMarker.add({
 					map,
 					id: location.id,
 					name: location.name ?? '',
 					lat: location.latitude ?? 0,
 					lng: location.longitude ?? 0,
 				})
-				markers.push(newMarker)
 			}
 			return () => {
-				for (const location of data.locations) mapMarker.remove(location.id)
+				for (const location of data.locations) {
+					mapMarker.remove(location.id)
+				}
 			}
 		}
+		return void 0
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLoading, data, mapIsReady])
 

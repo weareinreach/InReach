@@ -1,5 +1,6 @@
 import { Group, List, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { Link } from '~ui/components/core/Link'
@@ -22,21 +23,27 @@ const SocialMediaDisplay = ({ parentId = '', passedData, locationOnly }: SocialM
 		{ enabled: !passedData }
 	)
 
-	const componentData = passedData ? passedData : data
+	const componentData = passedData ?? data
 
-	if (!componentData?.length) return null
+	if (!componentData?.length) {
+		return null
+	}
 	const items: SocialLinkProps[] = []
 
 	for (const item of componentData) {
 		const icon = item.service.toLowerCase()
-		if (!isSocialIcon(icon)) continue
+		if (!isSocialIcon(icon)) {
+			continue
+		}
 		items.push({
 			icon,
 			href: item.url,
 			title: item.username,
 		})
 	}
-	if (!items.length) return null
+	if (!items.length) {
+		return null
+	}
 	return <SocialLink.Group links={items} header />
 }
 
@@ -58,6 +65,43 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 	const linkToLocation = api.orgSocialMedia.locationLink.useMutation({
 		onSuccess: () => apiUtils.orgSocialMedia.invalidate(),
 	})
+	const getTextVariants = useCallback(
+		({ published, deleted }: { published: boolean; deleted: boolean }) => {
+			if (deleted) {
+				return {
+					social: variants.Text.utility3darkGrayStrikethru,
+					desc: variants.Text.utility4darkGrayStrikethru,
+				}
+			}
+			if (!published) {
+				return {
+					social: variants.Text.utility3darkGray,
+					desc: variants.Text.utility4darkGray,
+				}
+			}
+
+			return {
+				social: variants.Text.utility3,
+				desc: variants.Text.utility4,
+			}
+		},
+		[
+			variants.Text.utility3,
+			variants.Text.utility3darkGray,
+			variants.Text.utility3darkGrayStrikethru,
+			variants.Text.utility4,
+			variants.Text.utility4darkGray,
+			variants.Text.utility4darkGrayStrikethru,
+		]
+	)
+
+	const handleLinkToLocation = useCallback(
+		({ orgLocationId, orgSocialMediaId }: { orgLocationId: string; orgSocialMediaId: string }) =>
+			() =>
+				linkToLocation.mutate({ orgLocationId, orgSocialMediaId, action: 'link' }),
+		[linkToLocation]
+	)
+
 	const addOrLink = isLocation ? (
 		<Menu keepMounted withinPortal>
 			<Menu.Target>
@@ -70,24 +114,11 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 			</Menu.Target>
 			<Menu.Dropdown>
 				{linkableSocials?.map(({ id, deleted, service, published, url }) => {
-					const socialTextVariant =
-						!published && deleted
-							? variants.Text.utility3darkGrayStrikethru
-							: deleted
-								? variants.Text.utility3darkGrayStrikethru
-								: variants.Text.utility3
-					const descTextVariant =
-						!published && deleted
-							? variants.Text.utility4darkGrayStrikethru
-							: deleted
-								? variants.Text.utility4darkGrayStrikethru
-								: variants.Text.utility4
+					const { social: socialTextVariant, desc: descTextVariant } = getTextVariants({ published, deleted })
 					return (
 						<Menu.Item
 							key={id}
-							onClick={() =>
-								linkToLocation.mutate({ orgLocationId: parentId, orgSocialMediaId: id, action: 'link' })
-							}
+							onClick={handleLinkToLocation({ orgLocationId: parentId, orgSocialMediaId: id })}
 						>
 							<Group noWrap>
 								<Icon icon='carbon:link' />
@@ -142,6 +173,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 										<Group noWrap spacing={8}>
 											<Icon icon={link.serviceIcon} color={theme.other.colors.secondary.darkGray} />
 											<Text variant={variants.Text.darkGrayStrikethru}>{link.service}</Text>
+											<Text variant={variants.Text.utility4darkGrayStrikethru}>({link.username})</Text>
 										</Group>
 									)
 								}
@@ -156,6 +188,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 											<Group noWrap spacing={8}>
 												<Icon icon={link.serviceIcon} color={theme.other.colors.secondary.darkGray} />
 												<Text variant={variants.Text.darkGray}>{link.service}</Text>
+												<Text variant={variants.Text.utility4darkGray}>({link.username})</Text>
 											</Group>
 										</Group>
 									)
@@ -165,6 +198,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 										<Group noWrap spacing={8}>
 											<Icon icon={link.serviceIcon} />
 											<Text>{link.service}</Text>
+											<Text variant={variants.Text.utility4}>({link.username})</Text>
 										</Group>
 									)
 								}
