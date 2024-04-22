@@ -8,8 +8,8 @@ import { organization } from '~ui/mockData/organization'
 import { SearchBox as SearchBoxComp } from './SearchBox'
 
 const StateWrapper = (args: SetOptional<ComponentProps<typeof SearchBoxComp>, 'loadingManager'>) => {
-	const [isLoading, setLoading] = useState(false)
-	const loadingManager = { isLoading, setLoading }
+	const [loading, setLoading] = useState(false)
+	const loadingManager = { isLoading: loading, setLoading }
 	return <SearchBoxComp loadingManager={loadingManager} {...args} />
 }
 

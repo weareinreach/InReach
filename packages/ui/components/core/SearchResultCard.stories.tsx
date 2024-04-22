@@ -33,9 +33,13 @@ export const SingleResult = {
 			skip: 0,
 			take: 0,
 		})
-		if (!data) return <>Loading mock data</>
+		if (!data) {
+			return <>Loading mock data</>
+		}
 		const item = data.orgs.at(0)
-		if (!item) return <>Something is wrong with the mock data</>
+		if (!item) {
+			return <>Something is wrong with the mock data</>
+		}
 		return <SearchResultCard result={item} />
 	},
 }
@@ -52,9 +56,13 @@ export const SingleResultWithLongName = {
 			skip: 0,
 			take: 0,
 		})
-		if (!data) return <>Loading mock data</>
+		if (!data) {
+			return <>Loading mock data</>
+		}
 		const item = data.orgs.at(0)
-		if (!item) return <>Something is wrong with the mock data</>
+		if (!item) {
+			return <>Something is wrong with the mock data</>
+		}
 		return <SearchResultCard result={item} />
 	},
 }
@@ -72,9 +80,13 @@ export const MultipleResults = {
 			skip: 0,
 			take: 0,
 		})
-		if (!data) return <>Loading mock data</>
+		if (!data) {
+			return <>Loading mock data</>
+		}
 		const item = data.orgs.at(0)
-		if (!item) return <>Something is wrong with the mock data</>
+		if (!item) {
+			return <>Something is wrong with the mock data</>
+		}
 		return (
 			<>
 				{data.orgs.map((result) => (

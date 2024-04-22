@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
+import { type MouseEventHandler, useCallback, useMemo } from 'react'
 
 import { checkPermissions } from '@weareinreach/auth'
 import { Button } from '~ui/components/core/Button'
@@ -60,6 +61,9 @@ const useStyles = createStyles((theme) => ({
 			backgroundColor: theme.other.colors.primary.lightGray,
 		}),
 		'&:disabled': theme.fn.hover({ cursor: 'auto' }),
+		'&[data-expanded]': {
+			backgroundColor: theme.other.colors.primary.lightGray,
+		},
 	},
 	logoutButton: {
 		padding: `${rem(14)} ${rem(12)}`,
@@ -81,7 +85,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	})
 	const editablePaths: (typeof router.pathname)[] = ['/org/[slug]', '/org/[slug]/[orgLocationId]']
 	const isEditablePage = editablePaths.includes(router.pathname)
-	const getEditPathname = (): typeof router.pathname => {
+	const getEditPathname = useCallback((): typeof router.pathname => {
 		switch (router.pathname) {
 			case '/org/[slug]': {
 				return '/org/[slug]/edit'
@@ -93,100 +97,111 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 				return router.pathname
 			}
 		}
-	}
+	}, [router])
+	const handleEditModeEntry = useCallback(() => {
+		router.replace({ pathname: getEditPathname(), query: router.query })
+	}, [getEditPathname, router])
 
-	if ((session?.user && status === 'authenticated') || isLoading) {
-		return (
-			<Group noWrap spacing={28}>
-				<LangPicker />
-				<Menu
-					width={260}
-					position='bottom-start'
-					transitionProps={{
-						transition: 'scale-y',
-					}}
-					classNames={{ item: classes.menuItem }}
-					radius='sm'
-					shadow='xs'
-					disabled={isLoading ? true : undefined}
-				>
-					<Menu.Target>
-						<UnstyledButton
-							className={cx(classes.buttons, classes.menuTarget)}
-							sx={(theme) => ({
-								'&[data-expanded]': {
-									backgroundColor: theme.other.colors.primary.lightGray,
-								},
-							})}
-							disabled={isLoading ? true : undefined}
-						>
-							<UserAvatar useLoggedIn />
-						</UnstyledButton>
-					</Menu.Target>
-					<Menu.Dropdown>
-						{canAccessDataPortal && (
-							<>
-								<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
-								<Menu.Item component={Link} href='/admin' target='_self'>
-									{t('user-menu.data-portal')}
-								</Menu.Item>
-								{isEditablePage && (
-									<Menu.Item
-										component={Link}
-										onClick={() => router.replace({ pathname: getEditPathname(), query: router.query })}
-										target='_self'
-									>
-										{t('user-menu.edit-page')}
+	const handleSignout: MouseEventHandler<HTMLAnchorElement> = useCallback((e) => {
+		e?.preventDefault?.()
+		signOut()
+	}, [])
+	const shouldShowMenu = useMemo(
+		() => (session?.user && status === 'authenticated') || isLoading,
+		[isLoading, session?.user, status]
+	)
+
+	const menuOrLoginButtons = useMemo(() => {
+		if (shouldShowMenu) {
+			return (
+				<>
+					<Menu
+						width={260}
+						position='bottom-start'
+						transitionProps={{
+							transition: 'scale-y',
+						}}
+						classNames={{ item: classes.menuItem }}
+						radius='sm'
+						shadow='xs'
+						disabled={isLoading ? true : undefined}
+					>
+						<Menu.Target>
+							<UnstyledButton
+								className={cx(classes.buttons, classes.menuTarget)}
+								disabled={isLoading ? true : undefined}
+							>
+								<UserAvatar useLoggedIn />
+							</UnstyledButton>
+						</Menu.Target>
+						<Menu.Dropdown>
+							{canAccessDataPortal && (
+								<>
+									<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
+									<Menu.Item component={Link} href='/admin' target='_self'>
+										{t('user-menu.data-portal')}
 									</Menu.Item>
-								)}
-								<Menu.Divider />
-								<Menu.Label>{t('user-menu.user-options')}</Menu.Label>
-							</>
-						)}
-						<Menu.Item component={Link} href='/account/saved' target='_self'>
-							{t('words.saved')}
-						</Menu.Item>
-						<Menu.Item component={Link} href='/account/reviews' target='_self'>
-							{t('words.reviews')}
-						</Menu.Item>
-						<Menu.Item component={Link} href='/account' target='_self'>
-							{t('words.settings')}
-						</Menu.Item>
-						<Menu.Item
-							component={Link}
-							external
-							onClick={(e) => {
-								e.preventDefault()
-								signOut({ callbackUrl: '/' })
-							}}
-						>
-							{t('log-out')}
-						</Menu.Item>
-					</Menu.Dropdown>
-				</Menu>
-				<UnstyledButton
-					className={cx(classes.logoutButton)}
-					variant={variant.Link.inlineInvertedUtil1}
-					component={Link}
-					style={{ visibility: isLoading ? 'hidden' : undefined }}
-					onClick={() => {
-						// e.preventDefault()
-						signOut({ callbackUrl: '/' })
-					}}
-				>
-					{!router.isFallback && t('log-out')}
-				</UnstyledButton>
-			</Group>
+									{isEditablePage && (
+										<Menu.Item component={Link} onClick={handleEditModeEntry} target='_self'>
+											{t('user-menu.edit-page')}
+										</Menu.Item>
+									)}
+									<Menu.Divider />
+									<Menu.Label>{t('user-menu.user-options')}</Menu.Label>
+								</>
+							)}
+							<Menu.Item component={Link} href='/account/saved' target='_self'>
+								{t('words.saved')}
+							</Menu.Item>
+							<Menu.Item component={Link} href='/account/reviews' target='_self'>
+								{t('words.reviews')}
+							</Menu.Item>
+							<Menu.Item component={Link} href='/account' target='_self'>
+								{t('words.settings')}
+							</Menu.Item>
+							<Menu.Item component={Link} external onClick={handleSignout}>
+								{t('log-out')}
+							</Menu.Item>
+						</Menu.Dropdown>
+					</Menu>
+					<UnstyledButton
+						className={cx(classes.logoutButton)}
+						variant={variant.Link.inlineInvertedUtil1}
+						component={Link}
+						style={{ visibility: isLoading ? 'hidden' : undefined }}
+						onClick={handleSignout}
+					>
+						{!router.isFallback && t('log-out')}
+					</UnstyledButton>
+				</>
+			)
+		}
+		return (
+			<>
+				<LoginModalLauncher component={UnstyledButton} className={classes.navText}>
+					{t('log-in')}
+				</LoginModalLauncher>
+				<SignupModalLauncher component={Button}>{t('sign-up-free')}</SignupModalLauncher>
+			</>
 		)
-	}
-	return (
-		<Group className={cx(className)} noWrap spacing={40}>
-			<LangPicker />
+	}, [
+		canAccessDataPortal,
+		classes,
+		cx,
+		handleEditModeEntry,
+		handleSignout,
+		isEditablePage,
+		isLoading,
+		router.isFallback,
+		shouldShowMenu,
+		t,
+		variant,
+	])
 
-			<LoginModalLauncher component={UnstyledButton} className={classes.navText}>
-				{t('log-in')}
-			</LoginModalLauncher>
-			<SignupModalLauncher component={Button}>{t('sign-up-free')}</SignupModalLauncher>
+	return (
+		<Group className={cx(className)} noWrap spacing={shouldShowMenu ? 28 : 40}>
+			<LangPicker />
+			{menuOrLoginButtons}
 		</Group>
 	)
 }

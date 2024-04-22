@@ -12,21 +12,34 @@ import {
 	Text,
 	Title,
 } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { type ComponentPropsWithoutRef, forwardRef, type ReactElement, useEffect, useState } from 'react'
+import {
+	type ComponentPropsWithoutRef,
+	forwardRef,
+	type ReactElement,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
+import SocialLinks from 'social-links'
 import { z } from 'zod'
 
 import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
+const socialLinkValidator = new SocialLinks()
+
+const useStyles = createStyles(() => ({
 	drawerContent: {
 		borderRadius: `${rem(32)} 0 0 0`,
 		minWidth: '40vw',
@@ -37,17 +50,19 @@ const FormSchema = z.object({
 	id: prefixedId('orgSocialMedia'),
 	username: z.string(),
 	url: z.string(),
-	published: z.boolean(),
-	deleted: z.boolean(),
+	published: z.boolean().default(true),
+	deleted: z.boolean().default(false),
 	serviceId: z.string(),
 	organizationId: prefixedId('organization').nullable(),
-	orgLocationOnly: z.boolean(),
-	service: z.object({
-		id: prefixedId('socialMediaService'),
-		name: z.string(),
-		logoIcon: z.string(),
-	}),
-	linkLocationId: z.string().nullish(),
+	orgLocationOnly: z.boolean().default(false),
+	service: z
+		.object({
+			id: prefixedId('socialMediaService'),
+			name: z.string(),
+			logoIcon: z.string(),
+		})
+		.optional(),
+	orgLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 interface ItemProps extends ComponentPropsWithoutRef<'div'> {
@@ -55,7 +70,7 @@ interface ItemProps extends ComponentPropsWithoutRef<'div'> {
 	label: string
 	icon: ReactElement
 }
-const SelectItem = forwardRef<HTMLDivElement, ItemProps>(({ value, label, icon, ...props }, ref) => (
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(({ value: _value, label, icon, ...props }, ref) => (
 	<div ref={ref} {...props}>
 		<Group noWrap spacing={12}>
 			{icon} {label}
@@ -67,7 +82,8 @@ SelectItem.displayName = 'SelectItem'
 const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
-		const [socialId] = useState(createNew ? generateId('orgSocialMedia') : id)
+		const { id: organizationId } = useOrgInfo()
+		const socialId = useMemo(() => (createNew ? generateId('orgSocialMedia') : id), [createNew, id])
 		const { data, isFetching } = api.orgSocialMedia.forEditDrawer.useQuery(
 			{ id: socialId },
 			{ enabled: !createNew }
@@ -82,56 +98,113 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 			reset,
 			getValues,
 			setValue: setFormValue,
+			watch,
 		} = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
-			values: data ? data : undefined,
+			values: data ?? undefined,
 		})
 		const apiUtils = api.useUtils()
-		const { data: services } = api.orgSocialMedia.getServiceTypes.useQuery(undefined, {
-			select: (data) =>
-				data
-					? data.map(({ id, name, logoIcon }) => ({ value: id, label: name, icon: <Icon icon={logoIcon} /> }))
+		const { data: socialMediaServices } = api.orgSocialMedia.getServiceTypes.useQuery(undefined, {
+			select: (serviceTypeData) =>
+				serviceTypeData
+					? serviceTypeData.map(({ id: value, name, logoIcon }) => ({
+							value,
+							label: name,
+							icon: <Icon icon={logoIcon} />,
+						}))
 					: [],
 			placeholderData: [],
 		})
 
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
-
-		const databaseUpdate = api.orgSocialMedia.update.useMutation({
-			onSettled: (data) => {
-				apiUtils.orgSocialMedia.forEditDrawer.invalidate()
-				apiUtils.orgSocialMedia.forContactInfoEdits.invalidate()
-				reset(data)
+		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const databaseUpdate = api.orgSocialMedia.upsert.useMutation({
+			onSettled: () => {
+				apiUtils.orgSocialMedia.invalidate()
+				reset()
 			},
 			onSuccess: () => {
 				setIsSaved(true)
+				notifySave()
+				modalHandler.close()
+				setTimeout(() => drawerHandler.close(), 500)
+				reset({ id: generateId('orgSocialMedia') })
 			},
 		})
 		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 		const unlinkFromLocation = api.orgSocialMedia.locationLink.useMutation({
 			onSuccess: () => apiUtils.orgSocialMedia.invalidate(),
 		})
+
+		const [urlValue] = useDebouncedValue(watch('url'), 300)
+		const parsedUsername = useMemo(() => {
+			if (!urlValue) {
+				return null
+			}
+			const detectedService = socialLinkValidator.detectProfile(urlValue)
+			if (!detectedService) {
+				return null
+			}
+			return socialLinkValidator.getProfileId(detectedService, urlValue)
+		}, [urlValue])
+
+		useEffect(() => {
+			if (parsedUsername) {
+				const currentUsername = getValues('username')
+				console.log('parsedUsername', parsedUsername)
+				console.log('current username', currentUsername)
+				if (parsedUsername !== currentUsername) {
+					setFormValue('username', parsedUsername)
+				}
+			}
+		}, [getValues, parsedUsername, setFormValue])
+
 		useEffect(() => {
 			if (createNew) {
 				setFormValue('published', true)
+				setFormValue('id', socialId)
+				organizationId && setFormValue('organizationId', organizationId)
 				if (hasLocationId !== null) {
-					setFormValue('linkLocationId', hasLocationId)
+					setFormValue('orgLocationId', hasLocationId)
+					setFormValue('orgLocationOnly', true)
 				}
 			}
-		}, [createNew, hasLocationId, setFormValue])
+		}, [createNew, hasLocationId, setFormValue, socialId, organizationId])
 		useEffect(() => {
 			if (isSaved && formIsDirty) {
 				setIsSaved(false)
 			}
 		}, [formIsDirty, isSaved])
-		const handleClose = () => {
+		const handleClose = useCallback(() => {
 			if (formState.isDirty) {
 				return modalHandler.open()
 			} else {
 				return drawerHandler.close()
 			}
-		}
+		}, [formState.isDirty, drawerHandler, modalHandler])
+
+		const handleUnlink = useCallback(
+			() =>
+				hasLocationId &&
+				unlinkFromLocation.mutate({
+					orgSocialMediaId: socialId,
+					orgLocationId: hasLocationId,
+					action: 'unlink',
+				}),
+			[unlinkFromLocation, socialId, hasLocationId]
+		)
+
+		const handleModalSubmit = useCallback(() => {
+			databaseUpdate.mutate({ operation: createNew ? 'create' : 'update', ...getValues() })
+		}, [createNew, databaseUpdate, getValues])
+
+		const handleModalDismiss = useCallback(() => {
+			reset()
+			modalHandler.close()
+			drawerHandler.close()
+		}, [drawerHandler, modalHandler, reset])
+
 		return (
 			<>
 				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
@@ -139,8 +212,8 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 					<Drawer.Content className={classes.drawerContent}>
 						<form
 							onSubmit={handleSubmit(
-								(data) => {
-									databaseUpdate.mutate({ id: socialId, data })
+								(formData) => {
+									databaseUpdate.mutate({ operation: createNew ? 'create' : 'update', ...formData })
 								},
 								(error) => console.error(error)
 							)}
@@ -169,10 +242,11 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 											required
 											name='serviceId'
 											control={control}
-											data={services ?? []}
+											data={socialMediaServices ?? []}
 											itemComponent={SelectItem}
 										/>
 										<TextInput label='Website URL' required name='url' control={control} />
+										<TextInput label='Username/handle' required name='username' control={control} />
 										<Group noWrap position='apart' w='100%'>
 											<Stack>
 												<Checkbox label='Published' name='published' control={control} />
@@ -181,13 +255,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 											{hasLocationId !== null && (
 												<Button
 													leftIcon={<Icon icon='carbon:unlink' />}
-													onClick={() =>
-														unlinkFromLocation.mutate({
-															orgSocialMediaId: socialId,
-															orgLocationId: hasLocationId,
-															action: 'unlink',
-														})
-													}
+													onClick={handleUnlink}
 													disabled={createNew}
 												>
 													Unlink from this location
@@ -205,28 +273,11 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={databaseUpdate.isLoading}
-											onClick={() => {
-												databaseUpdate.mutate(
-													{ id: socialId, data: getValues() },
-													{
-														onSuccess: () => {
-															modalHandler.close()
-															drawerHandler.close()
-														},
-													}
-												)
-											}}
+											onClick={handleModalSubmit}
 										>
 											Save
 										</Button>
-										<Button
-											variant='secondaryLg'
-											onClick={() => {
-												reset()
-												modalHandler.close()
-												drawerHandler.close()
-											}}
-										>
+										<Button variant='secondaryLg' onClick={handleModalDismiss}>
 											Discard
 										</Button>
 									</Group>

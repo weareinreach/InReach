@@ -5,7 +5,7 @@ import { /*Noto_Color_Emoji,*/ Work_Sans } from 'next/font/google'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 // import { Trans, useTranslation } from 'next-i18next'
-// import { type ComponentPropsWithoutRef, useMemo } from 'react'
+import { useMemo } from 'react'
 // import { type ConsentBanner, type ConsentOptions } from 'react-hook-consent'
 
 import { EditModeProvider } from '@weareinreach/ui/providers/EditMode'
@@ -96,16 +96,10 @@ export const Providers = ({ children, session }: ProviderProps) => {
 	// 	[t]
 	// )
 
+	const mantineTheme = useMemo(() => ({ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }), [])
+
 	return (
-		<MantineProvider
-			withGlobalStyles
-			withNormalizeCSS
-			theme={{
-				...appTheme,
-				fontFamily: fontWorkSans.style.fontFamily,
-			}}
-			emotionCache={appCache}
-		>
+		<MantineProvider withGlobalStyles withNormalizeCSS theme={mantineTheme} emotionCache={appCache}>
 			{/* <ConsentProvider options={consentOptions}> */}
 			<SessionProvider session={session}>
 				<EditModeProvider>
