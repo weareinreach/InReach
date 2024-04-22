@@ -52,7 +52,9 @@ export const UserAvatar = ({
 				return <Text className={classes.subText}>{subheading as string}</Text>
 			}
 			default: {
-				if (!(subheading instanceof Date)) return null
+				if (!(subheading instanceof Date)) {
+					return null
+				}
 				return (
 					<Text className={classes.subText}>
 						{DateTime.fromJSDate(subheading)
@@ -63,7 +65,7 @@ export const UserAvatar = ({
 			}
 		}
 	}
-	const showLoadingState = loading || (useLoggedIn && status === 'loading' && !session) || router.isFallback
+	const showLoadingState = loading || status === 'loading' || router.isFallback
 	if (showLoadingState) {
 		return (
 			<Group className={classes.group}>
@@ -85,7 +87,7 @@ export const UserAvatar = ({
 		<Group className={classes.group} align='center'>
 			<Avatar
 				src={displayData.image}
-				alt={displayData.name ?? (t('user-avatar') as string)}
+				alt={displayData.name ?? t('user-avatar')}
 				classNames={{ root: classes.avatarPlaceholder, placeholder: classes.avatarPlaceholder }}
 			>
 				<Icon icon='carbon:user' height={24} color={theme.other.colors.secondary.darkGray} />
@@ -117,7 +119,7 @@ interface PropsSession {
 	useLoggedIn: true
 	/** Date or text to display below the user's name. If `undefined`, the user's email address will be displayed */
 	subheading?: Date | string | null
-	user?: undefined
-	loading?: undefined
+	user?: never
+	loading?: never
 	avatarSize?: number
 }

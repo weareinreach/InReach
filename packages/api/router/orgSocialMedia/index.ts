@@ -70,4 +70,10 @@ export const orgSocialMediaRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	upsert: permissionedProcedure('updateSocialMedia')
+		.input(schema.ZUpsertSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('upsert'), () => import('./mutation.upsert.handler'))
+			return handler(opts)
+		}),
 })

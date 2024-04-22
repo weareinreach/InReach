@@ -18,7 +18,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
-import { type JSX, memo, useEffect, useMemo, useState } from 'react'
+import { type JSX, memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
@@ -90,6 +90,24 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
+const NoResults = memo(
+	({ crisisData }: { crisisData: NonNullable<ApiOutput['organization']['getNatlCrisis']> }) => {
+		const { classes } = useStyles()
+		const { t } = useTranslation('common')
+		return (
+			<Stack className={classes.noResultsStack}>
+				<Text>{t('common:search.no-results-adjust')}</Text>
+				<CrisisSupport role='national'>
+					{crisisData.map((result) => (
+						<CrisisSupport.National data={result} key={result.id} />
+					))}
+				</CrisisSupport>
+			</Stack>
+		)
+	}
+)
+NoResults.displayName = 'NoResults'
+
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
 	const { searchState, searchStateActions } = useSearchState()
@@ -108,11 +126,13 @@ const SearchResults = () => {
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
 	const [resultCount, setResultCount] = useState(0)
 	const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
-		Array.from({ length: 10 }, (x, i) => <SearchResultCard key={i} loading />)
+		Array.from({ length: 10 }, (_x, i) => <SearchResultCard key={i} loading />)
 	)
 	const [loadingPage, setLoadingPage] = useState(false)
 
-	if (!queryParams.success) setError(true)
+	if (!queryParams.success) {
+		setError(true)
+	}
 	const [country, lon, lat, dist, unit] = queryParams.success
 		? queryParams.data
 		: (['US', 0, 0, 0, 'mi'] as const)
@@ -140,20 +160,6 @@ const SearchResults = () => {
 	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({
 		cca2: country,
 	})
-
-	const NoResults = memo(({ data }: { data: NonNullable<ApiOutput['organization']['getNatlCrisis']> }) => {
-		return (
-			<Stack className={classes.noResultsStack}>
-				<Text>{t('common:search.no-results-adjust')}</Text>
-				<CrisisSupport role='national'>
-					{data.map((result) => (
-						<CrisisSupport.National data={result} key={result.id} />
-					))}
-				</CrisisSupport>
-			</Stack>
-		)
-	})
-	NoResults.displayName = 'NoResults'
 
 	useEffect(() => {
 		if (loadingPage !== searchIsLoading) {
@@ -188,8 +194,9 @@ const SearchResults = () => {
 
 	useEffect(
 		() => {
-			if (typeof router.query.page === 'string' && searchState.page !== router.query.page)
+			if (typeof router.query.page === 'string' && searchState.page !== router.query.page) {
 				searchStateActions.setPage(router.query.page)
+			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[router.query.page]
@@ -221,9 +228,14 @@ const SearchResults = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	if (error) return <>Error</>
-	const showCountryAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
-	const showStateAlertMessage = country === 'US'
+	const handleResetInitialValue = useCallback(() => {
+		searchStateActions.setSearchTerm('')
+	}, [searchStateActions])
+
+	if (error) {
+		return <>Error</>
+	}
+	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
 
 	return (
 		<>
@@ -251,9 +263,7 @@ const SearchResults = () => {
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
-							setSearchValue={(newValue: string) => {
-								searchStateActions.setSearchTerm(newValue)
-							}}
+							resetInitialValue={handleResetInitialValue}
 						/>
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
@@ -288,7 +298,7 @@ const SearchResults = () => {
 			<>
 				<Grid.Col xs={12} sm={8} md={8}>
 					{data?.resultCount === 0 && crisisResults ? (
-						<NoResults data={crisisResults} />
+						<NoResults crisisData={crisisResults} />
 					) : (
 						<>
 							<StateAlertBanner

@@ -2,18 +2,19 @@ import { Tabs as MantineTabs } from '@mantine/core'
 import { type Meta } from '@storybook/react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 const Story = () => {
 	const router = useRouter()
 	const { t } = useTranslation()
-
+	const tabHandler = useCallback(
+		(value: string) => {
+			router.push({ pathname: '/', query: { tab: value ?? '' } })
+		},
+		[router]
+	)
 	return (
-		<MantineTabs
-			defaultValue={router.query.activeTab as string}
-			onTabChange={(value) => {
-				router.push({ pathname: '/', query: { tab: value ?? '' } })
-			}}
-		>
+		<MantineTabs defaultValue={router.query.activeTab as string} onTabChange={tabHandler}>
 			<MantineTabs.List>
 				<MantineTabs.Tab value='services'>{t('services')}</MantineTabs.Tab>
 				<MantineTabs.Tab value='photos'>{t('photos')}</MantineTabs.Tab>
