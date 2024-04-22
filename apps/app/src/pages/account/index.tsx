@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 import { getServerSession } from '@weareinreach/auth'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -17,6 +18,8 @@ const SavedLists = () => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
 	const router = useRouter()
+	const handleReturnHome = useCallback(() => router.replace('/'), [router])
+
 	if (status === 'loading') {
 		return (
 			<Center>
@@ -27,7 +30,7 @@ const SavedLists = () => {
 	if (status === 'unauthenticated' || session === null) {
 		return (
 			<Overlay blur={2}>
-				<QuickPromotionModal component='button' autoLaunch onClose={() => router.replace('/')} />
+				<QuickPromotionModal component='button' autoLaunch onClose={handleReturnHome} />
 			</Overlay>
 		)
 	}

@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
@@ -55,7 +55,7 @@ const OrgLocationPage: NextPage = () => {
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
 	)
-	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
+	const hasAlerts = useMemo(() => Array.isArray(alertData) && alertData.length > 0, [alertData])
 	const { classes } = useStyles()
 
 	const servicesRef = useRef<HTMLDivElement>(null)
@@ -114,7 +114,7 @@ const OrgLocationPage: NextPage = () => {
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					{hasAlerts &&
-						alertData.map((alert) => (
+						alertData?.map((alert) => (
 							<AlertMessage
 								key={alert.key}
 								iconKey={alert.icon}
