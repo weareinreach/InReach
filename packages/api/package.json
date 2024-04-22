@@ -43,13 +43,13 @@
 		"just-map-values": "3.2.0",
 		"just-omit": "2.2.0",
 		"just-pick": "4.2.0",
-		"libphonenumber-js": "1.10.60",
+		"libphonenumber-js": "1.10.61",
 		"luxon": "3.4.4",
 		"nanoid": "5.0.7",
-		"remeda": "1.60.1",
+		"remeda": "1.61.0",
 		"slugify": "1.6.6",
 		"tiny-invariant": "1.3.3",
-		"zod": "3.22.5"
+		"zod": "3.23.0"
 	},
 	"devDependencies": {
 		"@turbo/gen": "1.13.2",
@@ -69,7 +69,7 @@
 		"prettier": "3.2.5",
 		"trpc-client-devtools-link": "0.2.1-next",
 		"trpc-panel": "1.3.4",
-		"type-fest": "4.15.0",
+		"type-fest": "4.16.0",
 		"typescript": "5.4.5"
 	},
 	"peerDependencies": {
