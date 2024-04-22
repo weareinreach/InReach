@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
@@ -211,7 +210,6 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
-						{drawerOpened && <DevTool control={control} placement='top-left' />}
 						<form
 							onSubmit={handleSubmit(
 								(formData) => {
