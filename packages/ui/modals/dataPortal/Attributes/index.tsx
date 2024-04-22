@@ -10,7 +10,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useMemo, useRef, useState } from 'react'
+import { forwardRef, type ReactNode, useCallback, useMemo, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -34,7 +34,7 @@ const supplementDefaults = {
 type SupplementFieldsNeeded = { [K in keyof typeof supplementDefaults]: boolean }
 
 const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
-	({ restrictCategories, attachesTo, parentRecord, ...props }, ref) => {
+	({ restrictCategories: _restrictCategories, attachesTo, parentRecord, ...props }, ref) => {
 		const { t } = useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const showAddedNotification = useNewNotification({ icon: 'added', displayText: 'Added Attribute' })
@@ -87,15 +87,15 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			null
 		)
 		const [supplements, setSupplements] = useState<SupplementFieldsNeeded>(supplementDefaults)
-		const saveAttributes = api.organization.attachAttribute.useMutation({
-			onSuccess: () => {
-				if (parentRecord.serviceId) {
-					apiUtils.service.forServiceEditDrawer.invalidate(parentRecord.serviceId)
-				}
-				showAddedNotification()
-				handler.close()
-			},
-		})
+
+		const needsSupplementalData = useCallback((item: NonNullable<typeof attributesByCategory>[number]) => {
+			const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
+
+			const check = [requireBoolean, requireGeo, requireData, requireLanguage, requireText]
+
+			return check.some(Boolean)
+		}, [])
+
 		// #endregion
 
 		// #region Handlers
@@ -108,35 +108,54 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				...parentRecord,
 			},
 		})
+		const saveAttributes = api.organization.attachAttribute.useMutation({
+			onSuccess: () => {
+				if (parentRecord.serviceId) {
+					apiUtils.service.forServiceEditDrawer.invalidate(parentRecord.serviceId)
+				}
+				form.reset({
+					id: generateId('attributeSupplement'),
+					...parentRecord,
+				})
+				setSelectedAttr(null)
+				setSupplements(supplementDefaults)
+				showAddedNotification()
+				handler.close()
+			},
+		})
+
 		// const formState = useFormState({ control: form.control })
 
-		const selectHandler = (e: string | null) => {
-			if (e === null) {
-				setSupplements(supplementDefaults)
-				setSelectedAttr(null)
-				form.resetField('attributeId')
-				return
-			}
-			const item = attributesByCategory?.find(({ value }) => value === e)
-			if (item) {
-				setSelectedAttr(item)
-				const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
-				/** Check if supplemental info required */
-				if (requireBoolean || requireGeo || requireData || requireLanguage || requireText) {
-					/** Handle if supplemental info is provided */
-					const suppRequired: SupplementFieldsNeeded = {
-						boolean: requireBoolean ?? false,
-						geo: requireGeo ?? false,
-						language: requireLanguage ?? false,
-						text: requireText ?? false,
-						data: requireData ?? false,
-					}
-					setSupplements(suppRequired)
+		const selectHandler = useCallback(
+			(e: string | null) => {
+				if (e === null) {
+					setSupplements(supplementDefaults)
+					setSelectedAttr(null)
+					form.resetField('attributeId')
+					return
 				}
-				form.setValue('attributeId', item.value)
-				selectAttrRef.current && (selectAttrRef.current.value = '')
-			}
-		}
+				const item = attributesByCategory?.find(({ value }) => value === e)
+				if (item) {
+					setSelectedAttr(item)
+					const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
+					/** Check if supplemental info required */
+					if (needsSupplementalData(item)) {
+						/** Handle if supplemental info is provided */
+						const suppRequired: SupplementFieldsNeeded = {
+							boolean: requireBoolean ?? false,
+							geo: requireGeo ?? false,
+							language: requireLanguage ?? false,
+							text: requireText ?? false,
+							data: requireData ?? false,
+						}
+						setSupplements(suppRequired)
+					}
+					form.setValue('attributeId', item.value)
+					selectAttrRef.current && (selectAttrRef.current.value = '')
+				}
+			},
+			[attributesByCategory, form, needsSupplementalData]
+		)
 
 		const submitHandler = () => {
 			saveAttributes.mutate(form.getValues())
@@ -148,27 +167,35 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 		// const needsSupplement = Object.values(supplements).includes(true)
 
-		const inputContainerWithSkeleton = (children: ReactNode) => (
-			<Skeleton visible={!!attrCat && attributesByCategoryApi.isLoading} radius='md'>
-				{children}
-			</Skeleton>
+		const inputContainerWithSkeleton = useCallback(
+			(children: ReactNode) => (
+				<Skeleton visible={!!attrCat && attributesByCategoryApi.isLoading} radius='md'>
+					{children}
+				</Skeleton>
+			),
+			[attrCat, attributesByCategoryApi.isLoading]
+		)
+
+		const handleCategorySelect = useCallback(
+			(e: string | null) => {
+				setAttrCat(e)
+				if (selectedAttr) {
+					setSelectedAttr(null)
+				}
+			},
+			[selectedAttr]
 		)
 
 		return (
 			<FormProvider {...form}>
-				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+				<Modal title={modalTitle} opened={opened} onClose={handler.close}>
 					<Stack>
 						<Stack>
 							<Skeleton visible={attributesByCategoryApi.isLoading}>
 								<MantineSelect
 									data={attributeCategories ?? []}
 									label='Select Category'
-									onChange={(e) => {
-										setAttrCat(e)
-										if (selectedAttr) {
-											setSelectedAttr(null)
-										}
-									}}
+									onChange={handleCategorySelect}
 									withinPortal
 									searchable
 									clearable
@@ -206,7 +233,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						</Button>
 					</Stack>
 				</Modal>
-				<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
+				<Box component='button' ref={ref} onClick={handler.open} {...props} />
 			</FormProvider>
 		)
 	}
