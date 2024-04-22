@@ -43,11 +43,11 @@ const IdTokenSchema = z
 	.passthrough()
 
 export const decodeCognitoIdJwt = async (jwt: string) => {
-	const data = await verifier('id').verify(jwt)
+	const data = await verifier('id').verify(jwt, { clientId: getEnv('COGNITO_CLIENT_ID') })
 	return IdTokenSchema.parse(data)
 }
 export const decodeCognitoAccessJwt = async (jwt: string) => {
-	const data = await verifier('access').verify(jwt)
+	const data = await verifier('access').verify(jwt, { clientId: getEnv('COGNITO_CLIENT_ID') })
 	return AccessTokenSchema.parse(data)
 }
 
