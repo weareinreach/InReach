@@ -42,7 +42,7 @@ export const generateFreeText = <T extends GenerateFreeTextType>(args: GenerateF
 				const { itemId } = args as GenerateFreeTextParams<'locationAlert'>
 				invariant(itemId)
 				return createKey(['locationBasedAlert', itemId])
-      }
+			}
 			default: {
 				return null
 			}
