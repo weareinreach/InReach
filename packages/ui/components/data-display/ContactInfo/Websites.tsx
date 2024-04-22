@@ -1,6 +1,7 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ReactElement, useCallback } from 'react'
+import { type ReactElement, useCallback, useMemo } from 'react'
+import invariant from 'tiny-invariant'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
@@ -13,11 +14,18 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { useCommonStyles } from './common.styles'
 import { type WebsitesProps } from './types'
 
+const anyTrue = (...args: boolean[]) => args.some((x) => x)
+
 export const Websites = ({ edit, ...props }: WebsitesProps) =>
 	edit ? <WebsitesEdit {...props} /> : <WebsitesDisplay {...props} />
 
-const WebsitesDisplay = ({ parentId = '', passedData, direct, locationOnly, websiteDesc }: WebsitesProps) => {
-	const output: ReactElement[] = []
+const WebsitesDisplay = ({
+	parentId = '',
+	passedData,
+	direct = false,
+	locationOnly = false,
+	websiteDesc,
+}: WebsitesProps) => {
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
@@ -26,60 +34,67 @@ const WebsitesDisplay = ({ parentId = '', passedData, direct, locationOnly, webs
 		{ parentId, locationOnly },
 		{ enabled: !passedData }
 	)
+	const domainExtract = useMemo(() => /https?:\/\/([^:/\n?]+)/, [])
 
-	const domainExtract = /https?:\/\/([^:/\n?]+)/
+	const componentData = useMemo(() => passedData ?? data ?? [], [data, passedData])
 
-	const componentData = passedData ?? data
+	const { output: content, showDirectHeading: shouldShowDirectHeading } = useMemo(() => {
+		const output: ReactElement[] = []
+		let showDirectHeading = false
 
-	if (!componentData?.length) {
-		return null
-	}
+		for (const website of componentData) {
+			const { id, url, orgLocationOnly, description, isPrimary } = website
+			const urlMatch = url.match(domainExtract)
+			const urlBase = urlMatch?.length ? urlMatch[1] : undefined
 
-	for (const website of componentData) {
-		const { id, url, orgLocationOnly, description, isPrimary } = website
-		const urlMatch = url.match(domainExtract)
-		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
-		if (!isExternal(url)) {
-			continue
-		}
-		if (!urlBase) {
-			continue
-		}
-		if (locationOnly && !orgLocationOnly) {
-			continue
-		}
+			if (anyTrue(!isExternal(url), !urlBase, locationOnly && !orgLocationOnly)) {
+				continue
+			}
+			invariant(isExternal(url))
+			invariant(urlBase)
 
-		if (direct) {
-			return (
-				<Stack spacing={12}>
-					<Title order={3}>{t('direct.website')}</Title>
-					<Link external href={url} variant={variants.Link.inlineInverted}>
-						{urlBase}
-					</Link>
-				</Stack>
+			if (direct) {
+				showDirectHeading = true
+			}
+
+			const desc =
+				websiteDesc && description
+					? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
+					: urlBase
+
+			const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
+
+			const item = (
+				<Link external key={id} href={url} variant={linkVariant}>
+					{desc}
+				</Link>
 			)
+			isPrimary ? output.unshift(item) : output.push(item)
 		}
-
-		const desc =
-			websiteDesc && description
-				? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
-				: urlBase
-		const item = (
-			<Link external key={id} href={url} variant={variants.Link.inline}>
-				{desc}
-			</Link>
-		)
-		isPrimary ? output.unshift(item) : output.push(item)
-	}
-
-	if (!output.length) {
+		return { output, showDirectHeading }
+	}, [
+		componentData,
+		direct,
+		domainExtract,
+		locationOnly,
+		orgId?.id,
+		t,
+		variants.Link.inline,
+		variants.Link.inlineInverted,
+		websiteDesc,
+	])
+	if (!content.length) {
 		return null
 	}
+
+	const headingContent = shouldShowDirectHeading
+		? t('direct.website')
+		: t('website', { count: content.length })
 
 	return (
 		<Stack spacing={12}>
-			<Title order={3}>{t('website', { count: output.length })}</Title>
-			{output}
+			<Title order={3}>{headingContent}</Title>
+			{content}
 		</Stack>
 	)
 }

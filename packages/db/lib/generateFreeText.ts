@@ -42,6 +42,9 @@ export const generateFreeText = <T extends GenerateFreeTextType>(args: GenerateF
 				const { itemId } = args as GenerateFreeTextParams<'locationAlert'>
 				invariant(itemId)
 				return createKey(['locationBasedAlert', itemId])
+      }
+			default: {
+				return null
 			}
 		}
 	})()
@@ -74,7 +77,7 @@ export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: Gen
 
 export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
 	args: GenerateFreeTextParams<T>
-): Prisma.FreeTextUpdateOneWithoutOrgEmailNestedInput => {
+) => {
 	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		upsert: {
