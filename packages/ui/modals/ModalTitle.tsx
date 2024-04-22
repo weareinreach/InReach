@@ -1,5 +1,5 @@
 import { Box, Group, Text } from '@mantine/core'
-import { type MouseEventHandler } from 'react'
+import { type MouseEventHandler, useMemo } from 'react'
 
 import { ActionButtons } from '~ui/components/core/ActionButtons'
 import { Breadcrumb, type BreadcrumbProps, isValidBreadcrumbProps } from '~ui/components/core/Breadcrumb'
@@ -8,7 +8,9 @@ import { useCustomVariant } from '~ui/hooks'
 export const ModalTitle = (props: ModalTitleProps) => {
 	const { breadcrumb, icons, rightText, serviceId } = props
 	const variants = useCustomVariant()
-	if (!isValidBreadcrumbProps(breadcrumb)) throw new Error('invalid Breadcrumb props')
+	if (!isValidBreadcrumbProps(breadcrumb)) {
+		throw new Error('invalid Breadcrumb props')
+	}
 	const iconMap = {
 		save: <ActionButtons key='modal-title-save' iconKey='save' omitLabel serviceId={serviceId} />,
 		share: <ActionButtons key='modal-title-share' iconKey='share' omitLabel />,
@@ -16,13 +18,19 @@ export const ModalTitle = (props: ModalTitleProps) => {
 
 	const displayIcons = icons?.length ? icons.map((item) => iconMap[item]) : undefined
 
-	const rightSection = displayIcons ? (
-		<Group position='right' spacing={0} noWrap>
-			{displayIcons}
-		</Group>
-	) : rightText ? (
-		<Text variant={variants.Text.utility1}>{rightText}</Text>
-	) : null
+	const rightSection = useMemo(() => {
+		if (displayIcons) {
+			return (
+				<Group position='right' spacing={0} noWrap>
+					{displayIcons}
+				</Group>
+			)
+		}
+		if (rightText) {
+			return <Text variant={variants.Text.utility1}>{rightText}</Text>
+		}
+		return null
+	}, [displayIcons, rightText, variants])
 	return (
 		<Group position='apart' align='center' noWrap>
 			<Box maw='70%' style={{ overflow: 'hidden' }}>

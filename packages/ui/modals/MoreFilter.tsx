@@ -18,10 +18,18 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { useMediaQuery, useViewportSize } from '@mantine/hooks'
+import { useDisclosure, useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type JSX, type MouseEventHandler, useEffect, useState } from 'react'
+import {
+	forwardRef,
+	type JSX,
+	type MouseEventHandler,
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useMemo,
+} from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
@@ -207,6 +215,96 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
+type FilterDisplayProps<T extends boolean> = T extends true ? TitleProps : TextProps
+const FilterDisplay = <T extends boolean>({
+	modalTitle,
+	disabled,
+	...props
+}: { modalTitle?: T; disabled?: boolean } & FilterDisplayProps<T>) => {
+	const { classes } = useStyles()
+	return modalTitle ? (
+		<Title order={2} mb={0} {...(props as TitleProps)} />
+	) : (
+		<Text
+			className={classes.label}
+			{...(disabled && { 'data-disabled': disabled })}
+			{...(props as TextProps)}
+		/>
+	)
+}
+
+interface TitleBarProps {
+	modalTitle?: boolean
+	disabled?: boolean
+	selectedItemCount: number
+	selectedCountIcon: ReactNode
+	deselectAll: () => void
+}
+const TitleBar = ({
+	modalTitle = false,
+	disabled = false,
+	selectedItemCount,
+	selectedCountIcon,
+	deselectAll,
+}: TitleBarProps) => {
+	const { classes } = useStyles()
+	const { t } = useTranslation('common')
+
+	return (
+		<Group
+			className={modalTitle ? undefined : classes.button}
+			position='apart'
+			noWrap
+			spacing={0}
+			{...(disabled && { 'data-disabled': disabled })}
+		>
+			{modalTitle ? (
+				<>
+					<Group spacing={8} noWrap>
+						<FilterDisplay>{t('more.options')}</FilterDisplay>
+						{selectedItemCount > 0 ? selectedCountIcon : null}
+					</Group>
+					{selectedItemCount > 0 ? (
+						<Link
+							fw={500}
+							onClick={deselectAll}
+							// className={selectedItemCount > 0 ? classes.uncheck : classes.uncheckDisabled}
+						>
+							{t('uncheck-all')}
+						</Link>
+					) : null}
+				</>
+			) : (
+				<>
+					<Group spacing={8} noWrap position='center' w='100%'>
+						<Icon icon='carbon:settings-adjust' rotate={2} />
+						<FilterDisplay>{t('more.options')}</FilterDisplay>
+					</Group>
+					{selectedItemCount > 0 ? selectedCountIcon : <Icon icon='carbon:chevron-down' height={24} />}
+				</>
+			)}
+		</Group>
+	)
+}
+
+const DefaultLauncher = ({
+	deselectAll,
+	modalTitle,
+	selectedCountIcon,
+	selectedItemCount,
+	...props
+}: UnstyledButtonProps & { onClick: MouseEventHandler<HTMLButtonElement> } & TitleBarProps) => {
+	const titleBarProps = useMemo(
+		() => ({ modalTitle, deselectAll, selectedCountIcon, selectedItemCount }),
+		[deselectAll, modalTitle, selectedCountIcon, selectedItemCount]
+	)
+	return (
+		<UnstyledButton w='100%' {...props}>
+			<TitleBar {...titleBarProps} />
+		</UnstyledButton>
+	)
+}
+
 const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 	({ resultCount, isFetching, disabled, ...props }, ref) => {
 		const { data: moreFilterOptionData, status } = api.attribute.getFilterOptions.useQuery()
@@ -214,7 +312,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		const { classes: accordionClasses } = useAccordionStyles()
 		const { classes: modalClasses } = useModalStyles()
 		const { t } = useTranslation(['common', 'attribute'])
-		const [opened, setOpened] = useState(false)
+		const [modalOpen, modalHandler] = useDisclosure(false)
 		const theme = useMantineTheme()
 		const { searchStateActions, searchState } = useSearchState()
 
@@ -224,7 +322,18 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 			`(orientation: landscape) and (max-height: ${em(376)}) and (max-width: ${theme.breakpoints.xs})`
 		)
 		const isMobile = isMobileQuery || isLandscape
-		const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
+		const viewportSize = useViewportSize()
+		const viewportOffset = useMemo(() => {
+			if (isLandscape) {
+				return isSmallLandscape ? 40 : 20
+			}
+			return 0
+		}, [isLandscape, isSmallLandscape])
+
+		const viewportHeight = useMemo(
+			() => viewportSize.height + viewportOffset,
+			[viewportOffset, viewportSize.height]
+		)
 		const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 
 		type AttributeFilter = NonNullable<typeof moreFilterOptionData>[number]
@@ -233,14 +342,19 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		const form = useForm<FilterValue[]>({ initialValues: [] })
 		const preSelected = searchState.attributes
 
-		const generateInitialData = (opts?: { clear?: boolean }) => {
-			if (!moreFilterOptionData) return []
-			const initialValues = moreFilterOptionData.map((filter) => ({
-				...filter,
-				checked: !opts?.clear && preSelected.includes(filter.id),
-			}))
-			return initialValues
-		}
+		const generateInitialData = useCallback(
+			(opts?: { clear?: boolean }) => {
+				if (!moreFilterOptionData) {
+					return []
+				}
+				const initialValues = moreFilterOptionData.map((filter) => ({
+					...filter,
+					checked: !opts?.clear && preSelected.includes(filter.id),
+				}))
+				return initialValues
+			},
+			[moreFilterOptionData, preSelected]
+		)
 
 		useEffect(() => {
 			if (moreFilterOptionData && status === 'success') {
@@ -251,17 +365,19 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		}, [moreFilterOptionData, status])
 
 		useEffect(() => {
-			const selectedItems: string[] = []
+			const itemsSelected: string[] = []
 			Object.values(form.values).forEach(({ checked, id }) => {
-				if (checked) selectedItems.push(id)
+				if (checked) {
+					itemsSelected.push(id)
+				}
 			})
-			searchStateActions.setAttributes(selectedItems)
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [form.values])
+			searchStateActions.setAttributes(itemsSelected)
+		}, [form.values, searchStateActions])
 
-		if (!moreFilterOptionData) return <Skeleton height={48} width='100%' radius='xs' />
-
-		const deselectAll = () => form.setValues(generateInitialData({ clear: true }))
+		const deselectAll = useCallback(
+			() => form.setValues(generateInitialData({ clear: true })),
+			[form, generateInitialData]
+		)
 
 		const filterListInclude: JSX.Element[] = []
 		const filterListExclude: JSX.Element[] = []
@@ -293,75 +409,36 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 			}
 		}
 
-		const selectedItems = (function () {
+		const selectedItems = useMemo(() => {
 			const selected: string[] = []
 			for (const [_key, value] of Object.entries(form.values)) {
-				if (value.checked) selected.push(value.id)
+				if (value.checked) {
+					selected.push(value.id)
+				}
 			}
 			return selected
-		})()
+		}, [form.values])
 
-		const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
-
-		const TitleBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
-			const FilterDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
-				modalTitle ? (
-					<Title order={2} mb={0} {...props} />
-				) : (
-					<Text className={classes.label} {...(disabled ? { 'data-disabled': disabled } : {})} {...props} />
-				)
-
-			return (
-				<Group
-					className={modalTitle ? undefined : classes.button}
-					position='apart'
-					noWrap
-					spacing={0}
-					{...(disabled ? { 'data-disabled': disabled } : {})}
-				>
-					{modalTitle ? (
-						<>
-							<Group spacing={8} noWrap>
-								<FilterDisplay>{t('more.options')}</FilterDisplay>
-								{selectedItems.length > 0 ? selectedCountIcon : null}
-							</Group>
-							{selectedItems.length > 0 ? (
-								<Link
-									fw={500}
-									onClick={() => deselectAll()}
-									// className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
-								>
-									{t('uncheck-all')}
-								</Link>
-							) : null}
-						</>
-					) : (
-						<>
-							<Group spacing={8} noWrap position='center' w='100%'>
-								<Icon icon='carbon:settings-adjust' rotate={2} />
-								<FilterDisplay>{t('more.options')}</FilterDisplay>
-							</Group>
-							{selectedItems.length > 0 ? selectedCountIcon : <Icon icon='carbon:chevron-down' height={24} />}
-						</>
-					)}
-				</Group>
-			)
-		}
-
-		const DefaultLauncher = (
-			props: UnstyledButtonProps & { onClick: MouseEventHandler<HTMLButtonElement> }
-		) => (
-			<UnstyledButton w='100%' {...props}>
-				<TitleBar />
-			</UnstyledButton>
+		const selectedCountIcon = useMemo(
+			() => <Text className={classes.count}>{selectedItems.length}</Text>,
+			[selectedItems.length, classes]
 		)
+
+		const titleBarProps = useMemo(
+			() => ({ deselectAll, selectedCountIcon, selectedItemCount: selectedItems.length }),
+			[deselectAll, selectedCountIcon, selectedItems.length]
+		)
+
+		if (!moreFilterOptionData) {
+			return <Skeleton height={48} width='100%' radius='xs' />
+		}
 
 		return (
 			<>
 				<Modal
-					opened={opened}
-					onClose={() => setOpened(false)}
-					title={<TitleBar modalTitle />}
+					opened={modalOpen}
+					onClose={modalHandler.close}
+					title={<TitleBar modalTitle {...titleBarProps} />}
 					fullScreen={isMobile}
 					classNames={modalClasses}
 					scrollAreaComponent={Modal.NativeScrollArea}
@@ -371,7 +448,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 							placeholder={null}
 							classNames={{ viewport: accordionClasses.scrollArea }}
 							mah={scrollAreaMaxHeight}
-							// TODO: Typescript wants these two properties all of a sudden -- why?
+							// Typescript wants these two properties all of a sudden -- why?
 							onPointerEnterCapture={undefined}
 							onPointerLeaveCapture={undefined}
 						>
@@ -388,7 +465,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 					<Group className={modalClasses.footer} noWrap>
 						<Button
 							variant='secondary'
-							onClick={() => deselectAll()}
+							onClick={deselectAll}
 							disabled={selectedItems.length < 1}
 							className={classes.uncheckBtn}
 						>
@@ -397,7 +474,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 						<Button
 							variant='primary'
 							className={classes.resultsBtn}
-							onClick={() => setOpened(false)}
+							onClick={modalHandler.close}
 							loading={isFetching}
 						>
 							{t('view-x-result', { count: resultCount })}
@@ -407,9 +484,10 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 				<Box
 					ref={ref}
 					component={DefaultLauncher}
-					onClick={() => setOpened(true)}
+					onClick={modalHandler.open}
 					className={classes.launchButton}
 					{...(disabled ? { disabled, 'data-disabled': disabled } : {})}
+					{...titleBarProps}
 					{...props}
 				/>
 			</>
