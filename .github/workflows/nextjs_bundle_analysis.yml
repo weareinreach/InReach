@@ -75,7 +75,7 @@ jobs:
         run: npx -p nextjs-bundle-analysis report
 
       - name: Upload bundle
-        uses: actions/upload-artifact@1746f4ab65b179e0ea60a494b83293b640dd5bba # v4
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4
         with:
           name: bundle
           path: /home/runner/work/InReach/InReach/apps/app/.next/analyze/__bundle_analysis.json
