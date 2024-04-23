@@ -23,8 +23,8 @@ const translation = [
 	{
 		title: 'Translation definitions from DB',
 		task: (_ctx: ListrContext, task: PassedTask) => generateTranslationKeys(task),
-		options,
 		skip: !process.env.DATABASE_URL,
+		options,
 	},
 ]
 
@@ -37,9 +37,13 @@ program.parse(process.argv)
 const cliOpts = program.opts()
 let tasklist: ListrJob[] = []
 
-if (cliOpts.translations) tasklist.push(...translation)
+if (cliOpts.translations) {
+	tasklist.push(...translation)
+}
 
-if (Object.keys(cliOpts).length === 0) tasklist = [...translation]
+if (Object.keys(cliOpts).length === 0) {
+	tasklist = [...translation]
+}
 
 const tasks = new Listr(tasklist, {
 	exitOnError: false,

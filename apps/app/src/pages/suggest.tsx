@@ -2,7 +2,7 @@ import { Grid, Overlay } from '@mantine/core'
 import { type GetStaticPropsContext } from 'next'
 import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { SuggestOrg } from '@weareinreach/ui/components/sections/SuggestOrg'
@@ -17,6 +17,7 @@ const QuickPromotionModal = dynamic(() =>
 const SuggestResource = () => {
 	const { data: session, status } = useSession()
 	const [overlay, setOverlay] = useState(false)
+	const handleClose = useCallback(() => setOverlay(false), [setOverlay])
 
 	return (
 		<>
@@ -27,7 +28,7 @@ const SuggestResource = () => {
 			</Grid.Col>
 			{overlay && (
 				<Overlay blur={2}>
-					<QuickPromotionModal component='button' autoLaunch onClose={() => setOverlay(false)} />
+					<QuickPromotionModal component='button' autoLaunch onClose={handleClose} />
 				</Overlay>
 			)}
 		</>

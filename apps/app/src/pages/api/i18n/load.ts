@@ -43,7 +43,9 @@ export default async function handler(req: NextRequest) {
 		for (const lang of langs) {
 			try {
 				const nsFileMap = sourceFiles(lang)
-				if (lang === 'en') continue
+				if (lang === 'en') {
+					continue
+				}
 				const databaseFile = sourceFiles(lang).databaseStrings
 				const cached = await redisReadCache(namespaces, lang, otaManifestTimestamp)
 				const langResult = new Map<string, object | string>(cached)
@@ -59,14 +61,18 @@ export default async function handler(req: NextRequest) {
 							case Object.hasOwn(nsFileMap, ns): {
 								const file = nsFileMap[ns as keyof typeof nsFileMap] ?? ''
 								const strings = await fetchCrowdinFile(file, lang)
-								if (strings && Object.keys(strings).length) cacheWriteQueue.push({ lang, ns, strings })
+								if (strings && Object.keys(strings).length) {
+									cacheWriteQueue.push({ lang, ns, strings })
+								}
 								langResult.set(ns, strings)
 								break
 							}
 							default: {
 								const file = databaseFile
 								const strings = await fetchCrowdinDbKey(ns, file, lang)
-								if (strings) cacheWriteQueue.push({ lang, ns, strings })
+								if (strings) {
+									cacheWriteQueue.push({ lang, ns, strings })
+								}
 								langResult.set(ns, strings)
 							}
 						}
