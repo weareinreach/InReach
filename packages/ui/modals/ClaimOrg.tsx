@@ -1,10 +1,9 @@
 import { Box, type ButtonProps, createPolymorphicComponent, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { Trans, useTranslation } from 'next-i18next'
-import { type Dispatch, forwardRef, type SetStateAction } from 'react'
+import { type Dispatch, forwardRef, type SetStateAction, useCallback } from 'react'
 
 import { Button } from '~ui/components/core/Button'
-// import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { LoginModalLauncher /*, SignupModalLauncher*/ } from './LoginSignUp'
@@ -16,29 +15,25 @@ const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProps>(
 		const variants = useCustomVariant()
 		const [opened, handler] = useDisclosure(false)
 		const { isMobile } = useScreenSize()
+		const handleClose = useCallback(() => {
+			if (typeof externalStateHandler === 'function') {
+				externalStateHandler(false)
+			}
+			handler.close()
+		}, [externalStateHandler, handler])
+
 		const modalTitle = (
 			<ModalTitle
 				breadcrumb={{
 					option: 'close',
-					onClick: () => {
-						if (typeof externalStateHandler === 'function') externalStateHandler(false)
-						handler.close()
-					},
+					onClick: handleClose,
 				}}
 			/>
 		)
 
 		return (
 			<>
-				<Modal
-					title={modalTitle}
-					opened={externalOpen === undefined ? opened : externalOpen}
-					onClose={() => {
-						if (typeof externalStateHandler === 'function') externalStateHandler(false)
-						handler.close()
-					}}
-					fullScreen={isMobile}
-				>
+				<Modal title={modalTitle} opened={externalOpen ?? opened} onClose={handleClose} fullScreen={isMobile}>
 					<Stack align='center' spacing={24}>
 						<Stack align='center' spacing={16}>
 							<Trans
@@ -79,15 +74,7 @@ const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProps>(
 						</SignupModalLauncher> */}
 					</Stack>
 				</Modal>
-				<Box
-					component='button'
-					ref={ref}
-					onClick={(e) => {
-						e.stopPropagation()
-						handler.open()
-					}}
-					{...props}
-				/>
+				<Box component='button' ref={ref} onClick={handler.open} {...props} />
 			</>
 		)
 	}

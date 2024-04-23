@@ -12,7 +12,7 @@ import {
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { forwardRef } from 'react'
+import { forwardRef, useCallback, useMemo } from 'react'
 import { z } from 'zod'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
@@ -61,39 +61,43 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 	})
 	const isLoading = createListOnly.isLoading || createListAndSaveItem.isLoading
 
-	const createHandler = () => {
+	const createHandler = useCallback(() => {
 		const { organizationId, serviceId } = props
-		const { name } = form.values
+		const { name } = form.getTransformedValues()
+
 		if (organizationId || serviceId) {
 			createListAndSaveItem.mutate({ name, serviceId, organizationId })
 		} else {
 			createListOnly.mutate({ name })
 		}
-	}
+	}, [createListAndSaveItem, createListOnly, form, props])
 
-	const modalTitle = (
-		<Group position='apart' align='center' noWrap>
-			<Box maw='70%' style={{ overflow: 'hidden' }}>
-				<Breadcrumb option='close' onClick={handler.close} />
-			</Box>
-		</Group>
+	const modalTitle = useMemo(
+		() => (
+			<Group position='apart' align='center' noWrap>
+				<Box maw='70%' style={{ overflow: 'hidden' }}>
+					<Breadcrumb option='close' onClick={handler.close} />
+				</Box>
+			</Group>
+		),
+		[handler]
 	)
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
+			<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
 				<Stack align='center' spacing={24}>
 					<Title order={2}>{t('list.create-new')}</Title>
 					<Text variant={variants.Text.utility4darkGray}>{t('list.create-new-sub')}</Text>
 					<TextInput
 						label={t('list.name')}
-						placeholder={t('list.new-list-placeholder') as string}
+						placeholder={t('list.new-list-placeholder')}
 						required
 						{...form.getInputProps('name')}
 					/>
 					<Text variant={variants.Text.utility4darkGray}>{t('list.create-new-sub2')}</Text>
 					<Button
-						onClick={() => createHandler()}
+						onClick={createHandler}
 						variant='primary-icon'
 						fullWidth
 						loaderPosition='center'
@@ -104,7 +108,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 					</Button>
 				</Stack>
 			</Modal>
-			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
+			<Box component='button' ref={ref} onClick={handler.open} {...props} />
 		</>
 	)
 })

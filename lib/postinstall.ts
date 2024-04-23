@@ -10,7 +10,7 @@ if ((!isCi || override) && !skip) {
 	require('dotenv').config()
 	const dbUrl = process.env.DATABASE_URL
 	let command = 'turbo run post-install'
-	if (typeof dbUrl === 'string' && dbUrl.substring(0, 6) === 'prisma') {
+	if (typeof dbUrl === 'string' && dbUrl.startsWith('prisma://')) {
 		command = `PRISMA_GENERATE_DATAPROXY=true ${command}`
 	}
 	if (override) {
