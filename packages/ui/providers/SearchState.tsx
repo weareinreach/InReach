@@ -50,15 +50,24 @@ const SearchStateSchema = z.object({
 	sort: z.string().array().optional().default([]).or(StringToArray),
 	searchTerm: z.string().optional(),
 })
-
-const createActionCreators = (dispatch: React.Dispatch<Action>): ActionCreators => ({
-	setParams: (payload: string[]) => dispatch({ type: 'SET_PARAMS', payload }),
+const isArrayDifferent = (a: string[], b: string[]) => {
+	if (a.length !== b.length) {
+		return true
+	}
+	return !(a.every((val) => b.includes(val)) && b.every((val) => a.includes(val)))
+}
+const createActionCreators = (dispatch: React.Dispatch<Action>, currentState: State): ActionCreators => ({
+	setParams: (payload: string[]) =>
+		isArrayDifferent(currentState.params, payload) && dispatch({ type: 'SET_PARAMS', payload }),
 	setPage: (payload: string) => dispatch({ type: 'SET_PAGE', payload }),
-	setAttributes: (payload: string[]) => dispatch({ type: 'SET_ATTRIBUTES', payload }),
-	setServices: (payload: string[]) => dispatch({ type: 'SET_SERVICES', payload }),
+	setAttributes: (payload: string[]) =>
+		isArrayDifferent(currentState.a, payload) && dispatch({ type: 'SET_ATTRIBUTES', payload }),
+	setServices: (payload: string[]) =>
+		isArrayDifferent(currentState.s, payload) && dispatch({ type: 'SET_SERVICES', payload }),
 	setSearchTerm: (payload: string) => dispatch({ type: 'SET_SEARCHTERM', payload }),
 	setExtended: (payload: string) => dispatch({ type: 'SET_EXTENDED', payload }),
-	setSort: (payload: string[]) => dispatch({ type: 'SET_SORT', payload }),
+	setSort: (payload: string[]) =>
+		isArrayDifferent(currentState.sort, payload) && dispatch({ type: 'SET_SORT', payload }),
 	setSearchState: (payload: z.input<typeof SearchStateSchema>) =>
 		dispatch({ type: 'SET_SEARCHSTATE', payload: SearchStateSchema.parse(payload) }),
 })
@@ -67,19 +76,21 @@ export const SearchStateContext = createContext<SearchStateContext | null>(null)
 SearchStateContext.displayName = 'SearchStateContext'
 export const SearchStateProvider = ({ children, initState }: SearchStateProviderProps) => {
 	const [state, dispatch] = useReducer(searchStateReducer, { ...initialState, ...initState })
-
-	const getRoute = useCallback(() => {
-		if (state.params.length) {
-			return {
-				params: state.params,
-				page: state.page.toString(),
-				...(state.a.length ? { a: state.a } : {}),
-				...(state.s.length ? { s: state.s } : {}),
-				...(state.sort.length ? { sort: state.sort } : {}),
+	const getRoute = useCallback(
+		(stateItem: typeof state) => () => {
+			if (stateItem.params.length) {
+				return {
+					params: stateItem.params,
+					page: stateItem.page.toString(),
+					...(stateItem.a.length ? { a: stateItem.a } : {}),
+					...(stateItem.s.length ? { s: stateItem.s } : {}),
+					...(stateItem.sort.length ? { sort: stateItem.sort } : {}),
+				}
 			}
-		}
-		return undefined
-	}, [state.a, state.page, state.params, state.s, state.sort])
+			return undefined
+		},
+		[]
+	)
 
 	const contextValue = useMemo(
 		() => ({
@@ -87,9 +98,9 @@ export const SearchStateProvider = ({ children, initState }: SearchStateProvider
 				...state,
 				attributes: state.a,
 				services: state.s,
-				getRoute,
+				getRoute: getRoute(state),
 			},
-			searchStateActions: { ...createActionCreators(dispatch), getRoute },
+			searchStateActions: { ...createActionCreators(dispatch, state), getRoute: getRoute(state) },
 		}),
 		[getRoute, state]
 	)

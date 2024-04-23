@@ -13,9 +13,16 @@ import {
 	useMantineTheme,
 	Checkbox as VanillaCheckbox,
 } from '@mantine/core'
-import { useMediaQuery, useViewportSize } from '@mantine/hooks'
+import { useDisclosure, useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { type BaseSyntheticEvent, type MouseEvent, useEffect, useMemo, useState } from 'react'
+import {
+	type BaseSyntheticEvent,
+	type MouseEvent,
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useMemo,
+} from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 
@@ -28,20 +35,99 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useAccordionStyles, useModalStyles, useStyles } from './styles'
 
+const accordionChevron = <Icon icon='carbon:chevron-right' height={24} width={24} />
+
+type ServiceDisplayProps<T extends boolean> = T extends true ? TitleProps : TextProps
+const ServicesDisplay = <T extends boolean>({
+	modalTitle,
+	disabled,
+	...props
+}: { modalTitle?: T; disabled?: boolean } & ServiceDisplayProps<T>) => {
+	const { classes } = useStyles()
+
+	return modalTitle ? (
+		<Title order={2} mb={0} {...(props as TitleProps)} />
+	) : (
+		<Text
+			className={classes.label}
+			{...(disabled && { 'data-disabled': disabled })}
+			{...(props as TextProps)}
+		/>
+	)
+}
+
+interface ServiceBarProps {
+	modalTitle?: boolean
+	disabled?: boolean
+	selectedItemCount: number
+	selectedCountIcon: ReactNode
+	deselectAll: () => void
+}
+
+const ServiceBar = ({
+	modalTitle = false,
+	disabled = false,
+	selectedItemCount,
+	selectedCountIcon,
+	deselectAll,
+}: ServiceBarProps) => {
+	const { classes } = useStyles()
+	const { t } = useTranslation('common')
+
+	return (
+		<Group
+			className={modalTitle ? undefined : classes.button}
+			position='apart'
+			noWrap
+			spacing={0}
+			{...(disabled ? { 'data-disabled': disabled } : {})}
+		>
+			{modalTitle ? (
+				<>
+					<Group spacing={8} noWrap>
+						<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
+						{selectedItemCount > 0 ? selectedCountIcon : null}
+					</Group>
+					{selectedItemCount > 0 ? (
+						<Link fw={500} onClick={deselectAll}>
+							{t('uncheck-all')}
+						</Link>
+					) : null}
+				</>
+			) : (
+				<>
+					<Group spacing={8} noWrap position='center' w='100%'>
+						<Icon icon='carbon:building' />
+						<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
+					</Group>
+					{selectedItemCount > 0 ? (
+						selectedCountIcon
+					) : (
+						<Icon icon='carbon:chevron-down' height={24} width={24} />
+					)}
+				</>
+			)}
+		</Group>
+	)
+}
+
 export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilterProps) => {
 	const { data: serviceOptionData } = api.service.getFilterOptions.useQuery(undefined, {
 		select: (data) =>
 			data.map(({ id, tsKey, tsNs, services }) => ({
 				categoryId: id,
 				label: `${tsNs}:${tsKey}`,
-				services: services.map(({ id, tsKey, tsNs }) => ({ value: id, label: `${tsNs}:${tsKey}` })),
+				services: services.map(({ id: serviceId, tsKey: serviceTsKey, tsNs: serviceTsNs }) => ({
+					value: serviceId,
+					label: `${serviceTsNs}:${serviceTsKey}`,
+				})),
 			})),
 	})
 	const { classes } = useStyles()
 	const { classes: accordionClasses } = useAccordionStyles()
 	const { classes: modalClasses } = useModalStyles()
 	const { t } = useTranslation(['common', 'services'])
-	const [opened, setOpened] = useState(false)
+	const [modalOpen, modalHandler] = useDisclosure(false)
 	const theme = useMantineTheme()
 	const { searchStateActions, searchState } = useSearchState()
 
@@ -52,7 +138,19 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 		`(orientation: landscape) and (max-height: ${em(376)}) and (max-width: ${theme.breakpoints.xs})`
 	)
 	const isMobile = isMobileQuery || isLandscape
-	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
+
+	const viewportSize = useViewportSize()
+	const viewportOffset = useMemo(() => {
+		if (isLandscape) {
+			return isSmallLandscape ? 40 : 20
+		}
+		return 0
+	}, [isLandscape, isSmallLandscape])
+
+	const viewportHeight = useMemo(
+		() => viewportSize.height + viewportOffset,
+		[viewportOffset, viewportSize.height]
+	)
 	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 	// #endregion
 
@@ -84,65 +182,123 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedValues])
 
-	if (!serviceOptionData) return <Skeleton height={48} width='100%' radius='xs' />
-
-	const hasAll = (categoryId: string) => {
-		const services = servicesByCategory.get(categoryId)
-		if (!services) return false
-		const doesHaveAll = services.every((service) => selectedValues.includes(service))
-		return doesHaveAll
-	}
-	const hasSome = (categoryId: string) => {
-		const services = servicesByCategory.get(categoryId)
-		if (!services) return false
-		return !hasAll(categoryId) && services.some((service) => selectedValues.includes(service))
-	}
-
-	const toggleCategory = (categoryId: string) => {
-		const services = servicesByCategory.get(categoryId)
-		const category = serviceCategoryName.get(categoryId)
-		if (!services) return
-		if (!hasAll(categoryId)) {
-			const newValue = [...new Set([...selectedValues, ...services])]
-			for (const service of newValue) {
-				if (!selectedValues.includes(service)) {
-					serviceFilterEvent.select(service, serviceName.get(service), category)
-				}
+	const hasAll = useCallback(
+		(categoryId: string) => {
+			const services = servicesByCategory.get(categoryId)
+			if (!services) {
+				return false
 			}
-			form.setValue('selected', newValue, { shouldValidate: true })
-		} else {
-			const newValue = selectedValues.filter((id) => !services.includes(id))
-			if (newValue.length === 0) {
+			const doesHaveAll = services.every((service) => selectedValues.includes(service))
+			return doesHaveAll
+		},
+		[servicesByCategory, selectedValues]
+	)
+	const hasSome = useCallback(
+		(categoryId: string) => {
+			const services = servicesByCategory.get(categoryId)
+			if (!services) {
+				return false
+			}
+			return !hasAll(categoryId) && services.some((service) => selectedValues.includes(service))
+		},
+		[servicesByCategory, selectedValues, hasAll]
+	)
+
+	const toggleCategory = useCallback(
+		(categoryId: string) => {
+			const services = servicesByCategory.get(categoryId)
+			const category = serviceCategoryName.get(categoryId)
+			if (!services) {
+				return
+			}
+
+			const newValue = !hasAll(categoryId)
+				? [...new Set([...selectedValues, ...services])]
+				: selectedValues.filter((id) => !services.includes(id))
+			if (!hasAll(categoryId)) {
+				for (const service of newValue) {
+					!selectedValues.includes(service) &&
+						serviceFilterEvent.select(service, serviceName.get(service), category)
+				}
+			} else if (newValue.length === 0) {
 				for (const service of selectedValues) {
 					serviceFilterEvent.unselect(service, serviceName.get(service), category)
 				}
-			}
-			for (const service of newValue) {
-				if (!selectedValues.includes(service)) {
-					serviceFilterEvent.unselect(service, serviceName.get(service), category)
+			} else {
+				for (const service of newValue) {
+					!selectedValues.includes(service) &&
+						serviceFilterEvent.unselect(service, serviceName.get(service), category)
 				}
 			}
 			form.setValue('selected', newValue, { shouldValidate: true })
-		}
-	}
-	const deselectAll = () => {
+		},
+		[servicesByCategory, selectedValues, serviceName, serviceCategoryName, form, hasAll]
+	)
+
+	const deselectAll = useCallback(() => {
 		serviceFilterEvent.deselectAll(selectedValues.map((serviceId) => serviceName.get(serviceId)))
 		for (const service of selectedValues) {
 			serviceFilterEvent.unselect(service, serviceName.get(service))
 		}
 		form.setValue('selected', [], { shouldValidate: true })
-	}
+	}, [form, serviceName, selectedValues])
 
-	const selectedCountIcon = <Text className={classes.count}>{selectedValues.length}</Text>
+	const getToggleAction = useCallback((checked: boolean, indeterminate: boolean) => {
+		if (checked) {
+			return 'unselect'
+		}
+		if (indeterminate) {
+			return 'select_from_partial'
+		}
+		return 'select'
+	}, [])
+
+	const handleToggleParent = useCallback(
+		({
+			categoryId,
+			label,
+			checked,
+			indeterminate,
+		}: {
+			categoryId: string
+			label: string
+			checked: boolean
+			indeterminate: boolean
+		}) =>
+			() => {
+				const toggleAction = getToggleAction(checked, indeterminate)
+				toggleCategory(categoryId)
+				serviceFilterEvent.toggleCategory(t(label, { lng: 'en' }), toggleAction)
+			},
+		[getToggleAction, toggleCategory, t]
+	)
+
+	const handleToggleChild = useCallback(
+		(item: { value: string; label: string }, parentLabel: string) =>
+			(e: BaseSyntheticEvent<MouseEvent, HTMLInputElement, { checked: boolean }>) => {
+				const serviceId = item.value
+				const serviceItemName = t(item.label, { lng: 'en' })
+				const serviceCategory = t(parentLabel, { lng: 'en' })
+				e.target.checked
+					? serviceFilterEvent.select(serviceId, serviceItemName, serviceCategory)
+					: serviceFilterEvent.unselect(serviceId, serviceItemName, serviceCategory)
+			},
+		[t]
+	)
+
 	const categorySelectedCountIcon = (categoryId: string) => {
 		const services = servicesByCategory.get(categoryId)
-		if (!services) return null
+		if (!services) {
+			return null
+		}
 		const selectedCount = services.filter((service) => selectedValues.includes(service)).length
-		if (selectedCount > 0) return <Text className={classes.count}>{selectedCount}</Text>
+		if (selectedCount > 0) {
+			return <Text className={classes.count}>{selectedCount}</Text>
+		}
 		return null
 	}
 
-	const filterList = serviceOptionData.map(({ categoryId, label, services }) => {
+	const filterList = serviceOptionData?.map(({ categoryId, label, services }) => {
 		const checked = hasAll(categoryId)
 		const indeterminate = hasSome(categoryId)
 
@@ -161,13 +317,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 							indeterminate={indeterminate}
 							label={t('all-service-category', { serviceCategory: `$t(${label})` })}
 							transitionDuration={0}
-							onClick={() => {
-								toggleCategory(categoryId)
-								serviceFilterEvent.toggleCategory(
-									t(label, { lng: 'en' }),
-									checked ? 'unselect' : indeterminate ? 'select_from_partial' : 'select'
-								)
-							}}
+							onChange={handleToggleParent({ categoryId, label, checked, indeterminate })}
 							className={classes.itemParent}
 						/>
 					)}
@@ -179,14 +329,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 									label={t(item.label)}
 									value={item.value}
 									key={item.value}
-									onClick={(e: BaseSyntheticEvent<MouseEvent, HTMLInputElement, { checked: boolean }>) => {
-										const serviceId = item.value
-										const serviceName = t(item.label, { lng: 'en' })
-										const serviceCategory = t(label, { lng: 'en' })
-										e.target.checked
-											? serviceFilterEvent.select(serviceId, serviceName, serviceCategory)
-											: serviceFilterEvent.unselect(serviceId, serviceName, serviceCategory)
-									}}
+									onClick={handleToggleChild(item, label)}
 								/>
 							)
 						})}
@@ -196,71 +339,38 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 		)
 	})
 
-	const ServiceBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
-		const ServicesDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
-			modalTitle ? (
-				<Title order={2} mb={0} {...props} />
-			) : (
-				<Text className={classes.label} {...(disabled ? { 'data-disabled': disabled } : {})} {...props} />
-			)
-
-		return (
-			<Group
-				className={modalTitle ? undefined : classes.button}
-				position='apart'
-				noWrap
-				spacing={0}
-				{...(disabled ? { 'data-disabled': disabled } : {})}
-			>
-				{modalTitle ? (
-					<>
-						<Group spacing={8} noWrap>
-							<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
-							{selectedValues.length > 0 ? selectedCountIcon : null}
-						</Group>
-						{selectedValues.length > 0 ? (
-							<Link fw={500} onClick={() => deselectAll()}>
-								{t('uncheck-all')}
-							</Link>
-						) : null}
-					</>
-				) : (
-					<>
-						<Group spacing={8} noWrap position='center' w='100%'>
-							<Icon icon='carbon:building' />
-							<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
-						</Group>
-						{selectedValues.length > 0 ? (
-							selectedCountIcon
-						) : (
-							<Icon icon='carbon:chevron-down' height={24} width={24} />
-						)}
-					</>
-				)}
-			</Group>
-		)
+	const selectedCountIcon = useMemo(
+		() => <Text className={classes.count}>{selectedValues.length}</Text>,
+		[selectedValues.length, classes]
+	)
+	const serviceBarProps: ServiceBarProps = useMemo(
+		() => ({
+			disabled,
+			selectedCountIcon,
+			deselectAll,
+			selectedItemCount: selectedValues.length,
+		}),
+		[disabled, selectedCountIcon, deselectAll, selectedValues.length]
+	)
+	const modalTitle = useMemo(() => <ServiceBar modalTitle {...serviceBarProps} />, [serviceBarProps])
+	if (!serviceOptionData) {
+		return <Skeleton height={48} width='100%' radius='xs' />
 	}
-
 	return (
 		<>
 			<Modal
-				opened={opened}
-				onClose={() => setOpened(false)}
-				title={<ServiceBar modalTitle />}
+				opened={modalOpen}
+				onClose={modalHandler.close}
+				title={modalTitle}
 				fullScreen={isMobile}
 				classNames={modalClasses}
 				scrollAreaComponent={Modal.NativeScrollArea}
 			>
-				<Accordion
-					chevron={<Icon icon='carbon:chevron-right' height={24} width={24} />}
-					transitionDuration={0}
-					classNames={accordionClasses}
-				>
+				<Accordion chevron={accordionChevron} transitionDuration={0} classNames={accordionClasses}>
 					<ScrollArea.Autosize
 						placeholder={null}
 						classNames={{ viewport: accordionClasses.scrollArea }}
 						mah={scrollAreaMaxHeight}
-						// TODO: Typescript wants these two properties all of a sudden -- why?
 						onPointerEnterCapture={undefined}
 						onPointerLeaveCapture={undefined}
 					>
@@ -271,7 +381,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 				<Group className={modalClasses.footer} noWrap>
 					<Button
 						variant='secondary'
-						onClick={() => deselectAll()}
+						onClick={deselectAll}
 						disabled={selectedValues.length < 1}
 						className={classes.uncheckBtn}
 					>
@@ -280,7 +390,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 					<Button
 						variant='primary'
 						className={classes.resultsBtn}
-						onClick={() => setOpened(false)}
+						onClick={modalHandler.close}
 						loading={isFetching}
 					>
 						{t('view-x-result', { count: resultCount })}
@@ -289,12 +399,12 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 			</Modal>
 
 			<UnstyledButton
-				onClick={() => setOpened(true)}
+				onClick={modalHandler.open}
 				w='100%'
 				className={classes.launchButton}
 				{...(disabled ? { disabled, 'data-disabled': disabled } : {})}
 			>
-				<ServiceBar />
+				<ServiceBar {...serviceBarProps} />
 			</UnstyledButton>
 		</>
 	)

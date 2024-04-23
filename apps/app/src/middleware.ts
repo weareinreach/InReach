@@ -28,7 +28,9 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 				url.pathname = `/search/intl/${searchedCountry}`
 			}
 			const redirected = NextResponse.redirect(url)
-			if (session) redirected.cookies.set('inreach-session', session.value)
+			if (session) {
+				redirected.cookies.set('inreach-session', session.value)
+			}
 
 			return redirected
 		}

@@ -23,7 +23,7 @@ const tasks = new Listr(
 				const regex = /\{\{KEY\}\}/
 				const vercelConfigFile = path.resolve(__dirname, '../vercel.json')
 				const vercelConfig = fs.readFileSync(vercelConfigFile, 'utf8')
-				fs.writeFileSync(vercelConfigFile, vercelConfig.replace(regex, getEnv('CRON_KEY')))
+				return fs.writeFileSync(vercelConfigFile, vercelConfig.replace(regex, getEnv('CRON_KEY')))
 			},
 		}),
 	],
