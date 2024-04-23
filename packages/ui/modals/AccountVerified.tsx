@@ -12,7 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
@@ -60,86 +60,115 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 		}, [router.query.c])
 
 		const parsedData = UrlParams.transform(({ c, code }) => ({ data: c, code })).safeParse(router.query)
-		useEffect(() => {
-			if (!success && !verifyAccount.isLoading && opened && !error && parsedData.success) {
-				verifyAccount.mutate(parsedData.data)
+
+		const dataToVerify = useMemo(
+			() => (parsedData.success ? parsedData.data : null),
+			[parsedData.success, parsedData?.data]
+		)
+		const readyToVerify = useMemo(() => {
+			if (success || error || verifyAccount.isLoading) {
+				return false
 			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [success, verifyAccount.isLoading, opened, error, parsedData.success])
+			return opened && dataToVerify !== null
+		}, [success, error, verifyAccount.isLoading, opened, dataToVerify])
+		useEffect(() => {
+			if (readyToVerify && dataToVerify !== null) {
+				verifyAccount.mutate(dataToVerify)
+			}
+		}, [readyToVerify, dataToVerify, verifyAccount])
 
-		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
-
-		const bodyWorking = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={2}>{t('verify-account.verifying')}</Title>
-					<Text variant={variants.Text.utility1darkGray}>{t('words.please-wait')}</Text>
-				</Stack>
-				<Loader size='lg' />
-			</Stack>
+		const modalTitle = useMemo(
+			() => <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />,
+			[handler]
 		)
 
-		const bodySuccess = (
-			<Stack align='center' spacing={40}>
+		const bodyWorking = useMemo(
+			() => (
 				<Stack align='center' spacing={24}>
 					<Stack spacing={0} align='center'>
-						<Title order={1}>📋</Title>
-						<Title order={2} ta='center'>
-							{t('survey.launch-title')}
-						</Title>
+						<Title order={2}>{t('verify-account.verifying')}</Title>
+						<Text variant={variants.Text.utility1darkGray}>{t('words.please-wait')}</Text>
 					</Stack>
-					<Text variant={variants.Text.darkGray} ta='center'>
-						<Trans
-							i18nKey='survey.launch-item1'
-							components={{
-								Bold: <Title order={3} display='inline' />,
-							}}
-						/>
-					</Text>
-					<Text variant={variants.Text.darkGray} ta='center'>
-						<Trans
-							i18nKey='survey.launch-item2'
-							components={{
-								Bold: <Title order={3} display='inline' />,
-							}}
-						/>
-					</Text>
-					<PrivacyStatementModal component={Link} variant={variants.Link.inlineUtil2darkGray}>
-						{t('privacy-policy')}
-					</PrivacyStatementModal>
+					<Loader size='lg' />
 				</Stack>
-				<Group>
-					<Button variant={variants.Button.secondaryLg} onClick={handler.close} radius='md'>
-						{t('survey.not-right-now')}
-					</Button>
-					<UserSurveyModalLauncher component={Button} variant={variants.Button.primaryLg}>
-						{t('survey.start-survey')}
-					</UserSurveyModalLauncher>
-				</Group>
-			</Stack>
-		)
-		const bodyError = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={1}>🫣</Title>
-					<Title order={2}>{t('errors.oh-no')}</Title>
-				</Stack>
-				<Trans
-					i18nKey='errors.try-again-text'
-					components={{
-						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
-					}}
-				/>
-			</Stack>
+			),
+			[t, variants]
 		)
 
+		const bodySuccess = useMemo(
+			() => (
+				<Stack align='center' spacing={40}>
+					<Stack align='center' spacing={24}>
+						<Stack spacing={0} align='center'>
+							<Title order={1}>📋</Title>
+							<Title order={2} ta='center'>
+								{t('survey.launch-title')}
+							</Title>
+						</Stack>
+						<Text variant={variants.Text.darkGray} ta='center'>
+							<Trans
+								i18nKey='survey.launch-item1'
+								components={{
+									Bold: <Title order={3} display='inline' />,
+								}}
+							/>
+						</Text>
+						<Text variant={variants.Text.darkGray} ta='center'>
+							<Trans
+								i18nKey='survey.launch-item2'
+								components={{
+									Bold: <Title order={3} display='inline' />,
+								}}
+							/>
+						</Text>
+						<PrivacyStatementModal component={Link} variant={variants.Link.inlineUtil2darkGray}>
+							{t('privacy-policy')}
+						</PrivacyStatementModal>
+					</Stack>
+					<Group>
+						<Button variant={variants.Button.secondaryLg} onClick={handler.close} radius='md'>
+							{t('survey.not-right-now')}
+						</Button>
+						<UserSurveyModalLauncher component={Button} variant={variants.Button.primaryLg}>
+							{t('survey.start-survey')}
+						</UserSurveyModalLauncher>
+					</Group>
+				</Stack>
+			),
+			[t, variants, handler]
+		)
+		const bodyError = useMemo(
+			() => (
+				<Stack align='center' spacing={24}>
+					<Stack spacing={0} align='center'>
+						<Title order={1}>🫣</Title>
+						<Title order={2}>{t('errors.oh-no')}</Title>
+					</Stack>
+					<Trans
+						i18nKey='errors.try-again-text'
+						components={{
+							Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
+						}}
+					/>
+				</Stack>
+			),
+			[t, variants]
+		)
+
+		const renderBody = useMemo(() => {
+			if (success) {
+				return bodySuccess
+			}
+			if (error) {
+				return bodyError
+			}
+			return bodyWorking
+		}, [bodyError, bodySuccess, bodyWorking, error, success])
+
 		return (
-			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
-					{success ? bodySuccess : error ? bodyError : bodyWorking}
-				</Modal>
-				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
-			</>
+			<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
+				{renderBody}
+			</Modal>
 		)
 	}
 )

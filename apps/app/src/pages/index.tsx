@@ -312,12 +312,14 @@ const Home: NextPageWithOptions = () => {
 										</Carousel.Slide>
 									) : (
 										reviews.map(({ user, reviewText, verifiedUser, createdAt, id }) => {
-											if (!reviewText) return null
+											if (!reviewText) {
+												return null
+											}
 											const props = {
 												user,
 												reviewText,
-												reviewDate: createdAt,
 												verifiedUser,
+												reviewDate: createdAt,
 											}
 											return (
 												<Carousel.Slide key={id}>
