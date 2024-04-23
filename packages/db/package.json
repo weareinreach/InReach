@@ -45,8 +45,8 @@
 		"@opentelemetry/sdk-trace-base": "1.23.0",
 		"@opentelemetry/sdk-trace-node": "1.23.0",
 		"@opentelemetry/semantic-conventions": "1.23.0",
-		"@prisma/client": "5.12.1",
-		"@prisma/instrumentation": "5.12.1",
+		"@prisma/client": "5.13.0",
+		"@prisma/instrumentation": "5.13.0",
 		"@vercel/kv": "1.0.1",
 		"@vercel/postgres-kysely": "0.8.0",
 		"@weareinreach/crowdin": "workspace:*",
@@ -59,12 +59,12 @@
 		"prisma-kysely": "1.8.0",
 		"sql-bricks": "3.0.1",
 		"superjson": "2.2.1",
-		"zod": "3.23.0"
+		"zod": "3.23.3"
 	},
 	"devDependencies": {
 		"@octokit/core": "5.2.0",
 		"@snaplet/copycat": "5.0.0",
-		"@snaplet/seed": "0.95.0",
+		"@snaplet/seed": "0.95.1",
 		"@terraformer/wkt": "2.2.0",
 		"@turbo/gen": "1.13.2",
 		"@turf/helpers": "7.0.0-alpha.114",
@@ -97,7 +97,7 @@
 		"prettier": "3.2.5",
 		"pretty-bytes": "6.1.1",
 		"pretty-ms": "9.0.0",
-		"prisma": "5.12.1",
+		"prisma": "5.13.0",
 		"prisma-dbml-generator": "0.12.0",
 		"prisma-query-inspector": "1.4.4",
 		"prisma-query-log": "3.2.0",
@@ -111,7 +111,7 @@
 		"type-fest": "4.16.0",
 		"typescript": "5.4.5",
 		"zod-prisma-types": "3.1.6",
-		"zod-to-json-schema": "3.22.5"
+		"zod-to-json-schema": "3.23.0"
 	},
 	"prisma": {
 		"seed": "turbo run db:run-seed"
