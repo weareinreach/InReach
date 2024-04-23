@@ -20,10 +20,11 @@ import {
 import { useForm } from '@mantine/form'
 import { useDisclosure, useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
+import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
 import {
 	forwardRef,
-	type JSX,
+	memo,
 	type MouseEventHandler,
 	type ReactNode,
 	useCallback,
@@ -237,18 +238,46 @@ interface TitleBarProps {
 	modalTitle?: boolean
 	disabled?: boolean
 	selectedItemCount: number
-	selectedCountIcon: ReactNode
 	deselectAll: () => void
 }
 const TitleBar = ({
 	modalTitle = false,
 	disabled = false,
 	selectedItemCount,
-	selectedCountIcon,
 	deselectAll,
 }: TitleBarProps) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
+
+	const titleBarContent = modalTitle ? (
+		<>
+			<Group spacing={8} noWrap>
+				<FilterDisplay>{t('more.options')}</FilterDisplay>
+				{selectedItemCount > 0 ? <SelectedItemCount selectedItemCount={selectedItemCount} /> : null}
+			</Group>
+			{selectedItemCount > 0 ? (
+				<Link
+					fw={500}
+					onClick={deselectAll}
+					// className={selectedItemCount > 0 ? classes.uncheck : classes.uncheckDisabled}
+				>
+					{t('uncheck-all')}
+				</Link>
+			) : null}
+		</>
+	) : (
+		<>
+			<Group spacing={8} noWrap position='center' w='100%'>
+				<Icon icon='carbon:settings-adjust' rotate={2} />
+				<FilterDisplay>{t('more.options')}</FilterDisplay>
+			</Group>
+			{selectedItemCount > 0 ? (
+				<SelectedItemCount selectedItemCount={selectedItemCount} />
+			) : (
+				<Icon icon='carbon:chevron-down' height={24} />
+			)}
+		</>
+	)
 
 	return (
 		<Group
@@ -258,45 +287,25 @@ const TitleBar = ({
 			spacing={0}
 			{...(disabled && { 'data-disabled': disabled })}
 		>
-			{modalTitle ? (
-				<>
-					<Group spacing={8} noWrap>
-						<FilterDisplay>{t('more.options')}</FilterDisplay>
-						{selectedItemCount > 0 ? selectedCountIcon : null}
-					</Group>
-					{selectedItemCount > 0 ? (
-						<Link
-							fw={500}
-							onClick={deselectAll}
-							// className={selectedItemCount > 0 ? classes.uncheck : classes.uncheckDisabled}
-						>
-							{t('uncheck-all')}
-						</Link>
-					) : null}
-				</>
-			) : (
-				<>
-					<Group spacing={8} noWrap position='center' w='100%'>
-						<Icon icon='carbon:settings-adjust' rotate={2} />
-						<FilterDisplay>{t('more.options')}</FilterDisplay>
-					</Group>
-					{selectedItemCount > 0 ? selectedCountIcon : <Icon icon='carbon:chevron-down' height={24} />}
-				</>
-			)}
+			{titleBarContent}
 		</Group>
 	)
+}
+
+const SelectedItemCount = ({ selectedItemCount }: { selectedItemCount: number }) => {
+	const { classes } = useStyles()
+	return <Text className={classes.count}>{selectedItemCount}</Text>
 }
 
 const DefaultLauncher = ({
 	deselectAll,
 	modalTitle,
-	selectedCountIcon,
 	selectedItemCount,
 	...props
 }: UnstyledButtonProps & { onClick: MouseEventHandler<HTMLButtonElement> } & TitleBarProps) => {
 	const titleBarProps = useMemo(
-		() => ({ modalTitle, deselectAll, selectedCountIcon, selectedItemCount }),
-		[deselectAll, modalTitle, selectedCountIcon, selectedItemCount]
+		() => ({ modalTitle, deselectAll, selectedItemCount }),
+		[modalTitle, deselectAll, selectedItemCount]
 	)
 	return (
 		<UnstyledButton w='100%' {...props}>
@@ -340,7 +349,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		type FilterValue = AttributeFilter & { checked: boolean }
 
 		const form = useForm<FilterValue[]>({ initialValues: [] })
-		const preSelected = searchState.attributes
+		const preSelected = useMemo(() => searchState.attributes, [searchState.attributes])
 
 		const generateInitialData = useCallback(
 			(opts?: { clear?: boolean }) => {
@@ -362,7 +371,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 				form.setValues(initialValues)
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [moreFilterOptionData, status])
+		}, [generateInitialData, moreFilterOptionData, status])
 
 		useEffect(() => {
 			const itemsSelected: string[] = []
@@ -376,58 +385,66 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 
 		const deselectAll = useCallback(
 			() => form.setValues(generateInitialData({ clear: true })),
-			[form, generateInitialData]
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			[generateInitialData]
+		)
+		const generateFilterIncludeExcludeList = useCallback(
+			(formValues: FilterValue[]) => {
+				const filterInclude: ReactNode[] = []
+				const filterExclude: ReactNode[] = []
+
+				for (const [i, filter] of Object.entries(formValues)) {
+					switch (filter.filterType) {
+						case 'INCLUDE': {
+							filterInclude.push(
+								<Checkbox
+									// className={classes.itemChild}
+									label={t(filter.tsKey, { ns: 'attribute' })}
+									key={filter.id}
+									{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
+								/>
+							)
+							break
+						}
+						case 'EXCLUDE': {
+							filterExclude.push(
+								<Checkbox
+									className={classes.itemChild}
+									label={t(filter.tsKey, { ns: 'attribute' })}
+									key={filter.id}
+									{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
+								/>
+							)
+							break
+						}
+					}
+				}
+				return {
+					filterListInclude: filterInclude,
+					filterListExclude: filterExclude,
+				}
+			},
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			[classes, t]
 		)
 
-		const filterListInclude: JSX.Element[] = []
-		const filterListExclude: JSX.Element[] = []
+		const { filterListInclude, filterListExclude } = generateFilterIncludeExcludeList(form.values)
 
-		for (const [i, filter] of Object.entries(form.values)) {
-			switch (filter.filterType) {
-				case 'INCLUDE': {
-					filterListInclude.push(
-						<Checkbox
-							// className={classes.itemChild}
-							label={t(filter.tsKey, { ns: 'attribute' })}
-							key={filter.id}
-							{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
-						/>
-					)
-					break
-				}
-				case 'EXCLUDE': {
-					filterListExclude.push(
-						<Checkbox
-							className={classes.itemChild}
-							label={t(filter.tsKey, { ns: 'attribute' })}
-							key={filter.id}
-							{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
-						/>
-					)
-					break
-				}
-			}
-		}
+		const getSelectedItems = useCallback((formValues: FilterValue[]) => {
+			return compact(Object.values(formValues).map(({ checked, id }) => (checked ? id : null)))
+		}, [])
 
-		const selectedItems = useMemo(() => {
-			const selected: string[] = []
-			for (const [_key, value] of Object.entries(form.values)) {
-				if (value.checked) {
-					selected.push(value.id)
-				}
-			}
-			return selected
-		}, [form.values])
+		const selectedItems = getSelectedItems(form.values)
 
-		const selectedCountIcon = useMemo(
-			() => <Text className={classes.count}>{selectedItems.length}</Text>,
-			[selectedItems.length, classes]
-		)
+		const selectedItemCount = useMemo(() => selectedItems.length, [selectedItems.length])
 
-		const titleBarProps = useMemo(
-			() => ({ deselectAll, selectedCountIcon, selectedItemCount: selectedItems.length }),
-			[deselectAll, selectedCountIcon, selectedItems.length]
-		)
+		const titleBarProps = useMemo(() => {
+			return { deselectAll, selectedItemCount }
+		}, [deselectAll, selectedItemCount])
+
+		const modalTitleBar = useMemo(() => {
+			return <TitleBar modalTitle deselectAll={deselectAll} selectedItemCount={selectedItemCount} />
+		}, [deselectAll, selectedItemCount])
 
 		if (!moreFilterOptionData) {
 			return <Skeleton height={48} width='100%' radius='xs' />
@@ -438,7 +455,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 				<Modal
 					opened={modalOpen}
 					onClose={modalHandler.close}
-					title={<TitleBar modalTitle {...titleBarProps} />}
+					title={modalTitleBar}
 					fullScreen={isMobile}
 					classNames={modalClasses}
 					scrollAreaComponent={Modal.NativeScrollArea}
@@ -496,7 +513,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 )
 MoreFilterBody.displayName = 'MoreFilters'
 
-export const MoreFilter = createPolymorphicComponent<'button', MoreFilterProps>(MoreFilterBody)
+export const MoreFilter = memo(createPolymorphicComponent<'button', MoreFilterProps>(MoreFilterBody))
 
 interface MoreFilterProps extends UnstyledButtonProps {
 	resultCount?: number
