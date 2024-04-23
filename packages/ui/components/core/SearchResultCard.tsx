@@ -200,7 +200,7 @@ export type SearchResultCardProps = SearchResultHasData | SearchResultLoading
 
 type SearchResultHasData = {
 	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
-	loading?: false
+	loading?: boolean
 }
 type SearchResultLoading = {
 	loading: true
