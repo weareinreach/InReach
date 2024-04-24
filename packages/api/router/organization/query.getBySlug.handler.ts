@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetBySlugSchema } from './query.getBySlug.schema'
 
-export const getBySlug = async ({ ctx, input }: TRPCHandlerParams<TGetBySlugSchema>) => {
+const getBySlug = async ({ ctx, input }: TRPCHandlerParams<TGetBySlugSchema>) => {
 	const { slug } = input
 	const { select } = organizationInclude(ctx)
 	const org = await prisma.organization.findUniqueOrThrow({

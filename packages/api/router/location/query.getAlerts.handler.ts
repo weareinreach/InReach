@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetAlertsSchema } from './query.getAlerts.schema'
 
-export const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) => {
+const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) => {
 	try {
 		const dbResult = await prisma.attributeSupplement.findMany({
 			where: {
@@ -24,13 +24,15 @@ export const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) 
 
 		const reformatted = compact(
 			dbResult.flatMap(({ text, attribute }) => {
-				if (!text?.tsKey) return
+				if (!text?.tsKey) {
+					return null
+				}
 				return { ...text.tsKey, ...attribute }
 			})
 		)
 		return reformatted
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getAlerts

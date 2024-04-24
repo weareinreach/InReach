@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetServiceLocationDataSchema } from './query.getServiceLocationData.schema'
 
-export const getServiceLocationData = async ({ input }: TRPCHandlerParams<TGetServiceLocationDataSchema>) => {
+const getServiceLocationData = async ({ input }: TRPCHandlerParams<TGetServiceLocationDataSchema>) => {
 	const limit = input.limit ?? 20
 	const { skip } = input
 

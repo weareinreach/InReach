@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForVisitCardSchema } from './query.forVisitCard.schema'
 
-export const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) => {
+const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) => {
 	try {
 		const result = await prisma.orgLocation.findUnique({
 			where: {
@@ -30,7 +30,9 @@ export const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSch
 				longitude: true,
 			},
 		})
-		if (!result) return null
+		if (!result) {
+			return null
+		}
 		const { attributes, ...rest } = result
 		const transformed = {
 			...rest,

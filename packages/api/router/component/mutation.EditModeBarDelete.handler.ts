@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TEditModeBarDeleteSchema } from './mutation.EditModeBarDelete.schema'
 
-export const EditModeBarDelete = async ({
+const EditModeBarDelete = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TEditModeBarDeleteSchema, 'protected'>) => {
@@ -36,9 +36,12 @@ export const EditModeBarDelete = async ({
 				})
 				return result
 			}
+			default: {
+				throw new Error('Invalid input')
+			}
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default EditModeBarDelete

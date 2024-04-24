@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForServiceModalSchema } from './query.forServiceModal.schema'
 
-export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceModalSchema>) => {
+const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceModalSchema>) => {
 	const result = await prisma.orgService.findUniqueOrThrow({
 		where: { id: input, ...globalWhere.isPublic() },
 		select: {
@@ -27,7 +27,6 @@ export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceMo
 				select: { location: { select: { country: { select: { cca2: true } } } } },
 			},
 			attributes: formatAttributes.prismaSelect(false),
-			// attributes: {
 			// 	select: {
 			// 		attribute: {
 			// 			select: {

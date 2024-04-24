@@ -21,7 +21,7 @@ const whereId = (input: TForContactInfoEditSchema): Prisma.OrgEmailWhereInput =>
 	}
 }
 
-export const forContactInfoEdit = async ({ ctx, input }: TRPCHandlerParams<TForContactInfoEditSchema>) => {
+const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContactInfoEditSchema>) => {
 	try {
 		const result = await prisma.orgEmail.findMany({
 			where: {
@@ -49,7 +49,7 @@ export const forContactInfoEdit = async ({ ctx, input }: TRPCHandlerParams<TForC
 		}))
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 

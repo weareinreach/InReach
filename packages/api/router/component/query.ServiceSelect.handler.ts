@@ -2,7 +2,7 @@ import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-export const ServiceSelect = async ({ ctx }: TRPCHandlerParams<undefined>) => {
+const ServiceSelect = async ({ ctx: _ctx }: TRPCHandlerParams) => {
 	try {
 		const result = await prisma.serviceCategory.findMany({
 			where: {
@@ -43,7 +43,7 @@ export const ServiceSelect = async ({ ctx }: TRPCHandlerParams<undefined>) => {
 		}))
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 

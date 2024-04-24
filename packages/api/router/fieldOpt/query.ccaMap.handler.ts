@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCcaMapSchema } from './query.ccaMap.schema'
 
-export const ccaMap = async ({ input }: TRPCHandlerParams<TCcaMapSchema>) => {
+const ccaMap = async ({ input }: TRPCHandlerParams<TCcaMapSchema>) => {
 	try {
 		const data = await prisma.country.findMany({
 			where: input.activeForOrgs
@@ -22,7 +22,7 @@ export const ccaMap = async ({ input }: TRPCHandlerParams<TCcaMapSchema>) => {
 
 		return { byId, byCCA }
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default ccaMap

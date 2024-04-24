@@ -1,6 +1,6 @@
 import { prisma } from '@weareinreach/db'
 
-export const suggestionOptions = async () => {
+const suggestionOptions = async () => {
 	const [countries, serviceTypes, communities] = await Promise.all([
 		prisma.country.findMany({
 			where: { activeForSuggest: true },

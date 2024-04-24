@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TLanguagesSchema } from './query.languages.schema'
 
-export const languages = async ({ input }: TRPCHandlerParams<TLanguagesSchema>) => {
+const languages = async ({ input }: TRPCHandlerParams<TLanguagesSchema>) => {
 	const results = await prisma.language.findMany({
 		where: input,
 		select: {

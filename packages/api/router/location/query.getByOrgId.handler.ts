@@ -7,7 +7,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TGetByOrgIdSchema } from './query.getByOrgId.schema'
 import { select } from './selects'
 
-export const getByOrgId = async ({ ctx, input }: TRPCHandlerParams<TGetByOrgIdSchema>) => {
+const getByOrgId = async ({ ctx, input }: TRPCHandlerParams<TGetByOrgIdSchema>) => {
 	const locations = await prisma.orgLocation.findMany({
 		where: {
 			organization: {
@@ -60,7 +60,9 @@ export const getByOrgId = async ({ ctx, input }: TRPCHandlerParams<TGetByOrgIdSc
 			id: true,
 		},
 	})
-	if (locations.length === 0) throw new TRPCError({ code: 'NOT_FOUND' })
+	if (locations.length === 0) {
+		throw new TRPCError({ code: 'NOT_FOUND' })
+	}
 	return locations
 }
 export default getByOrgId
