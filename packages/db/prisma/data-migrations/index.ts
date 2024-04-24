@@ -13,4 +13,5 @@ export * from './2024-03-11_hide-locations'
 export * from './2024-03-15_update-dead-links/index'
 export * from './2024-03-21_attribute-supplement-schemas'
 export * from './2024-04-03_access-instruction-schemas'
+export * from './2024-04-24_update-crowdin-ids'
 // codegen:end
