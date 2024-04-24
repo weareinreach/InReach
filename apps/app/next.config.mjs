@@ -74,28 +74,28 @@ const nextConfig = {
 					stats: { excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/] },
 				})
 			)
-			config.plugins.push(
-				new StatsWriterPlugin({
-					filename: '../webpack-stats.json',
-					stats: {
-						assets: true,
-						chunks: true,
-						modules: true,
-						chunkModules: true,
-						excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/],
-					},
-					transform: (webpackStats) => {
-						if (filterWebpackStats instanceof Function) {
-							const filteredSource = filterWebpackStats(webpackStats)
-							return JSON.stringify(filteredSource)
-						} else if (filterWebpackStats.default instanceof Function) {
-							const filteredSource = filterWebpackStats.default(webpackStats)
-							return JSON.stringify(filteredSource)
-						}
-						return JSON.stringify(webpackStats)
-					},
-				})
-			)
+			// config.plugins.push(
+			// 	new StatsWriterPlugin({
+			// 		filename: '../webpack-stats.json',
+			// 		stats: {
+			// 			assets: true,
+			// 			chunks: true,
+			// 			modules: true,
+			// 			chunkModules: true,
+			// 			excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/],
+			// 		},
+			// 		transform: (webpackStats) => {
+			// 			if (filterWebpackStats instanceof Function) {
+			// 				const filteredSource = filterWebpackStats(webpackStats)
+			// 				return JSON.stringify(filteredSource)
+			// 			} else if (filterWebpackStats.default instanceof Function) {
+			// 				const filteredSource = filterWebpackStats.default(webpackStats)
+			// 				return JSON.stringify(filteredSource)
+			// 			}
+			// 			return JSON.stringify(webpackStats)
+			// 		},
+			// 	})
+			// )
 		}
 		if (dev && !isServer) {
 			/** WDYR */
