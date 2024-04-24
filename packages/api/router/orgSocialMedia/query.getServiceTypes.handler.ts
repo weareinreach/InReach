@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetServiceTypesSchema } from './query.getServiceTypes.schema'
 
-export const getServiceTypes = async ({ ctx, input }: TRPCHandlerParams<TGetServiceTypesSchema>) => {
+export const getServiceTypes = async ({ input }: TRPCHandlerParams<TGetServiceTypesSchema>) => {
 	try {
 		const result = await prisma.socialMediaService.findMany({
 			where: input,
@@ -18,7 +18,7 @@ export const getServiceTypes = async ({ ctx, input }: TRPCHandlerParams<TGetServ
 		})
 		return result
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getServiceTypes

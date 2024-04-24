@@ -27,7 +27,7 @@ export const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) 
 		)
 		return reformatted
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getAlerts

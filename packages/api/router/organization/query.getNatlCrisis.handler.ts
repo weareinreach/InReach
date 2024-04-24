@@ -70,10 +70,12 @@ export const getNatlCrisis = async ({ input }: TRPCHandlerParams<TGetNatlCrisisS
 
 	const formattedData = orgs.map(({ id, name, services }) => {
 		const attributeTags: (Record<'tsKey', string> & { icon: string | null })[] = []
-		const accessInstructions: Record<string, string | null | undefined>[] = []
+		const formattedAccessInstructions: Record<string, string | null | undefined>[] = []
 		let descriptionText: Record<'key' | 'text', string> | null = null
 		for (const { attributes, description } of services) {
-			if (description) descriptionText = description.tsKey
+			if (description) {
+				descriptionText = description.tsKey
+			}
 			for (const { attribute, data, text } of attributes) {
 				if (attribute.categories.find(({ category }) => category.tag === 'service-access-instructions')) {
 					const parsedData = AccessInstructionSchema.parse(
@@ -81,7 +83,7 @@ export const getNatlCrisis = async ({ input }: TRPCHandlerParams<TGetNatlCrisisS
 							? superjson.deserialize<{ access_type: string; access_value: string }>(data)
 							: data
 					)
-					accessInstructions.push({ tag: attribute.tag, ...parsedData, ...text?.tsKey })
+					formattedAccessInstructions.push({ tag: attribute.tag, ...parsedData, ...text?.tsKey })
 				} else {
 					const { tsKey, icon } = attribute
 					attributeTags.push({ tsKey, icon })
@@ -92,9 +94,9 @@ export const getNatlCrisis = async ({ input }: TRPCHandlerParams<TGetNatlCrisisS
 		return {
 			id,
 			name,
+			accessInstructions: formattedAccessInstructions,
 			description: descriptionText,
 			community: attributeTags.at(0),
-			accessInstructions,
 		}
 	})
 

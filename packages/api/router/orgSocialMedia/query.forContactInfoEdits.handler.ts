@@ -38,7 +38,7 @@ export const forContactInfoEdits = async ({ input }: TRPCHandlerParams<TForConta
 		}))
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default forContactInfoEdits

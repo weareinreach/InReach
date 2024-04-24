@@ -5,13 +5,11 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TAuditLogByActorIdSchema } from './query.auditLogByActorId.schema'
 
-export const auditLogByActorId = async ({ ctx, input }: TRPCHandlerParams<TAuditLogByActorIdSchema>) => {
+export const auditLogByActorId = async ({ input }: TRPCHandlerParams<TAuditLogByActorIdSchema>) => {
 	try {
 		const { actorId, skip, take, sort } = input
 		const auditLog = await prisma.auditTrail.findMany({
 			where: { actorId },
-			skip,
-			take,
 			orderBy: { timestamp: sort === 'new' ? 'desc' : 'asc' },
 			select: {
 				actorId: true,
@@ -23,6 +21,8 @@ export const auditLogByActorId = async ({ ctx, input }: TRPCHandlerParams<TAudit
 				table: true,
 				timestamp: true,
 			},
+			skip,
+			take,
 		})
 		const withDiff = auditLog.map(({ new: newRecord, old: oldRecord, ...record }) => {
 			const recordPrev = (
@@ -42,7 +42,7 @@ export const auditLogByActorId = async ({ ctx, input }: TRPCHandlerParams<TAudit
 		})
 		return withDiff
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default auditLogByActorId

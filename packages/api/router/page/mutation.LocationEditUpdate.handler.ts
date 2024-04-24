@@ -28,7 +28,7 @@ export const LocationEditUpdate = async ({
 		})
 		return updated
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default LocationEditUpdate

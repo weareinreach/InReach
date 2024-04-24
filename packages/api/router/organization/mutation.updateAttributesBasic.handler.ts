@@ -34,7 +34,7 @@ export const updateAttributesBasic = async ({
 		})
 		return result
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default updateAttributesBasic

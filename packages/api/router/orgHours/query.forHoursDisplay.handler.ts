@@ -1,8 +1,7 @@
 import groupBy from 'just-group-by'
-import { DateTime, Interval } from 'luxon'
 
 import { isIdFor, prisma, type Prisma } from '@weareinreach/db'
-import { convertToLuxonWeekday } from '@weareinreach/util/luxon/weekday'
+import { generateHoursInterval } from '@weareinreach/util/luxon/interval'
 import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -33,23 +32,12 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 		select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true },
 		orderBy: [{ dayIndex: 'asc' }, { start: 'asc' }],
 	})
-	if (!result.length) return null
+	if (!result.length) {
+		return null
+	}
 
-	const { weekYear, weekNumber } = DateTime.now()
 	const intervalResults = result.map(({ start, end, tz, dayIndex, ...rest }) => {
-		const shouldAddDay = start > end
-
-		const open = DateTime.fromJSDate(start, { zone: tz ?? 'America/New_York' }).set({
-			weekday: convertToLuxonWeekday(dayIndex),
-			weekYear,
-			weekNumber,
-		})
-		const close = DateTime.fromJSDate(end, { zone: tz ?? 'America/New_York' }).set({
-			weekday: convertToLuxonWeekday(shouldAddDay ? (dayIndex === 6 ? 0 : dayIndex + 1) : dayIndex),
-			weekYear,
-			weekNumber: shouldAddDay && dayIndex === 6 ? weekNumber + 1 : weekNumber,
-		})
-		const interval = Interval.fromDateTimes(open, close).toISO()
+		const interval = generateHoursInterval({ start, end, tz, dayIndex })
 		return {
 			tz,
 			dayIndex,

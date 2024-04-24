@@ -26,7 +26,7 @@ export const getLinkOptions = async ({ input }: TRPCHandlerParams<TGetLinkOption
 		}))
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getLinkOptions

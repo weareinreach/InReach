@@ -8,10 +8,9 @@ export const unShareUrl = async ({ ctx, input }: TRPCHandlerParams<TUnShareUrlSc
 	const prisma = getAuditedClient(ctx.actorId)
 	checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
 
-	const data = { sharedLinkKey: null }
 	const result = await prisma.userSavedList.update({
 		where: input,
-		data,
+		data: { sharedLinkKey: null },
 		select: {
 			id: true,
 			name: true,

@@ -36,9 +36,12 @@ export const EditModeBarPublish = async ({
 				})
 				return result
 			}
+			default: {
+				throw new Error('Invalid input')
+			}
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default EditModeBarPublish

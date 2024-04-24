@@ -7,14 +7,22 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TSearchDistanceSchema } from './query.searchDistance.schema'
 
-const searchOrgByDistance = async (params: TSearchDistanceSchema) => {
-	const { lat, lon, dist, skip, take, services: serviceFilter, attributes: attribsToFilter, unit } = params
+const generateAttributesWhere = (filters: AttributeFilters) => {
+	if (filters.include.length && filters.exclude.length) {
+		return Prisma.sql`(attr. "attributeId" = ANY(filters.attribute_inc) OR NOT attr. "attributeId" = ANY(filters.attribute_exc))`
+	}
 
+	if (filters.exclude.length) {
+		return Prisma.sql`NOT attr. "attributeId" = ANY(filters.attribute_exc)`
+	}
+	return Prisma.sql`attr. "attributeId" = ANY(filters.attribute_inc)`
+}
+const getFilterDefs = async (attribsToFilter?: string[]) => {
 	const attributeFilter: AttributeFilters = {
 		include: [],
 		exclude: [],
 	}
-	if (!!attribsToFilter && attribsToFilter.length) {
+	if (attribsToFilter?.length) {
 		const attributeDefs = await prisma.attribute.findMany({
 			select: {
 				id: true,
@@ -32,9 +40,66 @@ const searchOrgByDistance = async (params: TSearchDistanceSchema) => {
 			}
 		}
 	}
+	return attributeFilter
+}
 
+const getAttributeFilters = async (attribsToFilter?: string[]) => {
+	const attributeFilter = await getFilterDefs(attribsToFilter)
 	const hasAttribFilter = !!attributeFilter.include.length || !!attributeFilter.exclude.length
-	const hasServiceFilter = !!serviceFilter?.length
+
+	const attributeFilterSQL = {
+		include: attributeFilter.include.length
+			? Prisma.sql`${Prisma.join(attributeFilter.include, ',')}`
+			: Prisma.empty,
+		exclude: attributeFilter.exclude.length
+			? Prisma.sql`${Prisma.join(attributeFilter.exclude, ',')}`
+			: Prisma.empty,
+	}
+
+	const attributesWhereSQL = generateAttributesWhere(attributeFilter)
+
+	const attributeFilterSelectSQL = hasAttribFilter
+		? Prisma.sql`ARRAY_REMOVE(
+				ARRAY_AGG(DISTINCT attributes. "attributeId"),
+				NULL
+			) AS "matchedAttributes",`
+		: Prisma.empty
+
+	const attributeFilterJoinSQL = hasAttribFilter
+		? Prisma.sql`
+		INNER JOIN attributes ON attributes."locId" = loc.id OR attributes."orgId" = org.id`
+		: Prisma.empty
+	return {
+		attributeFilterSQL,
+		attributesWhereSQL,
+		attributeFilterSelectSQL,
+		attributeFilterJoinSQL,
+	}
+}
+
+const getServiceFilters = (servicesToFilter?: string[]) => {
+	const hasServiceFilter = !!servicesToFilter?.length
+	const serviceFilterSQL = hasServiceFilter ? Prisma.sql`${Prisma.join(servicesToFilter, ',')}` : Prisma.empty
+
+	const serviceFilterSelectSQL = hasServiceFilter
+		? Prisma.sql`ARRAY_REMOVE(ARRAY_AGG(DISTINCT services. "tagId"), NULL) AS "matchedServices",`
+		: Prisma.empty
+
+	const serviceFilterJoinSQL = hasServiceFilter
+		? Prisma.sql`
+		INNER JOIN services ON services."organizationId" = org.id`
+		: Prisma.empty
+
+	return { serviceFilterSQL, serviceFilterSelectSQL, serviceFilterJoinSQL }
+}
+
+const searchOrgByDistance = async (params: TSearchDistanceSchema) => {
+	const { lat, lon, dist, skip, take, services: serviceFilter, attributes: attribsToFilter, unit } = params
+
+	const { attributeFilterSQL, attributesWhereSQL, attributeFilterSelectSQL, attributeFilterJoinSQL } =
+		await getAttributeFilters(attribsToFilter)
+
+	const { serviceFilterSQL, serviceFilterSelectSQL, serviceFilterJoinSQL } = getServiceFilters(serviceFilter)
 
 	const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
 
@@ -48,13 +113,9 @@ filters(
 	attribute_inc,attribute_exc, service
 ) AS (
 	VALUES (
-		ARRAY[${
-			attributeFilter.include.length ? Prisma.sql`${Prisma.join(attributeFilter.include, ',')}` : Prisma.empty
-		}]::text[],
-		ARRAY[${
-			attributeFilter.exclude.length ? Prisma.sql`${Prisma.join(attributeFilter.exclude, ',')}` : Prisma.empty
-		}]::text[],
-		ARRAY[${serviceFilter?.length ? Prisma.sql`${Prisma.join(serviceFilter, ',')}` : Prisma.empty}]::text[]
+		ARRAY[${attributeFilterSQL.include}]::text[],
+		ARRAY[${attributeFilterSQL.exclude}]::text[],
+		ARRAY[${serviceFilterSQL}]::text[]
 	)
 ),
 covered_areas AS (
@@ -73,14 +134,7 @@ attributes AS (
 				JOIN filters on true
 
 			WHERE attr.active
-				AND ${
-					!!attributeFilter.include.length && !!attributeFilter.exclude.length
-						? Prisma.sql`(attr. "attributeId" = ANY(filters.attribute_inc)
-				OR NOT attr. "attributeId" = ANY(filters.attribute_exc))`
-						: attributeFilter.exclude.length
-							? Prisma.sql`NOT attr. "attributeId" = ANY(filters.attribute_exc)`
-							: Prisma.sql`attr. "attributeId" = ANY(filters.attribute_inc)`
-				}
+				AND ${attributesWhereSQL}
 		) at
 	GROUP BY "locId",
 		"orgId",
@@ -151,19 +205,8 @@ service_area as (
 	FROM (
 		SELECT
 			org.id,
-			${
-				hasServiceFilter
-					? Prisma.sql`ARRAY_REMOVE(ARRAY_AGG(DISTINCT services. "tagId"), NULL) AS "matchedServices",`
-					: Prisma.empty
-			}
-			${
-				hasAttribFilter
-					? Prisma.sql`ARRAY_REMOVE(
-				ARRAY_AGG(DISTINCT attributes. "attributeId"),
-				NULL
-			) AS "matchedAttributes",`
-					: Prisma.empty
-			}
+			${serviceFilterSelectSQL}
+			${attributeFilterSelectSQL}
 			MIN(
 				ROUND(
 					ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int
@@ -173,18 +216,8 @@ service_area as (
 		FROM "Organization" org
 			INNER JOIN "OrgLocation" loc ON org.id = loc. "orgId"
 			LEFT JOIN service_area sa ON sa. "orgId" = org.id
-			${
-				hasServiceFilter
-					? Prisma.sql`
-		INNER JOIN services ON services."organizationId" = org.id`
-					: Prisma.empty
-			}
-		${
-			hasAttribFilter
-				? Prisma.sql`
-		INNER JOIN attributes ON attributes."locId" = loc.id OR attributes."orgId" = org.id`
-				: Prisma.empty
-		}
+			${serviceFilterJoinSQL}
+		${attributeFilterJoinSQL}
 	WHERE
 		(
 			ST_DWithin(ST_Transform(loc.geo, 3857), (SELECT meters FROM points), ${searchRadius})
@@ -206,7 +239,9 @@ OFFSET ${skip}`
 
 	let total = 0
 	const formattedResults = results.map((result) => {
-		if (parseInt(result.total) !== total) total = parseInt(result.total)
+		if (parseInt(result.total) !== total) {
+			total = parseInt(result.total)
+		}
 		return {
 			id: result.id,
 			distMeters: parseInt(result.distance),
@@ -243,23 +278,23 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 		const serviceCategoryMap = new Map<string, IdKeyNs>()
 		const attributeMap = new Map<string, Attribute>()
 
-		services.forEach(({ services }) =>
-			services.forEach(({ tag, service }) => {
+		services.forEach(({ services: innerServices }) =>
+			innerServices.forEach(({ tag, service }) => {
 				const { id, tsKey, tsNs, primaryCategory } = tag
 				servIds.add(id)
 				serviceCategoryMap.set(primaryCategory.id, primaryCategory)
 				serviceTagMap.set(id, { id, tsKey, tsNs })
 				service.attributes.forEach(({ attribute }) => {
-					const { categories, ...rest } = attribute
-					attribIds.add(rest.id)
+					const { categories, ...attrib } = attribute
+					attribIds.add(attrib.id)
 					categories.forEach(({ category }) =>
-						attributeMap.set(`${rest.id}${category.tag}`, { category, ...rest })
+						attributeMap.set(`${attrib.id}${category.tag}`, { category, ...attrib })
 					)
 				})
 			})
 		)
 
-		locations.forEach(({ services, city, ...coords }) => {
+		locations.forEach(({ services: locationServices, city, ...coords }) => {
 			cities.push({
 				city,
 				dist: getDistance(
@@ -268,27 +303,27 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 					1000
 				),
 			})
-			services.forEach(({ service }) =>
-				service.services.forEach(({ tag, service }) => {
+			locationServices.forEach(({ service }) =>
+				service.services.forEach(({ tag, service: innerService }) => {
 					const { id, tsKey, tsNs, primaryCategory } = tag
 					servIds.add(id)
 					serviceCategoryMap.set(primaryCategory.id, primaryCategory)
 					serviceTagMap.set(id, { id, tsKey, tsNs })
-					service.attributes.forEach(({ attribute }) => {
-						const { categories, ...rest } = attribute
-						attribIds.add(rest.id)
+					innerService.attributes.forEach(({ attribute }) => {
+						const { categories, ...attrib } = attribute
+						attribIds.add(attrib.id)
 						categories.forEach(({ category }) =>
-							attributeMap.set(`${rest.id}${category.tag}`, { category, ...rest })
+							attributeMap.set(`${attrib.id}${category.tag}`, { category, ...attrib })
 						)
 					})
 				})
 			)
 		})
 		attributes.forEach(({ attribute }) => {
-			const { categories, ...rest } = attribute
-			attribIds.add(rest.id)
+			const { categories, ...attrib } = attribute
+			attribIds.add(attrib.id)
 			categories.forEach(({ category }) =>
-				attributeMap.set(`${rest.id}${category.tag}`, { category, ...rest })
+				attributeMap.set(`${attrib.id}${category.tag}`, { category, ...attrib })
 			)
 		})
 
@@ -305,7 +340,9 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 			({ category, _count: count }) => category.tag === 'service-focus' && count.parents === 0
 		)
 		const sortedCities = [
-			...new Set(cities.sort(({ dist: distA }, { dist: distB }) => distA - distB).map(({ city }) => city)),
+			...new Set(
+				cities.toSorted(({ dist: distA }, { dist: distB }) => distA - distB).map(({ city }) => city)
+			),
 		]
 
 		return {
@@ -361,7 +398,9 @@ export const searchDistance = async ({ input }: TRPCHandlerParams<TSearchDistanc
 	orgs.results.forEach(({ id, distMeters, national }) => {
 		const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
 		const sort = results.find((result) => result.id === id)
-		if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, national })
+		if (sort) {
+			orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, national })
+		}
 	})
 	return { orgs: orderedResults, resultCount: orgs.total }
 }

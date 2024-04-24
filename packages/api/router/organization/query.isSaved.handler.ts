@@ -4,7 +4,9 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TIsSavedSchema } from './query.isSaved.schema'
 
 export const isSaved = async ({ ctx, input }: TRPCHandlerParams<TIsSavedSchema>) => {
-	if (!ctx.session?.user?.id) return false
+	if (!ctx.session?.user?.id) {
+		return false
+	}
 
 	const listEntries = await prisma.savedOrganization.findMany({
 		where: {
@@ -25,7 +27,9 @@ export const isSaved = async ({ ctx, input }: TRPCHandlerParams<TIsSavedSchema>)
 		},
 	})
 
-	if (!listEntries.length) return false
+	if (!listEntries.length) {
+		return false
+	}
 	const lists = listEntries.map(({ list }) => list)
 	return lists
 }

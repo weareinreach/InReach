@@ -24,12 +24,12 @@ export const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationP
 			longitude: true,
 			latitude: true,
 			description: globalSelect.freeText(),
-			attributes,
 			notVisitable: true,
 			reviews: {
 				where: { visible: true, deleted: false },
 				select: { id: true },
 			},
+			attributes,
 		},
 	})
 	return location

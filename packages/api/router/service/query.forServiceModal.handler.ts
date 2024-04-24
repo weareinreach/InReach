@@ -27,7 +27,6 @@ export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceMo
 				select: { location: { select: { country: { select: { cca2: true } } } } },
 			},
 			attributes: formatAttributes.prismaSelect(false),
-			// attributes: {
 			// 	select: {
 			// 		attribute: {
 			// 			select: {

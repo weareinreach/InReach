@@ -20,8 +20,11 @@ const uniqueSlug = async (name: string, inc?: number): Promise<string> => {
 		}
 		const generatedSlug = slugify(inc ? `${name} ${inc}` : name, { lower: true, strict: true, trim: true })
 		const isUnique = await check(generatedSlug)
-		if (isUnique) return generatedSlug
-		else return await uniqueSlug(name, (inc ?? 0) + 1)
+		if (isUnique) {
+			return generatedSlug
+		} else {
+			return await uniqueSlug(name, (inc ?? 0) + 1)
+		}
 	} catch (error) {
 		console.error(error)
 		throw error

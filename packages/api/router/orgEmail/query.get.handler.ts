@@ -44,7 +44,7 @@ export const get = async ({ input }: TRPCHandlerParams<TGetSchema>) => {
 			...record,
 			description: description?.tsKey?.text,
 			locations: locations.map(({ location }) => ({ ...location })),
-			organization: organization.map(({ organization }) => ({ ...organization })),
+			organization: organization.map(({ organization: nestedOrganization }) => ({ ...nestedOrganization })),
 			title: titleId,
 			services: services.map(({ service }) => ({
 				id: service.id,

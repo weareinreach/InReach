@@ -21,10 +21,10 @@ export const shareUrl = async ({ ctx, input }: TRPCHandlerParams<TShareUrlSchema
 	const prisma = getAuditedClient(ctx.actorId)
 	const urlSlug = await generateUniqueSlug()
 	checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
-	const data = { sharedLinkKey: urlSlug }
+
 	const result = await prisma.userSavedList.update({
 		where: input,
-		data,
+		data: { sharedLinkKey: urlSlug },
 		select: {
 			id: true,
 			name: true,

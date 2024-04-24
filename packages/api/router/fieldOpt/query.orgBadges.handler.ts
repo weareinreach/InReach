@@ -21,7 +21,7 @@ export const orgBadges = async ({ input }: TRPCHandlerParams<TOrgBadgesSchema>) 
 		})
 		return badges
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default orgBadges

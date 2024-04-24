@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetLinkOptionsSchema } from './query.getLinkOptions.schema'
 
-export const getLinkOptions = async ({ ctx, input }: TRPCHandlerParams<TGetLinkOptionsSchema>) => {
+export const getLinkOptions = async ({ input }: TRPCHandlerParams<TGetLinkOptionsSchema>) => {
 	try {
 		const { slug, locationId } = input
 		const result = await prisma.orgPhone.findMany({
@@ -39,7 +39,9 @@ export const getLinkOptions = async ({ ctx, input }: TRPCHandlerParams<TGetLinkO
 					...status,
 				}
 			}
-			if (ext) parsedPhone.setExt(ext)
+			if (ext) {
+				parsedPhone.setExt(ext)
+			}
 			const phoneNumber = parsedPhone.formatNational()
 
 			return {
@@ -52,7 +54,7 @@ export const getLinkOptions = async ({ ctx, input }: TRPCHandlerParams<TGetLinkO
 		})
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getLinkOptions
