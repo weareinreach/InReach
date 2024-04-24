@@ -32,7 +32,6 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 			}
-
 		case 'primary':
 			return {
 				root: {
@@ -208,6 +207,6 @@ export interface ButtonProps extends MantineButtonProps {
 	loading?: boolean
 }
 type CustomVariants = (typeof customVariants)[number] | keyof VariantNames['Button']
-type ButtonVariant = MantineButtonProps['variant']
+type ButtonVariant = ButtonProps['variant']
 type CustomButtonStyles = Partial<{ [className in ButtonStylesNames]: CSSObject }>
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => CustomButtonStyles

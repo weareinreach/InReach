@@ -12,8 +12,8 @@ const isServer = typeof window === 'undefined'
 
 /* Creating a handler for the tRPC endpoint. */
 export default createNextApiHandler({
-	router: appRouter,
 	createContext,
+	router: appRouter,
 	onError: ({ path, error, type }) => {
 		switch (true) {
 			case isDev: {

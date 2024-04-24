@@ -17,14 +17,14 @@ const generateUniqueSlug = async (): Promise<string> => {
 	}
 	return slug
 }
-export const shareUrl = async ({ ctx, input }: TRPCHandlerParams<TShareUrlSchema, 'protected'>) => {
+const shareUrl = async ({ ctx, input }: TRPCHandlerParams<TShareUrlSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const urlSlug = await generateUniqueSlug()
 	checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
-	const data = { sharedLinkKey: urlSlug }
+
 	const result = await prisma.userSavedList.update({
 		where: input,
-		data,
+		data: { sharedLinkKey: urlSlug },
 		select: {
 			id: true,
 			name: true,

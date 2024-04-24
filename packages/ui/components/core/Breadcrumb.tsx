@@ -1,7 +1,7 @@
 import { createStyles, Group, rem, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type MouseEventHandler, useCallback, useMemo } from 'react'
+import { type MouseEvent, type MouseEventHandler, useCallback, useMemo } from 'react'
 
 import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { useSearchState } from '~ui/hooks/useSearchState'
@@ -43,35 +43,36 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	const { searchStateActions } = useSearchState()
 	const { isMobile } = useScreenSize()
 
-	const clickHandler: MouseEventHandler<HTMLButtonElement> = useCallback(
-		(e) => {
-			if (typeof onClick === 'function') {
+	const backButtonClickHandler = useCallback(() => {
+		if (backTo === 'search') {
+			const query = searchStateActions.getRoute()
+			if (query) {
+				router.push({
+					pathname: '/search/[...params]',
+					query,
+				})
+			}
+		}
+		if (backTo === 'dynamicText' && router.pathname.startsWith('/org/[slug]/[orgLocationId]')) {
+			const { orgLocationId, slug } = router.query
+			if (isString(slug, orgLocationId)) {
+				router.push({
+					pathname: router.pathname.endsWith('/edit') ? '/org/[slug]/edit' : '/org/[slug]',
+					query: { slug },
+				})
+			}
+		}
+	}, [backTo, router, searchStateActions])
+
+	const handleClick = useCallback(
+		(e: MouseEvent<HTMLButtonElement>) => {
+			if (onClick instanceof Function) {
 				onClick(e)
 			} else if (option === 'back') {
-				switch (backTo) {
-					case 'search': {
-						const query = searchStateActions.getRoute()
-						if (query) {
-							router.push({
-								pathname: '/search/[...params]',
-								query,
-							})
-						}
-						break
-					}
-					case 'dynamicText': {
-						const { orgLocationId, slug } = router.query
-						if (router.pathname.startsWith('/org/[slug]/[orgLocationId]') && isString(slug, orgLocationId)) {
-							router.push({
-								pathname: router.pathname.endsWith('/edit') ? '/org/[slug]/edit' : '/org/[slug]',
-								query: { slug },
-							})
-						}
-					}
-				}
+				backButtonClickHandler()
 			}
 		},
-		[backTo, onClick, option, router, searchStateActions]
+		[backButtonClickHandler, onClick, option]
 	)
 
 	const icons = {
@@ -117,8 +118,8 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	}, [option, backTo, backToText, isMobile])
 
 	return (
-		<UnstyledButton className={classes.root} onClick={clickHandler}>
-			<Group spacing={8} noWrap>
+		<UnstyledButton className={classes.root} onClick={handleClick}>
+			<Group spacing={8}>
 				<Icon
 					icon={iconRender}
 					height={24}

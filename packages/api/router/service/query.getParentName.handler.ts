@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetParentNameSchema } from './query.getParentName.schema'
 
-export const getParentName = async ({ input }: TRPCHandlerParams<TGetParentNameSchema>) => {
+const getParentName = async ({ input }: TRPCHandlerParams<TGetParentNameSchema>) => {
 	const { slug, orgLocationId } = input
 
 	switch (true) {

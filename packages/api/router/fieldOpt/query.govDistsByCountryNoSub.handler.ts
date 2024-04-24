@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGovDistsByCountryNoSubSchema } from './query.govDistsByCountryNoSub.schema'
 
-export const govDistsByCountryNoSub = async ({ input }: TRPCHandlerParams<TGovDistsByCountryNoSubSchema>) => {
+const govDistsByCountryNoSub = async ({ input }: TRPCHandlerParams<TGovDistsByCountryNoSubSchema>) => {
 	const data = await prisma.country.findMany({
 		where: {
 			cca2: input?.cca2,

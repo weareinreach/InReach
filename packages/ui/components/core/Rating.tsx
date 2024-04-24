@@ -33,7 +33,7 @@ export const Rating = ({ recordId, hideCount = false, noMargin = false, forceLoa
 
 	const { average, count } = data ?? { count: 0 }
 
-	const parenRegex = /\(|\)/g
+	const parenRegex = /[()]/g
 
 	if (status !== 'success' || Boolean(forceLoading)) {
 		return <Skeleton className={classes.container} visible={true} />

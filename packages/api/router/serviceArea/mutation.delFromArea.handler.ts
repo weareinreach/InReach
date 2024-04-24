@@ -6,13 +6,13 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TDelFromAreaSchema } from './mutation.delFromArea.schema'
 
-export const delFromArea = async ({ ctx, input }: TRPCHandlerParams<TDelFromAreaSchema, 'protected'>) => {
+const delFromArea = async ({ ctx, input }: TRPCHandlerParams<TDelFromAreaSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 
 		if (input.countryId) {
 			const { serviceAreaId, countryId } = input
-			const delCountry = await prisma.serviceAreaCountry.delete({
+			await prisma.serviceAreaCountry.delete({
 				where: {
 					serviceAreaId_countryId: {
 						serviceAreaId,
@@ -20,12 +20,10 @@ export const delFromArea = async ({ ctx, input }: TRPCHandlerParams<TDelFromArea
 					},
 				},
 			})
-			if (delCountry) {
-				return { result: 'deleted' }
-			}
+			return { result: 'deleted' }
 		} else if (input.govDistId) {
 			const { serviceAreaId, govDistId } = input
-			const delGovDist = await prisma.serviceAreaDist.delete({
+			await prisma.serviceAreaDist.delete({
 				where: {
 					serviceAreaId_govDistId: {
 						serviceAreaId,
@@ -33,14 +31,13 @@ export const delFromArea = async ({ ctx, input }: TRPCHandlerParams<TDelFromArea
 					},
 				},
 			})
-			if (delGovDist) {
-				return { result: 'deleted' }
-			}
+
+			return { result: 'deleted' }
 		}
 
 		throw new TRPCError({ code: 'BAD_REQUEST' })
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default delFromArea

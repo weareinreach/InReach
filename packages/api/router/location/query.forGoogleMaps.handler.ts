@@ -21,7 +21,7 @@ const getCenter = (coords: { latitude: number; longitude: number }[]): google.ma
 	return { lat: center.latitude, lng: center.longitude }
 }
 
-export const forGoogleMaps = async ({ input }: TRPCHandlerParams<TForGoogleMapsSchema>) => {
+const forGoogleMaps = async ({ input }: TRPCHandlerParams<TForGoogleMapsSchema>) => {
 	const result = await prisma.orgLocation.findMany({
 		where: {
 			...globalWhere.isPublic(),
@@ -41,7 +41,9 @@ export const forGoogleMaps = async ({ input }: TRPCHandlerParams<TForGoogleMapsS
 	const coordsForBounds: { latitude: number; longitude: number }[] = []
 
 	for (const { latitude, longitude } of result) {
-		if (latitude && longitude) coordsForBounds.push({ latitude, longitude })
+		if (latitude && longitude) {
+			coordsForBounds.push({ latitude, longitude })
+		}
 	}
 	const bounds = result.length > 1 ? getBoundary(coordsForBounds) : null
 	const singleLat = result.at(0)?.latitude

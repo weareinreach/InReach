@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TSlugRedirectSchema } from './query.slugRedirect.schema'
 
-export const slugRedirect = async ({ input }: TRPCHandlerParams<TSlugRedirectSchema>) => {
+const slugRedirect = async ({ input }: TRPCHandlerParams<TSlugRedirectSchema>) => {
 	const cached = await readSlugRedirectCache(input)
 	if (cached) {
 		return { redirectTo: cached }

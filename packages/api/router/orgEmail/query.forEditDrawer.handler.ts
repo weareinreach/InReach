@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForEditDrawerSchema } from './query.forEditDrawer.schema'
 
-export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
+const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	try {
 		const result = await prisma.orgEmail.findUnique({
 			where: input,
@@ -23,7 +23,9 @@ export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDr
 				titleId: true,
 			},
 		})
-		if (!result) return null
+		if (!result) {
+			return null
+		}
 		const { description, ...rest } = result
 
 		const reformatted = {
@@ -33,7 +35,7 @@ export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDr
 
 		return reformatted
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default forEditDrawer

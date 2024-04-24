@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateSchema } from './mutation.update.schema'
 
-export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protected'>) => {
+const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const { id, orgId, description, countryId, phoneTypeId, ...rest } = input
 
@@ -32,11 +32,9 @@ export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'p
 							},
 						},
 					}
-				: description === null
-					? { description: { delete: true } }
-					: {}),
-			...(countryId ? { country: { connect: { id: countryId } } } : {}),
-			...(phoneTypeId ? { phoneType: { connect: { id: phoneTypeId } } } : {}),
+				: description === null && { description: { delete: true } }),
+			...(countryId && { country: { connect: { id: countryId } } }),
+			...(phoneTypeId && { phoneType: { connect: { id: phoneTypeId } } }),
 		},
 	})
 	return updatedRecord

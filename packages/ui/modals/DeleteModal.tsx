@@ -14,7 +14,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useCallback, useState } from 'react'
 import { z } from 'zod'
 
 import { Button } from '~ui/components/core/Button'
@@ -52,7 +52,7 @@ const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, 
 	const { t } = useTranslation(['common'])
 	const [error, setError] = useState<string | undefined>()
 	const schema = z.object({
-		password: z.string().min(1, { message: t('form-error-password-blank') as string }),
+		password: z.string().min(1, { message: t('form-error-password-blank') }),
 	})
 	const { classes } = useStyles()
 	const [opened, handler] = useDisclosure(false)
@@ -69,14 +69,17 @@ const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, 
 			handler.close()
 			router.push('/')
 		},
-		onError: (error) => {
-			setError(t(error.message) as string)
+		onError: (err) => {
+			setError(t(err.message))
 		},
 	})
-	const handleSubmit = (password: string) => {
-		form.clearErrors()
-		deleteAccount.mutate(password)
-	}
+	const handleSubmit = useCallback(
+		(password: string) => {
+			form.clearErrors()
+			deleteAccount.mutate(password)
+		},
+		[form, deleteAccount]
+	)
 
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 
@@ -102,19 +105,13 @@ const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, 
 						<Button variant='accent' className={classes.button} type='submit'>
 							{t('delete', { ns: 'common' })}
 						</Button>
-						<Button
-							variant='secondary'
-							className={classes.button}
-							onClick={() => {
-								handler.close()
-							}}
-						>
+						<Button variant='secondary' className={classes.button} onClick={handler.close}>
 							{t('cancel', { ns: 'common' })}
 						</Button>
 					</Group>
 				</form>
 			</Modal>
-			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
+			<Box component='button' ref={ref} onClick={handler.open} {...props} />
 		</>
 	)
 })

@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForLocationCardSchema } from './query.forLocationCard.schema'
 
-export const forLocationCard = async ({ input }: TRPCHandlerParams<TForLocationCardSchema>) => {
+const forLocationCard = async ({ input }: TRPCHandlerParams<TForLocationCardSchema>) => {
 	const result = await prisma.orgLocation.findUniqueOrThrow({
 		where: {
 			id: input,

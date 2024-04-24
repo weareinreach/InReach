@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
@@ -53,7 +53,7 @@ const OrganizationPage = ({
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
 			enabled: !!data?.id && data?.locations?.length > 1,
-			select: (data) => data.length !== 0,
+			select: (serviceInfoResult) => serviceInfoResult.length !== 0,
 		}
 	)
 	const { data: alertData } = api.organization.getAlerts.useQuery({ slug }, { enabled: !!slug })
@@ -71,42 +71,75 @@ const OrganizationPage = ({
 	useEffect(() => {
 		if (data && status === 'success' && !router.isFallback) {
 			setLoading(false)
-			if (data.locations?.length > 1) setActiveTab('locations')
+			if (data.locations?.length > 1) {
+				setActiveTab('locations')
+			}
 		}
 	}, [data, status, router.isFallback])
 
-	// useEffect(() => {
-	// 	orgId && i18n.reloadResources(i18n.resolvedLanguage)
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [])
+	const handleTabChange = useCallback((tab: string) => {
+		setActiveTab(tab)
+		switch (tab) {
+			case 'services': {
+				servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+			case 'photos': {
+				photosRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+			case 'reviews': {
+				reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+		}
+	}, [])
 
-	if (loading || !data || router.isFallback) return <OrgPageLoading />
+	const renderSidebar = useCallback(
+		(locationData: NonNullable<typeof data>['locations'] | undefined) => {
+			if (!locationData || locationData.length === 0) {
+				return null
+			}
+			if (locationData.length === 1) {
+				const soloLocation = locationData.at(0)
+				if (!soloLocation) {
+					return null
+				}
+				return (
+					<>
+						{isTablet && <Divider />}
+						<VisitCard locationId={soloLocation.id} />
+					</>
+				)
+			}
+			// Hide google map temporarily for 'sm' breakpoint
+			if (isTablet) {
+				return null
+			}
+			return (
+				<Stack ref={ref} miw='100%'>
+					{Boolean(width) && (
+						<GoogleMap
+							locationIds={locationData.map(({ id }) => id)}
+							width={width}
+							height={Math.floor(width * 1.185)}
+						/>
+					)}
+				</Stack>
+			)
+		},
+		[isTablet, ref, width]
+	)
+
+	if (loading || !data || router.isFallback) {
+		return <OrgPageLoading />
+	}
 
 	const { userLists, attributes, description, reviews, locations, isClaimed, id: organizationId } = data
 
 	const body =
 		locations?.length <= 1 ? (
-			<Tabs
-				w='100%'
-				value={activeTab}
-				onTabChange={(tab) => {
-					setActiveTab(tab)
-					switch (tab) {
-						case 'services': {
-							servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
-							break
-						}
-						case 'photos': {
-							photosRef.current?.scrollIntoView({ behavior: 'smooth' })
-							break
-						}
-						case 'reviews': {
-							reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
-							break
-						}
-					}
-				}}
-			>
+			<Tabs w='100%' value={activeTab} onTabChange={handleTabChange}>
 				<Tabs.List className={classes.tabsList}>
 					<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 					<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
@@ -138,34 +171,7 @@ const OrganizationPage = ({
 			</Tabs>
 		)
 
-	const sidebar =
-		locations?.length === 1 ? (
-			<>
-				{locations[0] && (
-					<>
-						{isTablet && <Divider />}
-						<VisitCard locationId={locations[0].id} />
-					</>
-				)}
-			</>
-		) : (
-			// Hide google map temporarily for 'sm' breakpoint
-			Boolean(locations.length) &&
-			!isTablet && (
-				<>
-					{isTablet && <Divider />}
-					<Stack ref={ref} miw='100%'>
-						{Boolean(width) && (
-							<GoogleMap
-								locationIds={locations.map(({ id }) => id)}
-								width={width}
-								height={Math.floor(width * 1.185)}
-							/>
-						)}
-					</Stack>
-				</>
-			)
-		)
+	const sidebar = renderSidebar(locations)
 
 	return (
 		<>
@@ -185,7 +191,9 @@ const OrganizationPage = ({
 				<Stack pt={24} align='flex-start' spacing={40}>
 					{hasAlerts &&
 						alertData.map((alert) => {
-							if (!alert.key) return null
+							if (!alert.key) {
+								return null
+							}
 							return (
 								<AlertMessage
 									key={alert.key}
@@ -200,8 +208,8 @@ const OrganizationPage = ({
 						data={{
 							name: data.name,
 							id: data.id,
-							slug,
 							lastVerified: data.lastVerified,
+							slug,
 							attributes,
 							description,
 							locations,
@@ -242,7 +250,9 @@ export const getStaticProps = async ({
 	locale,
 	params,
 }: GetStaticPropsContext<RoutedQuery<'/org/[slug]'>>) => {
-	if (!params) return { notFound: true }
+	if (!params) {
+		return { notFound: true }
+	}
 	const { slug } = params
 	const ssg = await trpcServerClient({ session: null })
 	try {
@@ -257,7 +267,9 @@ export const getStaticProps = async ({
 		}
 
 		const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
-		if (!orgId) return { notFound: true }
+		if (!orgId) {
+			return { notFound: true }
+		}
 
 		const [i18n] = await Promise.allSettled([
 			getServerSideTranslations(locale, formatNS(orgId)),
@@ -277,10 +289,8 @@ export const getStaticProps = async ({
 		}
 	} catch (error) {
 		const TRPCError = (await import('@trpc/server')).TRPCError
-		if (error instanceof TRPCError) {
-			if (error.code === 'NOT_FOUND') {
-				return { notFound: true }
-			}
+		if (error instanceof TRPCError && error.code === 'NOT_FOUND') {
+			return { notFound: true }
 		}
 	}
 }

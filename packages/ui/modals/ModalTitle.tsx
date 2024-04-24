@@ -11,30 +11,12 @@ export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProp
 	if (!isValidBreadcrumbProps(breadcrumb)) {
 		throw new Error('invalid Breadcrumb props')
 	}
+	const iconMap = {
+		save: <ActionButtons key='modal-title-save' iconKey='save' omitLabel serviceId={serviceId} />,
+		share: <ActionButtons key='modal-title-share' iconKey='share' omitLabel />,
+	} as const
 
-	const iconMap = useMemo(() => {
-		const SaveButton =
-			serviceId && breadcrumb.backToText ? (
-				<ActionButtons.Save
-					key='modal-title-save'
-					omitLabel
-					itemId={serviceId}
-					itemName={breadcrumb.backToText}
-				/>
-			) : null
-
-		const ShareButton = <ActionButtons.Share omitLabel />
-
-		return {
-			save: SaveButton,
-			share: ShareButton,
-		}
-	}, [breadcrumb.backToText, serviceId])
-
-	const displayIcons = useMemo(
-		() => (icons?.length ? icons.map((item) => iconMap[item]) : undefined),
-		[iconMap, icons]
-	)
+	const displayIcons = icons?.length ? icons.map((item) => iconMap[item]) : undefined
 
 	const rightSection = useMemo(() => {
 		if (displayIcons) {
@@ -48,9 +30,7 @@ export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProp
 			return <Text variant={variants.Text.utility1}>{rightText}</Text>
 		}
 		return null
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [displayIcons, rightText])
-
+	}, [displayIcons, rightText, variants])
 	return (
 		<Group position='apart' align='center' noWrap>
 			<Box maw='70%' style={{ overflow: 'hidden' }}>

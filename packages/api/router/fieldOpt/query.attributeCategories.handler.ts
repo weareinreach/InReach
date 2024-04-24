@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TAttributeCategoriesSchema } from './query.attributeCategories.schema'
 
-export const attributeCategories = async ({ input }: TRPCHandlerParams<TAttributeCategoriesSchema>) => {
+const attributeCategories = async ({ input }: TRPCHandlerParams<TAttributeCategoriesSchema>) => {
 	const results = await prisma.attributeCategory.findMany({
 		where: { active: true, ...(input?.length ? { tag: { in: input } } : {}) },
 		select: {

@@ -1,6 +1,6 @@
 import { prisma } from '@weareinreach/db'
 
-export const getFilterOptions = async () => {
+const getFilterOptions = async () => {
 	const result = await prisma.attribute.findMany({
 		where: {
 			AND: {

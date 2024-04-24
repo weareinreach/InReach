@@ -2,6 +2,7 @@ import { Divider, Flex, Grid, Stack, Text, Title, useMantineTheme } from '@manti
 import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useTranslation } from 'next-i18next'
+import { type ReactNode } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
@@ -40,37 +41,61 @@ const SupportPage = () => {
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
 
-	const support = [
-		<Link
-			key={7}
-			external
-			href='https://inreach.kindful.com/embeds/4d78c071-9369-4a0c-84c7-8e783b21a940'
-			onClick={donateEvent.click}
-			{...linkVar}
-		>
-			<SupportItem tKey='donate.to-inreach' />
-		</Link>,
-		<Link key={0} href='/suggest' target='_self' {...linkVar}>
-			<SupportItem tKey='footer.suggest-org' />
-		</Link>,
-		<Link key={1} href='https://www.surveymonkey.com/r/96QD8ZQ' external {...linkVar}>
-			<SupportItem tKey='footer.share-feedback' />
-		</Link>,
-		<Link key={2} href='https://inreach.org/vetting-process/' external {...linkVar}>
-			<SupportItem tKey='footer.vetting-process' />
-		</Link>,
-		<PrivacyStatementModal key={3} component={Link} {...linkVar}>
-			<SupportItem tKey='footer.privacy-statement' />
-		</PrivacyStatementModal>,
-		<GenericContentModal key={4} content='antiHate' component={Link} {...linkVar}>
-			<SupportItem tKey='footer.anti-hate' />
-		</GenericContentModal>,
-		<GenericContentModal key={5} content='accessibilityStatement' component={Link} {...linkVar}>
-			<SupportItem tKey='footer.digital-accessibility' />
-		</GenericContentModal>,
-		<GenericContentModal key={6} content='disclaimer' component={Link} {...linkVar}>
-			<SupportItem tKey='footer.disclaimer' />
-		</GenericContentModal>,
+	const support: [number, ReactNode][] = [
+		[
+			7,
+			<Link
+				key={7}
+				external
+				href='https://inreach.kindful.com/embeds/4d78c071-9369-4a0c-84c7-8e783b21a940'
+				onClick={donateEvent.click}
+				{...linkVar}
+			>
+				<SupportItem tKey='donate.to-inreach' />
+			</Link>,
+		],
+		[
+			0,
+			<Link key={0} href='/suggest' target='_self' {...linkVar}>
+				<SupportItem tKey='footer.suggest-org' />
+			</Link>,
+		],
+		[
+			1,
+			<Link key={1} href='https://www.surveymonkey.com/r/96QD8ZQ' external {...linkVar}>
+				<SupportItem tKey='footer.share-feedback' />
+			</Link>,
+		],
+		[
+			2,
+			<Link key={2} href='https://inreach.org/vetting-process/' external {...linkVar}>
+				<SupportItem tKey='footer.vetting-process' />
+			</Link>,
+		],
+		[
+			3,
+			<PrivacyStatementModal key={3} component={Link} {...linkVar}>
+				<SupportItem tKey='footer.privacy-statement' />
+			</PrivacyStatementModal>,
+		],
+		[
+			4,
+			<GenericContentModal key={4} content='antiHate' component={Link} {...linkVar}>
+				<SupportItem tKey='footer.anti-hate' />
+			</GenericContentModal>,
+		],
+		[
+			5,
+			<GenericContentModal key={5} content='accessibilityStatement' component={Link} {...linkVar}>
+				<SupportItem tKey='footer.digital-accessibility' />
+			</GenericContentModal>,
+		],
+		[
+			6,
+			<GenericContentModal key={6} content='disclaimer' component={Link} {...linkVar}>
+				<SupportItem tKey='footer.disclaimer' />
+			</GenericContentModal>,
+		],
 	]
 
 	return (
@@ -78,8 +103,8 @@ const SupportPage = () => {
 			<Stack align='flex-start' spacing={32} w='100%'>
 				<Title order={2}>{t('words.support')}</Title>
 				<Stack w='100%' spacing={0}>
-					{support.map((item, i) => (
-						<div key={i} style={{ width: '100%' }}>
+					{support.map(([key, item]) => (
+						<div key={key} style={{ width: '100%' }}>
 							{item}
 							<Divider w='100%' color={theme.other.colors.tertiary.coolGray} />
 						</div>

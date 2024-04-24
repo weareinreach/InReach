@@ -17,7 +17,7 @@ const whereId = (input: TForContactInfoEditsSchema): Prisma.OrgSocialMediaWhereI
 		}
 	}
 }
-export const forContactInfoEdits = async ({ input }: TRPCHandlerParams<TForContactInfoEditsSchema>) => {
+const forContactInfoEdits = async ({ input }: TRPCHandlerParams<TForContactInfoEditsSchema>) => {
 	try {
 		const result = await prisma.orgSocialMedia.findMany({
 			where: whereId(input),
@@ -38,7 +38,7 @@ export const forContactInfoEdits = async ({ input }: TRPCHandlerParams<TForConta
 		}))
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default forContactInfoEdits

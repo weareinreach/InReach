@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TByUserListIdSchema } from './query.byUserListId.schema'
 import { select } from './selects'
 
-export const byUserListId = async ({ ctx, input }: TRPCHandlerParams<TByUserListIdSchema, 'protected'>) => {
+const byUserListId = async ({ ctx, input }: TRPCHandlerParams<TByUserListIdSchema, 'protected'>) => {
 	const results = await prisma.orgService.findMany({
 		where: { userLists: { some: { list: { AND: { id: input.listId, ownedById: ctx.session.user.id } } } } },
 		select: {

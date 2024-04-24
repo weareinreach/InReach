@@ -110,7 +110,7 @@ export const variantNames: VariantDefinition = {
 	},
 } as const
 
-type VariantDefinition = {
+export type VariantNames = {
 	[K in keyof typeof variants]: {
 		[V in keyof (typeof variants)[K]]: V
 	}

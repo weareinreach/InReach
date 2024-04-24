@@ -2,12 +2,13 @@ import { Card, createStyles, Modal, rem, Stack, Text, Title } from '@mantine/cor
 import { useDisclosure } from '@mantine/hooks'
 import { setCookie } from 'cookies-next'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { Button } from './Button'
 
-const useStyles = createStyles((theme) => ({
+const useMessageBodyStyles = createStyles((theme) => ({
 	text: {
 		color: theme.other.colors.secondary.darkGray,
 	},
@@ -17,7 +18,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
-	const { classes } = useStyles()
+	const { classes } = useMessageBodyStyles()
 	const { t } = useTranslation()
 
 	const title = stacked ? (
@@ -55,15 +56,27 @@ export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
 	)
 }
 
+const usePopupStyles = createStyles((theme) => ({
+	content: {
+		[theme.fn.smallerThan('xs')]: {
+			marginTop: 'auto',
+			marginBottom: 'auto',
+			height: rem(340),
+			borderRadius: `${rem(16)} !important`,
+		},
+	},
+}))
+
 export const AntiHatePopup = ({ autoLaunch }: { autoLaunch: boolean }) => {
 	const [opened, handler] = useDisclosure(autoLaunch)
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const { isMobile } = useScreenSize()
-	const closeHandler = () => {
+	const { classes } = usePopupStyles()
+	const closeHandler = useCallback(() => {
 		setCookie('inr-ahpop', 'true', { maxAge: 60 * 60 * 24 * 30 })
 		handler.close()
-	}
+	}, [handler])
 
 	return (
 		<Modal
@@ -73,16 +86,7 @@ export const AntiHatePopup = ({ autoLaunch }: { autoLaunch: boolean }) => {
 			closeOnEscape={false}
 			centered
 			fullScreen={isMobile}
-			styles={(theme) => ({
-				content: {
-					[theme.fn.smallerThan('xs')]: {
-						marginTop: 'auto',
-						marginBottom: 'auto',
-						height: rem(340),
-						borderRadius: `${rem(16)} !important`,
-					},
-				},
-			})}
+			classNames={classes}
 		>
 			<Stack spacing={24} align='center'>
 				<AntiHateMessage noCard stacked />

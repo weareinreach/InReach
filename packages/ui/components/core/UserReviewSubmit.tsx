@@ -44,8 +44,8 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 
 	const form = useForm<FormFields>({
 		initialValues: {
-			organizationId: orgQuery?.id ?? '',
 			orgLocationId,
+			organizationId: orgQuery?.id ?? '',
 			orgServiceId: serviceId,
 			rating: 0,
 		},
@@ -53,7 +53,9 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 	})
 
 	useEffect(() => {
-		if (status === 'success' && orgQuery?.id) form.setFieldValue('organizationId', orgQuery.id)
+		if (status === 'success' && orgQuery?.id) {
+			form.setFieldValue('organizationId', orgQuery.id)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status, orgQuery?.id])
 
@@ -91,6 +93,9 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 					{component}
 				</Paper>
 			)
+		}
+		default: {
+			return null
 		}
 	}
 }

@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetAddressSchema } from './query.getAddress.schema'
 
-export const getAddress = async ({ input }: TRPCHandlerParams<TGetAddressSchema>) => {
+const getAddress = async ({ input }: TRPCHandlerParams<TGetAddressSchema>) => {
 	const result = await prisma.orgLocation.findUniqueOrThrow({
 		where: { id: input },
 		select: {

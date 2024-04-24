@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TSaveItemSchema } from './mutation.saveItem.schema'
 
-export const saveItem = async ({ ctx, input }: TRPCHandlerParams<TSaveItemSchema, 'protected'>) => {
+const saveItem = async ({ ctx, input }: TRPCHandlerParams<TSaveItemSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const { id, itemId } = input
 
