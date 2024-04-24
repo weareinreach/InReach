@@ -78,8 +78,7 @@ const nextConfig = {
 						chunks: true,
 						modules: true,
 					},
-					excludeAssets: [/webpack-stats.json/],
-
+					excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/],
 					transform: (webpackStats) => {
 						if (filterWebpackStats instanceof Function) {
 							const filteredSource = filterWebpackStats(webpackStats)
