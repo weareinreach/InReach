@@ -69,7 +69,11 @@ const nextConfig = {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
 		if (!dev && !isServer) {
-			config.plugins.push(new RelativeCiAgentWebpackPlugin())
+			config.plugins.push(
+				new RelativeCiAgentWebpackPlugin({
+					stats: { excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/] },
+				})
+			)
 			config.plugins.push(
 				new StatsWriterPlugin({
 					filename: '../webpack-stats.json',
@@ -77,8 +81,9 @@ const nextConfig = {
 						assets: true,
 						chunks: true,
 						modules: true,
+						chunkModules: true,
+						excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/],
 					},
-					excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/],
 					transform: (webpackStats) => {
 						if (filterWebpackStats instanceof Function) {
 							const filteredSource = filterWebpackStats(webpackStats)
