@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForUserTableSchema } from './query.forUserTable.schema'
 
-export const forUserTable = async ({ input }: TRPCHandlerParams<TForUserTableSchema>) => {
+const forUserTable = async ({ input }: TRPCHandlerParams<TForUserTableSchema>) => {
 	const userResults = await prisma.user.findMany({
 		where: input,
 		select: {
