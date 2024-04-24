@@ -19,5 +19,6 @@ if (process.env.NODE_ENV !== 'production') {
 declare global {
 	var crowdinApi: Crowdin | undefined
 }
-export const { getStringIdByKey } = createCommonFns(crowdinApi)
+export const { addSingleKey, getStringIdByKey, updateMultipleKeys, updateSingleKey } =
+	createCommonFns(crowdinApi)
 export { branches, sourceFiles, projectId } from '../constants'
