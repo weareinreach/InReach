@@ -34,10 +34,7 @@ import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 import { Link } from '~ui/components/core/Link'
-// import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
-// import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)

@@ -28,10 +28,7 @@ import { SearchResultSidebar } from '@weareinreach/ui/components/sections/Search
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-// import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
-// import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
