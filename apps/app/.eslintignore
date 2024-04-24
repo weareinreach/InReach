@@ -1,1 +1,2 @@
 *.spec.ts
+webpack-stats.json

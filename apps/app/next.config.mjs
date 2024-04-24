@@ -1,11 +1,13 @@
 /* eslint-disable node/no-process-env */
 
+import filterWebpackStats from '@bundle-stats/plugin-webpack-filter'
 import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import { RelativeCiAgentWebpackPlugin } from '@relative-ci/agent'
 import { withSentryConfig } from '@sentry/nextjs'
 import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import routes from 'nextjs-routes/config'
+import { StatsWriterPlugin } from 'webpack-stats-plugin'
 
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -68,6 +70,26 @@ const nextConfig = {
 		}
 		if (!dev && !isServer) {
 			config.plugins.push(new RelativeCiAgentWebpackPlugin())
+			config.plugins.push(
+				new StatsWriterPlugin({
+					filename: '../webpack-stats.json',
+					stats: {
+						assets: true,
+						chunks: true,
+						modules: true,
+					},
+					transform: (webpackStats) => {
+						if (filterWebpackStats instanceof Function) {
+							const filteredSource = filterWebpackStats(webpackStats)
+							return JSON.stringify(filteredSource)
+						} else if (filterWebpackStats.default instanceof Function) {
+							const filteredSource = filterWebpackStats.default(webpackStats)
+							return JSON.stringify(filteredSource)
+						}
+						return JSON.stringify(webpackStats)
+					},
+				})
+			)
 		}
 		if (dev && !isServer) {
 			/** WDYR */
