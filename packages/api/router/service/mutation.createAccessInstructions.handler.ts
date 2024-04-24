@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateAccessInstructionsSchema } from './mutation.createAccessInstructions.schema'
 
-export const createAccessInstructions = async ({
+const createAccessInstructions = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TCreateAccessInstructionsSchema, 'protected'>) => {

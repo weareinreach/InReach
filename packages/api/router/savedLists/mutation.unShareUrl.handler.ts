@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUnShareUrlSchema } from './mutation.unShareUrl.schema'
 
-export const unShareUrl = async ({ ctx, input }: TRPCHandlerParams<TUnShareUrlSchema, 'protected'>) => {
+const unShareUrl = async ({ ctx, input }: TRPCHandlerParams<TUnShareUrlSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
 

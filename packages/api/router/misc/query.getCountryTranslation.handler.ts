@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetCountryTranslationSchema } from './query.getCountryTranslation.schema'
 
-export const getCountryTranslation = async ({ input }: TRPCHandlerParams<TGetCountryTranslationSchema>) => {
+const getCountryTranslation = async ({ input }: TRPCHandlerParams<TGetCountryTranslationSchema>) => {
 	try {
 		const result = await prisma.country.findUniqueOrThrow({
 			where: { cca2: input.cca2 },

@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TEditModeBarReverifySchema } from './mutation.EditModeBarReverify.schema'
 
-export const EditModeBarReverify = async ({
+const EditModeBarReverify = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TEditModeBarReverifySchema, 'protected'>) => {

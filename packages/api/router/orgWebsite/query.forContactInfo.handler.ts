@@ -21,7 +21,7 @@ const whereId = (input: TForContactInfoSchema): Prisma.OrgWebsiteWhereInput => {
 	}
 }
 
-export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
+const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
 	const where = {
 		...isPublic,
 		...whereId(input),

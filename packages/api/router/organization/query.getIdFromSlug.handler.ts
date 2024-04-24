@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetIdFromSlugSchema } from './query.getIdFromSlug.schema'
 
-export const getIdFromSlug = async ({ ctx, input }: TRPCHandlerParams<TGetIdFromSlugSchema>) => {
+const getIdFromSlug = async ({ ctx, input }: TRPCHandlerParams<TGetIdFromSlugSchema>) => {
 	const { slug } = input
 	const cachedId = await readSlugCache(slug)
 	if (cachedId) {

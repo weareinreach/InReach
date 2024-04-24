@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TEditModeBarSchema } from './query.EditModeBar.schema'
 
-export const EditModeBar = async ({ input }: TRPCHandlerParams<TEditModeBarSchema>) => {
+const EditModeBar = async ({ input }: TRPCHandlerParams<TEditModeBarSchema>) => {
 	try {
 		const { orgLocationId, orgServiceId, slug } = input
 

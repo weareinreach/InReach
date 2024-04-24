@@ -28,7 +28,7 @@ const getWhereId = (input: TForContactInfoEditSchema, isSingleLoc?: boolean): Pr
 	}
 }
 
-export const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
+const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
 	const locCount = isIdFor('organization', input.parentId)
 		? await prisma.orgLocation.count({
 				where: { organization: { id: input.parentId } },

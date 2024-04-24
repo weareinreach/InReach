@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForServiceInfoCardSchema } from './query.forServiceInfoCard.schema'
 
-export const forServiceInfoCard = async ({ input }: TRPCHandlerParams<TForServiceInfoCardSchema>) => {
+const forServiceInfoCard = async ({ input }: TRPCHandlerParams<TForServiceInfoCardSchema>) => {
 	const result = await prisma.orgService.findMany({
 		where: {
 			...globalWhere.isPublic(),

@@ -22,7 +22,7 @@ const getWhereId = (input: TForContactInfoSchema): Prisma.OrgPhoneWhereInput => 
 	}
 }
 
-export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
+const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
 	const whereId = getWhereId(input)
 
 	const result = await prisma.orgPhone.findMany({

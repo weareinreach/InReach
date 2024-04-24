@@ -103,7 +103,7 @@ const whereId = (
 	}
 }
 
-export const hasContactInfo = async ({ input }: TRPCHandlerParams<THasContactInfoSchema>) => {
+const hasContactInfo = async ({ input }: TRPCHandlerParams<THasContactInfoSchema>) => {
 	try {
 		const locCount = isIdFor('organization', input)
 			? await prisma.orgLocation.count({ where: { organization: { id: input } } })

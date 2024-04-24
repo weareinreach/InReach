@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUnHideSchema } from './mutation.unHide.schema'
 
-export const unHide = async ({ ctx, input }: TRPCHandlerParams<TUnHideSchema, 'protected'>) => {
+const unHide = async ({ ctx, input }: TRPCHandlerParams<TUnHideSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const visible = true
 

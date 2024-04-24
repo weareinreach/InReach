@@ -1,6 +1,6 @@
 import { prisma } from '@weareinreach/db'
 
-export const countryGovDistMap = async () => {
+const countryGovDistMap = async () => {
 	const fields = { id: true, tsKey: true, tsNs: true }
 
 	const countries = await prisma.country.findMany({

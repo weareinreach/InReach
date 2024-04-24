@@ -21,7 +21,7 @@ const whereId = (input: TForHoursDrawerSchema): Prisma.OrgHoursWhereInput => {
 	}
 }
 
-export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawerSchema>) => {
+const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawerSchema>) => {
 	const result = await prisma.orgHours.findMany({
 		where: {
 			...whereId(input),

@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TAuditLogByRecordIdSchema } from './query.auditLogByRecordId.schema'
 
-export const auditLogByRecordId = async ({ input }: TRPCHandlerParams<TAuditLogByRecordIdSchema>) => {
+const auditLogByRecordId = async ({ input }: TRPCHandlerParams<TAuditLogByRecordIdSchema>) => {
 	try {
 		const { recordId, skip, take, sort } = input
 		const auditLog = await prisma.auditTrail.findMany({

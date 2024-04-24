@@ -20,7 +20,7 @@ const getOrgId = async (phoneId: string) => {
 	return org.id
 }
 
-export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
+const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	try {
 		const result = await prisma.orgPhone.findUnique({
 			where: input,

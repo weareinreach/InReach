@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TProcessDrawerSchema } from './mutation.processDrawer.schema'
 
-export const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDrawerSchema, 'protected'>) => {
+const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDrawerSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	try {
 		const results = {

@@ -4,7 +4,7 @@ import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-export const map = async ({ ctx: _ }: TRPCHandlerParams) => {
+const map = async ({ ctx: _ }: TRPCHandlerParams) => {
 	try {
 		const result = await prisma.attribute.findMany({
 			where: {

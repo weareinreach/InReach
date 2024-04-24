@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TEditModeBarDeleteSchema } from './mutation.EditModeBarDelete.schema'
 
-export const EditModeBarDelete = async ({
+const EditModeBarDelete = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TEditModeBarDeleteSchema, 'protected'>) => {

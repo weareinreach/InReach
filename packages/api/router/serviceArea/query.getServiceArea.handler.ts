@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetServiceAreaSchema } from './query.getServiceArea.schema'
 
-export const getServiceArea = async ({ input }: TRPCHandlerParams<TGetServiceAreaSchema>) => {
+const getServiceArea = async ({ input }: TRPCHandlerParams<TGetServiceAreaSchema>) => {
 	try {
 		const result = await prisma.serviceArea.findUnique({
 			where: {

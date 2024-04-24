@@ -14,7 +14,7 @@ const validateJsonSchema = (schema: unknown): schema is JSONSchemaType<unknown> 
 	return false
 }
 
-export const attributesByCategory = async ({ input }: TRPCHandlerParams<TAttributesByCategorySchema>) => {
+const attributesByCategory = async ({ input }: TRPCHandlerParams<TAttributesByCategorySchema>) => {
 	console.log(input)
 	const result = await prisma.attributesByCategory.findMany({
 		where: {

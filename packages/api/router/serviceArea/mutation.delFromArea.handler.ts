@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TDelFromAreaSchema } from './mutation.delFromArea.schema'
 
-export const delFromArea = async ({ ctx, input }: TRPCHandlerParams<TDelFromAreaSchema, 'protected'>) => {
+const delFromArea = async ({ ctx, input }: TRPCHandlerParams<TDelFromAreaSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 

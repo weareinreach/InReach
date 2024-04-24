@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetOneSchema } from './query.getOne.schema'
 
-export const getOne = async ({ input }: TRPCHandlerParams<TGetOneSchema>) => {
+const getOne = async ({ input }: TRPCHandlerParams<TGetOneSchema>) => {
 	const result = await prisma.attribute.findUniqueOrThrow({
 		where: input,
 		select: {

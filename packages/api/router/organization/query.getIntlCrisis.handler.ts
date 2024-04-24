@@ -11,7 +11,7 @@ const isSuperJSON = (input: unknown): input is SuperJSONResult =>
 
 const AccessInstructionSchema = z.object({ access_type: z.string(), access_value: z.string() })
 
-export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisSchema>) => {
+const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisSchema>) => {
 	const orgs = await prisma.organization.findMany({
 		where: {
 			serviceAreas: { active: true, countries: { some: { country: { cca2: input.cca2 } } } },

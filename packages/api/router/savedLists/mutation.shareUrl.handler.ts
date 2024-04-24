@@ -17,7 +17,7 @@ const generateUniqueSlug = async (): Promise<string> => {
 	}
 	return slug
 }
-export const shareUrl = async ({ ctx, input }: TRPCHandlerParams<TShareUrlSchema, 'protected'>) => {
+const shareUrl = async ({ ctx, input }: TRPCHandlerParams<TShareUrlSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const urlSlug = await generateUniqueSlug()
 	checkListOwnership({ listId: input.id, userId: ctx.session.user.id })

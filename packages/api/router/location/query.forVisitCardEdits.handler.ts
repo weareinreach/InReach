@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForVisitCardEditsSchema } from './query.forVisitCardEdits.schema'
 
-export const forVisitCardEdits = async ({ input }: TRPCHandlerParams<TForVisitCardEditsSchema>) => {
+const forVisitCardEdits = async ({ input }: TRPCHandlerParams<TForVisitCardEditsSchema>) => {
 	try {
 		const result = await prisma.orgLocation.findUnique({
 			where: {
