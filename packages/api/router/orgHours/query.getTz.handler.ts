@@ -22,14 +22,18 @@ const whereId = (input: TGetTzSchema): Prisma.OrgLocationWhereInput => {
 		}
 	}
 }
-export const getTz = async ({ input }: TRPCHandlerParams<TGetTzSchema>) => {
+const getTz = async ({ input }: TRPCHandlerParams<TGetTzSchema>) => {
 	const where = whereId(input)
 	const { latitude, longitude } =
 		(await prisma.orgLocation.findFirst({ where, select: { latitude: true, longitude: true } })) ?? {}
 
-	if (!latitude || !longitude) throw new TRPCError({ code: 'NOT_FOUND' })
+	if (!latitude || !longitude) {
+		throw new TRPCError({ code: 'NOT_FOUND' })
+	}
 	const result = find(latitude, longitude).at(0)
-	if (!result) throw new TRPCError({ code: 'NOT_FOUND' })
+	if (!result) {
+		throw new TRPCError({ code: 'NOT_FOUND' })
+	}
 	return result
 }
 export default getTz

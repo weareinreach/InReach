@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateNewSuggestionSchema } from './mutation.createNewSuggestion.schema'
 
-export const createNewSuggestion = async ({
+const createNewSuggestion = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TCreateNewSuggestionSchema, 'protected'>) => {

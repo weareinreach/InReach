@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForEditDrawerSchema } from './query.forEditDrawer.schema'
 
-export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
+const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	const result = await prisma.orgWebsite.findUnique({
 		where: input,
 		include: {

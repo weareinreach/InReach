@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TByOrgIdSchema } from './query.byOrgId.schema'
 import { select } from './selects'
 
-export const byOrgId = async ({ input }: TRPCHandlerParams<TByOrgIdSchema>) => {
+const byOrgId = async ({ input }: TRPCHandlerParams<TByOrgIdSchema>) => {
 	const results = await prisma.orgService.findMany({
 		where: input,
 		select: {

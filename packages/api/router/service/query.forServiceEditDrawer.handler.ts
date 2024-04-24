@@ -8,7 +8,7 @@ import { type TForServiceEditDrawerSchema } from './query.forServiceEditDrawer.s
 const freeTextSelect = {
 	select: { tsKey: { select: { key: true, text: true, ns: true, crowdinId: true } } },
 } as const
-export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServiceEditDrawerSchema>) => {
+const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServiceEditDrawerSchema>) => {
 	const result = await prisma.orgService.findUniqueOrThrow({
 		where: { id: input },
 		select: {

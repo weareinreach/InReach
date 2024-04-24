@@ -5,8 +5,10 @@ import { type TGetFeaturedSchema } from './query.getFeatured.schema'
 
 const getRandomItems = <T>(items: T[], count: number): T[] => {
 	const randomIndexes = new Set<number>()
-	if (items.length < count)
-		throw new Error('Count exceeds the number of items!', { cause: { items: items.length, count } })
+	if (items.length < count) {
+		console.warn('Count exceeds the number of items! Setting `count` to equal `items.length`')
+		count = items.length
+	}
 
 	while (randomIndexes.size < count) {
 		randomIndexes.add(Math.floor(Math.random() * items.length))
@@ -15,7 +17,7 @@ const getRandomItems = <T>(items: T[], count: number): T[] => {
 	return [...randomIndexes].map((i) => items[i]) as T[]
 }
 
-export const getFeatured = async ({ input }: TRPCHandlerParams<TGetFeaturedSchema>) => {
+const getFeatured = async ({ input }: TRPCHandlerParams<TGetFeaturedSchema>) => {
 	const results = await prisma.orgReview.findMany({
 		where: {
 			featured: true,

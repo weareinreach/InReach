@@ -3,10 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdatePhoneDataSchema } from './mutation.updatePhoneData.schema'
 
-export const updatePhoneData = async ({
-	ctx,
-	input,
-}: TRPCHandlerParams<TUpdatePhoneDataSchema, 'protected'>) => {
+const updatePhoneData = async ({ ctx, input }: TRPCHandlerParams<TUpdatePhoneDataSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const updates = input.map(({ id, to }) => {
 		const { serviceOnly, locationOnly, locations, services, published } = to

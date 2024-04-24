@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TAdminCreateSchema } from './mutation.adminCreate.schema'
 
-export const adminCreate = async ({ ctx, input }: TRPCHandlerParams<TAdminCreateSchema, 'protected'>) => {
+const adminCreate = async ({ ctx, input }: TRPCHandlerParams<TAdminCreateSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const newUser = await prisma.$transaction(async (tx) => {
 		const user = await tx.user.create(input.prisma)

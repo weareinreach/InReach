@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetLinkOptionsSchema } from './query.getLinkOptions.schema'
 
-export const getLinkOptions = async ({ input }: TRPCHandlerParams<TGetLinkOptionsSchema>) => {
+const getLinkOptions = async ({ input }: TRPCHandlerParams<TGetLinkOptionsSchema>) => {
 	try {
 		const { slug, locationId } = input
 		const result = await prisma.orgWebsite.findMany({
@@ -26,7 +26,7 @@ export const getLinkOptions = async ({ input }: TRPCHandlerParams<TGetLinkOption
 		}))
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getLinkOptions

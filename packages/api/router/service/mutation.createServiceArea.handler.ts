@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateServiceAreaSchema } from './mutation.createServiceArea.schema'
 
-export const createServiceArea = async ({
+const createServiceArea = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TCreateServiceAreaSchema, 'protected'>) => {

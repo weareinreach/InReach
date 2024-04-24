@@ -78,6 +78,7 @@
 			}
 		},
 		"overrides": {
+			"@tanstack/react-table@8.10.6": "@tanstack/react-table@8.16.0",
 			"better-sqlite3@<9": "^9.0.0",
 			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec"
 		},

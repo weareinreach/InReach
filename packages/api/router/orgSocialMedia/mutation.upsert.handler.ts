@@ -11,7 +11,7 @@ const socialLinkValidator = new SocialLinks()
 
 type CreateData = Pick<Create, 'deleted' | 'published' | 'orgLocationOnly'>
 
-export const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protected'>) => {
+const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 		const {

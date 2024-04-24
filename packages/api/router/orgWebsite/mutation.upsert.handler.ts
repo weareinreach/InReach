@@ -12,7 +12,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type Create, type TUpsertSchema } from './mutation.upsert.schema'
 
 type CreateData = Pick<Create, 'url' | 'isPrimary' | 'deleted' | 'published' | 'orgLocationOnly'>
-export const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protected'>) => {
+const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 		const { description: desc, operation, id: passedId, orgLocationId, organizationId, ...data } = input

@@ -11,7 +11,7 @@ const isSuperJSON = (input: unknown): input is SuperJSONResult =>
 
 const AccessInstructionSchema = z.object({ access_type: z.string(), access_value: z.string() })
 
-export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisSchema>) => {
+const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisSchema>) => {
 	const orgs = await prisma.organization.findMany({
 		where: {
 			serviceAreas: { active: true, countries: { some: { country: { cca2: input.cca2 } } } },
@@ -62,11 +62,11 @@ export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisS
 		const serviceTags: Record<'tsKey' | 'tsNs', string>[] = []
 		const accessInstructions: Record<'tag' | 'access_type' | 'access_value', string>[] = []
 
-		for (const { attributes, services: service } of services) {
+		for (const { attributes: serviceAttributes, services: service } of services) {
 			for (const { tag } of service) {
 				serviceTags.push(tag)
 			}
-			for (const { attribute, data } of attributes) {
+			for (const { attribute, data } of serviceAttributes) {
 				const parsedData = AccessInstructionSchema.parse(
 					isSuperJSON(data)
 						? superjson.deserialize<{ access_type: string; access_value: string }>(data)
@@ -79,6 +79,7 @@ export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisS
 		return {
 			id,
 			name,
+			accessInstructions,
 			description: { ...description?.tsKey },
 			targetPop: attributes
 				.map(({ attribute, text }) => ({
@@ -88,7 +89,6 @@ export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisS
 				}))
 				.at(0),
 			services: serviceTags,
-			accessInstructions,
 		}
 	})
 

@@ -4,7 +4,7 @@ import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-export const map = async ({ ctx: _ }: TRPCHandlerParams<undefined>) => {
+const map = async ({ ctx: _ }: TRPCHandlerParams) => {
 	try {
 		const result = await prisma.attribute.findMany({
 			where: {
@@ -25,7 +25,9 @@ export const map = async ({ ctx: _ }: TRPCHandlerParams<undefined>) => {
 				requireText: true,
 			},
 		})
-		if (!result) return null
+		if (!result) {
+			return null
+		}
 		const byId = new Map<string, MapById>(
 			result.map(({ id, ...rest }) => [id, filterObj(rest, (_key, value) => value !== null) as MapById])
 		)
@@ -34,7 +36,7 @@ export const map = async ({ ctx: _ }: TRPCHandlerParams<undefined>) => {
 		)
 		return { byId, byTag }
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 

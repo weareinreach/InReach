@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TLinkPhonesSchema } from './mutation.linkPhones.schema'
 
-export const linkPhones = async ({ ctx, input }: TRPCHandlerParams<TLinkPhonesSchema, 'protected'>) => {
+const linkPhones = async ({ ctx, input }: TRPCHandlerParams<TLinkPhonesSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 
 	const links = await prisma.orgServicePhone.createMany({ data: input, skipDuplicates: true })

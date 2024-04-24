@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TDeleteItemSchema } from './mutation.deleteItem.schema'
 
-export const deleteItem = async ({ ctx, input }: TRPCHandlerParams<TDeleteItemSchema, 'protected'>) => {
+const deleteItem = async ({ ctx, input }: TRPCHandlerParams<TDeleteItemSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const { id, organizationId, serviceId } = input
 	checkListOwnership({ listId: id, userId: ctx.session.user.id })

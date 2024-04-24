@@ -14,7 +14,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TUpdateBasicSchema } from './mutation.updateBasic.schema'
 
 const logger = createLoggerInstance('api - organization.updateBasic')
-export const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema, 'protected'>) => {
+const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 		const data: Prisma.OrganizationUpdateInput = {}
@@ -41,15 +41,15 @@ export const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasic
 		}
 		const update = await prisma.organization.update({
 			where: { id: input.id },
-			data,
 			select: {
 				name: true,
 				slug: true,
 			},
+			data,
 		})
 		if (update && input.description && existing.description) {
 			const stringId =
-				existing.description.tsKey.crowdinId ||
+				existing.description.tsKey.crowdinId ??
 				(await getStringIdByKey(existing.description?.tsKey?.key, true))
 			if (stringId) {
 				if (isVercelProd) {
@@ -65,7 +65,7 @@ export const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasic
 		}
 		return update
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default updateBasic

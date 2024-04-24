@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForLocationPageSchema } from './query.forLocationPage.schema'
 
-export const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSchema>) => {
+const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSchema>) => {
 	const { slug } = input
 	const org = await prisma.organization.findUniqueOrThrow({
 		where: {
