@@ -9,11 +9,13 @@ import { type TGetNamesSchema } from './query.getNames.schema'
 export const getNames = async ({ input }: TRPCHandlerParams<TGetNamesSchema>) => {
 	const { orgLocationId, organizationId } = input
 
-	if (!orgLocationId && !organizationId) throw new TRPCError({ code: 'BAD_REQUEST' })
+	if (!orgLocationId && !organizationId) {
+		throw new TRPCError({ code: 'BAD_REQUEST' })
+	}
 
 	const results = await prisma.orgService.findMany({
 		where: {
-			organizationId: organizationId,
+			organizationId,
 			...(orgLocationId
 				? {
 						locations: {
@@ -29,7 +31,9 @@ export const getNames = async ({ input }: TRPCHandlerParams<TGetNamesSchema>) =>
 	})
 	const transformedResults = flush(
 		results.map(({ id, serviceName }) => {
-			if (!serviceName) return
+			if (!serviceName) {
+				return null
+			}
 			return { id, tsKey: serviceName.key, defaultText: serviceName.tsKey.text }
 		})
 	)

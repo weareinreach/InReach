@@ -17,7 +17,9 @@ export const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDr
 		if (input.createdVals) {
 			const prepped = input.createdVals.map(({ interval, ...rest }) => {
 				const { start, end } = Interval.fromISO(interval)
-				if (!start || !end) throw new Error('Invalid interval', { cause: interval })
+				if (!start || !end) {
+					throw new Error('Invalid interval', { cause: interval })
+				}
 				return {
 					...rest,
 					start: start.toJSDate(),
@@ -31,7 +33,9 @@ export const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDr
 		if (input.updatedVals) {
 			const prepped = input.updatedVals.map(({ interval, id, ...rest }) => {
 				const { start, end } = Interval.fromISO(interval)
-				if (!start || !end) throw new Error('Invalid interval', { cause: interval })
+				if (!start || !end) {
+					throw new Error('Invalid interval', { cause: interval })
+				}
 				return {
 					where: { id },
 					data: {
@@ -52,7 +56,7 @@ export const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDr
 		}
 		return results
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default processDrawer

@@ -31,9 +31,12 @@ export const locationLink = async ({ ctx, input }: TRPCHandlerParams<TLocationLi
 				})
 				return result
 			}
+			default: {
+				throw new Error('Invalid action')
+			}
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default locationLink

@@ -23,10 +23,12 @@ export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerS
 				},
 			},
 		})
-		if (!result) return null
+		if (!result) {
+			return null
+		}
 		return result
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default forEditDrawer

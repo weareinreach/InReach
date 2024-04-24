@@ -32,11 +32,9 @@ export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'p
 							},
 						},
 					}
-				: description === null
-					? { description: { delete: true } }
-					: {}),
-			...(countryId ? { country: { connect: { id: countryId } } } : {}),
-			...(phoneTypeId ? { phoneType: { connect: { id: phoneTypeId } } } : {}),
+				: description === null && { description: { delete: true } }),
+			...(countryId && { country: { connect: { id: countryId } } }),
+			...(phoneTypeId && { phoneType: { connect: { id: phoneTypeId } } }),
 		},
 	})
 	return updatedRecord

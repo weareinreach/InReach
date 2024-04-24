@@ -122,7 +122,7 @@ export const hasContactInfo = async ({ input }: TRPCHandlerParams<THasContactInf
 		])
 		return email + phone + socialMedia + website !== 0 // ? 'true' : 'false'
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default hasContactInfo

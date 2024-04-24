@@ -12,7 +12,7 @@ export const addToArea = async ({ ctx, input }: TRPCHandlerParams<TAddToAreaSche
 
 		const { id: serviceAreaId } =
 			typeof input.serviceArea === 'string'
-				? { id: input.serviceArea as string }
+				? { id: input.serviceArea }
 				: await prisma.serviceArea.create({
 						data: {
 							id: generateId('serviceArea'),
@@ -21,30 +21,26 @@ export const addToArea = async ({ ctx, input }: TRPCHandlerParams<TAddToAreaSche
 						select: { id: true },
 					})
 		if (input.countryId) {
-			const result = await prisma.serviceAreaCountry.create({
+			await prisma.serviceAreaCountry.create({
 				data: {
 					serviceAreaId,
 					countryId: input.countryId,
 				},
 			})
-			if (result) {
-				return { result: 'added' }
-			}
+			return { result: 'added' }
 		} else if (input.govDistId) {
-			const result = await prisma.serviceAreaDist.create({
+			await prisma.serviceAreaDist.create({
 				data: {
 					serviceAreaId,
 					govDistId: input.govDistId,
 				},
 			})
-			if (result) {
-				return { result: 'added' }
-			}
+			return { result: 'added' }
 		} else {
 			throw new TRPCError({ code: 'BAD_REQUEST' })
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default addToArea

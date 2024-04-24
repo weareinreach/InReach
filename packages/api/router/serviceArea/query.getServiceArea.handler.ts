@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetServiceAreaSchema } from './query.getServiceArea.schema'
 
-export const getServiceArea = async ({ ctx, input }: TRPCHandlerParams<TGetServiceAreaSchema>) => {
+export const getServiceArea = async ({ input }: TRPCHandlerParams<TGetServiceAreaSchema>) => {
 	try {
 		const result = await prisma.serviceArea.findUnique({
 			where: {
@@ -35,7 +35,9 @@ export const getServiceArea = async ({ ctx, input }: TRPCHandlerParams<TGetServi
 			},
 		})
 
-		if (!result) return result
+		if (!result) {
+			return result
+		}
 
 		const { id, districts, countries } = result
 		const formatted = {
@@ -45,7 +47,7 @@ export const getServiceArea = async ({ ctx, input }: TRPCHandlerParams<TGetServi
 		}
 		return formatted
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getServiceArea

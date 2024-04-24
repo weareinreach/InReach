@@ -1,5 +1,4 @@
 import { prisma } from '@weareinreach/db'
-import { formatAccessDetails } from '~api/formatters/accessDetails'
 import { formatAttributes } from '~api/formatters/attributes'
 import { formatHours } from '~api/formatters/hours'
 import { handleError } from '~api/lib/errorHandler'
@@ -9,7 +8,7 @@ import { type TServiceEditSchema } from './query.serviceEdit.schema'
 
 const freeTextSelect = { select: { tsKey: { select: { key: true, text: true, ns: true } } } } as const
 
-export const serviceEdit = async ({ ctx, input }: TRPCHandlerParams<TServiceEditSchema>) => {
+export const serviceEdit = async ({ input }: TRPCHandlerParams<TServiceEditSchema>) => {
 	try {
 		const result = await prisma.orgService.findUnique({
 			where: input,
@@ -56,7 +55,9 @@ export const serviceEdit = async ({ ctx, input }: TRPCHandlerParams<TServiceEdit
 				locations: { select: { orgLocationId: true } },
 			},
 		})
-		if (!result) return null
+		if (!result) {
+			return null
+		}
 		const {
 			serviceName,
 			description,
@@ -75,10 +76,13 @@ export const serviceEdit = async ({ ctx, input }: TRPCHandlerParams<TServiceEdit
 			name: serviceName?.tsKey,
 			description: description?.tsKey,
 			services: services?.map(({ tag }) => tag),
-			emails: emails?.map(({ email: { title, ...rest } }) => ({ ...rest, title: title?.key ?? null })),
-			phones: phones?.map(({ phone: { description, ...rest } }) => ({
-				...rest,
-				description: description?.tsKey,
+			emails: emails?.map(({ email: { title, ...emailRecord } }) => ({
+				...emailRecord,
+				title: title?.key ?? null,
+			})),
+			phones: phones?.map(({ phone: { description: phoneDescription, ...phoneRecord } }) => ({
+				...phoneRecord,
+				description: phoneDescription?.tsKey,
 			})),
 			hours: formatHours.process(hours),
 			locations: locations?.map(({ orgLocationId }) => orgLocationId),
@@ -89,7 +93,7 @@ export const serviceEdit = async ({ ctx, input }: TRPCHandlerParams<TServiceEdit
 			...rest,
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default serviceEdit

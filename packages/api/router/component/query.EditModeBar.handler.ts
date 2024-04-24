@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TEditModeBarSchema } from './query.EditModeBar.schema'
 
-export const EditModeBar = async ({ ctx, input }: TRPCHandlerParams<TEditModeBarSchema>) => {
+export const EditModeBar = async ({ input }: TRPCHandlerParams<TEditModeBarSchema>) => {
 	try {
 		const { orgLocationId, orgServiceId, slug } = input
 
@@ -30,9 +30,12 @@ export const EditModeBar = async ({ ctx, input }: TRPCHandlerParams<TEditModeBar
 				})
 				return { ...result, lastVerified: null }
 			}
+			default: {
+				throw new Error('Invalid input')
+			}
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default EditModeBar

@@ -13,8 +13,8 @@ export const locationLink = async ({ ctx, input }: TRPCHandlerParams<TLocationLi
 			case 'link': {
 				const result = await prisma.orgLocationSocialMedia.create({
 					data: {
-						socialMediaId: orgSocialMediaId,
 						orgLocationId,
+						socialMediaId: orgSocialMediaId,
 						active: true,
 					},
 				})
@@ -31,9 +31,12 @@ export const locationLink = async ({ ctx, input }: TRPCHandlerParams<TLocationLi
 				})
 				return result
 			}
+			default: {
+				throw new Error('Invalid action')
+			}
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default locationLink

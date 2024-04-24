@@ -1,6 +1,5 @@
 import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
-import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForVisitCardEditsSchema } from './query.forVisitCardEdits.schema'
@@ -28,7 +27,9 @@ export const forVisitCardEdits = async ({ input }: TRPCHandlerParams<TForVisitCa
 				longitude: true,
 			},
 		})
-		if (!result) return null
+		if (!result) {
+			return null
+		}
 		const { attributes, ...rest } = result
 		const transformed = {
 			...rest,

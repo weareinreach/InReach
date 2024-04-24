@@ -12,7 +12,7 @@ export const getCountryTranslation = async ({ input }: TRPCHandlerParams<TGetCou
 		})
 		return result
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getCountryTranslation

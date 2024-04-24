@@ -41,7 +41,7 @@ export const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContac
 		}))
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default forContactInfoEdit

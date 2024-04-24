@@ -1,10 +1,7 @@
 import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import {
-	type TCreateAccessInstructionsSchema,
-	ZCreateAccessInstructionsSchema,
-} from './mutation.createAccessInstructions.schema'
+import { type TCreateAccessInstructionsSchema } from './mutation.createAccessInstructions.schema'
 
 export const createAccessInstructions = async ({
 	ctx,

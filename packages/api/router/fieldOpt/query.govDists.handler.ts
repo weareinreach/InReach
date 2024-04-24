@@ -20,7 +20,7 @@ export const govDists = async ({ input }: TRPCHandlerParams<TGovDistsSchema>) =>
 		})
 		return results
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default govDists

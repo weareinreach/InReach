@@ -175,7 +175,7 @@ export const forLocationPageEdits = async ({ input }: TRPCHandlerParams<TForLoca
 
 		return formatted
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default forLocationPageEdits

@@ -24,7 +24,7 @@ export const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySc
 	const upserts = await prisma.$transaction(
 		data.map(
 			({ title, services: servicesArr, locations: locationsArr, description, id: passedId, ...record }) => {
-				const before = passedId ? existing.find(({ id }) => id === passedId) : undefined
+				const before = passedId ? existing.find(({ id: existingId }) => existingId === passedId) : undefined
 				const servicesBefore = before?.services?.map(({ serviceId }) => ({ serviceId })) ?? []
 				const locationsBefore = before?.locations?.map(({ orgLocationId }) => ({ orgLocationId })) ?? []
 				const id = passedId ?? ctx.generateId('orgEmail')

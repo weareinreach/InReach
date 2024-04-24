@@ -22,7 +22,7 @@ export const ccaMap = async ({ input }: TRPCHandlerParams<TCcaMapSchema>) => {
 
 		return { byId, byCCA }
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default ccaMap

@@ -50,7 +50,7 @@ export const update = async ({ input, ctx }: TRPCHandlerParams<TUpdateSchema, 'p
 		})
 		return txn
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default update

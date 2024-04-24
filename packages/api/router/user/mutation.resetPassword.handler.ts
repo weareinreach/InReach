@@ -5,7 +5,7 @@ import { type TResetPasswordSchema } from './mutation.resetPassword.schema'
 
 export const resetPassword = async ({ input }: TRPCHandlerParams<TResetPasswordSchema>) => {
 	const { code, password, email } = input
-	const response = await cognitoResetPassword({ code, email: email.toLowerCase(), password })
+	const response = await cognitoResetPassword({ email: email.toLowerCase(), password, code })
 	return response
 }
 export default resetPassword

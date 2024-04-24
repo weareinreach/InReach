@@ -19,8 +19,6 @@ export const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEd
 			lastVerified: true,
 			allowedEditors: { where: { authorized: true }, select: { userId: true } },
 			description: freeText,
-			attributes,
-
 			reviews: {
 				select: { id: true },
 			},
@@ -36,6 +34,7 @@ export const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEd
 					notVisitable: true,
 				},
 			},
+			attributes,
 		},
 	})
 	const { allowedEditors, ...orgData } = org

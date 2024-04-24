@@ -25,7 +25,7 @@ export const EditModeBarReverify = async ({
 		})
 		return reverify
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default EditModeBarReverify
