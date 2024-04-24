@@ -343,9 +343,6 @@ importers:
         specifier: 3.23.3
         version: 3.23.3
     devDependencies:
-      '@bundle-stats/plugin-webpack-filter':
-        specifier: 4.12.2
-        version: 4.12.2(core-js@3.36.1)
       '@hookform/devtools':
         specifier: 4.3.1
         version: 4.3.1(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -385,9 +382,6 @@ importers:
       '@types/react-dom':
         specifier: 18.2.25
         version: 18.2.25
-      '@types/umami':
-        specifier: 0.1.5
-        version: 0.1.5
       '@typescript-eslint/eslint-plugin':
         specifier: 7.7.1
         version: 7.7.1(@typescript-eslint/parser@7.7.1(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -439,9 +433,6 @@ importers:
       webpack-bundle-analyzer:
         specifier: 4.10.2
         version: 4.10.2(bufferutil@4.0.8)(utf-8-validate@6.0.3)
-      webpack-stats-plugin:
-        specifier: 1.1.3
-        version: 1.1.3
 
   apps/web:
     dependencies:
@@ -5910,9 +5901,6 @@ packages:
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
-
-  '@types/umami@0.1.5':
-    resolution: {integrity: sha512-9MG8FuWArG85OOppjTU41AXF0ifAysjqqUgs68J1LOqOZKOHXLKv3G1NOYRKMAacYeL4f8rYR/spVAa+RfmDDA==}
 
   '@types/unist@2.0.10':
     resolution: {integrity: sha512-IfYcSBWE3hLpBg8+X2SEa8LVkJdJEkT2Ese2aaLs3ptGdVtABxndrMaxuFlQ1qdFf9Q5rDvDpxI3WwgvKFAsQA==}
@@ -14354,9 +14342,6 @@ packages:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
 
-  webpack-stats-plugin@1.1.3:
-    resolution: {integrity: sha512-yUKYyy+e0iF/w31QdfioRKY+h3jDBRpthexBOWGKda99iu2l/wxYsI/XqdlP5IU58/0KB9CsJZgWNAl+/MPkRw==}
-
   webpack-virtual-modules@0.5.0:
     resolution: {integrity: sha512-kyDivFZ7ZM0BVOUteVbDFhlRt7Ah/CSPwJdi8hBpkK7QLumUqdLtVfm/PX/hkcnrvr0i77fO5+TjZ94Pe+C9iw==}
 
@@ -20622,8 +20607,6 @@ snapshots:
   '@types/tinycolor2@1.4.6': {}
 
   '@types/trusted-types@2.0.7': {}
-
-  '@types/umami@0.1.5': {}
 
   '@types/unist@2.0.10': {}
 
@@ -31148,8 +31131,6 @@ snapshots:
       strip-ansi: 6.0.1
 
   webpack-sources@3.2.3: {}
-
-  webpack-stats-plugin@1.1.3: {}
 
   webpack-virtual-modules@0.5.0: {}
 
