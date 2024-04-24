@@ -27,7 +27,7 @@
 		"@googlemaps/react-wrapper": "1.1.35",
 		"@terraformer/wkt": "2.2.0",
 		"@textea/json-viewer": "3.4.1",
-		"@turf/helpers": "7.0.0-alpha.114",
+		"@turf/helpers": "7.0.0-alpha.115",
 		"@tweenjs/tween.js": "23.1.1",
 		"@weareinreach/analytics": "workspace:*",
 		"@weareinreach/env": "workspace:*",
@@ -106,7 +106,7 @@
 		"@storybook/testing-library": "0.2.2",
 		"@storybook/theming": "7.6.18",
 		"@storybook/types": "7.6.18",
-		"@swc/core": "1.4.17",
+		"@swc/core": "1.5.0",
 		"@swc/helpers": "0.5.10",
 		"@tanstack/react-query": "4.36.1",
 		"@tanstack/react-query-devtools": "4.36.1",
@@ -169,10 +169,10 @@
 		"style-loader": "3.3.4",
 		"tsconfig-paths-webpack-plugin": "4.1.0",
 		"tsx": "4.7.2",
-		"type-fest": "4.16.0",
+		"type-fest": "4.17.0",
 		"typescript": "5.4.5",
 		"webpack": "5.91.0",
-		"zod": "3.23.3"
+		"zod": "3.23.4"
 	},
 	"peerDependencies": {
 		"@emotion/react": "11.11.4",
