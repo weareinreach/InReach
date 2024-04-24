@@ -21,7 +21,7 @@
 		"@weareinreach/eslint-config": "workspace:*",
 		"next": "14.2.3",
 		"nextjs-google-analytics": "2.3.3",
-		"type-fest": "4.16.0"
+		"type-fest": "4.17.0"
 	},
 	"peerDependencies": {
 		"next": "14.2.3",
