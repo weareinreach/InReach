@@ -1,6 +1,6 @@
 import { prisma } from '@weareinreach/db'
 
-export const getOptions = async () => {
+const getOptions = async () => {
 	const result = await prisma.serviceTag.findMany({
 		select: {
 			id: true,

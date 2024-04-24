@@ -19,7 +19,7 @@ const whereId = (input: TForContactInfoSchema): Prisma.OrgSocialMediaWhereInput 
 	}
 }
 
-export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
+const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
 	const result = await prisma.orgSocialMedia.findMany({
 		where: {
 			...isPublic,

@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TAttachServiceAttributeSchema } from './mutation.attachServiceAttribute.schema'
 
-export const attachServiceAttribute = async ({
+const attachServiceAttribute = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TAttachServiceAttributeSchema, 'protected'>) => {

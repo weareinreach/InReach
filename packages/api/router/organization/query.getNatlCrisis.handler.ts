@@ -11,7 +11,7 @@ const isSuperJSON = (input: unknown): input is SuperJSONResult =>
 
 const AccessInstructionSchema = accessInstructions.getAll()
 
-export const getNatlCrisis = async ({ input }: TRPCHandlerParams<TGetNatlCrisisSchema>) => {
+const getNatlCrisis = async ({ input }: TRPCHandlerParams<TGetNatlCrisisSchema>) => {
 	const orgs = await prisma.organization.findMany({
 		where: {
 			services: {

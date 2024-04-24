@@ -24,7 +24,7 @@ const getTypes = (input: TAutocompleteSchema): PlaceAutocompleteType => {
 	] as unknown as PlaceAutocompleteType
 }
 
-export const autocomplete = async ({ input }: TRPCHandlerParams<TAutocompleteSchema>) => {
+const autocomplete = async ({ input }: TRPCHandlerParams<TAutocompleteSchema>) => {
 	const types = getTypes(input)
 
 	const { data } = await googleMapsApi.placeAutocomplete({

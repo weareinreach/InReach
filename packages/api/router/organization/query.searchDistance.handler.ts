@@ -382,7 +382,7 @@ type City = {
 	dist: number
 }
 
-export const searchDistance = async ({ input }: TRPCHandlerParams<TSearchDistanceSchema>) => {
+const searchDistance = async ({ input }: TRPCHandlerParams<TSearchDistanceSchema>) => {
 	const { unit } = input
 
 	const orgs = await searchOrgByDistance(input)

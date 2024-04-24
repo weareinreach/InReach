@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TLocationEditUpdateSchema } from './mutation.LocationEditUpdate.schema'
 
-export const LocationEditUpdate = async ({
+const LocationEditUpdate = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TLocationEditUpdateSchema, 'protected'>) => {

@@ -22,7 +22,7 @@ const whereId = (input: TForContactInfoSchema): Prisma.OrgEmailWhereInput => {
 	}
 }
 
-export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
+const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
 	const result = await prisma.orgEmail.findMany({
 		where: {
 			...isPublic,

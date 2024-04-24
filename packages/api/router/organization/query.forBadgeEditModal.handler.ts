@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForBadgeEditModalSchema } from './query.forBadgeEditModal.schema'
 
-export const forBadgeEditModal = async ({ input }: TRPCHandlerParams<TForBadgeEditModalSchema>) => {
+const forBadgeEditModal = async ({ input }: TRPCHandlerParams<TForBadgeEditModalSchema>) => {
 	try {
 		const data = await prisma.attributeSupplement.findMany({
 			where: {

@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetSchema } from './query.get.schema'
 
-export const get = async ({ input }: TRPCHandlerParams<TGetSchema>) => {
+const get = async ({ input }: TRPCHandlerParams<TGetSchema>) => {
 	const { id, orgLocationId, organizationId, serviceId } = input
 
 	const result = await prisma.orgEmail.findMany({

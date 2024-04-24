@@ -14,7 +14,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TUpdateBasicSchema } from './mutation.updateBasic.schema'
 
 const logger = createLoggerInstance('api - organization.updateBasic')
-export const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema, 'protected'>) => {
+const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 		const data: Prisma.OrganizationUpdateInput = {}

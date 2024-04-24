@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TEditModeBarPublishSchema } from './mutation.EditModeBarPublish.schema'
 
-export const EditModeBarPublish = async ({
+const EditModeBarPublish = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TEditModeBarPublishSchema, 'protected'>) => {

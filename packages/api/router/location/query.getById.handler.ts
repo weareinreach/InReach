@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TGetByIdSchema } from './query.getById.schema'
 import { select } from './selects'
 
-export const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdSchema>) => {
+const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdSchema>) => {
 	const location = await prisma.orgLocation.findUniqueOrThrow({
 		where: {
 			id: input.id,

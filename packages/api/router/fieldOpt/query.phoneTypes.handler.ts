@@ -1,6 +1,6 @@
 import { prisma } from '@weareinreach/db'
 
-export const phoneTypes = async () => {
+const phoneTypes = async () => {
 	const result = await prisma.phoneType.findMany({
 		where: { active: true },
 		select: {

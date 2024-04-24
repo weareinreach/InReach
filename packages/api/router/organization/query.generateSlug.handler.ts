@@ -31,7 +31,7 @@ const uniqueSlug = async (name: string, inc?: number): Promise<string> => {
 	}
 }
 
-export const generateSlug = async ({ input }: TRPCHandlerParams<TGenerateSlugSchema>) => {
+const generateSlug = async ({ input }: TRPCHandlerParams<TGenerateSlugSchema>) => {
 	const slug = await uniqueSlug(input)
 	return slug
 }

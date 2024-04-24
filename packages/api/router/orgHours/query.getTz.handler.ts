@@ -22,7 +22,7 @@ const whereId = (input: TGetTzSchema): Prisma.OrgLocationWhereInput => {
 		}
 	}
 }
-export const getTz = async ({ input }: TRPCHandlerParams<TGetTzSchema>) => {
+const getTz = async ({ input }: TRPCHandlerParams<TGetTzSchema>) => {
 	const where = whereId(input)
 	const { latitude, longitude } =
 		(await prisma.orgLocation.findFirst({ where, select: { latitude: true, longitude: true } })) ?? {}

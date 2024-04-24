@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForEditDrawerSchema } from './query.forEditDrawer.schema'
 
-export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
+const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	try {
 		const result = await prisma.orgSocialMedia.findUnique({
 			where: input,

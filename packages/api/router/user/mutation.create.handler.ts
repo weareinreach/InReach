@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateSchema } from './mutation.create.schema'
 
-export const create = async ({ input }: TRPCHandlerParams<TCreateSchema>) => {
+const create = async ({ input }: TRPCHandlerParams<TCreateSchema>) => {
 	const prisma = getAuditedClient(input.prisma.data.id)
 	try {
 		const newUser = await prisma.$transaction(async (tx) => {

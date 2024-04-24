@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForServiceModalSchema } from './query.forServiceModal.schema'
 
-export const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceModalSchema>) => {
+const forServiceModal = async ({ input }: TRPCHandlerParams<TForServiceModalSchema>) => {
 	const result = await prisma.orgService.findUniqueOrThrow({
 		where: { id: input, ...globalWhere.isPublic() },
 		select: {

@@ -12,7 +12,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpsertManySchema } from './mutation.upsertMany.schema'
 
-export const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySchema, 'protected'>) => {
+const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const { orgId, data } = input
 

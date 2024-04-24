@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForEditNavbarSchema } from './query.forEditNavbar.schema'
 
-export const forEditNavbar = async ({ input }: TRPCHandlerParams<TForEditNavbarSchema>) => {
+const forEditNavbar = async ({ input }: TRPCHandlerParams<TForEditNavbarSchema>) => {
 	try {
 		if (input.slug) {
 			const slugResult = await prisma.organization.findUniqueOrThrow({

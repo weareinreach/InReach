@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateAttributesBasicSchema } from './mutation.updateAttributesBasic.schema'
 
-export const updateAttributesBasic = async ({
+const updateAttributesBasic = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TUpdateAttributesBasicSchema, 'protected'>) => {

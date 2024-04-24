@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetNamesSchema } from './query.getNames.schema'
 
-export const getNames = async ({ input }: TRPCHandlerParams<TGetNamesSchema>) => {
+const getNames = async ({ input }: TRPCHandlerParams<TGetNamesSchema>) => {
 	const { orgLocationId, organizationId } = input
 
 	if (!orgLocationId && !organizationId) {

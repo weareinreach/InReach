@@ -7,7 +7,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForHoursDisplaySchema } from './query.forHoursDisplay.schema'
 
-export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisplaySchema>) => {
+const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisplaySchema>) => {
 	const whereId = (): Prisma.OrgHoursWhereInput => {
 		switch (true) {
 			case isIdFor('organization', input): {

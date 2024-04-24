@@ -17,7 +17,7 @@ const getRandomItems = <T>(items: T[], count: number): T[] => {
 	return [...randomIndexes].map((i) => items[i]) as T[]
 }
 
-export const getFeatured = async ({ input }: TRPCHandlerParams<TGetFeaturedSchema>) => {
+const getFeatured = async ({ input }: TRPCHandlerParams<TGetFeaturedSchema>) => {
 	const results = await prisma.orgReview.findMany({
 		where: {
 			featured: true,

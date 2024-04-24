@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetAlertsSchema } from './query.getAlerts.schema'
 
-export const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) => {
+const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) => {
 	try {
 		const { id, slug } = input
 		const dbResult = await prisma.attributeSupplement.findMany({

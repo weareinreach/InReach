@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TAddToAreaSchema } from './mutation.addToArea.schema'
 
-export const addToArea = async ({ ctx, input }: TRPCHandlerParams<TAddToAreaSchema, 'protected'>) => {
+const addToArea = async ({ ctx, input }: TRPCHandlerParams<TAddToAreaSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 

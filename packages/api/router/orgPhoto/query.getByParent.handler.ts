@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetByParentSchema } from './query.getByParent.schema'
 
-export const getByParent = async ({ input }: TRPCHandlerParams<TGetByParentSchema>) => {
+const getByParent = async ({ input }: TRPCHandlerParams<TGetByParentSchema>) => {
 	const whereId = (): Prisma.OrgPhotoWhereInput => {
 		switch (true) {
 			case isIdFor('organization', input): {

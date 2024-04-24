@@ -8,7 +8,7 @@ import { type TServiceEditSchema } from './query.serviceEdit.schema'
 
 const freeTextSelect = { select: { tsKey: { select: { key: true, text: true, ns: true } } } } as const
 
-export const serviceEdit = async ({ input }: TRPCHandlerParams<TServiceEditSchema>) => {
+const serviceEdit = async ({ input }: TRPCHandlerParams<TServiceEditSchema>) => {
 	try {
 		const result = await prisma.orgService.findUnique({
 			where: input,

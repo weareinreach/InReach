@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForOrgPageSchema } from './query.forOrgPage.schema'
 
-export const forOrgPage = async ({ ctx, input }: TRPCHandlerParams<TForOrgPageSchema>) => {
+const forOrgPage = async ({ ctx, input }: TRPCHandlerParams<TForOrgPageSchema>) => {
 	const { slug } = input
 	const org = await prisma.organization.findUniqueOrThrow({
 		where: {

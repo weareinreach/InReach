@@ -86,7 +86,7 @@ const groupByCategory = (result: DatabaseResult) => {
 	return grouped
 }
 
-export const getAttributes = async ({ input }: TRPCHandlerParams<TGetAttributesSchema>) => {
+const getAttributes = async ({ input }: TRPCHandlerParams<TGetAttributesSchema>) => {
 	try {
 		const dbResult = await getAttributesFromDb(input)
 		const formattedResult = groupByCategory(dbResult)
