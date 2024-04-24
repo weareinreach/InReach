@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetEmailDataSchema } from './query.getEmailData.schema'
 
-export const getEmailData = async ({ input }: TRPCHandlerParams<TGetEmailDataSchema>) => {
+const getEmailData = async ({ input }: TRPCHandlerParams<TGetEmailDataSchema>) => {
 	const limit = input.limit ?? 20
 	const { skip } = input
 

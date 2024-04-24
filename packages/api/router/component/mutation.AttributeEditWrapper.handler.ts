@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TAttributeEditWrapperSchema } from './mutation.AttributeEditWrapper.schema'
 
-export const AttributeEditWrapper = async ({
+const AttributeEditWrapper = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TAttributeEditWrapperSchema, 'protected'>) => {

@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetPhoneDataSchema } from './query.getPhoneData.schema'
 
-export const getPhoneData = async ({ input }: TRPCHandlerParams<TGetPhoneDataSchema>) => {
+const getPhoneData = async ({ input }: TRPCHandlerParams<TGetPhoneDataSchema>) => {
 	const limit = input.limit ?? 20
 	const { skip } = input
 

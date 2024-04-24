@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGeoByPlaceIdSchema } from './query.geoByPlaceId.schema'
 
-export const geoByPlaceId = async ({ input }: TRPCHandlerParams<TGeoByPlaceIdSchema>) => {
+const geoByPlaceId = async ({ input }: TRPCHandlerParams<TGeoByPlaceIdSchema>) => {
 	const { data } = await googleMapsApi.geocode({
 		params: {
 			key: process.env.GOOGLE_PLACES_API_KEY as string,

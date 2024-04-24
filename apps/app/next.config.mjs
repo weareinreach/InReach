@@ -67,7 +67,11 @@ const nextConfig = {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
 		if (!dev && !isServer) {
-			config.plugins.push(new RelativeCiAgentWebpackPlugin())
+			config.plugins.push(
+				new RelativeCiAgentWebpackPlugin({
+					stats: { excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/] },
+				})
+			)
 		}
 		if (dev && !isServer) {
 			/** WDYR */

@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TDeleteSchema } from './mutation.delete.schema'
 
-export const deleteReview = async ({ ctx, input }: TRPCHandlerParams<TDeleteSchema, 'protected'>) => {
+const deleteReview = async ({ ctx, input }: TRPCHandlerParams<TDeleteSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const deleted = true
 

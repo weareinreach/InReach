@@ -3,10 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateEmailDataSchema } from './mutation.updateEmailData.schema'
 
-export const updateEmailData = async ({
-	ctx,
-	input,
-}: TRPCHandlerParams<TUpdateEmailDataSchema, 'protected'>) => {
+const updateEmailData = async ({ ctx, input }: TRPCHandlerParams<TUpdateEmailDataSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const updates = input.map(({ id, to }) => {
 		const { serviceOnly, locationOnly, locations, services, published } = to

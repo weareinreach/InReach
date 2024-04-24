@@ -166,7 +166,6 @@
 		"storybook": "7.6.18",
 		"storybook-addon-pseudo-states": "2.2.1",
 		"style-loader": "3.3.4",
-		"trpc-client-devtools-link": "0.2.1-next",
 		"tsconfig-paths-webpack-plugin": "4.1.0",
 		"tsx": "4.7.2",
 		"type-fest": "4.16.0",

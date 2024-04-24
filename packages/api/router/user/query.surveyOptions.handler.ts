@@ -1,6 +1,6 @@
 import { prisma } from '@weareinreach/db'
 
-export const surveyOptions = async () => {
+const surveyOptions = async () => {
 	const commonSelect = { id: true, tsKey: true, tsNs: true }
 
 	const [immigration, sog, ethnicity, community, countries] = await Promise.all([

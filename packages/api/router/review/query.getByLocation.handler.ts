@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetByLocationSchema } from './query.getByLocation.schema'
 
-export const getByLocation = async ({ input }: TRPCHandlerParams<TGetByLocationSchema>) => {
+const getByLocation = async ({ input }: TRPCHandlerParams<TGetByLocationSchema>) => {
 	const reviews = await prisma.orgReview.findMany({
 		where: {
 			organizationId: input.orgId,

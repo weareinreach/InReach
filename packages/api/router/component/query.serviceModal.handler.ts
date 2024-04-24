@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TServiceModalSchema } from './query.serviceModal.schema'
 
-export const serviceModal = async ({ ctx, input }: TRPCHandlerParams<TServiceModalSchema>) => {
+const serviceModal = async ({ ctx, input }: TRPCHandlerParams<TServiceModalSchema>) => {
 	try {
 		return null
 	} catch (error) {

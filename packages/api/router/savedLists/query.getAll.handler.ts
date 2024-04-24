@@ -1,7 +1,7 @@
 import { prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-export const getAll = async ({ ctx }: TRPCHandlerParams<undefined, 'protected'>) => {
+const getAll = async ({ ctx }: TRPCHandlerParams<undefined, 'protected'>) => {
 	const lists = await prisma.userSavedList.findMany({
 		where: {
 			ownedById: ctx.session.user.id,

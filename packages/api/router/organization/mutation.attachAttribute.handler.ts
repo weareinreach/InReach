@@ -4,10 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TAttachAttributeSchema } from './mutation.attachAttribute.schema'
 
-export const attachAttribute = async ({
-	ctx,
-	input,
-}: TRPCHandlerParams<TAttachAttributeSchema, 'protected'>) => {
+const attachAttribute = async ({ ctx, input }: TRPCHandlerParams<TAttachAttributeSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const { locationId, organizationId, serviceId } = input
 

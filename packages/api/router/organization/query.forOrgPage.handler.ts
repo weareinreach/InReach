@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForOrgPageSchema } from './query.forOrgPage.schema'
 
-export const forOrgPage = async ({ ctx, input }: TRPCHandlerParams<TForOrgPageSchema>) => {
+const forOrgPage = async ({ ctx, input }: TRPCHandlerParams<TForOrgPageSchema>) => {
 	const { slug } = input
 	const org = await prisma.organization.findUniqueOrThrow({
 		where: {
@@ -25,7 +25,7 @@ export const forOrgPage = async ({ ctx, input }: TRPCHandlerParams<TForOrgPageSc
 						select: { list: { select: { id: true, name: true } } },
 					}
 				: undefined,
-			attributes,
+
 			reviews: {
 				where: { visible: true, deleted: false },
 				select: { id: true },
@@ -43,6 +43,7 @@ export const forOrgPage = async ({ ctx, input }: TRPCHandlerParams<TForOrgPageSc
 					notVisitable: true,
 				},
 			},
+			attributes,
 		},
 	})
 	const { allowedEditors, ...orgData } = org

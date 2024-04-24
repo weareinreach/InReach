@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TOrgBadgesSchema } from './query.orgBadges.schema'
 
-export const orgBadges = async ({ input }: TRPCHandlerParams<TOrgBadgesSchema>) => {
+const orgBadges = async ({ input }: TRPCHandlerParams<TOrgBadgesSchema>) => {
 	try {
 		const badges = await prisma.attribute.findMany({
 			where: {
@@ -21,7 +21,7 @@ export const orgBadges = async ({ input }: TRPCHandlerParams<TOrgBadgesSchema>) 
 		})
 		return badges
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default orgBadges

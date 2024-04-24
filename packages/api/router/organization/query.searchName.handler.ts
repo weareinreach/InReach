@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TSearchNameSchema } from './query.searchName.schema'
 
-export const searchName = async ({ input }: TRPCHandlerParams<TSearchNameSchema>) => {
+const searchName = async ({ input }: TRPCHandlerParams<TSearchNameSchema>) => {
 	const orgIds = await prisma.organization.findMany({
 		where: {
 			name: {

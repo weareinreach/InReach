@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUnDeleteSchema } from './mutation.unDelete.schema'
 
-export const unDelete = async ({ ctx, input }: TRPCHandlerParams<TUnDeleteSchema, 'protected'>) => {
+const unDelete = async ({ ctx, input }: TRPCHandlerParams<TUnDeleteSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
 	const deleted = false
 

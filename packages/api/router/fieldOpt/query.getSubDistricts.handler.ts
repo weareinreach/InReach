@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetSubDistrictsSchema } from './query.getSubDistricts.schema'
 
-export const getSubDistricts = async ({ input }: TRPCHandlerParams<TGetSubDistrictsSchema>) => {
+const getSubDistricts = async ({ input }: TRPCHandlerParams<TGetSubDistrictsSchema>) => {
 	try {
 		const results = await prisma.govDist.findMany({
 			where: {
@@ -27,7 +27,7 @@ export const getSubDistricts = async ({ input }: TRPCHandlerParams<TGetSubDistri
 		})
 		return results
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getSubDistricts
