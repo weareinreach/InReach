@@ -4,7 +4,6 @@ import {
 } from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
-import { devtoolsLink } from 'trpc-client-devtools-link'
 
 import { type AppRouter } from '@weareinreach/api'
 import { getEnv } from '@weareinreach/env'
@@ -34,9 +33,6 @@ export const api = createTRPCNext<AppRouter>({
 			links: [
 				...(isDev
 					? [
-							devtoolsLink({
-								enabled: isDev,
-							}),
 							loggerLink({
 								enabled: () => isDev,
 							}),
