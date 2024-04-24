@@ -315,6 +315,16 @@ const SearchResults = () => {
 					)}
 				</Grid.Col>
 			</>
+			<Grid.Col xs={12} sm={8} md={8}>
+				{data?.resultCount === 0 && crisisResults ? (
+					<NoResults crisisData={crisisResults} />
+				) : (
+					<>
+						{resultDisplay}
+						<Pagination total={getSearchResultPageCount(data?.resultCount)} />
+					</>
+				)}
+			</Grid.Col>
 		</>
 	)
 }
