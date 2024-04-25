@@ -1444,7 +1444,8 @@ model TranslationNamespace {
 
   attributeCategories AttributeCategory[]
 
-  exportFile Boolean @default(true)
+  exportFile            Boolean @default(true)
+  overwriteFileOnExport Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1468,6 +1469,8 @@ model TranslationKey {
   ns        String
 
   crowdinId Int?
+
+  active Boolean @default(true)
 
   // to manage plurals & ordinals
   interpolation       InterpolationOptions?

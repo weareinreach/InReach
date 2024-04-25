@@ -14,4 +14,5 @@ export * from './2024-03-15_update-dead-links/index'
 export * from './2024-03-21_attribute-supplement-schemas'
 export * from './2024-04-03_access-instruction-schemas'
 export * from './2024-04-24_update-crowdin-ids'
+export * from './2024-04-25_translation-activation-flag'
 // codegen:end
