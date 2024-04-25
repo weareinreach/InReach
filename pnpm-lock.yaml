@@ -898,6 +898,9 @@ importers:
       '@vercel/kv':
         specifier: 1.0.1
         version: 1.0.1
+      '@weareinreach/env':
+        specifier: workspace:*
+        version: link:../env
       '@weareinreach/util':
         specifier: workspace:*
         version: link:../util

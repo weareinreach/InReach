@@ -43,6 +43,7 @@
 		"@crowdin/ota-client": "1.0.0",
 		"@opentelemetry/api": "1.8.0",
 		"@vercel/kv": "1.0.1",
+		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"flat": "6.0.1",
 		"object-sizeof": "2.6.4",
