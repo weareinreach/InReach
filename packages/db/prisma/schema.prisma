@@ -151,6 +151,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   //@@schema("user")
+  Suggestion Suggestion[]
 
   @@index([userTypeId])
 }
@@ -1228,9 +1229,11 @@ model Suggestion {
   id String @id @default(cuid())
 
   data           Json
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  organizationId String?
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
   handled        Boolean?
+  suggestedBy    User?        @relation(fields: [suggestedById], references: [id])
+  suggestedById  String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
