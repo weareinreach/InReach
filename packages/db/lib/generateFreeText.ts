@@ -52,7 +52,9 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 		}),
 	}
 }
-export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: GenerateFreeTextParams<T>) => {
+export const generateNestedFreeText = <T extends GenerateFreeTextType>(
+	args: GenerateFreeTextParams<T>
+): NestedCreateOne => {
 	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		create: {
@@ -68,13 +70,30 @@ export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: Gen
 	}
 }
 
+interface NestedCreateOne {
+	create: {
+		id: string
+		tsKey: {
+			create: {
+				key: string
+				text: string
+				crowdinId?: number
+				namespace: {
+					connect: {
+						name: string
+					}
+				}
+			}
+		}
+	}
+}
+
 export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
 	args: GenerateFreeTextParams<T>
-) => {
+): GenerateNestedFreeTextUpsertResult => {
 	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		upsert: {
-			// where: { id: freeText.id },
 			create: {
 				id: freeText.id,
 				tsKey: {
@@ -87,17 +106,26 @@ export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
 			},
 			update: {
 				tsKey: {
-					// upsert: {
-					// 	create: {
-					// 		key: translationKey.key,
-					// 		text: translationKey.text,
-					// 		namespace: { connect: { name: translationKey.ns } },
-					// 	},
 					update: { text: translationKey.text },
-					// },
 				},
 			},
 		},
+	}
+}
+interface GenerateNestedFreeTextUpsertResult {
+	upsert: {
+		create: {
+			id: string
+			tsKey: {
+				create: {
+					key: string
+					text: string
+					crowdinId?: number
+					namespace: { connect: { name: string } }
+				}
+			}
+		}
+		update: { tsKey: { update: { text: string } } }
 	}
 }
 
