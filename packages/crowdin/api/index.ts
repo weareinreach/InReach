@@ -21,4 +21,35 @@ declare global {
 }
 export const { addSingleKey, getStringIdByKey, updateMultipleKeys, updateSingleKey } =
 	createCommonFns(crowdinApi)
+
+export const addSingleKeyFromNestedFreetextCreate = async (
+	freeText: AddStringFromNestedFreetextCreateParams
+) => {
+	if (freeText.create.tsKey?.create) {
+		return await addSingleKey({
+			isDatabaseString: true,
+			key: freeText.create.tsKey.create.key,
+			text: freeText.create.tsKey.create.text,
+		})
+	}
+	throw new Error('Unable to add string to Crowdin, check args.')
+}
+
 export { branches, sourceFiles, projectId } from '../constants'
+
+interface AddStringFromNestedFreetextCreateParams {
+	create: {
+		id: string
+		tsKey?: {
+			create?: {
+				key: string
+				text: string
+				namespace: {
+					connect: {
+						name: string
+					}
+				}
+			}
+		}
+	}
+}
