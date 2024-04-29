@@ -16,7 +16,7 @@ export const otaHash = 'e-39328dacf5f98928e8273b35wj'
 export const otaManifest = `https://distributions.crowdin.net/${otaHash}/manifest.json`
 export const projectId = {
 	base: getValue(12, 20),
-	dbContent: getValue(22, 22),
+	dbContent: getValue(24, 24),
 }
 
 // TODO: [IN-924] Create generator to update Crowdin data on build
@@ -61,8 +61,8 @@ export const branches = getValue(
 	{
 		main: 5354,
 		dev: 5360,
-		database: 5408,
-		'database-draft': 5408,
+		database: 5412,
+		'database-draft': 5416,
 	} as const
 )
 export const fileIds = getValue(

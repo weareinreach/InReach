@@ -1,5 +1,4 @@
 /* eslint-disable node/no-process-env */
-/* eslint-disable no-var */
 import Crowdin from '@crowdin/crowdin-api-client'
 
 import { createCommonFns } from '../common/apiFns'
@@ -17,6 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
 	global.crowdinApi = crowdinApi
 }
 declare global {
+	// eslint-disable-next-line no-var
 	var crowdinApi: Crowdin | undefined
 }
 export const { addSingleKey, getStringIdByKey, updateMultipleKeys, updateSingleKey } =
