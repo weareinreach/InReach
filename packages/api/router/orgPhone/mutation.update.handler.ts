@@ -1,5 +1,5 @@
 import { upsertSingleKey } from '@weareinreach/crowdin/api'
-import { generateFreeText, generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
+import { generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateSchema } from './mutation.update.schema'
