@@ -26,27 +26,33 @@ export const ZCreateSchema = z
 	.transform(({ orgId, data, title, titleId, description }) => {
 		const id = generateId('orgEmail')
 
+		const handleTitle = () => {
+			if (title) {
+				return {
+					create: {
+						title,
+						key: {
+							create: {
+								text: title,
+								key: slug(title),
+								namespace: { connect: { name: namespace.userTitle } },
+							},
+						},
+					},
+				}
+			}
+			if (titleId) {
+				return { connect: { id: titleId } }
+			}
+			return undefined
+		}
+
 		return Prisma.validator<Prisma.OrgEmailCreateInput>()({
 			...data,
 			description: description
 				? generateNestedFreeText({ orgId, itemId: id, text: description, type: 'emailDesc' })
 				: undefined,
-			title: title
-				? {
-						create: {
-							title,
-							key: {
-								create: {
-									text: title,
-									key: slug(title),
-									namespace: { connect: { name: namespace.userTitle } },
-								},
-							},
-						},
-					}
-				: titleId
-					? { connect: { id: titleId } }
-					: undefined,
+			title: handleTitle(),
 		})
 	})
 export type TCreateSchema = z.infer<typeof ZCreateSchema>

@@ -24,22 +24,28 @@ export const ZCreateSchema = z
 		const description = data.description
 			? generateNestedFreeText({ orgId, itemId: id, text: data.description, type: 'phoneDesc' })
 			: undefined
-		const phoneType = data.phoneTypeId
-			? { connect: { id: data.phoneTypeId } }
-			: data.phoneTypeNew
-				? {
-						create: {
-							type: data.phoneTypeNew,
-							key: {
-								create: {
-									key: slug(data.phoneTypeNew),
-									text: data.phoneTypeNew,
-									namespace: { connect: { name: namespace.phoneType } },
-								},
+		const handlePhoneType = (): Prisma.PhoneTypeCreateNestedOneWithoutAttachedPhonesInput | undefined => {
+			if (data.phoneTypeId) {
+				return { connect: { id: data.phoneTypeId } }
+			}
+			if (data.phoneTypeNew) {
+				return {
+					create: {
+						type: data.phoneTypeNew,
+						key: {
+							create: {
+								key: slug(data.phoneTypeNew),
+								text: data.phoneTypeNew,
+								namespace: { connect: { name: namespace.phoneType } },
 							},
 						},
-					}
-				: undefined
+					},
+				}
+			}
+			return undefined
+		}
+
+		const phoneType = handlePhoneType()
 
 		const { number, ext, locationOnly, primary, published } = data
 		return Prisma.validator<Prisma.OrgPhoneCreateInput>()({
@@ -49,9 +55,9 @@ export const ZCreateSchema = z
 			locationOnly,
 			primary,
 			published,
-			country: { connect: { id: data.countryId } },
 			description,
 			phoneType,
+			country: { connect: { id: data.countryId } },
 		})
 	})
 export type TCreateSchema = z.infer<typeof ZCreateSchema>
