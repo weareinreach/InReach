@@ -21,6 +21,7 @@ export const createCommonFns = (client: CrowdinApi) => {
 
 		return crowdinString.find(({ data }) => data.identifier === key)?.data.id
 	}
+
 	const updateSingleKey: UpdateSingleString = async ({ updatedString, isDatabaseString, ...params }) => {
 		const stringId = params.crowdinId ?? (await getStringIdByKey(params.key, isDatabaseString))
 		invariant(stringId)
@@ -126,7 +127,27 @@ export const createCommonFns = (client: CrowdinApi) => {
 		return response
 	}
 
-	return { getStringIdByKey, addMultipleKeys, addSingleKey, updateMultipleKeys, updateSingleKey }
+	const upsertSingleKey: UpsertSingleKey = async (params) => {
+		const { isDatabaseString, key, text } = params
+		const existingId = await getStringIdByKey(key, isDatabaseString)
+
+		if (existingId) {
+			return await updateSingleKey({ crowdinId: existingId, updatedString: text, isDatabaseString })
+		}
+		if (isDatabaseString) {
+			return await addSingleKey(params)
+		}
+		return await addSingleKey(params)
+	}
+
+	return {
+		getStringIdByKey,
+		addMultipleKeys,
+		addSingleKey,
+		updateMultipleKeys,
+		updateSingleKey,
+		upsertSingleKey,
+	}
 }
 
 interface UpdateStringById {
@@ -171,4 +192,22 @@ interface AddFileStringParams {
 	ns: keyof (typeof fileIds)['main']
 	key: string
 	text: string
+}
+
+interface UpsertSingleKey {
+	(params: UpsertDatabaseString): Promise<SourceStringsModel.String>
+	(params: UpsertFileString): Promise<SourceStringsModel.String>
+}
+
+interface UpsertDatabaseString {
+	isDatabaseString: true
+	ns?: never
+	text: string
+	key: string
+}
+interface UpsertFileString {
+	isDatabaseString: false
+	ns: keyof (typeof fileIds)['main']
+	text: string
+	key: string
 }

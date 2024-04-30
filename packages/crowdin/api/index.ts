@@ -19,8 +19,14 @@ declare global {
 	// eslint-disable-next-line no-var
 	var crowdinApi: Crowdin | undefined
 }
-export const { addSingleKey, getStringIdByKey, updateMultipleKeys, updateSingleKey } =
-	createCommonFns(crowdinApi)
+export const {
+	addSingleKey,
+	getStringIdByKey,
+	updateMultipleKeys,
+	updateSingleKey,
+	addMultipleKeys,
+	upsertSingleKey,
+} = createCommonFns(crowdinApi)
 
 export const addSingleKeyFromNestedFreetextCreate = async (
 	freeText: AddStringFromNestedFreetextCreateParams
