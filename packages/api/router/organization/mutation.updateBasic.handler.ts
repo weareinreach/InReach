@@ -1,19 +1,16 @@
-import { crowdinApi, getStringIdByKey, projectId } from '@weareinreach/crowdin/api'
+import { addSingleKey, updateSingleKey } from '@weareinreach/crowdin/api'
 import {
-	generateFreeText,
 	generateId,
+	generateNestedFreeTextUpsert,
 	generateUniqueSlug,
 	getAuditedClient,
 	type Prisma,
 } from '@weareinreach/db'
-import { isVercelProd } from '@weareinreach/env'
-import { createLoggerInstance } from '@weareinreach/util/logger'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateBasicSchema } from './mutation.updateBasic.schema'
 
-const logger = createLoggerInstance('api - organization.updateBasic')
 const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
@@ -30,14 +27,36 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 			data.oldSlugs = { create: { from: existing.slug, to: newSlug, id: generateId('slugRedirect') } }
 		}
 		if (input.description) {
-			// TODO: [IN-920] Handle new string creation in Crowdin
-			const newText = generateFreeText({ orgId: input.id, type: 'orgDesc', text: input.description })
-			data.description = {
-				upsert: {
-					update: { tsKey: { update: { text: input.description } } },
-					create: { id: newText.freeText.id, tsKey: { create: newText.translationKey } },
-				},
+			const upsertDescription = generateNestedFreeTextUpsert({
+				orgId: input.id,
+				type: 'orgDesc',
+				text: input.description,
+			})
+			if (existing.description?.tsKey.crowdinId) {
+				console.log('update crowdin', {
+					key: existing.description.tsKey.key,
+					isDatabaseString: true,
+					updatedString: upsertDescription.upsert.update.tsKey.update.text,
+				})
+				await updateSingleKey({
+					key: existing.description.tsKey.key,
+					isDatabaseString: true,
+					updatedString: upsertDescription.upsert.update.tsKey.update.text,
+				})
+			} else {
+				console.log('add crowdin', {
+					isDatabaseString: true,
+					key: upsertDescription.upsert.create.tsKey.create.key,
+					text: upsertDescription.upsert.create.tsKey.create.text,
+				})
+				const { id: crowdinId } = await addSingleKey({
+					isDatabaseString: true,
+					key: upsertDescription.upsert.create.tsKey.create.key,
+					text: upsertDescription.upsert.create.tsKey.create.text,
+				})
+				upsertDescription.upsert.create.tsKey.create.crowdinId = crowdinId
 			}
+			data.description = upsertDescription
 		}
 		const update = await prisma.organization.update({
 			where: { id: input.id },
@@ -47,22 +66,6 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 			},
 			data,
 		})
-		if (update && input.description && existing.description) {
-			const stringId =
-				existing.description.tsKey.crowdinId ??
-				(await getStringIdByKey(existing.description?.tsKey?.key, true))
-			if (stringId) {
-				if (isVercelProd) {
-					await crowdinApi.sourceStringsApi.editString(projectId, stringId, [
-						{ op: 'replace', path: '/text', value: input.description },
-					])
-				} else {
-					logger.info(
-						`\n==========\nSkipping Crowdin Update - Not production environment.\nCrowdin String ID: ${stringId}. Updated Description: ${input.description}\n==========`
-					)
-				}
-			}
-		}
 		return update
 	} catch (error) {
 		return handleError(error)

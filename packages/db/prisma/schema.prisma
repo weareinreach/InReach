@@ -151,6 +151,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   //@@schema("user")
+  Suggestion Suggestion[]
 
   @@index([userTypeId])
 }
@@ -1229,9 +1230,11 @@ model Suggestion {
   id String @id @default(cuid())
 
   data           Json
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  organizationId String?
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
   handled        Boolean?
+  suggestedBy    User?        @relation(fields: [suggestedById], references: [id])
+  suggestedById  String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1468,7 +1471,8 @@ model TranslationNamespace {
 
   attributeCategories AttributeCategory[]
 
-  exportFile Boolean @default(true)
+  exportFile            Boolean @default(true)
+  overwriteFileOnExport Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1492,6 +1496,8 @@ model TranslationKey {
   ns        String
 
   crowdinId Int?
+
+  active Boolean @default(true)
 
   // to manage plurals & ordinals
   interpolation       InterpolationOptions?

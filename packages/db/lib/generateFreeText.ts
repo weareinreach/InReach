@@ -51,7 +51,11 @@ export const generateFreeText = <T extends GenerateFreeTextType>(args: GenerateF
 	const ns = namespaces.orgData
 	invariant(key, 'Error creating key')
 	return {
-		translationKey: Prisma.validator<Prisma.TranslationKeyUncheckedCreateInput>()({ key, text, ns }),
+		translationKey: Prisma.validator<Prisma.TranslationKeyUncheckedCreateInput>()({
+			key,
+			text,
+			ns,
+		}),
 		freeText: Prisma.validator<Prisma.FreeTextUncheckedCreateInput>()({
 			key,
 			ns,
@@ -59,7 +63,23 @@ export const generateFreeText = <T extends GenerateFreeTextType>(args: GenerateF
 		}),
 	}
 }
-export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: GenerateFreeTextParams<T>) => {
+
+interface GenerateFreeTextReturn {
+	translationKey: {
+		key: string
+		text: string
+		ns: string
+		crowdinId?: number
+	}
+	freeText: {
+		key: string
+		ns: string
+		id: string
+	}
+}
+export const generateNestedFreeText = <T extends GenerateFreeTextType>(
+	args: GenerateFreeTextParams<T>
+): NestedCreateOne => {
 	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		create: {
@@ -75,9 +95,27 @@ export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: Gen
 	}
 }
 
+interface NestedCreateOne {
+	create: {
+		id: string
+		tsKey: {
+			create: {
+				key: string
+				text: string
+				crowdinId?: number
+				namespace: {
+					connect: {
+						name: string
+					}
+				}
+			}
+		}
+	}
+}
+
 export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
 	args: GenerateFreeTextParams<T>
-) => {
+): GenerateNestedFreeTextUpsertResult => {
 	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		upsert: {
@@ -97,6 +135,22 @@ export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
 				},
 			},
 		},
+	}
+}
+interface GenerateNestedFreeTextUpsertResult {
+	upsert: {
+		create: {
+			id: string
+			tsKey: {
+				create: {
+					key: string
+					text: string
+					crowdinId?: number
+					namespace: { connect: { name: string } }
+				}
+			}
+		}
+		update: { tsKey: { update: { text: string } } }
 	}
 }
 

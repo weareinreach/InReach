@@ -17,8 +17,8 @@ export const config = {
 }
 
 const QuerySchema = z.object({
-	lng: z.string(),
-	ns: z.string(),
+	lng: z.string().transform((s) => s.split(' ')),
+	ns: z.string().transform((s) => s.split(' ')),
 })
 const tracer = trace.getTracer('inreach-app')
 const log = createLoggerInstance('i18n Loader')
@@ -34,10 +34,9 @@ export default async function handler(req: NextRequest) {
 			})
 		}
 		const query = parsedQuery.data
-		const namespaces = query.ns.split(' ')
-		const langs = query.lng.split(' ')
+		const { ns: namespaces, lng: langs } = query
 		const cacheWriteQueue: WriteCacheArgs[] = []
-		const otaManifestTimestamp = await crowdinDistTimestamp()
+		const otaManifestTimestamps = await crowdinDistTimestamp()
 		const results = new Map<string, object>()
 
 		for (const lang of langs) {
@@ -46,8 +45,7 @@ export default async function handler(req: NextRequest) {
 				if (lang === 'en') {
 					continue
 				}
-				const databaseFile = sourceFiles(lang).databaseStrings
-				const cached = await redisReadCache(namespaces, lang, otaManifestTimestamp)
+				const cached = await redisReadCache(namespaces, lang, otaManifestTimestamps)
 				const langResult = new Map<string, object | string>(cached)
 
 				const fetchCrowdin = async (ns: string) => {
@@ -55,10 +53,12 @@ export default async function handler(req: NextRequest) {
 					try {
 						crowdinSpan.setAttributes({ ns })
 						switch (true) {
+							// Check if the namespace is already in the cache
 							case langResult.has(ns): {
 								return
 							}
-							case Object.hasOwn(nsFileMap, ns): {
+							// Check if the namespace is file based
+							case ns in nsFileMap: {
 								const file = nsFileMap[ns as keyof typeof nsFileMap] ?? ''
 								const strings = await fetchCrowdinFile(file, lang)
 								if (strings && Object.keys(strings).length) {
@@ -67,9 +67,9 @@ export default async function handler(req: NextRequest) {
 								langResult.set(ns, strings)
 								break
 							}
+							// Otherwise, it must be a database key
 							default: {
-								const file = databaseFile
-								const strings = await fetchCrowdinDbKey(ns, file, lang)
+								const strings = await fetchCrowdinDbKey(ns, lang)
 								if (strings) {
 									cacheWriteQueue.push({ lang, ns, strings })
 								}

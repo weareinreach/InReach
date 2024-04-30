@@ -1,3 +1,4 @@
+import { upsertSingleKey } from '@weareinreach/crowdin/api'
 import {
 	generateId,
 	generateNestedFreeText,
@@ -23,56 +24,90 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 
 		const id = isCreate ? passedId ?? generateId('orgEmail') : passedId
 
-		const generateDescription = ():
-			| Prisma.FreeTextCreateNestedOneWithoutOrgWebsiteInput
-			| Prisma.FreeTextUpdateOneWithoutOrgWebsiteNestedInput
-			| undefined => {
+		const generateDescription = (): GeneratedDescription | undefined => {
 			if (!desc || !organizationId) {
 				return undefined
 			}
 			if (isCreateData(operation, data)) {
-				return Prisma.validator<Prisma.FreeTextCreateNestedOneWithoutOrgWebsiteInput>()(
-					generateNestedFreeText({
-						orgId: organizationId,
-						text: desc,
-						type: 'websiteDesc',
-						itemId: id,
-					})
-				)
+				const nestedDesc = generateNestedFreeText({
+					orgId: organizationId,
+					text: desc,
+					type: 'websiteDesc',
+					itemId: id,
+				})
+				const crowdinArgs = {
+					key: nestedDesc.create.tsKey.create.key,
+					text: nestedDesc.create.tsKey.create.text,
+				}
+				return {
+					crowdinArgs,
+					prisma: Prisma.validator<Prisma.FreeTextCreateNestedOneWithoutOrgWebsiteInput>()(nestedDesc),
+				}
 			} else {
-				return Prisma.validator<Prisma.FreeTextUpdateOneWithoutOrgWebsiteNestedInput>()(
-					generateNestedFreeTextUpsert({
-						orgId: organizationId,
-						text: desc,
-						type: 'websiteDesc',
-						itemId: id,
-					})
-				)
+				const nestedDesc = generateNestedFreeTextUpsert({
+					orgId: organizationId,
+					text: desc,
+					type: 'websiteDesc',
+					itemId: id,
+				})
+				const crowdinArgs = {
+					key: nestedDesc.upsert.create.tsKey.create.key,
+					text: nestedDesc.upsert.create.tsKey.create.text,
+				}
+				return {
+					crowdinArgs,
+					prisma: Prisma.validator<Prisma.FreeTextUpdateOneWithoutOrgWebsiteNestedInput>()(nestedDesc),
+				}
 			}
 		}
 		const description = generateDescription()
 
-		const result = isCreateData(operation, data)
-			? await prisma.orgWebsite.create({
-					data: {
-						id,
-						...(description && { description }),
-						...data,
-						locations: createOne(orgLocationId, 'orgLocationId'),
-						organization: connectOne(organizationId, 'id'),
-					},
+		const result = await prisma.$transaction(async (tx) => {
+			if (description) {
+				const crowdin = await upsertSingleKey({
+					isDatabaseString: true,
+					...description.crowdinArgs,
 				})
-			: await prisma.orgWebsite.update({
-					where: { id },
-					data: {
-						...(description && { description }),
-						...data,
-					},
-				})
+				if (description.prisma.create?.tsKey?.create) {
+					description.prisma.create.tsKey.create.crowdinId = crowdin.id
+				}
+			}
 
+			const txnResult = isCreateData(operation, data)
+				? await tx.orgWebsite.create({
+						data: {
+							id,
+							...(description && { description: description.prisma }),
+							...data,
+							locations: createOne(orgLocationId, 'orgLocationId'),
+							organization: connectOne(organizationId, 'id'),
+						},
+					})
+				: await tx.orgWebsite.update({
+						where: { id },
+						data: {
+							...(description && { description: description.prisma }),
+							...data,
+						},
+					})
+
+			return txnResult
+		})
 		return result
 	} catch (error) {
 		return handleError(error)
 	}
 }
 export default upsert
+
+type CrowdinData = {
+	key: string
+	text: string
+}
+
+type GeneratedDescription = {
+	crowdinArgs: CrowdinData
+	prisma:
+		| Prisma.FreeTextCreateNestedOneWithoutOrgWebsiteInput
+		| Prisma.FreeTextUpdateOneWithoutOrgWebsiteNestedInput
+}
