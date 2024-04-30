@@ -22,7 +22,13 @@ export const raise = (err: string): never => {
 
 export const downloadFromDatastore = async (path: string, logger?: FormatMessage): Promise<unknown> => {
 	// eslint-disable-next-line node/no-process-env
-	const gh = new Octokit({ auth: process.env.GH_DATASTORE_PAT })
+	const githubPAT = process.env.GH_DATASTORE_PAT
+	if (!githubPAT) {
+		throw new Error(
+			`Missing 'GH_DATASTORE_PAT' environment variable.\nIf you need to generate a new one, visit https://github.com/settings/tokens\nThe token must be CLASSIC and not the newer 'fine-grained' variety. When selecting the scopes, the minimum required is 'repo'`
+		)
+	}
+	const gh = new Octokit({ auth: githubPAT })
 	const log = logger || console.log
 	const datafileInfo = await gh.request('GET /repos/{owner}/{repo}/contents/{path}', {
 		owner: 'weareinreach',
@@ -36,4 +42,5 @@ export const downloadFromDatastore = async (path: string, logger?: FormatMessage
 		log(`Downloaded '${datafileInfo.data.path}' (${prettyBytes(size)})`)
 		return data
 	}
+	throw new Error('Unable to download from datastore')
 }
