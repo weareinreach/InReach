@@ -15,7 +15,7 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 	text,
 	type,
 	freeTextId,
-}: GenerateFreeTextParams<T>) => {
+}: GenerateFreeTextParams<T>): GenerateFreeTextReturn => {
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
@@ -44,12 +44,30 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 	const ns = namespaces.orgData
 	invariant(key, 'Error creating key')
 	return {
-		translationKey: Prisma.validator<Prisma.TranslationKeyUncheckedCreateInput>()({ key, text, ns }),
+		translationKey: Prisma.validator<Prisma.TranslationKeyUncheckedCreateInput>()({
+			key,
+			text,
+			ns,
+		}),
 		freeText: Prisma.validator<Prisma.FreeTextUncheckedCreateInput>()({
 			key,
 			ns,
 			id: freeTextId ?? generateId('freeText'),
 		}),
+	}
+}
+
+interface GenerateFreeTextReturn {
+	translationKey: {
+		key: string
+		text: string
+		ns: string
+		crowdinId?: number
+	}
+	freeText: {
+		key: string
+		ns: string
+		id: string
 	}
 }
 export const generateNestedFreeText = <T extends GenerateFreeTextType>(
