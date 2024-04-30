@@ -19,9 +19,8 @@ const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protecte
 			input.description.create.tsKey.create.crowdinId = crowdinDesc.id
 		}
 		if (input.phoneType?.create) {
-			invariant(
-				input.phoneType.create.key?.create && input.phoneType.create.key.create.namespace?.connect?.name
-			)
+			invariant(input.phoneType.create.key?.create)
+			invariant(input.phoneType.create.key.create.namespace?.connect?.name)
 			const crowdinPhoneType = await addSingleKey({
 				isDatabaseString: false,
 				key: input.phoneType.create.key.create.key,
