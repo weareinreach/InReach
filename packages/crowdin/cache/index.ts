@@ -6,12 +6,27 @@ import formatBytes from 'pretty-bytes'
 
 import { createLoggerInstance } from '@weareinreach/util/logger'
 
-import { cacheTime } from '../constants'
+import { cacheTime, sourceFiles } from '../constants'
 
 const log = createLoggerInstance('Vercel KV')
 const tracer = trace.getTracer('inreach-app')
 
-export const redisReadCache = async (namespaces: string[], lang: string, otaManifestTimestamp: number) => {
+const fileBasedNsList = Object.keys(sourceFiles('en'))
+
+const getManifestTimestamp = (ns: string, otaManifestTimestamps: OtaManifestTimestamps) => {
+	if (fileBasedNsList.includes(ns)) {
+		return otaManifestTimestamps.common
+	}
+	return otaManifestTimestamps.database
+}
+
+type OtaManifestTimestamps = { common: number; database: number }
+
+export const redisReadCache = async (
+	namespaces: string[],
+	lang: string,
+	otaManifestTimestamps: OtaManifestTimestamps
+) => {
 	const span = tracer.startSpan('redisReadCache', undefined, context.active())
 	try {
 		if ((await redis.ping()) !== 'PONG') {
@@ -23,6 +38,7 @@ export const redisReadCache = async (namespaces: string[], lang: string, otaMani
 		const expireQueue: string[] = []
 
 		for (const ns of namespaces) {
+			const manifestTimestamp = getManifestTimestamp(ns, otaManifestTimestamps)
 			const cacheKey = `${ns}[${lang}]`
 			const itemTTL = await redis.ttl(cacheKey)
 
@@ -32,7 +48,7 @@ export const redisReadCache = async (namespaces: string[], lang: string, otaMani
 			}
 			const expiretime = itemTTL + Math.round(Date.now() / 1000)
 
-			if (otaManifestTimestamp > expiretime - cacheTime) {
+			if (manifestTimestamp > expiretime - cacheTime) {
 				log.info(`Manifest is newer than cache - skipping cache for ${cacheKey}`)
 				continue
 			}
@@ -75,10 +91,11 @@ export const redisWriteCache = async (data: WriteCacheArgs[]) => {
 	const span = tracer.startSpan('redisWriteCache', undefined, context.active())
 	try {
 		if ((await redis.ping()) !== 'PONG') {
-			log.warn('Skipping cache write - Redis client not connected')
-			return
+			throw new Error('Redis client not connected, skipping cache write')
 		}
-		if (!data.length) return
+		if (!data.length) {
+			throw new Error('No data to write')
+		}
 		const cacheKey = (ns: string, lang: string) => `${ns}[${lang}]`
 		const pipeline = redis.pipeline()
 		let dataSize = 0
@@ -123,9 +140,12 @@ export const redisWriteCache = async (data: WriteCacheArgs[]) => {
 
 		log.info(`Total written to cache: ${writtenTotal}`)
 		return writtenTotal
+	} catch (error) {
+		log.error(error)
 	} finally {
 		span.end()
 	}
+	return 0
 }
 interface WriteCacheArgs {
 	ns: string

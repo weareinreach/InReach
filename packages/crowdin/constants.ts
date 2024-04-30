@@ -12,8 +12,11 @@ const getValue = <T>(production: T, development: T): T => {
 	return development
 }
 
-export const otaHash = 'e-39328dacf5f98928e8273b35wj'
-export const otaManifest = `https://distributions.crowdin.net/${otaHash}/manifest.json`
+export const otaCommonHash = 'e-39328dacf5f98928e8273b35wj'
+export const otaDbHash = 'e-c467df906f1bfdb378f23b35wj'
+export const otaManifest = `https://distributions.crowdin.net/${otaCommonHash}/manifest.json`
+export const getOtaManifest = (content: 'common' | 'database') =>
+	`https://distributions.crowdin.net/${content === 'common' ? otaCommonHash : otaDbHash}/manifest.json`
 export const projectId = {
 	base: getValue(12, 20),
 	dbContent: getValue(24, 24),
@@ -24,7 +27,7 @@ export const projectId = {
 export const sourceFiles = (lang: string) =>
 	getValue(
 		{
-			databaseStrings: `/content/${lang}/database/org-data.json`,
+			// databaseStrings: `/content/${lang}/database/org-data.json`,
 			attribute: `/content/main/apps/app/public/locales/${lang}/attribute.json`,
 			common: `/content/main/apps/app/public/locales/${lang}/common.json`,
 			country: `/content/main/apps/app/public/locales/${lang}/country.json`,
@@ -37,7 +40,7 @@ export const sourceFiles = (lang: string) =>
 			user: `/content/main/apps/app/public/locales/${lang}/user.json`,
 		} as const,
 		{
-			databaseStrings: `/content/${lang}/database/org-data.json`,
+			// databaseStrings: `/content/${lang}/database/org-data.json`,
 			attribute: `/content/main/${lang}/attribute.json`,
 			common: `/content/main/${lang}/common.json`,
 			country: `/content/main/${lang}/country.json`,
