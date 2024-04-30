@@ -1,3 +1,4 @@
+import { addSingleKey } from '@weareinreach/crowdin/api'
 import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -11,6 +12,14 @@ const createAccessInstructions = async ({
 
 	const { attributeSupplement, freeText, translationKey } = input
 	const result = await prisma.$transaction(async (tx) => {
+		if (translationKey) {
+			const crowdin = await addSingleKey({
+				isDatabaseString: true,
+				key: translationKey.data.key,
+				text: translationKey.data.text,
+			})
+			translationKey.data.crowdinId = crowdin.id
+		}
 		const tKey = translationKey ? await tx.translationKey.create(translationKey) : undefined
 		const fText = freeText ? await tx.freeText.create(freeText) : undefined
 		const aSupp = attributeSupplement ? await tx.attributeSupplement.create(attributeSupplement) : undefined
