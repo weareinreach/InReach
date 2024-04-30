@@ -24,15 +24,7 @@ export const orgPhoneRouter = defineRouter({
 			const handler = await importHandler(namespaced('get'), () => import('./query.get.handler'))
 			return handler(opts)
 		}),
-	upsertMany: permissionedProcedure('updatePhone')
-		.input(schema.ZUpsertManySchema)
-		.mutation(async (opts) => {
-			const handler = await importHandler(
-				namespaced('upsertMany'),
-				() => import('./mutation.upsertMany.handler')
-			)
-			return handler(opts)
-		}),
+
 	forContactInfo: publicProcedure.input(schema.ZForContactInfoSchema).query(async (opts) => {
 		const handler = await importHandler(
 			namespaced('forContactInfo'),

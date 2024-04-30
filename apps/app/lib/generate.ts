@@ -14,19 +14,21 @@ import { generateTranslationKeys } from 'lib/generators'
 const program = new Command()
 
 export type PassedTask = ListrTaskWrapper<unknown, ListrDefaultRenderer, ListrSimpleRenderer>
+type TaskDef = ListrTask<unknown, ListrDefaultRenderer, ListrSimpleRenderer>
 
-const options = {
+const rendererOptions: TaskDef['rendererOptions'] = {
 	bottomBar: 10,
 	persistentOutput: true,
+	outputBar: true,
 }
 const translation = [
 	{
 		title: 'Translation definitions from DB',
 		task: (_ctx: ListrContext, task: PassedTask) => generateTranslationKeys(task),
 		skip: !process.env.DATABASE_URL,
-		options,
+		rendererOptions,
 	},
-]
+] satisfies TaskDef[]
 
 program
 	.name('generate')
@@ -47,6 +49,7 @@ if (Object.keys(cliOpts).length === 0) {
 
 const tasks = new Listr(tasklist, {
 	exitOnError: false,
+	rendererOptions: { collapseSubtasks: false },
 })
 
 tasks.run()
