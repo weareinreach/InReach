@@ -8,11 +8,11 @@ import { nodeProfilingIntegration } from '@sentry/profiling-node'
 
 import { prisma } from '@weareinreach/db'
 
-const isVercelProd = process.env.VERCEL_ENV === 'production'
+const isVercel = process.env.VERCEL === '1'
 
 Sentry.init({
 	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.us.sentry.io/6751163',
-	enabled: isVercelProd,
+	enabled: isVercel,
 	debug: !!process.env.SENTRY_DEBUG,
 	// Tracing rates
 	tracesSampleRate: 0.5,
