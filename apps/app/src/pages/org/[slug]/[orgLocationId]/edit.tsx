@@ -171,7 +171,6 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							},
 						}}
 						organizationId={data.organization.id}
-						saved={Boolean(isSaved)}
 					/>
 					<Stack pt={24} align='flex-start' spacing={40}>
 						{hasAlerts &&

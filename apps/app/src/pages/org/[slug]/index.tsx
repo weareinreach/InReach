@@ -185,7 +185,6 @@ const OrganizationPage = ({
 						option: 'back',
 						backTo: 'search',
 					}}
-					saved={Boolean(userLists?.length)}
 					organizationId={organizationId}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
