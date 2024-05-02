@@ -1,14 +1,6 @@
-import { type INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { type ViewportAddonParameter } from '@storybook/addon-viewport'
 
-import { type Viewports } from './types'
-
-type ViewportMap = typeof INITIAL_VIEWPORTS
-export interface ViewportConfig {
-	viewports?: ViewportMap
-	defaultViewport?: Viewports
-}
-
-export const viewport: ViewportConfig = {
+export const viewport: ViewportAddonParameter = {
 	viewports: {
 		iphonex: {
 			name: 'iPhone X',

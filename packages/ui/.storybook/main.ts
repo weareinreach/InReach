@@ -20,7 +20,7 @@ const getAbsolutePath = (value: string) => {
 
 const publicStatic = path.resolve(__dirname, '../../../apps/app/public')
 
-const config: StorybookConfig = {
+const storybookConfig: StorybookConfig = {
 	stories: [
 		'../components/**/*.stories.{ts,tsx}',
 		'../hooks/**/*.stories.{ts,tsx}',
@@ -41,12 +41,12 @@ const config: StorybookConfig = {
 		getAbsolutePath('@storybook/addon-essentials'),
 		getAbsolutePath('@geometricpanda/storybook-addon-badges'),
 		getAbsolutePath('@storybook/addon-a11y'),
-		// eslint-disable-next-line storybook/no-uninstalled-addons
-		'@tomfreudenberg/next-auth-mock/storybook', // This addon doesn't like to be wrapped.
 		getAbsolutePath('@storybook/addon-designs'),
 		getAbsolutePath('storybook-addon-pseudo-states'),
 		getAbsolutePath('@storybook/addon-interactions'),
 		'@storybook/addon-webpack5-compiler-swc',
+		// eslint-disable-next-line storybook/no-uninstalled-addons
+		'@tomfreudenberg/next-auth-mock/storybook', // This addon doesn't like to be wrapped.
 	],
 	framework: {
 		name: '@storybook/nextjs',
@@ -105,7 +105,7 @@ const config: StorybookConfig = {
 			stats: {
 				colors: true,
 			},
-			devtool: options.configType === 'DEVELOPMENT' ? 'eval-source-map' : undefined,
+			// devtool: options.configType === 'DEVELOPMENT' ? 'eval-source-map' : undefined,
 		}
 
 		/** I18 HMR */
@@ -113,7 +113,11 @@ const config: StorybookConfig = {
 			const plugin = new I18NextHMRPlugin({
 				localesDir: path.resolve(__dirname, '../../../apps/app/public/locales'),
 			})
-			Array.isArray(config.plugins) ? config.plugins.push(plugin) : (config.plugins = [plugin])
+			if (Array.isArray(config.plugins)) {
+				config.plugins.push(plugin)
+			} else {
+				config.plugins = [plugin]
+			}
 		}
 
 		const mergedConfig = mergeAndConcat(config, configAdditions)
@@ -131,4 +135,4 @@ const config: StorybookConfig = {
 				STORYBOOK_PROJECT_ROOT: path.resolve(__dirname, '../'),
 			},
 }
-export default config
+export default storybookConfig

@@ -1,5 +1,6 @@
 import {
 	Autocomplete,
+	type AutocompleteItem,
 	Button,
 	createStyles,
 	Divider,
@@ -19,9 +20,12 @@ import { Trans, useTranslation } from 'next-i18next'
 import {
 	type ComponentPropsWithRef,
 	type Dispatch,
+	type FocusEventHandler,
 	forwardRef,
 	type SetStateAction,
+	useCallback,
 	useEffect,
+	useMemo,
 	useState,
 } from 'react'
 
@@ -94,9 +98,17 @@ interface SuggestOrgProps {
 
 const OrgExistsError = ({ queryResult, form, setGenerateSlug }: OrgExistsErrorProps) => {
 	const variants = useCustomVariant()
-	if (!queryResult) return null
+	const handleDismiss = useCallback(() => {
+		form.clearFieldError('orgName')
+		setGenerateSlug(true)
+	}, [form, setGenerateSlug])
+
+	if (!queryResult) {
+		return null
+	}
 	const { name, published, slug } = queryResult
 	const key = published ? 'form.error-exists-active' : 'form.error-exists-inactive'
+
 	return (
 		<>
 			<Trans
@@ -118,13 +130,7 @@ const OrgExistsError = ({ queryResult, form, setGenerateSlug }: OrgExistsErrorPr
 				ns='suggestOrg'
 				components={{
 					Dismiss: (
-						<Link
-							variant={variants.Link.inheritStyle}
-							onClick={() => {
-								form.clearFieldError('orgName')
-								setGenerateSlug(true)
-							}}
-						>
+						<Link variant={variants.Link.inheritStyle} onClick={handleDismiss}>
 							.
 						</Link>
 					),
@@ -148,78 +154,79 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const { t } = useTranslation(['suggestOrg', 'services', 'attribute'])
 	const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 	const variants = useCustomVariant()
-	const [locationSearch, setLocationSearch] = useState('')
+	const [placeId, setPlaceId] = useState('')
 	const [loading, setLoading] = useState(true)
-	const [locSearchInput] = useDebouncedValue(form.values.searchLocation, 400)
+	const [searchLocation, setSearchLocation] = useState('')
+	const [locSearchInput] = useDebouncedValue(searchLocation, 400)
 	const [orgName, setOrgName] = useState<string>()
 	const [generateSlug, setGenerateSlug] = useState(false)
 	const router = useRouter()
 
 	const countrySelected = Boolean(form.values.countryId)
 
-	const {
-		data: formOptions,
-		isLoading,
-		isSuccess,
-	} = api.organization.suggestionOptions.useQuery(undefined, {
-		onSuccess: (data) => {
-			form.setValues({ formOptions: data })
-		},
-	})
+	const { data: formOptions, isLoading, isSuccess } = api.organization.suggestionOptions.useQuery()
 
-	api.geo.autocomplete.useQuery(
+	const { data: addressCandidates } = api.geo.autocomplete.useQuery(
 		{ search: locSearchInput, locale: simpleLocale(router.locale), fullAddress: true },
 		{
 			enabled: Boolean(locSearchInput) && locSearchInput !== '',
-			onSuccess: ({ results }) =>
-				form.setValues({
-					locationOptions: results.map((result) => ({
-						value: `${result.value}, ${result.subheading}`,
-						label: `${result.value}, ${result.subheading}`,
-						placeId: result.placeId,
-					})),
-				}),
 			refetchOnWindowFocus: false,
 		}
 	)
-	api.geo.geoByPlaceId.useQuery(locationSearch, {
-		enabled: Boolean(locationSearch) && locationSearch !== '',
-		onSuccess: ({ result }) => {
-			if (result)
-				form.setFieldValue('orgAddress', {
-					street1: `${result.streetNumber} ${result.streetName}`,
-					city: result.city,
-					govDist: result.govDist,
-					postCode: result.postCode,
-				})
-		},
-	})
+	const addressAutocompleteOptions = useMemo(
+		() =>
+			addressCandidates?.results.map((result) => ({
+				value: `${result.value}, ${result.subheading}`,
+				label: `${result.value}, ${result.subheading}`,
+				placeId: result.placeId,
+			})) ?? [],
+		[addressCandidates]
+	)
 
-	api.organization.checkForExisting.useQuery(orgName ?? '', {
+	const { data: addressResult } = api.geo.geoByPlaceId.useQuery(placeId, {
+		enabled: Boolean(placeId) && placeId !== '',
+	})
+	useEffect(() => {
+		if (addressResult?.result) {
+			const { result } = addressResult
+			form.setFieldValue('orgAddress', {
+				street1: `${result.streetNumber} ${result.streetName}`,
+				city: result.city,
+				govDist: result.govDist,
+				postCode: result.postCode,
+			})
+		}
+	}, [addressResult, form])
+
+	const { data: existingOrg } = api.organization.checkForExisting.useQuery(orgName ?? '', {
 		enabled: Boolean(orgName && orgName !== ''),
-		onSuccess: (data) => {
-			if (!data) {
-				form.clearFieldError('orgName')
-				setGenerateSlug(true)
-			} else {
-				form.setFieldError('orgName', <OrgExistsError {...{ queryResult: data, form, setGenerateSlug }} />)
-			}
-		},
 	})
-	api.organization.generateSlug.useQuery(orgName ?? '', {
+	useEffect(() => {
+		if (!existingOrg && !generateSlug) {
+			form.clearFieldError('orgName')
+			setGenerateSlug(true)
+		} else if (existingOrg) {
+			form.setFieldError(
+				'orgName',
+				<OrgExistsError {...{ queryResult: existingOrg, form, setGenerateSlug }} />
+			)
+		}
+	}, [existingOrg, generateSlug, form])
+
+	const { data: generatedSlug } = api.organization.generateSlug.useQuery(orgName ?? '', {
 		enabled: Boolean(orgName && orgName !== '' && generateSlug),
-		onSuccess: (data) => {
-			if (data) form.setFieldValue('orgSlug', data)
-			setGenerateSlug(false)
-		},
 	})
+	useEffect(() => {
+		if (generatedSlug) {
+			form.setFieldValue('orgSlug', generatedSlug)
+			setGenerateSlug(false)
+		}
+	}, [form, generatedSlug])
 
 	useEffect(() => {
 		if (loading && formOptions && isSuccess && !isLoading) {
-			form.setValues({ formOptions })
 			setLoading(false)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loading, formOptions, isSuccess, isLoading])
 
 	useEffect(() => {
@@ -227,27 +234,56 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 			setOverlay(true)
 			form.setFieldValue('countryId', '')
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [hasAuth, overlay, form.values.countryId])
+	}, [hasAuth, overlay, form.values.countryId, form, setOverlay])
 
-	if (loading) return null
+	const countryTranslation = useMemo(
+		() =>
+			new Intl.DisplayNames([router.locale.toLowerCase()], {
+				type: 'region',
+			}),
+		[router.locale]
+	)
 
-	const countryTranslation = new Intl.DisplayNames([router.locale.toLowerCase()], {
-		type: 'region',
-	})
+	const countrySelections = useMemo(
+		() =>
+			Array.isArray(formOptions?.countries)
+				? formOptions.countries.map(({ id, cca2 }) => {
+						return <Radio key={id} label={countryTranslation.of(cca2)} value={id} />
+					})
+				: null,
+		[formOptions?.countries, countryTranslation]
+	)
 
-	const countrySelections = Array.isArray(form.values.formOptions?.countries)
-		? form.values.formOptions?.countries.map(({ id, cca2 }, i) => {
-				return (
-					<Radio
-						key={id}
-						label={countryTranslation.of(cca2)}
-						{...form.getInputProps(`formOptions.countries.${i}.id`)}
-					/>
-				)
-			})
-		: null
+	const handleOrgNameBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
+		(e) => {
+			setOrgName(e.target.value)
+		},
+		[setOrgName]
+	)
 
+	const handleAddressSelection = useCallback(
+		(e: AutocompleteItem) => {
+			setPlaceId(e.placeId)
+		},
+		[setPlaceId]
+	)
+
+	const handleDismiss = useCallback(() => {
+		form.setValues({
+			communityFocus: [],
+			// communityParent: [],
+			countryId: '',
+			orgName: '',
+			orgSlug: '',
+			orgWebsite: '',
+			orgAddress: {},
+		})
+		modalHandler.close()
+	}, [form, modalHandler])
+
+	if (loading) {
+		return null
+	}
 	return (
 		<SuggestionFormProvider form={form}>
 			<form onSubmit={form.onSubmit(() => suggestOrgApi.mutate(form.values))}>
@@ -273,15 +309,15 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						</Radio.Group>
 						<TextInput
 							label={t('form.org-name')}
-							placeholder={t('form.placeholder-name') as string}
+							placeholder={t('form.placeholder-name')}
 							required
 							disabled={!countrySelected}
 							{...form.getInputProps('orgName')}
-							onBlur={(e) => setOrgName(e.target.value)}
+							onBlur={handleOrgNameBlur}
 						/>
 						<TextInput
 							label={t('form.org-website')}
-							placeholder={t('form.placeholder-website') as string}
+							placeholder={t('form.placeholder-website')}
 							disabled={!countrySelected}
 							{...form.getInputProps('orgWebsite')}
 						/>
@@ -292,18 +328,17 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						<Autocomplete
 							itemComponent={SelectItemTwoLines}
 							classNames={{ itemsWrapper: locationClasses.autocompleteWrapper }}
-							data={form.values.locationOptions ?? []}
+							data={addressAutocompleteOptions}
 							label={t('form.org-address')}
 							icon={<Icon icon='carbon:search' className={locationClasses.leftIcon} />}
-							placeholder={t('form.placeholder-address') as string}
+							placeholder={t('form.placeholder-address')}
 							disabled={!countrySelected}
-							onItemSubmit={(e) => {
-								setLocationSearch(e.placeId)
-							}}
-							{...form.getInputProps('searchLocation')}
+							onItemSubmit={handleAddressSelection}
+							value={searchLocation}
+							onChange={setSearchLocation}
 						/>
-						<ServiceTypes disabled={!countrySelected} />
-						<Communities disabled={!countrySelected} />
+						<ServiceTypes disabled={!countrySelected} serviceTypes={formOptions?.serviceTypes ?? []} />
+						<Communities disabled={!countrySelected} communities={formOptions?.communities ?? []} />
 						<Divider />
 						<Stack spacing={16} align='center'>
 							<Button
@@ -329,21 +364,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						<Text variant={variants.Text.darkGray} align='center'>
 							{t('modal.thank-you-sub')}
 						</Text>
-						<Button
-							variant={variants.Button.secondarySm}
-							onClick={() => {
-								form.setValues({
-									communityFocus: [],
-									communityParent: [],
-									countryId: '',
-									orgName: '',
-									orgSlug: '',
-									orgWebsite: '',
-									orgAddress: {},
-								})
-								modalHandler.close()
-							}}
-						>
+						<Button variant={variants.Button.secondarySm} onClick={handleDismiss}>
 							{t('modal.dismiss')}
 						</Button>
 					</Stack>

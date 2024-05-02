@@ -9,11 +9,13 @@ export const isValidIcon = (icon: unknown): icon is IconList =>
 	typeof icon === 'string' && iconList.includes(icon as IconList)
 
 export const validateIcon = (icon: unknown): IconList => {
-	if (isValidIcon(icon)) return icon
+	if (isValidIcon(icon)) {
+		return icon
+	}
 	return 'carbon:unknown-filled'
 }
 
-const useStyles = createStyles((theme, { block, color }: IconStylesParams) => ({
+const useStyles = createStyles((_theme, { block, color }: IconStylesParams) => ({
 	root: {
 		display: block ? 'block' : undefined,
 		color,
@@ -23,7 +25,14 @@ const useStyles = createStyles((theme, { block, color }: IconStylesParams) => ({
 export const Icon = memo(({ icon, block, className, ref, color, ...props }: CustomIconProps) => {
 	const { classes, cx } = useStyles({ block, color })
 	Iconify.displayName = 'Iconify'
-	return <Iconify ref={ref} icon={validateIcon(icon)} className={cx(classes.root, className)} {...props} />
+	return (
+		<Iconify
+			ref={ref}
+			icon={validateIcon(icon)}
+			className={`${cx(classes.root, className)} iconify-icon-root`}
+			{...props}
+		/>
+	)
 })
 
 Icon.displayName = '@weareinreach/ui/icon'
@@ -40,3 +49,4 @@ interface CustomIconifyIconProps extends IconifyIconProps, IconStylesParams {
 type IconElementProps = SVGProps<IconifyIconHTMLElement>
 
 type CustomIconProps = IconElementProps & CustomIconifyIconProps & { ref?: Ref<IconifyIconHTMLElement> }
+export { IconifyIconHTMLElement }

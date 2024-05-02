@@ -135,7 +135,7 @@ const OrganizationPage = ({
 		return <OrgPageLoading />
 	}
 
-	const { userLists, attributes, description, reviews, locations, isClaimed, id: organizationId } = data
+	const { attributes, description, reviews, locations, isClaimed, id: organizationId } = data
 
 	const body =
 		locations?.length <= 1 ? (
@@ -185,7 +185,6 @@ const OrganizationPage = ({
 						option: 'back',
 						backTo: 'search',
 					}}
-					saved={Boolean(userLists?.length)}
 					organizationId={organizationId}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>

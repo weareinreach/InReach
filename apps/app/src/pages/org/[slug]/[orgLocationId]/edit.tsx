@@ -53,9 +53,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const [loading, setLoading] = useState(true)
 	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
-	const { data: isSaved } = api.savedList.isSaved.useQuery(data?.organization?.id ?? '', {
-		enabled: status === 'success' && Boolean(data?.organization?.id),
-	})
+
 	const { data: alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
@@ -171,7 +169,6 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							},
 						}}
 						organizationId={data.organization.id}
-						saved={Boolean(isSaved)}
 					/>
 					<Stack pt={24} align='flex-start' spacing={40}>
 						{hasAlerts &&

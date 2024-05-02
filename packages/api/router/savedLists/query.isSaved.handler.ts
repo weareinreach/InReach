@@ -26,7 +26,7 @@ const isSaved = async ({ ctx, input }: TRPCHandlerParams<TIsSavedSchema>) => {
 		},
 	})
 	if (!result.length) {
-		return false
+		return null
 	}
 	return result
 }

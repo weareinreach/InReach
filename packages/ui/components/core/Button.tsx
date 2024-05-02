@@ -1,9 +1,9 @@
 import {
-	type ButtonProps,
 	type ButtonStylesNames,
 	createStyles,
 	type CSSObject,
 	Button as MantineButton,
+	type ButtonProps as MantineButtonProps,
 	type MantineTheme,
 	rem,
 } from '@mantine/core'
@@ -164,13 +164,13 @@ const customVariants = [
 	'accent-icon',
 ] as const
 
-export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', CustomButtonProps>>(
+export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', ButtonProps>>(
 	(props, ref) => {
 		const isCustom = (customVariants as ReadonlyArray<string>).includes(props.variant ?? 'filled')
 
 		const { classes: baseClasses } = useVariantStyles({ variant: props.variant ?? 'filled' })
 
-		const { children, variant, classNames, ...others } = props as ButtonProps
+		const { children, variant, classNames, ...others } = props as MantineButtonProps
 
 		const mantineVariant = isCustom ? undefined : (variant as ButtonVariant)
 
@@ -192,12 +192,8 @@ Button.displayName = '@weareinreach/ui/components/core/Button'
 interface ButtonStylesParams {
 	variant?: CustomVariants | 'filled' | 'outline'
 }
-// type MantineButtonProps = Pick<
-// 	ButtonProps,
-// 	'type' | 'fullWidth' | 'uppercase' | 'loaderProps' | 'loaderPosition'
-// >
 
-interface CustomButtonProps extends ButtonProps {
+export interface ButtonProps extends MantineButtonProps {
 	/** Button style/design */
 	variant?: CustomVariants | 'filled' | 'outline'
 	/** Label Text */
