@@ -1,6 +1,7 @@
 import './wdyr'
 import './font.css'
 import { type BADGE } from '@geometricpanda/storybook-addon-badges'
+import { type ViewportAddonParameter } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { type WhyDidYouRenderOptions } from '@welldone-software/why-did-you-render'
 import { http, passthrough, type RequestHandler } from 'msw'
@@ -24,7 +25,7 @@ import {
 	WithWhyDidYouRender,
 } from './decorators'
 import { i18n } from './i18next'
-import { viewport, type ViewportConfig } from './viewports'
+import { viewport } from './viewports'
 
 import type authStates from './mockAuthStates'
 
@@ -35,7 +36,7 @@ initializeMsw({
 		},
 	},
 	onUnhandledRequest: ({ method, url }) => {
-		if (url.startsWith('/trpc' || '/api')) {
+		if (url.startsWith('/trpc') || url.startsWith('/api')) {
 			console.error(`Unhandled ${method} request to ${url}.
 
 				This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
@@ -64,8 +65,6 @@ const preview: Preview = {
 				excludeDecorators: true,
 			},
 		},
-		i18n,
-		viewport,
 		chromatic: {
 			delay: 1000,
 		},
@@ -80,6 +79,8 @@ const preview: Preview = {
 				}),
 			},
 		},
+		i18n,
+		viewport,
 	},
 	globalTypes: {
 		...i18NextGlobalTypes,
@@ -110,7 +111,7 @@ declare module '@storybook/react' {
 		}
 		locale?: LocaleCodes
 		i18n?: typeof i18n
-		viewport?: ViewportConfig
+		viewport?: ViewportAddonParameter
 		design?: DesignParams | DesignParams[]
 		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
 		nextAuthMock?: { session: keyof typeof authStates }
