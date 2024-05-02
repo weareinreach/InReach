@@ -1,13 +1,4 @@
-import {
-	Box,
-	type ButtonProps,
-	createPolymorphicComponent,
-	Group,
-	Modal,
-	Stack,
-	Text,
-	Title,
-} from '@mantine/core'
+import { Box, createPolymorphicComponent, Group, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
@@ -15,7 +6,7 @@ import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, type MouseEventHandler, useCallback, useEffect, useMemo } from 'react'
 
 import { Breadcrumb, type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
-import { Button } from '~ui/components/core/Button'
+import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
@@ -75,20 +66,6 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 			</Group>
 		)
 
-		const handleClose = useCallback(() => {
-			if (noClose) {
-				handler.close()
-			}
-		}, [noClose, handler])
-
-		const handleOpen = useCallback(
-			(e: MouseEvent<HTMLButtonElement>) => {
-				e.stopPropagation()
-				handler.open()
-			},
-			[handler]
-		)
-
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={handleClose} fullScreen={isMobile}>
@@ -129,14 +106,14 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
 					</Stack>
 				</Modal>
-				{!autoLaunch && <Box component='button' ref={ref} onClick={handleOpen} {...props} />}
+				{!autoLaunch && <Box component={Button} ref={ref} onClick={handleOpen} {...props} />}
 			</>
 		)
 	}
 )
 QuickPromotionModalBody.displayName = 'QuickPromotionModal'
 
-export const QuickPromotionModal = createPolymorphicComponent<'button', QuickPromotionModalProps>(
+export const QuickPromotionModal = createPolymorphicComponent<typeof Button, QuickPromotionModalProps>(
 	QuickPromotionModalBody
 )
 

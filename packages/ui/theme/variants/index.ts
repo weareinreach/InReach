@@ -22,7 +22,7 @@ export const variants = {
 	Tooltip,
 } as const
 
-export const variantNames: VariantDefinition = {
+export const variantNames: VariantNames = {
 	Anchor: {
 		inline: 'inline',
 		inlineInverted: 'inlineInverted',
@@ -115,4 +115,3 @@ export type VariantNames = {
 		[V in keyof (typeof variants)[K]]: V
 	}
 }
-export type VariantNames = typeof variantNames

@@ -71,8 +71,6 @@
 	"pnpm": {
 		"peerDependencyRules": {
 			"allowedVersions": {
-				"react": "18",
-				"react-dom": "18",
 				"typescript": "5",
 				"webpack": "5"
 			}

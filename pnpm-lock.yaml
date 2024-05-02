@@ -1336,9 +1336,6 @@ importers:
       probe-image-size:
         specifier: 7.2.3
         version: 7.2.3
-      react-intersection-observer:
-        specifier: 9.8.2
-        version: 9.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-phone-number-input:
         specifier: 3.4.1
         version: 3.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -12327,15 +12324,6 @@ packages:
       react-dom:
         optional: true
       react-native:
-        optional: true
-
-  react-intersection-observer@9.8.2:
-    resolution: {integrity: sha512-901naEiiZmse3p+AmtbQ3NL9xx+gQ8TXLiGDc+8GiE3JKJkNV3vP737aGuWTAXBA+1QqxPrDDE+fIEgYpGDlrQ==}
-    peerDependencies:
-      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || 18
-      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || 18
-    peerDependenciesMeta:
-      react-dom:
         optional: true
 
   react-is@16.13.1:
@@ -28809,12 +28797,6 @@ snapshots:
       react: 18.3.1
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
-
-  react-intersection-observer@9.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
-    dependencies:
-      react: 18.2.0
-    optionalDependencies:
-      react-dom: 18.2.0(react@18.2.0)
 
   react-is@16.13.1: {}
 
