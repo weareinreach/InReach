@@ -48,9 +48,7 @@ const OrgLocationPage: NextPage = () => {
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
 	)
-	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
-		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
-	})
+
 	const { data: alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
@@ -110,7 +108,6 @@ const OrgLocationPage: NextPage = () => {
 						},
 					}}
 					organizationId={orgData.id}
-					saved={Boolean(isSaved)}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					{hasAlerts &&

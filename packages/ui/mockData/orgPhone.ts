@@ -8,11 +8,6 @@ export const orgPhone = {
 			return data
 		},
 	}),
-	upsertMany: getTRPCMock({
-		path: ['orgPhone', 'upsertMany'],
-		type: 'mutation',
-		response: () => [],
-	}),
 	update: getTRPCMock({
 		path: ['orgPhone', 'update'],
 		type: 'mutation',

@@ -119,7 +119,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 
 	return (
 		<UnstyledButton className={classes.root} onClick={handleClick}>
-			<Group spacing={8}>
+			<Group spacing={8} noWrap>
 				<Icon
 					icon={iconRender}
 					height={24}
