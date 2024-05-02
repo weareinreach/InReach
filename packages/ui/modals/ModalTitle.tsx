@@ -12,8 +12,15 @@ export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProp
 		throw new Error('invalid Breadcrumb props')
 	}
 	const iconMap = {
-		save: <ActionButtons key='modal-title-save' iconKey='save' omitLabel serviceId={serviceId} />,
-		share: <ActionButtons key='modal-title-share' iconKey='share' omitLabel />,
+		save: (
+			<ActionButtons.Save
+				key='modal-title-save'
+				omitLabel
+				itemId={serviceId ?? ''}
+				itemName={breadcrumb.backToText ?? ''}
+			/>
+		),
+		share: <ActionButtons.Share key='modal-title-share' omitLabel />,
 	} as const
 
 	const displayIcons = icons?.length ? icons.map((item) => iconMap[item]) : undefined
