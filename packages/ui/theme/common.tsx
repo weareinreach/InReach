@@ -122,10 +122,10 @@ const themeCustomObj = {
 	border: {
 		default: '1px solid #d9d9d9',
 	},
-	colors,
 	animations: {
 		shake,
 	},
+	colors,
 } as const //satisfies MantineThemeOther
 
 export const commonTheme = {
@@ -657,7 +657,7 @@ export const commonTheme = {
 				({
 					radius: 'xl',
 				}) satisfies SkeletonProps,
-			styles: (theme, { circle }: SkeletonStylesParams) =>
+			styles: (_theme, { circle }: SkeletonStylesParams) =>
 				({
 					root: {
 						minWidth: circle ? undefined : rem(100),

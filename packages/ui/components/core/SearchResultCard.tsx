@@ -157,6 +157,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 							className={classes.hoverText}
 							{...(hovered && { 'data-hovered': hovered })}
 							mb={12}
+							{...(hovered && { 'data-hovered': hovered })}
 						>
 							<Link
 								href={{ pathname: '/org/[slug]', query: { slug } }}
@@ -168,7 +169,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 							</Link>
 							{leaderBadgeGroup}
 						</Title>
-						<ActionButtons iconKey='save' organizationId={result.id} />
+						<ActionButtons.Save itemId={result.id} itemName={result.name} />
 					</Group>
 					<Link
 						href={{ pathname: '/org/[slug]', query: { slug } }}
