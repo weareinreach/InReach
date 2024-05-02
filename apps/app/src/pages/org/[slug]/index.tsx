@@ -135,7 +135,7 @@ const OrganizationPage = ({
 		return <OrgPageLoading />
 	}
 
-	const { userLists, attributes, description, reviews, locations, isClaimed, id: organizationId } = data
+	const { attributes, description, reviews, locations, isClaimed, id: organizationId } = data
 
 	const body =
 		locations?.length <= 1 ? (
