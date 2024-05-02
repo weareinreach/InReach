@@ -10,8 +10,8 @@ import { Icon } from '~ui/icon'
 
 import { useStyles } from './styles'
 
-export const Share = forwardRef<HTMLButtonElement, ShareProps>(({ omitLabel, ...props }, ref) => {
-	const { classes } = useStyles()
+export const Share = forwardRef<HTMLButtonElement, ShareProps>(({ omitLabel, className, ...props }, ref) => {
+	const { classes, cx } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
 	const { asPath } = useRouter()
@@ -35,7 +35,13 @@ export const Share = forwardRef<HTMLButtonElement, ShareProps>(({ omitLabel, ...
 	}, [clipboard, copiedToClipboard, href])
 
 	return (
-		<Box component={Button} ref={ref} onClick={handleCopy} className={classes.button} {...props}>
+		<Box
+			component={Button}
+			ref={ref}
+			onClick={handleCopy}
+			className={cx(classes.button, className)}
+			{...props}
+		>
 			<Group spacing={0} noWrap>
 				<Icon
 					icon='carbon:share'

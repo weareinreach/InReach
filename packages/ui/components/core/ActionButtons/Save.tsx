@@ -95,7 +95,7 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 }
 
 export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
-	({ itemId, itemName, menuItem, omitLabel, ...rest }, ref) => {
+	({ itemId, itemName, menuItem, omitLabel, className, ...rest }, ref) => {
 		const [menuOpened, menuHandler] = useDisclosure(false)
 		const { classes, cx } = useStyles()
 		const { status: sessionStatus } = useSession()
@@ -126,10 +126,10 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 			onError: notifications.errorDelete,
 		})
 
-		const isSaved = Boolean(savedToLists?.length)
+		const isSaved = Boolean(savedToLists)
 		const isLoggedIn = sessionStatus === 'authenticated'
 		const buttonIcon = isSaved ? 'carbon:favorite-filled' : 'carbon:favorite'
-		const savedToSingleList = savedToLists?.length === 1
+		const savedToSingleList = savedToLists && savedToLists.length === 1
 
 		const baseClassname = menuItem ? undefined : classes.button
 		const iconColor = menuItem ? theme.other.colors.secondary.white : theme.other.colors.secondary.black
@@ -178,7 +178,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 				<Box
 					ref={ref}
 					component={Button}
-					className={baseClassname}
+					className={cx(baseClassname, className)}
 					radius='md'
 					onClick={handleRemoveFromList(listId)}
 					{...rest}
@@ -197,7 +197,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 				keepMounted
 			>
 				<Menu.Target>
-					<Box ref={ref} component={Button} className={baseClassname} radius='md' {...rest}>
+					<Box ref={ref} component={Button} className={cx(baseClassname, className)} radius='md' {...rest}>
 						{DisplayedInfo}
 					</Box>
 				</Menu.Target>

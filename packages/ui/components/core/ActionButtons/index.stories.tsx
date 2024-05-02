@@ -99,6 +99,25 @@ export const More = {
 		},
 	},
 	args: {
-		iconKey: 'more',
+		containerWidth: 100,
 	},
-} satisfies StoryDef
+	argTypes: {
+		containerWidth: {
+			control: 'range',
+			min: 1,
+			max: 100,
+			step: 5,
+		},
+	},
+	// @ts-expect-error Stop yelling about the `containerWidth` prop.
+	render: ({ containerWidth }: { containerWidth: number }) => (
+		<div style={{ width: `${containerWidth}%` }}>
+			<ActionButtonsComponent.Group>
+				<ActionButtonsComponent.Save data-targetid='save' {...Save.args} />
+				<ActionButtonsComponent.Share data-targetid='share' />
+				<ActionButtonsComponent.Review data-targetid='review' />
+				<ActionButtonsComponent.Print data-targetid='print' />
+			</ActionButtonsComponent.Group>
+		</div>
+	),
+} satisfies StoryObj

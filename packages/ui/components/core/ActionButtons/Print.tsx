@@ -7,13 +7,19 @@ import { Icon } from '~ui/icon'
 
 import { useStyles } from './styles'
 
-export const Print = forwardRef<HTMLButtonElement, PrintProps>(({ omitLabel, ...props }, ref) => {
-	const { classes } = useStyles()
+export const Print = forwardRef<HTMLButtonElement, PrintProps>(({ omitLabel, className, ...props }, ref) => {
+	const { classes, cx } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
 
 	return (
-		<Box component={Button} ref={ref} onClick={window.print} className={classes.button} {...props}>
+		<Box
+			component={Button}
+			ref={ref}
+			onClick={window.print}
+			className={cx(classes.button, className)}
+			{...props}
+		>
 			<Group spacing={0} noWrap>
 				<Icon
 					icon='carbon:printer'

@@ -5,7 +5,8 @@ export const useStyles = createStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		minWidth: rem(48),
+		// minWidth: rem(48),
+		minWidth: 'fit-content',
 		height: rem(48),
 		padding: rem(12),
 		gap: rem(8),
@@ -29,7 +30,9 @@ export const useStyles = createStyles((theme) => ({
 			backgroundColor: theme.other.colors.primary.lightGray,
 		}),
 	},
-	icon: {},
+	icon: {
+		color: theme.other.colors.secondary.black,
+	},
 	text: {
 		fontWeight: theme.other.fontWeight.semibold,
 		marginLeft: rem(8),
@@ -51,6 +54,21 @@ export const useStyles = createStyles((theme) => ({
 			backgroundColor: 'inherit',
 			// color: 'black',
 			textDecoration: 'underline',
+		},
+	},
+	inOverflowMenu: {
+		border: 'none !important',
+		padding: 0,
+		backgroundColor: 'inherit',
+		...theme.fn.hover({
+			backgroundColor: 'transparent !important',
+		}),
+		height: 'unset',
+		'&.mantine-Group-root, .mantine-Text-root, .iconify-icon-root, .mantine-Menu-item': {
+			color: theme.other.colors.secondary.white,
+			// ...theme.fn.hover({
+			// 	backgroundColor: 'transparent !important',
+			// }),
 		},
 	},
 }))
