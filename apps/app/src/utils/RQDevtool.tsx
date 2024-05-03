@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import { isLocalDev, isVercelDev, isVercelProd } from '@weareinreach/env/checks'
 
 const ReactQueryDevtools = dynamic(
-	() => import('@tanstack/react-query-devtools').then((mod) => mod.ReactQueryDevtools),
+	() => import('@tanstack/react-query-devtools/production').then((mod) => mod.ReactQueryDevtools),
 	{ ssr: false }
 )
 
