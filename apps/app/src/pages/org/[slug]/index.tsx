@@ -1,6 +1,6 @@
 import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
-import { type GetStaticPaths, type GetStaticPropsContext, type InferGetStaticPropsType } from 'next'
+import { type GetStaticPaths, type GetStaticProps, type InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -245,10 +245,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	// }
 }
 
-export const getStaticProps = async ({
-	locale,
-	params,
-}: GetStaticPropsContext<RoutedQuery<'/org/[slug]'>>) => {
+export const getStaticProps: GetStaticProps<
+	{ slug: string; organizationId: string },
+	RoutedQuery<'/org/[slug]'>
+> = async ({ locale, params }) => {
 	if (!params) {
 		return { notFound: true }
 	}
@@ -290,6 +290,8 @@ export const getStaticProps = async ({
 		const TRPCError = (await import('@trpc/server')).TRPCError
 		if (error instanceof TRPCError && error.code === 'NOT_FOUND') {
 			return { notFound: true }
+		} else {
+			return { redirect: { destination: '/500', permanent: false } }
 		}
 	}
 }

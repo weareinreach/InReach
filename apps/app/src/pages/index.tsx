@@ -352,11 +352,9 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 		ssg.review.getFeatured.prefetch(3),
 	])
 
-	// await ssg.review.getFeatured.prefetch(3)
 	return {
 		props: {
 			trpcState: ssg.dehydrate(),
-			// ...(await getServerSideTranslations(locale, ['common', 'landingPage', 'attribute'])),
 			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		},
 		revalidate: 60 * 60 * 24, // 24 hours

@@ -12,7 +12,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { type GetStaticPaths, type GetStaticPropsContext } from 'next'
+import { type GetStaticPaths, type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -152,10 +152,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: 'blocking',
 	}
 }
-export const getStaticProps = async ({
-	params,
-	locale,
-}: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
+export const getStaticProps: GetStaticProps<
+	Record<string, unknown>,
+	RoutedQuery<'/search/intl/[country]'>
+> = async ({ params, locale }) => {
 	const parsedQuery = QuerySchema.safeParse(params)
 	if (!parsedQuery.success) {
 		return {
