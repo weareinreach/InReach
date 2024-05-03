@@ -4,7 +4,7 @@ import { type InferGetServerSidePropsType, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type GetServerSidePropsContext } from 'nextjs-routes'
+import { type GetServerSideProps } from 'nextjs-routes'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -239,12 +239,10 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	)
 }
 
-export const getServerSideProps = async ({
-	locale,
-	params,
-	req,
-	res,
-}: GetServerSidePropsContext<'/org/[slug]/[orgLocationId]/edit'>) => {
+export const getServerSideProps: GetServerSideProps<
+	{ organizationId: string } & Record<string, unknown>,
+	'/org/[slug]/[orgLocationId]/edit'
+> = async ({ locale, params, req, res }) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: prefixedId('orgLocation') }).safeParse(params)
 	if (!urlParams.success) {
 		return { notFound: true }

@@ -1,7 +1,7 @@
 import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 // import compact from 'just-compact'
-import { type GetStaticPaths, type GetStaticPropsContext, type NextPage } from 'next'
+import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -178,10 +178,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: true,
 	}
 }
-export const getStaticProps = async ({
-	locale,
-	params,
-}: GetStaticPropsContext<RoutedQuery<'/org/[slug]/[orgLocationId]'>>) => {
+export const getStaticProps: GetStaticProps<
+	Record<string, unknown>,
+	RoutedQuery<'/org/[slug]/[orgLocationId]'>
+> = async ({ locale, params }) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
 	if (!urlParams.success) {
 		return { notFound: true }
@@ -213,7 +213,6 @@ export const getStaticProps = async ({
 		])
 		const props = {
 			trpcState: ssg.dehydrate(),
-			// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
 			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		}
 
@@ -226,7 +225,7 @@ export const getStaticProps = async ({
 		if (error instanceof TRPCError && error.code === 'NOT_FOUND') {
 			return { notFound: true }
 		}
-		return { props: {}, revalidate: 1 }
+		return { redirect: { destination: '/500', permanent: false } }
 	}
 }
 type Tabname = 'services' | 'photos' | 'reviews'
