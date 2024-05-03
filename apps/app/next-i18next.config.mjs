@@ -91,11 +91,11 @@ const config = {
 	partialBundledLanguages: true,
 	nonExplicitSupportedLngs: true,
 	cleanCode: true,
-	// react: {
-	// 	useSuspense: false,
-	// 	bindI18nStore: 'added loaded',
-	// 	bindI18n: 'languageChanged loaded',
-	// },
+	react: {
+		useSuspense: false,
+		// 	bindI18nStore: 'added loaded',
+		// 	bindI18n: 'languageChanged loaded',
+	},
 
 	backend: isBrowser
 		? {
@@ -111,11 +111,8 @@ const config = {
 		skipOnVariables: false,
 		alwaysFormat: true,
 		format: (value, format) => {
-			switch (format) {
-				case 'lowercase': {
-					if (typeof value === 'string') return value.toLowerCase()
-					break
-				}
+			if (format === 'lowercase' && typeof value === 'string') {
+				return value.toLowerCase()
 			}
 			return value
 		},

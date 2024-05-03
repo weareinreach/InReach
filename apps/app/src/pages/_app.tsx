@@ -9,14 +9,12 @@ import { type AppProps, type NextWebVitalsMetric } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-// import Script from 'next/script'
 import { type Session } from 'next-auth'
 import { appWithTranslation } from 'next-i18next'
 import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 
 import { appEvent } from '@weareinreach/analytics/events'
-import { isLocalDev } from '@weareinreach/env/checks'
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
@@ -24,16 +22,12 @@ import { useScreenSize } from '@weareinreach/ui/hooks/useScreenSize'
 import { BodyGrid } from '@weareinreach/ui/layouts/BodyGrid'
 import { Providers } from '~app/providers'
 import { api } from '~app/utils/api'
+import { ConditionalReactQueryDevtool } from '~app/utils/RQDevtool'
 
 import nextI18nConfig from '../../next-i18next.config.mjs'
-// import { Donate, DonateModal } from '@weareinreach/ui/components/core/Donate'
+
 const DonateModal = dynamic(() =>
 	import('@weareinreach/ui/components/core/Donate').then((mod) => mod.DonateModal)
-)
-
-const ReactQueryDevtools = dynamic(
-	() => import('@tanstack/react-query-devtools').then((mod) => mod.ReactQueryDevtools),
-	{ ssr: false }
 )
 
 const defaultSEO = {
@@ -91,9 +85,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 				{(isMobile || isTablet) && <Space h={80} />}
 				<Footer />
 				<Notifications transitionDuration={500} />
-				{isLocalDev && (
-					<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
-				)}
+				<ConditionalReactQueryDevtool />
 				<Analytics />
 				<SpeedInsights />
 				<DonateModal />
