@@ -1,5 +1,5 @@
 import { Grid, Overlay } from '@mantine/core'
-import { type GetStaticPropsContext } from 'next'
+import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
 import { useCallback, useState } from 'react'
@@ -7,7 +7,6 @@ import { useCallback, useState } from 'react'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { SuggestOrg } from '@weareinreach/ui/components/sections/SuggestOrg'
 import { getServerSideTranslations } from '~app/utils/i18n'
-// import { QuickPromotionModal } from '@weareinreach/ui/modals'
 
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
@@ -37,7 +36,7 @@ const SuggestResource = () => {
 
 export default SuggestResource
 
-export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const ssg = await trpcServerClient({ session: null })
 
 	const [i18n] = await Promise.allSettled([

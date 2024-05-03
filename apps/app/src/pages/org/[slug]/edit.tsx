@@ -2,10 +2,10 @@ import { Grid, Stack } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { t } from 'i18next'
 import compact from 'just-compact'
-import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from 'next'
+import { type InferGetServerSidePropsType } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { type RoutedQuery } from 'nextjs-routes'
+import { type GetServerSideProps } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -136,12 +136,12 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 	)
 }
 
-export const getServerSideProps = async ({
+export const getServerSideProps: GetServerSideProps<{ organizationId: string }, '/org/[slug]'> = async ({
 	locale,
 	params,
 	req,
 	res,
-}: GetServerSidePropsContext<RoutedQuery<'/org/[slug]'>>) => {
+}) => {
 	if (!params) {
 		return { notFound: true }
 	}
