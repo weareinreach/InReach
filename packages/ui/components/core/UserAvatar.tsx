@@ -65,7 +65,18 @@ export const UserAvatar = ({
 			}
 		}
 	}
-	const showLoadingState = loading || status === 'loading' || router.isFallback
+
+	const areWeStillLoading = () => {
+		if (loading || status === 'loading') {
+			return true
+		}
+		if (typeof window !== 'undefined') {
+			return router.isFallback
+		}
+		return false
+	}
+
+	const showLoadingState = areWeStillLoading()
 	if (showLoadingState) {
 		return (
 			<Group className={classes.group}>
