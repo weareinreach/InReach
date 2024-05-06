@@ -19,10 +19,10 @@ import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
+import { nsFormatter } from '@weareinreach/ui/lib/nsFormatter'
 import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { nsFormatter } from '~app/utils/nsFormatter'
 
 const GoogleMap = dynamic(() =>
 	import('@weareinreach/ui/components/core/GoogleMap').then((mod) => mod.GoogleMap)
