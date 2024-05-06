@@ -198,7 +198,7 @@
 	"CCK": {
 		"name": "Zile Cocos (Keeling)",
 		"demonym_one": "Rezidan ile Coco",
-		"demonym_other": "Cocos Islanders"
+		"demonym_other": "Rezidan il Coco yo"
 	},
 	"CHE": {
 		"name": "Swis",
@@ -237,8 +237,8 @@
 	},
 	"COK": {
 		"name": "Zile Cook yo",
-		"demonym_one": "Kwit Islander",
-		"demonym_other": "Zileyen Cook yo"
+		"demonym_one": "Zile cook",
+		"demonym_other": "Habitan zile Cook yo"
 	},
 	"COL": {
 		"name": "Kolonbi",
@@ -247,7 +247,7 @@
 	},
 	"COM": {
 		"name": "Komò",
-		"demonym_one": "Comoran",
+		"demonym_one": "Comoren",
 		"demonym_other": "Komò yo"
 	},
 	"CPV": {
@@ -368,11 +368,11 @@
 	"FLK": {
 		"name": "Zile Falkland",
 		"demonym_one": "Abitan zile Falkland",
-		"demonym_other": "Falkland"
+		"demonym_other": "Abitan zile Falkland"
 	},
 	"FRA": {
 		"name": "Lafrans",
-		"demonym_one": "franse",
+		"demonym_one": "Franse",
 		"demonym_other": "Franse"
 	},
 	"FRO": {
@@ -402,7 +402,7 @@
 	},
 	"GGY": {
 		"name": "Guernsey",
-		"demonym_one": "Chèn Zileyen",
+		"demonym_one": "Chèn abitan Zile a",
 		"demonym_other": "Abitan Chèn Zile yo"
 	},
 	"GHA": {
@@ -412,13 +412,13 @@
 	},
 	"GIB": {
 		"name": "Gibraltar",
-		"demonym_one": "Gibraltarian",
-		"demonym_other": "Gibraltarian yo"
+		"demonym_one": "Gibraltayen",
+		"demonym_other": "Gibraltaryen yo"
 	},
 	"GIN": {
 		"name": "Gine",
-		"demonym_one": "Ginean",
-		"demonym_other": "Ginean yo"
+		"demonym_one": "Gineyen",
+		"demonym_other": "Gineyen yo"
 	},
 	"GLP": {
 		"name": "Gwadloup",
@@ -428,12 +428,12 @@
 	"GMB": {
 		"name": "Gambia",
 		"demonym_one": "ganbyen",
-		"demonym_other": "Gambian yo"
+		"demonym_other": "Gambiyen yo"
 	},
 	"GNB": {
 		"name": "Gine-Bissau",
-		"demonym_one": "Gine-Bissauan",
-		"demonym_other": "Gine-Bissauan yo"
+		"demonym_one": "Gine-Bisoyen",
+		"demonym_other": "Gine-Bisoyen yo"
 	},
 	"GNQ": {
 		"name": "Gine ekwateryal",
@@ -500,8 +500,8 @@
 	},
 	"HUN": {
 		"name": "Hungari",
-		"demonym_one": "Ongaryen",
-		"demonym_other": "Hungarian yo"
+		"demonym_one": "Hungaryen",
+		"demonym_other": "Hungaryen yo"
 	},
 	"IDN": {
 		"name": "Indonesi",
@@ -561,7 +561,7 @@
 	"JEY": {
 		"name": "Jersey",
 		"demonym_one": "Channel Islander",
-		"demonym_other": "Channel Iilandè yo"
+		"demonym_other": "Channel ilandè yo"
 	},
 	"JOR": {
 		"name": "Jordan",
@@ -600,7 +600,7 @@
 	},
 	"KNA": {
 		"name": "Saint Kitts ak Nevis",
-		"demonym_one": "Kittitian oswa Nevisian",
+		"demonym_one": "Kittiyen oswa Nevizyen",
 		"demonym_other": "Kittisyen oswa Nevisians"
 	},
 	"KOR": {
@@ -626,17 +626,17 @@
 	"LBR": {
 		"name": "Liberya",
 		"demonym_one": "Liberyen",
-		"demonym_other": "Liberian yo"
+		"demonym_other": "Libeyen yo"
 	},
 	"LBY": {
 		"name": "Libi",
 		"demonym_one": "Libyan",
-		"demonym_other": "Libyan yo"
+		"demonym_other": "Libyen yo"
 	},
 	"LCA": {
 		"name": "Saint Lucia",
 		"demonym_one": "Saint Lucian",
-		"demonym_other": "Saint Lucians"
+		"demonym_other": "Saint Lusye yo"
 	},
 	"LIE": {
 		"name": "Liechtenstein",
@@ -646,7 +646,7 @@
 	"LKA": {
 		"name": "Sri Lanka",
 		"demonym_one": "Sri Lankan",
-		"demonym_other": "Sri Lankan yo"
+		"demonym_other": "Sri Lankè yo"
 	},
 	"LSO": {
 		"name": "Lesotho",
@@ -655,7 +655,7 @@
 	},
 	"LTU": {
 		"name": "Lityani",
-		"demonym_one": "Lithuanian",
+		"demonym_one": "Lithuanyen",
 		"demonym_other": "Lithuanian yo"
 	},
 	"LUX": {
@@ -736,7 +736,7 @@
 	"MNE": {
 		"name": "Montenegwo",
 		"demonym_one": "Montenegwo",
-		"demonym_other": "Montenegrin yo"
+		"demonym_other": "Montenegren yo"
 	},
 	"MNG": {
 		"name": "Mongoli",
@@ -805,7 +805,7 @@
 	},
 	"NFK": {
 		"name": "Zile Norfolk",
-		"demonym_one": "IlZile Norfolk",
+		"demonym_one": "Abitan zile Norfolk",
 		"demonym_other": "Abitan zile Norfolk yo"
 	},
 	"NGA": {
@@ -816,7 +816,7 @@
 	"NIC": {
 		"name": "Nikaragwa",
 		"demonym_one": "Nikaragweyen",
-		"demonym_other": "Nikaragwa yo"
+		"demonym_other": "Nikaragweyen yo"
 	},
 	"NIU": {
 		"name": "Niue",
@@ -851,7 +851,7 @@
 	"OMN": {
 		"name": "Omàn",
 		"demonym_one": "Omani",
-		"demonym_other": "Omanis"
+		"demonym_other": "Omanis yo"
 	},
 	"PAK": {
 		"name": "Pakistan",
@@ -896,7 +896,7 @@
 	"PRI": {
 		"name": "Pòtoriko",
 		"demonym_one": "Pòtoriken",
-		"demonym_other": "Puertoriken"
+		"demonym_other": "Puertoriken yo"
 	},
 	"PRK": {
 		"name": "Kore di Nò",
@@ -935,7 +935,7 @@
 	},
 	"ROU": {
 		"name": "Woumani",
-		"demonym_one": "Romanian",
+		"demonym_one": "Romenyen",
 		"demonym_other": "Romanyen yo"
 	},
 	"RUS": {
@@ -946,7 +946,7 @@
 	"RWA": {
 		"name": "Rwanda",
 		"demonym_one": "Ouwanda",
-		"demonym_other": "Rwanda yo"
+		"demonym_other": "Rwondè yo"
 	},
 	"SAU": {
 		"name": "Arabi Saoudit",
@@ -1182,7 +1182,7 @@
 		"demonym_other": "Italyen yo"
 	},
 	"VCT": {
-		"name": "Saint Vincent ak Grenadines yo",
+		"name": "Saint Vincent and the Grenadye yo",
 		"demonym_one": "Saint Vincentian",
 		"demonym_other": "Saint Vincentians"
 	},
@@ -1193,7 +1193,7 @@
 	},
 	"VGB": {
 		"name": "Zile Vyèj Britanik yo",
-		"demonym_one": "Zile vyèj",
+		"demonym_one": "Abitan Zile Vyèj",
 		"demonym_other": "Moun zile vyèj"
 	},
 	"VIR": {
@@ -1219,7 +1219,7 @@
 	"WSM": {
 		"name": "Samoa",
 		"demonym_one": "Samoan",
-		"demonym_other": "Samoan yo"
+		"demonym_other": "Samowen yo"
 	},
 	"YEM": {
 		"name": "Yemèn",

@@ -16,7 +16,7 @@
 		"reception-services": "Sèvis resepsyon",
 		"reentry-services": "Re-antre sèvis yo",
 		"spiritual-support": "Sipò espirityèl",
-		"sponsors": "Imigrasyon parennaj"
+		"sponsors": "Parennaj Imigrasyon"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "Odinatè ak entènèt",
@@ -43,7 +43,7 @@
 	},
 	"housing": {
 		"CATEGORYNAME": "Lojman",
-		"drop-in-centers-for-lgbtq-youth": "Drop-nan sant pou jèn LGBTQ",
+		"drop-in-centers-for-lgbtq-youth": "Sant de vizit pou jèn LGBTQ",
 		"emergency-housing": "Lojman Ijans",
 		"housing-information-and-referrals": "Enfòmasyon sou lojman ak referans",
 		"short-term-housing": "Kout tèm lojman",
@@ -75,16 +75,16 @@
 		"immigration-detention": "Imigrasyon detansyon",
 		"legal-advice": "Konsèy legal",
 		"legal-hotlines": "Liy dirèk legal",
-		"name-and-gender-change": "Chanjman non ak makè sèks",
+		"name-and-gender-change": "Chanjman non ak genj sèks",
 		"refugee-claim": "Reklamasyon Refijye",
 		"residency": "Rezidans",
 		"special-immigrant-juvenile-status-sijs": "Estati Jivenil Imigran Espesyal (SIJS)",
 		"t-visa": "T viza",
-		"u-visa": "Viza"
+		"u-visa": "Viza U"
 	},
 	"mail": {
-		"CATEGORYNAME": "Mail",
-		"mail": "Mail"
+		"CATEGORYNAME": "La pòs",
+		"mail": "La pòs"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medikal",
@@ -110,7 +110,7 @@
 		"private-therapy-and-counseling": "Prive terapi ak konsèy",
 		"psychological-evaluations-for-asylum-claim": "Evalyasyon sikolojik pou reklamasyon azil",
 		"psychological-evaluations-for-refugee-claim": "Evalyasyon sikolojik pou reklamasyon refijye",
-		"substance-use": "Itilize sibstans",
+		"substance-use": "Itilizasyon sibstans",
 		"support-for-caregivers-of-trans-youth": "Sipò pou moun kap bay swen nan jèn trans",
 		"support-for-conversion-therapy-survivors": "Sipò pou sivivan terapi konvèsyon",
 		"support-groups": "Gwoup sipò yo",
