@@ -52,7 +52,6 @@ const useStyles = createStyles(() => ({
 }))
 export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
-		console.log({ id, createNew })
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 		const emailId = useMemo(() => {
 			if (createNew || !id) {

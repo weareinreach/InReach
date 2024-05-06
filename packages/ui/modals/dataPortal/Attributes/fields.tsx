@@ -1,6 +1,6 @@
 import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { type ComponentPropsWithoutRef, forwardRef, useCallback, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { NumberInput, Radio, Select, TextInput } from 'react-hook-form-mantine'
 
@@ -36,32 +36,35 @@ const SuppText = () => {
 const SuppData = ({ schema }: SuppDataProps) => {
 	const { control } = useFormContext<FormSchema>()
 
-	const renderField = (formSchema: FieldAttributes) => {
-		const { type, name: dataKey, ...schemaProps } = formSchema
-		const baseProps = {
-			...schemaProps,
-			name: `data.${dataKey}` as const,
-			control,
-		}
-		switch (type) {
-			case FieldType.text: {
-				return <TextInput {...baseProps} />
+	const renderField = useCallback(
+		(formSchema: FieldAttributes) => {
+			const { type, name: dataKey, key, ...schemaProps } = formSchema
+			const baseProps = {
+				...schemaProps,
+				name: `data.${dataKey}` as const,
+				control,
 			}
-			case FieldType.select: {
-				const { options } = formSchema
-				return <Select {...baseProps} data={options} />
+			switch (type) {
+				case FieldType.text: {
+					return <TextInput key={key} {...baseProps} />
+				}
+				case FieldType.select: {
+					const { options } = formSchema
+					return <Select key={key} {...baseProps} data={options} />
+				}
+				case FieldType.number: {
+					return <NumberInput key={key} {...baseProps} type='number' />
+				}
+				case FieldType.currency: {
+					return <NumberInput key={key} {...baseProps} type='number' />
+				}
+				default: {
+					return null
+				}
 			}
-			case FieldType.number: {
-				return <NumberInput {...baseProps} type='number' />
-			}
-			case FieldType.currency: {
-				return <NumberInput {...baseProps} type='number' />
-			}
-			default: {
-				return null
-			}
-		}
-	}
+		},
+		[control]
+	)
 
 	return (
 		<Stack>
