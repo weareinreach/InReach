@@ -24,7 +24,7 @@ export const generateDataSchemas = async (ctx: Context, task: ListrTask) => {
 		${schemas.join('\n')}
 	}
 
-	export const isAttributeSupplementSchema = (schema: string): schema is AttributeSupplementSchemas => Object.keys(attributeSupplementSchema).includes(schema)
+	export const isAttributeSupplementSchema = (schema?: string | null): schema is AttributeSupplementSchemas => typeof schema === 'string' && schema in attributeSupplementSchema
 
 	export type AttributeSupplementSchemas = keyof typeof attributeSupplementSchema
 	`
