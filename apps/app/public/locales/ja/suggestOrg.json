@@ -28,7 +28,7 @@
 	"modal": {
 		"community-sub": "この組織は特定のLGBTQ+コミュニティを対象としたサービスを提供していますか？該当するものを全て選択してください。",
 		"community-title": "LGBTQ+ コミュニティフォーカス",
-		"dismiss": "却下",
+		"dismiss": "拒否",
 		"service-types-sub": "この組織はどのようなサービスを提供していますか？該当するものを全て選択してください。",
 		"service-types-title": "サービスの種類",
 		"thank-you": "{{org}} を提出していただきありがとうございます。",
