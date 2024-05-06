@@ -88,7 +88,7 @@
 		"req-proof-of-income": "収入証明書が必要なもの",
 		"req-proof-of-residence": "居住証明書が必要なもの",
 		"req-referral": "紹介を受ける必要があるもの",
-		"time-appointment-required": "時間指定の予約が必要です"
+		"time-appointment-required": "時間の予約が必要です"
 	},
 	"lang": {
 		"CATEGORYNAME": "言語",
@@ -148,7 +148,7 @@
 		"corp-law-firm": "企業法律事務所",
 		"law-other": "その他",
 		"law-school-clinic": "ロースクールクリニック",
-		"legal-nonprofit": "合法的な非営利団体"
+		"legal-nonprofit": "法的非営利組織"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "サービスプロバイダーオプション",
