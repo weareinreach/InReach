@@ -9,11 +9,13 @@ import { WebsiteDrawer } from '~ui/components/data-portal/WebsiteDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
+import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useCommonStyles } from './common.styles'
 import { type WebsitesProps } from './types'
 
+const formatNs = nsFormatter(['common'])
 const anyTrue = (...args: boolean[]) => args.some((x) => x)
 
 export const Websites = ({ edit, ...props }: WebsitesProps) =>
@@ -28,7 +30,7 @@ const WebsitesDisplay = ({
 }: WebsitesProps) => {
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
+	const { t } = useTranslation(formatNs(orgId?.id))
 	const variants = useCustomVariant()
 	const { data } = api.orgWebsite.forContactInfo.useQuery(
 		{ parentId, locationOnly },
@@ -103,7 +105,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	const slug = useSlug()
 	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
+	const { t } = useTranslation(formatNs(orgId?.id))
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 
@@ -120,6 +122,26 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	const linkToLocation = api.orgWebsite.locationLink.useMutation({
 		onSuccess: () => apiUtils.orgWebsite.invalidate(),
 	})
+	const getTextVariant = useCallback(
+		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {
+			const isValue = kind === 'value'
+			if (deleted) {
+				return isValue ? variants.Text.utility3darkGrayStrikethru : variants.Text.utility4darkGrayStrikethru
+			}
+			if (!published) {
+				return isValue ? variants.Text.utility3darkGray : variants.Text.utility4darkGray
+			}
+			return isValue ? variants.Text.utility3 : variants.Text.utility4
+		},
+		[
+			variants.Text.utility3,
+			variants.Text.utility3darkGray,
+			variants.Text.utility3darkGrayStrikethru,
+			variants.Text.utility4,
+			variants.Text.utility4darkGray,
+			variants.Text.utility4darkGrayStrikethru,
+		]
+	)
 
 	const domainExtract = /https?:\/\/([^:/\n?]+)/
 
@@ -182,18 +204,8 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 			</Menu.Target>
 			<Menu.Dropdown>
 				{linkableWebsites?.map(({ id, deleted, description, url, published }) => {
-					const urlTextVariant =
-						!published && deleted
-							? variants.Text.utility3darkGrayStrikethru
-							: deleted
-								? variants.Text.utility3darkGrayStrikethru
-								: variants.Text.utility3
-					const descTextVariant =
-						!published && deleted
-							? variants.Text.utility4darkGrayStrikethru
-							: deleted
-								? variants.Text.utility4darkGrayStrikethru
-								: variants.Text.utility4
+					const urlTextVariant = getTextVariant('value', published, deleted)
+					const descTextVariant = getTextVariant('desc', published, deleted)
 					return (
 						<Menu.Item key={id} onClick={handleLinkLocation(id)}>
 							<Group noWrap>

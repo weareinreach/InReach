@@ -11,10 +11,13 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
+import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useCommonStyles } from './common.styles'
 import { type EmailsProps } from './types'
+
+const formatNs = nsFormatter(['common', 'user-title'])
 
 const anyTrue = (...args: boolean[]) => args.some((x) => x)
 
@@ -29,7 +32,7 @@ const EmailsDisplay = ({
 	serviceOnly = false,
 }: EmailsProps) => {
 	const { id: orgId } = useOrgInfo()
-	const { t } = useTranslation(orgId ? ['common', orgId, 'user-title'] : ['common', 'user-title'])
+	const { t } = useTranslation(formatNs(orgId))
 	const variants = useCustomVariant()
 	const { data } = api.orgEmail.forContactInfo.useQuery(
 		{ parentId, locationOnly, serviceOnly },
@@ -109,7 +112,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	const slug = useSlug()
 	const apiUtils = api.useUtils()
 	const { id: orgId } = useOrgInfo()
-	const { t } = useTranslation(orgId ? ['common', orgId, 'user-title'] : ['common', 'user-title'])
+	const { t } = useTranslation(formatNs(orgId))
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const { classes } = useCommonStyles()
