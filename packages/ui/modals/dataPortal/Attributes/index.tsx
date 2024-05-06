@@ -14,6 +14,10 @@ import { forwardRef, type ReactNode, useCallback, useMemo, useRef, useState } fr
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { type ApiOutput } from '@weareinreach/api'
+import {
+	attributeSupplementSchema,
+	isAttributeSupplementSchema,
+} from '@weareinreach/db/generated/attributeSupplementSchema'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Button } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
@@ -158,7 +162,16 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		)
 
 		const submitHandler = () => {
-			saveAttributes.mutate(form.getValues())
+			const formData = form.getValues()
+			const dataSchemaName = selectedAttr?.dataSchemaName
+			if (supplements.data && isAttributeSupplementSchema(dataSchemaName)) {
+				const parsed = attributeSupplementSchema[dataSchemaName].safeParse(formData.data)
+				if (parsed.success) {
+					formData.data = parsed.data
+				}
+			}
+
+			saveAttributes.mutate(formData)
 		}
 
 		// #endregion

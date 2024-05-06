@@ -1,10 +1,11 @@
 import { Prisma } from '@prisma/client'
 
 import { isSuperJSONResult, superjson } from '@weareinreach/util/transformer'
+import { JsonInputOrNullSuperJSON } from '~db/zod_util/prismaJson'
 
 const deserialize = (data: unknown) => (isSuperJSONResult(data) ? superjson.deserialize(data) : data)
 
-const processData = <T>(data: T) => (data ? superjson.stringify(data) : data)
+const processData = <T>(data: T) => (data ? JsonInputOrNullSuperJSON.parse(data) : data)
 
 export const jsonExtension = Prisma.defineExtension({
 	name: 'SuperJSON Serializer',

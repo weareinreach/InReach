@@ -84,7 +84,7 @@ export const attributeSupplementSchema = {
 	otherDescribe: z.object({ other: z.string() }),
 }
 
-export const isAttributeSupplementSchema = (schema: string): schema is AttributeSupplementSchemas =>
-	Object.keys(attributeSupplementSchema).includes(schema)
+export const isAttributeSupplementSchema = (schema?: string | null): schema is AttributeSupplementSchemas =>
+	typeof schema === 'string' && schema in attributeSupplementSchema
 
 export type AttributeSupplementSchemas = keyof typeof attributeSupplementSchema
