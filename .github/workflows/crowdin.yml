@@ -97,7 +97,7 @@ jobs:
 
       - name: Check for updated files
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
-        uses: tj-actions/verify-changed-files@d774a4c7ebe335445d79c7b44138f56a76058ba0 # v19
+        uses: tj-actions/verify-changed-files@ab875806658e59162bc5f42e4df5c2d4682c459e # v20
         id: verify-changed-files
         with:
           files: '**/locales/*/*.json'
@@ -114,7 +114,7 @@ jobs:
 
       - name: Get files to commit
         if: steps.run-prettier.conclusion == 'success'
-        uses: tj-actions/verify-changed-files@d774a4c7ebe335445d79c7b44138f56a76058ba0 # v19
+        uses: tj-actions/verify-changed-files@ab875806658e59162bc5f42e4df5c2d4682c459e # v20
         id: get-pending-files
         with:
           separator: <br>
