@@ -135,7 +135,9 @@ const config = {
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
-		EXPERIMENTAL_useProjectService: true,
+		EXPERIMENTAL_useProjectService: {
+			maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: Infinity,
+		},
 		// project: tsconfigGlobs,
 		// emitDecoratorMetadata: true,
 		// ecmaVersion: 2020,
