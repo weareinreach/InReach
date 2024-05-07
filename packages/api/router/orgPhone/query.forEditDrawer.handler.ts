@@ -1,4 +1,4 @@
-import parsePhoneNumber, { isSupportedCountry } from 'libphonenumber-js'
+import parsePhoneNumber, { type Extension, isSupportedCountry } from 'libphonenumber-js'
 
 import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
@@ -6,6 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForEditDrawerSchema } from './query.forEditDrawer.schema'
 
+const isExtension = (ext: string | null): ext is Extension => typeof ext === 'string' && ext.length > 0
 const getOrgId = async (phoneId: string) => {
 	const org = await prisma.organization.findFirstOrThrow({
 		where: {
@@ -48,7 +49,7 @@ const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>)
 		const parsedPhone = parsePhoneNumber(number, isSupportedCountry(country.cca2) ? country.cca2 : undefined)
 
 		if (typeof parsedPhone !== 'undefined') {
-			if (ext) {
+			if (isExtension(ext)) {
 				parsedPhone.setExt(ext)
 			}
 
