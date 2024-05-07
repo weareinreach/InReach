@@ -3,6 +3,12 @@ generator client {
   previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views", "driverAdapters", "nativeDistinct", "relationJoins"]
 }
 
+generator aws {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views", "driverAdapters", "nativeDistinct", "relationJoins"]
+  binaryTargets   = ["linux-arm64-openssl-3.0.x"]
+}
+
 // generator zod {
 //   provider               = "zod-prisma-types"
 //   output                 = "../zod-schemas"

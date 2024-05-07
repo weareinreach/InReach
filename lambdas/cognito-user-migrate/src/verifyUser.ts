@@ -12,7 +12,7 @@ export const verifyUser: VerifyUser = async (email, password) => {
 	try {
 		const userProfile = await prisma.user.findUniqueOrThrow({
 			where: {
-				email: email,
+				email,
 			},
 			select: {
 				id: true,
@@ -37,7 +37,7 @@ export const verifyUser: VerifyUser = async (email, password) => {
 		}
 		return { valid: false }
 	} catch (error) {
-		if (error instanceof Prisma.NotFoundError) {
+		if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
 			logger.error(`User not found: ${email}`)
 			throw new Error(`User not found: ${email}`)
 		}
