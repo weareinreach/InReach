@@ -4,18 +4,27 @@ Description: Cognito custom messaging.
 
 Globals:
   Function:
-    Runtime: nodejs18.x
-    CodeUri: ./dist/
+    Runtime: nodejs20.x
+    CodeUri: ./
     Timeout: 5
     Architectures:
-      - x86_64
+      - arm64
 
 Resources:
   cognitomessaging:
     Type: 'AWS::Serverless::Function'
+    DeletionPolicy: Retain
+    Metadata:
+      BuildMethod: makefile
     Properties:
-      Handler: index.handler
+      Handler: dist/index.handler
       FunctionName: 'cognito-messaging'
       MemorySize: 128
       Role: >-
         arn:aws:iam::142495371698:role/service-role/cognito-messaging-role-icuffany
+  MessageLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Retain
+    Properties:
+      LogGroupName: !Sub '/lambda/${cognitomessaging}'
+      RetentionInDays: 30

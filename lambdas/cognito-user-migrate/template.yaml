@@ -4,18 +4,18 @@ Description: Cognito user migration script.
 
 Globals:
   Function:
-    Runtime: nodejs18.x
-    CodeUri: ./dist/
+    Runtime: nodejs20.x
+    CodeUri: ./
     Timeout: 60
     MemorySize: 512
     Architectures:
-      - x86_64
+      - arm64
 
 Resources:
   usermigrate:
     Type: 'AWS::Serverless::Function'
-    # Metadata:
-    #   BuildMethod: makefile
+    Metadata:
+      BuildMethod: makefile
     Properties:
       FunctionName: 'cognito-user-migrate'
       Handler: dist/index.handler
@@ -24,13 +24,8 @@ Resources:
         Variables:
           DATABASE_URL: '{{resolve:ssm:/prod/inreach-prod}}'
           DB_DIRECT_URL: '{{resolve:ssm:/prod/inreach-prod}}'
-  # runtimeDepsLayer:
-  #   Type: AWS::Serverless::LayerVersion
-  #   Metadata:
-  #     BuildMethod: makefile
-  #   Properties:
-  #     LayerName: "usermigrate-dependencies"
-  #     ContentUri: ./
-  #     CompatibleRuntimes:
-  #       - nodejs18.x
-  #     RetentionPolicy: Retain
+  MessageLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/lambda/${usermigrate}'
+      RetentionInDays: 30
