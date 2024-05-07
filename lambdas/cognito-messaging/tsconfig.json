@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"baseUrl": "./src",
+		"baseUrl": "./",
 		"target": "es2020",
 		"strict": true,
 		"preserveConstEnums": true,

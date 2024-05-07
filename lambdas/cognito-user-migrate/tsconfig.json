@@ -1,10 +1,10 @@
 {
 	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
-		"baseUrl": "./src",
+		"baseUrl": "./",
 		"paths": {
 			"~/*": ["./*"],
-			"~db/*": ["../../db/*"]
+			"~db/*": ["../../packages/db/*"]
 		},
 		"target": "es2020",
 		"strict": true,
@@ -16,7 +16,7 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"isolatedModules": false
+		"isolatedModules": true
 	},
 	"exclude": ["dist", "node_modules"],
 	"include": ["./**/*.ts"]

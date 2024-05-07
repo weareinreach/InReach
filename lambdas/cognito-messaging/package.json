@@ -7,7 +7,7 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"build:aws": "pnpm clean:dist && pnpm bundle",
+		"build:aws": "sam build --build-in-source",
 		"bundle": "ncc build ./src/index.ts -s -a",
 		"clean:dist": "rm -fr dist && rm bundle.zip || true",
 		"clean:node": "rm -rf ./node_modules/ || true",
