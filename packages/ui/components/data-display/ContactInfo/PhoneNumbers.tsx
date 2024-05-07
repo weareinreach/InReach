@@ -6,7 +6,7 @@ import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { PhoneDrawer } from '~ui/components/data-portal/PhoneDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
+import { isExtension, parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
 import { nsFormatter } from '~ui/lib/nsFormatter'
@@ -52,7 +52,7 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 		if (!parsedPhone || (locationOnly && !showLocationOnly)) {
 			continue
 		}
-		if (ext) {
+		if (isExtension(ext)) {
 			parsedPhone.setExt(ext)
 		}
 		const dialURL = parsedPhone.getURI()
@@ -144,7 +144,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		if (!parsedPhone) {
 			return null
 		}
-		if (ext) {
+		if (isExtension(ext)) {
 			parsedPhone.setExt(ext)
 		}
 
