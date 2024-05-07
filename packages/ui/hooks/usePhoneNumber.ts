@@ -1,4 +1,9 @@
-import parsePhone, { type CountryCode, getCountries, isSupportedCountry } from 'libphonenumber-js'
+import parsePhone, {
+	type CountryCode,
+	type Extension,
+	getCountries,
+	isSupportedCountry,
+} from 'libphonenumber-js'
 
 /**
  * Type guard function checks if a given string is a supported country code and returns a boolean value. All
@@ -11,13 +16,16 @@ export const isCountryCode = (countryCode: string): countryCode is CountryCode =
 
 export const parsePhoneNumber = (phoneNumber: string, countryCode = 'US') => {
 	const country = countryCode.toUpperCase()
-	if (!isCountryCode(country))
+	if (!isCountryCode(country)) {
 		throw new Error('Invalid country', {
 			cause: { passed: countryCode, parsed: country, acceptableOptions: getCountries() },
 		})
+	}
 
 	return parsePhone(phoneNumber, country)
 }
 
 export const usePhoneNumber = (phoneNumber: string, countryCode = 'US') =>
 	parsePhoneNumber(phoneNumber, countryCode)
+
+export const isExtension = (ext: string | null): ext is Extension => typeof ext === 'string' && ext.length > 0
