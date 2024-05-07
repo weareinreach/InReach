@@ -63,10 +63,10 @@
 		"typesync": "0.12.1",
 		"yargs": "17.7.2"
 	},
-	"packageManager": "pnpm@9.0.6",
+	"packageManager": "pnpm@9.1.0",
 	"engines": {
-		"node": "20.12.2",
-		"pnpm": "9.0.6"
+		"node": "^20.12.2",
+		"pnpm": "^9.0.6"
 	},
 	"pnpm": {
 		"peerDependencyRules": {
