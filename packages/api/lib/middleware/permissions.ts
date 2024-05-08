@@ -97,7 +97,6 @@ export const isStaff = t.middleware(({ ctx, meta, next }) => {
 })
 
 export const hasPermissions = t.middleware(({ ctx, meta, next }) => {
-	console.log({ ctx, meta })
 	if (ctx.session === null) {
 		return reject()
 	}
