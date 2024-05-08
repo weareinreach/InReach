@@ -16,6 +16,7 @@ const useStyles = createStyles((theme) => ({
 		justifyContent: 'center',
 		textAlign: 'center',
 		position: 'absolute',
+		marginBottom: rem(40),
 		[theme.fn.largerThan('sm')]: {
 			marginTop: rem(-40),
 		},

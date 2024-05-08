@@ -16,15 +16,14 @@ import compare from 'just-compare'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next'
+import { i18n, Trans, useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
 import { type JSX, memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
-import { CountryAlertBanner } from '@weareinreach/ui/components/core/AlertBanner/CountryAlertBanner.stories'
-import { StateAlertBanner } from '@weareinreach/ui/components/core/AlertBanner/StateAlertBanner.stories'
+import { LocationBasedAlertBanner } from '@weareinreach/ui/components/core/LocationBasedAlertBanner'
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
@@ -63,6 +62,16 @@ const useStyles = createStyles((theme) => ({
 		[theme.fn.largerThan('sm')]: {
 			gap: rem(48),
 		},
+	},
+	alertContainer: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'flex-start',
 	},
 	banner: {
 		backgroundColor: theme.other.colors.secondary.cornflower,
@@ -154,6 +163,11 @@ const SearchResults = () => {
 		}
 	)
 
+	const { data: locationBasedAlertBannerProps } = api.component.LocationBasedAlertBanner.useQuery({
+		lat,
+		lon,
+	})
+
 	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({
 		cca2: country,
 	})
@@ -225,34 +239,37 @@ const SearchResults = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	const handleResetInitialValue = useCallback(() => {
-		searchStateActions.setSearchTerm('')
-	}, [searchStateActions])
-
 	if (error) {
 		return <>Error</>
 	}
 	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
+	// const alertProps = locationBasedAlertBannerProps ? locationBasedAlertBannerProps[0] : undefined
 
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-			{showCountryAlertMessage && (
-				<CountryAlertBanner
-					variant={variants.Text.utility1white}
-					variantInheritStyle={variants.Link.inheritStyle}
-				></CountryAlertBanner>
+
+			{showAlertMessage && locationBasedAlertBannerProps && (
+				<div className={classes.alertContainer}>
+					{locationBasedAlertBannerProps.map((alertProps) => (
+						<LocationBasedAlertBanner
+							key={alertProps?.id}
+							i18nKey={alertProps?.i18nKey}
+							ns={alertProps?.ns}
+							defaultText={alertProps?.defaultText}
+							level={alertProps?.level}
+						/>
+					))}
+				</div>
 			)}
 
 			<Grid.Col
 				xs={12}
 				sm={12}
 				pb={30}
-				{...(showCountryAlertMessage || showStateAlertMessage
-					? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } }
-					: {})}
+				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
 			>
 				<Group spacing={20} w='100%' className={classes.searchControls}>
 					<Group maw={{ md: '50%', base: '100%' }} w='100%'>
@@ -260,7 +277,6 @@ const SearchResults = () => {
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
-							resetInitialValue={handleResetInitialValue}
 						/>
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
@@ -298,14 +314,14 @@ const SearchResults = () => {
 						<NoResults crisisData={crisisResults} />
 					) : (
 						<>
-							<StateAlertBanner
+							<LocationBasedAlertBanner
 								stateInUS={stateInUS}
 								variantInheritStyle={variants.Link.inheritStyle}
 								variantBlack={variants.Text.utility1}
 								variantWhite={variants.Text.utility1white}
 								infoColor={theme.other.colors.secondary.cornflower}
 								warningColor={theme.fn.lighten(theme.other.colors.tertiary.pink, 0.3)}
-							></StateAlertBanner>
+							></LocationBasedAlertBanner>
 							{resultDisplay}
 							<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 						</>

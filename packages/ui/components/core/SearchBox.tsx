@@ -330,8 +330,7 @@ export const SearchBox = ({
 	const resetHandler = useCallback(() => {
 		form.reset()
 		form.values.search = ''
-		resetInitialValue?.()
-	}, [form, resetInitialValue])
+	}, [form])
 	const rightIcon = useMemo(() => {
 		if (isLoading || searchLoading) {
 			return (
