@@ -1,12 +1,12 @@
 import { Card, Divider, Group, List, Stack, Title, useMantineTheme } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
-import { Easing, getAll as getAllTweens, Tween } from '@tweenjs/tween.js'
+import { Easing, Tween } from '@tweenjs/tween.js'
 import compact from 'just-compact'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { formatAddress } from 'localized-address-format'
 import { useRouter } from 'next/router'
 import { type TFunction, useTranslation } from 'next-i18next'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import invariant from 'tiny-invariant'
 import { type SetNonNullable } from 'type-fest'
 
@@ -20,14 +20,6 @@ import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { type IconList } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-let runningAnimation: number
-const stopAnimations = (animationProcess: number) => {
-	cancelAnimationFrame(animationProcess)
-	const tweens = getAllTweens()
-	for (const instance of tweens) {
-		instance.stop()
-	}
-}
 const getAdminArea = (data: ApiOutput['location']['forLocationCard'] | undefined, t: TFunction) => {
 	if (data?.govDist?.abbrev) {
 		return data.govDist.abbrev
@@ -46,7 +38,7 @@ const hasCoords = (
 	!!data?.latitude && !!data?.longitude
 
 export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps) => {
-	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
+	const { map, mapIsReady, mapEvents, camera, tweenGroup } = useGoogleMaps()
 	const [initialPosition, setInitialPosition] = useState<google.maps.CameraOptions>()
 	const [canGetCenter, setCanGetCenter] = useState(map?.getCenter() !== undefined)
 
@@ -57,6 +49,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 	const { ref: addressRef, height: addressListHeight } = useElementSize()
 	const theme = useMantineTheme()
 	const mapMarker = useGoogleMapMarker()
+
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery(
 		{ slug: router.query.slug ?? '' },
 		{ enabled: router.isReady }
@@ -126,64 +119,100 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		}
 	}, [mapMarker, mapMarkerData])
 
-	useEffect(() => {
+	const stopAnimations = useCallback(() => {
+		const tweens = tweenGroup.getAll()
+		for (const instance of tweens) {
+			if (instance.isPlaying()) {
+				instance.stop()
+			}
+		}
+	}, [tweenGroup])
+	const createTweens = useCallback(() => {
 		try {
 			invariant(locationId)
 			invariant(map)
-			invariant(cardRef.current)
 			invariant(data?.latitude)
 			invariant(data?.longitude)
 			invariant(initialPosition)
 			const marker = mapMarker.get(locationId)
 			invariant(marker)
-			const card = cardRef.current
 			const locationCoords = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
 			const locationView: google.maps.CameraOptions = {
 				center: locationCoords.toJSON(),
 				zoom: 17,
 			}
-			const zoomIn = new Tween(camera)
+			const zoomIn = new Tween(camera, tweenGroup)
 				.to(locationView, 2000)
 				.easing(Easing.Quadratic.Out)
-				.onUpdate(() => {
-					map.moveCamera(camera)
+				.onUpdate((cameraOptions) => {
+					map.moveCamera(cameraOptions)
 				})
-			const zoomOut = new Tween(camera)
+				.dynamic(true)
+
+			const zoomOut = new Tween(camera, tweenGroup)
 				.to(initialPosition, 2000)
 				.easing(Easing.Quadratic.Out)
-				.onUpdate(() => {
-					map.moveCamera(camera)
+				.onUpdate((cameraOptions) => {
+					map.moveCamera(cameraOptions)
 				})
+				.dynamic(true)
 
-			const animateIn = async (time: number) => {
-				runningAnimation = requestAnimationFrame(animateIn)
-				setTimeout(() => zoomIn.update(time), 80)
+			const animateIn = () => {
+				if (zoomIn.isPlaying()) {
+					requestAnimationFrame(animateIn)
+					zoomIn.update()
+				}
 			}
-			const animateOut = async (time: number) => {
-				runningAnimation = requestAnimationFrame(animateOut)
-				setTimeout(() => zoomOut.update(time), 80)
+			const animateOut = () => {
+				if (zoomOut.isPlaying()) {
+					requestAnimationFrame(animateOut)
+					zoomOut.update()
+				}
 			}
 			const enterEvent = () => {
-				stopAnimations(runningAnimation)
+				stopAnimations()
 				zoomIn.start()
-				runningAnimation = requestAnimationFrame(animateIn)
+				requestAnimationFrame(animateIn)
 			}
 			const exitEvent = () => {
-				stopAnimations(runningAnimation)
+				stopAnimations()
 				zoomOut.start()
-				runningAnimation = requestAnimationFrame(animateOut)
+				requestAnimationFrame(animateOut)
 			}
-			card.addEventListener('mouseenter', enterEvent)
-			card.addEventListener('mouseleave', exitEvent)
+			return { enter: enterEvent, exit: exitEvent }
+		} catch {
+			return null
+		}
+	}, [
+		camera,
+		data?.latitude,
+		data?.longitude,
+		initialPosition,
+		locationId,
+		map,
+		mapMarker,
+		tweenGroup,
+		stopAnimations,
+	])
+
+	useEffect(() => {
+		try {
+			const card = cardRef.current
+			const tweenEvents = createTweens()
+			invariant(card)
+			invariant(tweenEvents)
+			const { enter, exit } = tweenEvents
+			card.addEventListener('mouseenter', enter)
+			card.addEventListener('mouseleave', exit)
 
 			return () => {
-				card.removeEventListener('mouseenter', enterEvent)
-				card.removeEventListener('mouseleave', exitEvent)
+				card.removeEventListener('mouseenter', enter)
+				card.removeEventListener('mouseleave', exit)
 			}
 		} catch {
-			return void 0
+			return () => void 0
 		}
-	}, [data, mapIsReady, map, mapMarker, initialPosition, camera, locationId])
+	}, [cardRef, createTweens])
 
 	const remoteReady = remoteOnly && remoteServices?.length && !remoteIsLoading
 
