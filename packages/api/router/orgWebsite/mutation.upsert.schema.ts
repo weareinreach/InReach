@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { prefixedId } from '~api/schemas/idPrefix'
+import { emptyStringToNull, prefixedId } from '~api/schemas/idPrefix'
 
 const base = z
 	.object({
@@ -11,7 +11,7 @@ const base = z
 		published: z.boolean(),
 		deleted: z.boolean(),
 		organizationId: prefixedId('organization'),
-		orgLocationId: prefixedId('orgLocation').nullable(),
+		orgLocationId: z.preprocess(emptyStringToNull, prefixedId('orgLocation').nullable()),
 		orgLocationOnly: z.boolean(),
 	})
 	.partial()
