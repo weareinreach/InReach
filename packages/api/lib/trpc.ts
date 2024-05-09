@@ -55,7 +55,7 @@ export const importHandler = async <
 	name: string,
 	importer: () => Promise<T>
 ) => {
-	const nameInCache = name as keyof typeof HANDLER_CACHE
+	const nameInCache = name satisfies keyof typeof HANDLER_CACHE
 
 	if (!HANDLER_CACHE[nameInCache]) {
 		const importedModule = await importer()

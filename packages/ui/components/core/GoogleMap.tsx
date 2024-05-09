@@ -3,6 +3,7 @@ import { Status, Wrapper } from '@googlemaps/react-wrapper'
 import { rem, Skeleton } from '@mantine/core'
 import { memo, useCallback, useEffect, useRef } from 'react'
 
+import { useEditMode } from '~ui/hooks/useEditMode'
 import { useGoogleMaps, useGoogleMapSetup } from '~ui/hooks/useGoogleMaps'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -31,9 +32,10 @@ const MapRenderer = memo(({ height, width }: MapRendererProps) => {
 
 MapRenderer.displayName = 'GoogleMapRenderer'
 export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
+	const { isEditMode } = useEditMode()
 	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
 	const { data, isLoading } = api.location.forGoogleMaps.useQuery(
-		{ locationIds: Array.isArray(locationIds) ? locationIds : [locationIds] },
+		{ locationIds: Array.isArray(locationIds) ? locationIds : [locationIds], isEditMode },
 		{ enabled: mapIsReady }
 	)
 

@@ -1,3 +1,4 @@
+import { Group as TweenGroup } from '@tweenjs/tween.js'
 import { useEventEmitter, useMap } from 'ahooks'
 import { type EventEmitter } from 'ahooks/lib/useEventEmitter'
 import { createContext, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
@@ -27,7 +28,7 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 	}, [map])
 
 	const cameraRef = useRef<google.maps.CameraOptions>(initialCamera)
-
+	const tweenGroup = useMemo(() => new TweenGroup(), [])
 	mapEventRef.current.ready.useSubscription((val) => {
 		setIsReady(val)
 	})
@@ -58,9 +59,9 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 
 	const mapIsReady = typeof map !== 'undefined' && typeof infoWindow !== 'undefined'
 
-	const contextValue: ContextValue<typeof mapIsReady> = useMemo(
+	const contextValue: ContextValue<boolean> = useMemo(
 		() =>
-			mapIsReady
+			mapIsReady && isReady
 				? {
 						map,
 						infoWindow,
@@ -69,7 +70,8 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 						mapEvents,
 						marker,
 						markers,
-						isReady: true,
+						isReady,
+						tweenGroup,
 						camera: cameraRef.current,
 					}
 				: {
@@ -78,13 +80,13 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 						mapEvents,
 						marker,
 						markers,
+						tweenGroup,
+						isReady: false,
 						map: undefined,
 						infoWindow: undefined,
-						isReady: false,
 						camera: cameraRef.current,
 					},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isReady]
+		[infoWindow, map, mapEvents, mapIsReady, marker, markers, isReady, tweenGroup]
 	)
 	return <GoogleMapContext.Provider value={contextValue}>{children}</GoogleMapContext.Provider>
 }
@@ -108,6 +110,7 @@ interface GoogleMapContextBase {
 	camera: google.maps.CameraOptions
 	marker: MarkerState
 	markers: Map<string, google.maps.marker.AdvancedMarkerElement>
+	tweenGroup: TweenGroup
 }
 
 interface GoogleMapReadyContext extends GoogleMapContextBase {

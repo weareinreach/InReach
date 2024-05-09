@@ -22,8 +22,8 @@ export type CreateContextOptions = {
 
 export const createContextInner = (opts: CreateContextOptions) => {
 	return {
-		session: opts.session,
 		generateId,
+		session: opts.session,
 		skipCache: false,
 		req: opts.req,
 		res: opts.res,
