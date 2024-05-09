@@ -88,7 +88,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			resolver: zodResolver(FormSchema),
 			values: initialData ?? undefined,
 			defaultValues: {
-				id: '',
+				id: phoneId,
 				number: '',
 				countryId: '',
 				description: '',
@@ -99,7 +99,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
-		const siteUpdate = api.orgPhone.update.useMutation({
+		const siteUpdate = api.orgPhone.upsert.useMutation({
 			onSettled: (data) => {
 				apiUtils.orgPhone.invalidate()
 				reset(data)
@@ -107,6 +107,8 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			onSuccess: () => {
 				setIsSaved(true)
 				apiUtils.orgPhone.invalidate()
+				modalHandler.close()
+				drawerHandler.close()
 			},
 		})
 		// const isSaved = /*siteUpdate.isSuccess &&*/ !formState.isDirty
@@ -154,19 +156,21 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			})
 		}, [hasLocationId, phoneId, unlinkFromLocation])
 
-		const handleSaveButton = useCallback(() => {
-			handleSubmit(
-				(data) => {
-					siteUpdate.mutate({ orgId: orgId ?? '', ...data })
-				},
-				(error) => console.error(error)
-			)
-		}, [handleSubmit, orgId, siteUpdate])
+		const handleSaveButton = useCallback(
+			() =>
+				handleSubmit(
+					(data) => {
+						siteUpdate.mutate({ orgId: orgId ?? '', operation: createNew ? 'create' : 'update', ...data })
+					},
+					(error) => console.error(error)
+				),
+			[createNew, handleSubmit, orgId, siteUpdate]
+		)
 
 		const handleModalSave = useCallback(() => {
 			const valuesToSubmit = getValues()
 			siteUpdate.mutate(
-				{ ...valuesToSubmit, orgId: orgId ?? '' },
+				{ ...valuesToSubmit, orgId: orgId ?? '', operation: createNew ? 'create' : 'update' },
 				{
 					onSuccess: () => {
 						modalHandler.close()
@@ -174,7 +178,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 					},
 				}
 			)
-		}, [drawerHandler, getValues, modalHandler, orgId, siteUpdate])
+		}, [createNew, drawerHandler, getValues, modalHandler, orgId, siteUpdate])
 		const handleCloseNoSave = useCallback(() => {
 			reset()
 			modalHandler.close()
@@ -186,7 +190,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
-						<form onSubmit={handleSaveButton}>
+						<form onSubmit={handleSaveButton()}>
 							<Drawer.Header>
 								<Group noWrap position='apart' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />

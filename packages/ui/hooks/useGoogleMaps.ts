@@ -1,3 +1,4 @@
+import { type Group as TweenGroup } from '@tweenjs/tween.js'
 import { useContext } from 'react'
 
 import { GoogleMapContext, type MapEvents, type MarkerState } from '~ui/providers/GoogleMaps'
@@ -15,6 +16,7 @@ export const useGoogleMaps = (): UseGoogleMapsReturn => {
 			mapEvents: context.mapEvents,
 			camera: context.camera,
 			marker: context.marker,
+			tweenGroup: context.tweenGroup,
 		}
 	} else {
 		return {
@@ -24,6 +26,7 @@ export const useGoogleMaps = (): UseGoogleMapsReturn => {
 			mapEvents: context.mapEvents,
 			camera: context.camera,
 			marker: context.marker,
+			tweenGroup: context.tweenGroup,
 		}
 	}
 }
@@ -49,6 +52,7 @@ interface MapNotReady {
 	mapEvents: MapEvents
 	camera: google.maps.CameraOptions
 	marker: MarkerState
+	tweenGroup: TweenGroup
 }
 interface MapIsReady {
 	map: google.maps.Map
@@ -57,5 +61,6 @@ interface MapIsReady {
 	mapEvents: MapEvents
 	camera: google.maps.CameraOptions
 	marker: MarkerState
+	tweenGroup: TweenGroup
 }
 type UseGoogleMapsReturn = MapNotReady | MapIsReady
