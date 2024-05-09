@@ -2,6 +2,7 @@ import { TRPCError } from '@trpc/server'
 import { getBounds, getCenterOfBounds } from 'geolib'
 
 import { prisma } from '@weareinreach/db'
+import { handleError } from '~api/lib'
 import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -21,45 +22,51 @@ const getCenter = (coords: { latitude: number; longitude: number }[]): google.ma
 	return { lat: center.latitude, lng: center.longitude }
 }
 
-const forGoogleMaps = async ({ input }: TRPCHandlerParams<TForGoogleMapsSchema>) => {
-	const result = await prisma.orgLocation.findMany({
-		where: {
-			...globalWhere.isPublic(),
-			id: { in: Array.isArray(input.locationIds) ? input.locationIds : [input.locationIds] },
-			AND: [{ latitude: { not: 0 } }, { longitude: { not: 0 } }],
-		},
-		select: {
-			id: true,
-			name: true,
-			latitude: true,
-			longitude: true,
-		},
-	})
-	if (!result.length) {
-		throw new TRPCError({ code: 'NOT_FOUND' })
-	}
-	const coordsForBounds: { latitude: number; longitude: number }[] = []
-
-	for (const { latitude, longitude } of result) {
-		if (latitude && longitude) {
-			coordsForBounds.push({ latitude, longitude })
+const forGoogleMaps = async ({ input, ctx }: TRPCHandlerParams<TForGoogleMapsSchema>) => {
+	try {
+		const { locationIds, isEditMode } = input
+		const canSeeAll = isEditMode && !!ctx.session?.user?.permissions
+		const result = await prisma.orgLocation.findMany({
+			where: {
+				...(!canSeeAll && globalWhere.isPublic()),
+				id: { in: locationIds },
+				AND: [{ latitude: { not: 0 } }, { longitude: { not: 0 } }],
+			},
+			select: {
+				id: true,
+				name: true,
+				latitude: true,
+				longitude: true,
+			},
+		})
+		if (!result.length) {
+			throw new TRPCError({ code: 'NOT_FOUND' })
 		}
-	}
-	const bounds = result.length > 1 ? getBoundary(coordsForBounds) : null
-	const singleLat = result.at(0)?.latitude
-	const singleLon = result.at(0)?.longitude
+		const coordsForBounds: { latitude: number; longitude: number }[] = []
 
-	const center =
-		result.length === 1 && singleLat && singleLon
-			? ({ lat: singleLat, lng: singleLon } satisfies google.maps.LatLngLiteral)
-			: getCenter(coordsForBounds)
-	const zoom = result.length === 1 ? 17 : null
+		for (const { latitude, longitude } of result) {
+			if (latitude && longitude) {
+				coordsForBounds.push({ latitude, longitude })
+			}
+		}
+		const bounds = result.length > 1 ? getBoundary(coordsForBounds) : null
+		const singleLat = result.at(0)?.latitude
+		const singleLon = result.at(0)?.longitude
 
-	return {
-		locations: result,
-		bounds,
-		center,
-		zoom,
+		const center =
+			result.length === 1 && singleLat && singleLon
+				? ({ lat: singleLat, lng: singleLon } satisfies google.maps.LatLngLiteral)
+				: getCenter(coordsForBounds)
+		const zoom = result.length === 1 ? 17 : null
+
+		return {
+			locations: result,
+			bounds,
+			center,
+			zoom,
+		}
+	} catch (e) {
+		return handleError(e)
 	}
 }
 export default forGoogleMaps

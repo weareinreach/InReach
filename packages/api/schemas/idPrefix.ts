@@ -8,4 +8,5 @@ export const prefixedId = (model: IdPrefix | IdPrefix[]) => {
 		: new RegExp(`^${idPrefix[model]}_\\w+$`)
 	return z.string().regex(regEx)
 }
+export const emptyStringToNull = <T>(s: T) => (s === '' ? null : s)
 export { idPrefix, type IdPrefix }

@@ -123,10 +123,17 @@ export const diffConnectionsMtoN = <T extends Record<string, any>>(
 		deleteMany: deletions.length ? deletions : undefined,
 	}
 }
-export const connectOneRequired = <T extends Record<string, any>>(data: T) => {
+export const connectOneRequired = <T extends Record<string, any> | string, K extends string = 'id'>(
+	data: T,
+	key: K = 'id' as K
+) => {
 	invariant(data)
+
+	if (isString(data)) {
+		return { connect: { [key]: data } as T extends string ? { [Key in K]: T } : T }
+	}
 	return {
-		connect: data,
+		connect: data as T extends string ? { [Key in K]: T } : T,
 	}
 }
 
