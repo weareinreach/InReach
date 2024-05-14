@@ -63,16 +63,6 @@ const useStyles = createStyles((theme) => ({
 			gap: rem(48),
 		},
 	},
-	alertContainer: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		right: 0,
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'flex-start',
-	},
 	banner: {
 		backgroundColor: theme.other.colors.secondary.cornflower,
 		...theme.other.utilityFonts.utility1,
@@ -163,11 +153,6 @@ const SearchResults = () => {
 		}
 	)
 
-	const { data: locationBasedAlertBannerProps } = api.component.LocationBasedAlertBanner.useQuery({
-		lat,
-		lon,
-	})
-
 	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({
 		cca2: country,
 	})
@@ -243,7 +228,6 @@ const SearchResults = () => {
 		return <>Error</>
 	}
 	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
-	// const alertProps = locationBasedAlertBannerProps ? locationBasedAlertBannerProps[0] : undefined
 
 	return (
 		<>
@@ -251,19 +235,7 @@ const SearchResults = () => {
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
 
-			{showAlertMessage && locationBasedAlertBannerProps && (
-				<div className={classes.alertContainer}>
-					{locationBasedAlertBannerProps.map((alertProps) => (
-						<LocationBasedAlertBanner
-							key={alertProps?.id}
-							i18nKey={alertProps?.i18nKey}
-							ns={alertProps?.ns}
-							defaultText={alertProps?.defaultText}
-							level={alertProps?.level}
-						/>
-					))}
-				</div>
-			)}
+			<LocationBasedAlertBanner lat={lat} lon={lon} />
 
 			<Grid.Col
 				xs={12}
@@ -314,14 +286,7 @@ const SearchResults = () => {
 						<NoResults crisisData={crisisResults} />
 					) : (
 						<>
-							<LocationBasedAlertBanner
-								stateInUS={stateInUS}
-								variantInheritStyle={variants.Link.inheritStyle}
-								variantBlack={variants.Text.utility1}
-								variantWhite={variants.Text.utility1white}
-								infoColor={theme.other.colors.secondary.cornflower}
-								warningColor={theme.fn.lighten(theme.other.colors.tertiary.pink, 0.3)}
-							></LocationBasedAlertBanner>
+							<LocationBasedAlertBanner lat={lat} lon={lon}></LocationBasedAlertBanner>
 							{resultDisplay}
 							<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 						</>
