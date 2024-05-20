@@ -235,7 +235,7 @@ const SearchResults = () => {
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
 
-			<LocationBasedAlertBanner lat={lat} lon={lon} />
+			<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
 
 			<Grid.Col
 				xs={12}
@@ -286,7 +286,7 @@ const SearchResults = () => {
 						<NoResults crisisData={crisisResults} />
 					) : (
 						<>
-							<LocationBasedAlertBanner lat={lat} lon={lon}></LocationBasedAlertBanner>
+							<LocationBasedAlertBanner lat={lat} lon={lon} type='secondary' />
 							{resultDisplay}
 							<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 						</>

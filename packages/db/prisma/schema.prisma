@@ -1424,9 +1424,12 @@ model LocationAlert {
 }
 
 enum LocationAlertLevel {
-  INFO
-  WARN
-  CRITICAL
+  INFO_PRIMARY
+  WARN_PRIMARY
+  CRITICAL_PRIMARY
+  INFO_SECONDARY
+  WARN_SECONDARY
+  CRITICAL_SECONDARY
 }
 
 /// Languages - ETF BCP 47 language tag
