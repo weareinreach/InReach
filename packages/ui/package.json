@@ -136,7 +136,7 @@
 		"embla-carousel-react": "7.1.0",
 		"eslint": "8.57.0",
 		"i18next": "23.11.4",
-		"i18next-browser-languagedetector": "7.2.1",
+		"i18next-browser-languagedetector": "8.0.0",
 		"i18next-hmr": "3.1.2",
 		"i18next-http-backend": "2.5.2",
 		"i18next-intervalplural-postprocessor": "3.0.0",
