@@ -32,7 +32,7 @@ jobs:
       HUSKY: 0
     steps:
       - name: Checkout
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Import GPG key
         id: import_gpg
@@ -97,7 +97,7 @@ jobs:
 
       - name: Check for updated files
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
-        uses: tj-actions/verify-changed-files@ab875806658e59162bc5f42e4df5c2d4682c459e # v20
+        uses: tj-actions/verify-changed-files@6ed7632824d235029086612d4330d659005af687 # v20
         id: verify-changed-files
         with:
           files: '**/locales/*/*.json'
@@ -114,7 +114,7 @@ jobs:
 
       - name: Get files to commit
         if: steps.run-prettier.conclusion == 'success'
-        uses: tj-actions/verify-changed-files@ab875806658e59162bc5f42e4df5c2d4682c459e # v20
+        uses: tj-actions/verify-changed-files@6ed7632824d235029086612d4330d659005af687 # v20
         id: get-pending-files
         with:
           separator: <br>
