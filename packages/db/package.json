@@ -86,7 +86,7 @@
 		"flat": "6.0.1",
 		"google-auth-library": "9.10.0",
 		"google-spreadsheet": "4.1.2",
-		"googleapis": "134.0.0",
+		"googleapis": "137.1.0",
 		"inquirer": "9.2.22",
 		"inquirer-autocomplete-prompt": "3.0.1",
 		"just-compact": "3.2.0",
