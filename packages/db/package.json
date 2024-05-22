@@ -65,7 +65,7 @@
 	"devDependencies": {
 		"@octokit/core": "5.2.0",
 		"@snaplet/copycat": "5.0.0",
-		"@snaplet/seed": "0.97.18",
+		"@snaplet/seed": "0.97.19",
 		"@terraformer/wkt": "2.2.1",
 		"@turbo/gen": "1.13.3",
 		"@turf/helpers": "7.0.0-alpha.116",
