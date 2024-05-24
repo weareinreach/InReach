@@ -7,3 +7,5 @@ region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
+[default.build.parameters]
+build_in_source = true
