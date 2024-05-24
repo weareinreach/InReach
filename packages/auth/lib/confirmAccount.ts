@@ -9,3 +9,5 @@ export const confirmAccount = async (email: string, code: string) => {
 	})
 	return response
 }
+
+export { ExpiredCodeException, CodeMismatchException } from '@aws-sdk/client-cognito-identity-provider'

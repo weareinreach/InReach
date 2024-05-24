@@ -12,7 +12,7 @@ import { z } from 'zod'
 import { createHmac } from 'crypto'
 
 import { prisma } from '@weareinreach/db'
-import { getEnv } from '@weareinreach/env'
+import { getEnv, isLocalDev } from '@weareinreach/env'
 import { createLoggerInstance } from '@weareinreach/util/logger'
 
 import { decodeCognitoIdJwt } from './cognitoJwt'
@@ -33,6 +33,8 @@ export const cognito = new CognitoIdentityProvider({
 		secretAccessKey: getEnv('COGNITO_SECRET'),
 	},
 	logger,
+	// eslint-disable-next-line node/no-process-env
+	...(isLocalDev && { endpoint: process.env.COGNITO_LOCAL_ENDPOINT }),
 })
 export const ClientId = getEnv('COGNITO_CLIENT_ID')
 
