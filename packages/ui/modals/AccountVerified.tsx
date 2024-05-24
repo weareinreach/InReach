@@ -12,7 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { forwardRef, useEffect, useMemo, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
@@ -44,10 +44,27 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 		const variants = useCustomVariant()
 		const [success, setSuccess] = useState(false)
 		const [error, setError] = useState(false)
+		const [codeSent, setCodeSent] = useState(false)
 		const verifyAccount = api.user.confirmAccount.useMutation({
 			onSuccess: () => setSuccess(true),
 			onError: () => setError(true),
 		})
+		const resendCode = api.user.resendCode.useMutation({
+			onSuccess: () => setCodeSent(true),
+		})
+
+		const handleResendCode = useCallback((data: string) => () => resendCode.mutate({ data }), [resendCode])
+
+		const hasError = useMemo(() => {
+			if (!verifyAccount.isError) {
+				return false
+			}
+			if (verifyAccount.error.data?.cause instanceof Error && verifyAccount.error.data?.cause?.name) {
+				return verifyAccount.error.data.cause.name
+			}
+			return 'UnknownError'
+		}, [verifyAccount.error?.data?.cause, verifyAccount.isError])
+
 		// const DataSchema = z.string().default('')
 		const [opened, handler] = useDisclosure(autoOpen)
 		const { isMobile } = useScreenSize()
@@ -137,19 +154,52 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 			),
 			[t, variants, handler]
 		)
-		const bodyError = useMemo(
-			() => (
+
+		const errorI18nKey = useMemo(() => {
+			switch (hasError) {
+				case 'NotAuthorizedException':
+				case 'CodeMismatchException': {
+					return 'errors.code-mismatch'
+				}
+				case 'ExpiredCodeException': {
+					return 'errors.code-expired'
+				}
+				default: {
+					return 'errors.try-again-text'
+				}
+			}
+		}, [hasError])
+
+		const bodyError = useMemo(() => {
+			return (
 				<Stack align='center' spacing={24}>
 					<Stack spacing={0} align='center'>
 						<Title order={1}>🫣</Title>
 						<Title order={2}>{t('errors.oh-no')}</Title>
 					</Stack>
 					<Trans
-						i18nKey='errors.try-again-text'
+						i18nKey={errorI18nKey}
 						components={{
 							Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
 						}}
 					/>
+					{errorI18nKey !== 'errors.try-again-text' && parsedData.data && (
+						<Button variant={variants.Button.primarySm} onClick={handleResendCode(parsedData.data.data)}>
+							{t('errors.resend-code')}
+						</Button>
+					)}
+				</Stack>
+			)
+		}, [errorI18nKey, t, variants, handleResendCode, parsedData.data])
+
+		const bodyCodeResent = useMemo(
+			() => (
+				<Stack align='center' spacing={24}>
+					<Stack spacing={0} align='center'>
+						<Title order={1}>📬</Title>
+						<Title order={2}>{t('confirm-account.code-requested')}</Title>
+					</Stack>
+					<Text variant={variants.Text.utility1darkGray}>{t('confirm-account.code-resent')}</Text>
 				</Stack>
 			),
 			[t, variants]
@@ -159,11 +209,14 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 			if (success) {
 				return bodySuccess
 			}
+			if (codeSent) {
+				return bodyCodeResent
+			}
 			if (error) {
 				return bodyError
 			}
 			return bodyWorking
-		}, [bodyError, bodySuccess, bodyWorking, error, success])
+		}, [bodyCodeResent, bodyError, bodySuccess, bodyWorking, codeSent, error, success])
 
 		return (
 			<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
