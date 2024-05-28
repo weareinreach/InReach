@@ -56,6 +56,7 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 				id,
 				deleted,
 				published,
+				organization: { connect: { id: orgId } },
 				...(input.services?.createdVals && {
 					services: {
 						createMany: {
