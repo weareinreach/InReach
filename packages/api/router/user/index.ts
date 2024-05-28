@@ -101,4 +101,11 @@ export const userRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	resendCode: publicProcedure.input(schema.ZResendCodeSchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('resendCode'),
+			() => import('./mutation.resendCode.handler')
+		)
+		return handler(opts)
+	}),
 })

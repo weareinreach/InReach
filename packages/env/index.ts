@@ -90,5 +90,6 @@ export const env = createEnv({
 
 export const getEnv = <T extends keyof typeof env>(envVar: T): (typeof env)[T] => env[envVar]
 
-export const isDev = process.env.NODE_ENV === 'development'
-export const isVercelProd = process.env.VERCEL_ENV === 'production'
+export * from './checks'
+// export const isDev = process.env.NODE_ENV === 'development'
+// export const isVercelProd = process.env.VERCEL_ENV === 'production'
