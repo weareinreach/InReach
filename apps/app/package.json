@@ -62,7 +62,7 @@
 		"@trpc/server": "10.45.2",
 		"@vercel/analytics": "1.2.2",
 		"@vercel/edge-config": "1.1.1",
-		"@vercel/kv": "1.0.1",
+		"@vercel/kv": "2.0.0",
 		"@vercel/speed-insights": "1.0.10",
 		"@weareinreach/analytics": "workspace:*",
 		"@weareinreach/api": "workspace:*",
