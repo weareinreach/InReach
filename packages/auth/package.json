@@ -31,6 +31,9 @@
 			"default": "./next-auth/types.ts",
 			"types": "./next-auth/types.ts"
 		},
+		"./resendCode": {
+			"default": "./lib/resendCode.ts"
+		},
 		"./resetPassword": {
 			"default": "./lib/resetPassword.ts"
 		},

@@ -1,4 +1,4 @@
-import { resendVerificationCode } from '@weareinreach/auth/lib/resendCode'
+import { resendVerificationCode } from '@weareinreach/auth/resendCode'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
