@@ -47,7 +47,7 @@
 		"@opentelemetry/semantic-conventions": "1.24.1",
 		"@prisma/client": "5.14.0",
 		"@prisma/instrumentation": "5.14.0",
-		"@vercel/kv": "1.0.1",
+		"@vercel/kv": "2.0.0",
 		"@vercel/postgres-kysely": "0.8.0",
 		"@weareinreach/crowdin": "workspace:*",
 		"@weareinreach/env": "workspace:*",
