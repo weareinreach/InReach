@@ -23,6 +23,7 @@ export default {
 			fieldOpt.govDists,
 			serviceArea.getServiceArea,
 			serviceArea.update,
+			serviceArea.addToArea,
 		],
 		rqDevtools: true,
 		whyDidYouRender: { collapseGroups: true },

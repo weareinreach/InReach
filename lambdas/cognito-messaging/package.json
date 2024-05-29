@@ -7,7 +7,7 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"build:aws": "pnpm clean:dist && pnpm bundle",
+		"build:aws": "sam build --build-in-source",
 		"bundle": "ncc build ./src/index.ts -s -a",
 		"clean:dist": "rm -fr dist && rm bundle.zip || true",
 		"clean:node": "rm -rf ./node_modules/ || true",
@@ -23,15 +23,15 @@
 		"@aws-lambda-powertools/logger": "1.18.1"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.136",
-		"@types/eslint": "8.56.6",
-		"@types/node": "20.11.30",
+		"@types/aws-lambda": "8.10.138",
+		"@types/eslint": "8.56.10",
+		"@types/node": "20.12.12",
 		"@vercel/ncc": "0.38.1",
 		"@weareinreach/config": "workspace:*",
-		"@weareinreach/eslint-config": "0.100.0",
+		"@weareinreach/eslint-config": "workspace:*",
 		"aws-lambda": "1.0.7",
 		"eslint": "8.57.0",
 		"prettier": "3.2.5",
-		"typescript": "5.4.3"
+		"typescript": "5.4.5"
 	}
 }

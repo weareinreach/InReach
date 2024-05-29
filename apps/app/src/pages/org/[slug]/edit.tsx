@@ -1,12 +1,11 @@
-import { DevTool } from '@hookform/devtools'
 import { Grid, Stack } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { t } from 'i18next'
 import compact from 'just-compact'
-import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from 'next'
+import { type InferGetServerSidePropsType } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { type RoutedQuery } from 'nextjs-routes'
+import { type GetServerSideProps } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -74,14 +73,18 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
 			enabled: !!data?.id && data?.locations?.length > 1,
-			select: (data) => data.length !== 0,
+			select: (result) => result.length !== 0,
 		}
 	)
 	const { ref, width } = useElementSize()
 	useEffect(() => {
-		if (data && status === 'success') setLoading(false)
+		if (data && status === 'success') {
+			setLoading(false)
+		}
 	}, [data, status])
-	if (loading || !data) return <OrgPageLoading />
+	if (loading || !data) {
+		return <OrgPageLoading />
+	}
 
 	const { attributes, description, slug, locations, isClaimed } = data
 
@@ -95,10 +98,10 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 					<Stack pt={24} align='flex-start' spacing={40}>
 						<ListingBasicInfo
 							data={{
-								name: data.name,
 								id: data.id,
-								slug,
+								name: data.name,
 								lastVerified: data.lastVerified,
+								slug,
 								attributes,
 								description,
 								locations,
@@ -127,20 +130,21 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 							)}
 						</Stack>
 					</Stack>
-					<DevTool control={formMethods.control} placement='bottom-right' id='page' />
 				</Grid.Col>
 			</FormProvider>
 		</>
 	)
 }
 
-export const getServerSideProps = async ({
+export const getServerSideProps: GetServerSideProps<{ organizationId: string }, '/org/[slug]'> = async ({
 	locale,
 	params,
 	req,
 	res,
-}: GetServerSidePropsContext<RoutedQuery<'/org/[slug]'>>) => {
-	if (!params) return { notFound: true }
+}) => {
+	if (!params) {
+		return { notFound: true }
+	}
 	const { slug } = params
 
 	const session = await checkServerPermissions({

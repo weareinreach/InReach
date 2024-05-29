@@ -111,7 +111,7 @@ const LcrQuestion3 = (
 		i18nKey='sign-up.lcr-screen3'
 		components={{
 			Link: (
-				<a href='https://inreach.org/become-a-local-community-reviewer/' target='_blank'>
+				<a href='https://inreach.org/become-a-local-community-reviewer/' target='_blank' rel='noreferrer'>
 					.
 				</a>
 			),
@@ -279,7 +279,7 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 			i18nKey={error === '1' ? 'sign-up.lcr-error1' : 'sign-up.lcr-error2'}
 			components={{
 				Link: (
-					<a href='https://inreach.org/become-a-local-community-reviewer/' target='_blank'>
+					<a href='https://inreach.org/become-a-local-community-reviewer/' target='_blank' rel='noreferrer'>
 						.
 					</a>
 				),
@@ -467,8 +467,8 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 		const router = useRouter()
 		const loginErrors = new Map([[401, t('login.error-username-password')]])
 		const LoginSchema = z.object({
-			email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
-			password: z.string().min(1, t('form-error-password-blank') as string),
+			email: z.string().email({ message: t('form-error-enter-valid-email') }),
+			password: z.string().min(1, t('form-error-password-blank')),
 		})
 		const form = useForm<LoginFormProps>({
 			validate: zodResolver(LoginSchema),
@@ -503,13 +503,13 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 				{hideTitle ? null : <Title order={2}>{t('log-in')}</Title>}
 				<TextInput
 					label={t('words.email')}
-					placeholder={t('enter-email-placeholder') as string}
+					placeholder={t('enter-email-placeholder')}
 					required
 					{...form.getInputProps('email')}
 				/>
 				<PasswordInput
 					label={t('words.password')}
-					placeholder={t('enter-password-placeholder') as string}
+					placeholder={t('enter-password-placeholder')}
 					required
 					{...form.getInputProps('password')}
 				/>

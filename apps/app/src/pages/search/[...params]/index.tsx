@@ -18,7 +18,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
-import { type JSX, memo, useEffect, useMemo, useState } from 'react'
+import { type JSX, memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
@@ -34,10 +34,7 @@ import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 import { Link } from '~ui/components/core/Link'
-// import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
-// import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
@@ -88,6 +85,24 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
+const NoResults = memo(
+	({ crisisData }: { crisisData: NonNullable<ApiOutput['organization']['getNatlCrisis']> }) => {
+		const { classes } = useStyles()
+		const { t } = useTranslation('common')
+		return (
+			<Stack className={classes.noResultsStack}>
+				<Text>{t('common:search.no-results-adjust')}</Text>
+				<CrisisSupport role='national'>
+					{crisisData.map((result) => (
+						<CrisisSupport.National data={result} key={result.id} />
+					))}
+				</CrisisSupport>
+			</Stack>
+		)
+	}
+)
+NoResults.displayName = 'NoResults'
+
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
 	const { searchState, searchStateActions } = useSearchState()
@@ -106,11 +121,13 @@ const SearchResults = () => {
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
 	const [resultCount, setResultCount] = useState(0)
 	const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
-		Array.from({ length: 10 }, (x, i) => <SearchResultCard key={i} loading />)
+		Array.from({ length: 10 }, (_x, i) => <SearchResultCard key={i} loading />)
 	)
 	const [loadingPage, setLoadingPage] = useState(false)
 
-	if (!queryParams.success) setError(true)
+	if (!queryParams.success) {
+		setError(true)
+	}
 	const [country, lon, lat, dist, unit] = queryParams.success
 		? queryParams.data
 		: (['US', 0, 0, 0, 'mi'] as const)
@@ -139,20 +156,6 @@ const SearchResults = () => {
 		cca2: country,
 	})
 
-	const NoResults = memo(({ data }: { data: NonNullable<ApiOutput['organization']['getNatlCrisis']> }) => {
-		return (
-			<Stack className={classes.noResultsStack}>
-				<Text>{t('common:search.no-results-adjust')}</Text>
-				<CrisisSupport role='national'>
-					{data.map((result) => (
-						<CrisisSupport.National data={result} key={result.id} />
-					))}
-				</CrisisSupport>
-			</Stack>
-		)
-	})
-	NoResults.displayName = 'NoResults'
-
 	useEffect(() => {
 		if (loadingPage !== searchIsLoading) {
 			setLoadingPage(searchIsLoading)
@@ -176,8 +179,9 @@ const SearchResults = () => {
 
 	useEffect(
 		() => {
-			if (typeof router.query.page === 'string' && searchState.page !== router.query.page)
+			if (typeof router.query.page === 'string' && searchState.page !== router.query.page) {
 				searchStateActions.setPage(router.query.page)
+			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[router.query.page]
@@ -209,7 +213,13 @@ const SearchResults = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	if (error) return <>Error</>
+	const handleResetInitialValue = useCallback(() => {
+		searchStateActions.setSearchTerm('')
+	}, [searchStateActions])
+
+	if (error) {
+		return <>Error</>
+	}
 	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
 
 	return (
@@ -228,7 +238,7 @@ const SearchResults = () => {
 									<Link
 										external
 										variant={variants.Link.inheritStyle}
-										href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-cd3'
+										href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-43a'
 										target='_blank'
 									></Link>
 								),
@@ -249,9 +259,7 @@ const SearchResults = () => {
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
-							resetInitialValue={() => {
-								searchStateActions.setSearchTerm('')
-							}}
+							resetInitialValue={handleResetInitialValue}
 						/>
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
@@ -281,7 +289,7 @@ const SearchResults = () => {
 			</Grid.Col>
 			<Grid.Col xs={12} sm={8} md={8}>
 				{data?.resultCount === 0 && crisisResults ? (
-					<NoResults data={crisisResults} />
+					<NoResults crisisData={crisisResults} />
 				) : (
 					<>
 						{resultDisplay}

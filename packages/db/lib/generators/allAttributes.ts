@@ -1,9 +1,7 @@
-import { prisma } from '~db/client'
-import { type ListrTask } from '~db/lib/generateData'
+import { type Context, type ListrTask } from '~db/lib/generateData'
 
-import { writeOutput } from './common'
-
-export const generateAllAttributes = async (task: ListrTask) => {
+export const generateAllAttributes = async (ctx: Context, task: ListrTask) => {
+	const { prisma, writeOutput } = ctx
 	const data = await prisma.attribute.findMany({
 		select: {
 			id: true,

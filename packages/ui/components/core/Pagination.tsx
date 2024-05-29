@@ -11,7 +11,7 @@ import {
 import { usePagination } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useCallback, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
 
@@ -29,88 +29,97 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
+interface ItemsProps {
+	paginationController: ReturnType<typeof usePagination>
+}
+const Items = ({ paginationController }: ItemsProps) => {
+	const { range, active } = paginationController
+	const { classes, cx } = useStyles()
+	const variants = useCustomVariant()
+	const clickHandler = useCallback(
+		(pageNum: number) => () => paginationController.setPage(pageNum),
+		[paginationController]
+	)
+
+	return (
+		<Group spacing={12}>
+			{range.map((item) => {
+				if (item === 'dots') {
+					return (
+						<Text key={item} variant={variants.Text.utility2} className={classes.paginationItem}>
+							...
+						</Text>
+					)
+				}
+				if (item === active) {
+					return (
+						<Text
+							key={item}
+							variant={variants.Text.utility1}
+							className={cx(classes.paginationItem, classes.paginationActive)}
+						>
+							{item}
+						</Text>
+					)
+				}
+				return (
+					<Anchor
+						key={item}
+						data-active={item === active ? true : undefined}
+						className={classes.paginationItem}
+						onClick={clickHandler(item)}
+						variant={variants.Link.pagination}
+					>
+						{item}
+					</Anchor>
+				)
+			})}
+		</Group>
+	)
+}
+
 export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, ref) => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
+	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const currentPage = typeof router.query.page === 'string' ? parseInt(router.query.page) : 1
 	const [page, setPage] = useState(currentPage)
-	const { classes, cx } = useStyles()
 
-	const pageChangeHandler = (page: number) => {
-		setPage(page)
-		router.replace(
-			{ query: { ...router.query, page: page.toString(), params: router.query.params } },
-			undefined,
-			{
-				shallow: true,
-				scroll: true,
-			}
-		)
-	}
+	const pageChangeHandler = useCallback(
+		(pageNum: number) => {
+			setPage(pageNum)
+			router.replace(
+				{ query: { ...router.query, page: pageNum.toString(), params: router.query.params } },
+				undefined,
+				{
+					shallow: true,
+					scroll: true,
+				}
+			)
+		},
+		[router]
+	)
 
 	const paginationController = usePagination({
 		total: props.total,
-		onChange: (page) => pageChangeHandler(page),
+		onChange: pageChangeHandler,
 		boundaries: 1,
 		siblings: 1,
 		initialPage: currentPage,
 	})
 	const { active: activePage } = paginationController
 
-	const Items = () => {
-		const { range, active } = paginationController
-
-		return (
-			<Group spacing={12}>
-				{range.map((item) => {
-					if (item === 'dots')
-						return (
-							<Text key={item} variant={variants.Text.utility2} className={classes.paginationItem}>
-								...
-							</Text>
-						)
-					if (item === active)
-						return (
-							<Text
-								key={item}
-								variant={variants.Text.utility1}
-								className={cx(classes.paginationItem, classes.paginationActive)}
-							>
-								{item}
-							</Text>
-						)
-					return (
-						<Anchor
-							key={item}
-							data-active={item === active ? true : undefined}
-							className={classes.paginationItem}
-							onClick={() => paginationController.setPage(item)}
-							variant={variants.Link.pagination}
-						>
-							{item}
-						</Anchor>
-					)
-				})}
-			</Group>
-		)
-	}
-
 	return (
-		<MantinePagination.Root
-			value={page}
-			onChange={(page) => pageChangeHandler(page)}
-			defaultValue={currentPage}
-			{...props}
-		>
+		<MantinePagination.Root value={page} onChange={pageChangeHandler} defaultValue={currentPage} {...props}>
 			<Group ref={ref} spacing={24} position='apart'>
-				<Items />
+				<Items paginationController={paginationController} />
 				<Group>
 					<Link
 						data-disabled={activePage === 1 ? true : undefined}
 						variant={variants.Link.pagination}
 						className={classes.paginationItem}
-						onClick={() => paginationController.previous()}
+						onClick={paginationController.previous}
 					>
 						{t('words.prev')}
 					</Link>
@@ -119,7 +128,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 						data-disabled={activePage === props.total ? true : undefined}
 						variant={variants.Link.pagination}
 						className={classes.paginationItem}
-						onClick={() => paginationController.next()}
+						onClick={paginationController.next}
 					>
 						{t('words.next')}
 					</Link>

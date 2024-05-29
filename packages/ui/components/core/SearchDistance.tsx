@@ -2,7 +2,7 @@ import { Checkbox, Slider, Stack, Title } from '@mantine/core'
 import { useUncontrolled } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
+import { type ChangeEventHandler, useCallback, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 const ParamSchema = z.tuple([
@@ -10,7 +10,7 @@ const ParamSchema = z.tuple([
 	z.coerce.number().gte(-180).lte(180).describe('longitude'),
 	z.coerce.number().gte(-90).lte(90).describe('latitude'),
 	z.coerce.number().describe('distance'),
-	z.literal('mi').or(z.literal('km')).describe(`'mi' or 'km'`),
+	z.literal('mi').or(z.literal('km')).describe("'mi' or 'km'"),
 ])
 
 interface MarkItem {
@@ -41,26 +41,70 @@ const coerceBoolean = (value?: string | string[] | boolean) =>
 export const SearchDistance = () => {
 	const router = useRouter()
 	const [_searchType, lon, lat, dist, unit] = ParamSchema.parse(router.query.params)
-	const paramArray = [_searchType, String(lon), String(lat), String(dist), unit]
+	const paramArray = useMemo(
+		() => [_searchType, String(lon), String(lat), String(dist), unit],
+		[_searchType, lon, lat, dist, unit]
+	)
 	const { t } = useTranslation('common')
-	const marks =
-		unit === 'mi'
-			? [
-					{ value: 0, dist: 10, label: '10 mi' },
-					{ value: 1, dist: 25, label: '25 mi' },
-					{ value: 2, dist: 50, label: '50 mi' },
-					{ value: 3, dist: 100, label: '100 mi' },
-					{ value: 4, dist: 250, label: '250 mi' },
-				]
-			: [
-					{ value: 0, dist: 20, label: '20 km' },
-					{ value: 1, dist: 50, label: '50 km' },
-					{ value: 2, dist: 100, label: '100 km' },
-					{ value: 3, dist: 250, label: '250 km' },
-					{ value: 4, dist: 500, label: '500 km' },
-				]
+	const marks = useMemo(
+		() =>
+			unit === 'mi'
+				? [
+						{ value: 0, dist: 10, label: '10 mi' },
+						{ value: 1, dist: 25, label: '25 mi' },
+						{ value: 2, dist: 50, label: '50 mi' },
+						{ value: 3, dist: 100, label: '100 mi' },
+						{ value: 4, dist: 250, label: '250 mi' },
+					]
+				: [
+						{ value: 0, dist: 20, label: '20 km' },
+						{ value: 1, dist: 50, label: '50 km' },
+						{ value: 2, dist: 100, label: '100 km' },
+						{ value: 3, dist: 250, label: '250 km' },
+						{ value: 4, dist: 500, label: '500 km' },
+					],
+		[unit]
+	)
 	const [distance, setDistance] = useUncontrolled({ defaultValue: findClosestItemIndex(dist, marks) })
 	const [extended, setExtended] = useState(coerceBoolean(router.query.extended))
+	const handleChangeEnd = useCallback(
+		(idx: number) => {
+			const selectedDist = marks.at(idx)?.dist
+			if (selectedDist) {
+				router.replace(
+					{
+						pathname: '/search/[...params]',
+						query: {
+							...router.query,
+							params: [_searchType, lon.toString(), lat.toString(), selectedDist.toString(), unit],
+						},
+					},
+					undefined,
+					{ shallow: true }
+				)
+			}
+		},
+		[_searchType, lat, lon, marks, router, unit]
+	)
+
+	const handleIncludeRemote: ChangeEventHandler<HTMLInputElement> = useCallback(
+		(e) => {
+			setExtended(e.currentTarget.checked)
+			router.replace(
+				{
+					pathname: '/search/[...params]',
+					query: {
+						...router.query,
+						params: paramArray,
+						extended: e.currentTarget.checked.toString(),
+					},
+				},
+				undefined,
+				{ shallow: true }
+			)
+		},
+		[paramArray, router]
+	)
 
 	return (
 		<Stack spacing={16}>
@@ -70,47 +114,14 @@ export const SearchDistance = () => {
 				<Slider
 					value={distance}
 					onChange={setDistance}
-					onChangeEnd={(idx) => {
-						const selectedDist = marks.at(idx)?.dist
-						if (selectedDist) {
-							router.replace(
-								{
-									pathname: '/search/[...params]',
-									query: {
-										...router.query,
-										params: [_searchType, lon.toString(), lat.toString(), selectedDist.toString(), unit],
-									},
-								},
-								undefined,
-								{ shallow: true }
-							)
-						}
-					}}
+					onChangeEnd={handleChangeEnd}
 					marks={marks}
 					min={0}
 					max={4}
 					step={1}
 				/>
 			</Stack>
-			<Checkbox
-				label={t('search.include-remote')}
-				checked={extended}
-				onChange={(e) => {
-					setExtended(e.currentTarget.checked)
-					router.replace(
-						{
-							pathname: '/search/[...params]',
-							query: {
-								...router.query,
-								params: paramArray,
-								extended: e.currentTarget.checked.toString(),
-							},
-						},
-						undefined,
-						{ shallow: true }
-					)
-				}}
-			/>
+			<Checkbox label={t('search.include-remote')} checked={extended} onChange={handleIncludeRemote} />
 		</Stack>
 	)
 }

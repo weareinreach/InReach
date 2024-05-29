@@ -15,7 +15,7 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 	text,
 	type,
 	freeTextId,
-}: GenerateFreeTextParams<T>) => {
+}: GenerateFreeTextParams<T>): GenerateFreeTextReturn => {
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
@@ -36,12 +36,19 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 				invariant(itemId)
 				return createKey([orgId, itemId, 'description'])
 			}
+			default: {
+				return null
+			}
 		}
 	})()
 	const ns = namespaces.orgData
 	invariant(key, 'Error creating key')
 	return {
-		translationKey: Prisma.validator<Prisma.TranslationKeyUncheckedCreateInput>()({ key, text, ns }),
+		translationKey: Prisma.validator<Prisma.TranslationKeyUncheckedCreateInput>()({
+			key,
+			text,
+			ns,
+		}),
 		freeText: Prisma.validator<Prisma.FreeTextUncheckedCreateInput>()({
 			key,
 			ns,
@@ -49,7 +56,23 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 		}),
 	}
 }
-export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: GenerateFreeTextParams<T>) => {
+
+interface GenerateFreeTextReturn {
+	translationKey: {
+		key: string
+		text: string
+		ns: string
+		crowdinId?: number
+	}
+	freeText: {
+		key: string
+		ns: string
+		id: string
+	}
+}
+export const generateNestedFreeText = <T extends GenerateFreeTextType>(
+	args: GenerateFreeTextParams<T>
+): NestedCreateOne => {
 	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		create: {
@@ -65,13 +88,30 @@ export const generateNestedFreeText = <T extends GenerateFreeTextType>(args: Gen
 	}
 }
 
+interface NestedCreateOne {
+	create: {
+		id: string
+		tsKey: {
+			create: {
+				key: string
+				text: string
+				crowdinId?: number
+				namespace: {
+					connect: {
+						name: string
+					}
+				}
+			}
+		}
+	}
+}
+
 export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
 	args: GenerateFreeTextParams<T>
-): Prisma.FreeTextUpdateOneWithoutOrgEmailNestedInput => {
+): GenerateNestedFreeTextUpsertResult => {
 	const { freeText, translationKey } = generateFreeText(args)
 	return {
 		upsert: {
-			// where: { id: freeText.id },
 			create: {
 				id: freeText.id,
 				tsKey: {
@@ -84,17 +124,26 @@ export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>(
 			},
 			update: {
 				tsKey: {
-					// upsert: {
-					// 	create: {
-					// 		key: translationKey.key,
-					// 		text: translationKey.text,
-					// 		namespace: { connect: { name: translationKey.ns } },
-					// 	},
 					update: { text: translationKey.text },
-					// },
 				},
 			},
 		},
+	}
+}
+interface GenerateNestedFreeTextUpsertResult {
+	upsert: {
+		create: {
+			id: string
+			tsKey: {
+				create: {
+					key: string
+					text: string
+					crowdinId?: number
+					namespace: { connect: { name: string } }
+				}
+			}
+		}
+		update: { tsKey: { update: { text: string } } }
 	}
 }
 

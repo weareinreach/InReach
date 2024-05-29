@@ -4,7 +4,6 @@ import {
 } from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
-import { devtoolsLink } from 'trpc-client-devtools-link'
 
 import { type AppRouter } from '@weareinreach/api'
 import { getEnv } from '@weareinreach/env'
@@ -13,9 +12,16 @@ import { transformer } from '@weareinreach/util/transformer'
 
 // const log = createLoggerInstance('tRPC')
 const getBaseUrl = () => {
-	if (typeof window !== 'undefined') return '' // browser should use relative url
-	if (getEnv('VERCEL_URL')) return `https://${getEnv('VERCEL_URL')}` // SSR should use vercel url
-	return `http://localhost:${getEnv('PORT') ?? 3000}` // dev SSR should use localhost
+	// browser should use relative url
+	if (typeof window !== 'undefined') {
+		return ''
+	}
+	// SSR should use vercel url
+	if (getEnv('VERCEL_URL')) {
+		return `https://${getEnv('VERCEL_URL')}`
+	}
+	// dev SSR should use localhost
+	return `http://localhost:${getEnv('PORT') ?? 3000}`
 }
 
 // eslint-disable-next-line node/no-process-env
@@ -27,9 +33,6 @@ export const api = createTRPCNext<AppRouter>({
 			links: [
 				...(isDev
 					? [
-							devtoolsLink({
-								enabled: isDev,
-							}),
 							loggerLink({
 								enabled: () => isDev,
 							}),

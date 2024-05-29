@@ -29,28 +29,30 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	)
 
 	const ratingProps = {
-		recordId: validateString(orgServiceId) || validateString(orgLocationId) || organizationId?.id,
+		recordId: validateString(orgServiceId) ?? validateString(orgLocationId) ?? organizationId?.id,
 	}
 
 	const reviews =
 		data && status === 'success'
 			? data.map((review) => {
 					const { user, reviewText, verifiedUser, createdAt, id } = review
-					if (!reviewText) return null
-					const props = {
+					if (!reviewText) {
+						return null
+					}
+					const reviewProps = {
 						user,
 						reviewText,
-						reviewDate: createdAt,
 						verifiedUser,
+						reviewDate: createdAt,
 					}
-					return <UserReview key={id} {...props} />
+					return <UserReview key={id} {...reviewProps} />
 				})
-			: props.reviews.map((_, idx) => (
+			: props.reviews.map(({ id }) => (
 					<UserReview
-						key={idx}
+						key={`ph-${id}`}
 						reviewText=''
 						reviewDate={new Date()}
-						verifiedUser={Boolean(Math.round(Math.random()))}
+						verifiedUser={false}
 						forceLoading
 					/>
 				))
@@ -60,7 +62,7 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 		<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
 			<Group position='apart' w='100%' align='center'>
 				<Title order={2}>{t('review', { count: 2 })}</Title>
-				<ActionButtons iconKey='review'>{t('add', { ns: 'common', item: '$t(review)' })}</ActionButtons>
+				<ActionButtons.Review>{t('add', { ns: 'common', item: '$t(review)' })}</ActionButtons.Review>
 			</Group>
 			{Boolean(props.reviews.length) && <Rating {...ratingProps} />}
 			{props.reviews.length ? reviews : noReviews}

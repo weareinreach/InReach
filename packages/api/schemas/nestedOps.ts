@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import compact from 'just-compact'
 import invariant from 'tiny-invariant'
+
+const isString = (x: unknown): x is string => typeof x === 'string'
 
 /**
  * `*************`
@@ -33,35 +36,54 @@ export const createManyOptional = <T extends Array<any>>(data: T | undefined) =>
 			}
 
 /** Individual create record */
-export const createOne = <T extends Record<string, any>>(data: T | undefined) =>
-	!data
-		? undefined
-		: ({
-				create: data,
-			} as const)
-export const connectOne = <T extends Record<string, any>>(data: T | undefined) =>
-	!data
-		? undefined
-		: ({
-				connect: data,
-			} as const)
+export const createOne = <T extends Record<string, any> | string, K extends string = 'id'>(
+	data: T | null | undefined,
+	key?: K
+): undefined | { create: T extends string ? { [Key in K]: T } : T } => {
+	if (!data) {
+		return undefined
+	}
+	if (isString(data)) {
+		return { create: { [key ?? 'id']: data } as T extends string ? { [Key in K]: T } : T }
+	}
+	return {
+		create: data as T extends string ? { [Key in K]: T } : T,
+	}
+}
+
+export const connectOne = <T extends Record<string, any> | string, K extends string = 'id'>(
+	data: T | null | undefined,
+	key?: K
+): undefined | { connect: T extends string ? { [Key in K]: T } : T } => {
+	if (!data) {
+		return undefined
+	}
+	if (isString(data)) {
+		return { connect: { [key ?? 'id']: data } as T extends string ? { [Key in K]: T } : T }
+	}
+	return {
+		connect: data as T extends string ? { [Key in K]: T } : T,
+	}
+}
 export const connectOneId = <T extends string>(id: T | undefined | null) =>
 	!id ? undefined : ({ connect: { id } } as const)
+
 export const connectOneIdRequired = <T extends string>(id: T) => {
 	invariant(id)
 	return { connect: { id } }
 }
 export const connectOrDisconnectId = <T extends string | null | undefined>(id: T) => {
-	switch (id) {
-		case null: {
+	try {
+		if (id === null) {
 			return { disconnect: true }
 		}
-		case undefined: {
-			return
+		if (id === undefined) {
+			return undefined
 		}
-		default: {
-			if (typeof id === 'string') return { connect: { id } }
-		}
+		invariant(id)
+		return { connect: { id } }
+	} catch {
+		return undefined
 	}
 }
 
@@ -101,9 +123,33 @@ export const diffConnectionsMtoN = <T extends Record<string, any>>(
 		deleteMany: deletions.length ? deletions : undefined,
 	}
 }
-export const connectOneRequired = <T extends Record<string, any>>(data: T) => {
+export const connectOneRequired = <T extends Record<string, any> | string, K extends string = 'id'>(
+	data: T,
+	key: K = 'id' as K
+) => {
 	invariant(data)
+
+	if (isString(data)) {
+		return { connect: { [key]: data } as T extends string ? { [Key in K]: T } : T }
+	}
 	return {
-		connect: data,
+		connect: data as T extends string ? { [Key in K]: T } : T,
+	}
+}
+
+export const connectOrCreateOne = <T extends string, K extends string = 'id'>(
+	id: T | undefined | null,
+	key?: K
+): { connectOrCreate: { where: { [Key in K]: T }; create: { [Key in K]: T } } } | undefined => {
+	if (!id) {
+		return undefined
+	}
+	const idObj = { [key ?? 'id']: id } as { [Key in K]: T }
+
+	return {
+		connectOrCreate: {
+			where: idObj,
+			create: idObj,
+		},
 	}
 }

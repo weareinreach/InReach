@@ -1,5 +1,10 @@
 import { Logger } from '@aws-lambda-powertools/logger'
-import { type Callback, type Context, type CustomMessageTriggerEvent } from 'aws-lambda'
+import {
+	type Callback,
+	type Context,
+	type CustomMessageTriggerEvent,
+	type CustomMessageTriggerHandler,
+} from 'aws-lambda'
 
 const logger = new Logger({ serviceName: 'cognito-messaging' })
 
@@ -17,7 +22,7 @@ const clientMetadataDefaults = (triggerSource: CustomMessageTriggerEvent['trigge
 	const resetPw = triggerSource === 'CustomMessage_ForgotPassword'
 
 	return {
-		baseUrl: `https://app.inreach.org`,
+		baseUrl: 'https://app.inreach.org',
 		subject: resetPw ? 'Reset your password' : 'Confirm your account',
 		message: resetPw
 			? 'Click the following link to reset your password:'
@@ -25,9 +30,9 @@ const clientMetadataDefaults = (triggerSource: CustomMessageTriggerEvent['trigge
 	}
 }
 
-export const handler = (
+export const handler: CustomMessageTriggerHandler = (
 	event: CustomMessageTriggerEvent,
-	context: Context,
+	_context: Context,
 	callback: Callback<CustomMessageTriggerEvent>
 ) => {
 	const { triggerSource, userName, request, response } = event

@@ -1,6 +1,16 @@
 {
-	"sonarlint.connectedMode.project": {
-		"connectionId": "inreach",
-		"projectKey": "weareinreach_InReach"
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true,
+		"packages": true,
+		"apps": true,
+		"lambdas": true,
+		"patches": true,
+		"docker": true,
+		"docs": true
 	}
 }

@@ -2,6 +2,7 @@ import {
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
+	createStyles,
 	Modal,
 	PasswordInput,
 	Popover,
@@ -15,10 +16,9 @@ import { useForm, type UseFormReturnType, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
-// import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
@@ -28,50 +28,57 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { LoginModalLauncher } from './LoginSignUp'
 import { ModalTitle } from './ModalTitle'
 
-// const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success
-// const UrlParams = z.object({ r: z.string(), code: z.string() }).refine((data) => {
-// 	try {
-// 		const obj = decodeUrl(data.r)
-// 		return isRecord(obj)
-// 	} catch (error) {
-// 		console.error(error)
-// 		return false
-// 	}
-// })
+const usePasswordRequirementStyles = createStyles(() => ({
+	text: {
+		display: 'flex',
+		alignItems: 'center',
+	},
+}))
+
+const PasswordRequirement = ({ meets, label }: PasswordRequirementProps) => {
+	const { t } = useTranslation('common')
+	const theme = useMantineTheme()
+	const variants = useCustomVariant()
+	const { classes } = usePasswordRequirementStyles()
+	const textColor = useMemo(
+		() => (meets ? theme.other.colors.primary.lightGray : theme.other.colors.tertiary.red),
+		[meets, theme]
+	)
+	const iconToDisplay = useMemo(
+		() =>
+			meets ? (
+				<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
+			) : (
+				<Icon icon='carbon:warning-filled' height={20} color={theme.other.colors.tertiary.red} />
+			),
+		[meets, theme]
+	)
+
+	return (
+		<Text variant={variants.Text.utility4} color={textColor} className={classes.text} mt={8}>
+			{iconToDisplay}
+			<Box ml={10}>{t(label, { ns: 'common' })}</Box>
+		</Text>
+	)
+}
+interface PasswordRequirementProps {
+	meets: boolean
+	label: string
+}
 
 const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: FormProps) => FormProps> }) => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
-	type PasswordRequirementProps = {
-		meets: boolean
-		label: string
-	}
-	const PasswordRequirement = ({ meets, label }: PasswordRequirementProps) => {
-		const { t } = useTranslation('common')
-		const theme = useMantineTheme()
-		const variants = useCustomVariant()
-		return (
-			<Text
-				variant={variants.Text.utility4}
-				color={meets ? theme.other.colors.primary.lightGray : theme.other.colors.tertiary.red}
-				sx={{ display: 'flex', alignItems: 'center' }}
-				mt={8}
-			>
-				{meets ? (
-					<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
-				) : (
-					<Icon icon='carbon:warning-filled' height={20} color={theme.other.colors.tertiary.red} />
-				)}
-				<Box ml={10}>{t(label, { ns: 'common' })}</Box>
-			</Text>
-		)
-	}
-	const passwordRequirements = [
-		{ re: /[0-9]/, label: 'password-req-number' },
-		{ re: /[a-z]/, label: 'password-req-lowercase' },
-		{ re: /[A-Z]/, label: 'password-req-uppercase' },
-		{ re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: 'password-req-special' },
-	]
+
+	const passwordRequirements = useMemo(
+		() => [
+			{ re: /\d/, label: 'password-req-number' },
+			{ re: /[a-z]/, label: 'password-req-lowercase' },
+			{ re: /[A-Z]/, label: 'password-req-uppercase' },
+			{ re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: 'password-req-special' },
+		],
+		[]
+	)
 	const passwordStrength = (password: string) => {
 		let multiplier = password.length > 5 ? 0 : 1
 
@@ -83,32 +90,36 @@ const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: Fo
 
 		return Math.max(100 - (100 / (passwordRequirements.length + 1)) * multiplier, 10)
 	}
-	const pwChecks = passwordRequirements.map((requirement, index) => (
+	const pwChecks = passwordRequirements.map((requirement) => (
 		<PasswordRequirement
-			key={index}
+			key={requirement.label}
 			label={requirement.label}
 			meets={requirement.re.test(form.values.password)}
 		/>
 	))
 	const pwStrength = passwordStrength(form.values.password)
-	const pwMeterColor =
-		pwStrength === 100
-			? theme.other.colors.primary.allyGreen
-			: pwStrength > 50
-				? theme.other.colors.tertiary.yellow
-				: theme.other.colors.tertiary.red
-	const [pwPopover, setPwPopover] = useState(false)
+
+	const pwMeterColor = useMemo(() => {
+		if (pwStrength === 100) {
+			return theme.other.colors.primary.allyGreen
+		}
+		if (pwStrength > 50) {
+			return theme.other.colors.tertiary.yellow
+		}
+		return theme.other.colors.tertiary.red
+	}, [pwStrength, theme])
+	const [popoverOpen, popoverHandler] = useDisclosure(false)
 
 	return (
-		<Popover opened={pwPopover} position='bottom' width='target' transitionProps={{ transition: 'pop' }}>
+		<Popover opened={popoverOpen} position='bottom' width='target' transitionProps={{ transition: 'pop' }}>
 			<Popover.Target>
 				<PasswordInput
 					required
 					label={t('password')}
-					placeholder={t('enter-password-placeholder') as string}
+					placeholder={t('enter-password-placeholder')}
 					{...form.getInputProps('password')}
-					onFocusCapture={() => setPwPopover(true)}
-					onBlurCapture={() => setPwPopover(false)}
+					onFocusCapture={popoverHandler.open}
+					onBlurCapture={popoverHandler.close}
 				/>
 			</Popover.Target>
 			<Popover.Dropdown>
@@ -132,12 +143,12 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 		const FormSchema = z
 			.object({
 				password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
-					message: t('form-error-password-req') as string,
+					message: t('form-error-password-req'),
 				}),
 				confirmPassword: z.string(),
 			})
 			.refine((data) => data.password === data.confirmPassword, {
-				message: t('password-error-match') as string,
+				message: t('password-error-match'),
 				path: ['confirmPassword'],
 			})
 		const DataSchema = z.string().default('')
@@ -165,72 +176,99 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [router.query.r])
 
-		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
-
-		const bodyReset = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={1}>🔐</Title>
-					<Title order={2}>{t('reset-password')}</Title>
-				</Stack>
-				<FormPassword form={passwordResetForm} />
-				<PasswordInput
-					required
-					label={t('password-confirm')}
-					placeholder={t('password-reenter-placeholder') as string}
-					{...passwordResetForm.getInputProps('confirmPassword')}
-				/>
-				<Button
-					onClick={() => pwResetHandler.mutate(passwordResetForm.values)}
-					variant='primary-icon'
-					fullWidth
-					loaderPosition='center'
-					loading={pwResetHandler.isLoading}
-					disabled={!passwordResetForm.isValid()}
-				>
-					{t('save')}
-				</Button>
-			</Stack>
+		const modalTitle = useMemo(
+			() => <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />,
+			[handler]
 		)
 
-		const bodySuccess = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={1}>✅</Title>
-					<Title order={2}>{t('password-saved')}</Title>
+		const handlePwResetSubmit = useCallback(() => {
+			const values = passwordResetForm.getTransformedValues()
+			pwResetHandler.mutate(values)
+		}, [passwordResetForm, pwResetHandler])
+
+		const bodyReset = useMemo(
+			() => (
+				<Stack align='center' spacing={24}>
+					<Stack spacing={0} align='center'>
+						<Title order={1}>🔐</Title>
+						<Title order={2}>{t('reset-password')}</Title>
+					</Stack>
+					<FormPassword form={passwordResetForm} />
+					<PasswordInput
+						required
+						label={t('password-confirm')}
+						placeholder={t('password-reenter-placeholder')}
+						{...passwordResetForm.getInputProps('confirmPassword')}
+					/>
+					<Button
+						onClick={handlePwResetSubmit}
+						variant='primary-icon'
+						fullWidth
+						loaderPosition='center'
+						loading={pwResetHandler.isLoading}
+						disabled={!passwordResetForm.isValid()}
+					>
+						{t('save')}
+					</Button>
 				</Stack>
-				<Trans
-					i18nKey='password-reset-success'
-					components={{
-						LoginModal: (
-							<LoginModalLauncher component={Link} key={0} variant={variants.Link.inheritStyle}>
-								.
-							</LoginModalLauncher>
-						),
-						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
-					}}
-				/>
-			</Stack>
+			),
+			[t, passwordResetForm, pwResetHandler, handlePwResetSubmit]
 		)
-		const bodyError = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={1}>🫣</Title>
-					<Title order={2}>{t('errors.oh-no')}</Title>
+
+		const bodySuccess = useMemo(
+			() => (
+				<Stack align='center' spacing={24}>
+					<Stack spacing={0} align='center'>
+						<Title order={1}>✅</Title>
+						<Title order={2}>{t('password-saved')}</Title>
+					</Stack>
+					<Trans
+						i18nKey='password-reset-success'
+						components={{
+							LoginModal: (
+								<LoginModalLauncher component={Link} key={0} variant={variants.Link.inheritStyle}>
+									.
+								</LoginModalLauncher>
+							),
+							Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
+						}}
+					/>
 				</Stack>
-				<Trans
-					i18nKey='errors.try-again-text'
-					components={{
-						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
-					}}
-				/>
-			</Stack>
+			),
+			[t, variants]
 		)
+		const bodyError = useMemo(
+			() => (
+				<Stack align='center' spacing={24}>
+					<Stack spacing={0} align='center'>
+						<Title order={1}>🫣</Title>
+						<Title order={2}>{t('errors.oh-no')}</Title>
+					</Stack>
+					<Trans
+						i18nKey='errors.try-again-text'
+						components={{
+							Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
+						}}
+					/>
+				</Stack>
+			),
+			[variants, t]
+		)
+
+		const renderBody = useMemo(() => {
+			if (success) {
+				return bodySuccess
+			}
+			if (error) {
+				return bodyError
+			}
+			return bodyReset
+		}, [bodyError, bodyReset, bodySuccess, error, success])
 
 		return (
 			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
-					{success ? bodySuccess : error ? bodyError : bodyReset}
+				<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
+					{renderBody}
 				</Modal>
 				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
 			</>

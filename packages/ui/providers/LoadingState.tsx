@@ -4,6 +4,7 @@ import {
 	type ReactNode,
 	type SetStateAction,
 	useContext,
+	useMemo,
 	useState,
 } from 'react'
 
@@ -20,8 +21,11 @@ export const useLoadingState = () => {
 }
 export const LoadingStateProvider = ({ children }: LoadingStateProviderProps) => {
 	const [loading, setLoading] = useState(false)
-
-	return <LoadingStateContext.Provider value={[loading, setLoading]}>{children}</LoadingStateContext.Provider>
+	const contextValue = useMemo(
+		() => [loading, setLoading] satisfies [boolean, Dispatch<SetStateAction<boolean>>],
+		[loading, setLoading]
+	)
+	return <LoadingStateContext.Provider value={contextValue}>{children}</LoadingStateContext.Provider>
 }
 type LoadingStateContext = [loading: boolean, setLoading: Dispatch<SetStateAction<boolean>>]
 interface LoadingStateProviderProps {

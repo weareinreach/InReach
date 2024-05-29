@@ -1,4 +1,5 @@
 /* eslint-disable node/no-process-env */
+import { PrismaClient } from '@prisma/client'
 import {
 	Listr,
 	type ListrDefaultRenderer,
@@ -7,19 +8,41 @@ import {
 	type ListrTaskWrapper,
 	PRESET_TIMER,
 } from 'listr2'
+import prettier from 'prettier'
 
-import { prisma } from '~db/client'
+import { writeFileSync } from 'fs'
+import path from 'path'
 
 import * as job from './generators'
+
+/**
+ * It takes a filename and some data, and writes it to a file in the `generated` directory
+ *
+ * @param {string} filename - The base name of the file to write to, **without extension**.
+ * @param {string} data - The data to be written to the file.
+ */
+export const writeOutput = async (filename: string, data: string, isJs = false) => {
+	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
+	const parser = isJs ? 'babel' : 'typescript'
+	const outFile = `${path.resolve(__dirname, '../generated')}/${filename}.${isJs ? 'mjs' : 'ts'}`
+
+	const formattedOutput = await prettier.format(data, { ...prettierOpts, parser })
+	writeFileSync(outFile, formattedOutput)
+}
+
+const prisma = new PrismaClient()
 
 const rendererOptions = {
 	bottomBar: 10,
 	timer: PRESET_TIMER,
 }
-const defineJob = (title: string, job: (task: ListrTask) => void | Promise<void>): ListrJob => ({
+const defineJob = (
+	title: string,
+	jobItem: (ctx: Context, task: ListrTask) => void | Promise<void>
+): ListrJob => ({
 	title,
-	task: async (_ctx, task): Promise<void> => job(task),
 	rendererOptions,
+	task: jobItem,
 	skip: !process.env.DATABASE_URL,
 })
 
@@ -39,8 +62,9 @@ const tasks = new Listr<Context>(
 						defineJob('Service Categories', job.generateServiceCategories),
 						defineJob('Language lists', job.generateLanguageFiles),
 						defineJob('Translation Namespaces', job.generateNamespaces),
+						defineJob('Attribute Supplement Data Schemas', job.generateDataSchemas),
 					],
-					{ concurrent: true }
+					{ concurrent: true, ctx: { prisma, writeOutput } }
 				),
 		},
 		{
@@ -67,6 +91,8 @@ tasks.run()
 
 export type Context = {
 	error?: boolean
+	prisma: typeof prisma
+	writeOutput: typeof writeOutput
 }
 export type ListrTask = ListrTaskWrapper<Context, ListrDefaultRenderer, ListrSimpleRenderer>
 type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>

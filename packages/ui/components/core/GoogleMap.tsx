@@ -1,9 +1,9 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { Status, Wrapper } from '@googlemaps/react-wrapper'
 import { rem, Skeleton } from '@mantine/core'
-import { memo, useEffect, useRef } from 'react'
+import { memo, useCallback, useEffect, useRef } from 'react'
 
+import { useEditMode } from '~ui/hooks/useEditMode'
 import { useGoogleMaps, useGoogleMapSetup } from '~ui/hooks/useGoogleMaps'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -32,9 +32,10 @@ const MapRenderer = memo(({ height, width }: MapRendererProps) => {
 
 MapRenderer.displayName = 'GoogleMapRenderer'
 export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
+	const { isEditMode } = useEditMode()
 	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
 	const { data, isLoading } = api.location.forGoogleMaps.useQuery(
-		{ locationIds: Array.isArray(locationIds) ? locationIds : [locationIds] },
+		{ locationIds: Array.isArray(locationIds) ? locationIds : [locationIds], isEditMode },
 		{ enabled: mapIsReady }
 	)
 
@@ -61,19 +62,25 @@ export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [mapIsReady, map, isLoading, data])
 
-	const mapRender = (status: Status) => {
-		switch (status) {
-			case Status.LOADING: {
-				return <Skeleton h={height} w={width} radius={16} />
+	const mapRender = useCallback(
+		(status: Status) => {
+			switch (status) {
+				case Status.LOADING: {
+					return <Skeleton h={height} w={width} radius={16} />
+				}
+				case Status.FAILURE: {
+					return <></>
+				}
+				case Status.SUCCESS: {
+					return <MapRenderer {...{ height, width }} />
+				}
+				default: {
+					return <></>
+				}
 			}
-			case Status.FAILURE: {
-				return <></>
-			}
-			case Status.SUCCESS: {
-				return <MapRenderer {...{ height, width }} />
-			}
-		}
-	}
+		},
+		[height, width]
+	)
 
 	return (
 		<Wrapper

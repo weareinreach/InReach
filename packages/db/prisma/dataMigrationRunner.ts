@@ -1,5 +1,5 @@
 /* eslint-disable node/no-process-env */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
 	Listr,
 	type ListrDefaultRenderer,
@@ -8,9 +8,12 @@ import {
 	PRESET_TIMER,
 	PRESET_TIMESTAMP,
 } from 'listr2'
+import { type Promisable } from 'type-fest'
 
 import { prisma } from '~db/client'
-import { type JobDef } from '~db/prisma/jobPreRun'
+import { generateId } from '~db/lib/idGen'
+import { downloadFromDatastore, formatMessage } from '~db/prisma/common'
+import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
 
 import * as jobList from './data-migrations'
 
@@ -38,10 +41,10 @@ const jobs = new Listr<Context>(
 				if (process.env.GITHUB_ACTION) {
 					return task.skip('Skipping migrations on GitHub Actions')
 				}
-				const jobs = await prisma.dataMigration.findMany({
+				const jobsFromDb = await prisma.dataMigration.findMany({
 					select: { jobId: true },
 				})
-				const completedJobs = jobs.map(({ jobId }) => jobId)
+				const completedJobs = jobsFromDb.map(({ jobId }) => jobId)
 				task.output = `${Object.values(jobList).length} migrations found in ~db/prisma/data-migrations`
 
 				const jobNamesToRun: string[] = []
@@ -59,8 +62,9 @@ const jobs = new Listr<Context>(
 					task.output = `${jobNamesToRun.length} migrations to run:\n▸ ${jobNamesToRun.join('\n▸ ')}`
 					task.title = `Pending migrations: ${jobNamesToRun.length}`
 				} else {
-					task.title = `No pending migrations to apply.`
+					task.title = 'No pending migrations to apply.'
 				}
+				return void 0
 			},
 
 			rendererOptions: { ...rendererOptions, timer: { condition: false, field: '' } },
@@ -75,6 +79,14 @@ const jobs = new Listr<Context>(
 		},
 	],
 	{
+		ctx: {
+			prisma,
+			downloadFromDatastore,
+			formatMessage,
+			jobPostRunner,
+			createLogger,
+			generateId,
+		},
 		rendererOptions: {
 			formatOutput: 'wrap',
 			timer: PRESET_TIMER,
@@ -96,12 +108,15 @@ export type Context = {
 	error?: boolean
 	pendingMigrations?: boolean
 	jobCount?: number
+	prisma: typeof prisma
+	downloadFromDatastore: typeof downloadFromDatastore
+	formatMessage: typeof formatMessage
+	jobPostRunner: typeof jobPostRunner
+	createLogger: typeof createLogger
+	generateId: typeof generateId
 }
 export type PassedTask = ListrTaskWrapper<Context, ListrDefaultRenderer, ListrDefaultRenderer>
 export type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>
 
 export type MigrationJob = ListrJob & { def: JobDef }
-export type ListrTask = (
-	ctx: Context,
-	task: PassedTask
-) => void | Promise<void | Listr<Context, any, any>> | Listr<Context, any, any>
+export type ListrTask = (ctx: Context, task: PassedTask) => Promisable<void | Listr<Context>>

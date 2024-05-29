@@ -6,12 +6,13 @@
 
 import * as Sentry from '@sentry/nextjs'
 
-const isVercelProd = process.env.VERCEL_ENV === 'production'
-Sentry.init({
-	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.sentry.io/6751163',
+const isVercel = process.env.VERCEL === '1'
 
+Sentry.init({
+	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.us.sentry.io/6751163',
+	enabled: isVercel,
 	// Adjust this value in production, or use tracesSampler for greater control
-	tracesSampleRate: isVercelProd ? 0.5 : 1.0,
+	tracesSampleRate: 0.5,
 
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: !!process.env.SENTRY_DEBUG,

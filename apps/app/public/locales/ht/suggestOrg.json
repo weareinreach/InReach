@@ -2,20 +2,20 @@
 	"body": {
 		"accept-country": "Tanpri sonje ke nou ka sèlman aksepte òganizasyon ki sitiye nan peyi Etazini an, Meksik, ak Kanada nan moman sa a.",
 		"additional-info": "Lòt enfòmasyon",
-		"intro-text": "Mèsi pou enterè ou nan kontribye nan App a InReach! Sèvi ak fòm sa a sijere yon òganizasyon (egzanp ONG, de baz oswa òganizasyon kominotè, sistèm swen sante, pratik prive, elatriye) ou panse yo ta dwe enkli. Li ok si ou pa gen tout enfòmasyon fòm nan mande pou - jis ranpli nan sa ou konnen, epi nou pral fè rès la! Nou apresye soumèt ou epi di ou mèsi pou ede ogmante aksè a resous san danje, verifye pou divès kominote LGBTQ+la. Tout òganizasyon sijere yo sijè a revize pa volontè ki resevwa fòmasyon InReach a anvan piblikasyon sou InReach.",
+		"intro-text": "Mèsi pou enterè ou nan kontribisyon nan Aplikasyon InReach la! Sèvi ak fòm sa sijere yon òganizasyon (egzanp ONG, de baz oswa òganizasyon kominotè, sistèm swen sante, pratik prive, elatriye) ou panse yo ta dwe enkli. Li ok si ou pa gen tout enfòmasyon fòm nan mande pou - jis ranpli nan sa ou konnen, epi nou pral fè rès la! Nou apresye soumèt ou epi di ou mèsi pou ede ogmante aksè a resous san danje, verifye pou divès kominote LGBTQ+la. Tout òganizasyon sijere yo sijè a revize pa volontè ki resevwa fòmasyon InReach a anvan piblikasyon sou InReach.",
 		"required-info": "Enfòmasyon obligatwa",
 		"subject-review": "Tout òganizasyon sijere yo sijè a revize pa InReach anvan piblikasyon.",
 		"suggest-org": "Sigjere yon òganizasyon"
 	},
 	"form": {
 		"btn-community": "Ajoute LGBTQ+konsantre kominote (yo)",
-		"btn-save-changes": "Sove chanjman",
+		"btn-save-changes": "Sovegade chanjman yo",
 		"btn-service": "Ajoute kalite sèvis (yo)",
 		"btn-submit": "Soumèt nouvo òganizasyon",
 		"community-focus": "Èske òganizasyon sa a bay sèvis (yo) konsantre sou kominote espesifik LGBTQ+?",
 		"error-exists-active": "<Link>{{org}}</Link> deja ki nan lis sou InReach. Tanpri itilize sèlman fòm sa a pou sijere nouvo òganizasyon yo.",
-		"error-exists-dismiss": "<Dismiss>Klike la a si sa a se yon òganizasyon diferan.</Dismiss>",
-		"error-exists-inactive": "<Link>{{org}}</Link> te deja sijere. Ekip nou an se swa toujou verifye enfòmasyon oswa òganizasyon sa a pa t 'satisfè tout kondisyon nou yo.",
+		"error-exists-dismiss": "<Dismiss>Klike la si sa se yon òganizasyon diferan.</Dismiss>",
+		"error-exists-inactive": "<Link>{{org}}</Link> te deja sijere. Ekip nou an se swa toujou verifye enfòmasyon oswa òganizasyon sa pat satisfè tout kondisyon nou yo.",
 		"org-address": "Adrès òganizasyon an",
 		"org-country": "Nan ki peyi se òganizasyon an ki sitiye?",
 		"org-name": "Non òganizasyon an",
@@ -23,11 +23,11 @@
 		"placeholder-address": "Antre nan adrès...",
 		"placeholder-name": "Antre non òganizasyon an...",
 		"placeholder-website": "Antre URL...",
-		"service-types": "Ki kalite (yo) nan sèvis (yo) òganizasyon sa a bay?"
+		"service-types": "Ki kalite nan sèvis (yo) òganizasyon sa bay?"
 	},
 	"modal": {
 		"community-sub": "Èske òganizasyon sa a bay sèvis (yo) konsantre sou kominote espesifik LGBTQ+? Tanpri chwazi tout sa ki aplike.",
-		"community-title": "LGBTQ+konsantre kominote (yo)",
+		"community-title": "Kominote konsantre LGBTQ+ (yo)",
 		"dismiss": "Ranvwaye",
 		"service-types-sub": "Ki kalite (yo) nan sèvis (yo) òganizasyon sa a bay? Tanpri chwazi tout sa ki aplike.",
 		"service-types-title": "Kalite sèvis yo",

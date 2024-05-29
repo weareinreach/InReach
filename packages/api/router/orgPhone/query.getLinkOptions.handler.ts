@@ -1,4 +1,4 @@
-import parsePhoneNumber, { isSupportedCountry } from 'libphonenumber-js'
+import parsePhoneNumber, { type Extension, isSupportedCountry } from 'libphonenumber-js'
 
 import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
@@ -6,7 +6,8 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetLinkOptionsSchema } from './query.getLinkOptions.schema'
 
-export const getLinkOptions = async ({ ctx, input }: TRPCHandlerParams<TGetLinkOptionsSchema>) => {
+const isExtension = (ext: string | null): ext is Extension => typeof ext === 'string' && ext.length > 0
+const getLinkOptions = async ({ input }: TRPCHandlerParams<TGetLinkOptionsSchema>) => {
 	try {
 		const { slug, locationId } = input
 		const result = await prisma.orgPhone.findMany({
@@ -39,7 +40,9 @@ export const getLinkOptions = async ({ ctx, input }: TRPCHandlerParams<TGetLinkO
 					...status,
 				}
 			}
-			if (ext) parsedPhone.setExt(ext)
+			if (isExtension(ext)) {
+				parsedPhone.setExt(ext)
+			}
 			const phoneNumber = parsedPhone.formatNational()
 
 			return {
@@ -52,7 +55,7 @@ export const getLinkOptions = async ({ ctx, input }: TRPCHandlerParams<TGetLinkO
 		})
 		return transformed
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getLinkOptions

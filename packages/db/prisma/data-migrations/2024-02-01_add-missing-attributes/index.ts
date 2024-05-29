@@ -3,10 +3,8 @@ import { z } from 'zod'
 import fs from 'fs'
 import path from 'path'
 
-import { prisma } from '~db/client'
-import { formatMessage } from '~db/prisma/common'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
-import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
+import { type JobDef } from '~db/prisma/jobPreRun'
 
 const DataSchema = z
 	.object({
@@ -34,7 +32,8 @@ const jobDef: JobDef = {
  */
 export const job20240201_add_missing_attributes = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
-	task: async (_ctx, task) => {
+	task: async (ctx, task) => {
+		const { createLogger, formatMessage, jobPostRunner, prisma } = ctx
 		/** Create logging instance */
 		createLogger(task, jobDef.jobId)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))

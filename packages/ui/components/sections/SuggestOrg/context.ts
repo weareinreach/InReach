@@ -1,7 +1,5 @@
 import { createFormContext } from '@mantine/form'
 
-import { type ApiOutput } from '@weareinreach/api'
-
 export const [SuggestionFormProvider, useFormContext, useForm] = createFormContext<SuggestionForm>()
 export interface SuggestionForm {
 	//data for submission
@@ -19,11 +17,5 @@ export interface SuggestionForm {
 	communityFocus?: string[]
 
 	//supportive data
-	communityParent?: string[]
-	searchLocation: string
-	locationOptions: {
-		value: string
-		placeId: string
-	}[]
-	formOptions: ApiOutput['organization']['suggestionOptions']
+	// communityParent?: string[]
 }

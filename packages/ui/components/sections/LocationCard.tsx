@@ -1,13 +1,16 @@
 import { Card, Divider, Group, List, Stack, Title, useMantineTheme } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
-import { Easing, getAll as getAllTweens, Tween } from '@tweenjs/tween.js'
+import { Easing, Tween } from '@tweenjs/tween.js'
 import compact from 'just-compact'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { formatAddress } from 'localized-address-format'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type TFunction, useTranslation } from 'next-i18next'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import invariant from 'tiny-invariant'
+import { type SetNonNullable } from 'type-fest'
 
+import { type ApiOutput } from '@weareinreach/api'
 import { Badge } from '~ui/components/core/Badge'
 import { Link } from '~ui/components/core/Link'
 import { Rating } from '~ui/components/core/Rating'
@@ -17,17 +20,25 @@ import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { type IconList } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-let runningAnimation: number
-const stopAnimations = (animationProcess: number) => {
-	cancelAnimationFrame(animationProcess)
-	const tweens = getAllTweens()
-	for (const instance of tweens) {
-		instance.stop()
+const getAdminArea = (data: ApiOutput['location']['forLocationCard'] | undefined, t: TFunction) => {
+	if (data?.govDist?.abbrev) {
+		return data.govDist.abbrev
 	}
+	if (data?.govDist?.tsKey) {
+		return t(data.govDist.tsKey, { ns: data.govDist.tsNs })
+	}
+	return undefined
 }
+const hasData = (
+	data: ApiOutput['location']['forLocationCard'] | undefined
+): data is ApiOutput['location']['forLocationCard'] => !!data
+const hasCoords = (
+	data: ApiOutput['location']['forLocationCard'] | undefined
+): data is SetNonNullable<ApiOutput['location']['forLocationCard'], 'latitude' | 'longitude'> =>
+	!!data?.latitude && !!data?.longitude
 
 export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps) => {
-	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
+	const { map, mapIsReady, mapEvents, camera, tweenGroup } = useGoogleMaps()
 	const [initialPosition, setInitialPosition] = useState<google.maps.CameraOptions>()
 	const [canGetCenter, setCanGetCenter] = useState(map?.getCenter() !== undefined)
 
@@ -38,33 +49,32 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 	const { ref: addressRef, height: addressListHeight } = useElementSize()
 	const theme = useMantineTheme()
 	const mapMarker = useGoogleMapMarker()
+
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery(
 		{ slug: router.query.slug ?? '' },
 		{ enabled: router.isReady }
 	)
-	const { data } = api.location.forLocationCard.useQuery(locationId ?? '', {
-		enabled: !remoteOnly,
-	})
+	const { data } = api.location.forLocationCard.useQuery(
+		{ id: locationId ?? '', isEditMode: edit },
+		{
+			enabled: !remoteOnly,
+		}
+	)
 	const { data: remoteServices, isLoading: remoteIsLoading } = api.service.forServiceInfoCard.useQuery(
 		{ parentId: orgId?.id ?? '', remoteOnly },
 		{ enabled: remoteOnly && orgId?.id !== undefined }
 	)
 	const formattedAddressParts = useMemo(() => {
-		const adminArea = data?.govDist?.abbrev
-			? data.govDist.abbrev
-			: data?.govDist?.tsKey
-				? (t(data.govDist.tsKey, { ns: data.govDist.tsNs }) satisfies string)
-				: undefined
+		const administrativeArea = getAdminArea(data, t)
 
 		return formatAddress({
 			addressLines: compact([data?.street1?.trim(), data?.street2?.trim()]),
 			locality: data?.city.trim(),
 			postalCode: data?.postCode ? data.postCode.trim() : undefined,
 			postalCountry: data?.country,
-			administrativeArea: adminArea,
+			administrativeArea,
 		})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data])
+	}, [data, t])
 
 	mapEvents.initialPropsSet.useSubscription((val) => {
 		setCanGetCenter(val)
@@ -77,78 +87,132 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		}
 	})
 
-	useEffect(() => {
-		if (mapIsReady && map && data?.latitude && data?.longitude && canGetCenter && !data?.notVisitable) {
-			mapMarker.add({
-				map,
-				id: data.id,
-				name: data.name ?? '',
-				lat: data.latitude,
-				lng: data.longitude,
-				address: formattedAddressParts,
-				slug: router.query.slug,
-				locationId: data.id,
-			})
+	const mapMarkerData = useMemo(() => {
+		if (!mapIsReady || !map || !hasData(data) || !canGetCenter) {
+			return null
 		}
-		return () => {
-			if (locationId) {
-				mapMarker.remove(locationId)
+		if (!hasCoords(data)) {
+			return null
+		}
+
+		return {
+			map,
+			id: data.id,
+			name: data.name ?? '',
+			lat: data.latitude,
+			lng: data.longitude,
+			address: formattedAddressParts,
+			slug: router.query.slug,
+			locationId: data.id,
+		}
+	}, [mapIsReady, map, data, canGetCenter, formattedAddressParts, router.query.slug])
+
+	useEffect(() => {
+		try {
+			invariant(mapMarkerData)
+			mapMarker.add(mapMarkerData)
+			return () => {
+				mapMarker.remove(mapMarkerData.id)
+			}
+		} catch {
+			return void 0
+		}
+	}, [mapMarker, mapMarkerData])
+
+	const stopAnimations = useCallback(() => {
+		const tweens = tweenGroup.getAll()
+		for (const instance of tweens) {
+			if (instance.isPlaying()) {
+				instance.stop()
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, mapIsReady, formattedAddressParts, router.query.slug, canGetCenter])
-	useEffect(() => {
-		if (locationId) {
+	}, [tweenGroup])
+	const createTweens = useCallback(() => {
+		try {
+			invariant(locationId)
+			invariant(map)
+			invariant(data?.latitude)
+			invariant(data?.longitude)
+			invariant(initialPosition)
 			const marker = mapMarker.get(locationId)
-			if (marker && cardRef.current && map && data?.latitude && data?.longitude && initialPosition) {
-				const card = cardRef.current
-				const locationCoords = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
-				const locationView: google.maps.CameraOptions = {
-					center: locationCoords.toJSON(),
-					zoom: 17,
-				}
-				const zoomIn = new Tween(camera)
-					.to(locationView, 2000)
-					.easing(Easing.Quadratic.Out)
-					.onUpdate(() => {
-						map.moveCamera(camera)
-					})
-				const zoomOut = new Tween(camera)
-					.to(initialPosition, 2000)
-					.easing(Easing.Quadratic.Out)
-					.onUpdate(() => {
-						map.moveCamera(camera)
-					})
+			invariant(marker)
+			const locationCoords = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
+			const locationView: google.maps.CameraOptions = {
+				center: locationCoords.toJSON(),
+				zoom: 17,
+			}
+			const zoomIn = new Tween(camera, tweenGroup)
+				.to(locationView, 2000)
+				.easing(Easing.Quadratic.Out)
+				.onUpdate((cameraOptions) => {
+					map.moveCamera(cameraOptions)
+				})
+				.dynamic(true)
 
-				const animateIn = async (time: number) => {
-					runningAnimation = requestAnimationFrame(animateIn)
-					setTimeout(() => zoomIn.update(time), 80)
-				}
-				const animateOut = async (time: number) => {
-					runningAnimation = requestAnimationFrame(animateOut)
-					setTimeout(() => zoomOut.update(time), 80)
-				}
-				const enterEvent = () => {
-					stopAnimations(runningAnimation)
-					zoomIn.start()
-					runningAnimation = requestAnimationFrame(animateIn)
-				}
-				const exitEvent = () => {
-					stopAnimations(runningAnimation)
-					zoomOut.start()
-					runningAnimation = requestAnimationFrame(animateOut)
-				}
-				card.addEventListener('mouseenter', enterEvent)
-				card.addEventListener('mouseleave', exitEvent)
+			const zoomOut = new Tween(camera, tweenGroup)
+				.to(initialPosition, 2000)
+				.easing(Easing.Quadratic.Out)
+				.onUpdate((cameraOptions) => {
+					map.moveCamera(cameraOptions)
+				})
+				.dynamic(true)
 
-				return () => {
-					card.removeEventListener('mouseenter', enterEvent)
-					card.removeEventListener('mouseleave', exitEvent)
+			const animateIn = () => {
+				if (zoomIn.isPlaying()) {
+					requestAnimationFrame(animateIn)
+					zoomIn.update()
 				}
 			}
+			const animateOut = () => {
+				if (zoomOut.isPlaying()) {
+					requestAnimationFrame(animateOut)
+					zoomOut.update()
+				}
+			}
+			const enterEvent = () => {
+				stopAnimations()
+				zoomIn.start()
+				requestAnimationFrame(animateIn)
+			}
+			const exitEvent = () => {
+				stopAnimations()
+				zoomOut.start()
+				requestAnimationFrame(animateOut)
+			}
+			return { enter: enterEvent, exit: exitEvent }
+		} catch {
+			return null
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, mapIsReady, map, mapMarker.get(locationId ?? ''), initialPosition])
+	}, [
+		camera,
+		data?.latitude,
+		data?.longitude,
+		initialPosition,
+		locationId,
+		map,
+		mapMarker,
+		tweenGroup,
+		stopAnimations,
+	])
+
+	useEffect(() => {
+		try {
+			const card = cardRef.current
+			const tweenEvents = createTweens()
+			invariant(card)
+			invariant(tweenEvents)
+			const { enter, exit } = tweenEvents
+			card.addEventListener('mouseenter', enter)
+			card.addEventListener('mouseleave', exit)
+
+			return () => {
+				card.removeEventListener('mouseenter', enter)
+				card.removeEventListener('mouseleave', exit)
+			}
+		} catch {
+			return () => void 0
+		}
+	}, [cardRef, createTweens])
 
 	const remoteReady = remoteOnly && remoteServices?.length && !remoteIsLoading
 
@@ -194,13 +258,11 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		)
 	}
 
-	if (!data) return null
+	if (!data) {
+		return null
+	}
 
-	const adminArea = data.govDist?.abbrev
-		? data.govDist.abbrev
-		: data.govDist?.tsKey
-			? (t(data.govDist.tsKey, { ns: data.govDist.tsNs }) satisfies string)
-			: undefined
+	const adminArea = getAdminArea(data, t)
 
 	const formattedAddress = formatAddress({
 		addressLines: compact([data.street1?.trim(), data.street2?.trim()]),

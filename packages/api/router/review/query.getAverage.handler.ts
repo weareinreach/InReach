@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetAverageSchema } from './query.getAverage.schema'
 
-export const getAverage = async ({ input }: TRPCHandlerParams<TGetAverageSchema>) => {
+const getAverage = async ({ input }: TRPCHandlerParams<TGetAverageSchema>) => {
 	const whereId = (): Prisma.OrgReviewWhereInput => {
 		switch (true) {
 			case isIdFor('organization', input): {

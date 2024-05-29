@@ -12,7 +12,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { type GetStaticPaths, type GetStaticPropsContext } from 'next'
+import { type GetStaticPaths, type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -28,10 +28,7 @@ import { SearchResultSidebar } from '@weareinreach/ui/components/sections/Search
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-// import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
-// import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
@@ -155,10 +152,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: 'blocking',
 	}
 }
-export const getStaticProps = async ({
-	params,
-	locale,
-}: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
+export const getStaticProps: GetStaticProps<
+	Record<string, unknown>,
+	RoutedQuery<'/search/intl/[country]'>
+> = async ({ params, locale }) => {
 	const parsedQuery = QuerySchema.safeParse(params)
 	if (!parsedQuery.success) {
 		return {

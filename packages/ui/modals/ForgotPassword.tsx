@@ -13,7 +13,7 @@ import {
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { forwardRef } from 'react'
+import { forwardRef, useCallback, useMemo } from 'react'
 import { z } from 'zod'
 
 import { Button } from '~ui/components/core/Button'
@@ -26,15 +26,15 @@ import { ModalTitle } from './ModalTitle'
 const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModalBodyProps>((props, ref) => {
 	const { t } = useTranslation(['common'])
 	const EmailSchema = z.object({
-		email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
+		email: z.string().email({ message: t('form-error-enter-valid-email') }),
 	})
 	const passwordResetForm = useForm<FormProps>({
 		validate: zodResolver(EmailSchema),
 		validateInputOnBlur: true,
 		initialValues: {
 			email: '',
-			cognitoSubject: t('password-reset.email-subject') as string,
-			cognitoMessage: t('password-reset.email-body') as string,
+			cognitoSubject: t('password-reset.email-subject'),
+			cognitoMessage: t('password-reset.email-body'),
 		},
 	})
 	const variants = useCustomVariant()
@@ -43,22 +43,32 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 	const { animateCSS, fireEvent } = useShake({ variant: 1 })
 	const [opened, handler] = useDisclosure(false)
 	const { isMobile } = useScreenSize()
-	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
-
-	const successMessage = (
-		<Group>
-			<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} height={14} />
-			<Text variant={variants.Text.utility3}>{t('email-sent')}</Text>
-		</Group>
+	const modalTitle = useMemo(
+		() => <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />,
+		[handler]
 	)
 
-	const submitHandler = () => {
+	const successMessage = useMemo(
+		() => (
+			<Group>
+				<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} height={14} />
+				<Text variant={variants.Text.utility3}>{t('email-sent')}</Text>
+			</Group>
+		),
+		[theme, t, variants]
+	)
+
+	const submitHandler = useCallback(() => {
 		if (passwordResetForm.isValid()) {
 			pwResetHandler.mutate(passwordResetForm.values)
 		} else {
 			fireEvent()
 		}
-	}
+	}, [passwordResetForm, pwResetHandler, fireEvent])
+
+	const closeOrMutateHandler = useCallback(() => {
+		pwResetHandler.isSuccess ? handler.close() : submitHandler()
+	}, [pwResetHandler.isSuccess, handler, submitHandler])
 
 	return (
 		<>
@@ -66,7 +76,7 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 				className={animateCSS}
 				title={modalTitle}
 				opened={opened}
-				onClose={() => handler.close()}
+				onClose={handler.close}
 				zIndex={550}
 				fullScreen={isMobile}
 			>
@@ -75,13 +85,13 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 					<Text variant={variants.Text.utility4darkGray}>{t('reset-password-message')}</Text>
 					<TextInput
 						label={t('words.email')}
-						placeholder={t('enter-email-placeholder') as string}
+						placeholder={t('enter-email-placeholder')}
 						required
 						{...passwordResetForm.getInputProps('email')}
 						description={pwResetHandler.isSuccess ? successMessage : undefined}
 					/>
 					<Button
-						onClick={() => (pwResetHandler.isSuccess ? handler.close() : submitHandler())}
+						onClick={closeOrMutateHandler}
 						variant='primary-icon'
 						fullWidth
 						loaderPosition='center'
@@ -92,7 +102,7 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 					</Button>
 				</Stack>
 			</Modal>
-			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
+			<Box component='button' ref={ref} onClick={handler.open} {...props} />
 		</>
 	)
 })

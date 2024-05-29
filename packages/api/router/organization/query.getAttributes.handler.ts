@@ -43,11 +43,11 @@ const getAttributesFromDb = async (input: TGetAttributesSchema) => {
 	})
 	const flattened = result.flatMap(({ attribute, ...supplement }) => {
 		const { categories, ...attributeData } = attribute
-		return categories.map(({ category }) => ({
-			categoryId: category.id,
-			categoryTag: category.tag,
-			categoryIcon: category.icon,
-			categoryRenderVariant: category.renderVariant,
+		return categories.map(({ category: categoryResult }) => ({
+			categoryId: categoryResult.id,
+			categoryTag: categoryResult.tag,
+			categoryIcon: categoryResult.icon,
+			categoryRenderVariant: categoryResult.renderVariant,
 			...attributeData,
 			supplement,
 		}))
@@ -86,13 +86,13 @@ const groupByCategory = (result: DatabaseResult) => {
 	return grouped
 }
 
-export const getAttributes = async ({ input }: TRPCHandlerParams<TGetAttributesSchema>) => {
+const getAttributes = async ({ input }: TRPCHandlerParams<TGetAttributesSchema>) => {
 	try {
 		const dbResult = await getAttributesFromDb(input)
 		const formattedResult = groupByCategory(dbResult)
 		return formattedResult
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default getAttributes

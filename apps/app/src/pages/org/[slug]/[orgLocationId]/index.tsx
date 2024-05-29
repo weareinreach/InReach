@@ -1,12 +1,12 @@
 import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 // import compact from 'just-compact'
-import { type GetStaticPaths, type GetStaticPropsContext, type NextPage } from 'next'
+import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
@@ -48,14 +48,12 @@ const OrgLocationPage: NextPage = () => {
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
 	)
-	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
-		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
-	})
+
 	const { data: alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
 	)
-	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
+	const hasAlerts = useMemo(() => Array.isArray(alertData) && alertData.length > 0, [alertData])
 	const { classes } = useStyles()
 
 	const servicesRef = useRef<HTMLDivElement>(null)
@@ -63,10 +61,32 @@ const OrgLocationPage: NextPage = () => {
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (data && status === 'success' && orgData && orgDataStatus === 'success') setLoading(false)
+		if (data && status === 'success' && orgData && orgDataStatus === 'success') {
+			setLoading(false)
+		}
 	}, [data, status, orgData, orgDataStatus])
-	if (loading || !data || !orgData || router.isFallback) return <OrgLocationPageLoading />
 
+	const handleTabChange = useCallback((tab: Tabname) => {
+		setActiveTab(tab)
+		switch (tab) {
+			case 'services': {
+				servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+			case 'photos': {
+				photosRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+			case 'reviews': {
+				reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
+				break
+			}
+		}
+	}, [])
+
+	if (loading || !data || !orgData || router.isFallback) {
+		return <OrgLocationPageLoading />
+	}
 	const { attributes, description, reviews } = data
 
 	return (
@@ -80,18 +100,18 @@ const OrgLocationPage: NextPage = () => {
 						option: 'back',
 						backTo: 'dynamicText',
 						backToText: orgData.name,
-						onClick: () =>
+						onClick: () => {
 							router.push({
 								pathname: '/org/[slug]',
 								query: { slug: orgData.slug },
-							}),
+							})
+						},
 					}}
 					organizationId={orgData.id}
-					saved={Boolean(isSaved)}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					{hasAlerts &&
-						alertData.map((alert) => (
+						alertData?.map((alert) => (
 							<AlertMessage
 								key={alert.key}
 								iconKey={alert.icon}
@@ -102,14 +122,14 @@ const OrgLocationPage: NextPage = () => {
 						))}
 					<ListingBasicInfo
 						data={{
-							name: data.name || orgData.name,
+							name: data.name ?? orgData.name,
 							id: data.id,
-							slug,
 							locations: [data],
-							description,
 							lastVerified: orgData.lastVerified,
-							attributes,
 							isClaimed: orgData.isClaimed,
+							slug,
+							description,
+							attributes,
 						}}
 					/>
 					{isTablet && (
@@ -120,27 +140,7 @@ const OrgLocationPage: NextPage = () => {
 							<VisitCard locationId={data.id} />
 						</Stack>
 					)}
-					<Tabs
-						w='100%'
-						value={activeTab}
-						onTabChange={(tab) => {
-							setActiveTab(tab)
-							switch (tab) {
-								case 'services': {
-									servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
-									break
-								}
-								case 'photos': {
-									photosRef.current?.scrollIntoView({ behavior: 'smooth' })
-									break
-								}
-								case 'reviews': {
-									reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
-									break
-								}
-							}
-						}}
-					>
+					<Tabs w='100%' value={activeTab} onTabChange={handleTabChange}>
 						<Tabs.List className={classes.tabsList}>
 							<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 							<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
@@ -178,12 +178,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: true,
 	}
 }
-export const getStaticProps = async ({
-	locale,
-	params,
-}: GetStaticPropsContext<RoutedQuery<'/org/[slug]/[orgLocationId]'>>) => {
+export const getStaticProps: GetStaticProps<
+	Record<string, unknown>,
+	RoutedQuery<'/org/[slug]/[orgLocationId]'>
+> = async ({ locale, params }) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
-	if (!urlParams.success) return { notFound: true }
+	if (!urlParams.success) {
+		return { notFound: true }
+	}
 	const { slug, orgLocationId } = urlParams.data
 
 	const ssg = await trpcServerClient({ session: null })
@@ -199,7 +201,9 @@ export const getStaticProps = async ({
 		}
 
 		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
-		if (!orgId?.id) return { notFound: true }
+		if (!orgId?.id) {
+			return { notFound: true }
+		}
 
 		const [i18n] = await Promise.allSettled([
 			getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId.id]),
@@ -209,7 +213,6 @@ export const getStaticProps = async ({
 		])
 		const props = {
 			trpcState: ssg.dehydrate(),
-			// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
 			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		}
 
@@ -219,12 +222,11 @@ export const getStaticProps = async ({
 		}
 	} catch (error) {
 		const TRPCError = (await import('@trpc/server')).TRPCError
-		if (error instanceof TRPCError) {
-			if (error.code === 'NOT_FOUND') {
-				return { notFound: true }
-			}
+		if (error instanceof TRPCError && error.code === 'NOT_FOUND') {
+			return { notFound: true }
 		}
+		return { redirect: { destination: '/500', permanent: false } }
 	}
 }
-
+type Tabname = 'services' | 'photos' | 'reviews'
 export default OrgLocationPage

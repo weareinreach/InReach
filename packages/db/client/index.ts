@@ -3,8 +3,8 @@ import { type Prisma, PrismaClient } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 
 import { createLoggerInstance } from '@weareinreach/util/logger'
-import { idMiddleware } from '~db/lib/idMiddleware'
-import { superjsonMiddleware } from '~db/lib/superjsonMiddleware'
+import { idGeneratorExtension } from '~db/client/extensions/idGenerator'
+import { jsonExtension } from '~db/client/extensions/json'
 
 const log = createLoggerInstance('prisma')
 const verboseLogging = Boolean(
@@ -12,8 +12,7 @@ const verboseLogging = Boolean(
 )
 
 declare global {
-	// allow global `var` declarations
-	// eslint-disable-next-line no-var
+	// eslint-disable-next-line no-var -- allow global `var` declarations
 	var prisma: PrismaClient<typeof clientOptions> | undefined
 }
 
@@ -31,31 +30,32 @@ const clientOptions = {
 	errorFormat: 'pretty',
 } satisfies Prisma.PrismaClientOptions
 
-const prisma = global.prisma || new PrismaClient(clientOptions)
+const generateClient = () => {
+	const client = new PrismaClient(clientOptions)
 
-prisma.$use(idMiddleware)
-prisma.$use(superjsonMiddleware)
-
-const queryLogger = createPrismaQueryEventHandler({
-	queryDuration: true,
-	format: true,
-	indent: `\t`,
-	// linesBetweenQueries: 2,
-	language: 'pl/sql',
-	logger: (data) => log.info(`\n${data}`),
-})
-
-if (!global.prisma) {
 	if (verboseLogging) {
-		prisma.$on('query', queryLogger)
+		const queryLogger = createPrismaQueryEventHandler({
+			queryDuration: true,
+			format: true,
+			indent: '\t',
+			language: 'pl/sql',
+			logger: (data) => log.info(`\n${data}`),
+		})
+		client.$on('query', queryLogger)
 	} else {
-		prisma.$on('error', (event) => log.error(event))
-		prisma.$on('warn', (event) => log.warn(event))
+		client.$on('error', (event) => log.error(event))
+		client.$on('warn', (event) => log.warn(event))
 	}
+
+	return client.$extends(jsonExtension).$extends(idGeneratorExtension) as unknown as PrismaClient<
+		typeof clientOptions
+	>
 }
-// prisma.$connect()
+
+const prisma = global.prisma ?? generateClient()
+
 if (process.env.NODE_ENV !== 'production') {
-	global.prisma = prisma
+	global.prisma ??= prisma
 }
 export { prisma }
 export type * from '@prisma/client'

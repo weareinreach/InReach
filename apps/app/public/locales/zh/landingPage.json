@@ -33,13 +33,13 @@
 			"8": "法律帮助",
 			"9": "翻译"
 		},
-		"subheading": "欢迎来到世界上第一个将面临迫害或歧视的TLGBQ+（变性人、女同性恋、男同性恋、双性恋、酷儿和更多身份）与安全、经过验证的资源相匹配的技术平台。"
+		"subheading": "欢迎来到世界上第一个将面临迫害或歧视的LGBTQ+（变性人、女同性恋、男同性恋、双性恋、酷儿和更多身份）与安全、经过验证的资源相匹配的技术平台。"
 	},
 	"values": {
 		"free": "<Title2>永久免费 🔑</Title2>\n<Text>我们的技术平台对所有人100％免费，以确保随时可以获得安全的帮助。</Text>\n<LinkFree>捐款以帮助我们保持平台免费。</LinkFree>",
 		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>我们是世界上第一个为面临迫害或歧视的LGBTQ+人群提供安全、独立验证的资源的技术平台。</Text>\n<LinkInnovative>查看我们的源代码并做出贡献。</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>我们认为 LGBTQ+ 平等需要跨性别司法、难民正义、种族正义、生殖正义、语言正义等等。</Text>\n<LinkIntersect>详细了解我们的审查流程。</LinkIntersect>",
+		"intersectional": "<Title2>跨部门 ✊🏿‍✊🏾✊🏽</Title2>\n<Text>我们相信LGBTQ+平等需要跨性别公正、难民公正、种族公正、生殖公正、语言公正等等努力。</Text>\n<LinkIntersect>了解我们的审查过程。<LinkIntersect>",
 		"our-values": "我们的价值观",
-		"safety-first": "<Title2>安全第一 🔒</Title2>\n<Text>我们知道在线匿名对于 LGBTQ+ 人群来说可能是一个生死攸关的问题。这就是为什么我们的应用程序旨在保护用户的在线机密性和安全的原因。</Text>\n<LinkSafety>进一步了解我们的隐私政策。</LinkSafety>"
+		"safety-first": "<Title2>安全第一 🔒</Title2>\n<Text>我们知道在线匿名对于 LGBTQ+ 人群来说可能是一个生死攸关的问题。这就是为什么我们的应用程序旨在努力保护用户的在线隐私和安全。</Text>\n<LinkSafety>进一步了解我们的隐私政策。</LinkSafety>"
 	}
 }

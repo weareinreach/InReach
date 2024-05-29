@@ -8,7 +8,7 @@ import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 // import { getServerSideTranslations } from '~app/utils/i18n'
 
 const ServerError: NextPage = () => {
-	const [isLoading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false)
 	const { t } = useTranslation('common')
 
 	return (
@@ -19,7 +19,6 @@ const ServerError: NextPage = () => {
 				spacing={32}
 			>
 				<Stack spacing={0} align='center'>
-					{/* eslint-disable-next-line i18next/no-literal-string */}
 					<Title order={1}>🔦</Title>
 					<Title order={1}>{t('errors.500-title')}</Title>
 				</Stack>
@@ -33,7 +32,7 @@ const ServerError: NextPage = () => {
 						<Center>
 							<SearchBox
 								type='location'
-								loadingManager={{ isLoading, setLoading }}
+								loadingManager={{ isLoading: loading, setLoading }}
 								placeholderTextKey='search.location-placeholder-searchby'
 							/>
 						</Center>
@@ -41,7 +40,7 @@ const ServerError: NextPage = () => {
 					<Tabs.Panel value='name' m={0}>
 						<SearchBox
 							type='organization'
-							loadingManager={{ isLoading, setLoading }}
+							loadingManager={{ isLoading: loading, setLoading }}
 							placeholderTextKey='search.organization-placeholder-searchby'
 						/>
 					</Tabs.Panel>

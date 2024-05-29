@@ -1,4 +1,5 @@
 import { Divider, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import orderBy from 'just-order-by'
 import { useTranslation } from 'next-i18next'
 import { memo, type ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -54,11 +55,12 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 				)
 			)
 		}
-		if (data.lastVerified)
+		if (data.lastVerified) {
 			output.push(
 				<Badge.Verified key={data.lastVerified.toString()} lastverified={data.lastVerified.toString()} />
 			)
-		output.push(<Badge.Claimed isClaimed={isClaimed} />)
+		}
+		output.push(<Badge.Claimed isClaimed={isClaimed} key='claimed-org' />)
 
 		return output
 	}
@@ -69,7 +71,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	))
 
 	const descriptionSection =
-		description && description.key ? (
+		description !== null ? (
 			<Skeleton visible={!i18nReady}>
 				<Text py={12}>{t(description.key, { ns: id, defaultValue: description.tsKey.text })}</Text>
 			</Skeleton>
@@ -90,29 +92,47 @@ ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 
 export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const { id: orgId } = useOrgInfo()
-	const { t, ready: i18nReady } = useTranslation(orgId)
+	const { t } = useTranslation(orgId)
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
 	const theme = useMantineTheme()
-	const leaderAttributes = attributes.filter(({ attribute }) =>
-		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
+	const leaderAttributes = orderBy(
+		attributes.filter(({ attribute }) =>
+			attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
+		),
+		[
+			{
+				property(record) {
+					return record.attribute.tsKey
+				},
+				order: 'asc',
+			},
+		]
 	)
-	const focusedCommunities = attributes.filter(({ attribute }) =>
-		attribute.categories.some(
-			({ category }) => category.tag === 'service-focus' && attribute._count.parents === 0
-		)
+	const focusedCommunities = orderBy(
+		attributes.filter(({ attribute }) =>
+			attribute.categories.some(({ category }) => category.tag === 'service-focus')
+		),
+		[
+			{
+				property(record) {
+					return record.attribute.tsKey
+				},
+				order: 'asc',
+			},
+		]
 	)
 
 	const leaderBadges = (): ReactNode[] => {
 		if (leaderAttributes.length) {
-			return leaderAttributes.map(({ attribute }) => (
-				<Badge.Leader key={attribute.id} icon={attribute.icon ?? ''} iconBg={attribute.iconBg ?? '#FFF'}>
-					{t(attribute.tsKey)}
+			return leaderAttributes.map(({ attribute, id }) => (
+				<Badge.Leader key={id} icon={attribute.icon ?? ''} iconBg={attribute.iconBg ?? '#FFF'}>
+					{t(attribute.tsKey, { ns: attribute.tsNs })}
 				</Badge.Leader>
 			))
 		} else {
 			return [
-				<Badge.Leader icon='➕' iconBg='#FFF'>
+				<Badge.Leader icon='➕' iconBg='#FFF' key='add-new-leader-badge'>
 					Add leader badge
 				</Badge.Leader>,
 			]
@@ -121,11 +141,12 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 
 	const infoBadges = () => {
 		const output: ReactNode[] = []
-		if (data.lastVerified)
+		if (data.lastVerified) {
 			output.push(
 				<Badge.Verified key={data.lastVerified.toString()} lastverified={data.lastVerified.toString()} />
 			)
-		output.push(<Badge.Claimed isClaimed={isClaimed} />)
+		}
+		output.push(<Badge.Claimed isClaimed={isClaimed} key='claimed-org' />)
 		return output
 	}
 	const focusedCommBadges: ReactNode[] = focusedCommunities.length
@@ -134,7 +155,11 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 					{t(attribute.tsKey, { ns: attribute.tsNs })}
 				</Badge.Community>
 			))
-		: [<Badge.Community icon='➕'>Add Focused Community badge(s)</Badge.Community>]
+		: [
+				<Badge.Community icon='➕' key='add-new-community-badge'>
+					Add Focused Community badge(s)
+				</Badge.Community>,
+			]
 
 	return (
 		<form autoComplete='off' style={{ width: '100%' }}>
@@ -184,7 +209,10 @@ ListingBasicEdit.displayName = 'ListingBasicEdit'
 
 export const ListingBasicInfo = ({ edit, ...props }: ListingBasicInfoProps) =>
 	edit ? <ListingBasicEdit {...props} /> : <ListingBasicDisplay {...props} />
-export type ListingBasicInfoProps = { edit?: boolean; location?: boolean } & OrgInfoProps
+export interface ListingBasicInfoProps extends OrgInfoProps {
+	edit?: boolean
+	location?: boolean
+}
 
 export interface OrgInfoProps {
 	data: {

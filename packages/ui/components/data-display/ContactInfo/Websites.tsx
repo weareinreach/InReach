@@ -1,6 +1,7 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ReactElement } from 'react'
+import { type ReactElement, useCallback, useMemo } from 'react'
+import invariant from 'tiny-invariant'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
@@ -8,69 +9,94 @@ import { WebsiteDrawer } from '~ui/components/data-portal/WebsiteDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
+import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useCommonStyles } from './common.styles'
 import { type WebsitesProps } from './types'
 
+const formatNs = nsFormatter(['common'])
+const anyTrue = (...args: boolean[]) => args.some((x) => x)
+
 export const Websites = ({ edit, ...props }: WebsitesProps) =>
 	edit ? <WebsitesEdit {...props} /> : <WebsitesDisplay {...props} />
 
-const WebsitesDisplay = ({ parentId = '', passedData, direct, locationOnly, websiteDesc }: WebsitesProps) => {
-	const output: ReactElement[] = []
+const WebsitesDisplay = ({
+	parentId = '',
+	passedData,
+	direct = false,
+	locationOnly = false,
+	websiteDesc,
+}: WebsitesProps) => {
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
+	const { t } = useTranslation(formatNs(orgId?.id))
 	const variants = useCustomVariant()
 	const { data } = api.orgWebsite.forContactInfo.useQuery(
 		{ parentId, locationOnly },
 		{ enabled: !passedData }
 	)
-	// eslint-disable-next-line no-useless-escape
-	const domainExtract = /https?:\/\/([^:\/\n?]+)/
+	const domainExtract = useMemo(() => /https?:\/\/([^:/\n?]+)/, [])
 
-	const componentData = passedData ? passedData : data
+	const componentData = useMemo(() => passedData ?? data ?? [], [data, passedData])
 
-	if (!componentData?.length) return null
+	const { output: content, showDirectHeading: shouldShowDirectHeading } = useMemo(() => {
+		const output: ReactElement[] = []
+		let showDirectHeading = false
 
-	for (const website of componentData) {
-		const { id, url, orgLocationOnly, description, isPrimary } = website
-		const urlMatch = url.match(domainExtract)
-		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
-		if (!isExternal(url)) continue
-		if (!urlBase) continue
-		if (locationOnly && !orgLocationOnly) continue
+		for (const website of componentData) {
+			const { id, url, orgLocationOnly, description, isPrimary } = website
+			const urlMatch = url.match(domainExtract)
+			const urlBase = urlMatch?.length ? urlMatch[1] : undefined
 
-		if (direct) {
-			return (
-				<Stack spacing={12}>
-					<Title order={3}>{t('direct.website')}</Title>
-					<Link external href={url} variant={variants.Link.inlineInverted}>
-						{urlBase}
-					</Link>
-				</Stack>
+			if (anyTrue(!isExternal(url), !urlBase, locationOnly && !orgLocationOnly)) {
+				continue
+			}
+			invariant(isExternal(url))
+			invariant(urlBase)
+
+			if (direct) {
+				showDirectHeading = true
+			}
+
+			const desc =
+				websiteDesc && description
+					? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
+					: urlBase
+
+			const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
+
+			const item = (
+				<Link external key={id} href={url} variant={linkVariant}>
+					{desc}
+				</Link>
 			)
+			isPrimary ? output.unshift(item) : output.push(item)
 		}
-
-		const desc = websiteDesc
-			? description?.key
-				? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
-				: urlBase
-			: urlBase
-		const item = (
-			<Link external key={id} href={url} variant={variants.Link.inline}>
-				{desc}
-			</Link>
-		)
-		isPrimary ? output.unshift(item) : output.push(item)
+		return { output, showDirectHeading }
+	}, [
+		componentData,
+		direct,
+		domainExtract,
+		locationOnly,
+		orgId?.id,
+		t,
+		variants.Link.inline,
+		variants.Link.inlineInverted,
+		websiteDesc,
+	])
+	if (!content.length) {
+		return null
 	}
 
-	if (!output.length) return null
+	const headingContent = shouldShowDirectHeading
+		? t('direct.website')
+		: t('website', { count: content.length })
 
 	return (
 		<Stack spacing={12}>
-			<Title order={3}>{t('website', { count: output.length })}</Title>
-			{output}
+			<Title order={3}>{headingContent}</Title>
+			{content}
 		</Stack>
 	)
 }
@@ -79,7 +105,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	const slug = useSlug()
 	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
+	const { t } = useTranslation(formatNs(orgId?.id))
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 
@@ -96,15 +122,39 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	const linkToLocation = api.orgWebsite.locationLink.useMutation({
 		onSuccess: () => apiUtils.orgWebsite.invalidate(),
 	})
-	// eslint-disable-next-line no-useless-escape
-	const domainExtract = /https?:\/\/([^:\/\n?]+)/
+	const getTextVariant = useCallback(
+		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {
+			const isValue = kind === 'value'
+			if (deleted) {
+				return isValue ? variants.Text.utility3darkGrayStrikethru : variants.Text.utility4darkGrayStrikethru
+			}
+			if (!published) {
+				return isValue ? variants.Text.utility3darkGray : variants.Text.utility4darkGray
+			}
+			return isValue ? variants.Text.utility3 : variants.Text.utility4
+		},
+		[
+			variants.Text.utility3,
+			variants.Text.utility3darkGray,
+			variants.Text.utility3darkGrayStrikethru,
+			variants.Text.utility4,
+			variants.Text.utility4darkGray,
+			variants.Text.utility4darkGrayStrikethru,
+		]
+	)
+
+	const domainExtract = /https?:\/\/([^:/\n?]+)/
 
 	const output = data?.map((website) => {
 		const { id, url, description, published, deleted } = website
 		const urlMatch = url.match(domainExtract)
 		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
-		if (!isExternal(url)) return null
-		if (!urlBase) return null
+		if (!isExternal(url)) {
+			return null
+		}
+		if (!urlBase) {
+			return null
+		}
 		const desc = description?.key
 			? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
 			: urlBase
@@ -135,6 +185,12 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		)
 		return item
 	})
+	const handleLinkLocation = useCallback(
+		(orgWebsiteId: string) => () => {
+			linkToLocation.mutate({ orgWebsiteId, orgLocationId: parentId, action: 'link' })
+		},
+		[linkToLocation, parentId]
+	)
 
 	const addOrLink = isLocation ? (
 		<Menu keepMounted withinPortal>
@@ -148,25 +204,10 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 			</Menu.Target>
 			<Menu.Dropdown>
 				{linkableWebsites?.map(({ id, deleted, description, url, published }) => {
-					const urlTextVariant =
-						!published && deleted
-							? variants.Text.utility3darkGrayStrikethru
-							: deleted
-								? variants.Text.utility3darkGrayStrikethru
-								: variants.Text.utility3
-					const descTextVariant =
-						!published && deleted
-							? variants.Text.utility4darkGrayStrikethru
-							: deleted
-								? variants.Text.utility4darkGrayStrikethru
-								: variants.Text.utility4
+					const urlTextVariant = getTextVariant('value', published, deleted)
+					const descTextVariant = getTextVariant('desc', published, deleted)
 					return (
-						<Menu.Item
-							key={id}
-							onClick={() =>
-								linkToLocation.mutate({ orgLocationId: parentId, orgWebsiteId: id, action: 'link' })
-							}
-						>
+						<Menu.Item key={id} onClick={handleLinkLocation(id)}>
 							<Group noWrap>
 								<Icon icon='carbon:link' />
 								<Stack spacing={0}>

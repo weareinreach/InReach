@@ -1,10 +1,15 @@
-import { Card, createStyles, Group, rem, Skeleton, Stack, Text } from '@mantine/core'
+import { Card, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 
 import { transformer } from '@weareinreach/util/transformer'
+import { Link } from '~ui/components/core'
 import { Badge } from '~ui/components/core/Badge'
-import { useCustomVariant, useScreenSize } from '~ui/hooks'
+import { ServiceEditDrawer } from '~ui/components/data-portal/ServiceEditDrawer'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useEditMode } from '~ui/hooks/useEditMode'
+import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ServiceModal } from '~ui/modals/Service'
@@ -33,19 +38,42 @@ const useServiceSectionStyles = createStyles((theme) => ({
 
 const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
+	const { isEditMode } = useEditMode()
 	const { slug } = router.isReady ? router.query : { slug: '' }
-	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug }, { enabled: router.isReady })
-	const { t } = useTranslation(orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services'])
-	const { classes } = useServiceSectionStyles()
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const namespaces = orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services']
 
+	const { t } = useTranslation(namespaces)
+	const { classes } = useServiceSectionStyles()
+	const theme = useMantineTheme()
 	const variants = useCustomVariant()
 	const apiUtils = api.useUtils()
+
+	const preloadService = useCallback(
+		(serviceId: string) => () => apiUtils.service.forServiceModal.prefetch(serviceId),
+		[apiUtils.service.forServiceModal]
+	)
+	const getTextVariant = useCallback(
+		(published: boolean, deleted: boolean) => {
+			if (deleted) {
+				return variants.Text.utility1darkGrayStrikethru
+			}
+			if (!published) {
+				return variants.Text.utility1darkGray
+			}
+			return variants.Text.utility1
+		},
+		[variants]
+	)
+
 	return (
 		<Stack spacing={8}>
 			{Array.isArray(category) ? (
 				<Badge.Group>
 					{category.map((tsKey) => (
-						<Badge.Service key={tsKey}>{t(tsKey, { ns: 'services' })}</Badge.Service>
+						<Badge.Service key={`(${category.join('-')}).${tsKey}`}>
+							{t(tsKey, { ns: 'services' })}
+						</Badge.Service>
 					))}
 				</Badge.Group>
 			) : (
@@ -54,7 +82,40 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 			<Stack spacing={0}>
 				{services.map((service) => {
 					const serviceName = t(service.tsKey, { ns: orgId?.id, defaultValue: service.defaultText })
-					return (
+					const children = (
+						<>
+							{service.offersRemote && !hideRemoteBadges ? (
+								<Group spacing={8} align='center'>
+									{!service.published && (
+										<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
+									)}
+									<Text variant={getTextVariant(service.published, service.deleted)}>{serviceName}</Text>
+									<Badge.Remote />
+								</Group>
+							) : (
+								<Group spacing={8}>
+									{!service.published && (
+										<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
+									)}
+									<Text variant={getTextVariant(service.published, service.deleted)}>{serviceName}</Text>
+								</Group>
+							)}
+							<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
+						</>
+					)
+
+					return isEditMode ? (
+						<ServiceEditDrawer
+							key={service.id}
+							serviceId={service.id}
+							variant={variants.Link.inlineInverted}
+							component={Link}
+						>
+							<Group noWrap position='apart' className={classes.group}>
+								{children}
+							</Group>
+						</ServiceEditDrawer>
+					) : (
 						<ServiceModal
 							key={service.id}
 							serviceId={service.id}
@@ -62,18 +123,9 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 							position='apart'
 							noWrap
 							className={classes.group}
-							onMouseOver={() => apiUtils.service.forServiceModal.prefetch(service.id)}
+							onMouseOver={preloadService(service.id)}
 						>
-							{service.offersRemote && !hideRemoteBadges ? (
-								<Group spacing={8} align='center'>
-									<Text variant={variants.Text.utility1}>{serviceName}</Text>
-									<Badge.Remote />
-								</Group>
-							) : (
-								<Text variant={variants.Text.utility1}>{serviceName}</Text>
-							)}
-
-							<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
+							{children}
 						</ServiceModal>
 					)
 				})}
@@ -88,11 +140,18 @@ type ServItem = {
 	tsKey: string
 	defaultText: string
 	offersRemote: boolean
+	published: boolean
+	deleted: boolean
 }
 
 export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: ServicesInfoCardProps) => {
 	const { isMobile } = useScreenSize()
-	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery({ parentId, remoteOnly })
+	const { isEditMode } = useEditMode()
+	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery({
+		parentId,
+		remoteOnly,
+		isEditMode,
+	})
 
 	if (isLoading || !services) {
 		return isMobile ? (
@@ -111,7 +170,9 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 
 		if (serviceMap.has(key)) {
 			const serviceSet = serviceMap.get(key)
-			if (!serviceSet) continue
+			if (!serviceSet) {
+				continue
+			}
 			serviceSet.add(
 				transformer.stringify({
 					id: service.id,
@@ -119,6 +180,8 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 					tsKey: service.serviceName?.tsKey,
 					defaultText: service.serviceName?.defaultText,
 					offersRemote: service.offersRemote,
+					published: service.published,
+					deleted: service.deleted,
 				})
 			)
 			serviceMap.set(key, serviceSet)
@@ -132,6 +195,8 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 						tsKey: service.serviceName?.tsKey,
 						defaultText: service.serviceName?.defaultText,
 						offersRemote: service.offersRemote,
+						published: service.published,
+						deleted: service.deleted,
 					}),
 				])
 			)
@@ -144,12 +209,12 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 
 	const sections = sectionArray.map(([key, value]) => {
 		const valSet = [...value]
-		const services = valSet.map((item) => transformer.parse<ServItem>(item))
+		const serviceList = valSet.map((item) => transformer.parse<ServItem>(item))
 		return (
 			<ServiceSection
 				key={key.join('-')}
 				category={key}
-				services={services}
+				services={serviceList}
 				{...(hideRemoteBadges ? { hideRemoteBadges } : {})}
 			/>
 		)

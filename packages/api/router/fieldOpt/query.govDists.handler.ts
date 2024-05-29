@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGovDistsSchema } from './query.govDists.schema'
 
-export const govDists = async ({ input }: TRPCHandlerParams<TGovDistsSchema>) => {
+const govDists = async ({ input }: TRPCHandlerParams<TGovDistsSchema>) => {
 	try {
 		const results = await prisma.govDist.findMany({
 			where: input,
@@ -16,10 +16,11 @@ export const govDists = async ({ input }: TRPCHandlerParams<TGovDistsSchema>) =>
 				country: { select: { cca2: true } },
 				govDistType: { select: { tsKey: true, tsNs: true } },
 			},
+			orderBy: { tsKey: 'asc' },
 		})
 		return results
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default govDists

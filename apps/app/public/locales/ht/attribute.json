@@ -9,7 +9,7 @@
 		"private-practice": "Pratik Prive",
 		"religiously-affiliated": "Relijyezman afilye",
 		"time-walk-in": "Gen mache-nan èdtan",
-		"wheelchair-accessible": "Accessible",
+		"wheelchair-accessible": "Aksesib",
 		"wheelchair-accessible_false": "Pa aksesib",
 		"wheelchair-accessible_true": "Aksesib"
 	},
@@ -109,7 +109,7 @@
 		"accessemail": "Aksè Enstriksyon - Imèl",
 		"accessfile": "Aksè Enstriksyon - dosye",
 		"accesslink": "Aksè Enstriksyon - Link",
-		"accesslocation": "Aksè Enstriksyon - Kote",
+		"accesslocation": "Aksè Enstriksyon - Localizasyon",
 		"accessphone": "Aksè Enstriksyon - Telefòn",
 		"accesspublictransit": "Aksè Enstriksyon - Transpò Piblik",
 		"accesssms": "Aksè Enstriksyon - SMS",
@@ -145,16 +145,16 @@
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Opsyon Pratike Lalwa",
-		"corp-law-firm": "Corporate kabinè avoka",
+		"corp-law-firm": "Korperasyon fèm lalwa",
 		"law-other": "Lòt",
 		"law-school-clinic": "Klinik lekòl lalwa",
 		"legal-nonprofit": "Legal òganizasyon san bi likratif"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Opsyon Founisè Sèvis",
-		"case-mananger": "Manadjè ka",
+		"case-mananger": "Manadjè dosye",
 		"community-org": "Volontè/anplwaye nan yon òganizasyon kominotè",
-		"friend-family": "N/A (Looking sou non zanmi/fanmi)",
+		"friend-family": "N/A (veye sou non zanmi/fanmi)",
 		"govt-agency": "Ajans gouvènman",
 		"grassroots-direct": "Grassroots dirèk sèvis òganizasyon",
 		"healthcare": "Founisè swen sante",

@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForOrganizationTableSchema } from './query.forOrganizationTable.schema'
 
-export const forOrganizationTable = async ({ input }: TRPCHandlerParams<TForOrganizationTableSchema>) => {
+const forOrganizationTable = async ({ input }: TRPCHandlerParams<TForOrganizationTableSchema>) => {
 	const results = await prisma.organization.findMany({
 		where: input,
 		select: {

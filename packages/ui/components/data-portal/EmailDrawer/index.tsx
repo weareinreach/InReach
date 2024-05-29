@@ -14,7 +14,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
@@ -22,23 +22,24 @@ import { z } from 'zod'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const FormSchema = z.object({
+	id: z.string(),
+	orgId: z.string(),
 	firstName: z.string().nullish(),
 	lastName: z.string().nullish(),
 	primary: z.boolean().optional(),
 	email: z.string().email(),
-	description: z.string().nullish(),
+	published: z.boolean().default(true),
+	deleted: z.boolean().default(false),
 	titleId: z.string().nullish(),
-	published: z.boolean(),
-	deleted: z.boolean(),
-	locationOnly: z.boolean(),
-	serviceOnly: z.boolean(),
-	id: z.string(),
-	orgId: z.string(),
+	locationOnly: z.boolean().default(false),
+	serviceOnly: z.boolean().default(false),
+	description: z.string().nullish(),
 	descriptionId: z.string().nullish(),
 	linkLocationId: z.string().nullish(),
 })
@@ -52,12 +53,20 @@ const useStyles = createStyles(() => ({
 export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
-		const [emailId] = useState(createNew ? generateId('orgEmail') : id)
+		const emailId = useMemo(() => {
+			if (createNew || !id) {
+				return generateId('orgEmail')
+			}
+			return id
+		}, [createNew, id])
 		const { id: orgId } = useOrgInfo()
+
+		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
+
 		const { data: initialData, isFetching } = api.orgEmail.forEditDrawer.useQuery(
 			{ id: emailId },
 			{
-				enabled: !!orgId || !createNew,
+				enabled: !!orgId && (!!id || !createNew),
 				select: (data) => (data ? { ...data, orgId: orgId ?? '' } : data),
 			}
 		)
@@ -65,6 +74,8 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const apiUtils = api.useUtils()
+		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+
 		const {
 			control,
 			handleSubmit,
@@ -74,46 +85,81 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 			setValue: setFormValue,
 		} = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
-			values: initialData ? initialData : undefined,
+			values: initialData ?? undefined,
+			defaultValues: {
+				id: emailId,
+				published: true,
+				deleted: false,
+				linkLocationId: hasLocationId,
+			},
 		})
+		useEffect(() => {
+			const formValues = getValues()
+			if (!formValues.orgId && orgId) {
+				setFormValue('orgId', orgId)
+			}
+		}, [getValues, orgId, setFormValue])
 
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
-		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 
 		const emailUpdate = api.orgEmail.update.useMutation({
 			onSettled: (data) => {
-				apiUtils.orgEmail.forEditDrawer.invalidate()
-				apiUtils.orgEmail.forContactInfoEdit.invalidate()
+				apiUtils.orgEmail.invalidate()
 				reset(data)
 			},
 			onSuccess: () => {
 				setIsSaved(true)
+				notifySave()
+				modalHandler.close()
+				setTimeout(() => drawerHandler.close(), 500)
 			},
 		})
 		const unlinkFromLocation = api.orgEmail.locationLink.useMutation({
 			onSuccess: () => apiUtils.orgEmail.invalidate(),
 		})
-		useEffect(() => {
-			if (createNew) {
-				setFormValue('published', true)
-				if (hasLocationId !== null) {
-					setFormValue('linkLocationId', hasLocationId)
-				}
-			}
-		}, [createNew, hasLocationId, setFormValue])
+		// useEffect(() => {
+		// 	if (createNew && orgId) {
+		// 		setFormValue('published', true)
+		// 		setFormValue('orgId', orgId)
+		// 		setFormValue('id', emailId)
+		// 		hasLocationId && setFormValue('linkLocationId', hasLocationId)
+		// 	}
+		// }, [createNew, hasLocationId, setFormValue, orgId, emailId])
 		useEffect(() => {
 			if (isSaved && formIsDirty) {
 				setIsSaved(false)
 			}
 		}, [formIsDirty, isSaved])
-		const handleClose = () => {
+		const handleClose = useCallback(() => {
 			if (formState.isDirty) {
 				return modalHandler.open()
 			} else {
 				return drawerHandler.close()
 			}
-		}
+		}, [formState.isDirty, drawerHandler, modalHandler])
+
+		const handleUnlink = useCallback(() => {
+			if (hasLocationId) {
+				unlinkFromLocation.mutate({
+					orgEmailId: emailId,
+					orgLocationId: hasLocationId,
+					action: 'unlink',
+				})
+			}
+		}, [emailId, hasLocationId, unlinkFromLocation])
+
+		const handleSaveFromModal = useCallback(() => {
+			const valuesToSubmit = getValues()
+			emailUpdate.mutate(valuesToSubmit)
+		}, [emailUpdate, getValues])
+
+		const handleCloseAndDiscard = useCallback(() => {
+			reset()
+			modalHandler.close()
+			drawerHandler.close()
+		}, [reset, modalHandler, drawerHandler])
+
 		return (
 			<>
 				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
@@ -161,13 +207,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 											{hasLocationId !== null && (
 												<Button
 													leftIcon={<Icon icon='carbon:unlink' />}
-													onClick={() =>
-														unlinkFromLocation.mutate({
-															orgEmailId: emailId,
-															orgLocationId: hasLocationId,
-															action: 'unlink',
-														})
-													}
+													onClick={handleUnlink}
 													disabled={createNew}
 												>
 													Unlink from this location
@@ -185,25 +225,11 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={emailUpdate.isLoading}
-											onClick={() => {
-												emailUpdate.mutate(getValues(), {
-													onSuccess: () => {
-														modalHandler.close()
-														drawerHandler.close()
-													},
-												})
-											}}
+											onClick={handleSaveFromModal}
 										>
 											Save
 										</Button>
-										<Button
-											variant='secondaryLg'
-											onClick={() => {
-												reset()
-												modalHandler.close()
-												drawerHandler.close()
-											}}
-										>
+										<Button variant='secondaryLg' onClick={handleCloseAndDiscard}>
 											Discard
 										</Button>
 									</Group>
@@ -222,9 +248,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 _EmailDrawer.displayName = 'EmailDrawer'
 
 export const EmailDrawer = createPolymorphicComponent<'button', EmailDrawerProps>(_EmailDrawer)
-// interface EmailDrawerProps {
-// 	id: string
-// }
+
 type EmailDrawerProps = EmailDrawerExisting | EmailDrawerNew
 interface EmailDrawerExisting {
 	id: string

@@ -60,17 +60,17 @@ const GenericContentModalBody = forwardRef<HTMLButtonElement, GenericContentModa
 
 		return (
 			<>
-				<Modal opened={opened} onClose={() => handlers.close()} title={modalTitle} fullScreen={isMobile}>
+				<Modal opened={opened} onClose={handlers.close} title={modalTitle} fullScreen={isMobile}>
 					<Stack align='center' spacing={24}>
 						{modalChildren}
 						{accept ? (
-							<Button variant={variants.Button.primaryLg} onClick={() => handlers.close()} fullWidth>
+							<Button variant={variants.Button.primaryLg} onClick={handlers.close} fullWidth>
 								{t('words.accept')}
 							</Button>
 						) : null}
 					</Stack>
 				</Modal>
-				<Box component='button' ref={ref} onClick={() => handlers.open()} {...props} />
+				<Box component='button' ref={ref} onClick={handlers.open} {...props} />
 			</>
 		)
 	}

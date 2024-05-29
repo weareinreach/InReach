@@ -8,7 +8,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TForServiceDrawerSchema } from './query.forServiceDrawer.schema'
 import { select } from './selects'
 
-export const forServiceDrawer = async ({ input }: TRPCHandlerParams<TForServiceDrawerSchema>) => {
+const forServiceDrawer = async ({ input }: TRPCHandlerParams<TForServiceDrawerSchema>) => {
 	const results = await prisma.orgService.findMany({
 		where: input,
 		select: {

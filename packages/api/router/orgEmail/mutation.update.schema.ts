@@ -16,5 +16,6 @@ export const ZUpdateSchema = z.object({
 	serviceOnly: z.boolean().optional(),
 	description: z.string().nullish(),
 	descriptionId: z.string().nullish(),
+	linkLocationId: z.string().nullish(),
 })
 export type TUpdateSchema = z.infer<typeof ZUpdateSchema>

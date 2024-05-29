@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TLocationLinkSchema } from './mutation.locationLink.schema'
 
-export const locationLink = async ({ ctx, input }: TRPCHandlerParams<TLocationLinkSchema, 'protected'>) => {
+const locationLink = async ({ ctx, input }: TRPCHandlerParams<TLocationLinkSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 		const { action, orgPhoneId, orgLocationId } = input
@@ -13,8 +13,8 @@ export const locationLink = async ({ ctx, input }: TRPCHandlerParams<TLocationLi
 			case 'link': {
 				const result = await prisma.orgLocationPhone.create({
 					data: {
-						phoneId: orgPhoneId,
 						orgLocationId,
+						phoneId: orgPhoneId,
 						active: true,
 					},
 				})
@@ -31,9 +31,12 @@ export const locationLink = async ({ ctx, input }: TRPCHandlerParams<TLocationLi
 				})
 				return result
 			}
+			default: {
+				throw new Error('Invalid action')
+			}
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default locationLink

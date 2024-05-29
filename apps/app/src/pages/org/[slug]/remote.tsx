@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Breadcrumb } from '@weareinreach/ui/components/core/Breadcrumb'
@@ -65,9 +65,29 @@ const RemoteServicesPage: NextPage = () => {
 	const servicesRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (org && status === 'success' && orgName && orgNameStatus === 'success') setLoading(false)
+		if (org && status === 'success' && orgName && orgNameStatus === 'success') {
+			setLoading(false)
+		}
 	}, [org, status, orgName, orgNameStatus])
-	if (loading || !org || !orgName || router.isFallback) return <LoadingState />
+	const handleBreadcrubClick = useCallback(() => {
+		router.push({
+			pathname: '/org/[slug]',
+			query: { slug },
+		})
+	}, [router, slug])
+	const handleTabChange = useCallback(
+		(tab: string) => {
+			setActiveTab(tab)
+			if (tab === 'services') {
+				servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
+			}
+		},
+		[setActiveTab]
+	)
+
+	if (loading || !org || !orgName || router.isFallback) {
+		return <LoadingState />
+	}
 
 	return (
 		<>
@@ -85,11 +105,7 @@ const RemoteServicesPage: NextPage = () => {
 						option: 'back',
 						backTo: 'dynamicText',
 						backToText: orgName.name,
-						onClick: () =>
-							router.push({
-								pathname: '/org/[slug]',
-								query: { slug },
-							}),
+						onClick: handleBreadcrubClick,
 					}}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
@@ -100,19 +116,7 @@ const RemoteServicesPage: NextPage = () => {
 							<ContactSection role='org' parentId={org.id} />
 						</Stack>
 					)}
-					<Tabs
-						w='100%'
-						value={activeTab}
-						onTabChange={(tab) => {
-							setActiveTab(tab)
-							switch (tab) {
-								case 'services': {
-									servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
-									break
-								}
-							}
-						}}
-					>
+					<Tabs w='100%' value={activeTab} onTabChange={handleTabChange}>
 						<Tabs.List className={classes.tabsList}>
 							<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 						</Tabs.List>
@@ -145,16 +149,19 @@ export const getStaticProps: GetStaticProps<
 	Record<string, unknown>,
 	RoutedQuery<'/org/[slug]/remote'>
 > = async ({ locale, params }) => {
-	if (!params?.slug)
+	if (!params?.slug) {
 		return {
 			notFound: true,
 		}
+	}
 
 	const { slug } = params
 
 	const ssg = await trpcServerClient({ session: null })
 	const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
-	if (!orgId?.id) return { notFound: true }
+	if (!orgId?.id) {
+		return { notFound: true }
+	}
 
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId.id]),

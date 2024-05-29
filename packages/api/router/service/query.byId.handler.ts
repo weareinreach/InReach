@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TByIdSchema } from './query.byId.schema'
 import { select } from './selects'
 
-export const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
+const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
 	const result = await prisma.orgService.findUniqueOrThrow({
 		where: input,
 		select: {

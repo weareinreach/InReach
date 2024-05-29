@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "TranslationKey"
+	ADD COLUMN "active" BOOLEAN NOT NULL DEFAULT TRUE;

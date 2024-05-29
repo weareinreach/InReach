@@ -2,7 +2,7 @@ import { prisma } from '@weareinreach/db'
 import { getEnv } from '@weareinreach/env'
 import { superjson } from '@weareinreach/util/transformer'
 
-export const updateInactiveCountryEdgeConfig = async () => {
+const updateInactiveCountryEdgeConfig = async () => {
 	const active = await prisma.country.findMany({
 		where: { activeForOrgs: true },
 		select: { cca2: true },

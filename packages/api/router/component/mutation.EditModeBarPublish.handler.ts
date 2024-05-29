@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TEditModeBarPublishSchema } from './mutation.EditModeBarPublish.schema'
 
-export const EditModeBarPublish = async ({
+const EditModeBarPublish = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TEditModeBarPublishSchema, 'protected'>) => {
@@ -36,9 +36,12 @@ export const EditModeBarPublish = async ({
 				})
 				return result
 			}
+			default: {
+				throw new Error('Invalid input')
+			}
 		}
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default EditModeBarPublish

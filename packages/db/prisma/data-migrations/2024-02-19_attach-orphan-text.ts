@@ -1,8 +1,6 @@
-import { prisma } from '~db/client'
-import { isIdFor } from '~db/index'
-import { formatMessage } from '~db/prisma/common'
+import { isIdFor } from '~db/lib/idGen'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
-import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
+import { type JobDef } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
@@ -17,7 +15,8 @@ const jobDef: JobDef = {
  */
 export const job20240221_attach_orphan_text = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
-	task: async (_ctx, task) => {
+	task: async (ctx, task) => {
+		const { createLogger, formatMessage, jobPostRunner, prisma } = ctx
 		/** Create logging instance */
 		createLogger(task, jobDef.jobId)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))

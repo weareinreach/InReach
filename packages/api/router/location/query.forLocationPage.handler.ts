@@ -5,7 +5,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForLocationPageSchema } from './query.forLocationPage.schema'
 
-export const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSchema>) => {
+const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSchema>) => {
 	const location = await prisma.orgLocation.findUniqueOrThrow({
 		where: {
 			id: input.id,
@@ -24,12 +24,12 @@ export const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationP
 			longitude: true,
 			latitude: true,
 			description: globalSelect.freeText(),
-			attributes,
 			notVisitable: true,
 			reviews: {
 				where: { visible: true, deleted: false },
 				select: { id: true },
 			},
+			attributes,
 		},
 	})
 	return location

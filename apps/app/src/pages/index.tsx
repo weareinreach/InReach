@@ -312,12 +312,14 @@ const Home: NextPageWithOptions = () => {
 										</Carousel.Slide>
 									) : (
 										reviews.map(({ user, reviewText, verifiedUser, createdAt, id }) => {
-											if (!reviewText) return null
+											if (!reviewText) {
+												return null
+											}
 											const props = {
 												user,
 												reviewText,
-												reviewDate: createdAt,
 												verifiedUser,
+												reviewDate: createdAt,
 											}
 											return (
 												<Carousel.Slide key={id}>
@@ -350,11 +352,9 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 		ssg.review.getFeatured.prefetch(3),
 	])
 
-	// await ssg.review.getFeatured.prefetch(3)
 	return {
 		props: {
 			trpcState: ssg.dehydrate(),
-			// ...(await getServerSideTranslations(locale, ['common', 'landingPage', 'attribute'])),
 			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		},
 		revalidate: 60 * 60 * 24, // 24 hours

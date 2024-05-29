@@ -1,9 +1,9 @@
 import {
-	type ButtonProps,
 	type ButtonStylesNames,
 	createStyles,
 	type CSSObject,
 	Button as MantineButton,
+	type ButtonProps as MantineButtonProps,
 	type MantineTheme,
 	rem,
 } from '@mantine/core'
@@ -11,7 +11,7 @@ import { type PolymorphicComponentProps } from '@mantine/utils'
 import { merge } from 'merge-anything'
 import { forwardRef, type JSX, type ReactNode } from 'react'
 
-import { type variantNames } from '~ui/theme/variants'
+import { type VariantNames } from '~ui/theme/variants'
 
 const buttonVariants: ButtonVariants = (theme, params) => {
 	switch (params.variant) {
@@ -24,29 +24,6 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				inner: {
 					color: theme.other.colors.secondary.white,
-					label: {
-						left: `calc(${theme.spacing.md} * 2)`,
-					},
-					leftIcon: {
-						display: 'none',
-					},
-				},
-			}
-		case 'outline':
-			return {
-				root: {
-					paddingLeft: `calc(${theme.spacing.md} * 2)`,
-					paddingRight: `calc(${theme.spacing.md} * 2)`,
-					height: `calc(${theme.spacing.lg} * 2)`,
-					border: theme.other.border.default,
-					borderColor: theme.other.colors.tertiary.coolGray,
-					backgroundColor: theme.other.colors.secondary.white,
-					'&:not([data-disabled])': theme.fn.hover({
-						backgroundColor: theme.other.colors.primary.lightGray,
-					}),
-				},
-				inner: {
-					color: theme.other.colors.secondary.black,
 					label: {
 						left: `calc(${theme.spacing.md} * 2)`,
 					},
@@ -75,6 +52,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 			}
+		case 'outline':
 		case 'secondary':
 			return {
 				root: {
@@ -186,13 +164,13 @@ const customVariants = [
 	'accent-icon',
 ] as const
 
-export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', CustomButtonProps>>(
+export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', ButtonProps>>(
 	(props, ref) => {
 		const isCustom = (customVariants as ReadonlyArray<string>).includes(props.variant ?? 'filled')
 
 		const { classes: baseClasses } = useVariantStyles({ variant: props.variant ?? 'filled' })
 
-		const { children, variant, classNames, ...others } = props as ButtonProps
+		const { children, variant, classNames, ...others } = props as MantineButtonProps
 
 		const mantineVariant = isCustom ? undefined : (variant as ButtonVariant)
 
@@ -214,12 +192,8 @@ Button.displayName = '@weareinreach/ui/components/core/Button'
 interface ButtonStylesParams {
 	variant?: CustomVariants | 'filled' | 'outline'
 }
-// type MantineButtonProps = Pick<
-// 	ButtonProps,
-// 	'type' | 'fullWidth' | 'uppercase' | 'loaderProps' | 'loaderPosition'
-// >
 
-interface CustomButtonProps extends ButtonProps {
+export interface ButtonProps extends MantineButtonProps {
 	/** Button style/design */
 	variant?: CustomVariants | 'filled' | 'outline'
 	/** Label Text */
@@ -232,7 +206,7 @@ interface CustomButtonProps extends ButtonProps {
 	fullWidth?: boolean
 	loading?: boolean
 }
-type CustomVariants = (typeof customVariants)[number] | keyof (typeof variantNames)['Button']
+type CustomVariants = (typeof customVariants)[number] | keyof VariantNames['Button']
 type ButtonVariant = ButtonProps['variant']
 type CustomButtonStyles = Partial<{ [className in ButtonStylesNames]: CSSObject }>
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => CustomButtonStyles

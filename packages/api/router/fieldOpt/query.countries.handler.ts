@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCountriesSchema } from './query.countries.schema'
 
-export const countries = async ({ input }: TRPCHandlerParams<TCountriesSchema>) => {
+const countries = async ({ input }: TRPCHandlerParams<TCountriesSchema>) => {
 	const { where } = input ?? {}
 	const result = await prisma.country.findMany({
 		where,

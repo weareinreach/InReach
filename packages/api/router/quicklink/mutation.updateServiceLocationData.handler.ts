@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateServiceLocationDataSchema } from './mutation.updateServiceLocationData.schema'
 
-export const updateServiceLocationData = async ({
+const updateServiceLocationData = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TUpdateServiceLocationDataSchema, 'protected'>) => {

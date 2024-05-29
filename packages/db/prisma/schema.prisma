@@ -3,6 +3,12 @@ generator client {
   previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views", "driverAdapters", "nativeDistinct", "relationJoins"]
 }
 
+generator aws {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views", "driverAdapters", "nativeDistinct", "relationJoins"]
+  binaryTargets   = ["linux-arm64-openssl-3.0.x"]
+}
+
 // generator zod {
 //   provider               = "zod-prisma-types"
 //   output                 = "../zod-schemas"
@@ -151,6 +157,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   //@@schema("user")
+  Suggestion Suggestion[]
 
   @@index([userTypeId])
 }
@@ -997,6 +1004,7 @@ model Attribute {
   requireData       Boolean                        @default(false)
   requireDataSchema AttributeSupplementDataSchema? @relation(fields: [requiredSchemaId], references: [id])
   requiredSchemaId  String?
+  canAttachTo       AttributeAttachment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1005,6 +1013,13 @@ model Attribute {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
+}
+
+enum AttributeAttachment {
+  ORGANIZATION
+  LOCATION
+  SERVICE
+  USER
 }
 
 enum FilterType {
@@ -1062,6 +1077,7 @@ model AttributeSupplementDataSchema {
   name       String
   active     Boolean @default(true)
   definition Json
+  schema     Json
   // entryComponent String?
 
   createdAt DateTime @default(now())
@@ -1219,9 +1235,11 @@ model Suggestion {
   id String @id @default(cuid())
 
   data           Json
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  organizationId String?
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
   handled        Boolean?
+  suggestedBy    User?        @relation(fields: [suggestedById], references: [id])
+  suggestedById  String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1432,7 +1450,8 @@ model TranslationNamespace {
 
   attributeCategories AttributeCategory[]
 
-  exportFile Boolean @default(true)
+  exportFile            Boolean @default(true)
+  overwriteFileOnExport Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1456,6 +1475,8 @@ model TranslationKey {
   ns        String
 
   crowdinId Int?
+
+  active Boolean @default(true)
 
   // to manage plurals & ordinals
   interpolation       InterpolationOptions?
@@ -2297,6 +2318,8 @@ view AttributesByCategory {
   requireBoolean      Boolean
   requireData         Boolean
   dataSchemaName      String?
+  formSchema          Json?
+  canAttachTo         AttributeAttachment[]
   dataSchema          Json?
 
   @@unique([categoryId, attributeId])

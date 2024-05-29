@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetSchema } from './query.get.schema'
 
-export const get = async ({ input }: TRPCHandlerParams<TGetSchema>) => {
+const get = async ({ input }: TRPCHandlerParams<TGetSchema>) => {
 	const { id, orgLocationId, organizationId, serviceId } = input
 
 	const result = await prisma.orgEmail.findMany({
@@ -44,7 +44,7 @@ export const get = async ({ input }: TRPCHandlerParams<TGetSchema>) => {
 			...record,
 			description: description?.tsKey?.text,
 			locations: locations.map(({ location }) => ({ ...location })),
-			organization: organization.map(({ organization }) => ({ ...organization })),
+			organization: organization.map(({ organization: nestedOrganization }) => ({ ...nestedOrganization })),
 			title: titleId,
 			services: services.map(({ service }) => ({
 				id: service.id,

@@ -1,21 +1,12 @@
-import {
-	Box,
-	type ButtonProps,
-	createPolymorphicComponent,
-	Group,
-	Modal,
-	Stack,
-	Text,
-	Title,
-} from '@mantine/core'
+import { Box, createPolymorphicComponent, Group, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
-import { forwardRef, useEffect } from 'react'
+import { forwardRef, type MouseEventHandler, useCallback, useEffect, useMemo } from 'react'
 
 import { Breadcrumb, type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
-import { Button } from '~ui/components/core/Button'
+import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
@@ -36,21 +27,37 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [session, status, autoLaunch])
 
-		const titleProps = (
-			noClose
-				? {
-						option: 'back',
-						backTo: 'none',
-						onClick: () => router.back(),
-					}
-				: {
-						option: 'close',
-						onClick: () => {
-							if (typeof onClose === 'function') onClose()
-							handler.close()
-						},
-					}
-		) satisfies BreadcrumbProps
+		const handleClose = useCallback(() => {
+			if (onClose instanceof Function) {
+				onClose()
+			}
+			if (!noClose) {
+				handler.close()
+			}
+		}, [onClose, noClose, handler])
+
+		const handleOpen: MouseEventHandler<HTMLButtonElement> = useCallback(
+			(e) => {
+				e.stopPropagation()
+				handler.open()
+			},
+			[handler]
+		)
+
+		const titleProps = useMemo(
+			() =>
+				(noClose
+					? {
+							option: 'back',
+							backTo: 'none',
+							onClick: router.back,
+						}
+					: {
+							option: 'close',
+							onClick: handleClose,
+						}) satisfies BreadcrumbProps,
+			[router, noClose, handleClose]
+		)
 		const modalTitle = (
 			<Group position='apart' align='center' noWrap>
 				<Box maw='70%' style={{ overflow: 'hidden' }}>
@@ -61,12 +68,7 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 
 		return (
 			<>
-				<Modal
-					title={modalTitle}
-					opened={opened}
-					onClose={() => (noClose ? null : handler.close())}
-					fullScreen={isMobile}
-				>
+				<Modal title={modalTitle} opened={opened} onClose={handleClose} fullScreen={isMobile}>
 					<Stack align='center' spacing={24}>
 						<Stack align='center' spacing={16}>
 							<Trans
@@ -104,24 +106,14 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
 					</Stack>
 				</Modal>
-				{!autoLaunch && (
-					<Box
-						component='button'
-						ref={ref}
-						onClick={(e) => {
-							e.stopPropagation()
-							handler.open()
-						}}
-						{...props}
-					/>
-				)}
+				{!autoLaunch && <Box component={Button} ref={ref} onClick={handleOpen} {...props} />}
 			</>
 		)
 	}
 )
 QuickPromotionModalBody.displayName = 'QuickPromotionModal'
 
-export const QuickPromotionModal = createPolymorphicComponent<'button', QuickPromotionModalProps>(
+export const QuickPromotionModal = createPolymorphicComponent<typeof Button, QuickPromotionModalProps>(
 	QuickPromotionModalBody
 )
 

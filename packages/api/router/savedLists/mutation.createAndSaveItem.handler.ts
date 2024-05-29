@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateAndSaveItemSchema } from './mutation.createAndSaveItem.schema'
 
-export const createAndSaveItem = async ({
+const createAndSaveItem = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TCreateAndSaveItemSchema, 'protected'>) => {

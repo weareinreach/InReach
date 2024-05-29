@@ -1,6 +1,7 @@
 import { MantineProvider, Stack, Text, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { type Route } from 'nextjs-routes'
+import { useCallback, useMemo } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { Link } from '~ui/components/core/Link'
@@ -22,7 +23,7 @@ const getHref: GetHref = ({ slug, locationId }) => {
 }
 type SlugOnly = {
 	slug: string
-	locationId?: undefined
+	locationId?: never
 }
 type LocationAndSlug = {
 	slug: string
@@ -33,15 +34,25 @@ export const useGoogleMapMarker = () => {
 	const router = useRouter()
 	const variant = useCustomVariant()
 	const { mapIsReady, infoWindow, marker, map } = useGoogleMaps()
-	return {
-		get(id: string) {
-			return marker.get(id)
-		},
-		add({ id, lat, lng, name, address, slug, locationId }: AddMarkerParams) {
-			if (!mapIsReady) throw new Error('map is not ready')
+	const markerInfoBoxLinkClickHandler = useCallback(
+		({ slug, locationId }: SlugOnly | LocationAndSlug) =>
+			() =>
+				router.push(getHref({ slug, locationId })),
+		[router]
+	)
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const getMarker = useCallback((id: string) => marker.get(id), [])
+	const addMarker = useCallback(
+		({ id, lat, lng, name, address, slug, locationId }: AddMarkerParams) => {
+			if (!mapIsReady) {
+				throw new Error('map is not ready')
+			}
+
 			const position = new google.maps.LatLng({ lat, lng })
 			const newMarker = marker.get(id) ?? new google.maps.marker.AdvancedMarkerElement()
 
+			// console.trace('adding new marker', name, position.toString())
 			newMarker.map = map
 			newMarker.position = position
 
@@ -55,7 +66,7 @@ export const useGoogleMapMarker = () => {
 						{slug ? (
 							<Link
 								variant={variant.Link.inlineUtil1}
-								onClick={() => router.push(getHref({ slug, locationId }))}
+								onClick={markerInfoBoxLinkClickHandler({ slug, locationId })}
 							>
 								<Title order={3}>{name}</Title>
 							</Link>
@@ -75,17 +86,31 @@ export const useGoogleMapMarker = () => {
 			marker.set(id, newMarker)
 			return newMarker
 		},
-		remove(markerId: string) {
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[infoWindow, map, mapIsReady, markerInfoBoxLinkClickHandler]
+	)
+
+	const removeMarker = useCallback(
+		(markerId: string) => {
 			const markerItem = marker.get(markerId)
-			if (!markerItem) return false
+			if (!markerItem) {
+				return false
+			}
 			markerItem.map = null
 			google.maps.event.clearInstanceListeners(markerItem)
 			marker.remove(markerId)
 			return true
 		},
-	}
-}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	)
+	const markerFns = useMemo(
+		() => ({ get: getMarker, add: addMarker, remove: removeMarker }),
+		[addMarker, getMarker, removeMarker]
+	)
 
+	return markerFns
+}
 interface AddMarkerParams {
 	id: string
 	lat: number

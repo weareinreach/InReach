@@ -7,9 +7,9 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"aws:db:generate": "prisma generate --schema ../db/prisma/schema.prisma",
-		"build:aws": "./build.sh",
-		"bundle": "ncc build ./src/index.ts -s  -a -d",
+		"aws:db:generate": "prisma generate --schema ../../packages/db/prisma/schema.prisma --generator aws",
+		"build:aws": "sam build --build-in-source",
+		"bundle": "ncc build ./src/index.ts -s -a -d --target es2020",
 		"clean:dist": "rm -fr dist",
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"deploy:aws": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://bundle.zip",
@@ -18,24 +18,24 @@
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
 		"package": "cd dist && zip -r bundle.zip *",
-		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
+		"prune-clients": "find ./dist/client -type f -not -name '*libquery_engine-linux-arm64-openssl-*' -delete -print"
 	},
 	"dependencies": {
 		"@aws-lambda-powertools/logger": "1.18.1",
-		"@prisma/client": "5.11.0",
+		"@prisma/client": "5.14.0",
 		"@weareinreach/db": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.136",
-		"@types/eslint": "8.56.6",
-		"@types/node": "20.11.30",
+		"@types/aws-lambda": "8.10.138",
+		"@types/eslint": "8.56.10",
+		"@types/node": "20.12.12",
 		"@vercel/ncc": "0.38.1",
 		"@weareinreach/config": "workspace:*",
-		"@weareinreach/eslint-config": "0.100.0",
+		"@weareinreach/eslint-config": "workspace:*",
 		"aws-lambda": "1.0.7",
 		"eslint": "8.57.0",
 		"prettier": "3.2.5",
-		"prisma": "5.11.0",
-		"typescript": "5.4.3"
+		"prisma": "5.14.0",
+		"typescript": "5.4.5"
 	}
 }

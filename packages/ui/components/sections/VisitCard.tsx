@@ -2,6 +2,7 @@ import { Card, createStyles, rem, Stack, Text, Title, useMantineTheme } from '@m
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
+import invariant from 'tiny-invariant'
 
 import { Badge } from '~ui/components/core/Badge'
 import { GoogleMap } from '~ui/components/core/GoogleMap'
@@ -14,8 +15,8 @@ import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { validateIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-export const VisitCard = (props: VisitCardProps) =>
-	props.edit ? <VisitCardEdit {...props} /> : <VisitCardDisplay {...props} />
+export const VisitCard = ({ edit = false, ...props }: VisitCardProps & { edit?: boolean }) =>
+	edit ? <VisitCardEdit {...props} /> : <VisitCardDisplay {...props} />
 
 const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	const { isMobile } = useScreenSize()
@@ -29,28 +30,44 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	const { data } = api.location.forVisitCard.useQuery(locationId)
 
 	const formattedAddress = useFormattedAddress(data)
+
 	useEffect(() => {
-		if (data && data.latitude && data.longitude && data.name && formattedAddress && mapIsReady && map) {
-			mapMarker.add({
-				id: locationId,
-				lat: data.latitude,
-				lng: data.longitude,
-				name: data.name,
-				address: formattedAddress,
-				map: map,
-			})
+		if (map && mapIsReady) {
+			const lat = data?.latitude
+			const lng = data?.longitude
+			const name = data?.name
+			try {
+				invariant(lat)
+				invariant(lng)
+				invariant(name)
+				invariant(formattedAddress)
+
+				mapMarker.add({
+					map,
+					lat,
+					lng,
+					name,
+					id: locationId,
+					address: formattedAddress,
+				})
+				return () => {
+					mapMarker.remove(locationId)
+				}
+			} catch (error) {
+				console.error(error)
+				return void 0
+			}
 		}
-		return () => {
-			mapMarker.remove(locationId)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, formattedAddress, map, mapIsReady])
+		return () => void 0
+	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId, mapMarker])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
 	// )
 
-	if (!data) return null
+	if (!data) {
+		return null
+	}
 
 	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
@@ -94,13 +111,14 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 
 	return isTablet ? body : <Card>{body}</Card>
 }
-// TODO: [IN-785] Create variant for Remote/Unpublished address
 
 const useEditStyles = createStyles((theme) => ({
 	overlay: {
 		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
 		borderRadius: rem(16),
 		margin: rem(-8),
+	},
+	overlayInner: {
 		padding: rem(8),
 	},
 }))
@@ -118,33 +136,52 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 	const formattedAddress = useFormattedAddress(data)
 	useEffect(() => {
-		if (data && data.latitude && data.longitude && data.name && formattedAddress && mapIsReady && map) {
-			mapMarker.add({
-				id: locationId,
-				lat: data.latitude,
-				lng: data.longitude,
-				name: data.name,
-				address: formattedAddress,
-				map: map,
-			})
+		if (map && mapIsReady) {
+			const { name, latitude: lat, longitude: lng } = data ?? {}
+			try {
+				invariant(lat)
+				invariant(lng)
+				invariant(name)
+				invariant(formattedAddress)
+
+				mapMarker.add({
+					map,
+					lat,
+					lng,
+					name,
+					id: locationId,
+					address: formattedAddress,
+				})
+				return () => {
+					mapMarker.remove(locationId)
+				}
+			} catch (error) {
+				console.error(error)
+				return void 0
+			}
 		}
-		return () => {
-			mapMarker.remove(locationId)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, formattedAddress, map, mapIsReady])
+		return () => void 0
+	}, [data, formattedAddress, map, mapIsReady, locationId, mapMarker])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
 	// )
 
-	if (!data) return null
+	if (!data) {
+		return null
+	}
 
 	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
 			<Title order={3}>{t('address', { context: data.remote ? 'physical' : undefined })}</Title>
-			<AddressDrawer locationId={locationId} external component={Link} variant={variants.Link.inlineInverted}>
-				<Text className={classes.overlay}>{formattedAddress}</Text>
+			<AddressDrawer
+				locationId={locationId}
+				external
+				component={Link}
+				variant={variants.Link.inlineInverted}
+				className={classes.overlay}
+			>
+				<Text className={classes.overlayInner}>{formattedAddress}</Text>
 			</AddressDrawer>
 			<GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />
 		</Stack>
@@ -165,20 +202,6 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 			{address}
 			{remoteSection}
 			<Hours parentId={locationId} edit />
-			{/* TODO: [IN-807] Validate accessibility data points before enabling.
-			<Stack spacing={12} align='flex-start'>
-				<Badge
-					variant='attribute'
-					tsNs='attribute'
-					tsKey='additional.wheelchair-accessible'
-					tProps={{ context: `${isAccessible}` }}
-					icon={isAccessible ? 'carbon:accessibility' : 'carbon:warning'}
-					style={{ marginLeft: 0 }}
-				/>
-				<Text variant={variants.Text.utility2}>
-					{t('accessible-building', { context: `${isAccessible}` })}
-				</Text>
-			</Stack> */}
 		</Stack>
 	)
 
@@ -187,6 +210,4 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 export interface VisitCardProps {
 	locationId: string
-	published?: boolean
-	edit?: boolean
 }

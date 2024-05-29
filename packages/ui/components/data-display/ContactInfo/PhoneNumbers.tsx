@@ -1,18 +1,21 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ReactElement } from 'react'
+import { type ReactElement, useCallback } from 'react'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { PhoneDrawer } from '~ui/components/data-portal/PhoneDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
+import { isExtension, parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
+import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useCommonStyles } from './common.styles'
 import { type PhoneNumbersProps } from './types'
+
+const formatNs = nsFormatter(['common', 'phone-type'])
 
 export const PhoneNumbers = ({ edit, ...props }: PhoneNumbersProps) =>
 	edit ? <PhoneNumbersEdit {...props} /> : <PhoneNumbersDisplay {...props} />
@@ -21,41 +24,40 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 	const output: ReactElement[] = []
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(orgId?.id ? ['common', 'phone-type', orgId.id] : ['common', 'phone-type'])
+	const { t } = useTranslation(formatNs(orgId?.id))
 	const variants = useCustomVariant()
 	const { data } = api.orgPhone.forContactInfo.useQuery({ parentId, locationOnly }, { enabled: !passedData })
 
-	const componentData = passedData ? passedData : data
+	const componentData = passedData ?? data
+	const getDescription = useCallback(
+		(description: FreeTextItem | null, phoneType: FreeTextItem | null) => {
+			if (description && orgId) {
+				return t(description.key, { ns: orgId.id, defaultValue: description.defaultText })
+			}
+			if (phoneType) {
+				return t(phoneType.key, { ns: 'phone-type' })
+			}
+			return null
+		},
+		[orgId, t]
+	)
 
-	if (!componentData?.length) return null
+	if (!componentData?.length) {
+		return null
+	}
 
 	for (const phone of componentData) {
 		const { country, ext, locationOnly: showLocationOnly, number, phoneType, primary, description } = phone
 		const parsedPhone = parsePhoneNumber(number, country)
-		if (!parsedPhone) continue
-		if (ext) parsedPhone.setExt(ext)
+		if (!parsedPhone || (locationOnly && !showLocationOnly)) {
+			continue
+		}
+		if (isExtension(ext)) {
+			parsedPhone.setExt(ext)
+		}
 		const dialURL = parsedPhone.getURI()
 		const phoneNumber = parsedPhone.formatNational()
-		if (direct) {
-			return (
-				<Stack spacing={12}>
-					<Title order={3}>{t('direct.phone')}</Title>
-					{isExternal(dialURL) ? (
-						<Link external href={dialURL} variant={variants.Link.inlineInverted}>
-							{phoneNumber}
-						</Link>
-					) : (
-						<Text>{phoneNumber}</Text>
-					)}
-				</Stack>
-			)
-		}
-		if (locationOnly && !showLocationOnly) continue
-		const desc = description
-			? t(description.key, { ns: orgId?.id, defaultValue: description.defaultText })
-			: phoneType?.key
-				? t(phoneType.key, { ns: 'phone-type' })
-				: undefined
+		const desc = getDescription(description, phoneType)
 
 		const item = (
 			<Stack spacing={4} key={phone.id}>
@@ -73,7 +75,7 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 	}
 	return (
 		<Stack spacing={12}>
-			<Title order={3}>{t('words.phone')}</Title>
+			<Title order={3}>{t(direct ? 'direct.phone' : 'words.phone')}</Title>
 			{output}
 		</Stack>
 	)
@@ -86,7 +88,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	const slug = useSlug()
 	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(orgId?.id ? ['common', 'phone-type', orgId.id] : ['common', 'phone-type'])
+	const { t } = useTranslation(formatNs(orgId?.id))
 	const { data } = api.orgPhone.forContactInfoEdit.useQuery({ parentId })
 	const isLocation = isIdFor('orgLocation', parentId)
 	const { data: linkablePhones } = api.orgPhone.getLinkOptions.useQuery(
@@ -98,19 +100,57 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	const linkToLocation = api.orgPhone.locationLink.useMutation({
 		onSuccess: () => apiUtils.orgPhone.invalidate(),
 	})
+	const getTextVariant = useCallback(
+		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {
+			const isValue = kind === 'value'
+			if (deleted) {
+				return isValue ? variants.Text.utility3darkGrayStrikethru : variants.Text.utility4darkGrayStrikethru
+			}
+			if (!published) {
+				return isValue ? variants.Text.utility3darkGray : variants.Text.utility4darkGray
+			}
+			return isValue ? variants.Text.utility3 : variants.Text.utility4
+		},
+		[
+			variants.Text.utility3,
+			variants.Text.utility3darkGray,
+			variants.Text.utility3darkGrayStrikethru,
+			variants.Text.utility4,
+			variants.Text.utility4darkGray,
+			variants.Text.utility4darkGrayStrikethru,
+		]
+	)
+	const getDescription = useCallback(
+		(description: FreeTextItem | null, phoneType: FreeTextItem | null) => {
+			if (description && orgId) {
+				return t(description.key, { ns: orgId.id, defaultValue: description.defaultText })
+			}
+			if (phoneType) {
+				return t(phoneType.key, { ns: 'phone-type' })
+			}
+			return null
+		},
+		[orgId, t]
+	)
+	const linkToLocationHandler = useCallback(
+		(orgLocationId: string, orgPhoneId: string) => () =>
+			linkToLocation.mutate({ orgLocationId, orgPhoneId, action: 'link' }),
+		[linkToLocation]
+	)
 	const output = data?.map((phone) => {
 		const { country, ext, number, phoneType, primary: _primary, description } = phone
 		const parsedPhone = parsePhoneNumber(number, country)
-		if (!parsedPhone) return null
-		if (ext) parsedPhone.setExt(ext)
+
+		if (!parsedPhone) {
+			return null
+		}
+		if (isExtension(ext)) {
+			parsedPhone.setExt(ext)
+		}
 
 		const phoneNumber = parsedPhone.formatNational()
 
-		const desc = description
-			? t(description.key, { ns: orgId?.id, defaultValue: description.defaultText })
-			: phoneType?.key
-				? t(phoneType.key, { ns: 'phone-type' })
-				: undefined
+		const desc = getDescription(description, phoneType)
 
 		const renderItem = () => {
 			switch (true) {
@@ -169,25 +209,10 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 			</Menu.Target>
 			<Menu.Dropdown>
 				{linkablePhones?.map(({ id, deleted, description, number, phoneType, published }) => {
-					const phoneTextVariant =
-						!published && deleted
-							? variants.Text.utility3darkGrayStrikethru
-							: deleted
-								? variants.Text.utility3darkGrayStrikethru
-								: variants.Text.utility3
-					const descTextVariant =
-						!published && deleted
-							? variants.Text.utility4darkGrayStrikethru
-							: deleted
-								? variants.Text.utility4darkGrayStrikethru
-								: variants.Text.utility4
+					const phoneTextVariant = getTextVariant('value', published, deleted)
+					const descTextVariant = getTextVariant('desc', published, deleted)
 					return (
-						<Menu.Item
-							key={id}
-							onClick={() =>
-								linkToLocation.mutate({ orgLocationId: parentId, orgPhoneId: id, action: 'link' })
-							}
-						>
+						<Menu.Item key={id} onClick={linkToLocationHandler(parentId, id)}>
 							<Group noWrap>
 								<Icon icon='carbon:link' />
 								<Stack spacing={0}>
@@ -228,4 +253,9 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 			</Stack>
 		</Stack>
 	)
+}
+
+type FreeTextItem = {
+	key: string
+	defaultText: string
 }

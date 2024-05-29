@@ -3,7 +3,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetByIdsSchema } from './query.getByIds.schema'
 
-export const getByIds = async ({ input }: TRPCHandlerParams<TGetByIdsSchema>) => {
+const getByIds = async ({ input }: TRPCHandlerParams<TGetByIdsSchema>) => {
 	const results = await prisma.orgReview.findMany({
 		where: {
 			id: {

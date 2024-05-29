@@ -27,7 +27,7 @@ const isVerbose = !!process.env.NEXT_VERBOSE
  */
 const getUrl = (path) => {
 	if (typeof path !== 'string') throw new Error('Path must be a string')
-	const parsedPath = path.charAt(0) === '/' ? path : `/${path}`
+	const parsedPath = path.startsWith('/') ? path : `/${path}`
 	if (typeof window !== 'undefined') return parsedPath // browser should use relative url
 	if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}${parsedPath}` // SSR should use vercel url
 	return `http://localhost:${process.env.PORT ?? 3000}${parsedPath}` // dev SSR should use localhost
@@ -48,7 +48,7 @@ const backendConfig = {
 		backend: HttpBackend,
 		backendOption: {
 			loadPath: getUrl('/locales/{{lng}}/{{ns}}.json'),
-			allowMultiLoading: true,
+			allowMultiLoading: false,
 		},
 	},
 }
@@ -91,11 +91,11 @@ const config = {
 	partialBundledLanguages: true,
 	nonExplicitSupportedLngs: true,
 	cleanCode: true,
-	// react: {
-	// 	useSuspense: false,
-	// 	bindI18nStore: 'added loaded',
-	// 	bindI18n: 'languageChanged loaded',
-	// },
+	react: {
+		useSuspense: false,
+		// 	bindI18nStore: 'added loaded',
+		// 	bindI18n: 'languageChanged loaded',
+	},
 
 	backend: isBrowser
 		? {
@@ -111,11 +111,8 @@ const config = {
 		skipOnVariables: false,
 		alwaysFormat: true,
 		format: (value, format) => {
-			switch (format) {
-				case 'lowercase': {
-					if (typeof value === 'string') return value.toLowerCase()
-					break
-				}
+			if (format === 'lowercase' && typeof value === 'string') {
+				return value.toLowerCase()
 			}
 			return value
 		},
