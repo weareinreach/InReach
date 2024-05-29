@@ -4,14 +4,19 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForServiceInfoCardSchema } from './query.forServiceInfoCard.schema'
 
-const forServiceInfoCard = async ({ input }: TRPCHandlerParams<TForServiceInfoCardSchema>) => {
+const forServiceInfoCard = async ({ input, ctx }: TRPCHandlerParams<TForServiceInfoCardSchema>) => {
+	const { parentId, isEditMode, remoteOnly } = input
+
+	const canSeeAll = isEditMode && ctx.session?.user
+	const recordVisiblity = { ...(!canSeeAll && globalWhere.isPublic()) }
+
 	const result = await prisma.orgService.findMany({
 		where: {
-			...globalWhere.isPublic(),
-			...(isIdFor('organization', input.parentId)
-				? { organization: { id: input.parentId, ...globalWhere.isPublic() } }
-				: { locations: { some: { location: { id: input.parentId, ...globalWhere.isPublic() } } } }),
-			...(input.remoteOnly
+			...recordVisiblity,
+			...(isIdFor('organization', parentId)
+				? { organization: { id: parentId, ...recordVisiblity } }
+				: { locations: { some: { location: { id: parentId, ...recordVisiblity } } } }),
+			...(remoteOnly
 				? { attributes: { some: { attribute: { active: true, tag: 'offers-remote-services' } } } }
 				: {}),
 			OR: [{ crisisSupportOnly: null }, { crisisSupportOnly: false }],
@@ -31,11 +36,14 @@ const forServiceInfoCard = async ({ input }: TRPCHandlerParams<TForServiceInfoCa
 				where: { attribute: { active: true, tag: 'offers-remote-services' } },
 				select: { attributeId: true },
 			},
+			published: true,
+			deleted: true,
 		},
 	})
 
-	const transformed = result.map(({ id, serviceName, services, attributes }) => ({
+	const transformed = result.map(({ id, serviceName, services, attributes, ...status }) => ({
 		id,
+		...status,
 		serviceName: serviceName
 			? { tsKey: serviceName.key, tsNs: serviceName.ns, defaultText: serviceName.tsKey.text }
 			: null,

@@ -15,5 +15,6 @@ export const ZUpsertSchema = z.object({
 			deletedVals: z.string().array().nullable(),
 		})
 		.optional(),
+	attachToLocation: prefixedId('orgLocation').optional(),
 })
 export type TUpsertSchema = z.infer<typeof ZUpsertSchema>
