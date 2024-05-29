@@ -92,6 +92,7 @@ export const variantNames: VariantNames = {
 		utility3: 'utility3',
 		utility4: 'utility4',
 		utility1darkGray: 'utility1darkGray',
+		utility1darkGrayStrikethru: 'utility1darkGrayStrikethru',
 		utility2darkGray: 'utility2darkGray',
 		utility3darkGray: 'utility3darkGray',
 		utility4darkGray: 'utility4darkGray',
