@@ -1,4 +1,4 @@
-import { Card, createStyles, Group, rem, Skeleton, Stack, Text } from '@mantine/core'
+import { Card, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
@@ -45,13 +45,25 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 
 	const { t } = useTranslation(namespaces)
 	const { classes } = useServiceSectionStyles()
-
+	const theme = useMantineTheme()
 	const variants = useCustomVariant()
 	const apiUtils = api.useUtils()
 
 	const preloadService = useCallback(
 		(serviceId: string) => () => apiUtils.service.forServiceModal.prefetch(serviceId),
 		[apiUtils.service.forServiceModal]
+	)
+	const getTextVariant = useCallback(
+		(published: boolean, deleted: boolean) => {
+			if (deleted) {
+				return variants.Text.utility1darkGrayStrikethru
+			}
+			if (!published) {
+				return variants.Text.utility1darkGray
+			}
+			return variants.Text.utility1
+		},
+		[variants]
 	)
 
 	return (
@@ -74,11 +86,19 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 						<>
 							{service.offersRemote && !hideRemoteBadges ? (
 								<Group spacing={8} align='center'>
-									<Text variant={variants.Text.utility1}>{serviceName}</Text>
+									{!service.published && (
+										<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
+									)}
+									<Text variant={getTextVariant(service.published, service.deleted)}>{serviceName}</Text>
 									<Badge.Remote />
 								</Group>
 							) : (
-								<Text variant={variants.Text.utility1}>{serviceName}</Text>
+								<Group spacing={8}>
+									{!service.published && (
+										<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
+									)}
+									<Text variant={getTextVariant(service.published, service.deleted)}>{serviceName}</Text>
+								</Group>
 							)}
 							<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
 						</>
@@ -120,11 +140,18 @@ type ServItem = {
 	tsKey: string
 	defaultText: string
 	offersRemote: boolean
+	published: boolean
+	deleted: boolean
 }
 
 export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: ServicesInfoCardProps) => {
 	const { isMobile } = useScreenSize()
-	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery({ parentId, remoteOnly })
+	const { isEditMode } = useEditMode()
+	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery({
+		parentId,
+		remoteOnly,
+		isEditMode,
+	})
 
 	if (isLoading || !services) {
 		return isMobile ? (
@@ -153,6 +180,8 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 					tsKey: service.serviceName?.tsKey,
 					defaultText: service.serviceName?.defaultText,
 					offersRemote: service.offersRemote,
+					published: service.published,
+					deleted: service.deleted,
 				})
 			)
 			serviceMap.set(key, serviceSet)
@@ -166,6 +195,8 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 						tsKey: service.serviceName?.tsKey,
 						defaultText: service.serviceName?.defaultText,
 						offersRemote: service.offersRemote,
+						published: service.published,
+						deleted: service.deleted,
 					}),
 				])
 			)
