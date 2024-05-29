@@ -200,7 +200,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 	)
 
 	const eligibilitySection = useMemo(() => {
-		if (!eligibility) {
+		if (!eligibility?.age && !eligibility?.requirements.length) {
 			return null
 		}
 		return (
@@ -224,24 +224,27 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 	}, [eligibility, t])
 
 	const languageSection = useMemo(
-		() => (
-			<Section.Divider title={t('service.languages')}>
-				{lang ? (
-					<Section.Sub title={t('service.languages')}>
-						<List>
-							{lang.map(({ id, childProps }) => (
-								<List.Item key={id} {...childProps} />
-							))}
-						</List>
-					</Section.Sub>
-				) : null}
-			</Section.Divider>
-		),
+		() =>
+			lang?.length ? (
+				<Section.Divider title={t('service.languages')}>
+					<List>
+						{lang.map(({ id, childProps }) => (
+							<List.Item key={id} {...childProps} />
+						))}
+					</List>
+				</Section.Divider>
+			) : null,
 		[lang, t]
 	)
 
-	const additionalInfoSection = useMemo(
-		() => (
+	const additionalInfoSection = useMemo(() => {
+		const hasItems = Boolean(miscWithIcons?.length) || Boolean(misc?.length)
+
+		if (!hasItems) {
+			return null
+		}
+
+		return (
 			<Section.Divider title={t('service.additional-info')}>
 				{Boolean(miscWithIcons?.length) && (
 					<Section.Sub key='miscbadges'>
@@ -260,9 +263,8 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 					</Section.Sub>
 				)}
 			</Section.Divider>
-		),
-		[misc, miscWithIcons, t]
-	)
+		)
+	}, [misc, miscWithIcons, t])
 
 	const publicTransitSection = useMemo(
 		() => (
