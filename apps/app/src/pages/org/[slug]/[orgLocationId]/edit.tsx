@@ -1,4 +1,4 @@
-import { createStyles, Grid, Stack, Tabs, Title } from '@mantine/core'
+import { createStyles, Grid, Group, Stack, Tabs, Title } from '@mantine/core'
 import { compareArrayVals } from 'crud-object-diff'
 import { type InferGetServerSidePropsType, type NextPage } from 'next'
 import Head from 'next/head'
@@ -12,15 +12,18 @@ import { z } from 'zod'
 import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
+import { Button } from '@weareinreach/ui/components/core'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover/hook-form'
+import { ServiceEditDrawer } from '@weareinreach/ui/components/data-portal/ServiceEditDrawer'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { useEditMode } from '@weareinreach/ui/hooks/useEditMode'
 import { useNewNotification } from '@weareinreach/ui/hooks/useNewNotification'
 import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
@@ -46,6 +49,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 }) => {
 	const apiUtils = api.useUtils()
 	const { t } = useTranslation()
+	const variants = useCustomVariant()
 	const router = useRouter<'/org/[slug]/[orgLocationId]'>()
 	const { query } = router.isReady ? router : { query: { slug: '', orgLocationId: '' } }
 	const { slug, orgLocationId } = query
@@ -86,7 +90,8 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 
 	const updateLocation = api.page.LocationEditUpdate.useMutation({
 		onSuccess: () => {
-			apiUtils.location.forLocationPageEdits.invalidate()
+			apiUtils.location.invalidate()
+			apiUtils.service.invalidate()
 			notifySave()
 		},
 	})
@@ -205,13 +210,19 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 								<Stack spacing={20} ref={servicesRef}>
 									<Stack spacing={8}>
 										<Title order={3}>{'Associate service(s) to this location'}</Title>
-										<MultiSelectPopover
-											label='Services available'
-											data={orgServices}
-											control={formMethods.control}
-											name='services'
-											indicateWhenDirty
-										/>
+										<Group noWrap position='apart'>
+											<MultiSelectPopover
+												label='Services available'
+												data={orgServices}
+												control={formMethods.control}
+												name='services'
+												indicateWhenDirty
+											/>
+											{/* eslint-disable-next-line i18next/no-literal-string */}
+											<ServiceEditDrawer createNew component={Button} variant={variants.Button.primarySm}>
+												Add new service
+											</ServiceEditDrawer>
+										</Group>
 									</Stack>
 									<Stack spacing={8}>
 										<Title order={3}>{'Associated services'}</Title>
