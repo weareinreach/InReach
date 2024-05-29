@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@sentry/integrations@<7.116.0': '@sentry/integrations@7.116.0'
+  '@sentry/integrations@<7.114.0': '@sentry/integrations@7.114.0'
   '@sentry/node@<7.116.0': '@sentry/node@7.116.0'
   '@tanstack/react-table@8.10.6': '@tanstack/react-table@8.16.0'
   better-sqlite3@<9: ^9.0.0
@@ -177,8 +177,8 @@ importers:
         specifier: 7.116.0
         version: 7.116.0
       '@sentry/integrations':
-        specifier: '@sentry/integrations@7.116.0'
-        version: link:@sentry/integrations@7.116.0
+        specifier: 7.114.0
+        version: 7.114.0
       '@sentry/nextjs':
         specifier: 7.116.0
         version: 7.116.0(encoding@0.1.13)(next@14.2.3(@opentelemetry/api@1.8.0)(@playwright/test@1.44.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.91.0(@swc/core@1.5.7))
@@ -4560,6 +4560,10 @@ packages:
 
   '@sentry/core@7.116.0':
     resolution: {integrity: sha512-J6Wmjjx+o7RwST0weTU1KaKUAlzbc8MGkJV1rcHM9xjNTWTva+nrcCM3vFBagnk2Gm/zhwv3h0PvWEqVyp3U1Q==}
+    engines: {node: '>=8'}
+
+  '@sentry/integrations@7.114.0':
+    resolution: {integrity: sha512-BJIBWXGKeIH0ifd7goxOS29fBA8BkEgVVCahs6xIOXBjX1IRS6PmX0zYx/GP23nQTfhJiubv2XPzoYOlZZmDxg==}
     engines: {node: '>=8'}
 
   '@sentry/integrations@7.116.0':
@@ -18364,6 +18368,13 @@ snapshots:
       '@sentry/types': 7.116.0
       '@sentry/utils': 7.116.0
 
+  '@sentry/integrations@7.114.0':
+    dependencies:
+      '@sentry/core': 7.114.0
+      '@sentry/types': 7.114.0
+      '@sentry/utils': 7.114.0
+      localforage: 1.10.0
+
   '@sentry/integrations@7.116.0':
     dependencies:
       '@sentry/core': 7.116.0
@@ -29400,7 +29411,7 @@ snapshots:
       '@faker-js/faker': 8.0.2
       '@loancrate/prisma-schema-parser': 2.0.0
       '@scaleleap/pg-format': 1.0.0
-      '@sentry/integrations': link:@sentry/integrations@7.116.0
+      '@sentry/integrations': link:@sentry/integrations@7.114.0
       '@sentry/node': link:@sentry/node@7.116.0
       '@snaplet/copycat': 5.0.0
       '@trpc/client': 10.29.1(@trpc/server@10.29.1)
