@@ -9,7 +9,7 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 	const { generateId } = ctx
 
 	const id = input.id ?? generateId('orgService')
-	const { published, deleted, organizationId: orgId } = input
+	const { published, deleted, organizationId: orgId, attachToLocation } = input
 
 	const hasServiceUpdates = Boolean(
 		input.services?.createdVals?.length ?? input.services?.deletedVals?.length
@@ -56,6 +56,7 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 				id,
 				deleted,
 				published,
+				organization: { connect: { id: orgId } },
 				...(input.services?.createdVals && {
 					services: {
 						createMany: {
@@ -66,6 +67,9 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 				}),
 				...(serviceName && { serviceName: { create: serviceName.upsert.create } }),
 				...(description && { description: { create: description.upsert.create } }),
+				...(attachToLocation && {
+					locations: { create: { location: { connect: { id: attachToLocation } } } },
+				}),
 			},
 			update: {
 				published,

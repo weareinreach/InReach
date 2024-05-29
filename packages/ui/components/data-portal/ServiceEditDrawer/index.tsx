@@ -16,12 +16,14 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { compareArrayVals } from 'crud-object-diff'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useCallback, useEffect, useMemo } from 'react'
+import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Textarea, TextInput } from 'react-hook-form-mantine'
+import { Checkbox, Textarea, TextInput } from 'react-hook-form-mantine'
 import invariant from 'tiny-invariant'
 
+import { generateId } from '@weareinreach/db/lib/idGen'
 import { Badge } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
@@ -165,9 +167,11 @@ interface AttributeEditWrapperProps {
 	editable?: boolean
 }
 
-const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>(
-	({ serviceId, ...props }, ref) => {
+const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
+	({ serviceId: passedServiceId, createNew, ...props }, ref) => {
 		const { id: organizationId } = useOrgInfo()
+		const router = useRouter()
+		const [serviceId, _setServiceId] = useState(passedServiceId ?? generateId('orgService'))
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
@@ -176,9 +180,31 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
 		const apiUtils = api.useUtils()
 		// #region Get existing data/populate form
-		const { data } = api.service.forServiceEditDrawer.useQuery(serviceId, {
+		const { data, error, isPlaceholderData } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
+			// enabled: !createNew,
+			placeholderData: {
+				accessDetails: [],
+				attributes: [],
+				deleted: false,
+				emails: [],
+				hours: {},
+				id: serviceId,
+				locations: [],
+				phones: [],
+				published: false,
+				serviceAreas: null,
+				services: [],
+				description: undefined,
+				name: undefined,
+			},
 		})
+
+		const isNew = !!createNew && (error?.data?.httpStatus === 404 || isPlaceholderData)
+		const attachToLocation = useMemo(
+			() => (typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : undefined),
+			[router.query.orgLocationId]
+		)
 		const form = useForm<TFormSchema>({
 			resolver: zodResolver(FormSchema),
 			values: data ? { ...data, organizationId: organizationId ?? '' } : undefined,
@@ -217,13 +243,18 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		)
 		const serviceUpsert = api.service.upsert.useMutation({
 			onSuccess: () => {
+				notifySave()
 				apiUtils.location.forLocationPageEdits.invalidate()
 				apiUtils.service.invalidate()
-				notifySave()
-				setTimeout(() => {
-					drawerHandler.close()
-					modalHandler.close()
-				}, 500)
+				if (isNew) {
+					apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
+				}
+				if (!isNew) {
+					setTimeout(() => {
+						drawerHandler.close()
+						modalHandler.close()
+					}, 500)
+				}
 			},
 		})
 
@@ -236,8 +267,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 				services: serviceChanges,
 				name: name?.text,
 				description: description?.text,
+				attachToLocation,
 			})
-		}, [data?.services, form, serviceUpsert])
+		}, [attachToLocation, data?.services, form, serviceUpsert])
 		const handleCloseAndDiscard = useCallback(() => {
 			form.reset()
 			drawerHandler.close()
@@ -346,8 +378,8 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const coverageModalSuccessHandler = useCallback(() => {
 			apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
 			apiUtils.service.forServiceModal.invalidate(serviceId)
-		}, [apiUtils.service.forServiceEditDrawer, apiUtils.service.forServiceModal, serviceId])
-		if (!data) {
+		}, [apiUtils, serviceId])
+		if (!data && !createNew) {
 			return null
 		}
 
@@ -360,13 +392,145 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 				})
 			: { getHelp: null, publicTransit: null }
 
-		const attributes = processAttributes({
-			attributes: data.attributes,
-			locale: i18n.resolvedLanguage ?? 'en',
-			isEditMode: true,
-			t,
-		})
-		const coverageModalServiceArea = data.serviceAreas?.id ?? { orgServiceId: serviceId }
+		const attributes = data
+			? processAttributes({
+					attributes: data.attributes,
+					locale: i18n.resolvedLanguage ?? 'en',
+					isEditMode: true,
+					t,
+				})
+			: {
+					clientsServed: {
+						srvfocus: [],
+						targetPop: [],
+					},
+					cost: [],
+					atCapacity: false,
+					eligibility: {
+						requirements: [],
+					},
+					lang: [],
+					misc: [],
+					miscWithIcons: [],
+				}
+		const coverageModalServiceArea = data?.serviceAreas?.id ?? { orgServiceId: serviceId }
+
+		const remainingDrawerBody =
+			data && !isNew ? (
+				<>
+					<Text variant={variants.Text.utility1}>Visibility Status</Text>
+					<Group noWrap>
+						<Checkbox name='published' control={form.control} label='Published' />
+						<Checkbox name='deleted' control={form.control} label='Deleted' />
+					</Group>
+					<Text variant={variants.Text.utility1}>Coverage Area</Text>
+					<Stack className={classes.dottedCard}>
+						{serviceAreas}
+						<CoverageArea
+							serviceArea={coverageModalServiceArea}
+							onSuccessAction={coverageModalSuccessHandler}
+							component={Button}
+							variant={variants.Button.secondarySm}
+						>
+							Add new service area
+						</CoverageArea>
+						{/* {Boolean(geoMap?.size) && } */}
+					</Stack>
+					<Section.Divider title={t('service.get-help')}>
+						{hasContactInfo(getHelp) && (
+							<ContactInfo passedData={getHelp} direct order={['phone', 'email', 'website']} />
+						)}
+						{publicTransit?.map(
+							(publicTransitProps) => publicTransitProps && <AttributeEditWrapper {...publicTransitProps} />
+						)}
+						{Boolean(Object.values(data?.hours ?? {}).length) && (
+							<Hours parentId={serviceId} label='service' data={data.hours} />
+						)}
+					</Section.Divider>
+					<Section.Divider title={t('service.clients-served')}>
+						<Section.Sub title={t('service.community-focus')}>
+							{attributes.clientsServed.srvfocus.map(({ childProps, ...wrapperProps }) => (
+								<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+									<Badge.Community {...childProps} />
+								</AttributeEditWrapper>
+							))}
+						</Section.Sub>
+						<Section.Sub title={t('service.target-population')}>
+							{attributes.clientsServed.targetPop.map(({ childProps, ...wrapperProps }) => (
+								<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+									<ModalText {...childProps} />
+								</AttributeEditWrapper>
+							))}
+						</Section.Sub>
+					</Section.Divider>
+					<Section.Divider title={t('service.cost')}>
+						{attributes.cost.map(({ badgeProps, detailProps, ...wrapperProps }) => (
+							<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+								<Stack align='start' spacing={0}>
+									{badgeProps && <Badge.Attribute {...badgeProps} />}
+									{detailProps && <ModalText {...detailProps} />}
+								</Stack>
+							</AttributeEditWrapper>
+						))}
+					</Section.Divider>
+					<Section.Divider title={t('service.eligibility')}>
+						<Section.Sub title={t('service.ages')}>
+							{attributes.eligibility.age && (
+								<AttributeEditWrapper
+									key={attributes.eligibility.age.id}
+									id={attributes.eligibility.age.id}
+									active={attributes.eligibility.age.active}
+									editable
+								>
+									<ModalText>{attributes.eligibility.age.children}</ModalText>
+								</AttributeEditWrapper>
+							)}
+						</Section.Sub>
+						<Section.Sub title={t('service.requirements')}>
+							{attributes.eligibility.requirements.map(({ childProps, ...wrapperProps }) => (
+								<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+									{childProps.children}
+								</AttributeEditWrapper>
+							))}
+						</Section.Sub>
+					</Section.Divider>
+					<Section.Divider title={t('service.languages')}>
+						<Section.Sub title={t('service.languages')}>
+							{attributes.lang.map(({ childProps, ...wrapperProps }) => (
+								<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+									<ModalText {...childProps} />
+								</AttributeEditWrapper>
+							))}
+						</Section.Sub>
+					</Section.Divider>
+					<Section.Divider title={t('service.extra-info')}>
+						<Section.Sub key='miscbadges'>
+							<Badge.Group withSeparator={false}>
+								{attributes.miscWithIcons.map(
+									({ badgeProps, ...wrapperProps }) =>
+										badgeProps && (
+											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+												<Badge.Attribute {...badgeProps} />
+											</AttributeEditWrapper>
+										)
+								)}
+							</Badge.Group>
+						</Section.Sub>
+						<Section.Sub key='misc' title={t('service.additional-info')}>
+							{attributes.misc.map(
+								({ detailProps, ...wrapperProps }) =>
+									detailProps && (
+										<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+											{detailProps.children}
+										</AttributeEditWrapper>
+									)
+							)}
+						</Section.Sub>
+					</Section.Divider>
+				</>
+			) : (
+				<Text>Click 'Save' to create service and to add further details.</Text>
+			)
 
 		return (
 			<>
@@ -381,8 +545,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 										component={Button}
 										variant={variants.Button.secondaryLg}
 										leftIcon={<Icon icon='carbon:add-filled' />}
-										parentRecord={{ serviceId: data.id }}
+										parentRecord={{ serviceId }}
 										attachesTo={['SERVICE']}
+										disabled={!data && isNew}
 									>
 										Add Attribute
 									</AttributeModal>
@@ -420,126 +585,25 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									<Text variant={variants.Text.utility1}>Services</Text>
 									<ServiceSelect name='services' control={form.control} data-isDirty={dirtyFields.services}>
 										<Badge.Group>
-											{activeServices.map((activeServiceId) => {
-												const service = allServices?.find((s) => s.id === activeServiceId)
-												if (!service) {
-													return null
-												}
-												return (
-													<Badge.Service key={service.id}>
-														{t(service.tsKey, { ns: service.tsNs })}
-													</Badge.Service>
-												)
-											})}
+											{activeServices.length ? (
+												activeServices.map((activeServiceId) => {
+													const service = allServices?.find((s) => s.id === activeServiceId)
+													if (!service) {
+														return null
+													}
+													return (
+														<Badge.Service key={service.id}>
+															{t(service.tsKey, { ns: service.tsNs })}
+														</Badge.Service>
+													)
+												})
+											) : (
+												<Badge.Service>Click to add service tag(s)</Badge.Service>
+											)}
 										</Badge.Group>
 									</ServiceSelect>
 								</Stack>
-
-								<Text variant={variants.Text.utility1}>Coverage Area</Text>
-								<Stack className={classes.dottedCard}>
-									{serviceAreas}
-									<CoverageArea
-										serviceArea={coverageModalServiceArea}
-										onSuccessAction={coverageModalSuccessHandler}
-										component={Button}
-										variant={variants.Button.secondarySm}
-									>
-										Add new service area
-									</CoverageArea>
-									{/* {Boolean(geoMap?.size) && } */}
-								</Stack>
-								<Section.Divider title={t('service.get-help')}>
-									{hasContactInfo(getHelp) && (
-										<ContactInfo passedData={getHelp} direct order={['phone', 'email', 'website']} />
-									)}
-									{publicTransit?.map(
-										(publicTransitProps) =>
-											publicTransitProps && <AttributeEditWrapper {...publicTransitProps} />
-									)}
-									{Boolean(Object.values(data.hours).length) && (
-										<Hours parentId={serviceId} label='service' data={data.hours} />
-									)}
-								</Section.Divider>
-								<Section.Divider title={t('service.clients-served')}>
-									<Section.Sub title={t('service.community-focus')}>
-										{attributes.clientsServed.srvfocus.map(({ childProps, ...wrapperProps }) => (
-											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-												<Badge.Community {...childProps} />
-											</AttributeEditWrapper>
-										))}
-									</Section.Sub>
-									<Section.Sub title={t('service.target-population')}>
-										{attributes.clientsServed.targetPop.map(({ childProps, ...wrapperProps }) => (
-											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-												<ModalText {...childProps} />
-											</AttributeEditWrapper>
-										))}
-									</Section.Sub>
-								</Section.Divider>
-								<Section.Divider title={t('service.cost')}>
-									{attributes.cost.map(({ badgeProps, detailProps, ...wrapperProps }) => (
-										<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-											<Stack align='start' spacing={0}>
-												{badgeProps && <Badge.Attribute {...badgeProps} />}
-												{detailProps && <ModalText {...detailProps} />}
-											</Stack>
-										</AttributeEditWrapper>
-									))}
-								</Section.Divider>
-								<Section.Divider title={t('service.eligibility')}>
-									<Section.Sub title={t('service.ages')}>
-										{attributes.eligibility.age && (
-											<AttributeEditWrapper
-												key={attributes.eligibility.age.id}
-												id={attributes.eligibility.age.id}
-												active={attributes.eligibility.age.active}
-												editable
-											>
-												<ModalText>{attributes.eligibility.age.children}</ModalText>
-											</AttributeEditWrapper>
-										)}
-									</Section.Sub>
-									<Section.Sub title={t('service.requirements')}>
-										{attributes.eligibility.requirements.map(({ childProps, ...wrapperProps }) => (
-											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-												{childProps.children}
-											</AttributeEditWrapper>
-										))}
-									</Section.Sub>
-								</Section.Divider>
-								<Section.Divider title={t('service.languages')}>
-									<Section.Sub title={t('service.languages')}>
-										{attributes.lang.map(({ childProps, ...wrapperProps }) => (
-											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-												<ModalText {...childProps} />
-											</AttributeEditWrapper>
-										))}
-									</Section.Sub>
-								</Section.Divider>
-								<Section.Divider title={t('service.extra-info')}>
-									<Section.Sub key='miscbadges'>
-										<Badge.Group withSeparator={false}>
-											{attributes.miscWithIcons.map(
-												({ badgeProps, ...wrapperProps }) =>
-													badgeProps && (
-														<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-															<Badge.Attribute {...badgeProps} />
-														</AttributeEditWrapper>
-													)
-											)}
-										</Badge.Group>
-									</Section.Sub>
-									<Section.Sub key='misc' title={t('service.additional-info')}>
-										{attributes.misc.map(
-											({ detailProps, ...wrapperProps }) =>
-												detailProps && (
-													<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-														{detailProps.children}
-													</AttributeEditWrapper>
-												)
-										)}
-									</Section.Sub>
-								</Section.Divider>
+								{remainingDrawerBody}
 							</Stack>
 						</Drawer.Body>
 						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
@@ -571,13 +635,17 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 )
 _ServiceEditDrawer.displayName = 'ServiceEditDrawer'
 
-export const ServiceEditDrawer = createPolymorphicComponent<'button', ServiceEditDrawerProps>(
-	_ServiceEditDrawer
-)
+export const ServiceEditDrawer = createPolymorphicComponent<'button', ServiceDrawerProps>(_ServiceEditDrawer)
 
 interface ServiceEditDrawerProps extends ButtonProps {
 	serviceId: string
+	createNew?: never
 }
+interface ServiceNewDrawerProps extends ButtonProps {
+	createNew: true
+	serviceId?: never
+}
+type ServiceDrawerProps = ServiceEditDrawerProps | ServiceNewDrawerProps
 
 interface ServiceAreaItemProps {
 	serviceId: string
