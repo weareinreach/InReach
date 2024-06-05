@@ -731,8 +731,8 @@ importers:
         specifier: 5.0.7
         version: 5.0.7
       remeda:
-        specifier: 1.61.0
-        version: 1.61.0
+        specifier: 2.0.4
+        version: 2.0.4
       slugify:
         specifier: 1.6.6
         version: 1.6.6
@@ -12533,6 +12533,9 @@ packages:
 
   remeda@1.61.0:
     resolution: {integrity: sha512-caKfSz9rDeSKBQQnlJnVW3mbVdFgxgGWQKq1XlFokqjf+hQD5gxutLGTTY2A/x24UxVyJe9gH5fAkFI63ULw4A==}
+
+  remeda@2.0.4:
+    resolution: {integrity: sha512-EbR83P0ni4AQqtHxiRBlLCpnb2oMHkvEn4epuQ1w3r1pjO51oDytiZFqUplnEjFUTizgm74gJCeThluNDsl20g==}
 
   remove-accents@0.4.2:
     resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
@@ -29064,6 +29067,10 @@ snapshots:
       unist-util-visit: 2.0.3
 
   remeda@1.61.0: {}
+
+  remeda@2.0.4:
+    dependencies:
+      type-fest: 4.19.0
 
   remove-accents@0.4.2: {}
 
