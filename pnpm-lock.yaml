@@ -1061,6 +1061,9 @@ importers:
       eslint:
         specifier: 8.57.0
         version: 8.57.0
+      fast-xml-parser:
+        specifier: 4.4.0
+        version: 4.4.0
       flat:
         specifier: 6.0.1
         version: 6.0.1
@@ -1091,6 +1094,9 @@ importers:
       listr2:
         specifier: 8.2.1
         version: 8.2.1
+      log-update:
+        specifier: 6.0.0
+        version: 6.0.0
       luxon:
         specifier: 3.4.4
         version: 3.4.4
@@ -1151,6 +1157,9 @@ importers:
       typescript:
         specifier: 5.4.5
         version: 5.4.5
+      xliff:
+        specifier: 6.2.1
+        version: 6.2.1
       zod-prisma-types:
         specifier: 3.1.8
         version: 3.1.8
@@ -8273,6 +8282,10 @@ packages:
     resolution: {integrity: sha512-B9/wizE4WngqQftFPmdaMYlXoJlJOYxGQOanC77fq9k8+Z0v5dDSVh+3glErdIROP//s/jgb7ZuxKfB8nVyo0g==}
     hasBin: true
 
+  fast-xml-parser@4.4.0:
+    resolution: {integrity: sha512-kLY3jFlwIYwBNDojclKsNAC12sfD6NwW74QB2CoNGPvtVxjliYehVunB3HYyNi+n4Tt1dAcgwYvmKF/Z18flqg==}
+    hasBin: true
+
   fastest-levenshtein@1.0.16:
     resolution: {integrity: sha512-eRnCtTTtGZFpQCwhJiUOuxPQWRXVKYDn0b2PeHfXL6/Zi53SLAzAHfVhVWK2AryC/WH05kGfxhFIPvTF0SXQzg==}
     engines: {node: '>= 4.9.1'}
@@ -14394,6 +14407,13 @@ packages:
   xdg-basedir@5.1.0:
     resolution: {integrity: sha512-GCPAHLvrIH13+c0SuacwvRYj2SxJXQ4kaVTT5xgL3kPrz56XxkF21IGhjSE1+W0aw7gpBWRGXLCPnPby6lSpmQ==}
     engines: {node: '>=12'}
+
+  xliff@6.2.1:
+    resolution: {integrity: sha512-uLdfmBHCG4ftZdgLHhzP7qFTt8/pOv4Hpr1lWcX0HKLZdvhu5f7zThLlPFHnXH7mHbFT+6LCaf82UB3zbLpweQ==}
+
+  xml-js@1.6.11:
+    resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
+    hasBin: true
 
   xml2js@0.6.2:
     resolution: {integrity: sha512-T4rieHaC1EXcES0Kxxj4JWgaUQHDk+qwHcYOCFHfiwKz7tOVPLq7Hjq9dM1WCMhylqMEfP7hMcOIChvotiZegA==}
@@ -23578,6 +23598,10 @@ snapshots:
     dependencies:
       strnum: 1.0.5
 
+  fast-xml-parser@4.4.0:
+    dependencies:
+      strnum: 1.0.5
+
   fastest-levenshtein@1.0.16: {}
 
   fastq@1.17.1:
@@ -31132,6 +31156,14 @@ snapshots:
       bufferutil: 4.0.8
 
   xdg-basedir@5.1.0: {}
+
+  xliff@6.2.1:
+    dependencies:
+      xml-js: 1.6.11
+
+  xml-js@1.6.11:
+    dependencies:
+      sax: 1.3.0
 
   xml2js@0.6.2:
     dependencies:
