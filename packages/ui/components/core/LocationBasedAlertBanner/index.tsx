@@ -12,7 +12,19 @@ const useStyles = createStyles((theme) => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
-		// width: '100vw',
+	},
+
+	primaryContainer: {
+		[theme.fn.smallerThan('sm')]: {
+			// marginTop: rem(0),
+			// marginBottom: rem(0),
+		},
+	},
+
+	secondaryContainer: {
+		[theme.fn.smallerThan('sm')]: {
+			// Add specific styles for secondary alert if needed
+		},
 	},
 
 	primary: {
@@ -22,14 +34,11 @@ const useStyles = createStyles((theme) => ({
 		justifyContent: 'center',
 		textAlign: 'center',
 		width: '100vw',
-		borderRadius: 0, // Square corners for primary
-		padding: 0, // No horizontal padding for primary
+		borderRadius: 0,
+		padding: 0,
 		...theme.other.utilityFonts.utility1,
 		position: 'sticky',
-		marginTop: rem(-20),
-		[theme.fn.smallerThan('lg')]: {
-			marginTop: rem(-40),
-		},
+		marginTop: rem(-10),
 
 		'&[data-alert-level="INFO_PRIMARY"]': {
 			backgroundColor: theme.other.colors.secondary.cornflower,
@@ -38,13 +47,10 @@ const useStyles = createStyles((theme) => ({
 			},
 		},
 		'&[data-alert-level="WARN_PRIMARY"]': {
-			backgroundColor: theme.other.colors.tertiary.pink,
-			span: {
-				color: theme.other.colors.secondary.white,
-			},
+			backgroundColor: theme.fn.lighten(theme.other.colors.tertiary.pink, 0.7),
 		},
 		'&[data-alert-level="CRITICAL_PRIMARY"]': {
-			backgroundColor: theme.other.colors.tertiary.red,
+			backgroundColor: theme.other.colors.tertiary.pink,
 			span: {
 				color: theme.other.colors.secondary.white,
 			},
@@ -52,97 +58,27 @@ const useStyles = createStyles((theme) => ({
 	},
 	secondary: {
 		width: '100%',
+		height: 'unset',
+		borderRadius: rem(10),
+		padding: `${rem(8)} ${rem(12)}`,
+		marginBottom: rem(10),
 		'&[data-alert-level="INFO_SECONDARY"]': {
+			height: 'unset',
 			backgroundColor: theme.other.colors.secondary.cornflower,
-			// span: {
-			// 	color: theme.other.colors.secondary.white,
-			// },
-			borderRadius: rem(10), // Rounded corners for secondary
+			span: {
+				color: theme.other.colors.secondary.white,
+			},
 		},
 		'&[data-alert-level="WARN_SECONDARY"]': {
-			height: 'unset',
-			backgroundColor: theme.other.colors.tertiary.pink,
-			// span: {
-			// 	...theme.other.utilityFonts.utility3,
-			// 	color: theme.other.colors.secondary.white,
-			// },
-			borderRadius: rem(8), // Rounded corners for secondary
-			padding: `${rem(8)} ${rem(12)}`,
+			backgroundColor: theme.fn.lighten(theme.other.colors.tertiary.pink, 0.7),
 		},
 		'&[data-alert-level="CRITICAL_SECONDARY"]': {
-			backgroundColor: theme.other.colors.tertiary.red,
-			// span: {
-			// 	color: theme.other.colors.secondary.black,
-			// },
-			borderRadius: rem(10), // Rounded corners for secondary
+			backgroundColor: theme.other.colors.tertiary.pink,
+			span: {
+				color: theme.other.colors.secondary.white,
+			},
 		},
 	},
-
-	// banner: {
-	// 	height: rem(52),
-	// 	display: 'flex',
-	// 	alignItems: 'center',
-	// 	justifyContent: 'center',
-	// 	textAlign: 'center',
-	// 	marginBottom: rem(4),
-	// 	padding: '0.5rem', // Add some padding by default
-	// 	borderRadius: rem(10), // Rounded corners for default style
-	// 	width: '100%',
-	// 	'&[data-alert-level="INFO_PRIMARY"]': {
-	// 		...theme.other.utilityFonts.utility1,
-	// 		backgroundColor: theme.other.colors.secondary.cornflower,
-	// 		span: {
-	// 			color: theme.other.colors.secondary.white,
-	// 		},
-	// 		width: '100vw', // Full width for primary
-	// 		borderRadius: 0, // Square corners for primary
-	// 		padding: 0, // No horizontal padding for primary
-	// 	},
-	// 	'&[data-alert-level="WARN_PRIMARY"]': {
-	// 		...theme.other.utilityFonts.utility1,
-	// 		backgroundColor: theme.other.colors.tertiary.pink,
-	// 		span: {
-	// 			color: theme.other.colors.secondary.black,
-	// 		},
-	// 		width: '100vw', // Full width for primary
-	// 		borderRadius: 0, // Square corners for primary
-	// 		padding: 0, // No horizontal padding for primary
-	// 	},
-	// 	'&[data-alert-level="CRITICAL_PRIMARY"]': {
-	// 		...theme.other.utilityFonts.utility1,
-	// 		backgroundColor: theme.other.colors.tertiary.red,
-	// 		span: {
-	// 			color: theme.other.colors.secondary.white,
-	// 		},
-	// 		width: '100vw', // Full width for primary
-	// 		borderRadius: 0, // Square corners for primary
-	// 		padding: 0, // No horizontal padding for primary
-	// 	},
-	// 	'&[data-alert-level="INFO_SECONDARY"]': {
-	// 		backgroundColor: theme.other.colors.secondary.cornflower,
-	// 		// span: {
-	// 		// 	color: theme.other.colors.secondary.white,
-	// 		// },
-	// 		borderRadius: rem(10), // Rounded corners for secondary
-	// 	},
-	// 	'&[data-alert-level="WARN_SECONDARY"]': {
-	// 		height: 'unset',
-	// 		backgroundColor: theme.other.colors.tertiary.pink,
-	// 		// span: {
-	// 		// 	...theme.other.utilityFonts.utility3,
-	// 		// 	color: theme.other.colors.secondary.white,
-	// 		// },
-	// 		borderRadius: rem(8), // Rounded corners for secondary
-	// 		padding: `${rem(8)} ${rem(12)}`,
-	// 	},
-	// 	'&[data-alert-level="CRITICAL_SECONDARY"]': {
-	// 		backgroundColor: theme.other.colors.tertiary.red,
-	// 		// span: {
-	// 		// 	color: theme.other.colors.secondary.black,
-	// 		// },
-	// 		borderRadius: rem(10), // Rounded corners for secondary
-	// 	},
-	// },
 }))
 
 export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertBannerProps) => {
@@ -155,7 +91,7 @@ export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertB
 	})
 
 	return isLoading ? null : (
-		<div className={classes.alertContainer}>
+		<div className={`${classes.alertContainer} ${classes[type]}`}>
 			{locationBasedAlertBannerProps
 				?.filter((alertProps) => alertProps.level.toLowerCase().endsWith(type))
 				.map((alertProps) => (
