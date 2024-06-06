@@ -33,11 +33,11 @@
 		"privatePractice": "Частная практика",
 		"remote-tool-tip": "Удаленный доступ",
 		"service-tool-tip": "Услуги, предлагаемые данной организацией",
-		"unclaimed": "Unclaimed",
+		"unclaimed": "Не востребовано",
 		"unclaimed-tool-tip": "Эта организация еще не была подтверждена представителем. <link>Подтвердите эту организацию</link> для укрепления доверия нашим сообщества, обновите информацию об организации и многое другое.",
-		"verified-information": "Verified information",
-		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
-		"verified-reviewer": "InReach Verified Reviewer"
+		"verified-information": "Проверенная информация",
+		"verified-information-detail": "Информация на этой странице была последний раз обновлена {{dateString}}. InReach приоритизирует точность и безопасность пользователей и регулярно обновляет всю информацию. Для получения дополнительной информации о процессе проверки посетите нашу страницу на InReach.org.",
+		"verified-reviewer": "Проверенный рецензент InReach"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Вернуться к <u>{{page}}</u>",
@@ -53,6 +53,8 @@
 	"close": "Закрыть",
 	"confirm-account": {
 		"click-verify": "Нажмите здесь для подтверждения вашей учетной записи в InReach",
+		"code-requested": "Запрошен код подтверждения!",
+		"code-resent": "Был запрошен новый код. Пожалуйста, проверьте вашу электронную почту.",
 		"message": "Нажмите на ссылку для подтверждения вашей учетной записи",
 		"subject": "Подтвердите свой аккаунт"
 	},
@@ -116,7 +118,10 @@
 		"404-title": "Ошибка 404: Страница не найдена.",
 		"500-body": "К сожалению, в данный момент InReach недоступен из-за ошибки, которую мы уже пытаемся устранить. Пожалуйста, попробуйте зайти на сайт позже, или перейдите к ссылке ниже для поиска проверенных ресурсов ЛГБТК+ в вашем регионе.",
 		"500-title": "Ошибка 500: Что-то пошло не так.",
+		"code-expired": "Предоставленный код истек.",
+		"code-mismatch": "Указанный код неверен.",
 		"oh-no": "Ой!",
+		"resend-code": "Запросить новый код",
 		"try-again-text": "<Text>Что-то пошло не так! Пожалуйста, попробуйте еще раз.</Text>"
 	},
 	"exclude": "Убрать",

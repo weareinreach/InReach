@@ -53,6 +53,8 @@
 	"close": "Kapat",
 	"confirm-account": {
 		"click-verify": "inReach hesabınızı onaylamanızı doğrulamak için buraya tıklayın",
+		"code-requested": "Doğrulama kodu istendi!",
+		"code-resent": "Yeni bir kod talep edildi. Lütfen e-postanızı kontrol edin.",
 		"message": "Hesabınızı onaylamak için aşağıdaki bağlantıyı tıklayın:",
 		"subject": "Hesabınızı onaylayın"
 	},
@@ -114,7 +116,10 @@
 		"404-title": "404: Sayfa bulunamadı.",
 		"500-body": "Üzgünüz, sunucumuzda bir sorun çıktı. Lütfen daha sonra tekrar deneyin veya bölgenizdeki güvenli, doğrulanmış LGBTQ+kaynaklarını bulmak için aşağıdan bir arama başlatın.",
 		"500-title": "500: Bir şeyler ters gitti.",
+		"code-expired": "Sağlanan kodun süresi doldu.",
+		"code-mismatch": "Verilen kod geçerli değil.",
 		"oh-no": "Oh hayır!",
+		"resend-code": "Yeni bir kod isteyin",
 		"try-again-text": "<Text>Bir şeyler ters gitti! Lütfen tekrar deneyin.</Text>"
 	},
 	"exclude": "Hariç",

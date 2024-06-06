@@ -53,6 +53,8 @@
 	"close": "关闭",
 	"confirm-account": {
 		"click-verify": "单击此处验证您的 InReach 帐户",
+		"code-requested": "验证码已请求！",
+		"code-resent": "已请求新代码。请检查您的电子邮件。",
 		"message": "单击以下链接确认您的帐户：",
 		"subject": "确认您的帐户"
 	},
@@ -113,7 +115,10 @@
 		"404-title": "404: 找不到页面。",
 		"500-body": "很抱歉，我们的服务器出了点问题。请稍后重试，或在下方开始搜索，查找您所在地区的安全、经过验证的 LGBTQ+ 资源。",
 		"500-title": "500：出错了。",
+		"code-expired": "提供的代码已过期。",
+		"code-mismatch": "提供的代码无效。",
 		"oh-no": "哦不！",
+		"resend-code": "请求一个新代码",
 		"try-again-text": "<Text>出了点问题！请再试一次。</Text>"
 	},
 	"exclude": "排除",
