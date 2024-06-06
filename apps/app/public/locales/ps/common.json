@@ -53,6 +53,8 @@
 	"close": "بندول",
 	"confirm-account": {
 		"click-verify": "د خپل InREACH حساب تایید کولو لپاره دلته کلیک وکړئ",
+		"code-requested": "Verification code requested!",
+		"code-resent": "A new code has been requested. Please check your email.",
 		"message": "د خپل حساب تایید لپاره لاندې لینک کلیک وکړئ:",
 		"subject": "خپل حساب تایید کړئ"
 	},
@@ -114,7 +116,10 @@
 		"404-title": "404: Page not found.",
 		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
 		"500-title": "500: Something went wrong.",
+		"code-expired": "The code provided has expired.",
+		"code-mismatch": "The code provided is not valid.",
 		"oh-no": "اوه نه!",
+		"resend-code": "Request a new code",
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "خارج کړئ",
