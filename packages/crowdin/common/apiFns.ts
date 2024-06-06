@@ -77,14 +77,11 @@ export const createCommonFns = (client: CrowdinApi) => {
 			identifier,
 			text,
 		}
-		console.log(getProjectId(isDatabaseString), requestArgs)
 
 		const { data: response } = await client.sourceStringsApi.addString(
 			getProjectId(isDatabaseString),
 			requestArgs
 		)
-
-		console.log(response)
 		return response
 	}
 
