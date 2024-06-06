@@ -16,7 +16,7 @@
 	"alert-message-instructions": "경고 메시지 입력",
 	"alert-title-instructions": "메시지 제목을 입력하십시오...",
 	"alerts": {
-		"search-page-legislative-map": "이 <ATLink>트랜스 방지 입법 위험 지도</ATLink> 는 50개 주와 D.C. 전체의 트랜스젠더 금지법에 대한 2년 위험을 보여줍니다."
+		"search-page-legislative-map": "이 <ATLink>트랜스젠더 금지법 위험 지도</ATLink> 는 50개 주와 D.C. 전체의 트랜스젠더 금지법에 대한 2년 위험성을 보여줍니다."
 	},
 	"all-service-category": "모두 {{serviceCategory}}",
 	"anti-hate": {
@@ -24,7 +24,7 @@
 		"title": "증오 방지 약속"
 	},
 	"badge": {
-		"accessible-building_false": "이 건물은 휠체어로 출입 할수없습니다.",
+		"accessible-building_false": "이 건물은 휠체어로 출입이 불가능합니다.",
 		"accessible-building_true": "이 건물은 휠체어 출입이 가능합니다.",
 		"claimed": "주장함",
 		"claimed-tool-tip": "이 단체는 검증된 대리인에 의해 소유권을 주장했습니다.<br/><link1>더 알아보기.</link1>",
@@ -33,17 +33,17 @@
 		"privatePractice": "개인병원",
 		"remote-tool-tip": "원격으로 사용 가능합니다",
 		"service-tool-tip": "이 단체에서 제공하는 서비스.",
-		"unclaimed": "Unclaimed",
+		"unclaimed": "미청구",
 		"unclaimed-tool-tip": "이 단체는 아직 대리인에 의해 청구되지 않았습니다.<br/><link1>이 단체에 대한 주장</link1> 공동체와의 신뢰 구축, 자체 정보 업데이트와 더할수입니다.",
-		"verified-information": "Verified information",
-		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
-		"verified-reviewer": "InReach Verified Reviewer"
+		"verified-information": "검증된 정보",
+		"verified-information-detail": "본 페이지의 정보는 {{dateString}}을 마지막으로 업데이트되었습니다. InReach는 정확성과 유저의 안전을 최우선으로 생각하며 모든 정보를 정기적으로 업데이트합니다. 심사 과정에 대한 자세한 내용은, InReach.org의 심사 과정 페이지를 방문하세요.",
+		"verified-reviewer": "InReach 검증된 검토자"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "<u>{{page}}</u>로 돌아가기",
 		"back-to-search": "검색으로 돌아가기"
 	},
-	"can-help-people-in": "{{location}} 있는 사람들을 도와줄수 있습니다.",
+	"can-help-people-in": "{{location}} 있는 사람들을 도와줄 수 있습니다.",
 	"cancel": "취소",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 InReach에서 단체의 프로필 페이지를 주장하고 청중과 신뢰를 쌓습니다 </textUtility1>\n<textUtility1> ✍🏾 InReach에 대한 단체의 정보 업데이트 하십시오 </textUtility1>\n<textUtility1>📨 InReach에서 다른 직원을 단체에 가입시키십시오 </textUtility1>\n<textUtility1>🔑 InReach의 제휴 서비스 공급자를 위해 특별히 제작된 향후 기능에 대한 겁근 권한 획득</textUtility1>",
@@ -53,6 +53,8 @@
 	"close": "닫기",
 	"confirm-account": {
 		"click-verify": "InReach 계정 확인을 하려면 여기를 클릭하십시오.",
+		"code-requested": "인증 코드가 요청되었습니다!",
+		"code-resent": "새 코드가 요청되었습니다.이메일을 확인해 주세요.",
 		"message": "계정을 확인하려면 다음 링크를 클릭하십시오.",
 		"subject": "계정 확인하기"
 	},
@@ -113,7 +115,10 @@
 		"404-title": "404: 페이지를 찾을수 없습니다.",
 		"500-body": "죄송합니다. 서버에 문제가 생겼습니다. 나중에 다시 시도하거나 아래에서 검색을 시작하여 해당 지역에서 안전하고 검증된 LGBTQ+ 자원 찾아보세요.",
 		"500-title": "500: 뭔가 잘못됐습니다",
+		"code-expired": "제공된 코드가 만료되었습니다.",
+		"code-mismatch": "제공된 코드가 유효하지 않습니다.",
 		"oh-no": "악! 안돼요!",
+		"resend-code": "새 코드 요청",
 		"try-again-text": "<Text>뭔가 잘못됐습니다! 다시 시도해 주십시요.</Text>"
 	},
 	"exclude": "제외함",
@@ -198,7 +203,7 @@
 	"other-specify": "다른거 (명시 해주세요)",
 	"page-title": {
 		"base": "{{- title}} -InReach",
-		"edit-mode": "{{- title}} [편집 모드] - 인리치",
+		"edit-mode": "{{- title}} [편집 모드] - InReach",
 		"search-results": "검색 결과"
 	},
 	"password": "비밀번호",
@@ -425,13 +430,13 @@
 		"please-wait": "잠시만요...",
 		"prev": "이전",
 		"print": "프린트",
-		"publish": "출판하기",
+		"publish": "게시",
 		"restore": "복원",
 		"reverify": "재확인",
 		"review": "후기",
 		"reviews": "후기들",
 		"save": "저장",
-		"save-changes": "변경 저장",
+		"save-changes": "변경 사항 저장",
 		"saved": "저장됨",
 		"search": "검색",
 		"service-hours": "서비스한 시간",
@@ -440,7 +445,7 @@
 		"sign-up": "등록하기",
 		"skip": "넘어가기",
 		"support": "지원하기",
-		"unpublish": "출판하기 취소",
+		"unpublish": "게시 취소",
 		"website": "웹사이트",
 		"yes": "예"
 	},
