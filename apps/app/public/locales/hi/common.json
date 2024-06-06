@@ -53,6 +53,8 @@
 	"close": "बंद करें",
 	"confirm-account": {
 		"click-verify": "अपने इनरीच खाते की पुष्टि करने के लिए यहां क्लिक करें",
+		"code-requested": "Verification code requested!",
+		"code-resent": "A new code has been requested. Please check your email.",
 		"message": "अपने खाते की पुष्टि करने के लिए नीचे दिए गए लिंक पर क्लिक करें:",
 		"subject": "अपने अकाउंट की पुष्टि करें"
 	},
@@ -114,7 +116,10 @@
 		"404-title": "404: Page not found.",
 		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
 		"500-title": "500: Something went wrong.",
+		"code-expired": "The code provided has expired.",
+		"code-mismatch": "The code provided is not valid.",
 		"oh-no": "अरे नहीं!",
+		"resend-code": "Request a new code",
 		"try-again-text": "<Text>कुछ गलत हुआ! कृपया फिर से कोशिश करें।</Text>"
 	},
 	"exclude": "बाहर निकालें",

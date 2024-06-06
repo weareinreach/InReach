@@ -53,6 +53,8 @@
 	"close": "Fèmen",
 	"confirm-account": {
 		"click-verify": "Klike la verifye konfime kont InReach ou",
+		"code-requested": "Verification code requested!",
+		"code-resent": "A new code has been requested. Please check your email.",
 		"message": "Klike sou lyen sa a konfime kont ou:",
 		"subject": "Konfime kont ou"
 	},
@@ -114,7 +116,10 @@
 		"404-title": "404: Paj la pa jwenn.",
 		"500-body": "Nou regrèt, gen yon bagay ki ale mal ak sèvè nou an. Tanpri eseye ankò pita, oswa kòmanse yon rechèch anba a pou jwenn resous LGBTQ+ ki an sekirite ak verifye nan zòn ou an.",
 		"500-title": "500: Yon bagay ale mal.",
+		"code-expired": "The code provided has expired.",
+		"code-mismatch": "The code provided is not valid.",
 		"oh-no": "Oh non!",
+		"resend-code": "Request a new code",
 		"try-again-text": "<Text>Yon bagay ale mal! Tanpri eseye ankò.</Text>"
 	},
 	"exclude": "Ekskli",

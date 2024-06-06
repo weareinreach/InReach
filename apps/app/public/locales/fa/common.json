@@ -53,6 +53,8 @@
 	"close": "بستن",
 	"confirm-account": {
 		"click-verify": "برای تأیید حساب InReach خود اینجا را کلیک کنید",
+		"code-requested": "Verification code requested!",
+		"code-resent": "A new code has been requested. Please check your email.",
 		"message": "برای تأیید حساب کاربری خود روی لینک زیر کلیک کنید:",
 		"subject": "حساب کاربری خود را تأیید کنید"
 	},
@@ -114,7 +116,10 @@
 		"404-title": "404: صفحه یافت نشد.",
 		"500-body": "متأسفیم، مشکلی در سرور ما رخ داده است. لطفاً بعداً دوباره امتحان کنید یا جستجوی زیر را برای یافتن منابع امن و تأیید شده +LGBTQ در منطقه خود شروع کنید.",
 		"500-title": "500: مشکلی پیش آمده است.",
+		"code-expired": "The code provided has expired.",
+		"code-mismatch": "The code provided is not valid.",
 		"oh-no": "اوه نه",
+		"resend-code": "Request a new code",
 		"try-again-text": "<Text>مشکلی پیش آمده است! لطفا دوباره تلاش کنید.</Text>"
 	},
 	"exclude": "حذف کردن",

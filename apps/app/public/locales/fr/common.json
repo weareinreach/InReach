@@ -53,6 +53,8 @@
 	"close": "Fermer",
 	"confirm-account": {
 		"click-verify": "Cliquer ici pour vérifier votre compte d'InReach",
+		"code-requested": "Code de vérification demandé !",
+		"code-resent": "Un nouveau code a été demandé. Veuillez vérifier vos emails.",
 		"message": "Cliquer sur le lien suivant pour confirmer votre compte :",
 		"subject": "Confirmer votre compte"
 	},
@@ -114,7 +116,10 @@
 		"404-title": "404 : Page non trouvée.",
 		"500-body": "Nous sommes désolés, une erreur s'est produite avec notre serveur. Veuillez réessayer plus tard, ou lancer une recherche ci-dessous pour trouver des ressources LGBTQ+ sûres et vérifiées dans votre région.",
 		"500-title": "500: Une erreur s'est produite.",
+		"code-expired": "Le code fourni a expiré.",
+		"code-mismatch": "Le code fourni n'est pas valide.",
 		"oh-no": "Oh non !",
+		"resend-code": "Demander un nouveau code",
 		"try-again-text": "<Text>Une erreur s'est produite ! Veuillez réessayer.</Text>"
 	},
 	"exclude": "Exclure",
