@@ -6,12 +6,12 @@ import { type TCreateSchema } from './mutation.create.schema'
 
 const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
-	const { emails, phones, services, ...rest } = input
+	const { emails, phones, services, address, ...rest } = input
 	const serviceLinks = (
 		!services
 			? undefined
 			: createManyRequired(
-					services.map(({ serviceId }) => {
+					services.map((serviceId) => {
 						return { serviceId }
 					})
 				)
@@ -21,7 +21,7 @@ const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protecte
 		!emails
 			? undefined
 			: createManyRequired(
-					emails.map(({ orgEmailId }) => {
+					emails.map((orgEmailId) => {
 						return { orgEmailId }
 					})
 				)
@@ -30,16 +30,22 @@ const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protecte
 		!phones
 			? undefined
 			: createManyRequired(
-					phones.map(({ phoneId }) => {
+					phones.map((phoneId) => {
 						return { phoneId }
 					})
 				)
 	) satisfies Prisma.OrgLocationPhoneCreateNestedManyWithoutLocationInput | undefined
+	const addressData = address
+		? {
+				...address,
+				...createGeoFields({ longitude: address.longitude, latitude: address.latitude }),
+			}
+		: undefined
 
 	const createArgs = Prisma.validator<Prisma.OrgLocationCreateArgs>()({
 		data: {
 			...rest,
-			...createGeoFields({ longitude: rest.longitude, latitude: rest.latitude }),
+			...addressData,
 			emails: emailLinks,
 			phones: phoneLinks,
 			services: serviceLinks,

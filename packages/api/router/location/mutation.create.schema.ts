@@ -6,28 +6,24 @@ export const ZCreateSchema = z.object({
 	orgId: prefixedId('organization'),
 	id: prefixedId('orgLocation').optional(),
 	name: z.string().optional(),
-	street1: z.string(),
-	street2: z.string().optional(),
-	city: z.string(),
-	postCode: z.string().optional(),
-	primary: z.boolean().optional(),
-	govDistId: z.string(),
+	address: z
+		.object({
+			street1: z.string(),
+			street2: z.string().optional(),
+			city: z.string(),
+			postCode: z.string().optional(),
+			govDistId: z.string(),
+			longitude: z.number(),
+			latitude: z.number(),
+		})
+		.optional(),
 	countryId: z.string(),
-	longitude: z.number(),
-	latitude: z.number(),
+	primary: z.boolean().optional(),
+	notVisitable: z.boolean().default(false),
 	published: z.boolean().default(false),
-	emails: z
-		.object({ orgEmailId: prefixedId('orgEmail') })
-		.array()
-		.optional(),
-	phones: z
-		.object({ phoneId: prefixedId('orgPhone') })
-		.array()
-		.optional(),
-	services: z
-		.object({ serviceId: prefixedId('orgService') })
-		.array()
-		.optional(),
+	emails: prefixedId('orgEmail').array().optional(),
+	phones: prefixedId('orgPhone').array().optional(),
+	services: prefixedId('orgService').array().optional(),
 })
 
 export type TCreateSchema = z.infer<typeof ZCreateSchema>
