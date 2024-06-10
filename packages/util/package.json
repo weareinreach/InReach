@@ -17,7 +17,7 @@
 		"luxon": "3.4.4",
 		"social-links": "1.14.0",
 		"superjson": "2.2.1",
-		"tslog": "4.9.2"
+		"tslog": "4.9.3"
 	},
 	"devDependencies": {
 		"@types/luxon": "3.4.2",
