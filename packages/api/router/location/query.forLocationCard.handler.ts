@@ -26,6 +26,8 @@ const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCar
 				latitude: true,
 				longitude: true,
 				notVisitable: true,
+				published: true,
+				deleted: true,
 				country: { select: { cca2: true } },
 				govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
 				phones: {

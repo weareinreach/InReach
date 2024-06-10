@@ -17,7 +17,7 @@ import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant } from '~ui/hooks'
 import { useGoogleMapMarker } from '~ui/hooks/useGoogleMapMarker'
 import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
-import { type IconList } from '~ui/icon'
+import { Icon, type IconList } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const getAdminArea = (data: ApiOutput['location']['forLocationCard'] | undefined, t: TFunction) => {
@@ -69,7 +69,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 
 		return formatAddress({
 			addressLines: compact([data?.street1?.trim(), data?.street2?.trim()]),
-			locality: data?.city.trim(),
+			locality: data?.city?.trim(),
 			postalCode: data?.postCode ? data.postCode.trim() : undefined,
 			postalCountry: data?.country,
 			administrativeArea,
@@ -214,6 +214,16 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		}
 	}, [cardRef, createTweens])
 
+	const getTextVariant = useMemo(() => {
+		if (data?.deleted) {
+			return variants.Title.darkGrayStrikethru
+		}
+		if (!data?.published) {
+			return variants.Title.darkGray
+		}
+		return undefined
+	}, [data, variants])
+
 	const remoteReady = remoteOnly && remoteServices?.length && !remoteIsLoading
 
 	if (remoteReady) {
@@ -266,7 +276,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 
 	const formattedAddress = formatAddress({
 		addressLines: compact([data.street1?.trim(), data.street2?.trim()]),
-		locality: data.city.trim(),
+		locality: data.city?.trim(),
 		postalCode: data.postCode ? data.postCode.trim() : undefined,
 		postalCountry: data.country,
 		administrativeArea: adminArea,
@@ -290,7 +300,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 
 	const hasServices = Boolean(data.services.length)
 	const hasAttributes = Boolean(data.attributes.length)
-
+	console.log('title variant', getTextVariant)
 	return (
 		<Link
 			href={{
@@ -305,11 +315,19 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 			<Card w='100%' variant={variants.Card.hoverCoolGray} ref={cardRef}>
 				<Stack spacing={32}>
 					<Stack spacing={12}>
-						<Title order={2}>{data.name}</Title>
-						<List {...listProps}>
-							{!data.notVisitable && <List.Item>{formattedAddress}</List.Item>}
-							{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
-						</List>
+						<Group>
+							<Title order={2} variant={getTextVariant}>
+								{data.name}
+							</Title>
+							{!data.published && <Icon icon='carbon:view-off-filled' />}
+							{data.deleted && <Icon icon='carbon:trash-can' />}
+						</Group>
+						{((!data.notVisitable && formattedAddress) || formattedPhone) && (
+							<List {...listProps}>
+								{!data.notVisitable && <List.Item>{formattedAddress}</List.Item>}
+								{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
+							</List>
+						)}
 					</Stack>
 					{hasServices && (
 						<Stack spacing={12}>

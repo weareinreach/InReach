@@ -12,7 +12,7 @@ export const ZUpdateSchema = z
 				name: z.string(),
 				street1: z.string().nullish(),
 				street2: z.string().nullish(),
-				city: z.string(),
+				city: z.string().nullish(),
 				postCode: z.string().nullable(),
 				primary: z.boolean(),
 				mailOnly: z.boolean(),

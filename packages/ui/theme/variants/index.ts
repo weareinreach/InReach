@@ -7,6 +7,7 @@ import { Input } from './Input'
 import { List } from './List'
 import { Skeleton } from './Skeleton'
 import { Text } from './Text'
+import { Title } from './Title'
 import { Tooltip } from './Tooltip'
 
 export const variants = {
@@ -19,6 +20,7 @@ export const variants = {
 	List,
 	Skeleton,
 	Text,
+	Title,
 	Tooltip,
 } as const
 
@@ -105,6 +107,12 @@ export const variantNames: VariantNames = {
 		utility4darkGrayStrikethru: 'utility4darkGrayStrikethru',
 		utility4coolGray: 'utility4coolGray',
 		utility4coolGrayStrikethru: 'utility4coolGrayStrikethru',
+	},
+	Title: {
+		coolGray: 'coolGray',
+		coolGrayStrikethru: 'coolGrayStrikethru',
+		darkGray: 'darkGray',
+		darkGrayStrikethru: 'darkGrayStrikethru',
 	},
 	Tooltip: {
 		utility1: 'utility1',
