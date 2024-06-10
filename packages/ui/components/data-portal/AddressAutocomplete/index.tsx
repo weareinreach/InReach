@@ -86,9 +86,12 @@ export const AddressAutocomplete = <T extends AddressSchema>({ name }: AddressAu
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
 	const { t, i18n } = useTranslation(['attribute', 'gov-dist'])
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
-	const { data: govDistsByCountry } = api.fieldOpt.govDistsByCountryNoSub.useQuery(undefined, {
-		refetchOnWindowFocus: false,
-	})
+	const { data: govDistsByCountry } = api.fieldOpt.govDistsByCountryNoSub.useQuery(
+		{ activeForOrgs: true },
+		{
+			refetchOnWindowFocus: false,
+		}
+	)
 	const setFormValue = useCallback(
 		(fieldName: Path<AddressSchema>, value: unknown) => {
 			form.setValue<Path<AddressSchema>>(fieldName, value)

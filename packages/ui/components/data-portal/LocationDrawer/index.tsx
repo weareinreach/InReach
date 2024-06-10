@@ -27,11 +27,18 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	const form = useForm<TCreateSchema>({
 		resolver: zodResolver(ZCreateSchema),
 	})
-	const { data: govDistsByCountry } = api.fieldOpt.govDistsByCountryNoSub.useQuery(undefined, {
-		refetchOnWindowFocus: false,
-		select: (results) =>
-			results.map(({ id, flag, cca2 }) => ({ flag, value: id, label: countryTranslation.of(cca2) ?? cca2 })),
-	})
+	const { data: govDistsByCountry } = api.fieldOpt.govDistsByCountryNoSub.useQuery(
+		{ activeForOrgs: true },
+		{
+			refetchOnWindowFocus: false,
+			select: (results) =>
+				results.map(({ id, flag, cca2 }) => ({
+					flag,
+					value: id,
+					label: countryTranslation.of(cca2) ?? cca2,
+				})),
+		}
+	)
 	const createLocation = api.location.create.useMutation({
 		onSuccess: () => {
 			modalHandler.close()
