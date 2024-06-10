@@ -81,7 +81,7 @@ const FormSchema = z.object({
 			name: z.string().nullable(),
 			street1: z.string().nullish().transform(transformNullString),
 			street2: z.string().nullable().transform(transformNullString),
-			city: z.string(),
+			city: z.string().nullish(),
 			postCode: z.string().nullable().transform(transformNullString),
 			primary: z.coerce.boolean(),
 			mailOnly: z.boolean(),

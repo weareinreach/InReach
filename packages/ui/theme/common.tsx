@@ -857,6 +857,7 @@ export const commonTheme = {
 						},
 					},
 				}) satisfies Styles<'root', TitleStylesParams>,
+			variants: variants.Title,
 		},
 		Tooltip: {
 			defaultProps: {
