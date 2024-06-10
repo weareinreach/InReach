@@ -624,7 +624,7 @@ model OrgLocation {
   name     String?
   street1  String?
   street2  String?
-  city     String
+  city     String?
   postCode String?
   primary  Boolean @default(false)
 

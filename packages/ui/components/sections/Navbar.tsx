@@ -100,6 +100,7 @@ const EditModeBar = () => {
 	})
 	const publish = api.component.EditModeBarPublish.useMutation({
 		onSuccess: () => {
+			apiUtils.location.invalidate()
 			apiUtils.organization.invalidate()
 			apiUtils.component.EditModeBar.invalidate()
 			publishedNotification()
