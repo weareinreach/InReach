@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Drawer, Group, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
@@ -35,6 +34,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	})
 	const createLocation = api.location.create.useMutation({
 		onSuccess: () => {
+			modalHandler.close()
 			apiUtils.location.invalidate()
 			apiUtils.organization.invalidate()
 			setIsSaved(true)
@@ -93,7 +93,6 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 
 	return (
 		<FormProvider {...form}>
-			<DevTool control={form.control} placement='top-left' />
 			<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right'>
 				<Drawer.Overlay />
 				<Drawer.Content>
