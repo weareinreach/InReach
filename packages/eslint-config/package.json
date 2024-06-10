@@ -27,7 +27,7 @@
 		"eslint-formatter-github": "1.1.4",
 		"eslint-import-resolver-typescript": "3.6.1",
 		"eslint-plugin-codegen": "0.28.0",
-		"eslint-plugin-deprecation": "2.0.0",
+		"eslint-plugin-deprecation": "3.0.0",
 		"eslint-plugin-i18next": "6.0.3",
 		"eslint-plugin-import": "npm:eslint-plugin-i@2.29.1",
 		"eslint-plugin-node": "npm:eslint-plugin-n@16.6.2",
