@@ -1,6 +1,5 @@
 import './wdyr'
 import './font.css'
-import { type BADGE } from '@geometricpanda/storybook-addon-badges'
 import { type ViewportAddonParameter } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { type WhyDidYouRenderOptions } from '@welldone-software/why-did-you-render'
@@ -48,7 +47,6 @@ initializeMsw({
 
 const preview: Preview = {
 	parameters: {
-		actions: { argTypesRegex: '^on.*' },
 		layout: 'centered',
 		controls: {
 			matchers: {
@@ -82,10 +80,12 @@ const preview: Preview = {
 		i18n,
 		viewport,
 	},
+
 	globalTypes: {
 		...i18NextGlobalTypes,
 		pseudo: {},
 	},
+
 	decorators: [
 		WithGoogleMaps,
 		WithSearchState,
@@ -96,6 +96,7 @@ const preview: Preview = {
 		WithStrictMode,
 		WithWhyDidYouRender,
 	],
+
 	loaders: [mswLoader],
 }
 export default preview
@@ -104,7 +105,6 @@ declare module '@storybook/react' {
 	export interface Parameters {
 		actions?: {
 			disable?: boolean
-			argTypesRegex?: string | RegExp
 		}
 		nextjs?: {
 			router?: Partial<BaseRouter & { push: Router['push'] }>
@@ -115,7 +115,6 @@ declare module '@storybook/react' {
 		design?: DesignParams | DesignParams[]
 		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
 		nextAuthMock?: { session: keyof typeof authStates }
-		badges?: BADGE[]
 		layout?: 'centered' | 'fullscreen' | 'padded'
 		layoutWrapper?: LayoutsDecorator
 		disableStrictMode?: boolean

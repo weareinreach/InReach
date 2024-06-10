@@ -33,6 +33,7 @@ const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEditsSche
 					govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
 					notVisitable: true,
 				},
+				orderBy: [{ deleted: 'asc' }, { published: 'desc' }, { createdAt: 'desc' }],
 			},
 			attributes,
 		},
