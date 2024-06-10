@@ -22,7 +22,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	const apiUtils = api.useUtils()
 	const { i18n } = useTranslation()
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
-	const [isSaved, setSaved] = useState(false)
+	const [isSaved, setIsSaved] = useState(false)
 	const [drawerOpened, drawerHandler] = useDisclosure(false)
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const form = useForm<TCreateSchema>({
@@ -37,7 +37,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 		onSuccess: () => {
 			apiUtils.location.invalidate()
 			apiUtils.organization.invalidate()
-			setSaved(true)
+			setIsSaved(true)
 			notifySave()
 			setTimeout(() => drawerHandler.close(), 500)
 			form.reset()
@@ -66,7 +66,17 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 		const hasAddress = Object.keys(form.getValues('address') ?? {}).length > 0
 		const countryId = form.getValues('address.countryId')
 		if (isNotVisitable && hasAddress) {
-			form.setValue('address', undefined)
+			const blankAddress = {
+				street1: undefined,
+				street2: undefined,
+				city: undefined,
+				postCode: undefined,
+				govDistId: undefined,
+				longitude: undefined,
+				latitude: undefined,
+				countryId,
+			}
+			form.setValue('address', blankAddress)
 		}
 		if (isNotVisitable && countryId) {
 			form.setValue('address.countryId', countryId)
