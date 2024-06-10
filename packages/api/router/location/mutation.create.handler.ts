@@ -40,7 +40,7 @@ const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protecte
 				...address,
 				...createGeoFields({ longitude: address.longitude, latitude: address.latitude }),
 			}
-		: undefined
+		: address
 
 	const createArgs = Prisma.validator<Prisma.OrgLocationCreateArgs>()({
 		data: {

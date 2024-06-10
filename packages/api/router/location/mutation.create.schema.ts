@@ -5,7 +5,7 @@ import { prefixedId } from '~api/schemas/idPrefix'
 export const ZCreateSchema = z.object({
 	orgId: prefixedId('organization'),
 	id: prefixedId('orgLocation').optional(),
-	name: z.string().optional(),
+	name: z.string(),
 	address: z
 		.object({
 			street1: z.string(),
@@ -15,9 +15,10 @@ export const ZCreateSchema = z.object({
 			govDistId: z.string(),
 			longitude: z.number(),
 			latitude: z.number(),
+			countryId: z.string(),
 		})
-		.optional(),
-	countryId: z.string(),
+		.partial()
+		.required({ countryId: true }),
 	primary: z.boolean().optional(),
 	notVisitable: z.boolean().default(false),
 	published: z.boolean().default(false),
