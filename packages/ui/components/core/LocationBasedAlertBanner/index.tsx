@@ -70,7 +70,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertBannerProps) => {
-	const { classes } = useStyles()
+	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 
 	const { data: locationBasedAlertBannerProps, isLoading } = api.component.LocationBasedAlertBanner.useQuery({
@@ -78,10 +78,10 @@ export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertB
 		lon,
 	})
 
-	return isLoading ? null : (
-		<div className={`${classes.alertContainer} ${classes[type]}`}>
+	return isLoading || !locationBasedAlertBannerProps ? null : (
+		<div className={cx(classes.alertContainer, classes[type])}>
 			{locationBasedAlertBannerProps
-				?.filter((alertProps) => alertProps.level.toLowerCase().endsWith(type))
+				.filter((alertProps) => alertProps.level.toLowerCase().endsWith(type))
 				.map((alertProps) => (
 					<Box className={classes[type]} data-alert-level={alertProps.level} key={alertProps.id}>
 						<Text>
@@ -100,4 +100,4 @@ export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertB
 	)
 }
 
-type LocationBasedAlertBannerProps = { lat: number; lon: number; type: 'primary' | 'secondary' }
+export type LocationBasedAlertBannerProps = { lat: number; lon: number; type: 'primary' | 'secondary' }
