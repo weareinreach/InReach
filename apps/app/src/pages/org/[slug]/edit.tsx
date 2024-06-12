@@ -13,6 +13,7 @@ import { z } from 'zod'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
+import { LocationDrawer } from '@weareinreach/ui/components/data-portal/LocationDrawer'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
@@ -109,6 +110,8 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 							}}
 							edit
 						/>
+						{/* eslint-disable-next-line i18next/no-literal-string */}
+						<LocationDrawer>Create new Location</LocationDrawer>
 						<Stack spacing={40} w='100%'>
 							{locations.map((location) => (
 								<LocationCard key={location.id} locationId={location.id} edit />

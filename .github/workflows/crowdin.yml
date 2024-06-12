@@ -163,4 +163,6 @@ jobs:
         if: github.event_name == 'schedule'
         env:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-        run: crowdin distribution release ${{ secrets.CROWDIN_OTA_HASH }} --no-progress --verbose
+        run: |
+          crowdin distribution release ${{ secrets.CROWDIN_OTA_HASH }} --no-progress --verbose
+          crowdin distribution release ${{ secrets.CROWDIN_OTA_HASH_DB }} -i 24 --no-progress --verbose

@@ -5,21 +5,30 @@ import { z } from 'zod'
 import { Prisma } from '~db/client'
 import { GeoJSONPointSchema, latitude, longitude } from '~db/zod_util'
 
-export const createPoint = ({ longitude, latitude }: CreatePointArgs) => {
-	if (!longitude || !latitude) return 'JsonNull'
-	return point([longitude, latitude]).geometry
+export const createPoint = ({ longitude: lon, latitude: lat }: CreatePointArgs) => {
+	if (!lon || !lat) {
+		return 'JsonNull'
+	}
+	return point([lon, lat]).geometry
 }
-export const createPointOrNull = ({ longitude, latitude }: CreatePointArgs) => {
-	if (!longitude || !latitude) return Prisma.JsonNull
-	return point([longitude, latitude]).geometry
+export const createPointOrNull = ({ longitude: lon, latitude: lat }: CreatePointArgs) => {
+	if (!lon || !lat) {
+		return Prisma.JsonNull
+	}
+	return point([lon, lat]).geometry
 }
 
 const GeoSchema = z.object({ latitude, longitude })
 
-export const createGeoFields = ({ longitude, latitude }: CreatePointArgs, opts?: CreateGeoFieldsOpts) => {
-	const parsed = GeoSchema.safeParse({ latitude, longitude })
+export const createGeoFields = (
+	{ longitude: lon, latitude: lat }: CreatePointArgs,
+	opts?: CreateGeoFieldsOpts
+) => {
+	const parsed = GeoSchema.safeParse({ latitude: lat, longitude: lon })
 
-	if (!parsed.success) return {}
+	if (!parsed.success) {
+		return {}
+	}
 
 	const geom = point([parsed.data.longitude, parsed.data.latitude]).geometry
 

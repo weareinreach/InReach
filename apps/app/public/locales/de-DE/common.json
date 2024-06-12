@@ -53,6 +53,8 @@
 	"close": "Schließen",
 	"confirm-account": {
 		"click-verify": "Klicke hier, um deinen InReach Account zu bestätigen",
+		"code-requested": "Bestätigungscode angefordert!",
+		"code-resent": "Ein neuer Code wurde angefordert. Bitte überprüfen Sie Ihre E-Mail.",
 		"message": "Klicken Sie auf den folgenden Link, um Ihr Konto zu bestätigen:",
 		"subject": "Bestätigen Sie Ihr Konto"
 	},
@@ -114,7 +116,10 @@
 		"404-title": "404: Seite nicht gefunden.",
 		"500-body": "Es tut uns leid, etwas ist mit unserem Server schief gelaufen. Bitte versuchen Sie es später noch einmal, oder starten Sie eine Suche unten, um sichere, verifizierte LGBTQ+-Ressourcen in Ihrer Nähe zu finden.",
 		"500-title": "500: Etwas ist schiefgelaufen.",
+		"code-expired": "Der angegebene Code ist abgelaufen.",
+		"code-mismatch": "Der angegebene Code ist nicht gültig.",
 		"oh-no": "Oh no!",
+		"resend-code": "Neuen Code anfordern",
 		"try-again-text": "<Text>Etwas ist schiefgelaufen! Bitte versuchen Sie es erneut.</Text>"
 	},
 	"exclude": "Ausschließen",

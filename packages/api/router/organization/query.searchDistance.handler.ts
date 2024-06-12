@@ -295,14 +295,15 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 		)
 
 		locations.forEach(({ services: locationServices, city, ...coords }) => {
-			cities.push({
-				city,
-				dist: getDistance(
-					{ latitude, longitude },
-					{ latitude: coords.latitude ?? 0, longitude: coords.longitude ?? 0 },
-					1000
-				),
-			})
+			city &&
+				cities.push({
+					city,
+					dist: getDistance(
+						{ latitude, longitude },
+						{ latitude: coords.latitude ?? 0, longitude: coords.longitude ?? 0 },
+						1000
+					),
+				})
 			locationServices.forEach(({ service }) =>
 				service.services.forEach(({ tag, service: innerService }) => {
 					const { id, tsKey, tsNs, primaryCategory } = tag

@@ -39,30 +39,29 @@ const storybookConfig: StorybookConfig = {
 	],
 	addons: [
 		getAbsolutePath('@storybook/addon-essentials'),
-		getAbsolutePath('@geometricpanda/storybook-addon-badges'),
 		getAbsolutePath('@storybook/addon-a11y'),
 		getAbsolutePath('@storybook/addon-designs'),
 		getAbsolutePath('storybook-addon-pseudo-states'),
 		getAbsolutePath('@storybook/addon-interactions'),
-		'@storybook/addon-webpack5-compiler-swc',
+		getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
+
+		getAbsolutePath('@storybook/addon-mdx-gfm'),
+		getAbsolutePath('@chromatic-com/storybook'),
+
+		// This addon doesn't like to be wrapped.
 		// eslint-disable-next-line storybook/no-uninstalled-addons
-		'@tomfreudenberg/next-auth-mock/storybook', // This addon doesn't like to be wrapped.
+		'@tomfreudenberg/next-auth-mock/storybook',
 	],
 	framework: {
 		name: '@storybook/nextjs',
 		options: {
 			builder: {
 				lazyCompilation: Boolean(process.env.SB_LAZY),
-				fsCache: true, // Boolean(process.env.SB_CACHE),
-				useSWC: true,
+				fsCache: false, // Boolean(process.env.SB_CACHE),
 			},
 			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
-			fastRefresh: true,
 			strictMode: true,
 		},
-	},
-	features: {
-		buildStoriesJson: true,
 	},
 	typescript: {
 		check: false,
@@ -108,7 +107,12 @@ const storybookConfig: StorybookConfig = {
 			// devtool: options.configType === 'DEVELOPMENT' ? 'eval-source-map' : undefined,
 		}
 
-		/** I18 HMR */
+		config.module?.rules?.push({
+			test: /\.tsx?$/,
+			use: 'swc-loader',
+			exclude: /node_modules(?!\/@weareinreach)/,
+		})
+		// /** I18 HMR */
 		if (options.configType === 'DEVELOPMENT') {
 			const plugin = new I18NextHMRPlugin({
 				localesDir: path.resolve(__dirname, '../../../apps/app/public/locales'),
@@ -123,9 +127,7 @@ const storybookConfig: StorybookConfig = {
 		const mergedConfig = mergeAndConcat(config, configAdditions)
 		return mergedConfig
 	},
-	docs: {
-		autodocs: true,
-	},
+	docs: {},
 	env: isChromatic()
 		? {
 				SKIP_ENV_VALIDATION: 'true',

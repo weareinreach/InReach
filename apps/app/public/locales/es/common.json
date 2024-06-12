@@ -53,6 +53,8 @@
 	"close": "Cerrar",
 	"confirm-account": {
 		"click-verify": "Haz clic aquí para confirmar tu cuenta de InReach",
+		"code-requested": "¡Código de verificación solicitado!",
+		"code-resent": "Se ha solicitado un nuevo código. Por favor, comprueba tu correo electrónico.",
 		"message": "Haz clic en el siguiente enlace para confirmar tu cuenta:",
 		"subject": "Confirma tu cuenta"
 	},
@@ -114,7 +116,10 @@
 		"404-title": "404: Página no encontrada.",
 		"500-body": "Lo sentimos, algo salió mal con nuestro servidor. Por favor, inténtalo de nuevo más tarde, o inicia una búsqueda a continuación para encontrar recursos seguros y verificados de LGBTQ+ en tu área.",
 		"500-title": "500: Algo salió mal.",
+		"code-expired": "El código proporcionado ha caducado.",
+		"code-mismatch": "El código proporcionado no es válido.",
 		"oh-no": "Oh no!",
+		"resend-code": "Solicitar un nuevo código",
 		"try-again-text": "<Text>¡Algo salió mal! Por favor, inténtalo de nuevo.</Text>"
 	},
 	"exclude": "Excluir",
@@ -132,7 +137,7 @@
 		"share-feedback": "Compartir comentarios",
 		"subscribe-newsletter": "Suscríbete a nuestro boletín",
 		"suggest-org": "Sugerir una organización",
-		"tagline": "Busca recursos para personas LGBTQ+.<br/>\nEncuentra seguridad.<br/>\nBusca pertenecer.",
+		"tagline": "Busca recursos para personas LGBTQ+.<br/>\nLogra seguridad.<br/>\nEncuentra pertenecer.",
 		"vetting-process": "Proceso de selección"
 	},
 	"forgot-password": "¿Olvidaste la contraseña?",
