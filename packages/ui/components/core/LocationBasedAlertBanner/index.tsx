@@ -90,7 +90,7 @@ export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertB
 								ns={alertProps.ns}
 								defaults={alertProps.defaultText}
 								components={{
-									Link: <Link external variant={variants.Link.inheritStyle} target='_blank'></Link>,
+									Link: <Link external variant={variants.Link.inheritStyle} target='_blank' />,
 								}}
 							/>
 						</Text>
