@@ -178,16 +178,6 @@ const SearchResults = () => {
 		}
 	}, [data, loadingPage])
 
-	const [stateInUS, setStateInUS] = useState<string>('')
-
-	useEffect(() => {
-		if (searchState.searchTerm?.slice(-3) == 'USA') {
-			setStateInUS(searchState.searchTerm?.split(', ')[1] || '')
-		} else {
-			setStateInUS('')
-		}
-	}, [searchState.searchTerm])
-
 	useEffect(
 		() => {
 			if (typeof router.query.page === 'string' && searchState.page !== router.query.page) {
@@ -232,7 +222,7 @@ const SearchResults = () => {
 	return (
 		<>
 			<Head>
-				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
+				<title>{t('page-title.base', { ns: 'common', title: t('page-title.search-results') })}</title>
 			</Head>
 
 			<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
@@ -280,24 +270,12 @@ const SearchResults = () => {
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 				/>
 			</Grid.Col>
-			<>
-				<Grid.Col xs={12} sm={8} md={8}>
-					{data?.resultCount === 0 && crisisResults ? (
-						<NoResults crisisData={crisisResults} />
-					) : (
-						<>
-							<LocationBasedAlertBanner lat={lat} lon={lon} type='secondary' />
-							{resultDisplay}
-							<Pagination total={getSearchResultPageCount(data?.resultCount)} />
-						</>
-					)}
-				</Grid.Col>
-			</>
 			<Grid.Col xs={12} sm={8} md={8}>
 				{data?.resultCount === 0 && crisisResults ? (
 					<NoResults crisisData={crisisResults} />
 				) : (
 					<>
+						<LocationBasedAlertBanner lat={lat} lon={lon} type='secondary' />
 						{resultDisplay}
 						<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 					</>
