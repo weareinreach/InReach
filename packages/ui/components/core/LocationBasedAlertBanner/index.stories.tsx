@@ -9,7 +9,9 @@ const RenderWrapper = ({ lat, lon }: { lat: number; lon: number }) => {
 	const { data } = api.component.LocationBasedAlertBanner.useQuery({ lat, lon })
 
 	const item = data?.at(0)
-	if (!item) return 'No data returned by mock API...'
+	if (!item) {
+		return 'No data returned by mock API...'
+	}
 	const { id, ...props } = item
 	return (
 		<div style={{ marginTop: '4rem' }}>

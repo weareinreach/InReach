@@ -33,11 +33,11 @@ export const LocationBasedAlertBanner = async ({
 				text: {
 					tsKey: { key, ns, text },
 				},
-			}) => ({ id, level, i18nKey: key, ns, defaultText: text })
+			}) => ({ id, level, ns, i18nKey: key, defaultText: text })
 		)
 		return formatted
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default LocationBasedAlertBanner
