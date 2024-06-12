@@ -14,14 +14,6 @@ const useStyles = createStyles((theme) => ({
 		justifyContent: 'flex-start',
 	},
 
-	primaryContainer: {
-		[theme.fn.smallerThan('xl')]: {},
-	},
-
-	secondaryContainer: {
-		[theme.fn.smallerThan('sm')]: {},
-	},
-
 	primary: {
 		height: rem(52),
 		display: 'flex',

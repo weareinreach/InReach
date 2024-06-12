@@ -222,7 +222,7 @@ const SearchResults = () => {
 	return (
 		<>
 			<Head>
-				<title>{t('page-title.base', { ns: 'common', title: t('page-title.search-results') })}</title>
+				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
 
 			<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
