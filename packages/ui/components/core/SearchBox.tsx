@@ -225,7 +225,7 @@ export const SearchBox = ({
 	initialValue = '',
 	pinToLeft,
 	placeholderTextKey,
-	setSearchValue: setSearchValue,
+	setSearchValue,
 }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
