@@ -64,19 +64,6 @@ export const generateFreeText = <T extends GenerateFreeTextType>(args: GenerateF
 	}
 }
 
-interface GenerateFreeTextReturn {
-	translationKey: {
-		key: string
-		text: string
-		ns: string
-		crowdinId?: number
-	}
-	freeText: {
-		key: string
-		ns: string
-		id: string
-	}
-}
 export const generateNestedFreeText = <T extends GenerateFreeTextType>(
 	args: GenerateFreeTextParams<T>
 ): NestedCreateOne => {

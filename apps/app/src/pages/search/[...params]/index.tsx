@@ -1,6 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
 import {
-	Box,
 	createStyles,
 	Divider,
 	Grid,
@@ -16,9 +15,9 @@ import compare from 'just-compare'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { i18n, Trans, useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
-import { type JSX, memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { type JSX, memo, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
@@ -34,7 +33,6 @@ import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { Link } from '~ui/components/core/Link'
 
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>

@@ -1,7 +1,6 @@
 import { Box, createStyles, rem, Text } from '@mantine/core'
 import { Trans } from 'next-i18next'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { trpc as api } from '~ui/lib/trpcClient'
