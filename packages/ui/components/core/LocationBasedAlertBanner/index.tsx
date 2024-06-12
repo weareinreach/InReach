@@ -15,16 +15,11 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	primaryContainer: {
-		[theme.fn.smallerThan('sm')]: {
-			// marginTop: rem(0),
-			// marginBottom: rem(0),
-		},
+		[theme.fn.smallerThan('xl')]: {},
 	},
 
 	secondaryContainer: {
-		[theme.fn.smallerThan('sm')]: {
-			// Add specific styles for secondary alert if needed
-		},
+		[theme.fn.smallerThan('sm')]: {},
 	},
 
 	primary: {
@@ -39,6 +34,11 @@ const useStyles = createStyles((theme) => ({
 		...theme.other.utilityFonts.utility1,
 		position: 'sticky',
 		marginTop: rem(-10),
+
+		[theme.fn.smallerThan('xl')]: {
+			marginTop: rem(-15),
+			marginBottom: rem(0),
+		},
 
 		'&[data-alert-level="INFO_PRIMARY"]': {
 			backgroundColor: theme.other.colors.secondary.cornflower,
@@ -64,10 +64,7 @@ const useStyles = createStyles((theme) => ({
 		marginBottom: rem(10),
 		'&[data-alert-level="INFO_SECONDARY"]': {
 			height: 'unset',
-			backgroundColor: theme.other.colors.secondary.cornflower,
-			span: {
-				color: theme.other.colors.secondary.white,
-			},
+			backgroundColor: theme.fn.lighten(theme.other.colors.secondary.cornflower, 0.7),
 		},
 		'&[data-alert-level="WARN_SECONDARY"]': {
 			backgroundColor: theme.fn.lighten(theme.other.colors.tertiary.pink, 0.7),
