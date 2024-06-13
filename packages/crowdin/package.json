@@ -53,7 +53,7 @@
 	"devDependencies": {
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
-		"prettier": "3.3.1",
+		"prettier": "3.3.2",
 		"typescript": "5.4.5"
 	}
 }
