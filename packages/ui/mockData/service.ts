@@ -1,3 +1,4 @@
+import { type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 export const service = {
@@ -5,7 +6,7 @@ export const service = {
 		path: ['service', 'forServiceInfoCard'],
 		response: async () => {
 			const { default: data } = await import('./json/service.forServiceInfoCard.json')
-			return data
+			return data as ApiOutput['service']['forServiceInfoCard']
 		},
 	}),
 	forServiceModal: getTRPCMock({
