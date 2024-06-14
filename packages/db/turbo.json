@@ -1,18 +1,18 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
 	"extends": ["//"],
-	"pipeline": {
+	"tasks": {
 		"db:dataMigrate": {
 			"dependsOn": ["db:generate", "db:deploy"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
 			"inputs": ["./prisma/data-migrations/**/*.ts", "./prisma/dataMigrationRunner.ts"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"db:deploy": {
 			"dependsOn": ["db:generate", "^docker:up"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
 			"inputs": ["./prisma/migrations/**/*"],
-			"outputMode": "new-only"
+			"outputLogs": "new-only"
 		},
 		"db:generate": {
 			"cache": false,
