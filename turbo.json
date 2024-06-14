@@ -12,10 +12,6 @@
 		"build": {
 			"dependsOn": ["^db:generate", "^generate:data", "^build", "^build:icons"],
 			"env": [
-				"CACHE_ACCESS_KEY",
-				"CACHE_READ_URL",
-				"CACHE_SECRET",
-				"CACHE_WRITE_URL",
 				"COGNITO_ACCESS_KEY",
 				"COGNITO_CLIENT_ID",
 				"COGNITO_CLIENT_SECRET",
