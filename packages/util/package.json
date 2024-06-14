@@ -20,8 +20,12 @@
 		"tslog": "4.9.3"
 	},
 	"devDependencies": {
+		"@types/eslint": "8.56.10",
 		"@types/luxon": "3.4.2",
+		"@types/node": "20.14.2",
 		"@weareinreach/config": "workspace:*",
-		"@weareinreach/eslint-config": "workspace:*"
+		"@weareinreach/eslint-config": "workspace:*",
+		"eslint": "8.57.0",
+		"typescript": "5.4.5"
 	}
 }

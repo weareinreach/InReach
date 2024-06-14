@@ -1,7 +1,7 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"extends": ["//"],
-	"pipeline": {
+	"tasks": {
 		"build": {
 			"dependsOn": [
 				"build:prebuild",
@@ -12,26 +12,32 @@
 				"^db:dataMigrate"
 			],
 			"env": [
-				"DATABASE_URL",
-				"DB_DIRECT_URL",
-				"NEXTAUTH_SECRET",
-				"NEXTAUTH_URL",
-				"VERCEL_URL",
-				"PORT",
+				"AWS_REGION",
+				"COGNITO_ACCESS_KEY",
 				"COGNITO_CLIENT_ID",
 				"COGNITO_CLIENT_SECRET",
 				"COGNITO_ISSUER",
-				"COGNITO_USER_POOL_ID",
-				"AWS_REGION",
-				"COGNITO_ACCESS_KEY",
 				"COGNITO_SECRET",
-				"NODE_ENV",
+				"COGNITO_USER_POOL_ID",
+				"CRON_KEY",
+				"CROWDIN_TOKEN",
+				"DATABASE_URL",
+				"DB_DIRECT_URL",
+				"EDGE_CONFIG",
+				"FEATURE_FLAG_CONFIG",
 				"GOOGLE_PLACES_API_KEY",
-				"NEXT_PUBLIC_GOOGLE_MAPS_API",
+				"KV_REST_API_READ_ONLY_TOKEN",
+				"KV_REST_API_TOKEN",
+				"KV_REST_API_URL",
+				"KV_URL",
+				"NEXTAUTH_SECRET",
+				"NEXTAUTH_URL",
+				"NODE_ENV",
+				"PORT",
 				"SENTRY_AUTH_TOKEN",
-				"NEXT_PUBLIC_SENTRY_DSN",
+				"SENTRY_ORG",
 				"SENTRY_PROJECT",
-				"SENTRY_ORG"
+				"VERCEL_URL"
 			],
 			"outputs": [".next/**"]
 		},
