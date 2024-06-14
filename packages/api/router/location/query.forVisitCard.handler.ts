@@ -11,7 +11,7 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 			where: {
 				...globalWhere.isPublic(),
 				id: input,
-				notVisitable: { not: true },
+				addressVisibility: { in: ['FULL', 'PARTIAL'] },
 			},
 			select: {
 				id: true,
@@ -28,6 +28,7 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 				},
 				latitude: true,
 				longitude: true,
+				addressVisibility: true,
 			},
 		})
 		if (!result) {

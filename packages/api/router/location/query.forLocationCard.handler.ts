@@ -25,7 +25,7 @@ const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCar
 				postCode: true,
 				latitude: true,
 				longitude: true,
-				notVisitable: true,
+				addressVisibility: true,
 				published: true,
 				deleted: true,
 				country: { select: { cca2: true } },

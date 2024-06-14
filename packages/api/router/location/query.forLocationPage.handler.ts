@@ -24,7 +24,7 @@ const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSche
 			longitude: true,
 			latitude: true,
 			description: globalSelect.freeText(),
-			notVisitable: true,
+			addressVisibility: true,
 			reviews: {
 				where: { visible: true, deleted: false },
 				select: { id: true },
