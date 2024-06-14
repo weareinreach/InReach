@@ -67,7 +67,7 @@
 		"@snaplet/copycat": "5.0.0",
 		"@snaplet/seed": "0.97.20",
 		"@terraformer/wkt": "2.2.1",
-		"@turbo/gen": "1.13.4",
+		"@turbo/gen": "2.0.3",
 		"@turf/helpers": "7.0.0",
 		"@types/eslint": "8.56.10",
 		"@types/inquirer": "9.0.7",

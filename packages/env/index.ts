@@ -45,37 +45,8 @@ export const env = createEnv({
 		NEXT_PUBLIC_VERCEL_ENV: z.enum(['production', 'development', 'preview']).optional(),
 		NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string(),
 	},
-	runtimeEnv: {
-		// Server
-		CI: process.env.CI,
-		COGNITO_ACCESS_KEY: process.env.COGNITO_ACCESS_KEY,
-		COGNITO_CLIENT_ID: process.env.COGNITO_CLIENT_ID,
-		COGNITO_CLIENT_SECRET: process.env.COGNITO_CLIENT_SECRET,
-		COGNITO_SECRET: process.env.COGNITO_SECRET,
-		COGNITO_USER_POOL_ID: process.env.COGNITO_USER_POOL_ID,
-		CRON_KEY: process.env.CRON_KEY,
-		CROWDIN_TOKEN: process.env.CROWDIN_TOKEN,
-		DATABASE_URL: process.env.DATABASE_URL,
-		DB_DIRECT_URL: process.env.DB_DIRECT_URL,
-		EDGE_CONFIG_TOKEN: process.env.EDGE_CONFIG_TOKEN,
-		EDGE_CONFIG: process.env.EDGE_CONFIG,
-		FEATURE_FLAG_CONFIG: process.env.FEATURE_FLAG_CONFIG,
-		GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY,
-		KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
-		KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
-		KV_REST_API_URL: process.env.KV_REST_API_URL,
-		KV_URL: process.env.KV_URL,
-		NEXT_RUNTIME: process.env.NEXT_RUNTIME,
-		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-		NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-		NODE_ENV: process.env.NODE_ENV,
-		OTEL_SERVER: process.env.OTEL_SERVER,
-		PORT: process.env.PORT,
-		VERCEL_ENV: process.env.VERCEL_ENV,
-		VERCEL_URL: process.env.VERCEL_URL,
-		VERCEL: process.env.VERCEL,
 
-		// Client
+	experimental__runtimeEnv: {
 		NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
 		NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API,
 		NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
@@ -91,5 +62,3 @@ export const env = createEnv({
 export const getEnv = <T extends keyof typeof env>(envVar: T): (typeof env)[T] => env[envVar]
 
 export * from './checks'
-// export const isDev = process.env.NODE_ENV === 'development'
-// export const isVercelProd = process.env.VERCEL_ENV === 'production'

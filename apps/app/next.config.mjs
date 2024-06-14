@@ -5,6 +5,7 @@ import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import { RelativeCiAgentWebpackPlugin } from '@relative-ci/agent'
 import { withSentryConfig } from '@sentry/nextjs'
 import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
+import createJiti from 'jiti'
 import routes from 'nextjs-routes/config'
 
 import path from 'path'
@@ -14,6 +15,8 @@ import i18nConfig from './next-i18next.config.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const jiti = createJiti(__filename)
+jiti('../../packages/env')
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
 const isVercelProd = process.env.VERCEL_ENV === 'production'
