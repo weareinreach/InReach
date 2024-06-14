@@ -6,12 +6,12 @@
 		"geo-public-transit-description": "公共交通機関/特定の道順",
 		"has-confidentiality-policy": "機密保持方針があるもの",
 		"offers-remote-services": "リモート",
-		"private-practice": "プライベート練習",
+		"private-practice": "個人的な練習",
 		"religiously-affiliated": "宗教に関係している",
 		"time-walk-in": "事前予約なしでの受け入れ時間あり",
-		"wheelchair-accessible": "アクセス可能",
+		"wheelchair-accessible": "利用可能な",
 		"wheelchair-accessible_false": "アクセス不可",
-		"wheelchair-accessible_true": "アクセシブル"
+		"wheelchair-accessible_true": "利用可能な"
 	},
 	"alerts": {
 		"CATEGORYNAME": "アラート",
@@ -79,7 +79,7 @@
 		"CATEGORYNAME": "資格要件",
 		"elig-age": "対象年齢",
 		"elig-age_max": "{{max}} 未満",
-		"elig-age_min": "{{min}} 以上",
+		"elig-age_min": "{{min}} 超過",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "その他 (自由記述)",
 		"req-medical-insurance": "医療保険が必要なもの",
@@ -109,7 +109,7 @@
 		"accessemail": "アクセス方法-電子メール",
 		"accessfile": "アクセス方法-ファイル",
 		"accesslink": "アクセス方法-リンク",
-		"accesslocation": "アクセス方法-場所",
+		"accesslocation": "アクセス方法・位置",
 		"accessphone": "アクセス方法-電話",
 		"accesspublictransit": "アクセス方法-公共交通機関",
 		"accesssms": "アクセス手順 - SMS",
@@ -122,7 +122,7 @@
 		"bipoc-comm": "BIPOC（黒人、先住民、有色人種）コミュニティ",
 		"caregivers": "介護者コミュニティ",
 		"disabled": "障がい者コミュニティ",
-		"elder": "高齢者に焦点を当てた",
+		"elder": "老人の対象者",
 		"gender-nc": "ジェンダーノンコンフォーミング",
 		"hiv-comm": "HIVコミュニティ",
 		"immigrant-comm": "移民コミュニティ",
@@ -134,14 +134,14 @@
 		"trans-fem": "トランス女性/トランスフェミニン",
 		"trans-masc": "トランス男性/トランスマスキュリン",
 		"trans-youth-focus": "トランスジェンダーの若者",
-		"women": "女性に焦点を当てた"
+		"women": "女性に対象者"
 	},
 	"sys": {
 		"CATEGORYNAME": "システム",
 		"incompatible-info": "互換性のない情報"
 	},
 	"tpop": {
-		"other": "ターゲット数 - その他"
+		"other": "対象人口 ・ ほかの"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "法律実務オプション",
@@ -151,12 +151,12 @@
 		"legal-nonprofit": "法的非営利組織"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "サービスプロバイダーオプション",
-		"case-mananger": "ケースマネージャー",
+		"CATEGORYNAME": "サービス提供者の選択肢",
+		"case-mananger": "福祉相談員",
 		"community-org": "コミュニティ組織のボランティア/スタッフ",
-		"friend-family": "該当なし (友人/家族に代わって見る)",
+		"friend-family": "該当なし (友人か家人のために)",
 		"govt-agency": "政府機関",
-		"grassroots-direct": "草の根ダイレクトサービス組織",
+		"grassroots-direct": "グラスルーツ直航組織",
 		"healthcare": "医療従事者",
 		"lawyer": "弁護士",
 		"other": "その他 (具体的に記入してください)",
