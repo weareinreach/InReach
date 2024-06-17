@@ -29,7 +29,8 @@
 				"KV_URL",
 				"NEXTAUTH_SECRET",
 				"NEXTAUTH_URL",
-				"NODE_ENV"
+				"NODE_ENV",
+				"RELATIVE_CI_KEY"
 			]
 		},
 		"build:aws": {},
