@@ -35,6 +35,7 @@
 				"NODE_ENV",
 				"PORT",
 				"RELATIVE_CI_KEY",
+				"RELATIVE_CI_SLUG",
 				"SENTRY_AUTH_TOKEN",
 				"SENTRY_ORG",
 				"SENTRY_PROJECT",
