@@ -67,7 +67,7 @@
 		"@snaplet/copycat": "5.0.0",
 		"@snaplet/seed": "0.97.20",
 		"@terraformer/wkt": "2.2.1",
-		"@turbo/gen": "2.0.3",
+		"@turbo/gen": "2.0.4",
 		"@turf/helpers": "7.0.0",
 		"@types/eslint": "8.56.10",
 		"@types/inquirer": "9.0.7",
@@ -112,12 +112,12 @@
 		"sql-bricks-postgres": "0.6.0",
 		"string-byte-length": "3.0.0",
 		"tiny-invariant": "1.3.3",
-		"tsx": "4.15.4",
-		"type-fest": "4.20.0",
+		"tsx": "4.15.6",
+		"type-fest": "4.20.1",
 		"typescript": "5.4.5",
 		"xliff": "6.2.1",
 		"zod-prisma-types": "3.1.8",
-		"zod-to-json-schema": "3.23.0"
+		"zod-to-json-schema": "3.23.1"
 	},
 	"prisma": {
 		"seed": "turbo run db:run-seed"
