@@ -3,6 +3,7 @@ import { handleError } from '~api/lib/errorHandler'
 import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { formatAddressVisiblity } from './lib.formatAddressVisibility'
 import { type TForVisitCardSchema } from './query.forVisitCard.schema'
 
 const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) => {
@@ -37,6 +38,7 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 		const { attributes, ...rest } = result
 		const transformed = {
 			...rest,
+			...formatAddressVisiblity(rest),
 			remote: attributes.find(({ attribute }) => attribute.tsKey === 'additional.offers-remote-services')
 				?.attribute,
 		}
@@ -46,3 +48,14 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 	}
 }
 export default forVisitCard
+type ReformattedAddress = {
+	street1: string | null
+	street2: string | null
+	city: string | null
+	postCode: string | null
+	govDist: {
+		tsKey: string
+		tsNs: string
+		abbrev: string | null
+	} | null
+}
