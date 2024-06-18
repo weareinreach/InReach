@@ -18,7 +18,7 @@
 	"devDependencies": {
 		"@types/eslint": "8.56.10",
 		"@types/gtag.js": "0.0.20",
-		"@types/node": "20.14.2",
+		"@types/node": "20.14.5",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.0",
