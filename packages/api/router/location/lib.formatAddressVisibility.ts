@@ -7,6 +7,8 @@ export const formatAddressVisiblity = (location: ProvidedAddress) => {
 		city: location.city,
 		postCode: location.postCode,
 		govDist: location.govDist,
+		latitude: location.latitude,
+		longitude: location.longitude,
 	}
 	switch (location.addressVisibility) {
 		case PrismaEnums.AddressVisibility.FULL: {
@@ -17,12 +19,15 @@ export const formatAddressVisiblity = (location: ProvidedAddress) => {
 			address.street2 = null
 			return address
 		}
-		case PrismaEnums.AddressVisibility.HIDDEN: {
+		case PrismaEnums.AddressVisibility.HIDDEN:
+		default: {
 			address.street1 = null
 			address.street2 = null
 			address.city = null
 			address.postCode = null
 			address.govDist = null
+			address.latitude = null
+			address.longitude = null
 			return address
 		}
 	}
@@ -38,6 +43,8 @@ type ReformattedAddress = {
 		tsNs: string
 		abbrev: string | null
 	} | null
+	latitude: number | null
+	longitude: number | null
 }
 type ProvidedAddress = Omit<ReformattedAddress, 'city'> & {
 	city: string
