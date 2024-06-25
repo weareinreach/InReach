@@ -70,7 +70,7 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.56.10",
-		"@types/node": "20.14.6",
+		"@types/node": "20.14.8",
 		"@types/react": "18.3.3",
 		"@types/react-dom": "18.3.0",
 		"@weareinreach/config": "workspace:*",
@@ -80,7 +80,7 @@
 		"next-auth": "4.24.7",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
-		"typescript": "5.4.5"
+		"typescript": "5.5.2"
 	},
 	"peerDependencies": {
 		"next": "14.2.4",

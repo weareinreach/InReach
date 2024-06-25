@@ -1,7 +1,6 @@
 import groupBy from 'just-group-by'
 import { DateTime, Interval } from 'luxon'
 
-import { type Prisma } from '@weareinreach/db'
 import { convertToLuxonWeekday } from '@weareinreach/util/luxon/weekday'
 
 const { weekYear, weekNumber } = DateTime.now()
@@ -13,10 +12,7 @@ export const formatHours = {
 					where: { active: true },
 				} as const)),
 		select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true } as const,
-		orderBy: [
-			{ dayIndex: 'asc' },
-			{ start: 'asc' },
-		] satisfies Prisma.OrgHoursOrderByWithRelationAndSearchRelevanceInput[],
+		orderBy: [{ dayIndex: 'asc' as const }, { start: 'asc' as const }],
 	}),
 	process: (data: HoursData) =>
 		groupBy(
