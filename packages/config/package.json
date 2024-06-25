@@ -16,11 +16,11 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.56.10",
-		"@types/node": "20.14.6",
+		"@types/node": "20.14.8",
 		"@weareinreach/eslint-config": "workspace:*",
 		"alex": "11.0.1",
 		"eslint": "8.57.0",
 		"next-i18next": "15.3.0",
-		"typescript": "5.4.5"
+		"typescript": "5.5.2"
 	}
 }

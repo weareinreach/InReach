@@ -34,6 +34,9 @@ const useBaseStyles = createStyles((theme) => ({
 const useFontSize = ({ fontSize, classNames }: InlineEditProps) => {
 	const { classes } = useStyles()
 	const { classes: baseClasses, cx } = useBaseStyles()
+	if (typeof fontSize !== 'string') {
+		throw new Error('`fontSize` must be a string')
+	}
 	const fontClass = fontSize ? classes[fontSize] : undefined
 	return {
 		...classNames,
@@ -44,7 +47,7 @@ const useFontSize = ({ fontSize, classNames }: InlineEditProps) => {
 }
 
 const _InlineTextInput = forwardRef<HTMLInputElement, InlineEditProps>(
-	({ fontSize, classNames, ...rest }, ref) => {
+	({ fontSize, classNames: _classNames, ...rest }, ref) => {
 		const variant = useFontSize({ fontSize, ...rest })
 
 		return <Box component={TextInput} classNames={variant} ref={ref} {...rest} />
