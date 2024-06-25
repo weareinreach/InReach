@@ -12,7 +12,7 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 			where: {
 				...globalWhere.isPublic(),
 				id: input,
-				addressVisibility: { in: ['FULL', 'PARTIAL'] },
+				addressVisibility: { in: ['FULL'] },
 			},
 			select: {
 				id: true,
@@ -48,14 +48,3 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 	}
 }
 export default forVisitCard
-type ReformattedAddress = {
-	street1: string | null
-	street2: string | null
-	city: string | null
-	postCode: string | null
-	govDist: {
-		tsKey: string
-		tsNs: string
-		abbrev: string | null
-	} | null
-}
