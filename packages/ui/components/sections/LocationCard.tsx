@@ -297,7 +297,6 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		<Divider w={4} size={4} style={{ borderRadius: '50%' }} color={theme.other.colors.secondary.darkGray} />
 	)
 	const listProps = { variant: addressListVariant, icon: separator, ref: addressRef }
-
 	const hasServices = Boolean(data.services.length)
 	const hasAttributes = Boolean(data.attributes.length)
 	console.log('title variant', getTextVariant)
@@ -322,9 +321,9 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 							{!data.published && <Icon icon='carbon:view-off-filled' />}
 							{data.deleted && <Icon icon='carbon:trash-can' />}
 						</Group>
-						{((!data.notVisitable && formattedAddress) || formattedPhone) && (
+						{((data.addressVisibility !== 'HIDDEN' && formattedAddress) || formattedPhone) && (
 							<List {...listProps}>
-								{!data.notVisitable && <List.Item>{formattedAddress}</List.Item>}
+								{data.addressVisibility !== 'HIDDEN' && <List.Item>{formattedAddress}</List.Item>}
 								{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
 							</List>
 						)}
