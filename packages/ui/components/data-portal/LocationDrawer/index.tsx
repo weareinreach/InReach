@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Drawer, Group, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
 import { forwardRef, useCallback, useEffect, useState } from 'react'
-import { FormProvider, useForm, useWatch } from 'react-hook-form'
-import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
+import { FormProvider, useForm } from 'react-hook-form'
+import { Select, TextInput } from 'react-hook-form-mantine'
 
 import { type TCreateSchema, ZCreateSchema } from '@weareinreach/api/router/location/mutation.create.schema'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
@@ -19,26 +18,13 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	const { id: orgId } = useOrgInfo()
 	const notifySave = useNewNotification({ displayText: 'Location has been created', icon: 'success' })
 	const apiUtils = api.useUtils()
-	const { i18n } = useTranslation()
-	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
+
 	const [isSaved, setIsSaved] = useState(false)
 	const [drawerOpened, drawerHandler] = useDisclosure(false)
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const form = useForm<TCreateSchema>({
 		resolver: zodResolver(ZCreateSchema),
 	})
-	const { data: govDistsByCountry } = api.fieldOpt.govDistsByCountryNoSub.useQuery(
-		{ activeForOrgs: true },
-		{
-			refetchOnWindowFocus: false,
-			select: (results) =>
-				results.map(({ id, flag, cca2 }) => ({
-					flag,
-					value: id,
-					label: countryTranslation.of(cca2) ?? cca2,
-				})),
-		}
-	)
 	const createLocation = api.location.create.useMutation({
 		onSuccess: () => {
 			modalHandler.close()
@@ -57,7 +43,6 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 		}
 	}, [form, orgId])
 
-	const isNotVisitable = useWatch({ control: form.control }).notVisitable
 	const handleSave = useCallback(() => {
 		const valuesToSubmit = form.getValues()
 		createLocation.mutate(valuesToSubmit)
@@ -69,27 +54,6 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 		drawerHandler.close()
 	}, [form, modalHandler, drawerHandler])
 
-	useEffect(() => {
-		const hasAddress = Object.keys(form.getValues('address') ?? {}).length > 0
-		const countryId = form.getValues('address.countryId')
-		if (isNotVisitable && hasAddress) {
-			const blankAddress = {
-				street1: undefined,
-				street2: undefined,
-				city: undefined,
-				postCode: undefined,
-				govDistId: undefined,
-				longitude: undefined,
-				latitude: undefined,
-				countryId,
-			}
-			form.setValue('address', blankAddress)
-		}
-		if (isNotVisitable && countryId) {
-			form.setValue('address.countryId', countryId)
-		}
-	}, [form, isNotVisitable])
-
 	const handleClose = useCallback(() => {
 		if (form.formState.isDirty) {
 			return modalHandler.open()
@@ -97,6 +61,11 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			return drawerHandler.close()
 		}
 	}, [drawerHandler, form.formState.isDirty, modalHandler])
+	const addressVisibilityOptions: Record<'value' | 'label', string>[] = [
+		{ value: 'FULL', label: 'Show full address' },
+		{ value: 'PARTIAL', label: 'Show city & state/province' },
+		{ value: 'HIDDEN', label: 'Hide address' },
+	]
 
 	return (
 		<FormProvider {...form}>
@@ -122,18 +91,13 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 							<Title order={2}>Add new location</Title>
 
 							<TextInput label='Display name' required control={form.control} name='name' />
-
-							<Checkbox label='This location is NOT visitable' control={form.control} name='notVisitable' />
-							{!isNotVisitable ? (
-								<AddressAutocomplete name='address' />
-							) : (
-								<Select
-									control={form.control}
-									name='address.countryId'
-									label='Country'
-									data={govDistsByCountry ?? []}
-								/>
-							)}
+							<Select
+								label='Address visibility to public'
+								control={form.control}
+								name='addressVisibility'
+								data={addressVisibilityOptions}
+							/>
+							<AddressAutocomplete name='address' />
 						</Stack>
 					</Drawer.Body>
 					<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>

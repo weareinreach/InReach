@@ -3,6 +3,7 @@ import { handleError } from '~api/lib/errorHandler'
 import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { formatAddressVisiblity } from './lib.formatAddressVisibility'
 import { type TForLocationCardSchema } from './query.forLocationCard.schema'
 
 const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCardSchema>) => {
@@ -25,7 +26,7 @@ const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCar
 				postCode: true,
 				latitude: true,
 				longitude: true,
-				notVisitable: true,
+				addressVisibility: true,
 				published: true,
 				deleted: true,
 				country: { select: { cca2: true } },
@@ -49,6 +50,7 @@ const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCar
 
 		const transformed = {
 			...result,
+			...formatAddressVisiblity(result),
 			country: result.country.cca2,
 			phones: result.phones.map(({ phone }) => ({ ...phone, country: phone.country.cca2 })),
 			attributes: result.attributes.map(({ attribute }) => attribute),

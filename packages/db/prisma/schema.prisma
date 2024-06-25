@@ -624,13 +624,13 @@ model OrgLocation {
   name     String?
   street1  String?
   street2  String?
-  city     String?
+  city     String
   postCode String?
   primary  Boolean @default(false)
 
-  mailOnly     Boolean @default(false)
-  notVisitable Boolean @default(false)
-  mapCityOnly  Boolean @default(false)
+  addressVisibility AddressVisibility @default(FULL)
+
+  mailOnly Boolean @default(false)
 
   description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?   @unique
@@ -686,6 +686,12 @@ model OrgLocation {
   @@index([govDistId])
   @@index([orgId, id, geo])
   @@index([id, published(sort: Desc), deleted])
+}
+
+enum AddressVisibility {
+  FULL
+  PARTIAL
+  HIDDEN
 }
 
 /// Organization photos
