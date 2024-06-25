@@ -27,9 +27,10 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 
 	const formattedAddress = useFormattedAddress(location)
 
-	const addressLine = location?.notVisitable ? null : (
-		<Text variant={variants.Text.utility2darkGray}>{formattedAddress}</Text>
-	)
+	const addressLine =
+		location?.addressVisibility === 'HIDDEN' ? null : (
+			<Text variant={variants.Text.utility2darkGray}>{formattedAddress}</Text>
+		)
 
 	const leaderAttributes = attributes.filter(({ attribute }) =>
 		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')

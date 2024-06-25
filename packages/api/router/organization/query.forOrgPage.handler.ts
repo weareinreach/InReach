@@ -36,7 +36,7 @@ const forOrgPage = async ({ input }: TRPCHandlerParams<TForOrgPageSchema>) => {
 						postCode: true,
 						country: { select: { cca2: true } },
 						govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
-						notVisitable: true,
+						addressVisibility: true,
 					},
 				},
 				attributes,

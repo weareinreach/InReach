@@ -3,14 +3,22 @@ import { type Meta } from '@storybook/react'
 import { useEffect, useState } from 'react'
 
 import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { attribute } from '~ui/mockData/attribute'
 
-import { MoreFilter } from './MoreFilter'
+import { MoreFilter, type MoreFilterProps } from './MoreFilter'
+
+const MoreFilterWrapper = (args: MoreFilterProps) => {
+	const [filter, _setFilter] = useState<string[]>([])
+	useEffect(() => {
+		action('Set service filter')(filter)
+	}, [filter])
+	// @ts-expect-error I don't know why - but I'm over it.
+	return <MoreFilter {...args} />
+}
 
 export default {
 	title: 'Modals/More Filter',
-	component: MoreFilter,
+	component: MoreFilterWrapper,
 	parameters: {
 		design: {
 			type: 'figma',
@@ -22,13 +30,13 @@ export default {
 		layout: 'fullscreen',
 	},
 	decorators: [StorybookGridDouble],
-	render: function Render(args) {
-		const [filter, _setFilter] = useState<string[]>([])
-		useEffect(() => {
-			action('Set service filter')(filter)
-		}, [filter])
-		return <MoreFilter {...args} />
-	},
-} satisfies Meta<typeof MoreFilter>
+	// render: function Render(args) {
+	// 	const [filter, _setFilter] = useState<string[]>([])
+	// 	useEffect(() => {
+	// 		action('Set service filter')(filter)
+	// 	}, [filter])
+	// 	return <MoreFilter {...args} />
+	// },
+} satisfies Meta<typeof MoreFilterWrapper>
 
 export const MoreFilterExample = {}

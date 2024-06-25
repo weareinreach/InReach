@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { PrismaEnums } from '@weareinreach/db'
 import { prefixedId } from '~api/schemas/idPrefix'
 
 export const ZCreateSchema = z.object({
@@ -18,9 +19,9 @@ export const ZCreateSchema = z.object({
 			countryId: z.string(),
 		})
 		.partial()
-		.required({ countryId: true }),
+		.required({ countryId: true, city: true }),
 	primary: z.boolean().optional(),
-	notVisitable: z.boolean().default(false),
+	addressVisibility: z.nativeEnum(PrismaEnums.AddressVisibility),
 	published: z.boolean().default(false),
 	emails: prefixedId('orgEmail').array().optional(),
 	phones: prefixedId('orgPhone').array().optional(),

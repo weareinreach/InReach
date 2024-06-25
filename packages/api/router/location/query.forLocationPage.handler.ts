@@ -1,8 +1,9 @@
-import { prisma } from '@weareinreach/db'
+import { prisma, PrismaEnums } from '@weareinreach/db'
 import { attributes } from '~api/schemas/selects/common'
 import { globalSelect, globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { formatAddressVisiblity } from './lib.formatAddressVisibility'
 import { type TForLocationPageSchema } from './query.forLocationPage.schema'
 
 const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSchema>) => {
@@ -24,7 +25,7 @@ const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSche
 			longitude: true,
 			latitude: true,
 			description: globalSelect.freeText(),
-			notVisitable: true,
+			addressVisibility: true,
 			reviews: {
 				where: { visible: true, deleted: false },
 				select: { id: true },
@@ -32,6 +33,7 @@ const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSche
 			attributes,
 		},
 	})
-	return location
+
+	return { ...location, ...formatAddressVisiblity(location) }
 }
 export default forLocationPage
