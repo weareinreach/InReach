@@ -59,13 +59,9 @@ export default {
 
 type StoryDef = StoryObj<typeof Toolbar>
 
-export const NotSaved = {
-	args: { saved: false },
-} satisfies StoryDef
+export const NotSaved = {} satisfies StoryDef
 
-export const Saved = {
-	args: { saved: true },
-} satisfies StoryDef
+export const Saved = {} satisfies StoryDef
 
 export const SmallVersion = {
 	parameters: {

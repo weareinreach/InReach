@@ -51,7 +51,7 @@ export const location = {
 			street2: address?.street2 ?? null,
 			city: address?.city ?? '',
 			postCode: address?.postCode ?? null,
-			notVisitable: rest.notVisitable ?? false,
+			addressVisibility: rest.addressVisibility ?? 'FULL',
 			latitude: address?.latitude ?? null,
 			longitude: address?.longitude ?? null,
 			id: 'oloc_000NEWID',
