@@ -81,7 +81,7 @@ const FormSchema = z.object({
 			name: z.string().nullable(),
 			street1: z.string().nullish().transform(transformNullString),
 			street2: z.string().nullable().transform(transformNullString),
-			city: z.string().nullish(),
+			city: z.string(),
 			postCode: z.string().nullable().transform(transformNullString),
 			primary: z.coerce.boolean(),
 			mailOnly: z.boolean(),
@@ -92,7 +92,7 @@ const FormSchema = z.object({
 			deleted: z.coerce.boolean(),
 			countryId: z.string().nullable(),
 			govDistId: z.string().nullable(),
-			notVisitable: z.coerce.boolean().default(false),
+			addressVisibility: z.enum(['FULL', 'PARTIAL', 'HIDDEN']).default('FULL'),
 			accessible: z
 				.object({
 					supplementId: z.string(),
@@ -159,6 +159,12 @@ const CountryItem = forwardRef<HTMLDivElement, CountryItem>(({ label, flag, ...p
 	)
 })
 CountryItem.displayName = 'CountryItem'
+
+const addressVisibilityOptions: Record<'value' | 'label', string>[] = [
+	{ value: 'FULL', label: 'Show full address' },
+	{ value: 'PARTIAL', label: 'Show city & state/province' },
+	{ value: 'HIDDEN', label: 'Hide address' },
+]
 
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
@@ -457,17 +463,16 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 							<Divider w='100%' />
 							<MultiSelectPopover
 								label='Services available'
-								// !fix when issue resolved.
 								data={orgServices}
 								fullWidth
 								{...form.getInputProps('data.services')}
 							/>
 							<Stack spacing={0} w='100%'>
-								<Text variant={variants.Text.utility1}>Hide address from public?</Text>
-								<Checkbox
-									label={"DO NOT show this location's address to the public"}
-									classNames={{ label: classes.radioLabel }}
-									{...form.getInputProps('data.notVisitable', { type: 'checkbox' })}
+								<Select
+									label='Address visibility'
+									data={addressVisibilityOptions}
+									defaultValue='FULL'
+									{...form.getInputProps('data.addressVisibility')}
 								/>
 							</Stack>
 							<Stack spacing={0} w='100%'>
