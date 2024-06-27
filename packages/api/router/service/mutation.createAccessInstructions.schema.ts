@@ -34,6 +34,7 @@ export const ZCreateAccessInstructionsSchema = z
 
 		const supplementData = {
 			id: supplementId,
+			textId: freeText?.id,
 			attributeId,
 			serviceId,
 			countryId,
@@ -41,13 +42,14 @@ export const ZCreateAccessInstructionsSchema = z
 			data,
 			govDistId,
 			languageId,
-			textId: freeText?.id,
 		}
 
 		return {
 			freeText: freeText ? Prisma.validator<Prisma.FreeTextCreateArgs>()({ data: freeText }) : undefined,
 			translationKey: translationKey
-				? Prisma.validator<Prisma.TranslationKeyCreateArgs>()({ data: translationKey })
+				? (Prisma.validator<Prisma.TranslationKeyCreateArgs>()({
+						data: translationKey,
+					}) as Prisma.TranslationKeyCreateArgs)
 				: undefined,
 			attributeSupplement: supplementData
 				? Prisma.validator<Prisma.AttributeSupplementCreateArgs>()({
