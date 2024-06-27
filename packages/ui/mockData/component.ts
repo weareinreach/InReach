@@ -1,5 +1,4 @@
-import invariant from 'tiny-invariant'
-
+import { PrismaEnums } from '@weareinreach/db'
 import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 export const component = {
@@ -12,31 +11,35 @@ export const component = {
 	}),
 	LocationBasedAlertBanner: getTRPCMock({
 		path: ['component', 'LocationBasedAlertBanner'],
-		response: async ({ lat, lon }) => {
+		response: async () => {
 			const { default: data } = await import('./json/component.LocationBasedAlertBanner.json')
-			if (!lat && !lon) {
-				return data
-			}
-			switch (lat || lon) {
-				case 1: {
-					const item = data.at(0)
-					invariant(item, 'expected to find an item')
-					return [item]
+
+			const reformattedData = data.map(({ level, ...rest }) => {
+				switch (level) {
+					case 'INFO_PRIMARY': {
+						return { ...rest, level: PrismaEnums.LocationAlertLevel.INFO_PRIMARY }
+					}
+					case 'WARN_PRIMARY': {
+						return { ...rest, level: PrismaEnums.LocationAlertLevel.WARN_PRIMARY }
+					}
+					case 'CRITICAL_PRIMARY': {
+						return { ...rest, level: PrismaEnums.LocationAlertLevel.CRITICAL_PRIMARY }
+					}
+					case 'INFO_SECONDARY': {
+						return { ...rest, level: PrismaEnums.LocationAlertLevel.INFO_SECONDARY }
+					}
+					case 'WARN_SECONDARY': {
+						return { ...rest, level: PrismaEnums.LocationAlertLevel.WARN_SECONDARY }
+					}
+					case 'CRITICAL_SECONDARY': {
+						return { ...rest, level: PrismaEnums.LocationAlertLevel.CRITICAL_SECONDARY }
+					}
+					default: {
+						throw new Error('Invalid alert level')
+					}
 				}
-				case 2: {
-					const item = data.at(1)
-					invariant(item, 'expected to find an item')
-					return [item]
-				}
-				case 3: {
-					const item = data.at(2)
-					invariant(item, 'expected to find an item')
-					return [item]
-				}
-				default: {
-					return data
-				}
-			}
+			})
+			return reformattedData
 		},
 	}),
 } satisfies MockHandlerObject<'component'>
