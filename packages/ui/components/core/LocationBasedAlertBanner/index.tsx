@@ -14,23 +14,23 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	primary: {
-		height: rem(52),
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
 		textAlign: 'center',
 		width: '100vw',
 		borderRadius: 0,
-		padding: 0,
+		padding: `${rem(12)} 0`,
 		...theme.other.utilityFonts.utility1,
 		position: 'sticky',
-		marginTop: rem(-10),
+		marginTop: rem(-15),
 
 		[theme.fn.smallerThan('xl')]: {
-			marginTop: rem(-15),
-			marginBottom: rem(0),
+			marginTop: rem(-25),
 		},
-
+		[theme.fn.smallerThan('sm')]: {
+			marginTop: rem(-25),
+		},
 		'&[data-alert-level="INFO_PRIMARY"]': {
 			backgroundColor: theme.other.colors.secondary.cornflower,
 			span: {
