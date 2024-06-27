@@ -1,6 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { trpc as api } from '~ui/lib/trpcClient'
 import { component } from '~ui/mockData/component'
 
 import { LocationBasedAlertBanner, type LocationBasedAlertBannerProps } from './index'
