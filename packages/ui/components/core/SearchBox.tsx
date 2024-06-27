@@ -225,7 +225,7 @@ export const SearchBox = ({
 	initialValue = '',
 	pinToLeft,
 	placeholderTextKey,
-	resetInitialValue,
+	setSearchValue,
 }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
@@ -269,6 +269,7 @@ export const SearchBox = ({
 	useEffect(() => {
 		if (isOrgSearchLoading(search) || isLocSearchLoading(search)) {
 			setSearchLoading(true)
+			setSearchValue?.(search)
 			setResults([{ value: search, label: search, fetching: true }])
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -329,8 +330,7 @@ export const SearchBox = ({
 	const resetHandler = useCallback(() => {
 		form.reset()
 		form.values.search = ''
-		resetInitialValue?.()
-	}, [form, resetInitialValue])
+	}, [form])
 	const rightIcon = useMemo(() => {
 		if (isLoading || searchLoading) {
 			return (
@@ -465,7 +465,7 @@ type SearchBoxProps = {
 	initialValue?: string
 	pinToLeft?: boolean
 	placeholderTextKey?: string
-	resetInitialValue?: () => void
+	setSearchValue?: (newValue: string) => void
 }
 type FormValues = {
 	search: string

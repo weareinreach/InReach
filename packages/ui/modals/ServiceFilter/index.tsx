@@ -412,5 +412,6 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 interface ServiceFilterProps {
 	resultCount?: number
 	isFetching?: boolean
+	current?: string[]
 	disabled?: boolean
 }

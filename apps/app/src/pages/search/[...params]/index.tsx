@@ -1,6 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
 import {
-	Box,
 	createStyles,
 	Divider,
 	Grid,
@@ -16,13 +15,14 @@ import compare from 'just-compare'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
-import { type JSX, memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { type JSX, memo, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
+import { LocationBasedAlertBanner } from '@weareinreach/ui/components/core/LocationBasedAlertBanner'
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
@@ -33,7 +33,6 @@ import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { Link } from '~ui/components/core/Link'
 
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
@@ -213,10 +212,6 @@ const SearchResults = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	const handleResetInitialValue = useCallback(() => {
-		searchStateActions.setSearchTerm('')
-	}, [searchStateActions])
-
 	if (error) {
 		return <>Error</>
 	}
@@ -227,26 +222,9 @@ const SearchResults = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-			{showAlertMessage && (
-				<Box className={classes.banner}>
-					<Text variant={variants.Text.utility1white}>
-						<Trans
-							i18nKey='alerts.search-page-legislative-map'
-							ns='common'
-							components={{
-								ATLink: (
-									<Link
-										external
-										variant={variants.Link.inheritStyle}
-										href='https://www.erininthemorning.com/p/anti-trans-legislative-risk-assessment-2a4'
-										target='_blank'
-									></Link>
-								),
-							}}
-						/>
-					</Text>
-				</Box>
-			)}
+
+			<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
+
 			<Grid.Col
 				xs={12}
 				sm={12}
@@ -259,11 +237,14 @@ const SearchResults = () => {
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
-							resetInitialValue={handleResetInitialValue}
 						/>
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
-						<ServiceFilter resultCount={resultCount} isFetching={searchIsFetching} />
+						<ServiceFilter
+							resultCount={resultCount}
+							isFetching={searchIsFetching}
+							current={searchState.services}
+						/>
 						{/* @ts-expect-error `component` prop not needed.. */}
 						<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
 							{t('more.filters')}
@@ -292,6 +273,7 @@ const SearchResults = () => {
 					<NoResults crisisData={crisisResults} />
 				) : (
 					<>
+						<LocationBasedAlertBanner lat={lat} lon={lon} type='secondary' />
 						{resultDisplay}
 						<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 					</>
