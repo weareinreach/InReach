@@ -9,32 +9,39 @@ import { slug } from './slugGen'
 const createKey = (parts: string[]) =>
 	parts.map((part) => slug(part, { remove: /[^\w\s$*+~.()'"!\-:@]+/g })).join('.')
 
-export const generateFreeText = <T extends GenerateFreeTextType>({
-	orgId,
-	itemId,
-	text,
-	type,
-	freeTextId,
-}: GenerateFreeTextParams<T>): GenerateFreeTextReturn => {
+export const generateFreeText = <T extends GenerateFreeTextType>(args: GenerateFreeTextParams<T>) => {
+	const { text, type, freeTextId } = args
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
+				const { orgId } = args as GenerateFreeTextParams<'orgDesc'>
+				invariant(orgId)
 				return createKey([orgId, 'description'])
 			}
 			case 'attSupp': {
-				invariant(itemId)
+				const { orgId, itemId } = args as GenerateFreeTextParams<'attSupp'>
+				invariant(itemId && orgId)
 				return createKey([orgId, 'attribute', itemId])
 			}
 			case 'svcName': {
-				invariant(itemId)
+				const { orgId, itemId } = args as GenerateFreeTextParams<'svcName'>
+				invariant(itemId && orgId)
 				return createKey([orgId, itemId, 'name'])
 			}
 			case 'websiteDesc':
 			case 'phoneDesc':
 			case 'emailDesc':
 			case 'svcDesc': {
-				invariant(itemId)
+				const { orgId, itemId } = args as GenerateFreeTextParams<
+					'websiteDesc' | 'phoneDesc' | 'emailDesc' | 'svcDesc'
+				>
+				invariant(itemId && orgId)
 				return createKey([orgId, itemId, 'description'])
+			}
+			case 'locationAlert': {
+				const { itemId } = args as GenerateFreeTextParams<'locationAlert'>
+				invariant(itemId)
+				return createKey(['locationBasedAlert', itemId])
 			}
 			default: {
 				return null
@@ -57,19 +64,6 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 	}
 }
 
-interface GenerateFreeTextReturn {
-	translationKey: {
-		key: string
-		text: string
-		ns: string
-		crowdinId?: number
-	}
-	freeText: {
-		key: string
-		ns: string
-		id: string
-	}
-}
 export const generateNestedFreeText = <T extends GenerateFreeTextType>(
 	args: GenerateFreeTextParams<T>
 ): NestedCreateOne => {
@@ -147,12 +141,14 @@ interface GenerateNestedFreeTextUpsertResult {
 	}
 }
 
-type GenerateFreeTextParams<T extends GenerateFreeTextType> = GenerateFreeTextWithItem<T>
-interface GenerateFreeTextBase {
+type GenerateFreeTextParams<T extends GenerateFreeTextType> = {
+	type: T
 	text: string
-	orgId: string
 	freeTextId?: string | null
-}
+	// eslint-disable-next-line @typescript-eslint/ban-types
+} & (T extends 'locationAlert' ? {} : { orgId: string }) &
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	(T extends 'orgDesc' ? {} : { itemId: string })
 
 type GenerateFreeTextType =
 	| 'attSupp'
@@ -162,13 +158,4 @@ type GenerateFreeTextType =
 	| 'phoneDesc'
 	| 'websiteDesc'
 	| 'orgDesc'
-
-interface GenerateFreeTextWithItem<T extends GenerateFreeTextType> extends GenerateFreeTextBase {
-	type: T
-	itemId?: GenerateFreeTextItemId<T>
-}
-type GenerateFreeTextItemId<T extends GenerateFreeTextType> = T extends 'orgDesc' ? never : Required<string>
-// interface GenerateFreeTextWithoutItem extends GenerateFreeTextBase {
-// 	type: 'orgDesc'
-// 	itemId?: never
-// }
+	| 'locationAlert'
