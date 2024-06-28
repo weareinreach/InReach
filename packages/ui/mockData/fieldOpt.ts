@@ -1,8 +1,9 @@
 import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { type $Enums } from '@weareinreach/db'
 import { getTRPCMock, type MockAPIHandler, type MockHandlerObject } from '~ui/lib/getTrpcMock'
+
+import type * as $Enums from '@weareinreach/db/enums'
 
 const queryAttributeCategories: MockAPIHandler<'fieldOpt', 'attributeCategories'> = async (query) => {
 	const attributeCategories = (await import('./json/fieldOpt.attributeCategories.json')).default

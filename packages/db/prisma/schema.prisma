@@ -9,6 +9,11 @@ generator aws {
   binaryTargets   = ["linux-arm64-openssl-3.0.x"]
 }
 
+generator enum {
+  provider = "node node_modules/prisma-generator-ts-enums" // specify the path to this generator here
+  output   = "../enums/index.ts" // optionally, you can specify an output filename here -- default is ./types/enums.d.ts
+}
+
 // generator zod {
 //   provider               = "zod-prisma-types"
 //   output                 = "../zod-schemas"

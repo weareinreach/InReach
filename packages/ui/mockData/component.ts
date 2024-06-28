@@ -1,4 +1,4 @@
-import { PrismaEnums } from '@weareinreach/db'
+import * as PrismaEnums from '@weareinreach/db/enums'
 import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 export const component = {
