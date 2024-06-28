@@ -182,7 +182,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		// #region Get existing data/populate form
 		const { data, error, isPlaceholderData } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
-			// enabled: !createNew,
+			enabled: !createNew,
 			placeholderData: {
 				accessDetails: [],
 				attributes: [],

@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
 import { getBounds, getCenterOfBounds } from 'geolib'
 
-import { prisma } from '@weareinreach/db'
+import { prisma, PrismaEnums } from '@weareinreach/db'
 import { handleError } from '~api/lib'
 import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
@@ -30,7 +30,15 @@ const forGoogleMaps = async ({ input, ctx }: TRPCHandlerParams<TForGoogleMapsSch
 			where: {
 				...(!canSeeAll && globalWhere.isPublic()),
 				id: { in: locationIds },
-				AND: [{ latitude: { not: 0 } }, { longitude: { not: 0 } }],
+				AND: [
+					{ latitude: { not: 0 } },
+					{ longitude: { not: 0 } },
+					{
+						addressVisibility: {
+							in: [PrismaEnums.AddressVisibility.FULL, PrismaEnums.AddressVisibility.PARTIAL],
+						},
+					},
+				],
 			},
 			select: {
 				id: true,

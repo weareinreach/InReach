@@ -515,7 +515,7 @@ MoreFilterBody.displayName = 'MoreFilters'
 
 export const MoreFilter = memo(createPolymorphicComponent<'button', MoreFilterProps>(MoreFilterBody))
 
-interface MoreFilterProps extends UnstyledButtonProps {
+export interface MoreFilterProps extends UnstyledButtonProps {
 	resultCount?: number
 	isFetching?: boolean
 	disabled?: boolean

@@ -42,6 +42,12 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
 					path: `prisma/data-migrations/${filePath}`,
 					templateFile: 'templates/dataMigration.hbs',
 				},
+				{
+					type: 'append',
+					path: `prisma/data-migrations/index.ts`,
+					pattern: /export \* from '[^']+';?(?=\n\/\/ codegen:end)/,
+					template: `export * from './${filePath.replace('.ts', '')}'`,
+				},
 			]
 		},
 	})

@@ -13,6 +13,9 @@ const getFilterOptions = async () => {
 			services: {
 				where: {
 					active: true,
+					serviceTag: {
+						active: true,
+					},
 				},
 				select: {
 					serviceTag: {

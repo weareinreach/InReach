@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { Geometry, Prisma } from '@weareinreach/db'
+import { Geometry, Prisma, PrismaEnums } from '@weareinreach/db'
 import { allAttributes } from '@weareinreach/db/generated/allAttributes'
 import { prefixedId } from '~api/schemas/idPrefix'
 
@@ -12,7 +12,7 @@ export const ZUpdateSchema = z
 				name: z.string(),
 				street1: z.string().nullish(),
 				street2: z.string().nullish(),
-				city: z.string().nullish(),
+				city: z.string(),
 				postCode: z.string().nullable(),
 				primary: z.boolean(),
 				mailOnly: z.boolean(),
@@ -30,7 +30,7 @@ export const ZUpdateSchema = z
 				countryId: prefixedId('country').nullable(),
 				govDistId: prefixedId('govDist').nullable(),
 				services: z.string().array(),
-				notVisitable: z.boolean(),
+				addressVisibility: z.nativeEnum(PrismaEnums.AddressVisibility),
 			})
 			.partial(),
 	})

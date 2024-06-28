@@ -59,4 +59,4 @@ if (process.env.NODE_ENV !== 'production') {
 }
 export { prisma }
 export type * from '@prisma/client'
-export { Prisma } from '@prisma/client'
+export { Prisma, $Enums as PrismaEnums } from '@prisma/client'

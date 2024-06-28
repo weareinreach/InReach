@@ -20,6 +20,7 @@ jiti('../../packages/env')
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
 const isVercelProd = process.env.VERCEL_ENV === 'production'
+const isVercelStaging = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF === 'dev'
 const isLocalDev =
 	process.env.NODE_ENV === 'development' && !['preview', 'production'].includes(process.env.VERCEL_ENV)
 const shouldAnalyze = process.env.ANALYZE === 'true'
@@ -56,10 +57,10 @@ const nextConfig = {
 		serverComponentsExternalPackages: ['@sentry/profiling-node'],
 	},
 	eslint: {
-		ignoreDuringBuilds: !(isVercelProd || isRenovatePR),
+		ignoreDuringBuilds: !(isVercelProd || isRenovatePR || isVercelStaging),
 	},
 	typescript: {
-		ignoreBuildErrors: !(isVercelProd || isRenovatePR),
+		ignoreBuildErrors: !(isVercelProd || isRenovatePR || isVercelStaging),
 	},
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
