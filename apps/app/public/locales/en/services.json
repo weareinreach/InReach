@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
 		"english-classes": "English classes",
 		"language-classes": "Language classes",
-		"leadership-training-and-professional-development": "Leadership training and professional development",
 		"libraries": "Libraries",
-		"scholarships": "Scholarships"
+		"scholarships": "Scholarships",
+		"training-and-professional-development": "Training and professional development"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Financial Assistance",
+		"bail-funds": "Bail Funds",
+		"healthcare-and-insurance": "Healthcare and insurance",
+		"housing-and-utilities": "Housing and utilities",
+		"legal-fees": "Legal fees",
+		"moving-and-domestic-relocation": "Moving and domestic relocation",
+		"mutual-aid": "Mutual Aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Food",
-		"food": "Food",
-		"food-assistance": "Food assistance"
+		"community-meals": "Community meals",
+		"food-assistance": "Food assistance",
+		"food-delivery": "Food delivery",
+		"food-pantries": "Food pantries",
+		"nutrition-education": "Nutrition education"
 	},
 	"housing": {
 		"CATEGORYNAME": "Housing",
+		"drop-in-centers": "Drop-in centers",
 		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
 		"emergency-housing": "Emergency housing",
 		"housing-information-and-referrals": "Housing information and referrals",
+		"mail-services": "Mail services",
 		"short-term-housing": "Short-term housing",
 		"trans-housing": "Trans housing"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
 		"deportation-or-removal": "Deportation or removal",
 		"employment-authorization": "Employment authorization",
-		"family-petitions": "Family petitions",
+		"family-based-immigration": "Family-based immigration",
+		"family-law": "Family law",
 		"immigration-detention": "Immigration detention",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Legal hotlines",
@@ -83,18 +98,19 @@
 		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "Mail",
-		"mail": "Mail"
+		"CATEGORYNAME": "Mail"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 services",
 		"dental-care": "Dental care",
+		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "HIV and sexual health",
 		"medical-clinics": "Medical clinics",
 		"obgyn-services": "OBGYN services",
 		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
 		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"substance-use": "Substance use",
 		"trans-health": "Trans health",
 		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
 		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC support groups",
+		"family-support-groups": "Family support groups",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Private therapy and counseling",
 		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "Art, music, and literature",
+		"camps-and-excursions": "Camps and excursions",
 		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"trans-focused-services": {
