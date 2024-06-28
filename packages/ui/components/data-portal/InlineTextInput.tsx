@@ -34,8 +34,9 @@ const useBaseStyles = createStyles((theme) => ({
 const useFontSize = ({ fontSize, classNames }: InlineEditProps) => {
 	const { classes } = useStyles()
 	const { classes: baseClasses, cx } = useBaseStyles()
-	if (typeof fontSize !== 'string') {
-		throw new Error('`fontSize` must be a string')
+	if (fontSize !== undefined && typeof fontSize !== 'string') {
+		fontSize = fontSize.toString()
+		// throw new Error('`fontSize` must be a string')
 	}
 	const fontClass = fontSize ? classes[fontSize] : undefined
 	return {
