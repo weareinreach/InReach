@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-import { Geometry, Prisma, PrismaEnums } from '@weareinreach/db'
+import { Geometry, Prisma } from '@weareinreach/db'
+import * as PrismaEnums from '@weareinreach/db/enums'
 import { allAttributes } from '@weareinreach/db/generated/allAttributes'
 import { prefixedId } from '~api/schemas/idPrefix'
 

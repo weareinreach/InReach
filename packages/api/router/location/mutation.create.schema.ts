@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { PrismaEnums } from '@weareinreach/db'
+import * as PrismaEnums from '@weareinreach/db/enums'
 import { prefixedId } from '~api/schemas/idPrefix'
 
 export const ZCreateSchema = z.object({
