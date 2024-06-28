@@ -27,6 +27,7 @@ import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { boolOrNull, transformNullString } from '@weareinreach/api/schemas/common'
+import * as PrismaEnums from '@weareinreach/db/enums'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { isExternal, Link } from '~ui/components/core/Link'
@@ -92,7 +93,7 @@ const FormSchema = z.object({
 			deleted: z.coerce.boolean(),
 			countryId: z.string().nullable(),
 			govDistId: z.string().nullable(),
-			addressVisibility: z.enum(['FULL', 'PARTIAL', 'HIDDEN']).default('FULL'),
+			addressVisibility: z.nativeEnum(PrismaEnums.AddressVisibility),
 			accessible: z
 				.object({
 					supplementId: z.string(),
@@ -160,10 +161,10 @@ const CountryItem = forwardRef<HTMLDivElement, CountryItem>(({ label, flag, ...p
 })
 CountryItem.displayName = 'CountryItem'
 
-const addressVisibilityOptions: Record<'value' | 'label', string>[] = [
-	{ value: 'FULL', label: 'Show full address' },
-	{ value: 'PARTIAL', label: 'Show city & state/province' },
-	{ value: 'HIDDEN', label: 'Hide address' },
+const addressVisibilityOptions: { value: PrismaEnums.AddressVisibility; label: string }[] = [
+	{ value: PrismaEnums.AddressVisibility.FULL, label: 'Show full address' },
+	{ value: PrismaEnums.AddressVisibility.PARTIAL, label: 'Show city & state/province' },
+	{ value: PrismaEnums.AddressVisibility.HIDDEN, label: 'Hide address' },
 ]
 
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
@@ -196,6 +197,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	})
 	useEffect(() => {
 		if (data && !isLoading) {
+			// @ts-expect-error TODO: Wtf?
 			form.setValues(data)
 			form.resetDirty()
 			setIsSaved(false)
@@ -471,7 +473,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								<Select
 									label='Address visibility'
 									data={addressVisibilityOptions}
-									defaultValue='FULL'
+									defaultValue={PrismaEnums.AddressVisibility.FULL}
 									{...form.getInputProps('data.addressVisibility')}
 								/>
 							</Stack>
