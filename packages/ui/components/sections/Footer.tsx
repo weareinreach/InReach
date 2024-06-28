@@ -68,7 +68,7 @@ const connectLinks: LinkArr = [
 	{
 		key: 'footer.subscribe-newsletter',
 		defaultValue: 'Subscribe to our newsletter',
-		href: 'https://inreach.org/newsletter/',
+		href: 'https://inreach.org/#newsletter',
 		external: true,
 	},
 ]
