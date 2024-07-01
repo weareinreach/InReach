@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "Sipò edikasyon pou jèn LGBTQ",
 		"english-classes": "Klas angle",
 		"language-classes": "Klas lang",
-		"leadership-training-and-professional-development": "Fòmasyon lidèchip ak devlopman pwofesyonèl",
 		"libraries": "Bibliyotèk",
-		"scholarships": "Bousdetid"
+		"scholarships": "Bousdetid",
+		"training-and-professional-development": "Training and professional development"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Asistans Finansye",
+		"bail-funds": "Bail Funds",
+		"healthcare-and-insurance": "Healthcare and insurance",
+		"housing-and-utilities": "Housing and utilities",
+		"legal-fees": "Legal fees",
+		"moving-and-domestic-relocation": "Moving and domestic relocation",
+		"mutual-aid": "Mutual Aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Manje",
-		"food": "Manje",
-		"food-assistance": "Asistans manje"
+		"community-meals": "Community meals",
+		"food-assistance": "Asistans manje",
+		"food-delivery": "Food delivery",
+		"food-pantries": "Food pantries",
+		"nutrition-education": "Nutrition education"
 	},
 	"housing": {
 		"CATEGORYNAME": "Lojman",
+		"drop-in-centers": "Drop-in centers",
 		"drop-in-centers-for-lgbtq-youth": "Sant de vizit pou jèn LGBTQ",
 		"emergency-housing": "Lojman Ijans",
 		"housing-information-and-referrals": "Enfòmasyon sou lojman ak referans",
+		"mail-services": "Mail services",
 		"short-term-housing": "Kout tèm lojman",
 		"trans-housing": "Trans lojman"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Aksyon difere pou arive timoun (DACA)",
 		"deportation-or-removal": "Depòtasyon oswa retire",
 		"employment-authorization": "Otorizasyon travay",
-		"family-petitions": "Petisyon fanmi",
+		"family-based-immigration": "Family-based immigration",
+		"family-law": "Family law",
 		"immigration-detention": "Imigrasyon detansyon",
 		"legal-advice": "Konsèy legal",
 		"legal-hotlines": "Liy dirèk legal",
@@ -83,18 +98,19 @@
 		"u-visa": "Viza U"
 	},
 	"mail": {
-		"CATEGORYNAME": "La pòs",
-		"mail": "La pòs"
+		"CATEGORYNAME": "La pòs"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medikal",
 		"covid-19-services": "Sèvis COVID-19",
 		"dental-care": "Swen dantè",
+		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "VIH ak sante seksyèl",
 		"medical-clinics": "Klinik medikal",
 		"obgyn-services": "Sèvis OBGYN",
 		"physical-evaluations-for-asylum-claim": "Evalyasyon fizik pou reklamasyon azil",
 		"physical-evaluations-for-refugee-claim": "Evalyasyon fizik pou reklamasyon refijye yo",
+		"substance-use": "Itilizasyon sibstans",
 		"trans-health": "Trans sante",
 		"trans-health-gender-affirming-surgery": "Trans sante - sèks afime operasyon",
 		"trans-health-hormone-and-surgery-letters": "Trans sante - òmòn ak lèt operasyon",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Sante mantal",
 		"bipoc-support-groups": "Gwoup sipò BIPOC",
+		"family-support-groups": "Family support groups",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Prive terapi ak konsèy",
 		"psychological-evaluations-for-asylum-claim": "Evalyasyon sikolojik pou reklamasyon azil",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Lwazi ak Aktivite",
 		"art-music-literature": "Atizay, mizik, ak literati",
+		"camps-and-excursions": "Camps and excursions",
 		"sports-and-entertainment": "Espò ak amizman"
 	},
 	"trans-focused-services": {

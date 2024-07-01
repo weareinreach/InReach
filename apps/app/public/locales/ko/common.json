@@ -15,9 +15,6 @@
 	"alert-message-1": "<strong>COVID-19 정책:</strong> COVID-19 예방에 대한 뉴스와 모범 사례가 날마다 빠르게 변화함에 따라 Whitman-Walker Health는 예방 권고를 반영하여 서비스를 지속적으로 업데이트하고 있습니다. 최신 정보는 해당 웹 사이트를 확인하십시오.",
 	"alert-message-instructions": "경고 메시지 입력",
 	"alert-title-instructions": "메시지 제목을 입력하십시오...",
-	"alerts": {
-		"search-page-legislative-map": "이 <ATLink>트랜스젠더 금지법 위험 지도</ATLink> 는 50개 주와 D.C. 전체의 트랜스젠더 금지법에 대한 2년 위험성을 보여줍니다."
-	},
 	"all-service-category": "모두 {{serviceCategory}}",
 	"anti-hate": {
 		"body": "InReach를 사용하면 이 자 정보를 유해하거나 증오에 기반한 동성애 혐오, 트랜스 혐오, 외국인 혐오 와/아니면 인종 차별적 의제나 논평에 사용하지 않을 것에 동의하는 것으로 간주됩니다.",

@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "Opvoedkundige ondersteuning vir LGBTQ-jeug",
 		"english-classes": "Engelse klasse",
 		"language-classes": "Taal klasse",
-		"leadership-training-and-professional-development": "Leierskapopleiding en professionele ontwikkeling",
 		"libraries": "Biblioteke",
-		"scholarships": "Beurse"
+		"scholarships": "Beurse",
+		"training-and-professional-development": "Training and professional development"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Financial Assistance",
+		"bail-funds": "Bail Funds",
+		"healthcare-and-insurance": "Healthcare and insurance",
+		"housing-and-utilities": "Housing and utilities",
+		"legal-fees": "Legal fees",
+		"moving-and-domestic-relocation": "Moving and domestic relocation",
+		"mutual-aid": "Mutual Aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Food",
-		"food": "Kos",
-		"food-assistance": "Voedselbystand"
+		"community-meals": "Community meals",
+		"food-assistance": "Voedselbystand",
+		"food-delivery": "Food delivery",
+		"food-pantries": "Food pantries",
+		"nutrition-education": "Nutrition education"
 	},
 	"housing": {
 		"CATEGORYNAME": "Housing",
+		"drop-in-centers": "Drop-in centers",
 		"drop-in-centers-for-lgbtq-youth": "Inloopsentrums vir LGBTQ-jeug",
 		"emergency-housing": "Nood behuising",
 		"housing-information-and-referrals": "Behuising inligting en verwysings",
+		"mail-services": "Mail services",
 		"short-term-housing": "Korttermyn behuising",
 		"trans-housing": "Trans behuising"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Uitgestelde aksie vir kinderjare aankomste (DACA)",
 		"deportation-or-removal": "Deportasie of verwydering",
 		"employment-authorization": "indiensneming magtiging",
-		"family-petitions": "Familie petisies",
+		"family-based-immigration": "Family-based immigration",
+		"family-law": "Family law",
 		"immigration-detention": "Immigrasie aanhouding",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Wetlike blitslyne",
@@ -83,18 +98,19 @@
 		"u-visa": "U visum"
 	},
 	"mail": {
-		"CATEGORYNAME": "Mail",
-		"mail": "Mail"
+		"CATEGORYNAME": "Mail"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 dienste",
 		"dental-care": "Tandheelkundige sorg",
+		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "MIV en seksuele gesondheid",
 		"medical-clinics": "Mediese klinieke",
 		"obgyn-services": "OBGYN dienste",
 		"physical-evaluations-for-asylum-claim": "Fisiese evaluerings vir asieleis",
 		"physical-evaluations-for-refugee-claim": "Fisiese evaluerings vir vlugtelingseis",
+		"substance-use": "Substance use",
 		"trans-health": "Trans gesondheid",
 		"trans-health-gender-affirming-surgery": "Trans gesondheid - geslagsbevestigende chirurgie",
 		"trans-health-hormone-and-surgery-letters": "Trans gesondheid - hormoon en chirurgie briewe",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC ondersteuningsgroepe",
+		"family-support-groups": "Family support groups",
 		"hotlines": "Blitslyne",
 		"private-therapy-and-counseling": "Privaat terapie en berading",
 		"psychological-evaluations-for-asylum-claim": "Sielkundige evaluerings vir asieleis",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Vermaak en aktiwiteite",
 		"art-music-literature": "Kuns, musiek en letterkunde",
+		"camps-and-excursions": "Camps and excursions",
 		"sports-and-entertainment": "Sport en vermaak"
 	},
 	"trans-focused-services": {

@@ -1,12 +1,12 @@
 {
 	"banner": {
-		"donate": "Ajude a manter o InReach grátis para todos. U <DonateLink>Doe agora!</DonateLink>💝",
-		"redesign": "Leia sobre o lançamento da reformulação do aplicativo inReach em nosso blog. <Link>Saiba mais.</Link>",
+		"donate": "Ajude a manter o InReach grátis para todos. <DonateLink>Faça uma doação agora!</DonateLink>💝",
+		"redesign": "Leia sobre o lançamento da reformulação do aplicativo inReach no nosso blog. <Link>Saiba mais.</Link>",
 		"tmf": "Espalhe alegria trans com #TransMascFuturos 🏳️‍⚧️"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Ouça nossos usuários</Title1>",
-		"who-we-are": "<Title1>Quem somos</Title1>\n<Text>Somos uma organização sem fins lucrativos de tecnologia liderada por trans que aumenta o acesso a recursos para a diversificada comunidade LGBTQ+.</Text>\n<Link>Saiba mais sobre nós.</Link>"
+		"who-we-are": "<Title1>Quem somos</Title1>\n<Text>Somos uma organização tecnológica sem fins lucrativos liderada por pessoas trans com o objetivo de aumentar o acesso a recursos para a comunidade LGBTQ+.</Text>\n<Link>Saiba mais sobre nós.</Link>"
 	},
 	"hero": {
 		"community": {
@@ -14,9 +14,9 @@
 			"1": "Imigrantes LGBTQ+",
 			"2": "Refugiados LGBTQ+",
 			"3": "Jovens LGBTQ+",
-			"4": "a comunidade transgênero",
+			"4": "a comunidade transgênera",
 			"5": "Comunidades LGBTQ+ BIPOC",
-			"6": "cuidadores de jovens LGBTQ+"
+			"6": "pessoas que cuidam de jovens LGBTQ+"
 		},
 		"find-resources": "<Text>Encontre </Text><Service></Service><Text> verificado para </Text><Community></Community><Text> com inReach.</Text>",
 		"heading": "Encontre recursos LGBTQ+.",
@@ -36,10 +36,10 @@
 		"subheading": "Bem-vindo à primeira plataforma tecnológica do mundo que combina pessoas TLGBQ+ (transgêneros, lésbicas, gays, bissexuais, homossexuais e outras identidades) que enfrentam perseguição ou discriminação com recursos seguros e verificados."
 	},
 	"values": {
-		"free": "<Title2>Gratuito para sempre 🔑</Title2>\n<Text>Nossa plataforma de tecnologia é 100% gratuita para todos, para garantir que a ajuda segura esteja sempre disponível.</Text>\n<LinkFree>Doe para nos ajudar a manter nossa plataforma gratuita.</LinkFree>",
+		"free": "<Title2>Gratuito para sempre 🔑</Title2>\n<Text>Nossa plataforma tecnológica é 100% gratuita para todos, para garantir que ajuda esteja sempre disponível.</Text>\n<LinkFree>Faça uma doação para ajudar a manter nossa plataforma gratuita.</LinkFree>",
 		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>Somos a primeira plataforma tecnológica do mundo que combina pessoas LGBTQ+ que enfrentam perseguição ou discriminação com recursos seguros e verificados de forma independente.</Text>\n<LinkInnovative>Veja nosso código-fonte e contribua.</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Acreditamos que a igualdade LGBTQ+ exige justiça trans, justiça para refugiados, justiça racial, justiça reprodutiva, justiça linguística e muito mais.</Text>\n<LinkIntersect>Saiba mais sobre nosso processo de verificação.</LinkIntersect>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Acreditamos que a igualdade LGBTQ+ exige justiça trans, justiça para refugiados, justiça racial, justiça reprodutiva, justiça linguística e muito mais.</Text>\n<LinkIntersect>Saiba mais sobre o nosso processo de verificação.</LinkIntersect>",
 		"our-values": "Nossos valores",
-		"safety-first": "<Title2>Segurança primeiro 🔒</Title2>\n<Text>Sabemos que o anonimato online pode ser uma questão de vida ou morte para pessoas LGBTQ+. É por isso que nosso aplicativo foi projetado para proteger a confidencialidade e a segurança dos usuários online.</Text>\n<LinkSafety>Saiba mais sobre nossa política de privacidade.</LinkSafety>"
+		"safety-first": "<Title2>Segurança antes de tudo 🔒</Title2>\n<Text>Sabemos que o anonimato online pode ser uma questão de vida ou morte para pessoas LGBTQ+. É por isso que nosso aplicativo foi projetado para proteger a confidencialidade e a segurança dos usuários online.</Text>\n<LinkSafety>Saiba mais sobre nossa política de privacidade.</LinkSafety>"
 	}
 }

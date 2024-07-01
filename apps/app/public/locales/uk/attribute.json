@@ -68,8 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Собівартість",
+		"cost-accepts-insurance": "Ця служба приймає страхування",
+		"cost-accepts-insurance_default": "Ця послуга приймає страховку. безпосередньо зв’яжіться з організацією для отримання додаткової інформації про вартість, варіанти фінансової допомоги та деталі страхового покриття.",
+		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
 		"cost-fees": "Стягне за собою витрати",
-		"cost-free": "Безкоштовно"
+		"cost-free": "Безкоштовно",
+		"cost-sliding-scale": "Витрати, визначені на розтягненні залишку",
+		"cost-sliding-scale_default": "У цьому сервісі є розсувні збори. Сума, яку ви платите за послуги, регулюється відповідно до рівня доходу. Зв'яжіться з організацією безпосередньо для отримання додаткової інформації.",
+		"cost-sliding-scale_withUrl": "У цьому сервісі є розсувні збори. Сума, яку ви платите за послуги, регулюється відповідно до рівня доходу. <Link href=\"{{url}}\">Натисніть тут, щоб відвідати сторінку організації для отримання додаткової інформації.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "Елдерс",
@@ -101,6 +107,7 @@
 		"bipoc-led": "Біпок-світлодіод",
 		"black-led": "Чорний світлодіод",
 		"immigrant-led": "Іммігрант-світлодіод",
+		"lgbtq-led": "LGBTQ+ Led",
 		"trans-led": "Трансгендерний світлодіодний",
 		"women-led": "Жінки-світлодіодні"
 	},

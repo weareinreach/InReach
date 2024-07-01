@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "LGBTQ gençlere eğitim desteği",
 		"english-classes": "İngilizce dersleri",
 		"language-classes": "Dil dersleri",
-		"leadership-training-and-professional-development": "Liderlik eğitimi ve mesleki gelişim",
 		"libraries": "Kütüphaneler",
-		"scholarships": "Burslar"
+		"scholarships": "Burslar",
+		"training-and-professional-development": "Eğitim ve mesleki gelişim"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Mali Yardım",
+		"bail-funds": "Kefalet Fonları",
+		"healthcare-and-insurance": "Sağlık ve sigorta",
+		"housing-and-utilities": "Konut ve kamu hizmetleri",
+		"legal-fees": "Yasal ücretler",
+		"moving-and-domestic-relocation": "Taşınma ve yurtiçi yer değiştirme",
+		"mutual-aid": "Karşılıklı Yardım"
 	},
 	"food": {
 		"CATEGORYNAME": "Gıda",
-		"food": "Gıda",
-		"food-assistance": "Gıda yardımı"
+		"community-meals": "Topluluk yemekleri",
+		"food-assistance": "Gıda yardımı",
+		"food-delivery": "Yemek teslimatı",
+		"food-pantries": "Gıda kilerleri",
+		"nutrition-education": "Beslenme eğitimi"
 	},
 	"housing": {
 		"CATEGORYNAME": "Konut",
+		"drop-in-centers": "Açılış merkezleri",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ gençler için giriş merkezleri",
 		"emergency-housing": "Acil durum muhafazası",
 		"housing-information-and-referrals": "Konut bilgileri ve yönlendirmeler",
+		"mail-services": "Posta hizmetleri",
 		"short-term-housing": "Kısa süreli konut",
 		"trans-housing": "Trans konut"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Çocukluk Çağı Gelenleri İçin Ertelenmiş Eylem (DACA)",
 		"deportation-or-removal": "Sınır dışı etme veya kaldırma",
 		"employment-authorization": "İstihdama yetkisi",
-		"family-petitions": "Aile dilekçeleri",
+		"family-based-immigration": "Aile temelli göçmenlik",
+		"family-law": "Aile Hukuku",
 		"immigration-detention": "Göçmenlik gözaltı",
 		"legal-advice": "Hukuki danışmanlık",
 		"legal-hotlines": "Yasal yardım hatları",
@@ -83,18 +98,19 @@
 		"u-visa": "U vizesi"
 	},
 	"mail": {
-		"CATEGORYNAME": "Posta",
-		"mail": "Posta"
+		"CATEGORYNAME": "Posta"
 	},
 	"medical": {
 		"CATEGORYNAME": "Tıbbi",
 		"covid-19-services": "COVID-19 hizmetleri",
 		"dental-care": "Diş bakımı",
+		"fertility-and-family-planning-services": "Doğurganlık ve aile planlaması hizmetleri",
 		"hiv-and-sexual-health": "HIV ve cinsel sağlık",
 		"medical-clinics": "Tıbbi klinikler",
 		"obgyn-services": "OBGYN hizmetleri",
 		"physical-evaluations-for-asylum-claim": "İltica talebi için fiziksel değerlendirmeler",
 		"physical-evaluations-for-refugee-claim": "Mülteci talebi için fiziksel değerlendirmeler",
+		"substance-use": "Madde kullanımı",
 		"trans-health": "Trans sağlığı",
 		"trans-health-gender-affirming-surgery": "Trans sağlığı - cinsiyeti onaylayan cerrahi",
 		"trans-health-hormone-and-surgery-letters": "Trans sağlığı - hormon ve cerrahi mektupları",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Ruh Sağlığı",
 		"bipoc-support-groups": "BIPOC destek grupları",
+		"family-support-groups": "Aile destek grupları",
 		"hotlines": "Yardım hatları",
 		"private-therapy-and-counseling": "Özel terapi ve danışmanlık",
 		"psychological-evaluations-for-asylum-claim": "İltica talebi için psikolojik değerlendirmeler",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Eğlence ve Aktiviteler",
 		"art-music-literature": "Sanat, müzik ve edebiyat",
+		"camps-and-excursions": "Kamplar ve geziler",
 		"sports-and-entertainment": "Spor ve eğlence"
 	},
 	"trans-focused-services": {

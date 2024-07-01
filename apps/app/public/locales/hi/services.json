@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "LGBTQ युवाओं के लिए शैक्षिक सहायता",
 		"english-classes": "अंग्रेजी की कक्षाएं",
 		"language-classes": "भाषा की कक्षाएँ",
-		"leadership-training-and-professional-development": "नेतृत्व प्रशिक्षण और पेशेवर विकास",
 		"libraries": "लाइब्रेरीज़",
-		"scholarships": "छात्रवृत्तियां"
+		"scholarships": "छात्रवृत्तियां",
+		"training-and-professional-development": "Training and professional development"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Financial Assistance",
+		"bail-funds": "Bail Funds",
+		"healthcare-and-insurance": "Healthcare and insurance",
+		"housing-and-utilities": "Housing and utilities",
+		"legal-fees": "Legal fees",
+		"moving-and-domestic-relocation": "Moving and domestic relocation",
+		"mutual-aid": "Mutual Aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Food",
-		"food": "फ़ूड",
-		"food-assistance": "खाद्य सहायता"
+		"community-meals": "Community meals",
+		"food-assistance": "खाद्य सहायता",
+		"food-delivery": "Food delivery",
+		"food-pantries": "Food pantries",
+		"nutrition-education": "Nutrition education"
 	},
 	"housing": {
 		"CATEGORYNAME": "Housing",
+		"drop-in-centers": "Drop-in centers",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ युवाओं के लिए ड्रॉप-इन सेंटर",
 		"emergency-housing": "आपातकालीन आवास",
 		"housing-information-and-referrals": "आवास की जानकारी और रेफरल",
+		"mail-services": "Mail services",
 		"short-term-housing": "लघु अवधि के आवास",
 		"trans-housing": "ट्रांस हाउसिंग"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "बचपन के आगमन के लिए आस्थगित कार्रवाई (DACA)",
 		"deportation-or-removal": "निर्वासन या निष्कासन",
 		"employment-authorization": "रोजगार प्राधिकरण",
-		"family-petitions": "पारिवारिक याचिकाएं",
+		"family-based-immigration": "Family-based immigration",
+		"family-law": "Family law",
 		"immigration-detention": "आप्रवासन निरोध",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "कानूनी हॉटलाइन",
@@ -83,18 +98,19 @@
 		"u-visa": "यू वीज़ा"
 	},
 	"mail": {
-		"CATEGORYNAME": "Mail",
-		"mail": "मेल"
+		"CATEGORYNAME": "Mail"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 सेवाएं",
 		"dental-care": "दाँतों की देखभाल",
+		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "एचआईवी और यौन स्वास्थ्य",
 		"medical-clinics": "मेडिकल क्लीनिक",
 		"obgyn-services": "ओबीजीवाईएन सेवाएं",
 		"physical-evaluations-for-asylum-claim": "शरण के दावे के लिए भौतिक मूल्यांकन",
 		"physical-evaluations-for-refugee-claim": "शरणार्थी के दावे के लिए भौतिक मूल्यांकन",
+		"substance-use": "Substance use",
 		"trans-health": "ट्रांस हेल्थ",
 		"trans-health-gender-affirming-surgery": "ट्रांस हेल्थ - लिंग पुष्टि करने वाली सर्जरी",
 		"trans-health-hormone-and-surgery-letters": "ट्रांस हेल्थ - हार्मोन और सर्जरी पत्र",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC सहायता समूह",
+		"family-support-groups": "Family support groups",
 		"hotlines": "हॉटलाइन",
 		"private-therapy-and-counseling": "निजी चिकित्सा और परामर्श",
 		"psychological-evaluations-for-asylum-claim": "शरण के दावे के लिए मनोवैज्ञानिक मूल्यांकन",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "मनोरंजन और गतिविधियां",
 		"art-music-literature": "कला, संगीत और साहित्य",
+		"camps-and-excursions": "Camps and excursions",
 		"sports-and-entertainment": "खेल और मनोरंजन"
 	},
 	"trans-focused-services": {

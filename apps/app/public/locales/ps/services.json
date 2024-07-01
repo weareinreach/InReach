@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره تعلیمي ملاتړ",
 		"english-classes": "انګلیسي ټولګي",
 		"language-classes": "د ژبې ټولګي",
-		"leadership-training-and-professional-development": "د رهبرۍ روزنه او مسلکي پرمختګ",
 		"libraries": "کتابتونونه",
-		"scholarships": "بورسونه"
+		"scholarships": "بورسونه",
+		"training-and-professional-development": "Training and professional development"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Financial Assistance",
+		"bail-funds": "Bail Funds",
+		"healthcare-and-insurance": "Healthcare and insurance",
+		"housing-and-utilities": "Housing and utilities",
+		"legal-fees": "Legal fees",
+		"moving-and-domestic-relocation": "Moving and domestic relocation",
+		"mutual-aid": "Mutual Aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Food",
-		"food": "خواړه",
-		"food-assistance": "د خوړو مرسته"
+		"community-meals": "Community meals",
+		"food-assistance": "د خوړو مرسته",
+		"food-delivery": "Food delivery",
+		"food-pantries": "Food pantries",
+		"nutrition-education": "Nutrition education"
 	},
 	"housing": {
 		"CATEGORYNAME": "Housing",
+		"drop-in-centers": "Drop-in centers",
 		"drop-in-centers-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره د ډراپ ان مرکزونه",
 		"emergency-housing": "بيړنۍ کور",
 		"housing-information-and-referrals": "د کور معلومات او راجع کول",
+		"mail-services": "Mail services",
 		"short-term-housing": "لنډمهاله هستوګنه",
 		"trans-housing": "د ټرانس کور"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "د ماشومتوب راتګ لپاره ځنډول شوی عمل (DACA)",
 		"deportation-or-removal": "جلاوطنه یا لرې کول",
 		"employment-authorization": "د کارموندنې واک",
-		"family-petitions": "کورنۍ غوښتنې",
+		"family-based-immigration": "Family-based immigration",
+		"family-law": "Family law",
 		"immigration-detention": "د کډوالۍ توقیف",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "قانوني هټلاینونه",
@@ -83,18 +98,19 @@
 		"u-visa": "U ویزه"
 	},
 	"mail": {
-		"CATEGORYNAME": "Mail",
-		"mail": "میل"
+		"CATEGORYNAME": "Mail"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "د کوویډ - 19 خدمتونه",
 		"dental-care": "د غاښونو پاملرنه",
+		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "HIV او جنسي روغتیا",
 		"medical-clinics": "طبي کلینیکونه",
 		"obgyn-services": "د OBGYN خدمتونه",
 		"physical-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره فزیکي ارزونه",
 		"physical-evaluations-for-refugee-claim": "د کډوالو د ادعا لپاره فزیکي ارزونه",
+		"substance-use": "Substance use",
 		"trans-health": "د ټرانس روغتیا",
 		"trans-health-gender-affirming-surgery": "د ټرانس روغتیا - د جنډر تایید جراحي",
 		"trans-health-hormone-and-surgery-letters": "د ټرانس روغتیا - هورمون او جراحي لیکونه",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "د BIPOC ملاتړ ډلې",
+		"family-support-groups": "Family support groups",
 		"hotlines": "هاټ لاینونه",
 		"private-therapy-and-counseling": "شخصي درملنه او مشوره ورکول",
 		"psychological-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره رواني ارزونې",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "تفریح او فعالیتونه",
 		"art-music-literature": "هنر، میوزیک او ادب",
+		"camps-and-excursions": "Camps and excursions",
 		"sports-and-entertainment": "سپورت او ساتیري"
 	},
 	"trans-focused-services": {

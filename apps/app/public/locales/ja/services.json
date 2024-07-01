@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "LGBTQの若者への教育支援",
 		"english-classes": "英語の教育",
 		"language-classes": "言語の教育",
-		"leadership-training-and-professional-development": "リーダーシップ育成と職業スキル向上支援",
 		"libraries": "図書館",
-		"scholarships": "奨学金"
+		"scholarships": "奨学金",
+		"training-and-professional-development": "トレーニングと専門的な開発"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "経済的支援",
+		"bail-funds": "保釈金",
+		"healthcare-and-insurance": "ヘルスケアと保険",
+		"housing-and-utilities": "住宅とユーティリティ",
+		"legal-fees": "法的手数料",
+		"moving-and-domestic-relocation": "移動および国内移動",
+		"mutual-aid": "相互援助"
 	},
 	"food": {
 		"CATEGORYNAME": "食糧支援",
-		"food": "食糧",
-		"food-assistance": "食糧援助"
+		"community-meals": "コミュニティの食事",
+		"food-assistance": "食糧援助",
+		"food-delivery": "食品の配送",
+		"food-pantries": "食料品用パント",
+		"nutrition-education": "栄養教育"
 	},
 	"housing": {
 		"CATEGORYNAME": "住居支援",
+		"drop-in-centers": "ドロップインセンター",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQの若者の立ち寄りセンター",
 		"emergency-housing": "非常時や緊急時の住居支援",
 		"housing-information-and-referrals": "住居情報と紹介（住宅に関する情報提供）",
+		"mail-services": "メールサービス",
 		"short-term-housing": "短期滞在住宅",
 		"trans-housing": "トランスジェンダーのための住居"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "若年移民に対する国外強制退去の延期措置（DACA）",
 		"deportation-or-removal": "国外追放または強制送還",
 		"employment-authorization": "就業許可申請",
-		"family-petitions": "家族の永住許可申請",
+		"family-based-immigration": "家族に基づく移行",
+		"family-law": "家族法",
 		"immigration-detention": "出入国管理収容",
 		"legal-advice": "法的アドバイス",
 		"legal-hotlines": "法的相談窓口",
@@ -83,18 +98,19 @@
 		"u-visa": "Uビザ"
 	},
 	"mail": {
-		"CATEGORYNAME": "郵便",
-		"mail": "郵便"
+		"CATEGORYNAME": "郵便"
 	},
 	"medical": {
 		"CATEGORYNAME": "医療",
 		"covid-19-services": "新型コロナウイルス関連サービス",
 		"dental-care": "歯科治療",
+		"fertility-and-family-planning-services": "妊娠可能性と家族計画サービス",
 		"hiv-and-sexual-health": "HIVと性の健康",
 		"medical-clinics": "診療所",
 		"obgyn-services": "産婦人科サービス",
 		"physical-evaluations-for-asylum-claim": "庇護申請のための身体検査",
 		"physical-evaluations-for-refugee-claim": "難民申請のための身体検査",
+		"substance-use": "薬物使用",
 		"trans-health": "トランスジェンダーの健康",
 		"trans-health-gender-affirming-surgery": "トランスジェンダーの健康 - 性別適合手術",
 		"trans-health-hormone-and-surgery-letters": "トランスジェンダーの健康-ホルモン療法と手術に関する文書",
@@ -106,8 +122,9 @@
 	"mental-health": {
 		"CATEGORYNAME": "メンタルヘルス",
 		"bipoc-support-groups": "BIPOC（黒人、先住民、有色人種）支援グループ",
+		"family-support-groups": "家族支援グループ",
 		"hotlines": "ホットライン",
-		"private-therapy-and-counseling": "プライベートセラピーとカウンセリング",
+		"private-therapy-and-counseling": "個人的な治療とケウンセリング",
 		"psychological-evaluations-for-asylum-claim": "庇護申請のための身体検査",
 		"psychological-evaluations-for-refugee-claim": "難民申請のための身体検査",
 		"substance-use": "薬物使用",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "エンターテイメントとアクティビティ",
 		"art-music-literature": "芸術、音楽、文学",
+		"camps-and-excursions": "キャンプと小旅行",
 		"sports-and-entertainment": "スポーツとエンターテイメント"
 	},
 	"trans-focused-services": {
