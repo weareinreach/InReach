@@ -53,9 +53,9 @@
 		"zod": "3.23.8"
 	},
 	"devDependencies": {
-		"@turbo/gen": "2.0.5",
+		"@turbo/gen": "2.0.6",
 		"@types/eslint": "8.56.10",
-		"@types/google.maps": "3.55.10",
+		"@types/google.maps": "3.55.11",
 		"@types/luxon": "3.4.2",
 		"@types/node": "20.14.9",
 		"@types/terraformer__wkt": "2.0.3",
