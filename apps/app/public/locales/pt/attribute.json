@@ -5,7 +5,7 @@
 		"geo-near-public-transit": "Perto do transporte público",
 		"geo-public-transit-description": "Transporte público/direções específicas",
 		"has-confidentiality-policy": "Tem uma política de confidencialidade",
-		"offers-remote-services": "Remoto",
+		"offers-remote-services": "Oferece serviços remotos",
 		"private-practice": "Prática Privada",
 		"religiously-affiliated": "É afiliado religiosamente",
 		"time-walk-in": "Tem horário de entrada",
@@ -68,8 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Custo",
+		"cost-accepts-insurance": "Este serviço aceita seguro",
+		"cost-accepts-insurance_default": "Este serviço aceita seguro. Entre em contato com a organização para obter mais informações sobre custo, opções de assistência financeira e detalhes de cobertura de seguro.",
+		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
 		"cost-fees": "Incorre em um custo",
-		"cost-free": "Livre de custos"
+		"cost-free": "Livre de custos",
+		"cost-sliding-scale": "Custos determinados em uma escala de deslizamento",
+		"cost-sliding-scale_default": "Este serviço tem taxas escalonantes. O valor que você paga pelos serviços é ajustado de acordo com o seu nível de rendimento. Entre em contato diretamente com a organização para obter mais informações.",
+		"cost-sliding-scale_withUrl": "Este serviço tem taxas escalonantes. O valor que você paga pelos serviços é ajustado de acordo com o seu nível de rendimento. <Link href=\"{{url}}\">Clique aqui para visitar a página da organização para obter mais informações.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "Anciões",
@@ -101,6 +107,7 @@
 		"bipoc-led": "LED BiPOC",
 		"black-led": "LED preto",
 		"immigrant-led": "Liderado por imigrantes",
+		"lgbtq-led": "LGBTQ+ Led",
 		"trans-led": "Liderado por transgêneros",
 		"women-led": "Liderado por mulheres"
 	},

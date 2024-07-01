@@ -68,8 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Koszt",
+		"cost-accepts-insurance": "Usługa ta akceptuje ubezpieczenie",
+		"cost-accepts-insurance_default": "Usługa ta akceptuje ubezpieczenie. Aby uzyskać więcej informacji na temat kosztów, opcji pomocy finansowej i szczegółów ubezpieczenia skontaktuj się bezpośrednio z organizacją.",
+		"cost-accepts-insurance_withUrl": "Ta usługa akceptuje ubezpieczenie. <Link href=\"{{url}}\">Kliknij tutaj, aby odwiedzić stronę</Link> , aby uzyskać więcej informacji o kosztach, opcjach pomocy finansowej i szczegółach ubezpieczenia.",
 		"cost-fees": "Kończy się koszt",
-		"cost-free": "Bezpłatnie"
+		"cost-free": "Bezpłatnie",
+		"cost-sliding-scale": "Koszty ustalone w przesuwanej skali",
+		"cost-sliding-scale_default": "Ta usługa ma obniżoną skalę. Kwota którą płacisz za usługi jest dostosowywana w zależności od poziomu dochodów. Aby uzyskać więcej informacji, skontaktuj się bezpośrednio z organizacją.",
+		"cost-sliding-scale_withUrl": "Ta usługa ma obniżoną skalę. Kwota którą płacisz za usługi jest dostosowywana w zależności od poziomu dochodów. <Link href=\"{{url}}\">Kliknij tutaj, aby odwiedzić stronę organizacji po więcej informacji.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "Lampy analizujące do kamer telewizyjnych",
@@ -101,6 +107,7 @@
 		"bipoc-led": "BiPOC LED",
 		"black-led": "Czarna dioda LED",
 		"immigrant-led": "Prowadzony przez imigrantów",
+		"lgbtq-led": "LGBTQ+ Led",
 		"trans-led": "Transgender-LED",
 		"women-led": "Zarządzana przez kobiety"
 	},

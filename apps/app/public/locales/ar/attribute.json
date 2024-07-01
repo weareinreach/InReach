@@ -45,7 +45,7 @@
 		"language-speakers": "الفرص التي تخدم {{language}} متكلمين",
 		"latin-america-immigrant": "الفرص المتاحة لأولئك القادمين من أمريكا اللاتينية",
 		"latinx": "الفرص التي تخدم المجتمع اللاتيني",
-		"lesbian": "الفرص التي تخدم الجالية السحاقية",
+		"lesbian": "الفرص التي تخدم مجتمع الــ Lesbians",
 		"lgbtq-youth": "الفرص التي تخدم شباب LGBTQ+",
 		"lgbtq-youth-caregivers": "الفرص التي تخدم مقدمي الرعاية لشباب المثليين والمثليين جنسياً والمتحولين جنسياً",
 		"middle-east-immigrant": "الفرص التي تخدم أولئك القادمين من الشرق الأوسط",
@@ -68,15 +68,21 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "التكلفة",
+		"cost-accepts-insurance": "تقبل هذه الخدمة التأمين",
+		"cost-accepts-insurance_default": "وتقبل هذه الخدمة التأمين، وتتصل مباشرة بالمنظمة للحصول على مزيد من المعلومات عن التكاليف وخيارات المساعدة المالية وتفاصيل تغطية التأمين.",
+		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
 		"cost-fees": "يتكبد تكلفة",
-		"cost-free": "مجانا"
+		"cost-free": "مجانا",
+		"cost-sliding-scale": "التكاليف المحددة على أساس جدول متدرج",
+		"cost-sliding-scale_default": "هذه الخدمة لديها رسوم جدول متدخلات. يتم تعديل المبلغ الذي تدفعه مقابل الخدمات وفقاً لمستوى دخلك. اتصل مباشرة بالمنظمة للحصول على مزيد من المعلومات.",
+		"cost-sliding-scale_withUrl": "This service has sliding scale fees. The amount you pay for services is adjusted according to your income level. <Link href=\"{{url}}\">Click here to visit the organization's page for more information.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "كبار السن",
-		"general-lgbtq": "اللواء LGBTQ+"
+		"general-lgbtq": "عامة LGBTQ+"
 	},
 	"eligibility": {
-		"CATEGORYNAME": "متطلبات الأهلية",
+		"CATEGORYNAME": "متطلبات التأهيل",
 		"elig-age": "الأهلية للعمر",
 		"elig-age_max": "تحت {{max}}",
 		"elig-age_min": "{{min}} وأقدم",
@@ -98,16 +104,17 @@
 	},
 	"orgleader": {
 		"CATEGORYNAME": "قيادة المنظمة",
-		"bipoc-led": "بيبوك تحت القيادة",
-		"black-led": "زجاج أسود",
-		"immigrant-led": "المهاجر الذي يقوده",
-		"trans-led": "عبر الزعامة",
-		"women-led": "قيادة المرأة"
+		"bipoc-led": "تحت قيادة BIPOC",
+		"black-led": "تحت قيادة السُود",
+		"immigrant-led": "تحت قيادة المهاجرين",
+		"lgbtq-led": "LGBTQ+ مدفوع",
+		"trans-led": "تحت قيادة المتحولين جنسياً",
+		"women-led": "تحت قيادة المرأة"
 	},
 	"serviceaccess": {
 		"CATEGORYNAME": "تعليمات الوصول إلى الخدمة",
 		"accessemail": "تعليمات الوصول - البريد الإلكتروني",
-		"accessfile": "تعليمات الوصول - ملف",
+		"accessfile": "تعليمات الوصول - مَلف",
 		"accesslink": "تعليمات الوصول - رابط",
 		"accesslocation": "تعليمات الوصول - الموقع",
 		"accessphone": "تعليمات الوصول - الهاتف",
@@ -129,7 +136,7 @@
 		"incarcerated": "المجتمع المسجون",
 		"lgbtq-youth-focus": "شباب LGBTQ+",
 		"resettled-refugees": "اللاجئين المعاد توطينهم",
-		"spanish-speakers": "المتحدثون الاسبانيون",
+		"spanish-speakers": "المتحدثون الإسبانيون",
 		"trans-comm": "عبر المجتمع",
 		"trans-fem": "النساء العابرات",
 		"trans-masc": "عبر الرجال/الذكور",
@@ -146,9 +153,9 @@
 	"userlawpractice": {
 		"CATEGORYNAME": "خيارات الممارسة القانونية",
 		"corp-law-firm": "مكتب محاماة الشركات",
-		"law-other": "اخرى",
-		"law-school-clinic": "عيادة طلاب كلية الحقوق",
-		"legal-nonprofit": "غير الربحية القانونية"
+		"law-other": "أُخرى",
+		"law-school-clinic": "عيادة طلاب كُلْيَة الحقوق",
+		"legal-nonprofit": "منظمة قانونية غير ربحية"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "خيارات موفر الخدمة",
@@ -158,12 +165,12 @@
 		"govt-agency": "الوكالة الحكومية",
 		"grassroots-direct": "منظمة الخدمات المباشرة الشعبية",
 		"healthcare": "مقدم الرعاية الصحية",
-		"lawyer": "محام",
+		"lawyer": "مُحامي",
 		"other": "أخرى (يرجى التحديد)",
 		"paralegal": "موظفو المساعدة القانونية أو غيرهم من موظفي الدعم القانوني",
-		"social-worker": "أخصائي اجتماعي",
+		"social-worker": "مختص اجتماعي",
 		"student-club": "قائد/مسؤول النادي الطلابي",
 		"teacher": "المعلم",
-		"therapist-counselor": "أخصائي العلاج/مستشار"
+		"therapist-counselor": "مختص بالعلاج النفسي/مستشار"
 	}
 }

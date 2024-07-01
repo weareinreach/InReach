@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "Образовательная поддержка ЛГБТК+ молодёжи",
 		"english-classes": "Курсы английского языка",
 		"language-classes": "Языковые курсы",
-		"leadership-training-and-professional-development": "Подготовка руководящих кадров и повышение квалификации",
 		"libraries": "Библиотеки",
-		"scholarships": "Стипендии"
+		"scholarships": "Стипендии",
+		"training-and-professional-development": "Подготовка кадров и профессиональное развитие"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Финансовая помощь",
+		"bail-funds": "Банковские фонды",
+		"healthcare-and-insurance": "Здравоохранение и страхование",
+		"housing-and-utilities": "Жилье и коммунальные услуги",
+		"legal-fees": "Юридические сборы",
+		"moving-and-domestic-relocation": "Перемещение и переселение внутри страны",
+		"mutual-aid": "Взаимная помощь"
 	},
 	"food": {
 		"CATEGORYNAME": "Продукты питания",
-		"food": "Продукты питания",
-		"food-assistance": "Продовольственная помощь"
+		"community-meals": "Питание сообщества",
+		"food-assistance": "Продовольственная помощь",
+		"food-delivery": "Доставка продовольствия",
+		"food-pantries": "Пища",
+		"nutrition-education": "Образование в области питания"
 	},
 	"housing": {
 		"CATEGORYNAME": "Жилье",
+		"drop-in-centers": "Центры выбрасывания",
 		"drop-in-centers-for-lgbtq-youth": "Центры для ЛГБТК+ молодёжи",
 		"emergency-housing": "Экстренное жилье",
 		"housing-information-and-referrals": "Информация о жилье",
+		"mail-services": "Почтовые службы",
 		"short-term-housing": "Краткосрочное жилье",
 		"trans-housing": "Трансгендерное жилье"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Программа отложенных мер в отношении детей-иммигрантов (DACA)",
 		"deportation-or-removal": "Депортация или выдворение",
 		"employment-authorization": "Разрешение на работу",
-		"family-petitions": "Семейные петиции",
+		"family-based-immigration": "Семейная иммиграция",
+		"family-law": "Семейное право",
 		"immigration-detention": "Задержание иммигрантов",
 		"legal-advice": "Юридическая помощь",
 		"legal-hotlines": "Горячие линии по юридическим вопросам",
@@ -83,18 +98,19 @@
 		"u-visa": "Виза U"
 	},
 	"mail": {
-		"CATEGORYNAME": "Почта",
-		"mail": "Почта"
+		"CATEGORYNAME": "Почта"
 	},
 	"medical": {
 		"CATEGORYNAME": "Медицинские услуги",
 		"covid-19-services": "Услуги по вопросам COVID-19",
 		"dental-care": "Стоматологическая помощь",
+		"fertility-and-family-planning-services": "Услуги по фертильности и планированию размера семьи",
 		"hiv-and-sexual-health": "ВИЧ-инфекции и сексуальное здоровье",
 		"medical-clinics": "Медицинские клиники",
 		"obgyn-services": "Гинекологические услуги",
 		"physical-evaluations-for-asylum-claim": "Оценка физического здоровья для подачи на убежище",
 		"physical-evaluations-for-refugee-claim": "Оценка физического здоровья для подачи на статус беженца",
+		"substance-use": "Употребление наркотиков",
 		"trans-health": "Медицинские услуги для трансгендерных людей",
 		"trans-health-gender-affirming-surgery": "Хирургическая коррекция пола",
 		"trans-health-hormone-and-surgery-letters": "Направления на гормональную терапию и хирургическую коррекцию пола",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Психическое здоровье",
 		"bipoc-support-groups": "Группы поддержки для людей из сообщества «бай-пок» (Black, Indigenous and People of Color, BIPOC)",
+		"family-support-groups": "Группы поддержки семьи",
 		"hotlines": "Горячие линии",
 		"private-therapy-and-counseling": "Психотерапия",
 		"psychological-evaluations-for-asylum-claim": "Оценка психологического здоровья для подачи на убежище",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Развлечения и мероприятия",
 		"art-music-literature": "Искусство, музыка и литература",
+		"camps-and-excursions": "Лагери и экскурсии",
 		"sports-and-entertainment": "Спортивная деятельность"
 	},
 	"trans-focused-services": {

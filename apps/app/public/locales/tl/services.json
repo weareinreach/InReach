@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "Suporta sa edukasyon para sa kabataan ng LGBTQ",
 		"english-classes": "Mga klase sa Ingles",
 		"language-classes": "Mga klase sa wika",
-		"leadership-training-and-professional-development": "Pagsasanay sa pamumuno at pag-unlad ng propesyonal",
 		"libraries": "Mga aklatan",
-		"scholarships": "Scholarship"
+		"scholarships": "Scholarship",
+		"training-and-professional-development": "Training and professional development"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Financial Assistance",
+		"bail-funds": "Bail Funds",
+		"healthcare-and-insurance": "Healthcare and insurance",
+		"housing-and-utilities": "Housing and utilities",
+		"legal-fees": "Legal fees",
+		"moving-and-domestic-relocation": "Moving and domestic relocation",
+		"mutual-aid": "Mutual Aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Food",
-		"food": "Pagkain",
-		"food-assistance": "Tulong sa pagkain"
+		"community-meals": "Community meals",
+		"food-assistance": "Tulong sa pagkain",
+		"food-delivery": "Food delivery",
+		"food-pantries": "Food pantries",
+		"nutrition-education": "Nutrition education"
 	},
 	"housing": {
 		"CATEGORYNAME": "Housing",
+		"drop-in-centers": "Drop-in centers",
 		"drop-in-centers-for-lgbtq-youth": "Mga drop-in center para sa kabataan ng LGBTQ",
 		"emergency-housing": "Pabahay ng emerhensiya",
 		"housing-information-and-referrals": "Impormasyon sa pabahay at mga referral",
+		"mail-services": "Mail services",
 		"short-term-housing": "Panandaliang pabahay",
 		"trans-housing": "Trans pabahay"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Ipinagpaliban Aksyon para sa Childhood Dating (KUNG)",
 		"deportation-or-removal": "Deportasyon o pag-alis",
 		"employment-authorization": "Awtorisasyon ng trabaho",
-		"family-petitions": "Mga petisyon ng pamilya",
+		"family-based-immigration": "Family-based immigration",
+		"family-law": "Family law",
 		"immigration-detention": "Pagpigil sa imigrasyon",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Mga ligal na hotline",
@@ -83,18 +98,19 @@
 		"u-visa": "Visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "Mail",
-		"mail": "Mail"
+		"CATEGORYNAME": "Mail"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Mga serbisyo ng COVID-19",
 		"dental-care": "Pangangalaga sa ngipin",
+		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "HIV at sekswal na kalusugan",
 		"medical-clinics": "Mga medikal na klinika",
 		"obgyn-services": "Mga serbisyo ng OBGYN",
 		"physical-evaluations-for-asylum-claim": "Mga pisikal na pagsusuri para sa pag-angkin ng asylum",
 		"physical-evaluations-for-refugee-claim": "Pisikal na pagsusuri para sa claim ng refugee",
+		"substance-use": "Substance use",
 		"trans-health": "Kalusugan ng trans",
 		"trans-health-gender-affirming-surgery": "Trans health - operasyon sa pagpapatibay ng kasarian",
 		"trans-health-hormone-and-surgery-letters": "Trans health - mga titik ng hormone at operasyon",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Mga grupo ng suporta ng BIPOC",
+		"family-support-groups": "Family support groups",
 		"hotlines": "Mga Hotline",
 		"private-therapy-and-counseling": "Pribadong therapy at pagpapayo",
 		"psychological-evaluations-for-asylum-claim": "Mga pagsusuri sa sikolohikal para sa pag-angkin ng pagpapakupkop",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Libangan at Aktibidad",
 		"art-music-literature": "Sining, musika, at panitikan",
+		"camps-and-excursions": "Camps and excursions",
 		"sports-and-entertainment": "Palakasan at libangan"
 	},
 	"trans-focused-services": {

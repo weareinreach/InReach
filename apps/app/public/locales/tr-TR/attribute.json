@@ -68,8 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Maliyet",
+		"cost-accepts-insurance": "Bu hizmet sigorta kabul eder",
+		"cost-accepts-insurance_default": "Bu hizmet sigortayı kabul eder. Maliyet, finansal yardım seçenekleri ve sigorta kapsamı ayrıntıları hakkında daha fazla bilgi için doğrudan kuruluşla iletişime geçin.",
+		"cost-accepts-insurance_withUrl": "Bu hizmet sigortayı kabul eder. <Link href=\"{{url}}\">Maliyet, finansal yardım seçenekleri ve sigorta kapsamı ayrıntıları hakkında daha fazla bilgi için kuruluşun</Link> sayfasını ziyaret etmek için buraya tıklayın.",
 		"cost-fees": "Bir maliyet doğurur",
-		"cost-free": "Ücretsiz"
+		"cost-free": "Ücretsiz",
+		"cost-sliding-scale": "Kayar ölçekte belirlenen maliyetler",
+		"cost-sliding-scale_default": "Bu hizmetin kayan ölçek ücretleri vardır. Hizmetler için ödediğiniz tutar gelir seviyenize göre ayarlanır. Daha fazla bilgi için doğrudan kuruluşla iletişime geçin.",
+		"cost-sliding-scale_withUrl": "Bu hizmetin kayan ölçek ücretleri vardır. Hizmetler için ödediğiniz tutar gelir seviyenize göre ayarlanır. <Link href=\"{{url}}\">Daha fazla bilgi için kuruluşun sayfasını ziyaret etmek için buraya tıklayın.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "Yaşlılar",
@@ -101,6 +107,7 @@
 		"bipoc-led": "BiPOC LED'li",
 		"black-led": "Siyah-LED",
 		"immigrant-led": "Göçmen liderliğindeki",
+		"lgbtq-led": "LGBTQ+Led",
 		"trans-led": "Transeksüel liderliğindeki",
 		"women-led": "Kadın Liderliğindeki"
 	},

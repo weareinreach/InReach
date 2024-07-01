@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "Msaada wa elimu kwa vijana wa LGBTQ",
 		"english-classes": "Madarasa ya Kiingereza",
 		"language-classes": "Madarasa ya lugha",
-		"leadership-training-and-professional-development": "Mafunzo ya uongozi na maendeleo ya kitaaluma",
 		"libraries": "Maktaba",
-		"scholarships": "Scholarships"
+		"scholarships": "Scholarships",
+		"training-and-professional-development": "Training and professional development"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Financial Assistance",
+		"bail-funds": "Bail Funds",
+		"healthcare-and-insurance": "Healthcare and insurance",
+		"housing-and-utilities": "Housing and utilities",
+		"legal-fees": "Legal fees",
+		"moving-and-domestic-relocation": "Moving and domestic relocation",
+		"mutual-aid": "Mutual Aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Food",
-		"food": "Chakula",
-		"food-assistance": "Msaada wa chakula"
+		"community-meals": "Community meals",
+		"food-assistance": "Msaada wa chakula",
+		"food-delivery": "Food delivery",
+		"food-pantries": "Food pantries",
+		"nutrition-education": "Nutrition education"
 	},
 	"housing": {
 		"CATEGORYNAME": "Housing",
+		"drop-in-centers": "Drop-in centers",
 		"drop-in-centers-for-lgbtq-youth": "Vituo vya kuacha kwa vijana wa LGBTQ",
 		"emergency-housing": "Nyumba ya dharura",
 		"housing-information-and-referrals": "Habari ya makazi na rufaa",
+		"mail-services": "Mail services",
 		"short-term-housing": "Makazi ya muda mfupi",
 		"trans-housing": "Trans makazi"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Hatua iliyoahirishwa kwa Kuwasili kwa Watoto (DACA)",
 		"deportation-or-removal": "Kuhamishwa au kuondolewa",
 		"employment-authorization": "Idhini ya ajira",
-		"family-petitions": "Maombi ya familia",
+		"family-based-immigration": "Family-based immigration",
+		"family-law": "Family law",
 		"immigration-detention": "Uhamiaji kizuizini",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Hotlines kisheria",
@@ -83,18 +98,19 @@
 		"u-visa": "Visa ya U"
 	},
 	"mail": {
-		"CATEGORYNAME": "Mail",
-		"mail": "Barua"
+		"CATEGORYNAME": "Mail"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Huduma za COVID-19",
 		"dental-care": "Huduma ya meno",
+		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "VVU na afya ya ngono",
 		"medical-clinics": "Kliniki za matibabu",
 		"obgyn-services": "Huduma za OBGYN",
 		"physical-evaluations-for-asylum-claim": "Tathmini ya kimwili kwa madai ya hifadhi",
 		"physical-evaluations-for-refugee-claim": "Tathmini ya kimwili kwa madai ya wakimbizi",
+		"substance-use": "Substance use",
 		"trans-health": "Afya ya Trans",
 		"trans-health-gender-affirming-surgery": "Afya ya Trans - upasuaji wa kuthibitisha jinsia",
 		"trans-health-hormone-and-surgery-letters": "Trans afya - homoni na upasuaji barua",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Vikundi vya msaada wa BIPOC",
+		"family-support-groups": "Family support groups",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Tiba ya kibinafsi na ushauri nasaha",
 		"psychological-evaluations-for-asylum-claim": "Tathmini ya kisaikolojia ya madai ya hifadhi",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Burudani na Shughuli",
 		"art-music-literature": "Sanaa, muziki, na fasihi",
+		"camps-and-excursions": "Camps and excursions",
 		"sports-and-entertainment": "Michezo na burudani"
 	},
 	"trans-focused-services": {

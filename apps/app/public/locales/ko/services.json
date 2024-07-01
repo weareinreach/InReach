@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "LGBTQ 청소년을 위한 교육적 지원",
 		"english-classes": "영어 수업",
 		"language-classes": "언어 수업",
-		"leadership-training-and-professional-development": "지휘통솔 훈련과 전문성 신장",
 		"libraries": "도서관",
-		"scholarships": "장학금"
+		"scholarships": "장학금",
+		"training-and-professional-development": "교육 및 전문성 개발"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "재정 보조",
+		"bail-funds": "보석 기금",
+		"healthcare-and-insurance": "헬스케어 및 보험",
+		"housing-and-utilities": "주택 및 유틸리티",
+		"legal-fees": "법률 수수료",
+		"moving-and-domestic-relocation": "이사 및 국내 이전",
+		"mutual-aid": "뮤추얼 에이드"
 	},
 	"food": {
 		"CATEGORYNAME": "식품",
-		"food": "식품",
-		"food-assistance": "식량 원조"
+		"community-meals": "커뮤니티 식사",
+		"food-assistance": "식량 원조",
+		"food-delivery": "음식 배달",
+		"food-pantries": "식품 저장실",
+		"nutrition-education": "영양 교육"
 	},
 	"housing": {
 		"CATEGORYNAME": "주택",
+		"drop-in-centers": "드롭인 센터",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 예약 필요 없는 회관",
 		"emergency-housing": "긴급 주택",
 		"housing-information-and-referrals": "주택 정보와 추천서",
+		"mail-services": "메일 서비스",
 		"short-term-housing": "단기의 주택",
 		"trans-housing": "트랜스젠더 주택"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "아동기 도착자에 대한 유예 조치 (DACA)",
 		"deportation-or-removal": "추방이나 제거",
 		"employment-authorization": "취직인허증",
-		"family-petitions": "가족 청원서",
+		"family-based-immigration": "가족 기반 이민",
+		"family-law": "가족법",
 		"immigration-detention": "이민자 수용소",
 		"legal-advice": "법률 자문",
 		"legal-hotlines": "법률 핫라인",
@@ -83,18 +98,19 @@
 		"u-visa": "U 비자"
 	},
 	"mail": {
-		"CATEGORYNAME": "우편물",
-		"mail": "우편물"
+		"CATEGORYNAME": "우편물"
 	},
 	"medical": {
 		"CATEGORYNAME": "의료",
 		"covid-19-services": "COVID-19 서비스",
 		"dental-care": "치과 치료",
+		"fertility-and-family-planning-services": "불임 및 가족 계획 서비스",
 		"hiv-and-sexual-health": "HIV와 성 건강",
 		"medical-clinics": "건강 진료소",
 		"obgyn-services": "산부인과 서비스",
 		"physical-evaluations-for-asylum-claim": "망명 신청에 위헤 육체적 평가",
 		"physical-evaluations-for-refugee-claim": "나민 신청에 위헤 육체적 평가",
+		"substance-use": "물질 사용",
 		"trans-health": "트랜스 건강",
 		"trans-health-gender-affirming-surgery": "트랜스 건강 - 성별 확증 수술",
 		"trans-health-hormone-and-surgery-letters": "트랜스 건강 - 호르몬이랑 수술 소견서",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "정신 건강",
 		"bipoc-support-groups": "BIPOC 지원 그룹",
+		"family-support-groups": "가족 지원 그룹",
 		"hotlines": "핫라인",
 		"private-therapy-and-counseling": "개인 요법과 상담",
 		"psychological-evaluations-for-asylum-claim": "망명 신청에 위헤 심리평가",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "오락과 활동",
 		"art-music-literature": "예술, 음악, 문학",
+		"camps-and-excursions": "캠프 및 견학",
 		"sports-and-entertainment": "스포츠와 오락"
 	},
 	"trans-focused-services": {

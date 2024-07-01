@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "الدعم التعليمي لشباب المثليات والمثليات والمثليات والمثليات والمثليات والمثليات جنسياً",
 		"english-classes": "دروس اللغة الإنجليزية",
 		"language-classes": "فصول اللغة",
-		"leadership-training-and-professional-development": "التدريب على القيادة والتطوير المهني",
 		"libraries": "المكتبات",
-		"scholarships": "المنح الدراسية"
+		"scholarships": "المنح الدراسية",
+		"training-and-professional-development": "التدريب والتطوير المهني"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "المساعدة المالية",
+		"bail-funds": "صناديق الكفالة",
+		"healthcare-and-insurance": "الرعاية الصحية والتأمين",
+		"housing-and-utilities": "الإسكان والمرافق العامة",
+		"legal-fees": "الأتعاب القانونية",
+		"moving-and-domestic-relocation": "الانتقال وإعادة التوطين في البيت",
+		"mutual-aid": "المساعدة المتبادلة"
 	},
 	"food": {
 		"CATEGORYNAME": "الطعام",
-		"food": "الطعام",
-		"food-assistance": "المساعدة الغذائية"
+		"community-meals": "وجبات المجتمع",
+		"food-assistance": "المساعدة الغذائية",
+		"food-delivery": "توصيل الأغذية",
+		"food-pantries": "اللوحات الغذائية",
+		"nutrition-education": "التثقيف في مجال التغذية"
 	},
 	"housing": {
 		"CATEGORYNAME": "السكن",
+		"drop-in-centers": "مراكز الاستقبال",
 		"drop-in-centers-for-lgbtq-youth": "مراكز الاستقبال لشباب المثليات والمثليات والمثليات جنسياً",
 		"emergency-housing": "مساكن الطوارئ",
 		"housing-information-and-referrals": "معلومات الإسكان والإحالات",
+		"mail-services": "خدمات البريد",
 		"short-term-housing": "السكن القصير الأجل",
 		"trans-housing": "السكن العابر"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "الإجراءات المؤجلة لوصول الأطفال",
 		"deportation-or-removal": "الترحيل أو الترحيل",
 		"employment-authorization": "إذن العمل",
-		"family-petitions": "الالتماسات العائلية",
+		"family-based-immigration": "الهجرة الأسرية",
+		"family-law": "قانون الأسرة",
 		"immigration-detention": "احتجاز المهاجرين",
 		"legal-advice": "الاستشارات القانونية",
 		"legal-hotlines": "الخطوط الساخنة القانونية",
@@ -83,18 +98,19 @@
 		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "البريد",
-		"mail": "البريد"
+		"CATEGORYNAME": "البريد"
 	},
 	"medical": {
 		"CATEGORYNAME": "طبي",
 		"covid-19-services": "خدمات COVID-19",
 		"dental-care": "الرعاية الصحية بالأسنان",
+		"fertility-and-family-planning-services": "الخصوبة وخدمات تنظيم الأسرة",
 		"hiv-and-sexual-health": "فيروس نقص المناعة البشرية والصحة الجنسية",
 		"medical-clinics": "العيادات الطبية",
 		"obgyn-services": "خدمات OBGYN",
 		"physical-evaluations-for-asylum-claim": "التقييمات المادية لطلب اللجوء",
 		"physical-evaluations-for-refugee-claim": "التقييمات المادية لطلب اللجوء",
+		"substance-use": "استخدام المواد",
 		"trans-health": "عبر الصحة",
 		"trans-health-gender-affirming-surgery": "الصحة المباشرة - الجراحة التي تؤكد نوع الجنس",
 		"trans-health-hormone-and-surgery-letters": "عبر الصحة - الهرمون وحروف الجراحة",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "الصحة النفسية",
 		"bipoc-support-groups": "مجموعات دعم BIPOC",
+		"family-support-groups": "مجموعات دعم الأسرة",
 		"hotlines": "الخطوط الساخنة",
 		"private-therapy-and-counseling": "العلاج الخاص والمشورة",
 		"psychological-evaluations-for-asylum-claim": "التقييمات النفسية لطلب اللجوء",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "الترفيه والأنشطة",
 		"art-music-literature": "الفن والموسيقى والآداب",
+		"camps-and-excursions": "المخيمات والرحلات",
 		"sports-and-entertainment": "الرياضة والترفيه"
 	},
 	"trans-focused-services": {
