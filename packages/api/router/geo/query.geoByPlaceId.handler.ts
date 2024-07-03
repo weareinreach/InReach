@@ -1,7 +1,7 @@
 /* eslint-disable node/no-process-env */
 import { googleMapsApi } from '~api/google'
 import { googleAPIResponseHandler } from '~api/lib/googleHandler'
-import { geocodeResponse } from '~api/schemas/thirdParty/googleGeo'
+import { geocodeByPlaceIdResponse } from '~api/schemas/thirdParty/googleGeo'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGeoByPlaceIdSchema } from './query.geoByPlaceId.schema'
@@ -13,7 +13,8 @@ const geoByPlaceId = async ({ input }: TRPCHandlerParams<TGeoByPlaceIdSchema>) =
 			place_id: input,
 		},
 	})
-	const parsedData = geocodeResponse.parse(data)
+	console.log(JSON.stringify(data, null, 2))
+	const parsedData = geocodeByPlaceIdResponse.parse(data)
 	return googleAPIResponseHandler(parsedData, data)
 }
 export default geoByPlaceId
