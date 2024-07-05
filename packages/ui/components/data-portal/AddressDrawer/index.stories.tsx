@@ -8,7 +8,7 @@ import { location } from '~ui/mockData/location'
 import { organization } from '~ui/mockData/organization'
 import { service } from '~ui/mockData/service'
 
-import { AddressDrawer } from './AddressDrawer'
+import { AddressDrawer } from './index'
 
 export default {
 	title: 'Data Portal/Drawers/Address',
