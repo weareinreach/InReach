@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { boolOrNull, transformNullString } from '@weareinreach/api/schemas/common'
 import * as PrismaEnums from '@weareinreach/db/enums'
 
+export const AddressVisibilitySchema = z.nativeEnum(PrismaEnums.AddressVisibility)
 export const FormSchema = z.object({
 	id: z.string(),
 	data: z
@@ -30,7 +31,8 @@ export const FormSchema = z.object({
 				.partial(),
 			services: z.string().array(),
 		})
-		.partial(),
+		.partial()
+		.required({ addressVisibility: true }),
 })
 export type FormSchema = z.infer<typeof FormSchema>
 export const schemaTransform = ({ id, data }: FormSchema) => ({
