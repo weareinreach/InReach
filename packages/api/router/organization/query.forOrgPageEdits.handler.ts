@@ -32,6 +32,8 @@ const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEditsSche
 					country: { select: { cca2: true } },
 					govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
 					addressVisibility: true,
+					latitude: true,
+					longitude: true,
 				},
 				orderBy: [{ deleted: 'asc' }, { published: 'desc' }, { createdAt: 'desc' }],
 			},
