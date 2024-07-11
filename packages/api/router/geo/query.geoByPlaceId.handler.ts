@@ -13,7 +13,6 @@ const geoByPlaceId = async ({ input }: TRPCHandlerParams<TGeoByPlaceIdSchema>) =
 			place_id: input,
 		},
 	})
-	console.log(JSON.stringify(data, null, 2))
 	const parsedData = geocodeByPlaceIdResponse.parse(data)
 	return googleAPIResponseHandler(parsedData, data)
 }
