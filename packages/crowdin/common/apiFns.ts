@@ -65,18 +65,21 @@ export const createCommonFns = (client: CrowdinApi) => {
 		return response
 	}
 	const addSingleKey: AddSingleKey = async ({ isDatabaseString, key, text, ...params }) => {
-		const branchId = isDatabaseString ? branches.database : undefined
-		const fileId = isDatabaseString ? undefined : fileIds.main[params.ns ?? 'common']
 		const identifier = key
 
-		const requestArgs: typeof isDatabaseString extends true
-			? SourceStringsModel.CreateStringStringsBasedRequest
-			: SourceStringsModel.CreateStringRequest = {
-			...(branchId && { branchId }),
-			...(fileId && { fileId }),
-			identifier,
-			text,
-		}
+		const requestArgs:
+			| SourceStringsModel.CreateStringStringsBasedRequest
+			| SourceStringsModel.CreateStringRequest = isDatabaseString
+			? ({
+					branchId: branches.database,
+					identifier,
+					text,
+				} satisfies SourceStringsModel.CreateStringStringsBasedRequest)
+			: ({
+					fileId: fileIds.main[params.ns ?? 'common'],
+					identifier,
+					text,
+				} satisfies SourceStringsModel.CreateStringRequest)
 
 		const { data: response } = await client.sourceStringsApi.addString(
 			getProjectId(isDatabaseString),
