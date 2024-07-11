@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.56.10",
-		"@types/node": "20.14.9",
+		"@types/node": "20.14.10",
 		"@weareinreach/eslint-config": "workspace:*",
 		"alex": "11.0.1",
 		"eslint": "8.57.0",
