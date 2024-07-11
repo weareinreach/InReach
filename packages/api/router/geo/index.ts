@@ -21,4 +21,8 @@ export const geoRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	cityCoords: publicProcedure.input(schema.ZCityCoordsSchema).query(async (opts) => {
+		const handler = await importHandler(namespaced('cityCoords'), () => import('./query.cityCoords.handler'))
+		return handler(opts)
+	}),
 })
