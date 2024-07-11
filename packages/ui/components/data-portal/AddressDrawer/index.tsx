@@ -1,32 +1,29 @@
 import {
 	Autocomplete,
+	type AutocompleteItem,
 	Box,
 	type ButtonProps,
 	Checkbox,
 	createPolymorphicComponent,
-	createStyles,
 	Divider,
 	Drawer,
 	Group,
+	Modal,
 	Radio,
-	rem,
 	Select,
 	Stack,
 	Text,
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { useForm, type UseFormReturnType, zodResolver } from '@mantine/form'
+import { useForm, zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import filterObject from 'just-filter-object'
 import { useTranslation } from 'next-i18next'
-import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
-import reactStringReplace from 'react-string-replace'
-import { z } from 'zod'
+import { forwardRef, useCallback, useEffect, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { boolOrNull, transformNullString } from '@weareinreach/api/schemas/common'
 import * as PrismaEnums from '@weareinreach/db/enums'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
@@ -38,128 +35,14 @@ import { Icon } from '~ui/icon'
 import { createWktFromLatLng } from '~ui/lib/geotools'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { MultiSelectPopover } from './MultiSelectPopover'
+import { AutoCompleteItem } from './AutocompleteItem'
+import { FormContext } from './context'
+import { CountryItem, type CountryItemProps } from './CountryItem'
+import { AddressVisibilitySchema, FormSchema, schemaTransform } from './schema'
+import { useStyles } from './styles'
+import { MultiSelectPopover } from '../MultiSelectPopover'
 
-const useStyles = createStyles((theme) => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-	drawerBody: {
-		padding: `${rem(40)} ${rem(32)}`,
-		'&:not(:only-child)': {
-			paddingTop: rem(40),
-		},
-	},
-	unmatchedText: {
-		...theme.other.utilityFonts.utility2,
-		color: theme.other.colors.secondary.darkGray,
-		display: 'block',
-	},
-	secondLine: { ...theme.other.utilityFonts.utility4, color: theme.other.colors.secondary.darkGray },
-	matchedText: {
-		color: theme.other.colors.secondary.black,
-	},
-	radioLabel: {
-		...theme.other.utilityFonts.utility4,
-	},
-	radioButton: {
-		height: rem(16),
-		width: rem(16),
-	},
-	overlay: {
-		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
-		borderRadius: rem(16),
-		margin: rem(-8),
-		padding: rem(8),
-	},
-}))
-
-const FormSchema = z.object({
-	id: z.string(),
-	data: z
-		.object({
-			name: z.string().nullable(),
-			street1: z.string().nullish().transform(transformNullString),
-			street2: z.string().nullable().transform(transformNullString),
-			city: z.string(),
-			postCode: z.string().nullable().transform(transformNullString),
-			primary: z.coerce.boolean(),
-			mailOnly: z.boolean(),
-			longitude: z.coerce.number().nullable(),
-			latitude: z.coerce.number().nullable(),
-			geoWKT: z.string().nullable().transform(transformNullString),
-			published: z.coerce.boolean(),
-			deleted: z.coerce.boolean(),
-			countryId: z.string().nullable(),
-			govDistId: z.string().nullable(),
-			addressVisibility: z.nativeEnum(PrismaEnums.AddressVisibility),
-			accessible: z
-				.object({
-					supplementId: z.string(),
-					boolean: boolOrNull,
-				})
-				.partial(),
-			services: z.string().array(),
-		})
-		.partial(),
-})
-
-const FormContext = createContext<UseFormReturnType<FormSchema> | null>(null)
-
-const schemaTransform = ({ id, data }: FormSchema) => ({
-	id,
-	data: {
-		...data,
-		name: data.name === null ? undefined : data.name,
-	},
-})
-const matchText = (
-	result: string,
-	textToMatch: string | undefined | null,
-	classes: ReturnType<typeof useStyles>['classes']
-) => {
-	if (!textToMatch) {
-		return result
-	}
-	const matcher = new RegExp(`(${textToMatch})`, 'ig')
-	const replaced = reactStringReplace(result, matcher, (match, i) => (
-		<span key={i} className={classes.matchedText}>
-			{match}
-		</span>
-	))
-	return replaced
-}
-
-const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
-	({ value, subheading, placeId: _placeId, ...others }: AutocompleteItem, ref) => {
-		const { classes, cx } = useStyles()
-		const form = useContext(FormContext)
-		if (!form) {
-			return null
-		}
-		return (
-			<div ref={ref} {...others}>
-				<Text className={classes.unmatchedText} truncate>
-					{matchText(value, form.values.data?.street1 ?? '', classes)}
-				</Text>
-				<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
-					{subheading}
-				</Text>
-			</div>
-		)
-	}
-)
-AutoCompleteItem.displayName = 'AutoCompleteItem'
-
-const CountryItem = forwardRef<HTMLDivElement, CountryItem>(({ label, flag, ...props }, ref) => {
-	return (
-		<div ref={ref} {...props}>
-			<Text>{`${flag} ${label}`}</Text>
-		</div>
-	)
-})
-CountryItem.displayName = 'CountryItem'
+const US_COUNTRY_ID = 'ctry_01GW2HHDK9M26M80SG63T21SVH'
 
 const addressVisibilityOptions: { value: PrismaEnums.AddressVisibility; label: string }[] = [
 	{ value: PrismaEnums.AddressVisibility.FULL, label: 'Show full address' },
@@ -167,18 +50,51 @@ const addressVisibilityOptions: { value: PrismaEnums.AddressVisibility; label: s
 	{ value: PrismaEnums.AddressVisibility.HIDDEN, label: 'Hide address' },
 ]
 
+const useCoordNotification = () => ({
+	address: useNewNotification({ displayText: 'Lat/Lon set to address', icon: 'info' }),
+	city: useNewNotification({ displayText: 'Lat/Lon set to city center', icon: 'info' }),
+})
+const shouldSearchFullAddress = ({
+	addressVisibility,
+	isDirty,
+	searchFullAddress,
+}: {
+	addressVisibility?: PrismaEnums.AddressVisibility
+	isDirty: boolean
+	searchFullAddress: boolean
+}) => {
+	if (!isDirty) {
+		return null
+	}
+	if (addressVisibility === PrismaEnums.AddressVisibility.FULL && !searchFullAddress) {
+		return true
+	}
+	if (
+		addressVisibility !== undefined &&
+		addressVisibility !== PrismaEnums.AddressVisibility.FULL &&
+		searchFullAddress
+	) {
+		return false
+	}
+	return null
+}
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
+	const [coordModalOpen, coordModalHandler] = useDisclosure(false)
 	const [searchTerm, setSearchTerm] = useState<string>('')
 	const [search] = useDebouncedValue(searchTerm, 200)
 	const [results, setResults] = useState<ApiOutput['geo']['autocomplete']['results']>()
 	const [govDistOpts, setGovDistOpts] = useState<{ value: string; label: string }[]>([])
-	const [countryOpts, setCountryOpts] = useState<CountryItem[]>([])
+	const [countryOpts, setCountryOpts] = useState<CountryItemProps[]>([])
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
 	const [isSaved, setIsSaved] = useState(false)
+	const [searchFullAddress, setSearchFullAddress] = useState(true)
 	const form = useForm<FormSchema>({
 		validate: zodResolver(FormSchema),
-		initialValues: { id: '', data: { accessible: {} } },
+		initialValues: {
+			id: '',
+			data: { accessible: {}, addressVisibility: PrismaEnums.AddressVisibility.FULL },
+		},
 		transformValues: FormSchema.transform(schemaTransform).parse,
 	})
 	const { id: organizationId } = useOrgInfo()
@@ -189,40 +105,13 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const apiUtils = api.useUtils()
 
 	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
-
-	// #region Get initial address
-	const { data, isLoading } = api.location.getAddress.useQuery(locationId ?? '', {
-		enabled: Boolean(locationId),
-		refetchOnWindowFocus: false,
-	})
-	useEffect(() => {
-		if (data && !isLoading) {
-			// @ts-expect-error TODO: Wtf?
-			form.setValues(data)
-			form.resetDirty()
-			setIsSaved(false)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, isLoading])
-	// #endregion
-
-	// #region Get org's services
-	const { data: orgServices } = api.service.getNames.useQuery(
-		{ organizationId: organizationId ?? '' },
-		{
-			// !fix when issue resolved.
-			select: (returnedData) =>
-				returnedData.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
-			enabled: Boolean(organizationId),
-			refetchOnWindowFocus: false,
-		}
-	)
-	// #endregion
+	const notifyCoordUpdate = useCoordNotification()
 
 	// #region Get country/gov dist selection items
 	const { data: govDistsByCountry } = api.fieldOpt.govDistsByCountryNoSub.useQuery(undefined, {
 		refetchOnWindowFocus: false,
 	})
+
 	useEffect(() => {
 		if (govDistsByCountry) {
 			setCountryOpts(
@@ -249,6 +138,40 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	}, [form.values?.data?.countryId])
 	// #endregion
 
+	// #region Get initial address
+	const { data, isLoading } = api.location.getAddress.useQuery(locationId ?? '', {
+		enabled: Boolean(locationId) && Boolean(govDistsByCountry?.length),
+		refetchOnWindowFocus: false,
+		select: ({ id, data: { addressVisibility, ...rest } }) => ({
+			id,
+			data: {
+				...rest,
+				addressVisibility: AddressVisibilitySchema.parse(addressVisibility),
+			},
+		}),
+	})
+	useEffect(() => {
+		if (data && !isLoading) {
+			form.setValues(data)
+			form.resetDirty()
+			setIsSaved(false)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data, isLoading])
+	// #endregion
+
+	// #region Get org's services
+	const { data: orgServices } = api.service.getNames.useQuery(
+		{ organizationId: organizationId ?? '' },
+		{
+			select: (returnedData) =>
+				returnedData.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
+			enabled: Boolean(organizationId),
+			refetchOnWindowFocus: false,
+		}
+	)
+	// #endregion
+
 	// #region Mutation handling
 	const updateLocation = api.location.update.useMutation({
 		onSuccess: () => {
@@ -266,23 +189,86 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		)
 	}, [form, updateLocation])
 
+	const setCoordsToFullAddress = useCallback(
+		async (formHook: typeof form) => {
+			if (!formHook.values.data.street1 || formHook.values.data.street1 === '') {
+				coordModalHandler.open()
+			}
+			const searchTerms = [
+				formHook.values.data.street1,
+				formHook.values.data.street2,
+				formHook.values.data.city,
+			]
+				.filter(Boolean)
+				.join(', ')
+			const { results: autocompleteResults } = await apiUtils.geo.autocomplete.fetch({
+				search: searchTerms,
+				fullAddress: true,
+			})
+			const placeId =
+				autocompleteResults.length >= 1 && autocompleteResults.at(0)?.placeId
+					? autocompleteResults.at(0)?.placeId
+					: undefined
+			if (placeId) {
+				setGooglePlaceId(placeId)
+			} else {
+				coordModalHandler.open()
+			}
+			notifyCoordUpdate.address()
+		},
+		[apiUtils, coordModalHandler, notifyCoordUpdate]
+	)
+
+	const setCoordsToCityCenter = useCallback(
+		async (formHook: typeof form) => {
+			if (formHook.values.data.city) {
+				const { results: cityResults } = await apiUtils.geo.cityCoords.fetch({
+					city: formHook.values.data.city,
+					country: formHook.values.data.countryId ?? US_COUNTRY_ID,
+					govDist: formHook.values.data.govDistId,
+				})
+				if (cityResults && !Array.isArray(cityResults)) {
+					const { place_id } = cityResults
+					setGooglePlaceId(place_id)
+				}
+			}
+			notifyCoordUpdate.city()
+		},
+		[apiUtils, notifyCoordUpdate]
+	)
+
 	useEffect(() => {
 		if (isSaved && isSaved === form.isDirty()) {
 			setIsSaved(false)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [form.values.data])
+		const fullAddressSearchNeeded = shouldSearchFullAddress({
+			addressVisibility: form.values.data.addressVisibility,
+			isDirty: form.isDirty(),
+			searchFullAddress,
+		})
+		if (fullAddressSearchNeeded !== null) {
+			if (fullAddressSearchNeeded) {
+				setSearchFullAddress(true)
+				setCoordsToFullAddress(form)
+			} else {
+				setSearchFullAddress(false)
+				setCoordsToCityCenter(form)
+			}
+		}
+	}, [form, isSaved, searchFullAddress, setCoordsToCityCenter, setCoordsToFullAddress])
 
 	// #endregion
 
 	// #region Google autocomplete/geocoding
+
 	const { data: autoCompleteSearch } = api.geo.autocomplete.useQuery(
 		{ search, fullAddress: true },
 		{
-			enabled: search !== '',
+			enabled: search !== '' && searchFullAddress,
 			refetchOnWindowFocus: false,
 		}
 	)
+
 	useEffect(() => {
 		if (autoCompleteSearch?.results.length) {
 			setResults(autoCompleteSearch.results)
@@ -299,40 +285,69 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			const country = govDistsByCountry?.find(({ cca2 }) => cca2 === result.country)
 			const govDist = country?.govDist.find(({ abbrev }) => abbrev === result.govDist)
 
-			form.setValues({
-				id: form.values.id,
-				data: {
-					...form.values.data,
-					street1: `${result.streetNumber} ${result.streetName}`,
-					street2: result.street2,
-					city: result.city,
-					postCode: result.postCode,
-					...(country ? { countryId: country.id } : {}),
-					...(govDist ? { govDistId: govDist.id } : {}),
-					latitude: result.geometry.location.lat,
-					longitude: result.geometry.location.lng,
-					geoWKT: createWktFromLatLng({
+			const formattedStreet1 =
+				compact([result.streetNumber, result.streetName]).length === 2
+					? compact([result.streetNumber, result.streetName]).join(' ')
+					: undefined
+
+			if (form.values.data.addressVisibility === PrismaEnums.AddressVisibility.FULL) {
+				form.setValues({
+					id: form.values.id,
+					data: {
+						...form.values.data,
+						street1: formattedStreet1,
+						street2: result.street2,
+						city: result.city,
+						postCode: result.postCode,
+						...(country ? { countryId: country.id } : {}),
+						...(govDist ? { govDistId: govDist.id } : {}),
 						latitude: result.geometry.location.lat,
 						longitude: result.geometry.location.lng,
-					}),
-				},
-			})
+						geoWKT: createWktFromLatLng({
+							latitude: result.geometry.location.lat,
+							longitude: result.geometry.location.lng,
+						}),
+					},
+				})
+			} else {
+				form.setValues({
+					id: form.values.id,
+					data: {
+						...form.values.data,
+						latitude: result.geometry.location.lat,
+						longitude: result.geometry.location.lng,
+						geoWKT: createWktFromLatLng({
+							latitude: result.geometry.location.lat,
+							longitude: result.geometry.location.lng,
+						}),
+					},
+				})
+			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [geoCodedAddress])
 
-	const gMapCheckDistance = `https://www.google.com/maps/dir/?api=1&origin=${encodeURI(
-		compact([
-			form.values?.data?.street1,
-			form.values?.data?.street2,
-			form.values?.data?.city,
-			govDistOpts.find(({ value }) => value === form.values?.data?.govDistId)?.label,
-			form.values?.data?.postCode,
-			countryOpts.find(({ value }) => value === form.values?.data?.countryId)?.label,
-		]).join(', ')
-	)}&destination=${encodeURI(
-		[form.values?.data?.latitude, form.values?.data?.longitude].join(',')
-	)}&travelmode=walking`
+	const getGoogleMapCheckDistanceURL = useCallback(
+		(formValues: typeof form.values) => {
+			const origin = compact([
+				formValues.data.street1,
+				formValues.data.street2,
+				formValues.data.city,
+				govDistOpts.find(({ value }) => value === formValues.data.govDistId)?.label,
+				formValues.data.postCode,
+				countryOpts.find(({ value }) => value === formValues.data.countryId)?.label,
+			]).join(', ')
+
+			const destination = [formValues.data.latitude, formValues.data.longitude].join(',')
+
+			const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURI(origin)}&destination=${encodeURI(
+				destination
+			)}&travelmode=walking`
+			return url
+		},
+		[countryOpts, form, govDistOpts]
+	)
+	const gMapCheckDistance = getGoogleMapCheckDistanceURL(form.values)
 	// #endregion
 
 	// #region Dropdown item components/handling
@@ -381,6 +396,14 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 							<Title order={2}>Edit Location</Title>
 							<TextInput label='Name' required {...form.getInputProps('data.name')} />
 							<Stack w='100%'>
+								<Stack spacing={0} w='100%'>
+									<Select
+										label='Address visibility'
+										data={addressVisibilityOptions}
+										defaultValue={PrismaEnums.AddressVisibility.FULL}
+										{...form.getInputProps('data.addressVisibility')}
+									/>
+								</Stack>
 								<Stack spacing={0}>
 									<Autocomplete
 										itemComponent={AutoCompleteItem}
@@ -469,14 +492,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								fullWidth
 								{...form.getInputProps('data.services')}
 							/>
-							<Stack spacing={0} w='100%'>
-								<Select
-									label='Address visibility'
-									data={addressVisibilityOptions}
-									defaultValue={PrismaEnums.AddressVisibility.FULL}
-									{...form.getInputProps('data.addressVisibility')}
-								/>
-							</Stack>
+
 							<Stack spacing={0} w='100%'>
 								<Text variant={variants.Text.utility1}>Mailing address only?</Text>
 								<Checkbox
@@ -489,6 +505,12 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>
+			<Modal opened={coordModalOpen} onClose={coordModalHandler.close}>
+				<Stack>
+					<Text>Please ensure that the full address is correct to get the correct coordinates</Text>
+					<Button onClick={coordModalHandler.close}>Close</Button>
+				</Stack>
+			</Modal>
 
 			<Stack>
 				<Box component='button' onClick={handler.open} ref={ref} {...props} />
@@ -501,17 +523,4 @@ export const AddressDrawer = createPolymorphicComponent<'button', AddressDrawerP
 
 interface AddressDrawerProps extends ButtonProps {
 	locationId?: string
-}
-type FormSchema = z.infer<typeof FormSchema>
-
-interface AutocompleteItem {
-	value: string
-	name?: string
-	subheading?: string
-	placeId?: string
-}
-interface CountryItem {
-	value: string
-	label: string
-	flag: string
 }

@@ -17,7 +17,7 @@ const {{name}} = async ({ctx}: TRPCHandlerParams<undefined>) => {
 
 
 	} catch (error) {
-		handleError(error)
+		return handleError(error)
 	}
 }
 export default {{name}}

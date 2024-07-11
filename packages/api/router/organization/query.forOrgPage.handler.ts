@@ -4,6 +4,7 @@ import { attributes, freeText, isPublic } from '~api/schemas/selects/common'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForOrgPageSchema } from './query.forOrgPage.schema'
+import { formatAddressVisiblity } from '../location/lib.formatAddressVisibility'
 
 const forOrgPage = async ({ input }: TRPCHandlerParams<TForOrgPageSchema>) => {
 	try {
@@ -37,14 +38,17 @@ const forOrgPage = async ({ input }: TRPCHandlerParams<TForOrgPageSchema>) => {
 						country: { select: { cca2: true } },
 						govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
 						addressVisibility: true,
+						latitude: true,
+						longitude: true,
 					},
 				},
 				attributes,
 			},
 		})
-		const { allowedEditors, ...orgData } = org
+		const { allowedEditors, locations, ...orgData } = org
 		const reformatted = {
 			...orgData,
+			locations: locations.map((location) => ({ ...location, ...formatAddressVisiblity(location) })),
 			isClaimed: Boolean(allowedEditors.length),
 		}
 
