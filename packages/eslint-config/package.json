@@ -14,7 +14,7 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"devDependencies": {
-		"@next/eslint-plugin-next": "14.2.4",
+		"@next/eslint-plugin-next": "14.2.5",
 		"@tanstack/eslint-plugin-query": "4.38.0",
 		"@types/eslint": "8.56.10",
 		"@types/eslint-config-prettier": "6.11.3",
@@ -22,7 +22,7 @@
 		"@typescript-eslint/eslint-plugin": "7.15.0",
 		"@typescript-eslint/parser": "7.15.0",
 		"eslint": "8.57.0",
-		"eslint-config-next": "14.2.4",
+		"eslint-config-next": "14.2.5",
 		"eslint-config-prettier": "9.1.0",
 		"eslint-formatter-github": "1.1.4",
 		"eslint-import-resolver-typescript": "3.6.1",
@@ -34,13 +34,13 @@
 		"eslint-plugin-react": "7.34.3",
 		"eslint-plugin-storybook": "0.8.0",
 		"eslint-plugin-turbo": "2.0.6",
-		"next": "14.2.4",
+		"next": "14.2.5",
 		"resolve-pkg-maps": "1.0.0",
 		"typescript": "5.5.3"
 	},
 	"peerDependencies": {
 		"eslint": "8.57.0",
-		"next": "14.2.4"
+		"next": "14.2.5"
 	},
 	"publishConfig": {
 		"access": "public"
