@@ -492,15 +492,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								fullWidth
 								{...form.getInputProps('data.services')}
 							/>
-
-							<Stack spacing={0} w='100%'>
-								<Text variant={variants.Text.utility1}>Mailing address only?</Text>
-								<Checkbox
-									label={'This is NOT a physical location'}
-									classNames={{ label: classes.radioLabel }}
-									{...form.getInputProps('data.mailOnly', { type: 'checkbox' })}
-								/>
-							</Stack>
 						</Stack>
 					</Drawer.Body>
 				</Drawer.Content>
