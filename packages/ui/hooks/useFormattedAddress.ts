@@ -1,6 +1,7 @@
 import compact from 'just-compact'
 import { formatAddress } from 'localized-address-format'
 import { type TFunction, useTranslation } from 'next-i18next'
+import { useCallback } from 'react'
 import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -56,6 +57,33 @@ export const useFormattedAddress = (location?: UseFormattedAddressProps | null) 
 		return address.join(', ')
 	}
 	return address
+}
+
+export const useAddressFormatter = () => {
+	const { t } = useTranslation('gov-dist')
+	const formatDbItem = useCallback(
+		(location?: UseFormattedAddressProps | null) => {
+			const addressParts = AddressSchema.safeParse(location)
+			if (!addressParts.success) {
+				return null
+			}
+
+			const parsedLocation = addressParts.data
+			const adminArea = getAdminArea(parsedLocation, t)
+			const formattedAddress = formatAddress({
+				addressLines: compact([parsedLocation.street1?.trim(), parsedLocation.street2?.trim()]),
+				locality: parsedLocation.city.trim(),
+				postalCode: parsedLocation.postCode?.trim() ?? undefined,
+				postalCountry: parsedLocation.country.cca2,
+				administrativeArea: adminArea,
+			})
+
+			return formattedAddress
+		},
+		[t]
+	)
+
+	return { formatDbItem, format: formatAddress }
 }
 
 export type UseFormattedAddressProps = Partial<
