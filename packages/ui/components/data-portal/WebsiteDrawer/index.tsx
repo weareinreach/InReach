@@ -110,8 +110,6 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			onSuccess: () => apiUtils.orgWebsite.invalidate(),
 		})
 		useEffect(() => {
-			console.log('useEffect', { createNew, hasLocationId, organizationId })
-
 			if (createNew && organizationId) {
 				setFormValue('published', true)
 				setFormValue('organizationId', organizationId)
