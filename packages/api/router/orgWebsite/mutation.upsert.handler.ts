@@ -22,7 +22,7 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 			op === 'create'
 		const isCreate = operation === 'create'
 
-		const id = isCreate ? passedId ?? generateId('orgEmail') : passedId
+		const id = isCreate ? (passedId ?? generateId('orgEmail')) : passedId
 
 		const generateDescription = (): GeneratedDescription | undefined => {
 			if (!desc || !organizationId) {

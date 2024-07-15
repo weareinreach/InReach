@@ -27,7 +27,7 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 		const isCreateData = (op: 'create' | 'update', inputData: typeof data): inputData is CreateData =>
 			op === 'create'
 		const isCreate = operation === 'create'
-		const id = isCreate ? passedId ?? generateId('orgSocialMedia') : passedId
+		const id = isCreate ? (passedId ?? generateId('orgSocialMedia')) : passedId
 		let username = passedUsername
 
 		if (url && !passedUsername) {
