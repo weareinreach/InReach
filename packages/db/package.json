@@ -100,7 +100,7 @@
 		"p-queue": "8.0.1",
 		"p-retry": "6.2.0",
 		"papaparse": "5.4.1",
-		"prettier": "3.3.2",
+		"prettier": "3.3.3",
 		"pretty-bytes": "6.1.1",
 		"pretty-ms": "9.0.0",
 		"prisma": "5.16.2",
