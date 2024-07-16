@@ -299,7 +299,6 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 	const listProps = { variant: addressListVariant, icon: separator, ref: addressRef }
 	const hasServices = Boolean(data.services.length)
 	const hasAttributes = Boolean(data.attributes.length)
-	console.log('title variant', getTextVariant)
 	return (
 		<Link
 			href={{

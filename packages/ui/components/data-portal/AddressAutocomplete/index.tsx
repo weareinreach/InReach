@@ -101,8 +101,6 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 	const disableFieldUntilCountry = !formValues.address?.countryId
 	const visibilityIsFull = addressVisibility === AddressVisibility.FULL
 
-	console.log('search term', { search, searchTerm })
-
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 	const { data: countryOptions } = api.fieldOpt.govDistsByCountryNoSub.useQuery(
 		{ activeForOrgs: true },
@@ -135,8 +133,6 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 			countryOptions?.find(({ value: countryId }) => countryId === selectedCountryId)?.govDist ?? []
 		return govDistItems
 	}, [countryOptions, formValues.address?.countryId])
-
-	console.log({ countryOptions, govDistOptions })
 
 	const setFormValue = useCallback(
 		(fieldName: Path<T>, value: FieldPathValue<T, typeof fieldName>) => {
