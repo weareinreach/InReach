@@ -140,7 +140,7 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 	)
 
 	const { data: autoCompleteSearch } = api.geo.autocomplete.useQuery(
-		{ search, fullAddress: true },
+		{ search, fullAddress: addressVisibility === AddressVisibility.FULL },
 		{
 			enabled: search !== '',
 			refetchOnWindowFocus: false,
