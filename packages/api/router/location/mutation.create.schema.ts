@@ -9,7 +9,7 @@ export const ZCreateSchema = z.object({
 	name: z.string(),
 	address: z
 		.object({
-			street1: z.string(),
+			street1: z.string().optional(),
 			street2: z.string().optional(),
 			city: z.string(),
 			postCode: z.string().optional(),
