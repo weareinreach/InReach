@@ -97,6 +97,12 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 	const [search] = useDebouncedValue(searchTerm, 200)
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
 	const { t, i18n } = useTranslation(['gov-dist'])
+
+	const disableFieldUntilCountry = !formValues.address?.countryId
+	const visibilityIsFull = addressVisibility === AddressVisibility.FULL
+
+	console.log('search term', { search, searchTerm })
+
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 	const { data: countryOptions } = api.fieldOpt.govDistsByCountryNoSub.useQuery(
 		{ activeForOrgs: true },
@@ -140,7 +146,7 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 	)
 
 	const { data: autoCompleteSearch } = api.geo.autocomplete.useQuery(
-		{ search, fullAddress: addressVisibility === AddressVisibility.FULL },
+		{ search, fullAddress: visibilityIsFull },
 		{
 			enabled: search !== '',
 			refetchOnWindowFocus: false,
@@ -249,8 +255,6 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 		}
 	}, [form, formValues.addressVisibility, getAndSetCoords, previousAddressVisibility])
 
-	const disableFieldUntilCountry = !formValues.address?.countryId
-
 	const Street1Input =
 		addressVisibility === AddressVisibility.FULL ? (
 			<Autocomplete
@@ -330,7 +334,7 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 				/>
 				<TextInput
 					label='Postal code'
-					required
+					required={visibilityIsFull}
 					disabled={disableFieldUntilCountry}
 					control={control}
 					name={getFieldName('postCode')}
