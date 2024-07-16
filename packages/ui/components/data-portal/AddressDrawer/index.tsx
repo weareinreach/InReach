@@ -23,12 +23,11 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
-import * as PrismaEnums from '@weareinreach/db/enums'
+import { AddressVisibility } from '@weareinreach/db/enums'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-import { useAddressFormatter } from '~ui/hooks/useFormattedAddress'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
@@ -44,10 +43,10 @@ import { MultiSelectPopover } from '../MultiSelectPopover'
 
 const US_COUNTRY_ID = 'ctry_01GW2HHDK9M26M80SG63T21SVH'
 
-const addressVisibilityOptions: { value: PrismaEnums.AddressVisibility; label: string }[] = [
-	{ value: PrismaEnums.AddressVisibility.FULL, label: 'Show full address' },
-	{ value: PrismaEnums.AddressVisibility.PARTIAL, label: 'Show city & state/province' },
-	{ value: PrismaEnums.AddressVisibility.HIDDEN, label: 'Hide address' },
+const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = [
+	{ value: AddressVisibility.FULL, label: 'Show full address' },
+	{ value: AddressVisibility.PARTIAL, label: 'Show city & state/province' },
+	{ value: AddressVisibility.HIDDEN, label: 'Hide address' },
 ]
 
 const useCoordNotification = () => ({
@@ -67,7 +66,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		validate: zodResolver(FormSchema),
 		initialValues: {
 			id: '',
-			data: { accessible: {}, addressVisibility: PrismaEnums.AddressVisibility.FULL },
+			data: { accessible: {}, addressVisibility: AddressVisibility.FULL },
 		},
 		transformValues: FormSchema.transform(schemaTransform).parse,
 	})
@@ -165,15 +164,8 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 
 	const setCoordsToFullAddress = useCallback(
 		async (formHook: typeof form) => {
-			console.log(
-				'setCoordsToFullAddress -> addressVisibility Dirty?',
-				formHook.isDirty('data.addressVisibility'),
-				'touched?',
-				formHook.isTouched('data.addressVisibility')
-			)
 			if (formHook.isTouched('data.addressVisibility')) {
 				if (!formHook.values.data.street1 || formHook.values.data.street1 === '') {
-					console.log('show modal cuz no street', formHook.values.data.street1)
 					coordModalHandler.open()
 				}
 				const searchTerms = [
@@ -195,7 +187,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 				if (placeId) {
 					setGooglePlaceId(placeId)
 				} else {
-					console.log('show modal cuz no placeId', autocompleteResults)
 					coordModalHandler.open()
 				}
 				notifyCoordUpdate.address()
@@ -206,12 +197,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 
 	const setCoordsToCityCenter = useCallback(
 		async (formHook: typeof form) => {
-			console.log(
-				'setCoordsToCityCenter -> addressVisibility Dirty?',
-				formHook.isDirty('data.addressVisibility'),
-				'touched?',
-				formHook.isTouched('data.addressVisibility')
-			)
 			if (formHook.values.data.city && formHook.isTouched('data.addressVisibility')) {
 				const { results: cityResults } = await apiUtils.geo.cityCoords.fetch({
 					city: formHook.values.data.city,
@@ -239,7 +224,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	// #region Google autocomplete/geocoding
 
 	const { data: autoCompleteSearch } = api.geo.autocomplete.useQuery(
-		{ search, fullAddress: form.values.data.addressVisibility === PrismaEnums.AddressVisibility.FULL },
+		{ search, fullAddress: form.values.data.addressVisibility === AddressVisibility.FULL },
 		{
 			enabled: search !== '',
 			refetchOnWindowFocus: false,
@@ -259,9 +244,9 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	useEffect(() => {
 		if (geoCodedAddress?.result) {
 			const addressVisibility = form.values.data.addressVisibility
-			const isFullAddress = addressVisibility === PrismaEnums.AddressVisibility.FULL
+			const isFullAddress = addressVisibility === AddressVisibility.FULL
 			const { result } = geoCodedAddress
-			console.log({ result })
+
 			const country = countryOptions?.find(({ cca2 }) => cca2 === result.country)
 			const govDist = country?.govDist.find(({ abbrev }) => abbrev === result.govDist)
 
@@ -377,11 +362,11 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	)
 
 	// #endregion
-	const addressFieldRequired = form.values.data.addressVisibility === PrismaEnums.AddressVisibility.FULL
+	const addressFieldRequired = form.values.data.addressVisibility === AddressVisibility.FULL
 	const countryNotSelected = !form.values.data.countryId || form.values.data.countryId === ''
 
 	const Street1Input =
-		form.values.data.addressVisibility === PrismaEnums.AddressVisibility.FULL ? (
+		form.values.data.addressVisibility === AddressVisibility.FULL ? (
 			<Autocomplete
 				itemComponent={AutoCompleteItem}
 				data={results ?? []}
@@ -398,7 +383,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		)
 
 	const CityInput =
-		form.values.data.addressVisibility === PrismaEnums.AddressVisibility.FULL ? (
+		form.values.data.addressVisibility === AddressVisibility.FULL ? (
 			<TextInput label='City' required disabled={countryNotSelected} {...form.getInputProps('data.city')} />
 		) : (
 			<Autocomplete
@@ -413,7 +398,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 				onChange={handleCityAutocompleteChange}
 			/>
 		)
-	console.log('form instance', { form })
+
 	return (
 		<FormContext.Provider value={form}>
 			<Drawer.Root onClose={handler.close} opened={opened} position='right'>
@@ -442,7 +427,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 									<Select
 										label='Address visibility'
 										data={addressVisibilityOptions}
-										defaultValue={PrismaEnums.AddressVisibility.FULL}
+										defaultValue={AddressVisibility.FULL}
 										{...form.getInputProps('data.addressVisibility')}
 										onChange={handleAddressVisibilityChange}
 									/>
