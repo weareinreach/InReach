@@ -124,7 +124,7 @@ const config = {
 		},
 		{
 			files: ['./**/*.{js,mjs,cjs}'],
-			parserOptions: { project: true },
+			parserOptions: { project: true, ecmaVersion: 2020, sourceType: 'module' },
 			rules: {
 				'@typescript-eslint/require-await': 'off',
 				'@typescript-eslint/return-await': 'off',
