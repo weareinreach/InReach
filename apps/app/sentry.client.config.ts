@@ -1,13 +1,4 @@
 /* eslint-disable node/no-process-env */
-// This file configures the initialization of Sentry on the client.
-// The config you add here will be used whenever a users loads a page in their browser.
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/
-
-import {
-	captureConsoleIntegration,
-	extraErrorDataIntegration,
-	reportingObserverIntegration,
-} from '@sentry/integrations'
 import * as Sentry from '@sentry/nextjs'
 
 const isVercel = process.env.VERCEL === '1'
@@ -33,13 +24,12 @@ Sentry.init({
 		}),
 		Sentry.browserTracingIntegration({ enableInp: true }),
 		Sentry.browserProfilingIntegration(),
-		reportingObserverIntegration(),
-		captureConsoleIntegration(),
-		extraErrorDataIntegration(),
+		Sentry.reportingObserverIntegration(),
+		Sentry.captureConsoleIntegration(),
+		Sentry.extraErrorDataIntegration(),
 	],
 	ignoreErrors: [
 		/^ResizeObserver loop completed with undelivered notifications.$/,
 		/^ResizeObserver loop limit exceeded$/,
 	],
-	tracePropagationTargets: ['localhost', /^https:\/\/(?:[a-z0-9-]+)-weareinreach\.vercel\.app\/.*/i],
 })
