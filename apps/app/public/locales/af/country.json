@@ -201,7 +201,7 @@
 		"demonym_other": "Cocos-eilandbewoners"
 	},
 	"CHE": {
-		"name": "Switzerland",
+		"name": "Switserland",
 		"demonym_one": "Switsers",
 		"demonym_other": "Switsers"
 	},
@@ -232,8 +232,8 @@
 	},
 	"COG": {
 		"name": "Republiek van die Kongo",
-		"demonym_one": "Congolese",
-		"demonym_other": "Congolese"
+		"demonym_one": "Kongolees",
+		"demonym_other": "Kongolees"
 	},
 	"COK": {
 		"name": "Cook-eilande",
@@ -312,8 +312,8 @@
 	},
 	"DOM": {
 		"name": "Dominikaanse Republiek",
-		"demonym_one": "Dominican",
-		"demonym_other": "Dominicans"
+		"demonym_one": "Dominikaanse",
+		"demonym_other": "Dominikane"
 	},
 	"DZA": {
 		"name": "Algerië",
@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "Frankryk",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "Frans",
+		"demonym_other": "Frans"
 	},
 	"FRO": {
 		"name": "Faroëreilande",
@@ -396,7 +396,7 @@
 		"demonym_other": "Britse"
 	},
 	"GEO": {
-		"name": "Georgia",
+		"name": "Georgië",
 		"demonym_one": "Georgies",
 		"demonym_other": "Georgiërs"
 	},
@@ -520,8 +520,8 @@
 	},
 	"IOT": {
 		"name": "Britse Indiese Oseaan Gebied",
-		"demonym_one": "Indian",
-		"demonym_other": "Indians"
+		"demonym_one": "Indiese",
+		"demonym_other": "Indiërs"
 	},
 	"IRL": {
 		"name": "Ierland",
@@ -560,8 +560,8 @@
 	},
 	"JEY": {
 		"name": "Jersey",
-		"demonym_one": "Channel Islander",
-		"demonym_other": "Channel Islanders"
+		"demonym_one": "Kanaal-eilandbewoner",
+		"demonym_other": "Kanaal-eilandbewoners"
 	},
 	"JOR": {
 		"name": "Jordan",
@@ -619,7 +619,7 @@
 		"demonym_other": "Laotiërs"
 	},
 	"LBN": {
-		"name": "Lebanon",
+		"name": "Libanon",
 		"demonym_one": "Libanese",
 		"demonym_other": "Libanese"
 	},
@@ -704,7 +704,7 @@
 		"demonym_other": "Maldivans"
 	},
 	"MEX": {
-		"name": "Mexico",
+		"name": "Mexiko",
 		"demonym_one": "Mexikaanse",
 		"demonym_other": "Meksikane"
 	},
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "Martinique",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "Frans",
+		"demonym_other": "Frans"
 	},
 	"MUS": {
 		"name": "Mauritius",
@@ -825,8 +825,8 @@
 	},
 	"NLD": {
 		"name": "Nederland",
-		"demonym_one": "Dutch",
-		"demonym_other": "Dutch"
+		"demonym_one": "Nederlands",
+		"demonym_other": "Nederlands"
 	},
 	"NOR": {
 		"name": "Noorweë",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "Reunion",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "Frans",
+		"demonym_other": "Frans"
 	},
 	"ROU": {
 		"name": "Roemenië",
@@ -978,8 +978,8 @@
 	},
 	"SJM": {
 		"name": "Svalbard en Jan Mayen",
-		"demonym_one": "Norwegian",
-		"demonym_other": "Norwegians"
+		"demonym_one": "Noors",
+		"demonym_other": "Noorweërs"
 	},
 	"SLB": {
 		"name": "Salomonseilande",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "Saint Pierre en Miquelon",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "Frans",
+		"demonym_other": "Frans"
 	},
 	"SRB": {
 		"name": "Serwië",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "Verenigde State Klein Afgeleë Eilande",
-		"demonym_one": "American",
-		"demonym_other": "Americans"
+		"demonym_one": "Amerikaans",
+		"demonym_other": "Amerikaners"
 	},
 	"UNK": {
 		"name": "Kosovo",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "Verenigde State",
-		"demonym_one": "American",
-		"demonym_other": "Americans"
+		"demonym_one": "Amerikaans",
+		"demonym_other": "Amerikaners"
 	},
 	"UZB": {
 		"name": "Oesbekistan",
@@ -1178,8 +1178,8 @@
 	},
 	"VAT": {
 		"name": "Vatikaanstad",
-		"demonym_one": "Italian",
-		"demonym_other": "Italians"
+		"demonym_one": "Italiaans",
+		"demonym_other": "Italianers"
 	},
 	"VCT": {
 		"name": "Saint Vincent en die Grenadines",

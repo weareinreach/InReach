@@ -6,6 +6,7 @@ import { useFormContext } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { AddressVisibility } from '@weareinreach/db/enums'
 import { Badge } from '~ui/components/core/Badge'
 import { Rating } from '~ui/components/core/Rating'
 import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
@@ -28,7 +29,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	const formattedAddress = useFormattedAddress(location)
 
 	const addressLine =
-		location?.addressVisibility === 'HIDDEN' ? null : (
+		location?.addressVisibility === AddressVisibility.HIDDEN ? null : (
 			<Text variant={variants.Text.utility2darkGray}>{formattedAddress}</Text>
 		)
 

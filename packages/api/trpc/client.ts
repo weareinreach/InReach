@@ -18,7 +18,7 @@ const getBaseUrl = () => {
 		return `https://${getEnv('VERCEL_URL')}`
 	}
 	// dev SSR should use localhost
-	return `http://localhost:${getEnv('PORT') ?? process.env.STORYBOOK ? 6006 : 3000}`
+	return `http://localhost:${(getEnv('PORT') ?? process.env.STORYBOOK) ? 6006 : 3000}`
 }
 
 export const trpcConfig = {

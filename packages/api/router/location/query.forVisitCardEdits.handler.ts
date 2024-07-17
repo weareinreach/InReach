@@ -2,6 +2,7 @@ import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { formatAddressVisiblity } from './lib.formatAddressVisibility'
 import { type TForVisitCardEditsSchema } from './query.forVisitCardEdits.schema'
 
 const forVisitCardEdits = async ({ input }: TRPCHandlerParams<TForVisitCardEditsSchema>) => {
@@ -25,14 +26,18 @@ const forVisitCardEdits = async ({ input }: TRPCHandlerParams<TForVisitCardEdits
 				},
 				latitude: true,
 				longitude: true,
+				addressVisibility: true,
 			},
 		})
 		if (!result) {
 			return null
 		}
+		const formattedAddress = formatAddressVisiblity(result)
+
 		const { attributes, ...rest } = result
 		const transformed = {
 			...rest,
+			...formattedAddress,
 			remote: attributes.find(({ attribute }) => attribute.tsKey === 'additional.offers-remote-services')
 				?.attribute,
 		}

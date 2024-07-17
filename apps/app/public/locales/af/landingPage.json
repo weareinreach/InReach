@@ -1,8 +1,8 @@
 {
 	"banner": {
-		"donate": "Help keep InReach free for everyone. <DonateLink>Donate now!</DonateLink> 💝",
+		"donate": "Help om InReach gratis vir almal te hou. <DonateLink>Skenk nou!</DonateLink>💝",
 		"redesign": "Lees oor die bekendstelling van die InReach App-herontwerp op ons blog. <Link>Kom meer te wete.</Link>",
-		"tmf": "<TMFLink>Spread trans joy with #TransMascFutures 🏳️‍⚧️</TMFLink>"
+		"tmf": "<TMFLink>Versprei trans-vreugde met #TransMascFutures 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Hoor van ons gebruikers</Title1>",
@@ -25,7 +25,7 @@
 			"0": "mediese sorg",
 			"1": "gemeenskapsondersteuning",
 			"2": "geestesgesondheidsorg",
-			"3": "education",
+			"3": "onderwys",
 			"4": "indiensneming",
 			"5": "voedsel",
 			"6": "behuising",

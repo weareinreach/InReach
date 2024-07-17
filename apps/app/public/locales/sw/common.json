@@ -1,7 +1,7 @@
 {
 	"about-us": "Kuhusu sisi",
 	"access": {
-		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+		"sms-with-body": "Tuma neno <strong>{{body}}</strong> hadi {{code}}"
 	},
 	"account": "Akaunti",
 	"add": "Ongeza {{item}}",
@@ -11,39 +11,36 @@
 		"organization": "{{adjective}} shirika"
 	},
 	"agree-disclaimer": "Kwa kubofya \"{{action}}\" unakubaliana na InReach <link1>Sera ya faragha</link1> na <link2>Masharti ya Matumizi</link2>.",
-	"alert-message": "Alert message",
-	"alert-message-1": "<strong>COVID-19 policy:</strong> With news and best practices for COVID-19 prevention changing rapidly each day, Whitman-Walker Health continues to update their services to reflect prevention recommendations. Please check their website for the most up-to-date information.",
-	"alert-message-instructions": "Enter the alert message",
-	"alert-title-instructions": "Enter a title for the message...",
-	"alerts": {
-		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
-	},
+	"alert-message": "Ujumbe wa tahadhari",
+	"alert-message-1": "<strong>Sera ya COVID-19:</strong> Huku habari na mbinu bora za kuzuia COVID-19 zikibadilika kwa kasi kila siku, Whitman-Walker Health inaendelea kusasisha huduma zao ili kuakisi mapendekezo ya kuzuia. Tafadhali angalia tovuti yao kwa habari ya kisasa zaidi.",
+	"alert-message-instructions": "Ingiza ujumbe wa tahadhari",
+	"alert-title-instructions": "Weka kichwa cha ujumbe...",
 	"all-service-category": "Zote {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Kwa kutumia InReach, unakubali kwamba hautatumia habari hii ya rasilimali kwa ajenda hatari, chuki, chuki ya jinsia moja, transphobic, chuki wageni, na/au ajenda za ubaguzi wa rangi au maoni.",
 		"title": "Kujitolea dhidi ya chuki"
 	},
 	"badge": {
-		"accessible-building_false": "This building is NOT wheelchair accessible",
-		"accessible-building_true": "This building is wheelchair accessible",
-		"claimed": "Claimed",
+		"accessible-building_false": "Jengo hili halifikiki kwa kiti cha magurudumu",
+		"accessible-building_true": "Jengo hili linapatikana kwa kiti cha magurudumu",
+		"claimed": "Alidai",
 		"claimed-tool-tip": "Shirika hili limedaiwa na mwakilishi aliyethibitishwa. <link1>Jifunze zaidi.</link1>",
 		"community-tool-tip": "Jumuiya inayohudumiwa na shirika hili.",
-		"national-tool-tip": "Offers services throughout {{country}}.",
-		"privatePractice": "Private Practice",
+		"national-tool-tip": "Inatoa huduma kote {{country}}.",
+		"privatePractice": "Mazoezi ya Kibinafsi",
 		"remote-tool-tip": "Inapatikana kwa mbali",
 		"service-tool-tip": "Huduma (s) zinazotolewa na shirika hili.",
-		"unclaimed": "Unclaimed",
+		"unclaimed": "Haijadaiwa",
 		"unclaimed-tool-tip": "Shirika hili bado halijadaiwa na mwakilishi. <link1>Dai shirika hili</link1> kujenga uaminifu na jamii yetu, sasisha habari yako mwenyewe, na zaidi.",
-		"verified-information": "Verified information",
-		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-information": "Taarifa zilizothibitishwa",
+		"verified-information-detail": "Taarifa kwenye ukurasa huu ilisasishwa mara ya mwisho {{dateString}}. InReach hupa kipaumbele usahihi na usalama wa mtumiaji, na husasisha taarifa zote mara kwa mara. Kwa habari zaidi juu ya mchakato wetu wa ukaguzi, tafadhali tembelea ukurasa wetu wa Mchakato wa Vetting kwenye InReach.org.",
 		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Rudi kwa <u>{{page}}</u>",
 		"back-to-search": "Rudi kutafuta"
 	},
-	"can-help-people-in": "Can help people located anywhere in {{location}}",
+	"can-help-people-in": "Inaweza kusaidia watu walio popote ndani ya {{location}}",
 	"cancel": "Ghairi",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -53,8 +50,8 @@
 	"close": "Karibu",
 	"confirm-account": {
 		"click-verify": "Bonyeza hapa kuthibitisha akaunti yako ya InReach",
-		"code-requested": "Verification code requested!",
-		"code-resent": "A new code has been requested. Please check your email.",
+		"code-requested": "Umeomba nambari ya kuthibitisha!",
+		"code-resent": "Msimbo mpya umeombwa. Tafadhali angalia barua pepe yako.",
 		"message": "Bonyeza kiungo kifuatacho ili kuthibitisha akaunti yako:",
 		"subject": "Thibitisha akaunti yako"
 	},
@@ -62,13 +59,13 @@
 	"contact": "Kuwasiliana",
 	"contact-us": "Wasiliana Nasi",
 	"cookie-consent": {
-		"approve-all": "Approve all",
-		"approve-selected": "Approve selected",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
-		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
-		"item-basic": "Necessary cookies for site functionality",
-		"item-ga4": "Analytics for internal InReach use",
-		"modal-title": "Cookies Settings"
+		"approve-all": "Idhinisha yote",
+		"approve-selected": "Idhinisha iliyochaguliwa",
+		"body": "Tunatumia vidakuzi na huduma za watu wengine kwenye tovuti hii. Baadhi yao ni muhimu, wengine hutusaidia kuboresha matumizi yako ya kuvinjari. Tafadhali tazama <PrivacyLink>Taarifa yetu ya Faragha</PrivacyLink> kwa maelezo zaidi.",
+		"intro": "Tunatumia vidakuzi muhimu kufanya tovuti yetu ifanye kazi. Tungependa kuweka vidakuzi vya ziada ili kuelewa matumizi ya tovuti, kuboresha tovuti na kukumbuka mipangilio yako.",
+		"item-basic": "Vidakuzi muhimu kwa utendakazi wa tovuti",
+		"item-ga4": "Takwimu za matumizi ya ndani ya InReach",
+		"modal-title": "Mipangilio ya Vidakuzi"
 	},
 	"count": {
 		"result_one": "Matokeo ya {{count}}",
@@ -77,13 +74,13 @@
 	"country-select": "Chagua nchi",
 	"create-new-list": "Unda orodha mpya",
 	"crisis-support": {
-		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
-		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
-		"intl-we-recommend": "We recommend these international resources",
-		"natl-find-help-now": "Find help now",
-		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
-		"outside-service-area": "InReach does not operate in {{country}}",
-		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+		"intl-stay-safe": "<Title3>📣 Tafadhali baki salama mtandaoni</Title3>\n<Text>Kutembelea mojawapo ya tovuti hizi <strong>kunaweza kuacha rekodi kwenye kompyuta au kivinjari chako</strong>, kama tovuti yoyote inavyofanya baada ya kuitembelea. Tafadhali chukua hatua ili kuepuka hali zisizo salama katika eneo lako.</Text>",
+		"intl-these-verified": "Nyenzo hizi zilizoidhinishwa zinaweza kusaidia jumuiya ya LGBTQ+ popote duniani.",
+		"intl-we-recommend": "Tunapendekeza rasilimali hizi za kimataifa",
+		"natl-find-help-now": "Tafuta usaidizi sasa",
+		"natl-these-verified": "<Text>Nyenzo hizi zilizoidhinishwa zinaweza kusaidia jumuiya ya LGBTQ+ nchini Marekani. Huduma hizi <strong>zinapatikana kwa mbali, ni za siri,</strong> na <strong>bila malipo</strong>.</Text>",
+		"outside-service-area": "InReach haifanyi kazi katika {{country}}",
+		"who-this-serves": "<Text><strong>Nani rasilimali hii inahudumia:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Mahali pa sasa",
 	"delete-account": "Futa akaunti yako?",
@@ -95,9 +92,9 @@
 	},
 	"disclaimer": "Kanusho",
 	"donate": {
-		"hover": "Donate today to help keep InReach free for everyone",
-		"popup": "Help keep InReach free for everyone",
-		"to-inreach": "Donate to InReach 💝"
+		"hover": "Changia leo ili kusaidia kuweka InReach bila malipo kwa kila mtu",
+		"popup": "Saidia kuweka InReach bila malipo kwa kila mtu",
+		"to-inreach": "Changia ili Kufikia 💝"
 	},
 	"dont-have-account": "Huna akaunti?",
 	"download-app": "Pakua programu",
@@ -109,35 +106,35 @@
 	"enter-password-placeholder": "Ingiza nenosiri...",
 	"enter-review": "Ingiza hakiki yako...",
 	"errors": {
-		"401-title": "You must be logged in to do that.",
-		"403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
-		"403-title": "403: Forbidden",
-		"404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
-		"404-title": "404: Page not found.",
-		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
-		"500-title": "500: Something went wrong.",
-		"code-expired": "The code provided has expired.",
-		"code-mismatch": "The code provided is not valid.",
+		"401-title": "Lazima uwe umeingia ili kufanya hivyo.",
+		"403-body": "Huna ruhusa ya kufikia ukurasa huu. Iwapo unaona kuwa umefika kwenye ukurasa huu kimakosa, tafadhali wasiliana na msimamizi wako.",
+		"403-title": "403: Haramu",
+		"404-body": "Samahani, ukurasa unaotafuta haupo au umehamishwa. Anza utafutaji hapa chini ili kupata nyenzo salama, zilizothibitishwa za jumuiya mbalimbali za LGBTQ+ katika eneo lako.",
+		"404-title": "404: Ukurasa haujapatikana.",
+		"500-body": "Samahani, hitilafu imetokea kwenye seva yetu. Tafadhali jaribu tena baadaye, au anza utafutaji hapa chini ili kupata rasilimali salama, zilizothibitishwa za LGBTQ+ katika eneo lako.",
+		"500-title": "500: Kitu kilienda vibaya.",
+		"code-expired": "Msimbo uliotolewa umekwisha muda wake.",
+		"code-mismatch": "Msimbo uliotolewa si sahihi.",
 		"oh-no": "Oh hapana!",
-		"resend-code": "Request a new code",
-		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
+		"resend-code": "Omba nambari mpya",
+		"try-again-text": "<Text>Hitilafu fulani imetokea! Tafadhali jaribu tena.</Text>"
 	},
 	"exclude": "Wala",
 	"exit": {
-		"edit-mode": "Exit edit mode"
+		"edit-mode": "Ondoka kwenye hali ya kuhariri"
 	},
 	"filter-by-service": "Chuja kwa huduma",
 	"find-resources": "Kupata rasilimali",
 	"find-x": "Pata {{value}}",
 	"footer": {
-		"anti-hate": "Anti-hate commitment",
+		"anti-hate": "Ahadi ya kupinga chuki",
 		"digital-accessibility": "Ufikiaji wa dijiti",
-		"disclaimer": "Disclaimer",
+		"disclaimer": "Kanusho",
 		"privacy-statement": "Taarifa ya faragha",
 		"share-feedback": "Shiriki maoni",
 		"subscribe-newsletter": "Jiandikishe kwenye jarida letu",
 		"suggest-org": "Pendekeza shirika",
-		"tagline": "Seek LGBTQ+ resources.<br/>Reach safety.<br/>Find belonging.",
+		"tagline": "Tafuta rasilimali za LGBTQ+.<br/>Fikia usalama.<br/>Tafuta mali.",
 		"vetting-process": "Mchakato wa kukagua"
 	},
 	"forgot-password": "Umesahau nywila?",
@@ -146,8 +143,8 @@
 	"form-error-password-req": "Nenosiri lako halikidhi mahitaji, tafadhali jaribu tena.",
 	"go-to-x": "Nenda kwa {{value}}",
 	"hours": {
-		"closed": "Closed",
-		"open24": "Open 24 hours"
+		"closed": "Imefungwa",
+		"open24": "Fungua masaa 24"
 	},
 	"in-reach-user": "Mtumiaji wa InReach",
 	"include": "Jumuisha",
@@ -164,7 +161,7 @@
 	"link-copied": "Kiungo kilichonakiliwa kwenye clipboard",
 	"list": {
 		"added": "Rasilimali zilizohifadhiwa ili kuorodhesha: {{name}}",
-		"create-new": "Create new list",
+		"create-new": "Unda orodha mpya",
 		"create-new-sub": "Orodha zako za rasilimali zilizohifadhiwa zinaonekana tu kwako na mtu yeyote unayezishiriki naye.",
 		"create-new-sub2": "Jina orodha yako kwa jamii, siku ya wiki, au yeyote orodha hii ni kwa ajili ya.",
 		"created": "Orodha mpya imeundwa: {{name}}",
@@ -183,8 +180,8 @@
 		"error-generic": "Kitu kilienda vibaya, tafadhali jaribu tena.",
 		"error-username-password": "Jina la mtumiaji au nenosiri lisilo sahihi."
 	},
-	"message_text": "Message text",
-	"message_title": "Message title",
+	"message_text": "Nakala ya ujumbe",
+	"message_title": "Kichwa cha ujumbe",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Taarifa ya Ufikiaji</title2>\n<textDarkGray>Teknolojia ya chanzo wazi ya InReach imejengwa kwa jamii tofauti ya LGBTQ+, pamoja na watumiaji wenye ulemavu.</textDarkGray>\n<textDarkGray>Programu ya bure ya InReach inapatikana kwenye wavuti (desktop na rununu), na iOS asili na Android. Kuanzia na uzinduzi wa urekebishaji wetu wa hivi karibuni (Juni 2023), InReach itajitahidi kufikia vigezo <linkAccessibility>vya Miongozo ya Ufikiaji wa Maudhui ya Wavuti (WCAG).</linkAccessibility></textDarkGray>\n<textDarkGray>Katika InReach, tunajitahidi kufanya jukwaa letu la teknolojia kupatikana kwa watumiaji na vifaa vingi iwezekanavyo kulingana na dhamira yetu ya kuwahudumia watu wote wa LGBTQ+wanaokabiliwa na mateso au ubaguzi.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>Timu ya InReach itajitahidi kuthibitisha ustahiki na ukweli wa kimsingi juu ya watoa huduma walioorodheshwa kwenye wavuti hii. Walakini, hatuwezi kuhakikisha uwezekano au uwezo wa watoa huduma kama hao. Kwa hivyo, InReach haichukui jukumu la vitendo vya watoa huduma walioorodheshwa kwenye wavuti hii na watumiaji wanaowasiliana na watoa huduma kama hao hufanya hivyo kwa hatari yao wenyewe.</textReg>\n</stack16>"
@@ -200,11 +197,11 @@
 	"none-apply": "Hakuna hata moja ya haya yanatumika kwangu",
 	"offices-and-locations": "Ofisi na Maeneo",
 	"org-image": "Picha ya shirika",
-	"organization": "Organization",
+	"organization": "Shirika",
 	"other-specify": "Nyingine (tafadhali taja)",
 	"page-title": {
 		"base": "{{title}} - Katika Kufikia",
-		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
+		"edit-mode": "{{- title}} [BADILISHA HALI YA] - Ufikiaji",
 		"search-results": "Matokeo ya Utafutaji"
 	},
 	"password": "Nenosiri",
@@ -218,7 +215,7 @@
 	"password-req-uppercase": "Inajumuisha herufi kubwa",
 	"password-reset": {
 		"email-body": "Bonyeza kiungo kifuatacho kuweka upya nenosiri lako:",
-		"email-subject": "Reset your password"
+		"email-subject": "Weka upya nenosiri lako"
 	},
 	"password-reset-success": "<Text>Tafadhali <LoginModal>login</LoginModal> kwa kutumia password yako mpya.</Text>",
 	"password-saved": "Nenosiri limehifadhiwa!",
@@ -226,7 +223,7 @@
 	"photo_interval": "(0) [Hakuna picha bado]; (2-inf) [Tazama picha zote {{count}} ];",
 	"please-specify": "Tafadhali taja",
 	"portal-module": {
-		"service-area": "Service Area"
+		"service-area": "Eneo la Huduma"
 	},
 	"powered-by-vercel": "Inaendeshwa na Vercel",
 	"prefer-not-to-say": "Unapendelea kusema",
@@ -235,10 +232,10 @@
 	"privacy-statement-body": [
 		"<textDarkGrayCentered>Katika InReach, tunatambua kuwa kuhifadhi kutokujulikana mkondoni ni suala la maisha au kifo kwa watu wengi wa LGBTQ +. Ndio sababu Programu ya InReach ya bure (programu yetu ya wavuti, programu ya asili ya iOS, na programu ya asili ya Android) imeundwa kutanguliza kulinda usalama na usiri wa watumiaji mkondoni.</textDarkGrayCentered>",
 		"<title2>Data ya idadi ya watu ya mtumiaji</title2>",
-		"<textDarkGray><strong>We do not require any personally identifiable information to use the free InReach App.</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
+		"<textDarkGray><strong>Hatuhitaji maelezo yoyote yanayoweza kumtambulisha mtu binafsi ili kutumia InReach App isiyolipishwa.</strong></textDarkGray>",
+		"<textDarkGray>Watumiaji wanaochagua kuunda akaunti ya mtumiaji ya InReach isiyolipishwa wana <strong>chaguo</strong> kushiriki maelezo yafuatayo ya demografia kupitia uchunguzi wa mtandaoni usiojulikana:</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
+		"<textDarkGray><strong>Taarifa hizi zote nyeti zimehifadhiwa bila kujulikana na hazijaunganishwa kwa mtumiaji au akaunti yoyote ya mtumiaji.*</strong></textDarkGray>",
 		"<textUtility4>(* Isipokuwa tu ni aina ya akaunti ya mtumiaji wa Mkaguzi wa Jumuiya ya Mitaa, ambayo hutumia habari yoyote ya idadi ya watu iliyokusanywa ili kuongeza uzoefu wa kujitolea wa Wakaguzi wa Jumuiya ya Mitaa na athari. Kwa akaunti za Mkaguzi wa Jumuiya ya Mitaa, tunahitaji eneo na habari zingine zote za idadi ya watu ni hiari lakini zingefungwa kwa rekodi yao ya mtumiaji. Takwimu hizi zitaonekana tu nje ya wafanyikazi wa InReach ikiwa Mkaguzi wa Jumuiya ya Mitaa atachagua kuifanya ionekane kupitia mipangilio ya faragha ya akaunti yao. Kushiriki wasifu unaokabiliwa na umma, itasaidia watumiaji wengine kujisikia ujasiri zaidi katika hakiki zako.)</textUtility4>",
 		"<textDarkGray>Kuelewa idadi ya watumiaji wetu kunaweza kutusaidia kupima athari zetu, kukusanya fedha, na kutathmini maamuzi ya bidhaa zijazo. Tunashukuru watumiaji kushiriki habari hii kwa hiari na sisi, na tunachukua hatua hizi kulinda faragha yako na kutokujulikana.</textDarkGray>",
 		"<textDarkGray><title2>Uchanganuzi wa matumizi ya tovuti</title2></textDarkGray>",
@@ -249,8 +246,8 @@
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Taarifa ya faragha</title2>"],
 	"profile": "Profaili",
 	"questions": "Maswali?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"quick-promo-body": "<textUtility1>💚 Hifadhi na ushiriki orodha za rasilimali zilizobinafsishwa</textUtility1>\n<textUtility1>💬 Acha ukadiriaji/maoni kwa umma kwenye mashirika</textUtility1>\n<textUtility1>🏠 Pendekeza mashirika katika eneo lako</textUtility1>\n<textUtility1>🔗 Dai ukurasa wa wasifu wa shirika lako (Inakuja hivi karibuni!)</textUtility1>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Unahitaji kuingia ili kufanya hivyo.</title2>\n<textDarkGray>Ukiwa na akaunti ya InReach bila malipo unaweza kufungua vipengele vya ziada:</textDarkGray>",
 	"remote-services": "Huduma zinapatikana kwa mbali",
 	"remote-services-page-title": "Huduma za mbali",
 	"reset-password": "Weka upya nenosiri lako",
@@ -264,21 +261,21 @@
 	"review-resource": "Pitia rasilimali hii",
 	"safety-exit": "Toka kwa usalama",
 	"save": "Okoa",
-	"save-changes": "Save changes",
+	"save-changes": "Hifadhi mabadiliko",
 	"saved": "Kuokolewa",
 	"search": {
 		"include-remote": "Jumuisha huduma za mbali",
 		"location-placeholder": "Ingiza jiji au msimbo wa zip...",
-		"location-placeholder-searchby": "Search by city or zip code...",
+		"location-placeholder-searchby": "Tafuta kwa jiji au msimbo wa posta...",
 		"look-up-org": "Tafuta shirika kwa jina",
 		"no-results": "Hakuna matokeo yaliyopatikana. Tafadhali jaribu tena.",
-		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
+		"no-results-adjust": "Hakuna matokeo yaliyopatikana ya utafutaji wako. Jaribu kurekebisha eneo ulilochagua au vichujio.",
 		"organization-placeholder": "Ingiza jina la shirika...",
-		"organization-placeholder-searchby": "Search by organization name...",
+		"organization-placeholder-searchby": "Tafuta kwa jina la shirika...",
 		"suggest-resource": "Haiwezi kuipata? <1>Pendekeza shirika unalofikiria</1> linapaswa kujumuishwa."
 	},
 	"select": {
-		"base": "Select {{- item}}"
+		"base": "Chagua {{- item}}"
 	},
 	"send-email": "Tuma barua pepe",
 	"service": {
@@ -316,13 +313,13 @@
 		"lcr-screen1none": "Hakuna hata hizi zinazotumika kwangu.",
 		"lcr-screen2": "Unapatikana katika nchi gani?",
 		"lcr-screen2a": "Marekani (ikiwa ni pamoja na wilaya)",
-		"lcr-screen2b": "Canada",
+		"lcr-screen2b": "Kanada",
 		"lcr-screen2c": "Mexico",
 		"lcr-screen2none": "Hakuna hata moja ya hapo juu",
 		"lcr-screen3": "Nimekagua ukurasa wa <Link><strong>Mkaguzi wa Jumuiya ya Mitaa</strong></Link> kwenye wavuti ya InReach na ninakidhi mahitaji.",
 		"modal-body": [
 			"<title3>Je! Ungependa kuunda akaunti ya aina gani?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<group>\n<button data-option='individual'>Mtu binafsi</button>\n<button data-option='provider'>Mtaalamu/Mtoa huduma</button>\n<button data-option='lcr'>Mitaa Mkaguzi wa Jumuiya</button>\n</group>",
 			"<loginLink>Tayari una akaunti?</loginLink>"
 		],
 		"name-use-any": "Tumia jina lolote unalostahili.",
@@ -340,7 +337,7 @@
 	},
 	"sign-up-free": "Ishara ya juu kwa ajili ya bure",
 	"social": {
-		"email": "Email",
+		"email": "Barua pepe",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "Kijamii",
@@ -389,10 +386,10 @@
 	"uncheck-all": "Ondoa alama zote",
 	"user-avatar": "Avatar ya mtumiaji",
 	"user-menu": {
-		"admin-options": "Admin Options",
-		"data-portal": "Data Portal Home",
-		"edit-page": "Edit this page",
-		"user-options": "User Options"
+		"admin-options": "Chaguzi za Msimamizi",
+		"data-portal": "Nyumbani mwa Tovuti ya Data",
+		"edit-page": "Hariri ukurasa huu",
+		"user-options": "Chaguzi za Mtumiaji"
 	},
 	"verify-account": {
 		"verified": "Akaunti imethibitishwa!",
@@ -401,59 +398,59 @@
 	},
 	"view-list": "Tazama orodha",
 	"visit": "Tembelea",
-	"welcome-name": "Welcome, {{name}}!",
+	"welcome-name": "Karibu, {{name}}!",
 	"words": {
 		"accept": "Kubali",
-		"account": "Account",
+		"account": "Akaunti",
 		"add": "Ongeza",
 		"and": "na",
 		"and-x-more": "na {{count}} zaidi",
-		"approve": "Approve",
+		"approve": "Idhinisha",
 		"back": "Nyuma",
-		"close": "Close",
+		"close": "Funga",
 		"coming-soon": "Inakuja hivi karibuni",
-		"customize": "Customize",
-		"decline": "Decline",
+		"customize": "Geuza kukufaa",
+		"decline": "Kataa",
 		"delete": "Futa",
 		"distance": "Umbali",
-		"donate": "Donate",
+		"donate": "Changia",
 		"email": "Barua pepe",
 		"home": "Nyumbani",
 		"hours": "Masaa",
-		"location": "Location",
+		"location": "Mahali",
 		"more": "zaidi",
-		"more-info": "More information",
+		"more-info": "Taarifa zaidi",
 		"next": "Ijayo",
 		"no": "Hapana",
 		"organization": "Shirika",
-		"password": "Password",
+		"password": "Nenosiri",
 		"phone": "Simu",
 		"please-wait": "Tafadhali subiri...",
 		"prev": "Kabla",
 		"print": "Chapisha",
-		"publish": "Publish",
-		"restore": "Restore",
-		"reverify": "Reverify",
+		"publish": "Kuchapisha",
+		"restore": "Rejesha",
+		"reverify": "Thibitisha tena",
 		"review": "Mapitio",
 		"reviews": "Mapitio",
-		"save": "Save",
-		"save-changes": "Save changes",
-		"saved": "Saved",
+		"save": "Hifadhi",
+		"save-changes": "Hifadhi mabadiliko",
+		"saved": "Imehifadhiwa",
 		"search": "Tafuta",
-		"service-hours": "Service hours",
+		"service-hours": "Saa za huduma",
 		"settings": "Mipangilio",
 		"share": "Shiriki",
 		"sign-up": "Ishara ya juu",
 		"skip": "Ruka",
-		"support": "Support",
-		"unpublish": "Unpublish",
-		"website": "Website",
+		"support": "Msaada",
+		"unpublish": "Batilisha uchapishaji",
+		"website": "Tovuti",
 		"yes": "Ndio"
 	},
 	"photo_one": "Picha",
 	"photo_other": "Picha",
 	"review-count_one": "(Mapitio{{count}} )",
-	"review-count_other": "({{count}} reviews)",
+	"review-count_other": "({{count}} hakiki)",
 	"review_one": "Mapitio",
 	"review_other": "Mapitio",
 	"view-x-result_one": "Tazama matokeo ya {{count}}",

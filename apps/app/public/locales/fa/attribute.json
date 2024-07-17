@@ -68,8 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "هزینه",
+		"cost-accepts-insurance": "این سرویس بیمه می پذیرد",
+		"cost-accepts-insurance_default": "این سرویس بیمه می پذیرد. برای اطلاعات بیشتر در مورد هزینه، گزینه های کمک مالی و جزئیات پوشش بیمه، مستقیماً با سازمان تماس بگیرید.",
+		"cost-accepts-insurance_withUrl": "این سرویس بیمه می پذیرد. <Link href=\"{{url}}\">برای اطلاعات بیشتر در مورد هزینه، گزینه های کمک مالی و جزئیات پوشش بیمه، اینجا را کلیک کنید تا از صفحه سازمان بازدید کنید</Link> .",
 		"cost-fees": "هزینه ای را متحمل می شود",
-		"cost-free": "رایگان از هزینه"
+		"cost-free": "رایگان از هزینه",
+		"cost-sliding-scale": "هزینه ها در مقیاس کشویی تعیین می شود",
+		"cost-sliding-scale_default": "این سرویس دارای هزینه های مقیاس کشویی است. مبلغی که برای خدمات پرداخت می کنید با توجه به سطح درآمد شما تنظیم می شود. برای اطلاعات بیشتر مستقیماً با سازمان تماس بگیرید.",
+		"cost-sliding-scale_withUrl": "این سرویس دارای هزینه های کشویی است. مبلغی که برای خدمات پرداخت می کنید با توجه به سطح درآمد شما تنظیم می شود. <Link href=\"{{url}}\">برای دیدن اطلاعات بیشتر به صفحه سازمان اینجا را کلیک کنید.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "بزرگترها",
@@ -77,7 +83,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "الزامات واجد شرایط بودن",
-		"elig-age": "Age eligibility",
+		"elig-age": "صلاحیت سنی",
 		"elig-age_max": "زیر {{max}}",
 		"elig-age_min": "{{min}} و قدیمی تر",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -101,6 +107,7 @@
 		"bipoc-led": "بی پی ال ای دی",
 		"black-led": "سیاه و سفید LED",
 		"immigrant-led": "مهاجران به رهبری",
+		"lgbtq-led": "LGBTQ+ LED",
 		"trans-led": "رهبری ترانسجندر",
 		"women-led": "زنان به رهبری"
 	},
@@ -141,7 +148,7 @@
 		"incompatible-info": "اطلاعات ناسازگار"
 	},
 	"tpop": {
-		"other": "Target Population - Other"
+		"other": "جمعیت هدف - سایر"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "گزینه های تمرین قانون",

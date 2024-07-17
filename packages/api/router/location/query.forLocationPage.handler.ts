@@ -1,4 +1,4 @@
-import { prisma, PrismaEnums } from '@weareinreach/db'
+import { prisma } from '@weareinreach/db'
 import { attributes } from '~api/schemas/selects/common'
 import { globalSelect, globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'

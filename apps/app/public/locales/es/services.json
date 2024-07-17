@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "Apoyo educativo a jóvenes LGBTTTI+",
 		"english-classes": "Clases de inglés",
 		"language-classes": "Clases de idiomas",
-		"leadership-training-and-professional-development": "Capacitación de liderazgo y desarrollo profesional",
 		"libraries": "Bibliotecas",
-		"scholarships": "Becas"
+		"scholarships": "Becas",
+		"training-and-professional-development": "Formación y desarrollo profesional"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Asistencia Financiera",
+		"bail-funds": "Fondos de fianza",
+		"healthcare-and-insurance": "Cuidado sanitario y seguro",
+		"housing-and-utilities": "Casas y utilidades",
+		"legal-fees": "Tarifas legales",
+		"moving-and-domestic-relocation": "Moviendo y reubicación doméstica",
+		"mutual-aid": "Ayuda mutua"
 	},
 	"food": {
 		"CATEGORYNAME": "Comida",
-		"food": "Comida",
-		"food-assistance": "Ayuda alimentaria"
+		"community-meals": "Comidas comunitarias",
+		"food-assistance": "Ayuda alimentaria",
+		"food-delivery": "Entrega de alimentos",
+		"food-pantries": "Despensas de comida",
+		"nutrition-education": "Educación nutricional"
 	},
 	"housing": {
 		"CATEGORYNAME": "Casita",
+		"drop-in-centers": "Centros Soltar",
 		"drop-in-centers-for-lgbtq-youth": "Centros de atención para jóvenes LGBTTTI+",
 		"emergency-housing": "Vivienda de emergencia",
 		"housing-information-and-referrals": "Información y referencias sobre vivienda",
+		"mail-services": "Servicios de correo",
 		"short-term-housing": "Vivienda de corto plazo",
 		"trans-housing": "Vivienda para personas trans"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Acción Diferida para les Llegades en la Infancia (DACA, por sus siglas en inglés)",
 		"deportation-or-removal": "Deportación o expulsión",
 		"employment-authorization": "Autorización de empleo",
-		"family-petitions": "Peticiones familiares",
+		"family-based-immigration": "Inmigración familiar",
+		"family-law": "Derecho de familia",
 		"immigration-detention": "Detención de inmigrantes",
 		"legal-advice": "Asesoramiento legal",
 		"legal-hotlines": "Líneas directas legales",
@@ -83,18 +98,19 @@
 		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "Correo",
-		"mail": "Correo"
+		"CATEGORYNAME": "Correo"
 	},
 	"medical": {
 		"CATEGORYNAME": "Médico",
 		"covid-19-services": "Servicios COVID-19",
 		"dental-care": "Cuidado dental",
+		"fertility-and-family-planning-services": "Servicios de fertilidad y planificación familiar",
 		"hiv-and-sexual-health": "VIH y salud sexual",
 		"medical-clinics": "Clínicas médicas",
 		"obgyn-services": "Servicios de ginecología y obstetricia (OBGYN)",
 		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas para la solicitud de asilo",
 		"physical-evaluations-for-refugee-claim": "Evaluaciones físicas para solicitudes de refugio",
+		"substance-use": "Uso de sustancias",
 		"trans-health": "Salud trans",
 		"trans-health-gender-affirming-surgery": "Salud trans - cirugía de afirmación de género",
 		"trans-health-hormone-and-surgery-letters": "Salud trans - cartas para recibir hormonas y cirugías",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Salud mental",
 		"bipoc-support-groups": "Grupos de apoyo para personas BIPOC (Negras, Indígenas y Personas de Color)",
+		"family-support-groups": "Grupos de apoyo familiar",
 		"hotlines": "Líneas de acceso",
 		"private-therapy-and-counseling": "Terapia y consejería privada",
 		"psychological-evaluations-for-asylum-claim": "Evaluaciones psicológicas para solicitudes de asilo",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Entretenimiento y Actividades",
 		"art-music-literature": "Arte, música y literatura",
+		"camps-and-excursions": "Campamentos y excursiones",
 		"sports-and-entertainment": "Deportes y entretenimiento"
 	},
 	"trans-focused-services": {

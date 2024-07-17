@@ -18,17 +18,17 @@
 	"devDependencies": {
 		"@types/eslint": "8.56.10",
 		"@types/gtag.js": "0.0.20",
-		"@types/node": "20.14.9",
+		"@types/node": "20.14.11",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.0",
-		"next": "14.2.4",
+		"next": "14.2.5",
 		"nextjs-google-analytics": "2.3.3",
-		"type-fest": "4.20.1",
-		"typescript": "5.5.2"
+		"type-fest": "4.22.0",
+		"typescript": "5.5.3"
 	},
 	"peerDependencies": {
-		"next": "14.2.4",
+		"next": "14.2.5",
 		"nextjs-google-analytics": "2.3.3"
 	}
 }

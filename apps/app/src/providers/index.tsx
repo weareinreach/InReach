@@ -97,9 +97,9 @@ export const Providers = ({ children, session }: ProviderProps) => {
 	// )
 
 	const mantineTheme = useMemo(() => ({ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }), [])
-
+	const mantineCache = useMemo(() => appCache, [])
 	return (
-		<MantineProvider withGlobalStyles withNormalizeCSS theme={mantineTheme} emotionCache={appCache}>
+		<MantineProvider withGlobalStyles withNormalizeCSS theme={mantineTheme} emotionCache={mantineCache}>
 			{/* <ConsentProvider options={consentOptions}> */}
 			<SessionProvider session={session}>
 				<EditModeProvider>

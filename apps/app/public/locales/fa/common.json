@@ -15,9 +15,6 @@
 	"alert-message-1": "<strong>سیاست COVID-19:</strong> با توجه به اینکه اخبار و بهترین شیوه های پیشگیری از COVID-19 هر روز به سرعت تغییر می کند، Whitman-Walker Health همچنان خدمات خود را به روز می کند تا منعکس کننده توصیه های پیشگیری باشد. لطفاً برای به روزترین اطلاعات، وب سایت آنها را بررسی کنید.",
 	"alert-message-instructions": "پیام هشدار را وارد کنید",
 	"alert-title-instructions": "عنوان پیام را وارد کنید...",
-	"alerts": {
-		"search-page-legislative-map": "این<ATLink> نقشه خطرات قانونگذاری ضد ترنس</ATLink> خطر 2 ساله برای قوانین ضد ترانس را در تمام 50 ایالت و DC نشان می دهد."
-	},
 	"all-service-category": "همه {{serviceCategory}}",
 	"anti-hate": {
 		"body": "با استفاده از InReach، شما موافقت می کنید که از این اطلاعات منابع برای برنامه های مضر، نفرت محور، همجنسگرا، ترانسفوبیک، بیگانه هراسی و/یا نژادپرستانه استفاده نخواهید کرد.",
@@ -53,8 +50,8 @@
 	"close": "بستن",
 	"confirm-account": {
 		"click-verify": "برای تأیید حساب InReach خود اینجا را کلیک کنید",
-		"code-requested": "Verification code requested!",
-		"code-resent": "A new code has been requested. Please check your email.",
+		"code-requested": "کد تأیید درخواست شد!",
+		"code-resent": "یک کد جدید درخواست شده است. لطفا ایمیل خود را چک کنید.",
 		"message": "برای تأیید حساب کاربری خود روی لینک زیر کلیک کنید:",
 		"subject": "حساب کاربری خود را تأیید کنید"
 	},
@@ -116,10 +113,10 @@
 		"404-title": "404: صفحه یافت نشد.",
 		"500-body": "متأسفیم، مشکلی در سرور ما رخ داده است. لطفاً بعداً دوباره امتحان کنید یا جستجوی زیر را برای یافتن منابع امن و تأیید شده +LGBTQ در منطقه خود شروع کنید.",
 		"500-title": "500: مشکلی پیش آمده است.",
-		"code-expired": "The code provided has expired.",
-		"code-mismatch": "The code provided is not valid.",
+		"code-expired": "کد ارائه شده منقضی شده است.",
+		"code-mismatch": "کد ارائه شده معتبر نیست.",
 		"oh-no": "اوه نه",
-		"resend-code": "Request a new code",
+		"resend-code": "درخواست کد جدید",
 		"try-again-text": "<Text>مشکلی پیش آمده است! لطفا دوباره تلاش کنید.</Text>"
 	},
 	"exclude": "حذف کردن",
@@ -186,8 +183,8 @@
 	"message_text": "متن پیام",
 	"message_title": "عنوان پیام",
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>Accessibility Statement</title2>\n<textDarkGray>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textDarkGray>\n<textDarkGray>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (June 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textDarkGray>\n<textDarkGray>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing persecution or discrimination.</textDarkGray>",
-		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>The InReach team will do its best to confirm the eligibility and basic facts about service providers listed on this website. However, we cannot guarantee the viability or capabilities of any such providers. Consequently, InReach assumes no responsibility for the actions of providers listed on this website and users who contact any such providers do so at their own risk.</textReg>\n</stack16>"
+		"accessibility": "<stack16>\n<title2>بیانیه دسترسی</title2>\n<textDarkGray>فناوری منبع باز InReach برای جامعه متنوع LGBTQ+، از جمله کاربران دارای معلولیت، ساخته شده است.</textDarkGray>\n<textDarkGray>برنامه رایگان InReach در وب (دسکتاپ و موبایل) و iOS و اندروید بومی در دسترس است. با شروع جدیدترین طراحی مجدد ما (ژوئن 2023)، InReach تلاش خواهد کرد تا معیارهای AA سطح <linkAccessibility>دستورالعمل های دسترسی به محتوای وب (WCAG) را برآورده کند.</linkAccessibility></textDarkGray>\n<textDarkGray>در InReach، ما در تلاش هستیم تا پلتفرم فناوری خود را برای هرچه بیشتر کاربران و دستگاه‌های ممکن در راستای مأموریت خود برای خدمت به همه افراد LGBTQ+ در دسترس قرار دهیم. آزار و اذیت یا تبعیض</textDarkGray>",
+		"disclaimer": "<stack16>\n<title2>سلب مسئولیت InReach</title2>\n<textReg>تیم InReach تمام تلاش خود را برای تأیید واجد شرایط بودن و حقایق اساسی در مورد ارائه دهندگان خدمات فهرست شده انجام خواهد داد. در این وب سایت با این حال، ما نمی توانیم دوام یا قابلیت های هیچ یک از این ارائه دهندگان را تضمین کنیم. در نتیجه، InReach هیچ مسئولیتی در قبال اقدامات ارائه دهندگان فهرست شده در این وب سایت ندارد و کاربرانی که با چنین ارائه دهندگانی تماس می گیرند این کار را با مسئولیت خود انجام می دهند.</textReg>\n</stack16>"
 	},
 	"modal-more-options": {
 		"exclude": "منابعی را که...",
@@ -204,7 +201,7 @@
 	"other-specify": "دیگر (لطفا مشخص کنید)",
 	"page-title": {
 		"base": "{{title}} - دور از دسترس",
-		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
+		"edit-mode": "{{- title}} [ویرایش حالت] - InReach",
 		"search-results": "نتایج جستجو"
 	},
 	"password": "کلمه عبور",
@@ -220,9 +217,9 @@
 		"email-body": "برای بازنشانی رمز عبور خود روی لینک زیر کلیک کنید:",
 		"email-subject": "رمز عبور خود را بازیابی کنید"
 	},
-	"password-reset-success": "<Text>Please <LoginModal>login</LoginModal> using your new password.</Text>",
+	"password-reset-success": "<Text>لطفا <LoginModal>با استفاده از رمز عبور جدید خود وارد شوید</LoginModal> .</Text>",
 	"password-saved": "رمز عبور ذخیره شد!",
-	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
+	"photo-count_interval": "(0)[هنوز هیچ عکسی وجود ندارد.]؛ (1)[{{count}} عکس]؛ (2-inf)[{{count}} عکس]",
 	"photo_interval": "(0) [هنوز عکس وجود ندارد]; (2-INF) [مشاهده همه {{count}} عکس];",
 	"please-specify": "لطفا مشخص کنید",
 	"portal-module": {
@@ -233,24 +230,24 @@
 	"privacy-policy": "سیاست حفظ حریم خصوصی",
 	"privacy-statement": "بیانیه حریم خصوصی",
 	"privacy-statement-body": [
-		"<textDarkGrayCentered>At InReach, we recognize that preserving online anonymity is a life-or-death issue for many LGBTQ+ people. That's why the free InReach App (our web app, native iOS app, and native Android app) is designed to prioritize protecting users' safety and confidentiality online.</textDarkGrayCentered>",
+		"<textDarkGrayCentered>در InReach، ما می دانیم که حفظ ناشناس بودن آنلاین برای بسیاری از LGBTQ+ یک مسئله مرگ یا زندگی است. به همین دلیل است که برنامه رایگان InReach (برنامه وب ما، برنامه بومی iOS، و برنامه بومی Android ما) به گونه ای طراحی شده است که حفاظت از امنیت و محرمانه بودن آنلاین کاربران را در اولویت قرار دهد.</textDarkGrayCentered>",
 		"<title2>اطلاعات دموگرافیک کاربر</title2>",
-		"<textDarkGray><strong>We do not require any personally identifiable information to use the free InReach App.</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
+		"<textDarkGray><strong>برای استفاده از برنامه رایگان InReach به هیچ گونه اطلاعات قابل شناسایی شخصی نیاز نداریم.</strong></textDarkGray>",
+		"<textDarkGray>کاربرانی که انتخاب می کنند یک حساب کاربری رایگان InReach ایجاد کنند، <strong>گزینه</strong> دارند تا اطلاعات جمعیتی زیر را از طریق یک نظرسنجی آنلاین ناشناس به اشتراک بگذارند:</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
-		"<textUtility4>(*The only exception is the Local Community Reviewer user account type, which leverages any demographic information collected to enhance Local Community Reviewers’ volunteering experience and impact. For Local Community Reviewer accounts, we require location and all other demographic information is optional but would be tied to their user record. This data would only be visible outside of InReach staff if the Local Community Reviewer chooses to make it visible through their account privacy settings. Sharing a public-facing profile, will help other users’ to feel more confident in your reviews.)</textUtility4>",
-		"<textDarkGray>Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions. We appreciate users voluntarily sharing this information with us, and we take these steps to protect your privacy and anonymity.</textDarkGray>",
+		"<textDarkGray><strong>همه این اطلاعات حساس به صورت ناشناس ذخیره می شوند و به هیچ کاربر یا حساب کاربری منفرد متصل نمی شوند.*</strong></textDarkGray>",
+		"<textUtility4>(*تنها استثنا نوع حساب کاربری بازبین جامعه محلی است که از اطلاعات جمعیتی جمع آوری شده برای افزایش تجربه داوطلبانه و تأثیرگذاری بازبینان انجمن محلی استفاده می کند. برای حساب های بازبین انجمن محلی، ما به موقعیت مکانی و سایر اطلاعات جمعیتی نیاز داریم. اختیاری است، اما به سابقه کاربری آن‌ها مرتبط می‌شود، این داده‌ها تنها در صورتی قابل مشاهده هستند که بازبینی‌کننده انجمن محلی آن را از طریق تنظیمات حریم خصوصی حساب خود قابل مشاهده کند، به سایر کاربران کمک می‌کند در نظرات خود اطمینان بیشتری داشته باشید.)</textUtility4>",
+		"<textDarkGray>درک جمعیت شناسی کاربران می تواند به ما در تعیین کمیت تأثیر، جمع آوری سرمایه و ارزیابی تصمیمات محصول آینده کمک کند. ما از کاربرانی که داوطلبانه این اطلاعات را با ما به اشتراک می گذارند قدردانی می کنیم و این اقدامات را برای محافظت از حریم خصوصی و ناشناس بودن شما انجام می دهیم.</textDarkGray>",
 		"<textDarkGray><title2>تجزیه و تحلیل استفاده از سایت</title2></textDarkGray>",
-		"<textDarkGray>InReach uses Google Analytics to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. Google Analytics is GDPR compliant and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
-		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>"
+		"<textDarkGray>InReach از Google Analytics برای تجزیه و تحلیل و ردیابی ناشناس داده های استفاده از برنامه (مانند جستجوهای کاربر و سایر رفتارها) در مجموع استفاده می کند. Google Analytics مطابق با GDPR است و هیچ گونه اطلاعات قابل شناسایی شخصی را جمع آوری نمی کند و همه داده های جمع آوری شده را ناشناس می کند. کاربران را نمی توان شناسایی کرد و هرگز در وب سایت ها ردیابی نمی شوند.</textDarkGray>",
+		"<textDarkGray>InReach همچنین از Vercel Analytics برای تجزیه و تحلیل موارد حیاتی وب و عملکرد استفاده می کند. Vercel Analytics اطلاعات استفاده از سایت را بدون ارتباط یا مرتبط بودن با هر بازدیدکننده یا آدرس IP شخصی ارائه می دهد. ضبط نقاط داده ناشناس است و ویژگی Analytics اطلاعاتی را جمع‌آوری یا ذخیره نمی‌کند که Vercel را قادر می‌سازد تا یک جلسه مرور در صفحات را بازسازی کند یا یک کاربر را شناسایی کند.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>برای اطلاعات بیشتر سیاست حفظ حریم خصوصی کامل ما را بخوانید</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>بیانیه حریم خصوصی</title2>"],
 	"profile": "مشخصات",
 	"questions": "سوال؟",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>برای انجام این کار باید وارد شوید.</title2>\n<textDarkGray>با یک حساب رایگان InReach می توانید قفل ویژگی های اضافی را باز کنید:</textDarkGray>",
 	"remote-services": "خدمات موجود از راه دور",
 	"remote-services-page-title": "خدمات از راه دور",
 	"reset-password": "رمز عبور خود را بازنشانی کنید",
