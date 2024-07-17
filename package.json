@@ -45,7 +45,7 @@
 		"@types/yargs": "17.0.32",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
-		"boxen": "7.1.1",
+		"boxen": "8.0.0",
 		"docker-compose": "0.24.8",
 		"dotenv": "16.4.5",
 		"dotenv-expand": "11.0.6",
