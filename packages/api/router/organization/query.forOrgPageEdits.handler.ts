@@ -3,6 +3,7 @@ import { attributes, freeText } from '~api/schemas/selects/common'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForOrgPageEditsSchema } from './query.forOrgPageEdits.schema'
+import { formatAddressVisiblity } from '../location/lib.formatAddressVisibility'
 
 const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEditsSchema>) => {
 	const { slug } = input
@@ -40,9 +41,10 @@ const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEditsSche
 			attributes,
 		},
 	})
-	const { allowedEditors, ...orgData } = org
+	const { allowedEditors, locations, ...orgData } = org
 	const reformatted = {
 		...orgData,
+		locations: locations.map((location) => ({ ...location, ...formatAddressVisiblity(location) })),
 		isClaimed: Boolean(allowedEditors.length),
 	}
 

@@ -5,12 +5,12 @@ import { type AuthResult, ClientId, cognito, generateHash, parseAuthResponse } f
 export const userLogin: UserLogin = async (email, password) => {
 	const response = await cognito.initiateAuth({
 		AuthFlow: AuthFlowType.USER_PASSWORD_AUTH,
-		ClientId,
 		AuthParameters: {
 			USERNAME: email.toLowerCase(),
 			PASSWORD: password,
 			SECRET_HASH: generateHash(email.toLowerCase()),
 		},
+		ClientId,
 	})
 	return parseAuthResponse(response, email.toLowerCase())
 }

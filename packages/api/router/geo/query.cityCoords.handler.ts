@@ -45,6 +45,7 @@ const cityCoords = async ({ input }: TRPCHandlerParams<TCityCoordsSchema>) => {
 				key: process.env.GOOGLE_PLACES_API_KEY as string,
 				address: searchString,
 				components: PlaceAutocompleteType.cities,
+				region: searchCountry,
 			},
 		})
 

@@ -9,10 +9,10 @@ export const ZCreateSchema = z.object({
 	name: z.string(),
 	address: z
 		.object({
-			street1: z.string(),
-			street2: z.string().optional(),
+			street1: z.string().nullish(),
+			street2: z.string().nullish(),
 			city: z.string(),
-			postCode: z.string().optional(),
+			postCode: z.string().nullish(),
 			govDistId: z.string(),
 			longitude: z.number(),
 			latitude: z.number(),

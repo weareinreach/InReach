@@ -12,7 +12,6 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 			where: {
 				...globalWhere.isPublic(),
 				id: input,
-				addressVisibility: { in: ['FULL'] },
 			},
 			select: {
 				id: true,

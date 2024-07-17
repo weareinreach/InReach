@@ -87,9 +87,9 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 				<Notifications transitionDuration={500} />
 				<ConditionalReactQueryDevtool />
 				<Analytics />
-				<SpeedInsights />
 				<DonateModal />
 			</Providers>
+			<SpeedInsights />
 		</>
 	)
 }
