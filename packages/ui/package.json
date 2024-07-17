@@ -121,7 +121,7 @@
 		"@types/eslint": "8.56.10",
 		"@types/google.maps": "3.55.11",
 		"@types/luxon": "3.4.2",
-		"@types/node": "20.14.10",
+		"@types/node": "20.14.11",
 		"@types/probe-image-size": "7.2.4",
 		"@types/react": "18.3.3",
 		"@types/react-dom": "18.3.0",
@@ -169,7 +169,7 @@
 		"swc-loader": "0.2.6",
 		"tsconfig-paths-webpack-plugin": "4.1.0",
 		"tsx": "4.16.2",
-		"type-fest": "4.21.0",
+		"type-fest": "4.22.0",
 		"typescript": "5.5.3",
 		"webpack": "5.93.0",
 		"zod": "3.23.8"
