@@ -1,7 +1,7 @@
 {
 	"about-us": "زموږ په اړه",
 	"access": {
-		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+		"sms-with-body": "متن <strong>{{body}}</strong> ته {{code}}ته"
 	},
 	"account": "ګڼون",
 	"add": "{{item}}اضافه کړئ",
@@ -11,39 +11,36 @@
 		"organization": "{{adjective}} سازمان"
 	},
 	"agree-disclaimer": "د \"{{action}}\" کلیک کولو سره تاسو د inREACH <link1>محرمیت پالیسي</link1> او <link2>د کارولو شرایط</link2>سره موافق یاست.",
-	"alert-message": "Alert message",
+	"alert-message": "د خبرتیا پیغام",
 	"alert-message-1": "<strong>COVID-19 پالیسي:</strong> هره ورځ د COVID-19 مخنیوي لپاره خبرونو او غوره کړنو سره، د ویټمن - واکر روغتیا د مخنیوي وړاندیزونو منعکس کولو لپاره د دوی خدماتو تازه کولو ته دوام ورکوي. مهرباني وکړئ د خورا تازه معلوماتو لپاره د دوی ویب پا checkه وګورئ.",
-	"alert-message-instructions": "Enter the alert message",
-	"alert-title-instructions": "Enter a title for the message...",
-	"alerts": {
-		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
-	},
+	"alert-message-instructions": "د خبرتیا پیغام دننه کړئ",
+	"alert-title-instructions": "د پیغام لپاره سرلیک دننه کړئ ...",
 	"all-service-category": "ټول {{serviceCategory}}",
 	"anti-hate": {
 		"body": "د InReach په کارولو سره، تاسو موافق یاست چې تاسو به د دې سرچینې معلومات د زیان رسونکي، نفرت پراساس، هوموفوبیک، ټرانسفوبیک، زینوفوبیک، او/یا توکمپالنې اجنډا یا تبصرې لپاره ونه کاروئ.",
 		"title": "د نفرت ضد ژمنتیا"
 	},
 	"badge": {
-		"accessible-building_false": "This building is NOT wheelchair accessible",
-		"accessible-building_true": "This building is wheelchair accessible",
-		"claimed": "Claimed",
-		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
+		"accessible-building_false": "دا ودانۍ د ویلچیر د لاسرسي وړ نه ده",
+		"accessible-building_true": "دا ودانۍ د ویلچیر د لاسرسي وړ ده",
+		"claimed": "ادعا وکړه",
+		"claimed-tool-tip": "دا سازمان د یوه تایید شوي استازي لخوا ادعا شوې ده.<br/><link1>نور معلومات ترلاسه کړئ.</link1>",
 		"community-tool-tip": "ټولنه د دې سازمان لخوا خدمت شوی.",
-		"national-tool-tip": "Offers services throughout {{country}}.",
-		"privatePractice": "Private Practice",
+		"national-tool-tip": "{{country}}په اوږدو کې خدمتونه وړاندې کوي.",
+		"privatePractice": "شخصي تمرین",
 		"remote-tool-tip": "په لرې ډول شتون لري",
 		"service-tool-tip": "د دې سازمان لخوا وړاندیز شوي خدمتونه.",
-		"unclaimed": "Unclaimed",
+		"unclaimed": "بې ادعا شوې",
 		"unclaimed-tool-tip": "دا سازمان لا تر اوسه د یوه استازي لخوا ادعا نه ده شوې. <link1>د دې سازمان ادعا وکړئ</link1> زموږ د ټولنې سره باور رامینځته کولو لپاره، خپل معلومات تازه کړئ، او نور ډیر څه.",
-		"verified-information": "Verified information",
-		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
-		"verified-reviewer": "InReach Verified Reviewer"
+		"verified-information": "تایید شوي معلومات",
+		"verified-information-detail": "د ‏‎ {{dateString}}‎‏ پاڼې اړوند نور معلومات په فسبوک کې اوګورئ InReach دقت او د کارونکي خوندیتوب ته لومړیتوب ورکوي، او ټول معلومات په منظم ډول تازه کوي. زموږ د ارزونې پروسې په اړه د نورو معلوماتو لپاره، مهرباني وکړئ زموږ د تفتیش پروسې پاڼې په InReach.org کې وګورئ.",
+		"verified-reviewer": "InReach تایید شوی بیاکتونکی"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "بېرته <u>{{page}}</u>ته",
 		"back-to-search": "بېرته لټون ته"
 	},
-	"can-help-people-in": "Can help people located anywhere in {{location}}",
+	"can-help-people-in": "کولی شي د خلکو سره مرسته وکړي چې په هر ځای کې موقعیت لري {{location}}",
 	"cancel": "لغوه کړه",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -53,8 +50,8 @@
 	"close": "بندول",
 	"confirm-account": {
 		"click-verify": "د خپل InREACH حساب تایید کولو لپاره دلته کلیک وکړئ",
-		"code-requested": "Verification code requested!",
-		"code-resent": "A new code has been requested. Please check your email.",
+		"code-requested": "د تایید کوډ غوښتنه شوې!",
+		"code-resent": "یو نوی کوډ غوښتل شوی. مهرباني وکړئ خپل بریښنالیک وګورئ.",
 		"message": "د خپل حساب تایید لپاره لاندې لینک کلیک وکړئ:",
 		"subject": "خپل حساب تایید کړئ"
 	},
@@ -62,13 +59,13 @@
 	"contact": "اړیکه",
 	"contact-us": "موږ سره اړیکه ونیسئ",
 	"cookie-consent": {
-		"approve-all": "Approve all",
-		"approve-selected": "Approve selected",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
-		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
-		"item-basic": "Necessary cookies for site functionality",
-		"item-ga4": "Analytics for internal InReach use",
-		"modal-title": "Cookies Settings"
+		"approve-all": "ټول منظور کړئ",
+		"approve-selected": "غوره شوی تصویب کړئ",
+		"body": "موږ په دې ویب پاڼه کې کوکیز او د دریمې ډلې خدمتونه کاروو. ځینې یې اړین دي، نور زموږ سره ستاسو د لټون تجربه ښه کولو کې مرسته کوي. مهرباني وکړئ د نورو معلوماتو لپاره زموږ <PrivacyLink>د محرمیت بیان</PrivacyLink> وګورئ.",
+		"intro": "موږ د خپل سایټ د کار کولو لپاره اړین کوکیز کاروو. موږ غواړو اضافي کوکیز ترتیب کړو ترڅو د سایټ کارونې پوه شي، د سایټ پرمختګونه او ستاسو ترتیبات یاد وساتئ.",
+		"item-basic": "د سایټ فعالیت لپاره اړین کوکیز",
+		"item-ga4": "د داخلي InReach کارولو لپاره تحلیلونه",
+		"modal-title": "د کوکیز ترتیبات"
 	},
 	"count": {
 		"result_one": "{{count}} پایله",
@@ -77,13 +74,13 @@
 	"country-select": "یو هیواد غوره کړئ",
 	"create-new-list": "نوی لیست جوړ کړئ",
 	"crisis-support": {
-		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
-		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
-		"intl-we-recommend": "We recommend these international resources",
-		"natl-find-help-now": "Find help now",
-		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
-		"outside-service-area": "InReach does not operate in {{country}}",
-		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+		"intl-stay-safe": "<Title3>📣 مهرباني وکړئ آنلاین خوندي اوسئ</Title3>\n<Text>د دې ویب پاڼو څخه د هر یو لیدل <strong>ممکن ستاسو په کمپیوټر یا براوزر کې ریکارډ پریږدي</strong>, لکه څنګه چې هره ویب پاڼه ستاسو د لیدلو وروسته کوي. مهرباني وکړئ په خپله سیمه کې د ناامنه حالاتو څخه د مخنیوي لپاره ګامونه پورته کړئ.</Text>",
+		"intl-these-verified": "دا تایید شوي سرچینې کولی شي د نړۍ په هر ځای کې د LGBTQ+ ټولنې سره مرسته وکړي.",
+		"intl-we-recommend": "موږ دا نړیوالې سرچینې وړاندیز کوو",
+		"natl-find-help-now": "اوس مرسته ومومئ",
+		"natl-these-verified": "<Text>دا تایید شوي سرچینې کولی شي په متحده ایالاتو کې د LGBTQ+ ټولنې سره مرسته وکړي. دا خدمتونه <strong>په لیرې توګه شتون لري، محرم،</strong> او <strong>وړیا</strong>.</Text>",
+		"outside-service-area": "InReach په {{country}}کې کار نه کوي",
+		"who-this-serves": "<Text><strong>دا سرچینه څوک خدمت کوي:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "اوسنی موقعیت",
 	"delete-account": "خپل حساب حذف کړئ؟",
@@ -95,9 +92,9 @@
 	},
 	"disclaimer": "اعلامیه",
 	"donate": {
-		"hover": "Donate today to help keep InReach free for everyone",
-		"popup": "Help keep InReach free for everyone",
-		"to-inreach": "Donate to InReach 💝"
+		"hover": "د هرچا لپاره د InReach وړیا ساتلو کې د مرستې لپاره نن ورځ مرسته وکړئ",
+		"popup": "د هرچا لپاره InReach وړیا ساتلو کې مرسته وکړئ",
+		"to-inreach": "InReach ته مرسته وکړئ 💝"
 	},
 	"dont-have-account": "حساب نه لری؟",
 	"download-app": "اپلیکیشن ډاونلوډ کړئ",
@@ -109,30 +106,30 @@
 	"enter-password-placeholder": "پټنوم دننه کړئ...",
 	"enter-review": "خپله بیاکتنه دننه کړئ...",
 	"errors": {
-		"401-title": "You must be logged in to do that.",
-		"403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
-		"403-title": "403: Forbidden",
-		"404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
-		"404-title": "404: Page not found.",
-		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
-		"500-title": "500: Something went wrong.",
-		"code-expired": "The code provided has expired.",
-		"code-mismatch": "The code provided is not valid.",
+		"401-title": "تاسو باید د دې کولو لپاره لاګ ان شئ.",
+		"403-body": "تاسو دې پاڼې ته د لاسرسي اجازه نلرئ. که تاسو احساس کوئ چې تاسو په غلطۍ سره دې پاڼې ته رسیدلی یاست، مهرباني وکړئ خپل څارونکي سره اړیکه ونیسئ.",
+		"403-title": "۴۰۳: حرام",
+		"404-body": "موږ بخښنه غواړو، هغه پاڼه چې تاسو یې په لټه کې یاست شتون نلري یا لیږدول شوی. ستاسو په سیمه کې د متنوع LGBTQ+ ټولنې لپاره خوندي، تایید شوي سرچینې موندلو لپاره لاندې لټون پیل کړئ.",
+		"404-title": "۴۰۴: پاڼه نه ده موندل شوې.",
+		"500-body": "موږ بخښنه غواړو، زموږ په سرور کې یو څه غلط شو. مهرباني وکړئ وروسته بیا هڅه وکړئ، یا ستاسو په سیمه کې د خوندي، تایید شوي LGBTQ+ سرچینو موندلو لپاره لاندې لټون پیل کړئ.",
+		"500-title": "500: یو څه غلط شو.",
+		"code-expired": "ورکړل شوی کوډ پای ته رسیدلی.",
+		"code-mismatch": "ورکړل شوی کوډ د اعتبار وړ ندی.",
 		"oh-no": "اوه نه!",
-		"resend-code": "Request a new code",
-		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
+		"resend-code": "د نوي کوډ غوښتنه وکړئ",
+		"try-again-text": "<Text>یو څه غلط شو! مهرباني وکړئ بیا هڅه وکړئ.</Text>"
 	},
 	"exclude": "خارج کړئ",
 	"exit": {
-		"edit-mode": "Exit edit mode"
+		"edit-mode": "د ترمیم حالت څخه وتل"
 	},
 	"filter-by-service": "د خدماتو لخوا فلټر",
 	"find-resources": "سرچینې ومومئ",
-	"find-x": "Find {{value}}",
+	"find-x": "{{value}}ومومئ",
 	"footer": {
-		"anti-hate": "Anti-hate commitment",
+		"anti-hate": "د نفرت ضد ژمنې",
 		"digital-accessibility": "ډیجیټل لاسرسی",
-		"disclaimer": "Disclaimer",
+		"disclaimer": "ردول",
 		"privacy-statement": "د محرمیت بیان",
 		"share-feedback": "فیډبیک شریک کړئ",
 		"subscribe-newsletter": "زموږ خبر پاterه کې ګډون وکړئ",
@@ -146,8 +143,8 @@
 	"form-error-password-req": "ستاسو پټنوم اړتیاوې نه پوره کوي، مهرباني وکړئ بیا هڅه وکړئ.",
 	"go-to-x": "{{value}}ته لاړ شه",
 	"hours": {
-		"closed": "Closed",
-		"open24": "Open 24 hours"
+		"closed": "تړل شوی",
+		"open24": "24 ساعته خلاص"
 	},
 	"in-reach-user": "کارن ریچ",
 	"include": "شاملول",
@@ -164,7 +161,7 @@
 	"link-copied": "لینک کلپ بورډ ته کاپي شوی",
 	"list": {
 		"added": "سرچینې لیست ته خوندي شوي: {{name}}",
-		"create-new": "Create new list",
+		"create-new": "نوی لیست جوړ کړئ",
 		"create-new-sub": "ستاسو د خوندي شوي سرچینو لیستونه یوازې تاسو او هر هغه چا ته لیدل کیږي چې تاسو ورسره شریک کړئ.",
 		"create-new-sub2": "خپل لیست د کټګورۍ، د اونۍ ورځ، یا د دې لیست د چا لپاره دی نوم ورکړئ.",
 		"created": "نوی لیست جوړ شوی: {{name}}",
@@ -183,11 +180,11 @@
 		"error-generic": "یو څه غلط شو، مهرباني وکړئ بیا هڅه وکړئ.",
 		"error-username-password": "ناسم کارن نوم یا پټنوم."
 	},
-	"message_text": "Message text",
-	"message_title": "Message title",
+	"message_text": "د پیغام متن",
+	"message_title": "د پیغام سرلیک",
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>Accessibility Statement</title2>\n<textDarkGray>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textDarkGray>\n<textDarkGray>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (June 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textDarkGray>\n<textDarkGray>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing persecution or discrimination.</textDarkGray>",
-		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>The InReach team will do its best to confirm the eligibility and basic facts about service providers listed on this website. However, we cannot guarantee the viability or capabilities of any such providers. Consequently, InReach assumes no responsibility for the actions of providers listed on this website and users who contact any such providers do so at their own risk.</textReg>\n</stack16>"
+		"accessibility": "<stack16>\n<title2>د لاسرسي بیان</title2>\n<textDarkGray>InReach د خلاصې سرچینې ټیکنالوژي د متنوع LGBTQ+ ټولنې لپاره جوړه شوې ده، په ګډون د معلولیت لرونکو کاروونکو.</textDarkGray>\n<textDarkGray>وړیا InReach اپلیکیشن په ویب (ډیسټاپ او ګرځنده) او اصلي iOS او Android کې شتون لري. زموږ د وروستي بیا ډیزاین (جون 2023) په پیل کولو سره، InReach به هڅه وکړي چې <linkAccessibility>د ویب مینځپانګې د لاسرسي لارښود (WCAG) کچې AA معیارونه پوره کړي.</linkAccessibility></textDarkGray>\n<textDarkGray>په InReach کې، موږ هڅه کوو چې خپل تخنیکي پلیټ فارم د امکان تر حده د ډیرو کاروونکو او وسیلو لپاره د لاسرسي وړ کړو ترڅو زموږ د ماموریت سره په سمون کې د ټولو LGBTQ+ خلکو ته خدمت وکړو چې ورسره مخ دي. تعصب او تبعیض.</textDarkGray>",
+		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>د InReach ټیم به د لیست شوي خدماتو چمتو کونکو په اړه د وړتیا او اساسي حقایقو تصدیق کولو لپاره خپله غوره هڅه وکړي. په دې ویب پاڼه کې. په هرصورت، موږ نشو کولی د داسې وړاندیز کونکو وړتیا یا وړتیا تضمین کړو. په پایله کې، InReach په دې ویب پاڼه کې د لیست شوي چمتو کونکو کړنو لپاره هیڅ مسؤلیت په غاړه نه اخلي او هغه کاروونکي چې د ورته چمتو کونکو سره اړیکه ونیسي دا په خپل خطر کې ترسره کوي.</textReg>\n</stack16>"
 	},
 	"modal-more-options": {
 		"exclude": "سرچینې خارج کړئ چې...",
@@ -200,11 +197,11 @@
 	"none-apply": "له دې څخه هیڅ یو ما باندې نه پلي کیږي",
 	"offices-and-locations": "دفترونه او موقعیتونه",
 	"org-image": "د سازمان عکس",
-	"organization": "Organization",
+	"organization": "سازمان",
 	"other-specify": "نور (مهرباني وکړئ مشخص کړئ)",
 	"page-title": {
 		"base": "{{title}} - انریچ",
-		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
+		"edit-mode": "{{- title}} [اډیټ موډ] - انریچ",
 		"search-results": "د لټون پایلې"
 	},
 	"password": "شفر",
@@ -218,39 +215,39 @@
 	"password-req-uppercase": "په لوی لیک کې شامل دي",
 	"password-reset": {
 		"email-body": "د خپل رمز له سره تنظیم کولو لپاره لاندې لینک کلیک وکړئ:",
-		"email-subject": "Reset your password"
+		"email-subject": "خپل پټنوم بیا تنظیم کړئ"
 	},
-	"password-reset-success": "<Text>Please <LoginModal>login</LoginModal> using your new password.</Text>",
+	"password-reset-success": "<Text>مهرباني وکړئ <LoginModal>ننوتل</LoginModal> د خپل نوي پټنوم په کارولو سره.</Text>",
 	"password-saved": "پټنوم خوندي شو!",
-	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
+	"photo-count_interval": "(0)[تر اوسه کوم عکسونه نشته.]؛(1)[{{count}} انځور]؛(2-inf)[{{count}} عکسونه]",
 	"photo_interval": "(0) [تراوسه هیڅ عکس نشته]؛ (2-inf) [ټول {{count}} عکسونه وګورئ]؛",
 	"please-specify": "مهرباني وکړئ مشخص کړئ",
 	"portal-module": {
-		"service-area": "Service Area"
+		"service-area": "د خدماتو ساحه"
 	},
 	"powered-by-vercel": "د ورسیل لخوا پرمخ وړل شوی",
 	"prefer-not-to-say": "غوره ګ. ي چې ووایی",
 	"privacy-policy": "د محرمیت تګلاره",
 	"privacy-statement": "د محرمیت بیان",
 	"privacy-statement-body": [
-		"<textDarkGrayCentered>At InReach, we recognize that preserving online anonymity is a life-or-death issue for many LGBTQ+ people. That's why the free InReach App (our web app, native iOS app, and native Android app) is designed to prioritize protecting users' safety and confidentiality online.</textDarkGrayCentered>",
+		"<textDarkGrayCentered>په InReach کې، موږ پوهیږو چې د آنلاین نوم نه ساتل د ډیری LGBTQ+ خلکو لپاره د ژوند یا مرګ مسله ده. له همدې امله وړیا InReach اپلیکیشن (زموږ ویب ایپ، اصلي iOS ایپ، او اصلي Android ایپ) د آنلاین کاروونکو خوندیتوب او محرمیت ساتلو ته لومړیتوب ورکولو لپاره ډیزاین شوی.</textDarkGrayCentered>",
 		"<title2>د کارونکي ډیموګرافیک معلومات</title2>",
-		"<textDarkGray><strong>We do not require any personally identifiable information to use the free InReach App.</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
+		"<textDarkGray><strong>موږ د وړیا InReach اپلیکیشن کارولو لپاره هیڅ شخصي پیژندل شوي معلوماتو ته اړتیا نلرو.</strong></textDarkGray>",
+		"<textDarkGray>هغه کارونکي چې د وړیا InReach کارن حساب رامینځته کول غوره کوي د <strong>اختیار لري</strong> لاندې ډیموګرافیک معلومات د نامعلوم آنلاین سروې له لارې شریک کړي:</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
-		"<textUtility4>(*The only exception is the Local Community Reviewer user account type, which leverages any demographic information collected to enhance Local Community Reviewers’ volunteering experience and impact. For Local Community Reviewer accounts, we require location and all other demographic information is optional but would be tied to their user record. This data would only be visible outside of InReach staff if the Local Community Reviewer chooses to make it visible through their account privacy settings. Sharing a public-facing profile, will help other users’ to feel more confident in your reviews.)</textUtility4>",
-		"<textDarkGray>Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions. We appreciate users voluntarily sharing this information with us, and we take these steps to protect your privacy and anonymity.</textDarkGray>",
+		"<textDarkGray><strong>دا ټول حساس معلومات په مستعار ډول زیرمه شوي او د یو واحد کارونکي یا کارونکي حساب سره ندي تړل شوي.*</strong></textDarkGray>",
+		"<textUtility4>(*یوازې استثنا د محلي ټولنې بیاکتونکي کارونکي حساب ډول دی، کوم چې د هر ډول ډیموکراتیک معلوماتو څخه ګټه پورته کوي ترڅو د محلي ټولنې بیاکتونکو رضاکارانه تجربې او اغیزو ته وده ورکړي. د محلي ټولنې بیاکتنې حسابونو لپاره، موږ موقعیت او نور ټول ډیموګرافیک معلوماتو ته اړتیا لرو اختیاري دی مګر د دوی د کارونکي ریکارډ پورې تړلی وي دا ډاټا به یوازې د InReach کارمندانو څخه بهر لیدل کیږي که چیرې د محلي ټولنې بیاکتنه د دوی د حساب محرمیت ترتیباتو له لارې ښکاره کړي، د نورو کاروونکو سره به مرسته وکړي په خپلو بیاکتنو کې د ډیر ډاډ احساس وکړئ.)</textUtility4>",
+		"<textDarkGray>زموږ د کارونکي ډیموګرافیک پوهیدل زموږ سره مرسته کولی شي زموږ اغیزې اندازه کړي ، فنډونه راټول کړي او د راتلونکي محصول پریکړې ارزونه وکړي. موږ د کاروونکو ستاینه کوو چې په داوطلبانه ډول دا معلومات له موږ سره شریکوي، او موږ دا ګامونه ستاسو د محرمیت او هویت ساتلو لپاره اخلو.</textDarkGray>",
 		"<textDarkGray><title2>د سایټ کارولو تحلیلونه</title2></textDarkGray>",
-		"<textDarkGray>InReach uses Google Analytics to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. Google Analytics is GDPR compliant and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
-		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>"
+		"<textDarkGray>InReach په مجموع کې د اپلیکیشن کارونې ډیټا (د مثال په توګه د کارونکي لټون او نور چلند) په مستعار ډول تحلیل او تعقیب کولو لپاره د ګوګل انلایټیک کاروي. Google Analytics د GDPR سره مطابقت لري او هیڅ ډول شخصي پیژندل شوي معلومات نه راټولوي او ټول راټول شوي معلومات پټوي. کاروونکي نشي پیژندل کیدی او هیڅکله په ویب پاڼو کې نه تعقیب کیږي.</textDarkGray>",
+		"<textDarkGray>InReach د ویب حیاتي او فعالیت تحلیل کولو لپاره د Vercel Analytics هم کاروي. Vercel Analytics د سایټ کارونې معلومات چمتو کوي پرته لدې چې د کوم انفرادي لیدونکي یا IP پتې سره تړاو ولري یا ورسره تړاو ولري. د ډیټا پوائنټونو ثبت کول نامعلوم دی او د تحلیل فیچر معلومات نه راټولوي یا ذخیره کوي چې ویرسل ته دا وړتیا ورکوي چې د مخونو په اوږدو کې د لټون سیشن بیا جوړ کړي یا یو کارن وپیژني.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>د نورو معلوماتو لپاره زموږ د محرمیت بشپړ تګلاره ولولئ</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>د محرمیت بیان</title2>"],
 	"profile": "پيژند",
 	"questions": "پوښتنې؟",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>تاسو اړتیا لرئ د دې کولو لپاره لاګ ان شئ.</title2>\n<textDarkGray>د وړیا InReach حساب سره تاسو کولی شئ اضافي ځانګړتیاوې خلاص کړئ:</textDarkGray>",
 	"remote-services": "خدمات په لرې ډول شتون لري",
 	"remote-services-page-title": "لیرې خدمتونه",
 	"reset-password": "خپل رمز بیا تنظیم کړئ",
@@ -264,27 +261,27 @@
 	"review-resource": "دا سرچینه بیاکتنه وکړئ",
 	"safety-exit": "د خوندیتوب وتل",
 	"save": "خوندي کړئ",
-	"save-changes": "Save changes",
+	"save-changes": "بدلونونه خوندي کړئ",
 	"saved": "خوندي شوی",
 	"search": {
 		"include-remote": "لیرې خدمتونه شامل کړئ",
 		"location-placeholder": "ښار یا زپ کوډ دننه کړئ...",
-		"location-placeholder-searchby": "Search by city or zip code...",
+		"location-placeholder-searchby": "د ښار یا زپ کوډ لخوا لټون وکړئ ...",
 		"look-up-org": "د نوم په واسطه یو سازمان وګورئ",
 		"no-results": "هیڅ پایله ونه موندل شوه. مهرباني وکړئ بیا هڅه وکړئ.",
-		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
+		"no-results-adjust": "ستاسو د لټون لپاره هیڅ پایله ونه موندل شوه. هڅه وکړئ خپل ټاکل شوي ځای یا فلټرونه تنظیم کړئ.",
 		"organization-placeholder": "د سازمان نوم دننه کړئ...",
-		"organization-placeholder-searchby": "Search by organization name...",
+		"organization-placeholder-searchby": "د سازمان په نوم لټون...",
 		"suggest-resource": "دا نشي موندلی؟ <1>هغه سازمان وړاندیز</1> کړئ چې تاسو فکر کوئ باید پکې شامل شي."
 	},
 	"select": {
-		"base": "Select {{- item}}"
+		"base": "{{- item}}غوره کړئ"
 	},
 	"send-email": "برېښناليک ولېږئ",
 	"service": {
 		"additional-info": "د وړتیا اضافي معلومات",
 		"ages": "وړ عمر",
-		"at-capacity": "<strong>This service is currently unable to take new clients.</strong>",
+		"at-capacity": "<strong>دا خدمت اوس مهال نشي کولی نوي پیرودونکي واخلي.</strong>",
 		"clients-served": "پیرودونکي خدمت کوي",
 		"community-focus": "LGBTQ+د ټولنې تمرکز",
 		"cost": "لګښت",
@@ -307,7 +304,7 @@
 	"show-more": "نور وښایاست",
 	"sign-up": {
 		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
-		"lcr-error1": "Unfortunately, you do not meet the current eligibility requirements to be a Local Community Reviewer.\n<Switch>Click here to create a standard account.</Switch>",
+		"lcr-error1": "له بده مرغه، تاسو د محلي ټولنې بیاکتونکي کیدو لپاره د وړتیا اوسني شرایط نه پوره کوئ.\n<Switch>د معیاري حساب جوړولو لپاره دلته کلیک وکړئ.</Switch>",
 		"lcr-error2": "تاسو باید د <Link><strong>محلي ټولنې بیاکتنه</strong></Link> پاڼه ولولئ او بیاکتنه وکړئ.",
 		"lcr-screen1": "مهرباني وکړئ ټول هغه څه وټاکئ چې پلي کیږي",
 		"lcr-screen1a": "زه په خپله ټولنه کې ځایی خدماتو ته د لاسرسي شخصي ژوند تجربه لرم.",
@@ -316,14 +313,14 @@
 		"lcr-screen1none": "له دې څخه هیڅ یو ما باندې نه پلي کیږي.",
 		"lcr-screen2": "تاسو په کوم هیواد کې موقعیت لرئ؟",
 		"lcr-screen2a": "متحده ایالات (د سیمو په شمول)",
-		"lcr-screen2b": "Canada",
-		"lcr-screen2c": "Mexico",
+		"lcr-screen2b": "کاناډا",
+		"lcr-screen2c": "میکسیکو",
 		"lcr-screen2none": "له پورته څخه هیڅ یو",
 		"lcr-screen3": "ما د INREACH ویب پا onه کې د <Link><strong>سیمه ایز ټولنې بیاکتنه</strong></Link> پا pageه بیاکتنه کړې او زه اړتیاوې پوره کوم.",
 		"modal-body": [
-			"<title3>What type of account would you like to create?</title3>",
+			"<title3>تاسو کوم ډول حساب جوړول غواړئ؟</title3>",
 			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
-			"<loginLink>Already have an account?</loginLink>"
+			"<loginLink>دمخه یو حساب لرئ؟</loginLink>"
 		],
 		"name-use-any": "هر هغه نوم وکاروئ چې تاسو ورسره راحته یاست.",
 		"name_alias": "نوم یا عرف",
@@ -340,7 +337,7 @@
 	},
 	"sign-up-free": "د وړیا لپاره لاسلیک وکړئ",
 	"social": {
-		"email": "Email",
+		"email": "ایمیل",
 		"facebook": "فېسبوک",
 		"github": "ګیټ هب",
 		"group-header": "ټولنیز",
@@ -389,10 +386,10 @@
 	"uncheck-all": "ټول چیک کړئ",
 	"user-avatar": "کارن اوتار",
 	"user-menu": {
-		"admin-options": "Admin Options",
-		"data-portal": "Data Portal Home",
-		"edit-page": "Edit this page",
-		"user-options": "User Options"
+		"admin-options": "د ادارې اختیارونه",
+		"data-portal": "د معلوماتو پورټل کور",
+		"edit-page": "دا پاڼه سم کړئ",
+		"user-options": "د کاروونکي اختیارونه"
 	},
 	"verify-account": {
 		"verified": "حساب تایید شوی!",
@@ -401,53 +398,53 @@
 	},
 	"view-list": "لیست وګورئ",
 	"visit": "لیدنه",
-	"welcome-name": "Welcome, {{name}}!",
+	"welcome-name": "ښه راغلاست، {{name}}!",
 	"words": {
 		"accept": "ومنئ",
-		"account": "Account",
+		"account": "حساب",
 		"add": "اضافه کول",
 		"and": "او",
 		"and-x-more": "او {{count}} نور",
-		"approve": "Approve",
+		"approve": "تصویب کړه",
 		"back": "شاته",
-		"close": "Close",
+		"close": "تړل",
 		"coming-soon": "ژر راځي",
-		"customize": "Customize",
-		"decline": "Decline",
+		"customize": "دودیز کړئ",
+		"decline": "کمول",
 		"delete": "ړنګول",
 		"distance": "فاصله",
-		"donate": "Donate",
+		"donate": "مرسته وکړئ",
 		"email": "برېښنالیک",
 		"home": "کور",
 		"hours": "ساعتونه",
-		"location": "Location",
+		"location": "ځای",
 		"more": "نور",
-		"more-info": "More information",
+		"more-info": "نور مالومات",
 		"next": "بل",
 		"no": "نه",
 		"organization": "سازمان",
-		"password": "Password",
+		"password": "رمز",
 		"phone": "تليفون",
 		"please-wait": "مهرباني وکړئ انتظار وکړئ...",
 		"prev": "مخکی",
 		"print": "چاپ",
-		"publish": "Publish",
-		"restore": "Restore",
-		"reverify": "Reverify",
+		"publish": "خپور کړئ",
+		"restore": "بیا رغول",
+		"reverify": "بیا تایید کړئ",
 		"review": "بیاکتنه",
 		"reviews": "کتنې",
-		"save": "Save",
-		"save-changes": "Save changes",
-		"saved": "Saved",
+		"save": "خوندي کړئ",
+		"save-changes": "بدلونونه خوندي کړئ",
+		"saved": "خوندي شوی",
 		"search": "لټون",
-		"service-hours": "Service hours",
+		"service-hours": "د خدمت ساعتونه",
 		"settings": "امستنې",
 		"share": "شریکول",
 		"sign-up": "نوم لیکنه",
 		"skip": "پرېښودل",
-		"support": "Support",
-		"unpublish": "Unpublish",
-		"website": "Website",
+		"support": "ملاتړ",
+		"unpublish": "نه خپرول",
+		"website": "ویب پاڼه",
 		"yes": "هو"
 	},
 	"photo_one": "عکس",

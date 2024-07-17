@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "为 LGBTQ 青年提供教育支持",
 		"english-classes": "英语课",
 		"language-classes": "语言课",
-		"leadership-training-and-professional-development": "领导力培训和职业发展",
 		"libraries": "图书馆",
-		"scholarships": "奖学金"
+		"scholarships": "奖学金",
+		"training-and-professional-development": "培训和专业发展"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "财政援助",
+		"bail-funds": "保释金",
+		"healthcare-and-insurance": "保健和保险",
+		"housing-and-utilities": "住房和公用设施",
+		"legal-fees": "法律费用",
+		"moving-and-domestic-relocation": "移动和家庭迁移",
+		"mutual-aid": "相互援助"
 	},
 	"food": {
 		"CATEGORYNAME": "食物",
-		"food": "食物",
-		"food-assistance": "食物援助"
+		"community-meals": "社区餐厅",
+		"food-assistance": "食物援助",
+		"food-delivery": "食品的提供",
+		"food-pantries": "食物面包",
+		"nutrition-education": "营养教育"
 	},
 	"housing": {
 		"CATEGORYNAME": "住房",
+		"drop-in-centers": "下拉中心",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ 青年救助中心",
 		"emergency-housing": "应急住房",
 		"housing-information-and-referrals": "住房信息和推荐",
+		"mail-services": "邮件服务",
 		"short-term-housing": "短期住房",
 		"trans-housing": "变性人住房"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "儿童入境延期行动 (DACA)",
 		"deportation-or-removal": "驱逐出境或驱逐",
 		"employment-authorization": "就业授权",
-		"family-petitions": "家庭请愿书",
+		"family-based-immigration": "基于家庭的移民",
+		"family-law": "家庭法",
 		"immigration-detention": "移民拘留",
 		"legal-advice": "法律咨询",
 		"legal-hotlines": "法律热线",
@@ -83,18 +98,19 @@
 		"u-visa": "U 签证"
 	},
 	"mail": {
-		"CATEGORYNAME": "邮件",
-		"mail": "邮件"
+		"CATEGORYNAME": "邮件"
 	},
 	"medical": {
 		"CATEGORYNAME": "医疗服务",
 		"covid-19-services": "COVID-19 服务",
 		"dental-care": "牙科保健",
+		"fertility-and-family-planning-services": "生育率和计划生育服务",
 		"hiv-and-sexual-health": "艾滋病毒和性健康",
 		"medical-clinics": "医疗诊所",
 		"obgyn-services": "妇产科服务",
 		"physical-evaluations-for-asylum-claim": "庇护申请的身体评估",
 		"physical-evaluations-for-refugee-claim": "难民申请的体检",
+		"substance-use": "药物的使用",
 		"trans-health": "跨性别健康",
 		"trans-health-gender-affirming-surgery": "跨性别健康——性别确认手术",
 		"trans-health-hormone-and-surgery-letters": "跨性别健康 - 激素和手术信件",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "精神健康",
 		"bipoc-support-groups": "黑人、原住民和有色人种支持小组",
+		"family-support-groups": "家庭支助小组",
 		"hotlines": "热线",
 		"private-therapy-and-counseling": "私人治疗和咨询",
 		"psychological-evaluations-for-asylum-claim": "对庇护申请的心理评估",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "娱乐和活动",
 		"art-music-literature": "艺术、音乐和文学",
+		"camps-and-excursions": "营地和旅行",
 		"sports-and-entertainment": "体育和娱乐"
 	},
 	"trans-focused-services": {

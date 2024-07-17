@@ -6,10 +6,10 @@
 		"geo-public-transit-description": "عامه ترانزیت/ځانګړي لارښوونې",
 		"has-confidentiality-policy": "د محرمیت تګلاره لري",
 		"offers-remote-services": "لرې",
-		"private-practice": "Private Practice",
+		"private-practice": "شخصي تمرین",
 		"religiously-affiliated": "په مذهبي ډول تړاو لري",
 		"time-walk-in": "په ساعتونو کې واک لري",
-		"wheelchair-accessible": "Accessible",
+		"wheelchair-accessible": "د لاسرسي وړ",
 		"wheelchair-accessible_false": "د لاسرسي وړ ندی",
 		"wheelchair-accessible_true": "د لاسرسي وړ"
 	},
@@ -67,19 +67,25 @@
 		"undocumented": "هغه فرصتونه چې بې اسنادو مهاجرینو ته خدمت کوي"
 	},
 	"cost": {
-		"CATEGORYNAME": "Cost",
+		"CATEGORYNAME": "لګښت",
+		"cost-accepts-insurance": "دا خدمت بیمه مني",
+		"cost-accepts-insurance_default": "دا خدمت بیمه مني. د لګښت، مالي مرستې اختیارونو او د بیمې پوښښ توضیحاتو په اړه د نورو معلوماتو لپاره مستقیم سازمان سره اړیکه ونیسئ.",
+		"cost-accepts-insurance_withUrl": "دا خدمت بیمه مني. <Link href=\"{{url}}\">د لګښت، مالي مرستې انتخابونو او د بیمې پوښښ د جزیاتو په اړه د نورو معلوماتو لپاره د سازمان پاڼې ته د لیدو لپاره دلته کلیک وکړئ</Link> .",
 		"cost-fees": "یو لګښت لري",
-		"cost-free": "د وړیا لګښت"
+		"cost-free": "د وړیا لګښت",
+		"cost-sliding-scale": "لګښتونه په سلیډینګ پیمانه ټاکل کیږي",
+		"cost-sliding-scale_default": "دا خدمت د سلیډینګ پیمانه فیس لري. هغه مقدار چې تاسو د خدماتو لپاره تادیه کوئ ستاسو د عاید کچې سره سم تنظیم کیږي. د نورو معلوماتو لپاره مستقیم سازمان سره اړیکه ونیسئ.",
+		"cost-sliding-scale_withUrl": "دا خدمت د سلیډینګ پیمانه فیس لري. هغه مقدار چې تاسو د خدماتو لپاره تادیه کوئ ستاسو د عاید کچې سره سم تنظیم کیږي. د ‏‎ <Link href=\"{{url}}\">‎‏ پاڼې اړوند نور معلومات په فسبوک کې اوګورئ</Link>"
 	},
 	"crisis-support-community": {
-		"elders": "Elders",
-		"general-lgbtq": "General LGBTQ+"
+		"elders": "مشرانو",
+		"general-lgbtq": "عمومي LGBTQ+"
 	},
 	"eligibility": {
 		"CATEGORYNAME": "د وړتیا اړتیاوې",
-		"elig-age": "Age eligibility",
-		"elig-age_max": "Under {{max}}",
-		"elig-age_min": "{{min}} and older",
+		"elig-age": "د عمر وړتیا",
+		"elig-age_max": "لاندې {{max}}",
+		"elig-age_min": "{{min}} او زاړه",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "نور (د وړیا متن توضیحات)",
 		"req-medical-insurance": "طبي بیمې ته اړتیا لري",
@@ -91,7 +97,7 @@
 		"time-appointment-required": "د وخت ټاکل اړین دي"
 	},
 	"lang": {
-		"CATEGORYNAME": "Languages",
+		"CATEGORYNAME": "ژبې",
 		"all-languages-by-interpreter": "ټولې ژبې د ژباړونکي له لارې",
 		"american-sign-language": "د امریکا د اشارې ژبه",
 		"lang-offered": "ځانګړې ژبې وړاندیز شوې"
@@ -101,6 +107,7 @@
 		"bipoc-led": "بایپوک - مشرۍ",
 		"black-led": "تور - مشرۍ",
 		"immigrant-led": "د کډوالۍ په مشرۍ",
+		"lgbtq-led": "LGBTQ+ Led",
 		"trans-led": "د ټرانسجنډر په مشرۍ",
 		"women-led": "د ښځو په مشرۍ"
 	},
@@ -112,9 +119,9 @@
 		"accesslocation": "د لاسرسي لارښوونې - موقعیت",
 		"accessphone": "د لاسرسي لارښوونې - تلیفون",
 		"accesspublictransit": "د لاسرسي لارښوونې - عامه لیږد",
-		"accesssms": "Access Instructions - SMS",
+		"accesssms": "د لاسرسي لارښوونې - SMS",
 		"accesstext": "د لاسرسي لارښوونې - متن",
-		"accesswhatsapp": "Access Instructions - WhatsApp"
+		"accesswhatsapp": "د لاسرسي لارښوونې - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "د خدمت تمرکز",
@@ -141,7 +148,7 @@
 		"incompatible-info": "نامناسبه معلومات"
 	},
 	"tpop": {
-		"other": "Target Population - Other"
+		"other": "د هدف نفوس - نور"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "د قانون تمرین اختیارونه",
@@ -159,7 +166,7 @@
 		"grassroots-direct": "د ګراس روټس مستقیم خدمت سازمان",
 		"healthcare": "د روغتیا پاملرنې چمتو کونکی",
 		"lawyer": "وکیل",
-		"other": "Other (please specify)",
+		"other": "نور (مهرباني وکړئ مشخص کړئ)",
 		"paralegal": "پارلیګال یا نور قانوني ملاتړ کارمندان",
 		"social-worker": "ټولنیز کارکونکی",
 		"student-club": "د زده کونکي کلب مشر/مدیر",

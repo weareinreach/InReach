@@ -1,12 +1,12 @@
 {
 	"banner": {
-		"donate": "Help keep InReach free for everyone. <DonateLink>Donate now!</DonateLink> 💝",
-		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>",
-		"tmf": "<TMFLink>Spread trans joy with #TransMascFutures 🏳️‍⚧️</TMFLink>"
+		"donate": "د هرچا لپاره InReach وړیا ساتلو کې مرسته وکړئ. <DonateLink>همدا اوس مرسته وکړئ!</DonateLink>💝",
+		"redesign": "زموږ په بلاګ کې د InReach ایپ بیا ډیزاین پیل کولو په اړه ولولئ. <Link>نور زده کړئ.</Link>",
+		"tmf": "<TMFLink>د #TransMascFutures سره د ټرانس خوښۍ خپره کړئ 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>زموږ د کاروونکو څخه واورئ</Title1>",
-		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
+		"who-we-are": "<Title1>موږ څوک یو</Title1>\n<Text>موږ د متنوع LGBTQ+ ټولنې لپاره سرچینو ته د لاسرسي ډیریدونکي ټیکنالوژي غیر انتفاعي لیږدونکي یو.</Text>\n<Link>‎‏ پاڼې اړوند نور معلومات په فسبوک کې اوګورئ</Link>"
 	},
 	"hero": {
 		"community": {
@@ -18,14 +18,14 @@
 			"5": "LGBTQ+BIPOC ټولنې",
 			"6": "د LGBTQ+ځوانانو ساتونکي"
 		},
-		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"find-resources": "<Text>تصدیق شوی موندل </Text><Service></Service><Text> لپاره </Text><Community></Community><Text> سره InRe .</Text>",
 		"heading": "د LGBTQ+سرچینې ومومئ.",
 		"privacy-disclaimer": "ستاسو ځواب نامعلوم دی او د انفرادي کارونکي په توګه تاسو سره تړاو نلري. د نورو زده کولو لپاره زموږ د <Link>محرمیت پالیسي</Link> ولولئ.",
 		"services": {
 			"0": "طبي پاملرنه",
 			"1": "د ټولنې ملاتړ",
 			"2": "رواني روغتیا پاملرنه",
-			"3": "education",
+			"3": "تعلیم",
 			"4": "کارموندنه",
 			"5": "خواړه",
 			"6": "کور",
@@ -36,10 +36,10 @@
 		"subheading": "د نړۍ لومړی ټیک پلیټ فارم ته ښه راغلاست د TLGQ+ (ټرانسجینڈر، لیسبین، همجنس، ابی جنس پرست، کویر او نور پیژندنې) سره هغه خلک چې د خوندي، تایید شوي سرچینو سره د ځورونې یا تبعیض سره مخ دي."
 	},
 	"values": {
-		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our open source platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
-		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first open source platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice, disability justice – justice for <strong>all</strong> members of our diverse community. </Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"free": "<Title2>د تل لپاره وړیا 🔑</Title2>\n<Text>زموږ د خلاصې سرچینې پلیټ فارم د هرچا لپاره 100٪ وړیا دی ترڅو ډاډ ترلاسه شي چې خوندي مرستې تل په انریچ کې وي.</Text>\n<LinkFree>مرسته وکړئ ترڅو زموږ پلیټ فارم وړیا وساتو.</LinkFree>",
+		"innovative": "<Title2>نوښتګر ✨</Title2>\n<Text>موږ د نړۍ لومړی د خلاصې سرچینې پلیټ فارم یو چې د LGBTQ+ خلکو سره سمون لري چې د خوندي او خپلواکه تایید شوي سرچینو سره د تعقیب یا تبعیض سره مخ دي.</Text>\n<LinkInnovative>زموږ د سرچینې کوډ وګورئ او مرسته وکړئ.</LinkInnovative>",
+		"intersectional": "<Title2>متقابله ✊🏿‍✊🏾✊🏽</Title2>\n<Text>موږ باور لرو چې LGBTQ+ مساوات د لیږد عدالت، د مهاجرینو عدالت، نژادي عدالت، د زیږون عدالت، د زیږون عدالت، ژبني عدالت ته اړتیا لري - زموږ د متنوع ټولنې <strong>ټولو</strong> غړو لپاره عدالت. </Text>\n<LinkIntersect>زموږ د ارزونې پروسې په اړه نور معلومات ترلاسه کړئ.</LinkIntersect>",
 		"our-values": "زموږ ارزښتونه",
-		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our platform is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
+		"safety-first": "<Title2>خوندیتوب-لومړی 🔒</Title2>\n<Text>موږ پوهیږو چې آنلاین ناڅرګندتیا د LGBTQ+ خلکو لپاره د ژوند یا مرګ مسله کیدی شي. له همدې امله زموږ پلیټ فارم د آنلاین کاروونکو محرمیت او خوندیتوب خوندي کولو لپاره ډیزاین شوی.</Text>\n<LinkSafety>زموږ د محرمیت پالیسۍ په اړه نور معلومات ترلاسه کړئ.</LinkSafety>"
 	}
 }

@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "Pampublikong pagbibiyahe /tiyak na direksyon",
 		"has-confidentiality-policy": "May Patakaran sa Kumpidensyal",
 		"offers-remote-services": "Remote",
-		"private-practice": "Private Practice",
+		"private-practice": "Pribadong Pagsasanay",
 		"religiously-affiliated": "Ay relihiyosong kaakibat",
 		"time-walk-in": "May Walk-In Oras",
 		"wheelchair-accessible": "Accessible",
@@ -27,7 +27,7 @@
 		"asexual": "Mga oportunidad na naglilingkod sa Asexual Community",
 		"asia-immigrant": "Mga oportunidad na nagsisilbi sa mga mula sa mga bansang Asyano",
 		"asylee": "Mga oportunidad na naglilingkod sa Asylees (mga nabigyan ng katayuan ng pagpapakupkop laban)",
-		"asylum-seeker": "Opportunities that serve Asylum seekers from {{country}}",
+		"asylum-seeker": "Mga pagkakataong nagsisilbi sa mga naghahanap ng Asylum mula sa {{country}}",
 		"bipoc": "Mga oportunidad na naglilingkod sa Itim, Katutubong, at Mga Tao ng Kulay",
 		"bisexual": "Mga oportunidad na nagsisilbi sa Bisexual Community",
 		"black": "Mga oportunidad na naglilingkod sa Black Community",
@@ -67,19 +67,25 @@
 		"undocumented": "Mga oportunidad na naglilingkod sa mga undocumented na imigrante"
 	},
 	"cost": {
-		"CATEGORYNAME": "Cost",
+		"CATEGORYNAME": "Gastos",
+		"cost-accepts-insurance": "Tumatanggap ang serbisyong ito ng insurance",
+		"cost-accepts-insurance_default": "Tumatanggap ang serbisyong ito ng insurance. Direktang makipag-ugnayan sa organisasyon para sa higit pang impormasyon sa gastos, mga opsyon sa tulong pinansyal at mga detalye ng saklaw ng insurance.",
+		"cost-accepts-insurance_withUrl": "Tumatanggap ang serbisyong ito ng insurance. <Link href=\"{{url}}\">Mag-click dito upang bisitahin ang pahina ng organisasyon</Link> para sa higit pang impormasyon sa gastos, mga opsyon sa tulong pinansyal at mga detalye ng saklaw ng insurance.",
 		"cost-fees": "Nagkakasakit ng gastos",
-		"cost-free": "Walang gastos"
+		"cost-free": "Walang gastos",
+		"cost-sliding-scale": "Natukoy ang mga gastos sa isang sliding scale",
+		"cost-sliding-scale_default": "Ang serbisyong ito ay may mga bayarin sa sliding scale. Ang halagang binabayaran mo para sa mga serbisyo ay naaayon sa antas ng iyong kita. Direktang makipag-ugnayan sa organisasyon para sa higit pang impormasyon.",
+		"cost-sliding-scale_withUrl": "Ang serbisyong ito ay may mga bayarin sa sliding scale. Ang halagang binabayaran mo para sa mga serbisyo ay naaayon sa antas ng iyong kita. <Link href=\"{{url}}\">Mag-click dito upang bisitahin ang pahina ng organisasyon para sa karagdagang impormasyon.</Link>"
 	},
 	"crisis-support-community": {
-		"elders": "Elders",
-		"general-lgbtq": "General LGBTQ+"
+		"elders": "Mga matatanda",
+		"general-lgbtq": "Pangkalahatang LGBTQ+"
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Mga Kinakailangan sa Pagiging Karapat-dapat",
-		"elig-age": "Age eligibility",
-		"elig-age_max": "Under {{max}}",
-		"elig-age_min": "{{min}} and older",
+		"elig-age": "Pagiging karapat-dapat sa edad",
+		"elig-age_max": "Sa ilalim ng {{max}}",
+		"elig-age_min": "{{min}} at mas matanda",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Iba pa (libreng paglalarawan ng teksto)",
 		"req-medical-insurance": "NANGANGAILANGAN ng medikal na seguro",
@@ -91,7 +97,7 @@
 		"time-appointment-required": "Kinakailangan ang Paghirang ng Oras"
 	},
 	"lang": {
-		"CATEGORYNAME": "Languages",
+		"CATEGORYNAME": "Mga wika",
 		"all-languages-by-interpreter": "Lahat ng mga wika sa pamamagitan ng interpreter",
 		"american-sign-language": "American Sign Language",
 		"lang-offered": "Inaalok ang mga partikular na wika"
@@ -101,6 +107,7 @@
 		"bipoc-led": "Pinangunahan ng Bipoc",
 		"black-led": "Itim-humantong",
 		"immigrant-led": "Pinangunahan ng imigrante",
+		"lgbtq-led": "Pinamunuan ng LGBTQ+",
 		"trans-led": "Pinangunahan ng Transgender",
 		"women-led": "Pinangunahan ng kababaihan"
 	},
@@ -112,9 +119,9 @@
 		"accesslocation": "Mga Tagubilin sa Pag-access - Lokasyon",
 		"accessphone": "Mga Tagubilin sa Pag-access - Telepono",
 		"accesspublictransit": "Mga Tagubilin sa Pag-access - Pampublikong Transit",
-		"accesssms": "Access Instructions - SMS",
+		"accesssms": "Mga Tagubilin sa Pag-access - SMS",
 		"accesstext": "Mga Tagubilin sa Pag-access - Teksto",
-		"accesswhatsapp": "Access Instructions - WhatsApp"
+		"accesswhatsapp": "Mga Tagubilin sa Pag-access - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Pokus sa Serbisyo",
@@ -141,7 +148,7 @@
 		"incompatible-info": "Hindi katugmang Impormasyon"
 	},
 	"tpop": {
-		"other": "Target Population - Other"
+		"other": "Target na Populasyon - Iba pa"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Mga Pagpipilian sa Pagsasanay sa B",
@@ -159,7 +166,7 @@
 		"grassroots-direct": "Grassroots Direktang Organisasyon ng Serbisyo",
 		"healthcare": "Tagabigay ng pangangalaga sa kalusugan",
 		"lawyer": "abogado",
-		"other": "Other (please specify)",
+		"other": "Iba pa (mangyaring tukuyin)",
 		"paralegal": "Paralegal o iba pang kawani ng ligal na suporta",
 		"social-worker": "Manggagawa sa lipunan",
 		"student-club": "Pinuno/tagapangasiwa ng club ng mag-aaral",

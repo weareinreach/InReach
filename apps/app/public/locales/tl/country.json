@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "Pransya",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "Pranses",
+		"demonym_other": "Pranses"
 	},
 	"FRO": {
 		"name": "Mga Isla ng Faroe",
@@ -521,7 +521,7 @@
 	"IOT": {
 		"name": "Teritoryo ng Karagatang British Indian",
 		"demonym_one": "Indian",
-		"demonym_other": "Indians"
+		"demonym_other": "mga Indian"
 	},
 	"IRL": {
 		"name": "Ireland",
@@ -560,7 +560,7 @@
 	},
 	"JEY": {
 		"name": "Jersey",
-		"demonym_one": "Channel Islander",
+		"demonym_one": "Taga-isla ng Channel",
 		"demonym_other": "Channel Islanders"
 	},
 	"JOR": {
@@ -670,8 +670,8 @@
 	},
 	"MAC": {
 		"name": "Macau",
-		"demonym_one": "Chinese",
-		"demonym_other": "Chinese"
+		"demonym_one": "Intsik",
+		"demonym_other": "Intsik"
 	},
 	"MAF": {
 		"name": "Saint Martin",
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "Martinique",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "Pranses",
+		"demonym_other": "Pranses"
 	},
 	"MUS": {
 		"name": "Mauritius",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "Réunion",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "Pranses",
+		"demonym_other": "Pranses"
 	},
 	"ROU": {
 		"name": "Romania",
@@ -979,7 +979,7 @@
 	"SJM": {
 		"name": "Svalbard at Jan Mayen",
 		"demonym_one": "Norwegian",
-		"demonym_other": "Norwegians"
+		"demonym_other": "mga Norwegian"
 	},
 	"SLB": {
 		"name": "Mga Isla ng Solomon",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "Sina Saint Pierre at Miquelon",
-		"demonym_one": "French",
-		"demonym_other": "French"
+		"demonym_one": "Pranses",
+		"demonym_other": "Pranses"
 	},
 	"SRB": {
 		"name": "Serbia",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "Mga Isla ng Minor Outlying ng Estados Unidos",
-		"demonym_one": "American",
-		"demonym_other": "Americans"
+		"demonym_one": "Amerikano",
+		"demonym_other": "mga Amerikano"
 	},
 	"UNK": {
 		"name": "Kosovo",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "Estados Unidos",
-		"demonym_one": "American",
-		"demonym_other": "Americans"
+		"demonym_one": "Amerikano",
+		"demonym_other": "mga Amerikano"
 	},
 	"UZB": {
 		"name": "Uzbekistan",
@@ -1178,8 +1178,8 @@
 	},
 	"VAT": {
 		"name": "Lungsod ng Vatican",
-		"demonym_one": "Italian",
-		"demonym_other": "Italians"
+		"demonym_one": "Italyano",
+		"demonym_other": "mga Italyano"
 	},
 	"VCT": {
 		"name": "Saint Vincent at ang Grenadines",

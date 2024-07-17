@@ -15,9 +15,6 @@
 	"alert-message-1": "<strong>COVID-19 politikası:</strong> COVID-19 önleme ile ilgili haberler ve en iyi uygulamalar her gün hızla değişirken, Whitman-Walker Health, hizmetlerini önleme tavsiyelerini yansıtacak şekilde güncellemeye devam ediyor. En güncel bilgiler için lütfen web sitelerini kontrol edin.",
 	"alert-message-instructions": "Uyarı mesajını girin",
 	"alert-title-instructions": "Mesaj için bir başlık girin...",
-	"alerts": {
-		"search-page-legislative-map": "Bu <ATLink>anti-trans yasal risk haritası</ATLink> , 50 eyalette ve DC'nin tamamında trans karşıtı yasalar için 2 yıllık riski göstermektedir."
-	},
 	"all-service-category": "Tümü {{serviceCategory}}",
 	"anti-hate": {
 		"body": "inReach'i kullanarak, bu kaynak bilgilerini zararlı, nefret temelli, homofobik, transfobik, yabancı düşmanı ve/veya ırkçı gündemler veya yorumlar için kullanmayacağınızı kabul etmiş olursunuz.",

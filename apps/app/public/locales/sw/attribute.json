@@ -6,10 +6,10 @@
 		"geo-public-transit-description": "Usafiri wa umma/maelekezo maalum",
 		"has-confidentiality-policy": "Ina Sera ya Usiri",
 		"offers-remote-services": "Remote",
-		"private-practice": "Private Practice",
+		"private-practice": "Mazoezi ya Kibinafsi",
 		"religiously-affiliated": "Ni uhusiano wa kidini",
 		"time-walk-in": "Ina Masaa ya Kutembea",
-		"wheelchair-accessible": "Accessible",
+		"wheelchair-accessible": "Inaweza kufikiwa",
 		"wheelchair-accessible_false": "Haipatikani",
 		"wheelchair-accessible_true": "Inapatikana"
 	},
@@ -67,19 +67,25 @@
 		"undocumented": "Fursa zinazowahudumia wahamiaji wasio na hati"
 	},
 	"cost": {
-		"CATEGORYNAME": "Cost",
+		"CATEGORYNAME": "Gharama",
+		"cost-accepts-insurance": "Huduma hii inakubali bima",
+		"cost-accepts-insurance_default": "Huduma hii inakubali bima. Wasiliana na shirika moja kwa moja kwa maelezo zaidi kuhusu gharama, chaguo za usaidizi wa kifedha na maelezo ya bima.",
+		"cost-accepts-insurance_withUrl": "Huduma hii inakubali bima. <Link href=\"{{url}}\">Bofya hapa ili kutembelea ukurasa wa shirika</Link> kwa maelezo zaidi kuhusu gharama, chaguo za usaidizi wa kifedha na maelezo ya bima.",
 		"cost-fees": "Inapata gharama",
-		"cost-free": "Bure ya gharama"
+		"cost-free": "Bure ya gharama",
+		"cost-sliding-scale": "Gharama zilizoamuliwa kwa mizani ya kuteleza",
+		"cost-sliding-scale_default": "Huduma hii ina ada za mizani ya kuteleza. Kiasi unacholipa kwa huduma hurekebishwa kulingana na kiwango cha mapato yako. Wasiliana na shirika moja kwa moja kwa maelezo zaidi.",
+		"cost-sliding-scale_withUrl": "Huduma hii ina ada za mizani ya kuteleza. Kiasi unacholipa kwa huduma hurekebishwa kulingana na kiwango cha mapato yako. <Link href=\"{{url}}\">Bofya hapa ili kutembelea ukurasa wa shirika kwa maelezo zaidi.</Link>"
 	},
 	"crisis-support-community": {
-		"elders": "Elders",
-		"general-lgbtq": "General LGBTQ+"
+		"elders": "Wazee",
+		"general-lgbtq": "Jumla ya LGBTQ+"
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Mahitaji ya kustahiki",
-		"elig-age": "Age eligibility",
-		"elig-age_max": "Under {{max}}",
-		"elig-age_min": "{{min}} and older",
+		"elig-age": "Kustahiki umri",
+		"elig-age_max": "Chini ya {{max}}",
+		"elig-age_min": "{{min}} na zaidi",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Nyingine (maelezo ya maandishi ya bure)",
 		"req-medical-insurance": "Inahitaji bima ya matibabu",
@@ -91,7 +97,7 @@
 		"time-appointment-required": "Muda Uteuzi Inahitajika"
 	},
 	"lang": {
-		"CATEGORYNAME": "Languages",
+		"CATEGORYNAME": "Lugha",
 		"all-languages-by-interpreter": "Lugha zote kupitia mkalimani",
 		"american-sign-language": "Lugha ya Ishara ya Marekani",
 		"lang-offered": "Lugha maalum zinazotolewa"
@@ -101,6 +107,7 @@
 		"bipoc-led": "Imeongozwa na Bipoc-",
 		"black-led": "Nyeusi iliyoongozwa",
 		"immigrant-led": "Wakiongozwa na wahamiaji",
+		"lgbtq-led": "LGBTQ+ Inayoongozwa",
 		"trans-led": "Transgender inayoongozwa",
 		"women-led": "Wanawake wakiongozwa"
 	},
@@ -112,9 +119,9 @@
 		"accesslocation": "Maagizo ya Ufikiaji - Mahali",
 		"accessphone": "Maagizo ya Ufikiaji - Simu",
 		"accesspublictransit": "Maagizo ya Ufikiaji - Usafiri wa Umma",
-		"accesssms": "Access Instructions - SMS",
+		"accesssms": "Maagizo ya Ufikiaji - SMS",
 		"accesstext": "Maelekezo ya Ufikiaji - Nakala",
-		"accesswhatsapp": "Access Instructions - WhatsApp"
+		"accesswhatsapp": "Maagizo ya Ufikiaji - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Kuzingatia Huduma",
@@ -141,7 +148,7 @@
 		"incompatible-info": "Taarifa zisizokubaliana"
 	},
 	"tpop": {
-		"other": "Target Population - Other"
+		"other": "Idadi Lengwa - Nyingine"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Chaguzi za Mazoezi ya Sheria",
@@ -159,7 +166,7 @@
 		"grassroots-direct": "Shirika la Huduma ya Moja kwa Moja ya Grasroots",
 		"healthcare": "Mtoaji wa huduma ya afya",
 		"lawyer": "Mwanasheria",
-		"other": "Other (please specify)",
+		"other": "Nyingine (tafadhali taja)",
 		"paralegal": "Msaidizi wa kisheria au wafanyakazi wengine wa msaada wa kisheria",
 		"social-worker": "Mfanyakazi wa jamii",
 		"student-club": "Kiongozi wa kilabu cha mwanafunzi/msimamizi",
