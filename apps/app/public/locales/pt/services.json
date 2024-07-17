@@ -23,8 +23,8 @@
 		"computers-and-internet": "Computadores e internet"
 	},
 	"crisis-support": {
-		"CATEGORYNAME": "Suporte Crítico",
-		"crisis-support": "Suporte Crítico"
+		"CATEGORYNAME": "Apoio em Situações Críticas",
+		"crisis-support": "Apoio em Situações Críticas"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Educação e emprego",
@@ -32,36 +32,50 @@
 		"educational-support-for-lgbtq-youth": "Apoio educacional para jovens LGBTQ",
 		"english-classes": "Aulas de inglês",
 		"language-classes": "Aulas de idiomas",
-		"leadership-training-and-professional-development": "Treinamento de liderança e desenvolvimento profissional",
 		"libraries": "Bibliotecas",
-		"scholarships": "Bolsas de estudo"
+		"scholarships": "Bolsas de estudo",
+		"training-and-professional-development": "Treinamento e desenvolvimento profissional"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Assistência Financeira",
+		"bail-funds": "Fundos de fiança",
+		"healthcare-and-insurance": "Cuidados de saúde e seguros",
+		"housing-and-utilities": "Habitação e serviços utilitários",
+		"legal-fees": "Tarifas legais",
+		"moving-and-domestic-relocation": "Movimentação e realocação interna",
+		"mutual-aid": "Ajuda Mútua"
 	},
 	"food": {
 		"CATEGORYNAME": "Alimentação",
-		"food": "Comida",
-		"food-assistance": "Assistência alimentar"
+		"community-meals": "Refeições comunitárias",
+		"food-assistance": "Assistência alimentar",
+		"food-delivery": "Entrega de alimentos",
+		"food-pantries": "Despensas de alimentos",
+		"nutrition-education": "Educação nutricional"
 	},
 	"housing": {
 		"CATEGORYNAME": "Habitação",
+		"drop-in-centers": "Centros de atendimento",
 		"drop-in-centers-for-lgbtq-youth": "Centros de acolhimento para jovens LGBTQ",
 		"emergency-housing": "Habitação de emergência",
 		"housing-information-and-referrals": "Informações e referências sobre moradia",
+		"mail-services": "Serviços de correio",
 		"short-term-housing": "Habitação de curto prazo",
-		"trans-housing": "Habitação trans"
+		"trans-housing": "Habitação para pessoas trans"
 	},
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Higiene e vestuário",
 		"clothes": "Roupas",
-		"gender-affirming-items": "Itens de gênero afirmando",
+		"gender-affirming-items": "Itens para afirmação de gênero",
 		"gender-neutral-bathrooms": "Banheiros de gênero neutro",
 		"haircuts-and-stylists": "Cortes de cabelo e estilistas",
 		"hygiene": "Higiene"
 	},
 	"international-support": {
-		"CATEGORTYNAME": "Suporte internacional",
+		"CATEGORTYNAME": "Apoio internacional",
 		"financial-assistance": "Assistência Financeira",
 		"mental-health": "Saúde mental",
-		"resettlement-assistance": "Assistência de Reconfiguração"
+		"resettlement-assistance": "Assistência para Reassentamento"
 	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Ação Diferida para Chegadas na Infância (DACA)",
 		"deportation-or-removal": "Deportação ou remoção",
 		"employment-authorization": "Autorização de emprego",
-		"family-petitions": "Petições familiares",
+		"family-based-immigration": "Imigração baseada em família",
+		"family-law": "Direito de família",
 		"immigration-detention": "Detenção de imigrantes",
 		"legal-advice": "Consulta jurídica",
 		"legal-hotlines": "Linhas diretas jurídicas",
@@ -83,18 +98,19 @@
 		"u-visa": "Visto U"
 	},
 	"mail": {
-		"CATEGORYNAME": "Correio",
-		"mail": "Correio"
+		"CATEGORYNAME": "Correio"
 	},
 	"medical": {
 		"CATEGORYNAME": "Medicamentos",
 		"covid-19-services": "Serviços da COVID-19",
 		"dental-care": "Assistência odontológica",
+		"fertility-and-family-planning-services": "Serviços de fertilidade e planejamento familiar",
 		"hiv-and-sexual-health": "HIV e saúde sexual",
 		"medical-clinics": "Clínicas médicas",
 		"obgyn-services": "Serviços de obstetrícia",
 		"physical-evaluations-for-asylum-claim": "Avaliações físicas para pedido de asilo",
 		"physical-evaluations-for-refugee-claim": "Avaliações físicas para solicitação de refúgio",
+		"substance-use": "Uso de substâncias",
 		"trans-health": "Saúde trans",
 		"trans-health-gender-affirming-surgery": "Saúde trans - cirurgia de afirmação de gênero",
 		"trans-health-hormone-and-surgery-letters": "Saúde trans - cartas sobre hormônios e cirurgias",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Saúde mental",
 		"bipoc-support-groups": "Grupos de apoio do BIPOC",
+		"family-support-groups": "Grupos de suporte familiar",
 		"hotlines": "Linhas diretas",
 		"private-therapy-and-counseling": "Terapia e aconselhamento privados",
 		"psychological-evaluations-for-asylum-claim": "Avaliações psicológicas para pedido de asilo",
@@ -119,12 +136,13 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Entretenimento e atividades",
 		"art-music-literature": "Arte, música e literatura",
+		"camps-and-excursions": "Acampamentos e excursões",
 		"sports-and-entertainment": "Esportes e entretenimento"
 	},
 	"trans-focused-services": {
 		"CATEGORYNAME": "Serviços Focados nos Trans",
 		"transport-gacare": "Transporte para a afirmação do género",
-		"transport-relo-support": "Suporte a realocação de Trans"
+		"transport-relo-support": "Apoio a realocação de pessoas Trans"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Tradução e Interpretação",
@@ -134,7 +152,7 @@
 	},
 	"transportation": {
 		"CATEGORYNAME": "Transporte",
-		"transit-passes-and-discounts": "Passes de transporte público e descontos",
+		"transit-passes-and-discounts": "Passes e descontos para transporte público",
 		"transportation-assistance": "Assistência de transporte"
 	}
 }

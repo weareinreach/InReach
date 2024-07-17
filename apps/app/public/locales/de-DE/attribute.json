@@ -68,8 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Kosten",
+		"cost-accepts-insurance": "Dieser Service akzeptiert eine Versicherung",
+		"cost-accepts-insurance_default": "Dieser Service akzeptiert Versicherungen. Kontaktieren Sie die Organisation direkt für weitere Informationen zu Kosten, Finanzhilfeoptionen und Versicherungsschutz.",
+		"cost-accepts-insurance_withUrl": "Dieser Service akzeptiert Versicherungen. <Link href=\"{{url}}\">Klicken Sie hier, um die Seite</Link> der Organisation zu besuchen, um weitere Informationen zu Kosten, Finanzhilfeoptionen und Versicherungsschutz zu erhalten.",
 		"cost-fees": "Incurs einen Preis",
-		"cost-free": "Kostenlos"
+		"cost-free": "Kostenlos",
+		"cost-sliding-scale": "Kosten auf Schiebemaßstab ermittelt",
+		"cost-sliding-scale_default": "Dieser Service hat gleitende Skalengebühren. Der Betrag, den Sie für Dienstleistungen bezahlen, wird entsprechend Ihrem Einkommensniveau angepasst. Kontaktieren Sie die Organisation direkt für weitere Informationen.",
+		"cost-sliding-scale_withUrl": "Dieser Service hat gleitende Skalengebühren. Der Betrag, den Sie für Dienstleistungen bezahlen, wird entsprechend Ihrem Einkommensniveau angepasst. <Link href=\"{{url}}\">Klicken Sie hier, um die Seite der Organisation für weitere Informationen zu besuchen.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "Ältere",
@@ -101,6 +107,7 @@
 		"bipoc-led": "BIPOC-geführt",
 		"black-led": "Schwarz geführt",
 		"immigrant-led": "Migrantengeführt",
+		"lgbtq-led": "LGBTQ+ Led",
 		"trans-led": "Transgender-geführt",
 		"women-led": "Frauen geführt"
 	},

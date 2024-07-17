@@ -32,20 +32,34 @@
 		"educational-support-for-lgbtq-youth": "Освітня підтримка ЛГБТК-молоді",
 		"english-classes": "Заняття з англійської мови",
 		"language-classes": "Мовні класи",
-		"leadership-training-and-professional-development": "Навчання лідерству та підвищення кваліфікації",
 		"libraries": "Бібліотеки",
-		"scholarships": "Стипендії"
+		"scholarships": "Стипендії",
+		"training-and-professional-development": "Тренування та професійний розвиток"
+	},
+	"financial-assistance": {
+		"CATEGORYNAME": "Фінансова допомога",
+		"bail-funds": "Грошові кошти",
+		"healthcare-and-insurance": "Охорона здоров'я та страхування",
+		"housing-and-utilities": "Житло і комунальні послуги",
+		"legal-fees": "Юридичні збори",
+		"moving-and-domestic-relocation": "Переміщення і внутрішнє переселення",
+		"mutual-aid": "Взаємна допомога"
 	},
 	"food": {
 		"CATEGORYNAME": "Продукти харчування",
-		"food": "Харчування",
-		"food-assistance": "Харчова допомога"
+		"community-meals": "Харчування спільноти",
+		"food-assistance": "Харчова допомога",
+		"food-delivery": "Доставка їжі",
+		"food-pantries": "Харчові панелі",
+		"nutrition-education": "Харчова освіта"
 	},
 	"housing": {
 		"CATEGORYNAME": "Житло",
+		"drop-in-centers": "Центри Drop-in",
 		"drop-in-centers-for-lgbtq-youth": "Центри для ЛГБТК-молоді",
 		"emergency-housing": "Аварійне житло",
 		"housing-information-and-referrals": "Інформація про житло та реферали",
+		"mail-services": "Поштові служби",
 		"short-term-housing": "Короткострокове житло",
 		"trans-housing": "Транс-житло"
 	},
@@ -71,7 +85,8 @@
 		"deferred-action-for-childhood-arrivals-daca": "Відкладені дії для дитинства прибуття (DACA)",
 		"deportation-or-removal": "Депортація або вивезення",
 		"employment-authorization": "Дозвіл на працевлаштування",
-		"family-petitions": "Сімейні клопотання",
+		"family-based-immigration": "Сімейно-орієнтована імміграція",
+		"family-law": "Сімейне право",
 		"immigration-detention": "Затримання імміграції",
 		"legal-advice": "Правова порада",
 		"legal-hotlines": "Юридичні гарячі лінії",
@@ -83,18 +98,19 @@
 		"u-visa": "U віза"
 	},
 	"mail": {
-		"CATEGORYNAME": "Пошта",
-		"mail": "Пошта"
+		"CATEGORYNAME": "Пошта"
 	},
 	"medical": {
 		"CATEGORYNAME": "Медичні проблеми",
 		"covid-19-services": "Послуги COVID-19",
 		"dental-care": "Стоматологічна допомога",
+		"fertility-and-family-planning-services": "Послуги планування народжуваності та родини",
 		"hiv-and-sexual-health": "ВІЛ і сексуальне здоров'я",
 		"medical-clinics": "Медичні клініки",
 		"obgyn-services": "Послуги акушерської гінекології",
 		"physical-evaluations-for-asylum-claim": "Фізичні оцінки для заяви про притулок",
 		"physical-evaluations-for-refugee-claim": "Фізичні оцінки для заяви про біженців",
+		"substance-use": "Використання тональності",
 		"trans-health": "Транс здоров'я",
 		"trans-health-gender-affirming-surgery": "Trans health - гендерна підтверджуюча хірургія",
 		"trans-health-hormone-and-surgery-letters": "Транс-здоров'я - гормони та хірургічні листи",
@@ -106,6 +122,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Психічне здоров'я",
 		"bipoc-support-groups": "Групи підтримки BIPOC",
+		"family-support-groups": "Сімейні групи підтримки",
 		"hotlines": "Гарячі лінії",
 		"private-therapy-and-counseling": "Приватна терапія та консультування",
 		"psychological-evaluations-for-asylum-claim": "Психологічні оцінки для заяви про притулок",
@@ -119,6 +136,7 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Розваги та розваги",
 		"art-music-literature": "Мистецтво, музика та література",
+		"camps-and-excursions": "Табори і екскурсії",
 		"sports-and-entertainment": "Спорт і розваги"
 	},
 	"trans-focused-services": {

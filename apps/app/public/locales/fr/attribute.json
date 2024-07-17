@@ -68,8 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Coûts",
+		"cost-accepts-insurance": "Ce service accepte les assurances",
+		"cost-accepts-insurance_default": "Communiquez directement avec l'organisation pour obtenir de plus amples renseignements sur les coûts, les options d'aide financière et les détails de la couverture d'assurance.",
+		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
 		"cost-fees": "Entraîne des frais",
-		"cost-free": "Gratuit"
+		"cost-free": "Gratuit",
+		"cost-sliding-scale": "Coûts déterminés sur une échelle de glissement",
+		"cost-sliding-scale_default": "Ce service a des frais d'échelle glissante. Le montant que vous payez pour les services est ajusté en fonction de votre niveau de revenu. Communiquez directement avec l'organisation pour obtenir de plus amples renseignements.",
+		"cost-sliding-scale_withUrl": "Ce service a des frais d'échelle glissante. Le montant que vous payez pour les services est ajusté en fonction de votre niveau de revenu. <Link href=\"{{url}}\">Cliquez ici pour visiter la page de l'organisation pour plus d'informations.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "Personnes âgées",
@@ -101,6 +107,7 @@
 		"bipoc-led": "Dirigé par des PANDC",
 		"black-led": "Dirigé par des noirs",
 		"immigrant-led": "Dirigé par des immigrés",
+		"lgbtq-led": "LGBTQ+ Led",
 		"trans-led": "Dirigé par des trans",
 		"women-led": "Femmes dirigées"
 	},

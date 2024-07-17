@@ -1,7 +1,7 @@
 {
 	"about-us": "Tungkol sa Amin",
 	"access": {
-		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+		"sms-with-body": "I-text ang <strong>{{body}}</strong> sa {{code}}"
 	},
 	"account": "Account",
 	"add": "Magdagdag ng {{item}}",
@@ -11,39 +11,36 @@
 		"organization": "{{adjective}} samahan"
 	},
 	"agree-disclaimer": "Sa pamamagitan ng pag-click sa \"{{action}}\" sumasang-ayon ka sa <link1>Patakaran sa Privacy ng inReach</link1> at <link2>Mga Tuntunin ng Paggamit</link2>.",
-	"alert-message": "Alert message",
+	"alert-message": "Mensahe ng alerto",
 	"alert-message-1": "Patakaran sa <strong>COVID-19:</strong> Sa mga balita at pinakamahusay na kasanayan para sa pag-iwas sa COVID-19 na mabilis na nagbabago bawat araw, patuloy na ina-update ng Whitman-Walker Health ang kanilang mga serbisyo upang maipakita ang mga rekomendasyon sa pag-iwas. Mangyaring suriin ang kanilang website para sa pinaka-up-to-date na impormasyon.",
-	"alert-message-instructions": "Enter the alert message",
-	"alert-title-instructions": "Enter a title for the message...",
-	"alerts": {
-		"search-page-legislative-map": "This <ATLink>anti-trans legislative risk map</ATLink> shows the 2-year risk for anti-trans laws in all 50 states and D.C."
-	},
+	"alert-message-instructions": "Ipasok ang alertong mensahe",
+	"alert-title-instructions": "Maglagay ng pamagat para sa mensahe...",
 	"all-service-category": "Lahat ng {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Sa pamamagitan ng paggamit ng inReach, sumasang-ayon ka na hindi mo gagamitin ang impormasyong ito para sa mapanganib, nakabatay sa poot, homophobic, transphobic, xenophobic, at/o racist agenda o komentaryo.",
 		"title": "Anti-poot na pangako"
 	},
 	"badge": {
-		"accessible-building_false": "This building is NOT wheelchair accessible",
-		"accessible-building_true": "This building is wheelchair accessible",
-		"claimed": "Claimed",
+		"accessible-building_false": "HINDI naa-access ng wheelchair ang gusaling ito",
+		"accessible-building_true": "Ang gusaling ito ay mapupuntahan ng wheelchair",
+		"claimed": "Inangkin",
 		"claimed-tool-tip": "Ang organisasyong ito ay inaangkin ng isang na-verify na kinatawan. <link1>Matuto nang higit pa.</link1>",
 		"community-tool-tip": "Komunidad na pinaglilingkuran ng organisasyong ito.",
-		"national-tool-tip": "Offers services throughout {{country}}.",
-		"privatePractice": "Private Practice",
+		"national-tool-tip": "Nag-aalok ng mga serbisyo sa buong {{country}}.",
+		"privatePractice": "Pribadong Pagsasanay",
 		"remote-tool-tip": "Magagamit nang malayuan",
 		"service-tool-tip": "(Mga) serbisyo na inaalok ng samahang ito.",
-		"unclaimed": "Unclaimed",
+		"unclaimed": "Hindi inaangkin",
 		"unclaimed-tool-tip": "Ang organisasyong ito ay hindi pa inaangkin ng isang kinatawan. <link1>Kunin ang samahang ito</link1> upang bumuo ng tiwala sa aming komunidad, i-update ang iyong sariling impormasyon, at higit pa.",
-		"verified-information": "Verified information",
-		"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+		"verified-information": "Na-verify na impormasyon",
+		"verified-information-detail": "Ang impormasyon sa pahinang ito ay huling na-update {{dateString}}. Ang InReach ay inuuna ang katumpakan at kaligtasan ng user, at regular na ina-update ang lahat ng impormasyon. Para sa karagdagang impormasyon sa aming proseso ng pag-vetting, pakibisita ang aming pahina ng Proseso ng Pag-vetting sa InReach.org.",
 		"verified-reviewer": "InReach Verified Reviewer"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Bumalik sa <u>{{page}}</u>",
 		"back-to-search": "Bumalik sa paghahanap"
 	},
-	"can-help-people-in": "Can help people located anywhere in {{location}}",
+	"can-help-people-in": "Makakatulong sa mga tao na matatagpuan saanman sa {{location}}",
 	"cancel": "Kanselahin",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -53,8 +50,8 @@
 	"close": "Isara",
 	"confirm-account": {
 		"click-verify": "Mag-click dito upang i-verify ang iyong kumpirmahin ang iyong inReach account",
-		"code-requested": "Verification code requested!",
-		"code-resent": "A new code has been requested. Please check your email.",
+		"code-requested": "Hiniling ang verification code!",
+		"code-resent": "Isang bagong code ang hiniling. Pakisuri ang iyong email.",
 		"message": "I-click ang sumusunod na link upang kumpirmahin ang iyong account:",
 		"subject": "Kumpirmahin ang iyong account"
 	},
@@ -62,13 +59,13 @@
 	"contact": "Makipag-ugnay",
 	"contact-us": "Makipag-ugnay sa Amin",
 	"cookie-consent": {
-		"approve-all": "Approve all",
-		"approve-selected": "Approve selected",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
-		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
-		"item-basic": "Necessary cookies for site functionality",
-		"item-ga4": "Analytics for internal InReach use",
-		"modal-title": "Cookies Settings"
+		"approve-all": "Aprubahan lahat",
+		"approve-selected": "Aprubahan ang napili",
+		"body": "Gumagamit kami ng cookies at mga serbisyo ng third party sa website na ito. Ang ilan sa mga ito ay mahalaga, ang iba ay tumutulong sa amin na mapabuti ang iyong karanasan sa pagba-browse. Pakitingnan ang aming <PrivacyLink>Privacy Statement</PrivacyLink> para sa higit pang impormasyon.",
+		"intro": "Gumagamit kami ng mga kinakailangang cookies upang gumana ang aming site. Gusto naming magtakda ng karagdagang cookies upang maunawaan ang paggamit ng site, gumawa ng mga pagpapabuti sa site at matandaan ang iyong mga setting.",
+		"item-basic": "Mga kinakailangang cookies para sa pagpapagana ng site",
+		"item-ga4": "Analytics para sa panloob na paggamit ng InReach",
+		"modal-title": "Mga Setting ng Cookies"
 	},
 	"count": {
 		"result_one": "{{count}} resulta",
@@ -77,13 +74,13 @@
 	"country-select": "Pumili ng isang bansa",
 	"create-new-list": "Lumikha ng bagong listahan",
 	"crisis-support": {
-		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
-		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
-		"intl-we-recommend": "We recommend these international resources",
-		"natl-find-help-now": "Find help now",
-		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
-		"outside-service-area": "InReach does not operate in {{country}}",
-		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+		"intl-stay-safe": "<Title3>📣 Mangyaring manatiling ligtas online</Title3>\n<Text>Ang pagbisita sa alinman sa mga website na ito <strong>ay maaaring mag-iwan ng tala sa iyong computer o browser</strong>, tulad ng ginagawa ng anumang website pagkatapos mong bisitahin ito. Mangyaring gumawa ng mga hakbang upang maiwasan ang mga hindi ligtas na sitwasyon sa iyong sariling lugar.</Text>",
+		"intl-these-verified": "Makakatulong ang mga na-verify na mapagkukunang ito sa komunidad ng LGBTQ+ saanman sa mundo.",
+		"intl-we-recommend": "Inirerekomenda namin ang mga internasyonal na mapagkukunang ito",
+		"natl-find-help-now": "Humanap ng tulong ngayon",
+		"natl-these-verified": "<Text>Makakatulong ang mga na-verify na mapagkukunang ito sa komunidad ng LGBTQ+ sa United States. Ang mga serbisyong ito ay <strong>malayuang magagamit, kumpidensyal,</strong> at <strong>libre</strong>.</Text>",
+		"outside-service-area": "Hindi gumagana ang InReach sa {{country}}",
+		"who-this-serves": "<Text><strong>Sino ang pinaglilingkuran ng mapagkukunang ito:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Kasalukuyang lokasyon",
 	"delete-account": "Tanggalin ang iyong account?",
@@ -95,9 +92,9 @@
 	},
 	"disclaimer": "Disclaimer",
 	"donate": {
-		"hover": "Donate today to help keep InReach free for everyone",
-		"popup": "Help keep InReach free for everyone",
-		"to-inreach": "Donate to InReach 💝"
+		"hover": "Mag-donate ngayon para makatulong na panatilihing libre ang InReach para sa lahat",
+		"popup": "Tumulong na panatilihing libre ang InReach para sa lahat",
+		"to-inreach": "Mag-donate sa InReach 💝"
 	},
 	"dont-have-account": "Wala kang account?",
 	"download-app": "I-download ang app",
@@ -109,28 +106,28 @@
 	"enter-password-placeholder": "Ipasok ang password...",
 	"enter-review": "Ipasok ang iyong pagsusuri...",
 	"errors": {
-		"401-title": "You must be logged in to do that.",
-		"403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
-		"403-title": "403: Forbidden",
-		"404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
-		"404-title": "404: Page not found.",
-		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
-		"500-title": "500: Something went wrong.",
-		"code-expired": "The code provided has expired.",
-		"code-mismatch": "The code provided is not valid.",
+		"401-title": "Dapat naka-log in ka para magawa iyon.",
+		"403-body": "Wala kang pahintulot na i-access ang pahinang ito. Kung sa tingin mo ay naabot mo ang pahinang ito sa pagkakamali, mangyaring makipag-ugnayan sa iyong superbisor.",
+		"403-title": "403 Ipinagbabawal",
+		"404-body": "Ikinalulungkot namin, ang pahina na iyong hinahanap ay wala o inilipat. Magsimula ng paghahanap sa ibaba upang makahanap ng ligtas, na-verify na mga mapagkukunan para sa magkakaibang komunidad ng LGBTQ+ sa iyong lugar.",
+		"404-title": "Hindi Natagpuan ang 404 Page.",
+		"500-body": "Paumanhin, nagkaroon ng problema sa aming server. Pakisubukang muli sa ibang pagkakataon, o magsimula ng paghahanap sa ibaba upang makahanap ng ligtas, na-verify na mga mapagkukunan ng LGBTQ+ sa iyong lugar.",
+		"500-title": "500: May nangyaring mali.",
+		"code-expired": "Nag-expire na ang ibinigay na code.",
+		"code-mismatch": "Ang code na ibinigay ay hindi wasto.",
 		"oh-no": "Oh hindi!",
-		"resend-code": "Request a new code",
+		"resend-code": "Humiling ng bagong code",
 		"try-again-text": "<Text>May nagkamali! Mangyaring subukang muli.</Text>"
 	},
 	"exclude": "Ibukod",
 	"exit": {
-		"edit-mode": "Exit edit mode"
+		"edit-mode": "Lumabas sa edit mode"
 	},
 	"filter-by-service": "I-filter ayon sa mga serbisyo",
 	"find-resources": "Maghanap ng mga mapagkukunan",
 	"find-x": "Hanapin ang {{value}}",
 	"footer": {
-		"anti-hate": "Anti-hate commitment",
+		"anti-hate": "Paninindigan laban sa poot",
 		"digital-accessibility": "Pag-access sa digital",
 		"disclaimer": "Disclaimer",
 		"privacy-statement": "Pahayag ng privacy",
@@ -146,8 +143,8 @@
 	"form-error-password-req": "Ang iyong password ay hindi nakakatugon sa mga kinakailangan, mangyaring subukang muli.",
 	"go-to-x": "Pumunta sa {{value}}",
 	"hours": {
-		"closed": "Closed",
-		"open24": "Open 24 hours"
+		"closed": "sarado",
+		"open24": "Bukas ng 24 na oras"
 	},
 	"in-reach-user": "InReach User",
 	"include": "Isama",
@@ -164,7 +161,7 @@
 	"link-copied": "Kinopya ang link sa clipboard",
 	"list": {
 		"added": "Resource save sa listahan: {{name}}",
-		"create-new": "Create new list",
+		"create-new": "Gumawa ng bagong listahan",
 		"create-new-sub": "Ang iyong mga listahan ng mga naka-save na mapagkukunan ay makikita lamang sa iyo at sinumang ibinabahagi mo sa kanila.",
 		"create-new-sub2": "Pangalanan ang iyong listahan ayon sa kategorya, araw ng linggo, o sinumang para sa listahang ito.",
 		"created": "Nilikha ang bagong listahan: {{name}}",
@@ -183,8 +180,8 @@
 		"error-generic": "May nagkamali, mangyaring subukang muli.",
 		"error-username-password": "Maling username o password."
 	},
-	"message_text": "Message text",
-	"message_title": "Message title",
+	"message_text": "Text ng mensahe",
+	"message_title": "Pamagat ng mensahe",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Pahayag ng Accessibility</title2>\n<textDarkGray>Ang bukas na mapagkukunan ng teknolohiya ng inReach ay itinayo para sa magkakaibang komunidad ng LGBTQ +, kabilang ang mga gumagamit na may kapansanan.</textDarkGray>\n<textDarkGray>Ang libreng inReach App ay magagamit sa web (desktop at mobile), at katutubong iOS at Android. Simula sa paglulunsad ng aming pinakabagong muling pagdidisenyo (Hunyo 2023), sisikapin ng inReach na matugunan ang <linkAccessibility>na pamantayan sa antas ng AA sa Pag-access sa Nilalaman ng Web Content (WCAG).</linkAccessibility></textDarkGray>\n<textDarkGray>Sa inReach, nagsusumikap kaming gawing naa-access ang aming tech platform para sa maraming mga gumagamit at aparato hangga't maaari sa pagkakahanay sa aming misyon na maglingkod sa lahat ng mga taong LGBTQ+na nahaharap sa pag-uusig o diskriminasyon.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>Gagawin ng koponan ng inReach ang makakaya upang kumpirmahin ang pagiging karapat-dapat at pangunahing mga katotohanan tungkol sa mga service provider na nakalista sa website na ito. Gayunpaman, hindi namin magagarantiyahan ang posibilidad na mabuhay o kakayahan ng anumang naturang mga provider. Dahil dito, ang inReach ay walang responsibilidad para sa mga aksyon ng mga provider na nakalista sa website na ito at ang mga gumagamit na nakikipag-ugnay sa anumang naturang mga provider ay ginagawa ito sa kanilang sariling panganib.</textReg>\n</stack16>"
@@ -200,7 +197,7 @@
 	"none-apply": "Wala sa mga ito ang nalalapat sa akin",
 	"offices-and-locations": "Mga Opisina at Lokasyon",
 	"org-image": "Larawan ng samahan",
-	"organization": "Organization",
+	"organization": "Organisasyon",
 	"other-specify": "Iba pa (mangyaring tukuyin)",
 	"page-title": {
 		"base": "{{title}} - inReach",
@@ -218,15 +215,15 @@
 	"password-req-uppercase": "May kasamang uppercase letter",
 	"password-reset": {
 		"email-body": "I-click ang sumusunod na link upang i-reset ang iyong password:",
-		"email-subject": "Reset your password"
+		"email-subject": "I-reset ang iyong password"
 	},
 	"password-reset-success": "<Text>Mangyaring <LoginModal>login</LoginModal> gamit ang iyong bagong password.</Text>",
 	"password-saved": "Naka-save ang password!",
-	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
+	"photo-count_interval": "(0)[Wala pang mga larawan.];(1)[{{count}} larawan];(2-inf)[{{count}} larawan]",
 	"photo_interval": "(0) [Wala pang mga larawan]; (2-inf) [Tingnan ang lahat ng {{count}} mga larawan];",
 	"please-specify": "Mangyaring tukuyin",
 	"portal-module": {
-		"service-area": "Service Area"
+		"service-area": "Lugar ng Serbisyo"
 	},
 	"powered-by-vercel": "Pinapagana ng Vercel",
 	"prefer-not-to-say": "Mas gusto na huwag sabihin",
@@ -234,11 +231,11 @@
 	"privacy-statement": "Pahayag ng Privacy",
 	"privacy-statement-body": [
 		"<textDarkGrayCentered>Sa inReach, kinikilala namin na ang pagpapanatili ng online anonymity ay isang isyu sa buhay-o-kamatayan para sa maraming mga LGBTQ+na tao. Iyon ang dahilan kung bakit ang libreng inReach App (aming web app, katutubong iOS app, at katutubong Android app) ay idinisenyo upang unahin ang pagprotekta sa kaligtasan at pagiging kompidensiyal ng mga gumagamit sa online.</textDarkGrayCentered>",
-		"<title2>User demographic data</title2>",
+		"<title2>Data ng demograpiko ng user</title2>",
 		"<textDarkGray><strong>Hindi kami nangangailangan ng anumang personal na makikilalang impormasyon upang magamit ang libreng inReach App.</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
-		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
+		"<textDarkGray>Ang mga user na pipili na gumawa ng libreng InReach user account ay may <strong>ang opsyon</strong> upang ibahagi ang sumusunod na demograpikong impormasyon sa pamamagitan ng hindi kilalang online na survey:</textDarkGray>",
+		"<textDarkGray><listGroup><listItem>Taon ng kapanganakan</listItem>\n<listItem>Bansang pinagmulan</listItem>\n<listItem>LGBTQ+ identity (sexual orientation at gender identity)</listItem>\n<listItem>Lahi/etnisidad</listItem>\n<listItem>Status ng imigrasyon</listItem>\n<listItem>Kasalukuyang lokasyon</listItem></listGroup></textDarkGray>",
+		"<textDarkGray><strong>Lahat ng sensitibong impormasyong ito ay naka-imbak nang hindi nagpapakilala at hindi konektado sa sinumang indibidwal na user o user account.*</strong></textDarkGray>",
 		"<textUtility4>(* Ang tanging pagbubukod ay ang uri ng account ng gumagamit ng Local Community Reviewer, na gumagamit ng anumang impormasyong demograpiko na nakolekta upang mapahusay ang karanasan at epekto ng pagboboluntaryo ng mga tagasuri ng Lokal na Komunidad. Para sa mga account ng Local Community Reviewer, kailangan namin ang lokasyon at lahat ng iba pang impormasyong demograpiko ay opsyonal ngunit itatali sa kanilang record ng gumagamit. Ang data na ito ay makikita lamang sa labas ng kawani ng inReach kung pipiliin ng Local Community Reviewer na gawin itong makita sa pamamagitan ng mga setting ng privacy ng kanilang account. Ang pagbabahagi ng profile na nakaharap sa publiko, ay makakatulong sa ibang mga gumagamit na maging mas tiwala sa iyong mga pagsusuri.)</textUtility4>",
 		"<textDarkGray>Ang pag-unawa sa aming mga demograpiko ng gumagamit ay makakatulong sa amin na mabilang ang aming epekto, makalikom ng pondo, at suriin ang mga desisyon sa produkto sa hinaharap. Pinahahalagahan namin ang mga gumagamit na kusang-loob na nagbabahagi ng impormasyong ito sa amin, at ginagawa namin ang mga hakbang na ito upang maprotektahan ang iyong privacy at pagkawala ng lagda.</textDarkGray>",
 		"<textDarkGray><title2>Paggamit ng site Analytics</title2></textDarkGray>",
@@ -250,7 +247,7 @@
 	"profile": "Profile",
 	"questions": "Mga Tanong?",
 	"quick-promo-body": "<textUtility1>💚 I-save at ibahagi ang mga personalized na listahan ng mapagkukunan</textUtility1>\n<textUtility1>💬 Mag-iwan ng pampublikong rating/review sa mga organisasyon</textUtility1>\n<textUtility1>🏠 Magmungkahi ng mga organisasyon sa iyong lugar</textUtility1>\n<textUtility1>🔗 I-claim ang pahina ng profile ng iyong samahan (Malapit na!)</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Kailangan mong mag-log in para magawa iyon.</title2>\n<textDarkGray>Gamit ang isang libreng InReach account maaari kang mag-unlock ng mga karagdagang feature:</textDarkGray>",
 	"remote-services": "Magagamit ang mga serbisyo nang malayuan",
 	"remote-services-page-title": "Remote serbisyo",
 	"reset-password": "I-reset ang iyong password",
@@ -264,21 +261,21 @@
 	"review-resource": "Suriin ang mapagkukunang ito",
 	"safety-exit": "Kaligtasan exit",
 	"save": "I-save",
-	"save-changes": "Save changes",
+	"save-changes": "I-save ang mga pagbabago",
 	"saved": "Nai-save",
 	"search": {
 		"include-remote": "Isama ang mga remote na serbisyo",
 		"location-placeholder": "Ipasok ang lungsod o zip code...",
-		"location-placeholder-searchby": "Search by city or zip code...",
+		"location-placeholder-searchby": "Maghanap ayon sa lungsod o zip code...",
 		"look-up-org": "Maghanap ng isang samahan ayon sa pangalan",
 		"no-results": "Walang nahanap na mga resulta. Mangyaring subukang muli.",
-		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
+		"no-results-adjust": "Walang nakitang mga resulta para sa iyong paghahanap. Subukang isaayos ang iyong napiling lokasyon o mga filter.",
 		"organization-placeholder": "Ipasok ang pangalan ng samahan...",
-		"organization-placeholder-searchby": "Search by organization name...",
+		"organization-placeholder-searchby": "Maghanap ayon sa pangalan ng organisasyon...",
 		"suggest-resource": "Hindi mahanap ito? <1>Magmungkahi ng isang samahan</1> na sa palagay mo ay dapat isama."
 	},
 	"select": {
-		"base": "Select {{- item}}"
+		"base": "Piliin ang {{- item}}"
 	},
 	"send-email": "Magpadala ng email",
 	"service": {
@@ -322,7 +319,7 @@
 		"lcr-screen3": "Sinuri ko ang <Link><strong>Local Community Reviewer</strong></Link> pahina sa website ng inReach at natutugunan ko ang mga kinakailangan.",
 		"modal-body": [
 			"<title3>Anong uri ng account ang nais mong likhain?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<group>\n<button data-option='individual'>Indibidwal</button>\n<button data-option='provider'>Propesyonal/Provider</button>\n<button data-option='lcr'>Lokal Tagasuri ng Komunidad</button>\n</group>",
 			"<loginLink>Mayroon nang isang account?</loginLink>"
 		],
 		"name-use-any": "Gamitin ang anumang pangalan na komportable ka.",
@@ -389,10 +386,10 @@
 	"uncheck-all": "Alisan ng tsek ang lahat",
 	"user-avatar": "Avatar ng gumagamit",
 	"user-menu": {
-		"admin-options": "Admin Options",
-		"data-portal": "Data Portal Home",
-		"edit-page": "Edit this page",
-		"user-options": "User Options"
+		"admin-options": "Mga Opsyon sa Admin",
+		"data-portal": "Home ng Data Portal",
+		"edit-page": "I-edit ang page na ito",
+		"user-options": "Mga Pagpipilian sa Gumagamit"
 	},
 	"verify-account": {
 		"verified": "Na-verify ang account!",
@@ -401,28 +398,28 @@
 	},
 	"view-list": "Tingnan ang listahan",
 	"visit": "Bisitahin",
-	"welcome-name": "Welcome, {{name}}!",
+	"welcome-name": "Maligayang pagdating, {{name}}!",
 	"words": {
 		"accept": "Tanggapin",
 		"account": "Account",
 		"add": "Magdagdag",
 		"and": "at",
 		"and-x-more": "at {{count}} higit pa",
-		"approve": "Approve",
+		"approve": "Aprubahan",
 		"back": "Bumalik",
-		"close": "Close",
+		"close": "Isara",
 		"coming-soon": "Malapit na",
-		"customize": "Customize",
-		"decline": "Decline",
+		"customize": "I-customize",
+		"decline": "Tanggihan",
 		"delete": "Tanggalin",
 		"distance": "Distansya",
-		"donate": "Donate",
+		"donate": "Mag-donate",
 		"email": "Email",
 		"home": "Tahanan",
 		"hours": "Oras",
-		"location": "Location",
+		"location": "Lokasyon",
 		"more": "higit pa",
-		"more-info": "More information",
+		"more-info": "Karagdagang informasiyon",
 		"next": "Susunod",
 		"no": "Hindi",
 		"organization": "Organisasyon",
@@ -431,22 +428,22 @@
 		"please-wait": "Mangyaring maghintay...",
 		"prev": "Prev",
 		"print": "I-print",
-		"publish": "Publish",
-		"restore": "Restore",
-		"reverify": "Reverify",
+		"publish": "I-publish",
+		"restore": "Ibalik",
+		"reverify": "I-verify muli",
 		"review": "Suriin",
 		"reviews": "Mga Review",
-		"save": "Save",
-		"save-changes": "Save changes",
-		"saved": "Saved",
+		"save": "I-save",
+		"save-changes": "I-save ang mga pagbabago",
+		"saved": "Nai-save",
 		"search": "Paghahanap",
-		"service-hours": "Service hours",
+		"service-hours": "Mga oras ng serbisyo",
 		"settings": "Mga Setting",
 		"share": "Ibahagi",
 		"sign-up": "Mag-sign up",
 		"skip": "Laktawan",
-		"support": "Support",
-		"unpublish": "Unpublish",
+		"support": "Suporta",
+		"unpublish": "I-unpublish",
 		"website": "Website",
 		"yes": "Oo"
 	},
