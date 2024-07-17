@@ -52,9 +52,8 @@ const nextConfig = {
 	},
 	experimental: {
 		// outputFileTracingRoot: path.join(__dirname, '../../'),
-		// instrumentationHook: true,
+		instrumentationHook: true,
 		webpackBuildWorker: true,
-		serverComponentsExternalPackages: ['@sentry/profiling-node'],
 	},
 	eslint: {
 		ignoreDuringBuilds: !(isVercelProd || isRenovatePR || isVercelStaging),
@@ -141,39 +140,34 @@ function defineNextConfig(config) {
  * @returns {T}
  */
 const defineSentryConfig = (nextConfig) =>
-	withSentryConfig(
-		nextConfig,
-		{
-			// For all available options, see:
-			// https://github.com/getsentry/sentry-webpack-plugin#options
+	withSentryConfig(nextConfig, {
+		// For all available options, see:
+		// https://github.com/getsentry/sentry-webpack-plugin#options
 
-			// Suppresses source map uploading logs during build
-			silent: !process.env.SENTRY_DEBUG,
-			org: 'weareinreach',
-			project: 'inreach-app',
-		},
-		{
-			// For all available options, see:
-			// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+		// Suppresses source map uploading logs during build
+		silent: !process.env.SENTRY_DEBUG,
+		org: 'weareinreach',
+		project: 'inreach-app',
+		// For all available options, see:
+		// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-			// Upload a larger set of source maps for prettier stack traces (increases build time)
-			widenClientFileUpload: true,
+		// Upload a larger set of source maps for prettier stack traces (increases build time)
+		widenClientFileUpload: true,
 
-			// Transpiles SDK to be compatible with IE11 (increases bundle size)
-			transpileClientSDK: false,
+		// Transpiles SDK to be compatible with IE11 (increases bundle size)
+		transpileClientSDK: false,
 
-			// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-			tunnelRoute: '/monitoring',
+		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
+		tunnelRoute: '/monitoring',
 
-			// Hides source maps from generated client bundles
-			hideSourceMaps: !isLocalDev,
+		// Hides source maps from generated client bundles
+		hideSourceMaps: !isLocalDev,
 
-			// Automatically tree-shake Sentry logger statements to reduce bundle size
-			disableLogger: isVercelProd || isVercelActiveDev,
-			automaticVercelMonitors: true,
-			autoInstrumentMiddleware: true,
-		}
-	)
+		// Automatically tree-shake Sentry logger statements to reduce bundle size
+		disableLogger: isVercelProd || isVercelActiveDev,
+		automaticVercelMonitors: true,
+		autoInstrumentMiddleware: true,
+	})
 
 export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
 // export default defineSentryConfig(defineNextConfig(nextConfig))
