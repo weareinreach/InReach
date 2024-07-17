@@ -21,7 +21,7 @@ export const getBaseUrl = () => {
 		return `https://${getEnv('VERCEL_URL')}`
 	}
 	// dev SSR should use localhost
-	return `http://localhost:${getEnv('PORT') ?? process.env.STORYBOOK ? 6006 : 3000}`
+	return `http://localhost:${(getEnv('PORT') ?? process.env.STORYBOOK) ? 6006 : 3000}`
 }
 
 const isDev = process.env.NODE_ENV === 'development' && process.env.VERCEL !== '1'

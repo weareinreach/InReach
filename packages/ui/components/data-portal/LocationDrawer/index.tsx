@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { Select, TextInput } from 'react-hook-form-mantine'
 
 import { type TCreateSchema, ZCreateSchema } from '@weareinreach/api/router/location/mutation.create.schema'
+import { AddressVisibility } from '@weareinreach/db/enums'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { AddressAutocomplete } from '~ui/components/data-portal/AddressAutocomplete'
@@ -13,6 +14,12 @@ import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+
+const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = [
+	{ value: AddressVisibility.FULL, label: 'Show full address' },
+	{ value: AddressVisibility.PARTIAL, label: 'Show city & state/province' },
+	{ value: AddressVisibility.HIDDEN, label: 'Hide address' },
+]
 
 export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
 	const { id: orgId } = useOrgInfo()
@@ -24,6 +31,9 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const form = useForm<TCreateSchema>({
 		resolver: zodResolver(ZCreateSchema),
+		defaultValues: {
+			addressVisibility: AddressVisibility.FULL,
+		},
 	})
 	const createLocation = api.location.create.useMutation({
 		onSuccess: () => {
@@ -61,11 +71,6 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			return drawerHandler.close()
 		}
 	}, [drawerHandler, form.formState.isDirty, modalHandler])
-	const addressVisibilityOptions: Record<'value' | 'label', string>[] = [
-		{ value: 'FULL', label: 'Show full address' },
-		{ value: 'PARTIAL', label: 'Show city & state/province' },
-		{ value: 'HIDDEN', label: 'Hide address' },
-	]
 
 	return (
 		<FormProvider {...form}>

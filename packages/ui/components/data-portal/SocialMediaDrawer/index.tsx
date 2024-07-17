@@ -152,8 +152,6 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 		useEffect(() => {
 			if (parsedUsername) {
 				const currentUsername = getValues('username')
-				console.log('parsedUsername', parsedUsername)
-				console.log('current username', currentUsername)
 				if (parsedUsername !== currentUsername) {
 					setFormValue('username', parsedUsername)
 				}
