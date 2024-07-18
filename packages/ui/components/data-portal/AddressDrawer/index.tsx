@@ -147,8 +147,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	// #region Mutation handling
 	const updateLocation = api.location.update.useMutation({
 		onSuccess: () => {
-			apiUtils.location.getAddress.invalidate(locationId ?? '')
-			apiUtils.location.forVisitCard.invalidate()
+			apiUtils.location.invalidate()
 			setIsSaved(true)
 			notifySave()
 			setTimeout(() => handler.close(), 500)
