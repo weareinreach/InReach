@@ -1,9 +1,10 @@
-import { Card, createStyles, rem, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Card, createStyles, Group, rem, Stack, Text, Title, Tooltip, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import invariant from 'tiny-invariant'
 
+import { AddressVisibility } from '@weareinreach/db/enums'
 import { Badge } from '~ui/components/core/Badge'
 import { GoogleMap } from '~ui/components/core/GoogleMap'
 import { Link } from '~ui/components/core/Link'
@@ -12,7 +13,7 @@ import { AddressDrawer } from '~ui/components/data-portal/AddressDrawer'
 import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
 import { useGoogleMapMarker } from '~ui/hooks/useGoogleMapMarker'
 import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
-import { validateIcon } from '~ui/icon'
+import { Icon, validateIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 export const VisitCard = ({ edit = false, ...props }: VisitCardProps & { edit?: boolean }) =>
@@ -171,18 +172,27 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 		return null
 	}
 
+	const addressHiddenIcon = (
+		<Tooltip label='Address is hidden' withinPortal>
+			<Icon icon='carbon:view-off' />
+		</Tooltip>
+	)
+
 	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
 			<Title order={3}>{t('address', { context: data.remote ? 'physical' : undefined })}</Title>
-			<AddressDrawer
-				locationId={locationId}
-				external
-				component={Link}
-				variant={variants.Link.inlineInverted}
-				className={classes.overlay}
-			>
-				<Text className={classes.overlayInner}>{formattedAddress}</Text>
-			</AddressDrawer>
+			<Group>
+				{data.addressVisibility === AddressVisibility.HIDDEN && addressHiddenIcon}
+				<AddressDrawer
+					locationId={locationId}
+					external
+					component={Link}
+					variant={variants.Link.inlineInverted}
+					className={classes.overlay}
+				>
+					<Text className={classes.overlayInner}>{formattedAddress}</Text>
+				</AddressDrawer>
+			</Group>
 			<GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />
 		</Stack>
 	)

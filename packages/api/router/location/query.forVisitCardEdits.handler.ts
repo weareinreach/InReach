@@ -32,7 +32,7 @@ const forVisitCardEdits = async ({ input }: TRPCHandlerParams<TForVisitCardEdits
 		if (!result) {
 			return null
 		}
-		const formattedAddress = formatAddressVisiblity(result)
+		const formattedAddress = formatAddressVisiblity(result, true)
 
 		const { attributes, ...rest } = result
 		const transformed = {
