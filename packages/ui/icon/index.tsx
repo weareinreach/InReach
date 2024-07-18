@@ -1,6 +1,6 @@
 import { Icon as Iconify, type IconifyIconHTMLElement, type IconifyIconProps } from '@iconify-icon/react'
 import { createStyles } from '@mantine/core'
-import { memo, type Ref, type SVGProps } from 'react'
+import { forwardRef, memo, type Ref, type SVGProps } from 'react'
 import { type LiteralUnion } from 'type-fest'
 
 import { iconList } from './iconList'
@@ -22,18 +22,20 @@ const useStyles = createStyles((_theme, { block, color }: IconStylesParams) => (
 	},
 }))
 
-export const Icon = memo(({ icon, block, className, ref, color, ...props }: CustomIconProps) => {
-	const { classes, cx } = useStyles({ block, color })
-	Iconify.displayName = 'Iconify'
-	return (
-		<Iconify
-			ref={ref}
-			icon={validateIcon(icon)}
-			className={`${cx(classes.root, className)} iconify-icon-root`}
-			{...props}
-		/>
-	)
-})
+export const Icon = memo(
+	forwardRef<IconifyIconHTMLElement, CustomIconProps>(({ icon, block, className, color, ...props }, ref) => {
+		const { classes, cx } = useStyles({ block, color })
+		Iconify.displayName = 'Iconify'
+		return (
+			<Iconify
+				ref={ref}
+				icon={validateIcon(icon)}
+				className={`${cx(classes.root, className)} iconify-icon-root`}
+				{...props}
+			/>
+		)
+	})
+)
 
 Icon.displayName = '@weareinreach/ui/icon'
 export type IconList = (typeof iconList)[number]
