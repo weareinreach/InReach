@@ -10,7 +10,9 @@ export const ContactSection = ({ parentId, edit }: ContactSectionProps) => {
 	const { isMobile, isTablet } = useScreenSize()
 	const { data: hasContactInfo } = api.misc.hasContactInfo.useQuery(parentId)
 
-	if (!hasContactInfo && !edit) return null
+	if (!hasContactInfo && !edit) {
+		return null
+	}
 
 	const body = (
 		<Stack spacing={isMobile ? 32 : 40}>
