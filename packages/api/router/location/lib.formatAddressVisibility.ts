@@ -1,6 +1,6 @@
 import { PrismaEnums } from '@weareinreach/db'
 
-export const formatAddressVisiblity = (location: ProvidedAddress) => {
+export const formatAddressVisiblity = (location: ProvidedAddress, isEditMode = false) => {
 	const address: ReformattedAddress = {
 		street1: location.street1,
 		street2: location.street2,
@@ -23,11 +23,13 @@ export const formatAddressVisiblity = (location: ProvidedAddress) => {
 		default: {
 			address.street1 = null
 			address.street2 = null
-			address.city = null
 			address.postCode = null
-			address.govDist = null
 			address.latitude = null
 			address.longitude = null
+			if (!isEditMode) {
+				address.city = null
+				address.govDist = null
+			}
 			return address
 		}
 	}
