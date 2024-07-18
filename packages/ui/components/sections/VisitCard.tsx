@@ -109,6 +109,9 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 			</Stack> */}
 		</Stack>
 	)
+	if (!formattedAddress && !data.hasHours) {
+		return null
+	}
 
 	return isTablet ? body : <Card>{body}</Card>
 }

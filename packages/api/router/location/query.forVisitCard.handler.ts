@@ -29,17 +29,19 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 				latitude: true,
 				longitude: true,
 				addressVisibility: true,
+				hours: { where: { active: true }, select: { id: true } },
 			},
 		})
 		if (!result) {
 			return null
 		}
-		const { attributes, ...rest } = result
+		const { attributes, hours, ...rest } = result
 		const transformed = {
 			...rest,
 			...formatAddressVisiblity(rest),
 			remote: attributes.find(({ attribute }) => attribute.tsKey === 'additional.offers-remote-services')
 				?.attribute,
+			hasHours: hours.length > 0,
 		}
 		return transformed
 	} catch (err) {

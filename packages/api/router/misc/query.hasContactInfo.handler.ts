@@ -74,8 +74,8 @@ const whereId = (
 					locations: { some: { location: { id: input, ...isPublic } } },
 					...isPublic,
 				},
-				socialMedia: { locations: { every: { location: { id: input, ...isPublic } } }, ...isPublic },
-				website: { locations: { every: { location: { id: input, ...isPublic } } }, ...isPublic },
+				socialMedia: { locations: { some: { location: { id: input, ...isPublic } } }, ...isPublic },
+				website: { locations: { some: { location: { id: input, ...isPublic } } }, ...isPublic },
 			}
 		}
 		case isIdFor('orgService', input): {
@@ -120,7 +120,10 @@ const hasContactInfo = async ({ input }: TRPCHandlerParams<THasContactInfoSchema
 				? prisma.orgWebsite.count({ where: whereId(input, isSingleLoc).website })
 				: 0,
 		])
-		return email + phone + socialMedia + website !== 0 // ? 'true' : 'false'
+
+		const totalCount = email + phone + socialMedia + website
+
+		return totalCount !== 0
 	} catch (error) {
 		return handleError(error)
 	}
