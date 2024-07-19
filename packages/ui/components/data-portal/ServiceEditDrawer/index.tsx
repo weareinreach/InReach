@@ -171,7 +171,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 	({ serviceId: passedServiceId, createNew, ...props }, ref) => {
 		const { id: organizationId } = useOrgInfo()
 		const router = useRouter()
-		const [serviceId, _setServiceId] = useState(passedServiceId ?? generateId('orgService'))
+		const serviceId = useMemo(() => passedServiceId ?? generateId('orgService'), [passedServiceId])
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
@@ -244,7 +244,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		const serviceUpsert = api.service.upsert.useMutation({
 			onSuccess: () => {
 				notifySave()
-				apiUtils.location.forLocationPageEdits.invalidate()
+				apiUtils.location.invalidate()
 				apiUtils.service.invalidate()
 				if (isNew) {
 					apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
