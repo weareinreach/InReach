@@ -31,8 +31,7 @@ export const FormSchema = z.object({
 				.partial(),
 			services: z.string().array(),
 		})
-		.partial()
-		.required({ addressVisibility: true }),
+		.partial(),
 })
 export type FormSchema = z.infer<typeof FormSchema>
 export const schemaTransform = ({ id, data }: FormSchema) => ({
