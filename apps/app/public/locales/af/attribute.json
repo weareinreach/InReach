@@ -6,10 +6,10 @@
 		"geo-public-transit-description": "Openbare vervoer/spesifieke aanwysings",
 		"has-confidentiality-policy": "Het 'n vertroulikheidsbeleid",
 		"offers-remote-services": "Afgeleë",
-		"private-practice": "Private Practice",
+		"private-practice": "Privaat praktyk",
 		"religiously-affiliated": "Is godsdienstig geaffilieer",
 		"time-walk-in": "Het inloop-ure",
-		"wheelchair-accessible": "Accessible",
+		"wheelchair-accessible": "Toeganklik",
 		"wheelchair-accessible_false": "Nie toeganklik nie",
 		"wheelchair-accessible_true": "Toeganklik"
 	},
@@ -27,7 +27,7 @@
 		"asexual": "Geleenthede wat die ongeslagtelike gemeenskap dien",
 		"asia-immigrant": "Geleenthede wat diegene uit Asiatiese lande dien",
 		"asylee": "Geleenthede wat Asylees dien (diegene wat asielstatus gekry het)",
-		"asylum-seeker": "Opportunities that serve Asylum seekers from {{country}}",
+		"asylum-seeker": "Geleenthede wat asielsoekers van {{country}}bedien",
 		"bipoc": "Geleenthede wat swart, inheemse en kleurlinge dien",
 		"bisexual": "Geleenthede wat die biseksuele gemeenskap dien",
 		"black": "Geleenthede wat die Swart Gemeenskap dien",
@@ -67,19 +67,25 @@
 		"undocumented": "Geleenthede wat ongedokumenteerde immigrante bedien"
 	},
 	"cost": {
-		"CATEGORYNAME": "Cost",
+		"CATEGORYNAME": "Koste",
+		"cost-accepts-insurance": "Hierdie diens aanvaar versekering",
+		"cost-accepts-insurance_default": "Hierdie diens aanvaar versekering. Kontak die organisasie direk vir meer inligting oor koste, finansiële bystandopsies en versekeringsdekkingbesonderhede.",
+		"cost-accepts-insurance_withUrl": "Hierdie diens aanvaar versekering. <Link href=\"{{url}}\">Klik hier om die organisasie se bladsy</Link> te besoek vir meer inligting oor koste, finansiële bystandopsies en versekeringsdekkingbesonderhede.",
 		"cost-fees": "Gaan 'n koste aan",
-		"cost-free": "Vry van koste"
+		"cost-free": "Vry van koste",
+		"cost-sliding-scale": "Koste word op 'n glyskaal bepaal",
+		"cost-sliding-scale_default": "Hierdie diens het glyskaalfooie. Die bedrag wat jy vir dienste betaal, word aangepas volgens jou inkomstevlak. Kontak die organisasie direk vir meer inligting.",
+		"cost-sliding-scale_withUrl": "Hierdie diens het glyskaalfooie. Die bedrag wat jy vir dienste betaal, word aangepas volgens jou inkomstevlak. <Link href=\"{{url}}\">Klik hier om die organisasie se bladsy vir meer inligting te besoek.</Link>"
 	},
 	"crisis-support-community": {
-		"elders": "Elders",
-		"general-lgbtq": "General LGBTQ+"
+		"elders": "Ouderlinge",
+		"general-lgbtq": "Algemene LGBTQ+"
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Geskiktheidsvereistes",
-		"elig-age": "Age eligibility",
-		"elig-age_max": "Under {{max}}",
-		"elig-age_min": "{{min}} and older",
+		"elig-age": "Ouderdom geskiktheid",
+		"elig-age_max": "Onder {{max}}",
+		"elig-age_min": "{{min}} en ouer",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Ander (vrye teks beskrywing)",
 		"req-medical-insurance": "VEREIS mediese versekering",
@@ -91,7 +97,7 @@
 		"time-appointment-required": "Tyd Aanstelling Vereiste"
 	},
 	"lang": {
-		"CATEGORYNAME": "Languages",
+		"CATEGORYNAME": "Tale",
 		"all-languages-by-interpreter": "Alle tale via tolk",
 		"american-sign-language": "Amerikaanse gebaretaal",
 		"lang-offered": "Spesifieke tale aangebied"
@@ -101,6 +107,7 @@
 		"bipoc-led": "Bipoc-gelei",
 		"black-led": "Swart-gelei",
 		"immigrant-led": "Immigrant-gelei",
+		"lgbtq-led": "LGBTQ+ gelei",
 		"trans-led": "Transgender-gelei",
 		"women-led": "Vroue-gelei"
 	},
@@ -112,9 +119,9 @@
 		"accesslocation": "Toegangsinstruksies - Ligging",
 		"accessphone": "Toegangsinstruksies - telefoon",
 		"accesspublictransit": "Toegangsinstruksies - Openbare vervoer",
-		"accesssms": "Access Instructions - SMS",
+		"accesssms": "Toegangsinstruksies - SMS",
 		"accesstext": "Toegangsinstruksies - teks",
-		"accesswhatsapp": "Access Instructions - WhatsApp"
+		"accesswhatsapp": "Toegangsinstruksies - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Diens Fokus",
@@ -141,7 +148,7 @@
 		"incompatible-info": "Onverenigbare inligting"
 	},
 	"tpop": {
-		"other": "Target Population - Other"
+		"other": "Teikenbevolking - Ander"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Regspraktyk Opsies",
@@ -159,7 +166,7 @@
 		"grassroots-direct": "Grassroots Direkte Diens Organisasie",
 		"healthcare": "Gesondheidsorgverskaffer",
 		"lawyer": "prokureur",
-		"other": "Other (please specify)",
+		"other": "Ander (spesifiseer asseblief)",
 		"paralegal": "Paralegal of ander regsondersteuningspersoneel",
 		"social-worker": "Maatskaplike werker",
 		"student-club": "Studenteklubleier/administrateur",

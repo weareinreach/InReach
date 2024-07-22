@@ -1,7 +1,7 @@
 {
 	"about-us": "私たちについて",
 	"access": {
-		"sms-with-body": "<strong>{{body}}</strong> を {{code}} にテキスト"
+		"sms-with-body": "<strong>{{body}}</strong> を {{code}} にメッセージ"
 	},
 	"account": "アカウント",
 	"add": "{{item}}を追加",
@@ -15,9 +15,6 @@
 	"alert-message-1": "<strong>COVID-19 ポリシー:</strong> COVID-19 予防に関するニュースや最適な予防方法は日々急速に変化するため、Whitman-Walker Health は予防に関する推奨事項を反映するようにサービスを更新し続けています。最新情報については、ウェブサイトをご確認ください。",
 	"alert-message-instructions": "警告メッセージを入力してください",
 	"alert-title-instructions": "メッセージのタイトルを入力してください...",
-	"alerts": {
-		"search-page-legislative-map": "この <ATLink>反トランスジェンダー法リスクマップ</ATLink> は、全50州およびワシントンD.C.における反トランスジェンダー法への2年間のリスクを示しています。"
-	},
 	"all-service-category": "すべて {{serviceCategory}}",
 	"anti-hate": {
 		"body": "InReachを使用することにより、このリソース情報を危害、憎悪、同性愛嫌悪、トランスジェンダー嫌悪、外国人嫌悪、および/または人種差別的な目的や批評に使用しないことに同意したものとみなされます。",
@@ -30,10 +27,10 @@
 		"claimed-tool-tip": "<link1>この組織は確認済みの代理人によって申し立てられています。 <link1>もっと詳しく.</link1>",
 		"community-tool-tip": "この組織がサービスを提供するコミュニティ。",
 		"national-tool-tip": "{{country}} 全域でサービスを提供しています。",
-		"privatePractice": "プライベート練習",
+		"privatePractice": "個人的な練習",
 		"remote-tool-tip": "リモートで利用可能",
 		"service-tool-tip": "この組織が提供するサービス。",
-		"unclaimed": "未請求",
+		"unclaimed": "請求未済",
 		"unclaimed-tool-tip": "この組織はまだ代表者による申請を受けていません。<br/><link1>この組織に申請して</link1> コミュニティとの信頼関係を築き、自分の情報を更新するなどしてください。",
 		"verified-information": "認証済み情報",
 		"verified-information-detail": "このページの最終更新日は {{dateString}}です。inReachは正確性とユーザーの安全を優先し、すべての情報を定期的に更新しています。当社の審査プロセスの詳細については、InReach.orgの該当ページをご覧ください。",
@@ -115,7 +112,7 @@
 		"404-title": "404: ページが見つかりません。",
 		"500-body": "申し訳ありませんが、サーバーに問題が発生しました。 後でもう一度お試しいただくか、以下を検索して、お住まいの地域の安全で認証済みのLGBTQ+リソースを探しましょう。",
 		"500-title": "500: 問題が発生しました。",
-		"code-expired": "提供されたコードの有効期限が切れています。",
+		"code-expired": "提供されたコードの期限切れました。",
 		"code-mismatch": "入力されたコードは無効です。",
 		"oh-no": "すみません",
 		"resend-code": "新しいコードをリクエストする",
@@ -431,7 +428,7 @@
 		"prev": "前へ",
 		"print": "印刷",
 		"publish": "公開",
-		"restore": "復元",
+		"restore": "復元する",
 		"reverify": "再確認する",
 		"review": "レビュー",
 		"reviews": "レビュー",

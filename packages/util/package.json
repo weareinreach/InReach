@@ -13,16 +13,16 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@vercel/edge-config": "1.2.0",
+		"@vercel/edge-config": "1.2.1",
 		"luxon": "3.4.4",
 		"social-links": "1.14.0",
 		"superjson": "2.2.1",
 		"tslog": "4.9.3"
 	},
 	"devDependencies": {
-		"@types/eslint": "8.56.10",
+		"@types/eslint": "8.56.11",
 		"@types/luxon": "3.4.2",
-		"@types/node": "20.14.9",
+		"@types/node": "20.14.11",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.0",

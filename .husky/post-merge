@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 check_changed() {
 	if git diff HEAD^ HEAD --exit-code --quiet -- $1; then
 	echo "📦 No change to $1"

@@ -21,8 +21,10 @@ export type CreateContextOptions = {
  */
 
 export const createContextInner = (opts: CreateContextOptions) => {
+	const locale = opts.req?.cookies['NEXT_LOCALE'] ?? 'en'
 	return {
 		generateId,
+		locale,
 		session: opts.session,
 		skipCache: false,
 		req: opts.req,

@@ -14,36 +14,28 @@ const isServer = typeof window === 'undefined'
 export default createNextApiHandler({
 	createContext,
 	router: appRouter,
-	onError: ({ path, error, type }) => {
+	onError: ({ path, error, type, ctx }) => {
+		Sentry.setUser(ctx?.session?.user ?? null)
+		if (error.code !== 'NOT_FOUND') {
+			Sentry.captureException(error, (scope) => {
+				scope.setTags({
+					'tRPC.path': path,
+					'tRPC.operation': type,
+				})
+				return scope
+			})
+		}
 		switch (true) {
 			case isDev: {
-				if (error.code === 'INTERNAL_SERVER_ERROR') {
-					Sentry.captureException(error, (scope) => {
-						scope.setTags({
-							'tRPC.path': path,
-							'tRPC.operation': type,
-						})
-						return scope
-					})
-				}
 				log.error(`❌ tRPC ${type} failed on ${path}:`, error)
 				break
 			}
 			case isServer: {
-				if (error.code === 'INTERNAL_SERVER_ERROR') {
-					Sentry.captureException(error, (scope) => {
-						scope.setTags({
-							'tRPC.path': path,
-							'tRPC.operation': type,
-						})
-						return scope
-					})
-				}
 				log.error({ type, path, error })
 				break
 			}
 			default: {
-				return
+				break
 			}
 		}
 	},
@@ -59,7 +51,7 @@ export default createNextApiHandler({
 			const ONE_DAY_IN_SECONDS = 60 * 60 * 24
 			return {
 				headers: {
-					'Cache-Control': `s-maxage=1, public, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
+					'cache-control': `s-maxage=1, public, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
 				},
 			}
 		}

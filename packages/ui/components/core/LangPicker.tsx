@@ -1,7 +1,8 @@
 import { createStyles, Flex, Menu, rem, Text, UnstyledButton, type UnstyledButtonProps } from '@mantine/core'
+import { hasCookie, setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, useCallback, useMemo } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo } from 'react'
 
 import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -59,6 +60,7 @@ export const LangPicker = () => {
 		(newLocale: LocaleCodes) => () => {
 			const { pathname, asPath, query } = router
 			i18n.changeLanguage(newLocale)
+			setCookie('NEXT_LOCALE', newLocale)
 			router.replace({ pathname, query }, asPath, { locale: newLocale })
 		},
 		[i18n, router]
@@ -72,6 +74,13 @@ export const LangPicker = () => {
 			)),
 		[langHandler]
 	)
+
+	useEffect(() => {
+		if (!hasCookie('NEXT_LOCALE')) {
+			setCookie('NEXT_LOCALE', currentLanguage)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<Menu

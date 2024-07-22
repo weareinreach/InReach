@@ -79,9 +79,10 @@ export const redisReadCache = async (
 			spanExpire.end()
 		}
 		const cacheArray = Array.from(cacheResults.entries())
+		const cacheArraySize = cacheArray.length === 0 ? 0 : sizeof(cacheArray)
 
-		log.info(`Cache return: ${cacheResults.size} ${formatBytes(sizeof(cacheArray))}`)
-		span.addEvent('data return size', { size: formatBytes(sizeof(cacheArray)) })
+		log.info(`Cache return: ${cacheResults.size} ${formatBytes(cacheArraySize)}`)
+		span.addEvent('data return size', { size: formatBytes(cacheArraySize) })
 		return cacheArray
 	} finally {
 		span.end()
