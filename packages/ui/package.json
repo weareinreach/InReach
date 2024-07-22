@@ -64,7 +64,7 @@
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "1.6.1",
-		"@emotion/react": "11.12.0",
+		"@emotion/react": "11.13.0",
 		"@emotion/server": "11.11.0",
 		"@faker-js/faker": "8.4.1",
 		"@hookform/devtools": "4.3.1",
@@ -118,7 +118,7 @@
 		"@trpc/client": "10.45.2",
 		"@trpc/next": "10.45.2",
 		"@trpc/react-query": "10.45.2",
-		"@types/eslint": "8.56.10",
+		"@types/eslint": "8.56.11",
 		"@types/google.maps": "3.55.11",
 		"@types/luxon": "3.4.2",
 		"@types/node": "20.14.11",
@@ -169,13 +169,13 @@
 		"swc-loader": "0.2.6",
 		"tsconfig-paths-webpack-plugin": "4.1.0",
 		"tsx": "4.16.2",
-		"type-fest": "4.22.1",
+		"type-fest": "4.23.0",
 		"typescript": "5.5.3",
 		"webpack": "5.93.0",
 		"zod": "3.23.8"
 	},
 	"peerDependencies": {
-		"@emotion/react": "11.12.0",
+		"@emotion/react": "11.13.0",
 		"@emotion/server": "11.11.0",
 		"@hookform/error-message": "2.0.1",
 		"@hookform/resolvers": "3.9.0",
