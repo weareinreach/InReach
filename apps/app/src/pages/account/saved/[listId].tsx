@@ -24,7 +24,11 @@ import { z } from 'zod'
 
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
-import { type Organization, SavedResultCard } from '@weareinreach/ui/components/core/SavedResultCard'
+import {
+	type Organization,
+	SavedResultCard,
+	type Service,
+} from '@weareinreach/ui/components/core/SavedResultCard'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { QuickPromotionModal } from '@weareinreach/ui/modals'
@@ -64,8 +68,13 @@ const SavedLists = () => {
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
 	const { data: queryResult } = api.savedList.getById.useQuery({ id: listId ?? '' }, { enabled: !!listId })
 	const [organizations, setOrganizations] = useState<Organization[]>()
+	const [services, setServices] = useState<Service[]>()
 
-	const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
+	const [organizationDisplay, setOrginizationDisplay] = useState<JSX.Element[]>(
+		Array.from({ length: 10 }, (_x, i) => <SavedResultCard key={i} loading />)
+	)
+
+	const [serviceDisplay, setServiceDisplay] = useState<JSX.Element[]>(
 		Array.from({ length: 10 }, (_x, i) => <SavedResultCard key={i} loading />)
 	)
 
@@ -76,7 +85,7 @@ const SavedLists = () => {
 		if (queryResult?._count.organizations) {
 			// setResultCount(searchQuery?._count.organizations)
 			setOrganizations(
-				queryResult?.organizations?.map((org) => ({
+				queryResult?.organizations?.map((org: ApiOutput['savedList']['getById']['organizations'][0]) => ({
 					id: org.organization.id,
 					slug: org.organization.slug,
 					name: org.organization.name,
@@ -90,13 +99,37 @@ const SavedLists = () => {
 			)
 			// setLoadingPage(false)
 		}
+
+		if (queryResult?._count.services) {
+			setServices(
+				queryResult?.services?.map((service: ApiOutput['savedList']['getById']['services'][0]) => ({
+					id: service.service.id,
+					slug: 'service.service.slug',
+					name: service.service.serviceName.tsKey.text,
+					description: service.service.description,
+				})) ?? []
+			)
+			// setLoadingPage(false)
+		}
 	}, [queryResult])
 
 	useEffect(() => {
 		if (organizations) {
-			setResultDisplay(
+			setOrginizationDisplay(
 				organizations.map((result) => {
 					return <SavedResultCard key={result.description?.tsKey.key} result={result} loading={false} />
+				})
+			)
+		}
+	}, [organizations])
+
+	useEffect(() => {
+		if (services) {
+			setServiceDisplay(
+				services?.map((result) => {
+					return (
+						<SavedResultCard key={result.description?.tsKey?.key ?? ''} result={result} loading={false} />
+					)
 				})
 			)
 		}
@@ -145,10 +178,10 @@ const SavedLists = () => {
 							<Tabs.Tab value='services'>Services</Tabs.Tab>
 						</Tabs.List>
 						<Tabs.Panel value='organizations' pt='xs'>
-							{activeTab === 'organizations' && resultDisplay}
+							{activeTab === 'organizations' && organizationDisplay}
 						</Tabs.Panel>
 						<Tabs.Panel value='services' pt='xs'>
-							{activeTab === 'services' && resultDisplay}
+							{activeTab === 'services' && serviceDisplay}
 						</Tabs.Panel>
 					</Tabs>
 				</Stack>

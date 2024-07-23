@@ -39,29 +39,29 @@ const getById = async ({
 			_count: {
 				select: {
 					organizations: true,
-					// services: true,
+					services: true,
 				},
 			},
 			updatedAt: true,
 			organizations: {
 				select: orgSelect,
 			},
-			// services: {
-			// 	select: {
-			// 		service: {
-			// 			select: {
-			// 				id: true,
-			// 				serviceName: {
-			// 					select: { tsKey: { select: { key: true, ns: true, text: true } } },
-			// 				},
-			// 				...orgSelect,
-			// 				description: {
-			// 					select: { tsKey: { select: { key: true, ns: true, text: true } } },
-			// 				},
-			// 			},
-			// 		},
-			// 	},
-			// },
+			services: {
+				select: {
+					service: {
+						select: {
+							id: true,
+							serviceName: {
+								select: { tsKey: { select: { key: true, ns: true, text: true } } },
+							},
+							// ...orgSelect,
+							description: {
+								select: { tsKey: { select: { key: true, ns: true, text: true } } },
+							},
+						},
+					},
+				},
+			},
 		},
 	})
 
@@ -76,9 +76,7 @@ const getById = async ({
 		_count: list._count,
 		updatedAt: list.updatedAt,
 		organizations: list.organizations,
-		// services: list.services.map(({ service }) => ({
-		// 	...service,
-		// })),
+		services: list.services,
 	}
 
 	return ZGetByIdResponseSchema.parse(reformattedData) // Validate the result with Zod schema

@@ -14,24 +14,28 @@ const tsKeySchema = z.object({
 	text: z.string(),
 })
 
-export const organizationSchema = z.object({
-	id: z.string(),
-	slug: z.string(),
-	name: z.string(),
-	description: z.object({ tsKey: tsKeySchema }).nullable(),
-	// locations: z.array(z.string()),
-	// orgLeader: z.array(z.string()),
-	// orgFocus: z.array(z.string()),
-	// serviceCategories: z.array(z.string()),
-	// national: z.array(z.string()),
-})
+export const organizationSchema = z
+	.object({
+		id: z.string(),
+		slug: z.string(),
+		name: z.string(),
+		description: z.object({ tsKey: tsKeySchema }).nullable(),
+		// locations: z.array(z.string()),
+		// orgLeader: z.array(z.string()),
+		// orgFocus: z.array(z.string()),
+		// serviceCategories: z.array(z.string()),
+		// national: z.array(z.string()),
+	})
+	.optional()
 
-const serviceSchema = z.object({
-	id: z.string(),
-	serviceName: z.object({ tsKey: tsKeySchema }).nullable(),
-	description: z.object({ tsKey: tsKeySchema }).nullable(),
-	organization: organizationSchema.nullable(),
-})
+const serviceSchema = z
+	.object({
+		id: z.string(),
+		serviceName: z.object({ tsKey: tsKeySchema }).nullable(),
+		description: z.object({ tsKey: tsKeySchema }).nullable(),
+		// organization: organizationSchema.nullable(),
+	})
+	.optional()
 
 export const ZGetByIdResponseSchema = z.object({
 	id: z.string(),
@@ -39,10 +43,10 @@ export const ZGetByIdResponseSchema = z.object({
 	updatedAt: z.date(),
 	_count: z.object({
 		organizations: z.number(),
-		// services: z.number(),
+		services: z.number(),
 	}),
-	organizations: z.array(z.object({ organization: organizationSchema })),
-	// services: z.array(z.object({ service: serviceSchema })),
+	organizations: z.array(z.object({ organization: organizationSchema }).optional()).optional(),
+	services: z.array(z.object({ service: serviceSchema }).optional()).optional(),
 })
 
 export type TGetByIdResponseSchema = z.infer<typeof ZGetByIdResponseSchema>

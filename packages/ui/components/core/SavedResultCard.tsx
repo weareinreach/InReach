@@ -30,7 +30,8 @@ export interface Organization {
 
 export interface Service {
 	id: string
-	serviceName: { tsKey: TsKey } | null
+	slug: string
+	name: { tsKey: TsKey } | null
 	description: { tsKey: TsKey } | null
 	organization: Organization | null
 }
@@ -53,7 +54,7 @@ export interface SavedResultLoading {
 
 export interface SavedResultHasData {
 	loading?: false
-	result: Organization
+	result: Organization | Service
 }
 
 export type SavedResultCardProps = SavedResultHasData | SavedResultLoading
