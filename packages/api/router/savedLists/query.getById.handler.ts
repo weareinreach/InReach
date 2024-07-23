@@ -1,40 +1,36 @@
 import { prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TGetByIdSchema } from './query.getById.schema'
-import { type ApiOutput } from '../..'
+import {
+	type TGetByIdInputSchema,
+	type TGetByIdResponseSchema,
+	ZGetByIdInputSchema,
+	ZGetByIdResponseSchema,
+} from './query.getById.schema'
 
 const orgSelect = {
 	organization: {
 		select: {
+			id: true,
 			slug: true,
 			name: true,
-			description: {
-				select: { tsKey: { select: { key: true, ns: true, text: true } } },
-			},
+			description: { select: { tsKey: { select: { key: true, ns: true, text: true } } } },
+			// locations: true,
+			// orgLeader: true,
+			// orgFocus: true,
+			// serviceCategories: true,
+			// national: true,
 		},
 	},
-}
-
-type SearchResultCardProps = SearchResultHasData | SearchResultLoading
-
-type SearchResultHasData = {
-	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
-	loading?: boolean
-}
-
-type SearchResultLoading = {
-	loading: true
-	result?: never
 }
 
 const getById = async ({
 	ctx,
 	input,
-}: TRPCHandlerParams<TGetByIdSchema, 'protected'>): Promise<SearchResultCardProps> => {
+}: TRPCHandlerParams<TGetByIdInputSchema, 'protected'>): Promise<TGetByIdResponseSchema> => {
 	const list = await prisma.userSavedList.findFirst({
 		where: {
-			id: input.id,
+			id: input?.id ?? '',
 			OR: [{ ownedById: ctx.session.user.id }, { sharedWith: { some: { userId: ctx.session.user.id } } }],
 		},
 		select: {
@@ -43,36 +39,49 @@ const getById = async ({
 			_count: {
 				select: {
 					organizations: true,
-					services: true,
+					// services: true,
 				},
 			},
+			updatedAt: true,
 			organizations: {
 				select: orgSelect,
 			},
-			services: {
-				select: {
-					service: {
-						select: {
-							id: true,
-							serviceName: {
-								select: { tsKey: { select: { key: true, ns: true, text: true } } },
-							},
-							...orgSelect,
-							description: {
-								select: { tsKey: { select: { key: true, ns: true, text: true } } },
-							},
-						},
-					},
-				},
-			},
+			// services: {
+			// 	select: {
+			// 		service: {
+			// 			select: {
+			// 				id: true,
+			// 				serviceName: {
+			// 					select: { tsKey: { select: { key: true, ns: true, text: true } } },
+			// 				},
+			// 				...orgSelect,
+			// 				description: {
+			// 					select: { tsKey: { select: { key: true, ns: true, text: true } } },
+			// 				},
+			// 			},
+			// 		},
+			// 	},
+			// },
 		},
 	})
 
 	if (!list) {
-		return { loading: true }
+		// throw new Error('List not found')
+		return ZGetByIdResponseSchema.parse({})
 	}
 
-	return { result: list, loading: false }
+	const reformattedData = {
+		id: list.id,
+		name: list.name,
+		_count: list._count,
+		updatedAt: list.updatedAt,
+		organizations: list.organizations,
+		// services: list.services.map(({ service }) => ({
+		// 	...service,
+		// })),
+	}
+
+	return ZGetByIdResponseSchema.parse(reformattedData) // Validate the result with Zod schema
 }
 
 export default getById

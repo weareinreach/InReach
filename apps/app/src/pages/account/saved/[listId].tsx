@@ -1,43 +1,108 @@
-import { Center, Grid, Loader, Overlay, Stack, Text, Title } from '@mantine/core'
+import {
+	Button,
+	Center,
+	Container,
+	Divider,
+	Grid,
+	Group,
+	Loader,
+	Overlay,
+	Paper,
+	Stack,
+	Tabs,
+	Text,
+	Title,
+} from '@mantine/core'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
-import { type JSX, memo, useEffect, useMemo, useState } from 'react'
+import { type JSX, useEffect, useState } from 'react'
+import { z } from 'zod'
 
+import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
-import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
+import { type Organization, SavedResultCard } from '@weareinreach/ui/components/core/SavedResultCard'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { QuickPromotionModal } from '@weareinreach/ui/modals'
+import { Icon } from '~ui/icon'
 
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
 )
+
+const formatDate = (dateString: Date) => {
+	const date = new Date(dateString)
+	const daySuffix = (d: number) => {
+		if (d > 3 && d < 21) return 'th'
+		switch (d % 10) {
+			case 1:
+				return 'st'
+			case 2:
+				return 'nd'
+			case 3:
+				return 'rd'
+			default:
+				return 'th'
+		}
+	}
+	const day = date.getDate()
+	const dayWithSuffix = day + daySuffix(day)
+	const formattedDate = `${date.toLocaleDateString('en-US', { weekday: 'short' })}, ${date.toLocaleDateString('en-US', { month: 'long' })} ${dayWithSuffix}, ${date.getFullYear()}`
+	return formattedDate
+}
+
 const SavedLists = () => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
 	const router = useRouter<'/account/saved/[listId]'>()
 	const { listId } = router.query
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
-	const { data } = api.savedList.getById.useQuery({ id: listId ?? '' }, { enabled: !!listId })
+	const { data: queryResult } = api.savedList.getById.useQuery({ id: listId ?? '' }, { enabled: !!listId })
+	const [organizations, setOrganizations] = useState<Organization[]>()
 
-	// const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
-	// 	Array.from({ length: 10 }, (_x, i) => <SearchResultCard key={i} loading />)
-	// )
+	const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
+		Array.from({ length: 10 }, (_x, i) => <SavedResultCard key={i} loading />)
+	)
 
-	// useEffect(() => {
-	// 	if (data) {
-	// 		setResultDisplay(
-	// 			data.organizations.map((result) => {
-	// 				return <SearchResultCard key={result.description.id} result={result} loading={false} />
-	// 			})
-	// 		)
-	// 	}
-	// }, [data])
+	useEffect(() => {
+		// if (loadingPage !== searchIsLoading) {
+		// 	setLoadingPage(searchIsLoading)
+		// }
+		if (queryResult?._count.organizations) {
+			// setResultCount(searchQuery?._count.organizations)
+			setOrganizations(
+				queryResult?.organizations?.map((org) => ({
+					id: org.organization.id,
+					slug: org.organization.slug,
+					name: org.organization.name,
+					description: org.organization.description,
+					// locations: org.organization.locations,
+					// orgLeader: org.organization.orgLeader,
+					// orgFocus: org.organization.orgFocus,
+					// serviceCategories: org.organization.serviceCategories,
+					// national: org.organization.national,
+				})) ?? []
+			)
+			// setLoadingPage(false)
+		}
+	}, [queryResult])
+
+	useEffect(() => {
+		if (organizations) {
+			setResultDisplay(
+				organizations.map((result) => {
+					return <SavedResultCard key={result.description?.tsKey.key} result={result} loading={false} />
+				})
+			)
+		}
+	}, [organizations])
+
+	const [activeTab, setActiveTab] = useState('organizations')
 
 	if (status === 'loading') {
 		return (
@@ -54,13 +119,41 @@ const SavedLists = () => {
 		)
 	}
 
+	const handleTabChange = (tab: string) => {
+		setActiveTab(tab)
+	}
+
 	return (
-		<Grid.Col xs={12} sm={12}>
-			<Stack h='100vh' align='flex-start' w='100%'>
-				<Title order={2}>We're showing stuff for list id: {listId}</Title>
-				<pre>{JSON.stringify(data, null, 2)}</pre>
-			</Stack>
-		</Grid.Col>
+		queryResult && (
+			<Container size='lg' px='md' py='lg'>
+				<Stack spacing='lg'>
+					<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={() => router.back()}>
+						<Icon icon='carbon:arrow-left' />
+						<Text>Back to Saved</Text>
+					</Group>
+
+					<Stack mt='md' mb='md'>
+						<Title order={2}>{queryResult.name ?? ''}</Title>
+						<Text>
+							Updated {formatDate(queryResult.updatedAt)} &#8226; {queryResult._count.organizations} resources
+						</Text>
+					</Stack>
+
+					<Tabs defaultValue={'organizations'} onTabChange={handleTabChange}>
+						<Tabs.List>
+							<Tabs.Tab value='organizations'>Organizations</Tabs.Tab>
+							<Tabs.Tab value='services'>Services</Tabs.Tab>
+						</Tabs.List>
+						<Tabs.Panel value='organizations' pt='xs'>
+							{activeTab === 'organizations' && resultDisplay}
+						</Tabs.Panel>
+						<Tabs.Panel value='services' pt='xs'>
+							{activeTab === 'services' && resultDisplay}
+						</Tabs.Panel>
+					</Tabs>
+				</Stack>
+			</Container>
+		)
 	)
 }
 
