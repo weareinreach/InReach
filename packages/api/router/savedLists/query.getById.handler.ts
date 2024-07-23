@@ -1,12 +1,7 @@
 import { prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import {
-	type TGetByIdInputSchema,
-	type TGetByIdResponseSchema,
-	ZGetByIdInputSchema,
-	ZGetByIdResponseSchema,
-} from './query.getById.schema'
+import { type TGetByIdInputSchema } from './query.getById.schema'
 
 const orgSelect = {
 	organization: {
@@ -24,10 +19,7 @@ const orgSelect = {
 	},
 }
 
-const getById = async ({
-	ctx,
-	input,
-}: TRPCHandlerParams<TGetByIdInputSchema, 'protected'>): Promise<TGetByIdResponseSchema> => {
+const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'protected'>) => {
 	const list = await prisma.userSavedList.findFirst({
 		where: {
 			id: input?.id ?? '',
@@ -64,22 +56,33 @@ const getById = async ({
 			},
 		},
 	})
-
 	if (!list) {
-		// throw new Error('List not found')
-		return ZGetByIdResponseSchema.parse({})
+		return null
 	}
+
+	const { services, organizations, ...rest } = list
 
 	const reformattedData = {
-		id: list.id,
-		name: list.name,
-		_count: list._count,
-		updatedAt: list.updatedAt,
-		organizations: list.organizations,
-		services: list.services,
+		...rest,
+		organizations: organizations.map(({ organization: { description, ...org } }) => ({
+			...org,
+			description: {
+				key: description?.tsKey.key,
+				ns: description?.tsKey.ns,
+				defaultText: description?.tsKey.text,
+			},
+		})),
+		services: services.map(({ service: { description, ...svc } }) => ({
+			...svc,
+			description: {
+				key: description?.tsKey.key,
+				ns: description?.tsKey.ns,
+				defaultText: description?.tsKey.text,
+			},
+		})),
 	}
 
-	return ZGetByIdResponseSchema.parse(reformattedData) // Validate the result with Zod schema
+	return reformattedData
 }
 
 export default getById
