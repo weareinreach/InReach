@@ -3,22 +3,6 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetByIdInputSchema } from './query.getById.schema'
 
-const orgSelect = {
-	organization: {
-		select: {
-			id: true,
-			slug: true,
-			name: true,
-			description: { select: { tsKey: { select: { key: true, ns: true, text: true } } } },
-			// locations: true,
-			// orgLeader: true,
-			// orgFocus: true,
-			// serviceCategories: true,
-			// national: true,
-		},
-	},
-}
-
 const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'protected'>) => {
 	const list = await prisma.userSavedList.findFirst({
 		where: {
@@ -36,7 +20,21 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 			},
 			updatedAt: true,
 			organizations: {
-				select: orgSelect,
+				select: {
+					organization: {
+						select: {
+							id: true,
+							slug: true,
+							name: true,
+							description: { select: { tsKey: { select: { key: true, ns: true, text: true } } } },
+							// locations: true,
+							// orgLeader: true,
+							// orgFocus: true,
+							// serviceCategories: true,
+							// national: true,
+						},
+					},
+				},
 			},
 			services: {
 				select: {
@@ -69,15 +67,22 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 			description: {
 				key: description?.tsKey.key,
 				ns: description?.tsKey.ns,
-				defaultText: description?.tsKey.text,
+				defaultText: description?.tsKey.text ?? '',
 			},
 		})),
-		services: services.map(({ service: { description, ...svc } }) => ({
+		services: services.map(({ service: { description, id, serviceName, ...svc } }) => ({
 			...svc,
+			id,
+			slug: id,
+			name: {
+				key: serviceName?.tsKey.key,
+				ns: serviceName?.tsKey.ns,
+				defaultText: serviceName?.tsKey.text ?? '',
+			},
 			description: {
 				key: description?.tsKey.key,
 				ns: description?.tsKey.ns,
-				defaultText: description?.tsKey.text,
+				defaultText: description?.tsKey.text ?? '',
 			},
 		})),
 	}
