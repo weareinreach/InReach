@@ -68,14 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Pri",
-		"cost-accepts-insurance": "This service accepts insurance",
-		"cost-accepts-insurance_default": "This service accepts insurance. Contact the organization directly for more information on cost, financial assistance options and insurance coverage details.",
-		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
+		"cost-accepts-insurance": "Sevis sa a aksepte asirans",
+		"cost-accepts-insurance_default": "Sevis sa a aksepte asirans. Kontakte òganizasyon an dirèkteman pou plis enfòmasyon sou pri, opsyon asistans finansye ak detay sou kouvèti asirans.",
+		"cost-accepts-insurance_withUrl": "Sevis sa a aksepte asirans. <Link href=\"{{url}}\">Klike la pou vizite paj òganizasyon an</Link> pou plis enfòmasyon sou pri, opsyon asistans finansye ak detay sou kouvèti asirans.",
 		"cost-fees": "Bay yon pri",
 		"cost-free": "Gratis nan pri",
-		"cost-sliding-scale": "Costs determined on a sliding scale",
-		"cost-sliding-scale_default": "This service has sliding scale fees. The amount you pay for services is adjusted according to your income level. Contact the organization directly for more information.",
-		"cost-sliding-scale_withUrl": "This service has sliding scale fees. The amount you pay for services is adjusted according to your income level. <Link href=\"{{url}}\">Click here to visit the organization's page for more information.</Link>"
+		"cost-sliding-scale": "Pri yo detèmine sou yon echèl glisman",
+		"cost-sliding-scale_default": "Sevis sa a gen frè selon yon echèl glisman. Kantite lajan ou peye pou sèvis yo ajiste selon nivo revni ou. Kontakte òganizasyon an dirèkteman pou plis enfòmasyon.",
+		"cost-sliding-scale_withUrl": "Sevis sa a gen frè selon yon echèl glisman. Kantite lajan ou peye pou sèvis yo ajiste selon nivo revni ou. <Link href=\"{{url}}\">Klike la pou vizite paj òganizasyon an pou plis enfòmasyon.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "Granmoun yo",
@@ -83,7 +83,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Kondisyon pou Kalifikasyon",
-		"elig-age": "Age eligibility",
+		"elig-age": "Kondisyon laj",
 		"elig-age_max": "Anba {{max}}",
 		"elig-age_min": "{{min}} ak plis",
 		"elig-age_range": "{{min}} - {{max}}",
@@ -107,7 +107,7 @@
 		"bipoc-led": "Dirije pa BIPOC",
 		"black-led": "Nwa-dirije",
 		"immigrant-led": "Imigran dirije",
-		"lgbtq-led": "LGBTQ+ Led",
+		"lgbtq-led": "Dirije pa LGBTQ+",
 		"trans-led": "Dirije pa transèksyèl",
 		"women-led": "Dirije pa Fanm"
 	},
@@ -148,7 +148,7 @@
 		"incompatible-info": "Enfòmasyon enkonpatib"
 	},
 	"tpop": {
-		"other": "Target Population - Other"
+		"other": "Popilasyon Sib - Lòt"
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Opsyon Pratike Lalwa",
