@@ -54,7 +54,7 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 							serviceName: {
 								select: { tsKey: { select: { key: true, ns: true, text: true } } },
 							},
-							// ...orgSelect,
+							organization: { select: { slug: true } },
 							description: {
 								select: { tsKey: { select: { key: true, ns: true, text: true } } },
 							},
