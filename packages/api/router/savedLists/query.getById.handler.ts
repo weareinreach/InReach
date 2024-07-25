@@ -27,11 +27,21 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 							slug: true,
 							name: true,
 							description: { select: { tsKey: { select: { key: true, ns: true, text: true } } } },
-							// locations: true,
-							// orgLeader: true,
-							// orgFocus: true,
-							// serviceCategories: true,
-							// national: true,
+							attributes: {
+								where: {
+									active: true,
+									attribute: {
+										active: true,
+										parents: { none: {} },
+										categories: {
+											some: {
+												category: { OR: [{ tag: 'organization-leadership' }, { tag: 'service-focus' }] },
+											},
+										},
+									},
+								},
+								select: { attribute: { select: { icon: true, iconBg: true, tsKey: true, tsNs: true } } },
+							},
 						},
 					},
 				},
@@ -62,14 +72,25 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 
 	const reformattedData = {
 		...rest,
-		organizations: organizations.map(({ organization: { description, ...org } }) => ({
-			...org,
-			description: {
-				key: description?.tsKey.key,
-				ns: description?.tsKey.ns,
-				defaultText: description?.tsKey.text ?? '',
-			},
-		})),
+		organizations: organizations.map(({ organization: { description, attributes, ...org } }) => {
+			const leaderBadges = attributes
+				.filter(({ attribute: { tsKey } }) => tsKey.startsWith('orgleader.'))
+				.map(({ attribute }) => attribute)
+			const communityBadges = attributes
+				.filter(({ attribute: { tsKey } }) => tsKey.startsWith('srvfocus.'))
+				.map(({ attribute }) => attribute)
+
+			return {
+				...org,
+				leaderBadges,
+				communityBadges,
+				description: {
+					key: description?.tsKey.key,
+					ns: description?.tsKey.ns,
+					defaultText: description?.tsKey.text ?? '',
+				},
+			}
+		}),
 		services: services.map(({ service: { description, id, serviceName, ...svc } }) => ({
 			...svc,
 			id,
