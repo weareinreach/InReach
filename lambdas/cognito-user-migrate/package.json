@@ -26,7 +26,7 @@
 		"@weareinreach/db": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.141",
+		"@types/aws-lambda": "8.10.142",
 		"@types/eslint": "8.56.11",
 		"@types/node": "20.14.12",
 		"@vercel/ncc": "0.38.1",
