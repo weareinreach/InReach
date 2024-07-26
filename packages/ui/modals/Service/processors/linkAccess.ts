@@ -7,10 +7,11 @@ export const processLinkAccess = (record: AccessDetailRecord): LinkAccessReturn 
 	if (!parsed.success || !parsed.data.access_value) {
 		return null
 	}
-	const { supplementId: id } = record
+	const { supplementId: id, active } = record
 	const { access_value } = parsed.data
 	return {
 		id,
+		active,
 		description: null,
 		isPrimary: false,
 		// orgLocationId: null,
@@ -25,5 +26,6 @@ export interface LinkAccessOutput {
 	url: string
 	isPrimary: boolean
 	orgLocationOnly: boolean
+	active: boolean
 }
 export type LinkAccessReturn = LinkAccessOutput | null

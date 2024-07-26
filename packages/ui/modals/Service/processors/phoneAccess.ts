@@ -11,10 +11,11 @@ export const processPhoneAccess = (
 	if (!parsed.success || !parsed.data.access_value || !country) {
 		return null
 	}
-	const { supplementId: id } = record
+	const { supplementId: id, active } = record
 	const { access_value } = parsed.data
 	return {
 		id,
+		active,
 		country,
 		number: access_value,
 		phoneType: null,
@@ -34,5 +35,6 @@ export interface PhoneAccessOutput {
 	locationOnly: boolean
 	ext: string | null
 	description: { key: string; defaultText: string } | null
+	active: boolean
 }
 export type PhoneAccessReturn = PhoneAccessOutput | null
