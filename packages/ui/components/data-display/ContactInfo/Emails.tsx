@@ -7,7 +7,9 @@ import invariant from 'tiny-invariant'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { EmailDrawer } from '~ui/components/data-portal/EmailDrawer'
+import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useEditMode } from '~ui/hooks/useEditMode'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
@@ -34,9 +36,13 @@ const EmailsDisplay = ({
 	const { id: orgId } = useOrgInfo()
 	const { t } = useTranslation(formatNs(orgId))
 	const variants = useCustomVariant()
+	const { isEditMode } = useEditMode()
 	const { data } = api.orgEmail.forContactInfo.useQuery(
 		{ parentId, locationOnly, serviceOnly },
-		{ enabled: !passedData }
+		{
+			enabled: !passedData,
+			select: (data) => data?.map((res) => ({ ...res, active: undefined })),
+		}
 	)
 	const componentData = useMemo(() => passedData ?? data ?? [], [data, passedData])
 	const { output: content, showDirectHeading: shouldShowDirectHeading } = useMemo(() => {
@@ -73,7 +79,16 @@ const EmailsDisplay = ({
 				return null
 			})()
 
-			const item = (
+			const item = isEditMode ? (
+				<AttributeEditWrapper key={id} active={email.active ?? false} id={id}>
+					<Stack spacing={4} key={id}>
+						<Link external href={href} variant={linkVariant}>
+							{address}
+						</Link>
+						{desc && <Text variant={variants.Text.utility4darkGray}>{desc}</Text>}
+					</Stack>
+				</AttributeEditWrapper>
+			) : (
 				<Stack spacing={4} key={id}>
 					<Link external href={href} variant={linkVariant}>
 						{address}
@@ -81,10 +96,12 @@ const EmailsDisplay = ({
 					{desc && <Text variant={variants.Text.utility4darkGray}>{desc}</Text>}
 				</Stack>
 			)
+
 			primary ? output.unshift(item) : output.push(item)
 		}
 		return { output, showDirectHeading }
 	}, [
+		isEditMode,
 		componentData,
 		direct,
 		locationOnly,
