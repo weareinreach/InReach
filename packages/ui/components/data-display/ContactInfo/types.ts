@@ -28,7 +28,7 @@ export type EmailsProps = CommonProps & (ApiData | PassedData<'orgEmail', 'forCo
 export type SocialMediaProps = CommonProps & (ApiData | PassedData<'orgSocialMedia', 'forContactInfo'>)
 
 type PassedData<K1 extends keyof ApiOutput, K2 extends keyof ApiOutput[K1]> = {
-	passedData: ApiOutput[K1][K2]
+	passedData: Array<ApiOutput[K1][K2][number] & { active?: boolean }>
 	parentId?: never
 }
 

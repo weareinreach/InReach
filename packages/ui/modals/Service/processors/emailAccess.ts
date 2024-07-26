@@ -7,10 +7,11 @@ export const processEmailAccess = (record: AccessDetailRecord): EmailAccessRetur
 	if (!parsed.success || !parsed.data.access_value) {
 		return null
 	}
-	const { supplementId: id } = record
+	const { supplementId: id, active } = record
 	const { access_value } = parsed.data
 	return {
 		id,
+		active,
 		title: null,
 		description: null,
 		email: access_value,
@@ -31,5 +32,6 @@ export interface EmailAccessOutput {
 	primary: boolean
 	locationOnly: boolean
 	serviceOnly: boolean
+	active: boolean
 }
 export type EmailAccessReturn = EmailAccessOutput | null
