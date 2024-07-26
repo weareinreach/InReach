@@ -24,6 +24,7 @@ import { useCallback, useState } from 'react'
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
 import {
+	type Badge,
 	Organization,
 	SavedResultCard,
 	Service,
@@ -126,11 +127,21 @@ const SavedLists = () => {
 								<>Placeholder!</>
 							) : (
 								queryResult.organizations?.map((result) => {
-									const { id, slug, name, description } = result
+									const { id, slug, name, description, leaderBadges, communityBadges, locations } = result
 									return (
 										<SavedResultCard
 											key={result.id}
-											result={new Organization(id, slug, name, description as TsKey)}
+											result={
+												new Organization(
+													id,
+													slug,
+													name,
+													description as TsKey,
+													leaderBadges as Badge[],
+													communityBadges as Badge[],
+													locations.map((location) => location.city)
+												)
+											}
 										/>
 									)
 								})

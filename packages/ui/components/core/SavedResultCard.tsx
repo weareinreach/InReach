@@ -28,18 +28,63 @@ abstract class SavedItem {
 	}
 
 	abstract getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string
+
+	getLeaderBadges(): Badge[] {
+		return []
+	}
+
+	getCommunityBadges(): Badge[] {
+		return []
+	}
+
+	getCities(): string[] {
+		return []
+	}
+}
+
+export interface Badge {
+	icon: string
+	iconBg: string | null
+	tsKey: string
+	tsNs: string
 }
 
 export class Organization extends SavedItem {
 	name: string
+	leaderBadges: Badge[]
+	communityBadges: Badge[]
+	cities: string[]
 
-	constructor(id: string, slug: string, name: string, description: TsKey) {
+	constructor(
+		id: string,
+		slug: string,
+		name: string,
+		description: TsKey,
+		leaderBadges: Badge[],
+		communityBadges: Badge[],
+		cities: string[]
+	) {
 		super(id, slug, description)
 		this.name = name
+		this.leaderBadges = leaderBadges
+		this.communityBadges = communityBadges
+		this.cities = cities
 	}
 
 	getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string {
 		return this.name
+	}
+
+	getLeaderBadges(): Badge[] {
+		return this.leaderBadges
+	}
+
+	getCommunityBadges(): Badge[] {
+		return this.communityBadges
+	}
+
+	getCities(): string[] {
+		return this.cities
 	}
 }
 
@@ -133,34 +178,33 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
 
-	// const leaderBadgeGroup = useMemo(
-	// 	() =>
-	// 		orgLeader?.length || nationa?l.length ? (
-	// 			<Badge.Group>
-	// 				{/* {orgLeader.map(({ icon, iconBg, id, tsKey }) => (
-	// 					<Badge.Leader key={id} minify hideBg {...{ icon: icon ?? '', iconBg: iconBg ?? '#FFFFFF' }}>
-	// 						{t(tsKey, { ns: 'attribute' })}
-	// 					</Badge.Leader>
-	// 				))} */}
-	// 				{national?.length ? <Badge.National countries={national} /> : null}
-	// 			</Badge.Group>
-	// 		) : null,
-	// 	[national, orgLeader, t]
-	// )
+	const leaderBadgeGroup = useMemo(
+		() =>
+			savedItem.getLeaderBadges().length ? ( // || national?.length ? (
+				<Badge.Group>
+					{savedItem.getLeaderBadges().map(({ icon, iconBg, tsKey }) => (
+						<Badge.Leader minify hideBg {...{ icon: icon ?? '', iconBg: iconBg ?? '#FFFFFF' }}>
+							{t(tsKey, { ns: 'attribute' })}
+						</Badge.Leader>
+					))}
+					{/* {national?.length ? <Badge.National countries={national} /> : null} */}
+				</Badge.Group>
+			) : null,
+		[savedItem, t]
+	)
 
-	// const communityFocusBadgeGroup = useMemo(
-	// 	() =>
-	// 		orgFocus.length ? (
-	// 			<Badge.Group>
-	// 				{orgFocus.map(({ icon, id, tsKey }) => (
-	// 					<Badge.Community key={id} icon={icon ?? ''}>
-	// 						{t(tsKey, { ns: 'attribute' })}
-	// 					</Badge.Community>
-	// 				))}
-	// 			</Badge.Group>
-	// 		) : null,
-	// 	[orgFocus, t]
-	// )
+	const communityFocusBadgeGroup = useMemo(
+		() =>
+			savedItem.getCommunityBadges().length ? (
+				<Badge.Group>
+					{savedItem.getCommunityBadges().map(({ icon, tsKey }) => (
+						<Badge.Community icon={icon ?? ''}>{t(tsKey, { ns: 'attribute' })}</Badge.Community>
+					))}
+				</Badge.Group>
+			) : null,
+		[savedItem, t]
+	)
+
 	// const serviceBadgeGroup = useMemo(
 	// 	() =>
 	// 		serviceCategories.length ? (
@@ -236,7 +280,7 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 								{savedItem.getDisplayName(t)}
 								<Space w={4} display='inline-block' />
 							</Link>
-							{/* {leaderBadgeGroup} */}
+							{leaderBadgeGroup}
 						</Title>
 						<ActionButtons.Save itemId={savedItem.id} itemName={savedItem.getDisplayName(t)} />
 					</Group>
@@ -246,7 +290,7 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						td='none'
 					>
 						<Stack spacing={12}>
-							{/* <Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text> */}
+							<Text variant={variants.Text.utility2darkGray}>{cityList(savedItem.getCities())}</Text>
 							{description && (
 								<Text className={classes.description}>
 									{t(description.key, { ns: description.ns, defaultValue: description.defaultText })}
@@ -255,8 +299,8 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						</Stack>
 					</Link>
 				</Stack>
-				{/* {communityFocusBadgeGroup}
-				{serviceBadgeGroup} */}
+				{communityFocusBadgeGroup}
+				{/* {serviceBadgeGroup} */}
 			</Stack>
 			<Divider my={40} />
 		</>

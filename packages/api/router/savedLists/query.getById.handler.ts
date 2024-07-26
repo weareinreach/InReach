@@ -27,6 +27,7 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 							slug: true,
 							name: true,
 							description: { select: { tsKey: { select: { key: true, ns: true, text: true } } } },
+							locations: { select: { city: true } },
 							attributes: {
 								where: {
 									active: true,
