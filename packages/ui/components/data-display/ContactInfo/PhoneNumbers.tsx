@@ -5,7 +5,9 @@ import { type ReactElement, useCallback } from 'react'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { PhoneDrawer } from '~ui/components/data-portal/PhoneDrawer'
+import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useEditMode } from '~ui/hooks/useEditMode'
 import { isExtension, parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
@@ -23,10 +25,14 @@ export const PhoneNumbers = ({ edit, ...props }: PhoneNumbersProps) =>
 const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }: PhoneNumbersProps) => {
 	const output: ReactElement[] = []
 	const slug = useSlug()
+	const { isEditMode } = useEditMode()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(formatNs(orgId?.id))
 	const variants = useCustomVariant()
-	const { data } = api.orgPhone.forContactInfo.useQuery({ parentId, locationOnly }, { enabled: !passedData })
+	const { data } = api.orgPhone.forContactInfo.useQuery(
+		{ parentId, locationOnly },
+		{ enabled: !passedData, select: (data) => data?.map((res) => ({ ...res, active: undefined })) }
+	)
 
 	const componentData = passedData ?? data
 	const getDescription = useCallback(
@@ -59,7 +65,20 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 		const phoneNumber = parsedPhone.formatNational()
 		const desc = getDescription(description, phoneType)
 
-		const item = (
+		const item = isEditMode ? (
+			<AttributeEditWrapper key={phone.id} id={phone.id} active={phone.active ?? false}>
+				<Stack spacing={4}>
+					{isExternal(dialURL) ? (
+						<Link external href={dialURL} variant={variants.Link.inlineInverted}>
+							{phoneNumber}
+						</Link>
+					) : (
+						<Text>{phoneNumber}</Text>
+					)}
+					{desc && <Text variant={variants.Text.utility4darkGray}>{desc}</Text>}
+				</Stack>
+			</AttributeEditWrapper>
+		) : (
 			<Stack spacing={4} key={phone.id}>
 				{isExternal(dialURL) ? (
 					<Link external href={dialURL} variant={variants.Link.inlineInverted}>

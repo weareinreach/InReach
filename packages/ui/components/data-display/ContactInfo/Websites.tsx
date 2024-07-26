@@ -5,8 +5,10 @@ import invariant from 'tiny-invariant'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
+import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
 import { WebsiteDrawer } from '~ui/components/data-portal/WebsiteDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useEditMode } from '~ui/hooks/useEditMode'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
 import { nsFormatter } from '~ui/lib/nsFormatter'
@@ -31,10 +33,11 @@ const WebsitesDisplay = ({
 	const slug = useSlug()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	const { t } = useTranslation(formatNs(orgId?.id))
+	const { isEditMode } = useEditMode()
 	const variants = useCustomVariant()
 	const { data } = api.orgWebsite.forContactInfo.useQuery(
 		{ parentId, locationOnly },
-		{ enabled: !passedData }
+		{ enabled: !passedData, select: (data) => data?.map((res) => ({ ...res, active: undefined })) }
 	)
 	const domainExtract = useMemo(() => /https?:\/\/([^:/\n?]+)/, [])
 
@@ -66,7 +69,13 @@ const WebsitesDisplay = ({
 
 			const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
 
-			const item = (
+			const item = isEditMode ? (
+				<AttributeEditWrapper key={id} active={website.active ?? false} id={id}>
+					<Link external href={url} variant={linkVariant}>
+						{desc}
+					</Link>
+				</AttributeEditWrapper>
+			) : (
 				<Link external key={id} href={url} variant={linkVariant}>
 					{desc}
 				</Link>
@@ -75,6 +84,7 @@ const WebsitesDisplay = ({
 		}
 		return { output, showDirectHeading }
 	}, [
+		isEditMode,
 		componentData,
 		direct,
 		domainExtract,
