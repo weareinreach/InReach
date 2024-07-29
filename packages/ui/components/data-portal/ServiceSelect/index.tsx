@@ -5,6 +5,7 @@ import { type FieldValues, type UseControllerProps, useFormState } from 'react-h
 import { Checkbox } from 'react-hook-form-mantine'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
@@ -42,25 +43,37 @@ export const ServiceSelect = <T extends FieldValues>({
 	const serviceGroups = data ? (
 		<Checkbox.Group {...{ name, control, defaultValue, rules, shouldUnregister }}>
 			<Stack spacing={16}>
-				{data.map((category) => (
-					<Stack spacing={8} key={category.tsKey}>
-						<Title order={3}>{t(category.tsKey)}</Title>
-						<Stack spacing={0}>
-							{category.services.map((service) => (
-								<Checkbox.Item
-									pl={16}
-									size='xs'
-									key={`${category.tsKey}-${service.id}`}
-									value={service.id}
-									label={t(service.tsKey)}
-									classNames={{
-										label: classes.checkboxLabel,
-									}}
-								/>
-							))}
+				{data.map((category) => {
+					if (category.services.length === 0) {
+						return null
+					}
+					return (
+						<Stack spacing={8} key={category.tsKey}>
+							<Group>
+								<Title order={3}>{t(category.tsKey)}</Title>
+								{!category.active && <Icon icon='carbon:view-off' />}
+							</Group>
+							<Stack spacing={0}>
+								{category.services.map((service) => (
+									<Checkbox.Item
+										pl={16}
+										size='xs'
+										key={`${category.tsKey}-${service.id}`}
+										value={service.id}
+										label={
+											<Group>
+												{t(service.tsKey)} {!service.active && <Icon icon='carbon:view-off' />}
+											</Group>
+										}
+										classNames={{
+											label: classes.checkboxLabel,
+										}}
+									/>
+								))}
+							</Stack>
 						</Stack>
-					</Stack>
-				))}
+					)
+				})}
 			</Stack>
 		</Checkbox.Group>
 	) : null
