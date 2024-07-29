@@ -10,6 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "Community Support",
+		"advocacy-and-community-organizing": "Advocacy and Community Organizing",
 		"community-social-groups": "Community and social groups",
 		"cultural-centers": "Cultural centers",
 		"lgbtq-centers": "LGBTQ centers",
@@ -93,6 +94,7 @@
 		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "Refugee claim",
 		"residency": "Residency",
+		"self-advocacy-information": "Self-Advocacy Information",
 		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
 		"t-visa": "T visa",
 		"u-visa": "U visa"
