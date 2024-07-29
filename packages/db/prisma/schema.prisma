@@ -2362,6 +2362,8 @@ view AttributesByCategory {
   formSchema          Json?
   canAttachTo         AttributeAttachment[]
   dataSchema          Json?
+  attributeActive     Boolean
+  categoryActive      Boolean
 
   @@unique([categoryId, attributeId])
   @@map("attributes_by_category")
