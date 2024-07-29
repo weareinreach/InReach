@@ -37,7 +37,7 @@ const clientOptions = {
 		: [
 				{ level: 'error', emit: 'event' },
 				{ level: 'warn', emit: 'event' },
-				{ level: 'info', emit: 'event' },
+				// { level: 'info', emit: 'event' },
 			],
 	errorFormat: getErrorFormat(),
 } satisfies Prisma.PrismaClientOptions
@@ -56,9 +56,9 @@ const generateClient = () => {
 	// 	client.$on('query', queryLogger)
 	// }
 	// else {
-	client.$on('error', log.error)
-	client.$on('warn', log.warn)
-	client.$on('info', log.info)
+	client.$on('error', (event) => log.error(event))
+	client.$on('warn', (event) => log.warn(event))
+	// client.$on('info', (event) => log.info(event))
 	// }
 
 	return client.$extends(jsonExtension).$extends(idGeneratorExtension) as unknown as PrismaClient
