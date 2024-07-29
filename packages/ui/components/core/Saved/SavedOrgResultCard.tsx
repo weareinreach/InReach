@@ -6,111 +6,89 @@ import { useCallback, useMemo } from 'react'
 import { type ApiOutput } from '@weareinreach/api'
 import { useCustomVariant } from '~ui/hooks'
 
-import { ActionButtons } from './ActionButtons'
-import { Badge } from './Badge'
-import { Link } from './Link'
+import { ActionButtons } from '../ActionButtons'
+import { Badge } from '../Badge'
+import { Link } from '../Link'
 
-export interface TsKey {
-	key: string
-	ns: string
-	defaultText: string
-}
+type Organization = NonNullable<ApiOutput['savedList']['getById']>['organizations'][number]
 
-abstract class SavedItem {
-	id: string
-	slug: string
-	description: TsKey
+// export interface TsKey {
+// 	key: string
+// 	ns: string
+// 	defaultText: string
+// }
 
-	constructor(id: string, slug: string, description: TsKey) {
-		this.id = id
-		this.slug = slug
-		this.description = description
-	}
+// abstract class SavedItem {
+// 	id: string
+// 	slug: string
+// 	description: TsKey
 
-	abstract getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string
+// 	constructor(id: string, slug: string, description: TsKey) {
+// 		this.id = id
+// 		this.slug = slug
+// 		this.description = description
+// 	}
 
-	getLeaderBadges(): Badge[] {
-		return []
-	}
+// 	abstract getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string
 
-	getCommunityBadges(): Badge[] {
-		return []
-	}
+// 	getLeaderBadges(): Badge[] {
+// 		return []
+// 	}
 
-	getCities(): string[] {
-		return []
-	}
-}
+// 	getCommunityBadges(): Badge[] {
+// 		return []
+// 	}
 
-export interface Badge {
-	icon: string
-	iconBg: string | null
-	tsKey: string
-	tsNs: string
-}
+// 	getCities(): string[] {
+// 		return []
+// 	}
+// }
 
-export class Organization extends SavedItem {
-	name: string
-	leaderBadges: Badge[]
-	communityBadges: Badge[]
-	cities: string[]
+// export interface Badge {
+// 	icon: string
+// 	iconBg: string | null
+// 	tsKey: string
+// 	tsNs: string
+// }
 
-	constructor(
-		id: string,
-		slug: string,
-		name: string,
-		description: TsKey,
-		leaderBadges: Badge[],
-		communityBadges: Badge[],
-		cities: string[]
-	) {
-		super(id, slug, description)
-		this.name = name
-		this.leaderBadges = leaderBadges
-		this.communityBadges = communityBadges
-		this.cities = cities
-	}
+// export class Organization extends SavedItem {
+// 	name: string
+// 	leaderBadges: Badge[]
+// 	communityBadges: Badge[]
+// 	cities: string[]
 
-	getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string {
-		return this.name
-	}
+// 	constructor(
+// 		id: string,
+// 		slug: string,
+// 		name: string,
+// 		description: TsKey,
+// 		leaderBadges: Badge[],
+// 		communityBadges: Badge[],
+// 		cities: string[]
+// 	) {
+// 		super(id, slug, description)
+// 		this.name = name
+// 		this.leaderBadges = leaderBadges
+// 		this.communityBadges = communityBadges
+// 		this.cities = cities
+// 	}
 
-	getLeaderBadges(): Badge[] {
-		return this.leaderBadges
-	}
+// 	getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string {
+// 		return this.name
+// 	}
 
-	getCommunityBadges(): Badge[] {
-		return this.communityBadges
-	}
+// 	getLeaderBadges(): Badge[] {
+// 		return this.leaderBadges
+// 	}
 
-	getCities(): string[] {
-		return this.cities
-	}
-}
+// 	getCommunityBadges(): Badge[] {
+// 		return this.communityBadges
+// 	}
 
-export class Service extends SavedItem {
-	name: TsKey
-
-	constructor(id: string, slug: string, name: TsKey, description: TsKey) {
-		super(id, slug, description)
-		this.name = name
-	}
-
-	getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string {
-		return t(this.name.key, { ns: this.name.ns, defaultValue: this.name.defaultText })
-	}
-}
-
-export interface SavedResult {
-	id: string
-	name: string
-	_count: {
-		organizations: number
-		services: number
-	}
-	organizations: { organization: Organization }[]
-	services: { service: Service }[]
-}
+// 	getCities(): string[] {
+// 		return this.cities
+// 	}
+// }
 
 export interface SavedResultLoading {
 	loading: true
@@ -119,7 +97,7 @@ export interface SavedResultLoading {
 
 export interface SavedResultHasData {
 	loading?: false
-	result: SavedItem
+	result: Organization
 }
 
 export type SavedResultCardProps = SavedResultHasData | SavedResultLoading
@@ -180,9 +158,9 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 
 	const leaderBadgeGroup = useMemo(
 		() =>
-			savedItem.getLeaderBadges().length ? ( // || national?.length ? (
+			savedItem.leaderBadges.length ? ( // || national?.length ? (
 				<Badge.Group>
-					{savedItem.getLeaderBadges().map(({ icon, iconBg, tsKey }) => (
+					{savedItem.leaderBadges.map(({ icon, iconBg, tsKey }) => (
 						<Badge.Leader minify hideBg {...{ icon: icon ?? '', iconBg: iconBg ?? '#FFFFFF' }}>
 							{t(tsKey, { ns: 'attribute' })}
 						</Badge.Leader>
@@ -195,9 +173,9 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 
 	const communityFocusBadgeGroup = useMemo(
 		() =>
-			savedItem.getCommunityBadges().length ? (
+			savedItem.communityBadges.length ? (
 				<Badge.Group>
-					{savedItem.getCommunityBadges().map(({ icon, tsKey }) => (
+					{savedItem.communityBadges.map(({ icon, tsKey }) => (
 						<Badge.Community icon={icon ?? ''}>{t(tsKey, { ns: 'attribute' })}</Badge.Community>
 					))}
 				</Badge.Group>
@@ -277,12 +255,12 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 								variant={variants.Link.inheritStyle}
 								td='none'
 							>
-								{savedItem.getDisplayName(t)}
+								{savedItem.name}
 								<Space w={4} display='inline-block' />
 							</Link>
 							{leaderBadgeGroup}
 						</Title>
-						<ActionButtons.Save itemId={savedItem.id} itemName={savedItem.getDisplayName(t)} />
+						<ActionButtons.Save itemId={savedItem.id} itemName={savedItem.name} />
 					</Group>
 					<Link
 						href={{ pathname: '/org/[slug]', query: { slug } }}
@@ -290,12 +268,11 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						td='none'
 					>
 						<Stack spacing={12}>
-							<Text variant={variants.Text.utility2darkGray}>{cityList(savedItem.getCities())}</Text>
-							{description && (
-								<Text className={classes.description}>
-									{t(description.key, { ns: description.ns, defaultValue: description.defaultText })}
-								</Text>
-							)}
+							<Text variant={variants.Text.utility2darkGray}>{cityList(savedItem.cities)}</Text>
+							<Text>
+								{description &&
+									t(description.key, { ns: description.ns, defaultValue: description.defaultText })}
+							</Text>
 						</Stack>
 					</Link>
 				</Stack>
@@ -307,7 +284,7 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 	)
 }
 
-export const SavedResultCard = (props: SavedResultCardProps) =>
+export const SavedOrgResultCard = (props: SavedResultCardProps) =>
 	props.loading ? <SavedResultLoading /> : <SavedResultData {...props} />
 
 export type SearchResultCardProps = SearchResultHasData | SearchResultLoading

@@ -41,7 +41,9 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 										},
 									},
 								},
-								select: { attribute: { select: { icon: true, iconBg: true, tsKey: true, tsNs: true } } },
+								select: {
+									attribute: { select: { id: true, icon: true, iconBg: true, tsKey: true, tsNs: true } },
+								},
 							},
 						},
 					},
@@ -59,6 +61,7 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 							description: {
 								select: { tsKey: { select: { key: true, ns: true, text: true } } },
 							},
+							services: { select: { tag: { select: { id: true, tsKey: true, tsNs: true } } } },
 						},
 					},
 				},
@@ -73,7 +76,7 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 
 	const reformattedData = {
 		...rest,
-		organizations: organizations.map(({ organization: { description, attributes, ...org } }) => {
+		organizations: organizations.map(({ organization: { description, attributes, locations, ...org } }) => {
 			const leaderBadges = attributes
 				.filter(({ attribute: { tsKey } }) => tsKey.startsWith('orgleader.'))
 				.map(({ attribute }) => attribute)
@@ -85,27 +88,35 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 				...org,
 				leaderBadges,
 				communityBadges,
-				description: {
-					key: description?.tsKey.key,
-					ns: description?.tsKey.ns,
-					defaultText: description?.tsKey.text ?? '',
-				},
+				description: description
+					? {
+							key: description.tsKey.key,
+							ns: description.tsKey.ns,
+							defaultText: description.tsKey.text,
+						}
+					: null,
+				cities: locations.map(({ city }) => city),
 			}
 		}),
-		services: services.map(({ service: { description, id, serviceName, ...svc } }) => ({
+		services: services.map(({ service: { description, id, serviceName, services, ...svc } }) => ({
 			...svc,
 			id,
 			slug: id,
-			name: {
-				key: serviceName?.tsKey.key,
-				ns: serviceName?.tsKey.ns,
-				defaultText: serviceName?.tsKey.text ?? '',
-			},
-			description: {
-				key: description?.tsKey.key,
-				ns: description?.tsKey.ns,
-				defaultText: description?.tsKey.text ?? '',
-			},
+			name: serviceName
+				? {
+						key: serviceName.tsKey.key,
+						ns: serviceName.tsKey.ns,
+						defaultText: serviceName.tsKey.text,
+					}
+				: null,
+			description: description
+				? {
+						key: description.tsKey.key,
+						ns: description.tsKey.ns,
+						defaultText: description.tsKey.text ?? '',
+					}
+				: null,
+			tags: services.map(({ tag }) => tag),
 		})),
 	}
 

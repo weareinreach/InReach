@@ -23,13 +23,8 @@ import { useCallback, useState } from 'react'
 
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
-import {
-	type Badge,
-	Organization,
-	SavedResultCard,
-	Service,
-	type TsKey,
-} from '@weareinreach/ui/components/core/SavedResultCard'
+import { SavedOrgResultCard } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
+import { SavedServiceResultCard } from '@weareinreach/ui/components/core/Saved/SavedServiceResultCard'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { QuickPromotionModal } from '@weareinreach/ui/modals'
@@ -127,23 +122,7 @@ const SavedLists = () => {
 								<>Placeholder!</>
 							) : (
 								queryResult.organizations?.map((result) => {
-									const { id, slug, name, description, leaderBadges, communityBadges, locations } = result
-									return (
-										<SavedResultCard
-											key={result.id}
-											result={
-												new Organization(
-													id,
-													slug,
-													name,
-													description as TsKey,
-													leaderBadges as Badge[],
-													communityBadges as Badge[],
-													locations.map((location) => location.city)
-												)
-											}
-										/>
-									)
+									return <SavedOrgResultCard key={result.id} result={result} />
 								})
 							)}
 						</Tabs.Panel>
@@ -152,13 +131,7 @@ const SavedLists = () => {
 								<>Placeholder!</>
 							) : (
 								queryResult.services?.map((result) => {
-									const { id, slug, name, description } = result
-									return (
-										<SavedResultCard
-											key={result.id}
-											result={new Service(id, slug, name as TsKey, description as TsKey)}
-										/>
-									)
+									return <SavedServiceResultCard key={result.id} result={result} />
 								})
 							)}{' '}
 						</Tabs.Panel>
