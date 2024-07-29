@@ -15,11 +15,14 @@ const validateJsonSchema = (schema: unknown): schema is JSONSchemaType<unknown> 
 }
 
 const attributesByCategory = async ({ input }: TRPCHandlerParams<TAttributesByCategorySchema>) => {
-	console.log(input)
+	const { attributeActive, categoryActive } = input ?? { attributeActive: true, categoryActive: true }
+
 	const result = await prisma.attributesByCategory.findMany({
 		where: {
 			categoryName: Array.isArray(input?.categoryName) ? { in: input.categoryName } : input?.categoryName,
 			canAttachTo: input?.canAttachTo?.length ? { hasSome: input.canAttachTo } : undefined,
+			attributeActive: attributeActive ? attributeActive : undefined,
+			categoryActive: categoryActive ? categoryActive : undefined,
 		},
 		orderBy: [{ categoryName: 'asc' }, { attributeName: 'asc' }],
 	})
