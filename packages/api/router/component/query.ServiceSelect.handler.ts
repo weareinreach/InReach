@@ -6,22 +6,25 @@ const ServiceSelect = async ({ ctx: _ctx }: TRPCHandlerParams) => {
 	try {
 		const result = await prisma.serviceCategory.findMany({
 			where: {
-				active: true,
+				// active: true,
 				OR: [{ crisisSupportOnly: null }, { crisisSupportOnly: false }],
 			},
 			select: {
 				// id: true,
 				tsKey: true,
 				// tsNs: true,
+				active: true,
 				services: {
 					where: {
-						active: true,
+						// active: true,
 					},
 					select: {
+						active: true,
 						serviceTag: {
 							select: {
 								id: true,
 								tsKey: true,
+								active: true,
 								// tsNs: true,
 							},
 						},

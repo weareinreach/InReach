@@ -10,7 +10,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { type TFunction, useTranslation } from 'next-i18next'
-import { forwardRef, useEffect } from 'react'
+import { forwardRef, useCallback, useEffect } from 'react'
 
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -19,7 +19,9 @@ import { useStyles } from './styles'
 import { ModalTitle } from '../ModalTitle'
 
 const reduceDistType = (data: { tsNs: string; tsKey: string }[] | undefined, t: TFunction) => {
-	if (!data) return ''
+	if (!data) {
+		return []
+	}
 	const valueSet = data.reduce((prev, curr) => {
 		const translated = t(curr.tsKey, { ns: curr.tsNs, count: 1 })
 		prev.add(translated)
@@ -86,13 +88,13 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 				item: reduceDistType(
 					dataDistrict?.map(({ govDistType }) => govDistType),
 					t
-				),
+				).join('/'),
 			}),
 			third: t('select.base', {
 				item: reduceDistType(
 					dataSubDist?.map(({ govDistType }) => govDistType),
 					t
-				),
+				).join('/'),
 			}),
 		}
 
@@ -108,7 +110,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 		})
 
 		const canAdd = !!selected.country
-		const handleAdd = () => {
+		const handleAdd = useCallback(() => {
 			if (selected.govDist || selected.subDist) {
 				const distToAdd = selected.subDist ?? selected.govDist
 				if (!distToAdd) {
@@ -121,7 +123,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 			} else if (selected.country) {
 				addServiceArea.mutate({ serviceArea, countryId: selected.country })
 			}
-		}
+		}, [addServiceArea, selected, serviceArea])
 
 		return (
 			<>

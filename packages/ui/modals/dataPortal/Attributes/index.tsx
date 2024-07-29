@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	type ButtonProps,
+	Checkbox,
 	createPolymorphicComponent,
 	Select as MantineSelect,
 	Modal,
@@ -46,18 +47,24 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		// #region tRPC
 		const apiUtils = api.useUtils()
 		const [attrCat, setAttrCat] = useState<string | null>()
+		const [showInactiveAttribs, setShowInactiveAttribs] = useState(true)
+		// const [showInactiveCategories, setShowInactiveCategories] = useState(false)
 		const { data: attributesByCategory, ...attributesByCategoryApi } =
-			api.fieldOpt.attributesByCategory.useQuery(undefined, {
-				refetchOnWindowFocus: false,
-				select: (data) => {
-					return data.map(({ attributeId, attributeKey, ...rest }) => ({
-						value: attributeId,
-						label: t(attributeKey),
-						tKey: attributeKey,
-						...rest,
-					}))
-				},
-			})
+			api.fieldOpt.attributesByCategory.useQuery(
+				{ attributeActive: !showInactiveAttribs /* categoryActive: !showInactiveCategories*/ },
+				{
+					refetchOnWindowFocus: false,
+					select: (data) => {
+						return data.map(({ attributeId, attributeKey, attributeActive, categoryActive, ...rest }) => ({
+							value: attributeId,
+							label: t(attributeKey),
+							tKey: attributeKey,
+							active: attributeActive && categoryActive,
+							...rest,
+						}))
+					},
+				}
+			)
 
 		const attributeCategories = useMemo(() => {
 			return [
@@ -199,6 +206,11 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			[selectedAttr]
 		)
 
+		const toggleShowInactiveAttribs = useCallback(
+			() => setShowInactiveAttribs((prev) => !prev),
+			[setShowInactiveAttribs]
+		)
+
 		return (
 			<FormProvider {...form}>
 				<Modal title={modalTitle} opened={opened} onClose={handler.close}>
@@ -220,7 +232,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 										? []
 										: (attributesByCategory ?? [])
 												.filter(({ categoryName }) => categoryName === attrCat)
-												.map(({ label, value }) => ({ label, value }))
+												.map(({ label, value, active }) => ({ label, value, active }))
 								}
 								value={selectedAttr?.value ?? null}
 								label='Select Attribute'
@@ -232,6 +244,11 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								clearable
 								onChange={selectHandler}
 								inputContainer={inputContainerWithSkeleton}
+							/>
+							<Checkbox
+								label='Show Inactive Attributes?'
+								checked={showInactiveAttribs}
+								onChange={toggleShowInactiveAttribs}
 							/>
 						</Stack>
 						{supplements.boolean && <Supplement.Boolean />}

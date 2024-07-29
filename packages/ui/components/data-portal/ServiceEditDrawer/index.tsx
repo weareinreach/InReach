@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-	ActionIcon,
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
@@ -11,14 +10,12 @@ import {
 	Stack,
 	Text,
 	Title,
-	Tooltip,
-	useMantineTheme,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { compareArrayVals } from 'crud-object-diff'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { forwardRef, type ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, Textarea, TextInput } from 'react-hook-form-mantine'
 import invariant from 'tiny-invariant'
@@ -41,137 +38,19 @@ import { AttributeModal } from '~ui/modals/dataPortal/Attributes'
 import { ModalText } from '~ui/modals/Service/ModalText'
 import { processAccessInstructions, processAttributes } from '~ui/modals/Service/processor'
 
+import { AttributeEditWrapper } from './AttributeEditWrapper'
 import { FormSchema, type TFormSchema } from './schemas'
+import { ServiceAreaItem } from './ServiceAreaItem'
 import { useStyles } from './styles'
 import { InlineTextInput } from '../InlineTextInput'
 
 const isObject = (x: unknown): x is object => typeof x === 'object'
 
-const ServiceAreaItem = ({
-	serviceId,
-	serviceAreaId,
-	countryId,
-	govDistId,
-	children,
-}: ServiceAreaItemProps) => {
-	const apiUtils = api.useUtils()
-	const removeServiceArea = api.serviceArea.delFromArea.useMutation({
-		onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(serviceId),
-	})
-
-	const actionHandler = useCallback(() => {
-		if (serviceAreaId) {
-			removeServiceArea.mutate({ serviceAreaId, countryId, govDistId })
-		}
-	}, [countryId, govDistId, removeServiceArea, serviceAreaId])
-
-	if (!serviceAreaId || !(countryId || govDistId)) {
-		return children
-	}
-
-	return (
-		<Group noWrap spacing={0}>
-			<Tooltip label='Delete'>
-				<ActionIcon onClick={actionHandler}>
-					<Icon icon='carbon:trash-can' />
-				</ActionIcon>
-			</Tooltip>
-			{children}
-		</Group>
-	)
-}
-
-const AttributeEditWrapper = ({ active, id, children, editable }: AttributeEditWrapperProps) => {
-	const theme = useMantineTheme()
-	const [confirmModalOpen, confirmModalHandler] = useDisclosure(false)
-	const apiUtils = api.useUtils()
-	const toggleOrDeleteAttribute = api.component.AttributeEditWrapper.useMutation({
-		onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(),
-	})
-	const handleToggle = useCallback(
-		() => toggleOrDeleteAttribute.mutate({ id, action: 'toggleActive' }),
-		[id, toggleOrDeleteAttribute]
-	)
-	const handleDelete = useCallback(
-		() => toggleOrDeleteAttribute.mutate({ id, action: 'delete' }),
-		[id, toggleOrDeleteAttribute]
-	)
-	const handleEdit = useCallback(() => {
-		alert('To be implemented later')
-	}, [])
-	const editIcon = useMemo(() => {
-		if (editable) {
-			return (
-				<Tooltip label='Edit'>
-					<ActionIcon onClick={handleEdit}>
-						<Icon icon='carbon:edit' color={theme.other.colors.secondary.black} />
-					</ActionIcon>
-				</Tooltip>
-			)
-		}
-		return (
-			<Tooltip label='Not Editable'>
-				<ActionIcon disabled>
-					<Icon icon='carbon:edit-off' />
-				</ActionIcon>
-			</Tooltip>
-		)
-	}, [editable, handleEdit, theme.other.colors.secondary.black])
-
-	const activeToggleIcon = useMemo(() => {
-		if (active) {
-			return (
-				<Tooltip label='Deactivate'>
-					<ActionIcon onClick={handleToggle}>
-						<Icon icon='carbon:view' color={theme.other.colors.secondary.black} />
-					</ActionIcon>
-				</Tooltip>
-			)
-		}
-		return (
-			<Tooltip label='Activate'>
-				<ActionIcon onClick={handleToggle}>
-					<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} />
-				</ActionIcon>
-			</Tooltip>
-		)
-	}, [active, handleToggle, theme.other.colors.secondary.black, theme.other.colors.secondary.darkGray])
-
-	return (
-		<Group noWrap spacing={8}>
-			<Group noWrap spacing={0}>
-				{editIcon}
-				{activeToggleIcon}
-				<Modal opened={confirmModalOpen} onClose={confirmModalHandler.close} title='Delete Attribute'>
-					<Text>Are you sure you want to delete this attribute?</Text>
-					<Group noWrap>
-						<Button onClick={confirmModalHandler.close}>Cancel</Button>
-						<Button onClick={handleDelete}>Delete</Button>
-					</Group>
-				</Modal>
-				<Tooltip label='Delete'>
-					<ActionIcon onClick={confirmModalHandler.open}>
-						<Icon icon='carbon:trash-can' color={theme.other.colors.secondary.black} />
-					</ActionIcon>
-				</Tooltip>
-			</Group>
-			{typeof children === 'string' ? <ModalText>{children}</ModalText> : children}
-		</Group>
-	)
-}
-
-interface AttributeEditWrapperProps {
-	id: string
-	children: ReactNode
-	active: boolean
-	editable?: boolean
-}
-
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 	({ serviceId: passedServiceId, createNew, ...props }, ref) => {
 		const { id: organizationId } = useOrgInfo()
 		const router = useRouter()
-		const [serviceId, _setServiceId] = useState(passedServiceId ?? generateId('orgService'))
+		const serviceId = useMemo(() => passedServiceId ?? generateId('orgService'), [passedServiceId])
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
@@ -244,7 +123,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		const serviceUpsert = api.service.upsert.useMutation({
 			onSuccess: () => {
 				notifySave()
-				apiUtils.location.forLocationPageEdits.invalidate()
+				apiUtils.location.invalidate()
 				apiUtils.service.invalidate()
 				if (isNew) {
 					apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
@@ -646,11 +525,3 @@ interface ServiceNewDrawerProps extends ButtonProps {
 	serviceId?: never
 }
 type ServiceDrawerProps = ServiceEditDrawerProps | ServiceNewDrawerProps
-
-interface ServiceAreaItemProps {
-	serviceId: string
-	serviceAreaId?: string
-	countryId?: string
-	govDistId?: string
-	children: ReactNode
-}

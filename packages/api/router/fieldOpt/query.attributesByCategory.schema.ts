@@ -6,6 +6,8 @@ export const ZAttributesByCategorySchema = z
 	.object({
 		categoryName: z.string().or(z.string().array()).optional().describe('categoryName'),
 		canAttachTo: z.enum(['LOCATION', 'ORGANIZATION', 'SERVICE', 'USER']).array().optional(),
+		attributeActive: z.boolean().default(true),
+		categoryActive: z.boolean().default(true),
 	})
 	.optional()
 export type TAttributesByCategorySchema = z.infer<typeof ZAttributesByCategorySchema>
