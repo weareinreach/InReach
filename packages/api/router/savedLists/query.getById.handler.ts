@@ -98,26 +98,28 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 				cities: locations.map(({ city }) => city),
 			}
 		}),
-		services: services.map(({ service: { description, id, serviceName, services, ...svc } }) => ({
-			...svc,
-			id,
-			slug: id,
-			name: serviceName
-				? {
-						key: serviceName.tsKey.key,
-						ns: serviceName.tsKey.ns,
-						defaultText: serviceName.tsKey.text,
-					}
-				: null,
-			description: description
-				? {
-						key: description.tsKey.key,
-						ns: description.tsKey.ns,
-						defaultText: description.tsKey.text ?? '',
-					}
-				: null,
-			tags: services.map(({ tag }) => tag),
-		})),
+		services: services.map(
+			({ service: { description, id, organization, serviceName, services, ...svc } }) => ({
+				...svc,
+				id,
+				slug: organization?.slug ?? '',
+				name: serviceName
+					? {
+							key: serviceName.tsKey.key,
+							ns: serviceName.tsKey.ns,
+							defaultText: serviceName.tsKey.text,
+						}
+					: null,
+				description: description
+					? {
+							key: description.tsKey.key,
+							ns: description.tsKey.ns,
+							defaultText: description.tsKey.text ?? '',
+						}
+					: null,
+				tags: services.map(({ tag }) => tag),
+			})
+		),
 	}
 
 	return reformattedData

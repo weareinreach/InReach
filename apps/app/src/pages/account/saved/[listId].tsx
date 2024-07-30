@@ -16,10 +16,10 @@ import {
 import { DateTime } from 'luxon'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
@@ -67,15 +67,14 @@ const SavedLists = () => {
 		{ enabled: !!listId }
 	)
 
-	// const [organizationDisplay, setOrginizationDisplay] = useState<JSX.Element[]>(
-	// 	Array.from({ length: 10 }, (_x, i) => <SavedResultCard key={i} loading />)
-	// )
+	const { query } = router
+	const initialTab = query.tab ? (query.tab as string) : 'organizations'
+	const [activeTab, setActiveTab] = useState(initialTab)
 
-	// const [serviceDisplay, setServiceDisplay] = useState<JSX.Element[]>(
-	// 	Array.from({ length: 10 }, (_x, i) => <SavedResultCard key={i} loading />)
-	// )
-
-	const [activeTab, setActiveTab] = useState('organizations')
+	useEffect(() => {
+		const currentTab = query.tab ? (query.tab as string) : 'organizations'
+		setActiveTab(currentTab)
+	}, [query.tab])
 
 	if (status === 'loading') {
 		return (
@@ -94,15 +93,58 @@ const SavedLists = () => {
 
 	const handleTabChange = (tab: string) => {
 		setActiveTab(tab)
+		if (listId) {
+			router.push(
+				{
+					pathname: router.pathname,
+					query: { ...router.query, tab, listId },
+				},
+				undefined,
+				{ shallow: true }
+			)
+		}
 	}
+
+	const { data: allSavedLists, refetch } = api.savedList.getAll.useQuery()
+
+	const deleteMutation = api.savedList.delete.useMutation({
+		onSuccess: () => {
+			refetch()
+			router.replace('/account/saved')
+		},
+	})
 
 	return (
 		queryResult && (
 			<Container size='lg' px='md' py='lg'>
-				<Stack spacing='lg'>
-					<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={() => router.back()}>
-						<Icon icon='carbon:arrow-left' />
-						<Text>Back to Saved</Text>
+				<Stack spacing='lg' style={{ paddingTop: '3rem' }}>
+					<Group position='apart'>
+						<Group
+							align='center'
+							spacing={8}
+							style={{ cursor: 'pointer' }}
+							onClick={() => router.replace('/account/saved')}
+						>
+							<Icon icon='carbon:arrow-left' />
+							<Text>Back to Saved</Text>
+						</Group>
+
+						<Group spacing={16}>
+							<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={() => window.print()}>
+								<Icon icon='carbon:printer' />
+								<Text>Print</Text>
+							</Group>
+
+							<Group
+								align='center'
+								spacing={8}
+								style={{ cursor: 'pointer' }}
+								onClick={() => deleteMutation.mutate({ id: queryResult.id })}
+							>
+								<Icon icon='carbon:trash-can' />
+								<Text>Delete</Text>
+							</Group>
+						</Group>
 					</Group>
 
 					<Stack mt='md' mb='md'>
@@ -112,7 +154,7 @@ const SavedLists = () => {
 						</Text>
 					</Stack>
 
-					<Tabs defaultValue={'organizations'} onTabChange={handleTabChange}>
+					<Tabs value={activeTab} onTabChange={handleTabChange}>
 						<Tabs.List>
 							<Tabs.Tab value='organizations'>Organizations</Tabs.Tab>
 							<Tabs.Tab value='services'>Services</Tabs.Tab>

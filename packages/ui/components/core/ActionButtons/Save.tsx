@@ -69,10 +69,13 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 		displayText: t('list.error-remove'),
 	})
 
+	const { data: allSavedLists, refetch } = api.savedList.getAll.useQuery()
+
 	const saveItem = api.savedList.saveItem.useMutation({
 		onSuccess: (_, { itemId }) => {
 			savedInList()
 			utils.savedList.isSaved.invalidate(itemId)
+			refetch()
 		},
 		onError: errorSaving,
 	})
@@ -80,6 +83,7 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 		onSuccess: (_, { itemId }) => {
 			deletedInList()
 			utils.savedList.isSaved.invalidate(itemId)
+			refetch()
 		},
 		onError: errorRemoving,
 	})
