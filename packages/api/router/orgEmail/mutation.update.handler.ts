@@ -51,9 +51,15 @@ const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protecte
 						email,
 						...record,
 						description: updateDescriptionText ? { create: updateDescriptionText.upsert.create } : undefined,
-						...(linkLocationId && {
-							locations: { createMany: { data: [{ orgLocationId: linkLocationId }], skipDuplicates: true } },
-						}),
+						...(linkLocationId
+							? {
+									locations: {
+										createMany: { data: [{ orgLocationId: linkLocationId }], skipDuplicates: true },
+									},
+								}
+							: {
+									organization: { createMany: { data: [{ organizationId: orgId }], skipDuplicates: true } },
+								}),
 					},
 					update: {
 						...record,
