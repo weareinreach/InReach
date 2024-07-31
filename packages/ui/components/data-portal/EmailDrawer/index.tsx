@@ -104,12 +104,10 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 
 		const emailUpdate = api.orgEmail.update.useMutation({
-			onSettled: (data) => {
+			onSuccess: (data) => {
+				setIsSaved(true)
 				apiUtils.orgEmail.invalidate()
 				reset(data)
-			},
-			onSuccess: () => {
-				setIsSaved(true)
 				notifySave()
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
