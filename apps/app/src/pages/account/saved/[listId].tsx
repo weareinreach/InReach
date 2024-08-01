@@ -1,33 +1,19 @@
-import {
-	Button,
-	Center,
-	Container,
-	Divider,
-	Grid,
-	Group,
-	Loader,
-	Overlay,
-	Paper,
-	Stack,
-	Tabs,
-	Text,
-	Title,
-} from '@mantine/core'
-import { DateTime } from 'luxon'
+import { Center, Container, Group, Loader, Overlay, Stack, Tabs, Text, Title } from '@mantine/core'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useEffect, useState } from 'react'
 
-import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
-import { SavedOrgResultCard } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
+import {
+	SavedOrgResultCard,
+	SavedResultLoading,
+} from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
 import { SavedServiceResultCard } from '@weareinreach/ui/components/core/Saved/SavedServiceResultCard'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-// import { QuickPromotionModal } from '@weareinreach/ui/modals'
 import { Icon } from '~ui/icon'
 
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
@@ -62,10 +48,11 @@ const SavedLists = () => {
 	const router = useRouter<'/account/saved/[listId]'>()
 	const { listId } = router.query
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
-	const { data: queryResult, isLoading } = api.savedList.getById.useQuery(
-		{ id: listId ?? '' },
-		{ enabled: !!listId }
-	)
+	const {
+		data: queryResult,
+		isLoading,
+		refetch,
+	} = api.savedList.getById.useQuery({ id: listId ?? '' }, { enabled: !!listId })
 
 	const { query } = router
 	const initialTab = query.tab ? (query.tab as string) : 'organizations'
@@ -75,6 +62,11 @@ const SavedLists = () => {
 		const currentTab = query.tab ? (query.tab as string) : 'organizations'
 		setActiveTab(currentTab)
 	}, [query.tab])
+
+	useEffect(() => {
+		refetch()
+		refetchAll()
+	}, [])
 
 	if (status === 'loading') {
 		return (
@@ -105,82 +97,89 @@ const SavedLists = () => {
 		}
 	}
 
-	const { data: allSavedLists, refetch } = api.savedList.getAll.useQuery()
+	const { data: allSavedLists, refetch: refetchAll } = api.savedList.getAll.useQuery()
 
 	const deleteMutation = api.savedList.delete.useMutation({
 		onSuccess: () => {
 			refetch()
+			refetchAll()
 			router.replace('/account/saved')
 		},
 	})
 
 	return (
-		queryResult && (
-			<Container size='lg' px='md' py='lg'>
-				<Stack spacing='lg' style={{ paddingTop: '3rem' }}>
-					<Group position='apart'>
+		<Container size='lg' px='md' py='lg' style={{ minWidth: '100%' }}>
+			<Stack spacing='lg' style={{ paddingTop: '3rem' }}>
+				<Group position='apart'>
+					<Group
+						align='center'
+						spacing={8}
+						style={{ cursor: 'pointer' }}
+						onClick={() => router.replace('/account/saved')}
+					>
+						<Icon icon='carbon:arrow-left' />
+						<Text>{t('list.back')}</Text>
+					</Group>
+
+					<Group spacing={16}>
+						<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={() => window.print()}>
+							<Icon icon='carbon:printer' />
+							<Text>{t('list.print')}</Text>
+						</Group>
+
 						<Group
 							align='center'
 							spacing={8}
 							style={{ cursor: 'pointer' }}
-							onClick={() => router.replace('/account/saved')}
+							onClick={() => deleteMutation.mutate({ id: queryResult?.id ?? '' })}
 						>
-							<Icon icon='carbon:arrow-left' />
-							<Text>Back to Saved</Text>
-						</Group>
-
-						<Group spacing={16}>
-							<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={() => window.print()}>
-								<Icon icon='carbon:printer' />
-								<Text>Print</Text>
-							</Group>
-
-							<Group
-								align='center'
-								spacing={8}
-								style={{ cursor: 'pointer' }}
-								onClick={() => deleteMutation.mutate({ id: queryResult.id })}
-							>
-								<Icon icon='carbon:trash-can' />
-								<Text>Delete</Text>
-							</Group>
+							<Icon icon='carbon:trash-can' />
+							<Text>{t('list.delete')}</Text>
 						</Group>
 					</Group>
+				</Group>
 
-					<Stack mt='md' mb='md'>
-						<Title order={2}>{queryResult.name ?? ''}</Title>
-						<Text>
-							Updated {formatDate(queryResult.updatedAt)} &#8226; {queryResult._count.organizations} resources
-						</Text>
-					</Stack>
-
-					<Tabs value={activeTab} onTabChange={handleTabChange}>
-						<Tabs.List>
-							<Tabs.Tab value='organizations'>Organizations</Tabs.Tab>
-							<Tabs.Tab value='services'>Services</Tabs.Tab>
-						</Tabs.List>
-						<Tabs.Panel value='organizations' pt='xs'>
-							{isLoading ? (
-								<>Placeholder!</>
-							) : (
-								queryResult.organizations?.map((result) => {
-									return <SavedOrgResultCard key={result.id} result={result} />
-								})
-							)}
-						</Tabs.Panel>
-						<Tabs.Panel value='services' pt='xs'>
-							{isLoading ? (
-								<>Placeholder!</>
-							) : (
-								queryResult.services?.map((result) => {
-									return <SavedServiceResultCard key={result.id} result={result} />
-								})
-							)}{' '}
-						</Tabs.Panel>
-					</Tabs>
+				<Stack mt='md' mb='md'>
+					<Title order={2}>{queryResult?.name ?? ''}</Title>
+					<Text>
+						{t('list.updated')} {formatDate(queryResult?.updatedAt ?? new Date(Date.now()))} &#8226;{' '}
+						{queryResult?._count?.organizations ?? 0 + (queryResult?._count?.services ?? 0)}{' '}
+						{t('list.resources')}
+					</Text>
 				</Stack>
-			</Container>
-		)
+
+				<Tabs value={activeTab} onTabChange={handleTabChange}>
+					<Tabs.List>
+						<Tabs.Tab value='organizations'>Organizations</Tabs.Tab>
+						<Tabs.Tab value='services'>Services</Tabs.Tab>
+					</Tabs.List>
+					<Tabs.Panel value='organizations' pt='xs'>
+						{isLoading ? (
+							<SavedResultLoading />
+						) : queryResult?._count?.organizations === 0 ? (
+							<Text>{t('list.no-orgs')}</Text>
+						) : (
+							queryResult?.organizations?.map((result) => {
+								return <SavedOrgResultCard key={result.id} result={result} />
+							})
+						)}
+					</Tabs.Panel>
+					<Tabs.Panel value='services' pt='xs'>
+						{isLoading ? (
+							<Center>
+								<Loader />
+							</Center>
+						) : queryResult?._count?.services === 0 ? (
+							<Text>{t('list.no-services')}</Text>
+						) : (
+							queryResult?.services?.map((result) => {
+								return <SavedServiceResultCard key={result.id} result={result} />
+							})
+						)}{' '}
+					</Tabs.Panel>
+				</Tabs>
+			</Stack>
+		</Container>
 	)
 }
 

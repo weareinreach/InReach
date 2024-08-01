@@ -1,18 +1,20 @@
-import { Button, Card, Center, Divider, Grid, Loader, Overlay, Stack, Text, Title } from '@mantine/core'
+import { Box, Card, Center, Divider, Grid, Group, Loader, Overlay, Stack, Text, Title } from '@mantine/core'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { useCallback } from 'react'
-import { Integer } from 'type-fest'
+import { type MouseEvent, useCallback } from 'react'
 
 import { getServerSession } from '@weareinreach/auth'
 import { Link } from '@weareinreach/ui/components/core/Link'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
+import { SavedResultLoading } from '~ui/components/core/Saved/SavedOrgResultCard'
+import { Icon } from '~ui/icon'
+import { CreateNewList } from '~ui/modals'
+
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
 )
@@ -42,9 +44,20 @@ const SavedLists = () => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
 	const router = useRouter()
-	const { data: allSavedLists } = api.savedList.getAll.useQuery()
-	const variants = useCustomVariant()
+	const { data: allSavedLists, isLoading, refetch } = api.savedList.getAll.useQuery()
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
+
+	const deleteMutation = api.savedList.delete.useMutation({
+		onSuccess: () => {
+			refetch()
+		},
+	})
+
+	const handleDelete = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, id: string) => {
+		e.stopPropagation()
+		deleteMutation.mutate({ id })
+	}
+
 	if (status === 'loading') {
 		return (
 			<Center>
@@ -63,31 +76,71 @@ const SavedLists = () => {
 	return (
 		<Grid.Col xs={12} sm={12}>
 			<Stack>
-				<Title order={1}>Saved</Title>
-				<Text size='lg'>
-					Your lists of saved resources are only visible to you and anyone you share them with.
-				</Text>
-				<Button variant='primaryLg' onClick={() => router.push('/account')} style={{ width: 'fit-content' }}>
-					Create new list
-				</Button>
+				<Title order={1}> {t('list.saved')} </Title>
+				<Text size='lg'>{t('list.create-new-sub')}</Text>
+				<CreateNewList
+					style={{
+						fontSize: '16px',
+						fontWeight: 'normal',
+						backgroundColor: 'black',
+						color: 'white',
+						borderRadius: '10px',
+						padding: '12px 24px',
+						textAlign: 'center',
+						border: 'none',
+						display: 'inline-block',
+						width: 'max-content',
+					}}
+				>
+					{t('list.create-new')}
+				</CreateNewList>
 				<Divider my='xl' />
-				{allSavedLists?.map((list) => (
-					<Link
-						key={list.id}
-						href={{ pathname: '/account/saved/[listId]', query: { listId: list.id } }}
-						style={{ textDecoration: 'none' }}
-					>
+				{isLoading ? (
+					<Center>
+						<SavedResultLoading />
+					</Center>
+				) : !allSavedLists || allSavedLists.length === 0 ? (
+					<Text>{t('list.none-yet')}</Text>
+				) : (
+					allSavedLists?.map((list) => (
 						<Card key={list.id}>
-							<Stack>
-								<Title order={2}>{list.name}</Title>
-								<Text>
-									Updated {formatDate(list.updatedAt)} &#8226;{' '}
-									{list._count.organizations + list._count.services} resources
-								</Text>
+							<Stack spacing='sm'>
+								<Group position='apart' align='center' style={{ width: '100%' }}>
+									<Stack spacing='sm' style={{ flex: 1 }}>
+										<Link
+											href={{ pathname: '/account/saved/[listId]', query: { listId: list.id } }}
+											style={{ textDecoration: 'none', color: 'inherit' }}
+										>
+											<Title order={2}>{list.name}</Title>
+											<Text>
+												{t('list.updated')} {formatDate(list.updatedAt)} &#8226;{' '}
+												{list._count.organizations + list._count.services} {t('list.resources')}
+											</Text>
+										</Link>
+									</Stack>
+									<Group spacing='sm'>
+										<Box
+											component='button'
+											style={{
+												background: 'none',
+												border: 'none',
+												cursor: 'pointer',
+												padding: '8px',
+												display: 'inline-flex',
+												alignItems: 'center',
+												justifyContent: 'center',
+											}}
+											onClick={(e) => handleDelete(e, list.id)}
+										>
+											<Icon icon='carbon:trash-can' width='24' height='24' />
+											<Text ml='xs'>{t('list.delete')}</Text>
+										</Box>
+									</Group>
+								</Group>
 							</Stack>
 						</Card>
-					</Link>
-				))}
+					))
+				)}
 			</Stack>
 		</Grid.Col>
 	)

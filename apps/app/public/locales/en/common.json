@@ -171,7 +171,16 @@
 		"name": "List name",
 		"new-list-placeholder": "Enter list name...",
 		"removedMulti": "Resource removed from list: {{name}}",
-		"removedSingle": "Resource removed from list"
+		"removedSingle": "Resource removed from list",
+		"saved": "Saved",
+		"none-yet": "No lists yet.",
+		"updated": "Updated",
+		"resources": "Resources",
+		"delete": "Delete",
+		"back": "Back to saved",
+		"print": "Print",
+		"no-orgs": "No organizations yet.",
+		"no-services": "No services yet."
 	},
 	"loading-page": "Loading Page...",
 	"log-in": "Log in",

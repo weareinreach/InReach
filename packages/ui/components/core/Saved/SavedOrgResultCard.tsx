@@ -10,98 +10,6 @@ import { ActionButtons } from '../ActionButtons'
 import { Badge } from '../Badge'
 import { Link } from '../Link'
 
-type Organization = NonNullable<ApiOutput['savedList']['getById']>['organizations'][number]
-
-// export interface TsKey {
-// 	key: string
-// 	ns: string
-// 	defaultText: string
-// }
-
-// abstract class SavedItem {
-// 	id: string
-// 	slug: string
-// 	description: TsKey
-
-// 	constructor(id: string, slug: string, description: TsKey) {
-// 		this.id = id
-// 		this.slug = slug
-// 		this.description = description
-// 	}
-
-// 	abstract getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string
-
-// 	getLeaderBadges(): Badge[] {
-// 		return []
-// 	}
-
-// 	getCommunityBadges(): Badge[] {
-// 		return []
-// 	}
-
-// 	getCities(): string[] {
-// 		return []
-// 	}
-// }
-
-// export interface Badge {
-// 	icon: string
-// 	iconBg: string | null
-// 	tsKey: string
-// 	tsNs: string
-// }
-
-// export class Organization extends SavedItem {
-// 	name: string
-// 	leaderBadges: Badge[]
-// 	communityBadges: Badge[]
-// 	cities: string[]
-
-// 	constructor(
-// 		id: string,
-// 		slug: string,
-// 		name: string,
-// 		description: TsKey,
-// 		leaderBadges: Badge[],
-// 		communityBadges: Badge[],
-// 		cities: string[]
-// 	) {
-// 		super(id, slug, description)
-// 		this.name = name
-// 		this.leaderBadges = leaderBadges
-// 		this.communityBadges = communityBadges
-// 		this.cities = cities
-// 	}
-
-// 	getDisplayName(t: (key: string, options?: { ns: string; defaultValue: string }) => string): string {
-// 		return this.name
-// 	}
-
-// 	getLeaderBadges(): Badge[] {
-// 		return this.leaderBadges
-// 	}
-
-// 	getCommunityBadges(): Badge[] {
-// 		return this.communityBadges
-// 	}
-
-// 	getCities(): string[] {
-// 		return this.cities
-// 	}
-// }
-
-export interface SavedResultLoading {
-	loading: true
-	result?: never
-}
-
-export interface SavedResultHasData {
-	loading?: false
-	result: Organization
-}
-
-export type SavedResultCardProps = SavedResultHasData | SavedResultLoading
-
 const useStyles = createStyles((theme) => ({
 	cardBody: {
 		'&:hover': {
@@ -124,7 +32,7 @@ export const SavedResultLoading = () => {
 	const variants = useCustomVariant()
 	return (
 		<>
-			<Stack spacing={16}>
+			<Stack spacing={16} w='100%'>
 				<Stack spacing={12}>
 					<Group position='apart'>
 						<Skeleton variant={variants.Skeleton.h2} w='80%' />
@@ -139,9 +47,9 @@ export const SavedResultLoading = () => {
 					</Stack>
 				</Stack>
 				<Group spacing={16}>
-					<Skeleton h={32} w={75} />
-					<Skeleton h={32} w={75} />
-					<Skeleton h={32} w={75} />
+					<Skeleton h={32} w='100%' />
+					<Skeleton h={32} w='100%' />
+					<Skeleton h={32} w='100%' />
 				</Group>
 			</Stack>
 			<Divider my={40} />
@@ -165,7 +73,6 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 							{t(tsKey, { ns: 'attribute' })}
 						</Badge.Leader>
 					))}
-					{/* {national?.length ? <Badge.National countries={national} /> : null} */}
 				</Badge.Group>
 			) : null,
 		[savedItem, t]
@@ -182,18 +89,6 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 			) : null,
 		[savedItem, t]
 	)
-
-	// const serviceBadgeGroup = useMemo(
-	// 	() =>
-	// 		serviceCategories.length ? (
-	// 			<Badge.Group>
-	// 				{serviceCategories.map(({ id, tsKey }) => (
-	// 					<Badge.Service key={id}>{t(tsKey, { ns: 'services' })}</Badge.Service>
-	// 				))}
-	// 			</Badge.Group>
-	// 		) : null,
-	// 	[serviceCategories, t]
-	// )
 
 	const cityList = useCallback(
 		(cities: string[]) => {
@@ -277,23 +172,25 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 					</Link>
 				</Stack>
 				{communityFocusBadgeGroup}
-				{/* {serviceBadgeGroup} */}
 			</Stack>
 			<Divider my={40} />
 		</>
 	)
 }
 
-export const SavedOrgResultCard = (props: SavedResultCardProps) =>
-	props.loading ? <SavedResultLoading /> : <SavedResultData {...props} />
+type Organization = NonNullable<ApiOutput['savedList']['getById']>['organizations'][number]
 
-export type SearchResultCardProps = SearchResultHasData | SearchResultLoading
-
-type SearchResultHasData = {
-	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
-	loading?: boolean
-}
-type SearchResultLoading = {
+export interface SavedResultLoading {
 	loading: true
 	result?: never
 }
+
+export interface SavedResultHasData {
+	loading?: false
+	result: Organization
+}
+
+export type SavedResultCardProps = SavedResultHasData | SavedResultLoading
+
+export const SavedOrgResultCard = (props: SavedResultCardProps) =>
+	props.loading ? <SavedResultLoading /> : <SavedResultData {...props} />
