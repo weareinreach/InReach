@@ -143,7 +143,7 @@ const SavedLists = () => {
 					<Title order={2}>{queryResult?.name ?? ''}</Title>
 					<Text>
 						{t('list.updated')} {formatDate(queryResult?.updatedAt ?? new Date(Date.now()))} &#8226;{' '}
-						{queryResult?._count?.organizations ?? 0 + (queryResult?._count?.services ?? 0)}{' '}
+						{queryResult ? queryResult._count?.organizations + queryResult?._count?.services : 0}{' '}
 						{t('list.resources')}
 					</Text>
 				</Stack>
