@@ -242,7 +242,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		paths: [],
 		fallback: true,
 	}
-	// }
 }
 
 export const getStaticProps: GetStaticProps<
@@ -261,13 +260,14 @@ export const getStaticProps: GetStaticProps<
 				redirect: {
 					permanent: true,
 					destination: `/org/${redirect.redirectTo}`,
+					revalidate: 60 * 60 * 24, // 1 day
 				},
 			}
 		}
 
 		const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
 		if (!orgId) {
-			return { notFound: true }
+			return { notFound: true, revalidate: 1 }
 		}
 
 		const [i18n] = await Promise.allSettled([
