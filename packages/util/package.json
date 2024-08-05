@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@vercel/edge-config": "1.2.1",
-		"luxon": "3.4.4",
+		"luxon": "3.5.0",
 		"social-links": "1.14.0",
 		"superjson": "2.2.1",
 		"tslog": "4.9.3"
@@ -22,7 +22,7 @@
 	"devDependencies": {
 		"@types/eslint": "8.56.11",
 		"@types/luxon": "3.4.2",
-		"@types/node": "20.14.13",
+		"@types/node": "20.14.14",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.0",
