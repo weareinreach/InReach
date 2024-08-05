@@ -16,7 +16,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
-import { useDebouncedValue, useDisclosure, usePrevious } from '@mantine/hooks'
+import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import filterObject from 'just-filter-object'
 import { useTranslation } from 'next-i18next'
@@ -41,18 +41,11 @@ import { AddressVisibilitySchema, FormSchema, schemaTransform } from './schema'
 import { useStyles } from './styles'
 import { MultiSelectPopover } from '../MultiSelectPopover'
 
-const US_COUNTRY_ID = 'ctry_01GW2HHDK9M26M80SG63T21SVH'
-
 const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = [
 	{ value: AddressVisibility.FULL, label: 'Show full address' },
 	{ value: AddressVisibility.PARTIAL, label: 'Show city & state/province' },
 	{ value: AddressVisibility.HIDDEN, label: 'Hide address' },
 ]
-
-const useCoordNotification = () => ({
-	address: useNewNotification({ displayText: 'Lat/Lon set to address', icon: 'info' }),
-	city: useNewNotification({ displayText: 'Lat/Lon set to city center', icon: 'info' }),
-})
 
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
@@ -70,7 +63,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		},
 		transformValues: FormSchema.transform(schemaTransform).parse,
 	})
-	const previousAddressVisibility = usePrevious(form.values.data.addressVisibility)
 	const { id: organizationId } = useOrgInfo()
 	const { t, i18n } = useTranslation(['attribute', 'gov-dist'])
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
@@ -79,7 +71,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const apiUtils = api.useUtils()
 
 	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
-	const notifyCoordUpdate = useCoordNotification()
 
 	// #region Get country/gov dist selection items
 	const { data: countryOptions, isSuccess: countryOptionsLoaded } =
@@ -160,57 +151,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			FormSchema.transform(schemaTransform).parse({ id: form.values.id, data: changesOnly })
 		)
 	}, [form, updateLocation])
-
-	const setCoordsToFullAddress = useCallback(
-		async (formHook: typeof form) => {
-			if (formHook.isTouched('data.addressVisibility')) {
-				if (!formHook.values.data.street1 || formHook.values.data.street1 === '') {
-					coordModalHandler.open()
-				}
-				const searchTerms = [
-					formHook.values.data.street1,
-					formHook.values.data.street2,
-					formHook.values.data.city,
-					formHook.values.data.postCode,
-				]
-					.filter(Boolean)
-					.join(', ')
-				const { results: autocompleteResults } = await apiUtils.geo.autocomplete.fetch({
-					search: searchTerms,
-					fullAddress: true,
-				})
-				const placeId =
-					autocompleteResults.length >= 1 && autocompleteResults.at(0)?.placeId
-						? autocompleteResults.at(0)?.placeId
-						: undefined
-				if (placeId) {
-					setGooglePlaceId(placeId)
-				} else {
-					coordModalHandler.open()
-				}
-				notifyCoordUpdate.address()
-			}
-		},
-		[apiUtils, coordModalHandler, notifyCoordUpdate]
-	)
-
-	const setCoordsToCityCenter = useCallback(
-		async (formHook: typeof form) => {
-			if (formHook.values.data.city && formHook.isTouched('data.addressVisibility')) {
-				const { results: cityResults } = await apiUtils.geo.cityCoords.fetch({
-					city: formHook.values.data.city,
-					country: formHook.values.data.countryId ?? US_COUNTRY_ID,
-					govDist: formHook.values.data.govDistId,
-				})
-				if (cityResults && !Array.isArray(cityResults)) {
-					const { place_id } = cityResults
-					setGooglePlaceId(place_id)
-				}
-			}
-			notifyCoordUpdate.city()
-		},
-		[apiUtils, notifyCoordUpdate]
-	)
 
 	useEffect(() => {
 		if (isSaved && isSaved === form.isDirty()) {
@@ -330,35 +270,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		},
 		[setSearchTerm, form]
 	)
-	const handleAddressVisibilityChange = useCallback(
-		(val: string | null) => {
-			form.getInputProps('data.addressVisibility').onChange(val)
-			const validatedAddressVisibility = AddressVisibilitySchema.safeParse(val)
-			if (!validatedAddressVisibility.success) {
-				return
-			}
-			const currentAddressVisibility = validatedAddressVisibility.data
-
-			switch (true) {
-				case previousAddressVisibility === 'FULL' &&
-					currentAddressVisibility &&
-					currentAddressVisibility !== 'FULL': {
-					setCoordsToCityCenter(form)
-					break
-				}
-				case previousAddressVisibility !== undefined &&
-					previousAddressVisibility !== 'FULL' &&
-					currentAddressVisibility === 'FULL': {
-					setCoordsToFullAddress(form)
-					break
-				}
-				default: {
-					break
-				}
-			}
-		},
-		[form, previousAddressVisibility, setCoordsToCityCenter, setCoordsToFullAddress]
-	)
 
 	// #endregion
 	const addressFieldRequired = form.values.data.addressVisibility === AddressVisibility.FULL
@@ -428,7 +339,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 										data={addressVisibilityOptions}
 										defaultValue={AddressVisibility.FULL}
 										{...form.getInputProps('data.addressVisibility')}
-										onChange={handleAddressVisibilityChange}
 									/>
 								</Stack>
 								<Stack spacing={0}>
