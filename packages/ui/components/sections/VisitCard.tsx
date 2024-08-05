@@ -31,9 +31,9 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	const { data } = api.location.forVisitCard.useQuery(locationId)
 
 	const formattedAddress = useFormattedAddress(data)
-
+	const hasMapData = !!data?.latitude && !!data?.longitude && !!data?.name
 	useEffect(() => {
-		if (map && mapIsReady) {
+		if (map && mapIsReady && hasMapData) {
 			const lat = data?.latitude
 			const lng = data?.longitude
 			const name = data?.name
@@ -60,7 +60,17 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 			}
 		}
 		return () => void 0
-	}, [data?.name, data?.latitude, data?.longitude, formattedAddress, map, mapIsReady, locationId, mapMarker])
+	}, [
+		data?.name,
+		data?.latitude,
+		data?.longitude,
+		formattedAddress,
+		map,
+		mapIsReady,
+		locationId,
+		mapMarker,
+		hasMapData,
+	])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
@@ -72,9 +82,13 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 
 	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
-			<Title order={3}>{t('address', { context: data.remote ? 'physical' : undefined })}</Title>
+			<Title order={3}>
+				{t(hasMapData ? 'words.address' : 'words.location', {
+					context: data.remote ? 'physical' : undefined,
+				})}
+			</Title>
 			<Text>{formattedAddress}</Text>
-			<GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />
+			{hasMapData && <GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />}
 		</Stack>
 	)
 
@@ -139,8 +153,9 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	const { data } = api.location.forVisitCardEdits.useQuery(locationId)
 
 	const formattedAddress = useFormattedAddress(data)
+	const hasMapData = !!data?.latitude && !!data?.longitude && !!data?.name
 	useEffect(() => {
-		if (map && mapIsReady) {
+		if (map && mapIsReady && hasMapData) {
 			const { name, latitude: lat, longitude: lng } = data ?? {}
 			try {
 				invariant(lat)
@@ -165,7 +180,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 			}
 		}
 		return () => void 0
-	}, [data, formattedAddress, map, mapIsReady, locationId, mapMarker])
+	}, [data, formattedAddress, map, mapIsReady, locationId, mapMarker, hasMapData])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
@@ -183,7 +198,11 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
-			<Title order={3}>{t('address', { context: data.remote ? 'physical' : undefined })}</Title>
+			<Title order={3}>
+				{t(hasMapData ? 'words.address' : 'words.location', {
+					context: data.remote ? 'physical' : undefined,
+				})}
+			</Title>
 			<Group>
 				{data.addressVisibility === AddressVisibility.HIDDEN && addressHiddenIcon}
 				<AddressDrawer
@@ -196,7 +215,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 					<Text className={classes.overlayInner}>{formattedAddress}</Text>
 				</AddressDrawer>
 			</Group>
-			<GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />
+			{hasMapData && <GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />}
 		</Stack>
 	)
 
