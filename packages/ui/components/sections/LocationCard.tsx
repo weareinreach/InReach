@@ -91,7 +91,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		if (!mapIsReady || !map || !hasData(data) || !canGetCenter) {
 			return null
 		}
-		if (!hasCoords(data)) {
+		if (!hasCoords(data) || !data.published) {
 			return null
 		}
 

@@ -34,9 +34,7 @@ const forGoogleMaps = async ({ input, ctx }: TRPCHandlerParams<TForGoogleMapsSch
 					{ latitude: { not: 0 } },
 					{ longitude: { not: 0 } },
 					{
-						addressVisibility: {
-							in: [PrismaEnums.AddressVisibility.FULL, PrismaEnums.AddressVisibility.PARTIAL],
-						},
+						addressVisibility: PrismaEnums.AddressVisibility.FULL,
 					},
 				],
 			},

@@ -17,6 +17,9 @@ export const formatAddressVisiblity = (location: ProvidedAddress, isEditMode = f
 		case PrismaEnums.AddressVisibility.PARTIAL: {
 			address.street1 = null
 			address.street2 = null
+			address.postCode = null
+			address.latitude = null
+			address.longitude = null
 			return address
 		}
 		case PrismaEnums.AddressVisibility.HIDDEN:
