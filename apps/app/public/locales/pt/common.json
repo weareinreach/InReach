@@ -5,8 +5,6 @@
 	},
 	"account": "Conta",
 	"add": "Adicionar {{item}}",
-	"address": "Endereço",
-	"address_physical": "Endereço físico",
 	"adjective": {
 		"organization": "{{adjective}} organização"
 	},
@@ -403,6 +401,8 @@
 		"accept": "Aceitar",
 		"account": "Conta",
 		"add": "Adicionar",
+		"address": "Endereço",
+		"address_physical": "Endereço físico",
 		"and": "e",
 		"and-x-more": "e {{count}} mais",
 		"approve": "Aprovar",
