@@ -68,8 +68,8 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 		() =>
 			savedItem.leaderBadges.length ? ( // || national?.length ? (
 				<Badge.Group>
-					{savedItem.leaderBadges.map(({ icon, iconBg, tsKey }) => (
-						<Badge.Leader minify hideBg {...{ icon: icon ?? '', iconBg: iconBg ?? '#FFFFFF' }}>
+					{savedItem.leaderBadges.map(({ icon, iconBg, tsKey, id }) => (
+						<Badge.Leader key={id} minify hideBg {...{ icon: icon ?? '', iconBg: iconBg ?? '#FFFFFF' }}>
 							{t(tsKey, { ns: 'attribute' })}
 						</Badge.Leader>
 					))}
@@ -82,8 +82,10 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 		() =>
 			savedItem.communityBadges.length ? (
 				<Badge.Group>
-					{savedItem.communityBadges.map(({ icon, tsKey }) => (
-						<Badge.Community icon={icon ?? ''}>{t(tsKey, { ns: 'attribute' })}</Badge.Community>
+					{savedItem.communityBadges.map(({ icon, tsKey, id }) => (
+						<Badge.Community key={id} icon={icon ?? ''}>
+							{t(tsKey, { ns: 'attribute' })}
+						</Badge.Community>
 					))}
 				</Badge.Group>
 			) : null,

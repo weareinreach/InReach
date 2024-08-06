@@ -47,6 +47,23 @@ const SavedLists = () => {
 		apiUtils.savedList.getAll.invalidate()
 	}, [])
 
+	const handleTabChange = useCallback(
+		(tab: string) => {
+			setActiveTab(tab)
+			if (listId) {
+				router.push(
+					{
+						pathname: router.pathname,
+						query: { ...router.query, tab, listId },
+					},
+					undefined,
+					{ shallow: true }
+				)
+			}
+		},
+		[listId, router]
+	)
+
 	if (status === 'loading') {
 		return (
 			<Center>
@@ -60,20 +77,6 @@ const SavedLists = () => {
 				<QuickPromotionModal component='button' autoLaunch onClose={handleReturnHome} />
 			</Overlay>
 		)
-	}
-
-	const handleTabChange = (tab: string) => {
-		setActiveTab(tab)
-		if (listId) {
-			router.push(
-				{
-					pathname: router.pathname,
-					query: { ...router.query, tab, listId },
-				},
-				undefined,
-				{ shallow: true }
-			)
-		}
 	}
 
 	const { data: allSavedLists } = api.savedList.getAll.useQuery()
