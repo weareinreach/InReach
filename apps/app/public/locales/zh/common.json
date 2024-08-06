@@ -5,8 +5,6 @@
 	},
 	"account": "账户",
 	"add": "添加 {{item}}",
-	"address": "地址",
-	"address_physical": "物理地址",
 	"adjective": {
 		"organization": "{{adjective}} 组织"
 	},
@@ -402,6 +400,8 @@
 		"accept": "接受",
 		"account": "账户",
 		"add": "添加",
+		"address": "地址",
+		"address_physical": "物理地址",
 		"and": "和",
 		"and-x-more": "和 {{count}} 更多",
 		"approve": "批准",

@@ -5,8 +5,6 @@
 	},
 	"account": "계정",
 	"add": "{{item}}추가",
-	"address": "주소",
-	"address_physical": "물리적 주소",
 	"adjective": {
 		"organization": "{{adjective}} 단체"
 	},
@@ -402,6 +400,8 @@
 		"accept": "승락하다",
 		"account": "계정",
 		"add": "추가",
+		"address": "주소",
+		"address_physical": "물리적 주소",
 		"and": "그리고",
 		"and-x-more": "{{count}}랑 이상",
 		"approve": "승인하다",
