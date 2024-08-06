@@ -12,35 +12,14 @@ import {
 	SavedResultLoading,
 } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
 import { SavedServiceResultCard } from '@weareinreach/ui/components/core/Saved/SavedServiceResultCard'
+import { formatDate } from '~app/pages/account/saved'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 import { Icon } from '~ui/icon'
-
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
 )
-
-const formatDate = (dateString: Date) => {
-	const date = new Date(dateString)
-	const daySuffix = (d: number) => {
-		if (d > 3 && d < 21) return 'th'
-		switch (d % 10) {
-			case 1:
-				return 'st'
-			case 2:
-				return 'nd'
-			case 3:
-				return 'rd'
-			default:
-				return 'th'
-		}
-	}
-	const day = date.getDate()
-	const dayWithSuffix = day + daySuffix(day)
-	const formattedDate = `${date.toLocaleDateString('en-US', { weekday: 'short' })}, ${date.toLocaleDateString('en-US', { month: 'long' })} ${dayWithSuffix}, ${date.getFullYear()}`
-	return formattedDate
-}
 
 const SavedLists = () => {
 	const { t, i18n } = useTranslation('common')
@@ -48,12 +27,12 @@ const SavedLists = () => {
 	const router = useRouter<'/account/saved/[listId]'>()
 	const { listId } = router.query
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
-	const {
-		data: queryResult,
-		isLoading,
-		refetch,
-	} = api.savedList.getById.useQuery({ id: listId ?? '' }, { enabled: !!listId })
+	const { data: queryResult, isLoading } = api.savedList.getById.useQuery(
+		{ id: listId ?? '' },
+		{ enabled: !!listId }
+	)
 
+	const apiUtils = api.useUtils()
 	const { query } = router
 	const initialTab = query.tab ? (query.tab as string) : 'organizations'
 	const [activeTab, setActiveTab] = useState(initialTab)
@@ -64,8 +43,8 @@ const SavedLists = () => {
 	}, [query.tab])
 
 	useEffect(() => {
-		refetch()
-		refetchAll()
+		apiUtils.savedList.getById.invalidate({ id: listId ?? '' })
+		apiUtils.savedList.getAll.invalidate()
 	}, [])
 
 	if (status === 'loading') {
@@ -97,12 +76,12 @@ const SavedLists = () => {
 		}
 	}
 
-	const { data: allSavedLists, refetch: refetchAll } = api.savedList.getAll.useQuery()
+	const { data: allSavedLists } = api.savedList.getAll.useQuery()
 
 	const deleteMutation = api.savedList.delete.useMutation({
 		onSuccess: () => {
-			refetch()
-			refetchAll()
+			apiUtils.savedList.getById.invalidate({ id: listId ?? '' })
+			apiUtils.savedList.getAll.invalidate()
 			router.replace('/account/saved')
 		},
 	})
@@ -124,7 +103,7 @@ const SavedLists = () => {
 					<Group spacing={16}>
 						<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={() => window.print()}>
 							<Icon icon='carbon:printer' />
-							<Text>{t('list.print')}</Text>
+							<Text>{t('words.print')}</Text>
 						</Group>
 
 						<Group
@@ -134,7 +113,7 @@ const SavedLists = () => {
 							onClick={() => deleteMutation.mutate({ id: queryResult?.id ?? '' })}
 						>
 							<Icon icon='carbon:trash-can' />
-							<Text>{t('list.delete')}</Text>
+							<Text>{t('words.delete')}</Text>
 						</Group>
 					</Group>
 				</Group>
@@ -143,8 +122,9 @@ const SavedLists = () => {
 					<Title order={2}>{queryResult?.name ?? ''}</Title>
 					<Text>
 						{t('list.updated')} {formatDate(queryResult?.updatedAt ?? new Date(Date.now()))} &#8226;{' '}
-						{queryResult ? queryResult._count?.organizations + queryResult?._count?.services : 0}{' '}
-						{t('list.resources')}
+						{t('list.resourcesCount', {
+							count: queryResult ? queryResult._count?.organizations + queryResult?._count?.services : 0,
+						})}
 					</Text>
 				</Stack>
 

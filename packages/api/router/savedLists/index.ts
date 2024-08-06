@@ -13,7 +13,7 @@ export const savedListRouter = defineRouter({
 		return handler(opts)
 	}),
 	/** Get list by ID. List must be owned by or shared with logged in user */
-	getById: protectedProcedure.input(schema.ZGetByIdInputSchema).query(async (opts) => {
+	getById: protectedProcedure.input(schema.ZGetByIdSchema).query(async (opts) => {
 		const handler = await importHandler(namespaced('getById'), () => import('./query.getById.handler'))
 		return handler(opts)
 	}),

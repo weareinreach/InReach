@@ -172,15 +172,12 @@
 		"new-list-placeholder": "Enter list name...",
 		"removedMulti": "Resource removed from list: {{name}}",
 		"removedSingle": "Resource removed from list",
-		"saved": "Saved",
+		"resourcesCount": "{{count}} Resources",
 		"none-yet": "No lists yet.",
-		"updated": "Updated",
-		"resources": "Resources",
-		"delete": "Delete",
 		"back": "Back to saved",
-		"print": "Print",
 		"no-orgs": "No organizations yet.",
-		"no-services": "No services yet."
+		"no-services": "No services yet.",
+		"updated": "Updated {{date}}"
 	},
 	"loading-page": "Loading Page...",
 	"log-in": "Log in",

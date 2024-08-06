@@ -1,4 +1,18 @@
-import { Box, Card, Center, Divider, Grid, Group, Loader, Overlay, Stack, Text, Title } from '@mantine/core'
+import {
+	Box,
+	Card,
+	Center,
+	createStyles,
+	Divider,
+	Grid,
+	Group,
+	Loader,
+	Overlay,
+	Stack,
+	Text,
+	Title,
+} from '@mantine/core'
+import { DateTime } from 'luxon'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -7,49 +21,53 @@ import { useTranslation } from 'next-i18next'
 import { type MouseEvent, useCallback } from 'react'
 
 import { getServerSession } from '@weareinreach/auth'
+import { Button } from '@weareinreach/ui/components/core/Button'
 import { Link } from '@weareinreach/ui/components/core/Link'
+import { SavedResultLoading } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
+import { Icon } from '@weareinreach/ui/icon'
+import { CreateNewList } from '@weareinreach/ui/modals'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { SavedResultLoading } from '~ui/components/core/Saved/SavedOrgResultCard'
-import { Icon } from '~ui/icon'
-import { CreateNewList } from '~ui/modals'
 
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
 )
 
-const formatDate = (dateString: Date) => {
-	const date = new Date(dateString)
-	const daySuffix = (d: number) => {
-		if (d > 3 && d < 21) return 'th'
-		switch (d % 10) {
-			case 1:
-				return 'st'
-			case 2:
-				return 'nd'
-			case 3:
-				return 'rd'
-			default:
-				return 'th'
-		}
-	}
-	const day = date.getDate()
-	const dayWithSuffix = day + daySuffix(day)
-	const formattedDate = `${date.toLocaleDateString('en-US', { weekday: 'short' })}, ${date.toLocaleDateString('en-US', { month: 'long' })} ${dayWithSuffix}, ${date.getFullYear()}`
+const useStyles = createStyles((theme) => ({
+	lessRoundedButton: {
+		borderRadius: '6px',
+		width: 'fit-content',
+	},
+	deleteButton: {
+		background: 'none',
+		border: 'none',
+		cursor: 'pointer',
+		padding: '8px',
+		display: 'inline-flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+}))
+
+export const formatDate = (date: Date, locale = 'en') => {
+	const dateTime = DateTime.fromJSDate(date).setLocale(locale)
+	const formattedDate = dateTime.toLocaleString(DateTime.DATE_HUGE)
 	return formattedDate
 }
 
 const SavedLists = () => {
 	const { t } = useTranslation('common')
+	const { classes } = useStyles()
 	const { data: session, status } = useSession()
 	const router = useRouter()
-	const { data: allSavedLists, isLoading, refetch } = api.savedList.getAll.useQuery()
+	const { data: allSavedLists, isLoading } = api.savedList.getAll.useQuery()
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
+	const apiUtils = api.useUtils()
 
 	const deleteMutation = api.savedList.delete.useMutation({
 		onSuccess: () => {
-			refetch()
+			apiUtils.savedList.getAll.invalidate()
 		},
 	})
 
@@ -76,24 +94,13 @@ const SavedLists = () => {
 	return (
 		<Grid.Col xs={12} sm={12}>
 			<Stack>
-				<Title order={1}> {t('list.saved')} </Title>
+				<Title order={1}> {t('words.saved')} </Title>
 				<Text size='lg'>{t('list.create-new-sub')}</Text>
-				<CreateNewList
-					style={{
-						fontSize: '16px',
-						fontWeight: 'normal',
-						backgroundColor: 'black',
-						color: 'white',
-						borderRadius: '10px',
-						padding: '12px 24px',
-						textAlign: 'center',
-						border: 'none',
-						display: 'inline-block',
-						width: 'max-content',
-					}}
-				>
+
+				<CreateNewList component={Button} className={classes.lessRoundedButton}>
 					{t('list.create-new')}
 				</CreateNewList>
+
 				<Divider my='xl' />
 				{isLoading ? (
 					<Center>
@@ -113,27 +120,21 @@ const SavedLists = () => {
 										>
 											<Title order={2}>{list.name}</Title>
 											<Text>
-												{t('list.updated')} {formatDate(list.updatedAt)} &#8226;{' '}
-												{list._count.organizations + list._count.services} {t('list.resources')}
+												{t('list.updated', { date: formatDate(list.updatedAt) })} &#8226;{' '}
+												{t('list.resourcesCount', {
+													count: list._count?.organizations + list?._count?.services,
+												})}
 											</Text>
 										</Link>
 									</Stack>
 									<Group spacing='sm'>
 										<Box
 											component='button'
-											style={{
-												background: 'none',
-												border: 'none',
-												cursor: 'pointer',
-												padding: '8px',
-												display: 'inline-flex',
-												alignItems: 'center',
-												justifyContent: 'center',
-											}}
+											className={classes.deleteButton}
 											onClick={(e) => handleDelete(e, list.id)}
 										>
 											<Icon icon='carbon:trash-can' width='24' height='24' />
-											<Text ml='xs'>{t('list.delete')}</Text>
+											<Text ml='xs'>{t('words.delete')}</Text>
 										</Box>
 									</Group>
 								</Group>
