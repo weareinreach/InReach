@@ -5,8 +5,6 @@
 	},
 	"account": "アカウント",
 	"add": "{{item}}を追加",
-	"address": "住所",
-	"address_physical": "現住所",
 	"adjective": {
 		"organization": "{{adjective}} 組織"
 	},
@@ -402,6 +400,8 @@
 		"accept": "承諾",
 		"account": "アカウント",
 		"add": "追加",
+		"address": "住所",
+		"address_physical": "現住所",
 		"and": "および",
 		"and-x-more": "他 {{count}} 名",
 		"approve": "承認",

@@ -10,6 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "الدعم المجتمعي",
+		"advocacy-and-community-organizing": "الدعوة وتنظيم المجتمعات المحلية",
 		"community-social-groups": "المجموعات المجتمعية والاجتماعية",
 		"cultural-centers": "المراكز الثقافية",
 		"lgbtq-centers": "مراكز LGBTQ",
@@ -93,6 +94,7 @@
 		"name-and-gender-change": "تغيير الاسم والعلامات الجنسانية",
 		"refugee-claim": "طلب اللجوء",
 		"residency": "الإقامة",
+		"self-advocacy-information": "معلومات الدعوة الذاتية",
 		"special-immigrant-juvenile-status-sijs": "حالة الأحداث الخاصة بالمهاجر",
 		"t-visa": "T visa",
 		"u-visa": "U visa"
