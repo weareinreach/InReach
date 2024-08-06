@@ -10,6 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "Apoyo comunitario",
+		"advocacy-and-community-organizing": "Defensa y organización comunitaria",
 		"community-social-groups": "Grupos comunitarios y sociales",
 		"cultural-centers": "Centros culturales",
 		"lgbtq-centers": "Centros LGBTTTI+",
@@ -39,23 +40,23 @@
 	"financial-assistance": {
 		"CATEGORYNAME": "Asistencia Financiera",
 		"bail-funds": "Fondos de fianza",
-		"healthcare-and-insurance": "Cuidado sanitario y seguro",
-		"housing-and-utilities": "Casas y utilidades",
-		"legal-fees": "Tarifas legales",
-		"moving-and-domestic-relocation": "Moviendo y reubicación doméstica",
+		"healthcare-and-insurance": "Asistencia médica y seguro",
+		"housing-and-utilities": "Vivienda y utilidades",
+		"legal-fees": "Honorarios legales",
+		"moving-and-domestic-relocation": "Mudanza y reubicación doméstica",
 		"mutual-aid": "Ayuda mutua"
 	},
 	"food": {
 		"CATEGORYNAME": "Comida",
 		"community-meals": "Comidas comunitarias",
 		"food-assistance": "Ayuda alimentaria",
-		"food-delivery": "Entrega de alimentos",
+		"food-delivery": "Entrega de comida",
 		"food-pantries": "Despensas de comida",
 		"nutrition-education": "Educación nutricional"
 	},
 	"housing": {
 		"CATEGORYNAME": "Casita",
-		"drop-in-centers": "Centros Soltar",
+		"drop-in-centers": "Centros de acogida",
 		"drop-in-centers-for-lgbtq-youth": "Centros de atención para jóvenes LGBTTTI+",
 		"emergency-housing": "Vivienda de emergencia",
 		"housing-information-and-referrals": "Información y referencias sobre vivienda",
@@ -93,6 +94,7 @@
 		"name-and-gender-change": "Cambio de nombre y marcador de género",
 		"refugee-claim": "Solicitud de Refugio",
 		"residency": "Residencia",
+		"self-advocacy-information": "Información de autodefensa",
 		"special-immigrant-juvenile-status-sijs": "Estado Especial de Inmigrante Juvenil (SIJS, por sus siglas en inglés)",
 		"t-visa": "T visa",
 		"u-visa": "U visa"

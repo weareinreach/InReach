@@ -142,7 +142,7 @@ const RemoteServicesPage: NextPage = () => {
 export const getStaticPaths: GetStaticPaths = async () => {
 	return {
 		paths: [],
-		fallback: true,
+		fallback: 'blocking',
 	}
 }
 export const getStaticProps: GetStaticProps<
