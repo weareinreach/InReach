@@ -5,8 +5,6 @@
 	},
 	"account": "ګڼون",
 	"add": "{{item}}اضافه کړئ",
-	"address": "پته",
-	"address_physical": "فزیکي پته",
 	"adjective": {
 		"organization": "{{adjective}} سازمان"
 	},
@@ -403,6 +401,8 @@
 		"accept": "ومنئ",
 		"account": "حساب",
 		"add": "اضافه کول",
+		"address": "Address",
+		"address_physical": "Physical address",
 		"and": "او",
 		"and-x-more": "او {{count}} نور",
 		"approve": "تصویب کړه",

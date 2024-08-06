@@ -68,14 +68,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "料金",
-		"cost-accepts-insurance": "このサービスは保険に同意します",
-		"cost-accepts-insurance_default": "このサービスは保険を受け入れます。費用の詳細、財政援助の選択および保険の適用範囲の詳細については、組織に直接連絡してください。",
-		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
+		"cost-accepts-insurance": "このサービスは保険を受け入れます",
+		"cost-accepts-insurance_default": "このサービスは保険を受け入れます。費用、資金援助のオプション、保険の適用範囲の詳細については、組織に直接お問い合わせください。",
+		"cost-accepts-insurance_withUrl": "このサービスは保険を受け入れます。 <Link href=\"{{url}}\">費用、資金援助オプション、保険適用範囲の詳細については、ここをクリックして組織のページ</Link> をご覧ください。",
 		"cost-fees": "費用が発生する",
 		"cost-free": "無料",
-		"cost-sliding-scale": "スライドスケールで決定されるコスト",
-		"cost-sliding-scale_default": "サービス料金は、お客様の収入レベルに応じて調整されます。 詳細については、組織に直接連絡してください。",
-		"cost-sliding-scale_withUrl": "サービス料金は、お客様の収入レベルに応じて調整されます。 <Link href=\"{{url}}\">こちらをクリックして組織のページをご覧ください。</Link>"
+		"cost-sliding-scale": "コストはスライディングスケールで決定",
+		"cost-sliding-scale_default": "このサービスにはスライディングスケールの料金がかかります。サービスに支払う金額は、収入レベルに応じて調整されます。詳細については、組織に直接お問い合わせください。",
+		"cost-sliding-scale_withUrl": "このサービスは、スケール料金をスライドさせています。サービスの料金は、収入レベルによって調整されます。 <Link href=\"{{url}}\">こちらをクリックして、組織のページにアクセスしてください。</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "高齢者",
@@ -107,7 +107,7 @@
 		"bipoc-led": "BIPOC（黒人、先住民、有色人種）主導",
 		"black-led": "黒人主導",
 		"immigrant-led": "移民主導",
-		"lgbtq-led": "LGBTQ+ Led",
+		"lgbtq-led": "LGBTQ+ LED表示",
 		"trans-led": "トランスジェンダー主導",
 		"women-led": "女性主導"
 	},

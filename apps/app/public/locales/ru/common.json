@@ -5,8 +5,6 @@
 	},
 	"account": "Аккаунт",
 	"add": "Добавить {{item}}",
-	"address": "Адрес постоянного проживания",
-	"address_physical": "Адрес места пребывания",
 	"adjective": {
 		"organization": "{{adjective}} организация"
 	},
@@ -405,6 +403,8 @@
 		"accept": "Принять",
 		"account": "Учетная запись",
 		"add": "Добавить",
+		"address": "Адрес постоянного проживания",
+		"address_physical": "Адрес места пребывания",
 		"and": "и",
 		"and-x-more": "и еще {{count}}",
 		"approve": "Подтвердить",

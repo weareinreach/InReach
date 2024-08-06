@@ -5,8 +5,6 @@
 	},
 	"account": "Обліковий запис",
 	"add": "Додати {{item}}",
-	"address": "Адреса",
-	"address_physical": "Фізична адреса",
 	"adjective": {
 		"organization": "{{adjective}} організація"
 	},
@@ -405,6 +403,8 @@
 		"accept": "Прийняти",
 		"account": "Обліковий запис",
 		"add": "Додати",
+		"address": "Адреса",
+		"address_physical": "Фізична адреса",
 		"and": "і",
 		"and-x-more": "і {{count}} більше",
 		"approve": "Схвалити",

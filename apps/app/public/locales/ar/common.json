@@ -5,8 +5,6 @@
 	},
 	"account": "حساب",
 	"add": "إضافة {{item}}",
-	"address": "العنوان",
-	"address_physical": "العنوان الموقعي",
 	"adjective": {
 		"organization": "{{adjective}} منظمة"
 	},
@@ -407,6 +405,8 @@
 		"accept": "القبول",
 		"account": "حساب",
 		"add": "إضافة",
+		"address": "العنوان",
+		"address_physical": "العنوان الموقعي",
 		"and": "و",
 		"and-x-more": "و {{count}} المزيد",
 		"approve": "الموافقة",
