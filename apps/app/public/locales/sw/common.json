@@ -5,8 +5,6 @@
 	},
 	"account": "Akaunti",
 	"add": "Ongeza {{item}}",
-	"address": "Anwani",
-	"address_physical": "Anwani ya kimwili",
 	"adjective": {
 		"organization": "{{adjective}} shirika"
 	},
@@ -403,6 +401,8 @@
 		"accept": "Kubali",
 		"account": "Akaunti",
 		"add": "Ongeza",
+		"address": "Address",
+		"address_physical": "Physical address",
 		"and": "na",
 		"and-x-more": "na {{count}} zaidi",
 		"approve": "Idhinisha",

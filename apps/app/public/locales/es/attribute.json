@@ -69,13 +69,13 @@
 	"cost": {
 		"CATEGORYNAME": "Costo",
 		"cost-accepts-insurance": "Este servicio acepta seguros",
-		"cost-accepts-insurance_default": "Este servicio acepta seguros. Contacte con la organización directamente para obtener más información sobre costes, opciones de asistencia financiera y detalles de cobertura de seguros.",
-		"cost-accepts-insurance_withUrl": "Este servicio acepta seguros. <Link href=\"{{url}}\">Haga clic aquí para visitar la página</Link> de la organización para obtener más información sobre costes, opciones de asistencia financiera y detalles de cobertura de seguros.",
+		"cost-accepts-insurance_default": "Este servicio acepta seguros. Contacte la organización directamente para obtener más información sobre costes, opciones de asistencia financiera y detalles de cobertura de seguros.",
+		"cost-accepts-insurance_withUrl": "Este servicio acepta seguros. <Link href=\"{{url}}\">Haga clic aquí para visitar la página de la organización</Link> para obtener más información sobre costes, opciones de asistencia financiera y detalles de cobertura de seguros.",
 		"cost-fees": "Incurre un coste",
 		"cost-free": "Gratis",
-		"cost-sliding-scale": "Costos determinados en una escala deslizante",
-		"cost-sliding-scale_default": "Este servicio tiene tarifas de escala deslizante. La cantidad que usted paga por los servicios se ajusta a su nivel de ingresos. Póngase en contacto directamente con la organización para obtener más información.",
-		"cost-sliding-scale_withUrl": "Este servicio tiene tarifas de escala deslizante. La cantidad que usted paga por los servicios se ajusta a su nivel de ingresos. <Link href=\"{{url}}\">Haga clic aquí para visitar la página de la organización para obtener más información.</Link>"
+		"cost-sliding-scale": "Costos determinados en una escala móvil",
+		"cost-sliding-scale_default": "Este servicio tiene tarifas de escala móvil. La cantidad que usted paga por los servicios se ajusta a su nivel de ingresos. Póngase en contacto directamente con la organización para obtener más información.",
+		"cost-sliding-scale_withUrl": "Este servicio tiene tarifas de escala móvil. La cantidad que usted paga por los servicios se ajusta a su nivel de ingresos. <Link href=\"{{url}}\">Haga clic aquí para visitar la página de la organización para obtener más información.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "Ancianes",
@@ -107,7 +107,7 @@
 		"bipoc-led": "Dirigido por BIPOC",
 		"black-led": "Dirigido por Negro",
 		"immigrant-led": "Dirigido por inmigrantes",
-		"lgbtq-led": "Led LGBTQ+",
+		"lgbtq-led": "Liderado por LGBTQ+",
 		"trans-led": "Dirigido por personas trans",
 		"women-led": "Dirigida por mujeres"
 	},
