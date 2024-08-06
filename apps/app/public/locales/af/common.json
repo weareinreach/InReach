@@ -5,8 +5,6 @@
 	},
 	"account": "Rekening",
 	"add": "Voeg {{item}}",
-	"address": "Adres",
-	"address_physical": "Fisiese adres",
 	"adjective": {
 		"organization": "{{adjective}} organisasie"
 	},
@@ -403,6 +401,8 @@
 		"accept": "Aanvaar",
 		"account": "Rekening",
 		"add": "Voeg",
+		"address": "Address",
+		"address_physical": "Physical address",
 		"and": "en",
 		"and-x-more": "en {{count}} meer",
 		"approve": "Keur goed",

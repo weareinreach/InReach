@@ -5,8 +5,6 @@
 	},
 	"account": "Account",
 	"add": "Magdagdag ng {{item}}",
-	"address": "Address",
-	"address_physical": "Pisikal na address",
 	"adjective": {
 		"organization": "{{adjective}} samahan"
 	},
@@ -403,6 +401,8 @@
 		"accept": "Tanggapin",
 		"account": "Account",
 		"add": "Magdagdag",
+		"address": "Address",
+		"address_physical": "Physical address",
 		"and": "at",
 		"and-x-more": "at {{count}} higit pa",
 		"approve": "Aprubahan",

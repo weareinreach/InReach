@@ -10,6 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "コミュニティサポート",
+		"advocacy-and-community-organizing": "アドボカシーとコミュニティの組織",
 		"community-social-groups": "コミュニティと社会グループ",
 		"cultural-centers": "文化センター",
 		"lgbtq-centers": "LGBTQ センター",
@@ -93,6 +94,7 @@
 		"name-and-gender-change": "氏名および性別表示変更",
 		"refugee-claim": "難民申請",
 		"residency": "居住権",
+		"self-advocacy-information": "自己擁護情報",
 		"special-immigrant-juvenile-status-sijs": "特別移民少年資格 (SIJS)",
 		"t-visa": "T ビザ",
 		"u-visa": "Uビザ"

@@ -5,8 +5,6 @@
 	},
 	"account": "अकाउंट",
 	"add": "{{item}}जोड़ें",
-	"address": "एड्रेस",
-	"address_physical": "भौतिक पता",
 	"adjective": {
 		"organization": "{{adjective}} संगठन"
 	},
@@ -403,6 +401,8 @@
 		"accept": "स्वीकारें",
 		"account": "खाता",
 		"add": "जोड़ें",
+		"address": "Address",
+		"address_physical": "Physical address",
 		"and": "और",
 		"and-x-more": "और {{count}} और",
 		"approve": "मंज़ूरी देना",

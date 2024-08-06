@@ -18,7 +18,7 @@
 		"@tanstack/eslint-plugin-query": "4.38.0",
 		"@types/eslint": "8.56.11",
 		"@types/eslint-config-prettier": "6.11.3",
-		"@types/node": "20.14.13",
+		"@types/node": "20.14.14",
 		"@typescript-eslint/eslint-plugin": "7.18.0",
 		"@typescript-eslint/parser": "7.18.0",
 		"eslint": "8.57.0",
@@ -33,7 +33,7 @@
 		"eslint-plugin-node": "npm:eslint-plugin-n@16.6.2",
 		"eslint-plugin-react": "7.35.0",
 		"eslint-plugin-storybook": "0.8.0",
-		"eslint-plugin-turbo": "2.0.11",
+		"eslint-plugin-turbo": "2.0.12",
 		"next": "14.2.5",
 		"resolve-pkg-maps": "1.0.0",
 		"typescript": "5.5.4"

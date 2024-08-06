@@ -5,8 +5,6 @@
 	},
 	"account": "Kont",
 	"add": "Ajoute {{item}}",
-	"address": "Adrès",
-	"address_physical": "Adrès fizik",
 	"adjective": {
 		"organization": "{{adjective}} òganizasyon"
 	},
@@ -403,6 +401,8 @@
 		"accept": "Aksepte",
 		"account": "Kont",
 		"add": "Ajoute",
+		"address": "Adrès",
+		"address_physical": "Adrès fizik",
 		"and": "ak",
 		"and-x-more": "ak {{count}} plis",
 		"approve": "Apwouve",
