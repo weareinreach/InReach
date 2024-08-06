@@ -151,14 +151,14 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 				message: t('password-error-match'),
 				path: ['confirmPassword'],
 			})
-		const DataSchema = z.string().default('')
+		const DataSchema = z.object({ r: z.string(), code: z.string() })
 
 		const passwordResetForm = useForm<FormProps>({
 			validate: zodResolver(FormSchema),
 			validateInputOnBlur: true,
 			initialValues: {
-				data: DataSchema.parse(router.query['r']),
-				code: DataSchema.parse(router.query['code']),
+				data: '',
+				code: '',
 				password: '',
 				confirmPassword: '',
 			},
@@ -170,11 +170,12 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 
 		const [opened, handler] = useDisclosure(autoOpen)
 		useEffect(() => {
-			if (router.query.r !== undefined) {
+			const parsedParams = DataSchema.safeParse(router.query)
+			if (router.query.r !== undefined && parsedParams.success) {
+				passwordResetForm.setValues({ data: parsedParams.data.r, code: parsedParams.data.code })
 				handler.open()
 			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [router.query.r])
+		}, [DataSchema, handler, passwordResetForm, router.query, router.query.r])
 
 		const modalTitle = useMemo(
 			() => <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />,
