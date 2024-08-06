@@ -58,7 +58,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@aws-sdk/client-cognito-identity-provider": "3.623.0",
+		"@aws-sdk/client-cognito-identity-provider": "3.624.0",
 		"@next-auth/prisma-adapter": "1.0.7",
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
