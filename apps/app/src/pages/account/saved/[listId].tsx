@@ -1,4 +1,5 @@
 import { Center, Container, Group, Loader, Overlay, Stack, Tabs, Text, Title } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -7,15 +8,16 @@ import { useTranslation } from 'next-i18next'
 import { useCallback, useEffect, useState } from 'react'
 
 import { getServerSession } from '@weareinreach/auth'
+import { ActionButtons } from '@weareinreach/ui/components/core/ActionButtons'
 import {
 	SavedOrgResultCard,
 	SavedResultLoading,
 } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
 import { SavedServiceResultCard } from '@weareinreach/ui/components/core/Saved/SavedServiceResultCard'
+import { Icon } from '@weareinreach/ui/icon'
 import { formatDate } from '~app/pages/account/saved'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { Icon } from '~ui/icon'
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
@@ -36,16 +38,12 @@ const SavedLists = () => {
 	const { query } = router
 	const initialTab = query.tab ? (query.tab as string) : 'organizations'
 	const [activeTab, setActiveTab] = useState(initialTab)
+	const confirmDeleteModalHandler = useDisclosure(false)
 
 	useEffect(() => {
 		const currentTab = query.tab ? (query.tab as string) : 'organizations'
 		setActiveTab(currentTab)
 	}, [query.tab])
-
-	useEffect(() => {
-		apiUtils.savedList.getById.invalidate({ id: listId ?? '' })
-		apiUtils.savedList.getAll.invalidate()
-	}, [])
 
 	const handleTabChange = useCallback(
 		(tab: string) => {
@@ -63,7 +61,24 @@ const SavedLists = () => {
 		},
 		[listId, router]
 	)
-
+	const deleteMutation = api.savedList.delete.useMutation({
+		onSuccess: () => {
+			const [, modalHandler] = confirmDeleteModalHandler
+			apiUtils.savedList.invalidate()
+			modalHandler.close()
+			router.replace({ pathname: '/account/saved' })
+		},
+	})
+	const handleDeleteList = useCallback(
+		(listId?: string) => {
+			if (!listId) {
+				console.error('No list id')
+				return () => void 0
+			}
+			return () => deleteMutation.mutate({ id: listId })
+		},
+		[deleteMutation]
+	)
 	if (status === 'loading') {
 		return (
 			<Center>
@@ -79,16 +94,6 @@ const SavedLists = () => {
 		)
 	}
 
-	const { data: allSavedLists } = api.savedList.getAll.useQuery()
-
-	const deleteMutation = api.savedList.delete.useMutation({
-		onSuccess: () => {
-			apiUtils.savedList.getById.invalidate({ id: listId ?? '' })
-			apiUtils.savedList.getAll.invalidate()
-			router.replace('/account/saved')
-		},
-	})
-
 	return (
 		<Container size='lg' px='md' py='lg' style={{ minWidth: '100%' }}>
 			<Stack spacing='lg' style={{ paddingTop: '3rem' }}>
@@ -97,27 +102,18 @@ const SavedLists = () => {
 						align='center'
 						spacing={8}
 						style={{ cursor: 'pointer' }}
-						onClick={() => router.replace('/account/saved')}
+						onClick={() => router.push({ pathname: '/account/saved' })}
 					>
 						<Icon icon='carbon:arrow-left' />
 						<Text>{t('list.back')}</Text>
 					</Group>
 
 					<Group spacing={16}>
-						<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={() => window.print()}>
-							<Icon icon='carbon:printer' />
-							<Text>{t('words.print')}</Text>
-						</Group>
-
-						<Group
-							align='center'
-							spacing={8}
-							style={{ cursor: 'pointer' }}
-							onClick={() => deleteMutation.mutate({ id: queryResult?.id ?? '' })}
-						>
-							<Icon icon='carbon:trash-can' />
-							<Text>{t('words.delete')}</Text>
-						</Group>
+						<ActionButtons.Print />
+						<ActionButtons.Delete
+							onClick={handleDeleteList(queryResult?.id)}
+							modalHandler={confirmDeleteModalHandler}
+						/>
 					</Group>
 				</Group>
 
@@ -133,8 +129,8 @@ const SavedLists = () => {
 
 				<Tabs value={activeTab} onTabChange={handleTabChange}>
 					<Tabs.List>
-						<Tabs.Tab value='organizations'>Organizations</Tabs.Tab>
-						<Tabs.Tab value='services'>Services</Tabs.Tab>
+						<Tabs.Tab value='organizations'>{t('words.organizations')}</Tabs.Tab>
+						<Tabs.Tab value='services'>{t('words.services')}</Tabs.Tab>
 					</Tabs.List>
 					<Tabs.Panel value='organizations' pt='xs'>
 						{isLoading ? (
