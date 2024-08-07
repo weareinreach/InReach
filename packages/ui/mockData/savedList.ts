@@ -7,7 +7,7 @@ export const savedList = {
 		path: ['savedList', 'getAll'],
 		response: async () => {
 			const { default: data } = await import('./json/savedList.getAll.json')
-			return data
+			return data.map((record) => ({ ...record, updatedAt: new Date() }))
 		},
 	}),
 	saveItem: getTRPCMock({
