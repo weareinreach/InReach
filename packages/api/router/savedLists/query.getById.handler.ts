@@ -1,12 +1,12 @@
 import { prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TGetByIdInputSchema } from './query.getById.schema'
+import { type TGetByIdSchema } from './query.getById.schema'
 
-const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'protected'>) => {
+const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdSchema, 'protected'>) => {
 	const list = await prisma.userSavedList.findFirst({
 		where: {
-			id: input?.id ?? '',
+			id: input.id,
 			OR: [{ ownedById: ctx.session.user.id }, { sharedWith: { some: { userId: ctx.session.user.id } } }],
 		},
 		select: {
@@ -57,7 +57,7 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 							serviceName: {
 								select: { tsKey: { select: { key: true, ns: true, text: true } } },
 							},
-							organization: { select: { slug: true } },
+							organization: { select: { slug: true, name: true } },
 							description: {
 								select: { tsKey: { select: { key: true, ns: true, text: true } } },
 							},
@@ -103,6 +103,7 @@ const getById = async ({ ctx, input }: TRPCHandlerParams<TGetByIdInputSchema, 'p
 				...svc,
 				id,
 				slug: organization?.slug ?? '',
+				orgName: organization?.name ?? '',
 				name: serviceName
 					? {
 							key: serviceName.tsKey.key,
