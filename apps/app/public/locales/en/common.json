@@ -53,6 +53,9 @@
 		"message": "Click the following link to confirm your account:",
 		"subject": "Confirm your account"
 	},
+	"confirm-modal": {
+		"delete-list": "Do you want to delete this list?"
+	},
 	"connect": "Connect",
 	"contact": "Contact",
 	"contact-us": "Contact Us",
@@ -66,6 +69,7 @@
 		"modal-title": "Cookies Settings"
 	},
 	"count": {
+		"more": "{{count}} more",
 		"result_one": "{{count}} result",
 		"result_other": "{{count}} results"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "Link copied to clipboard",
 	"list": {
 		"added": "Resource saved to list: {{name}}",
+		"back": "Back to saved",
 		"create-new": "Create new list",
 		"create-new-sub": "Your lists of saved resources are only visible to you and anyone you share them with.",
 		"create-new-sub2": "Name your list by category, day of the week, or whomever this list is for.",
@@ -168,8 +173,13 @@
 		"error-remove": "Error removing from list",
 		"name": "List name",
 		"new-list-placeholder": "Enter list name...",
+		"no-orgs": "No organizations yet.",
+		"no-services": "No services yet.",
+		"none-yet": "No lists yet.",
 		"removedMulti": "Resource removed from list: {{name}}",
-		"removedSingle": "Resource removed from list"
+		"removedSingle": "Resource removed from list",
+		"resourcesCount": "{{count}} Resources",
+		"updated": "Updated {{date}}"
 	},
 	"loading-page": "Loading Page...",
 	"log-in": "Log in",
@@ -417,6 +427,7 @@
 		"and-x-more": "and {{count}} more",
 		"approve": "Approve",
 		"back": "Back",
+		"cancel": "Cancel",
 		"close": "Close",
 		"coming-soon": "Coming soon",
 		"customize": "Customize",
@@ -433,6 +444,7 @@
 		"next": "Next",
 		"no": "No",
 		"organization": "Organization",
+		"organizations": "Organizations",
 		"password": "Password",
 		"phone": "Phone",
 		"please-wait": "Please wait...",
@@ -448,6 +460,7 @@
 		"saved": "Saved",
 		"search": "Search",
 		"service-hours": "Service hours",
+		"services": "Services",
 		"settings": "Settings",
 		"share": "Share",
 		"sign-up": "Sign up",
