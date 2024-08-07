@@ -12,14 +12,10 @@ export const Print = forwardRef<HTMLButtonElement, PrintProps>(({ omitLabel, cla
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
 
+	const onClick = typeof window !== 'undefined' ? window.print : undefined
+
 	return (
-		<Box
-			component={Button}
-			ref={ref}
-			onClick={window.print}
-			className={cx(classes.button, className)}
-			{...props}
-		>
+		<Box component={Button} ref={ref} onClick={onClick} className={cx(classes.button, className)} {...props}>
 			<Group spacing={0} noWrap>
 				<Icon
 					icon='carbon:printer'
