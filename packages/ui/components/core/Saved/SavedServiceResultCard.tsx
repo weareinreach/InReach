@@ -28,7 +28,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
-	const { description, slug } = savedItem
+	const { description, slug, orgName } = savedItem
 	const { t, ready: i18nReady } = useTranslation(['common', savedItem.id])
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
@@ -46,7 +46,6 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						<Title
 							order={2}
 							className={classes.hoverText}
-							{...(hovered && { 'data-hovered': hovered })}
 							mb={12}
 							{...(hovered && { 'data-hovered': hovered })}
 						>
@@ -76,6 +75,7 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						td='none'
 					>
 						<Stack spacing={12}>
+							<Text variant={variants.Text.utility2darkGray}>{orgName}</Text>
 							{description && (
 								<Text className={classes.description}>
 									{t(description.key, { ns: description.ns, defaultValue: description.defaultText })}
