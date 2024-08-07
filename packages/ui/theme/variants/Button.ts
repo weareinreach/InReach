@@ -74,6 +74,15 @@ export const Button = {
 			backgroundColor: theme.fn.darken(theme.other.colors.secondary.white, 0.4),
 		}),
 	}),
+	primaryLgRed: (theme) => ({
+		root: {
+			backgroundColor: `${theme.other.colors.tertiary.red} !important`,
+			borderRadius: theme.radius.md,
+			'&:not([data-disabled])': theme.fn.hover({
+				backgroundColor: theme.fn.darken(theme.other.colors.tertiary.red, 0.4),
+			}),
+		},
+	}),
 	secondaryLg: (theme) => ({
 		root: {
 			border: theme.other.border.default,
