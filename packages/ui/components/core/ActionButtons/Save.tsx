@@ -70,18 +70,16 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 	})
 
 	const saveItem = api.savedList.saveItem.useMutation({
-		onSuccess: (_, { itemId }) => {
+		onSuccess: () => {
 			savedInList()
-			utils.savedList.isSaved.invalidate(itemId)
-			utils.savedList.getAll.invalidate()
+			utils.savedList.invalidate()
 		},
 		onError: errorSaving,
 	})
 	const removeItem = api.savedList.deleteItem.useMutation({
-		onSuccess: (_, { itemId }) => {
+		onSuccess: () => {
 			deletedInList()
-			utils.savedList.isSaved.invalidate(itemId)
-			utils.savedList.getAll.invalidate()
+			utils.savedList.invalidate()
 		},
 		onError: errorRemoving,
 	})
