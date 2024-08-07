@@ -1,4 +1,4 @@
-import { createStyles, Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
+import { createStyles, Divider, Group, Space, Stack, Text, Title } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 

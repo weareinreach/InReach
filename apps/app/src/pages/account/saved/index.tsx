@@ -1,5 +1,4 @@
 import {
-	Box,
 	Card,
 	Center,
 	createStyles,
@@ -12,29 +11,30 @@ import {
 	Text,
 	Title,
 } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 import { DateTime } from 'luxon'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { type MouseEvent, useCallback } from 'react'
+import { useCallback } from 'react'
 
 import { getServerSession } from '@weareinreach/auth'
+import { ActionButtons } from '@weareinreach/ui/components/core/ActionButtons'
 import { Button } from '@weareinreach/ui/components/core/Button'
 import { Link } from '@weareinreach/ui/components/core/Link'
 import { SavedResultLoading } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
-import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
-import { Icon } from '@weareinreach/ui/icon'
-import { CreateNewList } from '@weareinreach/ui/modals'
+import { CreateNewList } from '@weareinreach/ui/modals/CreateNewList'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
 )
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((_theme) => ({
 	lessRoundedButton: {
 		borderRadius: '6px',
 		width: 'fit-content',
@@ -64,6 +64,7 @@ const SavedLists = () => {
 	const { data: allSavedLists, isLoading } = api.savedList.getAll.useQuery()
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
 	const apiUtils = api.useUtils()
+	const deleteConfirmModalHandler = useDisclosure(false)
 
 	const deleteMutation = api.savedList.delete.useMutation({
 		onSuccess: () => {
@@ -71,10 +72,7 @@ const SavedLists = () => {
 		},
 	})
 
-	const handleDelete = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, id: string) => {
-		e.stopPropagation()
-		deleteMutation.mutate({ id })
-	}
+	const handleDelete = useCallback((id: string) => () => deleteMutation.mutate({ id }), [deleteMutation])
 
 	if (status === 'loading') {
 		return (
@@ -127,16 +125,10 @@ const SavedLists = () => {
 											</Text>
 										</Link>
 									</Stack>
-									<Group spacing='sm'>
-										<Box
-											component='button'
-											className={classes.deleteButton}
-											onClick={(e) => handleDelete(e, list.id)}
-										>
-											<Icon icon='carbon:trash-can' width='24' height='24' />
-											<Text ml='xs'>{t('words.delete')}</Text>
-										</Box>
-									</Group>
+									<ActionButtons.Delete
+										onClick={handleDelete(list.id)}
+										modalHandler={deleteConfirmModalHandler}
+									/>
 								</Group>
 							</Stack>
 						</Card>

@@ -24,7 +24,7 @@ const QuickPromotionModal = dynamic(() =>
 )
 
 const SavedLists = () => {
-	const { t, i18n } = useTranslation('common')
+	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
 	const router = useRouter<'/account/saved/[listId]'>()
 	const { listId } = router.query
@@ -70,15 +70,18 @@ const SavedLists = () => {
 		},
 	})
 	const handleDeleteList = useCallback(
-		(listId?: string) => {
-			if (!listId) {
+		(listIdToDelete?: string) => {
+			if (!listIdToDelete) {
 				console.error('No list id')
 				return () => void 0
 			}
-			return () => deleteMutation.mutate({ id: listId })
+			return () => deleteMutation.mutate({ id: listIdToDelete })
 		},
 		[deleteMutation]
 	)
+	const handleGoBack = useCallback(() => {
+		router.push({ pathname: '/account/saved' })
+	}, [router])
 	if (status === 'loading') {
 		return (
 			<Center>
@@ -98,12 +101,7 @@ const SavedLists = () => {
 		<Container size='lg' px='md' py='lg' style={{ minWidth: '100%' }}>
 			<Stack spacing='lg' style={{ paddingTop: '3rem' }}>
 				<Group position='apart'>
-					<Group
-						align='center'
-						spacing={8}
-						style={{ cursor: 'pointer' }}
-						onClick={() => router.push({ pathname: '/account/saved' })}
-					>
+					<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={handleGoBack}>
 						<Icon icon='carbon:arrow-left' />
 						<Text>{t('list.back')}</Text>
 					</Group>
