@@ -1,10 +1,10 @@
 import { createStyles, Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
-import { TFunction as TFunctionType, useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 import { useCallback, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
 import { ActionButtons } from '../ActionButtons'
 import { Badge } from '../Badge'
@@ -59,7 +59,7 @@ export const SavedResultLoading = () => {
 
 const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 	const { description, slug } = savedItem
-	const { t, ready: i18nReady } = useTranslation(['common', savedItem.id])
+	const { t, ready: i18nReady, i18n } = useTranslation(['common', savedItem.id])
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
@@ -93,47 +93,28 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 	)
 
 	const cityList = useCallback(
-		(cities: string[]) => {
-			//check for duplicates and be case insensitive, before switching
-			const dedupedCityList: string[] = []
-			const lowercaseSet: { [key: string]: boolean } = {}
+		(cities: string[], locale: string) => {
+			const listFormatter = new Intl.ListFormat(locale, { style: 'long', type: 'conjunction' })
+			const citySet = [...new Set(cities)]
 
-			cities.forEach((value) => {
-				const lowercaseValue = value.toLowerCase()
-				if (!lowercaseSet[lowercaseValue]) {
-					lowercaseSet[lowercaseValue] = true
-					dedupedCityList.push(value)
-				}
-			})
-
-			const amount = dedupedCityList.length
-
-			switch (true) {
-				case amount === 0: {
-					return null
-				}
-				case amount <= 2: {
-					return dedupedCityList.join(` ${t('words.and')} `)
-				}
-				case amount === 3: {
-					const commas = dedupedCityList.slice(0, 2)
-					return [commas.join(', '), dedupedCityList[2]].join(` ${t('words.and')} `)
-				}
-				case amount > 3: {
-					const visibleItems = dedupedCityList.slice(0, 3)
-					const moreText = `${t('words.and-x-more', { count: dedupedCityList.length - visibleItems.length })}`
-					return `${visibleItems.join(', ')} ${moreText}`
-				}
-				default: {
-					return null
-				}
+			if (citySet.length === 0) {
+				return null
 			}
+
+			const listToFormat =
+				citySet.length < 3
+					? [...citySet]
+					: [...citySet.slice(0, 2), t('count.more', { count: citySet.length - 2 })]
+
+			const formattedList = listFormatter.format(listToFormat)
+			return formattedList
 		},
 		[t]
 	)
 	if (!i18nReady) {
 		return <SavedResultLoading />
 	}
+	const listOfCities = cityList(savedItem.cities, i18n.language)
 
 	return (
 		<>
@@ -143,7 +124,6 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						<Title
 							order={2}
 							className={classes.hoverText}
-							{...(hovered && { 'data-hovered': hovered })}
 							mb={12}
 							{...(hovered && { 'data-hovered': hovered })}
 						>
@@ -165,7 +145,7 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						td='none'
 					>
 						<Stack spacing={12}>
-							<Text variant={variants.Text.utility2darkGray}>{cityList(savedItem.cities)}</Text>
+							{listOfCities && <Text variant={variants.Text.utility2darkGray}>{listOfCities}</Text>}
 							<Text>
 								{description &&
 									t(description.key, { ns: description.ns, defaultValue: description.defaultText })}
