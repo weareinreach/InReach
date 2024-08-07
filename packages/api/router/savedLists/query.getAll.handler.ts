@@ -16,6 +16,7 @@ const getAll = async ({ ctx }: TRPCHandlerParams<undefined, 'protected'>) => {
 			},
 			id: true,
 			name: true,
+			updatedAt: true,
 		},
 	})
 	return lists

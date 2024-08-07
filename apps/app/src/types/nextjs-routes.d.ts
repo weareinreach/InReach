@@ -19,6 +19,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/account">
     | StaticRoute<"/account/reviews">
     | StaticRoute<"/account/saved">
+    | DynamicRoute<"/account/saved/[listId]", { "listId": string }>
     | StaticRoute<"/admin">
     | StaticRoute<"/admin/management">
     | StaticRoute<"/admin/quicklink">
@@ -63,7 +64,7 @@ declare module "nextjs-routes" {
     { pathname: P }
   >["query"];
 
-  export type Locale = 
+  export type Locale =
     | "en"
     | "es"
     | "fr"

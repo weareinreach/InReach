@@ -73,6 +73,7 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 		onSuccess: (_, { itemId }) => {
 			savedInList()
 			utils.savedList.isSaved.invalidate(itemId)
+			utils.savedList.getAll.invalidate()
 		},
 		onError: errorSaving,
 	})
@@ -80,6 +81,7 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 		onSuccess: (_, { itemId }) => {
 			deletedInList()
 			utils.savedList.isSaved.invalidate(itemId)
+			utils.savedList.getAll.invalidate()
 		},
 		onError: errorRemoving,
 	})
