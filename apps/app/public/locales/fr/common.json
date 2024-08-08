@@ -53,6 +53,9 @@
 		"message": "Cliquer sur le lien suivant pour confirmer votre compte :",
 		"subject": "Confirmer votre compte"
 	},
+	"confirm-modal": {
+		"delete-list": "Voulez-vous supprimer cette liste ?"
+	},
 	"connect": "Se connecter",
 	"contact": "Contacter",
 	"contact-us": "Nous contacter",
@@ -66,6 +69,7 @@
 		"modal-title": "Paramètres des cookies"
 	},
 	"count": {
+		"more": "{{count}} de plus",
 		"result_one": "{{count}} résultat",
 		"result_other": "{{count}} résultats"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "Lien copié dans le presse-papiers",
 	"list": {
 		"added": "Ressource enregistrée dans la liste : {{name}}",
+		"back": "Retour aux sauvegardes",
 		"create-new": "Créer une nouvelle liste",
 		"create-new-sub": "Vos listes de ressources enregistrées ne sont visibles que pour vous et quiconque avec qui vous les partagez.",
 		"create-new-sub2": "Nommer votre liste par catégorie, jour de la semaine ou à qui cette liste est destinée.",
@@ -168,8 +173,13 @@
 		"error-remove": "Une erreur s'est produite en retirant de la liste",
 		"name": "Nom de liste",
 		"new-list-placeholder": "Entrer le nom de liste...",
+		"no-orgs": "Aucune organisation pour le moment.",
+		"no-services": "Pas encore de services.",
+		"none-yet": "Pas encore de listes.",
 		"removedMulti": "Ressource retirée de la liste : {{name}}",
-		"removedSingle": "Ressource retirée de la liste"
+		"removedSingle": "Ressource retirée de la liste",
+		"resourcesCount": "Ressources {{count}}",
+		"updated": "Mise à jour {{date}}"
 	},
 	"loading-page": "Chargement de la page...",
 	"log-in": "Se connecter",
@@ -407,6 +417,7 @@
 		"and-x-more": "et {{count}} de plus",
 		"approve": "Valider",
 		"back": "Précédent",
+		"cancel": "Annuler",
 		"close": "Fermer",
 		"coming-soon": "Bientôt disponible",
 		"customize": "Personnaliser",
@@ -423,6 +434,7 @@
 		"next": "Suivant",
 		"no": "Non",
 		"organization": "Organisation",
+		"organizations": "Organisations",
 		"password": "Mot de passe",
 		"phone": "Téléphone",
 		"please-wait": "Veuillez attendre...",
@@ -438,6 +450,7 @@
 		"saved": "Enregistré",
 		"search": "Chercher",
 		"service-hours": "Heures de service",
+		"services": "Services",
 		"settings": "Réglages",
 		"share": "Partager",
 		"sign-up": "S'inscrire",

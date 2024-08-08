@@ -53,6 +53,9 @@
 		"message": "अपने खाते की पुष्टि करने के लिए नीचे दिए गए लिंक पर क्लिक करें:",
 		"subject": "अपने अकाउंट की पुष्टि करें"
 	},
+	"confirm-modal": {
+		"delete-list": "Do you want to delete this list?"
+	},
 	"connect": "कनेक्ट करें",
 	"contact": "संपर्क",
 	"contact-us": "हमसे संपर्क करें",
@@ -66,6 +69,7 @@
 		"modal-title": "कुकीज़ सेटिंग्स"
 	},
 	"count": {
+		"more": "{{count}} more",
 		"result_one": "{{count}} परिणाम",
 		"result_other": "{{count}} परिणाम"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "लिंक क्लिपबोर्ड पर कॉपी किया गया",
 	"list": {
 		"added": "सूची में सहेजा गया संसाधन: {{name}}",
+		"back": "Back to saved",
 		"create-new": "नई सूची बनाएं",
 		"create-new-sub": "सहेजे गए संसाधनों की आपकी सूची केवल आपको और उन लोगों को दिखाई देती है जिनके साथ आप उन्हें साझा करते हैं।",
 		"create-new-sub2": "श्रेणी, सप्ताह के दिन, या यह सूची किसके लिए है, के अनुसार अपनी सूची का नाम दें।",
@@ -168,8 +173,13 @@
 		"error-remove": "सूची से हटाने में त्रुटि",
 		"name": "सूची का नाम",
 		"new-list-placeholder": "सूची का नाम दर्ज करें...",
+		"no-orgs": "No organizations yet.",
+		"no-services": "No services yet.",
+		"none-yet": "No lists yet.",
 		"removedMulti": "सूची से संसाधन हटाया गया: {{name}}",
-		"removedSingle": "सूची से संसाधन हटाया गया"
+		"removedSingle": "सूची से संसाधन हटाया गया",
+		"resourcesCount": "{{count}} Resources",
+		"updated": "Updated {{date}}"
 	},
 	"loading-page": "पेज लोड हो रहा है...",
 	"log-in": "लॉग इन करें",
@@ -407,6 +417,7 @@
 		"and-x-more": "और {{count}} और",
 		"approve": "मंज़ूरी देना",
 		"back": "पीछे",
+		"cancel": "Cancel",
 		"close": "बंद करना",
 		"coming-soon": "जल्द आ रहा है",
 		"customize": "अनुकूलित करें",
@@ -423,6 +434,7 @@
 		"next": "अगला",
 		"no": "नहीं",
 		"organization": "संगठन",
+		"organizations": "Organizations",
 		"password": "पासवर्ड",
 		"phone": "फ़ोन",
 		"please-wait": "कृपया प्रतीक्षा करें...",
@@ -438,6 +450,7 @@
 		"saved": "बचाया",
 		"search": "सर्च",
 		"service-hours": "सेवा घंटे",
+		"services": "Services",
 		"settings": "सेटिंग्स",
 		"share": "शेयर करें",
 		"sign-up": "साइन अप करें",

@@ -53,6 +53,9 @@
 		"message": "Kliknij poniższy link, aby potwierdzić swoje konto:",
 		"subject": "Potwierdź swoje konto"
 	},
+	"confirm-modal": {
+		"delete-list": "Czy chcesz usunąć tę listę?"
+	},
 	"connect": "Połącz",
 	"contact": "Kontakt",
 	"contact-us": "Skontaktuj się z nami",
@@ -66,6 +69,7 @@
 		"modal-title": "Ustawienia ciasteczek"
 	},
 	"count": {
+		"more": "{{count}} more",
 		"result_one": "{{count}} wynik",
 		"result_few": "{{count}} wyniki",
 		"result_many": "{{count}} wyniki",
@@ -161,6 +165,7 @@
 	"link-copied": "Link skopiowany do schowka",
 	"list": {
 		"added": "Zasoby zapisane na liście: {{name}}",
+		"back": "Wróć do zapisanych",
 		"create-new": "Utwórz nową listę",
 		"create-new-sub": "Listy zapisanych zasobów są widoczne tylko dla Ciebie i wszystkich osób, którym je udostępniasz.",
 		"create-new-sub2": "Nazwij swoją listę według kategorii, dzień tygodnia, lub dla kogo ta lista jest przeznaczona.",
@@ -170,8 +175,13 @@
 		"error-remove": "Błąd usuwania z listy",
 		"name": "Nazwa listy",
 		"new-list-placeholder": "Wprowadź nazwę listy...",
+		"no-orgs": "Brak organizacji.",
+		"no-services": "Brak usług.",
+		"none-yet": "Brak list.",
 		"removedMulti": "Zasób usunięty z listy: {{name}}",
-		"removedSingle": "Zasób usunięty z listy"
+		"removedSingle": "Zasób usunięty z listy",
+		"resourcesCount": "Zasoby {{count}}",
+		"updated": "Zaktualizowano {{date}}"
 	},
 	"loading-page": "Ładowanie strony...",
 	"log-in": "Zaloguj się",
@@ -409,6 +419,7 @@
 		"and-x-more": "i {{count}} więcej",
 		"approve": "Zatwierdź",
 		"back": "Powrót",
+		"cancel": "Anuluj",
 		"close": "Zamknij",
 		"coming-soon": "Wkrótce",
 		"customize": "Dostosuj",
@@ -425,6 +436,7 @@
 		"next": "Kolejny",
 		"no": "Nie",
 		"organization": "Organizacja",
+		"organizations": "Organizacje",
 		"password": "Hasło",
 		"phone": "Telefon",
 		"please-wait": "Proszę czekać...",
@@ -440,6 +452,7 @@
 		"saved": "Zapisano",
 		"search": "Szukaj",
 		"service-hours": "Godziny pracy",
+		"services": "Usługi",
 		"settings": "Ustawienia",
 		"share": "Udostępnij",
 		"sign-up": "Zarejestruj się",
