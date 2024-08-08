@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "Community Support",
-		"advocacy-and-community-organizing": "Advocacy and Community Organizing",
+		"advocacy-and-community-organizing": "Advocacy and community organizing",
 		"community-social-groups": "Community and social groups",
 		"cultural-centers": "Cultural centers",
 		"lgbtq-centers": "LGBTQ centers",
@@ -25,7 +25,7 @@
 	},
 	"crisis-support": {
 		"CATEGORYNAME": "Crisis Support",
-		"crisis-support": "Crisis Support"
+		"crisis-support": "Crisis support"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Education and Employment",
@@ -39,12 +39,12 @@
 	},
 	"financial-assistance": {
 		"CATEGORYNAME": "Financial Assistance",
-		"bail-funds": "Bail Funds",
+		"bail-funds": "Bail and bond funds",
 		"healthcare-and-insurance": "Healthcare and insurance",
 		"housing-and-utilities": "Housing and utilities",
 		"legal-fees": "Legal fees",
 		"moving-and-domestic-relocation": "Moving and domestic relocation",
-		"mutual-aid": "Mutual Aid"
+		"mutual-aid": "Mutual aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Food",
@@ -74,9 +74,9 @@
 	},
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
-		"financial-assistance": "Financial Assistance",
-		"mental-health": "Mental Health",
-		"resettlement-assistance": "Resettlement Assistance"
+		"financial-assistance": "Financial assistance",
+		"mental-health": "Mental health",
+		"resettlement-assistance": "Resettlement assistance"
 	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
@@ -94,7 +94,7 @@
 		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "Refugee claim",
 		"residency": "Residency",
-		"self-advocacy-information": "Self-Advocacy Information",
+		"self-advocacy-information": "Self-advocacy information",
 		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
 		"t-visa": "T visa",
 		"u-visa": "U visa"
