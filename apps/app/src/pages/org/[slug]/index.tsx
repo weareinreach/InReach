@@ -44,7 +44,12 @@ const OrganizationPage = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const router = useRouter<'/org/[slug]'>()
 	const slug = passedSlug ?? router.query.slug
-	const { data, status } = api.organization.forOrgPage.useQuery({ slug })
+	const {
+		data,
+		status,
+		isError: pageFetchIsError,
+		error: pageFetchError,
+	} = api.organization.forOrgPage.useQuery({ slug })
 	// const { query } = router
 	const { t } = useTranslation(formatNS(orgId))
 	const [activeTab, setActiveTab] = useState<string | null>('services')
@@ -130,6 +135,10 @@ const OrganizationPage = ({
 		},
 		[isTablet, ref, width]
 	)
+
+	if (pageFetchIsError && pageFetchError.data?.code === 'NOT_FOUND') {
+		router.replace('/404')
+	}
 
 	if (loading || !data || router.isFallback) {
 		return <OrgPageLoading />
@@ -289,7 +298,7 @@ export const getStaticProps: GetStaticProps<
 	} catch (error) {
 		const TRPCError = (await import('@trpc/server')).TRPCError
 		if (error instanceof TRPCError && error.code === 'NOT_FOUND') {
-			return { notFound: true }
+			return { notFound: true, revalidate: 1 }
 		} else {
 			return { redirect: { destination: '/500', permanent: false } }
 		}
