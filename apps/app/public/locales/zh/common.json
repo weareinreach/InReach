@@ -53,6 +53,9 @@
 		"message": "单击以下链接确认您的帐户：",
 		"subject": "确认您的帐户"
 	},
+	"confirm-modal": {
+		"delete-list": "您想要删除此列表吗？"
+	},
 	"connect": "连接",
 	"contact": "联系我们",
 	"contact-us": "联系我们",
@@ -66,6 +69,7 @@
 		"modal-title": "Cookies 设置"
 	},
 	"count": {
+		"more": "{{count}} 更多",
 		"result_other": "{{count}} 结果"
 	},
 	"country-select": "选择一个国家",
@@ -158,6 +162,7 @@
 	"link-copied": "链接已复制到剪贴板",
 	"list": {
 		"added": "资源已保存到列表： {{name}}",
+		"back": "返回已保存",
 		"create-new": "创建新清单",
 		"create-new-sub": "只有您和与您共享资源的任何人才能看到您的已保存资源列表。",
 		"create-new-sub2": "按类别、一周中的某一天或此列表适用于的任何人命名您的列表。",
@@ -167,8 +172,13 @@
 		"error-remove": "从列表中删除时出错",
 		"name": "列表名称",
 		"new-list-placeholder": "输入列表名称...",
+		"no-orgs": "尚无组织。",
+		"no-services": "暂无服务。",
+		"none-yet": "尚无列表。",
 		"removedMulti": "已从列表中移除资源： {{name}}",
-		"removedSingle": "资源已从列表中删除"
+		"removedSingle": "资源已从列表中删除",
+		"resourcesCount": "{{count}} 资源",
+		"updated": "已更新 {{date}}"
 	},
 	"loading-page": "正在加载页面...",
 	"log-in": "登录",
@@ -406,6 +416,7 @@
 		"and-x-more": "和 {{count}} 更多",
 		"approve": "批准",
 		"back": "返回",
+		"cancel": "取消",
 		"close": "关闭",
 		"coming-soon": "即将上线",
 		"customize": "自定义",
@@ -422,6 +433,7 @@
 		"next": "下一步",
 		"no": "没有",
 		"organization": "组织",
+		"organizations": "组织",
 		"password": "密码",
 		"phone": "电话",
 		"please-wait": "请稍候...",
@@ -437,6 +449,7 @@
 		"saved": "已保存",
 		"search": "搜寻",
 		"service-hours": "服务时间",
+		"services": "服务",
 		"settings": "设置",
 		"share": "分享",
 		"sign-up": "注册",

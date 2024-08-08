@@ -54,6 +54,7 @@ export const variantNames: VariantNames = {
 		accent: 'accent',
 		accentLg: 'accentLg',
 		primaryLg: 'primaryLg',
+		primaryLgRed: 'primaryLgRed',
 		primarySm: 'primarySm',
 		secondaryLg: 'secondaryLg',
 		secondarySm: 'secondarySm',

@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     name: '🤖 PR Auto Approve'
     steps:
-      - uses: github/privileged-requester@f8d60d9344e1c10976aad5c1af0c7c977badd677 # v2.1.0
+      - uses: github/privileged-requester@3bfe4fe11beb79a205f0143769d3035d728cec2d # v2.2.0
         if: ${{ github.event.requested_reviewer.login == 'InReach-svc'}}
         with:
           github_token: ${{ secrets.GH_ACT_PAT }}

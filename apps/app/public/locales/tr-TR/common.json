@@ -53,6 +53,9 @@
 		"message": "Hesabınızı onaylamak için aşağıdaki bağlantıyı tıklayın:",
 		"subject": "Hesabınızı onaylayın"
 	},
+	"confirm-modal": {
+		"delete-list": "Bu listeyi silmek ister misiniz?"
+	},
 	"connect": "Bağlan",
 	"contact": "İletişim",
 	"contact-us": "Bize Ulaşın",
@@ -66,6 +69,7 @@
 		"modal-title": "Çerez Ayarları"
 	},
 	"count": {
+		"more": "{{count}} daha fazla",
 		"result_one": "{{count}} sonuç",
 		"result_other": "{{count}} sonuçlar"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "Bağlantı panoya kopyalandı",
 	"list": {
 		"added": "Listeye kaydedilen kaynak: {{name}}",
+		"back": "Kaydedilen sayfaya geri dön",
 		"create-new": "Yeni liste oluştur",
 		"create-new-sub": "Kaydedilen kaynak listeleriniz yalnızca siz ve bunları paylaştığınız herkes tarafından görülebilir.",
 		"create-new-sub2": "Listenizi kategoriye, haftanın gününe veya bu listenin kimin için olduğuna göre adlandırın.",
@@ -168,8 +173,13 @@
 		"error-remove": "Listeden kaldırılırken hata oluştu",
 		"name": "Liste adı",
 		"new-list-placeholder": "Liste adını girin...",
+		"no-orgs": "Henüz organizasyon yok.",
+		"no-services": "Henüz hizmet yok.",
+		"none-yet": "Henüz liste yok.",
 		"removedMulti": "Kaynak listeden kaldırıldı: {{name}}",
-		"removedSingle": "Kaynak listeden kaldırıldı"
+		"removedSingle": "Kaynak listeden kaldırıldı",
+		"resourcesCount": "{{count}} Kaynaklar",
+		"updated": "Güncellendi {{date}}"
 	},
 	"loading-page": "Sayfa Yükleniyor...",
 	"log-in": "Oturum aç",
@@ -407,6 +417,7 @@
 		"and-x-more": "ve {{count}} daha fazla",
 		"approve": "Onaylayın",
 		"back": "Geri",
+		"cancel": "İptal",
 		"close": "Kapat",
 		"coming-soon": "Yakında",
 		"customize": "Özelleştir",
@@ -423,6 +434,7 @@
 		"next": "Sonraki",
 		"no": "Hayır",
 		"organization": "Organizasyon",
+		"organizations": "Organizasyonlar",
 		"password": "Şifre",
 		"phone": "Telefon",
 		"please-wait": "Lütfen bekleyin...",
@@ -438,6 +450,7 @@
 		"saved": "Kaydedildi",
 		"search": "Arama",
 		"service-hours": "Hizmet Saatleri",
+		"services": "HİZMETLER",
 		"settings": "Ayarlar",
 		"share": "Paylaş",
 		"sign-up": "Üye ol",

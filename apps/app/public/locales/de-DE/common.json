@@ -53,6 +53,9 @@
 		"message": "Klicken Sie auf den folgenden Link, um Ihr Konto zu bestätigen:",
 		"subject": "Bestätigen Sie Ihr Konto"
 	},
+	"confirm-modal": {
+		"delete-list": "Möchten Sie diese Liste löschen?"
+	},
 	"connect": "Verbinden",
 	"contact": "Kontakt",
 	"contact-us": "Kontaktiere uns",
@@ -66,6 +69,7 @@
 		"modal-title": "Cookies Einstellungen"
 	},
 	"count": {
+		"more": "{{count}} mehr",
 		"result_one": "{{count}} Ergebnis",
 		"result_other": "{{count}} Ergebnisse"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "Link in Zwischenablage kopiert",
 	"list": {
 		"added": "Ressource in Liste gespeichert: {{name}}",
+		"back": "Zurück zum Gespeichert",
 		"create-new": "Neue Liste erstellen",
 		"create-new-sub": "Ihre Listen der gespeicherten Ressourcen sind nur für Sie und für jeden sichtbar, mit dem Sie sie teilen.",
 		"create-new-sub2": "Benennen Sie Ihre Liste nach Kategorie, Wochentag oder wem diese Liste dienen soll.",
@@ -168,8 +173,13 @@
 		"error-remove": "Fehler beim Entfernen der Liste",
 		"name": "Listenname",
 		"new-list-placeholder": "Listenname eingeben...",
+		"no-orgs": "Noch keine Organisationen.",
+		"no-services": "Noch keine Dienste.",
+		"none-yet": "Noch keine Listen.",
 		"removedMulti": "Ressource aus der Liste entfernt: {{name}}",
-		"removedSingle": "Ressource aus der Liste entfernt"
+		"removedSingle": "Ressource aus der Liste entfernt",
+		"resourcesCount": "{{count}} Ressourcen",
+		"updated": "{{date}} aktualisiert"
 	},
 	"loading-page": "Seite wird geladen...",
 	"log-in": "Anmelden",
@@ -407,6 +417,7 @@
 		"and-x-more": "und {{count}} mehr",
 		"approve": "Bestätigen",
 		"back": "Zurück",
+		"cancel": "Abbrechen",
 		"close": "Schließen",
 		"coming-soon": "Demnächst",
 		"customize": "Anpassen",
@@ -423,6 +434,7 @@
 		"next": "Nächste",
 		"no": "Nein",
 		"organization": "Organisation",
+		"organizations": "Organisationen",
 		"password": "Passwort",
 		"phone": "Telefon",
 		"please-wait": "Bitte warten...",
@@ -438,6 +450,7 @@
 		"saved": "Gespeichert",
 		"search": "Suchen",
 		"service-hours": "Service-Stunden",
+		"services": "Dienste",
 		"settings": "Einstellungen",
 		"share": "Teilen",
 		"sign-up": "Registrieren",
