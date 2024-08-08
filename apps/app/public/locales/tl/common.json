@@ -53,6 +53,9 @@
 		"message": "I-click ang sumusunod na link upang kumpirmahin ang iyong account:",
 		"subject": "Kumpirmahin ang iyong account"
 	},
+	"confirm-modal": {
+		"delete-list": "Do you want to delete this list?"
+	},
 	"connect": "Kumonekta",
 	"contact": "Makipag-ugnay",
 	"contact-us": "Makipag-ugnay sa Amin",
@@ -66,6 +69,7 @@
 		"modal-title": "Mga Setting ng Cookies"
 	},
 	"count": {
+		"more": "{{count}} more",
 		"result_one": "{{count}} resulta",
 		"result_other": "{{count}} mga resulta"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "Kinopya ang link sa clipboard",
 	"list": {
 		"added": "Resource save sa listahan: {{name}}",
+		"back": "Back to saved",
 		"create-new": "Gumawa ng bagong listahan",
 		"create-new-sub": "Ang iyong mga listahan ng mga naka-save na mapagkukunan ay makikita lamang sa iyo at sinumang ibinabahagi mo sa kanila.",
 		"create-new-sub2": "Pangalanan ang iyong listahan ayon sa kategorya, araw ng linggo, o sinumang para sa listahang ito.",
@@ -168,8 +173,13 @@
 		"error-remove": "Error sa pag-alis mula sa listahan",
 		"name": "Pangalan ng listahan",
 		"new-list-placeholder": "Ipasok ang pangalan ng listahan...",
+		"no-orgs": "No organizations yet.",
+		"no-services": "No services yet.",
+		"none-yet": "No lists yet.",
 		"removedMulti": "Resource inalis mula sa listahan: {{name}}",
-		"removedSingle": "Resource inalis mula sa listahan"
+		"removedSingle": "Resource inalis mula sa listahan",
+		"resourcesCount": "{{count}} Resources",
+		"updated": "Updated {{date}}"
 	},
 	"loading-page": "Naglo-load ng Pahina...",
 	"log-in": "Mag-log in",
@@ -407,6 +417,7 @@
 		"and-x-more": "at {{count}} higit pa",
 		"approve": "Aprubahan",
 		"back": "Bumalik",
+		"cancel": "Cancel",
 		"close": "Isara",
 		"coming-soon": "Malapit na",
 		"customize": "I-customize",
@@ -423,6 +434,7 @@
 		"next": "Susunod",
 		"no": "Hindi",
 		"organization": "Organisasyon",
+		"organizations": "Organizations",
 		"password": "Password",
 		"phone": "Telepono",
 		"please-wait": "Mangyaring maghintay...",
@@ -438,6 +450,7 @@
 		"saved": "Nai-save",
 		"search": "Paghahanap",
 		"service-hours": "Mga oras ng serbisyo",
+		"services": "Services",
 		"settings": "Mga Setting",
 		"share": "Ibahagi",
 		"sign-up": "Mag-sign up",

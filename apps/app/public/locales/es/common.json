@@ -53,6 +53,9 @@
 		"message": "Haz clic en el siguiente enlace para confirmar tu cuenta:",
 		"subject": "Confirma tu cuenta"
 	},
+	"confirm-modal": {
+		"delete-list": "¿Quieres eliminar esta lista?"
+	},
 	"connect": "Conecta",
 	"contact": "Contacto",
 	"contact-us": "Contáctanos",
@@ -66,6 +69,7 @@
 		"modal-title": "Configuración de cookies"
 	},
 	"count": {
+		"more": "{{count}} more",
 		"result_one": "{{count}} resultado",
 		"result_other": "{{count}} resultados"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "Enlace copiado al portapapeles",
 	"list": {
 		"added": "Recurso guardado en la lista: {{name}}",
+		"back": "Volver a guardado",
 		"create-new": "Crea una nueva lista",
 		"create-new-sub": "Tus listas de recursos guardados sólo son visibles para ti y para cualquiera con quien los compartas.",
 		"create-new-sub2": "Nombra su lista por categoría, día de la semana o para quien sea esta lista.",
@@ -168,8 +173,13 @@
 		"error-remove": "Error al eliminar de la lista",
 		"name": "Nombre de lista",
 		"new-list-placeholder": "Introduce el nombre de la lista...",
+		"no-orgs": "Aún no hay organizaciones.",
+		"no-services": "Aún no hay servicios.",
+		"none-yet": "Aún no hay listas.",
 		"removedMulti": "Recurso eliminado de la lista: {{name}}",
-		"removedSingle": "Recurso eliminado de la lista"
+		"removedSingle": "Recurso eliminado de la lista",
+		"resourcesCount": "Recursos {{count}}",
+		"updated": "Actualizado {{date}}"
 	},
 	"loading-page": "Cargando página...",
 	"log-in": "Iniciar sesión",
@@ -407,6 +417,7 @@
 		"and-x-more": "y {{count}} más",
 		"approve": "Aprobar",
 		"back": "Atrás",
+		"cancel": "Cancelar",
 		"close": "Cerrar",
 		"coming-soon": "Próximamente",
 		"customize": "Personalizar",
@@ -423,6 +434,7 @@
 		"next": "Siguiente",
 		"no": "No",
 		"organization": "Organización",
+		"organizations": "Organizaciones",
 		"password": "Contraseña",
 		"phone": "Teléfono",
 		"please-wait": "Por favor espere...",
@@ -438,6 +450,7 @@
 		"saved": "Guardado",
 		"search": "Buscar",
 		"service-hours": "Horas de servicio",
+		"services": "Servicios",
 		"settings": "Ajustes",
 		"share": "Compartir",
 		"sign-up": "Regístrate",

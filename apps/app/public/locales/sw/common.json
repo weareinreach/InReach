@@ -53,6 +53,9 @@
 		"message": "Bonyeza kiungo kifuatacho ili kuthibitisha akaunti yako:",
 		"subject": "Thibitisha akaunti yako"
 	},
+	"confirm-modal": {
+		"delete-list": "Do you want to delete this list?"
+	},
 	"connect": "Unganisha",
 	"contact": "Kuwasiliana",
 	"contact-us": "Wasiliana Nasi",
@@ -66,6 +69,7 @@
 		"modal-title": "Mipangilio ya Vidakuzi"
 	},
 	"count": {
+		"more": "{{count}} more",
 		"result_one": "Matokeo ya {{count}}",
 		"result_other": "Matokeo {{count}}"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "Kiungo kilichonakiliwa kwenye clipboard",
 	"list": {
 		"added": "Rasilimali zilizohifadhiwa ili kuorodhesha: {{name}}",
+		"back": "Back to saved",
 		"create-new": "Unda orodha mpya",
 		"create-new-sub": "Orodha zako za rasilimali zilizohifadhiwa zinaonekana tu kwako na mtu yeyote unayezishiriki naye.",
 		"create-new-sub2": "Jina orodha yako kwa jamii, siku ya wiki, au yeyote orodha hii ni kwa ajili ya.",
@@ -168,8 +173,13 @@
 		"error-remove": "Hitilafu kuondoa kutoka kwenye orodha",
 		"name": "Jina la orodha",
 		"new-list-placeholder": "Ingiza jina la orodha...",
+		"no-orgs": "No organizations yet.",
+		"no-services": "No services yet.",
+		"none-yet": "No lists yet.",
 		"removedMulti": "Rasilimali imeondolewa kwenye orodha: {{name}}",
-		"removedSingle": "Rasilimali zilizoondolewa kwenye orodha"
+		"removedSingle": "Rasilimali zilizoondolewa kwenye orodha",
+		"resourcesCount": "{{count}} Resources",
+		"updated": "Updated {{date}}"
 	},
 	"loading-page": "Inapakia Ukurasa...",
 	"log-in": "Ingia",
@@ -407,6 +417,7 @@
 		"and-x-more": "na {{count}} zaidi",
 		"approve": "Idhinisha",
 		"back": "Nyuma",
+		"cancel": "Cancel",
 		"close": "Funga",
 		"coming-soon": "Inakuja hivi karibuni",
 		"customize": "Geuza kukufaa",
@@ -423,6 +434,7 @@
 		"next": "Ijayo",
 		"no": "Hapana",
 		"organization": "Shirika",
+		"organizations": "Organizations",
 		"password": "Nenosiri",
 		"phone": "Simu",
 		"please-wait": "Tafadhali subiri...",
@@ -438,6 +450,7 @@
 		"saved": "Imehifadhiwa",
 		"search": "Tafuta",
 		"service-hours": "Saa za huduma",
+		"services": "Services",
 		"settings": "Mipangilio",
 		"share": "Shiriki",
 		"sign-up": "Ishara ya juu",

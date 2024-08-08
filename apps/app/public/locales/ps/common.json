@@ -53,6 +53,9 @@
 		"message": "د خپل حساب تایید لپاره لاندې لینک کلیک وکړئ:",
 		"subject": "خپل حساب تایید کړئ"
 	},
+	"confirm-modal": {
+		"delete-list": "Do you want to delete this list?"
+	},
 	"connect": "نښلول",
 	"contact": "اړیکه",
 	"contact-us": "موږ سره اړیکه ونیسئ",
@@ -66,6 +69,7 @@
 		"modal-title": "د کوکیز ترتیبات"
 	},
 	"count": {
+		"more": "{{count}} more",
 		"result_one": "{{count}} پایله",
 		"result_other": "{{count}} پایلې"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "لینک کلپ بورډ ته کاپي شوی",
 	"list": {
 		"added": "سرچینې لیست ته خوندي شوي: {{name}}",
+		"back": "Back to saved",
 		"create-new": "نوی لیست جوړ کړئ",
 		"create-new-sub": "ستاسو د خوندي شوي سرچینو لیستونه یوازې تاسو او هر هغه چا ته لیدل کیږي چې تاسو ورسره شریک کړئ.",
 		"create-new-sub2": "خپل لیست د کټګورۍ، د اونۍ ورځ، یا د دې لیست د چا لپاره دی نوم ورکړئ.",
@@ -168,8 +173,13 @@
 		"error-remove": "له لیست څخه په لرې کولو کې تېروتنه",
 		"name": "د لیست نوم",
 		"new-list-placeholder": "د لیست نوم دننه کړئ...",
+		"no-orgs": "No organizations yet.",
+		"no-services": "No services yet.",
+		"none-yet": "No lists yet.",
 		"removedMulti": "سرچینه له لیست څخه لرې شوې: {{name}}",
-		"removedSingle": "سرچینه له لیست څخه لرې شوې"
+		"removedSingle": "سرچینه له لیست څخه لرې شوې",
+		"resourcesCount": "{{count}} Resources",
+		"updated": "Updated {{date}}"
 	},
 	"loading-page": "د مخ پورته کول...",
 	"log-in": "ننوتل",
@@ -407,6 +417,7 @@
 		"and-x-more": "او {{count}} نور",
 		"approve": "تصویب کړه",
 		"back": "شاته",
+		"cancel": "Cancel",
 		"close": "تړل",
 		"coming-soon": "ژر راځي",
 		"customize": "دودیز کړئ",
@@ -423,6 +434,7 @@
 		"next": "بل",
 		"no": "نه",
 		"organization": "سازمان",
+		"organizations": "Organizations",
 		"password": "رمز",
 		"phone": "تليفون",
 		"please-wait": "مهرباني وکړئ انتظار وکړئ...",
@@ -438,6 +450,7 @@
 		"saved": "خوندي شوی",
 		"search": "لټون",
 		"service-hours": "د خدمت ساعتونه",
+		"services": "Services",
 		"settings": "امستنې",
 		"share": "شریکول",
 		"sign-up": "نوم لیکنه",
