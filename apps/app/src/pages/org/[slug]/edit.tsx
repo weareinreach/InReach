@@ -40,12 +40,14 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		{ slug: pageSlug },
 		{ enabled: router.isReady }
 	)
+	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 	const updateBasic = api.organization.updateBasic.useMutation({
 		onSuccess: (newData) => {
 			if (data && newData && data.slug !== newData.slug) {
 				router.replace({ pathname: router.pathname, query: { ...router.query, slug: newData.slug } })
 			}
 			apiUtils.organization.forOrgPageEdits.invalidate()
+			revalidatePage({ path: router.asPath.replace('/edit', '') })
 		},
 	})
 
