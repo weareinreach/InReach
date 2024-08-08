@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "Sipò pou Kominote",
-		"advocacy-and-community-organizing": "Advocacy and Community Organizing",
+		"advocacy-and-community-organizing": "Advocacy and community organizing",
 		"community-social-groups": "Kominote ak gwoup sosyal",
 		"cultural-centers": "Sant kiltirèl",
 		"lgbtq-centers": "Sant LGBTQ",
@@ -39,12 +39,12 @@
 	},
 	"financial-assistance": {
 		"CATEGORYNAME": "Asistans Finansye",
-		"bail-funds": "Bail Funds",
+		"bail-funds": "Bail and bond funds",
 		"healthcare-and-insurance": "Healthcare and insurance",
 		"housing-and-utilities": "Housing and utilities",
 		"legal-fees": "Legal fees",
 		"moving-and-domestic-relocation": "Moving and domestic relocation",
-		"mutual-aid": "Mutual Aid"
+		"mutual-aid": "Mutual aid"
 	},
 	"food": {
 		"CATEGORYNAME": "Manje",
@@ -94,7 +94,7 @@
 		"name-and-gender-change": "Chanjman non ak genj sèks",
 		"refugee-claim": "Reklamasyon Refijye",
 		"residency": "Rezidans",
-		"self-advocacy-information": "Self-Advocacy Information",
+		"self-advocacy-information": "Self-advocacy information",
 		"special-immigrant-juvenile-status-sijs": "Estati Jivenil Imigran Espesyal (SIJS)",
 		"t-visa": "T viza",
 		"u-visa": "Viza U"

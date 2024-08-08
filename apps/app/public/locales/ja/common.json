@@ -53,6 +53,9 @@
 		"message": "以下のリンクをクリックしてアカウントを確認してください。",
 		"subject": "アカウントの確認"
 	},
+	"confirm-modal": {
+		"delete-list": "このリストを削除しますか？"
+	},
 	"connect": "繋がる",
 	"contact": "連絡先",
 	"contact-us": "お問い合わせ",
@@ -66,6 +69,7 @@
 		"modal-title": "Cookie の設定"
 	},
 	"count": {
+		"more": "{{count}} 以上",
 		"result_other": "{{count}} 件の結果"
 	},
 	"country-select": "国を選択してください",
@@ -158,6 +162,7 @@
 	"link-copied": "リンクがクリップボードにコピーされました",
 	"list": {
 		"added": "リストに保存されたリソース: {{name}}",
+		"back": "保存に戻る",
 		"create-new": "新しいリストを作成",
 		"create-new-sub": "保存したリソースのリストは、自分とそれを共有している人にのみ表示されます。",
 		"create-new-sub2": "カテゴリ別、曜日別、またはこのリストの対象者別にリストに名前を付けてください。",
@@ -167,8 +172,13 @@
 		"error-remove": "リストから削除中にエラーが発生しました",
 		"name": "リスト名",
 		"new-list-placeholder": "リスト名を入力...",
+		"no-orgs": "まだ組織がありません。",
+		"no-services": "サービスはまだありません。",
+		"none-yet": "リストはまだありません。",
 		"removedMulti": "リストから削除されたリソース: {{name}}",
-		"removedSingle": "リソースはリストから削除されました"
+		"removedSingle": "リソースはリストから削除されました",
+		"resourcesCount": "{{count}} リソース",
+		"updated": "{{date}} を更新しました"
 	},
 	"loading-page": "ページをロード中...",
 	"log-in": "ログイン",
@@ -406,6 +416,7 @@
 		"and-x-more": "他 {{count}} 名",
 		"approve": "承認",
 		"back": "戻る",
+		"cancel": "キャンセル",
 		"close": "閉じる",
 		"coming-soon": "近日公開予定",
 		"customize": "カスタマイズ",
@@ -422,6 +433,7 @@
 		"next": "次へ",
 		"no": "いいえ",
 		"organization": "組織",
+		"organizations": "組織",
 		"password": "パスワード",
 		"phone": "電話",
 		"please-wait": "しばらくお待ちください...",
@@ -437,6 +449,7 @@
 		"saved": "保存しました",
 		"search": "検索",
 		"service-hours": "サービス提供時間",
+		"services": "サービス",
 		"settings": "設定",
 		"share": "シェア",
 		"sign-up": "新規登録",
