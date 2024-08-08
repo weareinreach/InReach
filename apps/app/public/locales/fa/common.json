@@ -53,6 +53,9 @@
 		"message": "برای تأیید حساب کاربری خود روی لینک زیر کلیک کنید:",
 		"subject": "حساب کاربری خود را تأیید کنید"
 	},
+	"confirm-modal": {
+		"delete-list": "Do you want to delete this list?"
+	},
 	"connect": "اتصال",
 	"contact": "تماس",
 	"contact-us": "با ما تماس بگیرید",
@@ -66,6 +69,7 @@
 		"modal-title": "تنظیمات کوکی ها"
 	},
 	"count": {
+		"more": "{{count}} more",
 		"result_one": "{{count}} نتیجه",
 		"result_other": "{{count}} نتایج"
 	},
@@ -159,6 +163,7 @@
 	"link-copied": "پیوند در کلیپ بورد کپی شد",
 	"list": {
 		"added": "منبع ذخیره شده در لیست: {{name}}",
+		"back": "Back to saved",
 		"create-new": "لیست جدید ایجاد کنید",
 		"create-new-sub": "لیست منابع ذخیره شده شما فقط برای شما و هرکسی که آنها را با آنها به اشتراک می گذارید قابل مشاهده است.",
 		"create-new-sub2": "لیست خود را بر اساس طبقه بندی، روز هفته یا هر کس که این لیست برای آن است نامگذاری کنید.",
@@ -168,8 +173,13 @@
 		"error-remove": "خطا در حذف از لیست",
 		"name": "نام فهرست",
 		"new-list-placeholder": "نام لیست را وارد کنید...",
+		"no-orgs": "No organizations yet.",
+		"no-services": "No services yet.",
+		"none-yet": "No lists yet.",
 		"removedMulti": "منبع حذف شده از لیست: {{name}}",
-		"removedSingle": "منبع حذف شده از لیست"
+		"removedSingle": "منبع حذف شده از لیست",
+		"resourcesCount": "{{count}} Resources",
+		"updated": "Updated {{date}}"
 	},
 	"loading-page": "در حال بارگذاری صفحه...",
 	"log-in": "ورود به سیستم",
@@ -407,6 +417,7 @@
 		"and-x-more": "و {{count}} بیشتر",
 		"approve": "تایید کردن",
 		"back": "پشت",
+		"cancel": "لغو کردن",
 		"close": "بستن",
 		"coming-soon": "به زودی",
 		"customize": "شخصی سازی",
@@ -423,6 +434,7 @@
 		"next": "بعدی",
 		"no": "نه",
 		"organization": "سازمان",
+		"organizations": "Organizations",
 		"password": "رمز عبور",
 		"phone": "تلفن",
 		"please-wait": "لطفا صبر کنید...",
@@ -438,6 +450,7 @@
 		"saved": "ذخیره شده",
 		"search": "جستجو",
 		"service-hours": "ساعات اداری",
+		"services": "Services",
 		"settings": "تنظیمات",
 		"share": "اشتراک گذاری",
 		"sign-up": "ثبت نام کنید",
