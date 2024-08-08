@@ -29,4 +29,13 @@ export const miscRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	revalidatePage: permissionedProcedure('createNewOrgQuick')
+		.input(schema.ZRevalidatePageSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('revalidatePage'),
+				() => import('./mutation.revalidatePage.handler')
+			)
+			return handler(opts)
+		}),
 })
