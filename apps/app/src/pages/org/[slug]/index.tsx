@@ -289,7 +289,7 @@ export const getStaticProps: GetStaticProps<
 	} catch (error) {
 		const TRPCError = (await import('@trpc/server')).TRPCError
 		if (error instanceof TRPCError && error.code === 'NOT_FOUND') {
-			return { notFound: true }
+			return { notFound: true, revalidate: 1 }
 		} else {
 			return { redirect: { destination: '/500', permanent: false } }
 		}

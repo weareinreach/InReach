@@ -202,7 +202,7 @@ export const getStaticProps: GetStaticProps<
 
 		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
 		if (!orgId?.id) {
-			return { notFound: true }
+			return { notFound: true, revalidate: 1 }
 		}
 
 		const [i18n] = await Promise.allSettled([
@@ -223,7 +223,7 @@ export const getStaticProps: GetStaticProps<
 	} catch (error) {
 		const TRPCError = (await import('@trpc/server')).TRPCError
 		if (error instanceof TRPCError && error.code === 'NOT_FOUND') {
-			return { notFound: true }
+			return { notFound: true, revalidate: 1 }
 		}
 		return { redirect: { destination: '/500', permanent: false } }
 	}
