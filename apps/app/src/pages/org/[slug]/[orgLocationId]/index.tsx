@@ -40,14 +40,18 @@ const OrgLocationPage: NextPage = () => {
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
-	const { data: orgData, status: orgDataStatus } = api.organization.forLocationPage.useQuery(
-		{ slug },
-		{ enabled: router.isReady }
-	)
-	const { data, status } = api.location.forLocationPage.useQuery(
-		{ id: orgLocationId },
-		{ enabled: router.isReady }
-	)
+	const {
+		data: orgData,
+		status: orgDataStatus,
+		isError: orgDataIsError,
+		error: orgDataError,
+	} = api.organization.forLocationPage.useQuery({ slug }, { enabled: router.isReady })
+	const {
+		data,
+		status,
+		isError: pageFetchIsError,
+		error: pageFetchError,
+	} = api.location.forLocationPage.useQuery({ id: orgLocationId }, { enabled: router.isReady })
 
 	const { data: alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },
@@ -83,6 +87,13 @@ const OrgLocationPage: NextPage = () => {
 			}
 		}
 	}, [])
+
+	if (
+		(orgDataIsError || pageFetchIsError) &&
+		(orgDataError?.data?.code === 'NOT_FOUND' || pageFetchError?.data?.code === 'NOT_FOUND')
+	) {
+		router.replace('/404')
+	}
 
 	if (loading || !data || !orgData || router.isFallback) {
 		return <OrgLocationPageLoading />
