@@ -65,7 +65,7 @@ const EditModeBar = () => {
 	const { t } = useTranslation('common')
 	const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 	const { orgLocationId, slug, orgServiceId } = router.query
-
+	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 	const apiQuery = (() => {
 		switch (true) {
 			case typeof orgServiceId === 'string': {
@@ -91,6 +91,7 @@ const EditModeBar = () => {
 		onSuccess: () => {
 			apiUtils.organization.invalidate()
 			apiUtils.component.EditModeBar.invalidate()
+			revalidatePage({ path: router.asPath.replace('/edit', '') })
 			reverifyNotification()
 		},
 	})
@@ -103,6 +104,7 @@ const EditModeBar = () => {
 			apiUtils.location.invalidate()
 			apiUtils.organization.invalidate()
 			apiUtils.component.EditModeBar.invalidate()
+			revalidatePage({ path: router.asPath.replace('/edit', '') })
 			publishedNotification()
 		},
 	})
@@ -114,6 +116,7 @@ const EditModeBar = () => {
 		onSuccess: () => {
 			apiUtils.organization.invalidate()
 			apiUtils.component.EditModeBar.invalidate()
+			revalidatePage({ path: router.asPath.replace('/edit', '') })
 			deletedNotification()
 		},
 	})

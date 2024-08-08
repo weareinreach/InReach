@@ -57,6 +57,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const [loading, setLoading] = useState(true)
 	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
+	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 
 	const { data: alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },
@@ -92,6 +93,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 		onSuccess: () => {
 			apiUtils.location.invalidate()
 			apiUtils.service.invalidate()
+			revalidatePage({ path: router.asPath.replace('/edit', '') })
 			notifySave()
 		},
 	})
