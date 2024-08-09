@@ -24,7 +24,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@googlemaps/react-wrapper": "1.1.35",
+		"@googlemaps/react-wrapper": "1.1.42",
 		"@terraformer/wkt": "2.2.1",
 		"@textea/json-viewer": "3.4.1",
 		"@turf/helpers": "7.0.0",
@@ -108,7 +108,7 @@
 		"@storybook/test-runner": "0.19.1",
 		"@storybook/theming": "8.2.8",
 		"@storybook/types": "8.2.8",
-		"@swc/core": "1.7.6",
+		"@swc/core": "1.7.9",
 		"@swc/helpers": "0.5.12",
 		"@tanstack/react-query": "4.36.1",
 		"@tanstack/react-query-devtools": "4.36.1",
@@ -168,8 +168,8 @@
 		"style-loader": "3.3.4",
 		"swc-loader": "0.2.6",
 		"tsconfig-paths-webpack-plugin": "4.1.0",
-		"tsx": "4.16.5",
-		"type-fest": "4.23.0",
+		"tsx": "4.17.0",
+		"type-fest": "4.24.0",
 		"typescript": "5.5.4",
 		"webpack": "5.93.0",
 		"zod": "3.23.8"
