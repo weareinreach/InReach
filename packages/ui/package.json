@@ -108,7 +108,7 @@
 		"@storybook/test-runner": "0.19.1",
 		"@storybook/theming": "8.2.9",
 		"@storybook/types": "8.2.9",
-		"@swc/core": "1.7.10",
+		"@swc/core": "1.7.11",
 		"@swc/helpers": "0.5.12",
 		"@tanstack/react-query": "4.36.1",
 		"@tanstack/react-query-devtools": "4.36.1",

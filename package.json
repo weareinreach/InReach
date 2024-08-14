@@ -39,7 +39,7 @@
 	},
 	"devDependencies": {
 		"@changesets/cli": "2.27.7",
-		"@turbo/gen": "2.0.12",
+		"@turbo/gen": "2.0.13",
 		"@types/lint-staged": "13.3.0",
 		"@types/node": "20.14.15",
 		"@types/yargs": "17.0.33",
@@ -58,12 +58,12 @@
 		"prettier-plugin-prisma": "5.0.0",
 		"sherif": "0.11.0",
 		"tsx": "4.17.0",
-		"turbo": "2.0.12",
+		"turbo": "2.0.13",
 		"typescript": "5.5.4",
 		"typesync": "0.13.0",
 		"yargs": "17.7.2"
 	},
-	"packageManager": "pnpm@9.7.0",
+	"packageManager": "pnpm@9.7.1",
 	"engines": {
 		"node": "^20.12.2",
 		"pnpm": "^9.0.0"
