@@ -16,19 +16,19 @@
 		"just-compact": "3.2.0"
 	},
 	"devDependencies": {
-		"@types/eslint": "8.56.11",
+		"@types/eslint": "8.56.12",
 		"@types/gtag.js": "0.0.20",
-		"@types/node": "20.14.14",
+		"@types/node": "20.16.1",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.0",
-		"next": "14.2.5",
-		"nextjs-google-analytics": "2.3.3",
-		"type-fest": "4.23.0",
+		"next": "14.2.7",
+		"nextjs-google-analytics": "2.3.7",
+		"type-fest": "4.25.0",
 		"typescript": "5.5.4"
 	},
 	"peerDependencies": {
-		"next": "14.2.5",
-		"nextjs-google-analytics": "2.3.3"
+		"next": "14.2.7",
+		"nextjs-google-analytics": "2.3.7"
 	}
 }
