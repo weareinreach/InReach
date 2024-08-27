@@ -24,6 +24,7 @@ export const LocationBasedAlertBanner = async ({
 				level: true,
 				text: { select: { tsKey: { select: { ns: true, key: true, text: true } } } },
 			},
+			orderBy: { order: 'asc' },
 		})
 
 		const formatted = alerts.map(
