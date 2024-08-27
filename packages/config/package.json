@@ -15,7 +15,7 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"devDependencies": {
-		"@types/eslint": "8.56.11",
+		"@types/eslint": "8.56.12",
 		"@types/node": "20.16.1",
 		"@weareinreach/eslint-config": "workspace:*",
 		"alex": "11.0.1",
