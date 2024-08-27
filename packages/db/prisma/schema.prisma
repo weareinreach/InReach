@@ -1422,6 +1422,7 @@ model LocationAlert {
   text   FreeText           @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   textId String
   level  LocationAlertLevel
+  order  Int                @default(0)
 
   country   Country? @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   countryId String?
