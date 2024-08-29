@@ -1086,8 +1086,8 @@ importers:
         specifier: 4.1.2
         version: 4.1.2(google-auth-library@9.14.0(encoding@0.1.13))
       googleapis:
-        specifier: 137.1.0
-        version: 137.1.0(encoding@0.1.13)
+        specifier: 143.0.0
+        version: 143.0.0(encoding@0.1.13)
       inquirer:
         specifier: 9.3.6
         version: 9.3.6
@@ -8797,8 +8797,8 @@ packages:
     resolution: {integrity: sha512-/fhDZEJZvOV3X5jmD+fKxMqma5q2Q9nZNSF3kn1F18tpxmA86BcTxAGBQdM0N89Z3bEaIs+HVznSmFJEAmMTjA==}
     engines: {node: '>=14.0.0'}
 
-  googleapis@137.1.0:
-    resolution: {integrity: sha512-2L7SzN0FLHyQtFmyIxrcXhgust77067pkkduqkbIpDuj9JzVnByxsRrcRfUMFQam3rQkWW2B0f1i40IwKDWIVQ==}
+  googleapis@143.0.0:
+    resolution: {integrity: sha512-hGeNM9d9cDQAV/dm8FvdkismWIDCJRV9v11UTLq4nRPP+s/2jPuHQnpI7dR+sWmL0o3XURW0K3a3THKyDRnWVg==}
     engines: {node: '>=14.0.0'}
 
   gopd@1.0.1:
@@ -23865,7 +23865,7 @@ snapshots:
       - encoding
       - supports-color
 
-  googleapis@137.1.0(encoding@0.1.13):
+  googleapis@143.0.0(encoding@0.1.13):
     dependencies:
       google-auth-library: 9.14.0(encoding@0.1.13)
       googleapis-common: 7.2.0(encoding@0.1.13)
