@@ -18,13 +18,13 @@
 	"devDependencies": {
 		"@types/eslint": "8.56.12",
 		"@types/gtag.js": "0.0.20",
-		"@types/node": "20.16.1",
+		"@types/node": "20.16.4",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.0",
 		"next": "14.2.7",
 		"nextjs-google-analytics": "2.3.7",
-		"type-fest": "4.25.0",
+		"type-fest": "4.26.0",
 		"typescript": "5.5.4"
 	},
 	"peerDependencies": {
