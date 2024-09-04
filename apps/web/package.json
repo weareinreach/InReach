@@ -36,8 +36,8 @@
 	"devDependencies": {
 		"@next/bundle-analyzer": "14.2.7",
 		"@types/eslint": "8.56.12",
-		"@types/node": "20.16.1",
-		"@types/react": "18.3.4",
+		"@types/node": "20.16.4",
+		"@types/react": "18.3.5",
 		"@types/react-dom": "18.3.0",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
