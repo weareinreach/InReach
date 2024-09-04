@@ -69,13 +69,13 @@
 	"cost": {
 		"CATEGORYNAME": "비용",
 		"cost-accepts-insurance": "이 서비스는 보험에 가입할 수 있습니다.",
-		"cost-accepts-insurance_default": "이 서비스는 보험에 가입할 수 있습니다.비용, 재정 지원 옵션 및 보험 적용 범위에 대한 자세한 내용은 해당 단체에 직접 문의하십시오.",
-		"cost-accepts-insurance_withUrl": "이 서비스는 보험에 가입할 수 있습니다. <Link href=\"{{url}}\">비용, 재정 지원 옵션 및 보험 보장 세부 정보에 대한 자세한 내용은 여기를 클릭하여 조직의</Link> 페이지를 방문하십시오.",
+		"cost-accepts-insurance_default": "이 서비스는 보험에 가입할 수 있습니다. 비용, 재정 지원 옵션 및 보험 적용 범위에 대한 자세한 내용은 해당 단체에 직접 문의하십시오.",
+		"cost-accepts-insurance_withUrl": "이 서비스는 보험에 가입할 수 있습니다. <Link href=\"{{url}}\"> 비용, 재정 지원 옵션 및 보험 보장 세부 정보에 대한 자세한 내용은 링크를 선택하여 단체의 </Link> 페이지를 방문하십시오.",
 		"cost-fees": "비용 있습니다",
 		"cost-free": "비용 무료입니다",
-		"cost-sliding-scale": "슬라이딩 스케일로 결정되는 비용",
-		"cost-sliding-scale_default": "이 서비스에는 슬라이딩 스케일 요금이 있습니다.서비스에 대해 지불하는 금액은 소득 수준에 따라 조정됩니다.자세한 내용은 해당 단체에 직접 문의하십시오.",
-		"cost-sliding-scale_withUrl": "이 서비스에는 슬라이딩 스케일 요금이 있습니다.서비스에 대해 지불하는 금액은 소득 수준에 따라 조정됩니다. <Link href=\"{{url}}\">자세한 내용은 여기를 클릭하여 해당 단체의 페이지를 방문하십시오.</Link>"
+		"cost-sliding-scale": "차등제로 결정되는 비용",
+		"cost-sliding-scale_default": "이 서비스는 차등제로 요금이 계산됩니다. 서비스에 대한 요금은 소득 수준에 따라 조정됩니다. 자세한 내용은 해당 단체에 직접 문의하십시오.",
+		"cost-sliding-scale_withUrl": "이 서비스는 차등제로 요금이 계산됩니다. 서비스에 대한 요금은 소득 수준에 따라 조정됩니다. <Link href=\"{{url}}\"> 자세한 내용은 링크를 선택하여 해당 단체의 페이지를 방문하십시오.</Link>"
 	},
 	"crisis-support-community": {
 		"elders": "노인분",
