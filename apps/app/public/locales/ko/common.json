@@ -54,7 +54,7 @@
 		"subject": "계정 확인하기"
 	},
 	"confirm-modal": {
-		"delete-list": "이 목록을 삭제하시겠습니까?"
+		"delete-list": "목록을 삭제하시겠습니까?"
 	},
 	"connect": "연결하기",
 	"contact": "연락처",
@@ -135,7 +135,7 @@
 		"share-feedback": "피드백 공유하십시오",
 		"subscribe-newsletter": "뉴스레터 구독하십시오",
 		"suggest-org": "단체 제안하기",
-		"tagline": "LGBTQ+ 자원을 찾아보세요.<br/>\n안전하게 피신하다.<br/>\n속하는 곳을 찾기.",
+		"tagline": "LGBTQ+/성소수자 자원을 구할 수 있습니다.<br/>\n안전히 피신할 수 있습니다.<br/>\n소속감을 느낄 수 있습니다.",
 		"vetting-process": "검증 과정"
 	},
 	"forgot-password": "비밀번호 잃어버렸어요?",
@@ -162,7 +162,7 @@
 	"link-copied": "링크 클립보드에 복사되었습니다.",
 	"list": {
 		"added": "리소스는 목록에 저장됩니다: {{name}}",
-		"back": "저장됨으로 돌아가기",
+		"back": "저장한 내용으로 돌아가기",
 		"create-new": "새 목록 만들기",
 		"create-new-sub": "저장된 자원 목록은 본인이나 해당 자원을 공유하는 사람만 볼수 있습니다.",
 		"create-new-sub2": "카테고리별, 요일로 아니면 목록의 사용자별로 목록의 이름을 지정합니다.",
@@ -172,13 +172,13 @@
 		"error-remove": "목록에 제거하기 잘못됐습니다",
 		"name": "목록 이름",
 		"new-list-placeholder": "목록 이름 입력해주세요...",
-		"no-orgs": "아직 조직이 없습니다.",
+		"no-orgs": "아직 단체가 없습니다.",
 		"no-services": "아직 서비스가 없습니다.",
-		"none-yet": "아직 리스트가 없습니다.",
+		"none-yet": "아직 목록이 없습니다.",
 		"removedMulti": "목록에서 자원 제거됨: {{name}}",
 		"removedSingle": "목록에서 자원 제거됨니다",
-		"resourcesCount": "{{count}} 리소스",
-		"updated": "업데이트됨 {{date}}"
+		"resourcesCount": "{{count}} 자원",
+		"updated": "갱신됐습니다 {{date}}"
 	},
 	"loading-page": "페이지 로드 중...",
 	"log-in": "로그인",
@@ -433,7 +433,7 @@
 		"next": "다음",
 		"no": "아니오",
 		"organization": "단체",
-		"organizations": "조직",
+		"organizations": "단체",
 		"password": "비밀번호",
 		"phone": "전화",
 		"please-wait": "잠시만요...",
