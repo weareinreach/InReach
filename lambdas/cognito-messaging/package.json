@@ -23,9 +23,9 @@
 		"@aws-lambda-powertools/logger": "1.18.1"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.143",
+		"@types/aws-lambda": "8.10.145",
 		"@types/eslint": "8.56.12",
-		"@types/node": "20.16.1",
+		"@types/node": "20.16.4",
 		"@vercel/ncc": "0.38.1",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
