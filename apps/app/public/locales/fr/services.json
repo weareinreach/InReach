@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "Support de la communauté",
-		"advocacy-and-community-organizing": "Plaidoyer et organisation de la communauté",
+		"advocacy-and-community-organizing": "Plaidoyer et organisation communautaire",
 		"community-social-groups": "Groupes communautaires et sociaux",
 		"cultural-centers": "Centres culturels",
 		"lgbtq-centers": "Centres LGBTQ",
@@ -40,10 +40,10 @@
 	"financial-assistance": {
 		"CATEGORYNAME": "Assistance financière",
 		"bail-funds": "Fonds de sauvetage",
-		"healthcare-and-insurance": "Soins de santé et assurance",
+		"healthcare-and-insurance": "Santé et assurance",
 		"housing-and-utilities": "Logement et services publics",
 		"legal-fees": "Frais légaux",
-		"moving-and-domestic-relocation": "Déplacement et déplacement domestique",
+		"moving-and-domestic-relocation": "Déménagement",
 		"mutual-aid": "Aide mutuelle"
 	},
 	"food": {
@@ -51,7 +51,7 @@
 		"community-meals": "Repas communautaires",
 		"food-assistance": "Aide alimentaire",
 		"food-delivery": "Livraison de nourriture",
-		"food-pantries": "Paniers alimentaires",
+		"food-pantries": "Banques alimentaires",
 		"nutrition-education": "Éducation nutritionnelle"
 	},
 	"housing": {
@@ -76,7 +76,7 @@
 		"CATEGORTYNAME": "Support international",
 		"financial-assistance": "Assistance financière",
 		"mental-health": "Santé mentale",
-		"resettlement-assistance": "Aide au rétablissement"
+		"resettlement-assistance": "Aide à la réinstallation"
 	},
 	"legal": {
 		"CATEGORYNAME": "Mentions légales",
@@ -94,7 +94,7 @@
 		"name-and-gender-change": "Changement de nom et de marqueur de genre",
 		"refugee-claim": "Demande de réfugié",
 		"residency": "Résidence",
-		"self-advocacy-information": "Information sur l'autodéfense",
+		"self-advocacy-information": "Information sur l'autonomie sociale",
 		"special-immigrant-juvenile-status-sijs": "Statut spécial des enfants immigrés (SIJS)",
 		"t-visa": "T visa",
 		"u-visa": "U visa"
@@ -124,7 +124,7 @@
 	"mental-health": {
 		"CATEGORYNAME": "Santé mentale",
 		"bipoc-support-groups": "Groupes de support BIPOC",
-		"family-support-groups": "Groupes de soutien à la famille",
+		"family-support-groups": "Groupes de soutien aux familles",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Thérapie privée et counseling",
 		"psychological-evaluations-for-asylum-claim": "Évaluation psychologique de la demande d'asile",
