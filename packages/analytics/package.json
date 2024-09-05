@@ -22,13 +22,13 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.0",
-		"next": "14.2.7",
+		"next": "14.2.8",
 		"nextjs-google-analytics": "2.3.7",
 		"type-fest": "4.26.0",
 		"typescript": "5.5.4"
 	},
 	"peerDependencies": {
-		"next": "14.2.7",
+		"next": "14.2.8",
 		"nextjs-google-analytics": "2.3.7"
 	}
 }
