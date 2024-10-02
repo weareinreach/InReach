@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
 	buttonText: {},
 }))
 
-const isString = (...args: unknown[]) => args.every((val) => typeof val === 'string')
+const isString = (val: unknown): val is string => typeof val === 'string'
 
 export const Breadcrumb = (props: BreadcrumbProps) => {
 	const { option, backTo, backToText, onClick, children } = props
@@ -55,7 +55,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 		}
 		if (backTo === 'dynamicText' && router.pathname.startsWith('/org/[slug]/[orgLocationId]')) {
 			const { orgLocationId, slug } = router.query
-			if (isString(slug, orgLocationId)) {
+			if (isString(slug) && isString(orgLocationId)) {
 				router.push({
 					pathname: router.pathname.endsWith('/edit') ? '/org/[slug]/edit' : '/org/[slug]',
 					query: { slug },
