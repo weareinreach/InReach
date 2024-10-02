@@ -1,7 +1,7 @@
 {
 	"about-us": "私たちについて",
 	"access": {
-		"sms-with-body": "<strong>{{body}}</strong> を {{code}} にメッセージ"
+		"sms-with-body": "<strong>{{body}}</strong> を {{code}} にメッセージしてください"
 	},
 	"account": "アカウント",
 	"add": "{{item}}を追加",
@@ -28,8 +28,8 @@
 		"privatePractice": "個人的な練習",
 		"remote-tool-tip": "リモートで利用可能",
 		"service-tool-tip": "この組織が提供するサービス。",
-		"unclaimed": "請求未済",
-		"unclaimed-tool-tip": "この組織はまだ代表者による申請を受けていません。<br/><link1>この組織に申請して</link1> コミュニティとの信頼関係を築き、自分の情報を更新するなどしてください。",
+		"unclaimed": "未請求",
+		"unclaimed-tool-tip": "この組織はまだ代表者から申請されていません。共同体との信頼関係を築き、情報を更新するなどのために、<br/><link1>この組織に申請して</link1>ください。",
 		"verified-information": "認証済み情報",
 		"verified-information-detail": "このページの最終更新日は {{dateString}}です。inReachは正確性とユーザーの安全を優先し、すべての情報を定期的に更新しています。当社の審査プロセスの詳細については、InReach.orgの該当ページをご覧ください。",
 		"verified-reviewer": "InReach認証済みレビュアー"
@@ -41,8 +41,8 @@
 	"can-help-people-in": "{{location}} にいる人を助けることができます。",
 	"cancel": "キャンセル",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 組織のプロフィールページを要求し、InReach でオーディエンスと信頼関係を構築する</textUtility1>\n<textUtility1>✍🏾 組織のInReach に関する情報を更新する</textUtility1>\n<textUtility1>📨 InReach であなたの組織に参加するために他のスタッフを招待する</textUtility1>\n<textUtility1>🔑 InReach の関連サービスプロバイダー専用に構築された将来の機能へのアクセスを得る</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>この組織はまだサービスプロバイダーから申請されていません。</title2>\n<textDarkGray>この組織をサービスプロバイダーとして申請できるのは、以下のとおりです。</textDarkGray>"
+		"list": "<textUtility1>🔗 組織のプロフィールページを要求し、InReach でオーディエンスと信頼関係を構築する</textUtility1>\n<textUtility1>✍🏾 InReach に組織の情報を更新する</textUtility1>\n<textUtility1>📨 InReachであなたの組織に参加するために他のスタッフを招待する</textUtility1>\n<textUtility1>🔑 InReach で関連サービス提供会社専用に構築された将来の機能へのアクセスを得る</textUtility1>",
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>この組織はまだサービス提供会社から申請されていません。</title2>\n<textDarkGray>無料の InReach サービス提供会社アカウントを使用して、すぐに次のことができるようになります：</textDarkGray>"
 	},
 	"clear": "削除",
 	"close": "閉じる",
@@ -54,7 +54,7 @@
 		"subject": "アカウントの確認"
 	},
 	"confirm-modal": {
-		"delete-list": "このリストを削除しますか？"
+		"delete-list": "このリストを消しますか？"
 	},
 	"connect": "繋がる",
 	"contact": "連絡先",
@@ -69,7 +69,7 @@
 		"modal-title": "Cookie の設定"
 	},
 	"count": {
-		"more": "{{count}} 以上",
+		"more": "あと {{count}}",
 		"result_other": "{{count}} 件の結果"
 	},
 	"country-select": "国を選択してください",
@@ -114,19 +114,19 @@
 		"404-title": "404: ページが見つかりません。",
 		"500-body": "申し訳ありませんが、サーバーに問題が発生しました。 後でもう一度お試しいただくか、以下を検索して、お住まいの地域の安全で認証済みのLGBTQ+リソースを探しましょう。",
 		"500-title": "500: 問題が発生しました。",
-		"code-expired": "提供されたコードの期限切れました。",
+		"code-expired": "提供されたコードの期限が切れました。",
 		"code-mismatch": "入力されたコードは無効です。",
 		"oh-no": "すみません",
 		"resend-code": "新しいコードをリクエストする",
 		"try-again-text": "<Text>問題が発生しました。もう一度やり直してください。</Text>"
 	},
-	"exclude": "除外",
+	"exclude": "除外する",
 	"exit": {
 		"edit-mode": "編集モードを終了"
 	},
 	"filter-by-service": "サービスで探す",
 	"find-resources": "情報を探す",
-	"find-x": "{{value}}を検索",
+	"find-x": "{{value}} を検索する",
 	"footer": {
 		"anti-hate": "反ヘイトへの取り組み",
 		"digital-accessibility": "デジタルアクセシビリティ",
@@ -144,8 +144,8 @@
 	"form-error-password-req": "パスワードが要件を満たしていません。もう一度お試しください。",
 	"go-to-x": "{{value}}に移動",
 	"hours": {
-		"closed": "クローズ済み",
-		"open24": "24時間オープン"
+		"closed": "終了",
+		"open24": "24時間営業"
 	},
 	"in-reach-user": "InReachのユーザー",
 	"include": "含める",
@@ -173,11 +173,11 @@
 		"name": "リスト名",
 		"new-list-placeholder": "リスト名を入力...",
 		"no-orgs": "まだ組織がありません。",
-		"no-services": "サービスはまだありません。",
-		"none-yet": "リストはまだありません。",
+		"no-services": "まだサービスがありません。",
+		"none-yet": "まだリストがありません。",
 		"removedMulti": "リストから削除されたリソース: {{name}}",
 		"removedSingle": "リソースはリストから削除されました",
-		"resourcesCount": "{{count}} リソース",
+		"resourcesCount": "{{count}} 資源",
 		"updated": "{{date}} を更新しました"
 	},
 	"loading-page": "ページをロード中...",
@@ -212,7 +212,7 @@
 		"search-results": "検索結果"
 	},
 	"password": "パスワード",
-	"password-confirm": "パスワードを認証する",
+	"password-confirm": "パスワードを確認する",
 	"password-error-match": "パスワードは一致しなければなりません",
 	"password-reenter-placeholder": "パスワードを再入力してください...",
 	"password-req-length": "少なくとも8文字以上",
@@ -246,14 +246,14 @@
 		"<textUtility4>(*唯一の例外は、ローカルコミュニティレビュアーのユーザーアカウントタイプです。これは、収集された統計情報を活用して、Local Community Reviewerのボランティア活動とその影響力を高めます。Local Community Reviewer アカウントの場合、位置情報は必須であり、その他の統計情報は任意ですが、それらの情報はユーザー記録に関連付けられます。このデータは、ローカルコミュニティレビュー担当者がアカウントの個人情報設定で公開することを選択した場合にのみ、inReachスタッフ以外にも公開されます。プロフィールを公開すると、他のユーザーがあなたのレビューに信頼できるようになります。）</textUtility4>",
 		"<textDarkGray>ユーザー層を把握することは、影響の定量化、資金調達、将来の製品決定に関する評価に役立ちます。ユーザーの自発的な情報提供に感謝し、私たちは利用者の個人情報と匿名性を保護するために措置を講じています。</textDarkGray>",
 		"<textDarkGray><title2>サイト利用分析</title2></textDarkGray>",
-		"<textDarkGray>InReachは、Google Analyticsを使用しアプリの使用状況データ（ユーザーの検索事項やその他）を匿名で分析及び追跡します。Goolge AnalyticsはGDPRに準拠しており、個人を特定できる情報は収集せず、収集されたデータは匿名化されます。ウェブサイトをまたいでユーザーは特定されたり、追跡されたりすることはありません。</textDarkGray>",
+		"<textDarkGray>InReach は、Google Analyticsを使用しアプリの使用状況データ (ユーザーの検索事項やその他) を匿名で分析及び追跡します。Google AnalyticsはGDPRに準拠しており、個人を特定できる情報は収集せず、収集されたデータは匿名化されます。ウェブサイトをまたいでユーザーは特定されたり、追跡されたりすることはありません。</textDarkGray>",
 		"<textDarkGray>InReachは、ウェブの重要な情報や動作の分析にもVercel Analyticsを使用しています。Vercel Analyticsは、個々の閲覧者やIPアドレスを関連付けることなく、サイトの利用状況に関する情報を提供します。データポイントの記録は匿名で行われ、Analiticsの機能は、Vercelがページ間のブラウジングセッションを再構築したり、ユーザーを特定できるような情報を収集または保存しません。</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>詳細については、当社の個人情報保護方針をお読みください。</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>個人情報保護方針</title2>"],
 	"profile": "プロフィール",
 	"questions": "質問がございますか?",
-	"quick-promo-body": "<textUtility1>💚 個人用のリソースリストを保存して共有しましょう</textUtility1>\n<textUtility1>💬 組織に公開評価/レビューを残しましょう</textUtility1>\n<textUtility1>🏠 お住まいの地域の組織を提案してください</textUtility1>\n<textUtility1>🔗 組織のプロフィールページを取得してください (近日公開予定!</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 個人用のリソースリストを保存して共有する</textUtility1>\n<textUtility1>💬 組織に公開評価/レビューを残す</textUtility1>\n<textUtility1>🏠 お住まいの地域の組織を提案してくれる</textUtility1>\n<textUtility1>🔗 組織のプロフィールページを取得する (近日公開予定！)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>これを行うにはログインする必要があります。</title2>\n<textDarkGray>無料のInReachアカウントでは、追加の機能を利用することができます。</textDarkGray>",
 	"remote-services": "リモートで利用できるサービス",
 	"remote-services-page-title": "リモートサービス",
@@ -404,7 +404,7 @@
 		"verifying": "アカウントを確認中..."
 	},
 	"view-list": "リストを表示",
-	"visit": "訪問",
+	"visit": "訪問する",
 	"welcome-name": "{{name}} さん、ようこそ！",
 	"words": {
 		"accept": "承諾",
@@ -413,7 +413,7 @@
 		"address": "住所",
 		"address_physical": "現住所",
 		"and": "および",
-		"and-x-more": "他 {{count}} 名",
+		"and-x-more": "さらに {{count}}",
 		"approve": "承認",
 		"back": "戻る",
 		"cancel": "キャンセル",
@@ -439,8 +439,8 @@
 		"please-wait": "しばらくお待ちください...",
 		"prev": "前へ",
 		"print": "印刷",
-		"publish": "公開",
-		"restore": "復元する",
+		"publish": "公開する",
+		"restore": "修復する",
 		"reverify": "再確認する",
 		"review": "レビュー",
 		"reviews": "レビュー",
