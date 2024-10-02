@@ -1,45 +1,45 @@
 {
 	"banner": {
-		"donate": "모두가 inReach를 무료로 이용할 수 있도록 도와주세요. <DonateLink>지금 기부하세요!</DonateLink>💝",
-		"redesign": "블로그에서 InReach 앱 재설계 출시에 대해 읽어보세요. <Link>더 알아보기.</Link>",
-		"tmf": "<TMFLink> #TransMascFutures 로 트랜스 행복함을 널리 퍼트립시다. 🏳️‍⚧️</TMFLink>"
+		"donate": "InReach를 모두 무료로 이용할 수 있도록 도와주세요. <DonateLink>기부하세요!</DonateLink>💝",
+		"redesign": "InReach 블로그에서 앱 재설계 출시에 대해 알아보십시오. <Link>더 보기.</Link>",
+		"tmf": "<TMFLink> #TransMascFutures 로 트랜스 행복을 널리 전파됩시다. 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
-		"hear-from-users": "<Title1>사용자의 의견을 들어보세요</Title1>",
-		"who-we-are": "<Title1>우리는 누구인가</Title1>\n<Text>우리는 다양한 LGBTQ+ 공동체를 위한 자원 접근성을 높이는 트랜스젠더 주도의 기술 비영리 단체입니다.</Text>\n<Link>우리에 대해서 자세히 알아보십시오.</Link>"
+		"hear-from-users": "<Title1>사용자의 의견 보기</Title1>",
+		"who-we-are": "<Title1>InReach의 목표</Title1>\n<Text>Inreach는 기술 비영리 트랜스젠더 주도의 단체입니다. 다양한 성소수자 (LGBTQ+) 공동체를 위하여 자원 접근 서비스를 제공합니다.</Text>\n<Link>InReach에 대해서 자세히 알아보십시오.</Link>"
 	},
 	"hero": {
 		"community": {
-			"0": "LGBTQ+ 망명 신청자",
+			"0": "성소수자 (LGBTQ+) 망명 신청자",
 			"1": "성소수자 (LGBTQ+) 이민자",
-			"2": "LGBTQ+ 난민",
-			"3": "LGBTQ+ 청소년",
-			"4": "트랜스젠더 커뮤니티",
-			"5": "LGBTQ+ BIPOC 공동체",
-			"6": "LGBTQ+ 청소년의 간병인"
+			"2": "성소수자 (LGBTQ+) 난민",
+			"3": "성소수자 (LGBTQ+) 청소년",
+			"4": "트랜스젠더 공동체",
+			"5": "성소수자 (LGBTQ+) 유색인 공동체",
+			"6": "성소수자 (LGBTQ+) 청소년의 간병인"
 		},
-		"find-resources": "<Text>확인된</Text><Service></Service><Text>위해</Text><Community></Community><Text>InReach랑</Text>",
-		"heading": "LGBTQ+ 자원을 찾아보세요.",
-		"privacy-disclaimer": "귀하의 답변은 익명으로 처리되며 개인 사용자로서 귀하와 연결되지 않습니다. 자세히 알아보려면 <Link>개인정보 보호정책 </Link> 읽어보세요.",
+		"find-resources": "<Text>확인된</Text><Service></Service><Text>자원을</Text><Community></Community><Text>InReach에 구하세요.</Text>",
+		"heading": "성소수자 (LGBTQ+) 자원을 구하십시오.",
+		"privacy-disclaimer": "답장은 모두 익명으로 처리되며 개인 사용자와 연결되지 않습니다. <Link>개인 정보 보호 정책 </Link>에 자세히 읽어보십시오.",
 		"services": {
-			"0": "의료 진료",
+			"0": "진료",
 			"1": "공동체 지원",
-			"2": "정신건강 돌봄",
+			"2": "정신건강 진료",
 			"3": "교육",
-			"4": "고용/지겁",
-			"5": "음식",
-			"6": "주택",
-			"7": "의류",
-			"8": "법적인 도움",
-			"9": "번역"
+			"4": "취업",
+			"5": "식품 접근",
+			"6": "주택 접근",
+			"7": "의복 접근",
+			"8": "법률 서비스",
+			"9": "번역 서비스"
 		},
-		"subheading": "박해나 차별받는 LGBTQ+ (트랜스젠더, 레즈비언, 게이, 바이섹슈얼, 퀴어등 모든 정체성) 사람들을 위해 안전하고 검증된 자원을 제공하는 세계 최초의 기술 플랫폼에 오신 것을 환영합니다."
+		"subheading": "박해와 차별을 당하는 성소수자 (LGBTQ+, 트랜스젠더, 레즈비언, 게이, 양성애자, 모든 퀴어 정체성, 등) 사람들을 위한 안전하고 검증된 자원을 제공하는 세계에 최초 기술 플랫폼입니다. 환영합니다."
 	},
 	"values": {
-		"free": "<Title2>영원히 무료 🔑</Title2>\n<Text>저희의 기술 플랫폼은 누구나 안전하게 도움을 받을 수 있도록 100% 무료로 제공됩니다.</Text>\n<LinkFree>플랫폼을 무료로 유지할 수 있도록 기부하기.</LinkFree>",
-		"innovative": "<Title2> 혁신적 ✨</Title2>\n<Text> 박해와 핍박받는 LGBTQ+ 사람들을 위해 안전하고 독립적으로 검증된 자원을 제공하는 세계 최초의 기술 플랫폼입니다.</Text>\n<LinkInnovative>소스 코드를 보고 기여하기.</LinkInnovative>",
-		"intersectional": "<Title2>교차성 ✊🏿‍✊🏾✊🏽</Title2>\n<Text>저희는 LGBTQ+ 평등을 위해서 트랜스 정의, 난민 정의, 인종 정의, 생식 정의, 언어 정의, 장애 정의등 - 모든 <strong> 분들이 필요하다 믿습니다.</Text>\n<LinkIntersect>심사 절차에 대해 자세히 알아보기.</LinkIntersect>",
-		"our-values": "우리의 가치관",
-		"safety-first": "<Title2>안전 최우선 🔒</Title2>\n<Text> 온라인 익명성은 LGBTQ+ 사람들에게 삶과 죽음의 문제가 될 수 있다는 것을 알고 있습니다. 따라서 저희 앱이 사용자의 기밀과 안전을 보호하도록 설계 되었습니다.</Text>\n<LinkSafety>개인정보 보호정책에 대해 자세히 알아보기.</LinkSafety>"
+		"free": "<Title2>언제나 무료입니다 🔑</Title2>\n<Text>InReach의 기술 플랫폼은 모두에게 도움을 안전히 구할 수 있도록 100% 무료로 제공됩니다.</Text>\n<LinkFree>플랫폼을 무료로 유지할 수 있도록 기부해주세요.</LinkFree>",
+		"innovative": "<Title2>혁신적 ✨</Title2>\n<Text> 박해와 차별을 당하는 성소수자 (LGBTQ+) 사람들을 위한 안전하고 검증된 자원을 제공하는 세계에 최초 기술 플랫폼입니다.</Text>\n<LinkInnovative>InReach의 소스 코드를 살펴보고 기부해주세요.</LinkInnovative>",
+		"intersectional": "<Title2>포괄적 ✊🏿‍✊🏾✊🏽</Title2>\n<Text>InReach는 성소수자 (LGBTQ+) 평등을 위하여 트랜스 권리, 난민 권리, 인종 권리, 번식 권리, 언어 권리, 장애인 권리, 등 - <strong> 모든</Text> 인간의 권리를 지원합니다.\n<LinkIntersect>InReach의 심사 절차에 대해 자세히 알아보십시오.</LinkIntersect>",
+		"our-values": "InReach의 가치관",
+		"safety-first": "<Title2>안전 우선 🔒</Title2>\n<Text> InReach에는 온라인 익명은 성소수자 (LGBTQ+) 사람에게 삶의 문제라고 인정합니다. 그러므로 InReach 앱은 사용자의 익명과 안전 보호를 위해 건설되었습니다.</Text>\n<LinkSafety>개인 정보 보호 정책에 대해 자세히 알아보십시오.</LinkSafety>"
 	}
 }

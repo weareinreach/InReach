@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "コミュニティサポート",
-		"advocacy-and-community-organizing": "アドボカシーとコミュニティの組織",
+		"advocacy-and-community-organizing": "アドボカシーおよびコミュニティの団結",
 		"community-social-groups": "コミュニティと社会グループ",
 		"cultural-centers": "文化センター",
 		"lgbtq-centers": "LGBTQ センター",
@@ -35,23 +35,23 @@
 		"language-classes": "言語の教育",
 		"libraries": "図書館",
 		"scholarships": "奨学金",
-		"training-and-professional-development": "トレーニングと専門的な開発"
+		"training-and-professional-development": "トレーニングおよび専門的能力の開発"
 	},
 	"financial-assistance": {
 		"CATEGORYNAME": "経済的支援",
-		"bail-funds": "保釈金",
-		"healthcare-and-insurance": "ヘルスケアと保険",
-		"housing-and-utilities": "住宅とユーティリティ",
-		"legal-fees": "法的手数料",
+		"bail-funds": "保釈金および債券基金",
+		"healthcare-and-insurance": "ヘルスケアおよび保険",
+		"housing-and-utilities": "住宅および光熱水",
+		"legal-fees": "弁護士費用",
 		"moving-and-domestic-relocation": "移動および国内移動",
-		"mutual-aid": "相互援助"
+		"mutual-aid": "相互扶助"
 	},
 	"food": {
 		"CATEGORYNAME": "食糧支援",
 		"community-meals": "コミュニティの食事",
 		"food-assistance": "食糧援助",
-		"food-delivery": "食品の配送",
-		"food-pantries": "食料品用パント",
+		"food-delivery": "フードデリバリー",
+		"food-pantries": "フードパントリー",
 		"nutrition-education": "栄養教育"
 	},
 	"housing": {
@@ -86,7 +86,7 @@
 		"deferred-action-for-childhood-arrivals-daca": "若年移民に対する国外強制退去の延期措置（DACA）",
 		"deportation-or-removal": "国外追放または強制送還",
 		"employment-authorization": "就業許可申請",
-		"family-based-immigration": "家族に基づく移行",
+		"family-based-immigration": "家族に基づく移民",
 		"family-law": "家族法",
 		"immigration-detention": "出入国管理収容",
 		"legal-advice": "法的アドバイス",
@@ -94,7 +94,7 @@
 		"name-and-gender-change": "氏名および性別表示変更",
 		"refugee-claim": "難民申請",
 		"residency": "居住権",
-		"self-advocacy-information": "自己擁護情報",
+		"self-advocacy-information": "自己権利擁護情報",
 		"special-immigrant-juvenile-status-sijs": "特別移民少年資格 (SIJS)",
 		"t-visa": "T ビザ",
 		"u-visa": "Uビザ"
@@ -106,7 +106,7 @@
 		"CATEGORYNAME": "医療",
 		"covid-19-services": "新型コロナウイルス関連サービス",
 		"dental-care": "歯科治療",
-		"fertility-and-family-planning-services": "妊娠可能性と家族計画サービス",
+		"fertility-and-family-planning-services": "生殖能力および家族計画サービス",
 		"hiv-and-sexual-health": "HIVと性の健康",
 		"medical-clinics": "診療所",
 		"obgyn-services": "産婦人科サービス",
