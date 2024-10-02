@@ -70,12 +70,12 @@
 		"CATEGORYNAME": "料金",
 		"cost-accepts-insurance": "このサービスは保険を受け入れます",
 		"cost-accepts-insurance_default": "このサービスは保険を受け入れます。費用、資金援助のオプション、保険の適用範囲の詳細については、組織に直接お問い合わせください。",
-		"cost-accepts-insurance_withUrl": "このサービスは保険を受け入れます。 <Link href=\"{{url}}\">費用、資金援助オプション、保険適用範囲の詳細については、ここをクリックして組織のページ</Link> をご覧ください。",
+		"cost-accepts-insurance_withUrl": "このサービスは保険を受け入れます。費用、資金援助オプション、保険適用範囲の詳細については、<Link href=\"{{url}}\">こちらをクリックして</Link>組織のページをご覧ください。",
 		"cost-fees": "費用が発生する",
 		"cost-free": "無料",
 		"cost-sliding-scale": "コストはスライディングスケールで決定",
 		"cost-sliding-scale_default": "このサービスにはスライディングスケールの料金がかかります。サービスに支払う金額は、収入レベルに応じて調整されます。詳細については、組織に直接お問い合わせください。",
-		"cost-sliding-scale_withUrl": "このサービスは、スケール料金をスライドさせています。サービスの料金は、収入レベルによって調整されます。 <Link href=\"{{url}}\">こちらをクリックして、組織のページにアクセスしてください。</Link>"
+		"cost-sliding-scale_withUrl": "このサービスにスライディングスケールの料金がかかります。サービスに支払う金額は、収入レベルに応じて調整されます。<Link href=\"{{url}}\">こちらをクリックして、</Link>組織のページにアクセスしてください。"
 	},
 	"crisis-support-community": {
 		"elders": "高齢者",
