@@ -163,7 +163,7 @@
 	"link-copied": "Lien copié dans le presse-papiers",
 	"list": {
 		"added": "Ressource enregistrée dans la liste : {{name}}",
-		"back": "Retour aux sauvegardes",
+		"back": "Retour aux sauvegardés",
 		"create-new": "Créer une nouvelle liste",
 		"create-new-sub": "Vos listes de ressources enregistrées ne sont visibles que pour vous et quiconque avec qui vous les partagez.",
 		"create-new-sub2": "Nommer votre liste par catégorie, jour de la semaine ou à qui cette liste est destinée.",
@@ -174,11 +174,11 @@
 		"name": "Nom de liste",
 		"new-list-placeholder": "Entrer le nom de liste...",
 		"no-orgs": "Aucune organisation pour le moment.",
-		"no-services": "Pas encore de services.",
-		"none-yet": "Pas encore de listes.",
+		"no-services": "Aucun service pour le moment.",
+		"none-yet": "Aucune liste pour le moment.",
 		"removedMulti": "Ressource retirée de la liste : {{name}}",
 		"removedSingle": "Ressource retirée de la liste",
-		"resourcesCount": "Ressources {{count}}",
+		"resourcesCount": "{{count}} ressources",
 		"updated": "Mise à jour {{date}}"
 	},
 	"loading-page": "Chargement de la page...",

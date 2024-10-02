@@ -29,7 +29,7 @@
 	},
 	"ARE": {
 		"name": "아랍에미리트",
-		"demonym_other": "애미라이티"
+		"demonym_other": "애미라이트인"
 	},
 	"ARG": {
 		"name": "아르헨티나",
@@ -48,16 +48,16 @@
 		"demonym_other": "남극 대륙인"
 	},
 	"ATF": {
-		"name": "프랑스령 남방 및 남극 지역",
-		"demonym_other": "프랑스 국민"
+		"name": "프랑스령 남부 및 남극 지역",
+		"demonym_other": "프랑스인"
 	},
 	"ATG": {
-		"name": "앤티가 바부다",
+		"name": "앤티가, 바부다",
 		"demonym_other": "앤티가인, 바부다인"
 	},
 	"AUS": {
 		"name": "호주",
-		"demonym_other": "호주인들"
+		"demonym_other": "호주인"
 	},
 	"AUT": {
 		"name": "오스트리아",
@@ -65,7 +65,7 @@
 	},
 	"AZE": {
 		"name": "아제르바이잔",
-		"demonym_other": "아제리인"
+		"demonym_other": "아제르바이잔인"
 	},
 	"BDI": {
 		"name": "부룬디",
@@ -96,19 +96,19 @@
 	},
 	"BHR": {
 		"name": "바레인",
-		"demonym_other": "바레인 인"
+		"demonym_other": "바레인인"
 	},
 	"BHS": {
 		"name": "바하마",
 		"demonym_other": "바하마인"
 	},
 	"BIH": {
-		"name": "보스니아 헤르체고비나",
-		"demonym_other": "보스니아인, 헤르체고비니아인"
+		"name": "보스니아, 헤르체고비나",
+		"demonym_other": "보스니아인, 헤르체고비나인"
 	},
 	"BLM": {
 		"name": "생 바르텔레미",
-		"demonym_other": "생 바르텔레미 섬사람"
+		"demonym_other": "생 바르텔레미 섬인"
 	},
 	"BLR": {
 		"name": "벨라루스",
@@ -124,7 +124,7 @@
 	},
 	"BOL": {
 		"name": "볼리비아",
-		"demonym_other": "볼리비아 사람"
+		"demonym_other": "볼리비아인"
 	},
 	"BRA": {
 		"name": "브라질",
@@ -143,11 +143,11 @@
 		"demonym_other": "부탄인"
 	},
 	"BVT": {
-		"name": "부베 아일랜드"
+		"name": "부베 섬"
 	},
 	"BWA": {
 		"name": "보츠와나",
-		"demonym_other": "보츠와나"
+		"demonym_other": "보츠와나인"
 	},
 	"CAF": {
 		"name": "중앙아프리카 공화국",
@@ -159,7 +159,7 @@
 	},
 	"CCK": {
 		"name": "코코스 (킬링) 제도",
-		"demonym_other": "코코스 섬사람"
+		"demonym_other": "코코스 섬인"
 	},
 	"CHE": {
 		"name": "스위철랜드",
@@ -191,7 +191,7 @@
 	},
 	"COK": {
 		"name": "쿡 제도",
-		"demonym_other": "쿡 제도 섬사람"
+		"demonym_other": "쿡 제도 섬인"
 	},
 	"COL": {
 		"name": "콜롬비아",
@@ -211,7 +211,7 @@
 	},
 	"CUB": {
 		"name": "쿠바",
-		"demonym_other": "쿠바"
+		"demonym_other": "쿠바인"
 	},
 	"CUW": {
 		"name": "퀴라소",
@@ -219,11 +219,11 @@
 	},
 	"CXR": {
 		"name": "크리스마스 섬",
-		"demonym_other": "크리스마스 섬사람"
+		"demonym_other": "크리스마스 섬인"
 	},
 	"CYM": {
 		"name": "케이맨 제도",
-		"demonym_other": "케이맨 제도 인"
+		"demonym_other": "케이맨 제도 섬인"
 	},
 	"CYP": {
 		"name": "키프로스",
@@ -231,7 +231,7 @@
 	},
 	"CZE": {
 		"name": "체코",
-		"demonym_other": "체코"
+		"demonym_other": "체코인"
 	},
 	"DEU": {
 		"name": "독일",
@@ -275,7 +275,7 @@
 	},
 	"ESP": {
 		"name": "스페인",
-		"demonym_other": "스페인 인"
+		"demonym_other": "스페인인"
 	},
 	"EST": {
 		"name": "에스토니아",
@@ -287,7 +287,7 @@
 	},
 	"FIN": {
 		"name": "핀란드",
-		"demonym_other": "핀인"
+		"demonym_other": "핀란드인"
 	},
 	"FJI": {
 		"name": "피지",
@@ -295,7 +295,7 @@
 	},
 	"FLK": {
 		"name": "포클랜드 제도",
-		"demonym_other": "포클랜드 섬사람"
+		"demonym_other": "포클랜드 섬인"
 	},
 	"FRA": {
 		"name": "프랑스",
@@ -303,7 +303,7 @@
 	},
 	"FRO": {
 		"name": "페로 제도",
-		"demonym_other": "페로인"
+		"demonym_other": "페로 섬인"
 	},
 	"FSM": {
 		"name": "미크로네시아",
@@ -323,7 +323,7 @@
 	},
 	"GGY": {
 		"name": "건지",
-		"demonym_other": "채널 섬사람"
+		"demonym_other": "채널 섬인"
 	},
 	"GHA": {
 		"name": "가나",
@@ -351,7 +351,7 @@
 	},
 	"GNQ": {
 		"name": "적도 기니",
-		"demonym_other": "적도 기니 인"
+		"demonym_other": "적도 기니인"
 	},
 	"GRC": {
 		"name": "그리스",
@@ -386,7 +386,7 @@
 	},
 	"HMD": {
 		"name": "허드 섬 및 맥도날드 제도",
-		"demonym_other": "허드 섬 및 맥도날드 섬사람"
+		"demonym_other": "허드 섬 및 맥도날드 섬인"
 	},
 	"HND": {
 		"name": "온두라스",
@@ -409,8 +409,8 @@
 		"demonym_other": "인도네시아인"
 	},
 	"IMN": {
-		"name": "아일 오브 맨",
-		"demonym_other": "아일 오브 매 인"
+		"name": "맨섬",
+		"demonym_other": "맨섬인"
 	},
 	"IND": {
 		"name": "인도",
@@ -450,7 +450,7 @@
 	},
 	"JEY": {
 		"name": "저지",
-		"demonym_other": "채널 섬사람"
+		"demonym_other": "채널 섬인"
 	},
 	"JOR": {
 		"name": "요르단",
@@ -481,8 +481,8 @@
 		"demonym_other": "키리바시인"
 	},
 	"KNA": {
-		"name": "세인트키츠 네비스",
-		"demonym_other": "키티티안 아니면 네비시안"
+		"name": "세인트키츠, 네비스",
+		"demonym_other": "세인틔츠인, 네비스인"
 	},
 	"KOR": {
 		"name": "대한민국",
@@ -542,7 +542,7 @@
 	},
 	"MAF": {
 		"name": "세인트 마틴 섬",
-		"demonym_other": "세인트 마틴 섬사람"
+		"demonym_other": "세인트 마틴 섬인"
 	},
 	"MAR": {
 		"name": "모로코",
@@ -550,7 +550,7 @@
 	},
 	"MCO": {
 		"name": "모나코",
-		"demonym_other": "모나코 인"
+		"demonym_other": "모나코인"
 	},
 	"MDA": {
 		"name": "몰도바",
@@ -570,7 +570,7 @@
 	},
 	"MHL": {
 		"name": "마셜 제도",
-		"demonym_other": "마셜제도인"
+		"demonym_other": "마셜 제도 섬인"
 	},
 	"MKD": {
 		"name": "북 마케도니아",
@@ -646,7 +646,7 @@
 	},
 	"NFK": {
 		"name": "노퍽 섬",
-		"demonym_other": "노퍽 섬사람"
+		"demonym_other": "노퍽 섬인"
 	},
 	"NGA": {
 		"name": "나이지리아",
@@ -694,7 +694,7 @@
 	},
 	"PCN": {
 		"name": "핏케언 제도",
-		"demonym_other": "핏케언 섬사람"
+		"demonym_other": "핏케언 섬인"
 	},
 	"PER": {
 		"name": "페루",
@@ -714,7 +714,7 @@
 	},
 	"POL": {
 		"name": "폴란드",
-		"demonym_other": "폴인"
+		"demonym_other": "폴란드인"
 	},
 	"PRI": {
 		"name": "푸에르토리코",
@@ -753,7 +753,7 @@
 		"demonym_other": "루마니아인"
 	},
 	"RUS": {
-		"name": "러시아 제국",
+		"name": "러시아",
 		"demonym_other": "러시아인"
 	},
 	"RWA": {
@@ -778,18 +778,18 @@
 	},
 	"SGS": {
 		"name": "사우스 조지아",
-		"demonym_other": "사우스조지아 사우스샌드위치 섬사람"
+		"demonym_other": "사우스조지아 사우스샌드위치 섬인"
 	},
 	"SHN": {
-		"name": "세인트헬레나 어센션 트리스탄다쿠냐"
+		"name": "세인트헬레나, 어센션, 트리스탄다쿠냐"
 	},
 	"SJM": {
-		"name": "스발바르 얀마옌",
+		"name": "스발바르, 얀마옌",
 		"demonym_other": "노르웨이인"
 	},
 	"SLB": {
 		"name": "솔로몬 제도",
-		"demonym_other": "솔로몬 섬사람"
+		"demonym_other": "솔로몬 섬인"
 	},
 	"SLE": {
 		"name": "시에라리온",
@@ -808,7 +808,7 @@
 		"demonym_other": "소말리인"
 	},
 	"SPM": {
-		"name": "생피에르 미클롱",
+		"name": "생피에르, 미클롱",
 		"demonym_other": "프랑스인"
 	},
 	"SRB": {
@@ -821,7 +821,7 @@
 	},
 	"STP": {
 		"name": "상투메 프린시페",
-		"demonym_other": "상투메 프린시페 인"
+		"demonym_other": "상투메 프린시페인"
 	},
 	"SUR": {
 		"name": "수리남",
@@ -857,7 +857,7 @@
 	},
 	"TCA": {
 		"name": "터크스 케이커스 제도",
-		"demonym_other": "터크스 케이커스 섬사람"
+		"demonym_other": "터크스 케이커스 섬인"
 	},
 	"TCD": {
 		"name": "차드",
@@ -892,8 +892,8 @@
 		"demonym_other": "통가인"
 	},
 	"TTO": {
-		"name": "트리니다드 토바고",
-		"demonym_other": "트리니다드 토바고인"
+		"name": "트리니다드, 토바고",
+		"demonym_other": "트리니다드인, 토바고인"
 	},
 	"TUN": {
 		"name": "튀니지",
@@ -957,11 +957,11 @@
 	},
 	"VGB": {
 		"name": "영국령 버진아일랜드",
-		"demonym_other": "버진 아일랜드 섬사람"
+		"demonym_other": "버진 아일랜드 섬인"
 	},
 	"VIR": {
 		"name": "미국령 버진아일랜드",
-		"demonym_other": "버진 아일랜드 섬사람"
+		"demonym_other": "버진 아일랜드 섬인"
 	},
 	"VNM": {
 		"name": "베트남",
@@ -969,11 +969,11 @@
 	},
 	"VUT": {
 		"name": "바누아투",
-		"demonym_other": "니-바누아투인"
+		"demonym_other": "바누아투인"
 	},
 	"WLF": {
 		"name": "월리스 푸투나",
-		"demonym_other": "월리스 푸투나 섬사람"
+		"demonym_other": "월리스 푸투나 섬인"
 	},
 	"WSM": {
 		"name": "사모아",

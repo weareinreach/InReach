@@ -1,101 +1,101 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "낙태 치료",
-		"abortion-providers": "낙태 공급자",
-		"financial-assistance": "재정 보조",
-		"lodging-assistance": "숙박 보조",
-		"mail-order-services": "통신판매 서비스",
-		"mental-health-support": "정신 건강 지원",
-		"travel-assistance": "여행 보조"
+		"CATEGORYNAME": "낙태 서비스",
+		"abortion-providers": "낙태 제공자",
+		"financial-assistance": "재정 지원",
+		"lodging-assistance": "주택 지원",
+		"mail-order-services": "우편 서비스",
+		"mental-health-support": "정신건강 지원",
+		"travel-assistance": "소송 지원"
 	},
 	"community-support": {
 		"CATEGORYNAME": "공동체 지원",
-		"advocacy-and-community-organizing": "옹호 및 커뮤니티 조직",
-		"community-social-groups": "공동체와 소셜 그룹",
+		"advocacy-and-community-organizing": "변호 단체와 공동체 조직",
+		"community-social-groups": "공동체와 사회 조직",
 		"cultural-centers": "문화센터",
-		"lgbtq-centers": "LGBTQ 센터",
+		"lgbtq-centers": "성소수자 (LGBTQ+) 센터",
 		"reception-services": "접수처 서비스",
 		"reentry-services": "수감과 재입국 서비스",
 		"spiritual-support": "영적인 지원",
-		"sponsors": "이민국 스폰서십"
+		"sponsors": "이민 후원"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "컴퓨터와 인터넷",
 		"computers-and-internet": "컴퓨터와 인터넷"
 	},
 	"crisis-support": {
-		"CATEGORYNAME": "위기 긴급지원",
-		"crisis-support": "위기 긴급지원"
+		"CATEGORYNAME": "위기 관리 지원",
+		"crisis-support": "위기 관리 지원"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "교육와 취업",
+		"CATEGORYNAME": "교육과 취업",
 		"career-counseling": "경력상담",
-		"educational-support-for-lgbtq-youth": "LGBTQ 청소년을 위한 교육적 지원",
+		"educational-support-for-lgbtq-youth": "성소수자 (LGBTQ+) 청소년을 위한 교육 지원",
 		"english-classes": "영어 수업",
 		"language-classes": "언어 수업",
 		"libraries": "도서관",
 		"scholarships": "장학금",
-		"training-and-professional-development": "교육 및 전문성 개발"
+		"training-and-professional-development": "교육과 전문적인 개발"
 	},
 	"financial-assistance": {
 		"CATEGORYNAME": "재정 보조",
-		"bail-funds": "보석 기금",
-		"healthcare-and-insurance": "헬스케어 및 보험",
+		"bail-funds": "긴급구제 자금과 채권 기금",
+		"healthcare-and-insurance": "진료와 의료 보험",
 		"housing-and-utilities": "주택 및 유틸리티",
-		"legal-fees": "법률 수수료",
+		"legal-fees": "법률 비용",
 		"moving-and-domestic-relocation": "이사 및 국내 이전",
-		"mutual-aid": "뮤추얼 에이드"
+		"mutual-aid": "상호원조"
 	},
 	"food": {
 		"CATEGORYNAME": "식품",
-		"community-meals": "커뮤니티 식사",
-		"food-assistance": "식량 원조",
+		"community-meals": "공동체 식품",
+		"food-assistance": "식품 지원",
 		"food-delivery": "음식 배달",
-		"food-pantries": "식품 저장실",
+		"food-pantries": "식품 보관실",
 		"nutrition-education": "영양 교육"
 	},
 	"housing": {
 		"CATEGORYNAME": "주택",
-		"drop-in-centers": "드롭인 센터",
-		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 예약 필요 없는 회관",
+		"drop-in-centers": "무예약 센터",
+		"drop-in-centers-for-lgbtq-youth": "성소수자 (LGBTQ+) 청소년을 위한 무예약 센터",
 		"emergency-housing": "긴급 주택",
 		"housing-information-and-referrals": "주택 정보와 추천서",
-		"mail-services": "메일 서비스",
-		"short-term-housing": "단기의 주택",
+		"mail-services": "우편 서비스",
+		"short-term-housing": "단기 주택",
 		"trans-housing": "트랜스젠더 주택"
 	},
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "위생과 의류",
-		"clothes": "옷",
-		"gender-affirming-items": "성별 확증 옷",
-		"gender-neutral-bathrooms": "성 중립 화장실",
-		"haircuts-and-stylists": "헤어컷이랑 헤어 스타일리스트",
+		"clothes": "의복",
+		"gender-affirming-items": "성별 확증 의복",
+		"gender-neutral-bathrooms": "성중립 화장실",
+		"haircuts-and-stylists": "헤어컷과 미용실 서비스",
 		"hygiene": "위생"
 	},
 	"international-support": {
 		"CATEGORTYNAME": "국제 지원",
-		"financial-assistance": "재정 보조",
-		"mental-health": "정신 건강",
+		"financial-assistance": "재정 지원",
+		"mental-health": "정신건강",
 		"resettlement-assistance": "재정착 지원"
 	},
 	"legal": {
-		"CATEGORYNAME": "합법적",
-		"asylum-application": "망명 신청서",
+		"CATEGORYNAME": "법률",
+		"asylum-application": "망명 신청",
 		"citizenship": "시민권",
 		"crime-and-discrimination": "범죄와 차별",
-		"deferred-action-for-childhood-arrivals-daca": "아동기 도착자에 대한 유예 조치 (DACA)",
-		"deportation-or-removal": "추방이나 제거",
+		"deferred-action-for-childhood-arrivals-daca": "아동기 도착 유예 조치 (DACA)",
+		"deportation-or-removal": "이민자 추방",
 		"employment-authorization": "취직인허증",
-		"family-based-immigration": "가족 기반 이민",
+		"family-based-immigration": "가족 이민",
 		"family-law": "가족법",
 		"immigration-detention": "이민자 수용소",
-		"legal-advice": "법률 자문",
+		"legal-advice": "법률상담",
 		"legal-hotlines": "법률 핫라인",
-		"name-and-gender-change": "표시된 이름과 성별 변화",
+		"name-and-gender-change": "개명과 법률 성전환",
 		"refugee-claim": "난민 신청",
 		"residency": "거주",
-		"self-advocacy-information": "자기 옹호 정보",
-		"special-immigrant-juvenile-status-sijs": "청소년 특별 이민 (SIJS)",
+		"self-advocacy-information": "자기 주장 정보",
+		"special-immigrant-juvenile-status-sijs": "청소년 특별 이민자 신분 (SIJS)",
 		"t-visa": "T 비자",
 		"u-visa": "U 비자"
 	},
@@ -105,56 +105,56 @@
 	"medical": {
 		"CATEGORYNAME": "의료",
 		"covid-19-services": "COVID-19 서비스",
-		"dental-care": "치과 치료",
-		"fertility-and-family-planning-services": "불임 및 가족 계획 서비스",
-		"hiv-and-sexual-health": "HIV와 성 건강",
+		"dental-care": "치과 진료",
+		"fertility-and-family-planning-services": "불임과 가족계획 서비스",
+		"hiv-and-sexual-health": "HIV와 성식건강",
 		"medical-clinics": "건강 진료소",
 		"obgyn-services": "산부인과 서비스",
-		"physical-evaluations-for-asylum-claim": "망명 신청에 위헤 육체적 평가",
-		"physical-evaluations-for-refugee-claim": "나민 신청에 위헤 육체적 평가",
+		"physical-evaluations-for-asylum-claim": "망명 신청을 위한 물리 평가",
+		"physical-evaluations-for-refugee-claim": "난민 신청을 위한 물리 평가",
 		"substance-use": "물질 사용",
 		"trans-health": "트랜스 건강",
 		"trans-health-gender-affirming-surgery": "트랜스 건강 - 성별 확증 수술",
 		"trans-health-hormone-and-surgery-letters": "트랜스 건강 - 호르몬이랑 수술 소견서",
 		"trans-health-hormone-therapy": "트랜스 건강 - 호르몬 요법",
-		"trans-health-primary-care": "트랜스 건강 - 일차 의료",
+		"trans-health-primary-care": "트랜스 건강 - 일차 진료",
 		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료",
 		"trans-health-youth-care": "트랜스 건강 - 청소년 진료"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "정신 건강",
-		"bipoc-support-groups": "BIPOC 지원 그룹",
-		"family-support-groups": "가족 지원 그룹",
+		"CATEGORYNAME": "정신건강",
+		"bipoc-support-groups": "BIPOC 지원단",
+		"family-support-groups": "가족 지원단",
 		"hotlines": "핫라인",
-		"private-therapy-and-counseling": "개인 요법과 상담",
-		"psychological-evaluations-for-asylum-claim": "망명 신청에 위헤 심리평가",
-		"psychological-evaluations-for-refugee-claim": "난민 신청에 위헤 심리평가",
-		"substance-use": "물질 사용",
-		"support-for-caregivers-of-trans-youth": "트랜스 청소년의 간병인을 위한 도움",
-		"support-for-conversion-therapy-survivors": "전환 치료 생존자를 위한 도움",
+		"private-therapy-and-counseling": "사적 요법과 상담",
+		"psychological-evaluations-for-asylum-claim": "망명 신청을 위한 심리평가",
+		"psychological-evaluations-for-refugee-claim": "난민 신청을 위한 심리평가",
+		"substance-use": "약물 남용",
+		"support-for-caregivers-of-trans-youth": "트랜스 청소년의 간병인을 위한 서비스",
+		"support-for-conversion-therapy-survivors": "성적 지향 전환 치료 생존자를 위한 서비스",
 		"support-groups": "지원단",
 		"trans-support-groups": "트랜스 지원단"
 	},
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "오락과 활동",
 		"art-music-literature": "예술, 음악, 문학",
-		"camps-and-excursions": "캠프 및 견학",
+		"camps-and-excursions": "캠프와 여행",
 		"sports-and-entertainment": "스포츠와 오락"
 	},
 	"trans-focused-services": {
-		"CATEGORYNAME": "트랜스에 초점을 맛춤한 서비스",
-		"transport-gacare": "성별 확증 진료를 위한 교통편",
-		"transport-relo-support": "트랜스 재정착하기 지원"
+		"CATEGORYNAME": "트랜스 초점의 서비스",
+		"transport-gacare": "성별 확증 진료를 위한 수송",
+		"transport-relo-support": "트랜스 재정착 지원"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "일반 번역이랑 통역",
-		"for-healthcare": "건강관리 위해",
-		"for-legal-services": "법률 서비스 위해",
-		"general-translation-and-interpretation": "일반 번역이랑 통역"
+		"CATEGORYNAME": "번역과 통역 서비스",
+		"for-healthcare": "진료 서비스",
+		"for-legal-services": "법률 서비스",
+		"general-translation-and-interpretation": "일반 번역과 통역"
 	},
 	"transportation": {
-		"CATEGORYNAME": "교통편",
-		"transit-passes-and-discounts": "대중교통 패스랑 할인",
-		"transportation-assistance": "교통편 보조"
+		"CATEGORYNAME": "수송",
+		"transit-passes-and-discounts": "대중교통 패스와 할인",
+		"transportation-assistance": "수송 지원"
 	}
 }
