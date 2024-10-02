@@ -15,7 +15,7 @@
 	"alert-title-instructions": "Digite um título para a mensagem...",
 	"all-service-category": "Todos os {{serviceCategory}}",
 	"anti-hate": {
-		"body": "Ao usar o inReach, você concorda que não usará essas informações de recursos para agendas ou comentários nocivos, baseados no ódio, homofóbicos, transfóbicos, xenófobos e/ou racistas.",
+		"body": "Ao usar o inReach, você concorda que não usará essas informações de recursos para agendas ou comentários nocivos, de ódio, homofóbicos, transfóbicos, xenófobos e/ou racistas.",
 		"title": "Compromisso anti-ódio"
 	},
 	"badge": {
@@ -31,14 +31,14 @@
 		"unclaimed": "Não-Reivindicado",
 		"unclaimed-tool-tip": "Essa organização ainda não foi reivindicada por um representante. <link1>Reivindique esta organização</link1> para criar confiança com nossa comunidade, atualizar suas próprias informações e muito mais.",
 		"verified-information": "Informação verificada",
-		"verified-information-detail": "A informação nesta página foi atualizada pela última vez pelo {{dateString}}. Alcançar prioriza a precisão e a segurança do usuário e atualiza todas as informações regularmente. Para obter mais informações sobre o nosso processo de verificação, por favor visite a página do processo de Vetting em InReach.org.",
-		"verified-reviewer": "Revisor Verificado por InReach"
+		"verified-information-detail": "A informação nesta página foi atualizada pela última vez em {{dateString}}. A InReach prioriza informação precisa e a segurança des usuáries, e atualiza todas as informações regularmente. Para obter mais informações sobre o nosso processo de verificação, por favor visite a página do processo de verificação em InReach.org.",
+		"verified-reviewer": "Avaliadore Verificade por InReach"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Voltar para <u>{{page}}</u>",
 		"back-to-search": "Voltar à pesquisa"
 	},
-	"can-help-people-in": "Pode ajudar pessoas localizadas em qualquer lugar no {{location}}",
+	"can-help-people-in": "Pode ajudar pessoas localizadas em qualquer lugar em {{location}}",
 	"cancel": "Cancelar",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 reivindique a página de perfil da sua organização e construa confiança com o seu público em InReach</textUtility1>\n<textUtility1>:writing_hand_medi_skin_tone: Atualize as informações da sua organização em Infernir</textUtility1>\n<textUtility1>📨 Convide outros funcionários para se juntar à sua organização em Inach</textUtility1>\n<textUtility1>🔑 Ganhe acesso a recursos futuros construídos especificamente para provedores de serviços afiliados em Inferir</textUtility1>",
@@ -69,7 +69,7 @@
 		"modal-title": "Configurações de Cookies"
 	},
 	"count": {
-		"more": "{{count}} more",
+		"more": "{{count}} mais",
 		"result_one": "{{count}} resultado",
 		"result_other": "{{count}} resultados"
 	},
@@ -82,7 +82,7 @@
 		"natl-find-help-now": "Encontre ajuda agora",
 		"natl-these-verified": "<Text>Esses recursos verificados podem ajudar a comunidade LGBTQ+ nos Estados Unidos. Estes serviços são <strong>disponíveis remotamente, confidenciais,</strong> e <strong>gratuitos</strong>.</Text>",
 		"outside-service-area": "A inreach não opera em {{country}}",
-		"who-this-serves": "<Text><strong>Quem este recurso serve:</strong> {{targetPop}}</Text>"
+		"who-this-serves": "<Text><strong>A quem este recurso atende:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Localização atual",
 	"delete-account": "Excluir sua conta?",
@@ -118,7 +118,7 @@
 		"code-expired": "O código fornecido está expirado.",
 		"code-mismatch": "O código fornecido não é válido.",
 		"oh-no": "Ah, não!",
-		"resend-code": "Solicite um novo código",
+		"resend-code": "Solicitar um novo código",
 		"try-again-text": "<Text>Algo deu errado! Por favor, tente novamente.</Text>"
 	},
 	"exclude": "Excluir",
@@ -131,12 +131,12 @@
 	"footer": {
 		"anti-hate": "Compromisso anti-ódio",
 		"digital-accessibility": "Acessibilidade digital",
-		"disclaimer": "Renúncia",
+		"disclaimer": "Aviso Legal",
 		"privacy-statement": "Declaração de privacidade",
 		"share-feedback": "Compartilhe feedback",
-		"subscribe-newsletter": "Assine nosso boletim informativo",
+		"subscribe-newsletter": "Assine nossa newsletter",
 		"suggest-org": "Sugira uma organização",
-		"tagline": "Procure recursos LGBTQ+.<br/>\nAlcance a segurança.<br/>\nEncontre pertença.",
+		"tagline": "Procure recursos LGBTQ+.<br/>\nAlcance a segurança.<br/>\nEncontre pertencimento.",
 		"vetting-process": "Processo de verificação"
 	},
 	"forgot-password": "Esqueceu a senha?",
@@ -163,7 +163,7 @@
 	"link-copied": "Link copiado para a área de transferência",
 	"list": {
 		"added": "Recurso salvo na lista: {{name}}",
-		"back": "Voltar para salvo",
+		"back": "Voltar para salvos",
 		"create-new": "Criar nova lista",
 		"create-new-sub": "Suas listas de recursos salvos só são visíveis para você e para qualquer pessoa com quem você as compartilhe.",
 		"create-new-sub2": "Nomeie sua lista por categoria, dia da semana ou para quem quer que ela seja.",
@@ -179,7 +179,7 @@
 		"removedMulti": "Recurso removido da lista: {{name}}",
 		"removedSingle": "Recurso removido da lista",
 		"resourcesCount": "Recursos de {{count}}",
-		"updated": "Updated {{date}}"
+		"updated": "Atualizado em {{date}}"
 	},
 	"loading-page": "Carregando página...",
 	"log-in": "Entrar",
@@ -191,8 +191,8 @@
 	"message_text": "Texto da mensagem",
 	"message_title": "Título da mensagem",
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>Declaração de acessibilidade</title2>\n<textDarkGray>A tecnologia de código aberto da inReach foi criada para a comunidade diversificada LGBTQ+, incluindo usuários com deficiências.</textDarkGray>\n<textDarkGray>O aplicativo gratuito inReach está disponível na web (desktop e celular) e em iOS e Android nativos. Começando com o lançamento de nossa última reformulação (junho de 2023), a inReach se esforçará para atender aos <linkAccessibility>critérios de nível AA das Diretrizes de Acessibilidade de Conteúdo da Web (WCAG).</linkAccessibility></textDarkGray>\n<textDarkGray>Na inReach, nos esforçamos para tornar nossa plataforma tecnológica acessível para o maior número possível de usuários e dispositivos, de acordo com nossa missão de servir todas as pessoas LGBTQ+ que enfrentam perseguição ou discriminação.</textDarkGray>",
-		"disclaimer": "<stack16>\n<title2>Aviso legal da inReach</title2>\n<textReg>A equipe da inReach fará o possível para confirmar a elegibilidade e os fatos básicos sobre os prestadores de serviços listados neste site. No entanto, não podemos garantir a viabilidade ou as capacidades de nenhum desses fornecedores. Consequentemente, a inReach não assume nenhuma responsabilidade pelas ações dos provedores listados neste site e os usuários que entram em contato com esses provedores o fazem por sua conta e risco.</textReg>\n</stack16>"
+		"accessibility": "<stack16>\n<title2>Declaração de acessibilidade</title2>\n<textDarkGray>A tecnologia de código aberto da inReach foi criada para a comunidade diversificada LGBTQ+, incluindo usuáries com deficiências.</textDarkGray>\n<textDarkGray>O aplicativo gratuito inReach está disponível na web (desktop e celular) e nativamente em iOS e Android. Começando com o lançamento de nossa última reformulação (junho de 2023), a inReach se esforçará para atender aos <linkAccessibility>critérios de nível AA das Diretrizes de Acessibilidade de Conteúdo da Web (WCAG).</linkAccessibility></textDarkGray>\n<textDarkGray>Na inReach, nos esforçamos para tornar nossa plataforma tecnológica acessível para o maior número possível de usuáries e dispositivos, de acordo com nossa missão de servir todas as pessoas LGBTQ+ que enfrentam perseguição ou discriminação.</textDarkGray>",
+		"disclaimer": "<stack16>\n<title2>Aviso legal da inReach</title2>\n<textReg>A equipe da inReach fará o possível para confirmar a elegibilidade e os fatos básicos sobre os prestadores de serviços listados neste site. No entanto, não podemos garantir a viabilidade ou as capacidades de nenhum desses prestadores. Consequentemente, a inReach não assume nenhuma responsabilidade pelas ações dos prestadores listados neste site, e usuáries que entram em contato com esses provedores o fazem por sua conta e risco.</textReg>\n</stack16>"
 	},
 	"modal-more-options": {
 		"exclude": "Exclua recursos que...",
@@ -205,22 +205,22 @@
 	"none-apply": "Nada disso se aplica a mim",
 	"offices-and-locations": "Escritórios e localizações",
 	"org-image": "Foto da organização",
-	"organization": "Cliente",
+	"organization": "Organização",
 	"other-specify": "Outros (por favor, especifique)",
 	"page-title": {
 		"base": "{{- title}} - InReach",
-		"edit-mode": "{{- title}} [MODO EDITO] - Alcançar",
+		"edit-mode": "{{- title}} [MODO DE EDIÇÃO] - Alcançar",
 		"search-results": "Resultados da pesquisa"
 	},
 	"password": "Senha",
 	"password-confirm": "Confirme a senha",
-	"password-error-match": "As senhas devem coincidir",
+	"password-error-match": "As senhas devem ser iguais",
 	"password-reenter-placeholder": "Digite sua senha novamente...",
-	"password-req-length": "Inclui pelo menos 8 caracteres",
-	"password-req-lowercase": "Inclui letra minúscula",
-	"password-req-number": "Inclui número",
-	"password-req-special": "Inclui caractere especial",
-	"password-req-uppercase": "Inclui letra maiúscula",
+	"password-req-length": "Incluir pelo menos 8 caracteres",
+	"password-req-lowercase": "Incluir letra minúscula",
+	"password-req-number": "Incluir número",
+	"password-req-special": "Incluir caractere especial",
+	"password-req-uppercase": "Incluir letra maiúscula",
 	"password-reset": {
 		"email-body": "Clique no link a seguir para redefinir sua senha:",
 		"email-subject": "Redefinir senha"
@@ -254,7 +254,7 @@
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Declaração de privacidade</title2>"],
 	"profile": "Perfil",
 	"questions": "Perguntas?",
-	"quick-promo-body": "<textUtility1>💚 Salvar e compartilhar listas de recursos personalizadas</textUtility1>\n<textUtility1>💬 Deixe a classificação pública/comentários nas organizações</textUtility1>\n<textUtility1>🏠 Sugerir organizações em sua área</textUtility1>\n<textUtility1>🔗 Reivindicar o perfil da sua organização (em breve!</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Salvar e compartilhar listas de recursos personalizadas</textUtility1>\n<textUtility1>💬 Fazer uma classificação ou avaliação pública das organizações</textUtility1>\n<textUtility1>🏠 Sugerir organizações em sua área</textUtility1>\n<textUtility1>🔗 Reivindicar o perfil da sua organização (em breve!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Você precisa logar para fazer isso.</title2>\n<textDarkGray>Com uma conta gratuita você pode desbloquear recursos adicionais:</textDarkGray>",
 	"remote-services": "Serviços disponíveis remotamente",
 	"remote-services-page-title": "Serviços remotos",
@@ -266,7 +266,7 @@
 	"review-count_interval": "(0) [Ainda não há avaliações];",
 	"review-not-empty": "A avaliação não pode estar vazia",
 	"review-note": "Sua avaliação não será registrada até que você insira uma avaliação e clique em “Enviar”.",
-	"review-resource": "Revise este recurso",
+	"review-resource": "Avalie este recurso",
 	"safety-exit": "Saída de segurança",
 	"save": "Salvar",
 	"save-changes": "Salvar as alterações",
@@ -295,7 +295,7 @@
 		"cost": "Custo",
 		"cost-details": "Detalhes do custo",
 		"elig-age_max": "Menos de {{max}}",
-		"elig-age_min": "{{min}} e mais velhos",
+		"elig-age_min": "{{min}} e mais antigos",
 		"elig-age_range": "{{min}} - {{max}}",
 		"eligibility": "Requisitos de elegibilidade",
 		"extra-info": "Informações adicionais",
@@ -327,7 +327,7 @@
 		"lcr-screen3": "Analisei a página <Link><strong>Local Community Reviewer</strong></Link> no site da inReach e atendo aos requisitos.",
 		"modal-body": [
 			"<title3>Que tipo de conta você gostaria de criar?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Profissional/Provedor</button>\n<button data-option='lcr'>Revisor da Comunidade Local</button>\n</group>",
+			"<group>\n<button data-option='individual'>Pessoa</button>\n<button data-option='provider'>Profissional/Pessoa provedora</button>\n<button data-option='lcr'>Pessoa Avaliadora da Comunidade Local</button>\n</group>",
 			"<loginLink>Já tem uma conta?</loginLink>"
 		],
 		"name-use-any": "Use qualquer nome com o qual você se sinta confortável.",
@@ -367,7 +367,7 @@
 	"step-x-y": "Etapa {{x}} de {{y}}",
 	"submit": "Enviar",
 	"submit-review": "Enviar avaliação",
-	"subscribe-to-newsletter": "Assine o boletim informativo",
+	"subscribe-to-newsletter": "Assine a Newsletter",
 	"suggest-a-resource": "Sugira um recurso",
 	"support": "Suporte",
 	"survey": {
@@ -387,7 +387,7 @@
 		"question-5-title": "Quantos anos você tem?",
 		"question-subtitle": "Suas respostas são anônimas.",
 		"start-survey": "Iniciar pesquisa",
-		"thank-you": "Obrigada!",
+		"thank-you": "Agradecemos!",
 		"thank-you-message": "As informações que você compartilhou nos ajudam a melhorar nosso produto."
 	},
 	"take-action": "Participe",
@@ -405,8 +405,8 @@
 		"verifying": "Verificando a conta..."
 	},
 	"view-list": "Ver lista",
-	"visit": "Visita",
-	"welcome-name": "Bem-vindo, {{name}}!",
+	"visit": "Visitar",
+	"welcome-name": "Boas vindas, {{name}}!",
 	"words": {
 		"accept": "Aceitar",
 		"account": "Conta",
@@ -418,7 +418,7 @@
 		"approve": "Aprovar",
 		"back": "Voltar",
 		"cancel": "Cancelar",
-		"close": "FECHAR",
+		"close": "Fechar",
 		"coming-soon": "Em breve",
 		"customize": "Personalizar",
 		"decline": "Recusar",
@@ -426,7 +426,7 @@
 		"distance": "Distância",
 		"donate": "Doar",
 		"email": "E-mail",
-		"home": "Casa",
+		"home": "Início",
 		"hours": "Horas",
 		"location": "Local",
 		"more": "mais",
@@ -439,24 +439,24 @@
 		"phone": "Telefone",
 		"please-wait": "Por favor, espere...",
 		"prev": "Anterior",
-		"print": "Imprima",
-		"publish": "Publique",
-		"restore": "Restaure",
-		"reverify": "Verifique novamente",
-		"review": "Revisão",
+		"print": "Imprimir",
+		"publish": "Publicar",
+		"restore": "Restaurar",
+		"reverify": "Verificar novamente",
+		"review": "Avaliar",
 		"reviews": "Avaliações",
-		"save": "Salve",
-		"save-changes": "Salve as alterações",
+		"save": "Salvar",
+		"save-changes": "Salvar as alterações",
 		"saved": "Salvo",
-		"search": "Pesquisa",
+		"search": "Pesquisar",
 		"service-hours": "Horário de atendimento",
 		"services": "Serviços",
 		"settings": "Configurações",
-		"share": "Compartilha",
+		"share": "Compartilhar",
 		"sign-up": "Cadastre-se",
-		"skip": "Ignorar",
-		"support": "SUPORTE",
-		"unpublish": "Anule a publicação",
+		"skip": "Pular",
+		"support": "Ajuda",
+		"unpublish": "Despublicar",
 		"website": "Site",
 		"yes": "Sim"
 	},
@@ -464,9 +464,9 @@
 	"photo_other": "Fotos",
 	"review-count_one": "({{count}} avaliação)",
 	"review-count_other": "({{count}} avaliações)",
-	"review_one": "Revisão",
+	"review_one": "Avaliação",
 	"review_other": "Avaliações",
-	"view-x-result_one": "Veja {{count}} resultado",
+	"view-x-result_one": "Ver {{count}} resultado",
 	"view-x-result_other": "Veja {{count}} resultados",
 	"website_one": "Website",
 	"website_other": "Websites"

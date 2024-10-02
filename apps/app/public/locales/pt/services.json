@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Cuidados de Aborto",
+		"CATEGORYNAME": "Cuidados Abortivos",
 		"abortion-providers": "Provedores de aborto",
 		"financial-assistance": "Assistência financeira",
 		"lodging-assistance": "Assistência de hospedagem",
@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "Suporte comunitário",
-		"advocacy-and-community-organizing": "Advocacia e organização da comunidade",
+		"advocacy-and-community-organizing": "Promoção e organização da comunidade",
 		"community-social-groups": "Grupos comunitários e sociais",
 		"cultural-centers": "Centros culturais",
 		"lgbtq-centers": "Centros LGBTQ",
@@ -40,10 +40,10 @@
 	"financial-assistance": {
 		"CATEGORYNAME": "Assistência Financeira",
 		"bail-funds": "Fundos de fiança",
-		"healthcare-and-insurance": "Cuidados de saúde e seguros",
+		"healthcare-and-insurance": "Assistência médica e seguros",
 		"housing-and-utilities": "Habitação e serviços utilitários",
 		"legal-fees": "Tarifas legais",
-		"moving-and-domestic-relocation": "Movimentação e realocação interna",
+		"moving-and-domestic-relocation": "Mudança e realocação doméstica",
 		"mutual-aid": "Ajuda Mútua"
 	},
 	"food": {
@@ -56,11 +56,11 @@
 	},
 	"housing": {
 		"CATEGORYNAME": "Habitação",
-		"drop-in-centers": "Centros de atendimento",
+		"drop-in-centers": "Centros de acolhimento",
 		"drop-in-centers-for-lgbtq-youth": "Centros de acolhimento para jovens LGBTQ",
 		"emergency-housing": "Habitação de emergência",
 		"housing-information-and-referrals": "Informações e referências sobre moradia",
-		"mail-services": "Serviços de correio",
+		"mail-services": "Serviços de correios",
 		"short-term-housing": "Habitação de curto prazo",
 		"trans-housing": "Habitação para pessoas trans"
 	},
@@ -86,16 +86,16 @@
 		"deferred-action-for-childhood-arrivals-daca": "Ação Diferida para Chegadas na Infância (DACA)",
 		"deportation-or-removal": "Deportação ou remoção",
 		"employment-authorization": "Autorização de emprego",
-		"family-based-immigration": "Imigração baseada em família",
+		"family-based-immigration": "Imigração familiar",
 		"family-law": "Direito de família",
 		"immigration-detention": "Detenção de imigrantes",
-		"legal-advice": "Consulta jurídica",
+		"legal-advice": "Assessoria Jurídica",
 		"legal-hotlines": "Linhas diretas jurídicas",
-		"name-and-gender-change": "Nome e sexo variação de marcador",
-		"refugee-claim": "Pedido de refugiado",
+		"name-and-gender-change": "Mudança de nome e marcador de gênero",
+		"refugee-claim": "Pedido de refúgio",
 		"residency": "Residência",
-		"self-advocacy-information": "Informações de auto-defesa",
-		"special-immigrant-juvenile-status-sijs": "Status Especial Juvenil de Imigrante (SIJS)",
+		"self-advocacy-information": "Informações de autodefesa",
+		"special-immigrant-juvenile-status-sijs": "Status Especial de Imigração Juvenil (SIJS)",
 		"t-visa": "Visto T",
 		"u-visa": "Visto U"
 	},
@@ -109,29 +109,29 @@
 		"fertility-and-family-planning-services": "Serviços de fertilidade e planejamento familiar",
 		"hiv-and-sexual-health": "HIV e saúde sexual",
 		"medical-clinics": "Clínicas médicas",
-		"obgyn-services": "Serviços de obstetrícia",
+		"obgyn-services": "Serviços de obstetrícia e ginecologia",
 		"physical-evaluations-for-asylum-claim": "Avaliações físicas para pedido de asilo",
 		"physical-evaluations-for-refugee-claim": "Avaliações físicas para solicitação de refúgio",
 		"substance-use": "Uso de substâncias",
 		"trans-health": "Saúde trans",
-		"trans-health-gender-affirming-surgery": "Saúde trans - cirurgia de afirmação de gênero",
-		"trans-health-hormone-and-surgery-letters": "Saúde trans - cartas sobre hormônios e cirurgias",
+		"trans-health-gender-affirming-surgery": "Saúde trans - cirurgias de redesignação sexual",
+		"trans-health-hormone-and-surgery-letters": "Saúde trans - permissões para hormônios e cirurgias",
 		"trans-health-hormone-therapy": "Saúde trans - terapia hormonal",
 		"trans-health-primary-care": "Saúde trans - atenção primária",
 		"trans-health-speech-therapy": "Saúde trans - terapia da fala",
-		"trans-health-youth-care": "Saúde de Trans - Cuidados com juventude"
+		"trans-health-youth-care": "Saúde de Trans - Cuidados com o jovem"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Saúde mental",
-		"bipoc-support-groups": "Grupos de apoio do BIPOC",
+		"bipoc-support-groups": "Grupos de apoio para BIPOC/pessoas racializadas",
 		"family-support-groups": "Grupos de suporte familiar",
 		"hotlines": "Linhas diretas",
-		"private-therapy-and-counseling": "Terapia e aconselhamento privados",
+		"private-therapy-and-counseling": "Terapia e aconselhamento individuais",
 		"psychological-evaluations-for-asylum-claim": "Avaliações psicológicas para pedido de asilo",
 		"psychological-evaluations-for-refugee-claim": "Avaliações psicológicas para solicitação de refúgio",
 		"substance-use": "Uso de substâncias",
-		"support-for-caregivers-of-trans-youth": "Apoio aos cuidadores de jovens trans",
-		"support-for-conversion-therapy-survivors": "Suporte para sobreviventes da terapia de conversão",
+		"support-for-caregivers-of-trans-youth": "Apoio a responsáveis e cuidadores de jovens trans",
+		"support-for-conversion-therapy-survivors": "Apoio a sobreviventes de terapias de conversão",
 		"support-groups": "Grupos de apoio",
 		"trans-support-groups": "Grupos de apoio trans"
 	},
@@ -142,9 +142,9 @@
 		"sports-and-entertainment": "Esportes e entretenimento"
 	},
 	"trans-focused-services": {
-		"CATEGORYNAME": "Serviços Focados nos Trans",
-		"transport-gacare": "Transporte para a afirmação do género",
-		"transport-relo-support": "Apoio a realocação de pessoas Trans"
+		"CATEGORYNAME": "Serviços voltados a pessoas trans",
+		"transport-gacare": "Transporte para cuidados de afirmação de gênero",
+		"transport-relo-support": "Apoio à realocação de pessoas Trans"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Tradução e Interpretação",
