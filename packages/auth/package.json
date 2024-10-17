@@ -76,14 +76,14 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.1",
-		"next": "14.2.14",
+		"next": "14.2.15",
 		"next-auth": "4.24.8",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
 		"typescript": "5.6.3"
 	},
 	"peerDependencies": {
-		"next": "14.2.14",
+		"next": "14.2.15",
 		"next-auth": "4.24.8",
 		"react": "18.3.1",
 		"react-dom": "18.3.1"
