@@ -27,17 +27,17 @@
 		"@weareinreach/ui": "workspace:*",
 		"dayjs": "1.11.13",
 		"embla-carousel-react": "7.1.0",
-		"i18next": "23.15.2",
+		"i18next": "23.16.2",
 		"next": "14.2.15",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
-		"react-i18next": "15.0.2"
+		"react-i18next": "15.1.0"
 	},
 	"devDependencies": {
 		"@next/bundle-analyzer": "14.2.15",
 		"@types/eslint": "8.56.12",
-		"@types/node": "20.16.11",
-		"@types/react": "18.3.11",
+		"@types/node": "20.17.0",
+		"@types/react": "18.3.12",
 		"@types/react-dom": "18.3.1",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
