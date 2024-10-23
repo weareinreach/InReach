@@ -129,7 +129,7 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"@welldone-software/why-did-you-render": "8.0.3",
-		"chromatic": "11.14.0",
+		"chromatic": "11.15.0",
 		"css-loader": "6.11.0",
 		"dayjs": "1.11.13",
 		"dotenv": "16.4.5",
