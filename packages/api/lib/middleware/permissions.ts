@@ -56,6 +56,7 @@ export const checkRole = (allowedRoles: string[], userRoles: string[]) => {
 
 export const isAdmin = t.middleware(({ ctx, meta, next }) => {
 	if (ctx.session === null) {
+		console.error('Rejected Admin procedure - no session context')
 		return reject()
 	}
 	if (
@@ -67,6 +68,8 @@ export const isAdmin = t.middleware(({ ctx, meta, next }) => {
 			)
 		)
 	) {
+		console.error('Rejected Admin Procedure - Invalid permissions')
+		console.error(ctx.session)
 		return reject()
 	}
 
