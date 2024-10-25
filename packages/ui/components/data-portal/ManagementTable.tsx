@@ -8,9 +8,11 @@ import {
 	MRT_TablePagination,
 	useMantineReactTable,
 } from 'mantine-react-table'
+import { useTranslation } from 'next-i18next'
 import { useCallback, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { Link } from '~ui/components/core/Link'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -19,7 +21,7 @@ const customIcons: Partial<MRT_Icons> = {
 	IconSortDescending: () => <Icon icon={'carbon:chevron-down'} color='black' />,
 }
 
-const DataPortalConfirmModal = ({ current, userId }: { current: boolean; userId: string }) => {
+const DataPortalUserConfirmModal = ({ current, userId }: { current: boolean; userId: string }) => {
 	const [opened, handler] = useDisclosure(false)
 	const apiUtils = api.useUtils()
 	const updateAccess = api.user.toggleDataPortalAccess.useMutation({
@@ -49,6 +51,34 @@ const DataPortalConfirmModal = ({ current, userId }: { current: boolean; userId:
 				<Button onClick={handler.close}>No</Button>
 			</Modal>
 			<Switch onChange={handler.toggle} checked={current} />
+		</>
+	)
+}
+
+const PasswordResetModal = ({ email }: { email: string }) => {
+	const [opened, handler] = useDisclosure(false)
+	const { t } = useTranslation('common')
+	const resetPw = api.user.forgotPassword.useMutation({
+		onSettled: handler.close,
+	})
+	const cognitoSubject = t('password-reset.email-subject')
+	const cognitoMessage = t('password-reset.email-body')
+
+	const createResetHandler = useCallback(
+		(email: string) => () => {
+			resetPw.mutate({ email, cognitoSubject, cognitoMessage })
+		},
+		[cognitoSubject, cognitoMessage, resetPw]
+	)
+
+	return (
+		<>
+			<Modal opened={opened} onClose={handler.close} title='Reset Password'>
+				<p>Are you sure you want to reset this user's password?</p>
+				<Button onClick={createResetHandler(email)}>Yes</Button>
+				<Button onClick={handler.close}>No</Button>
+			</Modal>
+			<Link onClick={handler.open}>Reset</Link>
 		</>
 	)
 }
@@ -103,7 +133,13 @@ export const ManagementTable = () => {
 				header: 'Data Portal Access?',
 				Cell: ({ cell }) => {
 					const currentValue = cell.getValue<boolean>()
-					return <DataPortalConfirmModal current={currentValue} userId={cell.row.original.id} />
+					return <DataPortalUserConfirmModal current={currentValue} userId={cell.row.original.id} />
+				},
+			},
+			{
+				header: 'Reset Password',
+				Cell: ({ cell }) => {
+					return <PasswordResetModal email={cell.row.original.email} />
 				},
 			},
 		],
