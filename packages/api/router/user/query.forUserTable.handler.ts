@@ -14,8 +14,16 @@ const forUserTable = async ({ input }: TRPCHandlerParams<TForUserTableSchema>) =
 			createdAt: true,
 			emailVerified: true,
 			updatedAt: true,
+			permissions: {
+				where: { permission: { name: 'root' } },
+				select: { permission: { select: { name: true } }, authorized: true },
+			},
 		},
 	})
-	return userResults
+	const reformattedResults = userResults.map(({ permissions, ...user }) => ({
+		...user,
+		canAccessDataPortal: permissions.some(({ authorized }) => authorized),
+	}))
+	return reformattedResults
 }
 export default forUserTable

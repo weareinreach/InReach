@@ -1,4 +1,5 @@
-import { Button, Group, NativeSelect, Stack, Text } from '@mantine/core'
+import { Button, Group, Modal, NativeSelect, Stack, Switch, Text } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 import {
 	MantineReactTable,
 	type MRT_ColumnDef,
@@ -7,7 +8,7 @@ import {
 	MRT_TablePagination,
 	useMantineReactTable,
 } from 'mantine-react-table'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Icon } from '~ui/icon'
@@ -16,6 +17,40 @@ import { trpc as api } from '~ui/lib/trpcClient'
 const customIcons: Partial<MRT_Icons> = {
 	IconSortAscending: () => <Icon icon={'carbon:chevron-up'} color='black' />,
 	IconSortDescending: () => <Icon icon={'carbon:chevron-down'} color='black' />,
+}
+
+const DataPortalConfirmModal = ({ current, userId }: { current: boolean; userId: string }) => {
+	const [opened, handler] = useDisclosure(false)
+	const apiUtils = api.useUtils()
+	const updateAccess = api.user.toggleDataPortalAccess.useMutation({
+		onSettled: () => {
+			handler.close()
+		},
+		onSuccess: () => {
+			setTimeout(apiUtils.user.invalidate, 500)
+		},
+	})
+
+	const createToggleHandler = useCallback(
+		(userId: string, current: boolean) => () =>
+			updateAccess.mutate({ userId, action: current ? 'deny' : 'allow' }),
+		[updateAccess]
+	)
+
+	return (
+		<>
+			<Modal opened={opened} onClose={handler.close} title='Data Portal Access'>
+				{current ? (
+					<p>Are you sure you want to remove this user's access to the data portal?</p>
+				) : (
+					<p>Are you sure you want to give this user access to the data portal?</p>
+				)}
+				<Button onClick={createToggleHandler(userId, current)}>Yes</Button>
+				<Button onClick={handler.close}>No</Button>
+			</Modal>
+			<Switch onChange={handler.toggle} checked={current} />
+		</>
+	)
 }
 
 export const ManagementTable = () => {
@@ -59,6 +94,17 @@ export const ManagementTable = () => {
 			{
 				accessorKey: 'active',
 				header: 'Active',
+				Cell: ({ cell }) => {
+					return cell.getValue<boolean>() ? 'Yes' : 'No'
+				},
+			},
+			{
+				accessorKey: 'canAccessDataPortal',
+				header: 'Data Portal Access?',
+				Cell: ({ cell }) => {
+					const currentValue = cell.getValue<boolean>()
+					return <DataPortalConfirmModal current={currentValue} userId={cell.row.original.id} />
+				},
 			},
 		],
 		[]

@@ -108,4 +108,13 @@ export const userRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	toggleDataPortalAccess: adminProcedure
+		.input(schema.ZToggleDataPortalAccessSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('toggleDataPortalAccess'),
+				() => import('./mutation.toggleDataPortalAccess.handler')
+			)
+			return handler(opts)
+		}),
 })
