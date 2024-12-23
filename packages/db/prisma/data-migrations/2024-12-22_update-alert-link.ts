@@ -3,16 +3,16 @@ import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef } from '~db/prisma/jobPreRun'
 /** Define the job metadata here. */
 const jobDef: JobDef = {
-	jobId: '2024-06-27_search-page-alert',
+	jobId: '2024-12-22_update-alert-link',
 	title: 'Search page alert',
-	createdBy: 'Joe Karow',
+	createdBy: 'Diana Garbarino',
 	/** Optional: Longer description for the job */
 	description: undefined,
 }
 /**
  * Job export - this variable MUST be UNIQUE
  */
-export const job202401222_update_alert_link = {
+export const job20240627_search_page_alert = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
 	task: async (ctx, task) => {
 		const { createLogger, downloadFromDatastore, generateId, formatMessage, jobPostRunner, prisma } = ctx
