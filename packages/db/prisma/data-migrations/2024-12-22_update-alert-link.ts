@@ -46,7 +46,7 @@ export const job20241222_update_alert_link = {
 					type: 'locationAlert',
 					freeTextId: existingAlert.text.freeTextId, // Retain the same freeTextId to avoid changing other content
 					itemId: alertId,
-					text: 'This <Link href="https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk">new anti-trans legislative risk map</Link> shows updated risk information.',
+					text: 'This <Link href="https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk">anti-trans legislative risk map</Link> shows the 2-year risk for anti-trans laws in all 50 states and D.C.',
 				}),
 			},
 		})
