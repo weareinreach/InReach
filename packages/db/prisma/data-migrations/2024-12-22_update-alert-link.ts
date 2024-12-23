@@ -12,7 +12,7 @@ const jobDef: JobDef = {
 /**
  * Job export - this variable MUST be UNIQUE
  */
-export const job20240627_search_page_alert = {
+export const job20241222_update_alert_link = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
 	task: async (ctx, task) => {
 		const { createLogger, downloadFromDatastore, generateId, formatMessage, jobPostRunner, prisma } = ctx
