@@ -1,57 +1,51 @@
 import { generateNestedFreeText } from '~db/lib/generateFreeText'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef } from '~db/prisma/jobPreRun'
-
 /** Define the job metadata here. */
 const jobDef: JobDef = {
-	jobId: '2024-12-22_update-alert-link',
-	title: 'Update alert link',
-	createdBy: 'Diana Garbarino',
+	jobId: '2024-06-27_search-page-alert',
+	title: 'Search page alert',
+	createdBy: 'Joe Karow',
 	/** Optional: Longer description for the job */
-	description: 'This migration script updates the alert text with a new link.',
+	description: undefined,
 }
-
 /**
  * Job export - this variable MUST be UNIQUE
  */
-export const job20241222_update_alert_link = {
+export const job202401222_update_alert_link = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
 	task: async (ctx, task) => {
-		const { createLogger, jobPostRunner, prisma, formatMessage } = ctx
+		const { createLogger, downloadFromDatastore, generateId, formatMessage, jobPostRunner, prisma } = ctx
 		/** Create logging instance */
 		createLogger(task, jobDef.jobId)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
+		/**
+		 * Start defining your data migration from here.
+		 *
+		 * To log output, use `task.output = 'Message to log'`
+		 *
+		 * This will be written to `stdout` and to a log file in `/prisma/migration-logs/`
+		 */
 
-		// Log that the script has started
-		log('Starting to update the alert link.')
+		// Do stuff
 
-		// Define the alertId you wish to update
 		const alertId = 'alrt_01J1D1GAT5G5S6QNMCND5PMDAX'
 
-		// Fetch the existing alert record
-		const existingAlert = await prisma.locationAlert.findUnique({
-			where: { id: alertId },
-		})
-
-		if (!existingAlert) {
-			log(`Alert with ID ${alertId} not found.`)
-			return
-		}
-
-		// Update the 'text' field with a new link
-		const updatedAlert = await prisma.locationAlert.update({
-			where: { id: alertId },
+		const newAlert = await prisma.locationAlert.create({
 			data: {
+				id: alertId,
+				level: 'WARN_PRIMARY',
 				text: generateNestedFreeText({
 					type: 'locationAlert',
-					freeTextId: existingAlert.text.freeTextId, // Retain the same freeTextId to avoid changing other content
+					freeTextId: 'ftxt_01J1D1GVD7X1VBKZMPJ8AKYYMB',
 					itemId: alertId,
-					text: 'This <Link href="https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk">anti-trans legislative risk map</Link> shows the 2-year risk for anti-trans laws in all 50 states and D.C.',
+					text: 'This <Link href=“https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk”>anti-trans legislative risk map</Link> shows the 2-year risk for anti-trans laws in all 50 states and D.C.',
 				}),
+				country: { connect: { cca2: 'US' } },
 			},
 		})
 
-		log(`Updated alert ${updatedAlert.id} with new link`)
+		log(`Created alert ${newAlert.id}`)
 
 		/**
 		 * DO NOT REMOVE BELOW
