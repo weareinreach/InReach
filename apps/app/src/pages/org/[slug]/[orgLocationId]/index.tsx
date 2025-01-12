@@ -53,8 +53,13 @@ const OrgLocationPage: NextPage = () => {
 		error: pageFetchError,
 	} = api.location.forLocationPage.useQuery({ id: orgLocationId }, { enabled: router.isReady })
 
-	const { data: alertData } = { data: [] }
-	const hasAlerts = useMemo(() => Array.isArray(alertData) && alertData.length > 0, [alertData])
+	interface Alert {
+		key: string
+		icon: string
+		text: string
+	}
+
+	const { data: alertData }: { data: Alert[] } = { data: [] }
 	const { classes } = useStyles()
 
 	const servicesRef = useRef<HTMLDivElement>(null)

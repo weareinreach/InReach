@@ -59,7 +59,13 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 
-	const { data: alertData } = { data: [] }
+	interface Alert {
+		key: string
+		icon: string
+		text: string
+	}
+
+	const { data: alertData }: { data: Alert[] } = { data: [] }
 
 	// for use with MultiSelectPopover
 

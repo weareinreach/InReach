@@ -61,7 +61,15 @@ const OrganizationPage = ({
 			select: (serviceInfoResult) => serviceInfoResult.length !== 0,
 		}
 	)
-	const { data: alertData } = { data: [] }
+
+	interface Alert {
+		key: string
+		icon: string
+		text: string
+	}
+
+	const { data: alertData }: { data: Alert[] } = { data: [] }
+
 	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
 	const { ref, width } = useElementSize()
 	const { searchState } = useSearchState()
