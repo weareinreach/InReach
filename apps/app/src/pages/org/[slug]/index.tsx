@@ -61,7 +61,7 @@ const OrganizationPage = ({
 			select: (serviceInfoResult) => serviceInfoResult.length !== 0,
 		}
 	)
-	const { data: alertData } = api.organization.getAlerts.useQuery({ slug }, { enabled: !!slug })
+	const { data: alertData } = { data: [] }
 	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
 	const { ref, width } = useElementSize()
 	const { searchState } = useSearchState()
