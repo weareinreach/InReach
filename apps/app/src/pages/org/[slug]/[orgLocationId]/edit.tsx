@@ -13,7 +13,6 @@ import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { Button } from '@weareinreach/ui/components/core'
-import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover/hook-form'
 import { ServiceEditDrawer } from '@weareinreach/ui/components/data-portal/ServiceEditDrawer'
@@ -59,14 +58,10 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 
-	interface Alert {
-		key: string
-		icon: string
-		text: string
-	}
-
-	const { data: alertData }: { data: Alert[] } = { data: [] }
-
+	const { data: alertData } = api.location.getAlerts.useQuery(
+		{ id: orgLocationId },
+		{ enabled: router.isReady }
+	)
 	// for use with MultiSelectPopover
 
 	const { data: orgServices } = api.service.getNames.useQuery(
@@ -85,7 +80,6 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 		values: defaultFormValues,
 	})
 
-	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
 	const { classes } = useStyles()
 
 	const servicesRef = useRef<HTMLDivElement>(null)
@@ -181,16 +175,6 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 						organizationId={data.organization.id}
 					/>
 					<Stack pt={24} align='flex-start' spacing={40}>
-						{hasAlerts &&
-							alertData.map((alert) => (
-								<AlertMessage
-									key={alert.key}
-									iconKey={alert.icon}
-									ns={data.organization.id}
-									textKey={alert.key}
-									defaultText={alert.text}
-								/>
-							))}
 						<ListingBasicInfo
 							data={{
 								slug,
