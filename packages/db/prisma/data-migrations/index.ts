@@ -12,4 +12,6 @@ export * from './2024-07-29_new-service-tags'
 export * from './2024-08-22_election-alert'
 export * from './2024-12-22_update-alert-link'
 export * from './2025-01-07_update-locationbased-alert-string'
+export * from './2025-01-15_new_food-service-tag'
+export * from './2025-01-15_update-food-tags'
 // codegen:end
