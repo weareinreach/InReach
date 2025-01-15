@@ -6,11 +6,10 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -53,13 +52,6 @@ const OrgLocationPage: NextPage = () => {
 		error: pageFetchError,
 	} = api.location.forLocationPage.useQuery({ id: orgLocationId }, { enabled: router.isReady })
 
-	interface Alert {
-		key: string
-		icon: string
-		text: string
-	}
-
-	const { data: alertData }: { data: Alert[] } = { data: [] }
 	const { classes } = useStyles()
 
 	const servicesRef = useRef<HTMLDivElement>(null)
@@ -123,16 +115,6 @@ const OrgLocationPage: NextPage = () => {
 					organizationId={orgData.id}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
-					{hasAlerts &&
-						alertData?.map((alert) => (
-							<AlertMessage
-								key={alert.key}
-								iconKey={alert.icon}
-								ns={orgData.id}
-								textKey={alert.key}
-								defaultText={alert.text}
-							/>
-						))}
 					<ListingBasicInfo
 						data={{
 							name: data.name ?? orgData.name,

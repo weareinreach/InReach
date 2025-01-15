@@ -9,7 +9,6 @@ import { type RoutedQuery } from 'nextjs-routes'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -62,15 +61,6 @@ const OrganizationPage = ({
 		}
 	)
 
-	interface Alert {
-		key: string
-		icon: string
-		text: string
-	}
-
-	const { data: alertData }: { data: Alert[] } = { data: [] }
-
-	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
 	const { ref, width } = useElementSize()
 	const { searchState } = useSearchState()
 	const theme = useMantineTheme()
@@ -205,21 +195,6 @@ const OrganizationPage = ({
 					organizationId={organizationId}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
-					{hasAlerts &&
-						alertData.map((alert) => {
-							if (!alert.key) {
-								return null
-							}
-							return (
-								<AlertMessage
-									key={alert.key}
-									iconKey={alert.icon}
-									ns={organizationId}
-									textKey={alert.key}
-									defaultText={alert.text}
-								/>
-							)
-						})}
 					<ListingBasicInfo
 						data={{
 							name: data.name,
