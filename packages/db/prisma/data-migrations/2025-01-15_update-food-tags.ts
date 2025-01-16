@@ -44,14 +44,12 @@ export const job20250115_update_food_tags_to_active = {
 			}),
 			prisma.serviceTag.update({
 				where: { tsKey_tsNs: { tsKey: 'food.food-pantries', tsNs: 'services' } },
-
 				data: {
 					active: true,
 				},
 			}),
 			prisma.serviceTag.update({
 				where: { tsKey_tsNs: { tsKey: 'food.food-delivery', tsNs: 'services' } },
-
 				data: {
 					active: true,
 				},
