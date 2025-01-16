@@ -8,7 +8,6 @@ import { AddressVisibility } from '@weareinreach/db/enums'
 import { Badge } from '~ui/components/core/Badge'
 import { GoogleMap } from '~ui/components/core/GoogleMap'
 import { Link } from '~ui/components/core/Link'
-import { Hours } from '~ui/components/data-display/Hours'
 import { AddressDrawer } from '~ui/components/data-portal/AddressDrawer'
 import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
 import { useGoogleMapMarker } from '~ui/hooks/useGoogleMapMarker'
@@ -106,7 +105,7 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}
-			<Hours parentId={locationId} />
+			{/* <Hours parentId={locationId} /> */}
 			{/* TODO: [IN-807] Validate accessibility data points before enabling.
 			<Stack spacing={12} align='flex-start'>
 				<Badge
@@ -233,7 +232,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}
-			<Hours parentId={locationId} edit />
+			{/* <Hours parentId={locationId} edit /> */}
 		</Stack>
 	)
 

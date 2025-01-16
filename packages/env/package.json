@@ -19,15 +19,15 @@
 	"dependencies": {
 		"@t3-oss/env-nextjs": "0.9.2",
 		"@weareinreach/util": "workspace:*",
-		"chromatic": "11.7.1",
+		"chromatic": "11.15.0",
 		"zod": "3.23.8"
 	},
 	"devDependencies": {
 		"@types/eslint": "8.56.12",
-		"@types/node": "20.16.1",
+		"@types/node": "20.17.0",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
-		"eslint": "8.57.0",
-		"typescript": "5.5.4"
+		"eslint": "8.57.1",
+		"typescript": "5.6.3"
 	}
 }

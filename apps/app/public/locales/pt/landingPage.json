@@ -1,8 +1,8 @@
 {
 	"banner": {
-		"donate": "Ajude a manter o InReach grátis para todos. <DonateLink>Faça uma doação agora!</DonateLink>💝",
+		"donate": "Ajude a manter o InReach grátis para todo mundo. <DonateLink>Faça uma doação agora!</DonateLink>💝",
 		"redesign": "Leia sobre o lançamento da reformulação do aplicativo inReach no nosso blog. <Link>Saiba mais.</Link>",
-		"tmf": "Espalhe alegria trans com #TransMascFuturos 🏳️‍⚧️"
+		"tmf": "<TMFLink>Espalhe alegria trans com #TransMascFutures 🏳️‍⚧️</TMFLink>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Ouça nossos usuários</Title1>",
@@ -36,7 +36,7 @@
 		"subheading": "Bem-vindo à primeira plataforma tecnológica do mundo que combina pessoas TLGBQ+ (transgêneros, lésbicas, gays, bissexuais, homossexuais e outras identidades) que enfrentam perseguição ou discriminação com recursos seguros e verificados."
 	},
 	"values": {
-		"free": "<Title2>Gratuito para sempre 🔑</Title2>\n<Text>Nossa plataforma tecnológica é 100% gratuita para todos, para garantir que ajuda esteja sempre disponível.</Text>\n<LinkFree>Faça uma doação para ajudar a manter nossa plataforma gratuita.</LinkFree>",
+		"free": "<Title2>Gratuito para sempre 🔑</Title2>\n<Text>Nossa plataforma de código aberto é 100% gratuita para todo mundo, para garantir que a ajuda esteja sempre ao alcance.</Text>\n<LinkFree>Faça uma doação para ajudar a manter nossa plataforma gratuita.</LinkFree>",
 		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>Somos a primeira plataforma tecnológica do mundo que combina pessoas LGBTQ+ que enfrentam perseguição ou discriminação com recursos seguros e verificados de forma independente.</Text>\n<LinkInnovative>Veja nosso código-fonte e contribua.</LinkInnovative>",
 		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Acreditamos que a igualdade LGBTQ+ exige justiça trans, justiça para refugiados, justiça racial, justiça reprodutiva, justiça linguística e muito mais.</Text>\n<LinkIntersect>Saiba mais sobre o nosso processo de verificação.</LinkIntersect>",
 		"our-values": "Nossos valores",
