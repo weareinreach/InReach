@@ -31,31 +31,33 @@ export const job20250115_update_food_tags_to_active = {
 
 		const update = await prisma.$transaction([
 			prisma.serviceTag.update({
-				where: { id: 'svtg_01J1GDWBVVQ9BBBWMDW3J8J4MT' },
+				where: { tsKey_tsNs: { tsKey: 'food.community-meals', tsNs: 'services' } },
 				data: {
 					active: true,
 				},
 			}),
 			prisma.serviceTag.update({
-				where: { id: 'svtg_01J1GDWBWJKRP2H2NC84CXAERQ' },
+				where: { tsKey_tsNs: { tsKey: 'food.food-assistance', tsNs: 'services' } },
 				data: {
 					active: true,
 				},
 			}),
 			prisma.serviceTag.update({
-				where: { id: 'svtg_01J1GDWBWZJAKK8GBQ9GECY6W6' },
+				where: { tsKey_tsNs: { tsKey: 'food.food-pantries', tsNs: 'services' } },
+
 				data: {
 					active: true,
 				},
 			}),
 			prisma.serviceTag.update({
-				where: { id: 'svtg_01J1GDWBXBWPMPZCNAYNCGEHYP' },
+				where: { tsKey_tsNs: { tsKey: 'food.food-delivery', tsNs: 'services' } },
+
 				data: {
 					active: true,
 				},
 			}),
 			prisma.serviceTag.update({
-				where: { id: 'svtg_01J1GDWBXYEJX7RJP7XRXJYPAH' },
+				where: { tsKey_tsNs: { tsKey: 'food.nutrition-education', tsNs: 'services' } },
 				data: {
 					active: true,
 				},
