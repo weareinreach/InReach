@@ -60,6 +60,12 @@ export const job20250115_update_food_tags_to_active = {
 					active: true,
 				},
 			}),
+			prisma.serviceTag.update({
+				where: { tsKey_tsNs: { tsKey: 'housing.drop-in-centers', tsNs: 'services' } },
+				data: {
+					active: true,
+				},
+			}),
 		])
 		log(`serviceTag records updated: ${update.length}`)
 
