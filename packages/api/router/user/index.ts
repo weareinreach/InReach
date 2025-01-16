@@ -2,6 +2,7 @@ import {
 	adminProcedure,
 	defineRouter,
 	importHandler,
+	permissionedProcedure,
 	protectedProcedure,
 	publicProcedure,
 } from '~api/lib/trpc'
@@ -91,6 +92,15 @@ export const userRouter = defineRouter({
 		)
 		return handler({ input, ctx })
 	}),
+	forUserTable: permissionedProcedure('viewAllUsers')
+		.input(schema.ZForUserTableSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('forUserTable'),
+				() => import('./query.forUserTable.handler')
+			)
+			return handler(opts)
+		}),
 	resendCode: publicProcedure.input(schema.ZResendCodeSchema).mutation(async (opts) => {
 		const handler = await importHandler(
 			namespaced('resendCode'),
@@ -98,4 +108,13 @@ export const userRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	toggleDataPortalAccess: adminProcedure
+		.input(schema.ZToggleDataPortalAccessSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('toggleDataPortalAccess'),
+				() => import('./mutation.toggleDataPortalAccess.handler')
+			)
+			return handler(opts)
+		}),
 })
