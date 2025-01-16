@@ -106,7 +106,7 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}
-			<Hours parentId={locationId} />
+			{/* <Hours parentId={locationId} /> */}
 			{/* TODO: [IN-807] Validate accessibility data points before enabling.
 			<Stack spacing={12} align='flex-start'>
 				<Badge
@@ -233,7 +233,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}
-			<Hours parentId={locationId} edit />
+			{/* <Hours parentId={locationId} edit /> */}
 		</Stack>
 	)
 
