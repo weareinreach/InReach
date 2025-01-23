@@ -734,8 +734,8 @@ importers:
         specifier: 3.5.0
         version: 3.5.0
       nanoid:
-        specifier: 5.0.7
-        version: 5.0.7
+        specifier: 5.0.9
+        version: 5.0.9
       remeda:
         specifier: 2.16.0
         version: 2.16.0
@@ -9993,6 +9993,7 @@ packages:
 
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
 
   lodash.includes@4.3.0:
     resolution: {integrity: sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==}
@@ -10708,8 +10709,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanoid@5.0.7:
-    resolution: {integrity: sha512-oLxFY2gd2IqnjcYyOXD8XGCftpGtZP2AbHbOkthDkvRywH5ayNtPVy9YlOPcHckXzbLTCHpkb7FB+yuxKV13pQ==}
+  nanoid@5.0.9:
+    resolution: {integrity: sha512-Aooyr6MXU6HpvvWXKoVoXwKMs/KyVakWwg7xQfv5/S/RIgJMy0Ifa45H9qqYy7pTCszrHzP21Uk4PZq2HpEM8Q==}
     engines: {node: ^18 || >=20}
     hasBin: true
 
@@ -13535,6 +13536,7 @@ packages:
   typesync@0.13.2:
     resolution: {integrity: sha512-yLH4fUxkBKZTQ2rSDzBoDSFhBHQcU5wgF2j1x2cWSaXHBdCps0p+Q3TP/jd50WCFcdpWOpcNVGry2le0ipF+9A==}
     engines: {node: '>=16.0.0'}
+    deprecated: This version contains a regression. Update to 0.13.3 or later.
     hasBin: true
 
   ufo@1.5.4:
@@ -26307,7 +26309,7 @@ snapshots:
 
   nanoid@3.3.7: {}
 
-  nanoid@5.0.7: {}
+  nanoid@5.0.9: {}
 
   napi-build-utils@1.0.2: {}
 
