@@ -52,6 +52,7 @@
 		"food-assistance": "食物援助",
 		"food-delivery": "食品的提供",
 		"food-pantries": "食物面包",
+		"hot-meals": "热餐：",
 		"nutrition-education": "营养教育"
 	},
 	"housing": {
@@ -108,6 +109,7 @@
 		"dental-care": "牙科保健",
 		"fertility-and-family-planning-services": "生育率和计划生育服务",
 		"hiv-and-sexual-health": "艾滋病毒和性健康",
+		"medical-info-and-referrals": "医疗信息和转诊服务",
 		"medical-clinics": "医疗诊所",
 		"obgyn-services": "妇产科服务",
 		"physical-evaluations-for-asylum-claim": "庇护申请的身体评估",
