@@ -41,7 +41,7 @@ jobs:
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -54,7 +54,7 @@ jobs:
         run: pnpm install
 
       - name: Restore next build
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4
         id: restore-build-cache
         env:
           cache-name: cache-next-build
@@ -75,7 +75,7 @@ jobs:
         run: npx -p nextjs-bundle-analysis report
 
       - name: Upload bundle
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4
         with:
           name: bundle
           path: /home/runner/work/InReach/InReach/apps/app/.next/analyze/__bundle_analysis.json
