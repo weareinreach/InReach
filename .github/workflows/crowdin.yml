@@ -36,7 +36,7 @@ jobs:
 
       - name: Import GPG key
         id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@01dd5d3ca463c7f10f7f4f7b4f177225ac661ee4 # v6
+        uses: crazy-max/ghaction-import-gpg@cb9bde2e2525e640591a934b1fd28eef1dcaf5e5 # v6
         with:
           gpg_private_key: ${{ secrets.BOT_GPG_KEY }}
           git_user_signingkey: true
@@ -53,7 +53,7 @@ jobs:
 
       - name: Install Node.js
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -122,7 +122,7 @@ jobs:
       - name: Commit files
         id: commit-files
         if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
-        uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7
+        uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7
         with:
           token: ${{ secrets.GH_ACT_PAT }}
           commit-message: Updated translations from Crowdin
