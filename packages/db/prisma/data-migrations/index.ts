@@ -16,4 +16,7 @@ export * from './2025-01-15_new_food-service-tag'
 export * from './2025-01-15_new_medical-service-tag'
 export * from './2025-01-15_update-cost-tags'
 export * from './2025-01-15_update-food-tags'
+export * from './2025-01-29_update-nationwide-locationbased-alert'
+export * from './2025-01-29_update-parent-category-for-trans-you-health'
+export * from './2025-01-29_update-translation-key-for-trans-health-youth'
 // codegen:end
