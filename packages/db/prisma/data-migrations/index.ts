@@ -19,4 +19,6 @@ export * from './2025-01-15_update-food-tags'
 export * from './2025-01-29_update-nationwide-locationbased-alert'
 export * from './2025-01-29_update-parent-category-for-trans-you-health'
 export * from './2025-01-29_update-translation-key-for-trans-health-youth'
+export * from './2025-01-31_remove-twitter-from-orgWebsite-and-OrgSocialMedia'
+export * from './2025-01-31_remove-twitter-from-SocialMediaServices'
 // codegen:end
