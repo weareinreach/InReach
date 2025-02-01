@@ -69,7 +69,7 @@
 		"modal-title": "Configuración de cookies"
 	},
 	"count": {
-		"more": "{{count}} more",
+		"more": "{{count}} más",
 		"result_one": "{{count}} resultado",
 		"result_other": "{{count}} resultados"
 	},
