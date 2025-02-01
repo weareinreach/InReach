@@ -39,7 +39,7 @@
 	},
 	"financial-assistance": {
 		"CATEGORYNAME": "Asistencia Financiera",
-		"bail-funds": "Fondos de fianza",
+		"bail-funds": "Fondo de fianza y bonos",
 		"healthcare-and-insurance": "Asistencia médica y seguro",
 		"housing-and-utilities": "Vivienda y utilidades",
 		"legal-fees": "Honorarios legales",
@@ -52,6 +52,7 @@
 		"food-assistance": "Ayuda alimentaria",
 		"food-delivery": "Entrega de comida",
 		"food-pantries": "Despensas de comida",
+		"hot-meals": "Comidas calientes",
 		"nutrition-education": "Educación nutricional"
 	},
 	"housing": {
@@ -108,6 +109,7 @@
 		"dental-care": "Cuidado dental",
 		"fertility-and-family-planning-services": "Servicios de fertilidad y planificación familiar",
 		"hiv-and-sexual-health": "VIH y salud sexual",
+		"medical-info-and-referrals": "Información médica y referencias",
 		"medical-clinics": "Clínicas médicas",
 		"obgyn-services": "Servicios de ginecología y obstetricia (OBGYN)",
 		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas para la solicitud de asilo",
@@ -119,7 +121,7 @@
 		"trans-health-hormone-therapy": "Salud trans - terapia hormonal",
 		"trans-health-primary-care": "Salud trans - atención primaria",
 		"trans-health-speech-therapy": "Salud trans - terapia de voz",
-		"trans-health-youth-care": "Salud trans - atención a jóvenes"
+		"trans-health-youth-care": "Salud trans para jóvenes"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Salud mental",
