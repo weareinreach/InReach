@@ -9,7 +9,6 @@ export const socialMediaIcons = {
 	email: 'carbon:email',
 	youtube: 'carbon:logo-youtube',
 	github: 'carbon:logo-github',
-	twitter: 'carbon:logo-twitter',
 	linkedin: 'carbon:logo-linkedin',
 	tiktok: 'simple-icons:tiktok',
 } as const

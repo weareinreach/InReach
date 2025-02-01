@@ -34,12 +34,12 @@ export const job20250129_update_nationwide_locationbased_alert = {
 
 		const update2 = await prisma.locationAlert.update({
 			where: { id: 'alrt_01J1D1GAT5G5S6QNMCND5PMDAX' },
-			data: { level: 'INFO_PRIMARY' }, 
+			data: { level: 'INFO_PRIMARY' },
 		})
 
 		const update3 = await prisma.locationAlert.update({
 			where: { id: 'alrt_01J5XNBQ5GREHSHK5D2QTCXRWE' },
-			data: { active: true, level: 'WARN_SECONDARY' }, 
+			data: { active: true, level: 'WARN_SECONDARY' },
 		})
 
 		log(`Location-based alert text string updated: ${update1.key} with new text: "${update1.text}"`)

@@ -161,7 +161,6 @@ export const Footer = () => {
 								href='https://www.facebook.com/weareinreach'
 								title={t('social.facebook', { defaultValue: 'Facebook' })}
 							/>
-							{/* <SocialLink icon='twitter' href='https://twitter.com/weareinreach' /> */}
 							<SocialLink
 								icon='linkedin'
 								href='https://www.linkedin.com/company/weareinreach'

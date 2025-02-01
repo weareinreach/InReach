@@ -33,7 +33,6 @@ export const Group = {
 			{ icon: 'instagram', href: '#' },
 			{ icon: 'linkedin', href: '#' },
 			{ icon: 'tiktok', href: '#' },
-			{ icon: 'twitter', href: '#' },
 			{ icon: 'youtube', href: '#' },
 			{ icon: 'email', href: '#' },
 		],
