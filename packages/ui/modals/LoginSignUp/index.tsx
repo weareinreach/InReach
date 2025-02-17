@@ -196,7 +196,9 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 		: t('step-x-y', { ns: 'common', x: stepOption ? 2 : 1, y: 2 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
 
-	const step1 = <RichTranslate i18nKey='sign-up.modal-body' stateSetter={userTypeChange} handler={handler} />
+	const step1 = (
+		<RichTranslate i18nKey='sign-up.modal-body-temp' stateSetter={userTypeChange} handler={handler} />
+	)
 
 	const submitHandler = () => {
 		if (form.isValid()) {

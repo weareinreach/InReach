@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Individueel</button>\n<button data-option='provider'>Professioneel/Verskaffer</button>\n<button data-option='lcr'>Plaaslik Gemeenskapresensent</button>\n</group>",
 			"<loginLink>Het u reeds 'n rekening?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Watter tipe rekening wil jy skep?</title3>",
+			"<group>\n<button data-option='individual'>Individueel</button>\n<button data-option='provider'>Professioneel/Verskaffer</button>\n</group>",
+			"<loginLink>Het u reeds 'n rekening?</loginLink>"
+		],
 		"name-use-any": "Gebruik watter naam jy ook al gemaklik is.",
 		"name_alias": "Naam of alias",
 		"name_full": "Volle naam",

@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Endividyèl</button>\n<button data-option='provider'>Pwofesyonèl/Founisè</button>\n<button data-option='lcr'>Lokal Evalè Kominote</button>\n</group>",
 			"<loginLink>Deja gen yon kont?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Ki kalite kont ou ta renmen kreye?</title3>",
+			"<group>\n<button data-option='individual'>Endividyèl</button>\n<button data-option='provider'>Pwofesyonèl/Founisè</button>\n</group>",
+			"<loginLink>Deja gen yon kont?</loginLink>"
+		],
 		"name-use-any": "Sèvi ak tou sa non ou konfòtab avèk li.",
 		"name_alias": "Non oswa alyas",
 		"name_full": "Non konplè",

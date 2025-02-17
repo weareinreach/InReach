@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Bireysel</button>\n<button data-option='provider'>Profesyonel/Sağlayıcı</button>\n<button data-option='lcr'>Yerel Topluluk İncelemesi</button>\n</group>",
 			"<loginLink>Zaten bir hesabınız var mı?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Ne tür bir hesap oluşturmak istersiniz?</title3>",
+			"<group>\n<button data-option='individual'>Bireysel</button>\n<button data-option='provider'>Profesyonel/Sağlayıcı</button>\n</group>",
+			"<loginLink>Zaten bir hesabınız var mı?</loginLink>"
+		],
 		"name-use-any": "Rahat olduğunuz ismi kullanın.",
 		"name_alias": "İsim veya takma ad",
 		"name_full": "Ad Soyad",
