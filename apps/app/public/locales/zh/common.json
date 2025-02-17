@@ -329,6 +329,11 @@
 			"<group>\n<button data-option='individual'>个人</button>\n<button data-option='provider'>专业人士/提供商</button>\n<button data-option='lcr'>本地社区评论家</button>\n</group>",
 			"<loginLink>已有帐号？</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>你想创建什么类型的账户？</title3>",
+			"<group>\n<button data-option='individual'>个人</button>\n<button data-option='provider'>专业人士/提供商</button>\n</group>",
+			"<loginLink>已有帐号？</loginLink>"
+		],
 		"name-use-any": "使用您喜欢的任何名称。",
 		"name_alias": "姓名或别名",
 		"name_full": "全名",

@@ -332,6 +332,11 @@
 			"<group>\n<button data-option='individual'>Індивідуальний</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Локальний оглядач спільноти</button>\n</group>",
 			"<loginLink>Вже є обліковий запис?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Який тип облікового запису ви хотіли б створити?</title3>",
+			"<group>\n<button data-option='individual'>Індивідуальний</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>Вже є обліковий запис?</loginLink>"
+		],
 		"name-use-any": "Використовуйте будь-яке ім'я, яке вам зручно.",
 		"name_alias": "Ім'я або псевдонім",
 		"name_full": "П.І.Б.",
