@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
 			"<loginLink>क्या आपके पास पहले से ही एक अकाउंट है?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>आप किस प्रकार का अकाउंट बनाना चाहेंगे?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>क्या आपके पास पहले से ही एक अकाउंट है?</loginLink>"
+		],
 		"name-use-any": "जिस भी नाम के साथ आप सहज हों उसका उपयोग करें।",
 		"name_alias": "नाम या उपनाम",
 		"name_full": "पूरा नाम",

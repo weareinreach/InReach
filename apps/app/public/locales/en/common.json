@@ -336,6 +336,11 @@
 			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
 			"<loginLink>Already have an account?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>What type of account would you like to create?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
+		],
 		"name-use-any": "Use whatever name you're comfortable with.",
 		"name_alias": "Name or alias",
 		"name_full": "Full name",

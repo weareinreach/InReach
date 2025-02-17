@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Indibidwal</button>\n<button data-option='provider'>Propesyonal/Provider</button>\n<button data-option='lcr'>Lokal Tagasuri ng Komunidad</button>\n</group>",
 			"<loginLink>Mayroon nang isang account?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Anong uri ng account ang nais mong likhain?</title3>",
+			"<group>\n<button data-option='individual'>Indibidwal</button>\n<button data-option='provider'>Propesyonal/Provider</button>\n</group>",
+			"<loginLink>Mayroon nang isang account?</loginLink>"
+		],
 		"name-use-any": "Gamitin ang anumang pangalan na komportable ka.",
 		"name_alias": "Pangalan o alyas",
 		"name_full": "Buong pangalan",

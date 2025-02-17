@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
 			"<loginLink>از قبل حساب کاربری دارید؟</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>چه نوع حساب کاربری می خواهید ایجاد کنید؟</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>از قبل حساب کاربری دارید؟</loginLink>"
+		],
 		"name-use-any": "از هر اسمي که باهاش راحت هستي استفاده کن",
 		"name_alias": "نام یا نام مستعار",
 		"name_full": "نام کامل",

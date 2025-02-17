@@ -329,6 +329,11 @@
 			"<group>\n<button data-option='individual'>개인</button>\n<button data-option='provider'>전문가/제공자</button>\n<button data-option='lcr'>지역 사회 검토자</button>\n</group>",
 			"<loginLink>계정 이미 있습니다.</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>어떤 계정을 만들고 싶으세요?</title3>",
+			"<group>\n<button data-option='individual'>개인</button>\n<button data-option='provider'>전문가/제공자</button>\n</group>",
+			"<loginLink>계정 이미 있습니다.</loginLink>"
+		],
 		"name-use-any": "편한 이름을 사용하세요.",
 		"name_alias": "성함/가명",
 		"name_full": "성함",
