@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
 			"<loginLink>دمخه یو حساب لرئ؟</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>تاسو کوم ډول حساب جوړول غواړئ؟</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>`\n</group>",
+			"<loginLink>دمخه یو حساب لرئ؟</loginLink>"
+		],
 		"name-use-any": "هر هغه نوم وکاروئ چې تاسو ورسره راحته یاست.",
 		"name_alias": "نوم یا عرف",
 		"name_full": "بشپړ نوم",

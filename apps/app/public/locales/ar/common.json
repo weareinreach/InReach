@@ -334,6 +334,11 @@
 			"<group>\n<button data-option='individual'>فردي</button>\n<button data-option='provider'>المحترف / المزود</button>\n<button data-option='lcr'>مستعرض المجتمع المحلي</button>\n</group>",
 			"<loginLink>لديك حساب من قبل؟</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>ما نوع الحساب الذي ترغب في إنشاءه؟</title3>",
+			"<group>\n<button data-option='individual'>فردي</button>\n<button data-option='provider'>المحترف / المزود</button>\n</group>",
+			"<loginLink>لديك حساب من قبل؟</loginLink>"
+		],
 		"name-use-any": "استخدم أي اسم أنت مرتاحاً له.",
 		"name_alias": "الاسم أو الاسم المستعار",
 		"name_full": "الاسم الكامل",
