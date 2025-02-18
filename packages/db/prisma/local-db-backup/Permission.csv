@@ -1,0 +1,45 @@
+perm_01GW2HKXRSQ6DC2B3WC7PYVK7J,basic,Basic user role,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSFZPGCVWT5BMPV00T,isLCR,Local Community Reviewer,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSC8SCA9WXYYM612RS,editSingleOrg,Edit a single organization - used for claimed orgs,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSVQ0TGVEBQQXEDS48,createOrg,Create an organization,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSD42TPCDKMX8M5Y95,editTeamOrg,Edit organizations assigned to your team,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSYP89407W3YQHZ69C,editAnyOrg,Edit any organization,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRS799HN35HA8P65PZE,publishOrg,Publish an organization,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSH5YXQ95QFT47FFJT,unpublishOrg,Remove an organization from public view,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRS7QG07NTXG5R8CZKZ,editSingleLocation,Edit a single location - used for claimed orgs,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRS7KZZW2Z1JX6MBD85,createLocation,Create a location,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSHDAA8RZNQ3G5S92H,editTeamLocation,Edit locations assigned to your team,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSWVTAT03Q5ZM730KM,editAnyLocation,Edit any location,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSDKBZ3ZS7F7FCX2W1,publishLocation,Publish a location,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSSHK9QVQZASD5RK12,unpublishLocation,Remove a location from public view,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRST9Z1VAPC18MD3CZK,editSingleService,Edit a single service - used for claimed orgs,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSKHGWHGQ7ZMR62F88,createService,Create a service,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSRDCAX4Q6D897HE1V,editTeamService,Edit services assigned to your team,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRSMJGM0XVF9R3RV9T2,editAnyService,Edit any service,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTX5QV5WSRG6DFEMHV,publishService,Publish a service,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTG18T20B17WT8J4XV,unpublishService,Remove a service from public view,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTMHXB89FMJN9KR20Y,deleteUserReview,Delete a user's review,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTJK8FBE3MYS9QJTKY,hideUserReview,Hide a user's review,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTZ20BHF6W7G8CTZQG,showUserReview,Show a user's review,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTMHYK3NGCY5Y0QAZB,viewUserReviews,View another user's reviews,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTKP19YQ9CZW9WAAZ5,createBasicUser,Can create basic user account,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRT5MBQDE3M83QP6KGD,createLCRUser,Can create Local Community Reviewer account,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRT67JY36CG7PKYZ4FF,createStaffUser,Can create staff user account,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTFTSPF6RZ0TSRYATA,createManagerUser,Can create Management user account,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTRWKY87HNTTFZCBH1,root,SUPER USER! Highest possible level. USE WITH CAUTION,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTRFEJBWMEX0BVEBHA,adminPermissions,Administer Permission definitions,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTZV7AVN93RZVYV9BW,adminRoles,Administer User Role definitions,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTPNRF2N15TZDDETER,adminUserTypes,Administer User Type definitions,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTJZQ29AY8HB8R18W8,adminUserEthnicity,Administer User Ethnicity definitions,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRT6EPVYKPB47AJ4K3B,adminUserImmigration,Administer User Immigration definitions,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTEHRPQ681NF3Z26CS,adminUserSOG,Administer User Sexual Orientation definitions,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GW2HKXRTZ2X10DAWWZA762HQ,adminUserCommunity,Administer User Community definitions,2023-03-21 16:56:40.477,2023-03-21 16:56:40.477,t
+perm_01GYSVX2TC3TG74AYAMP7BBQGX,alertOrg,Manage organization alerts.,2023-04-24 14:50:22.062,2023-04-24 14:50:22.062,t
+perm_01GYSVX2TC12559T13CQJ5N4XN,alertLoc,Manage location alerts.,2023-04-24 14:50:22.062,2023-04-24 14:50:22.062,t
+perm_01GYSVX2TC11BX532TDSW3DTVQ,alertService,Manage service alerts.,2023-04-24 14:50:22.062,2023-04-24 14:50:22.062,t
+perm_01GYSVX2TD6909JV9EK67PNQWA,internalNotesRead,View internal notes,2023-04-24 14:50:22.062,2023-04-24 14:50:22.062,t
+perm_01GYSVX2TDJC3KX9ERSW7QPSV1,internalNotesWrite,Edit internal notes,2023-04-24 14:50:22.062,2023-04-24 14:50:22.062,t
+perm_01H0QX1XC037A47900JPAX6JBP,dataPortalBasic,View basic Data Portal pages/modules,2023-05-18 17:03:23.68,2023-05-18 17:03:23.68,t
+perm_01H0QX1XC0335R04JMGMQ3KXVN,dataPortalAdmin,View admin Data Portal pages/modules,2023-05-18 17:03:23.68,2023-05-18 17:03:23.68,t
+perm_01H0QX1XC04Z9G8H44G464YHQQ,dataPortalManager,View manager Data Portal pages/modules,2023-05-18 17:03:23.68,2023-05-18 17:03:23.68,t
+perm_01H79745ED9DXDY7W5EYYMXYA7,undeleteUserReview,Un-delete a user review,2023-08-14 21:30:37.588,2023-08-14 21:30:37.588,t

@@ -1,0 +1,14 @@
+attc_01GW2HHFVKM2PSHFWVFM0TWX1P,system,System,,,t,attribute,2023-03-21 16:55:20.969,2023-03-21 16:55:20.969,
+attc_01GW2HHFVKAMMGPD71H90XRJ38,service-access-instructions,Service Access Instructions,,,t,attribute,2023-03-21 16:55:20.969,2023-03-21 16:55:20.969,
+attc_01GW2HHFVRSN3W3GYZZ43WCW24,law-practice-options,Law Practice Options,,,t,attribute,2023-03-21 16:55:20.969,2023-03-21 16:55:20.969,
+attc_01GW2HHFVSQWE2Y2RF3DT2VEYX,service-provider-options,Service Provider Options,,,t,attribute,2023-03-21 16:55:20.969,2023-03-21 16:55:20.969,
+attc_01GW2HHFV5XN6DW56SZ2GY5AEN,community,Community,,,f,attribute,2023-03-21 16:55:20.969,2023-03-28 00:43:11.184,
+attc_01GYSVX1N9T91BJYSHRDPCHJBS,alerts,Alerts,,Alert messages,t,attribute,2023-04-24 14:50:21.076,2023-04-24 14:50:21.076,
+attc_01GW2HHFV3DJ380F351SKB0B74,additional-information,Additional Information,,Misc,t,attribute,2023-03-21 16:55:20.969,2023-05-18 17:03:18.252,ATTRIBUTE
+attc_01GW2HHFVFKNMYPN8F86M0H576,cost,Cost,,,t,attribute,2023-03-21 16:55:20.969,2023-05-18 17:03:18.252,ATTRIBUTE
+attc_01GW2HHFVMNHV2ZS5875JWCRJ7,organization-leadership,Organization Leadership,,,t,attribute,2023-03-21 16:55:20.969,2023-05-18 17:03:18.252,LEADER
+attc_01GW2HHFVNXMNJNV47BF2BPM1R,service-focus,Service Focus,,,t,attribute,2023-03-21 16:55:20.969,2023-05-18 17:03:18.252,COMMUNITY
+attc_01GW2HHFVGHPW1Y72SA8377623,eligibility-requirements,Eligibility Requirements,,,t,attribute,2023-03-21 16:55:20.969,2023-05-18 17:03:18.252,LIST
+attc_01GW2HHFVJQQ68XGSBXM976BDF,languages,Languages,,,t,attribute,2023-03-21 16:55:20.969,2023-05-18 17:03:18.252,LIST
+attc_01H6P8SSY4C141YH7BAC1RW7KJ,crisis-support-community,Crisis Support Community,,,t,attribute,2023-08-01 22:44:35.742,2023-08-01 22:44:35.742,COMMUNITY
+attc_01HNG5BPYJADWX4YFVNENS3TRD,target-population,Target Population,,,t,attribute,2024-02-20 22:01:31.795,2024-02-20 22:01:31.795,

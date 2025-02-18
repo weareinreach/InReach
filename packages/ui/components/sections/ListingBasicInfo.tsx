@@ -81,6 +81,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 
 	return (
 		<Stack align='flex-start' spacing={12}>
+			{descriptionSection}
 			<Title order={2}>{data.name}</Title>
 			{isSingleLoc && <Rating recordId={data.id} noMargin />}
 			{addressLine}
