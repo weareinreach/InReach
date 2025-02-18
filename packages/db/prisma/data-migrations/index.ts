@@ -21,4 +21,7 @@ export * from './2025-01-29_update-parent-category-for-trans-you-health'
 export * from './2025-01-29_update-translation-key-for-trans-health-youth'
 export * from './2025-01-31_remove-twitter-from-orgWebsite-and-OrgSocialMedia'
 export * from './2025-01-31_remove-twitter-from-SocialMediaServices'
+export * from './2025-02-17_new_legal-service-tag'
+export * from './2025-02-17_new_mental-health-service-tag'
+export * from './2025-02-17_update-medical-tags'
 // codegen:end
