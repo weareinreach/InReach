@@ -40,7 +40,7 @@ export const job20250217_new_legal_service_tag = {
 				primaryCategory: { connect: { id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX' } },
 				key: {
 					create: {
-						key: 'legal-info-referrals',
+						key: 'legal.legal-info-referrals',
 						text: 'Legal information and referrals',
 						namespace: { connect: { name: 'services' } },
 					},
