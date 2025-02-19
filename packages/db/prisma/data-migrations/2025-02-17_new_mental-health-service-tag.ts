@@ -40,7 +40,7 @@ export const job20250217_new_mental_health_service_tag = {
 				primaryCategory: { connect: { id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ' } },
 				key: {
 					create: {
-						key: 'mental-health-info-referrals',
+						key: 'mental-health.mental-health-info-referrals',
 						text: 'Mental health information and referrals',
 						namespace: { connect: { name: 'services' } },
 					},
