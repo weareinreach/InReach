@@ -24,4 +24,5 @@ export * from './2025-01-31_remove-twitter-from-SocialMediaServices'
 export * from './2025-02-17_new_legal-service-tag'
 export * from './2025-02-17_new_mental-health-service-tag'
 export * from './2025-02-17_update-medical-tags'
+export * from './2025-02-17_new-cost-attribute'
 // codegen:end
