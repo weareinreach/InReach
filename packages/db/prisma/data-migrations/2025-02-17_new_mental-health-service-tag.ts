@@ -33,7 +33,7 @@ export const job20250217_new_mental_health_service_tag = {
 			data: {
 				id: 'svtg_01J4044WXYZRWK3Q9JH2Y4F8B0',
 				name: 'Mental health information and referrals',
-				active: false,
+				active: true,
 				categories: {
 					create: { active: true, category: { connect: { id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ' } } },
 				},

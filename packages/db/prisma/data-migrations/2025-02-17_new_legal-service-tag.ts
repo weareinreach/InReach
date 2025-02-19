@@ -33,7 +33,7 @@ export const job20250217_new_legal_service_tag = {
 			data: {
 				id: 'svtg_01J4044WXYZS9V6F5R7M3L8XCY',
 				name: 'Legal information and referrals',
-				active: false,
+				active: true,
 				categories: {
 					create: { active: true, category: { connect: { id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX' } } },
 				},
