@@ -49,6 +49,7 @@ const useStyles = createStyles((theme) => ({
 		height: 'unset',
 		borderRadius: rem(10),
 		padding: `${rem(8)} ${rem(12)}`,
+		marginBottom: rem(40),
 
 		'&[data-alert-level="INFO_SECONDARY"]': {
 			height: 'unset',
