@@ -311,7 +311,7 @@
 	"show-less": "نمایش کمتر",
 	"show-more": "بیشتر نشان بده",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching <strong>LGBTQ+</strong> resource platform.</textDarkGray>\n</group>",
 		"lcr-error1": "متأسفانه، شما شرایط فعلی واجد شرایط بودن برای بازبینی انجمن محلی را ندارید.\n<Switch>برای ایجاد یک حساب استاندارد اینجا را کلیک کنید.</Switch>",
 		"lcr-error2": "شما باید صفحه <Link><strong>انجمن محلی</strong></Link> را بخوانید و بررسی کنید.",
 		"lcr-screen1": "لطفا همه موارد اعمال شده را انتخاب کنید",
