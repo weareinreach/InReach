@@ -106,7 +106,6 @@ export const LocationBasedAlertBanner = ({ lat, lon, type, onClick }: LocationBa
 								components={{
 									Link: <Link external variant={variants.Link.inheritStyle} target='_blank' />,
 								}}
-								// as={Text}
 							/>
 						</Text>
 					</Box>
