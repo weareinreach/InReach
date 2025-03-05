@@ -17,6 +17,9 @@ const RecommendedLinksModalBody = forwardRef<HTMLButtonElement, RecommendedLinks
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 
 	const buttons = Object.entries(t('recommended-links.buttons', { returnObjects: true }) || {})
+	const handleButtonClick = (link: string) => {
+		window.open(link, '_blank')
+	}
 
 	return (
 		<>
@@ -41,7 +44,7 @@ const RecommendedLinksModalBody = forwardRef<HTMLButtonElement, RecommendedLinks
 									paddingRight: isMobile ? '1rem' : undefined,
 									textDecoration: 'none',
 								}}
-								onClick={() => window.open(btn.link, '_blank')}
+								onClick={() => handleButtonClick(btn.link)}
 							>
 								<Text ta='center' variant={variants.Text.utility1} fz={isMobile ? '.75rem' : undefined}>
 									{btn.text}
