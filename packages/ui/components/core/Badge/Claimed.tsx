@@ -30,6 +30,13 @@ export const _Claimed = forwardRef<HTMLDivElement, BadgeClaimedProps>(
 			...props,
 		} as const
 
+		const badgePropsTemp = {
+			variant: 'outline',
+			classNames: classes,
+			...(isClaimed ? { ref } : {}),
+			...props,
+		} as const
+
 		const badge = isClaimed ? (
 			<Badge {...badgeProps}>
 				<Text>{t('badge.claimed')}</Text>
@@ -37,6 +44,7 @@ export const _Claimed = forwardRef<HTMLDivElement, BadgeClaimedProps>(
 		) : (
 			<Text>{t('badge.unclaimed')}</Text>
 		)
+
 		const label = isClaimed ? (
 			<Trans
 				i18nKey='badge.claimed-tool-tip'
@@ -86,12 +94,21 @@ export const _Claimed = forwardRef<HTMLDivElement, BadgeClaimedProps>(
 			className: classes.root,
 		} as const
 
-		return isClaimed ? (
-			<Tooltip {...tooltipProps}>{badge}</Tooltip>
-		) : (
-			<Tooltip {...tooltipProps}>
-				<ClaimOrgModal {...claimOrgModalProps}>{badge}</ClaimOrgModal>
-			</Tooltip>
+		const claimOrgModalPropsTemp = {
+			component: Badge,
+			...badgePropsTemp,
+			w: 'fit-content',
+			externalOpen: modalOpen,
+			externalStateHandler: setModalOpen,
+			className: classes.root,
+		} as const
+
+		return (
+			<ClaimOrgModal {...claimOrgModalPropsTemp}>
+				<Link external onClick={() => setModalOpen(true)} variant={variants.Link.inheritStyle}>
+					{t('words.coming-soon')}
+				</Link>
+			</ClaimOrgModal>
 		)
 	}
 )

@@ -332,6 +332,11 @@
 			"<group>\n<button data-option='individual'>Индивидуальная</button>\n<button data-option='provider'>Профессионал/ресурс</button>\n<button data-option='lcr'>Обозреватель услуг для местного населения</button>\n</group>",
 			"<loginLink>У вас уже есть аккаунт?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Какой тип учетной записи вы хотели бы создать?</title3>",
+			"<group>\n<button data-option='individual'>Индивидуальная</button>\n<button data-option='provider'>Профессионал/ресурс</button>\n</group>",
+			"<loginLink>У вас уже есть аккаунт?</loginLink>"
+		],
 		"name-use-any": "Вы можете использовать любое имя, которое вам нравится.",
 		"name_alias": "Имя или псевдоним",
 		"name_full": "Полное имя",

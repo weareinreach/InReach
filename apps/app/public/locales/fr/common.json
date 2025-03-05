@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Individuel</button>\n<button data-option='provider'>Professionnel/Prestataire</button>\n<button data-option='lcr'>Critique dans la communauté locale</button>\n</group>",
 			"<loginLink>Vous avez déjà un compte ?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Quel type de compte voulez-vous créer ?</title3>",
+			"<group>\n<button data-option='individual'>Individuel</button>\n<button data-option='provider'>Professionnel/Prestataire</button>\n</group>",
+			"<loginLink>Vous avez déjà un compte ?</loginLink>"
+		],
 		"name-use-any": "Utilisez le nom qui vous convient le mieux.",
 		"name_alias": "Nom ou alias",
 		"name_full": "Nom complet",

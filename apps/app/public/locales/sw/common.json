@@ -330,6 +330,11 @@
 			"<group>\n<button data-option='individual'>Mtu binafsi</button>\n<button data-option='provider'>Mtaalamu/Mtoa huduma</button>\n<button data-option='lcr'>Mitaa Mkaguzi wa Jumuiya</button>\n</group>",
 			"<loginLink>Tayari una akaunti?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Je! Ungependa kuunda akaunti ya aina gani?</title3>",
+			"<group>\n<button data-option='individual'>Mtu binafsi</button>\n<button data-option='provider'>Mtaalamu/Mtoa huduma</button>\n</group>",
+			"<loginLink>Tayari una akaunti?</loginLink>"
+		],
 		"name-use-any": "Tumia jina lolote unalostahili.",
 		"name_alias": "Jina au pak",
 		"name_full": "Jina kamili",

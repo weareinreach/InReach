@@ -329,6 +329,11 @@
 			"<group>\n<button data-option='individual'>個人</button>\n<button data-option='provider'>専門家/提供者</button>\n<button data-option='lcr'>地域コミュニティレビュアー</button>\n</group>",
 			"<loginLink>すでにアカウントをお持ちですか？</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>どのタイプのアカウントを作成しますか?</title3>",
+			"<group>\n<button data-option='individual'>個人</button>\n<button data-option='provider'>専門家/提供者</button>\n</group>",
+			"<loginLink>すでにアカウントをお持ちですか？</loginLink>"
+		],
 		"name-use-any": "自身にとって快適な名前をお使いください。",
 		"name_alias": "名前または別名",
 		"name_full": "フルネーム",

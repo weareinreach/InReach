@@ -311,7 +311,7 @@
 	"show-less": "لږ وښایاست",
 	"show-more": "نور وښایاست",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching <strong>LGBTQ+</strong> resource platform.</textDarkGray>\n</group>",
 		"lcr-error1": "له بده مرغه، تاسو د محلي ټولنې بیاکتونکي کیدو لپاره د وړتیا اوسني شرایط نه پوره کوئ.\n<Switch>د معیاري حساب جوړولو لپاره دلته کلیک وکړئ.</Switch>",
 		"lcr-error2": "تاسو باید د <Link><strong>محلي ټولنې بیاکتنه</strong></Link> پاڼه ولولئ او بیاکتنه وکړئ.",
 		"lcr-screen1": "مهرباني وکړئ ټول هغه څه وټاکئ چې پلي کیږي",
@@ -328,6 +328,11 @@
 		"modal-body": [
 			"<title3>تاسو کوم ډول حساب جوړول غواړئ؟</title3>",
 			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<loginLink>دمخه یو حساب لرئ؟</loginLink>"
+		],
+		"modal-body-temp": [
+			"<title3>تاسو کوم ډول حساب جوړول غواړئ؟</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>`\n</group>",
 			"<loginLink>دمخه یو حساب لرئ؟</loginLink>"
 		],
 		"name-use-any": "هر هغه نوم وکاروئ چې تاسو ورسره راحته یاست.",

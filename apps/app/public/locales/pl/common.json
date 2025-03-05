@@ -332,6 +332,11 @@
 			"<group>\n<button data-option='individual'>Indywidualny</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Lokalny recenzenta społeczności</button>\n</group>",
 			"<loginLink>Masz już konto?</loginLink>"
 		],
+		"modal-body-temp": [
+			"<title3>Jaki typ konta chciałbyś założyć?</title3>",
+			"<group>\n<button data-option='individual'>Indywidualny</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>Masz już konto?</loginLink>"
+		],
 		"name-use-any": "Używaj dowolnej nazwy, z którą czujesz się komfortowo.",
 		"name_alias": "Nazwa lub alias",
 		"name_full": "Pełne imię i nazwisko",

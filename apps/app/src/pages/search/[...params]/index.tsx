@@ -34,6 +34,11 @@ import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const RecommendedLinksModal = dynamic(() =>
+	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal)
+)
+
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
@@ -223,7 +228,9 @@ const SearchResults = () => {
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
 
-			<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
+			<RecommendedLinksModal component={'div'}>
+				<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
+			</RecommendedLinksModal>
 
 			<Grid.Col
 				xs={12}
