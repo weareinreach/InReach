@@ -67,7 +67,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertBannerProps) => {
+export const LocationBasedAlertBanner = ({ lat, lon, type, onClick }: LocationBasedAlertBannerProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 
@@ -91,7 +91,13 @@ export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertB
 			{locationBasedAlertBannerProps
 				.filter((alertProps) => alertProps.level.toLowerCase().endsWith(type))
 				.map((alertProps) => (
-					<Box className={classes[type]} data-alert-level={alertProps.level} key={alertProps.id}>
+					<Box
+						className={classes[type]}
+						data-alert-level={alertProps.level}
+						key={alertProps.id}
+						onClick={onClick}
+						style={{ cursor: onClick ? 'pointer' : 'default' }}
+					>
 						<Text>
 							<Trans
 								i18nKey={alertProps.i18nKey}
@@ -109,4 +115,9 @@ export const LocationBasedAlertBanner = ({ lat, lon, type }: LocationBasedAlertB
 	)
 }
 
-export type LocationBasedAlertBannerProps = { lat: number; lon: number; type: 'primary' | 'secondary' }
+export type LocationBasedAlertBannerProps = {
+	lat: number
+	lon: number
+	type: 'primary' | 'secondary'
+	onClick?: () => void
+}
