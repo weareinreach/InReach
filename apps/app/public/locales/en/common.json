@@ -264,7 +264,7 @@
 		"body": "Find more information about your rights.",
 		"buttons": {
 			"btn-1": {
-				"text": "Anti-Trans Risk Map (Erin Reed)",
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
 				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
 			},
 			"btn-2": {
@@ -344,7 +344,7 @@
 	"show-less": "Show less",
 	"show-more": "Show more",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching <strong>LGBTQ+</strong> resource platform.</textDarkGray>\n</group>",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first open source verified LGBTQ+ resource platform.</textDarkGray>\n</group>",
 		"lcr-error1": "Unfortunately, you do not meet the current eligibility requirements to be a Local Community Reviewer.\n<Switch>Click here to create a standard account.</Switch>",
 		"lcr-error2": "You must read & review the <Link><strong>Local Community Reviewer</strong></Link> page.",
 		"lcr-screen1": "Please select all that apply",

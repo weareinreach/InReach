@@ -3,7 +3,7 @@ import { type JobDef } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
-	jobId: '2025-03-01_update-nationwide-based-alert-text',
+	jobId: '2025-03-05_update-nationwide-based-alert-text',
 	title: 'change the nationwide alert text string',
 	createdBy: 'Diana Garbarino',
 	/** Optional: Longer description for the job */
@@ -12,7 +12,7 @@ const jobDef: JobDef = {
 /**
  * Job export - this variable MUST be UNIQUE
  */
-export const job20250301_update_nationwide_based_alert = {
+export const job20250305_update_nationwide_based_alert = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
 	task: async (ctx, task) => {
 		const { createLogger, formatMessage, jobPostRunner, prisma } = ctx
@@ -23,7 +23,8 @@ export const job20250301_update_nationwide_based_alert = {
 		// Variables for the update
 		const key = 'locationBasedAlert.alrt_01J1D1GAT5G5S6QNMCND5PMDAX'
 		const ns = 'org-data'
-		const newTextValue = 'Check out our list of recommended links for trans and immigrant communities'
+		const newTextValue =
+			'Check out our list of <Link>recommended links</Link> for trans and immigrant communities'
 		// Perform the update
 		const update1 = await prisma.translationKey.update({
 			where: { ns_key: { key, ns } },
