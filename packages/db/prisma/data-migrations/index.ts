@@ -25,5 +25,6 @@ export * from './2025-02-17_new_legal-service-tag'
 export * from './2025-02-17_new_mental-health-service-tag'
 export * from './2025-02-17_new-cost-attribute'
 export * from './2025-02-17_update-medical-tags'
-export * from './2025-02-24_update-locationbased-alert-string-add-emoji'
+export * from './2025-03-01_update-locationbased-alert-string-add-emoji'
+export * from './2025-03-01_update-nationwide-locationbased-alert'
 // codegen:end
