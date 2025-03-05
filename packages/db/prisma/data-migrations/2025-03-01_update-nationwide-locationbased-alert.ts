@@ -3,16 +3,16 @@ import { type JobDef } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
-	jobId: '2025-02-24_update-locationbased-alert-string-add-emoji',
-	title: 'add "Bell" emoji to alert link',
+	jobId: '2025-03-01_update-nationwide-based-alert-text',
+	title: 'change the nationwide alert text string',
 	createdBy: 'Diana Garbarino',
 	/** Optional: Longer description for the job */
-	description: 'add "Bell" emoji to alert link',
+	description: 'change the nationwide alert text string',
 }
 /**
  * Job export - this variable MUST be UNIQUE
  */
-export const job20250224_update_locationbased_alert_string_add_emoji = {
+export const job20250301_update_nationwide_based_alert = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
 	task: async (ctx, task) => {
 		const { createLogger, formatMessage, jobPostRunner, prisma } = ctx
@@ -23,16 +23,14 @@ export const job20250224_update_locationbased_alert_string_add_emoji = {
 		// Variables for the update
 		const key = 'locationBasedAlert.alrt_01J1D1GAT5G5S6QNMCND5PMDAX'
 		const ns = 'org-data'
-		const newTextValue =
-			'🔔 This <Link href="https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk">anti-trans legislative risk map</Link> shows the 2-year risk for anti-trans laws in all 50 states and D.C.'
-
+		const newTextValue = 'Check out our list of recommended links for trans and immigrant communities'
 		// Perform the update
-		const update = await prisma.translationKey.update({
+		const update1 = await prisma.translationKey.update({
 			where: { ns_key: { key, ns } },
 			data: { text: newTextValue },
 		})
 
-		log(`Location-based alert text string updated: ${update.key} with new text: "${update.text}"`)
+		log(`Location-based alert text string updated: ${update1.key} with new text: "${update1.text}"`)
 
 		/**
 		 * DO NOT REMOVE BELOW
