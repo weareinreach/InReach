@@ -256,6 +256,33 @@
 	"questions": "Kesyon?",
 	"quick-promo-body": "<textUtility1>💚 Sofgade ak pataje lis resous pèsonalize</textUtility1>\n<textUtility1>💬 Kite piblik Rating/revize sou òganizasyon</textUtility1>\n<textUtility1>🏠 Sijere òganizasyon nan zòn ou an</textUtility1>\n<textUtility1>🔗 Reklame paj pwofil òganizasyon ou an (Vini byento!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Ou bezwen konekte pou fè sa.</title2>\n<textDarkGray>Avèk yon kont InReach gratis ou ka debloke lòt karakteristik:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Recommended Links",
+		"body": "Find more information about your rights.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Immigrants' Rights (Immigration Equality)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Immigrants' Rights (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Sèvis ki disponib adistans",
 	"remote-services-page-title": "Sèvis aleka",
 	"reset-password": "Reyajiste modpas ou",
@@ -332,7 +359,7 @@
 		],
 		"modal-body-temp": [
 			"<title3>Ki kalite kont ou ta renmen kreye?</title3>",
-			"<group>\n<button data-option='individual'>Endividyèl</button>\n<button data-option='provider'>Pwofesyonèl/Founisè</button>\n</group>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
 			"<loginLink>Deja gen yon kont?</loginLink>"
 		],
 		"name-use-any": "Sèvi ak tou sa non ou konfòtab avèk li.",

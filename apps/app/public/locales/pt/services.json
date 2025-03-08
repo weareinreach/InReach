@@ -52,6 +52,7 @@
 		"food-assistance": "Assistência alimentar",
 		"food-delivery": "Entrega de alimentos",
 		"food-pantries": "Despensas de alimentos",
+		"hot-meals": "refeições quentes",
 		"nutrition-education": "Educação nutricional"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Detenção de imigrantes",
 		"legal-advice": "Assessoria Jurídica",
 		"legal-hotlines": "Linhas diretas jurídicas",
+		"legal-info-referrals": "Informações legais e referências",
 		"name-and-gender-change": "Mudança de nome e marcador de gênero",
 		"refugee-claim": "Pedido de refúgio",
 		"residency": "Residência",
@@ -108,6 +110,7 @@
 		"dental-care": "Assistência odontológica",
 		"fertility-and-family-planning-services": "Serviços de fertilidade e planejamento familiar",
 		"hiv-and-sexual-health": "HIV e saúde sexual",
+		"medical-info-and-referrals": "Informações médicas e referências",
 		"medical-clinics": "Clínicas médicas",
 		"obgyn-services": "Serviços de obstetrícia e ginecologia",
 		"physical-evaluations-for-asylum-claim": "Avaliações físicas para pedido de asilo",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "Grupos de apoio para BIPOC/pessoas racializadas",
 		"family-support-groups": "Grupos de suporte familiar",
 		"hotlines": "Linhas diretas",
+		"mental-health-info-referrals": "Informações e indicações sobre saúde mental",
 		"private-therapy-and-counseling": "Terapia e aconselhamento individuais",
 		"psychological-evaluations-for-asylum-claim": "Avaliações psicológicas para pedido de asilo",
 		"psychological-evaluations-for-refugee-claim": "Avaliações psicológicas para solicitação de refúgio",
