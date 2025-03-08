@@ -1,19 +1,30 @@
 import { type AttributeRecord } from '../types'
 
-export const processLangAttrib = (record: AttributeRecord): LangAttribReturn => {
-	const { language, supplementId: id, active } = record
-	if (!language) {
-		return null
+export const processLangAttrib = (
+	record: AttributeRecord,
+	t: (key: string, options?: { ns?: string; lng?: string }) => string,
+	locale: string = 'en'
+): LangAttribReturn => {
+	const { language, supplementId: id, active, tsKey } = record
+	if (language) {
+		return {
+			id,
+			active,
+			childProps: {
+				children: language.languageName,
+			},
+		}
 	}
-	const { languageName } = language
-
-	return {
-		id,
-		active,
-		childProps: {
-			children: languageName,
-		},
+	if (tsKey) {
+		return {
+			id,
+			active,
+			childProps: {
+				children: t(tsKey, { ns: 'attribute', lng: locale }),
+			},
+		}
 	}
+	return null
 }
 
 export interface LangAttribOutput {
