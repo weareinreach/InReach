@@ -260,6 +260,33 @@
 	"questions": "أسئلة؟",
 	"quick-promo-body": "<textUtility1>💚 حفظ وتقاسم قوائم الموارد المخصصة</textUtility1>\n<textUtility1>💬 اترك التقييم العام الخاص بالمنظمات</textUtility1>\n<textUtility1>🏠 اقترح منظمات في منطقتك</textUtility1>\n<textUtility1>🔗 اطلب الصفحة الشخصية لمؤسستك</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>تحتاج إلى تسجيل الدخول لتوفير الموارد.</title2>\n<textDarkGray>مع حساب InReach مجاني يمكنك فتح ميزات إضافية:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "الروابط الموصى بها",
+		"body": "ابحث عن المزيد من المعلومات عن حقوقك.",
+		"buttons": {
+			"btn-1": {
+				"text": "خريطة مكافحة المخاطر العابرة (الرين)",
+				"link": "https://www.erinthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "مركز وثائق الهوية (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ حقوق المهاجرين (المساواة في الهجرة)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/Knowyour-rights/"
+			},
+			"btn-4": {
+				"text": "موارد اللجوء (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "حقوق المهاجرين",
+				"link": "https://www.aclu.org/Knowyour-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "الخدمات المتاحة عن بعد",
 	"remote-services-page-title": "الخدمات عن بعد",
 	"reset-password": "إعادة تعيين كلمة المرور",
@@ -336,7 +363,7 @@
 		],
 		"modal-body-temp": [
 			"<title3>ما نوع الحساب الذي ترغب في إنشاءه؟</title3>",
-			"<group>\n<button data-option='individual'>فردي</button>\n<button data-option='provider'>المحترف / المزود</button>\n</group>",
+			"<group>\n<button data-option='individual'>الفردية</button>\n<button data-option='provider'>المحترف/المزود</button>\n</group>",
 			"<loginLink>لديك حساب من قبل؟</loginLink>"
 		],
 		"name-use-any": "استخدم أي اسم أنت مرتاحاً له.",

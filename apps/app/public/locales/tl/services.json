@@ -52,6 +52,7 @@
 		"food-assistance": "Tulong sa pagkain",
 		"food-delivery": "Paghahatid ng pagkain",
 		"food-pantries": "Mga pantry ng pagkain",
+		"hot-meals": "Hot meals",
 		"nutrition-education": "Edukasyon sa nutrisyon"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Pagpigil sa imigrasyon",
 		"legal-advice": "Legal na payo",
 		"legal-hotlines": "Mga ligal na hotline",
+		"legal-info-referrals": "Legal information and referrals",
 		"name-and-gender-change": "Pagbabago ng marker ng pangalan at kasarian",
 		"refugee-claim": "Pag-angkin ng Refugee",
 		"residency": "Paninirahan",
@@ -108,6 +110,7 @@
 		"dental-care": "Pangangalaga sa ngipin",
 		"fertility-and-family-planning-services": "Mga serbisyo sa fertility at family planning",
 		"hiv-and-sexual-health": "HIV at sekswal na kalusugan",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "Mga medikal na klinika",
 		"obgyn-services": "Mga serbisyo ng OBGYN",
 		"physical-evaluations-for-asylum-claim": "Mga pisikal na pagsusuri para sa pag-angkin ng asylum",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "Mga grupo ng suporta ng BIPOC",
 		"family-support-groups": "Mga grupo ng suporta sa pamilya",
 		"hotlines": "Mga Hotline",
+		"mental-health-info-referrals": "Mental health information and referrals",
 		"private-therapy-and-counseling": "Pribadong therapy at pagpapayo",
 		"psychological-evaluations-for-asylum-claim": "Mga pagsusuri sa sikolohikal para sa pag-angkin ng pagpapakupkop",
 		"psychological-evaluations-for-refugee-claim": "Mga pagsusuri sa sikolohikal para sa pag-angkin ng mga refugee",

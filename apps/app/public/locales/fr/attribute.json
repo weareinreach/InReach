@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "Ce service accepte les assurances. <Link href=\"{{url}}\">Cliquez ici pour visiter la page</Link> de l'organisation pour plus d'informations sur les coûts, les options d'assistance financière et les détails de la couverture d'assurance.",
 		"cost-fees": "Entraîne des frais",
 		"cost-free": "Gratuit",
+		"cost-financial-assistance-available": "Assistance financière disponible",
 		"cost-sliding-scale": "Coûts soumis à des tarifs dégressifs",
 		"cost-sliding-scale_default": "Ce service est soumis à des tarifs dégressifs. Le montant que vous payez pour les services est ajusté en fonction de votre revenu. Contactez directement l'organisation pour plus d'informations.",
 		"cost-sliding-scale_withUrl": "Ce service est soumis à des tarifs dégressifs. Le montant que vous payez pour les services est ajusté en fonction de votre revenu. <Link href=\"{{url}}\">Cliquez ici pour visiter la page de l'organisation pour plus d'informations.</Link>"

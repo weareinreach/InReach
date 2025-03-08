@@ -52,6 +52,7 @@
 		"food-assistance": "Pomoc żywnościowa",
 		"food-delivery": "Dostarczanie żywności",
 		"food-pantries": "Pasty spożywcze",
+		"hot-meals": "Gorące posiłki",
 		"nutrition-education": "Kształcenie w zakresie odżywiania"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Zatrzymanie imigracyjne",
 		"legal-advice": "Doradztwo prawne",
 		"legal-hotlines": "Infolinie prawne",
+		"legal-info-referrals": "Informacje prawne i wnioski o wydanie opinii",
 		"name-and-gender-change": "Zmiana nazwy i markera płci",
 		"refugee-claim": "Wniosek o uchodźcę",
 		"residency": "Rezydencja",
@@ -108,6 +110,7 @@
 		"dental-care": "Dental care",
 		"fertility-and-family-planning-services": "Usługi w zakresie planowania płodności i rodziny",
 		"hiv-and-sexual-health": "HIV a zdrowie seksualne",
+		"medical-info-and-referrals": "Informacje medyczne i wnioski o wydanie opinii",
 		"medical-clinics": "Kliniki medyczne",
 		"obgyn-services": "Usługi położnicze",
 		"physical-evaluations-for-asylum-claim": "Fizyczne oceny wniosku o azyl",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "Grupy wsparcia BIPOC",
 		"family-support-groups": "Grupy wsparcia rodziny",
 		"hotlines": "Infolinie",
+		"mental-health-info-referrals": "Informacje dotyczące zdrowia psychicznego i wnioski o wydanie opinii",
 		"private-therapy-and-counseling": "Prywatna terapia i poradnictwo",
 		"psychological-evaluations-for-asylum-claim": "Psychologiczne oceny wniosku o azyl",
 		"psychological-evaluations-for-refugee-claim": "Psychologiczne oceny wniosku o uchodźcę",

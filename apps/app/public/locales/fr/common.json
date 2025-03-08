@@ -256,6 +256,33 @@
 	"questions": "Des questions ?",
 	"quick-promo-body": "<textUtility1>💚 Sauvgarder et partager les listes de ressources personnalisées</textUtility1>\n<textUtility1>💬 Laisser votre avis publique sur les organisations</textUtility1>\n<textUtility1>🏠 Suggérer des organisations dans votre région</textUtility1>\n<textUtility1>🔗 Revendiquer la page de profil de votre organisation (bientôt disponible !)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>: arc-en-ciel :</emojiLg>\n<title2>Il faut vous connecter pour faire cela.</title2>\n<textDarkGray>Avec un compte InReach gratuit, vous pouvez accéder aux fonctionnalités supplémentaires :</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Liens recommandés",
+		"body": "Pour en savoir plus sur vos droits.",
+		"buttons": {
+			"btn-1": {
+				"text": "Carte des risques anti-trans (érin roseau)",
+				"link": "https://www.erinthemorning.com/p/post-election-2024-anti-risque"
+			},
+			"btn-2": {
+				"text": "Centre de Documents d'Identification (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "Droits des immigrants LGBTQ+ (Égalité de l'immigration)",
+				"link": "https://immigrationequality.org/legal/help/legal-help/ressources/savoir-faire/"
+			},
+			"btn-4": {
+				"text": "Ressources pour l'asile (CWS)",
+				"link": "https://asileborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Droits des immigrants (ACLU)",
+				"link": "https://www.aclu.org/fr/savoir-faire/droits des immigrants/"
+			}
+		}
+	},
 	"remote-services": "Services disponibles à distance",
 	"remote-services-page-title": "Services à distance",
 	"reset-password": "Rerégler votre mot de passe",
@@ -332,7 +359,7 @@
 		],
 		"modal-body-temp": [
 			"<title3>Quel type de compte voulez-vous créer ?</title3>",
-			"<group>\n<button data-option='individual'>Individuel</button>\n<button data-option='provider'>Professionnel/Prestataire</button>\n</group>",
+			"<group>\n<button data-option='individual'></button>Individuel\n<button data-option='provider'>Professionnel/Fournisseur</button>\n</group>",
 			"<loginLink>Vous avez déjà un compte ?</loginLink>"
 		],
 		"name-use-any": "Utilisez le nom qui vous convient le mieux.",
