@@ -2,6 +2,7 @@
 export * from './CallOut'
 export * from './ContactSection/index'
 export * from './CrisisSupport/index'
+export * from './DataToolbar'
 export * from './Footer'
 export * from './Hero'
 export * from './ListingBasicInfo'

@@ -1,0 +1,33 @@
+import { createStyles, rem } from '@mantine/core'
+import { useState } from 'react'
+
+import { Button } from '~ui/components/core/Button'
+import { AuditDrawer } from '~ui/components/data-portal/AuditDrawer'
+
+const useMessageBodyStyles = createStyles((theme) => ({
+	actionBlock: {
+		display: 'flex',
+		gap: rem(10),
+		paddingRight: rem(20),
+	},
+}))
+
+export const Action = () => {
+	const [auditOpen, setAuditOpen] = useState(false)
+	const { classes } = useMessageBodyStyles()
+	const onClose = () => {
+		setAuditOpen(false)
+	}
+
+	return (
+		<div className={classes.actionBlock}>
+			<Button variant='secondary' size='small' onClick={() => setAuditOpen(true)}>
+				View activity log
+			</Button>
+			<Button variant='secondary' size='small'>
+				View internal notes
+			</Button>
+			<AuditDrawer opened={auditOpen} onClose={onClose} recordId='osmd_01GVH3VF5VQKZHJS025530GPZX' />
+		</div>
+	)
+}
