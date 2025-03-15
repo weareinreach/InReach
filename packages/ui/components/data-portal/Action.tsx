@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { AuditDrawer } from '~ui/components/data-portal/AuditDrawer'
+import { InternalNotesDrawer } from '~ui/components/data-portal/InternalNotesDrawer'
 
 const useMessageBodyStyles = createStyles((theme) => ({
 	actionBlock: {
@@ -14,9 +15,14 @@ const useMessageBodyStyles = createStyles((theme) => ({
 
 export const Action = () => {
 	const [auditOpen, setAuditOpen] = useState(false)
+	const [internalOpen, setInternalOpen] = useState(false)
 	const { classes } = useMessageBodyStyles()
-	const onClose = () => {
+	const onAuditClose = () => {
 		setAuditOpen(false)
+	}
+
+	const onInternalClose = () => {
+		setInternalOpen(false)
 	}
 
 	return (
@@ -24,10 +30,11 @@ export const Action = () => {
 			<Button variant='secondary' size='small' onClick={() => setAuditOpen(true)}>
 				View activity log
 			</Button>
-			<Button variant='secondary' size='small'>
+			<Button variant='secondary' size='small' onClick={() => setInternalOpen(true)}>
 				View internal notes
 			</Button>
-			<AuditDrawer opened={auditOpen} onClose={onClose} recordId='osmd_01GVH3VF5VQKZHJS025530GPZX' />
+			<AuditDrawer opened={auditOpen} onClose={onAuditClose} recordId='osmd_01GVH3VF5VQKZHJS025530GPZX' />
+			<InternalNotesDrawer opened={internalOpen} onClose={onInternalClose} />
 		</div>
 	)
 }

@@ -6,7 +6,7 @@ import { Breadcrumb, type BreadcrumbProps, isValidBreadcrumbProps } from '~ui/co
 import { useCustomVariant } from '~ui/hooks'
 
 export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProps<TIcons>) => {
-	const { breadcrumb, icons, rightText, serviceId } = props
+	const { breadcrumb, icons, rightText, serviceId, maxWidth = '70%' } = props
 	const variants = useCustomVariant()
 	if (!isValidBreadcrumbProps(breadcrumb)) {
 		throw new Error('invalid Breadcrumb props')
@@ -40,7 +40,7 @@ export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProp
 	}, [displayIcons, rightText, variants])
 	return (
 		<Group position='apart' align='center' noWrap>
-			<Box maw='70%' style={{ overflow: 'hidden' }}>
+			<Box maw={maxWidth} style={{ overflow: 'hidden' }}>
 				<Breadcrumb {...breadcrumb} />
 			</Box>
 			{rightSection}
@@ -59,5 +59,6 @@ type _ModalTitleProps<TIcons extends ToolbarIcons[]> = {
 	icons?: TIcons
 	rightText?: string
 	serviceId?: 'save' extends TIcons[number] ? string : never
+	maxWidth?: string
 }
 export type ModalTitleProps = _ModalTitleProps<ToolbarIcons[]>
