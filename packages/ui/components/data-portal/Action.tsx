@@ -5,7 +5,7 @@ import { Button } from '~ui/components/core/Button'
 import { AuditDrawer } from '~ui/components/data-portal/AuditDrawer'
 import { InternalNotesDrawer } from '~ui/components/data-portal/InternalNotesDrawer'
 
-const useMessageBodyStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme) => ({
 	actionBlock: {
 		display: 'flex',
 		gap: rem(10),
@@ -16,7 +16,7 @@ const useMessageBodyStyles = createStyles((theme) => ({
 export const Action = () => {
 	const [auditOpen, setAuditOpen] = useState(false)
 	const [internalOpen, setInternalOpen] = useState(false)
-	const { classes } = useMessageBodyStyles()
+	const { classes } = useStyles()
 	const onAuditClose = () => {
 		setAuditOpen(false)
 	}
