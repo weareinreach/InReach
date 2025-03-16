@@ -1,11 +1,9 @@
 import { Drawer, Loader, Pagination, Stack, Table, Text, Title } from '@mantine/core'
 import { useEffect, useMemo, useState } from 'react'
 
-import { ModalTitle } from '~ui/modals/ModalTitle'
-import { Button } from '~ui/components/core/Button'
-
-
 import { trpc } from '~api/trpc'
+import { Button } from '~ui/components/core/Button'
+import { ModalTitle } from '~ui/modals/ModalTitle'
 
 interface AuditDrawerProps {
 	opened: boolean
