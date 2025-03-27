@@ -178,7 +178,7 @@ export const processAttributes = ({
 			}
 
 			case 'lang': {
-				const langItem = processLangAttrib(attribute)
+				const langItem = processLangAttrib(attribute, t, locale)
 				if (langItem) {
 					output.lang.push(langItem)
 				}
