@@ -83,6 +83,9 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
 		has: 'some',
 	})
+	const canAccessUserManagement =
+		checkPermissions({ session, permissions: ['root'], has: 'all' }) &&
+		session?.user.email.endsWith('@inreach.org')
 	const editablePaths: (typeof router.pathname)[] = ['/org/[slug]', '/org/[slug]/[orgLocationId]']
 	const isEditablePage = editablePaths.includes(router.pathname)
 	const getEditPathname = useCallback((): typeof router.pathname => {
@@ -138,6 +141,11 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 							{canAccessDataPortal && (
 								<>
 									<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
+									{canAccessUserManagement && (
+										<Menu.Item component={Link} href='/admin/management' target='_self'>
+											{t('user-menu.user-management')}
+										</Menu.Item>
+									)}
 									<Menu.Item component={Link} href='/admin' target='_self'>
 										{t('user-menu.data-portal')}
 									</Menu.Item>
