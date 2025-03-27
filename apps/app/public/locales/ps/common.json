@@ -256,6 +256,33 @@
 	"questions": "پوښتنې؟",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>تاسو اړتیا لرئ د دې کولو لپاره لاګ ان شئ.</title2>\n<textDarkGray>د وړیا InReach حساب سره تاسو کولی شئ اضافي ځانګړتیاوې خلاص کړئ:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Recommended Links",
+		"body": "Find more information about your rights.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-risk-assessment"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Immigrants' Rights (Immigration Equality)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Immigrants' Rights (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "خدمات په لرې ډول شتون لري",
 	"remote-services-page-title": "لیرې خدمتونه",
 	"reset-password": "خپل رمز بیا تنظیم کړئ",
@@ -311,7 +338,7 @@
 	"show-less": "لږ وښایاست",
 	"show-more": "نور وښایاست",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching <strong>LGBTQ+</strong> resource platform.</textDarkGray>\n</group>",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first open source verified LGBTQ+ resource platform.</textDarkGray>\n</group>",
 		"lcr-error1": "له بده مرغه، تاسو د محلي ټولنې بیاکتونکي کیدو لپاره د وړتیا اوسني شرایط نه پوره کوئ.\n<Switch>د معیاري حساب جوړولو لپاره دلته کلیک وکړئ.</Switch>",
 		"lcr-error2": "تاسو باید د <Link><strong>محلي ټولنې بیاکتنه</strong></Link> پاڼه ولولئ او بیاکتنه وکړئ.",
 		"lcr-screen1": "مهرباني وکړئ ټول هغه څه وټاکئ چې پلي کیږي",
@@ -331,9 +358,9 @@
 			"<loginLink>دمخه یو حساب لرئ؟</loginLink>"
 		],
 		"modal-body-temp": [
-			"<title3>تاسو کوم ډول حساب جوړول غواړئ؟</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>`\n</group>",
-			"<loginLink>دمخه یو حساب لرئ؟</loginLink>"
+			"<title3>What type of account would you like to create?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
 		],
 		"name-use-any": "هر هغه نوم وکاروئ چې تاسو ورسره راحته یاست.",
 		"name_alias": "نوم یا عرف",

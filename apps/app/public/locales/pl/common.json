@@ -258,6 +258,33 @@
 	"questions": "Pytania?",
 	"quick-promo-body": "<textUtility1>💚 Zapisz i udostępnij spersonalizowane listy zasobów</textUtility1>\n<textUtility1>💬 Pozostaw publiczną ocenę/recenzje na organizacjach</textUtility1>\n<textUtility1>🏠 Suggest Organizations in your area</textUtility1>\n<textUtility1>🔗 Odbierz stronę profilową swojej organizacji (Już wkrótce!</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Musisz się zalogować, aby to zrobić.</title2>\n<textDarkGray>Z darmowym kontem InReach możesz odblokować dodatkowe funkcje:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Polecane linki",
+		"body": "Znajdź więcej informacji na temat swoich praw.",
+		"buttons": {
+			"btn-1": {
+				"text": "Mapa ryzyka związanego z transkacją (Eryn Reed)",
+				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "Centrum dokumentów tożsamości (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "Prawa imigrantów LGBTQ+ (równość imigracji)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Zasoby w zakresie azylu (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Prawa imigrantów (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Usługi dostępne zdalnie",
 	"remote-services-page-title": "Usługi zdalne",
 	"reset-password": "Zresetuj hasło",
@@ -333,7 +360,7 @@
 			"<loginLink>Masz już konto?</loginLink>"
 		],
 		"modal-body-temp": [
-			"<title3>Jaki typ konta chciałbyś założyć?</title3>",
+			"<title3>Jaki rodzaj konta chcesz utworzyć?</title3>",
 			"<group>\n<button data-option='individual'>Indywidualny</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
 			"<loginLink>Masz już konto?</loginLink>"
 		],
