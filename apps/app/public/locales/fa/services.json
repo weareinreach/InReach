@@ -52,6 +52,7 @@
 		"food-assistance": "کمک های غذایی",
 		"food-delivery": "تحویل غذا",
 		"food-pantries": "انبارهای غذا",
+		"hot-meals": "Hot meals",
 		"nutrition-education": "آموزش تغذیه"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "بازداشت مهاجرتی",
 		"legal-advice": "مشاوره حقوقی",
 		"legal-hotlines": "خط تلفن اضطراری حقوقی",
+		"legal-info-referrals": "Legal information and referrals",
 		"name-and-gender-change": "تغییر نشانگر نام و جنسیت",
 		"refugee-claim": "ادعای پناهندگی",
 		"residency": "دستیاری",
@@ -108,6 +110,7 @@
 		"dental-care": "مراقبت از بهداشت دندان",
 		"fertility-and-family-planning-services": "خدمات باروری و تنظیم خانواده",
 		"hiv-and-sexual-health": "اچ آی وی و سلامت جنسی",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "کلینیک های پزشکی",
 		"obgyn-services": "خدمات زنان و زایمان",
 		"physical-evaluations-for-asylum-claim": "ارزیابی فیزیکی برای درخواست پناهندگی",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "گروه های پشتیبانی BIPOC",
 		"family-support-groups": "گروه های حمایت از خانواده",
 		"hotlines": "خطوط تلفن",
+		"mental-health-info-referrals": "Mental health information and referrals",
 		"private-therapy-and-counseling": "مشاوره و درمان خصوصی",
 		"psychological-evaluations-for-asylum-claim": "ارزیابی روانی برای درخواست پناهندگی",
 		"psychological-evaluations-for-refugee-claim": "ارزیابی های روانشناختی برای ادعای پناهندگی",

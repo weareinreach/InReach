@@ -255,6 +255,33 @@
 	"questions": "有问题吗？",
 	"quick-promo-body": "<textUtility1>💚 保存并共享个性化资源清单</textUtility1>\n<textUtility1>💬 对组织进行公开评分/评论</textUtility1>\n<textUtility1>🏠 推荐您所在地区的组织</textUtility1>\n<textUtility1>🔗 申领贵组织的资料页面(即将上线！) </textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>你需要登录才能这样做。</title2>\n<textDarkGray>使用免费的 inReach 账号你可以解锁其他功能：</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "推荐的链接",
+		"body": "查找更多关于您权利的信息。",
+		"buttons": {
+			"btn-1": {
+				"text": "抗跨风险图(英里)",
+				"link": "https://www.erinthemorning.com/p/post-election-2024-anti-transrisk"
+			},
+			"btn-2": {
+				"text": "ID 文档中心 (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ 移民权利(平等)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/了解你的权利/"
+			},
+			"btn-4": {
+				"text": "庇护资源",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "移民权利",
+				"link": "https://www.aclu.org/Ekyour-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "远程可用的服务",
 	"remote-services-page-title": "远程服务",
 	"reset-password": "重置你的密码",
@@ -331,7 +358,7 @@
 		],
 		"modal-body-temp": [
 			"<title3>你想创建什么类型的账户？</title3>",
-			"<group>\n<button data-option='individual'>个人</button>\n<button data-option='provider'>专业人士/提供商</button>\n</group>",
+			"<group>\n<button data-option='individual'>个人</button>\n<button data-option='provider'>专业/提供者</button>\n</group>",
 			"<loginLink>已有帐号？</loginLink>"
 		],
 		"name-use-any": "使用您喜欢的任何名称。",

@@ -256,6 +256,33 @@
 	"questions": "سوال؟",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>برای انجام این کار باید وارد شوید.</title2>\n<textDarkGray>با یک حساب رایگان InReach می توانید قفل ویژگی های اضافی را باز کنید:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Recommended Links",
+		"body": "Find more information about your rights.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-risk-assessment"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Immigrants' Rights (Immigration Equality)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Immigrants' Rights (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "خدمات موجود از راه دور",
 	"remote-services-page-title": "خدمات از راه دور",
 	"reset-password": "رمز عبور خود را بازنشانی کنید",
@@ -311,7 +338,7 @@
 	"show-less": "نمایش کمتر",
 	"show-more": "بیشتر نشان بده",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching <strong>LGBTQ+</strong> resource platform.</textDarkGray>\n</group>",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first open source verified LGBTQ+ resource platform.</textDarkGray>\n</group>",
 		"lcr-error1": "متأسفانه، شما شرایط فعلی واجد شرایط بودن برای بازبینی انجمن محلی را ندارید.\n<Switch>برای ایجاد یک حساب استاندارد اینجا را کلیک کنید.</Switch>",
 		"lcr-error2": "شما باید صفحه <Link><strong>انجمن محلی</strong></Link> را بخوانید و بررسی کنید.",
 		"lcr-screen1": "لطفا همه موارد اعمال شده را انتخاب کنید",
