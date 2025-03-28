@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Path to the directory containing CSV files
-csv_dir="/Users/dmac1/Projects/InReach2/InReach/packages/db/prisma/db"
+csv_dir="/Users/dmac1/Projects/InReach2/InReach/packages/db/prisma/local-db-backup"
 
 # Database connection URL
 DATABASE_URL="postgres://user:password@localhost:5432/inreach"
 
 # Log file to store the results
-log_file="/Users/dmac1/Projects/InReach2/InReach/packages/db/prisma/db/logs/import_log.txt"
-error_log_file="/Users/dmac1/Projects/InReach2/InReach/packages/db/prisma/db/logs/error_log.txt"
+log_file="/Users/dmac1/Projects/InReach2/InReach/packages/db/prisma/local-db-backup/logs/import_log.txt"
+error_log_file="/Users/dmac1/Projects/InReach2/InReach/packages/db/prisma/local-db-backup/logs/error_log.txt"
 
 # Ensure the log directory exists
 log_dir=$(dirname "$log_file")
@@ -35,7 +35,7 @@ for csv_file in "$csv_dir"/*.csv; do
     PGPASSWORD=$(echo $DATABASE_URL | sed 's/.*:\(.*\)@.*/\1/') psql $DATABASE_URL -c "ALTER TABLE public.\"$table_name\" DISABLE TRIGGER ALL" >> "$log_file" 2>&1
 
     # Run the \copy command using psql with the DATABASE_URL
-    PGPASSWORD=$(echo $DATABASE_URL | sed 's/.*:\(.*\)@.*/\1/') psql $DATABASE_URL -c "\copy public.\"$table_name\" FROM '$csv_file' WITH CSV" >> "$log_file" 2>&1
+    PGPASSWORD=$(echo $DATABASE_URL | sed 's/.*:\(.*\)@.*/\1/') psql $DATABASE_URL -c "\copy public.\"$table_name\" FROM '$csv_file' WITH CSV" 2>> "$error_log_file"
 
     # Check for errors
     if [ $? -eq 0 ]; then
@@ -43,6 +43,9 @@ for csv_file in "$csv_dir"/*.csv; do
     else
       echo "Error importing data into table $table_name" | tee -a "$error_log_file"
       echo "$table_name" >> "$error_log_file"
+
+      # Check for duplicate key violations and handle them
+      PGPASSWORD=$(echo $DATABASE_URL | sed 's/.*:\(.*\)@.*/\1/') psql $DATABASE_URL -c "\COPY public.\"$table_name\" FROM '$csv_file' WITH CSV ON CONFLICT DO NOTHING" >> "$log_file" 2>&1
     fi
 
     # Re-enable constraints for the current table
