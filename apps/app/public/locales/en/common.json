@@ -258,6 +258,33 @@
 	"questions": "Questions?",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Recommended Links",
+		"body": "Find more information about your rights.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-risk-assessment"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Immigrants' Rights (Immigration Equality)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Immigrants' Rights (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Services available remotely",
 	"remote-services-page-title": "Remote services",
 	"reset-password": "Reset your password",
@@ -317,7 +344,7 @@
 	"show-less": "Show less",
 	"show-more": "Show more",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first open source verified LGBTQ+ resource platform.</textDarkGray>\n</group>",
 		"lcr-error1": "Unfortunately, you do not meet the current eligibility requirements to be a Local Community Reviewer.\n<Switch>Click here to create a standard account.</Switch>",
 		"lcr-error2": "You must read & review the <Link><strong>Local Community Reviewer</strong></Link> page.",
 		"lcr-screen1": "Please select all that apply",
