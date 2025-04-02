@@ -1,4 +1,4 @@
-import { Avatar, createStyles, Drawer, rem, Stack, Table, Text, Textarea, Title } from '@mantine/core'
+import { createStyles, Drawer, rem, Stack, Table, Text, Textarea, Title } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useEffect, useMemo } from 'react'
 import { z } from 'zod'
@@ -38,13 +38,13 @@ const useStyles = createStyles((theme) => ({
 
 const comments = [
 	{
-		avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
+		id: 1,
 		name: 'John Doe',
 		date: '2025-03-15',
 		comment: 'This is a sample comment.',
 	},
 	{
-		avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
+		id: 2,
 		name: 'Jane Smith',
 		date: '2025-03-14',
 		comment: 'Another sample comment.',
@@ -82,7 +82,7 @@ export const InternalNotesDrawer: React.FC<InternalNotesDrawerProps> = ({ opened
 	const orgQuery = { id: '123' } // Mock organization ID
 
 	useEffect(() => {
-		if (status === 'success' && orgQuery?.id) {
+		if (status === 'success' && orgQuery?.id && form.values.organizationId !== orgQuery.id) {
 			form.setFieldValue('organizationId', orgQuery.id)
 		}
 	}, [status, orgQuery?.id, form])
@@ -112,10 +112,7 @@ export const InternalNotesDrawer: React.FC<InternalNotesDrawerProps> = ({ opened
 						<Table striped>
 							<tbody>
 								{comments.map((comment, index) => (
-									<tr key={index}>
-										<td>
-											<Avatar src={comment.avatar} alt={comment.name} radius='xl' />
-										</td>
+									<tr key={comment.id}>
 										<td>
 											<div style={{ display: 'flex', flexDirection: 'column' }}>
 												<Text size='sm' weight={500}>
