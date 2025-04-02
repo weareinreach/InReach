@@ -56,18 +56,16 @@ interface FormFields {
 	organizationId: string
 }
 
-interface InternalNotesDrawerProps {
-	opened: boolean
-	onClose: () => void
-	recordId: string
-	name: string
-}
-
-export const InternalNotesDrawer: React.FC<InternalNotesDrawerProps> = ({
+export const InternalNotesDrawer = ({
 	opened,
 	onClose,
 	recordId,
 	name,
+}: {
+	opened: boolean
+	onClose: () => void
+	recordId: string
+	name: string
 }) => {
 	const { classes } = useStyles()
 

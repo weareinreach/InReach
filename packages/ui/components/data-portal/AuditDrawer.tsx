@@ -5,13 +5,6 @@ import { trpc } from '~api/trpc'
 import { Button } from '~ui/components/core/Button'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
-interface AuditDrawerProps {
-	opened: boolean
-	onClose: () => void
-	recordId: string
-	name: string
-}
-
 interface AuditLogItem {
 	id: string
 	timestamp: string
@@ -20,7 +13,17 @@ interface AuditLogItem {
 	diff: Record<string, unknown>
 }
 
-export const AuditDrawer: React.FC<AuditDrawerProps> = ({ opened, onClose, recordId, name }) => {
+export const AuditDrawer = ({
+	opened,
+	onClose,
+	recordId,
+	name,
+}: {
+	opened: boolean
+	onClose: () => void
+	recordId: string
+	name: string
+}) => {
 	const [data, setData] = useState<AuditLogItem[]>([])
 	const [loading, setLoading] = useState(false)
 	const [page, setPage] = useState(1)
