@@ -41,6 +41,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		{ slug: pageSlug },
 		{ enabled: router.isReady }
 	)
+
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 	const updateBasic = api.organization.updateBasic.useMutation({
 		onSuccess: (newData) => {
@@ -97,7 +98,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			<Head>
 				<title>{t('page-title.edit-mode', { ns: 'common', title: data.name })}</title>
 			</Head>
-			<DataToolbar />
+			<DataToolbar data={{ id: data.id, name: data.name }} />
 			<FormProvider {...formMethods}>
 				<Grid.Col sm={8} order={1}>
 					<Stack pt={24} align='flex-start' spacing={40}>

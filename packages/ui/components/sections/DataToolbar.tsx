@@ -12,14 +12,14 @@ const useMessageBodyStyles = createStyles((theme) => ({
 	},
 }))
 
-export const DataToolbar = () => {
+export const DataToolbar = ({ data }: { data: { id: string; name: string } }) => {
 	const { classes } = useMessageBodyStyles()
 
 	return (
 		<>
 			<div className={classes.toolbar}>
 				<Activity />
-				<Action />
+				<Action data={data} />
 			</div>
 			<div>
 				<Divider my='lg' mb='md' />

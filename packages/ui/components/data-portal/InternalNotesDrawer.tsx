@@ -59,9 +59,16 @@ interface FormFields {
 interface InternalNotesDrawerProps {
 	opened: boolean
 	onClose: () => void
+	recordId: string
+	name: string
 }
 
-export const InternalNotesDrawer: React.FC<InternalNotesDrawerProps> = ({ opened, onClose }) => {
+export const InternalNotesDrawer: React.FC<InternalNotesDrawerProps> = ({
+	opened,
+	onClose,
+	recordId,
+	name,
+}) => {
 	const { classes } = useStyles()
 
 	const drawerTitle = useMemo(
@@ -79,7 +86,7 @@ export const InternalNotesDrawer: React.FC<InternalNotesDrawerProps> = ({ opened
 
 	// Simulating external data for organization ID
 	const status = 'success' // Mock status
-	const orgQuery = { id: '123' } // Mock organization ID
+	const orgQuery = { id: recordId } // Mock organization ID
 
 	useEffect(() => {
 		if (status === 'success' && orgQuery?.id && form.values.organizationId !== orgQuery.id) {
@@ -105,7 +112,8 @@ export const InternalNotesDrawer: React.FC<InternalNotesDrawerProps> = ({ opened
 			<div className={classes.contentContainer}>
 				<Stack style={{ textAlign: 'center', paddingTop: rem(40) }}>
 					<Title>Internal Notes</Title>
-					<Text>Organization name: Placeholder</Text>
+					<Text>Organization name: {name}</Text>
+					<Text>Organization id: {recordId}</Text>
 				</Stack>
 				<div className={classes.commentsContainer}>
 					<div className={classes.commentsTable}>

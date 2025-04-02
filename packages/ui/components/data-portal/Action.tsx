@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const Action = () => {
+export const Action = ({ data }: { data: { id: string; name: string } }) => {
 	const [auditOpen, setAuditOpen] = useState(false)
 	const [internalOpen, setInternalOpen] = useState(false)
 	const { classes } = useStyles()
@@ -33,8 +33,13 @@ export const Action = () => {
 			<Button variant='secondary' size='small' onClick={() => setInternalOpen(true)}>
 				View internal notes
 			</Button>
-			<AuditDrawer opened={auditOpen} onClose={onAuditClose} recordId='osmd_01GVH3VF5VQKZHJS025530GPZX' />
-			<InternalNotesDrawer opened={internalOpen} onClose={onInternalClose} />
+			<AuditDrawer opened={auditOpen} onClose={onAuditClose} recordId={data.id} name={data.name} />
+			<InternalNotesDrawer
+				opened={internalOpen}
+				onClose={onInternalClose}
+				recordId={data.id}
+				name={data.name}
+			/>
 		</div>
 	)
 }

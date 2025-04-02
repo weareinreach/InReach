@@ -9,6 +9,7 @@ interface AuditDrawerProps {
 	opened: boolean
 	onClose: () => void
 	recordId: string
+	name: string
 }
 
 interface AuditLogItem {
@@ -16,10 +17,10 @@ interface AuditLogItem {
 	timestamp: string
 	actorId: string
 	operation: string
-	diff: Record<string, any> // You may adjust this type if needed based on the actual structure of `diff`
+	diff: Record<string, unknown>
 }
 
-export const AuditDrawer: React.FC<AuditDrawerProps> = ({ opened, onClose, recordId }) => {
+export const AuditDrawer: React.FC<AuditDrawerProps> = ({ opened, onClose, recordId, name }) => {
 	const [data, setData] = useState<AuditLogItem[]>([])
 	const [loading, setLoading] = useState(false)
 	const [page, setPage] = useState(1)
@@ -33,28 +34,6 @@ export const AuditDrawer: React.FC<AuditDrawerProps> = ({ opened, onClose, recor
 	// Fetch data only when drawer is open or page changes
 	useEffect(() => {
 		if (!opened || !recordId) return
-
-		// const fetchData = async () => {
-		// 	setLoading(true)
-
-		// 	try {
-		// 		// Call the trpc API
-		// 		const response = await trpc.system.auditLogByRecordId.query({
-		// 			recordId: [recordId], // Ensure it's an array
-		// 			skip: (page - 1) * 10,
-		// 			take: 10,
-		// 			sort: 'new',
-		// 		})
-
-		// 		setData(response || [])
-		// 		// If the response has pagination info, set totalPages here
-		// 		setTotalPages(Math.ceil(response.length / 10)) // Adjust pagination based on response length
-		// 	} catch (error) {
-		// 		console.error('Error fetching audit data:', error)
-		// 	}
-
-		// 	setLoading(false)
-		// }
 
 		const fetchData = async () => {
 			setLoading(true)
@@ -108,8 +87,8 @@ export const AuditDrawer: React.FC<AuditDrawerProps> = ({ opened, onClose, recor
 					<>
 						<Stack style={{ textAlign: 'center' }}>
 							<Title>Activity Log</Title>
-							<Text>Organization Name</Text>
-							<Text>Placeholder Data</Text>
+							<Text>{name}</Text>
+							<Text>{recordId}</Text>
 						</Stack>
 						<Table style={{ borderCollapse: 'separate', borderSpacing: 0, width: '100%' }}>
 							<thead style={{ background: '#e0e0e0', borderRadius: '10px', overflow: 'hidden' }}>
