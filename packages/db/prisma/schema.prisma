@@ -1721,6 +1721,7 @@ model InternalNote {
   translationNamespace            TranslationNamespace?          @relation(fields: [translationNamespaceName], references: [name], onDelete: Cascade, onUpdate: Cascade)
   translationNamespaceName        String?
 
+  createdBy String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
