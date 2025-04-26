@@ -84,6 +84,7 @@
 		"natl-find-help-now": "Найти помощь",
 		"natl-these-verified": "<Text>Эти проверенные ресурсы могут помочь сообществу ЛГБТК+ в США. Эти сервисы <strong>доступны онлайн, конфиденциальны</strong> и <strong>бесплатны</strong>.</Text>",
 		"outside-service-area": "InReach не работает в {{country}}",
+		"only-in-north-america": "InReach работает только в Северной Америке.",
 		"who-this-serves": "<Text><strong>Для кого предназначен этот ресурс:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Текущее местоположение",
@@ -258,6 +259,33 @@
 	"questions": "Вопросы?",
 	"quick-promo-body": "<textUtility1>💚 Сохраняйте и делитесь личными списками ресурсов</textUtility1>\n<textUtility1>💬 Оставляйте публичные отзывы об организациях</textUtility1>\n<textUtility1>🏠 Предлагайте организации в вашем регионе</textUtility1>\n<textUtility1>🔗 Запрашивайте страницу профиля вашей организации</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Вам нужно войти в систему.</title2>\n<textDarkGray>С бесплатной учетной записью InReach, вы можете разблокировать дополнительные возможности:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Рекомендуемые ссылки",
+		"body": "Узнайте больше о своих правах.",
+		"buttons": {
+			"btn-1": {
+				"text": "Карта риска антитранса (рин красный)",
+				"link": "https://www.erinthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "Центр документов (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "Права иммигрантов LGBTQ+ (иммиграционное равенство)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Ресурсы убежища (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Права иммигрантов (АКЛУС)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Онлайн-услуги",
 	"remote-services-page-title": "Удаленные услуги",
 	"reset-password": "Сброс пароля",
@@ -334,7 +362,7 @@
 		],
 		"modal-body-temp": [
 			"<title3>Какой тип учетной записи вы хотели бы создать?</title3>",
-			"<group>\n<button data-option='individual'>Индивидуальная</button>\n<button data-option='provider'>Профессионал/ресурс</button>\n</group>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional / Provider</button>\n</group>",
 			"<loginLink>У вас уже есть аккаунт?</loginLink>"
 		],
 		"name-use-any": "Вы можете использовать любое имя, которое вам нравится.",

@@ -82,6 +82,7 @@
 		"natl-find-help-now": "Humanap ng tulong ngayon",
 		"natl-these-verified": "<Text>Makakatulong ang mga na-verify na mapagkukunang ito sa komunidad ng LGBTQ+ sa United States. Ang mga serbisyong ito ay <strong>malayuang magagamit, kumpidensyal,</strong> at <strong>libre</strong>.</Text>",
 		"outside-service-area": "Hindi gumagana ang InReach sa {{country}}",
+		"only-in-north-america": "InReach only operates in North America.",
 		"who-this-serves": "<Text><strong>Sino ang pinaglilingkuran ng mapagkukunang ito:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Kasalukuyang lokasyon",
@@ -256,6 +257,33 @@
 	"questions": "Mga Tanong?",
 	"quick-promo-body": "<textUtility1>💚 I-save at ibahagi ang mga personalized na listahan ng mapagkukunan</textUtility1>\n<textUtility1>💬 Mag-iwan ng pampublikong rating/review sa mga organisasyon</textUtility1>\n<textUtility1>🏠 Magmungkahi ng mga organisasyon sa iyong lugar</textUtility1>\n<textUtility1>🔗 I-claim ang pahina ng profile ng iyong samahan (Malapit na!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Kailangan mong mag-log in para magawa iyon.</title2>\n<textDarkGray>Gamit ang isang libreng InReach account maaari kang mag-unlock ng mga karagdagang feature:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Recommended Links",
+		"body": "Find more information about your rights.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-risk-assessment"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Immigrants' Rights (Immigration Equality)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Immigrants' Rights (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Magagamit ang mga serbisyo nang malayuan",
 	"remote-services-page-title": "Remote serbisyo",
 	"reset-password": "I-reset ang iyong password",
@@ -331,9 +359,9 @@
 			"<loginLink>Mayroon nang isang account?</loginLink>"
 		],
 		"modal-body-temp": [
-			"<title3>Anong uri ng account ang nais mong likhain?</title3>",
-			"<group>\n<button data-option='individual'>Indibidwal</button>\n<button data-option='provider'>Propesyonal/Provider</button>\n</group>",
-			"<loginLink>Mayroon nang isang account?</loginLink>"
+			"<title3>What type of account would you like to create?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
 		],
 		"name-use-any": "Gamitin ang anumang pangalan na komportable ka.",
 		"name_alias": "Pangalan o alyas",
