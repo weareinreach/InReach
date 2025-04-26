@@ -82,6 +82,7 @@ export const InternationalCard = ({
 													external
 													variant={variant.Link.inheritStyle}
 													key={`${i}-${access_type}`}
+													style={{ overflowWrap: 'anywhere', whiteSpace: 'normal' }}
 												>
 													{access_value.replace(protocol, '')}
 												</Link>
