@@ -82,6 +82,7 @@
 		"natl-find-help-now": "Find help now",
 		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
 		"outside-service-area": "InReach does not operate in {{country}}",
+		"only-in-north-america": "InReach only operates in North America.",
 		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Current location",
