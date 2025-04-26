@@ -15,6 +15,7 @@ import { checkServerPermissions } from '@weareinreach/auth'
 import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { LocationDrawer } from '@weareinreach/ui/components/data-portal/LocationDrawer'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
+import { DataToolbar } from '@weareinreach/ui/components/sections/DataToolbar'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
 import { useEditMode } from '@weareinreach/ui/hooks/useEditMode'
@@ -40,6 +41,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		{ slug: pageSlug },
 		{ enabled: router.isReady }
 	)
+
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 	const updateBasic = api.organization.updateBasic.useMutation({
 		onSuccess: (newData) => {
@@ -96,6 +98,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			<Head>
 				<title>{t('page-title.edit-mode', { ns: 'common', title: data.name })}</title>
 			</Head>
+			<DataToolbar data={{ id: data.id, name: data.name }} />
 			<FormProvider {...formMethods}>
 				<Grid.Col sm={8} order={1}>
 					<Stack pt={24} align='flex-start' spacing={40}>
