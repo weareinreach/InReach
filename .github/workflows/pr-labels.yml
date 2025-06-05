@@ -13,7 +13,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: 🏷 Verify PR has a valid label
-        uses: mheap/github-action-required-labels@d25134c992b943fb6ad00c25ea00eb5988c0a9dd # v5
+        uses: mheap/github-action-required-labels@fb29a14a076b0f74099f6198f77750e8fc236016 # v5
         with:
           labels: 'breaking-change, bugfix, documentation, enhancement, refactor, performance, new-feature, maintenance, ci, dependencies, translations, changelog-ignore, release'
           mode: minimum
