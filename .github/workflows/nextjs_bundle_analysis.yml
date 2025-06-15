@@ -55,7 +55,7 @@ jobs:
 
       - name: Restore next build
         # uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4
-        uses: actions/cache@v4
+        uses: actions/cache@v4 # Changed from SHA to v4 tag
         id: restore-build-cache
         env:
           cache-name: cache-next-build
