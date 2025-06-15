@@ -81,6 +81,7 @@
 		"natl-find-help-now": "立即寻求帮助",
 		"natl-these-verified": "<Text>这些经过验证的资源可以帮助美国的 LGBTQ+ 社区。这些服务是 <strong>远程可用、机密的、</strong> 和 <strong>免费</strong>。</Text>",
 		"outside-service-area": "InReach 不在 {{country}} 中运行",
+		"only-in-north-america": "只在北美开展活动。",
 		"who-this-serves": "<Text><strong> 此资源服务于谁：</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "当前位置",
@@ -255,6 +256,33 @@
 	"questions": "有问题吗？",
 	"quick-promo-body": "<textUtility1>💚 保存并共享个性化资源清单</textUtility1>\n<textUtility1>💬 对组织进行公开评分/评论</textUtility1>\n<textUtility1>🏠 推荐您所在地区的组织</textUtility1>\n<textUtility1>🔗 申领贵组织的资料页面(即将上线！) </textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>你需要登录才能这样做。</title2>\n<textDarkGray>使用免费的 inReach 账号你可以解锁其他功能：</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "推荐的链接",
+		"body": "查找更多关于您权利的信息。",
+		"buttons": {
+			"btn-1": {
+				"text": "抗跨风险图(英里)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-risk-assessment"
+			},
+			"btn-2": {
+				"text": "ID 文档中心 (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ 移民权利(平等)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/了解你的权利/"
+			},
+			"btn-4": {
+				"text": "庇护资源(教会世界服务)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "移民权利(美国公民自由联盟)",
+				"link": "https://www.aclu.org/Ekyour-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "远程可用的服务",
 	"remote-services-page-title": "远程服务",
 	"reset-password": "重置你的密码",
@@ -310,7 +338,7 @@
 	"show-less": "少显示",
 	"show-more": "显示更多",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>欢迎来到世界上第一个为面临迫害或歧视的 LGBTQ+ 人群提供安全、经过验证的资源的技术平台。</textDarkGray>\n</group>",
+		"header": "<title2><group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>欢迎来到世界上第一个为面临迫害或歧视的 LGBTQ+ 人群提供安全、经过验证的资源的技术平台。</textDarkGray>\n</group>",
 		"lcr-error1": "很遗憾，您不符合成为本地社区审阅者的当前资格要求。\n<Switch>点击此处创建标准账户。</Switch>",
 		"lcr-error2": "您必须阅读并查看 <Link><strong>本地社区审核员</strong></Link> 页面。",
 		"lcr-screen1": "请选择所有适用的选项",
@@ -331,7 +359,7 @@
 		],
 		"modal-body-temp": [
 			"<title3>你想创建什么类型的账户？</title3>",
-			"<group>\n<button data-option='individual'>个人</button>\n<button data-option='provider'>专业人士/提供商</button>\n</group>",
+			"<group>\n<button data-option='individual'>个人</button>\n<button data-option='provider'>专业/提供者</button>\n</group>",
 			"<loginLink>已有帐号？</loginLink>"
 		],
 		"name-use-any": "使用您喜欢的任何名称。",
