@@ -82,6 +82,7 @@
 		"natl-find-help-now": "Şimdi yardım bulun",
 		"natl-these-verified": "<Text>Bu doğrulanmış kaynaklar Amerika Birleşik Devletleri'ndeki LGBTQ+topluluğuna yardımcı olabilir. Bu hizmetler <strong>uzaktan kullanılabilir, gizli,</strong> ve <strong>ücretsiz</strong>.</Text>",
 		"outside-service-area": "inReach {{country}}'de çalışmıyor",
+		"only-in-north-america": "inReach yalnızca Kuzey Amerika'da faaliyet göstermektedir.",
 		"who-this-serves": "<Text><strong>Bu kaynak kime hizmet ediyor:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Geçerli konum",
@@ -256,6 +257,33 @@
 	"questions": "Sorular?",
 	"quick-promo-body": "<textUtility1>💚 Kişiselleştirilmiş kaynak listelerini kaydedin ve paylaşın</textUtility1>\n<textUtility1>💬 Kuruluşlar hakkında halka açık derecelendirme/incelemeler bırakın</textUtility1>\n<textUtility1>🏠 Bölgenizdeki kuruluşları önerin</textUtility1>\n<textUtility1>🔗 Kuruluşunuzun profil sayfasını talep edin (Çok yakında!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Bunu yapmak için giriş yapmanız gerekiyor.</title2>\n<textDarkGray>Ücretsiz bir inReach hesabıyla ek özelliklerin kilidini açabilirsiniz:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Önerilen Bağlantılar",
+		"body": "Haklarınız hakkında daha fazla bilgi edinin.",
+		"buttons": {
+			"btn-1": {
+				"text": "Trans Karşıtı Risk Haritası (Erin Reed)",
+				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "Kimlik Belgeleri Merkezi (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Göçmen Hakları (Göçmenlik Eşitliği)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "İltica Kaynakları (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Göçmen Hakları (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Uzaktan sunulan hizmetler",
 	"remote-services-page-title": "Uzaktan servisler",
 	"reset-password": "Şifrenizi sıfırla",
