@@ -66,6 +66,10 @@ const system = {
 	getDetails: ['dataPortalBasic'],
 } satisfies PermissionDefs
 
+const user = {
+	viewAllUsers: ['dataPortalAdmin'],
+} satisfies PermissionDefs
+
 const permissions = {
 	...locations,
 	...organizations,
@@ -78,6 +82,7 @@ const permissions = {
 	...orgWebsite,
 	...reviews,
 	...system,
+	...user,
 } satisfies PermissionDefs
 
 export const getPermissions = (procedure: PermissionedProcedure): { hasPerm: Permission | Permission[] } => ({
