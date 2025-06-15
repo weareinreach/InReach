@@ -225,6 +225,7 @@
 		},
 		"sonarlint.output.showAnalyzerLogs": true,
 		"sonarlint.output.showVerboseLogs": false,
+		"i18n-ally.localesPaths": ["public/locales", "src/pages/api/i18n"],
 	},
 	"launch": {
 		"configurations": [
