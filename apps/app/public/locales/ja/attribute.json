@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "このサービスは保険を受け入れます。費用、資金援助オプション、保険適用範囲の詳細については、<Link href=\"{{url}}\">こちらをクリックして</Link>組織のページをご覧ください。",
 		"cost-fees": "費用が発生する",
 		"cost-free": "無料",
+		"cost-financial-assistance-available": "資金援助が利用可能です",
 		"cost-sliding-scale": "コストはスライディングスケールで決定",
 		"cost-sliding-scale_default": "このサービスにはスライディングスケールの料金がかかります。サービスに支払う金額は、収入レベルに応じて調整されます。詳細については、組織に直接お問い合わせください。",
 		"cost-sliding-scale_withUrl": "このサービスにスライディングスケールの料金がかかります。サービスに支払う金額は、収入レベルに応じて調整されます。<Link href=\"{{url}}\">こちらをクリックして、</Link>組織のページにアクセスしてください。"

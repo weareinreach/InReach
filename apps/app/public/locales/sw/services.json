@@ -52,6 +52,7 @@
 		"food-assistance": "Msaada wa chakula",
 		"food-delivery": "Utoaji wa chakula",
 		"food-pantries": "Pantries za chakula",
+		"hot-meals": "Hot meals",
 		"nutrition-education": "Elimu ya lishe"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Uhamiaji kizuizini",
 		"legal-advice": "Ushauri wa kisheria",
 		"legal-hotlines": "Hotlines kisheria",
+		"legal-info-referrals": "Legal information and referrals",
 		"name-and-gender-change": "Mabadiliko ya jina na jinsia",
 		"refugee-claim": "Madai ya wakimbizi",
 		"residency": "Makazi",
@@ -108,6 +110,7 @@
 		"dental-care": "Huduma ya meno",
 		"fertility-and-family-planning-services": "Huduma za uzazi na uzazi wa mpango",
 		"hiv-and-sexual-health": "VVU na afya ya ngono",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "Kliniki za matibabu",
 		"obgyn-services": "Huduma za OBGYN",
 		"physical-evaluations-for-asylum-claim": "Tathmini ya kimwili kwa madai ya hifadhi",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "Vikundi vya msaada wa BIPOC",
 		"family-support-groups": "Vikundi vya usaidizi wa familia",
 		"hotlines": "Hotlines",
+		"mental-health-info-referrals": "Mental health information and referrals",
 		"private-therapy-and-counseling": "Tiba ya kibinafsi na ushauri nasaha",
 		"psychological-evaluations-for-asylum-claim": "Tathmini ya kisaikolojia ya madai ya hifadhi",
 		"psychological-evaluations-for-refugee-claim": "Tathmini ya kisaikolojia kwa madai ya wakimbizi",
