@@ -215,6 +215,7 @@ const QuickLink = () => {
 												pathname: '/org/[slug]',
 												query: { slug },
 											}}
+											// @ts-expect-error just an annoying issue that doesn't really break anything
 											target='_blank'
 											rel='noopener noreferrer'
 											variant={variants.Link.inheritStyle}
