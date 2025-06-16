@@ -216,6 +216,7 @@ const QuickLink = () => {
 												query: { slug },
 											}}
 											target='_blank'
+											rel='noopener noreferrer'
 											variant={variants.Link.inheritStyle}
 										>
 											<Icon icon='carbon:launch' />
