@@ -34,6 +34,13 @@ const useStyles = createStyles((theme) => ({
 		minWidth: '250px',
 		gap: rem(24),
 	},
+	drawerTitleWrapper: {
+		maxWidth: '100% !important',
+
+		[`& div.mantine-Group-root > div:first-of-type`]: {
+			maxWidth: '100% !important',
+		},
+	},
 }))
 
 const comments = [
@@ -106,6 +113,9 @@ export const InternalNotesDrawer = ({
 			padding='md'
 			withCloseButton={false}
 			title={drawerTitle}
+			classNames={{
+				title: classes.drawerTitleWrapper,
+			}}
 		>
 			<div className={classes.contentContainer}>
 				<Stack style={{ textAlign: 'center', paddingTop: rem(40) }}>

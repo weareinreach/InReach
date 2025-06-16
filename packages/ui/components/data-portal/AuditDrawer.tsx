@@ -1,4 +1,4 @@
-import { Drawer, Loader, Pagination, Stack, Table, Text, Title } from '@mantine/core'
+import { createStyles, Drawer, Loader, Pagination, Stack, Table, Text, Title } from '@mantine/core'
 import { useEffect, useMemo, useState } from 'react'
 
 import { trpc } from '~api/trpc'
@@ -13,6 +13,16 @@ interface AuditLogItem {
 	diff: Record<string, unknown>
 }
 
+const useStyles = createStyles((theme) => ({
+	drawerTitleWrapper: {
+		maxWidth: '100% !important',
+
+		[`& div.mantine-Group-root > div:first-of-type`]: {
+			maxWidth: '100% !important',
+		},
+	},
+}))
+
 export const AuditDrawer = ({
 	opened,
 	onClose,
@@ -24,6 +34,7 @@ export const AuditDrawer = ({
 	recordId: string
 	name: string
 }) => {
+	const { classes } = useStyles()
 	const [data, setData] = useState<AuditLogItem[]>([])
 	const [loading, setLoading] = useState(false)
 	const [page, setPage] = useState(1)
@@ -81,6 +92,9 @@ export const AuditDrawer = ({
 			padding='md'
 			withCloseButton={false}
 			title={drawerTitle}
+			classNames={{
+				title: classes.drawerTitleWrapper,
+			}}
 		>
 			{/* Body */}
 			<div style={{ overflowX: 'auto', marginBottom: '2rem' }}>
