@@ -52,6 +52,7 @@
 		"food-assistance": "Харчова допомога",
 		"food-delivery": "Доставка їжі",
 		"food-pantries": "Харчові панелі",
+		"hot-meals": "Харчова їжа",
 		"nutrition-education": "Харчова освіта"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Затримання імміграції",
 		"legal-advice": "Правова порада",
 		"legal-hotlines": "Юридичні гарячі лінії",
+		"legal-info-referrals": "Правова інформація та реферали",
 		"name-and-gender-change": "Зміна маркера імені та статі",
 		"refugee-claim": "Позов про біженця",
 		"residency": "Резиденція",
@@ -108,6 +110,7 @@
 		"dental-care": "Стоматологічна допомога",
 		"fertility-and-family-planning-services": "Послуги планування народжуваності та родини",
 		"hiv-and-sexual-health": "ВІЛ і сексуальне здоров'я",
+		"medical-info-and-referrals": "Медична інформація та реферали",
 		"medical-clinics": "Медичні клініки",
 		"obgyn-services": "Послуги акушерської гінекології",
 		"physical-evaluations-for-asylum-claim": "Фізичні оцінки для заяви про притулок",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "Групи підтримки BIPOC",
 		"family-support-groups": "Сімейні групи підтримки",
 		"hotlines": "Гарячі лінії",
+		"mental-health-info-referrals": "Інформація про психічне здоров'я та реферали",
 		"private-therapy-and-counseling": "Приватна терапія та консультування",
 		"psychological-evaluations-for-asylum-claim": "Психологічні оцінки для заяви про притулок",
 		"psychological-evaluations-for-refugee-claim": "Психологічні оцінки для заяви про біженця",
