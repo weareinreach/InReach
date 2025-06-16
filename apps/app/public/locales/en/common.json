@@ -436,7 +436,8 @@
 		"admin-options": "Admin Options",
 		"data-portal": "Data Portal Home",
 		"edit-page": "Edit this page",
-		"user-options": "User Options"
+		"user-options": "User Options",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Account verified!",
