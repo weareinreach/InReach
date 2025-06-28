@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "Sevis sa a aksepte asirans. <Link href=\"{{url}}\">Klike la pou vizite paj òganizasyon an</Link> pou plis enfòmasyon sou pri, opsyon asistans finansye ak detay sou kouvèti asirans.",
 		"cost-fees": "Bay yon pri",
 		"cost-free": "Gratis nan pri",
+		"cost-financial-assistance-available": "Financial assistance available",
 		"cost-sliding-scale": "Pri yo detèmine sou yon echèl glisman",
 		"cost-sliding-scale_default": "Sevis sa a gen frè selon yon echèl glisman. Kantite lajan ou peye pou sèvis yo ajiste selon nivo revni ou. Kontakte òganizasyon an dirèkteman pou plis enfòmasyon.",
 		"cost-sliding-scale_withUrl": "Sevis sa a gen frè selon yon echèl glisman. Kantite lajan ou peye pou sèvis yo ajiste selon nivo revni ou. <Link href=\"{{url}}\">Klike la pou vizite paj òganizasyon an pou plis enfòmasyon.</Link>"

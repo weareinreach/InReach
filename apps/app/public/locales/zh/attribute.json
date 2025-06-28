@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "此服务接受保险。 <Link href=\"{{url}}\">点击此处访问该组织的页面</Link> 以获取有关费用、经济援助选项和保险范围详细信息的更多信息。",
 		"cost-fees": "产生成本",
 		"cost-free": "免费的",
+		"cost-financial-assistance-available": "有经济援助",
 		"cost-sliding-scale": "在滑动规模上确定的成本",
 		"cost-sliding-scale_default": "此服务有滑动比额表费用。您支付的服务金额将根据您的收入水平进行调整。 直接联系组织获取更多信息。",
 		"cost-sliding-scale_withUrl": "这项服务的费用是浮动的。您支付的服务费用将根据您的收入水平进行调整。 <Link href=\"{{url}}\">单击此处访问该组织的页面以获取更多信息。</Link>"
@@ -98,8 +99,8 @@
 	},
 	"lang": {
 		"CATEGORYNAME": "语文",
-		"all-languages-by-interpreter": "所有语言均通过口译员提供",
-		"american-sign-language": "美国手语",
+		"all-languages-by-interpreter": "所有语言均通过口译员提供。请联系以获取更多信息。",
+		"american-sign-language": "美国手语（美式手语）",
 		"lang-offered": "提供的特定语言"
 	},
 	"orgleader": {

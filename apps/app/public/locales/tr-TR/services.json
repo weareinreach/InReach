@@ -52,6 +52,7 @@
 		"food-assistance": "Gıda yardımı",
 		"food-delivery": "Yemek teslimatı",
 		"food-pantries": "Gıda kilerleri",
+		"hot-meals": "Sıcak yemekler",
 		"nutrition-education": "Beslenme eğitimi"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Göçmenlik gözaltı",
 		"legal-advice": "Hukuki danışmanlık",
 		"legal-hotlines": "Yasal yardım hatları",
+		"legal-info-referrals": "Yasal bilgiler ve yönlendirmeler",
 		"name-and-gender-change": "İsim ve cinsiyet belirteci değişikliği",
 		"refugee-claim": "Mülteci talebi",
 		"residency": "İkamet",
@@ -108,6 +110,7 @@
 		"dental-care": "Diş bakımı",
 		"fertility-and-family-planning-services": "Doğurganlık ve aile planlaması hizmetleri",
 		"hiv-and-sexual-health": "HIV ve cinsel sağlık",
+		"medical-info-and-referrals": "Tıbbi bilgi ve yönlendirmeler",
 		"medical-clinics": "Tıbbi klinikler",
 		"obgyn-services": "OBGYN hizmetleri",
 		"physical-evaluations-for-asylum-claim": "İltica talebi için fiziksel değerlendirmeler",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "BIPOC destek grupları",
 		"family-support-groups": "Aile destek grupları",
 		"hotlines": "Yardım hatları",
+		"mental-health-info-referrals": "Ruh sağlığı bilgileri ve yönlendirmeleri",
 		"private-therapy-and-counseling": "Özel terapi ve danışmanlık",
 		"psychological-evaluations-for-asylum-claim": "İltica talebi için psikolojik değerlendirmeler",
 		"psychological-evaluations-for-refugee-claim": "Mülteci talebi için psikolojik değerlendirmeler",

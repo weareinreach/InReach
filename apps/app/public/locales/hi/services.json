@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "सामुदायिक सहायता",
-		"advocacy-and-community-organizing": "Advocacy and community organizing",
+		"advocacy-and-community-organizing": "वकालत और सामुदायिक आयोजन",
 		"community-social-groups": "समुदाय और सामाजिक समूह",
 		"cultural-centers": "सांस्कृतिक केंद्र",
 		"lgbtq-centers": "LGBTQ केंद्र",
@@ -52,6 +52,7 @@
 		"food-assistance": "खाद्य सहायता",
 		"food-delivery": "भोजन पहुचना",
 		"food-pantries": "खाद्य भंडार",
+		"hot-meals": "गरम खाना",
 		"nutrition-education": "पोषण शिक्षा"
 	},
 	"housing": {
@@ -91,10 +92,11 @@
 		"immigration-detention": "आप्रवासन निरोध",
 		"legal-advice": "कानूनी सलाह",
 		"legal-hotlines": "कानूनी हॉटलाइन",
+		"legal-info-referrals": "Legal information and referrals",
 		"name-and-gender-change": "नाम और लिंग चिह्न परिवर्तन",
 		"refugee-claim": "शरणार्थी का दावा",
 		"residency": "रेजीडेंसी",
-		"self-advocacy-information": "Self-advocacy information",
+		"self-advocacy-information": "स्व-वकालत संबंधी जानकारी",
 		"special-immigrant-juvenile-status-sijs": "विशेष आप्रवासी किशोर स्थिति (SIJS)",
 		"t-visa": "टी वीज़ा",
 		"u-visa": "यू वीज़ा"
@@ -108,6 +110,7 @@
 		"dental-care": "दाँतों की देखभाल",
 		"fertility-and-family-planning-services": "प्रजनन और परिवार नियोजन सेवाएं",
 		"hiv-and-sexual-health": "एचआईवी और यौन स्वास्थ्य",
+		"medical-info-and-referrals": "मेडिकल जानकारी और रेफरल",
 		"medical-clinics": "मेडिकल क्लीनिक",
 		"obgyn-services": "ओबीजीवाईएन सेवाएं",
 		"physical-evaluations-for-asylum-claim": "शरण के दावे के लिए भौतिक मूल्यांकन",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "BIPOC सहायता समूह",
 		"family-support-groups": "परिवार सहायता समूह",
 		"hotlines": "हॉटलाइन",
+		"mental-health-info-referrals": "Mental health information and referrals",
 		"private-therapy-and-counseling": "निजी चिकित्सा और परामर्श",
 		"psychological-evaluations-for-asylum-claim": "शरण के दावे के लिए मनोवैज्ञानिक मूल्यांकन",
 		"psychological-evaluations-for-refugee-claim": "शरणार्थी के दावे के लिए मनोवैज्ञानिक मूल्यांकन",

@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "Ta usługa akceptuje ubezpieczenie. <Link href=\"{{url}}\">Kliknij tutaj, aby odwiedzić stronę</Link> , aby uzyskać więcej informacji o kosztach, opcjach pomocy finansowej i szczegółach ubezpieczenia.",
 		"cost-fees": "Kończy się koszt",
 		"cost-free": "Bezpłatnie",
+		"cost-financial-assistance-available": "Dostępna pomoc finansowa",
 		"cost-sliding-scale": "Koszty ustalone w przesuwanej skali",
 		"cost-sliding-scale_default": "Ta usługa ma obniżoną skalę. Kwota którą płacisz za usługi jest dostosowywana w zależności od poziomu dochodów. Aby uzyskać więcej informacji, skontaktuj się bezpośrednio z organizacją.",
 		"cost-sliding-scale_withUrl": "Ta usługa ma obniżoną skalę. Kwota którą płacisz za usługi jest dostosowywana w zależności od poziomu dochodów. <Link href=\"{{url}}\">Kliknij tutaj, aby odwiedzić stronę organizacji po więcej informacji.</Link>"

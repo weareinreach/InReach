@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "Hierdie diens aanvaar versekering. <Link href=\"{{url}}\">Klik hier om die organisasie se bladsy</Link> te besoek vir meer inligting oor koste, finansiële bystandopsies en versekeringsdekkingbesonderhede.",
 		"cost-fees": "Gaan 'n koste aan",
 		"cost-free": "Vry van koste",
+		"cost-financial-assistance-available": "Financial assistance available",
 		"cost-sliding-scale": "Koste word op 'n glyskaal bepaal",
 		"cost-sliding-scale_default": "Hierdie diens het glyskaalfooie. Die bedrag wat jy vir dienste betaal, word aangepas volgens jou inkomstevlak. Kontak die organisasie direk vir meer inligting.",
 		"cost-sliding-scale_withUrl": "Hierdie diens het glyskaalfooie. Die bedrag wat jy vir dienste betaal, word aangepas volgens jou inkomstevlak. <Link href=\"{{url}}\">Klik hier om die organisasie se bladsy vir meer inligting te besoek.</Link>"
