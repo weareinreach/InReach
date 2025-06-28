@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
 		"cost-fees": "Платно",
 		"cost-free": "Бесплатно",
+		"cost-financial-assistance-available": "Доступна финансовая помощь",
 		"cost-sliding-scale": "Расходы, определяемые по скользящей шкале",
 		"cost-sliding-scale_default": "Эта услуга имеет комиссионные скользящего масштаба. Сумма, которую вы платите за услуги, корректируется в соответствии с вашим уровнем дохода. Свяжитесь с организацией напрямую для получения дополнительной информации.",
 		"cost-sliding-scale_withUrl": "This service has sliding scale fees. The amount you pay for services is adjusted according to your income level. <Link href=\"{{url}}\">Click here to visit the organization's page for more information.</Link>"
@@ -98,7 +99,7 @@
 	},
 	"lang": {
 		"CATEGORYNAME": "Языки",
-		"all-languages-by-interpreter": "Любые языки с помощью переводчика",
+		"all-languages-by-interpreter": "Любые языки с помощью переводчика. Свяжитесь с нами для получения дополнительной информации.",
 		"american-sign-language": "Американский язык жестов",
 		"lang-offered": "Предлагаются определенные языки"
 	},

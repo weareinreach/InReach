@@ -39,12 +39,12 @@
 	},
 	"financial-assistance": {
 		"CATEGORYNAME": "财政援助",
-		"bail-funds": "保释金",
+		"bail-funds": "保释金和债券资金",
 		"healthcare-and-insurance": "保健和保险",
 		"housing-and-utilities": "住房和公用设施",
 		"legal-fees": "法律费用",
 		"moving-and-domestic-relocation": "移动和家庭迁移",
-		"mutual-aid": "相互援助"
+		"mutual-aid": "相互帮助"
 	},
 	"food": {
 		"CATEGORYNAME": "食物",
@@ -52,6 +52,7 @@
 		"food-assistance": "食物援助",
 		"food-delivery": "食品的提供",
 		"food-pantries": "食物面包",
+		"hot-meals": "热餐：",
 		"nutrition-education": "营养教育"
 	},
 	"housing": {
@@ -91,10 +92,11 @@
 		"immigration-detention": "移民拘留",
 		"legal-advice": "法律咨询",
 		"legal-hotlines": "法律热线",
+		"legal-info-referrals": "B. 法律资料和转介情况",
 		"name-and-gender-change": "姓名和性别标记更改",
 		"refugee-claim": "难民申请",
 		"residency": "居留权",
-		"self-advocacy-information": "自我宣传的信息",
+		"self-advocacy-information": "自我宣传信息",
 		"special-immigrant-juvenile-status-sijs": "特殊移民少年身份 (SIJS)",
 		"t-visa": "T 签证",
 		"u-visa": "U 签证"
@@ -108,6 +110,7 @@
 		"dental-care": "牙科保健",
 		"fertility-and-family-planning-services": "生育率和计划生育服务",
 		"hiv-and-sexual-health": "艾滋病毒和性健康",
+		"medical-info-and-referrals": "医疗信息和转诊服务",
 		"medical-clinics": "医疗诊所",
 		"obgyn-services": "妇产科服务",
 		"physical-evaluations-for-asylum-claim": "庇护申请的身体评估",
@@ -119,13 +122,14 @@
 		"trans-health-hormone-therapy": "跨性别健康-激素疗法",
 		"trans-health-primary-care": "跨性别健康——初级保健",
 		"trans-health-speech-therapy": "跨性别健康-言语疗法",
-		"trans-health-youth-care": "跨部门健康——青年保健"
+		"trans-health-youth-care": "跨性别青少年援助"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "精神健康",
 		"bipoc-support-groups": "黑人、原住民和有色人种支持小组",
 		"family-support-groups": "家庭支助小组",
 		"hotlines": "热线",
+		"mental-health-info-referrals": "心理健康信息和转诊服务",
 		"private-therapy-and-counseling": "私人治疗和咨询",
 		"psychological-evaluations-for-asylum-claim": "对庇护申请的心理评估",
 		"psychological-evaluations-for-refugee-claim": "对难民申请的心理评估",

@@ -41,7 +41,7 @@
 	"can-help-people-in": "{{location}}में कहीं भी स्थित लोगों की सहायता कर सकता है",
 	"cancel": "कैंसिल करें",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 अपने संगठन के प्रोफाइल पेज का दावा करें और InReach पर अपने दर्शकों के साथ विश्वास का निर्माण करें</textUtility1>\n<textUtility1>✍🏾 InReach पर अपने संगठन की जानकारी अपडेट करें</textUtility1>\n<textUtility1>📨 InReach पर अपने संगठन में शामिल होने के लिए अन्य कर्मचारियों को आमंत्रित करें</textUtility1>\n<textUtility1>🔑 InReach पर संबद्ध सेवा प्रदाताओं के लिए विशेष रूप से निर्मित भविष्य की सुविधाओं तक पहुंच प्राप्त करें</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>इस संगठन पर अभी तक किसी सेवा प्रदाता द्वारा दावा नहीं किया गया है।</title2>\n<textDarkGray>आप इस संगठन के लिए सेवा प्रदाता के रूप में दावा कर सकते हैं:</textDarkGray>"
 	},
 	"clear": "क्लियर",
@@ -82,6 +82,7 @@
 		"natl-find-help-now": "अभी सहायता प्राप्त करें",
 		"natl-these-verified": "<Text>ये सत्यापित संसाधन संयुक्त राज्य अमेरिका में LGBTQ+ समुदाय की मदद कर सकते हैं। ये सेवाएँ <strong>दूर से उपलब्ध, गोपनीय,</strong> और <strong>निःशुल्क</strong>हैं।</Text>",
 		"outside-service-area": "InReach {{country}}में काम नहीं करता है",
+		"only-in-north-america": "InReach only operates in North America.",
 		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "मौज़ूदा स्थान",
@@ -179,7 +180,7 @@
 		"removedMulti": "सूची से संसाधन हटाया गया: {{name}}",
 		"removedSingle": "सूची से संसाधन हटाया गया",
 		"resourcesCount": "{{count}} Resources",
-		"updated": "Updated {{date}}"
+		"updated": "अपडेट किया गया {{date}}"
 	},
 	"loading-page": "पेज लोड हो रहा है...",
 	"log-in": "लॉग इन करें",
@@ -256,6 +257,33 @@
 	"questions": "प्रश्न?",
 	"quick-promo-body": "<textUtility1>💚 वैयक्तिकृत संसाधन सूचियों को सहेजें और साझा करें</textUtility1>\n<textUtility1>💬 संगठनों पर सार्वजनिक रेटिंग/समीक्षाएं छोड़ें</textUtility1>\n<textUtility1>🏠 अपने क्षेत्र में संगठनों का सुझाव दें</textUtility1>\n<textUtility1>🔗 अपने संगठन के प्रोफ़ाइल पेज का दावा करें (जल्द ही आ रहा है!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>ऐसा करने के लिए आपको लॉग इन करना होगा।</title2>\n<textDarkGray>एक निःशुल्क InReach खाते के साथ आप अतिरिक्त सुविधाओं को अनलॉक कर सकते हैं:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Recommended Links",
+		"body": "Find more information about your rights.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-risk-assessment"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Immigrants' Rights (Immigration Equality)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Immigrants' Rights (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "दूर से उपलब्ध सेवाएँ",
 	"remote-services-page-title": "रिमोट सेवाएं",
 	"reset-password": "अपना पासवर्ड रीसेट करें",
@@ -331,9 +359,9 @@
 			"<loginLink>क्या आपके पास पहले से ही एक अकाउंट है?</loginLink>"
 		],
 		"modal-body-temp": [
-			"<title3>आप किस प्रकार का अकाउंट बनाना चाहेंगे?</title3>",
+			"<title3>What type of account would you like to create?</title3>",
 			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
-			"<loginLink>क्या आपके पास पहले से ही एक अकाउंट है?</loginLink>"
+			"<loginLink>Already have an account?</loginLink>"
 		],
 		"name-use-any": "जिस भी नाम के साथ आप सहज हों उसका उपयोग करें।",
 		"name_alias": "नाम या उपनाम",
