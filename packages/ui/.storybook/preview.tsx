@@ -7,6 +7,8 @@ import { http, passthrough, type RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswLoader } from 'msw-storybook-addon'
 import { type BaseRouter } from 'next/dist/shared/lib/router/router'
 import { type Router } from 'next/router'
+import { SessionProvider } from 'next-auth/react'
+import React from 'react'
 
 import { type LocaleCodes } from '@weareinreach/db/generated/languages'
 import { type SearchStateProviderProps } from '~ui/providers/SearchState'
@@ -24,9 +26,8 @@ import {
 	WithWhyDidYouRender,
 } from './decorators'
 import { i18n } from './i18next'
+import authStates from './mockAuthStates'
 import { viewport } from './viewports'
-
-import type authStates from './mockAuthStates'
 
 initializeMsw({
 	serviceWorker: {
@@ -87,6 +88,16 @@ const preview: Preview = {
 	},
 
 	decorators: [
+		(Story, context) => {
+			const sessionKey = context.parameters.nextAuthMock?.session
+			const session = sessionKey ? authStates[sessionKey] : null
+
+			return (
+				<SessionProvider session={session}>
+					<Story />
+				</SessionProvider>
+			)
+		},
 		WithGoogleMaps,
 		WithSearchState,
 		Layouts,

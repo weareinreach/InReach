@@ -1,4 +1,4 @@
-import { Stack, Title } from '@mantine/core'
+import { Group, Stack, Title } from '@mantine/core'
 import { type GetServerSideProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useSession } from 'next-auth/react'
@@ -8,6 +8,7 @@ import { type Route, route } from 'nextjs-routes'
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
 import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
 import { getServerSideTranslations } from '~app/utils/i18n'
+import { trpc as api } from '~ui/lib/trpcClient'
 
 const AdminIndex: NextPage = () => {
 	const { t } = useTranslation(['common'])
@@ -42,7 +43,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			},
 		}
 	}
-	const hasPermissions = checkPermissions({ session, permissions: 'root', has: 'some' })
+	const hasPermissions = checkPermissions({
+		session,
+		permissions: ['root', 'dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
+		has: 'some',
+	})
 
 	if (!hasPermissions) {
 		return {
