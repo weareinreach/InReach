@@ -18,7 +18,7 @@
 		"@googlemaps/google-maps-services-js": "3.4.1",
 		"@opentelemetry/api": "1.9.0",
 		"@prisma/client": "5.22.0",
-		"@sentry/nextjs": "8.35.0",
+		"@sentry/nextjs": "8.49.0",
 		"@tanstack/react-query": "4.40.0",
 		"@terraformer/wkt": "2.2.1",
 		"@trpc/client": "10.45.2",
