@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  better-sqlite3@<9: ^9.0.0
+  better-sqlite3@<9: 9.6.0
   sourcemap-codec: npm:@jridgewell/sourcemap-codec
 
 patchedDependencies:
@@ -324,7 +324,7 @@ importers:
         specifier: 15.5.3
         version: 15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       zod:
-        specifier: ^3.25.70
+        specifier: 3.25.70
         version: 3.25.70
     devDependencies:
       '@hookform/devtools':
@@ -388,7 +388,7 @@ importers:
         specifier: 16.6.1
         version: 16.6.1
       dotenv-cli:
-        specifier: ^7.4.2
+        specifier: 7.4.4
         version: 7.4.4
       eslint:
         specifier: 8.57.1
@@ -746,7 +746,7 @@ importers:
         specifier: 1.3.3
         version: 1.3.3
       zod:
-        specifier: ^3.25.70
+        specifier: 3.25.70
         version: 3.25.70
     devDependencies:
       '@turbo/gen':
@@ -831,7 +831,7 @@ importers:
         specifier: 4.9.3
         version: 4.9.3
       zod:
-        specifier: ^3.25.70
+        specifier: 3.25.70
         version: 3.25.70
     devDependencies:
       '@types/eslint':
@@ -1007,7 +1007,7 @@ importers:
         specifier: 2.2.2
         version: 2.2.2
       zod:
-        specifier: ^3.25.70
+        specifier: 3.25.70
         version: 3.25.70
     devDependencies:
       '@octokit/core':
@@ -1194,7 +1194,7 @@ importers:
         specifier: 11.29.0
         version: 11.29.0
       zod:
-        specifier: ^3.25.70
+        specifier: 3.25.70
         version: 3.25.70
     devDependencies:
       '@types/eslint':
@@ -1730,7 +1730,7 @@ importers:
         specifier: 5.99.9
         version: 5.99.9(@swc/core@1.12.9(@swc/helpers@0.5.17))(esbuild@0.25.5)
       zod:
-        specifier: ^3.25.70
+        specifier: 3.25.70
         version: 3.25.70
 
   packages/util:
@@ -10590,7 +10590,7 @@ packages:
     peerDependencies:
       '@libsql/kysely-libsql': '>=0.3.0 <0.5.0'
       '@tediousjs/connection-string': '>=0.5.0 <0.6.0'
-      better-sqlite3: ^9.0.0
+      better-sqlite3: 9.6.0
       kysely: '>=0.27.0 <1.0.0'
       kysely-bun-sqlite: '>=0.3.2 <1.0.0'
       kysely-bun-worker: '>=1.2.0 <2.0.0'
