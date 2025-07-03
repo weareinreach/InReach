@@ -731,8 +731,8 @@ importers:
         specifier: 3.6.1
         version: 3.6.1
       nanoid:
-        specifier: 5.0.7
-        version: 5.0.7
+        specifier: 5.0.9
+        version: 5.0.9
       remeda:
         specifier: 2.23.2
         version: 2.23.2
@@ -11319,8 +11319,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  nanoid@5.0.7:
-    resolution: {integrity: sha512-oLxFY2gd2IqnjcYyOXD8XGCftpGtZP2AbHbOkthDkvRywH5ayNtPVy9YlOPcHckXzbLTCHpkb7FB+yuxKV13pQ==}
+  nanoid@5.0.9:
+    resolution: {integrity: sha512-Aooyr6MXU6HpvvWXKoVoXwKMs/KyVakWwg7xQfv5/S/RIgJMy0Ifa45H9qqYy7pTCszrHzP21Uk4PZq2HpEM8Q==}
     engines: {node: ^18 || >=20}
     hasBin: true
 
@@ -27616,7 +27616,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  nanoid@5.0.7: {}
+  nanoid@5.0.9: {}
 
   napi-build-utils@2.0.0: {}
 
