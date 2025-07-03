@@ -36,7 +36,7 @@ jobs:
 
       - name: Import GPG key
         id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@01dd5d3ca463c7f10f7f4f7b4f177225ac661ee4 # v6
+        uses: crazy-max/ghaction-import-gpg@e89d40939c28e39f97cf32126055eeae86ba74ec # v6
         with:
           gpg_private_key: ${{ secrets.BOT_GPG_KEY }}
           git_user_signingkey: true
@@ -44,7 +44,7 @@ jobs:
           git_commit_gpgsign: true
           git_committer_name: 'InReach [bot]'
 
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
         name: Install pnpm
         id: pnpm-install
         with:
@@ -53,7 +53,7 @@ jobs:
 
       - name: Install Node.js
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -97,7 +97,7 @@ jobs:
 
       - name: Check for updated files
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
-        uses: tj-actions/verify-changed-files@6ed7632824d235029086612d4330d659005af687 # v20
+        uses: tj-actions/verify-changed-files@a1c6acee9df209257a246f2cc6ae8cb6581c1edf # v20
         id: verify-changed-files
         with:
           files: '**/locales/*/*.json'
@@ -114,7 +114,7 @@ jobs:
 
       - name: Get files to commit
         if: steps.run-prettier.conclusion == 'success'
-        uses: tj-actions/verify-changed-files@6ed7632824d235029086612d4330d659005af687 # v20
+        uses: tj-actions/verify-changed-files@a1c6acee9df209257a246f2cc6ae8cb6581c1edf # v20
         id: get-pending-files
         with:
           separator: <br>
@@ -122,7 +122,7 @@ jobs:
       - name: Commit files
         id: commit-files
         if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
-        uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7
         with:
           token: ${{ secrets.GH_ACT_PAT }}
           commit-message: Updated translations from Crowdin
