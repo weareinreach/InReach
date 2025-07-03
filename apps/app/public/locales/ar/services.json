@@ -52,6 +52,7 @@
 		"food-assistance": "المساعدة الغذائية",
 		"food-delivery": "توصيل الأغذية",
 		"food-pantries": "اللوحات الغذائية",
+		"hot-meals": "وجبات ساخنة",
 		"nutrition-education": "التثقيف في مجال التغذية"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "احتجاز المهاجرين",
 		"legal-advice": "الاستشارات القانونية",
 		"legal-hotlines": "الخطوط الساخنة القانونية",
+		"legal-info-referrals": "باء - المعلومات القانونية والإحالات",
 		"name-and-gender-change": "تغيير الاسم والعلامات الجنسانية",
 		"refugee-claim": "طلب اللجوء",
 		"residency": "الإقامة",
@@ -108,6 +110,7 @@
 		"dental-care": "الرعاية الصحية بالأسنان",
 		"fertility-and-family-planning-services": "الخصوبة وخدمات تنظيم الأسرة",
 		"hiv-and-sexual-health": "فيروس نقص المناعة البشرية والصحة الجنسية",
+		"medical-info-and-referrals": "المعلومات الطبية والإحالات",
 		"medical-clinics": "العيادات الطبية",
 		"obgyn-services": "خدمات OBGYN",
 		"physical-evaluations-for-asylum-claim": "التقييمات المادية لطلب اللجوء",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "مجموعات دعم BIPOC",
 		"family-support-groups": "مجموعات دعم الأسرة",
 		"hotlines": "الخطوط الساخنة",
+		"mental-health-info-referrals": "معلومات الصحة النفسية والإحالات",
 		"private-therapy-and-counseling": "العلاج الخاص والمشورة",
 		"psychological-evaluations-for-asylum-claim": "التقييمات النفسية لطلب اللجوء",
 		"psychological-evaluations-for-refugee-claim": "التقييمات النفسية لطلب اللجوء",

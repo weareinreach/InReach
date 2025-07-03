@@ -52,6 +52,7 @@
 		"food-assistance": "Nahrungsmittelhilfe",
 		"food-delivery": "Lebensmittellieferung",
 		"food-pantries": "Nahrungsmittel",
+		"hot-meals": "Heiße Mahlzeiten",
 		"nutrition-education": "Ernährungslehre"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Inhaftierung der Einwanderung",
 		"legal-advice": "Rechtsberatung",
 		"legal-hotlines": "Rechtliche Hotlines",
+		"legal-info-referrals": "Rechtliche Informationen und Empfehlungen",
 		"name-and-gender-change": "Name und Geschlechtsmarker ändern",
 		"refugee-claim": "Flüchtlingsbehauptung",
 		"residency": "Residenz",
@@ -108,6 +110,7 @@
 		"dental-care": "Zahnpflege",
 		"fertility-and-family-planning-services": "Fertilitäts- und Familienplanungsdienstleistungen",
 		"hiv-and-sexual-health": "HIV und sexuelle Gesundheit",
+		"medical-info-and-referrals": "Medizinische Informationen und Empfehlungen",
 		"medical-clinics": "Kliniken",
 		"obgyn-services": "OBGYN Dienste",
 		"physical-evaluations-for-asylum-claim": "Körperliche Bewertungen des Asylantrags",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "BIPOC Unterstützungsgruppen",
 		"family-support-groups": "Familien-Unterstützungsgruppen",
 		"hotlines": "Hotlines",
+		"mental-health-info-referrals": "Informationen zur psychischen Gesundheit und Empfehlungen",
 		"private-therapy-and-counseling": "Private Therapie und Beratung",
 		"psychological-evaluations-for-asylum-claim": "Psychologische Bewertungen des Asylantrags",
 		"psychological-evaluations-for-refugee-claim": "Psychologische Bewertungen von Flüchtlingsangaben",

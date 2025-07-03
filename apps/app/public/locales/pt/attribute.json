@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "Este serviço aceita seguro. <Link href=\"{{url}}\">Clique aqui para visitar a página da organização</Link> e obter mais informações sobre custos, opções de assistência financeira e detalhes sobre cobertura de seguro.",
 		"cost-fees": "Não gratuito",
 		"cost-free": "Gratuito",
+		"cost-financial-assistance-available": "Assistência financeira disponível",
 		"cost-sliding-scale": "Custos determinados em escala flexível",
 		"cost-sliding-scale_default": "Este serviço tem taxas em escala flexível. O valor que você paga pelos serviços é ajustado de acordo com o seu nível de renda. Entre em contato diretamente com a organização para obter mais informações.",
 		"cost-sliding-scale_withUrl": "Este serviço tem taxas em escala flexível. O valor que você paga pelos serviços é ajustado de acordo com o seu nível de renda. <Link href=\"{{url}}\">Clique aqui para visitar a página da organização para obter mais informações.</Link>"

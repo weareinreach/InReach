@@ -52,6 +52,7 @@
 		"food-assistance": "Aide alimentaire",
 		"food-delivery": "Livraison de nourriture",
 		"food-pantries": "Banques alimentaires",
+		"hot-meals": "Repas chauds",
 		"nutrition-education": "Éducation nutritionnelle"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Rétention de l’immigration",
 		"legal-advice": "Conseils juridiques",
 		"legal-hotlines": "Hotlines légalement",
+		"legal-info-referrals": "Informations légales et recommandations",
 		"name-and-gender-change": "Changement de nom et de marqueur de genre",
 		"refugee-claim": "Demande de réfugié",
 		"residency": "Résidence",
@@ -108,6 +110,7 @@
 		"dental-care": "Soins dentaires",
 		"fertility-and-family-planning-services": "Services de fécondité et de planification familiale",
 		"hiv-and-sexual-health": "VIH et santé sexuelle",
+		"medical-info-and-referrals": "Informations médicales et recommandations",
 		"medical-clinics": "Cliniques médicales",
 		"obgyn-services": "OBGYER les services",
 		"physical-evaluations-for-asylum-claim": "Évaluations physiques de la demande d'asile",
@@ -119,13 +122,14 @@
 		"trans-health-hormone-therapy": "Santé trans - thérapie hormonale",
 		"trans-health-primary-care": "Santé des trans - soins primaires",
 		"trans-health-speech-therapy": "Santé trans - thérapie vocale",
-		"trans-health-youth-care": "Santé trans - Aide à la jeunesse"
+		"trans-health-youth-care": "Santé des personnes trans : aide à la jeunesse"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Santé mentale",
 		"bipoc-support-groups": "Groupes de support BIPOC",
 		"family-support-groups": "Groupes de soutien aux familles",
 		"hotlines": "Hotlines",
+		"mental-health-info-referrals": "Informations sur la santé mentale et les recommandations",
 		"private-therapy-and-counseling": "Thérapie privée et counseling",
 		"psychological-evaluations-for-asylum-claim": "Évaluation psychologique de la demande d'asile",
 		"psychological-evaluations-for-refugee-claim": "Évaluation psychologique de la demande de réfugié",
