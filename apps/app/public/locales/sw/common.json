@@ -82,6 +82,7 @@
 		"natl-find-help-now": "Tafuta usaidizi sasa",
 		"natl-these-verified": "<Text>Nyenzo hizi zilizoidhinishwa zinaweza kusaidia jumuiya ya LGBTQ+ nchini Marekani. Huduma hizi <strong>zinapatikana kwa mbali, ni za siri,</strong> na <strong>bila malipo</strong>.</Text>",
 		"outside-service-area": "InReach haifanyi kazi katika {{country}}",
+		"only-in-north-america": "InReach only operates in North America.",
 		"who-this-serves": "<Text><strong>Nani rasilimali hii inahudumia:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Mahali pa sasa",
@@ -256,6 +257,33 @@
 	"questions": "Maswali?",
 	"quick-promo-body": "<textUtility1>💚 Hifadhi na ushiriki orodha za rasilimali zilizobinafsishwa</textUtility1>\n<textUtility1>💬 Acha ukadiriaji/maoni kwa umma kwenye mashirika</textUtility1>\n<textUtility1>🏠 Pendekeza mashirika katika eneo lako</textUtility1>\n<textUtility1>🔗 Dai ukurasa wa wasifu wa shirika lako (Inakuja hivi karibuni!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Unahitaji kuingia ili kufanya hivyo.</title2>\n<textDarkGray>Ukiwa na akaunti ya InReach bila malipo unaweza kufungua vipengele vya ziada:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Recommended Links",
+		"body": "Find more information about your rights.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-risk-assessment"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Immigrants' Rights (Immigration Equality)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Immigrants' Rights (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Huduma zinapatikana kwa mbali",
 	"remote-services-page-title": "Huduma za mbali",
 	"reset-password": "Weka upya nenosiri lako",
@@ -331,9 +359,9 @@
 			"<loginLink>Tayari una akaunti?</loginLink>"
 		],
 		"modal-body-temp": [
-			"<title3>Je! Ungependa kuunda akaunti ya aina gani?</title3>",
-			"<group>\n<button data-option='individual'>Mtu binafsi</button>\n<button data-option='provider'>Mtaalamu/Mtoa huduma</button>\n</group>",
-			"<loginLink>Tayari una akaunti?</loginLink>"
+			"<title3>What type of account would you like to create?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
 		],
 		"name-use-any": "Tumia jina lolote unalostahili.",
 		"name_alias": "Jina au pak",
