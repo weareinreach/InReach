@@ -173,7 +173,9 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 					)}
 					{Boolean(clientsServed?.targetPop.length) && (
 						<Section.Sub title={t('service.target-population')}>
-							{clientsServed?.targetPop.map(({ id, childProps }) => <ModalText key={id} {...childProps} />)}
+							{clientsServed?.targetPop.map(({ id, childProps }) => (
+								<ModalText key={id} {...childProps} />
+							))}
 						</Section.Sub>
 					)}
 				</Section.Divider>
@@ -269,7 +271,9 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 	const publicTransitSection = useMemo(
 		() => (
 			<Section.Divider title={t('service.transit-directions')}>
-				{publicTransit?.map(({ id, children }) => <ModalText key={id}>{children}</ModalText>)}
+				{publicTransit?.map(({ id, children }) => (
+					<ModalText key={id}>{children}</ModalText>
+				))}
 			</Section.Divider>
 		),
 		[publicTransit, t]
