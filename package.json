@@ -76,7 +76,7 @@
 			}
 		},
 		"overrides": {
-			"better-sqlite3@<9": "^9.0.0",
+			"better-sqlite3@<9": "9.6.0",
 			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec"
 		},
 		"patchedDependencies": {
