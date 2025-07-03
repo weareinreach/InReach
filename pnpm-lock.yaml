@@ -133,7 +133,7 @@ importers:
         version: 15.3.4(bufferutil@4.0.9)
       '@next/third-parties':
         specifier: 15.3.4
-        version: 15.3.4(next@14.2.16(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.48.1)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 15.3.4(next@14.2.16(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@opentelemetry/api':
         specifier: 1.9.0
         version: 1.9.0
@@ -1478,8 +1478,8 @@ importers:
         specifier: 6.0.22
         version: 6.0.22(react@18.3.1)
       '@next/third-parties':
-        specifier: 15.3.4
-        version: 15.3.4(next@14.2.16(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.48.1)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        specifier: 14.2.16
+        version: 14.2.16(next@14.2.16(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@storybook/addon-a11y':
         specifier: 8.6.14
         version: 8.6.14(storybook@8.6.14(bufferutil@4.0.9)(prettier@3.6.2))
@@ -3945,6 +3945,12 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
+
+  '@next/third-parties@14.2.16':
+    resolution: {integrity: sha512-owdCT5BbGyfdDXkmZ1kjPMRPJ8+WLLJFTJSjMRQOYwq5j5o0L3U47sHi07J0mhgJgX6RmRyLd0OFPHCVfAY3Kw==}
+    peerDependencies:
+      next: ^13.0.0 || ^14.0.0
+      react: ^18.2.0
 
   '@next/third-parties@15.3.4':
     resolution: {integrity: sha512-jOvAsd0Yoq/eZ3/M+X/y/539/M6Up2xPE/aOr23CGXKinhfK2kscGP4uhtwlS0FZyHvU7ud9HTTt7G3D5G5BkA==}
@@ -17977,7 +17983,13 @@ snapshots:
   '@next/swc-win32-x64-msvc@14.2.16':
     optional: true
 
-  '@next/third-parties@15.3.4(next@14.2.16(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.48.1)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+  '@next/third-parties@14.2.16(next@14.2.16(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      next: 14.2.16(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      third-party-capital: 1.0.20
+
+  '@next/third-parties@15.3.4(next@14.2.16(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     dependencies:
       next: 14.2.16(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
