@@ -82,6 +82,7 @@
 		"natl-find-help-now": "Kry nou hulp",
 		"natl-these-verified": "<Text>Hierdie geverifieerde hulpbronne kan die LGBTQ+-gemeenskap in die Verenigde State help. Hierdie dienste is <strong>op afstand beskikbaar, vertroulik,</strong> en <strong>gratis</strong>.</Text>",
 		"outside-service-area": "InReach werk nie in {{country}}nie",
+		"only-in-north-america": "InReach only operates in North America.",
 		"who-this-serves": "<Text><strong>Wie hierdie hulpbron bedien:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Huidige ligging",
@@ -256,6 +257,33 @@
 	"questions": "Vrae?",
 	"quick-promo-body": "<textUtility1>💚 Stoor en deel persoonlike hulpbronlyste</textUtility1>\n<textUtility1>💬 Laat openbare gradering/resensies oor organisasies</textUtility1>\n<textUtility1>🏠 Stel organisasies in u omgewing voor</textUtility1>\n<textUtility1>🔗 Eis die profielbladsy van u organisasie op (binnekort!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Jy moet aanmeld om dit te doen.</title2>\n<textDarkGray>Met 'n gratis InReach-rekening kan jy bykomende kenmerke ontsluit:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Recommended Links",
+		"body": "Find more information about your rights.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans Risk Map (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-risk-assessment"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Immigrants' Rights (Immigration Equality)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Immigrants' Rights (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Dienste op afstand beskikbaar",
 	"remote-services-page-title": "Afgeleë dienste",
 	"reset-password": "Stel u wagwoord terug",
@@ -331,9 +359,9 @@
 			"<loginLink>Het u reeds 'n rekening?</loginLink>"
 		],
 		"modal-body-temp": [
-			"<title3>Watter tipe rekening wil jy skep?</title3>",
-			"<group>\n<button data-option='individual'>Individueel</button>\n<button data-option='provider'>Professioneel/Verskaffer</button>\n</group>",
-			"<loginLink>Het u reeds 'n rekening?</loginLink>"
+			"<title3>What type of account would you like to create?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
 		],
 		"name-use-any": "Gebruik watter naam jy ook al gemaklik is.",
 		"name_alias": "Naam of alias",
