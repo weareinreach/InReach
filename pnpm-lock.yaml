@@ -14964,17 +14964,17 @@ snapshots:
   '@babel/core@7.23.2':
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@babel/code-frame': 7.22.13
-      '@babel/generator': 7.23.0
+      '@babel/code-frame': 7.27.1
+      '@babel/generator': 7.27.5
       '@babel/helper-compilation-targets': 7.27.2
       '@babel/helper-module-transforms': 7.27.3(@babel/core@7.23.2)
       '@babel/helpers': 7.27.6
-      '@babel/parser': 7.23.0
-      '@babel/template': 7.22.15
-      '@babel/traverse': 7.23.2
-      '@babel/types': 7.23.0
+      '@babel/parser': 7.27.5
+      '@babel/template': 7.27.2
+      '@babel/traverse': 7.27.4
+      '@babel/types': 7.27.6
       convert-source-map: 2.0.0
-      debug: 4.3.4
+      debug: 4.4.1
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -15009,7 +15009,7 @@ snapshots:
 
   '@babel/generator@7.23.0':
     dependencies:
-      '@babel/types': 7.23.0
+      '@babel/types': 7.27.6
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
@@ -15202,7 +15202,7 @@ snapshots:
 
   '@babel/parser@7.23.0':
     dependencies:
-      '@babel/types': 7.23.0
+      '@babel/types': 7.27.6
 
   '@babel/parser@7.27.5':
     dependencies:
@@ -15856,9 +15856,9 @@ snapshots:
 
   '@babel/template@7.22.15':
     dependencies:
-      '@babel/code-frame': 7.22.13
-      '@babel/parser': 7.23.0
-      '@babel/types': 7.23.0
+      '@babel/code-frame': 7.27.1
+      '@babel/parser': 7.27.5
+      '@babel/types': 7.27.6
 
   '@babel/template@7.27.2':
     dependencies:
@@ -15868,15 +15868,15 @@ snapshots:
 
   '@babel/traverse@7.23.2':
     dependencies:
-      '@babel/code-frame': 7.22.13
-      '@babel/generator': 7.23.0
+      '@babel/code-frame': 7.27.1
+      '@babel/generator': 7.27.5
       '@babel/helper-environment-visitor': 7.24.7
       '@babel/helper-function-name': 7.24.7
       '@babel/helper-hoist-variables': 7.24.7
       '@babel/helper-split-export-declaration': 7.24.7
-      '@babel/parser': 7.23.0
-      '@babel/types': 7.23.0
-      debug: 4.3.4
+      '@babel/parser': 7.27.5
+      '@babel/types': 7.27.6
+      debug: 4.4.1
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -19908,7 +19908,7 @@ snapshots:
 
   '@types/chalk@2.2.4':
     dependencies:
-      chalk: 4.1.2
+      chalk: 5.4.1
 
   '@types/concat-stream@2.0.3':
     dependencies:
@@ -20575,7 +20575,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.1
     transitivePeerDependencies:
       - supports-color
 
@@ -21265,7 +21265,7 @@ snapshots:
   buffer@4.9.2:
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
       isarray: 1.0.0
 
   buffer@5.7.1:
@@ -22637,7 +22637,7 @@ snapshots:
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
@@ -22680,7 +22680,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1):
+  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.1
@@ -23307,7 +23307,7 @@ snapshots:
 
   find-workspaces@0.2.0:
     dependencies:
-      fast-glob: 3.2.12
+      fast-glob: 3.3.3
       pkg-types: 1.3.1
       yaml: 2.8.0
 
@@ -24132,7 +24132,7 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.4.1
     transitivePeerDependencies:
       - supports-color
 
@@ -27521,7 +27521,7 @@ snapshots:
       packet-reader: 1.0.0
       pg-connection-string: 2.9.0
       pg-pool: 3.10.0(pg@8.10.0)
-      pg-protocol: 1.6.0
+      pg-protocol: 1.10.0
       pg-types: 2.2.0
       pgpass: 1.0.5
 
@@ -27690,7 +27690,7 @@ snapshots:
 
   postgresql-client@2.5.5:
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.1
       doublylinked: 2.5.6
       lightning-pool: 4.11.1
       postgres-bytea: 3.0.0
@@ -30857,7 +30857,7 @@ snapshots:
 
   xml2js@0.6.2:
     dependencies:
-      sax: 1.2.1
+      sax: 1.4.1
       xmlbuilder: 11.0.1
 
   xml@1.0.1: {}
