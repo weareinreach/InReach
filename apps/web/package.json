@@ -34,7 +34,7 @@
 		"react-i18next": "15.6.0"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "15.3.4",
+		"@next/bundle-analyzer": "15.3.5",
 		"@types/eslint": "8.56.12",
 		"@types/node": "20.19.4",
 		"@types/react": "18.3.23",
