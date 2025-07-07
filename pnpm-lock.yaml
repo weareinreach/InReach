@@ -66,8 +66,8 @@ importers:
         specifier: 1.3.3
         version: 1.3.3(prettier@3.6.2)
       prettier-plugin-packagejson:
-        specifier: 2.5.17
-        version: 2.5.17(prettier@3.6.2)
+        specifier: 2.5.18
+        version: 2.5.18(prettier@3.6.2)
       prettier-plugin-prisma:
         specifier: 5.0.0
         version: 5.0.0(prettier@3.6.2)
@@ -100,7 +100,7 @@ importers:
         version: 11.11.0
       '@hookform/resolvers':
         specifier: 3.10.0
-        version: 3.10.0(react-hook-form@7.59.0(react@18.3.1))
+        version: 3.10.0(react-hook-form@7.60.0(react@18.3.1))
       '@mantine/carousel':
         specifier: 6.0.22
         version: 6.0.22(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(embla-carousel-react@7.1.0(react@18.3.1))(react@18.3.1)
@@ -177,8 +177,8 @@ importers:
         specifier: 8.55.0
         version: 8.55.0
       '@tanstack/react-query':
-        specifier: 4.40.0
-        version: 4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.40.1
+        version: 4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-table':
         specifier: 8.21.3
         version: 8.21.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -187,10 +187,10 @@ importers:
         version: 10.45.2(@trpc/server@10.45.2)
       '@trpc/next':
         specifier: 10.45.2
-        version: 10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/react-query@10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/server@10.45.2)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/react-query@10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/server@10.45.2)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/react-query':
         specifier: 10.45.2
-        version: 10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
         specifier: 10.45.2
         version: 10.45.2
@@ -286,7 +286,7 @@ importers:
         version: 4.24.11(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-i18next:
         specifier: 15.4.2
-        version: 15.4.2(i18next@23.16.8)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-i18next@15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react@18.3.1)
+        version: 15.4.2(i18next@23.16.8)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-i18next@15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react@18.3.1)
       next-seo:
         specifier: 6.8.0
         version: 6.8.0(next@14.2.30(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -315,17 +315,17 @@ importers:
         specifier: 3.5.3
         version: 3.5.3(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-hook-form:
-        specifier: 7.59.0
-        version: 7.59.0(react@18.3.1)
+        specifier: 7.60.0
+        version: 7.60.0(react@18.3.1)
       react-hook-form-mantine:
         specifier: 2.0.0
-        version: 2.0.0(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/dates@6.0.22(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(dayjs@1.11.13)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.59.0(react@18.3.1))(react@18.3.1)
+        version: 2.0.0(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/dates@6.0.22(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(dayjs@1.11.13)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.60.0(react@18.3.1))(react@18.3.1)
       react-i18next:
-        specifier: 15.5.3
-        version: 15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
+        specifier: 15.6.0
+        version: 15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       zod:
-        specifier: 3.25.71
-        version: 3.25.71
+        specifier: 3.25.75
+        version: 3.25.75
     devDependencies:
       '@hookform/devtools':
         specifier: 4.4.0
@@ -340,8 +340,8 @@ importers:
         specifier: 4.3.1
         version: 4.3.1(encoding@0.1.13)(typescript@5.8.3)(webpack@5.99.9(@swc/core@1.12.9(@swc/helpers@0.5.17)))
       '@tanstack/react-query-devtools':
-        specifier: 4.40.0
-        version: 4.40.0(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.40.1
+        version: 4.40.1(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-table-devtools':
         specifier: 8.21.3
         version: 8.21.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -394,8 +394,8 @@ importers:
         specifier: 8.57.1
         version: 8.57.1
       eslint-plugin-i18next:
-        specifier: 6.1.1
-        version: 6.1.1
+        specifier: 6.1.2
+        version: 6.1.2
       i18next-hmr:
         specifier: 3.1.4
         version: 3.1.4
@@ -410,10 +410,10 @@ importers:
         version: 3.6.2
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.71)
+        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.75)
       trpc-playground:
         specifier: 1.0.4
-        version: 1.0.4(@trpc/server@10.45.2)(@types/node@20.19.4)(express@4.21.2)(terser@5.42.0)(typescript@5.8.3)(zod@3.25.71)
+        version: 1.0.4(@trpc/server@10.45.2)(@types/node@20.19.4)(express@4.21.2)(terser@5.42.0)(typescript@5.8.3)(zod@3.25.75)
       type-fest:
         specifier: 4.41.0
         version: 4.41.0
@@ -484,8 +484,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       react-i18next:
-        specifier: 15.5.3
-        version: 15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
+        specifier: 15.6.0
+        version: 15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
     devDependencies:
       '@next/bundle-analyzer':
         specifier: 15.3.4
@@ -638,8 +638,8 @@ importers:
   packages/api:
     dependencies:
       '@googlemaps/google-maps-services-js':
-        specifier: 3.4.1
-        version: 3.4.1
+        specifier: 3.4.2
+        version: 3.4.2
       '@opentelemetry/api':
         specifier: 1.9.0
         version: 1.9.0
@@ -650,8 +650,8 @@ importers:
         specifier: 8.55.0
         version: 8.55.0(@opentelemetry/context-async-hooks@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.202.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))(encoding@0.1.13)(next@14.2.30(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.99.9(@swc/core@1.12.9(@swc/helpers@0.5.17)))
       '@tanstack/react-query':
-        specifier: 4.40.0
-        version: 4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.40.1
+        version: 4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@terraformer/wkt':
         specifier: 2.2.1
         version: 2.2.1
@@ -660,10 +660,10 @@ importers:
         version: 10.45.2(@trpc/server@10.45.2)
       '@trpc/next':
         specifier: 10.45.2
-        version: 10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/react-query@10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/server@10.45.2)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/react-query@10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/server@10.45.2)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/react-query':
         specifier: 10.45.2
-        version: 10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server':
         specifier: 10.45.2
         version: 10.45.2
@@ -734,8 +734,8 @@ importers:
         specifier: 5.1.5
         version: 5.1.5
       remeda:
-        specifier: 2.23.3
-        version: 2.23.3
+        specifier: 2.24.0
+        version: 2.24.0
       slugify:
         specifier: 1.6.6
         version: 1.6.6
@@ -746,8 +746,8 @@ importers:
         specifier: 1.3.3
         version: 1.3.3
       zod:
-        specifier: 3.25.71
-        version: 3.25.71
+        specifier: 3.25.75
+        version: 3.25.75
     devDependencies:
       '@turbo/gen':
         specifier: 2.5.4
@@ -796,7 +796,7 @@ importers:
         version: 3.6.2
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.71)
+        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.75)
       type-fest:
         specifier: 4.41.0
         version: 4.41.0
@@ -831,8 +831,8 @@ importers:
         specifier: 4.9.3
         version: 4.9.3
       zod:
-        specifier: 3.25.71
-        version: 3.25.71
+        specifier: 3.25.75
+        version: 3.25.75
     devDependencies:
       '@types/eslint':
         specifier: 8.56.12
@@ -890,7 +890,7 @@ importers:
         version: 8.57.1
       next-i18next:
         specifier: 15.4.2
-        version: 15.4.2(i18next@23.16.8)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-i18next@15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react@18.3.1)
+        version: 15.4.2(i18next@23.16.8)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-i18next@15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react@18.3.1)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -898,8 +898,8 @@ importers:
   packages/crowdin:
     dependencies:
       '@crowdin/crowdin-api-client':
-        specifier: 1.45.0
-        version: 1.45.0
+        specifier: 1.45.1
+        version: 1.45.1
       '@crowdin/ota-client':
         specifier: 2.0.1
         version: 2.0.1
@@ -1007,8 +1007,8 @@ importers:
         specifier: 2.2.2
         version: 2.2.2
       zod:
-        specifier: 3.25.71
-        version: 3.25.71
+        specifier: 3.25.75
+        version: 3.25.75
     devDependencies:
       '@octokit/core':
         specifier: 5.2.1
@@ -1018,7 +1018,7 @@ importers:
         version: 5.1.1
       '@snaplet/seed':
         specifier: 0.98.0
-        version: 0.98.0(@prisma/client@5.22.0(prisma@5.22.0))(@snaplet/copycat@5.1.1)(@types/pg@8.15.4)(babel-plugin-macros@3.1.0)(better-sqlite3@9.6.0)(encoding@0.1.13)(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))(pg@8.16.3)(ws@8.18.2(bufferutil@4.0.9))
+        version: 0.98.0(@prisma/client@5.22.0(prisma@5.22.0))(@snaplet/copycat@5.1.1)(@types/pg@8.15.4)(babel-plugin-macros@3.1.0)(better-sqlite3@9.6.0)(encoding@0.1.13)(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))(pg@8.16.3)(ws@8.18.2(bufferutil@4.0.9))
       '@terraformer/wkt':
         specifier: 2.2.1
         version: 2.2.1
@@ -1180,13 +1180,13 @@ importers:
         version: 3.2.4(@prisma/client@5.22.0(prisma@5.22.0))(prisma@5.22.0)
       zod-to-json-schema:
         specifier: 3.24.6
-        version: 3.24.6(zod@3.25.71)
+        version: 3.24.6(zod@3.25.75)
 
   packages/env:
     dependencies:
       '@t3-oss/env-nextjs':
         specifier: 0.9.2
-        version: 0.9.2(typescript@5.8.3)(zod@3.25.71)
+        version: 0.9.2(typescript@5.8.3)(zod@3.25.75)
       '@weareinreach/util':
         specifier: workspace:*
         version: link:../util
@@ -1194,8 +1194,8 @@ importers:
         specifier: 11.29.0
         version: 11.29.0
       zod:
-        specifier: 3.25.71
-        version: 3.25.71
+        specifier: 3.25.75
+        version: 3.25.75
     devDependencies:
       '@types/eslint':
         specifier: 8.56.12
@@ -1261,8 +1261,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0(eslint@8.57.1)(typescript@5.8.3)
       eslint-plugin-i18next:
-        specifier: 6.1.1
-        version: 6.1.1
+        specifier: 6.1.2
+        version: 6.1.2
       eslint-plugin-import:
         specifier: npm:eslint-plugin-i@2.29.1
         version: eslint-plugin-i@2.29.1(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@8.57.1)
@@ -1419,10 +1419,10 @@ importers:
         version: 4.4.0(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@hookform/error-message':
         specifier: 2.0.1
-        version: 2.0.1(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.59.0(react@18.3.1))(react@18.3.1)
+        version: 2.0.1(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.60.0(react@18.3.1))(react@18.3.1)
       '@hookform/resolvers':
         specifier: 3.10.0
-        version: 3.10.0(react-hook-form@7.59.0(react@18.3.1))
+        version: 3.10.0(react-hook-form@7.60.0(react@18.3.1))
       '@iconify-icon/react':
         specifier: 2.3.0
         version: 2.3.0(react@18.3.1)
@@ -1439,8 +1439,8 @@ importers:
         specifier: 1.2.2
         version: 1.2.2
       '@iconify-json/simple-icons':
-        specifier: 1.2.41
-        version: 1.2.41
+        specifier: 1.2.42
+        version: 1.2.42
       '@iconify/react':
         specifier: 4.1.1
         version: 4.1.1(react@18.3.1)
@@ -1544,11 +1544,11 @@ importers:
         specifier: 0.5.17
         version: 0.5.17
       '@tanstack/react-query':
-        specifier: 4.40.0
-        version: 4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.40.1
+        version: 4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-query-devtools':
-        specifier: 4.40.0
-        version: 4.40.0(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.40.1
+        version: 4.40.1(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-table':
         specifier: 8.21.3
         version: 8.21.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1563,10 +1563,10 @@ importers:
         version: 10.45.2(@trpc/server@10.45.2)
       '@trpc/next':
         specifier: 10.45.2
-        version: 10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/react-query@10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/server@10.45.2)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/react-query@10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/server@10.45.2)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/react-query':
         specifier: 10.45.2
-        version: 10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/eslint':
         specifier: 8.56.12
         version: 8.56.12
@@ -1643,11 +1643,11 @@ importers:
         specifier: 6.0.6
         version: 6.0.6
       msw:
-        specifier: 2.10.2
-        version: 2.10.2(@types/node@20.19.4)(typescript@5.8.3)
+        specifier: 2.10.3
+        version: 2.10.3(@types/node@20.19.4)(typescript@5.8.3)
       msw-storybook-addon:
         specifier: 2.0.5
-        version: 2.0.5(msw@2.10.2(@types/node@20.19.4)(typescript@5.8.3))
+        version: 2.0.5(msw@2.10.3(@types/node@20.19.4)(typescript@5.8.3))
       next:
         specifier: 14.2.30
         version: 14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1656,7 +1656,7 @@ importers:
         version: 4.24.11(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-i18next:
         specifier: 15.4.2
-        version: 15.4.2(i18next@23.16.8)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-i18next@15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react@18.3.1)
+        version: 15.4.2(i18next@23.16.8)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-i18next@15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react@18.3.1)
       postcss-loader:
         specifier: 8.1.1
         version: 8.1.1(postcss@8.5.5)(typescript@5.8.3)(webpack@5.99.9(@swc/core@1.12.9(@swc/helpers@0.5.17))(esbuild@0.25.5))
@@ -1679,17 +1679,17 @@ importers:
         specifier: 4.1.2
         version: 4.1.2(react@18.3.1)
       react-hook-form:
-        specifier: 7.59.0
-        version: 7.59.0(react@18.3.1)
+        specifier: 7.60.0
+        version: 7.60.0(react@18.3.1)
       react-hook-form-mantine:
         specifier: 2.0.0
-        version: 2.0.0(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/dates@6.0.22(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(dayjs@1.11.13)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.59.0(react@18.3.1))(react@18.3.1)
+        version: 2.0.0(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/dates@6.0.22(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(dayjs@1.11.13)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.60.0(react@18.3.1))(react@18.3.1)
       react-hook-tracer:
         specifier: 1.4.0
         version: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-i18next:
-        specifier: 15.5.3
-        version: 15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
+        specifier: 15.6.0
+        version: 15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       react-refresh:
         specifier: 0.17.0
         version: 0.17.0
@@ -1730,8 +1730,8 @@ importers:
         specifier: 5.99.9
         version: 5.99.9(@swc/core@1.12.9(@swc/helpers@0.5.17))(esbuild@0.25.5)
       zod:
-        specifier: 3.25.71
-        version: 3.25.71
+        specifier: 3.25.75
+        version: 3.25.75
 
   packages/util:
     dependencies:
@@ -2703,8 +2703,8 @@ packages:
     resolution: {integrity: sha512-vYQ+TcfktEE3GHnLZXHCzXF/sN9dw+KivH8a5cmPyd9YtQs7fZtHrEgsIjWpYycXiweKMo1Lm1RZsjxk8DH3rA==}
     engines: {node: '>=16.0.0', yarn: '>=1.22.18'}
 
-  '@crowdin/crowdin-api-client@1.45.0':
-    resolution: {integrity: sha512-UxWO0psEzIHkJiXTYD10R1o/cSjUuHbqcKE5/lLlDzeORF5farpwK4Cj9GJk7eT4xVhh/NXOt5UN0T+e0RKYvQ==}
+  '@crowdin/crowdin-api-client@1.45.1':
+    resolution: {integrity: sha512-gMQ+g68O1PYHOWTEtRbuMlOaAXSXMGp1xwQM3Q9bjMVaHX+Ejd7U4LLshnCJih4XUfVuUVn0NTXl8luFjnBJbQ==}
     engines: {node: '>=12.9.0'}
 
   '@crowdin/ota-client@2.0.1':
@@ -3134,8 +3134,8 @@ packages:
   '@glideapps/ts-necessities@2.2.3':
     resolution: {integrity: sha512-gXi0awOZLHk3TbW55GZLCPP6O+y/b5X1pBXKBVckFONSwF1z1E5ND2BGJsghQFah+pW7pkkyFb2VhUQI2qhL5w==}
 
-  '@googlemaps/google-maps-services-js@3.4.1':
-    resolution: {integrity: sha512-b9shxiSuKXfsWfUjAfmg1YUh1aN8tvuZ5DeKJxuZM+e2LQtuBRqbK6Xgd8OyQe55RsVk1EY4hhKZxlRlbLGT0g==}
+  '@googlemaps/google-maps-services-js@3.4.2':
+    resolution: {integrity: sha512-QjxiJSt8woyPaaQIUUDNL1nRfCEXTiv8KfJSNq/YzKEUVXABT75GLG+Zo267UwOcq70n8OsZbaro5VrY962mJg==}
 
   '@googlemaps/js-api-loader@1.16.8':
     resolution: {integrity: sha512-CROqqwfKotdO6EBjZO/gQGVTbeDps5V7Mt9+8+5Q+jTg5CRMi3Ii/L9PmV3USROrt2uWxtGzJHORmByxyo9pSQ==}
@@ -3211,8 +3211,8 @@ packages:
   '@iconify-json/ph@1.2.2':
     resolution: {integrity: sha512-PgkEZNtqa8hBGjHXQa4pMwZa93hmfu8FUSjs/nv4oUU6yLsgv+gh9nu28Kqi8Fz9CCVu4hj1MZs9/60J57IzFw==}
 
-  '@iconify-json/simple-icons@1.2.41':
-    resolution: {integrity: sha512-4tt29cKzNsxvt6rjAOVhEgpZV0L8jleTDTMdtvIJjF14Afp9aH8peuwGYyX35l6idfFwuzbvjSVfVyVjJtfmYA==}
+  '@iconify-json/simple-icons@1.2.42':
+    resolution: {integrity: sha512-G/EED0hUV1wMNUsWaFdQYLibm6SO7rP2GZP1+CvhszB5WAFYYibD3zoWp3X96xSIWpYQFvccvE17ewpd0Q1hWQ==}
 
   '@iconify/react@4.1.1':
     resolution: {integrity: sha512-jed14EjvKjee8mc0eoscGxlg7mSQRkwQG3iX3cPBCO7UlOjz0DtlvTqxqEcHUJGh+z1VJ31Yhu5B9PxfO0zbdg==}
@@ -5676,15 +5676,15 @@ packages:
   '@tanstack/query-core@4.40.0':
     resolution: {integrity: sha512-7MJTtZkCSuehMC7IxMOCGsLvHS3jHx4WjveSrGsG1Nc1UQLjaFwwkpLA2LmPfvOAxnH4mszMOBFD6LlZE+aB+Q==}
 
-  '@tanstack/react-query-devtools@4.40.0':
-    resolution: {integrity: sha512-Imtu6sx1NDVtH+hVuF7ftTL3t9r7jmfgnfedoj9xuxsFYwC2IbD0wXKJbeItHa4XbXCd63BFRGGGrMtVzuMnbA==}
+  '@tanstack/react-query-devtools@4.40.1':
+    resolution: {integrity: sha512-g8g2CCDt91CNhkLsKLVXVBVQSUubExnBdprwwjY5FFM+ZBjv1WfCpGiX1UOezgjVhNxqoi1Is+iMYShdOMoI8Q==}
     peerDependencies:
-      '@tanstack/react-query': ^4.40.0
+      '@tanstack/react-query': ^4.40.1
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  '@tanstack/react-query@4.40.0':
-    resolution: {integrity: sha512-kt1G/wETT/Ad79cac5zJ8tyaMOm4rgyeomW5yDxgOO9qEhOwufgw9kgPpp+T9U0M0lL7EMoc6YXgv4gYhXu9tg==}
+  '@tanstack/react-query@4.40.1':
+    resolution: {integrity: sha512-mgD07S5N8e5v81CArKDWrHE4LM7HxZ9k/KLeD3+NUD9WimGZgKIqojUZf/rXkfAMYZU9p0Chzj2jOXm7xpgHHQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -8444,9 +8444,9 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-i18next@6.1.1:
-    resolution: {integrity: sha512-/Vy6BfX44njxpRnbJm7bbph0KaNJF2eillqN5W+u03hHuxmh9BjtjdPSrI9HPtyoEbG4j5nBn9gXm/dg99mz3Q==}
-    engines: {node: '>=0.10.0'}
+  eslint-plugin-i18next@6.1.2:
+    resolution: {integrity: sha512-hvTmws4kouNHkk314+9MHNj+RQmsqrkejWhTXGlRC0j8H+EXq2qDRLe6UqIjrFZo7/ogyd4btuqsnKCBi8wHbw==}
+    engines: {node: '>=18.10.0'}
 
   eslint-plugin-i@2.29.1:
     resolution: {integrity: sha512-ORizX37MelIWLbMyqI7hi8VJMf7A0CskMmYkB+lkCX3aF4pkGV7kwx5bSEb4qx7Yce2rAf9s34HqDRPjGRZPNQ==}
@@ -11246,8 +11246,8 @@ packages:
     peerDependencies:
       msw: ^2.0.0
 
-  msw@2.10.2:
-    resolution: {integrity: sha512-RCKM6IZseZQCWcSWlutdf590M8nVfRHG1ImwzOtwz8IYxgT4zhUO0rfTcTvDGiaFE0Rhcc+h43lcF3Jc9gFtwQ==}
+  msw@2.10.3:
+    resolution: {integrity: sha512-rpqW4wIqISJlgDfu3tiqzuWC/d6jofSuMUsBu1rwepzSwX21aQoagsd+fjahJ8sewa6FwlYhu4no+jfGVQm2IA==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -12265,8 +12265,8 @@ packages:
     peerDependencies:
       prettier: ^3.0.0
 
-  prettier-plugin-packagejson@2.5.17:
-    resolution: {integrity: sha512-1WYvhTix+4EMYZQYSjAxb6+KTCULINuHUTBcxYa2ipoUS9Y2zJVjE3kuZ5I7ZWIFqyK8xpwYIunXqN5eiT7Hew==}
+  prettier-plugin-packagejson@2.5.18:
+    resolution: {integrity: sha512-NKznPGcGrcj4NPGxnh+w78JXPyfB6I4RQSCM0v+CAXwpDG7OEpJQ5zMyfC5NBgKH1k7Skwcj5ak5by2mrHvC5g==}
     peerDependencies:
       prettier: '>= 1.16.0'
     peerDependenciesMeta:
@@ -12579,8 +12579,8 @@ packages:
       react-dom: ^18.2.0
       react-hook-form: ^7.43
 
-  react-hook-form@7.59.0:
-    resolution: {integrity: sha512-kmkek2/8grqarTJExFNjy+RXDIP8yM+QTl3QL6m6Q8b2bih4ltmiXxH7T9n+yXNK477xPh5yZT/6vD8sYGzJTA==}
+  react-hook-form@7.60.0:
+    resolution: {integrity: sha512-SBrYOvMbDB7cV8ZfNpaiLcgjH/a1c7aK0lK+aNigpf4xWLO8q+o4tcvVurv3c4EOyzn/3dCsYt4GKD42VvJ/+A==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -12591,8 +12591,8 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  react-i18next@15.5.3:
-    resolution: {integrity: sha512-ypYmOKOnjqPEJZO4m1BI0kS8kWqkBNsKYyhVUfij0gvjy9xJNoG/VcGkxq5dRlVwzmrmY1BQMAmpbbUBLwC4Kw==}
+  react-i18next@15.6.0:
+    resolution: {integrity: sha512-W135dB0rDfiFmbMipC17nOhGdttO5mzH8BivY+2ybsQBbXvxWIwl3cmeH3T9d+YPBSJu/ouyJKFJTtkK7rJofw==}
     peerDependencies:
       i18next: '>= 23.2.3'
       react: '>= 16.8.0'
@@ -12877,8 +12877,8 @@ packages:
   remeda@1.61.0:
     resolution: {integrity: sha512-caKfSz9rDeSKBQQnlJnVW3mbVdFgxgGWQKq1XlFokqjf+hQD5gxutLGTTY2A/x24UxVyJe9gH5fAkFI63ULw4A==}
 
-  remeda@2.23.3:
-    resolution: {integrity: sha512-2mzlSo0cUzpgOGiZTryB5/0JyFmpzktr5552Xhcy3K54PgSjZp7U7NN056YxgybBTyNP1BRwJg/37JIRVmJn8g==}
+  remeda@2.24.0:
+    resolution: {integrity: sha512-EGC3ZG304e3S1ZMdkhBjIPFn0NdI6d/NWqcxe34+TfG+c3cv6TcVavn/z17am8aQsrGZPX+fx4U6mTQvNRv4MQ==}
 
   remove-accents@0.4.2:
     resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
@@ -13402,8 +13402,8 @@ packages:
   sort-object-keys@1.1.3:
     resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
 
-  sort-package-json@3.3.1:
-    resolution: {integrity: sha512-awjhQR2Iy5UN3NuguAK5+RezcEuUg9Ra4O8y2Aj+DlJa7MywyHaipAPf9bu4qqFj0hsYHHoT9sS3aV7Ucu728g==}
+  sort-package-json@3.4.0:
+    resolution: {integrity: sha512-97oFRRMM2/Js4oEA9LJhjyMlde+2ewpZQf53pgue27UkbEXfHJnDzHlUxQ/DWUkzqmp7DFwJp8D+wi/TYeQhpA==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -14981,8 +14981,8 @@ packages:
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
 
-  zod@3.25.71:
-    resolution: {integrity: sha512-BsBc/NPk7h8WsUWYWYL+BajcJPY8YhjelaWu2NMLuzgraKAz4Lb4/6K11g9jpuDetjMiqhZ6YaexFLOC0Ogi3Q==}
+  zod@3.25.75:
+    resolution: {integrity: sha512-OhpzAmVzabPOL6C3A3gpAifqr9MqihV/Msx3gor2b2kviCgcb+HM9SEOpMWwwNp9MRunWnhtAKUoo0AHhjyPPg==}
 
   zustand@4.5.7:
     resolution: {integrity: sha512-CHOUy7mu3lbD6o6LJLfllpjkzhHXSBlX8B9+qPddUsIfeF5S/UZ5q0kmCsnRqT1UHFQZchNFDDzMbQsuesHWlw==}
@@ -16529,7 +16529,7 @@ snapshots:
       - '@chromatic-com/playwright'
       - react
 
-  '@crowdin/crowdin-api-client@1.45.0':
+  '@crowdin/crowdin-api-client@1.45.1':
     dependencies:
       axios: 1.9.0
     transitivePeerDependencies:
@@ -16856,7 +16856,7 @@ snapshots:
 
   '@glideapps/ts-necessities@2.2.3': {}
 
-  '@googlemaps/google-maps-services-js@3.4.1':
+  '@googlemaps/google-maps-services-js@3.4.2':
     dependencies:
       '@googlemaps/url-signature': 1.0.40
       agentkeepalive: 4.6.0
@@ -16911,15 +16911,15 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@hookform/error-message@2.0.1(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.59.0(react@18.3.1))(react@18.3.1)':
+  '@hookform/error-message@2.0.1(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.60.0(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-hook-form: 7.59.0(react@18.3.1)
+      react-hook-form: 7.60.0(react@18.3.1)
 
-  '@hookform/resolvers@3.10.0(react-hook-form@7.59.0(react@18.3.1))':
+  '@hookform/resolvers@3.10.0(react-hook-form@7.60.0(react@18.3.1))':
     dependencies:
-      react-hook-form: 7.59.0(react@18.3.1)
+      react-hook-form: 7.60.0(react@18.3.1)
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
@@ -16954,7 +16954,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/simple-icons@1.2.41':
+  '@iconify-json/simple-icons@1.2.42':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -17395,29 +17395,29 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
-  '@langchain/core@0.2.36(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))':
+  '@langchain/core@0.2.36(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))':
     dependencies:
       ansi-styles: 5.2.0
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.20
-      langsmith: 0.1.68(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))
+      langsmith: 0.1.68(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
       uuid: 10.0.0
-      zod: 3.25.71
-      zod-to-json-schema: 3.24.6(zod@3.25.71)
+      zod: 3.25.75
+      zod-to-json-schema: 3.24.6(zod@3.25.75)
     transitivePeerDependencies:
       - openai
 
-  '@langchain/groq@0.0.15(encoding@0.1.13)(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))(ws@8.18.2(bufferutil@4.0.9))':
+  '@langchain/groq@0.0.15(encoding@0.1.13)(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))(ws@8.18.2(bufferutil@4.0.9))':
     dependencies:
-      '@langchain/core': 0.2.36(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))
+      '@langchain/core': 0.2.36(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))
       '@langchain/openai': 0.2.11(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))
       groq-sdk: 0.3.3(encoding@0.1.13)
-      zod: 3.25.71
-      zod-to-json-schema: 3.24.6(zod@3.25.71)
+      zod: 3.25.75
+      zod-to-json-schema: 3.24.6(zod@3.25.75)
     transitivePeerDependencies:
       - encoding
       - openai
@@ -17425,11 +17425,11 @@ snapshots:
 
   '@langchain/openai@0.2.11(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))':
     dependencies:
-      '@langchain/core': 0.2.36(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))
+      '@langchain/core': 0.2.36(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))
       js-tiktoken: 1.0.20
-      openai: 4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71)
-      zod: 3.25.71
-      zod-to-json-schema: 3.24.6(zod@3.25.71)
+      openai: 4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75)
+      zod: 3.25.75
+      zod-to-json-schema: 3.24.6(zod@3.25.75)
     transitivePeerDependencies:
       - encoding
       - ws
@@ -19873,11 +19873,11 @@ snapshots:
       string-argv: 0.3.2
       uuid: 9.0.1
 
-  '@snaplet/seed@0.98.0(@prisma/client@5.22.0(prisma@5.22.0))(@snaplet/copycat@5.1.1)(@types/pg@8.15.4)(babel-plugin-macros@3.1.0)(better-sqlite3@9.6.0)(encoding@0.1.13)(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))(pg@8.16.3)(ws@8.18.2(bufferutil@4.0.9))':
+  '@snaplet/seed@0.98.0(@prisma/client@5.22.0(prisma@5.22.0))(@snaplet/copycat@5.1.1)(@types/pg@8.15.4)(babel-plugin-macros@3.1.0)(better-sqlite3@9.6.0)(encoding@0.1.13)(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))(pg@8.16.3)(ws@8.18.2(bufferutil@4.0.9))':
     dependencies:
       '@inquirer/prompts': 5.5.0
-      '@langchain/core': 0.2.36(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))
-      '@langchain/groq': 0.0.15(encoding@0.1.13)(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71))(ws@8.18.2(bufferutil@4.0.9))
+      '@langchain/core': 0.2.36(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))
+      '@langchain/groq': 0.0.15(encoding@0.1.13)(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75))(ws@8.18.2(bufferutil@4.0.9))
       '@langchain/openai': 0.2.11(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))
       '@prisma/generator-helper': 5.14.0-dev.34
       '@prisma/internals': 5.14.0-dev.34
@@ -19905,7 +19905,7 @@ snapshots:
       terminal-link: 3.0.0
       uuid: 9.0.1
       yargs: 17.7.2
-      zod: 3.25.71
+      zod: 3.25.75
     optionalDependencies:
       '@prisma/client': 5.22.0(prisma@5.22.0)
       '@types/pg': 8.15.4
@@ -20413,16 +20413,16 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@t3-oss/env-core@0.9.2(typescript@5.8.3)(zod@3.25.71)':
+  '@t3-oss/env-core@0.9.2(typescript@5.8.3)(zod@3.25.75)':
     dependencies:
-      zod: 3.25.71
+      zod: 3.25.75
     optionalDependencies:
       typescript: 5.8.3
 
-  '@t3-oss/env-nextjs@0.9.2(typescript@5.8.3)(zod@3.25.71)':
+  '@t3-oss/env-nextjs@0.9.2(typescript@5.8.3)(zod@3.25.75)':
     dependencies:
-      '@t3-oss/env-core': 0.9.2(typescript@5.8.3)(zod@3.25.71)
-      zod: 3.25.71
+      '@t3-oss/env-core': 0.9.2(typescript@5.8.3)(zod@3.25.75)
+      zod: 3.25.75
     optionalDependencies:
       typescript: 5.8.3
 
@@ -20447,16 +20447,16 @@ snapshots:
 
   '@tanstack/query-core@4.40.0': {}
 
-  '@tanstack/react-query-devtools@4.40.0(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tanstack/react-query-devtools@4.40.1(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/match-sorter-utils': 8.19.4
-      '@tanstack/react-query': 4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tanstack/react-query': 4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       superjson: 1.13.3
       use-sync-external-store: 1.5.0(react@18.3.1)
 
-  '@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/query-core': 4.40.0
       react: 18.3.1
@@ -20573,19 +20573,19 @@ snapshots:
     dependencies:
       '@trpc/server': 10.45.2
 
-  '@trpc/next@10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/react-query@10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/server@10.45.2)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@trpc/next@10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/react-query@10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/server@10.45.2)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tanstack/react-query': 4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tanstack/react-query': 4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/client': 10.45.2(@trpc/server@10.45.2)
-      '@trpc/react-query': 10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@trpc/react-query': 10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/server': 10.45.2
       next: 14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@trpc/react-query@10.45.2(@tanstack/react-query@4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@trpc/react-query@10.45.2(@tanstack/react-query@4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@trpc/client@10.45.2(@trpc/server@10.45.2))(@trpc/server@10.45.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tanstack/react-query': 4.40.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tanstack/react-query': 4.40.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@trpc/client': 10.45.2(@trpc/server@10.45.2)
       '@trpc/server': 10.45.2
       react: 18.3.1
@@ -23652,7 +23652,7 @@ snapshots:
       read-pkg-up: 7.0.1
       safe-stringify: 1.2.0
       strip-ansi: 6.0.1
-      zod: 3.25.71
+      zod: 3.25.75
       zx: 8.6.1
     transitivePeerDependencies:
       - babel-plugin-macros
@@ -23676,7 +23676,7 @@ snapshots:
       eslint: 8.57.1
       eslint-compat-utils: 0.5.1(eslint@8.57.1)
 
-  eslint-plugin-i18next@6.1.1:
+  eslint-plugin-i18next@6.1.2:
     dependencies:
       lodash: 4.17.21
       requireindex: 1.1.0
@@ -26204,8 +26204,8 @@ snapshots:
       smol-toml: 1.3.4
       strip-json-comments: 5.0.2
       typescript: 5.8.3
-      zod: 3.25.71
-      zod-validation-error: 3.5.0(zod@3.25.71)
+      zod: 3.25.75
+      zod-validation-error: 3.5.0(zod@3.25.75)
 
   kolorist@1.8.0: {}
 
@@ -26220,7 +26220,7 @@ snapshots:
       micromatch: 4.0.8
       minimist: 1.2.8
       pluralize: 8.0.0
-      zod: 3.25.71
+      zod: 3.25.75
     optionalDependencies:
       better-sqlite3: 9.6.0
       pg: 8.16.3
@@ -26229,7 +26229,7 @@ snapshots:
 
   kysely@0.28.2: {}
 
-  langsmith@0.1.68(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71)):
+  langsmith@0.1.68(openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75)):
     dependencies:
       '@types/uuid': 10.0.0
       commander: 10.0.1
@@ -26238,7 +26238,7 @@ snapshots:
       semver: 7.7.2
       uuid: 10.0.0
     optionalDependencies:
-      openai: 4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71)
+      openai: 4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75)
 
   language-subtag-registry@0.3.23: {}
 
@@ -27478,12 +27478,12 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw-storybook-addon@2.0.5(msw@2.10.2(@types/node@20.19.4)(typescript@5.8.3)):
+  msw-storybook-addon@2.0.5(msw@2.10.3(@types/node@20.19.4)(typescript@5.8.3)):
     dependencies:
       is-node-process: 1.2.0
-      msw: 2.10.2(@types/node@20.19.4)(typescript@5.8.3)
+      msw: 2.10.3(@types/node@20.19.4)(typescript@5.8.3)
 
-  msw@2.10.2(@types/node@20.19.4)(typescript@5.8.3):
+  msw@2.10.3(@types/node@20.19.4)(typescript@5.8.3):
     dependencies:
       '@bundled-es-modules/cookie': 2.0.1
       '@bundled-es-modules/statuses': 1.0.1
@@ -27584,7 +27584,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       uuid: 8.3.2
 
-  next-i18next@15.4.2(i18next@23.16.8)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-i18next@15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react@18.3.1):
+  next-i18next@15.4.2(i18next@23.16.8)(next@14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-i18next@15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.27.6
       '@types/hoist-non-react-statics': 3.3.6
@@ -27594,7 +27594,7 @@ snapshots:
       i18next-fs-backend: 2.6.0
       next: 14.2.30(@babel/core@7.27.4)(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
-      react-i18next: 15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
+      react-i18next: 15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
 
   next-seo@6.8.0(next@14.2.30(@opentelemetry/api@1.9.0)(@playwright/test@1.53.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -27991,7 +27991,7 @@ snapshots:
       is-docker: 2.2.1
       is-wsl: 2.2.0
 
-  openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.71):
+  openai@4.104.0(encoding@0.1.13)(ws@8.18.2(bufferutil@4.0.9))(zod@3.25.75):
     dependencies:
       '@types/node': 18.19.111
       '@types/node-fetch': 2.6.12
@@ -28002,7 +28002,7 @@ snapshots:
       node-fetch: 2.7.0(encoding@0.1.13)
     optionalDependencies:
       ws: 8.18.2(bufferutil@4.0.9)
-      zod: 3.25.71
+      zod: 3.25.75
     transitivePeerDependencies:
       - encoding
 
@@ -28665,9 +28665,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  prettier-plugin-packagejson@2.5.17(prettier@3.6.2):
+  prettier-plugin-packagejson@2.5.18(prettier@3.6.2):
     dependencies:
-      sort-package-json: 3.3.1
+      sort-package-json: 3.4.0
       synckit: 0.11.8
     optionalDependencies:
       prettier: 3.6.2
@@ -28734,7 +28734,7 @@ snapshots:
       '@prisma/generator-helper': 5.3.1
       '@prisma/internals': 5.3.1(encoding@0.1.13)
       typescript: 5.8.3
-      zod: 3.25.71
+      zod: 3.25.75
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -29064,15 +29064,15 @@ snapshots:
     transitivePeerDependencies:
       - prop-types
 
-  react-hook-form-mantine@2.0.0(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/dates@6.0.22(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(dayjs@1.11.13)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.59.0(react@18.3.1))(react@18.3.1):
+  react-hook-form-mantine@2.0.0(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/dates@6.0.22(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(dayjs@1.11.13)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react-hook-form@7.60.0(react@18.3.1))(react@18.3.1):
     dependencies:
       '@mantine/core': 6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mantine/dates': 6.0.22(@mantine/core@6.0.22(@emotion/react@11.14.0(@types/react@18.3.23)(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@6.0.22(react@18.3.1))(dayjs@1.11.13)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-hook-form: 7.59.0(react@18.3.1)
+      react-hook-form: 7.60.0(react@18.3.1)
 
-  react-hook-form@7.59.0(react@18.3.1):
+  react-hook-form@7.60.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
@@ -29081,7 +29081,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  react-i18next@15.5.3(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3):
+  react-i18next@15.6.0(i18next@23.16.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3):
     dependencies:
       '@babel/runtime': 7.27.6
       html-parse-stringify: 3.0.1
@@ -29475,7 +29475,7 @@ snapshots:
 
   remeda@1.61.0: {}
 
-  remeda@2.23.3:
+  remeda@2.24.0:
     dependencies:
       type-fest: 4.41.0
 
@@ -30146,7 +30146,7 @@ snapshots:
 
   sort-object-keys@1.1.3: {}
 
-  sort-package-json@3.3.1:
+  sort-package-json@3.4.0:
     dependencies:
       detect-indent: 7.0.1
       detect-newline: 4.0.1
@@ -30757,24 +30757,24 @@ snapshots:
 
   trough@2.2.0: {}
 
-  trpc-panel@1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.71):
+  trpc-panel@1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.75):
     dependencies:
       '@trpc/server': 10.45.2
       fuzzysort: 2.0.4
       path: 0.12.7
       url: 0.11.4
-      zod: 3.25.71
-      zod-to-json-schema: 3.24.6(zod@3.25.71)
+      zod: 3.25.75
+      zod-to-json-schema: 3.24.6(zod@3.25.75)
 
-  trpc-playground@1.0.4(@trpc/server@10.45.2)(@types/node@20.19.4)(express@4.21.2)(terser@5.42.0)(typescript@5.8.3)(zod@3.25.71):
+  trpc-playground@1.0.4(@trpc/server@10.45.2)(@types/node@20.19.4)(express@4.21.2)(terser@5.42.0)(typescript@5.8.3)(zod@3.25.75):
     dependencies:
       '@trpc-playground/html': 1.0.4(@types/node@20.19.4)(terser@5.42.0)
       '@trpc-playground/types': 1.0.0(@trpc/server@10.45.2)(typescript@5.8.3)
       '@trpc/server': 10.45.2
       lodash: 4.17.21
       uttp: 0.1.3(express@4.21.2)
-      zod: 3.25.71
-      zod-to-ts: 1.2.0(typescript@5.8.3)(zod@3.25.71)
+      zod: 3.25.75
+      zod-to-ts: 1.2.0(typescript@5.8.3)(zod@3.25.75)
     transitivePeerDependencies:
       - '@types/node'
       - express
@@ -31878,28 +31878,28 @@ snapshots:
       code-block-writer: 12.0.0
       lodash: 4.17.21
       prisma: 5.22.0
-      zod: 3.25.71
+      zod: 3.25.75
 
-  zod-to-json-schema@3.24.6(zod@3.25.71):
+  zod-to-json-schema@3.24.6(zod@3.25.75):
     dependencies:
-      zod: 3.25.71
+      zod: 3.25.75
 
-  zod-to-ts@1.2.0(typescript@5.8.3)(zod@3.25.71):
+  zod-to-ts@1.2.0(typescript@5.8.3)(zod@3.25.75):
     dependencies:
       typescript: 5.8.3
-      zod: 3.25.71
+      zod: 3.25.75
 
   zod-validation-error@1.5.0(zod@3.22.4):
     dependencies:
       zod: 3.22.4
 
-  zod-validation-error@3.5.0(zod@3.25.71):
+  zod-validation-error@3.5.0(zod@3.25.75):
     dependencies:
-      zod: 3.25.71
+      zod: 3.25.75
 
   zod@3.22.4: {}
 
-  zod@3.25.71: {}
+  zod@3.25.75: {}
 
   zustand@4.5.7(@types/react@18.3.23)(react@18.3.1):
     dependencies:
