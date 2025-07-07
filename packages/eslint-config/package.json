@@ -28,7 +28,7 @@
 		"eslint-import-resolver-typescript": "3.10.1",
 		"eslint-plugin-codegen": "0.33.0",
 		"eslint-plugin-deprecation": "3.0.0",
-		"eslint-plugin-i18next": "6.1.1",
+		"eslint-plugin-i18next": "6.1.2",
 		"eslint-plugin-import": "npm:eslint-plugin-i@2.29.1",
 		"eslint-plugin-node": "npm:eslint-plugin-n@16.6.2",
 		"eslint-plugin-react": "7.37.5",
