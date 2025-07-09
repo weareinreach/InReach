@@ -67,6 +67,18 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
+					id: 'attr_01H273GHADR15DGYH06SSN5XVG',
+					icon: null,
+					tag: 'private-practice',
+					tsKey: 'additional.private-practice',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
 					id: 'attr_01GW2HHFV4TM7H5V6FHWA7S9JK',
 					icon: null,
 					tag: 'time-walk-in',
@@ -131,10 +143,34 @@ export const attributesByCategory = [
 		attributes: [
 			{
 				attribute: {
+					id: 'attr_01J1FYH8F5YX6T1GD7SB0QTCJQ',
+					icon: 'carbon:piggy-bank',
+					tag: 'cost-accepts-insurance',
+					tsKey: 'cost.cost-accepts-insurance',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
 					id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
 					icon: 'carbon:piggy-bank',
 					tag: 'cost-fees',
 					tsKey: 'cost.cost-fees',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01J4044WXYZV6X8B3N2J7M5T9P',
+					icon: 'carbon:piggy-bank',
+					tag: 'cost-financial-assistance-available',
+					tsKey: 'cost.cost-financial-assistance-available',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -150,6 +186,18 @@ export const attributesByCategory = [
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: 'INCLUDE',
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01J1FYH8F5GHPSFYDQVQY8VYPM',
+					icon: 'carbon:piggy-bank',
+					tag: 'cost-sliding-scale',
+					tsKey: 'cost.cost-sliding-scale',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
 					iconBg: null,
 				},
 			},
@@ -483,6 +531,18 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
+					id: 'attr_01J1DF9MFN8QWFXKYR7XFJANSF',
+					icon: '🏳️‍🌈',
+					tag: 'lgbtq-led',
+					tsKey: 'orgleader.lgbtq-led',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: '#D4A1BA',
+				},
+			},
+			{
+				attribute: {
 					id: 'attr_01GW2HHFVN3RYX9JMXDZSQZM70',
 					icon: '️‍🏳️‍⚧️',
 					tag: 'trans-led',
@@ -491,6 +551,18 @@ export const attributesByCategory = [
 					showOnLocation: null,
 					filterType: null,
 					iconBg: '#705890',
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01H273GW0GN44GZ5RK1F51Z1QZ',
+					icon: '💜',
+					tag: 'women-led',
+					tsKey: 'orgleader.women-led',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: '#D9D9D9',
 				},
 			},
 		],
@@ -867,26 +939,7 @@ export const attributesByCategory = [
 			},
 		],
 	},
-	{
-		id: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P',
-		tag: 'system',
-		icon: null,
-		ns: 'attribute',
-		attributes: [
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
-					icon: null,
-					tag: 'incompatible-info',
-					tsKey: 'sys.incompatible-info',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-		],
-	},
+	{ id: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P', tag: 'system', icon: null, ns: 'attribute', attributes: [] },
 	{
 		id: 'attc_01HNG5BPYJADWX4YFVNENS3TRD',
 		tag: 'target-population',
