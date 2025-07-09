@@ -101,7 +101,7 @@ export const generateId = (table: IdPrefix, seedTime?: Date | number) => {
 }
 
 // Define system tables that should never have an ID prefix
-const systemTables = ['spatial_ref_sys'] as const satisfies Prisma.ModelName[]
+const systemTables = ['spatial_ref_sys'] as const
 
 type Tables = Exclude<Prisma.ModelName, (typeof excludedTables)[number] | (typeof systemTables)[number]>
 
