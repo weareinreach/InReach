@@ -23,6 +23,9 @@ importers:
       '@turbo/gen':
         specifier: 2.5.4
         version: 2.5.4(@swc/core@1.12.9(@swc/helpers@0.5.17))(@types/node@20.19.4)(typescript@5.8.3)
+      '@types/google.maps':
+        specifier: 3.58.1
+        version: 3.58.1
       '@types/lint-staged':
         specifier: 13.3.0
         version: 13.3.0
