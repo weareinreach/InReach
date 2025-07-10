@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@vercel/edge-config": "1.4.0",
-		"luxon": "3.7.0",
+		"luxon": "3.7.1",
 		"social-links": "1.15.1",
 		"superjson": "2.2.2",
 		"tslog": "4.9.3"
