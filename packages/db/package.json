@@ -97,7 +97,7 @@
 		"libphonenumber-js": "1.12.9",
 		"listr2": "8.3.3",
 		"log-update": "6.1.0",
-		"luxon": "3.7.0",
+		"luxon": "3.7.1",
 		"p-queue": "8.1.0",
 		"p-retry": "6.2.1",
 		"papaparse": "5.5.3",
