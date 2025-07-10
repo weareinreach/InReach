@@ -430,7 +430,8 @@
 		"admin-options": "Mga Opsyon sa Admin",
 		"data-portal": "Home ng Data Portal",
 		"edit-page": "I-edit ang page na ito",
-		"user-options": "Mga Pagpipilian sa Gumagamit"
+		"user-options": "Mga Pagpipilian sa Gumagamit",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Na-verify ang account!",

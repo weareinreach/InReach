@@ -430,7 +430,8 @@
 		"admin-options": "د ادارې اختیارونه",
 		"data-portal": "د معلوماتو پورټل کور",
 		"edit-page": "دا پاڼه سم کړئ",
-		"user-options": "د کاروونکي اختیارونه"
+		"user-options": "د کاروونکي اختیارونه",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "حساب تایید شوی!",

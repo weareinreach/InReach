@@ -430,7 +430,8 @@
 		"admin-options": "व्यवस्थापक विकल्प",
 		"data-portal": "डेटा पोर्टल होम",
 		"edit-page": "इस पृष्ठ को संपादित करें",
-		"user-options": "उपयोगकर्ता विकल्प"
+		"user-options": "उपयोगकर्ता विकल्प",
+		"user-management": "प्रयोक्ता प्रबंधन"
 	},
 	"verify-account": {
 		"verified": "अकाउंट सत्यापित!",

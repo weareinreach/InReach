@@ -429,7 +429,8 @@
 		"admin-options": "관리자 설정",
 		"data-portal": "데이터 포털 홈페이지",
 		"edit-page": "페이지 편집하기",
-		"user-options": "사용자 설정"
+		"user-options": "사용자 설정",
+		"user-management": "사용자 관리"
 	},
 	"verify-account": {
 		"verified": "계정이 확인되었습니다!",

@@ -432,7 +432,8 @@
 		"admin-options": "Опції адміністратора",
 		"data-portal": "Домівка порталу даних",
 		"edit-page": "Редагувати сторінку",
-		"user-options": "Налаштування користувача"
+		"user-options": "Налаштування користувача",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Аккаунт підтверджений!",
