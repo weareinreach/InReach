@@ -105,9 +105,12 @@ const SavedLists = () => {
 		organizationsContent = <Text>{t('list.no-orgs')}</Text>
 	} else {
 		// Assert queryResult and its organizations property are non-null/non-undefined here
-		organizationsContent = queryResult!.organizations!.map((result) => {
-			return <SavedOrgResultCard key={result.id} result={result} loading={false} />
-		})
+		// **THIS IS THE CRITICAL CHANGE - ADDING THE TYPE ANNOTATION**
+		organizationsContent = queryResult!.organizations!.map(
+			(result: React.ComponentProps<typeof SavedOrgResultCard>['result']) => {
+				return <SavedOrgResultCard key={result.id} result={result} loading={false} />
+			}
+		)
 	}
 
 	// Refactored content for 'services' tab
@@ -122,9 +125,12 @@ const SavedLists = () => {
 		servicesContent = <Text>{t('list.no-services')}</Text>
 	} else {
 		// Assert queryResult and its services property are non-null/non-undefined here
-		servicesContent = queryResult!.services!.map((result) => {
-			return <SavedServiceResultCard key={result.id} result={result} loading={false} />
-		})
+		// **THIS IS THE CRITICAL CHANGE - ADDING THE TYPE ANNOTATION**
+		servicesContent = queryResult!.services!.map(
+			(result: React.ComponentProps<typeof SavedServiceResultCard>['result']) => {
+				return <SavedServiceResultCard key={result.id} result={result} loading={false} />
+			}
+		)
 	}
 
 	return (
