@@ -1,5 +1,6 @@
 import { Center, Container, Group, Loader, Overlay, Stack, Tabs, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { type inferRouterOutputs } from '@trpc/server'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -7,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import React, { useCallback, useEffect, useState } from 'react'
 
+import { type appRouter } from '@weareinreach/api'
 import { getServerSession } from '@weareinreach/auth'
 import { ActionButtons } from '@weareinreach/ui/components/core/ActionButtons'
 import {
@@ -18,10 +20,19 @@ import { Icon } from '@weareinreach/ui/icon'
 import { formatDate } from '~app/pages/account/saved'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+
+type AppRouter = typeof appRouter
+
+type ApiOutput = inferRouterOutputs<AppRouter>
+
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
 )
+
+// Define the exact non-nullable types for Organization and Service objects
+type OrganizationType = NonNullable<ApiOutput['savedList']['getById']>['organizations'][number]
+type ServiceType = NonNullable<ApiOutput['savedList']['getById']>['services'][number]
 
 const SavedLists = () => {
 	const { t } = useTranslation('common')
@@ -97,23 +108,20 @@ const SavedLists = () => {
 		)
 	}
 
-	// Refactored content for 'organizations' tab
 	let organizationsContent
 	if (isLoading) {
 		organizationsContent = <SavedResultLoading />
 	} else if (queryResult?._count?.organizations === 0) {
 		organizationsContent = <Text>{t('list.no-orgs')}</Text>
 	} else {
-		// Assert queryResult and its organizations property are non-null/non-undefined here
-		// **THIS IS THE CRITICAL CHANGE - ADDING THE TYPE ANNOTATION**
-		organizationsContent = queryResult!.organizations!.map(
-			(result: React.ComponentProps<typeof SavedOrgResultCard>['result']) => {
-				return <SavedOrgResultCard key={result.id} result={result} loading={false} />
-			}
+		const nonNullableOrganizations = queryResult!.organizations!.filter(
+			(org): org is OrganizationType => org !== null && org !== undefined
 		)
+		organizationsContent = nonNullableOrganizations.map((result) => {
+			return <SavedOrgResultCard key={result.id} result={result} loading={false} />
+		})
 	}
 
-	// Refactored content for 'services' tab
 	let servicesContent
 	if (isLoading) {
 		servicesContent = (
@@ -124,13 +132,12 @@ const SavedLists = () => {
 	} else if (queryResult?._count?.services === 0) {
 		servicesContent = <Text>{t('list.no-services')}</Text>
 	} else {
-		// Assert queryResult and its services property are non-null/non-undefined here
-		// **THIS IS THE CRITICAL CHANGE - ADDING THE TYPE ANNOTATION**
-		servicesContent = queryResult!.services!.map(
-			(result: React.ComponentProps<typeof SavedServiceResultCard>['result']) => {
-				return <SavedServiceResultCard key={result.id} result={result} loading={false} />
-			}
+		const nonNullableServices = queryResult!.services!.filter(
+			(service): service is ServiceType => service !== null && service !== undefined
 		)
+		servicesContent = nonNullableServices.map((result) => {
+			return <SavedServiceResultCard key={result.id} result={result} loading={false} />
+		})
 	}
 
 	return (
