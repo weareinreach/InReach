@@ -56,11 +56,20 @@ export const checkRole = (allowedRoles: string[], userRoles: string[]) => {
 
 export const isAdmin = t.middleware(({ ctx, meta, next }) => {
 	if (ctx.session === null) {
+		console.error('Rejected Admin procedure - no session context')
 		return reject()
 	}
 	if (
-		!(checkRole(['dataAdmin', 'sysadmin', 'root'], ctx.session?.user?.roles) && checkPermissions(meta, ctx))
+		!(
+			/*checkRole(['dataAdmin', 'sysadmin', 'root'], ctx.session?.user?.roles) &&*/ (
+				checkPermissions({ hasPerm: 'root' }, ctx) &&
+				/* Temporary solution - since we're just doling out the 'root' role for general data portal access right now, only those with @inreach.org emails can grant/deny access */
+				ctx.session.user.email.endsWith('@inreach.org')
+			)
+		)
 	) {
+		console.error('Rejected Admin Procedure - Invalid permissions')
+		console.error(ctx.session)
 		return reject()
 	}
 
