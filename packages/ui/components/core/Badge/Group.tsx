@@ -4,7 +4,9 @@ import { Children, isValidElement, type ReactNode } from 'react'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
 export const _BadgeGroup = ({ withSeparator, children, ...props }: BadgeGroupProps) => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const variants = useCustomVariant()
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const theme = useMantineTheme()
 	const separator = (
 		<Divider w={4} size={4} style={{ borderRadius: '50%' }} color={theme.other.colors.secondary.black} />

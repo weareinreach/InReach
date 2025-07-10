@@ -76,8 +76,30 @@ export const attributeSupplementSchema = {
 	numMax: z.object({ max: z.number() }),
 	numMin: z.object({ min: z.number() }),
 	numMinMaxOrRange: z.union([
-		z.object({ max: z.never().optional(), min: z.number() }).strict(),
-		z.object({ max: z.number(), min: z.never().optional() }).strict(),
+		z
+			.object({
+				max: z
+					.any()
+					.refine(
+						(value) => !z.any().safeParse(value).success,
+						'Invalid input: Should NOT be valid against schema'
+					)
+					.optional(),
+				min: z.number(),
+			})
+			.strict(),
+		z
+			.object({
+				max: z.number(),
+				min: z
+					.any()
+					.refine(
+						(value) => !z.any().safeParse(value).success,
+						'Invalid input: Should NOT be valid against schema'
+					)
+					.optional(),
+			})
+			.strict(),
 		z.object({ max: z.number(), min: z.number() }).strict(),
 	]),
 	numRange: z.object({ max: z.number(), min: z.number() }),
