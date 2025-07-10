@@ -430,7 +430,8 @@
 		"admin-options": "Yönetici Seçenekleri",
 		"data-portal": "Veri Portalı Ana Sayfası",
 		"edit-page": "Bu sayfayı düzenle",
-		"user-options": "Kullanıcı Seçenekleri"
+		"user-options": "Kullanıcı Seçenekleri",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Hesap doğrulandı!",

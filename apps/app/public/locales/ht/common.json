@@ -430,7 +430,8 @@
 		"admin-options": "Opsyon Admin",
 		"data-portal": "Done Portay",
 		"edit-page": "Edite paj sa",
-		"user-options": "Opsyon itilizatè"
+		"user-options": "Opsyon itilizatè",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Kont verifye!",

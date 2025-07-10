@@ -430,7 +430,8 @@
 		"admin-options": "گزینه های مدیریت",
 		"data-portal": "صفحه اصلی پورتال داده",
 		"edit-page": "این صفحه را ویرایش کنید",
-		"user-options": "گزینه های کاربر"
+		"user-options": "گزینه های کاربر",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "حساب کاربری تأیید شد!",
