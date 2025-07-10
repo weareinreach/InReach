@@ -115,7 +115,7 @@ const SavedLists = () => {
 		const nonNullableOrganizations = queryResult!.organizations!.filter(
 			(org: OrganizationType | null | undefined): org is OrganizationType => org !== null && org !== undefined
 		)
-		organizationsContent = nonNullableOrganizations.map((result) => {
+		organizationsContent = nonNullableOrganizations.map((result: OrganizationType) => {
 			return <SavedOrgResultCard key={result.id} result={result} loading={false} />
 		})
 	}
@@ -134,7 +134,7 @@ const SavedLists = () => {
 			(service: ServiceType | null | undefined): service is ServiceType =>
 				service !== null && service !== undefined
 		)
-		servicesContent = nonNullableServices.map((result) => {
+		servicesContent = nonNullableServices.map((result: ServiceType) => {
 			return <SavedServiceResultCard key={result.id} result={result} loading={false} />
 		})
 	}
