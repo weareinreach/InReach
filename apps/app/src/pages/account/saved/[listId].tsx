@@ -22,17 +22,15 @@ import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 type AppRouter = typeof appRouter
-
 type ApiOutput = inferRouterOutputs<AppRouter>
+
+type OrganizationType = NonNullable<ApiOutput['savedList']['getById']>['organizations'][number]
+type ServiceType = NonNullable<ApiOutput['savedList']['getById']>['services'][number]
 
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
 )
-
-// Define the exact non-nullable types for Organization and Service objects
-type OrganizationType = NonNullable<ApiOutput['savedList']['getById']>['organizations'][number]
-type ServiceType = NonNullable<ApiOutput['savedList']['getById']>['services'][number]
 
 const SavedLists = () => {
 	const { t } = useTranslation('common')
@@ -114,8 +112,9 @@ const SavedLists = () => {
 	} else if (queryResult?._count?.organizations === 0) {
 		organizationsContent = <Text>{t('list.no-orgs')}</Text>
 	} else {
+		// FIX: Explicitly type 'org' parameter here to satisfy 'noImplicitAny'
 		const nonNullableOrganizations = queryResult!.organizations!.filter(
-			(org): org is OrganizationType => org !== null && org !== undefined
+			(org: OrganizationType | null | undefined): org is OrganizationType => org !== null && org !== undefined
 		)
 		organizationsContent = nonNullableOrganizations.map((result) => {
 			return <SavedOrgResultCard key={result.id} result={result} loading={false} />
@@ -132,8 +131,10 @@ const SavedLists = () => {
 	} else if (queryResult?._count?.services === 0) {
 		servicesContent = <Text>{t('list.no-services')}</Text>
 	} else {
+		// FIX: Explicitly type 'service' parameter here to satisfy 'noImplicitAny'
 		const nonNullableServices = queryResult!.services!.filter(
-			(service): service is ServiceType => service !== null && service !== undefined
+			(service: ServiceType | null | undefined): service is ServiceType =>
+				service !== null && service !== undefined
 		)
 		servicesContent = nonNullableServices.map((result) => {
 			return <SavedServiceResultCard key={result.id} result={result} loading={false} />
