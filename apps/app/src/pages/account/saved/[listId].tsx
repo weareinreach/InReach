@@ -112,7 +112,6 @@ const SavedLists = () => {
 	} else if (queryResult?._count?.organizations === 0) {
 		organizationsContent = <Text>{t('list.no-orgs')}</Text>
 	} else {
-		// FIX: Explicitly type 'org' parameter here to satisfy 'noImplicitAny'
 		const nonNullableOrganizations = queryResult!.organizations!.filter(
 			(org: OrganizationType | null | undefined): org is OrganizationType => org !== null && org !== undefined
 		)
@@ -131,7 +130,6 @@ const SavedLists = () => {
 	} else if (queryResult?._count?.services === 0) {
 		servicesContent = <Text>{t('list.no-services')}</Text>
 	} else {
-		// FIX: Explicitly type 'service' parameter here to satisfy 'noImplicitAny'
 		const nonNullableServices = queryResult!.services!.filter(
 			(service: ServiceType | null | undefined): service is ServiceType =>
 				service !== null && service !== undefined
