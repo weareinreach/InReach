@@ -430,7 +430,8 @@
 		"admin-options": "Admin Opsies",
 		"data-portal": "Data Portaal Tuis",
 		"edit-page": "Wysig hierdie bladsy",
-		"user-options": "Gebruikersopsies"
+		"user-options": "Gebruikersopsies",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Rekening geverifieer!",

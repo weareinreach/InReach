@@ -432,7 +432,8 @@
 		"admin-options": "Opcje administratora",
 		"data-portal": "Strona główna portalu danych",
 		"edit-page": "Edytuj tę stronę",
-		"user-options": "Opcje użytkownika"
+		"user-options": "Opcje użytkownika",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Konto zweryfikowane!",
