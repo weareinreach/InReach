@@ -429,7 +429,8 @@
 		"admin-options": "管理者オプション",
 		"data-portal": "データポータルのホーム",
 		"edit-page": "このページを編集",
-		"user-options": "ユーザーオプション"
+		"user-options": "ユーザーオプション",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "アカウントが認証されました。",
