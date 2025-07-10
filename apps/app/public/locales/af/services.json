@@ -52,6 +52,7 @@
 		"food-assistance": "Voedselbystand",
 		"food-delivery": "Kos aflewering",
 		"food-pantries": "Kos spens",
+		"hot-meals": "Hot meals",
 		"nutrition-education": "Voedingsopvoeding"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Immigrasie aanhouding",
 		"legal-advice": "Regsadvies",
 		"legal-hotlines": "Wetlike blitslyne",
+		"legal-info-referrals": "Legal information and referrals",
 		"name-and-gender-change": "Naam en geslag merker verander",
 		"refugee-claim": "Vlugtelinge eis",
 		"residency": "Koshuis",
@@ -108,6 +110,7 @@
 		"dental-care": "Tandheelkundige sorg",
 		"fertility-and-family-planning-services": "Vrugbaarheid en gesinsbeplanning dienste",
 		"hiv-and-sexual-health": "MIV en seksuele gesondheid",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "Mediese klinieke",
 		"obgyn-services": "OBGYN dienste",
 		"physical-evaluations-for-asylum-claim": "Fisiese evaluerings vir asieleis",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "BIPOC ondersteuningsgroepe",
 		"family-support-groups": "Familie ondersteuningsgroepe",
 		"hotlines": "Blitslyne",
+		"mental-health-info-referrals": "Mental health information and referrals",
 		"private-therapy-and-counseling": "Privaat terapie en berading",
 		"psychological-evaluations-for-asylum-claim": "Sielkundige evaluerings vir asieleis",
 		"psychological-evaluations-for-refugee-claim": "Sielkundige evaluerings vir vlugtelingeis",
