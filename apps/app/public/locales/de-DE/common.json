@@ -82,6 +82,7 @@
 		"natl-find-help-now": "Hilfe jetzt finden",
 		"natl-these-verified": "<Text>Diese überprüften Ressourcen können der LGBTQ+ Community in den Vereinigten Staaten helfen. Diese Dienste sind <strong>aus der Ferne verfügbar, vertraulich,</strong> und <strong>kostenlos</strong>.</Text>",
 		"outside-service-area": "InReach funktioniert nicht in {{country}}",
+		"only-in-north-america": "InReach ist nur in Nordamerika tätig.",
 		"who-this-serves": "<Text><strong>wem diese Ressource dient:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Aktueller Standort",
@@ -256,6 +257,33 @@
 	"questions": "Fragen?",
 	"quick-promo-body": "<textUtility1>💚 Speichern und teilen Sie personalisierte Ressourcenlisten</textUtility1>\n<textUtility1>:speech_ballon: Verlassen Sie öffentliche Bewertungen von Organisationen</textUtility1>\n\n<textUtility1>🏠 Vorschläge Organisationen in Ihrer Region</textUtility1>\n<textUtility1>🔗 Berechnen Sie die Profilseite Ihrer Organisation (bald kommen!</textUtility1>",
 	"quick-promo-heading": "<emojiLg>:Regenbogen:</emojiLg>\n<title2>Sie müssen sich einloggen, um dies zu tun.</title2>\n<textDarkGray>Mit einem kostenlosen InReach Account können Sie zusätzliche Funktionen freischalten:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Empfohlene Links",
+		"body": "Finden Sie weitere Informationen über Ihre Rechte.",
+		"buttons": {
+			"btn-1": {
+				"text": "Anti-Trans-Risikokarte (Erin Reed)",
+				"link": "https://www.erinthemorning.com/p/Post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "ID Dokumentenzentrum (A4TE)",
+				"link": "https://transequality.org/dokumente"
+			},
+			"btn-3": {
+				"text": "Rechte von LGBTQ+ Einwanderern (Gleichstellung der Einwanderung)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylressourcen (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Rechte der Einwanderer (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/Einwanderer-Rechte"
+			}
+		}
+	},
 	"remote-services": "Remote-Dienste verfügbar",
 	"remote-services-page-title": "Remote-Dienste",
 	"reset-password": "Passwort zurücksetzen",
@@ -402,7 +430,8 @@
 		"admin-options": "Admin-Optionen",
 		"data-portal": "Datenportal-Startseite",
 		"edit-page": "Diese Seite bearbeiten",
-		"user-options": "Benutzeroptionen"
+		"user-options": "Benutzeroptionen",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Konto überprüft!",

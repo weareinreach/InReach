@@ -1,12 +1,14 @@
 import { Center, Container, Group, Loader, Overlay, Stack, Tabs, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { type inferRouterOutputs } from '@trpc/server'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
+import { type appRouter } from '@weareinreach/api'
 import { getServerSession } from '@weareinreach/auth'
 import { ActionButtons } from '@weareinreach/ui/components/core/ActionButtons'
 import {
@@ -18,6 +20,13 @@ import { Icon } from '@weareinreach/ui/icon'
 import { formatDate } from '~app/pages/account/saved'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+
+type AppRouter = typeof appRouter
+type ApiOutput = inferRouterOutputs<AppRouter>
+
+type OrganizationType = NonNullable<ApiOutput['savedList']['getById']>['organizations'][number]
+type ServiceType = NonNullable<ApiOutput['savedList']['getById']>['services'][number]
+
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
@@ -97,6 +106,39 @@ const SavedLists = () => {
 		)
 	}
 
+	let organizationsContent
+	if (isLoading) {
+		organizationsContent = <SavedResultLoading />
+	} else if (queryResult?._count?.organizations === 0) {
+		organizationsContent = <Text>{t('list.no-orgs')}</Text>
+	} else {
+		const nonNullableOrganizations = queryResult!.organizations!.filter(
+			(org: OrganizationType | null | undefined): org is OrganizationType => org !== null && org !== undefined
+		)
+		organizationsContent = nonNullableOrganizations.map((result: OrganizationType) => {
+			return <SavedOrgResultCard key={result.id} result={result} loading={false} />
+		})
+	}
+
+	let servicesContent
+	if (isLoading) {
+		servicesContent = (
+			<Center>
+				<Loader />
+			</Center>
+		)
+	} else if (queryResult?._count?.services === 0) {
+		servicesContent = <Text>{t('list.no-services')}</Text>
+	} else {
+		const nonNullableServices = queryResult!.services!.filter(
+			(service: ServiceType | null | undefined): service is ServiceType =>
+				service !== null && service !== undefined
+		)
+		servicesContent = nonNullableServices.map((result: ServiceType) => {
+			return <SavedServiceResultCard key={result.id} result={result} loading={false} />
+		})
+	}
+
 	return (
 		<Container size='lg' px='md' py='lg' style={{ minWidth: '100%' }}>
 			<Stack spacing='lg' style={{ paddingTop: '3rem' }}>
@@ -131,28 +173,10 @@ const SavedLists = () => {
 						<Tabs.Tab value='services'>{t('words.services')}</Tabs.Tab>
 					</Tabs.List>
 					<Tabs.Panel value='organizations' pt='xs'>
-						{isLoading ? (
-							<SavedResultLoading />
-						) : queryResult?._count?.organizations === 0 ? (
-							<Text>{t('list.no-orgs')}</Text>
-						) : (
-							queryResult?.organizations?.map((result) => {
-								return <SavedOrgResultCard key={result.id} result={result} />
-							})
-						)}
+						{organizationsContent}
 					</Tabs.Panel>
 					<Tabs.Panel value='services' pt='xs'>
-						{isLoading ? (
-							<Center>
-								<Loader />
-							</Center>
-						) : queryResult?._count?.services === 0 ? (
-							<Text>{t('list.no-services')}</Text>
-						) : (
-							queryResult?.services?.map((result) => {
-								return <SavedServiceResultCard key={result.id} result={result} />
-							})
-						)}{' '}
+						{servicesContent}
 					</Tabs.Panel>
 				</Tabs>
 			</Stack>

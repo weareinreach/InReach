@@ -35,6 +35,12 @@ export const serviceCategory = [
 		tsKey: 'sports-and-entertainment.CATEGORYNAME',
 		tsNs: 'services',
 	},
+	{
+		id: 'svct_01J1DGAQK79BW8G73FA3RNXX3Q',
+		category: 'Financial Assistance',
+		tsKey: 'financial-assistance.CATEGORYNAME',
+		tsNs: 'services',
+	},
 	{ id: 'svct_01GW2HHEVFXW9YFMK4R95ZHBPV', category: 'Food', tsKey: 'food.CATEGORYNAME', tsNs: 'services' },
 	{
 		id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
@@ -55,7 +61,6 @@ export const serviceCategory = [
 		tsNs: 'services',
 	},
 	{ id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX', category: 'Legal', tsKey: 'legal.CATEGORYNAME', tsNs: 'services' },
-	{ id: 'svct_01GW2HHEVQ0VE6E94T3CZWEW9F', category: 'Mail', tsKey: 'mail.CATEGORYNAME', tsNs: 'services' },
 	{
 		id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 		category: 'Medical',

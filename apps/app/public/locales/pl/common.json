@@ -62,14 +62,14 @@
 	"cookie-consent": {
 		"approve-all": "Zatwierdź wszystkie",
 		"approve-selected": "Zatwierdź wybrane",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"body": "Używamy plików cookie i usług stron trzecich na tej stronie internetowej. Niektóre z nich są niezbędne, inne pomagają nam ulepszyć Twoje doświadczenia związane z przeglądaniem. Więcej informacji znajdziesz w naszym <PrivacyLink>Oświadczeniu o prywatności</PrivacyLink>.",
 		"intro": "Używamy niezbędnych plików cookie, aby nasza strona działała. Chcielibyśmy ustawić dodatkowe ciasteczka, aby zrozumieć użycie witryny, ulepszyć witrynę i zapamiętać Twoje ustawienia.",
 		"item-basic": "Potrzebne ciasteczka dla funkcji witryny",
 		"item-ga4": "Analityka dla wewnętrznego użytkowania Inach",
 		"modal-title": "Ustawienia ciasteczek"
 	},
 	"count": {
-		"more": "{{count}} more",
+		"more": "jeszcze {{count}}",
 		"result_one": "{{count}} wynik",
 		"result_few": "{{count}} wyniki",
 		"result_many": "{{count}} wyniki",
@@ -78,13 +78,14 @@
 	"country-select": "Wybierz kraj",
 	"create-new-list": "Utwórz nową listę",
 	"crisis-support": {
-		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-stay-safe": "<Title3>📣 Prosimy o zachowanie ostrożności w sieci</Title3>\n<Text>Odwiedzanie któregokolwiek z tych serwisów <strong>może pozostawić ślad na Twoim komputerze lub w przeglądarce</strong>, tak jak każda inna strona internetowa. Prosimy, podejmij odpowiednie kroki, aby unikać niebezpiecznych sytuacji w swojej okolicy.</Text>",
 		"intl-these-verified": "Te zweryfikowane zasoby mogą pomóc społeczności LGBTQ+ na całym świecie.",
 		"intl-we-recommend": "Zalecamy te międzynarodowe zasoby",
 		"natl-find-help-now": "Znajdź pomoc teraz",
 		"natl-these-verified": "<Text>Te zweryfikowane zasoby mogą pomóc społeczności LGBTQ+ w Stanach Zjednoczonych. Te usługi są <strong>zdalnie dostępne, poufne,</strong> i <strong>darmowe</strong>.</Text>",
 		"outside-service-area": "Wejście nie działa w {{country}}",
-		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+		"only-in-north-america": "InReach działa tylko w Ameryce Północnej.",
+		"who-this-serves": "<Text><strong>Kogo dotyczy to źródło:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Bieżąca lokalizacja",
 	"delete-account": "Usunąć swoje konto?",
@@ -258,6 +259,33 @@
 	"questions": "Pytania?",
 	"quick-promo-body": "<textUtility1>💚 Zapisz i udostępnij spersonalizowane listy zasobów</textUtility1>\n<textUtility1>💬 Pozostaw publiczną ocenę/recenzje na organizacjach</textUtility1>\n<textUtility1>🏠 Suggest Organizations in your area</textUtility1>\n<textUtility1>🔗 Odbierz stronę profilową swojej organizacji (Już wkrótce!</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Musisz się zalogować, aby to zrobić.</title2>\n<textDarkGray>Z darmowym kontem InReach możesz odblokować dodatkowe funkcje:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Polecane linki",
+		"body": "Znajdź więcej informacji na temat swoich praw.",
+		"buttons": {
+			"btn-1": {
+				"text": "Mapa ryzyka związanego z transkacją (Eryn Reed)",
+				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "Centrum dokumentów tożsamości (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "Prawa imigrantów LGBTQ+ (równość imigracji)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Zasoby w zakresie azylu (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Prawa imigrantów (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Usługi dostępne zdalnie",
 	"remote-services-page-title": "Usługi zdalne",
 	"reset-password": "Zresetuj hasło",
@@ -333,7 +361,7 @@
 			"<loginLink>Masz już konto?</loginLink>"
 		],
 		"modal-body-temp": [
-			"<title3>Jaki typ konta chciałbyś założyć?</title3>",
+			"<title3>Jaki rodzaj konta chcesz utworzyć?</title3>",
 			"<group>\n<button data-option='individual'>Indywidualny</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
 			"<loginLink>Masz już konto?</loginLink>"
 		],
@@ -404,7 +432,8 @@
 		"admin-options": "Opcje administratora",
 		"data-portal": "Strona główna portalu danych",
 		"edit-page": "Edytuj tę stronę",
-		"user-options": "Opcje użytkownika"
+		"user-options": "Opcje użytkownika",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "Konto zweryfikowane!",

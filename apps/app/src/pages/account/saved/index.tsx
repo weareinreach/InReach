@@ -12,6 +12,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { type inferRouterOutputs } from '@trpc/server' // Import inferRouterOutputs
 import { DateTime } from 'luxon'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
@@ -20,6 +21,10 @@ import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { useCallback } from 'react'
 
+// --- START OF REQUIRED TYPE DEFINITIONS ---
+import { type appRouter } from '@weareinreach/api'
+// --- END OF REQUIRED TYPE DEFINITIONS ---
+
 import { getServerSession } from '@weareinreach/auth'
 import { ActionButtons } from '@weareinreach/ui/components/core/ActionButtons'
 import { Button } from '@weareinreach/ui/components/core/Button'
@@ -27,7 +32,14 @@ import { Link } from '@weareinreach/ui/components/core/Link'
 import { SavedResultLoading } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
 import { CreateNewList } from '@weareinreach/ui/modals/CreateNewList'
 import { api } from '~app/utils/api'
-import { getServerSideTranslations } from '~app/utils/i18n'
+import { getServerSideTranslations } from '~app/utils/i18n' // Import appRouter type from your package
+
+// Derive AppRouter and ApiOutput types
+type AppRouter = typeof appRouter
+type ApiOutput = inferRouterOutputs<AppRouter>
+
+// Define the type for a single saved list item from the API output
+type SavedListItemType = NonNullable<ApiOutput['savedList']['getAll']>[number]
 
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const QuickPromotionModal = dynamic(() =>
@@ -107,7 +119,7 @@ const SavedLists = () => {
 				) : !allSavedLists || allSavedLists.length === 0 ? (
 					<Text>{t('list.none-yet')}</Text>
 				) : (
-					allSavedLists?.map((list) => (
+					allSavedLists?.map((list: SavedListItemType) => (
 						<Card key={list.id}>
 							<Stack spacing='sm'>
 								<Group position='apart' align='center' style={{ width: '100%' }}>

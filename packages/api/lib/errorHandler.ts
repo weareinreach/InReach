@@ -24,8 +24,12 @@ export const handleError = (error: unknown) => {
 
 	// Prisma db errors
 	if (error instanceof Prisma.PrismaClientKnownRequestError) {
-		const { message, cause } = error
-		const code = prismaErrorMap.get(error.code) ?? 'INTERNAL_SERVER_ERROR'
+		// THIS IS THE MOST RELIABLE FIX GIVEN YOUR SITUATION:
+		// Explicitly assert the type on the error variable for destructuring and property access
+		const prismaError = error as Prisma.PrismaClientKnownRequestError // Assert here
+		const { message, cause } = prismaError // Destructure from the asserted variable
+
+		const code = prismaErrorMap.get(prismaError.code) ?? 'INTERNAL_SERVER_ERROR' // Access property from asserted variable
 		throw new TRPCError({ code, message, cause })
 	}
 
@@ -38,8 +42,10 @@ export const handleError = (error: unknown) => {
 	if (error instanceof Error) {
 		throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message, cause: error.cause })
 	} else {
-		if (typeof error === 'object') {
+		if (typeof error === 'object' && error !== null) {
 			error = JSON.stringify(error)
+		} else if (typeof error !== 'string') {
+			error = String(error)
 		}
 		throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: `${error}` })
 	}
