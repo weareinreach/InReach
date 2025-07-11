@@ -17,6 +17,8 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
+		"noImplicitAny": false,
+		"strictNullChecks": false,
 		"target": "es2020"
 	},
 	"display": "Default",
