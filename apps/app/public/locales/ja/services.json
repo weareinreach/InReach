@@ -52,6 +52,7 @@
 		"food-assistance": "食糧援助",
 		"food-delivery": "フードデリバリー",
 		"food-pantries": "フードパントリー",
+		"hot-meals": "熱い食事",
 		"nutrition-education": "栄養教育"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "出入国管理収容",
 		"legal-advice": "法的アドバイス",
 		"legal-hotlines": "法的相談窓口",
+		"legal-info-referrals": "法的情報と紹介",
 		"name-and-gender-change": "氏名および性別表示変更",
 		"refugee-claim": "難民申請",
 		"residency": "居住権",
@@ -108,6 +110,7 @@
 		"dental-care": "歯科治療",
 		"fertility-and-family-planning-services": "生殖能力および家族計画サービス",
 		"hiv-and-sexual-health": "HIVと性の健康",
+		"medical-info-and-referrals": "医療情報と紹介",
 		"medical-clinics": "診療所",
 		"obgyn-services": "産婦人科サービス",
 		"physical-evaluations-for-asylum-claim": "庇護申請のための身体検査",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "BIPOC（黒人、先住民、有色人種）支援グループ",
 		"family-support-groups": "家族支援グループ",
 		"hotlines": "ホットライン",
+		"mental-health-info-referrals": "メンタルヘルス情報と紹介",
 		"private-therapy-and-counseling": "個人的な治療とケウンセリング",
 		"psychological-evaluations-for-asylum-claim": "庇護申請のための身体検査",
 		"psychological-evaluations-for-refugee-claim": "難民申請のための身体検査",

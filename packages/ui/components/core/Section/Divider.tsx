@@ -9,6 +9,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const _Divider = ({ title, children, ...props }: SectionProps) => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { classes } = useStyles()
 	if (!children || (Array.isArray(children) && children.length === 0)) return null
 

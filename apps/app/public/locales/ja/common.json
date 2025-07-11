@@ -81,6 +81,7 @@
 		"natl-find-help-now": "今すぐ助けを見つける",
 		"natl-these-verified": "<Text>これらの認証済みリソースは、米国のLGBTQ+コミュニティに役立ちます。 これらのサービスは、<strong>オンライン上で利用可能であり、</strong> 、 <strong>無料</strong>です。</Text>",
 		"outside-service-area": "{{country}} ではInReachを利用することはできません",
+		"only-in-north-america": "InReachは北米でのみ動作します。",
 		"who-this-serves": "<Text><strong>この情報の対象者:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "現在の場所",
@@ -255,6 +256,33 @@
 	"questions": "質問がございますか?",
 	"quick-promo-body": "<textUtility1>💚 個人用のリソースリストを保存して共有する</textUtility1>\n<textUtility1>💬 組織に公開評価/レビューを残す</textUtility1>\n<textUtility1>🏠 お住まいの地域の組織を提案してくれる</textUtility1>\n<textUtility1>🔗 組織のプロフィールページを取得する (近日公開予定！)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>これを行うにはログインする必要があります。</title2>\n<textDarkGray>無料のInReachアカウントでは、追加の機能を利用することができます。</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "推奨リンク",
+		"body": "お客様の権利に関する詳細情報をご覧ください。",
+		"buttons": {
+			"btn-1": {
+				"text": "アンチトランスリスクマップ(エリン・リード)",
+				"link": "https://www.erinthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "ID Documents Center (A4TE)",
+				"link": "https://transequenciality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+移民の権利(移民の平等)",
+				"link": "https://implementationequality.org/legal/legal-help/resources/nouncilyour-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Resources (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "移民の権利 (ACLU)",
+				"link": "https://www.aclu.org/now.your-rights/migrants-rights"
+			}
+		}
+	},
 	"remote-services": "リモートで利用できるサービス",
 	"remote-services-page-title": "リモートサービス",
 	"reset-password": "パスワードをリセット",
@@ -331,7 +359,7 @@
 		],
 		"modal-body-temp": [
 			"<title3>どのタイプのアカウントを作成しますか?</title3>",
-			"<group>\n<button data-option='individual'>個人</button>\n<button data-option='provider'>専門家/提供者</button>\n</group>",
+			"<group>\n<button data-option='individual'>個人</button>\n<button data-option='provider'>Professional/プロバイダー</button>\n</group>",
 			"<loginLink>すでにアカウントをお持ちですか？</loginLink>"
 		],
 		"name-use-any": "自身にとって快適な名前をお使いください。",
@@ -401,7 +429,8 @@
 		"admin-options": "管理者オプション",
 		"data-portal": "データポータルのホーム",
 		"edit-page": "このページを編集",
-		"user-options": "ユーザーオプション"
+		"user-options": "ユーザーオプション",
+		"user-management": "User Management"
 	},
 	"verify-account": {
 		"verified": "アカウントが認証されました。",

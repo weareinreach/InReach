@@ -2,17 +2,17 @@
 	"body": {
 		"accept-country": "현재에 미국, 멕시코, 캐나다에 위치한 단체만 제공할 수 있습니다.",
 		"additional-info": "더 보기",
-		"intro-text": "InReach 앱에 기여하는 데에 관심을 가지셔서 감사합니다! 이 양식을 통해 제출하고 싶은 단체를 (예: 비영리 단체, Grassroots/공동체 단체, 의료 시스템, 게인 진료) 추천하십시오.양식에 요구하는 모든 정보가 없어도 됩니다. 확인된 내용만 입력하여 나머지 정보는 InReach 팀이 처리해 드리겠습니다! 제출해 주셔서 감사합니다. 다양한 성소수자 (LGBTQ+) 공동체를 위한 안전하고 검증된 서비스의 접근성을 높이는 데에 감사합니다. 추천된 모든 단체는 InReach에 제공하기 전 InReach의 숙련된 봉사자의 검토를 통과해야 합니다.",
+		"intro-text": "InReach 앱에 기여하는 데에 관심을 가지셔서 감사합니다! 이 양식을 통해 제출하고 싶은 단체를 (예: 비영리 단체, Grassroots/공동체 단체, 의료 시스템, 게인 진료) 추천하십시오.양식에 요구하는 모든 정보가 없어도 됩니다. 확인된 내용만 입력하여 나머지 정보는 InReach 팀이 처리해 드리겠습니다! 제출해 주셔서 감사합니다. 다양한 LGBTQ+ 공동체를 위한 안전하고 검증된 서비스의 접근성을 높이는 데에 감사합니다. 추천된 모든 단체는 InReach에 제공하기 전 InReach의 숙련된 봉사자의 검토를 통과해야 합니다.",
 		"required-info": "필수 정보",
 		"subject-review": "출판하기 전 추천된 단체는 모두 InReach에 검토를 통과해야 합니다.",
 		"suggest-org": "단체 추천하기"
 	},
 	"form": {
-		"btn-community": "성소수자 (LGBTQ+) 고동체 초점을 추가하기",
+		"btn-community": "LGBTQ+ 고동체 초점을 추가하기",
 		"btn-save-changes": "변경 저장하기",
 		"btn-service": "서비스 추가하기",
 		"btn-submit": "새로운 단체 제출하기",
-		"community-focus": "이 단체는 특정한 성소수자 (LGBTQ+) 공동체 초점의 서비스를 제공합니까?",
+		"community-focus": "이 단체는 특정한 LGBTQ+ 공동체 초점의 서비스를 제공합니까?",
 		"error-exists-active": "<Link>{{org}}</Link>는 이미 InReach에 올려 있습니다. 양식은 새로운 단체를 추천하는 데에만 사용하세요.",
 		"error-exists-dismiss": "<Dismiss>다른 단체인 경우 여기를 선택하십시오.</Dismiss>",
 		"error-exists-inactive": "<Link>{{org}}</Link>는 이미 추천되었습니다. 이 단체는 요구 사항을 충족하지 않거나 InReach 팀은 아직 단체 정보를 확인 중입니다.",
@@ -26,8 +26,8 @@
 		"service-types": "이 단체는 어떤 서비스를 제공합니까?"
 	},
 	"modal": {
-		"community-sub": "이 단체는 특정한 성소수자 (LGBTQ+) 공동체 초점의 서비스를 제공합니까? 알맞은 내용을 모두 선택해주세요.",
-		"community-title": "성소수자 (LGBTQ+) 고동체의 초점",
+		"community-sub": "이 단체는 특정한 LGBTQ+ 공동체 초점의 서비스를 제공합니까? 알맞은 내용을 모두 선택해주세요.",
+		"community-title": "LGBTQ+ 고동체의 초점",
 		"dismiss": "넘어가기",
 		"service-types-sub": "이 단체는 어떤 서비스를 제공합니까? 알맞은 내용을 모두 선택해주세요.",
 		"service-types-title": "서비스 종류",

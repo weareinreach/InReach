@@ -55,6 +55,10 @@ const QuickPromotionModal = dynamic(() =>
 
 const RESULTS_PER_PAGE = 20
 
+// Define the type for a single data record that comes from the form/API
+// This is derived from the FormData interface
+type EmailRecordType = ApiOutput['quicklink']['getEmailData']['results'][number]
+
 const columnHelper = createColumnHelper<FormData['data'][number]>()
 
 const QuickLink = () => {
@@ -150,7 +154,7 @@ const QuickLink = () => {
 
 	const handleMutation = () => {
 		const updated: ApiInput['quicklink']['updateEmailData'][number][] = compact(
-			form.values.data.map((record, i) => {
+			form.values.data.map((record: EmailRecordType, i: number) => {
 				if (form.isDirty(`data.${i}`)) {
 					const {
 						attachedLocations,
@@ -162,7 +166,7 @@ const QuickLink = () => {
 						published,
 					} = record
 					const originalRecord = data?.results.find(
-						(original) => orgId === original.orgId && emailId === original.emailId
+						(original: EmailRecordType) => original.orgId === orgId && original.emailId === emailId
 					)
 					if (!originalRecord) return
 
@@ -216,6 +220,7 @@ const QuickLink = () => {
 												query: { slug },
 											}}
 											target='_blank'
+											rel='noopener noreferrer'
 											variant={variants.Link.inheritStyle}
 										>
 											<Icon icon='carbon:launch' />

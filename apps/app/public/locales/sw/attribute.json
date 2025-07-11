@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "Huduma hii inakubali bima. <Link href=\"{{url}}\">Bofya hapa ili kutembelea ukurasa wa shirika</Link> kwa maelezo zaidi kuhusu gharama, chaguo za usaidizi wa kifedha na maelezo ya bima.",
 		"cost-fees": "Inapata gharama",
 		"cost-free": "Bure ya gharama",
+		"cost-financial-assistance-available": "Financial assistance available",
 		"cost-sliding-scale": "Gharama zilizoamuliwa kwa mizani ya kuteleza",
 		"cost-sliding-scale_default": "Huduma hii ina ada za mizani ya kuteleza. Kiasi unacholipa kwa huduma hurekebishwa kulingana na kiwango cha mapato yako. Wasiliana na shirika moja kwa moja kwa maelezo zaidi.",
 		"cost-sliding-scale_withUrl": "Huduma hii ina ada za mizani ya kuteleza. Kiasi unacholipa kwa huduma hurekebishwa kulingana na kiwango cha mapato yako. <Link href=\"{{url}}\">Bofya hapa ili kutembelea ukurasa wa shirika kwa maelezo zaidi.</Link>"

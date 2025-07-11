@@ -69,7 +69,7 @@
 		"modal-title": "Configuración de cookies"
 	},
 	"count": {
-		"more": "{{count}} more",
+		"more": "{{count}} más",
 		"result_one": "{{count}} resultado",
 		"result_other": "{{count}} resultados"
 	},
@@ -82,6 +82,7 @@
 		"natl-find-help-now": "Encuentra ayuda ahora",
 		"natl-these-verified": "<Text>Estos recursos verificados pueden ayudar a la comunidad LGBTQ+ en los Estados Unidos. Estos servicios son <strong>disponibles remotamente, confidenciales,</strong> y <strong>gratuitos</strong>.</Text>",
 		"outside-service-area": "Inreach no funciona en {{country}}",
+		"only-in-north-america": "InReach sólo opera en Norteamérica.",
 		"who-this-serves": "<Text><strong>Quién sirve este recurso:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Ubicación actual",
@@ -256,6 +257,33 @@
 	"questions": "¿Preguntas?",
 	"quick-promo-body": "<textUtility1>💚 Guardar y compartir listas de recursos personalizados</textUtility1>\n<textUtility1>: speech _balloon: Dejar calificaciones/opiniones públicas sobre las organizaciones</textUtility1>\n<textUtility1>🏠 Sugerir organizaciones en tu área</textUtility1>\n<textUtility1>🔗 Reclamar la página de perfil de su organización (¡pronto!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Necesitas iniciar sesión para hacer eso.</title2>\n<textDarkGray>Con una cuenta gratuita de InReach puedes desbloquear características adicionales:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Enlaces Recomendados",
+		"body": "Encuentre más información sobre sus derechos.",
+		"buttons": {
+			"btn-1": {
+				"text": "Mapa de Riesgo Antitrans (Erin en la mañana)",
+				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "Centro de documentos de ID (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "Derechos de les inmigrantes LGBTQ+ (Igualdad de Inmigración)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Recursos de Asilo (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Derechos de les inmigrantes (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Servicios disponibles de forma remota",
 	"remote-services-page-title": "Servicios remotos",
 	"reset-password": "Restablece tu contraseña",
@@ -311,7 +339,7 @@
 	"show-less": "Mostrar menos",
 	"show-more": "Mostrar más",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(palabras.sign-up)</title2>\n<textDarkGray>Bienvenido a la primera plataforma tecnológica del mundo que combina a las personas LGBTQ+ con persecución o discriminación con recursos seguros y verificados.</textDarkGray>\n</group>",
+		"header": "$t(words.sign-up)<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(palabras.sign-up)</title2>\n<textDarkGray>Bienvenide a la primera plataforma tecnológica del mundo que conecta a las personas LGBTQ+ que enfrentan persecución o discriminación con recursos seguros y verificados.</textDarkGray>\n</group>",
 		"lcr-error1": "Desafortunadamente, no cumple con los requisitos de elegibilidad para ser Revisor de la Comunidad Local.\n<Switch>Haga clic aquí para crear una cuenta estándar.</Switch>",
 		"lcr-error2": "Debe leer y revisar la página <Link><strong>Revisor de Comunidad Local</strong></Link>.",
 		"lcr-screen1": "Por favor, seleccione todo lo que aplique",
@@ -402,7 +430,8 @@
 		"admin-options": "Opciones de Administración",
 		"data-portal": "Página principal del portal de datos",
 		"edit-page": "Editar esta página",
-		"user-options": "Opciones de usuario"
+		"user-options": "Opciones de usuario",
+		"user-management": "Gestión de usuario"
 	},
 	"verify-account": {
 		"verified": "¡Cuenta Verificada!",
