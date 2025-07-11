@@ -73,6 +73,7 @@
 		"cost-accepts-insurance_withUrl": "تقبل هذه الخدمة التأمين. <Link href=\"{{url}}\">انقر هنا لزيارة صفحة المنظمة</Link> لمزيد من المعلومات حول التكلفة وخيارات المساعدة المالية وتفاصيل التغطية التأمينية.",
 		"cost-fees": "يتكبد تكلفة",
 		"cost-free": "مجانا",
+		"cost-financial-assistance-available": "المساعدة المالية المتاحة",
 		"cost-sliding-scale": "التكاليف المحددة على أساس جدول متدرج",
 		"cost-sliding-scale_default": "هذه الخدمة لديها رسوم جدول متدخلات. يتم تعديل المبلغ الذي تدفعه مقابل الخدمات وفقاً لمستوى دخلك. اتصل مباشرة بالمنظمة للحصول على مزيد من المعلومات.",
 		"cost-sliding-scale_withUrl": "This service has sliding scale fees. The amount you pay for services is adjusted according to your income level. <Link href=\"{{url}}\">Click here to visit the organization's page for more information.</Link>"
