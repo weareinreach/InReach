@@ -1,0 +1,2466 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views", "driverAdapters", "nativeDistinct", "relationJoins"]
+}
+
+generator aws {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views", "driverAdapters", "nativeDistinct", "relationJoins"]
+  binaryTargets   = ["linux-arm64-openssl-3.0.x"]
+}
+
+generator enum {
+  provider = "node node_modules/prisma-generator-ts-enums" // specify the path to this generator here
+  output   = "../enums/index.ts" // optionally, you can specify an output filename here -- default is ./types/enums.d.ts
+}
+
+// generator zod {
+//   provider               = "zod-prisma-types"
+//   output                 = "../zod-schemas"
+//   useMultipleFiles       = true
+//   createModelTypes       = true
+//   createInputTypes       = false
+//   createPartialTypes     = true
+//   addInputTypeValidation = false
+//   addSelectType          = false
+//   useDefaultValidators   = false
+//   writeBarrelFiles       = true
+// }
+
+// generator dbml {
+//   provider              = "prisma-dbml-generator"
+//   output                = "./dbml"
+//   outputName            = "inreach.dbml"
+//   projectName           = "InReach"
+//   projectDatabaseType   = "PostgreSQL"
+//   includeRelationFields = false
+// }
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DB_DIRECT_URL")
+  extensions = [pg_stat_statements, postgis]
+  // schemas    = ["user", "org", "system", "relation"]
+}
+
+/// NextAuth Account **DO NOT ALTER**
+model Account {
+  id                String  @id @default(cuid())
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user   User   @relation("Account", fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("user")
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+/// NextAuth Session **DO NOT ALTER**
+model Session {
+  // Do not change - NextAuth fields
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  expires      DateTime
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  //@@schema("user")
+}
+
+/// NextAuth Verification Token **DO NOT ALTER**
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  //@@schema("user")
+
+  @@unique([identifier, token])
+}
+
+/// NextAuth User
+model User {
+  //
+  // Do not change - NextAuth fields
+  //
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique(sort: Asc)
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[] @relation("Account")
+  sessions      Session[]
+  //
+  // Ok to change below - Start of custom fields
+  //
+  legacyId      String?   @unique /// old ID from MongoDB
+
+  active             Boolean                  @default(true)
+  permissions        UserPermission[]
+  /// assets that certain permissible roles are attributed to (edit org, etc)
+  orgPermission      OrganizationPermission[]
+  locationPermission LocationPermission[]
+  roles              AssignedRole[]
+  attributes         AttributeSupplement[]
+
+  reviews          OrgReview[]
+  // Current location - for LCR
+  currentCity      String?
+  currentGovDist   GovDist?    @relation(fields: [currentGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  currentGovDistId String?
+  currentCountry   Country?    @relation(name: "currentCountry", fields: [currentCountryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  currentCountryId String?
+
+  signupData Json? // holding for other data items collected @ signup
+
+  // Data for AWS Cognito migration
+  //  migrated from old DB - once user is migrated to Cognito, legacy fields are cleared, migrateDate is set
+  legacyHash  String?
+  legacySalt  String?
+  migrateDate DateTime?
+
+  // for LCR accounts
+  communities     UserCommunityLink[] /// used for LCR accounts ONLY
+  userSOGIdentity UserSOGLink[] /// used for LCR accounts ONLY
+
+  // Relationships
+  savedLists          UserSavedList[]
+  listsSharedWithUser ListSharedWith[]
+
+  userType   UserType @relation(fields: [userTypeId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  userTypeId String
+
+  langPref   Language? @relation(fields: [langPrefId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  langPrefId String?
+
+  source   Source? @relation(name: "userSource", fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  sourceId String?
+
+  mailReceived UserMail[] @relation("mailTo")
+  mailSent     UserMail[] @relation("mailFrom")
+
+  orgAssociations UserToOrganization[]
+
+  fieldVisibility FieldVisibility? /// For user profile page. All fields default to 'NONE'
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("user")
+  Suggestion Suggestion[]
+
+  @@index([userTypeId])
+}
+
+/// User Role - Contains array of granular permissions
+///  Internal use
+model UserRole {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  tag    String  @unique
+  active Boolean @default(true)
+
+  permissions   RolePermission[]
+  usersAssigned AssignedRole[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("system")
+}
+
+/// Permission Definition
+model Permission {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+  active      Boolean @default(true)
+
+  users UserPermission[]
+  roles RolePermission[]
+
+  orgs      OrganizationPermission[]
+  locations LocationPermission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("system")
+}
+
+/// User Info - account type (seeker, org, lawyer, etc.)
+///  use shorthand descriptions - front-end displayable text is defined in Translations
+model UserType {
+  id     String  @id @default(cuid())
+  type   String  @unique
+  users  User[]
+  active Boolean @default(true)
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+/// User Info - professional title
+///  this will be a searchable list
+model UserTitle {
+  id         String               @id @default(cuid())
+  title      String               @unique
+  email      OrgEmail[]
+  orgUsers   UserToOrganization[]
+  searchable Boolean              @default(false)
+  active     Boolean              @default(true)
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+model UserSurvey {
+  id String @id @default(cuid())
+
+  birthYear     Int?    @db.SmallInt
+  reasonForJoin String?
+
+  communities    SurveyCommunity[]
+  ethnicities    SurveyEthnicity[]
+  ethnicityOther String?
+  identifiesAs   SurveySOG[]
+
+  countryOrigin   Country? @relation("origin", fields: [countryOriginId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  countryOriginId String?
+
+  immigration      UserImmigration? @relation(fields: [immigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  immigrationId    String?
+  immigrationOther String?
+
+  currentCity      String?
+  currentGovDist   GovDist? @relation(fields: [currentGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  currentGovDistId String?
+  currentCountry   Country? @relation(name: "currentLocation", fields: [currentCountryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  currentCountryId String?
+
+  //@@schema("user")
+}
+
+/// User demographics - Ethnicity
+model UserEthnicity {
+  id        String            @id @default(cuid())
+  ///  use shorthand descriptions - front-end displayable text is defined in Translations
+  ethnicity String            @unique
+  surveys   SurveyEthnicity[]
+  active    Boolean           @default(true)
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+/// User demographics - Immigration Status
+model UserImmigration {
+  id      String       @id @default(cuid())
+  ///  use shorthand descriptions - front-end displayable text is defined in Translations
+  status  String       @unique
+  surveys UserSurvey[]
+  active  Boolean      @default(true)
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+/// User demographics - Sexual orientation / Identity
+model UserSOGIdentity {
+  id         String        @id @default(cuid())
+  ///  use shorthand descriptions - front-end displayable text is defined in Translations
+  identifyAs String        @unique
+  surveys    SurveySOG[]
+  users      UserSOGLink[]
+  active     Boolean       @default(true)
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+/// User demographics - Community
+model UserCommunity {
+  id        String              @id @default(cuid())
+  ///  use shorthand descriptions - front-end displayable text is defined in Translations
+  community String              @unique
+  users     UserCommunityLink[]
+  active    Boolean             @default(true)
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  surveys SurveyCommunity[]
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+/// User's list(s) of saved resources.
+model UserSavedList {
+  id            String              @id @default(cuid())
+  name          String
+  organizations SavedOrganization[]
+  services      SavedService[]
+  sharedWith    ListSharedWith[]
+  sharedLinkKey String?             @unique
+
+  ownedBy   User   @relation(fields: [ownedById], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownedById String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("user")
+
+  @@index([ownedById])
+}
+
+model UserMail {
+  id         String   @id @default(cuid())
+  toUser     User     @relation("mailTo", fields: [toUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  toUserId   String
+  toExternal String[] /// Array of email addresses
+  read       Boolean  @default(false)
+  subject    String
+  body       String
+
+  from       String?
+  fromUser   User?   @relation("mailFrom", fields: [fromUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  fromUserId String?
+
+  replies      UserMail[] @relation("userMailReplies")
+  responseTo   UserMail?  @relation("userMailReplies", fields: [responseToId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  responseToId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("user")
+
+  @@index([toUserId])
+  @@index([fromUserId])
+  @@index([responseToId])
+  @@index([fromUserId, toUserId])
+}
+
+/// Main organization definition
+model Organization {
+  id         String  @id @default(cuid())
+  legacyId   String? @unique /// old ID from MongoDB
+  name       String
+  slug       String  @unique /// @zod.string.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/gm)
+  legacySlug String?
+
+  // nested data
+  description   FreeText?             @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  descriptionId String?               @unique
+  emails        OrganizationEmail[]
+  locations     OrgLocation[]
+  phones        OrganizationPhone[]
+  photos        OrgPhoto[]
+  services      OrgService[]
+  socialMedia   OrgSocialMedia[]
+  websites      OrgWebsite[]
+  reviews       OrgReview[]
+  serviceAreas  ServiceArea?
+  hours         OrgHours[] // for schedules that need to be assigned to locations
+  attributes    AttributeSupplement[]
+
+  deleted        Boolean   @default(false)
+  published      Boolean   @default(false)
+  crisisResource Boolean?
+  lastVerified   DateTime?
+
+  // For International Crisis Support resources
+  crisisResourceSort Int? @unique
+
+  // Outside API connections
+  outsideApi OutsideAPI[]
+
+  source   Source @relation(fields: [sourceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  sourceId String
+
+  suggestions Suggestion[]
+
+  // attachments
+  userLists       SavedOrganization[]
+  // Users associated with organization (staff)
+  associatedUsers UserToOrganization[]
+  allowedEditors  OrganizationPermission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notes    InternalNote[]
+  oldSlugs SlugRedirect[]
+
+  /// Does this record need to be checked by staff after migration?
+  checkMigration Boolean?
+  //@@schema("org")
+
+  @@index([name(sort: Asc)])
+  @@index([published, deleted])
+  @@index([slug])
+  @@index([slug, published, deleted])
+  @@index([id, published(sort: Desc), deleted])
+}
+
+model SlugRedirect {
+  id   String @id @default(cuid())
+  from String @unique
+  to   String @unique
+
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orgId])
+}
+
+/// Organization email contacts - can be general or location specific
+model OrgEmail {
+  id         String  @id @default(cuid())
+  legacyId   String? @unique /// old ID from MongoDB
+  legacyDesc String?
+  firstName  String?
+  lastName   String?
+  primary    Boolean @default(false)
+  email      String
+  published  Boolean @default(true)
+  deleted    Boolean @default(false)
+
+  title   UserTitle? @relation(fields: [titleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  titleId String?
+
+  description   FreeText? @relation(references: [id], fields: [descriptionId])
+  descriptionId String?   @unique
+
+  associatedUsers UserToOrganization[]
+
+  // optional - attach email to a specific location/service
+  organization OrganizationEmail[]
+  locations    OrgLocationEmail[]
+  services     OrgServiceEmail[]
+  /// associated only with location/service and not overall organization (for large orgs w/ multiple locations)
+  locationOnly Boolean             @default(false)
+  serviceOnly  Boolean             @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("org")
+
+  @@index([lastName(sort: Asc), firstName])
+  @@index([email])
+  @@index([id, published(sort: Desc), deleted])
+}
+
+/// Org phone numbers - can be general or location specific
+model OrgPhone {
+  id              String   @id @default(cuid())
+  legacyId        String?  @unique /// old ID from MongoDB
+  legacyDesc      String?
+  countryCode     String?
+  number          String
+  ext             String?
+  primary         Boolean  @default(false)
+  published       Boolean  @default(true)
+  deleted         Boolean  @default(false)
+  migrationReview Boolean?
+
+  /// Country profiles have intl dial prefix
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  countryId String
+
+  phoneType   PhoneType? @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  phoneTypeId String?
+
+  description   FreeText? @relation(fields: [descriptionId], references: [id])
+  descriptionId String?   @unique
+
+  associatedUsers UserToOrganization[]
+
+  /// associated only with location and not overall organization (for large orgs w/ multiple locations)
+
+  organization OrganizationPhone?
+  locations    OrgLocationPhone[]
+  services     OrgServicePhone[]
+  phoneLangs   OrgPhoneLanguage[]
+
+  /// associated only with location/service and not overall organization (for large orgs w/ multiple locations)
+  locationOnly Boolean @default(false)
+  serviceOnly  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("org")
+  @@index([id, published(sort: Desc), deleted])
+}
+
+/// Organization's social media links
+model OrgSocialMedia {
+  id        String  @id @default(cuid())
+  legacyId  String? @unique /// old ID from MongoDB
+  username  String
+  url       String
+  deleted   Boolean @default(false)
+  published Boolean @default(true)
+
+  service   SocialMediaService @relation(fields: [serviceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  serviceId String
+
+  organization   Organization?            @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?
+  locations      OrgLocationSocialMedia[]
+
+  /// associated only with location and not overall organization (for large orgs w/ multiple locations)
+  orgLocationOnly Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("org")
+
+  @@index([serviceId])
+  @@index([organizationId])
+  @@index([id, published(sort: Desc), deleted])
+}
+
+model OrgWebsite {
+  id            String    @id @default(cuid())
+  url           String
+  description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  descriptionId String?   @unique
+  isPrimary     Boolean   @default(false)
+  deleted       Boolean   @default(false)
+  published     Boolean   @default(true)
+
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?
+
+  services        OrgServiceWebsite[]
+  locations       OrgLocationWebsite[]
+  orgLocationOnly Boolean              @default(false)
+
+  languages OrgWebsiteLanguage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("org")
+
+  @@index([organizationId])
+  @@index([id, published(sort: Desc), deleted])
+}
+
+/// Org location information
+model OrgLocation {
+  id       String  @id @default(cuid())
+  legacyId String? @unique /// old ID from MongoDB
+  name     String?
+  street1  String?
+  street2  String?
+  city     String
+  postCode String?
+  primary  Boolean @default(false)
+
+  addressVisibility AddressVisibility @default(FULL)
+
+  mailOnly Boolean @default(false)
+
+  description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  descriptionId String?   @unique
+
+  govDist   GovDist? @relation(fields: [govDistId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  govDistId String?
+
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  countryId String
+
+  longitude Float?                               @db.Real
+  latitude  Float?                               @db.Real
+  geo       Unsupported("Geometry(POINT,4326)")?
+  geoJSON   Json?
+  geoWKT    String?
+
+  published Boolean    @default(true)
+  deleted   Boolean    @default(false)
+  hours     OrgHours[]
+
+  attributes AttributeSupplement[]
+
+  organization   Organization         @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgId          String
+  allowedEditors LocationPermission[]
+
+  emails       OrgLocationEmail[] /// if location specific
+  phones       OrgLocationPhone[] /// if location specific
+  photos       OrgPhoto[]
+  services     OrgLocationService[]
+  serviceAreas ServiceArea?
+  socialMedia  OrgLocationSocialMedia[]
+  websites     OrgLocationWebsite[]
+
+  // Outside API connections
+  outsideApi    OutsideAPI[]
+  apiLocationId String?
+
+  reviews OrgReview[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  /// Does this record need to be checked by staff after migration?
+  checkMigration Boolean?
+  //@@schema("org")
+
+  @@index([geo], type: Gist)
+  @@index([orgId])
+  @@index([countryId])
+  @@index([govDistId])
+  @@index([orgId, id, geo])
+  @@index([id, published(sort: Desc), deleted])
+}
+
+enum AddressVisibility {
+  FULL
+  PARTIAL
+  HIDDEN
+}
+
+/// Organization photos
+model OrgPhoto {
+  id        String  @id @default(cuid())
+  src       String
+  height    Int?    @db.SmallInt
+  width     Int?    @db.SmallInt
+  published Boolean @default(false)
+  deleted   Boolean @default(false)
+
+  organization Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgId        String?
+
+  orgLocation   OrgLocation? @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  orgLocationId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("org")
+
+  @@index([orgId])
+  @@index([orgLocationId])
+  @@index([id, published(sort: Desc), deleted])
+}
+
+/// Organization location/service hours
+///  day is stored as integer [0-6], Sunday = 0
+///  start/end times are stored as RFC 3339 Timestamp (without zone)
+///  as local time. Any timezone offset will be handled by runtime logic
+model OrgHours {
+  id          String   @id @default(cuid())
+  /// Sun 0, Mon 1, Tue 2, Wed 3, Thu 3, Fri 4, Sat 6
+  dayIndex    Int      @default(0) @db.SmallInt
+  start       DateTime @db.Timetz(0)
+  end         DateTime @db.Timetz(0)
+  interval    Json?
+  closed      Boolean  @default(false)
+  open24hours Boolean  @default(false)
+  tz          String?
+  active      Boolean  @default(true)
+
+  orgLocation OrgLocation? @relation(fields: [orgLocId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocId    String?
+
+  orgService     OrgService?   @relation(fields: [orgServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  orgServiceId   String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?
+
+  needAssignment Boolean @default(false)
+  needReview     Boolean @default(false)
+  legacyId       String?
+  legacyName     String?
+  legacyNote     String?
+  legacyStart    String?
+  legacyEnd      String?
+  legacyTz       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("org")
+
+  @@index([orgLocId])
+  @@index([orgServiceId])
+  @@index([organizationId])
+  @@index([id, active])
+}
+
+model FreeText {
+  id    String         @id @default(cuid())
+  tsKey TranslationKey @relation(fields: [key, ns], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
+  key   String
+  ns    String
+
+  Organization        Organization?
+  OrgLocation         OrgLocation?
+  OrgWebsite          OrgWebsite?
+  OrgService          OrgService?          @relation("OrgServiceDescription")
+  AttributeSupplement AttributeSupplement?
+  OrgEmail            OrgEmail?
+  OrgServiceName      OrgService?          @relation("OrgServiceName")
+  OrgPhone            OrgPhone?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("org")
+  LocationAlert LocationAlert[]
+
+  @@unique([key, ns])
+  @@index([key])
+  @@index([ns, key])
+}
+
+/// Organization's offered services - access instructions & details
+///  associated with service tag
+model OrgService {
+  id            String                @id @default(cuid())
+  legacyId      String?               @unique /// old ID from MongoDB
+  published     Boolean               @default(false)
+  deleted       Boolean               @default(false)
+  legacyName    String?
+  serviceName   FreeText?             @relation("OrgServiceName", fields: [serviceNameId], references: [id])
+  serviceNameId String?               @unique
+  // Nested data
+  services      OrgServiceTag[]
+  serviceAreas  ServiceArea?
+  hours         OrgHours[]
+  reviews       OrgReview[]
+  attributes    AttributeSupplement[]
+  phones        OrgServicePhone[]
+  emails        OrgServiceEmail[]
+  description   FreeText?             @relation("OrgServiceDescription", fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  descriptionId String?               @unique
+
+  crisisSupportOnly Boolean?
+
+  // attachments
+  organization   Organization?        @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?
+  locations      OrgLocationService[]
+  userLists      SavedService[]
+  websites       OrgServiceWebsite[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  /// Does this record need to be checked by staff after migration?
+  checkMigration Boolean?
+  //@@schema("org")
+
+  @@index([organizationId(sort: Asc)])
+  @@index([organizationId, published(sort: Desc), deleted])
+  @@index([id, published(sort: Desc), deleted])
+}
+
+model ServiceArea {
+  id     String  @id @default(cuid())
+  active Boolean @default(true)
+
+  countries ServiceAreaCountry[]
+  districts ServiceAreaDist[]
+
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?       @unique
+  orgLocation    OrgLocation?  @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId  String?       @unique
+  orgService     OrgService?   @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgServiceId   String?       @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("org")
+
+  @@index([organizationId])
+  @@index([orgLocationId])
+  @@index([orgServiceId])
+  @@index([active, organizationId])
+  @@index([active, orgLocationId])
+  @@index([active, orgServiceId])
+}
+
+/// User reviews/ratings of organization
+model OrgReview {
+  id         String  @id @default(cuid())
+  legacyId   String? @unique /// old ID from MongoDB
+  rating     Int?    @db.SmallInt
+  reviewText String?
+  visible    Boolean @default(true)
+  deleted    Boolean @default(false)
+
+  // Is this review in the pool to be featured on the homepage?
+  featured Boolean?
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String
+
+  // Optional: Review can be attached to a specific service.
+  orgService   OrgService? @relation(fields: [orgServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  orgServiceId String?
+
+  // Optional: Review can be attached to a specific service.
+  orgLocation   OrgLocation? @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  orgLocationId String?
+
+  // Store the language of the review text
+  // Use session locale value or Google Translate lang detect API
+  // Optional: do not store anything if 'comment' is null
+  language       Language?          @relation(fields: [langId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  langId         String?
+  /// How confident is the API guess?
+  langConfidence Float?
+  translatedText TranslatedReview[]
+
+  /// From https://perspectiveapi.com/
+  toxicity Float?
+
+  // Snapshot local community reviwer geographical info
+  //  review should keep original geo data if LCR user updates their location.
+  // Optional - only applicable if user is LCR
+  lcrCity      String?
+  lcrGovDist   GovDist? @relation(fields: [lcrGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  lcrGovDistId String?
+  lcrCountry   Country? @relation(fields: [lcrCountryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  lcrCountryId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("org")
+
+  @@index([organizationId(sort: Asc)])
+  @@index([orgServiceId(sort: Asc)])
+  @@index([id, visible, deleted])
+  @@index([orgLocationId])
+  @@index([userId])
+}
+
+/// Store machine translations for reviews - save on API calls
+model TranslatedReview {
+  id String @id @default(cuid())
+
+  review   OrgReview @relation(fields: [reviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  reviewId String
+
+  language   Language @relation(fields: [languageId], references: [id])
+  languageId String
+
+  text String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([reviewId, languageId])
+}
+
+/// Additional Properties for Org/Service.
+model AttributeCategory {
+  id            String           @id @default(cuid())
+  tag           String           @unique
+  name          String           @unique
+  icon          String?
+  /// Internal description
+  intDesc       String?
+  active        Boolean          @default(true)
+  renderVariant AttributeRender?
+
+  namespace TranslationNamespace @relation(fields: [ns], references: [name], onDelete: Restrict, onUpdate: Cascade)
+  ns        String
+
+  attributes AttributeToCategory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("system")
+}
+
+enum AttributeRender {
+  COMMUNITY
+  SERVICE
+  LEADER
+  ATTRIBUTE
+  LIST
+}
+
+model Attribute {
+  id               String   @id @default(cuid())
+  tag              String   @unique
+  name             String
+  icon             String?
+  iconBg           String?
+  /// Internal description
+  intDesc          String?
+  active           Boolean  @default(true)
+  activeForSuggest Boolean?
+
+  /// Can this be used as a filter? No - `null` : Yes - Defined as INCLUDE or EXCLUDE
+  filterType FilterType?
+
+  /// Set this flag to have attribute display on Location/Visit cards
+  showOnLocation Boolean?
+
+  categories AttributeToCategory[]
+
+  children AttributeNesting[] @relation("attribParentToChild")
+  parents  AttributeNesting[] @relation("attribChildToParent")
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  // Defaults
+  serviceCategoryDefaults ServiceCategoryDefaultAttribute[]
+  serviceTagDefaults      ServiceTagDefaultAttribute[]
+
+  attachedSupplements AttributeSupplement[]
+
+  requireText       Boolean                        @default(false)
+  requireLanguage   Boolean                        @default(false)
+  requireGeo        Boolean                        @default(false)
+  requireBoolean    Boolean                        @default(false)
+  requireData       Boolean                        @default(false)
+  requireDataSchema AttributeSupplementDataSchema? @relation(fields: [requiredSchemaId], references: [id])
+  requiredSchemaId  String?
+  canAttachTo       AttributeAttachment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+enum AttributeAttachment {
+  ORGANIZATION
+  LOCATION
+  SERVICE
+  USER
+}
+
+enum FilterType {
+  INCLUDE
+  EXCLUDE
+}
+
+model AttributeSupplement {
+  id     String  @id @default(cuid())
+  active Boolean @default(true)
+
+  data    Json?
+  boolean Boolean?
+
+  country    Country?  @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId  String?
+  govDist    GovDist?  @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistId  String?
+  language   Language? @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  languageId String?
+  text       FreeText? @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  textId     String?   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  attribute      Attribute     @relation(references: [id], fields: [attributeId])
+  attributeId    String
+  location       OrgLocation?  @relation(references: [id], fields: [locationId], onDelete: Cascade)
+  locationId     String?
+  organization   Organization? @relation(references: [id], fields: [organizationId], onDelete: Cascade)
+  organizationId String?
+  service        OrgService?   @relation(references: [id], fields: [serviceId], onDelete: Cascade)
+  serviceId      String?
+  user           User?         @relation(references: [id], fields: [userId], onDelete: Cascade)
+  userId         String?
+
+  @@index([locationId])
+  @@index([organizationId])
+  @@index([serviceId])
+  @@index([userId])
+  @@index([attributeId])
+  @@index([attributeId, locationId])
+  @@index([attributeId, organizationId])
+  @@index([attributeId, serviceId])
+  @@index([attributeId, userId])
+  @@index([active, attributeId])
+}
+
+model AttributeSupplementDataSchema {
+  id         String  @id @default(cuid())
+  tag        String  @unique
+  name       String
+  active     Boolean @default(true)
+  definition Json
+  schema     Json
+  // entryComponent String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  Attribute     Attribute[]
+}
+
+model ServiceCategory {
+  id                String                            @id @default(cuid())
+  category          String                            @unique
+  active            Boolean                           @default(true)
+  activeForSuggest  Boolean?
+  primaryServices   ServiceTag[]
+  services          ServiceTagToCategory[]
+  defaultAttributes ServiceCategoryDefaultAttribute[]
+  crisisSupportOnly Boolean?
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+model ServiceTag {
+  id                String                       @id @default(cuid())
+  name              String
+  active            Boolean                      @default(true)
+  defaultAttributes ServiceTagDefaultAttribute[]
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  primaryCategory   ServiceCategory        @relation(fields: [primaryCategoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  primaryCategoryId String
+  categories        ServiceTagToCategory[]
+
+  crisisSupportOnly Boolean?
+
+  children ServiceTagNesting[] @relation("serviceParentToChild")
+  parents  ServiceTagNesting[] @relation("serviceChildToParent")
+
+  locationRestriction ServiceTagCountry[]
+
+  /// Tables referencing ServiceTag
+  attachedServices OrgServiceTag[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+  @@unique([name, primaryCategoryId])
+  @@index([primaryCategoryId])
+}
+
+model ServiceTagToCategory {
+  category     ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId   String
+  serviceTag   ServiceTag      @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceTagId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([categoryId, serviceTagId])
+  @@index([serviceTagId, categoryId])
+}
+
+/// Phone number descriptors
+model PhoneType {
+  id             String     @id @default(cuid())
+  type           String     @unique
+  attachedPhones OrgPhone[]
+  active         Boolean    @default(true)
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+/// Social media service properties
+model SocialMediaService {
+  id       String   @id @default(cuid())
+  name     String   @unique
+  urlBase  String[]
+  logoIcon String
+  internal Boolean  @default(false)
+  active   Boolean  @default(true)
+
+  organizationUsage OrgSocialMedia[]
+  systemUsage       SocialMediaLink[]
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+/// Source of organization/user
+///  *INTERNAL* - for tracking purposes
+model Source {
+  id     String     @id @default(cuid())
+  source String     @unique
+  type   SourceType
+  active Boolean    @default(true)
+
+  organizations Organization[]
+  users         User[]         @relation("userSource")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("system")
+}
+
+enum SourceType {
+  EXTERNAL
+  ORGANIZATION
+  SYSTEM
+  USER
+
+  //@@schema("system")
+}
+
+model Suggestion {
+  id String @id @default(cuid())
+
+  data           Json
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  handled        Boolean?
+  suggestedBy    User?        @relation(fields: [suggestedById], references: [id])
+  suggestedById  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  @@index([organizationId])
+}
+
+/// Country metadata
+model Country {
+  id       String @id @default(cuid())
+  /// ISO 3166-1 alpha-2 Country code
+  cca2     String @unique @db.Char(2)
+  /// ISO 3166-1 alpha-3 Country code
+  cca3     String @unique @db.Char(3)
+  /// Country name (English).
+  name     String @unique(sort: Asc)
+  /// International dialing code
+  dialCode Int?   @db.SmallInt
+  /// Country flag (emoji)
+  flag     String
+
+  /// Does the country name have a prefix in certain situations? (The United States, The Netherlands...)
+  articlePrefix Boolean?
+
+  geoData   GeoData? @relation(fields: [geoDataId], references: [id])
+  geoDataId String?  @unique
+
+  key   TranslationKey @relation("country", fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  demonym    TranslationKey? @relation("demonym", fields: [demonymKey, demonymNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  demonymKey String?
+  demonymNs  String?
+
+  // List of administrative subdivisions
+  govDist GovDist[]
+
+  activeForOrgs    Boolean?
+  activeForSuggest Boolean?
+
+  /// Tables using Country
+  attributeSupplements  AttributeSupplement[]
+  addresses             OrgLocation[]
+  reviews               OrgReview[]
+  phones                OrgPhone[]
+  serviceAreas          ServiceAreaCountry[]
+  currentUsers          User[]                @relation("currentCountry")
+  surveyCurrentLocation UserSurvey[]          @relation("currentLocation")
+  surveyOrigin          UserSurvey[]          @relation("origin")
+  serviceRestrictions   ServiceTagCountry[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+  LocationAlert LocationAlert[]
+
+  @@unique([tsKey, tsNs])
+  @@unique([demonymKey, demonymNs])
+  @@index([geoDataId])
+}
+
+/// Administrative districts for countries
+model GovDist {
+  id        String   @id @default(cuid())
+  /// Name (English/Roman alphabet)
+  name      String
+  /// Slug - [country (ISO)]-[govdist]-[...]
+  slug      String   @unique
+  /// ISO-3166-2 code
+  iso       String?
+  /// Abbreviation (Optional)
+  abbrev    String?
+  /// Geo data - required only if this will be considered a "service area"
+  geoData   GeoData? @relation(fields: [geoDataId], references: [id])
+  geoDataId String?  @unique
+
+  active Boolean? @default(true)
+
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId String
+
+  govDistType   GovDistType @relation(fields: [govDistTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistTypeId String
+
+  /// table can be used for "sub districts" (State -> County -> City)
+  isPrimary    Boolean?  @default(true)
+  parent       GovDist?  @relation(name: "associatedDistricts", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  parentId     String?
+  subDistricts GovDist[] @relation("associatedDistricts")
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  /// Tables using GovDist
+  attributeSupplements AttributeSupplement[]
+  locations            OrgLocation[]
+  reviews              OrgReview[]
+  users                User[]
+  serviceAreas         ServiceAreaDist[]
+  userSurveys          UserSurvey[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+  LocationAlert LocationAlert[]
+
+  @@unique([tsKey, tsNs])
+  @@index([countryId])
+  @@index([parentId])
+  @@index([countryId, id])
+  @@index([parentId, id])
+  @@index([geoDataId])
+}
+
+/// Descriptor of principal administrative districts (state, province, county, etc.)
+model GovDistType {
+  id   String @id @default(cuid())
+  name String @unique
+
+  districts GovDist[]
+
+  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
+  tsKey String
+  tsNs  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+
+  @@unique([tsKey, tsNs])
+}
+
+/// Geo data
+model GeoData {
+  id         String                                     @id @default(cuid())
+  name       String
+  geo        Unsupported("geometry(multipolygon,4326)")
+  iso        String
+  iso2       String?
+  abbrev     String?
+  type       String?
+  adminLevel Int
+
+  country Country?
+  govDist GovDist?
+
+  @@index([geo], type: Gist)
+  @@index([name])
+  @@index([iso])
+  @@index([abbrev])
+  @@index([iso, abbrev])
+  @@index([iso, adminLevel])
+}
+
+model LocationAlert {
+  id     String             @id @default(cuid())
+  active Boolean            @default(true)
+  text   FreeText           @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  textId String
+  level  LocationAlertLevel
+  order  Int                @default(0)
+
+  country   Country? @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId String?
+  govDist   GovDist? @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistId String?
+
+  @@index([countryId, textId])
+  @@index([govDistId, textId])
+  @@index([active, countryId, textId])
+  @@index([active, govDistId, textId])
+}
+
+enum LocationAlertLevel {
+  INFO_PRIMARY
+  WARN_PRIMARY
+  CRITICAL_PRIMARY
+  INFO_SECONDARY
+  WARN_SECONDARY
+  CRITICAL_SECONDARY
+}
+
+/// Languages - ETF BCP 47 language tag
+///  top level & regional locale (ex: 'en', "en-us", "en-ca")
+model Language {
+  id                 String  @id @default(cuid())
+  languageName       String
+  /// ETF BCP 47 language tag
+  localeCode         String  @unique(sort: Asc)
+  /// ISO 639-2
+  iso6392            String? @db.Char(3)
+  /// Language name in it's language.
+  nativeName         String
+  /// Is this language being actively used for translations?
+  activelyTranslated Boolean @default(false)
+
+  // Sorting options
+  defaultSort Int?     @unique
+  groupCommon Boolean?
+
+  // fields using records
+  attributeSupplements AttributeSupplement[]
+  reviews              OrgReview[]
+  users                User[]
+  phones               OrgPhoneLanguage[]
+  websites             OrgWebsiteLanguage[]
+  reviewTranslation    TranslatedReview[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("system")
+}
+
+//
+// Translation tables for database values.
+//
+
+// Top level category for i18next
+model TranslationNamespace {
+  name String @id
+
+  crowdinId Int?
+
+  keys TranslationKey[]
+
+  attributeCategories AttributeCategory[]
+
+  exportFile            Boolean @default(true)
+  overwriteFileOnExport Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("system")
+}
+
+// Item key - i18next
+model TranslationKey {
+  //id        String               @id @default(cuid())
+  /// Item key
+  key       String
+  /// Base string
+  text      String
+  /// Context
+  context   String?
+  /// Associated namespace
+  namespace TranslationNamespace @relation(fields: [ns], references: [name], onDelete: Cascade, onUpdate: Cascade)
+  ns        String
+
+  crowdinId Int?
+
+  active Boolean @default(true)
+
+  // to manage plurals & ordinals
+  interpolation       InterpolationOptions?
+  interpolationValues Json?
+
+  /// Associated tables
+  attribute          Attribute?
+  country            Country?            @relation("country")
+  demonym            Country?            @relation("demonym")
+  freeText           FreeText?
+  govDist            GovDist?
+  govDistType        GovDistType?
+  phoneType          PhoneType?
+  serviceCategory    ServiceCategory?
+  serviceTag         ServiceTag?
+  socialMediaService SocialMediaService?
+  userCommunity      UserCommunity?
+  userEthnicity      UserEthnicity?
+  userImmigration    UserImmigration?
+  userSOGIdentity    UserSOGIdentity?
+  userTitle          UserTitle?
+  userType           UserType?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+  //@@schema("system")
+
+  /// Only 1 key per namespace
+  // @@unique([ns(sort: Asc), key(sort: Asc)])
+  @@id([ns, key])
+  @@index([crowdinId])
+  @@index([key])
+}
+
+enum InterpolationOptions {
+  PLURAL
+  ORDINAL
+  CONTEXT
+}
+
+model OutsideAPIService {
+  service     String  @id
+  description String
+  urlPattern  String
+  apiKey      String?
+  active      Boolean @default(true)
+
+  instances OutsideAPI[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("system")
+}
+
+/// Define outside APIs in use
+model OutsideAPI {
+  id String @id @default(cuid())
+
+  active        Boolean @default(true)
+  apiIdentifier String
+
+  service     OutsideAPIService @relation(fields: [serviceName], references: [service], onDelete: Restrict, onUpdate: Cascade)
+  serviceName String
+
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?
+  orgLocation    OrgLocation?  @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("system")
+}
+
+/// Visibilty settings for user profile pages
+model FieldVisibility {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+
+  name           VisibilitySetting @default(NONE) /// All users
+  email          VisibilitySetting @default(NONE) /// for service provider/professional
+  image          VisibilitySetting @default(NONE) /// All users
+  ethnicity      VisibilitySetting @default(NONE) /// for LCR accounts
+  countryOrigin  VisibilitySetting @default(NONE) /// for LCR accounts
+  SOG            VisibilitySetting @default(NONE) /// for LCR accounts
+  communities    VisibilitySetting @default(NONE) /// for LCR accounts
+  currentCity    VisibilitySetting @default(NONE) /// for LCR accounts
+  currentGovDist VisibilitySetting @default(NONE) /// for LCR accounts
+  currentCountry VisibilitySetting @default(NONE) /// for LCR accounts
+  userType       VisibilitySetting @default(NONE) /// for specialized accounts
+  associatedOrg  VisibilitySetting @default(NONE) /// for service provider
+  orgTitle       VisibilitySetting @default(NONE) /// for service provider
+  createdAt      VisibilitySetting @default(NONE) /// to facilitate "User since..."
+
+  recordCreatedAt DateTime @default(now())
+  recordupdatedAt DateTime @updatedAt
+
+  //@@schema("system")
+}
+
+enum VisibilitySetting {
+  NONE
+  LOGGED_IN
+  PROVIDER
+  PUBLIC
+
+  //@@schema("system")
+}
+
+model SocialMediaLink {
+  id   String @id @default(cuid())
+  href String @unique
+  icon String
+
+  service   SocialMediaService @relation(fields: [serviceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  serviceId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  internalNotes InternalNote[]
+
+  //@@schema("system")
+}
+
+/// Internal notes - multipurpose
+model InternalNote {
+  id       String  @id @default(cuid())
+  legacyId String? @unique /// old ID from MongoDB
+  text     String
+
+  attribute                       Attribute?                     @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId                     String?
+  attributeCategory               AttributeCategory?             @relation(fields: [attributeCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeCategoryId             String?
+  attributeSupplement             AttributeSupplement?           @relation(fields: [attributeSupplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeSupplementId           String?
+  attributeSupplementDataSchema   AttributeSupplementDataSchema? @relation(fields: [attributeSupplementDataSchemaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeSupplementDataSchemaId String?
+  country                         Country?                       @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId                       String?
+  govDist                         GovDist?                       @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistId                       String?
+  govDistType                     GovDistType?                   @relation(fields: [govDistTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistTypeId                   String?
+  language                        Language?                      @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  languageId                      String?
+  organization                    Organization?                  @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId                  String?
+  orgEmail                        OrgEmail?                      @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgEmailId                      String?
+  orgHours                        OrgHours?                      @relation(fields: [orgHoursId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgHoursId                      String?
+  orgLocation                     OrgLocation?                   @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId                   String?
+  orgPhone                        OrgPhone?                      @relation(fields: [orgPhoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgPhoneId                      String?
+  orgPhoto                        OrgPhoto?                      @relation(fields: [orgPhotoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgPhotoId                      String?
+  orgReview                       OrgReview?                     @relation(fields: [orgReviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgReviewId                     String?
+  orgService                      OrgService?                    @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgServiceId                    String?
+  orgSocialMedia                  OrgSocialMedia?                @relation(fields: [orgSocialMediaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgSocialMediaId                String?
+  orgWebsite                      OrgWebsite?                    @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgWebsiteId                    String?
+  outsideApi                      OutsideAPI?                    @relation(fields: [outsideApiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  outsideApiId                    String?
+  outsideAPIService               OutsideAPIService?             @relation(fields: [outsideAPIServiceService], references: [service], onDelete: Cascade, onUpdate: Cascade)
+  outsideAPIServiceService        String?
+  permission                      Permission?                    @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId                    String?
+  phoneType                       PhoneType?                     @relation(fields: [phoneTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  phoneTypeId                     String?
+  serviceCategory                 ServiceCategory?               @relation(fields: [serviceCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceCategoryId               String?
+  serviceTag                      ServiceTag?                    @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceTagId                    String?
+  socialMediaLink                 SocialMediaLink?               @relation(fields: [socialMediaLinkId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  socialMediaLinkId               String?
+  socialMediaService              SocialMediaService?            @relation(fields: [socialMediaServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  socialMediaServiceId            String?
+  source                          Source?                        @relation(fields: [sourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sourceId                        String?
+  suggestion                      Suggestion?                    @relation(fields: [suggestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  suggestionId                    String?
+  translation                     TranslationKey?                @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
+  translationKey                  String?
+  translationNs                   String?
+  translationNamespace            TranslationNamespace?          @relation(fields: [translationNamespaceName], references: [name], onDelete: Cascade, onUpdate: Cascade)
+  translationNamespaceName        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("system")
+}
+
+model AuditTrail {
+  id        String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  table     String
+  table_oid Int                 @db.Oid
+  recordId  String[]
+  operation AuditTrailOperation
+  old       Json?
+  new       Json?
+  timestamp DateTime            @default(now()) @db.Timestamptz
+  actorId   String
+
+  @@index([recordId], type: Gin)
+  @@index([actorId])
+  @@index([table_oid])
+  @@index([timestamp], type: Brin)
+}
+
+enum AuditTrailOperation {
+  INSERT
+  UPDATE
+  DELETE
+}
+
+//
+// RELATION TABLES
+//
+
+// Permissions
+
+/// Assign default permissions to role
+model RolePermission {
+  role         UserRole   @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roleId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([roleId, permissionId])
+  @@index([permissionId, roleId])
+}
+
+/// Assign permissions to user
+model UserPermission {
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId String
+
+  authorized Boolean @default(false)
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, permissionId])
+  @@index([permissionId, userId])
+}
+
+/// Associate User to Org - w/ contact info
+// For claimed organizations / organization staff
+model UserToOrganization {
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId         String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String
+
+  authorized Boolean @default(false)
+
+  title      UserTitle? @relation(fields: [orgTitleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  orgTitleId String?
+  email      OrgEmail?  @relation(fields: [orgEmailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  orgEmailId String?    @unique
+  phone      OrgPhone?  @relation(fields: [orgPhoneId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  orgPhoneId String?    @unique
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, organizationId])
+  @@index([organizationId, userId])
+}
+
+/// For certain permissions, attach Organization
+model OrganizationPermission {
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId String
+
+  authorized Boolean @default(false)
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String
+
+  linkedAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("relation")
+
+  @@id([userId, permissionId, organizationId])
+  @@index([organizationId, userId])
+  @@index([userId, organizationId])
+}
+
+/// For certain permissions, attach Organization
+model LocationPermission {
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId String
+
+  authorized Boolean @default(false)
+
+  location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //@@schema("relation")
+
+  @@id([userId, permissionId, orgLocationId])
+  @@index([orgLocationId, userId])
+  @@index([userId, orgLocationId])
+}
+
+//
+// User links
+//
+
+/// For LCR accounts - link community to user profile
+model UserCommunityLink {
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      String
+  community   UserCommunity @relation(fields: [communityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  communityId String
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, communityId])
+}
+
+/// For LCR accounts, link SOG identity to user profile
+model UserSOGLink {
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId        String
+  sogIdentity   UserSOGIdentity @relation(fields: [sogIdentityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sogIdentityId String
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, sogIdentityId])
+}
+
+/// Link a user's shared list with other users who can view.
+model ListSharedWith {
+  user   User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+  list   UserSavedList @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  listId String
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, listId])
+  @@index([listId, userId])
+}
+
+/// Organizations saved to list
+model SavedOrganization {
+  list           UserSavedList @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  listId         String
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([listId, organizationId])
+  @@index([organizationId, listId])
+}
+
+/// Services saved to list
+model SavedService {
+  list      UserSavedList @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  listId    String
+  service   OrgService    @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId String
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([listId, serviceId])
+  @@index([serviceId, listId])
+}
+
+/// Role assigned to user
+model AssignedRole {
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+  role   UserRole @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roleId String
+
+  authorized Boolean @default(false)
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, roleId])
+  @@index([roleId, userId])
+}
+
+/// Link community to anon user survey
+model SurveyCommunity {
+  survey      UserSurvey    @relation(fields: [surveyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  surveyId    String
+  community   UserCommunity @relation(fields: [communityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  communityId String
+  //@@schema("relation")
+
+  @@id([surveyId, communityId])
+}
+
+/// Link ethnicity to anon user survey
+model SurveyEthnicity {
+  survey      UserSurvey    @relation(fields: [surveyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  surveyId    String
+  ethnicity   UserEthnicity @relation(fields: [ethnicityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ethnicityId String
+  //@@schema("relation")
+
+  @@id([surveyId, ethnicityId])
+}
+
+/// Link SOG identity to anon user survey
+model SurveySOG {
+  survey   UserSurvey      @relation(fields: [surveyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  surveyId String
+  sog      UserSOGIdentity @relation(fields: [sogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sogId    String
+  //@@schema("relation")
+
+  @@id([surveyId, sogId])
+}
+
+//
+// Organization
+//
+
+model OrganizationPhone {
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String
+  phone          OrgPhone     @relation(fields: [phoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  phoneId        String       @unique
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([organizationId, phoneId])
+  @@index([phoneId, organizationId])
+}
+
+model OrganizationEmail {
+  email          OrgEmail     @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgEmailId     String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([orgEmailId, organizationId])
+  @@index([organizationId, orgEmailId])
+}
+
+/// Link multiple languages to a website entry
+model OrgWebsiteLanguage {
+  website      OrgWebsite @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgWebsiteId String
+  language     Language   @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  languageId   String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([orgWebsiteId, languageId])
+  @@index([languageId, orgWebsiteId])
+}
+
+/// Link multiple languages to a phone number
+model OrgPhoneLanguage {
+  phone      OrgPhone @relation(fields: [orgPhoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgPhoneId String
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  languageId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([orgPhoneId, languageId])
+  @@index([languageId, orgPhoneId])
+}
+
+/// Link phone numbers to services
+model OrgServicePhone {
+  phone      OrgPhone   @relation(fields: [orgPhoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgPhoneId String
+  service    OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId  String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([orgPhoneId, serviceId])
+  @@index([serviceId, orgPhoneId])
+}
+
+/// Link emails to services
+model OrgServiceEmail {
+  email      OrgEmail   @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgEmailId String
+  service    OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId  String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([orgEmailId, serviceId])
+  @@index([serviceId, orgEmailId])
+}
+
+/// Link website to service
+model OrgServiceWebsite {
+  website      OrgWebsite @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgWebsiteId String
+  service      OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId    String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([orgWebsiteId, serviceId])
+  @@index([serviceId, orgWebsiteId])
+}
+
+/// Link emails to locations
+model OrgLocationEmail {
+  location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId String
+  email         OrgEmail    @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgEmailId    String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([orgEmailId, orgLocationId])
+  @@index([orgLocationId, orgEmailId])
+}
+
+model OrgLocationPhone {
+  location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId String
+  phone         OrgPhone    @relation(fields: [phoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  phoneId       String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([orgLocationId, phoneId])
+  @@index([phoneId, orgLocationId])
+}
+
+/// Link services to organizations
+model OrgLocationService {
+  location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId String
+  service       OrgService  @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId     String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([orgLocationId, serviceId])
+  @@index([serviceId, orgLocationId])
+  @@index([orgLocationId, active])
+  @@index([serviceId, active])
+  @@index([orgLocationId])
+  @@index([serviceId])
+  @@index([active, serviceId])
+}
+
+/// Link website to location
+model OrgLocationWebsite {
+  location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId String
+  website       OrgWebsite  @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgWebsiteId  String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([orgLocationId, orgWebsiteId])
+  @@index([orgWebsiteId, orgLocationId])
+}
+
+/// Link Social Media to Location
+model OrgLocationSocialMedia {
+  location      OrgLocation    @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId String
+  socialMedia   OrgSocialMedia @relation(fields: [socialMediaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  socialMediaId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([orgLocationId, socialMediaId])
+  @@index([socialMediaId, orgLocationId])
+}
+
+/// Link tags to services
+model OrgServiceTag {
+  service   OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId String
+  tag       ServiceTag @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  tagId     String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([serviceId, tagId])
+  @@index([serviceId, active])
+  @@index([tagId, active])
+  @@index([serviceId])
+  @@index([tagId])
+}
+
+/// Link countries to service areas
+model ServiceAreaCountry {
+  serviceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceAreaId String
+  country       Country     @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId     String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([serviceAreaId, countryId])
+  @@index([serviceAreaId, active])
+  @@index([active, serviceAreaId])
+  @@index([serviceAreaId, countryId, active])
+  @@index([serviceAreaId])
+  @@index([countryId])
+}
+
+/// Link Governing Districts to service areas
+model ServiceAreaDist {
+  serviceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceAreaId String
+  govDist       GovDist     @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistId     String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([serviceAreaId, govDistId])
+  @@index([serviceAreaId, active])
+  @@index([active, serviceAreaId])
+  @@index([serviceAreaId])
+  @@index([govDistId])
+  @@index([serviceAreaId, govDistId, active])
+}
+
+//
+// Attributes
+//
+
+/// Nesting attributes
+model AttributeNesting {
+  child    Attribute @relation("attribChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  childId  String
+  parent   Attribute @relation("attribParentToChild", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  parentId String
+
+  linkedAt DateTime @default(now())
+
+  @@id([parentId, childId])
+}
+
+/// Link attributes to category
+model AttributeToCategory {
+  attribute   Attribute         @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId String
+  category    AttributeCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId  String
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([attributeId, categoryId])
+  @@index([attributeId])
+  @@index([categoryId])
+}
+
+/// Link default attributes to service category
+model ServiceCategoryDefaultAttribute {
+  attribute   Attribute       @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId String
+  category    ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId  String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([attributeId, categoryId])
+}
+
+/// Link default attributes to service tag
+model ServiceTagDefaultAttribute {
+  attribute   Attribute  @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId String
+  service     ServiceTag @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId   String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+  //@@schema("relation")
+
+  @@id([attributeId, serviceId])
+}
+
+model ServiceTagCountry {
+  country   Country    @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId String
+  service   ServiceTag @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([countryId, serviceId])
+  @@index([countryId])
+  @@index([serviceId])
+}
+
+model ServiceTagNesting {
+  child   ServiceTag @relation("serviceChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  childId String
+
+  parent   ServiceTag @relation("serviceParentToChild", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  parentId String
+
+  linkedAt DateTime @default(now())
+
+  @@id([parentId, childId])
+}
+
+model DataMigration {
+  id          String   @id @default(cuid())
+  jobId       String   @unique
+  title       String
+  description String?
+  createdBy   String
+  appliedAt   DateTime @default(now())
+}
+
+view orgsearchresults {
+  id                String @unique
+  name              String
+  attributecategory Json
+  servicetags       Json
+}
+
+view geography_columns {
+  f_table_catalog    Unsupported("name")?
+  f_table_schema     Unsupported("name")?
+  f_table_name       Unsupported("name")?
+  f_geography_column Unsupported("name")?
+  coord_dimension    Int?
+  srid               Int?
+  type               String?
+
+  @@ignore
+}
+
+view geometry_columns {
+  f_table_catalog   String?              @db.VarChar(256)
+  f_table_schema    Unsupported("name")?
+  f_table_name      Unsupported("name")?
+  f_geometry_column Unsupported("name")?
+  coord_dimension   Int?
+  srid              Int?
+  type              String?              @db.VarChar(30)
+
+  @@ignore
+}
+
+view AttributesByCategory {
+  categoryId          String
+  categoryName        String
+  categoryDisplay     String
+  attributeId         String
+  attributeName       String
+  attributeKey        String
+  attributeNs         String
+  interpolationValues Json?
+  icon                String?
+  iconBg              String?
+  badgeRender         AttributeRender?
+  requireText         Boolean
+  requireLanguage     Boolean
+  requireGeo          Boolean
+  requireBoolean      Boolean
+  requireData         Boolean
+  dataSchemaName      String?
+  formSchema          Json?
+  canAttachTo         AttributeAttachment[]
+  dataSchema          Json?
+  attributeActive     Boolean
+  categoryActive      Boolean
+
+  @@unique([categoryId, attributeId])
+  @@map("attributes_by_category")
+}
+
+view user_refresh_token {
+  id            String  @unique
+  email         String  @unique
+  refresh_token String?
+}
+
+view user_access_token {
+  id           String  @unique
+  access_token String?
+}
+
+view pg_index_usage_rate {
+  relname                     String @unique
+  percent_of_times_index_used Int
+  rows_in_table               Int
+
+  @@ignore
+}
+
+view pg_cache_hit_rate {
+  heap_read Int   @unique
+  heap_hit  Int
+  ratio     Float
+
+  @@ignore
+}
+
+view pg_index_usage {
+  relation        String
+  indexname       String @unique
+  num_rows        Int
+  table_size      String
+  index_size      String
+  number_of_scans Int
+  tuples_read     Int
+  tuples_fetched  Int
+
+  @@ignore
+}
+
+// view pg_stat_statements_info {
+//   dealloc     BigInt?
+//   stats_reset DateTime? @db.Timestamptz(6)
+
+//   @@ignore
+// }
+
+// view pg_stat_statements {
+//   userid                 Int?     @db.Oid
+//   dbid                   Int?     @db.Oid
+//   toplevel               Boolean?
+//   queryid                BigInt?
+//   query                  String?
+//   plans                  BigInt?
+//   total_plan_time        Float?
+//   min_plan_time          Float?
+//   max_plan_time          Float?
+//   mean_plan_time         Float?
+//   stddev_plan_time       Float?
+//   calls                  BigInt?
+//   total_exec_time        Float?
+//   min_exec_time          Float?
+//   max_exec_time          Float?
+//   mean_exec_time         Float?
+//   stddev_exec_time       Float?
+//   rows                   BigInt?
+//   shared_blks_hit        BigInt?
+//   shared_blks_read       BigInt?
+//   shared_blks_dirtied    BigInt?
+//   shared_blks_written    BigInt?
+//   local_blks_hit         BigInt?
+//   local_blks_read        BigInt?
+//   local_blks_dirtied     BigInt?
+//   local_blks_written     BigInt?
+//   temp_blks_read         BigInt?
+//   temp_blks_written      BigInt?
+//   blk_read_time          Float?
+//   blk_write_time         Float?
+//   temp_blk_read_time     Float?
+//   temp_blk_write_time    Float?
+//   wal_records            BigInt?
+//   wal_fpi                BigInt?
+//   wal_bytes              Decimal? @db.Decimal
+//   jit_functions          BigInt?
+//   jit_generation_time    Float?
+//   jit_inlining_count     BigInt?
+//   jit_inlining_time      Float?
+//   jit_optimization_count BigInt?
+//   jit_optimization_time  Float?
+//   jit_emission_count     BigInt?
+//   jit_emission_time      Float?
+
+//   @@ignore
+// }

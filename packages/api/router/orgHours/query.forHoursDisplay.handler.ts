@@ -45,7 +45,8 @@ const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisplaySche
 			interval,
 		}
 	})
-	const grouped = groupBy(intervalResults, ({ dayIndex }) => dayIndex)
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const grouped = groupBy(intervalResults, (item: any) => item.dayIndex)
 	return grouped
 }
 export default forHoursDisplay

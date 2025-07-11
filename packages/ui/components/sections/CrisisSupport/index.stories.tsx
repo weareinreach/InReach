@@ -20,7 +20,9 @@ export const InternationalContainer = {
 
 		return (
 			<CrisisSupport role='international'>
-				{data?.map((item) => <CrisisSupport.International data={item} key={item.id} />)}
+				{data?.map((item) => (
+					<CrisisSupport.International data={item} key={item.id} />
+				))}
 			</CrisisSupport>
 		)
 	},
@@ -41,7 +43,9 @@ export const NationalContainer = {
 		const { data } = trpc.organization.getNatlCrisis.useQuery({ cca2: '' })
 		return (
 			<CrisisSupport role='national'>
-				{data?.map((item) => <CrisisSupport.National data={item} key={item.id} />)}
+				{data?.map((item) => (
+					<CrisisSupport.National data={item} key={item.id} />
+				))}
 			</CrisisSupport>
 		)
 	},

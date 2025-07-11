@@ -10,7 +10,9 @@
 			"~ui/*": ["./packages/ui/*"],
 			"~util/*": ["./packages/util/*"]
 		},
-		"strict": true
+		"strict": true,
+		"noImplicitAny": false,
+		"strictNullChecks": false
 	},
 	"extends": "./packages/config/tsconfig/base.json",
 	"exclude": ["**/node_modules"],

@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Прерывание беременности",
-		"abortion-providers": "Услуги по прерыванию беременности",
+		"CATEGORYNAME": "Аборт",
+		"abortion-providers": "Услуги аборта",
 		"financial-assistance": "Финансовая помощь",
 		"lodging-assistance": "Помощь в аренде жилья",
 		"mail-order-services": "Почтовые услуги",
@@ -52,6 +52,7 @@
 		"food-assistance": "Продовольственная помощь",
 		"food-delivery": "Доставка продовольствия",
 		"food-pantries": "Пища",
+		"hot-meals": "Горячие блюда",
 		"nutrition-education": "Образование в области питания"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Задержание иммигрантов",
 		"legal-advice": "Юридическая помощь",
 		"legal-hotlines": "Горячие линии по юридическим вопросам",
+		"legal-info-referrals": "Правовая информация и рефералы",
 		"name-and-gender-change": "Изменение имени и пола",
 		"refugee-claim": "Статус беженца",
 		"residency": "Вид на жительство",
@@ -108,6 +110,7 @@
 		"dental-care": "Стоматологическая помощь",
 		"fertility-and-family-planning-services": "Услуги по фертильности и планированию размера семьи",
 		"hiv-and-sexual-health": "ВИЧ-инфекции и сексуальное здоровье",
+		"medical-info-and-referrals": "Информация о медицинском обслуживании и направления",
 		"medical-clinics": "Медицинские клиники",
 		"obgyn-services": "Гинекологические услуги",
 		"physical-evaluations-for-asylum-claim": "Оценка физического здоровья для подачи на убежище",
@@ -119,13 +122,14 @@
 		"trans-health-hormone-therapy": "Гормональная терапия",
 		"trans-health-primary-care": "Услуги поликлиники",
 		"trans-health-speech-therapy": "Речевая терапия",
-		"trans-health-youth-care": "Уход за молодёжью"
+		"trans-health-youth-care": "Уход за трансгендерной молодёжью"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Психическое здоровье",
 		"bipoc-support-groups": "Группы поддержки для людей из сообщества «бай-пок» (Black, Indigenous and People of Color, BIPOC)",
 		"family-support-groups": "Группы поддержки семьи",
 		"hotlines": "Горячие линии",
+		"mental-health-info-referrals": "Информация о психическом здоровье и направления",
 		"private-therapy-and-counseling": "Психотерапия",
 		"psychological-evaluations-for-asylum-claim": "Оценка психологического здоровья для подачи на убежище",
 		"psychological-evaluations-for-refugee-claim": "Оценка психологического здоровья для подачи на статус беженца",

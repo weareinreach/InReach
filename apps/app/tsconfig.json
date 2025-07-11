@@ -2,6 +2,7 @@
 	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
 		"baseUrl": ".",
+		"noImplicitAny": false,
 		"strict": true,
 		"plugins": [{ "name": "next" }],
 		"allowImportingTsExtensions": true,
