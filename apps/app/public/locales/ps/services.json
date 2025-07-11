@@ -52,6 +52,7 @@
 		"food-assistance": "د خوړو مرسته",
 		"food-delivery": "د خوړو رسول",
 		"food-pantries": "د خواړو پخلنځي",
+		"hot-meals": "Hot meals",
 		"nutrition-education": "د تغذیې زده کړه"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "د کډوالۍ توقیف",
 		"legal-advice": "قانوني مشوره",
 		"legal-hotlines": "قانوني هټلاینونه",
+		"legal-info-referrals": "Legal information and referrals",
 		"name-and-gender-change": "نوم او د جندر مارکر بدلون",
 		"refugee-claim": "د کډوالو ادعا",
 		"residency": "د استوګنې ځای",
@@ -108,6 +110,7 @@
 		"dental-care": "د غاښونو پاملرنه",
 		"fertility-and-family-planning-services": "د زیږون او کورنۍ پلان کولو خدمتونه",
 		"hiv-and-sexual-health": "HIV او جنسي روغتیا",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "طبي کلینیکونه",
 		"obgyn-services": "د OBGYN خدمتونه",
 		"physical-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره فزیکي ارزونه",
@@ -126,6 +129,7 @@
 		"bipoc-support-groups": "د BIPOC ملاتړ ډلې",
 		"family-support-groups": "د کورنۍ ملاتړ ډلې",
 		"hotlines": "هاټ لاینونه",
+		"mental-health-info-referrals": "Mental health information and referrals",
 		"private-therapy-and-counseling": "شخصي درملنه او مشوره ورکول",
 		"psychological-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره رواني ارزونې",
 		"psychological-evaluations-for-refugee-claim": "د کډوالو د ادعا لپاره رواني ارزونه",

@@ -9,6 +9,7 @@ const locations = {
 const organizations = {
 	createNewOrgQuick: 'createOrg',
 	attachOrgAttributes: ['editTeamOrg', 'editAnyOrg', 'editSingleOrg'],
+	dataPortalManager: 'dataPortalManager',
 } satisfies PermissionDefs
 
 const orgEmails = {
