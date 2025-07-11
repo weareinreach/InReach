@@ -154,7 +154,7 @@ const QuickLink = () => {
 
 	const handleMutation = () => {
 		const updated: ApiInput['quicklink']['updateEmailData'][number][] = compact(
-			form.values.data.map((record: EmailRecordType, i) => {
+			form.values.data.map((record: EmailRecordType, i: number) => {
 				if (form.isDirty(`data.${i}`)) {
 					const {
 						attachedLocations,
