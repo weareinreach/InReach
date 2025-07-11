@@ -121,7 +121,7 @@
 		"@types/eslint": "8.56.12",
 		"@types/google.maps": "3.58.1",
 		"@types/luxon": "3.6.2",
-		"@types/node": "20.19.6",
+		"@types/node": "20.19.7",
 		"@types/probe-image-size": "7.2.5",
 		"@types/react": "18.3.23",
 		"@types/react-dom": "18.3.7",
@@ -171,7 +171,7 @@
 		"tsx": "4.20.3",
 		"type-fest": "4.41.0",
 		"typescript": "5.8.3",
-		"webpack": "5.100.0",
+		"webpack": "5.100.1",
 		"zod": "3.25.76"
 	},
 	"peerDependencies": {

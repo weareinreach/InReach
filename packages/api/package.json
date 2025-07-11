@@ -58,7 +58,7 @@
 		"@types/eslint": "8.56.12",
 		"@types/google.maps": "3.58.1",
 		"@types/luxon": "3.6.2",
-		"@types/node": "20.19.6",
+		"@types/node": "20.19.7",
 		"@types/terraformer__wkt": "2.0.3",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",

@@ -24,7 +24,7 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.56.12",
-		"@types/node": "20.19.6",
+		"@types/node": "20.19.7",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.1",
