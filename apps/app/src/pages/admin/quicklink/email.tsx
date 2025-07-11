@@ -166,7 +166,7 @@ const QuickLink = () => {
 						published,
 					} = record
 					const originalRecord = data?.results.find(
-						(original) => original.orgId === orgId && original.emailId === emailId
+						(original: EmailRecordType) => original.orgId === orgId && original.emailId === emailId
 					)
 					if (!originalRecord) return
 
