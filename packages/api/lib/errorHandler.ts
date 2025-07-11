@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
 import { ZodError } from 'zod'
 
-import { Prisma } from '@weareinreach/db' // Ensure Prisma is correctly imported
+import { Prisma } from '@weareinreach/db'
 import { createLoggerInstance } from '@weareinreach/util/logger'
 
 import { PRISMA_ERROR_CODES } from './prismaErrorCodes'
@@ -24,14 +24,12 @@ export const handleError = (error: unknown) => {
 
 	// Prisma db errors
 	if (error instanceof Prisma.PrismaClientKnownRequestError) {
-		// Introduce a new constant here after narrowing the type
-		const prismaKnownError = error
+		// THIS IS THE MOST RELIABLE FIX GIVEN YOUR SITUATION:
+		// Explicitly assert the type on the error variable for destructuring and property access
+		const prismaError = error as Prisma.PrismaClientKnownRequestError // Assert here
+		const { message, cause } = prismaError // Destructure from the asserted variable
 
-		// Now destructure from the correctly narrowed variable
-		const { message, cause } = prismaKnownError
-
-		// Also use the new variable for accessing 'code'
-		const code = prismaErrorMap.get(prismaKnownError.code) ?? 'INTERNAL_SERVER_ERROR'
+		const code = prismaErrorMap.get(prismaError.code) ?? 'INTERNAL_SERVER_ERROR' // Access property from asserted variable
 		throw new TRPCError({ code, message, cause })
 	}
 
@@ -44,13 +42,9 @@ export const handleError = (error: unknown) => {
 	if (error instanceof Error) {
 		throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message, cause: error.cause })
 	} else {
-		// Consider if you really want to stringify non-Error objects that might be complex
-		// Or if you want a more specific catch for custom error types
 		if (typeof error === 'object' && error !== null) {
-			// Added null check for safety
 			error = JSON.stringify(error)
 		} else if (typeof error !== 'string') {
-			// Ensure it's convertible to string
 			error = String(error)
 		}
 		throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: `${error}` })
