@@ -82,6 +82,7 @@
 		"natl-find-help-now": "Encontre ajuda agora",
 		"natl-these-verified": "<Text>Esses recursos verificados podem ajudar a comunidade LGBTQ+ nos Estados Unidos. Estes serviços são <strong>disponíveis remotamente, confidenciais,</strong> e <strong>gratuitos</strong>.</Text>",
 		"outside-service-area": "A inreach não opera em {{country}}",
+		"only-in-north-america": "O alcance só opera na América do Norte.",
 		"who-this-serves": "<Text><strong>A quem este recurso atende:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Localização atual",
@@ -256,6 +257,33 @@
 	"questions": "Perguntas?",
 	"quick-promo-body": "<textUtility1>💚 Salvar e compartilhar listas de recursos personalizadas</textUtility1>\n<textUtility1>💬 Fazer uma classificação ou avaliação pública das organizações</textUtility1>\n<textUtility1>🏠 Sugerir organizações em sua área</textUtility1>\n<textUtility1>🔗 Reivindicar o perfil da sua organização (em breve!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Você precisa logar para fazer isso.</title2>\n<textDarkGray>Com uma conta gratuita você pode desbloquear recursos adicionais:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Links recomendados",
+		"body": "Encontre mais informações sobre seus direitos.",
+		"buttons": {
+			"btn-1": {
+				"text": "Mapa de Risco Anti-Trans (Erin Re)",
+				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "Centro de Documentos ID (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "LGBTQ+ Direitos dos Imigrantes (Qualidade da Imigração)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Recursos de Asilo (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Direitos dos imigrantes (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Serviços disponíveis remotamente",
 	"remote-services-page-title": "Serviços remotos",
 	"reset-password": "Redefinir sua senha",
@@ -332,8 +360,8 @@
 		],
 		"modal-body-temp": [
 			"<title3>Que tipo de conta você gostaria de criar?</title3>",
-			"<group>\n<button data-option='individual'>Pessoa</button>\n<button data-option='provider'>Profissional/Pessoa provedora</button>\n</group>",
-			"<loginLink>Já tem uma conta?</loginLink>"
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Profissional/Fornecedor</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
 		],
 		"name-use-any": "Use qualquer nome com o qual você se sinta confortável.",
 		"name_alias": "Nome ou apelido",

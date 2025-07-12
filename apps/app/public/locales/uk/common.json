@@ -84,7 +84,7 @@
 		"natl-find-help-now": "Знайти допомогу зараз",
 		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
 		"outside-service-area": "InReach does not operate in {{country}}",
-		"only-in-north-america": "InReach only operates in North America.",
+		"only-in-north-america": "InReach працює лише в Північній Америці.",
 		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Поточне місцезнаходження",
@@ -259,6 +259,33 @@
 	"questions": "Питання?",
 	"quick-promo-body": "<textUtility1>💚 Зберігайте та діліться персоналізованими списками ресурсів</textUtility1>\n<textUtility1>💬 Залиште публічний рейтинг/відгуки про організації</textUtility1>\n<textUtility1>🏠 Запропонуйте організації у вашому регіоні</textUtility1>\n<textUtility1>🔗 Запретендуйте на сторінку профілю своєї організації (Скоро!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Ви повинні увійти, щоб зробити це.</title2>\n<textDarkGray>З безкоштовним обліковим записом InReach ви зможете розблокувати додаткові функції:</textDarkGray>",
+	"recommended-links": {
+		"emoji": "🌈",
+		"title": "Рекомендовані посилання",
+		"body": "Знайдіть більше інформації про ваші права.",
+		"buttons": {
+			"btn-1": {
+				"text": "Антитрансакційна карта Ризику (стирання новин)",
+				"link": "https://www.erinthemorning.com/p/post-election-2024-anti-trans-risk"
+			},
+			"btn-2": {
+				"text": "Центр документів ID (A4TE)",
+				"link": "https://transequality.org/documents"
+			},
+			"btn-3": {
+				"text": "Права LGBTQ+ Іммігрантів (імміграційна рівність)",
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
+			},
+			"btn-4": {
+				"text": "Asylum Ресурси (CWS)",
+				"link": "https://asylumandborderresources.org/"
+			},
+			"btn-5": {
+				"text": "Права іммігрантів (ACLU)",
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
+			}
+		}
+	},
 	"remote-services": "Послуги, доступні віддалено",
 	"remote-services-page-title": "Дистанційні послуги",
 	"reset-password": "Скидання пароля",
@@ -334,9 +361,9 @@
 			"<loginLink>Вже є обліковий запис?</loginLink>"
 		],
 		"modal-body-temp": [
-			"<title3>Який тип облікового запису ви хотіли б створити?</title3>",
-			"<group>\n<button data-option='individual'>Індивідуальний</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
-			"<loginLink>Вже є обліковий запис?</loginLink>"
+			"<title3>Який тип облікового запису ви бажаєте створити?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
 		],
 		"name-use-any": "Використовуйте будь-яке ім'я, яке вам зручно.",
 		"name_alias": "Ім'я або псевдонім",
