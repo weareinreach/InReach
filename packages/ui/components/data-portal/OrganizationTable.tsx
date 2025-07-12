@@ -194,12 +194,22 @@ const RowAction = ({ row }: RowActionProps) => {
 	return (
 		<Group noWrap spacing={8}>
 			<Tooltip label='View' withinPortal>
-				<ActionIcon component={Link} href={getViewUrl()} target='_blank'>
+				<ActionIcon
+					component={Link}
+					href={getViewUrl()}
+					// @ts-expect-error ignore the blank target error
+					target='_blank'
+				>
 					<Icon icon='carbon:search' />
 				</ActionIcon>
 			</Tooltip>
 			<Tooltip label='Edit' withinPortal>
-				<ActionIcon component={Link} href={getEditUrl()} target='_blank'>
+				<ActionIcon
+					component={Link}
+					href={getEditUrl()}
+					// @ts-expect-error ignore the blank target error
+					target='_blank'
+				>
 					<Icon icon='carbon:edit' />
 				</ActionIcon>
 			</Tooltip>
