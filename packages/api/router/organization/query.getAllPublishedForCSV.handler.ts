@@ -21,7 +21,7 @@ interface OrganizationCsvExportRow {
 	// Add any other columns present in your view here
 }
 
-const getAllPublishedForCSV = async ({ ctx }: TRPCHandlerParams<TGetAllPublishedForCSVSchema>) => {
+const getAllPublishedForCSV = async ({ input }: TRPCHandlerParams<TGetAllPublishedForCSVSchema>) => {
 	// Use $queryRaw to execute a raw SQL query against your database view
 	const results = await prisma.$queryRaw<OrganizationCsvExportRow[]>(
 		Prisma.sql`

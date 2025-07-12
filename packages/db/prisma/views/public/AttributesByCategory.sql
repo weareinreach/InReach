@@ -14,13 +14,9 @@ SELECT
   a."requireGeo",
   a."requireBoolean",
   a."requireData",
-  asds.definition AS "formSchema",
+  asds.definition AS "dataSchema",
   tkey."interpolationValues",
-  asds.tag AS "dataSchemaName",
-  a."canAttachTo",
-  asds.schema AS "dataSchema",
-  a.active AS "attributeActive",
-  ac.active AS "categoryActive"
+  asds.tag AS "dataSchemaName"
 FROM
   (
     (
@@ -34,6 +30,11 @@ FROM
       LEFT JOIN "AttributeSupplementDataSchema" asds ON ((asds.id = a."requiredSchemaId"))
     )
     LEFT JOIN "TranslationKey" tkey ON ((tkey.key = a."tsKey"))
+  )
+WHERE
+  (
+    (a.active = TRUE)
+    AND (ac.active = TRUE)
   )
 ORDER BY
   ac.tag,

@@ -79,13 +79,13 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 			<Group noWrap spacing={8}>
 				<CsvDownload
 					label='All Published Organizations'
-					fileName='all_published_organizations'
+					fileName='all_published_organizations.csv'
 					useMutationHook={() => api.organization.getAllPublishedForCSV.useMutation()}
 					permissionKey='dataPortalManager'
 				/>
 				<CsvDownload
 					label='All Unpublished Organizations'
-					fileName='all_unpublished_organizations'
+					fileName='all_unpublished_organizations.csv'
 					useMutationHook={() => api.organization.getAllUnpublishedForCSV.useMutation()}
 					permissionKey='dataPortalManager'
 				/>
