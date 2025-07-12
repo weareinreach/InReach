@@ -79,7 +79,13 @@ export const Footer = () => {
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
 	const support = [
-		<Link key={0} href='/suggest' target='_self' {...linkVar}>
+		<Link
+			key={0}
+			href='/suggest'
+			// @ts-expect-error ignore the blank target error
+			target='_self'
+			{...linkVar}
+		>
 			{t('footer.suggest-org', { defaultValue: 'Suggest an organization' })}
 		</Link>,
 		<Link key={1} href='https://www.surveymonkey.com/r/96QD8ZQ' external {...linkVar}>

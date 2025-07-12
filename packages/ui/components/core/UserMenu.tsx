@@ -138,11 +138,21 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 							{canAccessDataPortal && (
 								<>
 									<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
-									<Menu.Item component={Link} href='/admin' target='_self'>
+									<Menu.Item
+										component={Link}
+										href='/admin'
+										// @ts-expect-error ignore the blank target error
+										target='_self'
+									>
 										{t('user-menu.data-portal')}
 									</Menu.Item>
 									{isEditablePage && (
-										<Menu.Item component={Link} onClick={handleEditModeEntry} target='_self'>
+										<Menu.Item
+											component={Link}
+											onClick={handleEditModeEntry}
+											// @ts-expect-error ignore the blank target error
+											target='_self'
+										>
 											{t('user-menu.edit-page')}
 										</Menu.Item>
 									)}
@@ -150,13 +160,28 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 									<Menu.Label>{t('user-menu.user-options')}</Menu.Label>
 								</>
 							)}
-							<Menu.Item component={Link} href='/account/saved' target='_self'>
+							<Menu.Item
+								component={Link}
+								href='/account/saved'
+								// @ts-expect-error ignore the blank target error
+								target='_self'
+							>
 								{t('words.saved')}
 							</Menu.Item>
-							<Menu.Item component={Link} href='/account/reviews' target='_self'>
+							<Menu.Item
+								component={Link}
+								href='/account/reviews'
+								// @ts-expect-error ignore the blank target error
+								target='_self'
+							>
 								{t('words.reviews')}
 							</Menu.Item>
-							<Menu.Item component={Link} href='/account' target='_self'>
+							<Menu.Item
+								component={Link}
+								href='/account'
+								// @ts-expect-error ignore the blank target error
+								target='_self'
+							>
 								{t('words.settings')}
 							</Menu.Item>
 							<Menu.Item component={Link} external onClick={handleSignout}>
