@@ -217,6 +217,7 @@ const QuickLink = () => {
 											}}
 											// @ts-expect-error ignore the blank target error
 											target='_blank'
+											rel='noopener noreferrer'
 											variant={variants.Link.inheritStyle}
 										>
 											<Icon icon='carbon:launch' />
