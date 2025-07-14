@@ -85,7 +85,7 @@ export const MultiSelectPopover = <T extends FieldValues>({
 						onChange={handleCheckboxGroupChange}
 						{...field}
 					>
-						{data?.map((checkboxProps) => <Checkbox key={checkboxProps.value} {...checkboxProps} />)}
+						{data?.map((checkboxProps) => <Checkbox key={checkboxProps.value} {...checkboxProps} />)}{' '}
 					</Checkbox.Group>
 				</ScrollArea.Autosize>
 			</Popover.Dropdown>

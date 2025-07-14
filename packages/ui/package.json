@@ -133,6 +133,7 @@
 		"css-loader": "6.11.0",
 		"dayjs": "1.11.13",
 		"dotenv": "16.4.5",
+		"dotenv-cli": "7.4.2",
 		"embla-carousel-react": "7.1.0",
 		"eslint": "8.57.1",
 		"i18next": "23.16.3",
