@@ -194,6 +194,7 @@ const Home: NextPageWithOptions = () => {
 									external
 									variant={variants.Link.inheritStyle}
 									href='https://inreach.org/introducing-the-redesigned-inreach-app'
+									// @ts-expect-error ignore the blank target error
 									target='_blank'
 								></Link>
 							),
@@ -202,6 +203,7 @@ const Home: NextPageWithOptions = () => {
 									external
 									variant={variants.Link.inheritStyle}
 									href='https://inreach.kindful.com/embeds/9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b'
+									// @ts-expect-error ignore the blank target error
 									target='_blank'
 								></Link>
 							),
@@ -210,6 +212,7 @@ const Home: NextPageWithOptions = () => {
 									external
 									variant={variants.Link.inheritStyle}
 									href='https://transmascfutures.inreach.org'
+									// @ts-expect-error ignore the blank target error
 									target='_blank'
 								></Link>
 							),

@@ -39,7 +39,7 @@
 	},
 	"financial-assistance": {
 		"CATEGORYNAME": "Asistencia Financiera",
-		"bail-funds": "Fondos de fianza",
+		"bail-funds": "Fondo de fianza y bonos",
 		"healthcare-and-insurance": "Asistencia médica y seguro",
 		"housing-and-utilities": "Vivienda y utilidades",
 		"legal-fees": "Honorarios legales",
@@ -52,6 +52,7 @@
 		"food-assistance": "Ayuda alimentaria",
 		"food-delivery": "Entrega de comida",
 		"food-pantries": "Despensas de comida",
+		"hot-meals": "Comidas calientes",
 		"nutrition-education": "Educación nutricional"
 	},
 	"housing": {
@@ -91,6 +92,7 @@
 		"immigration-detention": "Detención de inmigrantes",
 		"legal-advice": "Asesoramiento legal",
 		"legal-hotlines": "Líneas directas legales",
+		"legal-info-referrals": "Información legal y referencias",
 		"name-and-gender-change": "Cambio de nombre y marcador de género",
 		"refugee-claim": "Solicitud de Refugio",
 		"residency": "Residencia",
@@ -108,6 +110,7 @@
 		"dental-care": "Cuidado dental",
 		"fertility-and-family-planning-services": "Servicios de fertilidad y planificación familiar",
 		"hiv-and-sexual-health": "VIH y salud sexual",
+		"medical-info-and-referrals": "Información médica y referencias",
 		"medical-clinics": "Clínicas médicas",
 		"obgyn-services": "Servicios de ginecología y obstetricia (OBGYN)",
 		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas para la solicitud de asilo",
@@ -119,13 +122,14 @@
 		"trans-health-hormone-therapy": "Salud trans - terapia hormonal",
 		"trans-health-primary-care": "Salud trans - atención primaria",
 		"trans-health-speech-therapy": "Salud trans - terapia de voz",
-		"trans-health-youth-care": "Salud trans - atención a jóvenes"
+		"trans-health-youth-care": "Salud trans para jóvenes"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Salud mental",
 		"bipoc-support-groups": "Grupos de apoyo para personas BIPOC (Negras, Indígenas y Personas de Color)",
 		"family-support-groups": "Grupos de apoyo familiar",
 		"hotlines": "Líneas de acceso",
+		"mental-health-info-referrals": "Información sobre la salud mental y referencias",
 		"private-therapy-and-counseling": "Terapia y consejería privada",
 		"psychological-evaluations-for-asylum-claim": "Evaluaciones psicológicas para solicitudes de asilo",
 		"psychological-evaluations-for-refugee-claim": "Evaluaciones psicológicas para solicitudes de refugio",

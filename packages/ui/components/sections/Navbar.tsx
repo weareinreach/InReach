@@ -210,7 +210,12 @@ export const Navbar = () => {
 			<MobileNav className={classes.mobileNav} />
 			<Container className={classes.desktopNav} fluid maw='100%'>
 				<Flex justify='space-between' align='center' pt={5}>
-					<Link href='/' target='_self' py={8}>
+					<Link
+						href='/'
+						// @ts-expect-error ignore the blank target error
+						target='_self'
+						py={8}
+					>
 						<Image
 							src={InReachLogo}
 							width={100}
@@ -221,7 +226,12 @@ export const Navbar = () => {
 					</Link>
 					<Group spacing={40} noWrap align='center'>
 						<UserMenu />
-						<Link href='https://www.google.com' target='_self' variant={variants.Link.inheritStyle}>
+						<Link
+							href='https://www.google.com'
+							// @ts-expect-error ignore the blank target error
+							target='_self'
+							variant={variants.Link.inheritStyle}
+						>
 							<Button variant='accent' onClick={navbarEvent.safetyExit} id='safety-exit'>
 								{!router.isFallback && t('safety-exit')}
 							</Button>

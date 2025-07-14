@@ -56,7 +56,13 @@ const SupportPage = () => {
 		],
 		[
 			0,
-			<Link key={0} href='/suggest' target='_self' {...linkVar}>
+			<Link
+				key={0}
+				href='/suggest'
+				// @ts-expect-error ignore the blank target error
+				target='_self'
+				{...linkVar}
+			>
 				<SupportItem tKey='footer.suggest-org' />
 			</Link>,
 		],
