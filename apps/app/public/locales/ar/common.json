@@ -434,7 +434,8 @@
 		"admin-options": "خيارات المدير",
 		"data-portal": "الصفحة الرئيسية لبوابة البيانات",
 		"edit-page": "تحرير هذه الصفحة",
-		"user-options": "خيارات المستخدم"
+		"user-options": "خيارات المستخدم",
+		"user-management": "إدارة المستخدم"
 	},
 	"verify-account": {
 		"verified": "تم تأكيد الحساب!",

@@ -430,7 +430,8 @@
 		"admin-options": "Admin-Optionen",
 		"data-portal": "Datenportal-Startseite",
 		"edit-page": "Diese Seite bearbeiten",
-		"user-options": "Benutzeroptionen"
+		"user-options": "Benutzeroptionen",
+		"user-management": "Benutzerverwaltung"
 	},
 	"verify-account": {
 		"verified": "Konto überprüft!",

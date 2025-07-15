@@ -429,7 +429,8 @@
 		"admin-options": "管理选项",
 		"data-portal": "数据门户主页",
 		"edit-page": "编辑此页面",
-		"user-options": "用户选项"
+		"user-options": "用户选项",
+		"user-management": "用户管理"
 	},
 	"verify-account": {
 		"verified": "账户已验证！",
