@@ -430,7 +430,8 @@
 		"admin-options": "Opções de Administração",
 		"data-portal": "Início do Portal de Dados",
 		"edit-page": "Editar esta página",
-		"user-options": "Opções do Usuário"
+		"user-options": "Opções do Usuário",
+		"user-management": "Gerenciamento de usuários"
 	},
 	"verify-account": {
 		"verified": "Conta verificada!",
