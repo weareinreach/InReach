@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { getServerSession } from '@weareinreach/auth'
 import { ActionButtons } from '@weareinreach/ui/components/core/ActionButtons'
@@ -97,6 +97,35 @@ const SavedLists = () => {
 		)
 	}
 
+	let organizationsContent
+	if (isLoading) {
+		organizationsContent = <SavedResultLoading />
+	} else if (queryResult?._count?.organizations === 0) {
+		organizationsContent = <Text>{t('list.no-orgs')}</Text>
+	} else {
+		// Assert queryResult and its organizations property are non-null/non-undefined here
+		organizationsContent = queryResult!.organizations!.map((result) => {
+			return <SavedOrgResultCard key={result.id} result={result} loading={false} />
+		})
+	}
+
+	// Refactored content for 'services' tab
+	let servicesContent
+	if (isLoading) {
+		servicesContent = (
+			<Center>
+				<Loader />
+			</Center>
+		)
+	} else if (queryResult?._count?.services === 0) {
+		servicesContent = <Text>{t('list.no-services')}</Text>
+	} else {
+		// Assert queryResult and its services property are non-null/non-undefined here
+		servicesContent = queryResult!.services!.map((result) => {
+			return <SavedServiceResultCard key={result.id} result={result} loading={false} />
+		})
+	}
+
 	return (
 		<Container size='lg' px='md' py='lg' style={{ minWidth: '100%' }}>
 			<Stack spacing='lg' style={{ paddingTop: '3rem' }}>
@@ -131,28 +160,10 @@ const SavedLists = () => {
 						<Tabs.Tab value='services'>{t('words.services')}</Tabs.Tab>
 					</Tabs.List>
 					<Tabs.Panel value='organizations' pt='xs'>
-						{isLoading ? (
-							<SavedResultLoading />
-						) : queryResult?._count?.organizations === 0 ? (
-							<Text>{t('list.no-orgs')}</Text>
-						) : (
-							queryResult?.organizations?.map((result) => {
-								return <SavedOrgResultCard key={result.id} result={result} />
-							})
-						)}
+						{organizationsContent}
 					</Tabs.Panel>
 					<Tabs.Panel value='services' pt='xs'>
-						{isLoading ? (
-							<Center>
-								<Loader />
-							</Center>
-						) : queryResult?._count?.services === 0 ? (
-							<Text>{t('list.no-services')}</Text>
-						) : (
-							queryResult?.services?.map((result) => {
-								return <SavedServiceResultCard key={result.id} result={result} />
-							})
-						)}{' '}
+						{servicesContent}
 					</Tabs.Panel>
 				</Tabs>
 			</Stack>

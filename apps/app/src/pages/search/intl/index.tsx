@@ -18,6 +18,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
@@ -139,6 +140,7 @@ const OutsideServiceArea = () => {
 	)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 	const ssg = await trpcServerClient({ session: null })
 	const [i18n] = await Promise.allSettled([

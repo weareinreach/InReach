@@ -83,6 +83,9 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
 		has: 'some',
 	})
+	const canAccessUserManagement =
+		checkPermissions({ session, permissions: ['root'], has: 'all' }) &&
+		session?.user.email.endsWith('@inreach.org')
 	const editablePaths: (typeof router.pathname)[] = ['/org/[slug]', '/org/[slug]/[orgLocationId]']
 	const isEditablePage = editablePaths.includes(router.pathname)
 	const getEditPathname = useCallback((): typeof router.pathname => {
@@ -138,6 +141,16 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 							{canAccessDataPortal && (
 								<>
 									<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
+									{canAccessUserManagement && (
+										<Menu.Item
+											component={Link}
+											href='/admin/management'
+											// @ts-expect-error ignore the blank target error
+											target='_self'
+										>
+											{t('user-menu.user-management')}
+										</Menu.Item>
+									)}
 									<Menu.Item
 										component={Link}
 										href='/admin'
@@ -150,7 +163,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 										<Menu.Item
 											component={Link}
 											onClick={handleEditModeEntry}
-											// @ts-expect-error ignore the blank target error
+											// @ts-expect-error ignore the self target error
 											target='_self'
 										>
 											{t('user-menu.edit-page')}
@@ -163,7 +176,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 							<Menu.Item
 								component={Link}
 								href='/account/saved'
-								// @ts-expect-error ignore the blank target error
+								// @ts-expect-error ignore the self target error
 								target='_self'
 							>
 								{t('words.saved')}
@@ -171,7 +184,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 							<Menu.Item
 								component={Link}
 								href='/account/reviews'
-								// @ts-expect-error ignore the blank target error
+								// @ts-expect-error ignore the self target error
 								target='_self'
 							>
 								{t('words.reviews')}
@@ -179,7 +192,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 							<Menu.Item
 								component={Link}
 								href='/account'
-								// @ts-expect-error ignore the blank target error
+								// @ts-expect-error ignore the self target error
 								target='_self'
 							>
 								{t('words.settings')}
