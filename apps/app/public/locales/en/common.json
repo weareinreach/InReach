@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} organization"
 	},
+	"admin": {
+		"tab-organizations": "Organizations",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
 	"alert-message": "Alert message",
 	"alert-message-1": "<strong>COVID-19 policy:</strong> With news and best practices for COVID-19 prevention changing rapidly each day, Whitman-Walker Health continues to update their services to reflect prevention recommendations. Please check their website for the most up-to-date information.",
@@ -434,6 +439,7 @@
 	"user-avatar": "User avatar",
 	"user-menu": {
 		"admin-options": "Admin Options",
+		"csv-downloads": "CSV Downloads",
 		"data-portal": "Data Portal Home",
 		"edit-page": "Edit this page",
 		"user-options": "User Options",

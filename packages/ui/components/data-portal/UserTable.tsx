@@ -83,7 +83,7 @@ const PasswordResetModal = ({ email }: { email: string }) => {
 	)
 }
 
-export const ManagementTable = () => {
+export const UserTable = () => {
 	const { data: userData } = api.user.forUserTable.useQuery()
 
 	const columns = useMemo<MRT_ColumnDef<UserDataRecord>[]>(
