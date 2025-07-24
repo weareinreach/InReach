@@ -141,26 +141,6 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 							{canAccessDataPortal && (
 								<>
 									<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
-									{canAccessUserManagement && (
-										<>
-											<Menu.Item
-												component={Link}
-												href='/admin/management'
-												// @ts-expect-error ignore the blank target error
-												target='_self'
-											>
-												{t('user-menu.user-management')}
-											</Menu.Item>
-											<Menu.Item
-												component={Link}
-												href='/admin/download'
-												// @ts-expect-error ignore the blank target error
-												target='_self'
-											>
-												{t('user-menu.csv-downloads')}
-											</Menu.Item>
-										</>
-									)}
 									<Menu.Item
 										component={Link}
 										href='/admin'
