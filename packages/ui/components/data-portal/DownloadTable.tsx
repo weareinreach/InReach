@@ -1,7 +1,7 @@
 import { Group, Stack, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
-import { CsvDownload } from '~ui/components/core/ActionButtons/CsvDownload'
+import { CsvDownload } from '~ui/components/data-portal/CsvDownload'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 // Define the props interface for your DownloadTable
@@ -22,13 +22,13 @@ export const DownloadTable = (props: DownloadTableProps) => {
 				<CsvDownload
 					label='All Published Organizations'
 					fileName='all_published_organizations'
-					useMutationHook={() => api.organization.getAllPublishedForCSV.useMutation()}
+					useMutationHook={() => api.csvDownload.getAllPublishedForCSV.useMutation()}
 					permissionKey='dataPortalManager'
 				/>
 				<CsvDownload
 					label='All Unpublished Organizations'
 					fileName='all_unpublished_organizations'
-					useMutationHook={() => api.organization.getAllUnpublishedForCSV.useMutation()}
+					useMutationHook={() => api.csvDownload.getAllUnpublishedForCSV.useMutation()}
 					permissionKey='dataPortalManager'
 				/>
 			</Group>

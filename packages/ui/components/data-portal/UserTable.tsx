@@ -92,12 +92,10 @@ const DataPortalAccessSelect = ({
 	const handleLevelChange = useCallback(
 		(newLevelValue: string | null) => {
 			const selectedOption = DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.value === newLevelValue)
-			console.log('Selected Option ID:', selectedOption?.id)
 
 			if (selectedOption && selectedOption.value === 'none') {
 				// Explicitly type 'action' as 'deny'
 				const payload: { userId: string; action: 'deny'; permissionId?: string } = { userId, action: 'deny' }
-				console.log('Calling toggleDataPortalAccess with (deny):', payload)
 				updateAccess.mutate(payload)
 			} else if (selectedOption && selectedOption.id) {
 				// Explicitly type 'action' as 'allow'
@@ -106,10 +104,7 @@ const DataPortalAccessSelect = ({
 					action: 'allow',
 					permissionId: selectedOption.id,
 				}
-				console.log('Calling toggleDataPortalAccess with (allow):', payload)
 				updateAccess.mutate(payload)
-			} else {
-				console.error(`Error: Invalid level selected or missing ID for level: ${newLevelValue}`)
 			}
 		},
 		[updateAccess, userId]
@@ -117,7 +112,7 @@ const DataPortalAccessSelect = ({
 
 	const filteredAccessOptions = useMemo(() => {
 		return DATA_PORTAL_ACCESS_OPTIONS.map((option) => ({ value: option.value, label: option.label }))
-	}, [loggedInUserPermissions])
+	}, [])
 
 	if (filteredAccessOptions.length === 0) {
 		return (

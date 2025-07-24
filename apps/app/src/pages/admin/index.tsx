@@ -79,17 +79,13 @@ const AdminIndex: NextPage = () => {
 			setActiveTab(null)
 		}
 	}, [activeTab, canAccessOrganizations, canAccessUsers, canAccessDownloads])
-	// Get user's permissions as a comma-separated string for display
-	const userPermissionsString = session?.user?.permissions?.join(', ') || 'No Permissions'
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { title: 'Data Admin' })}</title>
 			</Head>
 			<Stack spacing={40} miw='80vw'>
-				<Title order={2}>
-					{t('welcome-name', { name: session?.user?.name })} (Permissions: {userPermissionsString})
-				</Title>
+				<Title order={2}>{t('welcome-name', { name: session?.user?.name })}</Title>
 				<Tabs value={activeTab} onTabChange={setActiveTab} keepMounted={false}>
 					<Tabs.List>
 						{canAccessOrganizations && (
