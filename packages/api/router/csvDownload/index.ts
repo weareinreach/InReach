@@ -25,7 +25,7 @@ export const csvDownloadRouter = defineRouter({
 			return handler(opts)
 		}),
 	getOrgsWithReviews: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetAllUnpublishedForCSVSchema)
+		.input(schema.ZGetOrgsWithReviewsSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(
 				namespaced('getOrgsWithReviews'),
@@ -52,7 +52,7 @@ export const csvDownloadRouter = defineRouter({
 			return handler(opts)
 		}),
 	getOrgCountByState: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetOrgCountByCountryAttributeSchema)
+		.input(schema.ZGetOrgCountByStateSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(
 				namespaced('getOrgCountByState'),
@@ -61,7 +61,7 @@ export const csvDownloadRouter = defineRouter({
 			return handler(opts)
 		}),
 	getPublishedOrgServicesCalifornia: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetOrgCountByCountryAttributeSchema)
+		.input(schema.ZGetPublishedOrgServicesCaliforniaSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(
 				namespaced('getPublishedOrgServicesCalifornia'),
@@ -70,7 +70,7 @@ export const csvDownloadRouter = defineRouter({
 			return handler(opts)
 		}),
 	getServiceCountByCountry: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetOrgCountByCountryAttributeSchema)
+		.input(schema.ZGetServicesCountByCountrySchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(
 				namespaced('getServiceCountByCountry'),
@@ -79,7 +79,7 @@ export const csvDownloadRouter = defineRouter({
 			return handler(opts)
 		}),
 	getServicesCountByCategoryCalifornia: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetOrgCountByCountryAttributeSchema)
+		.input(schema.ZGetServicesCountByCategoryCaliforniaSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(
 				namespaced('getServicesCountByCategoryCalifornia'),
@@ -88,7 +88,7 @@ export const csvDownloadRouter = defineRouter({
 			return handler(opts)
 		}),
 	getServicesCountByCategoryCountry: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetOrgCountByCountryAttributeSchema)
+		.input(schema.ZGetServicesCountByCategoryCountrySchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(
 				namespaced('getServicesCountByCategoryCountry'),
@@ -97,7 +97,7 @@ export const csvDownloadRouter = defineRouter({
 			return handler(opts)
 		}),
 	getServicesCountByCountryAttribute: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetOrgCountByCountryAttributeSchema)
+		.input(schema.ZGetServicesCountByCountryAttributeSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(
 				namespaced('getServicesCountByCountryAttribute'),
@@ -106,7 +106,7 @@ export const csvDownloadRouter = defineRouter({
 			return handler(opts)
 		}),
 	getServicesCountByCountryState: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetOrgCountByCountryAttributeSchema)
+		.input(schema.ZGetServicesCountByCountryStateSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(
 				namespaced('getServicesCountByCountryState'),
