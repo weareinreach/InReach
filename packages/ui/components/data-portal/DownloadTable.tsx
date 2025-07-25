@@ -55,21 +55,15 @@ export const DownloadTable = (props: DownloadTableProps) => {
 						permissionKey='dataPortalManager'
 					/>
 					<CsvDownload
-						label='Published Organizations By Country'
-						fileName='count_of_org_by_country'
-						useMutationHook={() => api.csvDownload.getOrgCountByCountry.useMutation()}
-						permissionKey='dataPortalManager'
-					/>
-					<CsvDownload
 						label='Published Organizations By Country & Attribute'
 						fileName='count_of_org_by_country_attribute'
 						useMutationHook={() => api.csvDownload.getOrgCountByCountryAttribute.useMutation()}
 						permissionKey='dataPortalManager'
 					/>
 					<CsvDownload
-						label='Published Organizations By Country & State'
-						fileName='count_of_org_by_country_state'
-						useMutationHook={() => api.csvDownload.getOrgCountByState.useMutation()}
+						label='Published Organizations By Country'
+						fileName='count_of_org_by_country'
+						useMutationHook={() => api.csvDownload.getOrgCountByCountry.useMutation()}
 						permissionKey='dataPortalManager'
 					/>
 					<CsvDownload
@@ -84,12 +78,6 @@ export const DownloadTable = (props: DownloadTableProps) => {
 			<Stack spacing='md'>
 				<Title order={3}>Service Counts</Title>
 				<SimpleGrid cols={3}>
-					<CsvDownload
-						label='Published Services By Country'
-						fileName='count_of_services_by_country'
-						useMutationHook={() => api.csvDownload.getServiceCountByCountry.useMutation()}
-						permissionKey='dataPortalManager'
-					/>
 					<CsvDownload
 						label='Published Services By Category in California'
 						fileName='count_of_services_by_category_in_california'
@@ -106,6 +94,12 @@ export const DownloadTable = (props: DownloadTableProps) => {
 						label='Published Services By Attribute & Country'
 						fileName='count_of_services_by_attribute_country'
 						useMutationHook={() => api.csvDownload.getServicesCountByCountryAttribute.useMutation()}
+						permissionKey='dataPortalManager'
+					/>
+					<CsvDownload
+						label='Published Services By Country'
+						fileName='count_of_services_by_country'
+						useMutationHook={() => api.csvDownload.getServiceCountByCountry.useMutation()}
 						permissionKey='dataPortalManager'
 					/>
 					<CsvDownload
