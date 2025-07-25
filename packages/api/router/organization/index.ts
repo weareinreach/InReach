@@ -191,24 +191,4 @@ export const orgRouter = defineRouter({
 		}),
 
 	// #endregion
-	// #for csv
-	getAllPublishedForCSV: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetAllPublishedForCSVSchema)
-		.mutation(async (opts) => {
-			const handler = await importHandler(
-				namespaced('getAllPublishedForCSV'),
-				() => import('./query.getAllPublishedForCSV.handler')
-			)
-			return handler(opts)
-		}),
-	getAllUnpublishedForCSV: permissionedProcedure('dataPortalManager')
-		.input(schema.ZGetAllUnpublishedForCSVSchema)
-		.mutation(async (opts) => {
-			const handler = await importHandler(
-				namespaced('getAllUnpublishedForCSV'),
-				() => import('./query.getAllUnpublishedForCSV.handler')
-			)
-			return handler(opts)
-		}),
-	// #endforcsv
 })

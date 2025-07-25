@@ -16,7 +16,6 @@ import { type Route } from 'nextjs-routes'
 import { type Dispatch, type SetStateAction, useEffect, useMemo, useRef, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { CsvDownload } from '~ui/components/core/ActionButtons/CsvDownload'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
@@ -76,20 +75,6 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 
 	return (
 		<Group>
-			<Group noWrap spacing={8}>
-				<CsvDownload
-					label='All Published Organizations'
-					fileName='all_published_organizations'
-					useMutationHook={() => api.organization.getAllPublishedForCSV.useMutation()}
-					permissionKey='dataPortalManager'
-				/>
-				<CsvDownload
-					label='All Unpublished Organizations'
-					fileName='all_unpublished_organizations'
-					useMutationHook={() => api.organization.getAllUnpublishedForCSV.useMutation()}
-					permissionKey='dataPortalManager'
-				/>
-			</Group>
 			<Tooltip
 				label={
 					publishedState

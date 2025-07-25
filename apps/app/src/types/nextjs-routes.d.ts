@@ -21,7 +21,6 @@ declare module "nextjs-routes" {
     | StaticRoute<"/account/saved">
     | DynamicRoute<"/account/saved/[listId]", { "listId": string }>
     | StaticRoute<"/admin">
-    | StaticRoute<"/admin/management">
     | StaticRoute<"/admin/quicklink">
     | StaticRoute<"/admin/quicklink/email">
     | StaticRoute<"/admin/quicklink/phone">

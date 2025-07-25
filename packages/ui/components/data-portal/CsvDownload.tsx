@@ -87,7 +87,9 @@ export const CsvDownload: React.FC<CsvDownloadProps> = ({
 					variant='secondary-icon'
 					size='compact-xs'
 				>
-					<Text size='sm'>{label}</Text>
+					<Text size='sm' style={{ whiteSpace: 'normal', textAlign: 'center' }}>
+						{label}
+					</Text>
 				</Button>
 			</Tooltip>
 			{currentError && (

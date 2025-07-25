@@ -4,6 +4,7 @@ import { pageRouter } from '~api/router/page'
 import { attributeRouter } from './attribute'
 import { authRouter } from './auth'
 import { componentRouter } from './component'
+import { csvDownloadRouter } from './csvDownload'
 import { fieldOptRouter } from './fieldOpt'
 import { geoRouter } from './geo'
 import { internalNoteRouter } from './internalNote'
@@ -28,6 +29,7 @@ export const appRouter = defineRouter({
 	attribute: attributeRouter,
 	auth: authRouter,
 	component: componentRouter,
+	csvDownload: csvDownloadRouter,
 	fieldOpt: fieldOptRouter,
 	geo: geoRouter,
 	internalNote: internalNoteRouter,
