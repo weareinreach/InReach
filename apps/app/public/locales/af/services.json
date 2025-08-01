@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Aborsie sorg",
 		"abortion-providers": "Aborsie verskaffers",
+		"CATEGORYNAME": "Aborsie sorg",
 		"financial-assistance": "Finansiële bystand",
 		"lodging-assistance": "Verblyf hulp",
 		"mail-order-services": "Posbestelling dienste",
@@ -9,8 +9,8 @@
 		"travel-assistance": "Reisbystand"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Gemeenskapsondersteuning",
 		"advocacy-and-community-organizing": "Advocacy and community organizing",
+		"CATEGORYNAME": "Gemeenskapsondersteuning",
 		"community-social-groups": "Gemeenskap en sosiale groepe",
 		"cultural-centers": "Kulturele sentrums",
 		"lgbtq-centers": "LGBTQ sentrums",
@@ -28,8 +28,8 @@
 		"crisis-support": "Krisis Ondersteuning"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Onderwys en indiensneming",
 		"career-counseling": "Loopbaanberading",
+		"CATEGORYNAME": "Onderwys en indiensneming",
 		"educational-support-for-lgbtq-youth": "Opvoedkundige ondersteuning vir LGBTQ-jeug",
 		"english-classes": "Engelse klasse",
 		"language-classes": "Taal klasse",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "Opleiding en professionele ontwikkeling"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "Finansiële bystand",
 		"bail-funds": "Borgtogfondse",
+		"CATEGORYNAME": "Finansiële bystand",
 		"healthcare-and-insurance": "Gesondheidsorg en versekering",
 		"housing-and-utilities": "Behuising en nutsdienste",
 		"legal-fees": "Regskoste",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "Hervestigingsbystand"
 	},
 	"legal": {
-		"CATEGORYNAME": "Wetlike",
 		"asylum-application": "Asiel aansoek",
+		"CATEGORYNAME": "Wetlike",
 		"citizenship": "Burgerskap",
 		"crime-and-discrimination": "Misdaad en diskriminasie",
 		"deferred-action-for-childhood-arrivals-daca": "Uitgestelde aksie vir kinderjare aankomste (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "Tandheelkundige sorg",
 		"fertility-and-family-planning-services": "Vrugbaarheid en gesinsbeplanning dienste",
 		"hiv-and-sexual-health": "MIV en seksuele gesondheid",
-		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "Mediese klinieke",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"obgyn-services": "OBGYN dienste",
 		"physical-evaluations-for-asylum-claim": "Fisiese evaluerings vir asieleis",
 		"physical-evaluations-for-refugee-claim": "Fisiese evaluerings vir vlugtelingseis",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "Transgesondheid - jeugsorg"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Geestesgesondheid",
 		"bipoc-support-groups": "BIPOC ondersteuningsgroepe",
+		"CATEGORYNAME": "Geestesgesondheid",
 		"family-support-groups": "Familie ondersteuningsgroepe",
 		"hotlines": "Blitslyne",
 		"mental-health-info-referrals": "Mental health information and referrals",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "Trans ondersteuningsgroepe"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Vermaak en aktiwiteite",
 		"art-music-literature": "Kuns, musiek en letterkunde",
 		"camps-and-excursions": "Kampe en uitstappies",
+		"CATEGORYNAME": "Vermaak en aktiwiteite",
 		"sports-and-entertainment": "Sport en vermaak"
 	},
 	"trans-focused-services": {

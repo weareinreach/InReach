@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} organizacja"
 	},
+	"admin": {
+		"tab-organizations": "Organizacje",
+		"tab-users": "Użytkownicy",
+		"tab-downloads": "Pobrania"
+	},
 	"agree-disclaimer": "Klikając „{{action}}”, wyrażasz zgodę na <link1>Politykę prywatności inReach</link1> i <link2>Warunki użytkowania</link2>.",
 	"alert-message": "Komunikat alarmowy",
 	"alert-message-1": "<strong>Polityka COVID-19:</strong> Ponieważ nowości i najlepsze praktyki w zakresie zapobiegania COVID-19 zmieniają się szybko każdego dnia, Whitman-Walker Health nadal aktualizuje swoje usługi, aby odzwierciedlić zalecenia dotyczące zapobiegania. Sprawdź ich stronę internetową, aby uzyskać najbardziej aktualne informacje.",
@@ -104,9 +109,9 @@
 	"dont-have-account": "Nie masz konta?",
 	"download-app": "Pobierz aplikację",
 	"edit-profile": "Edytuj profil",
-	"email-sent": "Wysłano e-mail.",
 	"email_professional": "Profesjonalna poczta e-mail",
 	"email_student-pro": "E-mail profesjonalny lub studencki",
+	"email-sent": "Wysłano e-mail.",
 	"enter-email-placeholder": "Wpisz adres e-mail...",
 	"enter-password-placeholder": "Wprowadź hasło...",
 	"enter-review": "Wpisz swoją recenzję...",
@@ -230,8 +235,8 @@
 	},
 	"password-reset-success": "<Text>Proszę <LoginModal>Zaloguj się</LoginModal> używając nowego hasła.</Text>",
 	"password-saved": "Hasło zapisane!",
-	"photo-count_interval": "(0)[Brak zdjęć.];(1)[{{count}} zdjęć];(2-inf)[{{count}} zdjęć]",
 	"photo_interval": "(0) [Brak zdjęć]; (2-inf) [Zobacz wszystkie {{count}} zdjęcia];",
+	"photo-count_interval": "(0)[Brak zdjęć.];(1)[{{count}} zdjęć];(2-inf)[{{count}} zdjęć]",
 	"please-specify": "Proszę określić",
 	"portal-module": {
 		"service-area": "Obszar usługowy"
@@ -430,6 +435,7 @@
 	"user-avatar": "Avatar użytkownika",
 	"user-menu": {
 		"admin-options": "Opcje administratora",
+		"csv-downloads": "Pliki CSV",
 		"data-portal": "Strona główna portalu danych",
 		"edit-page": "Edytuj tę stronę",
 		"user-options": "Opcje użytkownika",
@@ -500,14 +506,14 @@
 	"photo_few": "Zdjęcia",
 	"photo_many": "Zdjęcia",
 	"photo_other": "Zdjęcia",
-	"review-count_one": "({{count}} recenzja)",
-	"review-count_few": "({{count}} ocen)",
-	"review-count_many": "({{count}} ocen)",
-	"review-count_other": "({{count}} ocen)",
 	"review_one": "Recenzja",
 	"review_few": "Recenzje",
 	"review_many": "Recenzje",
 	"review_other": "Recenzje",
+	"review-count_one": "({{count}} recenzja)",
+	"review-count_few": "({{count}} ocen)",
+	"review-count_many": "({{count}} ocen)",
+	"review-count_other": "({{count}} ocen)",
 	"view-x-result_one": "Wyświetl {{count}} wynik",
 	"view-x-result_few": "Wyświetl {{count}} wyników",
 	"view-x-result_many": "Wyświetl {{count}} wyników",

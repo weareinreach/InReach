@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "Organisation {{adjective}}"
 	},
+	"admin": {
+		"tab-organizations": "Organisations",
+		"tab-users": "Utilisateurs",
+		"tab-downloads": "Téléchargements"
+	},
 	"agree-disclaimer": "En cliquant sur \"{{action}}\", vous acceptez la <link1>Politique de confidentialité d'InReach</link1> et les <link2>Conditions d'utilisation</link2>.",
 	"alert-message": "Message d'alerte",
 	"alert-message-1": "<strong>Politique COVID-19 :</strong> Avec les nouvelles et les meilleures pratiques pour la prévention COVID-19 changeant rapidement chaque jour, Whitman-Walker Health continue de mettre à jour ses services afin de refléter les recommandations de prévention. Veuillez consulter leur site web pour obtenir les informations les plus à jour.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "Vous n'avez pas de compte ?",
 	"download-app": "Télécharger l'application",
 	"edit-profile": "Modifier le profil",
-	"email-sent": "Email envoyé.",
 	"email_professional": "E-mail professionnel",
 	"email_student-pro": "Email professionnel ou étudiant",
+	"email-sent": "Email envoyé.",
 	"enter-email-placeholder": "Entrer une adresse email...",
 	"enter-password-placeholder": "Entrer le mot de passe...",
 	"enter-review": "Entrer votre avis...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>Veuillez <LoginModal>vous connecter</LoginModal> en utilisant votre nouveau mot de passe.</Text>",
 	"password-saved": "Mot de passe enregistré !",
-	"photo-count_interval": "(0)[Aucune photo.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0)[Aucune photo];(3-inf)[Voir toutes les{{count}} photos];",
+	"photo-count_interval": "(0)[Aucune photo.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"please-specify": "Veuillez spécifier",
 	"portal-module": {
 		"service-area": "Zone de service"
@@ -428,6 +433,7 @@
 	"user-avatar": "Avatar de l'utilisateur",
 	"user-menu": {
 		"admin-options": "Options d'administration",
+		"csv-downloads": "Téléchargements CSV",
 		"data-portal": "Accueil Portail de Données",
 		"edit-page": "Modifier cette page",
 		"user-options": "Options de l'utilisateur.e",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "Photo",
 	"photo_other": "Photos",
-	"review-count_one": "{{count}} avis",
-	"review-count_other": "{{count}} avis",
 	"review_one": "Commentaires",
 	"review_other": "Critiques",
+	"review-count_one": "{{count}} avis",
+	"review-count_other": "{{count}} avis",
 	"view-x-result_one": "Voir {{count}} résultat",
 	"view-x-result_other": "Voir {{count}} résultats",
 	"website_one": "Site Web",

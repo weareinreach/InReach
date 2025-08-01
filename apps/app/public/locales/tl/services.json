@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Pangangalaga sa Aborsyon",
 		"abortion-providers": "Mga nagbibigay ng pagpapalaglag",
+		"CATEGORYNAME": "Pangangalaga sa Aborsyon",
 		"financial-assistance": "Tulong sa pananalapi",
 		"lodging-assistance": "Tulong sa panunuluyan",
 		"mail-order-services": "Mga serbisyo sa order ng mail",
@@ -9,8 +9,8 @@
 		"travel-assistance": "Tulong sa paglalakbay"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Suporta sa Komunidad",
 		"advocacy-and-community-organizing": "Advocacy and community organizing",
+		"CATEGORYNAME": "Suporta sa Komunidad",
 		"community-social-groups": "Mga pangkat ng komunidad at panlipunan",
 		"cultural-centers": "Mga sentro ng kultura",
 		"lgbtq-centers": "Mga sentro ng LGBTQ",
@@ -28,8 +28,8 @@
 		"crisis-support": "Suporta sa Krisis"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Edukasyon at Trabaho",
 		"career-counseling": "Pagpapayo sa karera",
+		"CATEGORYNAME": "Edukasyon at Trabaho",
 		"educational-support-for-lgbtq-youth": "Suporta sa edukasyon para sa kabataan ng LGBTQ",
 		"english-classes": "Mga klase sa Ingles",
 		"language-classes": "Mga klase sa wika",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "Pagsasanay at propesyonal na pag-unlad"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "Tulong Pinansyal",
 		"bail-funds": "Mga Pondo ng Piyansa",
+		"CATEGORYNAME": "Tulong Pinansyal",
 		"healthcare-and-insurance": "Pangangalaga sa kalusugan at seguro",
 		"housing-and-utilities": "Pabahay at mga kagamitan",
 		"legal-fees": "Mga legal na bayarin",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "Tulong sa Resettlement"
 	},
 	"legal": {
-		"CATEGORYNAME": "Legal",
 		"asylum-application": "Aplikasyon ng pagpapakupkop",
+		"CATEGORYNAME": "Legal",
 		"citizenship": "Pagkamamamayan",
 		"crime-and-discrimination": "Krimen at diskriminasyon",
 		"deferred-action-for-childhood-arrivals-daca": "Ipinagpaliban Aksyon para sa Childhood Dating (KUNG)",
@@ -110,8 +110,8 @@
 		"dental-care": "Pangangalaga sa ngipin",
 		"fertility-and-family-planning-services": "Mga serbisyo sa fertility at family planning",
 		"hiv-and-sexual-health": "HIV at sekswal na kalusugan",
-		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "Mga medikal na klinika",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"obgyn-services": "Mga serbisyo ng OBGYN",
 		"physical-evaluations-for-asylum-claim": "Mga pisikal na pagsusuri para sa pag-angkin ng asylum",
 		"physical-evaluations-for-refugee-claim": "Pisikal na pagsusuri para sa claim ng refugee",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "Trans health - pangangalaga sa kabataan"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Kalusugang pangkaisipan",
 		"bipoc-support-groups": "Mga grupo ng suporta ng BIPOC",
+		"CATEGORYNAME": "Kalusugang pangkaisipan",
 		"family-support-groups": "Mga grupo ng suporta sa pamilya",
 		"hotlines": "Mga Hotline",
 		"mental-health-info-referrals": "Mental health information and referrals",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "Mga grupo ng suporta sa trans"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Libangan at Aktibidad",
 		"art-music-literature": "Sining, musika, at panitikan",
 		"camps-and-excursions": "Mga kampo at iskursiyon",
+		"CATEGORYNAME": "Libangan at Aktibidad",
 		"sports-and-entertainment": "Palakasan at libangan"
 	},
 	"trans-focused-services": {

@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "د سقط پاملرنې",
 		"abortion-providers": "د سقط چمتو کونکي",
+		"CATEGORYNAME": "د سقط پاملرنې",
 		"financial-assistance": "مالي مرسته",
 		"lodging-assistance": "د استوګنې مرسته",
 		"mail-order-services": "د میل آرډر خدمتونه",
@@ -9,8 +9,8 @@
 		"travel-assistance": "د سفر مرسته"
 	},
 	"community-support": {
-		"CATEGORYNAME": "د ټولنې ملاتړ",
 		"advocacy-and-community-organizing": "Advocacy and community organizing",
+		"CATEGORYNAME": "د ټولنې ملاتړ",
 		"community-social-groups": "ټولنه او ټولنیزې ډلې",
 		"cultural-centers": "کلتوري مرکزونه",
 		"lgbtq-centers": "د LGBTQ مرکزونه",
@@ -28,8 +28,8 @@
 		"crisis-support": "د بحران ملاتړ"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "ښوونه او روزنه",
 		"career-counseling": "د کیریر مشوره",
+		"CATEGORYNAME": "ښوونه او روزنه",
 		"educational-support-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره تعلیمي ملاتړ",
 		"english-classes": "انګلیسي ټولګي",
 		"language-classes": "د ژبې ټولګي",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "روزنه او مسلکي وده"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "مالي مرسته",
 		"bail-funds": "د ضمانت فنډونه",
+		"CATEGORYNAME": "مالي مرسته",
 		"healthcare-and-insurance": "روغتیایی پاملرنه او بیمه",
 		"housing-and-utilities": "کورونه او اسانتیاوې",
 		"legal-fees": "قانوني فیس",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "د بیا میشتیدنې مرستې"
 	},
 	"legal": {
-		"CATEGORYNAME": "قانوني",
 		"asylum-application": "د پناه غوښتنې غوښتنه",
+		"CATEGORYNAME": "قانوني",
 		"citizenship": "تابعیت",
 		"crime-and-discrimination": "جرم او تبعیض",
 		"deferred-action-for-childhood-arrivals-daca": "د ماشومتوب راتګ لپاره ځنډول شوی عمل (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "د غاښونو پاملرنه",
 		"fertility-and-family-planning-services": "د زیږون او کورنۍ پلان کولو خدمتونه",
 		"hiv-and-sexual-health": "HIV او جنسي روغتیا",
-		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "طبي کلینیکونه",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"obgyn-services": "د OBGYN خدمتونه",
 		"physical-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره فزیکي ارزونه",
 		"physical-evaluations-for-refugee-claim": "د کډوالو د ادعا لپاره فزیکي ارزونه",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "ټرانس روغتیا - د ځوانانو پاملرنه"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "دماغی روغتیا، فکری جوړتیا، ذهنی روغتیا",
 		"bipoc-support-groups": "د BIPOC ملاتړ ډلې",
+		"CATEGORYNAME": "دماغی روغتیا، فکری جوړتیا، ذهنی روغتیا",
 		"family-support-groups": "د کورنۍ ملاتړ ډلې",
 		"hotlines": "هاټ لاینونه",
 		"mental-health-info-referrals": "Mental health information and referrals",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "د ټرانس ملاتړ ډلې"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "تفریح او فعالیتونه",
 		"art-music-literature": "هنر، میوزیک او ادب",
 		"camps-and-excursions": "کمپونه او سفرونه",
+		"CATEGORYNAME": "تفریح او فعالیتونه",
 		"sports-and-entertainment": "سپورت او ساتیري"
 	},
 	"trans-focused-services": {

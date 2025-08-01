@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Аборт",
 		"abortion-providers": "Услуги аборта",
+		"CATEGORYNAME": "Аборт",
 		"financial-assistance": "Финансовая помощь",
 		"lodging-assistance": "Помощь в аренде жилья",
 		"mail-order-services": "Почтовые услуги",
@@ -9,8 +9,8 @@
 		"travel-assistance": "Помощь в организации поездок"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Общественная поддержка",
 		"advocacy-and-community-organizing": "Пропаганда и организация общин",
+		"CATEGORYNAME": "Общественная поддержка",
 		"community-social-groups": "Сообщества и социальные группы",
 		"cultural-centers": "Культурные центры",
 		"lgbtq-centers": "Центры ЛГБТК",
@@ -28,8 +28,8 @@
 		"crisis-support": "Поддержка в кризисный период"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Образование и трудоустройство",
 		"career-counseling": "Профессиональные консультации",
+		"CATEGORYNAME": "Образование и трудоустройство",
 		"educational-support-for-lgbtq-youth": "Образовательная поддержка ЛГБТК+ молодёжи",
 		"english-classes": "Курсы английского языка",
 		"language-classes": "Языковые курсы",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "Подготовка кадров и профессиональное развитие"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "Финансовая помощь",
 		"bail-funds": "Банковские фонды",
+		"CATEGORYNAME": "Финансовая помощь",
 		"healthcare-and-insurance": "Здравоохранение и страхование",
 		"housing-and-utilities": "Жилье и коммунальные услуги",
 		"legal-fees": "Юридические сборы",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "Помощь в переезде"
 	},
 	"legal": {
-		"CATEGORYNAME": "Юридические услуги",
 		"asylum-application": "Прошение о предоставлении убежища",
+		"CATEGORYNAME": "Юридические услуги",
 		"citizenship": "Вопросы гражданства",
 		"crime-and-discrimination": "Преступления и дискриминационные вопросы",
 		"deferred-action-for-childhood-arrivals-daca": "Программа отложенных мер в отношении детей-иммигрантов (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "Стоматологическая помощь",
 		"fertility-and-family-planning-services": "Услуги по фертильности и планированию размера семьи",
 		"hiv-and-sexual-health": "ВИЧ-инфекции и сексуальное здоровье",
-		"medical-info-and-referrals": "Информация о медицинском обслуживании и направления",
 		"medical-clinics": "Медицинские клиники",
+		"medical-info-and-referrals": "Информация о медицинском обслуживании и направления",
 		"obgyn-services": "Гинекологические услуги",
 		"physical-evaluations-for-asylum-claim": "Оценка физического здоровья для подачи на убежище",
 		"physical-evaluations-for-refugee-claim": "Оценка физического здоровья для подачи на статус беженца",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "Уход за трансгендерной молодёжью"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Психическое здоровье",
 		"bipoc-support-groups": "Группы поддержки для людей из сообщества «бай-пок» (Black, Indigenous and People of Color, BIPOC)",
+		"CATEGORYNAME": "Психическое здоровье",
 		"family-support-groups": "Группы поддержки семьи",
 		"hotlines": "Горячие линии",
 		"mental-health-info-referrals": "Информация о психическом здоровье и направления",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "Группы трансгендерной поддержки"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Развлечения и мероприятия",
 		"art-music-literature": "Искусство, музыка и литература",
 		"camps-and-excursions": "Лагери и экскурсии",
+		"CATEGORYNAME": "Развлечения и мероприятия",
 		"sports-and-entertainment": "Спортивная деятельность"
 	},
 	"trans-focused-services": {

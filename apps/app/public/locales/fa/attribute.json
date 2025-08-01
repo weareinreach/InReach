@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "اطلاعات تکمیلی",
 		"at-capacity": "ظرفیت کامل",
+		"CATEGORYNAME": "اطلاعات تکمیلی",
 		"geo-near-public-transit": "نزدیک حمل و نقل عمومی",
 		"geo-public-transit-description": "عبور و مرور عمومی/مسیرهای خاص",
 		"has-confidentiality-policy": "دارای یک سیاست محرمانه بودن",
 		"offers-remote-services": "از راه دور",
-		"private-practice": "تمرین خصوصی",
-		"religiously-affiliated": "وابسته به مذهب است",
 		"time-walk-in": "ساعت پیاده‌ روی دارد",
-		"wheelchair-accessible": "قابل دسترسی",
+		"wheelchair-accessible_true": "قابل دسترسی",
 		"wheelchair-accessible_false": "قابل دسترسی نیست",
-		"wheelchair-accessible_true": "قابل دسترسی"
+		"wheelchair-accessible": "قابل دسترسی"
 	},
 	"alerts": {
 		"CATEGORYNAME": "هشدارها",
@@ -19,7 +17,6 @@
 		"warn": "اعلام هشدار"
 	},
 	"community": {
-		"CATEGORYNAME": "جامعه",
 		"adults": "«بالغ» تعریف شده به عنوان 18 سال یا بالاتر",
 		"africa-immigrant": "فرصت هایی که دراختیار کسانی که اهل کشورهای آفریقایی هستند قرار میگیرد",
 		"african-american": "فرصت هایی که دراختیار افراد متعلق به گروه های آفریقایی آمریکایی قرار میگیرد",
@@ -31,6 +28,7 @@
 		"bipoc": "فرصت هایی که در خدمت سیاه و سفید, بومی, و مردم از رنگ",
 		"bisexual": "فرصت هایی که به جامعه دوجنسگرا خدمت می کنند",
 		"black": "فرصت هایی که در خدمت جامعه سیاه پوست",
+		"CATEGORYNAME": "جامعه",
 		"citizens": "شهروندان {{country}}",
 		"conversion-therapy-survivors": "فرصت هایی که در خدمت تبدیل درمان بازماندگان",
 		"daca-recipient-seeker": "فرصت هایی که در خدمت خیال (دریافت کنندگان DACA)",
@@ -58,25 +56,19 @@
 		"seniors": "«ارشد» تعریف شده به عنوان 65 سال یا بالاتر",
 		"sex-workers": "فرصت هایی که به کارگران جنسی خدمت می کنند",
 		"teens": "«نوجوان» تعریف شده به عنوان 12-18 ساله",
-		"trans-youth": "فرصت هایی که به جوانان ترانس خدمت می کنند",
-		"trans-youth-caregivers": "فرصت هایی که به مراقبان جوانان ترانس خدمت می کنند",
 		"transfeminine": "فرصت هایی که به جامعه فرازنانه خدمت می کنند",
 		"transgender": "فرصت هایی که به جامعه transgender خدمت می کنند (برای جوامع غیر سازگار یا غیر باینری، از خواص جنسیتی غیر سازگار یا غیر باینری استفاده می کنند)",
 		"transmasculine": "فرصت هایی که به جامعه Trasmasculine خدمت می کنند",
+		"trans-youth": "فرصت هایی که به جوانان ترانس خدمت می کنند",
+		"trans-youth-caregivers": "فرصت هایی که به مراقبان جوانان ترانس خدمت می کنند",
 		"unaccompanied-minors": "فرصت هایی که به افراد زیر سن قانونی بدون همراه خدمت می کنند",
 		"undocumented": "فرصت هایی که به مهاجران غیرقانونی خدمت می کنند"
 	},
 	"cost": {
 		"CATEGORYNAME": "هزینه",
-		"cost-accepts-insurance": "این سرویس بیمه می پذیرد",
-		"cost-accepts-insurance_default": "این سرویس بیمه می پذیرد. برای اطلاعات بیشتر در مورد هزینه، گزینه های کمک مالی و جزئیات پوشش بیمه، مستقیماً با سازمان تماس بگیرید.",
-		"cost-accepts-insurance_withUrl": "این سرویس بیمه می پذیرد. <Link href=\"{{url}}\">برای اطلاعات بیشتر در مورد هزینه، گزینه های کمک مالی و جزئیات پوشش بیمه، اینجا را کلیک کنید تا از صفحه سازمان بازدید کنید</Link> .",
 		"cost-fees": "هزینه ای را متحمل می شود",
-		"cost-free": "رایگان از هزینه",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-sliding-scale": "هزینه ها در مقیاس کشویی تعیین می شود",
-		"cost-sliding-scale_default": "این سرویس دارای هزینه های مقیاس کشویی است. مبلغی که برای خدمات پرداخت می کنید با توجه به سطح درآمد شما تنظیم می شود. برای اطلاعات بیشتر مستقیماً با سازمان تماس بگیرید.",
-		"cost-sliding-scale_withUrl": "این سرویس دارای هزینه های کشویی است. مبلغی که برای خدمات پرداخت می کنید با توجه به سطح درآمد شما تنظیم می شود. <Link href=\"{{url}}\">برای دیدن اطلاعات بیشتر به صفحه سازمان اینجا را کلیک کنید.</Link>"
+		"cost-free": "رایگان از هزینه"
 	},
 	"crisis-support-community": {
 		"elders": "بزرگترها",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "الزامات واجد شرایط بودن",
-		"elig-age": "صلاحیت سنی",
 		"elig-age_max": "زیر {{max}}",
 		"elig-age_min": "{{min}} و قدیمی تر",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "صلاحیت سنی",
 		"other-describe": "سایر (توضیحات متن رایگان)",
 		"req-medical-insurance": "نیاز به بیمه درمانی",
 		"req-photo-id": "نیاز به یک شناسه عکس",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "وقت ملاقات مورد نیاز"
 	},
 	"lang": {
-		"CATEGORYNAME": "زبان ها",
 		"all-languages-by-interpreter": "همه زبان ها از طریق مترجم",
 		"american-sign-language": "زبان اشاره آمریکایی",
+		"CATEGORYNAME": "زبان ها",
 		"lang-offered": "زبان های خاص ارائه شده"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "رهبری سازمان",
 		"bipoc-led": "بی پی ال ای دی",
 		"black-led": "سیاه و سفید LED",
+		"CATEGORYNAME": "رهبری سازمان",
 		"immigrant-led": "مهاجران به رهبری",
 		"lgbtq-led": "LGBTQ+ LED",
-		"trans-led": "رهبری ترانسجندر",
-		"women-led": "زنان به رهبری"
+		"trans-led": "رهبری ترانسجندر"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "دستورالعمل دسترسی به خدمات",
 		"accessemail": "دستورالعمل دسترسی - ایمیل",
 		"accessfile": "دستورالعمل های دسترسی - فایل",
 		"accesslink": "دستورالعمل های دسترسی - لینک",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "دستورالعمل های دسترسی - حمل و نقل عمومی",
 		"accesssms": "دستورالعملهای دسترسی - پیامک",
 		"accesstext": "دستورالعمل دسترسی - متن",
-		"accesswhatsapp": "دستورالعملهای دسترسی - واتساپ"
+		"accesswhatsapp": "دستورالعملهای دسترسی - واتساپ",
+		"CATEGORYNAME": "دستورالعمل دسترسی به خدمات"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "تمرکز خدمات",
 		"asylum-seekers": "پناهجویان",
 		"bipoc-comm": "جامعه بیپوک",
-		"caregivers": "جامعه مراقبان",
-		"disabled": "جامعه معلولین",
-		"elder": "با تمرکز بر بزرگان",
+		"CATEGORYNAME": "تمرکز خدمات",
 		"gender-nc": "جنسیت غیر منطبق",
 		"hiv-comm": "جامعه اچ آی وی",
 		"immigrant-comm": "جامعه مهاجر",
-		"incarcerated": "جامعه زندانی",
 		"lgbtq-youth-focus": "دگرباشان جنسی جوانان",
 		"resettled-refugees": "اسکان مجدد پناهندگان",
 		"spanish-speakers": "گویشوران اسپانیایی",
 		"trans-comm": "جامعه ترانس",
 		"trans-fem": "زنان تراجن/ترانس زنانه",
 		"trans-masc": "ترانس مردان/ترانس مردانه",
-		"trans-youth-focus": "جوانان ترانس",
-		"women": "با تمرکز بر زنان"
+		"trans-youth-focus": "جوانان ترانس"
 	},
 	"sys": {
-		"CATEGORYNAME": "سیستم",
-		"incompatible-info": "اطلاعات ناسازگار"
+		"CATEGORYNAME": "سیستم"
 	},
 	"tpop": {
 		"other": "جمعیت هدف - سایر"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "سازمان حقوقی غیرانتفاعی"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "گزینه های ارائه دهنده خدمات",
 		"case-mananger": "مدیر پرونده",
+		"CATEGORYNAME": "گزینه های ارائه دهنده خدمات",
 		"community-org": "داوطلب/کارکنان در یک سازمان اجتماعی",
-		"friend-family": "N/A (به دنبال به نمایندگی از دوستان/خانواده)",
-		"govt-agency": "سازمان دولتی",
-		"grassroots-direct": "مردمی سازمان خدمات مستقیم",
 		"healthcare": "ارائه دهنده خدمات بهداشتی",
 		"lawyer": "وکیل",
 		"other": "دیگر (لطفا مشخص کنید)",

@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "流产护理",
 		"abortion-providers": "堕胎服务提供者",
+		"CATEGORYNAME": "流产护理",
 		"financial-assistance": "财务援助",
 		"lodging-assistance": "住宿援助",
 		"mail-order-services": "邮购服务",
@@ -9,8 +9,8 @@
 		"travel-assistance": "旅行援助"
 	},
 	"community-support": {
-		"CATEGORYNAME": "社区支持",
 		"advocacy-and-community-organizing": "倡导和社区组织",
+		"CATEGORYNAME": "社区支持",
 		"community-social-groups": "社区和社会团体",
 		"cultural-centers": "文化中心",
 		"lgbtq-centers": "LGBTQ 中心",
@@ -28,8 +28,8 @@
 		"crisis-support": "危机支持"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "教育和就业",
 		"career-counseling": "职业咨询",
+		"CATEGORYNAME": "教育和就业",
 		"educational-support-for-lgbtq-youth": "为 LGBTQ 青年提供教育支持",
 		"english-classes": "英语课",
 		"language-classes": "语言课",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "培训和专业发展"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "财政援助",
 		"bail-funds": "保释金和债券资金",
+		"CATEGORYNAME": "财政援助",
 		"healthcare-and-insurance": "保健和保险",
 		"housing-and-utilities": "住房和公用设施",
 		"legal-fees": "法律费用",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "重新安置援助"
 	},
 	"legal": {
-		"CATEGORYNAME": "合法",
 		"asylum-application": "庇护申请",
+		"CATEGORYNAME": "合法",
 		"citizenship": "公民身份",
 		"crime-and-discrimination": "犯罪和歧视",
 		"deferred-action-for-childhood-arrivals-daca": "儿童入境延期行动 (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "牙科保健",
 		"fertility-and-family-planning-services": "生育率和计划生育服务",
 		"hiv-and-sexual-health": "艾滋病毒和性健康",
-		"medical-info-and-referrals": "医疗信息和转诊服务",
 		"medical-clinics": "医疗诊所",
+		"medical-info-and-referrals": "医疗信息和转诊服务",
 		"obgyn-services": "妇产科服务",
 		"physical-evaluations-for-asylum-claim": "庇护申请的身体评估",
 		"physical-evaluations-for-refugee-claim": "难民申请的体检",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "跨性别青少年援助"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "精神健康",
 		"bipoc-support-groups": "黑人、原住民和有色人种支持小组",
+		"CATEGORYNAME": "精神健康",
 		"family-support-groups": "家庭支助小组",
 		"hotlines": "热线",
 		"mental-health-info-referrals": "心理健康信息和转诊服务",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "跨性别支持团体"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "娱乐和活动",
 		"art-music-literature": "艺术、音乐和文学",
 		"camps-and-excursions": "营地和旅行",
+		"CATEGORYNAME": "娱乐和活动",
 		"sports-and-entertainment": "体育和娱乐"
 	},
 	"trans-focused-services": {

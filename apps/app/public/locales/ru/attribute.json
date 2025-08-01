@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Дополнительная информация",
 		"at-capacity": "По вместимости",
+		"CATEGORYNAME": "Дополнительная информация",
 		"geo-near-public-transit": "Ближайшая станция общественного транспорта",
 		"geo-public-transit-description": "Общественный транспорт",
 		"has-confidentiality-policy": "Наличие Политики конфиденциальности",
 		"offers-remote-services": "Онлайн-услуги",
-		"private-practice": "Частная практика",
-		"religiously-affiliated": "Религиозно-ориентированный",
 		"time-walk-in": "Без предварительной записи",
-		"wheelchair-accessible": "Доступно",
+		"wheelchair-accessible_true": "Оборудованный пандусом",
 		"wheelchair-accessible_false": "Не оборудованный пандусом",
-		"wheelchair-accessible_true": "Оборудованный пандусом"
+		"wheelchair-accessible": "Доступно"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Оповещения",
@@ -19,7 +17,6 @@
 		"warn": "Предупреждение"
 	},
 	"community": {
-		"CATEGORYNAME": "Сообщество",
 		"adults": "Для взрослых старше 18 лет ",
 		"africa-immigrant": "Ресурсы для африканских иммигрантов",
 		"african-american": "Ресурсы для афро-американских иммигрантов",
@@ -31,6 +28,7 @@
 		"bipoc": "Ресурсы для сообщества «бай-пок» (Black, Indigenous and People of Color, BIPOC)",
 		"bisexual": "Ресурсы для бисексуалов",
 		"black": "Ресурсы для темнокожих людей",
+		"CATEGORYNAME": "Сообщество",
 		"citizens": "Граждане {{country}}",
 		"conversion-therapy-survivors": "Ресурсы для пострадавших от репаративной терапии",
 		"daca-recipient-seeker": "Ресурсы для «мечтателей» (участники программы отложенных мер в отношении детей-иммигрантов, DACA)",
@@ -58,25 +56,19 @@
 		"seniors": "Пожилые люди старше 65 лет",
 		"sex-workers": "Ресурсы для секс-работников",
 		"teens": "Подростки в возрасте 12-18 лет",
-		"trans-youth": "Ресурсы транс-молодёжи",
-		"trans-youth-caregivers": "Ресурсы для помощников по уходу за транс-молодёжью",
 		"transfeminine": "Ресурсы для трансфеминисток",
 		"transgender": "Ресурсы для трангендерного сообщества (для гендерно-вариативных лиц или небинарных сообществ, используйте соответствующие категории)",
 		"transmasculine": "Ресурсы для транс-мужчин",
+		"trans-youth": "Ресурсы транс-молодёжи",
+		"trans-youth-caregivers": "Ресурсы для помощников по уходу за транс-молодёжью",
 		"unaccompanied-minors": "Ресурсы для несовершеннолетних без сопровождения",
 		"undocumented": "Ресурсы для иммигрантов без документов"
 	},
 	"cost": {
 		"CATEGORYNAME": "Затраты",
-		"cost-accepts-insurance": "Эта услуга принимает страхование",
-		"cost-accepts-insurance_default": "Эта услуга принимает страховку. Обратитесь в организацию напрямую за дополнительной информацией о стоимости, вариантах финансовой помощи и деталях страхового покрытия.",
-		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
 		"cost-fees": "Платно",
-		"cost-free": "Бесплатно",
 		"cost-financial-assistance-available": "Доступна финансовая помощь",
-		"cost-sliding-scale": "Расходы, определяемые по скользящей шкале",
-		"cost-sliding-scale_default": "Эта услуга имеет комиссионные скользящего масштаба. Сумма, которую вы платите за услуги, корректируется в соответствии с вашим уровнем дохода. Свяжитесь с организацией напрямую для получения дополнительной информации.",
-		"cost-sliding-scale_withUrl": "This service has sliding scale fees. The amount you pay for services is adjusted according to your income level. <Link href=\"{{url}}\">Click here to visit the organization's page for more information.</Link>"
+		"cost-free": "Бесплатно"
 	},
 	"crisis-support-community": {
 		"elders": "Старшие представители",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Требования",
-		"elig-age": "Право на возраст",
 		"elig-age_max": "До {{max}}",
 		"elig-age_min": "{{min}} и старше",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "Право на возраст",
 		"other-describe": "Иное",
 		"req-medical-insurance": "Медицинское страхование",
 		"req-photo-id": "Удостоверение личности с фотографией",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "Укажите время записи"
 	},
 	"lang": {
-		"CATEGORYNAME": "Языки",
 		"all-languages-by-interpreter": "Любые языки с помощью переводчика. Свяжитесь с нами для получения дополнительной информации.",
 		"american-sign-language": "Американский язык жестов",
+		"CATEGORYNAME": "Языки",
 		"lang-offered": "Предлагаются определенные языки"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Руководство организации",
 		"bipoc-led": "Возглавляемая представителем сообщества «бай-пок» (Black, Indigenous and People of Color, BIPOC)",
 		"black-led": "Возглавляемая представителем темнокожих",
+		"CATEGORYNAME": "Руководство организации",
 		"immigrant-led": "Возглавляемая представителем иммигрантов",
 		"lgbtq-led": "Led LGBTQ+",
-		"trans-led": "Возглавляемая представителем транслюдей",
-		"women-led": "Возглавляемая представителем женского сообщества"
+		"trans-led": "Возглавляемая представителем транслюдей"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Инструкции по предоставлению доступа к сервисам",
 		"accessemail": "Email",
 		"accessfile": "Файл",
 		"accesslink": "Ссылка",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "Общественный транспорт",
 		"accesssms": "СМС",
 		"accesstext": "Сообщение",
-		"accesswhatsapp": "WhatsApp"
+		"accesswhatsapp": "WhatsApp",
+		"CATEGORYNAME": "Инструкции по предоставлению доступа к сервисам"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Категория услуг",
 		"asylum-seekers": "Просители убежища",
 		"bipoc-comm": "«Бай-пок» (Black, Indigenous and People of Color, BIPOC)",
-		"caregivers": "Помощники по уходу",
-		"disabled": "Люди с ограниченными возможностями",
-		"elder": "Старшие представители",
+		"CATEGORYNAME": "Категория услуг",
 		"gender-nc": "Гендерно-вариативные лица",
 		"hiv-comm": "ВИЧ",
 		"immigrant-comm": "Иммигранты",
-		"incarcerated": "Условно осужденные",
 		"lgbtq-youth-focus": "ЛГБТК+ молодёжь",
 		"resettled-refugees": "Переселенные беженцы",
 		"spanish-speakers": "Испано-говорящие представители",
 		"trans-comm": "Трансгендеры",
 		"trans-fem": "Транс-женщины",
 		"trans-masc": "Транс-мужчины",
-		"trans-youth-focus": "Транс-молодёжь",
-		"women": "Представители женского сообщества"
+		"trans-youth-focus": "Транс-молодёжь"
 	},
 	"sys": {
-		"CATEGORYNAME": "Система",
-		"incompatible-info": "Несовместимая информация"
+		"CATEGORYNAME": "Система"
 	},
 	"tpop": {
 		"other": "Целевое население - Другое"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "Некоммерческая организация"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "Поставщики услуг",
 		"case-mananger": "Делопроизводитель",
+		"CATEGORYNAME": "Поставщики услуг",
 		"community-org": "Волонтер сообщества",
-		"friend-family": "Ищу от имени друзей или семьи",
-		"govt-agency": "Государственное учреждение",
-		"grassroots-direct": "Народная организация",
 		"healthcare": "Медицинская служба",
 		"lawyer": "Адвокат",
 		"other": "Иное (просьба указать)",

@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} Organisation"
 	},
+	"admin": {
+		"tab-organizations": "Organisationen",
+		"tab-users": "Benutzer",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
 	"alert-message": "Warnmeldung",
 	"alert-message-1": "<strong>COVID-19 Richtlinie:</strong> Mit Neuigkeiten und Best Practices für die COVID-19 Prävention ändern sich jeden Tag schnell Whitman-Walker Health aktualisiert ihre Dienstleistungen weiter, um die Präventionsempfehlungen wiederzugeben. Bitte schauen Sie auf ihrer Website nach, um die aktuellsten Informationen zu erhalten.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "Sie haben noch kein Konto?",
 	"download-app": "App herunterladen",
 	"edit-profile": "Profil bearbeiten",
-	"email-sent": "E-Mail gesendet.",
 	"email_professional": "Professionelle E-Mail",
 	"email_student-pro": "Professionelle oder Studenten-E-Mail",
+	"email-sent": "E-Mail gesendet.",
 	"enter-email-placeholder": "E-Mail-Adresse eingeben...",
 	"enter-password-placeholder": "Passwort eingeben...",
 	"enter-review": "Gib deine Bewertung ein...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>Bitte <LoginModal>melden Sie sich</LoginModal> mit Ihrem neuen Passwort an.</Text>",
 	"password-saved": "Passwort gespeichert!",
-	"photo-count_interval": "(0)[Noch keine Foto.];(1)[{{count}} Foto];(2-inf)[{{count}} Fotos]",
 	"photo_interval": "(0)[Noch keine Fotos];(2-In)[Alle {{count}} Fotos ansehen];",
+	"photo-count_interval": "(0)[Noch keine Foto.];(1)[{{count}} Foto];(2-inf)[{{count}} Fotos]",
 	"please-specify": "Bitte angeben",
 	"portal-module": {
 		"service-area": "Service-Bereich"
@@ -428,6 +433,7 @@
 	"user-avatar": "Benutzer Avatar",
 	"user-menu": {
 		"admin-options": "Admin-Optionen",
+		"csv-downloads": "CSV-Downloads",
 		"data-portal": "Datenportal-Startseite",
 		"edit-page": "Diese Seite bearbeiten",
 		"user-options": "Benutzeroptionen",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "Foto",
 	"photo_other": "Fotos",
-	"review-count_one": "({{count}} Rezension)",
-	"review-count_other": "({{count}} Rezensionen)",
 	"review_one": "Überprüfen",
 	"review_other": "Bewertungen",
+	"review-count_one": "({{count}} Rezension)",
+	"review-count_other": "({{count}} Rezensionen)",
 	"view-x-result_one": "{{count}} Ergebnis anzeigen",
 	"view-x-result_other": "{{count}} Ergebnisse anzeigen",
 	"website_one": "Webseite",

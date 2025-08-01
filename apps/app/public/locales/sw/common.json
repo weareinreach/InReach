@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} shirika"
 	},
+	"admin": {
+		"tab-organizations": "Organizations",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "Kwa kubofya \"{{action}}\" unakubaliana na InReach <link1>Sera ya faragha</link1> na <link2>Masharti ya Matumizi</link2>.",
 	"alert-message": "Ujumbe wa tahadhari",
 	"alert-message-1": "<strong>Sera ya COVID-19:</strong> Huku habari na mbinu bora za kuzuia COVID-19 zikibadilika kwa kasi kila siku, Whitman-Walker Health inaendelea kusasisha huduma zao ili kuakisi mapendekezo ya kuzuia. Tafadhali angalia tovuti yao kwa habari ya kisasa zaidi.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "Huna akaunti?",
 	"download-app": "Pakua programu",
 	"edit-profile": "Hariri Profaili",
-	"email-sent": "Barua pepe imetumwa.",
 	"email_professional": "Barua pepe ya kitaalam",
 	"email_student-pro": "Barua pepe ya kitaalam au ya mwanafunzi",
+	"email-sent": "Barua pepe imetumwa.",
 	"enter-email-placeholder": "Ingiza anwani ya barua pepe...",
 	"enter-password-placeholder": "Ingiza nenosiri...",
 	"enter-review": "Ingiza hakiki yako...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>Tafadhali <LoginModal>login</LoginModal> kwa kutumia password yako mpya.</Text>",
 	"password-saved": "Nenosiri limehifadhiwa!",
-	"photo-count_interval": "(0) [Hakuna picha bado.]; (1) [{{count}} picha] ;( 2-inf) [{{count}} picha]",
 	"photo_interval": "(0) [Hakuna picha bado]; (2-inf) [Tazama picha zote {{count}} ];",
+	"photo-count_interval": "(0) [Hakuna picha bado.]; (1) [{{count}} picha] ;( 2-inf) [{{count}} picha]",
 	"please-specify": "Tafadhali taja",
 	"portal-module": {
 		"service-area": "Eneo la Huduma"
@@ -428,6 +433,7 @@
 	"user-avatar": "Avatar ya mtumiaji",
 	"user-menu": {
 		"admin-options": "Chaguzi za Msimamizi",
+		"csv-downloads": "CSV Downloads",
 		"data-portal": "Nyumbani mwa Tovuti ya Data",
 		"edit-page": "Hariri ukurasa huu",
 		"user-options": "Chaguzi za Mtumiaji",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "Picha",
 	"photo_other": "Picha",
-	"review-count_one": "(Mapitio{{count}} )",
-	"review-count_other": "({{count}} hakiki)",
 	"review_one": "Mapitio",
 	"review_other": "Mapitio",
+	"review-count_one": "(Mapitio{{count}} )",
+	"review-count_other": "({{count}} hakiki)",
 	"view-x-result_one": "Tazama matokeo ya {{count}}",
 	"view-x-result_other": "Tazama matokeo {{count}}",
 	"website_one": "Tovuti",

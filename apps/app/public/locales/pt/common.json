@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} organização"
 	},
+	"admin": {
+		"tab-organizations": "Organizações",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "Ao clicar em \"{{action}}\", você concorda com a Política de Privacidade <link1></link1> e <link2>Termos de Uso</link2>da inReach.",
 	"alert-message": "Mensagem de alerta",
 	"alert-message-1": "<strong>Política da COVID-19:</strong> Com as notícias e as melhores práticas para a prevenção da COVID-19 mudando rapidamente a cada dia, a Whitman-Walker Health continua atualizando seus serviços para refletir as recomendações de prevenção. Verifique o site da Whitman-Walker para obter as informações mais atualizadas.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "Não tem uma conta?",
 	"download-app": "Baixe o aplicativo",
 	"edit-profile": "Editar perfil",
-	"email-sent": "E-mail enviado.",
 	"email_professional": "E-mail profissional",
 	"email_student-pro": "E-mail profissional ou estudantil",
+	"email-sent": "E-mail enviado.",
 	"enter-email-placeholder": "Digite o endereço de e-mail...",
 	"enter-password-placeholder": "Digite a senha...",
 	"enter-review": "Insira seu comentário...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>Por favor, <LoginModal>faça login</LoginModal> usando sua nova senha.</Text>",
 	"password-saved": "Senha salva!",
-	"photo-count_interval": "(0) [Ainda não há fotos.]; (1) [{{count}} foto] ;( 2-inf) [{{count}} fotos]",
 	"photo_interval": "(0) [Ainda não há fotos]; (2-inf) [Ver todas as {{count}} fotos];",
+	"photo-count_interval": "(0) [Ainda não há fotos.]; (1) [{{count}} foto] ;( 2-inf) [{{count}} fotos]",
 	"please-specify": "Por favor, especifique",
 	"portal-module": {
 		"service-area": "Área de Serviço"
@@ -428,6 +433,7 @@
 	"user-avatar": "Avatar do usuário",
 	"user-menu": {
 		"admin-options": "Opções de Administração",
+		"csv-downloads": "Downloads CSV",
 		"data-portal": "Início do Portal de Dados",
 		"edit-page": "Editar esta página",
 		"user-options": "Opções do Usuário",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "foto",
 	"photo_other": "Fotos",
-	"review-count_one": "({{count}} avaliação)",
-	"review-count_other": "({{count}} avaliações)",
 	"review_one": "Avaliação",
 	"review_other": "Avaliações",
+	"review-count_one": "({{count}} avaliação)",
+	"review-count_other": "({{count}} avaliações)",
 	"view-x-result_one": "Ver {{count}} resultado",
 	"view-x-result_other": "Veja {{count}} resultados",
 	"website_one": "Website",

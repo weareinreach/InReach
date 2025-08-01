@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Додаткова інформація",
 		"at-capacity": "При потужності",
+		"CATEGORYNAME": "Додаткова інформація",
 		"geo-near-public-transit": "Поруч зупинка громадського транспорту",
 		"geo-public-transit-description": "Громадський транспорт/конкретні напрямки",
 		"has-confidentiality-policy": "Має політику конфіденційності",
 		"offers-remote-services": "Дистанційний",
-		"private-practice": "Приватна практика",
-		"religiously-affiliated": "Релігійно афілійований",
 		"time-walk-in": "Має прогулянку годин",
-		"wheelchair-accessible": "Доступний",
+		"wheelchair-accessible_true": "Доступний",
 		"wheelchair-accessible_false": "Недоступний",
-		"wheelchair-accessible_true": "Доступний"
+		"wheelchair-accessible": "Доступний"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Сповіщення",
@@ -19,7 +17,6 @@
 		"warn": "Попередження про попередження"
 	},
 	"community": {
-		"CATEGORYNAME": "Спільнота",
 		"adults": "«дорослий» визначається як 18 років і старше",
 		"africa-immigrant": "Можливості, які обслуговують тих, хто з африканських країн",
 		"african-american": "Можливості, які обслуговують афроамериканське співтовариство",
@@ -31,6 +28,7 @@
 		"bipoc": "Можливості, які служать чорним, корінним і людям кольору",
 		"bisexual": "Можливості, які обслуговують бісексуальну спільноту",
 		"black": "Можливості, які обслуговують Чорне співтовариство",
+		"CATEGORYNAME": "Спільнота",
 		"citizens": "Громадяни {{country}}",
 		"conversion-therapy-survivors": "Можливості, які обслуговують конверсійна терапія, що вижили",
 		"daca-recipient-seeker": "Можливості, які служать мрійники (DACA одержувачі)",
@@ -58,25 +56,19 @@
 		"seniors": "«старший» визначається як 65 років і старше",
 		"sex-workers": "Можливості, які обслуговують секс-працівників",
 		"teens": "«підліток» визначається як 12-18 років",
-		"trans-youth": "Можливості, які обслуговують транс-молодь",
-		"trans-youth-caregivers": "Можливості, які обслуговують вихователів транс-молоді",
 		"transfeminine": "Можливості, які служать Трансфемінне співтовариство",
 		"transgender": "Можливості, які обслуговують трансгендерну спільноту (для невідповідних або небінарних спільнот використовують гендерно-невідповідні або небінарні властивості)",
 		"transmasculine": "Можливості, які обслуговують трансчоловіче співтовариство",
+		"trans-youth": "Можливості, які обслуговують транс-молодь",
+		"trans-youth-caregivers": "Можливості, які обслуговують вихователів транс-молоді",
 		"unaccompanied-minors": "Можливості, які обслуговують неповнолітніх без супроводу",
 		"undocumented": "Можливості, які обслуговують іммігрантів без документів"
 	},
 	"cost": {
 		"CATEGORYNAME": "Собівартість",
-		"cost-accepts-insurance": "Ця служба приймає страхування",
-		"cost-accepts-insurance_default": "Ця послуга приймає страховку. безпосередньо зв’яжіться з організацією для отримання додаткової інформації про вартість, варіанти фінансової допомоги та деталі страхового покриття.",
-		"cost-accepts-insurance_withUrl": "This service accepts insurance. <Link href=\"{{url}}\">Click here to visit the organization's page</Link> for more information on cost, financial assistance options and insurance coverage details.",
 		"cost-fees": "Стягне за собою витрати",
-		"cost-free": "Безкоштовно",
 		"cost-financial-assistance-available": "Фінансова допомога доступна",
-		"cost-sliding-scale": "Витрати, визначені на розтягненні залишку",
-		"cost-sliding-scale_default": "У цьому сервісі є розсувні збори. Сума, яку ви платите за послуги, регулюється відповідно до рівня доходу. Зв'яжіться з організацією безпосередньо для отримання додаткової інформації.",
-		"cost-sliding-scale_withUrl": "У цьому сервісі є розсувні збори. Сума, яку ви платите за послуги, регулюється відповідно до рівня доходу. <Link href=\"{{url}}\">Натисніть тут, щоб відвідати сторінку організації для отримання додаткової інформації.</Link>"
+		"cost-free": "Безкоштовно"
 	},
 	"crisis-support-community": {
 		"elders": "Елдерс",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Вимоги до прийнятності",
-		"elig-age": "Вікова придатність",
 		"elig-age_max": "Under {{max}}",
 		"elig-age_min": "{{min}} і старші",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "Вікова придатність",
 		"other-describe": "Інше (безкоштовний текстовий опис)",
 		"req-medical-insurance": "ВИМАГАЄ МЕДИЧНОГО СТРАХУВАННЯ",
 		"req-photo-id": "ПОТРІБНО посвідчення особи з фотографією",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "Необхідний час призначення"
 	},
 	"lang": {
-		"CATEGORYNAME": "Мови",
 		"all-languages-by-interpreter": "Усі мови через перекладача",
 		"american-sign-language": "американська мова жестів",
+		"CATEGORYNAME": "Мови",
 		"lang-offered": "Конкретні мови, пропоновані"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Керівництво організації",
 		"bipoc-led": "Біпок-світлодіод",
 		"black-led": "Чорний світлодіод",
+		"CATEGORYNAME": "Керівництво організації",
 		"immigrant-led": "Іммігрант-світлодіод",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "Трансгендерний світлодіодний",
-		"women-led": "Жінки-світлодіодні"
+		"trans-led": "Трансгендерний світлодіодний"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Інструкції з доступу до сервісу",
 		"accessemail": "Інструкції щодо доступу - Електронна пошта",
 		"accessfile": "Інструкції щодо доступу - Файл",
 		"accesslink": "Інструкції щодо доступу - Посилання",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "Інструкції щодо доступу - Громадський транспорт",
 		"accesssms": "Інструкції доступу - SMS",
 		"accesstext": "Інструкції щодо доступу - Текст",
-		"accesswhatsapp": "Інструкція доступу - WhatsApp"
+		"accesswhatsapp": "Інструкція доступу - WhatsApp",
+		"CATEGORYNAME": "Інструкції з доступу до сервісу"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Сервісний фокус",
 		"asylum-seekers": "Шукачі притулку",
 		"bipoc-comm": "Спільнота BIPOC",
-		"caregivers": "Спільнота опікунів",
-		"disabled": "Спільнота інвалідів",
-		"elder": "Орієнтований на старійшин",
+		"CATEGORYNAME": "Сервісний фокус",
 		"gender-nc": "Гендерна невідповідність",
 		"hiv-comm": "ВІЛ-спільнота",
 		"immigrant-comm": "Іммігрант спільноти",
-		"incarcerated": "Спільнота уволених",
 		"lgbtq-youth-focus": "ЛГБТК+ Молодь",
 		"resettled-refugees": "Переселені біженці",
 		"spanish-speakers": "Іспанська Спікери",
 		"trans-comm": "Транс Спільнота",
 		"trans-fem": "Транс жінки/Транс жіночий",
 		"trans-masc": "Транс чоловіки/Транс Чоловічий",
-		"trans-youth-focus": "Транс Юність",
-		"women": "Орієнтований на жінок"
+		"trans-youth-focus": "Транс Юність"
 	},
 	"sys": {
-		"CATEGORYNAME": "Система",
-		"incompatible-info": "Несумісна інформація"
+		"CATEGORYNAME": "Система"
 	},
 	"tpop": {
 		"other": "Цільове населення - інше"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "Юридична неприбуткова організація"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "Параметри постачальника послуг",
 		"case-mananger": "Кейс-менеджер",
+		"CATEGORYNAME": "Параметри постачальника послуг",
 		"community-org": "Волонтер/персонал громадської організації",
-		"friend-family": "N/A (Дивлячись від імені друзів/сім'ї)",
-		"govt-agency": "Державна установа",
-		"grassroots-direct": "Організація прямого обслуговування низових",
 		"healthcare": "Постачальник медичних послуг",
 		"lawyer": "Адвокат",
 		"other": "Інше (будь ласка, вкажіть)",

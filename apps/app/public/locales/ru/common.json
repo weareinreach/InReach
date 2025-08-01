@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} организация"
 	},
+	"admin": {
+		"tab-organizations": "Организации",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "Нажимая кнопку \"{{action}}\", вы соглашаетесь с <link1>политикой конфиденциальности</link1> и <link2>Условиями использования</link2> нашей организации InReach.",
 	"alert-message": "Оповещение",
 	"alert-message-1": "<strong>COVID-19:</strong> Новые изменения и методы борьбы с COVID-19 каждый день меняются. Медицинский центр медицинский центр Уитмена-Уокер предоставляет услуги с учетом рекомендаций по профилактике заболевания. Пожалуйста, ознакомьтесь с наиболее актуальной информацией на сайте медицинского центра.",
@@ -104,9 +109,9 @@
 	"dont-have-account": "Нет учетной записи?",
 	"download-app": "Скачайте приложение",
 	"edit-profile": "Изменить профиль",
-	"email-sent": "Письмо отправлено.",
 	"email_professional": "Рабочий email",
 	"email_student-pro": "Студенческий или рабочий email",
+	"email-sent": "Письмо отправлено.",
 	"enter-email-placeholder": "Введите адрес электронной почты",
 	"enter-password-placeholder": "Введите пароль",
 	"enter-review": "Добавьте отзыв",
@@ -230,8 +235,8 @@
 	},
 	"password-reset-success": "<Text>Пожалуйста, <LoginModal>войдите,</LoginModal> используя ваш новый пароль.</Text>",
 	"password-saved": "Пароль сохранен!",
-	"photo-count_interval": "(0)[Еще нет фотографий.];(1)[{{count}} фото];(2-inf)[{{count}} фото]",
 	"photo_interval": "(0)[Еще нет фотографий];(2-inf)[{{count}} фотографий];",
+	"photo-count_interval": "(0)[Еще нет фотографий.];(1)[{{count}} фото];(2-inf)[{{count}} фото]",
 	"please-specify": "Просьба указать",
 	"portal-module": {
 		"service-area": "Зона обслуживания"
@@ -430,6 +435,7 @@
 	"user-avatar": "Аватар пользователя",
 	"user-menu": {
 		"admin-options": "Параметры администратора",
+		"csv-downloads": "Загрузки CSV",
 		"data-portal": "Домашний портал данных",
 		"edit-page": "Редактировать эту страницу",
 		"user-options": "Настройки пользователя",
@@ -500,14 +506,14 @@
 	"photo_few": "Фото",
 	"photo_many": "Фото",
 	"photo_other": "Фото",
-	"review-count_one": "{{count}} отзыв",
-	"review-count_few": "{{count}} отзыва",
-	"review-count_many": "{{count}} отзывов",
-	"review-count_other": "{{count}} отзывов",
 	"review_one": "Отзыв",
 	"review_few": "Отзывов",
 	"review_many": "Отзывов",
 	"review_other": "Отзыва",
+	"review-count_one": "{{count}} отзыв",
+	"review-count_few": "{{count}} отзыва",
+	"review-count_many": "{{count}} отзывов",
+	"review-count_other": "{{count}} отзывов",
 	"view-x-result_one": "Просмотр результата {{count}}",
 	"view-x-result_few": "Посмотреть {{count}} результатов",
 	"view-x-result_many": "Посмотреть {{count}} результатов",

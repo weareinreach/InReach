@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "مراقبتهای مربوط به سقط جنین",
 		"abortion-providers": "ارائه دهندگان سقط جنین",
+		"CATEGORYNAME": "مراقبتهای مربوط به سقط جنین",
 		"financial-assistance": "کمک مالی",
 		"lodging-assistance": "کمک به اسکان",
 		"mail-order-services": "خدمات سفارش پستی",
@@ -9,8 +9,8 @@
 		"travel-assistance": "کمک مسافرتی"
 	},
 	"community-support": {
-		"CATEGORYNAME": "پشتیبانی جامعه",
 		"advocacy-and-community-organizing": "Advocacy and community organizing",
+		"CATEGORYNAME": "پشتیبانی جامعه",
 		"community-social-groups": "جامعه و گروه های اجتماعی",
 		"cultural-centers": "مراکز فرهنگی",
 		"lgbtq-centers": "مراکز دگرباشان جنسی",
@@ -28,8 +28,8 @@
 		"crisis-support": "پشتیبانی بحران"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "آموزش و اشتغال",
 		"career-counseling": "مشاوره شغلی",
+		"CATEGORYNAME": "آموزش و اشتغال",
 		"educational-support-for-lgbtq-youth": "پشتیبانی آموزشی برای جوانان دگرباش جنسی",
 		"english-classes": "کلاس های زبان انگلیسی",
 		"language-classes": "کلاس های زبان",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "آموزش و توسعه حرفه ای"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "کمک مالی",
 		"bail-funds": "وجوه وثیقه",
+		"CATEGORYNAME": "کمک مالی",
 		"healthcare-and-insurance": "بهداشت و درمان و بیمه",
 		"housing-and-utilities": "مسکن و تاسیسات",
 		"legal-fees": "هزینه های حقوقی",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "کمک به اسکان مجدد"
 	},
 	"legal": {
-		"CATEGORYNAME": "حقوقی",
 		"asylum-application": "درخواست پناهندگی",
+		"CATEGORYNAME": "حقوقی",
 		"citizenship": "تابعیت",
 		"crime-and-discrimination": "جرم و تبعیض",
 		"deferred-action-for-childhood-arrivals-daca": "اقدام معوق برای ورود به دوران کودکی (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "مراقبت از بهداشت دندان",
 		"fertility-and-family-planning-services": "خدمات باروری و تنظیم خانواده",
 		"hiv-and-sexual-health": "اچ آی وی و سلامت جنسی",
-		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "کلینیک های پزشکی",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"obgyn-services": "خدمات زنان و زایمان",
 		"physical-evaluations-for-asylum-claim": "ارزیابی فیزیکی برای درخواست پناهندگی",
 		"physical-evaluations-for-refugee-claim": "ارزیابی فیزیکی برای تقاضای پناهندگی",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "سلامت تراجنسیتی ها-مراقبت از جوانان"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "سلامت روان",
 		"bipoc-support-groups": "گروه های پشتیبانی BIPOC",
+		"CATEGORYNAME": "سلامت روان",
 		"family-support-groups": "گروه های حمایت از خانواده",
 		"hotlines": "خطوط تلفن",
 		"mental-health-info-referrals": "Mental health information and referrals",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "گروه های پشتیبانی ترانس"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "سرگرمی و فعالیت ها",
 		"art-music-literature": "هنر، موسیقی و ادبیات",
 		"camps-and-excursions": "کمپ و گردش",
+		"CATEGORYNAME": "سرگرمی و فعالیت ها",
 		"sports-and-entertainment": "ورزش و سرگرمی"
 	},
 	"trans-focused-services": {

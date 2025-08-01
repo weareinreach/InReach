@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "اضافي معلومات",
 		"at-capacity": "په ظرفیت",
+		"CATEGORYNAME": "اضافي معلومات",
 		"geo-near-public-transit": "عامه ترانسپورت ته نږدې",
 		"geo-public-transit-description": "عامه ترانزیت/ځانګړي لارښوونې",
 		"has-confidentiality-policy": "د محرمیت تګلاره لري",
 		"offers-remote-services": "لرې",
-		"private-practice": "شخصي تمرین",
-		"religiously-affiliated": "په مذهبي ډول تړاو لري",
 		"time-walk-in": "په ساعتونو کې واک لري",
-		"wheelchair-accessible": "د لاسرسي وړ",
+		"wheelchair-accessible_true": "د لاسرسي وړ",
 		"wheelchair-accessible_false": "د لاسرسي وړ ندی",
-		"wheelchair-accessible_true": "د لاسرسي وړ"
+		"wheelchair-accessible": "د لاسرسي وړ"
 	},
 	"alerts": {
 		"CATEGORYNAME": "خبرتیاو",
@@ -19,7 +17,6 @@
 		"warn": "د خبرتیا خبرتیا"
 	},
 	"community": {
-		"CATEGORYNAME": "ټولنه",
 		"adults": "«بالغ» د 18 کلونو یا ډیر عمر په توګه تعریف شوی",
 		"africa-immigrant": "هغه فرصتونه چې د افریقایي هیوادونو خلکو ته خدمت کوي",
 		"african-american": "هغه فرصتونه چې د افریقی امریکایی ټولنې ته خدمت کوي",
@@ -31,6 +28,7 @@
 		"bipoc": "هغه فرصتونه چې تور، داخلي او د رنګ خلکو ته خدمت کوي",
 		"bisexual": "هغه فرصتونه چې د ابی جنس ټولنې ته خدمت کوي",
 		"black": "هغه فرصتونه چې تور ټولنې ته خدمت کوي",
+		"CATEGORYNAME": "ټولنه",
 		"citizens": "د {{country}}اتباع",
 		"conversion-therapy-survivors": "هغه فرصتونه چې د تبادلې درملنې ژغورونکو ته خدمت کوي",
 		"daca-recipient-seeker": "هغه فرصتونه چې د خوب لیدونکو ته خدمت کوي (د DACA ترلاسه کونکي)",
@@ -58,25 +56,19 @@
 		"seniors": "«لوړ» د 65 کلونو یا ډیر عمر په توګه تعریف شوی",
 		"sex-workers": "هغه فرصتونه چې د جنسي کارمندانو خدمت کوي",
 		"teens": "«ځوان» د 12-18 کلن په توګه تعریف شوی",
-		"trans-youth": "فرصتونه چې د ټرانس ځوانانو ته خدمت کوي",
-		"trans-youth-caregivers": "هغه فرصتونه چې د ټرانس ځوانانو پاملرنې کونکو ته خدمت کوي",
 		"transfeminine": "هغه فرصتونه چې د ټرانسفینینین ټولنې ته خدمت کوي",
 		"transgender": "هغه فرصتونه چې د ټرانسجینڈر ټولنې ته خدمت کوي (د نه مطابقت لرونکي یا غیر بائنری ټولنو لپاره، د جنډر غیر متناسب یا غیر بائنری ملکیتونو څخه کار واخلئ)",
 		"transmasculine": "هغه فرصتونه چې د تراسمذکر ټولنې ته خدمت کوي",
+		"trans-youth": "فرصتونه چې د ټرانس ځوانانو ته خدمت کوي",
+		"trans-youth-caregivers": "هغه فرصتونه چې د ټرانس ځوانانو پاملرنې کونکو ته خدمت کوي",
 		"unaccompanied-minors": "هغه فرصتونه چې بې سرپرسته کوچنيانو ته خدمت کوي",
 		"undocumented": "هغه فرصتونه چې بې اسنادو مهاجرینو ته خدمت کوي"
 	},
 	"cost": {
 		"CATEGORYNAME": "لګښت",
-		"cost-accepts-insurance": "دا خدمت بیمه مني",
-		"cost-accepts-insurance_default": "دا خدمت بیمه مني. د لګښت، مالي مرستې اختیارونو او د بیمې پوښښ توضیحاتو په اړه د نورو معلوماتو لپاره مستقیم سازمان سره اړیکه ونیسئ.",
-		"cost-accepts-insurance_withUrl": "دا خدمت بیمه مني. <Link href=\"{{url}}\">د لګښت، مالي مرستې انتخابونو او د بیمې پوښښ د جزیاتو په اړه د نورو معلوماتو لپاره د سازمان پاڼې ته د لیدو لپاره دلته کلیک وکړئ</Link> .",
 		"cost-fees": "یو لګښت لري",
-		"cost-free": "د وړیا لګښت",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-sliding-scale": "لګښتونه په سلیډینګ پیمانه ټاکل کیږي",
-		"cost-sliding-scale_default": "دا خدمت د سلیډینګ پیمانه فیس لري. هغه مقدار چې تاسو د خدماتو لپاره تادیه کوئ ستاسو د عاید کچې سره سم تنظیم کیږي. د نورو معلوماتو لپاره مستقیم سازمان سره اړیکه ونیسئ.",
-		"cost-sliding-scale_withUrl": "دا خدمت د سلیډینګ پیمانه فیس لري. هغه مقدار چې تاسو د خدماتو لپاره تادیه کوئ ستاسو د عاید کچې سره سم تنظیم کیږي. د ‏‎ <Link href=\"{{url}}\">‎‏ پاڼې اړوند نور معلومات په فسبوک کې اوګورئ</Link>"
+		"cost-free": "د وړیا لګښت"
 	},
 	"crisis-support-community": {
 		"elders": "مشرانو",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "د وړتیا اړتیاوې",
-		"elig-age": "د عمر وړتیا",
 		"elig-age_max": "لاندې {{max}}",
 		"elig-age_min": "{{min}} او زاړه",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "د عمر وړتیا",
 		"other-describe": "نور (د وړیا متن توضیحات)",
 		"req-medical-insurance": "طبي بیمې ته اړتیا لري",
 		"req-photo-id": "د عکس ID ته اړتیا لري",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "د وخت ټاکل اړین دي"
 	},
 	"lang": {
-		"CATEGORYNAME": "ژبې",
 		"all-languages-by-interpreter": "ټولې ژبې د ژباړونکي له لارې",
 		"american-sign-language": "د امریکا د اشارې ژبه",
+		"CATEGORYNAME": "ژبې",
 		"lang-offered": "ځانګړې ژبې وړاندیز شوې"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "د سازمان رهبري",
 		"bipoc-led": "بایپوک - مشرۍ",
 		"black-led": "تور - مشرۍ",
+		"CATEGORYNAME": "د سازمان رهبري",
 		"immigrant-led": "د کډوالۍ په مشرۍ",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "د ټرانسجنډر په مشرۍ",
-		"women-led": "د ښځو په مشرۍ"
+		"trans-led": "د ټرانسجنډر په مشرۍ"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "د خدماتو لاسرسي لارښوونې",
 		"accessemail": "د لاسرسي لارښوونې - بریښنالیک",
 		"accessfile": "د لاسرسي لارښوونې - دوتنه",
 		"accesslink": "د لاسرسي لارښوونې - لینک",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "د لاسرسي لارښوونې - عامه لیږد",
 		"accesssms": "د لاسرسي لارښوونې - SMS",
 		"accesstext": "د لاسرسي لارښوونې - متن",
-		"accesswhatsapp": "د لاسرسي لارښوونې - WhatsApp"
+		"accesswhatsapp": "د لاسرسي لارښوونې - WhatsApp",
+		"CATEGORYNAME": "د خدماتو لاسرسي لارښوونې"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "د خدمت تمرکز",
 		"asylum-seekers": "پناه غوښتونکي",
 		"bipoc-comm": "د BIPOC ټولنه",
-		"caregivers": "د ټولنې پاملرنې کونکي",
-		"disabled": "معیوبین ټولنه",
-		"elder": "په مشرانو تمرکز",
+		"CATEGORYNAME": "د خدمت تمرکز",
 		"gender-nc": "د جندر غیر مطابقت",
 		"hiv-comm": "د اچ آی وي ټولنه",
 		"immigrant-comm": "د مهاجرینو ټولنه",
-		"incarcerated": "بندیان ټولنه",
 		"lgbtq-youth-focus": "LGBTQ+ځوانان",
 		"resettled-refugees": "بې ځایه شوي کډوال",
 		"spanish-speakers": "هسپانوي ویناوالو",
 		"trans-comm": "ټرانس ټولنه",
 		"trans-fem": "ټرانس ښځې/ټرانس ښځینه",
 		"trans-masc": "ترانس نارینه/ټرانس مذکر",
-		"trans-youth-focus": "ټرانس ځوانان",
-		"women": "په ښځو تمرکز"
+		"trans-youth-focus": "ټرانس ځوانان"
 	},
 	"sys": {
-		"CATEGORYNAME": "سیستم",
-		"incompatible-info": "نامناسبه معلومات"
+		"CATEGORYNAME": "سیستم"
 	},
 	"tpop": {
 		"other": "د هدف نفوس - نور"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "حقوقي غیر انتفاعي سازمان"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "د خدمت چمتو کونکي اختیارونه",
 		"case-mananger": "د قضیې مدیر",
+		"CATEGORYNAME": "د خدمت چمتو کونکي اختیارونه",
 		"community-org": "د ټولنې په سازمان کې رضاکاران/کارمندان",
-		"friend-family": "N/A (د ملګرو/کورنۍ په استازیتوب په لټه کې)",
-		"govt-agency": "دولتي اداره",
-		"grassroots-direct": "د ګراس روټس مستقیم خدمت سازمان",
 		"healthcare": "د روغتیا پاملرنې چمتو کونکی",
 		"lawyer": "وکیل",
 		"other": "نور (مهرباني وکړئ مشخص کړئ)",
