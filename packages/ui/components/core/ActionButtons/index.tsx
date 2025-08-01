@@ -1,6 +1,5 @@
 import { Skeleton } from '@mantine/core'
 
-import { CsvDownload } from './CsvDownload'
 import { Delete } from './Delete'
 import { ActionButtonGroup } from './Group'
 import { OverflowMenu } from './Menu'
@@ -14,7 +13,6 @@ export const ActionButtons = () => null
 
 ActionButtons.Group = ActionButtonGroup
 
-ActionButtons.CSVDownload = CsvDownload
 ActionButtons.Delete = Delete
 ActionButtons.Loading = Loading
 ActionButtons.Menu = OverflowMenu

@@ -168,6 +168,7 @@ const OrganizationPage = ({
 			<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
 				<Tabs.List>
 					<Tabs.Tab value='locations'>{t('offices-and-locations')}</Tabs.Tab>
+					<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 				</Tabs.List>
 				<Stack pt={40} spacing={40}>
 					{locations.map((location) => (
