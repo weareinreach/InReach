@@ -50,7 +50,7 @@ jobs:
 
       # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
-        uses: chromaui/action@25f8ff36486472c2d6b5b02dc2d277f051a3ecdb # v11
+        uses: chromaui/action@58d9ffb36c90c97a02d061544ecc849cc4a242a9 # v13
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
