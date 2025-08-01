@@ -14,7 +14,7 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"devDependencies": {
-		"@next/eslint-plugin-next": "14.2.16",
+		"@next/eslint-plugin-next": "14.2.31",
 		"@tanstack/eslint-plugin-query": "4.38.0",
 		"@types/eslint": "8.56.12",
 		"@types/eslint-config-prettier": "6.11.3",
@@ -22,7 +22,7 @@
 		"@typescript-eslint/eslint-plugin": "7.18.0",
 		"@typescript-eslint/parser": "7.18.0",
 		"eslint": "8.57.1",
-		"eslint-config-next": "14.2.16",
+		"eslint-config-next": "14.2.31",
 		"eslint-config-prettier": "9.1.0",
 		"eslint-formatter-github": "1.1.4",
 		"eslint-import-resolver-typescript": "3.6.3",
