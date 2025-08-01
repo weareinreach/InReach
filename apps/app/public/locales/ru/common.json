@@ -10,8 +10,8 @@
 	},
 	"admin": {
 		"tab-organizations": "Организации",
-		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-users": "Пользователи",
+		"tab-downloads": "Загрузки"
 	},
 	"agree-disclaimer": "Нажимая кнопку \"{{action}}\", вы соглашаетесь с <link1>политикой конфиденциальности</link1> и <link2>Условиями использования</link2> нашей организации InReach.",
 	"alert-message": "Оповещение",
