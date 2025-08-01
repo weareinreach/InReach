@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "गर्भपात देखभाल",
 		"abortion-providers": "गर्भपात कराने वाले",
+		"CATEGORYNAME": "गर्भपात देखभाल",
 		"financial-assistance": "वित्तीय सहायता",
 		"lodging-assistance": "लॉजिंग सहायता",
 		"mail-order-services": "मेल ऑर्डर सेवाएं",
@@ -9,8 +9,8 @@
 		"travel-assistance": "यात्रा संबंधी सहायता"
 	},
 	"community-support": {
-		"CATEGORYNAME": "सामुदायिक सहायता",
 		"advocacy-and-community-organizing": "वकालत और सामुदायिक आयोजन",
+		"CATEGORYNAME": "सामुदायिक सहायता",
 		"community-social-groups": "समुदाय और सामाजिक समूह",
 		"cultural-centers": "सांस्कृतिक केंद्र",
 		"lgbtq-centers": "LGBTQ केंद्र",
@@ -28,8 +28,8 @@
 		"crisis-support": "संकट सहायता"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "शिक्षा और रोजगार",
 		"career-counseling": "करियर काउंसलिंग",
+		"CATEGORYNAME": "शिक्षा और रोजगार",
 		"educational-support-for-lgbtq-youth": "LGBTQ युवाओं के लिए शैक्षिक सहायता",
 		"english-classes": "अंग्रेजी की कक्षाएं",
 		"language-classes": "भाषा की कक्षाएँ",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "प्रशिक्षण और व्यावसायिक विकास"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "वित्तीय सहायता",
 		"bail-funds": "जमानत निधि",
+		"CATEGORYNAME": "वित्तीय सहायता",
 		"healthcare-and-insurance": "स्वास्थ्य देखभाल और बीमा",
 		"housing-and-utilities": "आवास एवं उपयोगिताएँ",
 		"legal-fees": "कानूनी फीस",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "पुनर्वास सहायता"
 	},
 	"legal": {
-		"CATEGORYNAME": "लीगल",
 		"asylum-application": "शरण आवेदन",
+		"CATEGORYNAME": "लीगल",
 		"citizenship": "नागरिकता",
 		"crime-and-discrimination": "अपराध और भेदभाव",
 		"deferred-action-for-childhood-arrivals-daca": "बचपन के आगमन के लिए आस्थगित कार्रवाई (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "दाँतों की देखभाल",
 		"fertility-and-family-planning-services": "प्रजनन और परिवार नियोजन सेवाएं",
 		"hiv-and-sexual-health": "एचआईवी और यौन स्वास्थ्य",
-		"medical-info-and-referrals": "मेडिकल जानकारी और रेफरल",
 		"medical-clinics": "मेडिकल क्लीनिक",
+		"medical-info-and-referrals": "मेडिकल जानकारी और रेफरल",
 		"obgyn-services": "ओबीजीवाईएन सेवाएं",
 		"physical-evaluations-for-asylum-claim": "शरण के दावे के लिए भौतिक मूल्यांकन",
 		"physical-evaluations-for-refugee-claim": "शरणार्थी के दावे के लिए भौतिक मूल्यांकन",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "ट्रांस स्वास्थ्य - युवा देखभाल"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "मानसिक स्वास्थ्य",
 		"bipoc-support-groups": "BIPOC सहायता समूह",
+		"CATEGORYNAME": "मानसिक स्वास्थ्य",
 		"family-support-groups": "परिवार सहायता समूह",
 		"hotlines": "हॉटलाइन",
 		"mental-health-info-referrals": "Mental health information and referrals",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "ट्रांस सहायता समूह"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "मनोरंजन और गतिविधियां",
 		"art-music-literature": "कला, संगीत और साहित्य",
 		"camps-and-excursions": "शिविर और भ्रमण",
+		"CATEGORYNAME": "मनोरंजन और गतिविधियां",
 		"sports-and-entertainment": "खेल और मनोरंजन"
 	},
 	"trans-focused-services": {

@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Swen Avòtman",
 		"abortion-providers": "Founisè avòtman",
+		"CATEGORYNAME": "Swen Avòtman",
 		"financial-assistance": "Asistans finansye",
 		"lodging-assistance": "Asistans lojman",
 		"mail-order-services": "Sèvis lòd lapòs",
@@ -9,8 +9,8 @@
 		"travel-assistance": "Asistans vwayaj"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Sipò pou Kominote",
 		"advocacy-and-community-organizing": "Advocacy and community organizing",
+		"CATEGORYNAME": "Sipò pou Kominote",
 		"community-social-groups": "Kominote ak gwoup sosyal",
 		"cultural-centers": "Sant kiltirèl",
 		"lgbtq-centers": "Sant LGBTQ",
@@ -28,8 +28,8 @@
 		"crisis-support": "Sipò pou kriz"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Edikasyon ak Travay",
 		"career-counseling": "Karyè konsèy",
+		"CATEGORYNAME": "Edikasyon ak Travay",
 		"educational-support-for-lgbtq-youth": "Sipò edikasyon pou jèn LGBTQ",
 		"english-classes": "Klas angle",
 		"language-classes": "Klas lang",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "Training and professional development"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "Asistans Finansye",
 		"bail-funds": "Bail and bond funds",
+		"CATEGORYNAME": "Asistans Finansye",
 		"healthcare-and-insurance": "Healthcare and insurance",
 		"housing-and-utilities": "Housing and utilities",
 		"legal-fees": "Legal fees",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "Asistans pou reyentegrasyon"
 	},
 	"legal": {
-		"CATEGORYNAME": "Legal",
 		"asylum-application": "Azil aplikasyon",
+		"CATEGORYNAME": "Legal",
 		"citizenship": "Sitwayènte",
 		"crime-and-discrimination": "Krim ak diskriminasyon",
 		"deferred-action-for-childhood-arrivals-daca": "Aksyon difere pou arive timoun (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "Swen dantè",
 		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "VIH ak sante seksyèl",
-		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "Klinik medikal",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"obgyn-services": "Sèvis OBGYN",
 		"physical-evaluations-for-asylum-claim": "Evalyasyon fizik pou reklamasyon azil",
 		"physical-evaluations-for-refugee-claim": "Evalyasyon fizik pou reklamasyon refijye yo",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "Trans sante - swen pou jèn"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Sante mantal",
 		"bipoc-support-groups": "Gwoup sipò BIPOC",
+		"CATEGORYNAME": "Sante mantal",
 		"family-support-groups": "Family support groups",
 		"hotlines": "Hotlines",
 		"mental-health-info-referrals": "Mental health information and referrals",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "Gwoup sipò Trans"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Lwazi ak Aktivite",
 		"art-music-literature": "Atizay, mizik, ak literati",
 		"camps-and-excursions": "Camps and excursions",
+		"CATEGORYNAME": "Lwazi ak Aktivite",
 		"sports-and-entertainment": "Espò ak amizman"
 	},
 	"trans-focused-services": {

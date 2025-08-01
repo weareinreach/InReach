@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Bykomende inligting",
 		"at-capacity": "By kapasiteit",
+		"CATEGORYNAME": "Bykomende inligting",
 		"geo-near-public-transit": "Naby openbare vervoer",
 		"geo-public-transit-description": "Openbare vervoer/spesifieke aanwysings",
 		"has-confidentiality-policy": "Het 'n vertroulikheidsbeleid",
 		"offers-remote-services": "Afgeleë",
-		"private-practice": "Privaat praktyk",
-		"religiously-affiliated": "Is godsdienstig geaffilieer",
 		"time-walk-in": "Het inloop-ure",
-		"wheelchair-accessible": "Toeganklik",
+		"wheelchair-accessible_true": "Toeganklik",
 		"wheelchair-accessible_false": "Nie toeganklik nie",
-		"wheelchair-accessible_true": "Toeganklik"
+		"wheelchair-accessible": "Toeganklik"
 	},
 	"alerts": {
 		"CATEGORYNAME": "waarskuwings",
@@ -19,7 +17,6 @@
 		"warn": "Waarskuwing Alert"
 	},
 	"community": {
-		"CATEGORYNAME": "Gemeenskap",
 		"adults": "“Volwasse” gedefinieer as 18 jaar of ouer",
 		"africa-immigrant": "Geleenthede wat diegene uit Afrika-lande dien",
 		"african-american": "Geleenthede wat die Afro-Amerikaanse gemeenskap dien",
@@ -31,6 +28,7 @@
 		"bipoc": "Geleenthede wat swart, inheemse en kleurlinge dien",
 		"bisexual": "Geleenthede wat die biseksuele gemeenskap dien",
 		"black": "Geleenthede wat die Swart Gemeenskap dien",
+		"CATEGORYNAME": "Gemeenskap",
 		"citizens": "Burgers van {{country}}",
 		"conversion-therapy-survivors": "Geleenthede wat oorlewendes van omskakelingsterapie dien",
 		"daca-recipient-seeker": "Geleenthede wat Dreamers dien (DACA-ontvangers)",
@@ -58,25 +56,19 @@
 		"seniors": "“senior” gedefinieer as 65 jaar of ouer",
 		"sex-workers": "Geleenthede wat sekswerkers dien",
 		"teens": "“tiener” gedefinieer as 12-18 jaar oud",
-		"trans-youth": "Geleenthede wat Trans-jeug dien",
-		"trans-youth-caregivers": "Geleenthede wat versorgers van Trans-jeug dien",
 		"transfeminine": "Geleenthede wat die Transfeminine Gemeenskap dien",
 		"transgender": "Geleenthede wat die transgender-gemeenskap dien (vir nie-ooreenstemmende of nie-binêre gemeenskappe, gebruik die geslags-nie-konformerende of nie-binêre eienskappe)",
 		"transmasculine": "Geleenthede wat die Trasmasculine Community dien",
+		"trans-youth": "Geleenthede wat Trans-jeug dien",
+		"trans-youth-caregivers": "Geleenthede wat versorgers van Trans-jeug dien",
 		"unaccompanied-minors": "Geleenthede wat onbegeleide minderjariges bedien",
 		"undocumented": "Geleenthede wat ongedokumenteerde immigrante bedien"
 	},
 	"cost": {
 		"CATEGORYNAME": "Koste",
-		"cost-accepts-insurance": "Hierdie diens aanvaar versekering",
-		"cost-accepts-insurance_default": "Hierdie diens aanvaar versekering. Kontak die organisasie direk vir meer inligting oor koste, finansiële bystandopsies en versekeringsdekkingbesonderhede.",
-		"cost-accepts-insurance_withUrl": "Hierdie diens aanvaar versekering. <Link href=\"{{url}}\">Klik hier om die organisasie se bladsy</Link> te besoek vir meer inligting oor koste, finansiële bystandopsies en versekeringsdekkingbesonderhede.",
 		"cost-fees": "Gaan 'n koste aan",
-		"cost-free": "Vry van koste",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-sliding-scale": "Koste word op 'n glyskaal bepaal",
-		"cost-sliding-scale_default": "Hierdie diens het glyskaalfooie. Die bedrag wat jy vir dienste betaal, word aangepas volgens jou inkomstevlak. Kontak die organisasie direk vir meer inligting.",
-		"cost-sliding-scale_withUrl": "Hierdie diens het glyskaalfooie. Die bedrag wat jy vir dienste betaal, word aangepas volgens jou inkomstevlak. <Link href=\"{{url}}\">Klik hier om die organisasie se bladsy vir meer inligting te besoek.</Link>"
+		"cost-free": "Vry van koste"
 	},
 	"crisis-support-community": {
 		"elders": "Ouderlinge",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Geskiktheidsvereistes",
-		"elig-age": "Ouderdom geskiktheid",
 		"elig-age_max": "Onder {{max}}",
 		"elig-age_min": "{{min}} en ouer",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "Ouderdom geskiktheid",
 		"other-describe": "Ander (vrye teks beskrywing)",
 		"req-medical-insurance": "VEREIS mediese versekering",
 		"req-photo-id": "VEREIS 'n foto-ID",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "Tyd Aanstelling Vereiste"
 	},
 	"lang": {
-		"CATEGORYNAME": "Tale",
 		"all-languages-by-interpreter": "Alle tale via tolk",
 		"american-sign-language": "Amerikaanse gebaretaal",
+		"CATEGORYNAME": "Tale",
 		"lang-offered": "Spesifieke tale aangebied"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Organisasie Leierskap",
 		"bipoc-led": "Bipoc-gelei",
 		"black-led": "Swart-gelei",
+		"CATEGORYNAME": "Organisasie Leierskap",
 		"immigrant-led": "Immigrant-gelei",
 		"lgbtq-led": "LGBTQ+ gelei",
-		"trans-led": "Transgender-gelei",
-		"women-led": "Vroue-gelei"
+		"trans-led": "Transgender-gelei"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Diens Toegang Instruksies",
 		"accessemail": "Toegangsinstruksies - e-pos",
 		"accessfile": "Toegangsinstruksies - lêer",
 		"accesslink": "Toegangsinstruksies - skakel",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "Toegangsinstruksies - Openbare vervoer",
 		"accesssms": "Toegangsinstruksies - SMS",
 		"accesstext": "Toegangsinstruksies - teks",
-		"accesswhatsapp": "Toegangsinstruksies - WhatsApp"
+		"accesswhatsapp": "Toegangsinstruksies - WhatsApp",
+		"CATEGORYNAME": "Diens Toegang Instruksies"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Diens Fokus",
 		"asylum-seekers": "Asielsoekers",
 		"bipoc-comm": "BIPOC Gemeenskap",
-		"caregivers": "Versorgers Gemeenskap",
-		"disabled": "Gestremde gemeenskap",
-		"elder": "Fokus op ouderlinge",
+		"CATEGORYNAME": "Diens Fokus",
 		"gender-nc": "Geslag nie-ooreenstemmend",
 		"hiv-comm": "MIV-gemeenskap",
 		"immigrant-comm": "Immigrant Gemeenskap",
-		"incarcerated": "Gevange gemeenskap",
 		"lgbtq-youth-focus": "LGBTQ+Jeug",
 		"resettled-refugees": "Hervestigde vlugtelinge",
 		"spanish-speakers": "Spaanssprekendes",
 		"trans-comm": "Trans Gemeenskap",
 		"trans-fem": "Trans Vroue/Trans Vroulik",
 		"trans-masc": "Trans Mans/Trans Manlik",
-		"trans-youth-focus": "Trans Jeug",
-		"women": "Fokus op vroue"
+		"trans-youth-focus": "Trans Jeug"
 	},
 	"sys": {
-		"CATEGORYNAME": "Stelsel",
-		"incompatible-info": "Onverenigbare inligting"
+		"CATEGORYNAME": "Stelsel"
 	},
 	"tpop": {
 		"other": "Teikenbevolking - Ander"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "Wettige organisasie sonder winsbejag"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "Diensverskaffer opsies",
 		"case-mananger": "Saak bestuurder",
+		"CATEGORYNAME": "Diensverskaffer opsies",
 		"community-org": "Vrywilliger/personeel by 'n gemeenskapsorganisasie",
-		"friend-family": "N/A (Kyk namens vriende/familie)",
-		"govt-agency": "Regeringsagentskap",
-		"grassroots-direct": "Grassroots Direkte Diens Organisasie",
 		"healthcare": "Gesondheidsorgverskaffer",
 		"lawyer": "prokureur",
 		"other": "Ander (spesifiseer asseblief)",

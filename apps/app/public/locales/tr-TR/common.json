@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} organizasyon"
 	},
+	"admin": {
+		"tab-organizations": "Kuruluşlar",
+		"tab-users": "Kullanıcılar",
+		"tab-downloads": "İndirilenler"
+	},
 	"agree-disclaimer": "“{{action}}\" ı tıklayarak inReach'in <link1>Gizlilik Politikası</link1> ve <link2>Kullanım Şartları</link2>kabul etmiş olursunuz.",
 	"alert-message": "Uyarı mesajı",
 	"alert-message-1": "<strong>COVID-19 politikası:</strong> COVID-19 önleme ile ilgili haberler ve en iyi uygulamalar her gün hızla değişirken, Whitman-Walker Health, hizmetlerini önleme tavsiyelerini yansıtacak şekilde güncellemeye devam ediyor. En güncel bilgiler için lütfen web sitelerini kontrol edin.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "Hesabınız yok mu?",
 	"download-app": "Uygulamayı indirin",
 	"edit-profile": "Profili Düzenle",
-	"email-sent": "E-posta gönderildi.",
 	"email_professional": "Profesyonel e-posta",
 	"email_student-pro": "Profesyonel veya öğrenci e-postası",
+	"email-sent": "E-posta gönderildi.",
 	"enter-email-placeholder": "E-posta adresini girin...",
 	"enter-password-placeholder": "Şifreyi girin...",
 	"enter-review": "Yorumunuzu girin...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>Lütfen <LoginModal>yeni şifrenizi kullanarak</LoginModal> giriş yapın.</Text>",
 	"password-saved": "Şifre kaydedildi!",
-	"photo-count_interval": "(0) [Henüz fotoğraf yok.]; (1) [{{count}} fotoğraf] ;( 2-inf) [{{count}} fotoğraf]",
 	"photo_interval": "(0) [Henüz fotoğraf yok]; (2-inf) [Tüm {{count}} fotoğraflarını görün];",
+	"photo-count_interval": "(0) [Henüz fotoğraf yok.]; (1) [{{count}} fotoğraf] ;( 2-inf) [{{count}} fotoğraf]",
 	"please-specify": "Lütfen belirtin",
 	"portal-module": {
 		"service-area": "Hizmet Alanı"
@@ -428,6 +433,7 @@
 	"user-avatar": "Kullanıcı avatarı",
 	"user-menu": {
 		"admin-options": "Yönetici Seçenekleri",
+		"csv-downloads": "CSV İndirmeleri",
 		"data-portal": "Veri Portalı Ana Sayfası",
 		"edit-page": "Bu sayfayı düzenle",
 		"user-options": "Kullanıcı Seçenekleri",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "Fotoğraf",
 	"photo_other": "Fotoğraflar",
-	"review-count_one": "({{count}} incelemesi)",
-	"review-count_other": "({{count}} yorumlar)",
 	"review_one": "Gözden Geçirme",
 	"review_other": "Yorumlar",
+	"review-count_one": "({{count}} incelemesi)",
+	"review-count_other": "({{count}} yorumlar)",
 	"view-x-result_one": "{{count}} sonucuyu görüntüle",
 	"view-x-result_other": "{{count}} sonuçlarını görüntüleyin",
 	"website_one": "İnternet sitesi",

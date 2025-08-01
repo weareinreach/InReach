@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} 단체"
 	},
+	"admin": {
+		"tab-organizations": "단체",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "\"{{action}}\"을 선택하면 InReach의 <link1>개인정보 보안 정책</link1> 과 <link2>이용약관</link2>과 동의합니다.",
 	"alert-message": "알림 메시지",
 	"alert-message-1": "<strong>COVID-19 정책:</strong> COVID-19 예방에 대한 뉴스와 모범 사례가 매일 격변하였으므로 Whitman-Walker Health는 예방 권고를 반영하여 서비스를 지속적으로 업데이트하고 있습니다. 최신 정보는 해당 웹사이트를 확인하십시오.",
@@ -101,9 +106,9 @@
 	"dont-have-account": "계정 없습니다",
 	"download-app": "앱 다운로드하기",
 	"edit-profile": "프로필 편집하기",
-	"email-sent": "이메일 보냈습니다.",
 	"email_professional": "전문 이메일",
 	"email_student-pro": "전문/학생 이메일",
+	"email-sent": "이메일 보냈습니다.",
 	"enter-email-placeholder": "이메일 주소 입력하세요...",
 	"enter-password-placeholder": "비밀번호 입력하세요...",
 	"enter-review": "후기를 입력하세요...",
@@ -227,8 +232,8 @@
 	},
 	"password-reset-success": "<Text>새 비밀번호를 사용하여<LoginModal>로그인</LoginModal> 하세요.</Text>",
 	"password-saved": "비밀번호가 저장되었습니다!",
-	"photo-count_interval": "(0)[아직 사진이 없습니다.];(1)[{{count}} 장];(2-inf)[{{count}} 장]",
 	"photo_interval": "(0) [아직 사진이 없습니다]; (2-inf) [모든 {{count}} 사진 보기];",
+	"photo-count_interval": "(0)[아직 사진이 없습니다.];(1)[{{count}} 장];(2-inf)[{{count}} 장]",
 	"please-specify": "명시 해주세요",
 	"portal-module": {
 		"service-area": "서비스 영역"
@@ -427,6 +432,7 @@
 	"user-avatar": "사용자 아바타",
 	"user-menu": {
 		"admin-options": "관리자 설정",
+		"csv-downloads": "CSV Downloads",
 		"data-portal": "데이터 포털 홈페이지",
 		"edit-page": "페이지 편집하기",
 		"user-options": "사용자 설정",
@@ -494,8 +500,8 @@
 		"yes": "예"
 	},
 	"photo_other": "사진",
-	"review-count_other": "({{count}} 후기)",
 	"review_other": "후기",
+	"review-count_other": "({{count}} 후기)",
 	"view-x-result_other": "{{count}} 결과 보기",
 	"website_other": "웹사이트"
 }

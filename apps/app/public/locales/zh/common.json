@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} 组织"
 	},
+	"admin": {
+		"tab-organizations": "组织",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "点击\"{{action}}\"，您同意InReach的 <link1>隐私政策</link1> 和 <link2>使用条款</link2>。",
 	"alert-message": "警报消息",
 	"alert-message-1": "<strong>COVID-19政策：</strong> 随着针对COVID-19预防工作的新闻和最佳做法每天都在迅速变化。 Whitman-Walker Health 继续更新其服务，以反映预防方面的建议。 请检查他们的网站获取最新信息。",
@@ -101,9 +106,9 @@
 	"dont-have-account": "没有账号？",
 	"download-app": "下载该应用程序",
 	"edit-profile": "编辑个人资料",
-	"email-sent": "电子邮件已发送。",
 	"email_professional": "专业邮箱",
 	"email_student-pro": "专业人士或学生的电子邮件",
+	"email-sent": "电子邮件已发送。",
 	"enter-email-placeholder": "输入电子邮件地址...",
 	"enter-password-placeholder": "输入密码...",
 	"enter-review": "输入您的评论...",
@@ -227,8 +232,8 @@
 	},
 	"password-reset-success": "<Text>请使用 <LoginModal>登录</LoginModal> 使用您的新密码</Text>",
 	"password-saved": "密码已保存！",
-	"photo-count_interval": "(0)[还没有照片。];(1)[{{count}} 照片];(2-inf)[{{count}} 照片]",
 	"photo_interval": "(0)[还没有照片];(2-inf)[查看全部 {{count}} 照片];",
+	"photo-count_interval": "(0)[还没有照片。];(1)[{{count}} 照片];(2-inf)[{{count}} 照片]",
 	"please-specify": "请具体说明",
 	"portal-module": {
 		"service-area": "服务区"
@@ -427,6 +432,7 @@
 	"user-avatar": "用户头像",
 	"user-menu": {
 		"admin-options": "管理选项",
+		"csv-downloads": "CSV 下载",
 		"data-portal": "数据门户主页",
 		"edit-page": "编辑此页面",
 		"user-options": "用户选项",
@@ -494,8 +500,8 @@
 		"yes": "是的"
 	},
 	"photo_other": "照片",
-	"review-count_other": "({{count}} 条评论)",
 	"review_other": "点评",
+	"review-count_other": "({{count}} 条评论)",
 	"view-x-result_other": "查看 {{count}} 结果",
 	"website_other": "网站"
 }

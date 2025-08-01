@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Kürtaj Bakımı",
 		"abortion-providers": "Kürtaj sağlayıcıları",
+		"CATEGORYNAME": "Kürtaj Bakımı",
 		"financial-assistance": "Mali yardım",
 		"lodging-assistance": "Konaklama yardımı",
 		"mail-order-services": "Posta siparişi hizmetleri",
@@ -9,8 +9,8 @@
 		"travel-assistance": "Seyahat yardımı"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Topluluk Desteği",
 		"advocacy-and-community-organizing": "Savunuculuk ve Toplum Organizasyonu",
+		"CATEGORYNAME": "Topluluk Desteği",
 		"community-social-groups": "Topluluk ve sosyal gruplar",
 		"cultural-centers": "Kültür merkezleri",
 		"lgbtq-centers": "LGBTQ merkezleri",
@@ -28,8 +28,8 @@
 		"crisis-support": "Kriz Desteği"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Eğitim ve İstihdama",
 		"career-counseling": "Kariyer danışmanlığı",
+		"CATEGORYNAME": "Eğitim ve İstihdama",
 		"educational-support-for-lgbtq-youth": "LGBTQ gençlere eğitim desteği",
 		"english-classes": "İngilizce dersleri",
 		"language-classes": "Dil dersleri",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "Eğitim ve mesleki gelişim"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "Mali Yardım",
 		"bail-funds": "Kefalet Fonları",
+		"CATEGORYNAME": "Mali Yardım",
 		"healthcare-and-insurance": "Sağlık ve sigorta",
 		"housing-and-utilities": "Konut ve kamu hizmetleri",
 		"legal-fees": "Yasal ücretler",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "Yeniden Yerleşim Yardımı"
 	},
 	"legal": {
-		"CATEGORYNAME": "Yasal",
 		"asylum-application": "İltica başvurusu",
+		"CATEGORYNAME": "Yasal",
 		"citizenship": "Vatandaşlık",
 		"crime-and-discrimination": "Suç ve ayrımcılık",
 		"deferred-action-for-childhood-arrivals-daca": "Çocukluk Çağı Gelenleri İçin Ertelenmiş Eylem (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "Diş bakımı",
 		"fertility-and-family-planning-services": "Doğurganlık ve aile planlaması hizmetleri",
 		"hiv-and-sexual-health": "HIV ve cinsel sağlık",
-		"medical-info-and-referrals": "Tıbbi bilgi ve yönlendirmeler",
 		"medical-clinics": "Tıbbi klinikler",
+		"medical-info-and-referrals": "Tıbbi bilgi ve yönlendirmeler",
 		"obgyn-services": "OBGYN hizmetleri",
 		"physical-evaluations-for-asylum-claim": "İltica talebi için fiziksel değerlendirmeler",
 		"physical-evaluations-for-refugee-claim": "Mülteci talebi için fiziksel değerlendirmeler",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "Trans sağlık - gençlik bakımı"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Ruh Sağlığı",
 		"bipoc-support-groups": "BIPOC destek grupları",
+		"CATEGORYNAME": "Ruh Sağlığı",
 		"family-support-groups": "Aile destek grupları",
 		"hotlines": "Yardım hatları",
 		"mental-health-info-referrals": "Ruh sağlığı bilgileri ve yönlendirmeleri",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "Trans destek grupları"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Eğlence ve Aktiviteler",
 		"art-music-literature": "Sanat, müzik ve edebiyat",
 		"camps-and-excursions": "Kamplar ve geziler",
+		"CATEGORYNAME": "Eğlence ve Aktiviteler",
 		"sports-and-entertainment": "Spor ve eğlence"
 	},
 	"trans-focused-services": {

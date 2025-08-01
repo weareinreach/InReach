@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "낙태 서비스",
 		"abortion-providers": "낙태 제공자",
+		"CATEGORYNAME": "낙태 서비스",
 		"financial-assistance": "재정 지원",
 		"lodging-assistance": "주택 지원",
 		"mail-order-services": "우편 서비스",
@@ -9,8 +9,8 @@
 		"travel-assistance": "소송 지원"
 	},
 	"community-support": {
-		"CATEGORYNAME": "공동체 지원",
 		"advocacy-and-community-organizing": "변호 단체와 공동체 조직",
+		"CATEGORYNAME": "공동체 지원",
 		"community-social-groups": "공동체와 사회 조직",
 		"cultural-centers": "문화센터",
 		"lgbtq-centers": "LGBTQ 센터",
@@ -28,8 +28,8 @@
 		"crisis-support": "위기 관리 지원"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "교육과 취업",
 		"career-counseling": "경력상담",
+		"CATEGORYNAME": "교육과 취업",
 		"educational-support-for-lgbtq-youth": "LGBTQ+ 청소년을 위한 교육 지원",
 		"english-classes": "영어 수업",
 		"language-classes": "언어 수업",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "교육과 전문적인 개발"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "재정 보조",
 		"bail-funds": "긴급구제 자금과 채권 기금",
+		"CATEGORYNAME": "재정 보조",
 		"healthcare-and-insurance": "진료와 의료 보험",
 		"housing-and-utilities": "주택 및 유틸리티",
 		"legal-fees": "법률 비용",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "재정착 지원"
 	},
 	"legal": {
-		"CATEGORYNAME": "법률",
 		"asylum-application": "망명 신청",
+		"CATEGORYNAME": "법률",
 		"citizenship": "시민권",
 		"crime-and-discrimination": "범죄와 차별",
 		"deferred-action-for-childhood-arrivals-daca": "아동기 도착 유예 조치 (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "치과 진료",
 		"fertility-and-family-planning-services": "불임과 가족계획 서비스",
 		"hiv-and-sexual-health": "HIV와 성식건강",
-		"medical-info-and-referrals": "의료 정보 및 의뢰",
 		"medical-clinics": "건강 진료소",
+		"medical-info-and-referrals": "의료 정보 및 의뢰",
 		"obgyn-services": "산부인과 서비스",
 		"physical-evaluations-for-asylum-claim": "망명 신청을 위한 물리 평가",
 		"physical-evaluations-for-refugee-claim": "난민 신청을 위한 물리 평가",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "트랜스 건강 - 청소년 진료"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "정신건강",
 		"bipoc-support-groups": "BIPOC 지원단",
+		"CATEGORYNAME": "정신건강",
 		"family-support-groups": "가족 지원단",
 		"hotlines": "핫라인",
 		"mental-health-info-referrals": "정신 건강 정보 및 추천",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "트랜스 지원단"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "오락과 활동",
 		"art-music-literature": "예술, 음악, 문학",
 		"camps-and-excursions": "캠프와 여행",
+		"CATEGORYNAME": "오락과 활동",
 		"sports-and-entertainment": "스포츠와 오락"
 	},
 	"trans-focused-services": {
