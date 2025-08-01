@@ -10,7 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizações",
-		"tab-users": "Users",
+		"tab-users": "Utilizadores",
 		"tab-downloads": "Downloads"
 	},
 	"agree-disclaimer": "Ao clicar em \"{{action}}\", você concorda com a Política de Privacidade <link1></link1> e <link2>Termos de Uso</link2>da inReach.",

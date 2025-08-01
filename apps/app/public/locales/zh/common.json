@@ -10,8 +10,8 @@
 	},
 	"admin": {
 		"tab-organizations": "组织",
-		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-users": "用户",
+		"tab-downloads": "下载"
 	},
 	"agree-disclaimer": "点击\"{{action}}\"，您同意InReach的 <link1>隐私政策</link1> 和 <link2>使用条款</link2>。",
 	"alert-message": "警报消息",

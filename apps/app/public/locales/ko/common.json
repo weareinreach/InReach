@@ -10,8 +10,8 @@
 	},
 	"admin": {
 		"tab-organizations": "단체",
-		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-users": "유저",
+		"tab-downloads": "다운로드"
 	},
 	"agree-disclaimer": "\"{{action}}\"을 선택하면 InReach의 <link1>개인정보 보안 정책</link1> 과 <link2>이용약관</link2>과 동의합니다.",
 	"alert-message": "알림 메시지",
@@ -432,7 +432,7 @@
 	"user-avatar": "사용자 아바타",
 	"user-menu": {
 		"admin-options": "관리자 설정",
-		"csv-downloads": "CSV Downloads",
+		"csv-downloads": "CSV 다운로드",
 		"data-portal": "데이터 포털 홈페이지",
 		"edit-page": "페이지 편집하기",
 		"user-options": "사용자 설정",
