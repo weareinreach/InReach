@@ -5,7 +5,13 @@ import { type TCreateSchema } from './mutation.create.schema'
 
 const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
-	const { id } = await prisma.internalNote.create(input)
+
+	const data = {
+		...input.data,
+		userId: ctx.actorId,
+	}
+
+	const { id } = await prisma.internalNote.create({ data })
 
 	return { id }
 }
