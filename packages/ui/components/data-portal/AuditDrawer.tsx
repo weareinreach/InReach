@@ -1,17 +1,20 @@
-import { createStyles, Drawer, Loader, Pagination, Stack, Table, Text, Title } from '@mantine/core'
-import { useEffect, useMemo, useState } from 'react'
+import {
+	Button,
+	createStyles,
+	Drawer,
+	Group,
+	Loader,
+	Pagination,
+	rem,
+	Stack,
+	Table,
+	Text,
+	Title,
+} from '@mantine/core'
+import { useMemo, useState } from 'react'
 
-import { trpc } from '~api/trpc'
-import { Button } from '~ui/components/core/Button'
+import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
-
-interface AuditLogItem {
-	id: string
-	timestamp: string
-	actorId: string
-	operation: string
-	diff: Record<string, unknown>
-}
 
 const useStyles = createStyles((theme) => ({
 	drawerTitleWrapper: {
@@ -20,6 +23,11 @@ const useStyles = createStyles((theme) => ({
 		[`& div.mantine-Group-root > div:first-of-type`]: {
 			maxWidth: '100% !important',
 		},
+	},
+	scrollableTable: {
+		marginTop: rem(24),
+		maxHeight: 'calc(100vh - 200px)',
+		overflow: 'auto',
 	},
 }))
 
@@ -35,53 +43,28 @@ export const AuditDrawer = ({
 	name: string
 }) => {
 	const { classes } = useStyles()
-	const [data, setData] = useState<AuditLogItem[]>([])
-	const [loading, setLoading] = useState(false)
 	const [page, setPage] = useState(1)
-	const [totalPages, setTotalPages] = useState(10)
+	const pageSize = 20
+	const [showAdminDetails, setShowAdminDetails] = useState(false)
 
 	const drawerTitle = useMemo(
 		() => <ModalTitle breadcrumb={{ option: 'close', onClick: onClose }} maxWidth='100%' />,
 		[onClose]
 	)
 
-	// Fetch data only when drawer is open or page changes
-	useEffect(() => {
-		if (!opened || !recordId) return
-
-		const fetchData = async () => {
-			setLoading(true)
-
-			try {
-				// Placeholder response instead of API call
-				const response = [
-					{
-						id: '1',
-						timestamp: new Date().toISOString(),
-						actorId: 'user123',
-						operation: 'UPDATE',
-						diff: { field1: 'oldValue → newValue' },
-					},
-					{
-						id: '2',
-						timestamp: new Date().toISOString(),
-						actorId: 'user456',
-						operation: 'INSERT',
-						diff: { field2: 'null → someValue' },
-					},
-				]
-
-				setData(response)
-				setTotalPages(1)
-			} catch (error) {
-				console.error('Error fetching audit data:', error)
-			}
-
-			setLoading(false)
+	// Use the tRPC hook to fetch the audit trail data, including pagination parameters.
+	const { data, isLoading, error } = api.auditTrail.getAllForOrg.useQuery(
+		{ slug: recordId, page, pageSize },
+		{
+			enabled: !!recordId && opened,
 		}
+	)
 
-		fetchData()
-	}, [opened, page, recordId])
+	// Use the data from the API response to get the total count and results.
+	const auditTrail = data?.results
+	const totalCount = data?.totalCount || 0
+	const totalPages = Math.ceil(totalCount / pageSize)
+	const colSpanValue = showAdminDetails ? 6 : 5
 
 	return (
 		<Drawer
@@ -96,68 +79,77 @@ export const AuditDrawer = ({
 				title: classes.drawerTitleWrapper,
 			}}
 		>
-			{/* Body */}
-			<div style={{ overflowX: 'auto', marginBottom: '2rem' }}>
-				{loading ? (
-					<Loader />
+			<div style={{ overflowX: 'auto', marginBottom: rem(32) }}>
+				{isLoading ? (
+					<Loader style={{ margin: 'auto', display: 'block' }} />
+				) : error ? (
+					<Text color='red' style={{ textAlign: 'center' }}>
+						Error loading audit trail data.
+					</Text>
 				) : (
 					<>
-						<Stack style={{ textAlign: 'center' }}>
+						<Stack style={{ textAlign: 'center', paddingTop: rem(40) }}>
 							<Title>Activity Log</Title>
 							<Text>{name}</Text>
 							<Text>{recordId}</Text>
 						</Stack>
-						<Table style={{ borderCollapse: 'separate', borderSpacing: 0, width: '100%' }}>
-							<thead style={{ background: '#e0e0e0', borderRadius: '10px', overflow: 'hidden' }}>
-								<tr>
-									<th>Time</th>
-									<th>User</th>
-									<th>Activity</th>
-									<th>Updated fields</th>
-								</tr>
-							</thead>
-							<tbody>
-								{data.length > 0 ? (
-									data.map((item) => (
-										<tr key={item.id}>
-											<td>{item.timestamp}</td>
-											<td>{item.actorId}</td>
-											<td>{item.operation}</td>
-											<td>{JSON.stringify(item.diff)}</td>
-										</tr>
-									))
-								) : (
+						<Group position='right' mb='md'>
+							<Button size='xs' color='green' onClick={() => setShowAdminDetails(!showAdminDetails)}>
+								{showAdminDetails ? 'Hide Admin Details' : 'Show Admin Details'}
+							</Button>
+						</Group>
+						<div className={classes.scrollableTable}>
+							<Table striped style={{ borderCollapse: 'separate', borderSpacing: 0, width: '100%' }}>
+								<thead style={{ background: '#e0e0e0', borderRadius: '10px', overflow: 'hidden' }}>
 									<tr>
-										<td colSpan={4} style={{ textAlign: 'center' }}>
-											No audit data available
-										</td>
+										<th>Time</th>
+										<th>User</th>
+										<th>Table</th>
+										<th>Activity</th>
+										<th>Updated fields</th>
+										{showAdminDetails && <th>Admin details</th>}{' '}
 									</tr>
-								)}
-							</tbody>
-						</Table>
+								</thead>
+								<tbody>
+									{auditTrail && auditTrail.length > 0 ? (
+										auditTrail.map((item) => (
+											<tr key={item.id}>
+												<td>{new Date(item.timestamp).toLocaleString()}</td>
+												<td>{item.user?.name}</td>
+												<td>{item.table}</td>
+												<td>{item.operation}</td>
+												<td>
+													{item.summary.map((summaryItem, index) => (
+														<div key={index}>{summaryItem}</div>
+													))}
+												</td>
+												{showAdminDetails && (
+													<td>
+														{Object.entries(item.details).map(([key, value]) => (
+															<div key={key}>
+																<strong>{key}:</strong> {value as string}
+															</div>
+														))}
+													</td>
+												)}
+											</tr>
+										))
+									) : (
+										<tr>
+											<td colSpan={colSpanValue} style={{ textAlign: 'center' }}>
+												No audit data available
+											</td>
+										</tr>
+									)}
+								</tbody>
+							</Table>
+						</div>
 					</>
 				)}
 			</div>
 
-			{/* Pagination Controls */}
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-					padding: '1rem 0',
-					borderTop: '1px solid #ddd',
-				}}
-			>
-				<Pagination total={totalPages} page={page} onChange={setPage} siblings={1} />
-				<div>
-					<Button variant='subtle' disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
-						Prev
-					</Button>
-					<Button variant='subtle' disabled={page === totalPages} onClick={() => setPage((p) => p + 1)}>
-						Next
-					</Button>
-				</div>
+			<div style={{ display: 'flex', justifyContent: 'center', marginTop: rem(16) }}>
+				<Pagination total={totalPages} page={page} onChange={setPage} />
 			</div>
 		</Drawer>
 	)
