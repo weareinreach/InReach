@@ -70,11 +70,11 @@ export const InternalNotesDrawer = ({
 	const { classes } = useStyles()
 	const apiUtils = api.useUtils()
 	const { data: session } = useSession()
-	const userId = session?.user?.id
-	const userName = session?.user?.name
+	const userId = session?.user?.id ?? null
+	const userName = session?.user?.name ?? null
 
 	const drawerTitle = useMemo(
-		() => <ModalTitle breadcrumb={{ option: 'close', onClick: onClose }} maxWidth='100%' />,
+		() => <ModalTitle breadcrumb={{ option: 'close', onClick: onClose }} />,
 		[onClose]
 	)
 

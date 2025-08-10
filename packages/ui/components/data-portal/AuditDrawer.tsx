@@ -163,7 +163,7 @@ export const AuditDrawer = ({
 			<div style={{ overflowX: 'auto', marginBottom: rem(32) }}>{mainContent}</div>
 
 			<div style={{ display: 'flex', justifyContent: 'center', marginTop: rem(16) }}>
-				<Pagination total={totalPages} page={page} onChange={setPage} />
+				<Pagination total={totalPages} value={page} onChange={setPage} />
 			</div>
 		</Drawer>
 	)
