@@ -16,7 +16,7 @@ import { useMemo, useState } from 'react'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	drawerTitleWrapper: {
 		maxWidth: '100% !important',
 
@@ -66,6 +66,45 @@ export const AuditDrawer = ({
 	const totalPages = Math.ceil(totalCount / pageSize)
 	const colSpanValue = showAdminDetails ? 6 : 5
 
+	// New named function to toggle admin details
+	const toggleAdminDetails = () => {
+		setShowAdminDetails(!showAdminDetails)
+	}
+
+	// Refactored logic to render table rows or the "no data" message
+	const tableContent =
+		auditTrail && auditTrail.length > 0 ? (
+			auditTrail.map((item) => (
+				<tr key={item.id}>
+					<td>{new Date(item.timestamp).toLocaleString()}</td>
+					<td>{item.user?.name}</td>
+					<td>{item.table}</td>
+					<td>{item.operation}</td>
+					<td>
+						{item.summary.map((summaryItem) => (
+							// Changed key from index to summaryItem for stability
+							<div key={summaryItem}>{summaryItem}</div>
+						))}
+					</td>
+					{showAdminDetails && (
+						<td>
+							{Object.entries(item.details).map(([key, value]) => (
+								<div key={key}>
+									<strong>{key}:</strong> {value as string}
+								</div>
+							))}
+						</td>
+					)}
+				</tr>
+			))
+		) : (
+			<tr>
+				<td colSpan={colSpanValue} style={{ textAlign: 'center' }}>
+					No audit data available
+				</td>
+			</tr>
+		)
+
 	return (
 		<Drawer
 			opened={opened}
@@ -94,7 +133,8 @@ export const AuditDrawer = ({
 							<Text>{recordId}</Text>
 						</Stack>
 						<Group position='right' mb='md'>
-							<Button size='xs' color='green' onClick={() => setShowAdminDetails(!showAdminDetails)}>
+							{/* Used the new named function reference */}
+							<Button size='xs' color='green' onClick={toggleAdminDetails}>
 								{showAdminDetails ? 'Hide Admin Details' : 'Show Admin Details'}
 							</Button>
 						</Group>
@@ -110,38 +150,7 @@ export const AuditDrawer = ({
 										{showAdminDetails && <th>Admin details</th>}{' '}
 									</tr>
 								</thead>
-								<tbody>
-									{auditTrail && auditTrail.length > 0 ? (
-										auditTrail.map((item) => (
-											<tr key={item.id}>
-												<td>{new Date(item.timestamp).toLocaleString()}</td>
-												<td>{item.user?.name}</td>
-												<td>{item.table}</td>
-												<td>{item.operation}</td>
-												<td>
-													{item.summary.map((summaryItem, index) => (
-														<div key={index}>{summaryItem}</div>
-													))}
-												</td>
-												{showAdminDetails && (
-													<td>
-														{Object.entries(item.details).map(([key, value]) => (
-															<div key={key}>
-																<strong>{key}:</strong> {value as string}
-															</div>
-														))}
-													</td>
-												)}
-											</tr>
-										))
-									) : (
-										<tr>
-											<td colSpan={colSpanValue} style={{ textAlign: 'center' }}>
-												No audit data available
-											</td>
-										</tr>
-									)}
-								</tbody>
+								<tbody>{tableContent}</tbody>
 							</Table>
 						</div>
 					</>

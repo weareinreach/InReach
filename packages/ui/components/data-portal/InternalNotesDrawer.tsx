@@ -13,7 +13,7 @@ const noteSchema = z.object({
 	organizationId: z.string(),
 })
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	contentContainer: {
 		gap: rem(24),
 		padding: `${rem(40)} ${rem(64)} ${rem(40)} ${rem(64)}`,

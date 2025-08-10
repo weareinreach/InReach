@@ -211,19 +211,19 @@ const getAllForOrg = async ({ input }: TRPCHandlerParams<TGetAllForOrgSchema, 'p
 				operation: record.operation,
 				// The new recordId property, extracted from the 'new' payload
 				recordId: (newData.id as string) || null,
-				// Use property shorthand
-				details,
-				summary,
 				user: {
 					name: record['user.name'],
 				},
 				table: record.table,
+				// Use property shorthand
+				details,
+				summary,
 			}
 		})
 
 		return {
 			results: formattedResults,
-			totalCount: totalCount,
+			totalCount,
 		}
 	} catch (error) {
 		console.error('An error occurred during the audit trail query:', error)

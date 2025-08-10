@@ -3,7 +3,7 @@ import { createStyles, Divider } from '@mantine/core'
 import { Action } from '~ui/components/data-portal/Action'
 import { Activity } from '~ui/components/data-portal/Activity'
 
-const useMessageBodyStyles = createStyles((theme) => ({
+const useMessageBodyStyles = createStyles(() => ({
 	toolbar: {
 		display: 'flex',
 		justifyContent: 'space-between',

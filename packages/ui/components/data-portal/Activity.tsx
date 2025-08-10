@@ -1,4 +1,4 @@
-import { createStyles, Group, rem, Text } from '@mantine/core'
+import { createStyles, rem, Text } from '@mantine/core'
 
 // Assuming you have a date formatting utility like this
 const formatDate = (date: Date): string => {
