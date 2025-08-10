@@ -157,6 +157,7 @@ model User {
   orgAssociations UserToOrganization[]
 
   fieldVisibility FieldVisibility? /// For user profile page. All fields default to 'NONE'
+  internalNotes   InternalNote[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1720,6 +1721,8 @@ model InternalNote {
   translationNs                   String?
   translationNamespace            TranslationNamespace?          @relation(fields: [translationNamespaceName], references: [name], onDelete: Cascade, onUpdate: Cascade)
   translationNamespaceName        String?
+  userId                          String?
+  user                            User?                          @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
