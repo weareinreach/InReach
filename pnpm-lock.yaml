@@ -10,16 +10,16 @@ overrides:
 
 patchedDependencies:
   '@crowdin/ota-client@1.0.0':
-    hash: refrge56ym5gomc3tkglzjdymy
+    hash: aa7f14ddca0963b91831f413e62a73548f65f1014fafd0bcb7b86c3a3861cad9
     path: patches/@crowdin__ota-client@1.0.0.patch
   json-schema-to-zod@2.0.14:
-    hash: m6gxyy33n5omrqal5wlfjbvve4
+    hash: d34ba0467fbf8dc4d8cf87a01ab05b192060bcd9d3a93955e01388d5a16e772f
     path: patches/json-schema-to-zod@2.0.14.patch
   social-links@1.14.0:
-    hash: vsl4v34ksjh5tzibzra6h65ytm
+    hash: a5fedc338e34f473c54eb53169ae49c5c85841baff7ba7d1af9a453b58f46231
     path: patches/social-links@1.14.0.patch
   trpc-panel@1.3.4:
-    hash: 3z2tx2cn67fyw5s2xdx73dxaji
+    hash: be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7
     path: patches/trpc-panel@1.3.4.patch
 
 importers:
@@ -419,7 +419,7 @@ importers:
         version: 3.3.3
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.45.2)(zod@3.23.8)
+        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.23.8)
       trpc-playground:
         specifier: 1.0.4
         version: 1.0.4(@trpc/server@10.45.2)(@types/node@20.17.0)(express@4.21.1)(terser@5.36.0)(typescript@5.6.3)(zod@3.23.8)
@@ -437,7 +437,7 @@ importers:
     dependencies:
       '@crowdin/ota-client':
         specifier: 1.0.0
-        version: 1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)
+        version: 1.0.0(patch_hash=aa7f14ddca0963b91831f413e62a73548f65f1014fafd0bcb7b86c3a3861cad9)
       '@emotion/react':
         specifier: 11.13.3
         version: 11.13.3(@types/react@18.3.12)(react@18.3.1)
@@ -750,7 +750,7 @@ importers:
         version: 1.6.6
       social-links:
         specifier: 1.14.0
-        version: 1.14.0(patch_hash=vsl4v34ksjh5tzibzra6h65ytm)
+        version: 1.14.0(patch_hash=a5fedc338e34f473c54eb53169ae49c5c85841baff7ba7d1af9a453b58f46231)
       tiny-invariant:
         specifier: 1.3.3
         version: 1.3.3
@@ -805,7 +805,7 @@ importers:
         version: 3.3.3
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.45.2)(zod@3.23.8)
+        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.23.8)
       type-fest:
         specifier: 4.26.1
         version: 4.26.1
@@ -911,7 +911,7 @@ importers:
         version: 1.38.0
       '@crowdin/ota-client':
         specifier: 1.0.0
-        version: 1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)
+        version: 1.0.0(patch_hash=aa7f14ddca0963b91831f413e62a73548f65f1014fafd0bcb7b86c3a3861cad9)
       '@opentelemetry/api':
         specifier: 1.9.0
         version: 1.9.0
@@ -996,7 +996,7 @@ importers:
         version: 1.6.6
       json-schema-to-zod:
         specifier: 2.0.14
-        version: 2.0.14(patch_hash=m6gxyy33n5omrqal5wlfjbvve4)
+        version: 2.0.14(patch_hash=d34ba0467fbf8dc4d8cf87a01ab05b192060bcd9d3a93955e01388d5a16e772f)
       kysely:
         specifier: 0.27.4
         version: 0.27.4
@@ -1162,7 +1162,7 @@ importers:
         version: 0.92.1(babel-plugin-macros@3.1.0)(encoding@0.1.13)
       social-links:
         specifier: 1.14.0
-        version: 1.14.0(patch_hash=vsl4v34ksjh5tzibzra6h65ytm)
+        version: 1.14.0(patch_hash=a5fedc338e34f473c54eb53169ae49c5c85841baff7ba7d1af9a453b58f46231)
       sql-bricks-postgres:
         specifier: 0.6.0
         version: 0.6.0
@@ -1358,7 +1358,7 @@ importers:
         version: 3.3.4
       json-schema-to-zod:
         specifier: 2.0.14
-        version: 2.0.14(patch_hash=m6gxyy33n5omrqal5wlfjbvve4)
+        version: 2.0.14(patch_hash=d34ba0467fbf8dc4d8cf87a01ab05b192060bcd9d3a93955e01388d5a16e772f)
       just-compact:
         specifier: 3.2.0
         version: 3.2.0
@@ -1400,7 +1400,7 @@ importers:
         version: 1.1.1
       social-links:
         specifier: 1.14.0
-        version: 1.14.0(patch_hash=vsl4v34ksjh5tzibzra6h65ytm)
+        version: 1.14.0(patch_hash=a5fedc338e34f473c54eb53169ae49c5c85841baff7ba7d1af9a453b58f46231)
       timezones-list:
         specifier: 3.0.3
         version: 3.0.3
@@ -1755,7 +1755,7 @@ importers:
         version: 3.5.0
       social-links:
         specifier: 1.14.0
-        version: 1.14.0(patch_hash=vsl4v34ksjh5tzibzra6h65ytm)
+        version: 1.14.0(patch_hash=a5fedc338e34f473c54eb53169ae49c5c85841baff7ba7d1af9a453b58f46231)
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -16091,7 +16091,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@crowdin/ota-client@1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)':
+  '@crowdin/ota-client@1.0.0(patch_hash=aa7f14ddca0963b91831f413e62a73548f65f1014fafd0bcb7b86c3a3861cad9)':
     dependencies:
       axios: 1.7.7
     transitivePeerDependencies:
@@ -22645,7 +22645,7 @@ snapshots:
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.1(eslint@8.57.1)
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
@@ -22688,7 +22688,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1))(eslint@8.57.1):
+  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.1
@@ -25174,7 +25174,7 @@ snapshots:
       smtp-address-parser: 1.0.10
       valid-url: 1.0.9
 
-  json-schema-to-zod@2.0.14(patch_hash=m6gxyy33n5omrqal5wlfjbvve4): {}
+  json-schema-to-zod@2.0.14(patch_hash=d34ba0467fbf8dc4d8cf87a01ab05b192060bcd9d3a93955e01388d5a16e772f): {}
 
   json-schema-traverse@0.4.1: {}
 
@@ -29149,7 +29149,7 @@ snapshots:
       - pg-native
       - supports-color
 
-  social-links@1.14.0(patch_hash=vsl4v34ksjh5tzibzra6h65ytm): {}
+  social-links@1.14.0(patch_hash=a5fedc338e34f473c54eb53169ae49c5c85841baff7ba7d1af9a453b58f46231): {}
 
   socket.io-adapter@2.5.5(bufferutil@4.0.8):
     dependencies:
@@ -29783,7 +29783,7 @@ snapshots:
 
   trough@2.2.0: {}
 
-  trpc-panel@1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.45.2)(zod@3.23.8):
+  trpc-panel@1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.23.8):
     dependencies:
       '@trpc/server': 10.45.2
       fuzzysort: 2.0.4
