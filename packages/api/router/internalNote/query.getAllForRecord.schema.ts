@@ -37,5 +37,6 @@ export const ZGetAllForRecordSchema = z.union([
 	z.object({ outsideAPIServiceService: nonEmptyString }),
 	z.object({ translationKey: nonEmptyString, translationNs: nonEmptyString }),
 	z.object({ translationNamespaceName: nonEmptyString }),
+	z.object({ userId: prefixedId('user') }),
 ])
 export type TGetAllForRecordSchema = z.infer<typeof ZGetAllForRecordSchema>
