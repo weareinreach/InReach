@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Huduma ya Utoaji Mimba",
 		"abortion-providers": "Watoa huduma za utoaji mimba",
+		"CATEGORYNAME": "Huduma ya Utoaji Mimba",
 		"financial-assistance": "Msaada wa kifedha",
 		"lodging-assistance": "Msaada wa makaazi",
 		"mail-order-services": "Huduma za kuagiza barua",
@@ -9,8 +9,8 @@
 		"travel-assistance": "Msaada wa kusafiri"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Msaada wa Jumuiya",
 		"advocacy-and-community-organizing": "Advocacy and community organizing",
+		"CATEGORYNAME": "Msaada wa Jumuiya",
 		"community-social-groups": "Jamii na vikundi vya kijamii",
 		"cultural-centers": "Vituo vya kitamaduni",
 		"lgbtq-centers": "Vituo vya LGBTQ",
@@ -28,8 +28,8 @@
 		"crisis-support": "Msaada wa Mgogoro"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Elimu na Ajira",
 		"career-counseling": "Ushauri wa kazi",
+		"CATEGORYNAME": "Elimu na Ajira",
 		"educational-support-for-lgbtq-youth": "Msaada wa elimu kwa vijana wa LGBTQ",
 		"english-classes": "Madarasa ya Kiingereza",
 		"language-classes": "Madarasa ya lugha",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "Mafunzo na maendeleo ya kitaaluma"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "Msaada wa Kifedha",
 		"bail-funds": "Fedha za Dhamana",
+		"CATEGORYNAME": "Msaada wa Kifedha",
 		"healthcare-and-insurance": "Huduma ya afya na bima",
 		"housing-and-utilities": "Nyumba na huduma",
 		"legal-fees": "Ada za kisheria",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "Msaada wa makazi mapya"
 	},
 	"legal": {
-		"CATEGORYNAME": "Kisheria",
 		"asylum-application": "Maombi ya hifadhi",
+		"CATEGORYNAME": "Kisheria",
 		"citizenship": "Uraia",
 		"crime-and-discrimination": "Uhalifu na ubaguzi",
 		"deferred-action-for-childhood-arrivals-daca": "Hatua iliyoahirishwa kwa Kuwasili kwa Watoto (DACA)",
@@ -110,8 +110,8 @@
 		"dental-care": "Huduma ya meno",
 		"fertility-and-family-planning-services": "Huduma za uzazi na uzazi wa mpango",
 		"hiv-and-sexual-health": "VVU na afya ya ngono",
-		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "Kliniki za matibabu",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"obgyn-services": "Huduma za OBGYN",
 		"physical-evaluations-for-asylum-claim": "Tathmini ya kimwili kwa madai ya hifadhi",
 		"physical-evaluations-for-refugee-claim": "Tathmini ya kimwili kwa madai ya wakimbizi",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "Trans afya - huduma ya vijana"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Afya ya kiakili",
 		"bipoc-support-groups": "Vikundi vya msaada wa BIPOC",
+		"CATEGORYNAME": "Afya ya kiakili",
 		"family-support-groups": "Vikundi vya usaidizi wa familia",
 		"hotlines": "Hotlines",
 		"mental-health-info-referrals": "Mental health information and referrals",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "Vikundi vya msaada vya Trans"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Burudani na Shughuli",
 		"art-music-literature": "Sanaa, muziki, na fasihi",
 		"camps-and-excursions": "Kambi na safari",
+		"CATEGORYNAME": "Burudani na Shughuli",
 		"sports-and-entertainment": "Michezo na burudani"
 	},
 	"trans-focused-services": {

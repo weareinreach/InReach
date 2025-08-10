@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "附加信息",
 		"at-capacity": "满负荷",
+		"CATEGORYNAME": "附加信息",
 		"geo-near-public-transit": "靠近公共交通",
 		"geo-public-transit-description": "公共交通/特定路线",
 		"has-confidentiality-policy": "有保密政策",
 		"offers-remote-services": "远程",
-		"private-practice": "私人执业",
-		"religiously-affiliated": "是有宗教附属的",
 		"time-walk-in": "有无需预约的时间",
-		"wheelchair-accessible": "无障碍",
+		"wheelchair-accessible_true": "可访问",
 		"wheelchair-accessible_false": "无法访问",
-		"wheelchair-accessible_true": "可访问"
+		"wheelchair-accessible": "无障碍"
 	},
 	"alerts": {
 		"CATEGORYNAME": "提醒",
@@ -19,7 +17,6 @@
 		"warn": "警告信息"
 	},
 	"community": {
-		"CATEGORYNAME": "社区",
 		"adults": "定义为 18 岁或以上的成年人",
 		"africa-immigrant": "为来自非洲国家的人提供的机会",
 		"african-american": "为非裔美国人社区服务的机会",
@@ -31,6 +28,7 @@
 		"bipoc": "{{某国家}}的公民",
 		"bisexual": "为双性恋社区服务的机会",
 		"black": "为黑人社区服务的机会",
+		"CATEGORYNAME": "社区",
 		"citizens": "{{country}} 的公民",
 		"conversion-therapy-survivors": "为转化疗法幸存者提供的机会",
 		"daca-recipient-seeker": "为梦想家（DACA 接受者）提供的机会",
@@ -58,25 +56,19 @@
 		"seniors": "定义为 65 岁或以上的年长者",
 		"sex-workers": "为性工作者提供的机会",
 		"teens": "定义为 12-18 岁的青少年",
-		"trans-youth": "为跨性别青年提供的机会",
-		"trans-youth-caregivers": "为跨性别青年护理人员提供的机会",
 		"transfeminine": "为跨女性群体提供的机会",
 		"transgender": "为跨性别者群体服务的机会（对于不合规或非二元社区，使用性别不一致或非二元特性）",
 		"transmasculine": "为跨男性群体提供的机会",
+		"trans-youth": "为跨性别青年提供的机会",
+		"trans-youth-caregivers": "为跨性别青年护理人员提供的机会",
 		"unaccompanied-minors": "为无人陪伴的未成年人提供的机会",
 		"undocumented": "为无证移民提供的机会"
 	},
 	"cost": {
 		"CATEGORYNAME": "费用",
-		"cost-accepts-insurance": "此服务接受保险",
-		"cost-accepts-insurance_default": "此服务接受保险。直接联系组织获取更多有关费用、财政援助选项和保险覆盖面的详细信息。",
-		"cost-accepts-insurance_withUrl": "此服务接受保险。 <Link href=\"{{url}}\">点击此处访问该组织的页面</Link> 以获取有关费用、经济援助选项和保险范围详细信息的更多信息。",
 		"cost-fees": "产生成本",
-		"cost-free": "免费的",
 		"cost-financial-assistance-available": "有经济援助",
-		"cost-sliding-scale": "在滑动规模上确定的成本",
-		"cost-sliding-scale_default": "此服务有滑动比额表费用。您支付的服务金额将根据您的收入水平进行调整。 直接联系组织获取更多信息。",
-		"cost-sliding-scale_withUrl": "这项服务的费用是浮动的。您支付的服务费用将根据您的收入水平进行调整。 <Link href=\"{{url}}\">单击此处访问该组织的页面以获取更多信息。</Link>"
+		"cost-free": "免费的"
 	},
 	"crisis-support-community": {
 		"elders": "年长者",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "资格要求",
-		"elig-age": "年龄资格",
 		"elig-age_max": "低于 {{max}}",
 		"elig-age_min": "{{min}} 岁及以上",
 		"elig-age_range": "{{min}} 至{{max}} 之间",
+		"elig-age": "年龄资格",
 		"other-describe": "其他（自由文字描述）",
 		"req-medical-insurance": "需要医疗保险",
 		"req-photo-id": "需要带照片的身份证件",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "需要预约"
 	},
 	"lang": {
-		"CATEGORYNAME": "语文",
 		"all-languages-by-interpreter": "所有语言均通过口译员提供。请联系以获取更多信息。",
 		"american-sign-language": "美国手语（美式手语）",
+		"CATEGORYNAME": "语文",
 		"lang-offered": "提供的特定语言"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "组织领导",
 		"bipoc-led": "黑人，原住民或有色人种领导的",
 		"black-led": "黑人领导的",
+		"CATEGORYNAME": "组织领导",
 		"immigrant-led": "移民者领导的",
 		"lgbtq-led": "LGBTQ+Led",
-		"trans-led": "跨性别者领导的",
-		"women-led": "女性领导的"
+		"trans-led": "跨性别者领导的"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "服务访问指南",
 		"accessemail": "访问说明-电子邮件",
 		"accessfile": "访问说明-文件",
 		"accesslink": "访问说明-链接",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "访问说明-公共交通",
 		"accesssms": "访问说明 - 短信",
 		"accesstext": "访问说明-文字",
-		"accesswhatsapp": "访问说明 - WhatsApp"
+		"accesswhatsapp": "访问说明 - WhatsApp",
+		"CATEGORYNAME": "服务访问指南"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "服务重点",
 		"asylum-seekers": "寻求庇护者",
 		"bipoc-comm": "黑人，原住民和有色人种群体",
-		"caregivers": "护工群体",
-		"disabled": "残疾人群体",
-		"elder": "专注于老人",
+		"CATEGORYNAME": "服务重点",
 		"gender-nc": "性别表现不一致",
 		"hiv-comm": "艾滋患者群体",
 		"immigrant-comm": "移民群体",
-		"incarcerated": "被监禁的群体",
 		"lgbtq-youth-focus": "LGBTQ+ 青年",
 		"resettled-refugees": "重新安置的难民",
 		"spanish-speakers": "西班牙语使用者",
 		"trans-comm": "跨性别群体",
 		"trans-fem": "跨性别女性/跨性别女性",
 		"trans-masc": "跨性别男人/跨性别男性",
-		"trans-youth-focus": "跨性别青年",
-		"women": "专注于女性"
+		"trans-youth-focus": "跨性别青年"
 	},
 	"sys": {
-		"CATEGORYNAME": "系统",
-		"incompatible-info": "不兼容的信息"
+		"CATEGORYNAME": "系统"
 	},
 	"tpop": {
 		"other": "目标人群 - 其他"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "合法的非营利组织"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "服务提供商选项",
 		"case-mananger": "个案负责人",
+		"CATEGORYNAME": "服务提供商选项",
 		"community-org": "社区组织的志愿者/工作人员",
-		"friend-family": "N/A（代表朋友/家人看看）",
-		"govt-agency": "政府机构",
-		"grassroots-direct": "基层直接服务组织",
 		"healthcare": "医疗服务提供方",
 		"lawyer": "律师",
 		"other": "其他（请具体说明）",

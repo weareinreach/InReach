@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Ek Bilgiler",
 		"at-capacity": "Kapasitede",
+		"CATEGORYNAME": "Ek Bilgiler",
 		"geo-near-public-transit": "Toplu taşımacılığa yakın",
 		"geo-public-transit-description": "Toplu taşımacılık/belirli yönler",
 		"has-confidentiality-policy": "Gizlilik Politikası Var",
 		"offers-remote-services": "Uzaktan",
-		"private-practice": "Özel Muayenehane",
-		"religiously-affiliated": "Dini olarak bağlı",
 		"time-walk-in": "Giriş Saatleri Var",
-		"wheelchair-accessible": "Erişilebilir",
+		"wheelchair-accessible_true": "Erişilebilir",
 		"wheelchair-accessible_false": "Erişilebilir Değil",
-		"wheelchair-accessible_true": "Erişilebilir"
+		"wheelchair-accessible": "Erişilebilir"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Uyarılar",
@@ -19,7 +17,6 @@
 		"warn": "Uyarı Uyarısı"
 	},
 	"community": {
-		"CATEGORYNAME": "Topluluk",
 		"adults": "18 yaş ve üstü olarak tanımlanan “yetişkin”",
 		"africa-immigrant": "Afrika ülkelerinden olanlara hizmet eden fırsatlar",
 		"african-american": "Afro-Amerikan topluluğuna hizmet eden fırsatlar",
@@ -31,6 +28,7 @@
 		"bipoc": "Siyah, Yerli ve Renkli İnsanlara hizmet eden fırsatlar",
 		"bisexual": "Biseksüel Topluluğa Hizmet Eden Fırsatlar",
 		"black": "Siyah Topluluğa hizmet eden fırsatlar",
+		"CATEGORYNAME": "Topluluk",
 		"citizens": "{{country}}Vatandaşları",
 		"conversion-therapy-survivors": "Dönüşüm Terapisi Kurtulanlarına Hizmet Eden Fırsatlar",
 		"daca-recipient-seeker": "Hayalperestlere hizmet eden fırsatlar (DACA alıcıları)",
@@ -58,25 +56,19 @@
 		"seniors": "65 yaş ve üstü olarak tanımlanan “kıdemli”",
 		"sex-workers": "Seks işçilerine hizmet eden fırsatlar",
 		"teens": "12-18 yaş olarak tanımlanan “genç”",
-		"trans-youth": "Trans gençlere hizmet eden fırsatlar",
-		"trans-youth-caregivers": "Trans gençlik bakıcılarına hizmet eden fırsatlar",
 		"transfeminine": "Transfeminin Topluluğuna hizmet eden fırsatlar",
 		"transgender": "Transseksüel topluluğa hizmet eden fırsatlar (uygun olmayan veya ikili olmayan topluluklar için cinsiyete uygun olmayan veya ikili olmayan özellikleri kullanın)",
 		"transmasculine": "Trasmasculin Topluluğuna hizmet eden fırsatlar",
+		"trans-youth": "Trans gençlere hizmet eden fırsatlar",
+		"trans-youth-caregivers": "Trans gençlik bakıcılarına hizmet eden fırsatlar",
 		"unaccompanied-minors": "Refakatsiz küçüklere hizmet veren fırsatlar",
 		"undocumented": "Belgesiz göçmenlere hizmet eden fırsatlar"
 	},
 	"cost": {
 		"CATEGORYNAME": "Maliyet",
-		"cost-accepts-insurance": "Bu hizmet sigorta kabul eder",
-		"cost-accepts-insurance_default": "Bu hizmet sigortayı kabul eder. Maliyet, finansal yardım seçenekleri ve sigorta kapsamı ayrıntıları hakkında daha fazla bilgi için doğrudan kuruluşla iletişime geçin.",
-		"cost-accepts-insurance_withUrl": "Bu hizmet sigortayı kabul eder. <Link href=\"{{url}}\">Maliyet, finansal yardım seçenekleri ve sigorta kapsamı ayrıntıları hakkında daha fazla bilgi için kuruluşun</Link> sayfasını ziyaret etmek için buraya tıklayın.",
 		"cost-fees": "Bir maliyet doğurur",
-		"cost-free": "Ücretsiz",
 		"cost-financial-assistance-available": "Mali yardım mevcut",
-		"cost-sliding-scale": "Kayar ölçekte belirlenen maliyetler",
-		"cost-sliding-scale_default": "Bu hizmetin kayan ölçek ücretleri vardır. Hizmetler için ödediğiniz tutar gelir seviyenize göre ayarlanır. Daha fazla bilgi için doğrudan kuruluşla iletişime geçin.",
-		"cost-sliding-scale_withUrl": "Bu hizmetin kayan ölçek ücretleri vardır. Hizmetler için ödediğiniz tutar gelir seviyenize göre ayarlanır. <Link href=\"{{url}}\">Daha fazla bilgi için kuruluşun sayfasını ziyaret etmek için buraya tıklayın.</Link>"
+		"cost-free": "Ücretsiz"
 	},
 	"crisis-support-community": {
 		"elders": "Yaşlılar",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Uygunluk Koşulları",
-		"elig-age": "Yaş uygunluğu",
 		"elig-age_max": "{{max}}altında",
 		"elig-age_min": "{{min}} ve daha eski",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "Yaş uygunluğu",
 		"other-describe": "Diğer (serbest metin açıklaması)",
 		"req-medical-insurance": "Sağlık sigortası GEREKTIRIR",
 		"req-photo-id": "Fotoğraflı kimlik gerektirir",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "Zaman Randevusu Gerekli"
 	},
 	"lang": {
-		"CATEGORYNAME": "Diller",
 		"all-languages-by-interpreter": "Tercüman aracılığıyla tüm diller",
 		"american-sign-language": "Amerikan İşaret Dili",
+		"CATEGORYNAME": "Diller",
 		"lang-offered": "Sunulan belirli diller"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Organizasyon Liderliği",
 		"bipoc-led": "BiPOC LED'li",
 		"black-led": "Siyah-LED",
+		"CATEGORYNAME": "Organizasyon Liderliği",
 		"immigrant-led": "Göçmen liderliğindeki",
 		"lgbtq-led": "LGBTQ+Led",
-		"trans-led": "Transeksüel liderliğindeki",
-		"women-led": "Kadın Liderliğindeki"
+		"trans-led": "Transeksüel liderliğindeki"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Servis Erişim Talimatları",
 		"accessemail": "Erişim Talimatları - E-posta",
 		"accessfile": "Erişim Talimatları - Dosya",
 		"accesslink": "Erişim Talimatları - Bağlantı",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "Erişim Talimatları - Toplu Taşıma",
 		"accesssms": "Erişim Talimatları - SMS",
 		"accesstext": "Erişim Talimatları - Metin",
-		"accesswhatsapp": "Erişim Talimatları - WhatsApp"
+		"accesswhatsapp": "Erişim Talimatları - WhatsApp",
+		"CATEGORYNAME": "Servis Erişim Talimatları"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Hizmet Odağı",
 		"asylum-seekers": "Sığınmacılar",
 		"bipoc-comm": "BIPOC Topluluğu",
-		"caregivers": "Bakıcılar Topluluğu",
-		"disabled": "Engelli Topluluğu",
-		"elder": "Yaşlılara Odaklandı",
+		"CATEGORYNAME": "Hizmet Odağı",
 		"gender-nc": "Cinsiyete Uygun Olmayan",
 		"hiv-comm": "HIV Topluluğu",
 		"immigrant-comm": "Göçmen Topluluğu",
-		"incarcerated": "Hapsedilmiş Topluluk",
 		"lgbtq-youth-focus": "LGBTQ+Gençlik",
 		"resettled-refugees": "Yeniden Yerleşen Mülteciler",
 		"spanish-speakers": "İspanyolca Konuşanlar",
 		"trans-comm": "Trans Topluluğu",
 		"trans-fem": "Trans Kadınlar/Trans Kadın",
 		"trans-masc": "Trans Erkekler/Trans Erkil",
-		"trans-youth-focus": "Trans Gençlik",
-		"women": "Kadınlara Odaklanmış"
+		"trans-youth-focus": "Trans Gençlik"
 	},
 	"sys": {
-		"CATEGORYNAME": "SİSTEMİ",
-		"incompatible-info": "Uyumsuz Bilgiler"
+		"CATEGORYNAME": "SİSTEMİ"
 	},
 	"tpop": {
 		"other": "Hedef Nüfus - Diğer"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "Hukuk amacı gütmeyen kuruluş"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "Servis Sağlayıcı Seçenekleri",
 		"case-mananger": "Vaka yöneticisi",
+		"CATEGORYNAME": "Servis Sağlayıcı Seçenekleri",
 		"community-org": "Bir topluluk organizasyonunda gönüllü/personel",
-		"friend-family": "Yok (Arkadaşların/aile adına bakıyor)",
-		"govt-agency": "Devlet kurumu",
-		"grassroots-direct": "Tabandan Doğrudan Hizmet Organizasyonu",
 		"healthcare": "Sağlık hizmeti sağlayıcısı",
 		"lawyer": "Avukat",
 		"other": "Diğer (lütfen belirtin)",

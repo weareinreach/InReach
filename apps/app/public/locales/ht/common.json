@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} òganizasyon"
 	},
+	"admin": {
+		"tab-organizations": "Organizations",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "Le ou klike \"{{action}}\" ou dakò ak <link1>Règleman sou enfòmasyon prive InReach la</link1> ak <link2>Regleman p Itilizasyon</link2>.",
 	"alert-message": "Mesaj alèt",
 	"alert-message-1": "<strong>Règleman COVID-19:</strong> Avèk nouvèl ak pi bon pratik pou prevansyon COVID-19 \n ki ap chanje rapidman chak jou, Whitman-Walker Health kontinye mete ajou sèvis yo pou reflete rekòmandasyon prevansyon yo. Tanpri tcheke sit entènèt yo pou enfòmasyon ki pi ajou.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "Pa gen yon kont?",
 	"download-app": "Telechaje aplikasyon an",
 	"edit-profile": "Edit Profile",
-	"email-sent": "Imèl ki voye.",
 	"email_professional": "Pwofesyonèl imel",
 	"email_student-pro": "Imèl pwofesyonèl oswa elèv",
+	"email-sent": "Imèl ki voye.",
 	"enter-email-placeholder": "Antre adrès imel...",
 	"enter-password-placeholder": "Mete modpas...",
 	"enter-review": "Antre nan revizyon ou...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>Tanpri <LoginModal>login</LoginModal> lè l sèvi avèk nouvo modpas ou.</Text>",
 	"password-saved": "Modpas sofgade!",
-	"photo-count_interval": "(0)[Pa gen foto ankò.];(1)[{{count}} foto];(2-inf)[{{count}} foto]",
 	"photo_interval": "(0) [Pa gen foto ankò]; (2-inf) [Gade tout {{count}} foto];",
+	"photo-count_interval": "(0)[Pa gen foto ankò.];(1)[{{count}} foto];(2-inf)[{{count}} foto]",
 	"please-specify": "Tanpri presize",
 	"portal-module": {
 		"service-area": "Zòn Sèvis"
@@ -428,6 +433,7 @@
 	"user-avatar": "Itilizatè avatar",
 	"user-menu": {
 		"admin-options": "Opsyon Admin",
+		"csv-downloads": "CSV Downloads",
 		"data-portal": "Done Portay",
 		"edit-page": "Edite paj sa",
 		"user-options": "Opsyon itilizatè",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "Photo",
 	"photo_other": "Photos",
-	"review-count_one": "({{count}} revizyon)",
-	"review-count_other": "(Evalyason{{count}})",
 	"review_one": "Evalye",
 	"review_other": "Evalye",
+	"review-count_one": "({{count}} revizyon)",
+	"review-count_other": "(Evalyason{{count}})",
 	"view-x-result_one": "Gade {{count}} rezilta",
 	"view-x-result_other": "Gade{{count}} rezilta",
 	"website_one": "Sit wèb",

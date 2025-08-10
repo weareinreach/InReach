@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Lòt Enfòmasyon",
 		"at-capacity": "Nan kapasite",
+		"CATEGORYNAME": "Lòt Enfòmasyon",
 		"geo-near-public-transit": "Tou prè transpò piblik",
 		"geo-public-transit-description": "Transpò piblik/direksyon spesifik",
 		"has-confidentiality-policy": "Gen yon règleman konfidansyalite",
 		"offers-remote-services": "Tele travay",
-		"private-practice": "Pratik Prive",
-		"religiously-affiliated": "Relijyezman afilye",
 		"time-walk-in": "Gen mache-nan èdtan",
-		"wheelchair-accessible": "Aksesib",
+		"wheelchair-accessible_true": "Aksesib",
 		"wheelchair-accessible_false": "Pa aksesib",
-		"wheelchair-accessible_true": "Aksesib"
+		"wheelchair-accessible": "Aksesib"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Alèt",
@@ -19,7 +17,6 @@
 		"warn": "Avètisman Alèt"
 	},
 	"community": {
-		"CATEGORYNAME": "Kominote",
 		"adults": "“granmoun” defini kòm 18 ane oswa plis",
 		"africa-immigrant": "Opòtinite ki sèvi moun ki soti nan peyi Afriken yo",
 		"african-american": "Opòtinite ki sèvi kominote Afriken Ameriken an",
@@ -31,6 +28,7 @@
 		"bipoc": "Opòtinite ki sèvi Nwa, endijèn, ak moun ki gen koulè",
 		"bisexual": "Opòtinite ki sèvi Kominote Biseksyèl la",
 		"black": "Opòtinite ki sèvi Kominote Nwa",
+		"CATEGORYNAME": "Kominote",
 		"citizens": "Sitwayen nan {{country}}",
 		"conversion-therapy-survivors": "Opòtinite ki sèvi Sivivan Terapi Konvèsyon",
 		"daca-recipient-seeker": "Opòtinite ki sèvi Dreamers (moun ki resevwa DACA)",
@@ -58,25 +56,19 @@
 		"seniors": "“granmoun aje” defini kòm 65 ane oswa plis",
 		"sex-workers": "Opòtinite ki sèvi travayè sèks",
 		"teens": "“jèn timoun” defini kòm 12-18 ane",
-		"trans-youth": "Opòtinite ki sèvi jèn Trans",
-		"trans-youth-caregivers": "Opòtinite ki sèvi moun kap bay swen nan jèn Trans",
 		"transfeminine": "Opòtinite ki sèvi kominote Trans Feminin",
 		"transgender": "Opòtinite ki sèvi kominote transjend la (pou kominote ki pa konfòme oswa ki pa binè, sèvi ak pwopriyete sèks ki pa konfòm oswa nonbinè)",
 		"transmasculine": "Opòtinite ki sèvi Tras maskilen Kominote a",
+		"trans-youth": "Opòtinite ki sèvi jèn Trans",
+		"trans-youth-caregivers": "Opòtinite ki sèvi moun kap bay swen nan jèn Trans",
 		"unaccompanied-minors": "Opòtinite ki sèvi minè ki pa akonpaye",
 		"undocumented": "Opòtinite ki sèvi imigran san papye"
 	},
 	"cost": {
 		"CATEGORYNAME": "Pri",
-		"cost-accepts-insurance": "Sevis sa a aksepte asirans",
-		"cost-accepts-insurance_default": "Sevis sa a aksepte asirans. Kontakte òganizasyon an dirèkteman pou plis enfòmasyon sou pri, opsyon asistans finansye ak detay sou kouvèti asirans.",
-		"cost-accepts-insurance_withUrl": "Sevis sa a aksepte asirans. <Link href=\"{{url}}\">Klike la pou vizite paj òganizasyon an</Link> pou plis enfòmasyon sou pri, opsyon asistans finansye ak detay sou kouvèti asirans.",
 		"cost-fees": "Bay yon pri",
-		"cost-free": "Gratis nan pri",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-sliding-scale": "Pri yo detèmine sou yon echèl glisman",
-		"cost-sliding-scale_default": "Sevis sa a gen frè selon yon echèl glisman. Kantite lajan ou peye pou sèvis yo ajiste selon nivo revni ou. Kontakte òganizasyon an dirèkteman pou plis enfòmasyon.",
-		"cost-sliding-scale_withUrl": "Sevis sa a gen frè selon yon echèl glisman. Kantite lajan ou peye pou sèvis yo ajiste selon nivo revni ou. <Link href=\"{{url}}\">Klike la pou vizite paj òganizasyon an pou plis enfòmasyon.</Link>"
+		"cost-free": "Gratis nan pri"
 	},
 	"crisis-support-community": {
 		"elders": "Granmoun yo",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Kondisyon pou Kalifikasyon",
-		"elig-age": "Kondisyon laj",
 		"elig-age_max": "Anba {{max}}",
 		"elig-age_min": "{{min}} ak plis",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "Kondisyon laj",
 		"other-describe": "Lòt (deskripsyon tèks gratis)",
 		"req-medical-insurance": "Asirans medikal rekòmande",
 		"req-photo-id": "Mande pou yon ID foto",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "Randevou Tan Egzije"
 	},
 	"lang": {
-		"CATEGORYNAME": "Lang",
 		"all-languages-by-interpreter": "Tout lang atravè entèprèt",
 		"american-sign-language": "Lang Siy Ameriken",
+		"CATEGORYNAME": "Lang",
 		"lang-offered": "Lang spesifik yo ofri"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Lidèchip Òganizasyon",
 		"bipoc-led": "Dirije pa BIPOC",
 		"black-led": "Nwa-dirije",
+		"CATEGORYNAME": "Lidèchip Òganizasyon",
 		"immigrant-led": "Imigran dirije",
 		"lgbtq-led": "Dirije pa LGBTQ+",
-		"trans-led": "Dirije pa transèksyèl",
-		"women-led": "Dirije pa Fanm"
+		"trans-led": "Dirije pa transèksyèl"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Aksè Enstriksyon yo Sèvis",
 		"accessemail": "Aksè Enstriksyon - Imèl",
 		"accessfile": "Aksè Enstriksyon - dosye",
 		"accesslink": "Aksè Enstriksyon - Link",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "Aksè Enstriksyon - Transpò Piblik",
 		"accesssms": "Aksè Enstriksyon - SMS",
 		"accesstext": "Aksè Enstriksyon - Tèks",
-		"accesswhatsapp": "Aksè Enstriksyon - WhatsApp"
+		"accesswhatsapp": "Aksè Enstriksyon - WhatsApp",
+		"CATEGORYNAME": "Aksè Enstriksyon yo Sèvis"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Sèvis Konsantre",
 		"asylum-seekers": "Moun k ap Chèche Azil",
 		"bipoc-comm": "BIPOC Kominote",
-		"caregivers": "Kominote moun kap bay swen",
-		"disabled": "Kominote andikape",
-		"elder": "Konsantre sou Granmoun Aje",
+		"CATEGORYNAME": "Sèvis Konsantre",
 		"gender-nc": "Sèks ki pa konfòme",
 		"hiv-comm": "Kominote VIH",
 		"immigrant-comm": "Kominote Imigran",
-		"incarcerated": "Kominote nan prizon",
 		"lgbtq-youth-focus": "LGBTQ+Jèn",
 		"resettled-refugees": "Refijye reyentegrasyon",
 		"spanish-speakers": "Oratè Panyòl",
 		"trans-comm": "Kominote Trans",
 		"trans-fem": "Trans fanm/Trans Feminine",
 		"trans-masc": "Trans Gason/Trans maskilen",
-		"trans-youth-focus": "Trans jèn",
-		"women": "Konsantre sou Fanm"
+		"trans-youth-focus": "Trans jèn"
 	},
 	"sys": {
-		"CATEGORYNAME": "Sistèm",
-		"incompatible-info": "Enfòmasyon enkonpatib"
+		"CATEGORYNAME": "Sistèm"
 	},
 	"tpop": {
 		"other": "Popilasyon Sib - Lòt"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "Legal òganizasyon san bi likratif"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "Opsyon Founisè Sèvis",
 		"case-mananger": "Manadjè dosye",
+		"CATEGORYNAME": "Opsyon Founisè Sèvis",
 		"community-org": "Volontè/anplwaye nan yon òganizasyon kominotè",
-		"friend-family": "N/A (veye sou non zanmi/fanmi)",
-		"govt-agency": "Ajans gouvènman",
-		"grassroots-direct": "Grassroots dirèk sèvis òganizasyon",
 		"healthcare": "Founisè swen sante",
 		"lawyer": "Avoka",
 		"other": "Lòt (tanpri presize)",

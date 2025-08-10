@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} 組織"
 	},
+	"admin": {
+		"tab-organizations": "組織",
+		"tab-users": "ユーザー",
+		"tab-downloads": "ダウンロード"
+	},
 	"agree-disclaimer": "「{{action}}」をクリックすると、InReachの <link1>プライバシーポリシー</link1> および <link2>利用規約</link2>に同意したことになります。",
 	"alert-message": "警告メッセージ",
 	"alert-message-1": "<strong>COVID-19 ポリシー:</strong> COVID-19 予防に関するニュースや最適な予防方法は日々急速に変化するため、Whitman-Walker Health は予防に関する推奨事項を反映するようにサービスを更新し続けています。最新情報については、ウェブサイトをご確認ください。",
@@ -101,9 +106,9 @@
 	"dont-have-account": "アカウントをまだお持ちでないですか？",
 	"download-app": "アプリをダウンロードする",
 	"edit-profile": "プロフィールを編集",
-	"email-sent": "E メールが送信されました。",
 	"email_professional": "ビジネス用電子メール",
 	"email_student-pro": "ビジネス用または学生用の電子メール",
+	"email-sent": "E メールが送信されました。",
 	"enter-email-placeholder": "Eメールアドレスを入力...",
 	"enter-password-placeholder": "パスワードを入力...",
 	"enter-review": "レビューを入力...",
@@ -227,8 +232,8 @@
 	},
 	"password-reset-success": "<Text>新しいパスワードを使用して <LoginModal>ログイン</LoginModal> してください。</Text>",
 	"password-saved": "パスワードが保存されました！",
-	"photo-count_interval": "{{count}}(0)[まだ写真はありません。];(1)[{{count}} 枚の写真];(2-inf)[{{count}} 枚の写真]",
 	"photo_interval": "(0)[写真はまだありません];(2-inf)[ {{count}} 枚の写真をすべて見る];",
+	"photo-count_interval": "{{count}}(0)[まだ写真はありません。];(1)[{{count}} 枚の写真];(2-inf)[{{count}} 枚の写真]",
 	"please-specify": "具体的にご記入ください",
 	"portal-module": {
 		"service-area": "サービス提供エリア"
@@ -427,6 +432,7 @@
 	"user-avatar": "ユーザーのアバター",
 	"user-menu": {
 		"admin-options": "管理者オプション",
+		"csv-downloads": "CSV ダウンロード",
 		"data-portal": "データポータルのホーム",
 		"edit-page": "このページを編集",
 		"user-options": "ユーザーオプション",
@@ -494,8 +500,8 @@
 		"yes": "はい"
 	},
 	"photo_other": "写真",
-	"review-count_other": "({{count}} 件のレビュー)",
 	"review_other": "レビュー",
+	"review-count_other": "({{count}} 件のレビュー)",
 	"view-x-result_other": "{{count}} 件の結果を表示",
 	"website_other": "ウェブサイト"
 }

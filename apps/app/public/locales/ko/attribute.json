@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "자세한 정보",
 		"at-capacity": "만석입니다",
+		"CATEGORYNAME": "자세한 정보",
 		"geo-near-public-transit": "대중교통의 근처에 위치합니다",
 		"geo-public-transit-description": "대중교통/자세한 방향",
 		"has-confidentiality-policy": "보안 정책이 있습니다",
 		"offers-remote-services": "원격의",
-		"private-practice": "사기업 병원",
-		"religiously-affiliated": "종교와 소속되어 있습니다",
 		"time-walk-in": "무예약 영업시간 있습니다",
-		"wheelchair-accessible": "접근 가능합니다",
+		"wheelchair-accessible_true": "장애인 접근성 있습니다",
 		"wheelchair-accessible_false": "장애인 접근성 없습니다",
-		"wheelchair-accessible_true": "장애인 접근성 있습니다"
+		"wheelchair-accessible": "접근 가능합니다"
 	},
 	"alerts": {
 		"CATEGORYNAME": "알림",
@@ -19,7 +17,6 @@
 		"warn": "경고 알림"
 	},
 	"community": {
-		"CATEGORYNAME": "공동체",
 		"adults": "18세 이상은 성인으로 정의됩니다",
 		"africa-immigrant": "아프리카 국가 출신을 위한 서비스",
 		"african-american": "아프리카계 미국인/미국흑인 공동체를 위한 서비스",
@@ -31,6 +28,7 @@
 		"bipoc": "흑인, 원주민, 및 유색인종을 위한 서비스",
 		"bisexual": "양성애 공동체를 위한 서비스",
 		"black": "흑인 공동체를 위한 서비스",
+		"CATEGORYNAME": "공동체",
 		"citizens": "{{country}}의 시민",
 		"conversion-therapy-survivors": "전환 치료 생존자를 위한 서비스",
 		"daca-recipient-seeker": "드리머 (DACA 수혜자)를 위한 서비스",
@@ -58,25 +56,19 @@
 		"seniors": "65세 이상은 노인으로 정의됩니다.",
 		"sex-workers": "성매매 종사자를 위한 서비스",
 		"teens": "12-18세 청소년으로 정의됩니다.",
-		"trans-youth": "트랜스 청소년을 위한 서비스",
-		"trans-youth-caregivers": "트랜스 청소년의 보호자를 위한 서비스",
 		"transfeminine": "트랜스페미닌 공동체를 위한 서비스",
 		"transgender": "트랜스젠더 공동체 (성별 부적합과 논바이너리 공동체)를 위한 서비스 ",
 		"transmasculine": "트랜스매스큘린 공동체를 위한 서비스",
+		"trans-youth": "트랜스 청소년을 위한 서비스",
+		"trans-youth-caregivers": "트랜스 청소년의 보호자를 위한 서비스",
 		"unaccompanied-minors": "보호자 없는 미성년자를 위한 서비스",
 		"undocumented": "미등록 이민자를 위한 서비스"
 	},
 	"cost": {
 		"CATEGORYNAME": "비용",
-		"cost-accepts-insurance": "이 서비스는 보험에 가입할 수 있습니다",
-		"cost-accepts-insurance_default": "이 서비스는 보험에 가입할 수 있습니다. 비용, 재정 지원 옵션 및 보험 적용 범위에 대한 자세한 내용은 해당 단체에 직접 문의하십시오.",
-		"cost-accepts-insurance_withUrl": "이 서비스는 보험에 가입할 수 있습니다. <Link href=\"{{url}}\"> 비용, 재정 지원 옵션 및 보험 보장 세부 정보에 대한 자세한 내용은 링크를 선택하여 단체의 </Link> 페이지를 방문하세요.",
 		"cost-fees": "비용이 들어갑니다",
-		"cost-free": "무료입니다",
 		"cost-financial-assistance-available": "재정 지원 이용 가능",
-		"cost-sliding-scale": "차등제로 결정되는 비용",
-		"cost-sliding-scale_default": "이 서비스의 요금은 차등제로 계산됩니다. 서비스에 대한 요금은 소득 수준에 따라 조정됩니다. 자세한 내용은 해당 단체에 직접 문의하십시오.",
-		"cost-sliding-scale_withUrl": "이 서비스의 요금은 차등제로 계산됩니다. 서비스에 대한 요금은 소득 수준에 따라 조정됩니다. <Link href=\"{{url}}\">자세한 내용은 해당 단체의 웹사이트를 직접 방문하세요.</Link>"
+		"cost-free": "무료입니다"
 	},
 	"crisis-support-community": {
 		"elders": "노인",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "자격 조건",
-		"elig-age": "연령 자격",
 		"elig-age_max": "{{max}}미만",
 		"elig-age_min": "{{min}}과 이상",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "연령 자격",
 		"other-describe": "기타 (글로 설명하기)",
 		"req-medical-insurance": "의료 보험은 필수입니다",
 		"req-photo-id": "신분증은 필수입니다",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "예약은 필수입니다"
 	},
 	"lang": {
-		"CATEGORYNAME": "언어",
 		"all-languages-by-interpreter": "통역사를 통해 모든 언어는 가능합니다",
 		"american-sign-language": "미국 수화",
+		"CATEGORYNAME": "언어",
 		"lang-offered": "특정 언어 제공"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "단체 지도자",
 		"bipoc-led": "유색인종 주도자",
 		"black-led": "흑인 주도자",
+		"CATEGORYNAME": "단체 지도자",
 		"immigrant-led": "이민자 주도자",
 		"lgbtq-led": "성소수자의 주도",
-		"trans-led": "트랜스젠더 주도자",
-		"women-led": "여성 주도자"
+		"trans-led": "트랜스젠더 주도자"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "서비스 교육접속",
 		"accessemail": "교육접속 - 이메일",
 		"accessfile": "교육접속 - 파일",
 		"accesslink": "교육접속 - 링크",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "교육접속 - 대중교통",
 		"accesssms": "교육접속 - SMS",
 		"accesstext": "교육접속 - 문자",
-		"accesswhatsapp": "교육접속 - WhatsApp"
+		"accesswhatsapp": "교육접속 - WhatsApp",
+		"CATEGORYNAME": "서비스 교육접속"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "서비스 초점",
 		"asylum-seekers": "망명 신청자",
 		"bipoc-comm": "유색인 공동체",
-		"caregivers": "간병인 공동체",
-		"disabled": "장애인 공동체",
-		"elder": "노인의 초점",
+		"CATEGORYNAME": "서비스 초점",
 		"gender-nc": "젠더비관행",
 		"hiv-comm": "HIV 공동체",
 		"immigrant-comm": "이민자 공동체",
-		"incarcerated": "수감인 공동체",
 		"lgbtq-youth-focus": "LGBTQ+ 청소년",
 		"resettled-refugees": "재정착 난민",
 		"spanish-speakers": "스페인어 사용자",
 		"trans-comm": "트랜스 공동체",
 		"trans-fem": "트랜스 여성/트랜스페미닌 사람",
 		"trans-masc": "트랜스 남성/트랜스매스큘린 사람",
-		"trans-youth-focus": "트랜스 청소년",
-		"women": "여성의 초점"
+		"trans-youth-focus": "트랜스 청소년"
 	},
 	"sys": {
-		"CATEGORYNAME": "시스템",
-		"incompatible-info": "양립할 수 없는 정보"
+		"CATEGORYNAME": "시스템"
 	},
 	"tpop": {
 		"other": "대상 인구 - 기타"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "법률 비영리 단체"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "서비스 사업자 선택권",
 		"case-mananger": "사례 관리사",
+		"CATEGORYNAME": "서비스 사업자 선택권",
 		"community-org": "공동체 단체의 봉사자/직원",
-		"friend-family": "N/A (친구/가족을 대신에 검색합니다)",
-		"govt-agency": "정부기관",
-		"grassroots-direct": "Grassroots Direct 서비스 단체",
 		"healthcare": "의료 제공자",
 		"lawyer": "변호사",
 		"other": "기타 (명시하세요)",

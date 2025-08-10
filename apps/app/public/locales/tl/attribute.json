@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Karagdagang Impormasyon",
 		"at-capacity": "Sa kapasidad",
+		"CATEGORYNAME": "Karagdagang Impormasyon",
 		"geo-near-public-transit": "Malapit sa pampublikong transportasyon",
 		"geo-public-transit-description": "Pampublikong pagbibiyahe /tiyak na direksyon",
 		"has-confidentiality-policy": "May Patakaran sa Kumpidensyal",
 		"offers-remote-services": "Remote",
-		"private-practice": "Pribadong Pagsasanay",
-		"religiously-affiliated": "Ay relihiyosong kaakibat",
 		"time-walk-in": "May Walk-In Oras",
-		"wheelchair-accessible": "Accessible",
+		"wheelchair-accessible_true": "Naa-access",
 		"wheelchair-accessible_false": "Hindi maa-access",
-		"wheelchair-accessible_true": "Naa-access"
+		"wheelchair-accessible": "Accessible"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Mga Alerto",
@@ -19,7 +17,6 @@
 		"warn": "Babala Alert"
 	},
 	"community": {
-		"CATEGORYNAME": "Komunidad",
 		"adults": "“adult” tinukoy bilang 18 taon o mas matanda",
 		"africa-immigrant": "Mga oportunidad na nagsisilbi sa mga mula sa mga bansang Africa",
 		"african-american": "Mga oportunidad na nagsisilbi sa pamayanan ng African American",
@@ -31,6 +28,7 @@
 		"bipoc": "Mga oportunidad na naglilingkod sa Itim, Katutubong, at Mga Tao ng Kulay",
 		"bisexual": "Mga oportunidad na nagsisilbi sa Bisexual Community",
 		"black": "Mga oportunidad na naglilingkod sa Black Community",
+		"CATEGORYNAME": "Komunidad",
 		"citizens": "Mga mamamayan ng {{country}}",
 		"conversion-therapy-survivors": "Mga oportunidad na naglilingkod sa Conversion Therapy Survivors",
 		"daca-recipient-seeker": "Oportunidad na maglingkod Dreamers (DACA tatanggap)",
@@ -58,25 +56,19 @@
 		"seniors": "“senior” na tinukoy bilang 65 taon o mas matanda",
 		"sex-workers": "Mga pagkakataon na naglilingkod sa mga manggagawa sa sex",
 		"teens": "“tinedyer” na tinukoy bilang 12-18 taong gulang",
-		"trans-youth": "Mga oportunidad na naglilingkod sa kabataan ng Trans",
-		"trans-youth-caregivers": "Mga oportunidad na naglilingkod sa mga tagapag-alaga ng mga kabataan ng Trans",
 		"transfeminine": "Mga oportunidad na nagsisilbi sa Komunidad ng Transfeminine",
 		"transgender": "Ang mga oportunidad na nagsisilbi sa komunidad ng transgender (para sa mga hindi sumunod o di-binary na mga komunidad, gamitin ang mga katangiang hindi naaayon o di-binary na mga katangian)",
 		"transmasculine": "Mga oportunidad na naglilingkod sa Trasmasculine Community",
+		"trans-youth": "Mga oportunidad na naglilingkod sa kabataan ng Trans",
+		"trans-youth-caregivers": "Mga oportunidad na naglilingkod sa mga tagapag-alaga ng mga kabataan ng Trans",
 		"unaccompanied-minors": "Mga oportunidad na nagsisilbi sa mga walang kasamang menor de edad",
 		"undocumented": "Mga oportunidad na naglilingkod sa mga undocumented na imigrante"
 	},
 	"cost": {
 		"CATEGORYNAME": "Gastos",
-		"cost-accepts-insurance": "Tumatanggap ang serbisyong ito ng insurance",
-		"cost-accepts-insurance_default": "Tumatanggap ang serbisyong ito ng insurance. Direktang makipag-ugnayan sa organisasyon para sa higit pang impormasyon sa gastos, mga opsyon sa tulong pinansyal at mga detalye ng saklaw ng insurance.",
-		"cost-accepts-insurance_withUrl": "Tumatanggap ang serbisyong ito ng insurance. <Link href=\"{{url}}\">Mag-click dito upang bisitahin ang pahina ng organisasyon</Link> para sa higit pang impormasyon sa gastos, mga opsyon sa tulong pinansyal at mga detalye ng saklaw ng insurance.",
 		"cost-fees": "Nagkakasakit ng gastos",
-		"cost-free": "Walang gastos",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-sliding-scale": "Natukoy ang mga gastos sa isang sliding scale",
-		"cost-sliding-scale_default": "Ang serbisyong ito ay may mga bayarin sa sliding scale. Ang halagang binabayaran mo para sa mga serbisyo ay naaayon sa antas ng iyong kita. Direktang makipag-ugnayan sa organisasyon para sa higit pang impormasyon.",
-		"cost-sliding-scale_withUrl": "Ang serbisyong ito ay may mga bayarin sa sliding scale. Ang halagang binabayaran mo para sa mga serbisyo ay naaayon sa antas ng iyong kita. <Link href=\"{{url}}\">Mag-click dito upang bisitahin ang pahina ng organisasyon para sa karagdagang impormasyon.</Link>"
+		"cost-free": "Walang gastos"
 	},
 	"crisis-support-community": {
 		"elders": "Mga matatanda",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Mga Kinakailangan sa Pagiging Karapat-dapat",
-		"elig-age": "Pagiging karapat-dapat sa edad",
 		"elig-age_max": "Sa ilalim ng {{max}}",
 		"elig-age_min": "{{min}} at mas matanda",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "Pagiging karapat-dapat sa edad",
 		"other-describe": "Iba pa (libreng paglalarawan ng teksto)",
 		"req-medical-insurance": "NANGANGAILANGAN ng medikal na seguro",
 		"req-photo-id": "NANGANGAILANGAN ng ID ng larawan",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "Kinakailangan ang Paghirang ng Oras"
 	},
 	"lang": {
-		"CATEGORYNAME": "Mga wika",
 		"all-languages-by-interpreter": "Lahat ng mga wika sa pamamagitan ng interpreter",
 		"american-sign-language": "American Sign Language",
+		"CATEGORYNAME": "Mga wika",
 		"lang-offered": "Inaalok ang mga partikular na wika"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Pamumuno ng Organisasyon",
 		"bipoc-led": "Pinangunahan ng Bipoc",
 		"black-led": "Itim-humantong",
+		"CATEGORYNAME": "Pamumuno ng Organisasyon",
 		"immigrant-led": "Pinangunahan ng imigrante",
 		"lgbtq-led": "Pinamunuan ng LGBTQ+",
-		"trans-led": "Pinangunahan ng Transgender",
-		"women-led": "Pinangunahan ng kababaihan"
+		"trans-led": "Pinangunahan ng Transgender"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Mga tagubilin sa pag-access sa serbisyo",
 		"accessemail": "Mga Tagubilin sa Pag-access - Email",
 		"accessfile": "Mga Tagubilin sa Pag-access - File",
 		"accesslink": "Mga Tagubilin sa Pag-access - Link",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "Mga Tagubilin sa Pag-access - Pampublikong Transit",
 		"accesssms": "Mga Tagubilin sa Pag-access - SMS",
 		"accesstext": "Mga Tagubilin sa Pag-access - Teksto",
-		"accesswhatsapp": "Mga Tagubilin sa Pag-access - WhatsApp"
+		"accesswhatsapp": "Mga Tagubilin sa Pag-access - WhatsApp",
+		"CATEGORYNAME": "Mga tagubilin sa pag-access sa serbisyo"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Pokus sa Serbisyo",
 		"asylum-seekers": "Mga Naghahanap ng Asylum",
 		"bipoc-comm": "Komunidad ng BIPOC",
-		"caregivers": "Komunidad ng Mga Tagapag-alaga",
-		"disabled": "Komunidad na may kapansanan",
-		"elder": "Nakatuon sa Mga Matatanda",
+		"CATEGORYNAME": "Pokus sa Serbisyo",
 		"gender-nc": "Hindi Sumasunod ang Kasarian",
 		"hiv-comm": "Komunidad ng HIV",
 		"immigrant-comm": "Komunidad ng Immigrant",
-		"incarcerated": "Nakulong na Komunidad",
 		"lgbtq-youth-focus": "LGBTQ+Kabataan",
 		"resettled-refugees": "Resettled Refugee",
 		"spanish-speakers": "Espanyol Speaker",
 		"trans-comm": "Komunidad ng Trans",
 		"trans-fem": "Trans Kababaihan/Trans Pambabae",
 		"trans-masc": "Trans Lalaki/Trans Panlalaki",
-		"trans-youth-focus": "Kabataan Ng Trans",
-		"women": "Nakatuon sa Kababaihan"
+		"trans-youth-focus": "Kabataan Ng Trans"
 	},
 	"sys": {
-		"CATEGORYNAME": "Sistema",
-		"incompatible-info": "Hindi katugmang Impormasyon"
+		"CATEGORYNAME": "Sistema"
 	},
 	"tpop": {
 		"other": "Target na Populasyon - Iba pa"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "Legal na hindi pangkalakal na organisasyon"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "Mga Pagpipilian sa Service Provider",
 		"case-mananger": "Tagapamahala ng kaso",
+		"CATEGORYNAME": "Mga Pagpipilian sa Service Provider",
 		"community-org": "Magboluntaryo/kawani sa isang samahan ng komunidad",
-		"friend-family": "N/A (Naghahanap sa ngalan ng mga kaibigan/pamilya)",
-		"govt-agency": "Ahensya ng pamahalaan",
-		"grassroots-direct": "Grassroots Direktang Organisasyon ng Serbisyo",
 		"healthcare": "Tagabigay ng pangangalaga sa kalusugan",
 		"lawyer": "abogado",
 		"other": "Iba pa (mangyaring tukuyin)",

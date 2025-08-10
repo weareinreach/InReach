@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} організація"
 	},
+	"admin": {
+		"tab-organizations": "Організації",
+		"tab-users": "Спільноти",
+		"tab-downloads": "Завантажень"
+	},
 	"agree-disclaimer": "Натискаючи \"{{action}}\", ви погоджуєтеся з <link1>Політикою конфіденційності InReach</link1> і <link2>Умови використання</link2>.",
 	"alert-message": "Оповіщення",
 	"alert-message-1": "<strong>Політика щодо COVID-19:</strong> Оскільки новини та найкращі практики профілактики COVID-19 швидко змінюються щодня, Whitman-Walker Health продовжує оновлювати свої послуги, щоб відобразити рекомендації щодо профілактики. Будь ласка, перевірте їх веб-сайт для отримання найактуальнішої інформації.",
@@ -104,9 +109,9 @@
 	"dont-have-account": "У вас немає облікового запису?",
 	"download-app": "Завантажте додаток",
 	"edit-profile": "Редагувати профіль",
-	"email-sent": "Електронна пошта надіслана.",
 	"email_professional": "Професійна електронна пошта",
 	"email_student-pro": "Професійна або студентська електронна пошта",
+	"email-sent": "Електронна пошта надіслана.",
 	"enter-email-placeholder": "Введіть адресу електронної пошти...",
 	"enter-password-placeholder": "Введіть пароль...",
 	"enter-review": "Введіть свій відгук...",
@@ -230,8 +235,8 @@
 	},
 	"password-reset-success": "<Text>Будь ласка, <LoginModal>логін</LoginModal> використовуючи новий пароль.</Text>",
 	"password-saved": "Пароль збережено!",
-	"photo-count_interval": "(0) [Фото ще немає.]; (1) [{{count}} фото] ;( 2-інф) [{{count}} фото]",
 	"photo_interval": "(0) [Фото ще немає]; (2-інф) [Переглянути всі {{count}} фото];",
+	"photo-count_interval": "(0) [Фото ще немає.]; (1) [{{count}} фото] ;( 2-інф) [{{count}} фото]",
 	"please-specify": "Будь ласка, вкажіть",
 	"portal-module": {
 		"service-area": "Область обслуговування"
@@ -430,6 +435,7 @@
 	"user-avatar": "Аватар користувача",
 	"user-menu": {
 		"admin-options": "Опції адміністратора",
+		"csv-downloads": "CSV завантаження",
 		"data-portal": "Домівка порталу даних",
 		"edit-page": "Редагувати сторінку",
 		"user-options": "Налаштування користувача",
@@ -500,14 +506,14 @@
 	"photo_few": "Фотографії",
 	"photo_many": "Фотографії",
 	"photo_other": "Фотографії",
-	"review-count_one": "({{count}} відгук)",
-	"review-count_few": "({{count}} відгуків)",
-	"review-count_many": "({{count}} відгуків)",
-	"review-count_other": "({{count}} відгуків)",
 	"review_one": "Рецензія",
 	"review_few": "Відгуки",
 	"review_many": "Відгуки",
 	"review_other": "Відгуки",
+	"review-count_one": "({{count}} відгук)",
+	"review-count_few": "({{count}} відгуків)",
+	"review-count_many": "({{count}} відгуків)",
+	"review-count_other": "({{count}} відгуків)",
 	"view-x-result_one": "Переглянути {{count}} результат",
 	"view-x-result_few": "Переглянути {{count}} результатів",
 	"view-x-result_many": "Переглянути {{count}} результатів",

@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} سازمان"
 	},
+	"admin": {
+		"tab-organizations": "Organizations",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "د \"{{action}}\" کلیک کولو سره تاسو د inREACH <link1>محرمیت پالیسي</link1> او <link2>د کارولو شرایط</link2>سره موافق یاست.",
 	"alert-message": "د خبرتیا پیغام",
 	"alert-message-1": "<strong>COVID-19 پالیسي:</strong> هره ورځ د COVID-19 مخنیوي لپاره خبرونو او غوره کړنو سره، د ویټمن - واکر روغتیا د مخنیوي وړاندیزونو منعکس کولو لپاره د دوی خدماتو تازه کولو ته دوام ورکوي. مهرباني وکړئ د خورا تازه معلوماتو لپاره د دوی ویب پا checkه وګورئ.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "حساب نه لری؟",
 	"download-app": "اپلیکیشن ډاونلوډ کړئ",
 	"edit-profile": "پېژند سمول",
-	"email-sent": "بریښنالیک واستول شو.",
 	"email_professional": "مسلکي بریښنالیک",
 	"email_student-pro": "مسلکي یا زده کونکي بریښنالیک",
+	"email-sent": "بریښنالیک واستول شو.",
 	"enter-email-placeholder": "بریښنالیک پته دننه کړئ...",
 	"enter-password-placeholder": "پټنوم دننه کړئ...",
 	"enter-review": "خپله بیاکتنه دننه کړئ...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>مهرباني وکړئ <LoginModal>ننوتل</LoginModal> د خپل نوي پټنوم په کارولو سره.</Text>",
 	"password-saved": "پټنوم خوندي شو!",
-	"photo-count_interval": "(0)[تر اوسه کوم عکسونه نشته.]؛(1)[{{count}} انځور]؛(2-inf)[{{count}} عکسونه]",
 	"photo_interval": "(0) [تراوسه هیڅ عکس نشته]؛ (2-inf) [ټول {{count}} عکسونه وګورئ]؛",
+	"photo-count_interval": "(0)[تر اوسه کوم عکسونه نشته.]؛(1)[{{count}} انځور]؛(2-inf)[{{count}} عکسونه]",
 	"please-specify": "مهرباني وکړئ مشخص کړئ",
 	"portal-module": {
 		"service-area": "د خدماتو ساحه"
@@ -428,6 +433,7 @@
 	"user-avatar": "کارن اوتار",
 	"user-menu": {
 		"admin-options": "د ادارې اختیارونه",
+		"csv-downloads": "CSV Downloads",
 		"data-portal": "د معلوماتو پورټل کور",
 		"edit-page": "دا پاڼه سم کړئ",
 		"user-options": "د کاروونکي اختیارونه",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "عکس",
 	"photo_other": "عکسونه",
-	"review-count_one": "(د{{count}} بیاکتنه)",
-	"review-count_other": "({{count}} بیاکتنې)",
 	"review_one": "بیاکتنه",
 	"review_other": "کتنې",
+	"review-count_one": "(د{{count}} بیاکتنه)",
+	"review-count_other": "({{count}} بیاکتنې)",
 	"view-x-result_one": "د {{count}} پایله وګورئ",
 	"view-x-result_other": "د {{count}} پایلې وګورئ",
 	"website_one": "وېب پاڼه",

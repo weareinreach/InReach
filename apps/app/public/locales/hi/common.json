@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} संगठन"
 	},
+	"admin": {
+		"tab-organizations": "Organizations",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "\"{{action}}\" पर क्लिक करके आप InReach की <link1>गोपनीयता नीति</link1> और <link2>उपयोग की शर्तों</link2>से सहमत होते हैं।",
 	"alert-message": "चेतावनी संदेश",
 	"alert-message-1": "<strong>COVID-19 नीति:</strong> COVID-19 की रोकथाम के लिए समाचार और सर्वोत्तम प्रथाओं के साथ हर दिन तेजी से बदल रहा है, व्हिटमैन-वॉकर हेल्थ रोकथाम की सिफारिशों को प्रतिबिंबित करने के लिए अपनी सेवाओं को अपडेट करना जारी रखता है। नवीनतम जानकारी के लिए कृपया उनकी वेबसाइट देखें।",
@@ -102,9 +107,9 @@
 	"dont-have-account": "क्या आपके पास अकाउंट नहीं है?",
 	"download-app": "ऐप डाउनलोड करें",
 	"edit-profile": "प्रोफ़ाइल संपादित करें",
-	"email-sent": "ईमेल भेजा गया।",
 	"email_professional": "पेशेवर ईमेल",
 	"email_student-pro": "पेशेवर या छात्र ईमेल",
+	"email-sent": "ईमेल भेजा गया।",
 	"enter-email-placeholder": "ईमेल पता दर्ज करें...",
 	"enter-password-placeholder": "पासवर्ड दर्ज करें...",
 	"enter-review": "अपनी समीक्षा दर्ज करें...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>कृपया अपने नए पासवर्ड का उपयोग करके <LoginModal>लॉगिन</LoginModal> करें।</Text>",
 	"password-saved": "पासवर्ड सहेजा गया!",
-	"photo-count_interval": "(0)[अभी तक कोई फ़ोटो नहीं.];(1)[{{count}} फ़ोटो];(2-inf)[{{count}} फ़ोटो]",
 	"photo_interval": "(0) [अभी तक कोई फ़ोटो नहीं है]; (2-inf) [सभी {{count}} फ़ोटो देखें];",
+	"photo-count_interval": "(0)[अभी तक कोई फ़ोटो नहीं.];(1)[{{count}} फ़ोटो];(2-inf)[{{count}} फ़ोटो]",
 	"please-specify": "कृपया निर्दिष्ट करें",
 	"portal-module": {
 		"service-area": "सेवा क्षेत्र"
@@ -428,6 +433,7 @@
 	"user-avatar": "यूज़र अवतार",
 	"user-menu": {
 		"admin-options": "व्यवस्थापक विकल्प",
+		"csv-downloads": "CSV Downloads",
 		"data-portal": "डेटा पोर्टल होम",
 		"edit-page": "इस पृष्ठ को संपादित करें",
 		"user-options": "उपयोगकर्ता विकल्प",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "तस्वीर",
 	"photo_other": "फ़ोटो",
-	"review-count_one": "({{count}} समीक्षा)",
-	"review-count_other": "({{count}} समीक्षाएं)",
 	"review_one": "समीक्षा",
 	"review_other": "समीक्षाएं",
+	"review-count_one": "({{count}} समीक्षा)",
+	"review-count_other": "({{count}} समीक्षाएं)",
 	"view-x-result_one": "{{count}} परिणाम देखें",
 	"view-x-result_other": "{{count}} परिणाम देखें",
 	"website_one": "वेबसाइट",

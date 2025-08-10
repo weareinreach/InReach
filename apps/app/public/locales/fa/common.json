@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} سازمان"
 	},
+	"admin": {
+		"tab-organizations": "Organizations",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "با کلیک کردن بر روی \"{{action}}\" شما موافقت می کنید <link1>سیاست حفظ حریم خصوصی</link1> و <link2>شرایط استفاده</link2>.",
 	"alert-message": "پیام هشدار",
 	"alert-message-1": "<strong>سیاست COVID-19:</strong> با توجه به اینکه اخبار و بهترین شیوه های پیشگیری از COVID-19 هر روز به سرعت تغییر می کند، Whitman-Walker Health همچنان خدمات خود را به روز می کند تا منعکس کننده توصیه های پیشگیری باشد. لطفاً برای به روزترین اطلاعات، وب سایت آنها را بررسی کنید.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "آیا حساب کاربری ندارید?",
 	"download-app": "برنامه را دانلود کنید",
 	"edit-profile": "ویرایش پروفایل",
-	"email-sent": "ایمیل ارسال شد.",
 	"email_professional": "ایمیل حرفه ای",
 	"email_student-pro": "ایمیل حرفه ای یا دانشجویی",
+	"email-sent": "ایمیل ارسال شد.",
 	"enter-email-placeholder": "آدرس ایمیل را وارد کنید...",
 	"enter-password-placeholder": "رمز عبور را وارد کنید...",
 	"enter-review": "نظر خود را وارد کنید...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>لطفا <LoginModal>با استفاده از رمز عبور جدید خود وارد شوید</LoginModal> .</Text>",
 	"password-saved": "رمز عبور ذخیره شد!",
-	"photo-count_interval": "(0)[هنوز هیچ عکسی وجود ندارد.]؛ (1)[{{count}} عکس]؛ (2-inf)[{{count}} عکس]",
 	"photo_interval": "(0) [هنوز عکس وجود ندارد]; (2-INF) [مشاهده همه {{count}} عکس];",
+	"photo-count_interval": "(0)[هنوز هیچ عکسی وجود ندارد.]؛ (1)[{{count}} عکس]؛ (2-inf)[{{count}} عکس]",
 	"please-specify": "لطفا مشخص کنید",
 	"portal-module": {
 		"service-area": "منطقه خدمات"
@@ -428,6 +433,7 @@
 	"user-avatar": "آواتار کاربر",
 	"user-menu": {
 		"admin-options": "گزینه های مدیریت",
+		"csv-downloads": "CSV Downloads",
 		"data-portal": "صفحه اصلی پورتال داده",
 		"edit-page": "این صفحه را ویرایش کنید",
 		"user-options": "گزینه های کاربر",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "تصویر",
 	"photo_other": "عکس ها",
-	"review-count_one": "({{count}} مرور)",
-	"review-count_other": "({{count}} بررسی)",
 	"review_one": "مرور",
 	"review_other": "نقدها",
+	"review-count_one": "({{count}} مرور)",
+	"review-count_other": "({{count}} بررسی)",
 	"view-x-result_one": "مشاهده نتیجه {{count}}",
 	"view-x-result_other": "مشاهده {{count}} نتیجه",
 	"website_one": "وب سایت",

@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Abortion providers",
+		"CATEGORYNAME": "Abortion Care",
 		"financial-assistance": "Financial assistance",
 		"lodging-assistance": "Lodging assistance",
 		"mail-order-services": "Mail order services",
@@ -9,8 +9,8 @@
 		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Community Support",
 		"advocacy-and-community-organizing": "Advocacy and community organizing",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "Community and social groups",
 		"cultural-centers": "Cultural centers",
 		"lgbtq-centers": "LGBTQ centers",
@@ -23,13 +23,10 @@
 		"CATEGORYNAME": "Computers and Internet",
 		"computers-and-internet": "Computers and internet"
 	},
-	"crisis-support": {
-		"CATEGORYNAME": "Crisis Support",
-		"crisis-support": "Crisis support"
-	},
+	"crisis-support": { "CATEGORYNAME": "Crisis Support", "crisis-support": "Crisis support" },
 	"education-and-employment": {
-		"CATEGORYNAME": "Education and Employment",
 		"career-counseling": "Career counseling",
+		"CATEGORYNAME": "Education and Employment",
 		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
 		"english-classes": "English classes",
 		"language-classes": "Language classes",
@@ -38,8 +35,8 @@
 		"training-and-professional-development": "Training and professional development"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "Financial Assistance",
 		"bail-funds": "Bail and bond funds",
+		"CATEGORYNAME": "Financial Assistance",
 		"healthcare-and-insurance": "Healthcare and insurance",
 		"housing-and-utilities": "Housing and utilities",
 		"legal-fees": "Legal fees",
@@ -80,8 +77,8 @@
 		"resettlement-assistance": "Resettlement assistance"
 	},
 	"legal": {
-		"CATEGORYNAME": "Legal",
 		"asylum-application": "Asylum application",
+		"CATEGORYNAME": "Legal",
 		"citizenship": "Citizenship",
 		"crime-and-discrimination": "Crime and discrimination",
 		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
@@ -101,17 +98,15 @@
 		"t-visa": "T visa",
 		"u-visa": "U visa"
 	},
-	"mail": {
-		"CATEGORYNAME": "Mail"
-	},
+	"mail": { "CATEGORYNAME": "Mail" },
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 services",
 		"dental-care": "Dental care",
 		"fertility-and-family-planning-services": "Fertility and family planning services",
 		"hiv-and-sexual-health": "HIV and sexual health",
-		"medical-info-and-referrals": "Medical information and referrals",
 		"medical-clinics": "Medical clinics",
+		"medical-info-and-referrals": "Medical information and referrals",
 		"obgyn-services": "OBGYN services",
 		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
 		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
@@ -122,11 +117,11 @@
 		"trans-health-hormone-therapy": "Trans health - hormone therapy",
 		"trans-health-primary-care": "Trans health - primary care",
 		"trans-health-speech-therapy": "Trans health - speech therapy",
-		"trans-health-youth-care": "Trans youth support"
+		"trans-health-youth-care": "Trans - youth care"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC support groups",
+		"CATEGORYNAME": "Mental Health",
 		"family-support-groups": "Family support groups",
 		"hotlines": "Hotlines",
 		"mental-health-info-referrals": "Mental health information and referrals",
@@ -140,9 +135,9 @@
 		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "Art, music, and literature",
 		"camps-and-excursions": "Camps and excursions",
+		"CATEGORYNAME": "Entertainment and Activities",
 		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"trans-focused-services": {

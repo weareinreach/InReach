@@ -8,6 +8,11 @@
 	"adjective": {
 		"organization": "{{adjective}} samahan"
 	},
+	"admin": {
+		"tab-organizations": "Organizations",
+		"tab-users": "Users",
+		"tab-downloads": "Downloads"
+	},
 	"agree-disclaimer": "Sa pamamagitan ng pag-click sa \"{{action}}\" sumasang-ayon ka sa <link1>Patakaran sa Privacy ng inReach</link1> at <link2>Mga Tuntunin ng Paggamit</link2>.",
 	"alert-message": "Mensahe ng alerto",
 	"alert-message-1": "Patakaran sa <strong>COVID-19:</strong> Sa mga balita at pinakamahusay na kasanayan para sa pag-iwas sa COVID-19 na mabilis na nagbabago bawat araw, patuloy na ina-update ng Whitman-Walker Health ang kanilang mga serbisyo upang maipakita ang mga rekomendasyon sa pag-iwas. Mangyaring suriin ang kanilang website para sa pinaka-up-to-date na impormasyon.",
@@ -102,9 +107,9 @@
 	"dont-have-account": "Wala kang account?",
 	"download-app": "I-download ang app",
 	"edit-profile": "I-edit ang Profile",
-	"email-sent": "Ipinadala ang email.",
 	"email_professional": "Propesyonal na email",
 	"email_student-pro": "Propesyonal o email ng mag-aaral",
+	"email-sent": "Ipinadala ang email.",
 	"enter-email-placeholder": "Ipasok ang email address...",
 	"enter-password-placeholder": "Ipasok ang password...",
 	"enter-review": "Ipasok ang iyong pagsusuri...",
@@ -228,8 +233,8 @@
 	},
 	"password-reset-success": "<Text>Mangyaring <LoginModal>login</LoginModal> gamit ang iyong bagong password.</Text>",
 	"password-saved": "Naka-save ang password!",
-	"photo-count_interval": "(0)[Wala pang mga larawan.];(1)[{{count}} larawan];(2-inf)[{{count}} larawan]",
 	"photo_interval": "(0) [Wala pang mga larawan]; (2-inf) [Tingnan ang lahat ng {{count}} mga larawan];",
+	"photo-count_interval": "(0)[Wala pang mga larawan.];(1)[{{count}} larawan];(2-inf)[{{count}} larawan]",
 	"please-specify": "Mangyaring tukuyin",
 	"portal-module": {
 		"service-area": "Lugar ng Serbisyo"
@@ -428,6 +433,7 @@
 	"user-avatar": "Avatar ng gumagamit",
 	"user-menu": {
 		"admin-options": "Mga Opsyon sa Admin",
+		"csv-downloads": "CSV Downloads",
 		"data-portal": "Home ng Data Portal",
 		"edit-page": "I-edit ang page na ito",
 		"user-options": "Mga Pagpipilian sa Gumagamit",
@@ -496,10 +502,10 @@
 	},
 	"photo_one": "Larawan",
 	"photo_other": "Mga Litrato",
-	"review-count_one": "({{count}} pagsusuri)",
-	"review-count_other": "({{count}} mga review)",
 	"review_one": "Suriin",
 	"review_other": "Mga Review",
+	"review-count_one": "({{count}} pagsusuri)",
+	"review-count_other": "({{count}} mga review)",
 	"view-x-result_one": "Tingnan ang {{count}} resulta",
 	"view-x-result_other": "Tingnan ang {{count}} mga resulta",
 	"website_one": "Website",
