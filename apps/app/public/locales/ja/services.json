@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "中絶ケア",
 		"abortion-providers": "中絶のための医療機関",
+		"CATEGORYNAME": "中絶ケア",
 		"financial-assistance": "経済的支援",
 		"lodging-assistance": "中絶医療のための宿泊に関する支援",
 		"mail-order-services": "郵送による中絶医療",
@@ -9,8 +9,8 @@
 		"travel-assistance": "中絶医療のための移動手段に関する支援"
 	},
 	"community-support": {
-		"CATEGORYNAME": "コミュニティサポート",
 		"advocacy-and-community-organizing": "アドボカシーおよびコミュニティの団結",
+		"CATEGORYNAME": "コミュニティサポート",
 		"community-social-groups": "コミュニティと社会グループ",
 		"cultural-centers": "文化センター",
 		"lgbtq-centers": "LGBTQ センター",
@@ -28,8 +28,8 @@
 		"crisis-support": "危機への支援"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "教育と雇用",
 		"career-counseling": "就職支援",
+		"CATEGORYNAME": "教育と雇用",
 		"educational-support-for-lgbtq-youth": "LGBTQの若者への教育支援",
 		"english-classes": "英語の教育",
 		"language-classes": "言語の教育",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "トレーニングおよび専門的能力の開発"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "経済的支援",
 		"bail-funds": "保釈金および債券基金",
+		"CATEGORYNAME": "経済的支援",
 		"healthcare-and-insurance": "ヘルスケアおよび保険",
 		"housing-and-utilities": "住宅および光熱水",
 		"legal-fees": "弁護士費用",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "再定住支援"
 	},
 	"legal": {
-		"CATEGORYNAME": "法的手続き",
 		"asylum-application": "亡命申請",
+		"CATEGORYNAME": "法的手続き",
 		"citizenship": "市民権",
 		"crime-and-discrimination": "犯罪と差別",
 		"deferred-action-for-childhood-arrivals-daca": "若年移民に対する国外強制退去の延期措置（DACA）",
@@ -110,8 +110,8 @@
 		"dental-care": "歯科治療",
 		"fertility-and-family-planning-services": "生殖能力および家族計画サービス",
 		"hiv-and-sexual-health": "HIVと性の健康",
-		"medical-info-and-referrals": "医療情報と紹介",
 		"medical-clinics": "診療所",
+		"medical-info-and-referrals": "医療情報と紹介",
 		"obgyn-services": "産婦人科サービス",
 		"physical-evaluations-for-asylum-claim": "庇護申請のための身体検査",
 		"physical-evaluations-for-refugee-claim": "難民申請のための身体検査",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "トランスジェンダーの健康 - 青少年の医療"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "メンタルヘルス",
 		"bipoc-support-groups": "BIPOC（黒人、先住民、有色人種）支援グループ",
+		"CATEGORYNAME": "メンタルヘルス",
 		"family-support-groups": "家族支援グループ",
 		"hotlines": "ホットライン",
 		"mental-health-info-referrals": "メンタルヘルス情報と紹介",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "トランスジェンダー支援団体"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "エンターテイメントとアクティビティ",
 		"art-music-literature": "芸術、音楽、文学",
 		"camps-and-excursions": "キャンプと小旅行",
+		"CATEGORYNAME": "エンターテイメントとアクティビティ",
 		"sports-and-entertainment": "スポーツとエンターテイメント"
 	},
 	"trans-focused-services": {

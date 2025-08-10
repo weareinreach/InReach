@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "追加情報",
 		"at-capacity": "定員に達しているもの",
+		"CATEGORYNAME": "追加情報",
 		"geo-near-public-transit": "近くの公共交通機関",
 		"geo-public-transit-description": "公共交通機関/特定の道順",
 		"has-confidentiality-policy": "機密保持方針があるもの",
 		"offers-remote-services": "リモート",
-		"private-practice": "個人的な練習",
-		"religiously-affiliated": "宗教に関係している",
 		"time-walk-in": "事前予約なしでの受け入れ時間あり",
-		"wheelchair-accessible": "利用可能な",
+		"wheelchair-accessible_true": "利用可能な",
 		"wheelchair-accessible_false": "アクセス不可",
-		"wheelchair-accessible_true": "利用可能な"
+		"wheelchair-accessible": "利用可能な"
 	},
 	"alerts": {
 		"CATEGORYNAME": "アラート",
@@ -19,7 +17,6 @@
 		"warn": "警告"
 	},
 	"community": {
-		"CATEGORYNAME": "コミュニティ",
 		"adults": "「成人」とは18歳以上と定義されます",
 		"africa-immigrant": "アフリカ諸国の人々に役立つ機会",
 		"african-american": "アフリカ系アメリカ人コミュニティに役立つ機会",
@@ -31,6 +28,7 @@
 		"bipoc": "黒人、先住民、有色人種に役立つ機会",
 		"bisexual": "バイセクシュアルコミュニティに役立つ機会",
 		"black": "黒人コミュニティに役立つ機会",
+		"CATEGORYNAME": "コミュニティ",
 		"citizens": "{{country}} 国民",
 		"conversion-therapy-survivors": "転向療法の被害者に役立つ機会",
 		"daca-recipient-seeker": "ドリーマーズ（DACA受益者）に役立つ機会",
@@ -58,25 +56,19 @@
 		"seniors": "「高齢者」とは65歳以上と定義されています",
 		"sex-workers": "セックスワーカーに役立つ機会",
 		"teens": "「ティーン」とは、12歳から18歳と定義されています",
-		"trans-youth": "トランスジェンダーの若者に役立つ機会",
-		"trans-youth-caregivers": "トランスジェンダーの若者を支援する介護者に役立つ機会",
 		"transfeminine": "トランスフェミニンコミュニティに役立つ機会",
 		"transgender": "トランスジェンダーのコミュニティに役立つ機会（ノンコンフォーミングまたはノンバイナリーのコミュニティの場合は、ジェンダーノンコンフォーミングまたはノンバイナリー向けの機会を利用してください）",
 		"transmasculine": "トランスマスキュリンコミュニティに役立つ機会",
+		"trans-youth": "トランスジェンダーの若者に役立つ機会",
+		"trans-youth-caregivers": "トランスジェンダーの若者を支援する介護者に役立つ機会",
 		"unaccompanied-minors": "同伴者のいない未成年者向けの機会",
 		"undocumented": "不法移民に役立つ機会"
 	},
 	"cost": {
 		"CATEGORYNAME": "料金",
-		"cost-accepts-insurance": "このサービスは保険を受け入れます",
-		"cost-accepts-insurance_default": "このサービスは保険を受け入れます。費用、資金援助のオプション、保険の適用範囲の詳細については、組織に直接お問い合わせください。",
-		"cost-accepts-insurance_withUrl": "このサービスは保険を受け入れます。費用、資金援助オプション、保険適用範囲の詳細については、<Link href=\"{{url}}\">こちらをクリックして</Link>組織のページをご覧ください。",
 		"cost-fees": "費用が発生する",
-		"cost-free": "無料",
 		"cost-financial-assistance-available": "資金援助が利用可能です",
-		"cost-sliding-scale": "コストはスライディングスケールで決定",
-		"cost-sliding-scale_default": "このサービスにはスライディングスケールの料金がかかります。サービスに支払う金額は、収入レベルに応じて調整されます。詳細については、組織に直接お問い合わせください。",
-		"cost-sliding-scale_withUrl": "このサービスにスライディングスケールの料金がかかります。サービスに支払う金額は、収入レベルに応じて調整されます。<Link href=\"{{url}}\">こちらをクリックして、</Link>組織のページにアクセスしてください。"
+		"cost-free": "無料"
 	},
 	"crisis-support-community": {
 		"elders": "高齢者",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "資格要件",
-		"elig-age": "対象年齢",
 		"elig-age_max": "{{max}} 未満",
 		"elig-age_min": "{{min}} 超過",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "対象年齢",
 		"other-describe": "その他 (自由記述)",
 		"req-medical-insurance": "医療保険が必要なもの",
 		"req-photo-id": "写真付き身分証明書が必要なもの",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "時間の予約が必要です"
 	},
 	"lang": {
-		"CATEGORYNAME": "言語",
 		"all-languages-by-interpreter": "通訳者による全ての言語",
 		"american-sign-language": "アメリカ手話",
+		"CATEGORYNAME": "言語",
 		"lang-offered": "特定の言語を提供"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "組織リーダーシップ",
 		"bipoc-led": "BIPOC（黒人、先住民、有色人種）主導",
 		"black-led": "黒人主導",
+		"CATEGORYNAME": "組織リーダーシップ",
 		"immigrant-led": "移民主導",
 		"lgbtq-led": "LGBTQ+ LED表示",
-		"trans-led": "トランスジェンダー主導",
-		"women-led": "女性主導"
+		"trans-led": "トランスジェンダー主導"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "サービスへのアクセス方法",
 		"accessemail": "アクセス方法-電子メール",
 		"accessfile": "アクセス方法-ファイル",
 		"accesslink": "アクセス方法-リンク",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "アクセス方法-公共交通機関",
 		"accesssms": "アクセス手順 - SMS",
 		"accesstext": "アクセス方法-ショートメッセージ（SMS）",
-		"accesswhatsapp": "アクセス方法 - WhatsApp"
+		"accesswhatsapp": "アクセス方法 - WhatsApp",
+		"CATEGORYNAME": "サービスへのアクセス方法"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "サービスの対象者",
 		"asylum-seekers": "亡命希望者",
 		"bipoc-comm": "BIPOC（黒人、先住民、有色人種）コミュニティ",
-		"caregivers": "介護者コミュニティ",
-		"disabled": "障がい者コミュニティ",
-		"elder": "老人の対象者",
+		"CATEGORYNAME": "サービスの対象者",
 		"gender-nc": "ジェンダーノンコンフォーミング",
 		"hiv-comm": "HIVコミュニティ",
 		"immigrant-comm": "移民コミュニティ",
-		"incarcerated": "投獄された人々のコミュニティ",
 		"lgbtq-youth-focus": "LGBTQ+ の若者",
 		"resettled-refugees": "再定住した難民",
 		"spanish-speakers": "スペイン語話者",
 		"trans-comm": "トランスコミュニティ",
 		"trans-fem": "トランス女性/トランスフェミニン",
 		"trans-masc": "トランス男性/トランスマスキュリン",
-		"trans-youth-focus": "トランスジェンダーの若者",
-		"women": "女性に対象者"
+		"trans-youth-focus": "トランスジェンダーの若者"
 	},
 	"sys": {
-		"CATEGORYNAME": "システム",
-		"incompatible-info": "互換性のない情報"
+		"CATEGORYNAME": "システム"
 	},
 	"tpop": {
 		"other": "対象人口 ・ ほかの"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "法的非営利組織"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "サービス提供者の選択肢",
 		"case-mananger": "福祉相談員",
+		"CATEGORYNAME": "サービス提供者の選択肢",
 		"community-org": "コミュニティ組織のボランティア/スタッフ",
-		"friend-family": "該当なし (友人か家人のために)",
-		"govt-agency": "政府機関",
-		"grassroots-direct": "グラスルーツ直航組織",
 		"healthcare": "医療従事者",
 		"lawyer": "弁護士",
 		"other": "その他 (具体的に記入してください)",

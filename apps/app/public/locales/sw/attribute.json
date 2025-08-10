@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Maelezo ya ziada",
 		"at-capacity": "Kwa uwezo",
+		"CATEGORYNAME": "Maelezo ya ziada",
 		"geo-near-public-transit": "Karibu na usafiri wa umma",
 		"geo-public-transit-description": "Usafiri wa umma/maelekezo maalum",
 		"has-confidentiality-policy": "Ina Sera ya Usiri",
 		"offers-remote-services": "Remote",
-		"private-practice": "Mazoezi ya Kibinafsi",
-		"religiously-affiliated": "Ni uhusiano wa kidini",
 		"time-walk-in": "Ina Masaa ya Kutembea",
-		"wheelchair-accessible": "Inaweza kufikiwa",
+		"wheelchair-accessible_true": "Inapatikana",
 		"wheelchair-accessible_false": "Haipatikani",
-		"wheelchair-accessible_true": "Inapatikana"
+		"wheelchair-accessible": "Inaweza kufikiwa"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Tahadhari",
@@ -19,7 +17,6 @@
 		"warn": "Tahadhari ya onyo"
 	},
 	"community": {
-		"CATEGORYNAME": "Jumuiya",
 		"adults": "“mtu mzima” hufafanuliwa kama miaka 18 au zaidi",
 		"africa-immigrant": "Fursa zinazowahudumia wale kutoka nchi za Kiafrika",
 		"african-american": "Fursa zinazohudumia jamii ya Kiafrika ya Amerika",
@@ -31,6 +28,7 @@
 		"bipoc": "Fursa ambazo hutumikia Weusi, Asili, na Watu wa Rangi",
 		"bisexual": "Fursa ambazo hutumikia Jumuiya ya Bisexual",
 		"black": "Fursa zinazohudumia Jumuiya ya Weusi",
+		"CATEGORYNAME": "Jumuiya",
 		"citizens": "Wananchi wa {{country}}",
 		"conversion-therapy-survivors": "Fursa zinazohudumia Waathirika wa Tiba ya Uongofu",
 		"daca-recipient-seeker": "Fursa ambazo hutumikia Dreamers (wapokeaji wa DACA)",
@@ -58,25 +56,19 @@
 		"seniors": "“mwandamizi” hufafanuliwa kama miaka 65 au zaidi",
 		"sex-workers": "Fursa ambazo zinahudumia wafanyabiashara ya ngono",
 		"teens": "“kijana” hufafanuliwa kama umri wa miaka 12-18",
-		"trans-youth": "Fursa ambazo zinahudumia vijana wa Trans",
-		"trans-youth-caregivers": "Fursa ambazo hutumikia Walezi wa Vijana wa Trans",
 		"transfeminine": "Fursa ambazo hutumikia Jumuiya ya Transfeminine",
 		"transgender": "Fursa ambazo hutumikia jamii ya transgender (kwa jamii zisizofanana au zisizo za binary, tumia mali isiyofanana na jinsia au isiyo ya kawaida)",
 		"transmasculine": "Fursa zinazohudumia Jumuiya ya Trasmasculine",
+		"trans-youth": "Fursa ambazo zinahudumia vijana wa Trans",
+		"trans-youth-caregivers": "Fursa ambazo hutumikia Walezi wa Vijana wa Trans",
 		"unaccompanied-minors": "Fursa ambazo zinahudumia watoto wasioandamana",
 		"undocumented": "Fursa zinazowahudumia wahamiaji wasio na hati"
 	},
 	"cost": {
 		"CATEGORYNAME": "Gharama",
-		"cost-accepts-insurance": "Huduma hii inakubali bima",
-		"cost-accepts-insurance_default": "Huduma hii inakubali bima. Wasiliana na shirika moja kwa moja kwa maelezo zaidi kuhusu gharama, chaguo za usaidizi wa kifedha na maelezo ya bima.",
-		"cost-accepts-insurance_withUrl": "Huduma hii inakubali bima. <Link href=\"{{url}}\">Bofya hapa ili kutembelea ukurasa wa shirika</Link> kwa maelezo zaidi kuhusu gharama, chaguo za usaidizi wa kifedha na maelezo ya bima.",
 		"cost-fees": "Inapata gharama",
-		"cost-free": "Bure ya gharama",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-sliding-scale": "Gharama zilizoamuliwa kwa mizani ya kuteleza",
-		"cost-sliding-scale_default": "Huduma hii ina ada za mizani ya kuteleza. Kiasi unacholipa kwa huduma hurekebishwa kulingana na kiwango cha mapato yako. Wasiliana na shirika moja kwa moja kwa maelezo zaidi.",
-		"cost-sliding-scale_withUrl": "Huduma hii ina ada za mizani ya kuteleza. Kiasi unacholipa kwa huduma hurekebishwa kulingana na kiwango cha mapato yako. <Link href=\"{{url}}\">Bofya hapa ili kutembelea ukurasa wa shirika kwa maelezo zaidi.</Link>"
+		"cost-free": "Bure ya gharama"
 	},
 	"crisis-support-community": {
 		"elders": "Wazee",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Mahitaji ya kustahiki",
-		"elig-age": "Kustahiki umri",
 		"elig-age_max": "Chini ya {{max}}",
 		"elig-age_min": "{{min}} na zaidi",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "Kustahiki umri",
 		"other-describe": "Nyingine (maelezo ya maandishi ya bure)",
 		"req-medical-insurance": "Inahitaji bima ya matibabu",
 		"req-photo-id": "Inahitaji kitambulisho cha picha",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "Muda Uteuzi Inahitajika"
 	},
 	"lang": {
-		"CATEGORYNAME": "Lugha",
 		"all-languages-by-interpreter": "Lugha zote kupitia mkalimani",
 		"american-sign-language": "Lugha ya Ishara ya Marekani",
+		"CATEGORYNAME": "Lugha",
 		"lang-offered": "Lugha maalum zinazotolewa"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Uongozi wa Shirika",
 		"bipoc-led": "Imeongozwa na Bipoc-",
 		"black-led": "Nyeusi iliyoongozwa",
+		"CATEGORYNAME": "Uongozi wa Shirika",
 		"immigrant-led": "Wakiongozwa na wahamiaji",
 		"lgbtq-led": "LGBTQ+ Inayoongozwa",
-		"trans-led": "Transgender inayoongozwa",
-		"women-led": "Wanawake wakiongozwa"
+		"trans-led": "Transgender inayoongozwa"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Maagizo ya Ufikiaji wa Huduma",
 		"accessemail": "Maagizo ya Ufikiaji - Barua pepe",
 		"accessfile": "Maelekezo ya Ufikiaji - Faili",
 		"accesslink": "Maagizo ya Ufikiaji - Kiungo",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "Maagizo ya Ufikiaji - Usafiri wa Umma",
 		"accesssms": "Maagizo ya Ufikiaji - SMS",
 		"accesstext": "Maelekezo ya Ufikiaji - Nakala",
-		"accesswhatsapp": "Maagizo ya Ufikiaji - WhatsApp"
+		"accesswhatsapp": "Maagizo ya Ufikiaji - WhatsApp",
+		"CATEGORYNAME": "Maagizo ya Ufikiaji wa Huduma"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Kuzingatia Huduma",
 		"asylum-seekers": "Wanaotafuta hifadhi",
 		"bipoc-comm": "Jumuiya ya BIPOC",
-		"caregivers": "Jumuiya ya walezi",
-		"disabled": "Jumuiya ya Walemavu",
-		"elder": "Kuzingatia Wazee",
+		"CATEGORYNAME": "Kuzingatia Huduma",
 		"gender-nc": "Jinsia Yasiyo ya Kufanana",
 		"hiv-comm": "Jumuiya ya VVU",
 		"immigrant-comm": "Jumuiya ya Wahamiaji",
-		"incarcerated": "Jumuiya ya wafungwa",
 		"lgbtq-youth-focus": "LGBTQ+Vijana",
 		"resettled-refugees": "Wakimbizi waliohamishwa",
 		"spanish-speakers": "Spika za Kihispania",
 		"trans-comm": "Jumuiya ya Trans",
 		"trans-fem": "Trans Wanawake/Trans Wanawake",
 		"trans-masc": "Wanaume wa Trans/Trans Kiume",
-		"trans-youth-focus": "Vijana wa Trans",
-		"women": "Kuzingatia Wanawake"
+		"trans-youth-focus": "Vijana wa Trans"
 	},
 	"sys": {
-		"CATEGORYNAME": "System",
-		"incompatible-info": "Taarifa zisizokubaliana"
+		"CATEGORYNAME": "System"
 	},
 	"tpop": {
 		"other": "Idadi Lengwa - Nyingine"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "Shirika la kisheria lisilo la faida"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "Chaguzi za Mtoaji wa Huduma",
 		"case-mananger": "Meneja wa kesi",
+		"CATEGORYNAME": "Chaguzi za Mtoaji wa Huduma",
 		"community-org": "Kujitolea/wafanyakazi katika shirika la jamii",
-		"friend-family": "N/A (Kuangalia kwa niaba ya marafiki/familia)",
-		"govt-agency": "Wakala wa serikali",
-		"grassroots-direct": "Shirika la Huduma ya Moja kwa Moja ya Grasroots",
 		"healthcare": "Mtoaji wa huduma ya afya",
 		"lawyer": "Mwanasheria",
 		"other": "Nyingine (tafadhali taja)",

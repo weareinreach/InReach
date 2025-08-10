@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Cuidado del aborto",
 		"abortion-providers": "Proveedores de aborto",
+		"CATEGORYNAME": "Cuidado del aborto",
 		"financial-assistance": "Asistencia financiera",
 		"lodging-assistance": "Asistencia de alojamiento",
 		"mail-order-services": "Servicios de pedidos por correo",
@@ -9,8 +9,8 @@
 		"travel-assistance": "Asistencia para viajes"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Apoyo comunitario",
 		"advocacy-and-community-organizing": "Defensa y organización comunitaria",
+		"CATEGORYNAME": "Apoyo comunitario",
 		"community-social-groups": "Grupos comunitarios y sociales",
 		"cultural-centers": "Centros culturales",
 		"lgbtq-centers": "Centros LGBTTTI+",
@@ -28,8 +28,8 @@
 		"crisis-support": "Apoyo en momentos de crisis"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Educación y Empleo",
 		"career-counseling": "Orientación profesional",
+		"CATEGORYNAME": "Educación y Empleo",
 		"educational-support-for-lgbtq-youth": "Apoyo educativo a jóvenes LGBTTTI+",
 		"english-classes": "Clases de inglés",
 		"language-classes": "Clases de idiomas",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "Formación y desarrollo profesional"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "Asistencia Financiera",
 		"bail-funds": "Fondo de fianza y bonos",
+		"CATEGORYNAME": "Asistencia Financiera",
 		"healthcare-and-insurance": "Asistencia médica y seguro",
 		"housing-and-utilities": "Vivienda y utilidades",
 		"legal-fees": "Honorarios legales",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "Asistencia de Reasentamiento"
 	},
 	"legal": {
-		"CATEGORYNAME": "Legal",
 		"asylum-application": "Solicitud de asilo",
+		"CATEGORYNAME": "Legal",
 		"citizenship": "Ciudadanía",
 		"crime-and-discrimination": "Delitos y discriminación",
 		"deferred-action-for-childhood-arrivals-daca": "Acción Diferida para les Llegades en la Infancia (DACA, por sus siglas en inglés)",
@@ -110,8 +110,8 @@
 		"dental-care": "Cuidado dental",
 		"fertility-and-family-planning-services": "Servicios de fertilidad y planificación familiar",
 		"hiv-and-sexual-health": "VIH y salud sexual",
-		"medical-info-and-referrals": "Información médica y referencias",
 		"medical-clinics": "Clínicas médicas",
+		"medical-info-and-referrals": "Información médica y referencias",
 		"obgyn-services": "Servicios de ginecología y obstetricia (OBGYN)",
 		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas para la solicitud de asilo",
 		"physical-evaluations-for-refugee-claim": "Evaluaciones físicas para solicitudes de refugio",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "Salud trans para jóvenes"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Salud mental",
 		"bipoc-support-groups": "Grupos de apoyo para personas BIPOC (Negras, Indígenas y Personas de Color)",
+		"CATEGORYNAME": "Salud mental",
 		"family-support-groups": "Grupos de apoyo familiar",
 		"hotlines": "Líneas de acceso",
 		"mental-health-info-referrals": "Información sobre la salud mental y referencias",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "Grupos de apoyo para personas Trans"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Entretenimiento y Actividades",
 		"art-music-literature": "Arte, música y literatura",
 		"camps-and-excursions": "Campamentos y excursiones",
+		"CATEGORYNAME": "Entretenimiento y Actividades",
 		"sports-and-entertainment": "Deportes y entretenimiento"
 	},
 	"trans-focused-services": {

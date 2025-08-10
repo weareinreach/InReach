@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "معلومات إضافية",
 		"at-capacity": "بالسعة القصوى",
+		"CATEGORYNAME": "معلومات إضافية",
 		"geo-near-public-transit": "المواصلات العامة القريبة",
 		"geo-public-transit-description": "النقل العام / اتجاهات محددة",
 		"has-confidentiality-policy": "لديه سياسة سرية",
 		"offers-remote-services": "عن بعد",
-		"private-practice": "تدريب خاص",
-		"religiously-affiliated": "منتسب دينيا",
 		"time-walk-in": "لديها ساعات عمل بدون حجز مسبق",
-		"wheelchair-accessible": "متيسر",
+		"wheelchair-accessible_true": "متيسر",
 		"wheelchair-accessible_false": "لا يمكن الوصول إليها",
-		"wheelchair-accessible_true": "متيسر"
+		"wheelchair-accessible": "متيسر"
 	},
 	"alerts": {
 		"CATEGORYNAME": "التنبيهات",
@@ -19,7 +17,6 @@
 		"warn": "تنبيه التحذير"
 	},
 	"community": {
-		"CATEGORYNAME": "المجتمع",
 		"adults": "يُعرَّف مصطلح \"البالغ\" بأنه 18 سنة أو أكثر",
 		"africa-immigrant": "الفرص التي تخدم البلدان الأفريقية",
 		"african-american": "الفرص التي تخدم مجتمع الأمريكيين من أصل أفريقي",
@@ -31,6 +28,7 @@
 		"bipoc": "الفرص التي تخدم السود والسكان الأصليين والأشخاص الملونين",
 		"bisexual": "الفرص التي تخدم مجتمع ثنائيي الجنس",
 		"black": "الفرص التي تخدم المجتمع الأسود",
+		"CATEGORYNAME": "المجتمع",
 		"citizens": "مواطنو {{country}}",
 		"conversion-therapy-survivors": "الفرص التي تخدم الناجين من العلاج التحويلي",
 		"daca-recipient-seeker": "الفرص التي تخدم الأحلام (مستقبلو DACA)",
@@ -58,25 +56,19 @@
 		"seniors": "'كبار` يعرَّف بأنه 65 سنة أو أكثر",
 		"sex-workers": "الفرص التي تخدم المشتغلين بالجنس",
 		"teens": "\"المراهق\" يعرَّف بأنه يتراوح عمره بين 12 و18 سنة",
-		"trans-youth": "الفرص التي تخدم الشباب العابرين",
-		"trans-youth-caregivers": "الفرص التي تخدم مقدمي الرعاية للشباب العابرين",
 		"transfeminine": "الفرص التي تخدم المجتمع النسائي العابر",
 		"transgender": "الفرص التي تخدم مجتمع المحولين جنسيا (للمجتمعات غير المطابقة أو غير الثنائية، وتستخدم الخصائص غير المطابقة للجنسين أو غير الثنائية)",
 		"transmasculine": "الفرص التي تخدم مجتمع ذكور تراس",
+		"trans-youth": "الفرص التي تخدم الشباب العابرين",
+		"trans-youth-caregivers": "الفرص التي تخدم مقدمي الرعاية للشباب العابرين",
 		"unaccompanied-minors": "الفرص المتاحة لخدمة القصّر غير المصحوبين",
 		"undocumented": "الفرص المتاحة للمهاجرين الذين لا يحملون وثائق رسمية"
 	},
 	"cost": {
 		"CATEGORYNAME": "التكلفة",
-		"cost-accepts-insurance": "تقبل هذه الخدمة التأمين",
-		"cost-accepts-insurance_default": "وتقبل هذه الخدمة التأمين، وتتصل مباشرة بالمنظمة للحصول على مزيد من المعلومات عن التكاليف وخيارات المساعدة المالية وتفاصيل تغطية التأمين.",
-		"cost-accepts-insurance_withUrl": "تقبل هذه الخدمة التأمين. <Link href=\"{{url}}\">انقر هنا لزيارة صفحة المنظمة</Link> لمزيد من المعلومات حول التكلفة وخيارات المساعدة المالية وتفاصيل التغطية التأمينية.",
 		"cost-fees": "يتكبد تكلفة",
-		"cost-free": "مجانا",
 		"cost-financial-assistance-available": "المساعدة المالية المتاحة",
-		"cost-sliding-scale": "التكاليف المحددة على أساس جدول متدرج",
-		"cost-sliding-scale_default": "هذه الخدمة لديها رسوم جدول متدخلات. يتم تعديل المبلغ الذي تدفعه مقابل الخدمات وفقاً لمستوى دخلك. اتصل مباشرة بالمنظمة للحصول على مزيد من المعلومات.",
-		"cost-sliding-scale_withUrl": "This service has sliding scale fees. The amount you pay for services is adjusted according to your income level. <Link href=\"{{url}}\">Click here to visit the organization's page for more information.</Link>"
+		"cost-free": "مجانا"
 	},
 	"crisis-support-community": {
 		"elders": "كبار السن",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "متطلبات التأهيل",
-		"elig-age": "الأهلية للعمر",
 		"elig-age_max": "تحت {{max}}",
 		"elig-age_min": "{{min}} وأقدم",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "الأهلية للعمر",
 		"other-describe": "أخرى (وصف النص المجاني)",
 		"req-medical-insurance": "طلب تأمين طبي",
 		"req-photo-id": "يتطلب معرف صورة",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "التعيين الزمني مطلوب"
 	},
 	"lang": {
-		"CATEGORYNAME": "اللغات",
 		"all-languages-by-interpreter": "جميع اللغات عن طريق المترجم الشفوي",
 		"american-sign-language": "لغة الإشارة الأمريكية",
+		"CATEGORYNAME": "اللغات",
 		"lang-offered": "اللغات المحددة المعروضة"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "قيادة المنظمة",
 		"bipoc-led": "تحت قيادة BIPOC",
 		"black-led": "تحت قيادة السُود",
+		"CATEGORYNAME": "قيادة المنظمة",
 		"immigrant-led": "تحت قيادة المهاجرين",
 		"lgbtq-led": "LGBTQ+ مدفوع",
-		"trans-led": "تحت قيادة المتحولين جنسياً",
-		"women-led": "تحت قيادة المرأة"
+		"trans-led": "تحت قيادة المتحولين جنسياً"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "تعليمات الوصول إلى الخدمة",
 		"accessemail": "تعليمات الوصول - البريد الإلكتروني",
 		"accessfile": "تعليمات الوصول - مَلف",
 		"accesslink": "تعليمات الوصول - رابط",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "تعليمات الوصول - النقل العام",
 		"accesssms": "تعليمات الوصول - الرسائل القصيرة",
 		"accesstext": "تعليمات الوصول - النص",
-		"accesswhatsapp": "تعليمات الوصول - WhatsApp"
+		"accesswhatsapp": "تعليمات الوصول - WhatsApp",
+		"CATEGORYNAME": "تعليمات الوصول إلى الخدمة"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "تركيز الخدمة",
 		"asylum-seekers": "ملتمسو اللجوء",
 		"bipoc-comm": "مجتمع BIPOC",
-		"caregivers": "مجتمع مقدمي الرعاية",
-		"disabled": "مجتمع معطل",
-		"elder": "التركيز على كبار السن",
+		"CATEGORYNAME": "تركيز الخدمة",
 		"gender-nc": "عدم الإشاعة بين الجنسين",
 		"hiv-comm": "مجتمع فيروس نقص المناعة البشرية",
 		"immigrant-comm": "جالية المهاجرين",
-		"incarcerated": "المجتمع المسجون",
 		"lgbtq-youth-focus": "شباب LGBTQ+",
 		"resettled-refugees": "اللاجئين المعاد توطينهم",
 		"spanish-speakers": "المتحدثون الإسبانيون",
 		"trans-comm": "عبر المجتمع",
 		"trans-fem": "النساء العابرات",
 		"trans-masc": "عبر الرجال/الذكور",
-		"trans-youth-focus": "الشباب العابرون",
-		"women": "التركيز على المرأة"
+		"trans-youth-focus": "الشباب العابرون"
 	},
 	"sys": {
-		"CATEGORYNAME": "النظام",
-		"incompatible-info": "معلومات غير متوافقة"
+		"CATEGORYNAME": "النظام"
 	},
 	"tpop": {
 		"other": "السكان المستهدفون - غير ذلك"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "منظمة قانونية غير ربحية"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "خيارات موفر الخدمة",
 		"case-mananger": "مدير الحالة",
+		"CATEGORYNAME": "خيارات موفر الخدمة",
 		"community-org": "متطوعون/موظفون في منظمة مجتمعية",
-		"friend-family": "N/A (النظر نيابة عن الأصدقاء/الأسرة)",
-		"govt-agency": "الوكالة الحكومية",
-		"grassroots-direct": "منظمة الخدمات المباشرة الشعبية",
 		"healthcare": "مقدم الرعاية الصحية",
 		"lawyer": "مُحامي",
 		"other": "أخرى (يرجى التحديد)",

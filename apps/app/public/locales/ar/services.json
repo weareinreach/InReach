@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "رعاية الإجهاض",
 		"abortion-providers": "موفري الإجهاض",
+		"CATEGORYNAME": "رعاية الإجهاض",
 		"financial-assistance": "المساعدة المالية",
 		"lodging-assistance": "مساعدة السكن",
 		"mail-order-services": "خدمات طلب البريد",
@@ -9,8 +9,8 @@
 		"travel-assistance": "المساعدة في السفر"
 	},
 	"community-support": {
-		"CATEGORYNAME": "الدعم المجتمعي",
 		"advocacy-and-community-organizing": "الدعوة وتنظيم المجتمعات المحلية",
+		"CATEGORYNAME": "الدعم المجتمعي",
 		"community-social-groups": "المجموعات المجتمعية والاجتماعية",
 		"cultural-centers": "المراكز الثقافية",
 		"lgbtq-centers": "مراكز LGBTQ",
@@ -28,8 +28,8 @@
 		"crisis-support": "دعم الأزمات"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "التعليم والعمالة",
 		"career-counseling": "المشورة الوظيفية",
+		"CATEGORYNAME": "التعليم والعمالة",
 		"educational-support-for-lgbtq-youth": "الدعم التعليمي لشباب المثليات والمثليات والمثليات والمثليات والمثليات والمثليات جنسياً",
 		"english-classes": "دروس اللغة الإنجليزية",
 		"language-classes": "فصول اللغة",
@@ -38,8 +38,8 @@
 		"training-and-professional-development": "التدريب والتطوير المهني"
 	},
 	"financial-assistance": {
-		"CATEGORYNAME": "المساعدة المالية",
 		"bail-funds": "صناديق الكفالة",
+		"CATEGORYNAME": "المساعدة المالية",
 		"healthcare-and-insurance": "الرعاية الصحية والتأمين",
 		"housing-and-utilities": "الإسكان والمرافق العامة",
 		"legal-fees": "الأتعاب القانونية",
@@ -80,8 +80,8 @@
 		"resettlement-assistance": "المساعدة على إعادة التوطين"
 	},
 	"legal": {
-		"CATEGORYNAME": "قانوني",
 		"asylum-application": "طلب اللجوء",
+		"CATEGORYNAME": "قانوني",
 		"citizenship": "المواطنة",
 		"crime-and-discrimination": "دال - الجريمة والتمييز",
 		"deferred-action-for-childhood-arrivals-daca": "الإجراءات المؤجلة لوصول الأطفال",
@@ -110,8 +110,8 @@
 		"dental-care": "الرعاية الصحية بالأسنان",
 		"fertility-and-family-planning-services": "الخصوبة وخدمات تنظيم الأسرة",
 		"hiv-and-sexual-health": "فيروس نقص المناعة البشرية والصحة الجنسية",
-		"medical-info-and-referrals": "المعلومات الطبية والإحالات",
 		"medical-clinics": "العيادات الطبية",
+		"medical-info-and-referrals": "المعلومات الطبية والإحالات",
 		"obgyn-services": "خدمات OBGYN",
 		"physical-evaluations-for-asylum-claim": "التقييمات المادية لطلب اللجوء",
 		"physical-evaluations-for-refugee-claim": "التقييمات المادية لطلب اللجوء",
@@ -125,8 +125,8 @@
 		"trans-health-youth-care": "الصحة المباشرة - رعاية الشباب"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "الصحة النفسية",
 		"bipoc-support-groups": "مجموعات دعم BIPOC",
+		"CATEGORYNAME": "الصحة النفسية",
 		"family-support-groups": "مجموعات دعم الأسرة",
 		"hotlines": "الخطوط الساخنة",
 		"mental-health-info-referrals": "معلومات الصحة النفسية والإحالات",
@@ -140,9 +140,9 @@
 		"trans-support-groups": "عبر مجموعات الدعم"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "الترفيه والأنشطة",
 		"art-music-literature": "الفن والموسيقى والآداب",
 		"camps-and-excursions": "المخيمات والرحلات",
+		"CATEGORYNAME": "الترفيه والأنشطة",
 		"sports-and-entertainment": "الرياضة والترفيه"
 	},
 	"trans-focused-services": {

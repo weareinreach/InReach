@@ -1,17 +1,15 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Dodatkowe informacje",
 		"at-capacity": "Przy pojemności",
+		"CATEGORYNAME": "Dodatkowe informacje",
 		"geo-near-public-transit": "Blisko transportu publicznego",
 		"geo-public-transit-description": "Tranzyt publiczny/konkretne kierunki",
 		"has-confidentiality-policy": "Ma Politykę Poufności",
 		"offers-remote-services": "Pilot",
-		"private-practice": "Prywatna praktyka",
-		"religiously-affiliated": "Jest religijnie powiązany",
 		"time-walk-in": "Ma godziny Walk-In",
-		"wheelchair-accessible": "Dostępny",
+		"wheelchair-accessible_true": "Dostępny",
 		"wheelchair-accessible_false": "Brak dostępu dla wózków inwalidzkich",
-		"wheelchair-accessible_true": "Dostępny"
+		"wheelchair-accessible": "Dostępny"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Alerty",
@@ -19,7 +17,6 @@
 		"warn": "Ostrzeżenie"
 	},
 	"community": {
-		"CATEGORYNAME": "Społeczność",
 		"adults": "„dorosły” zdefiniowany jako 18 lat lub starszy",
 		"africa-immigrant": "Możliwości, które służą osobom z krajów afrykańskich",
 		"african-american": "Możliwości, które służą społeczności afroamerykańskiej",
@@ -31,6 +28,7 @@
 		"bipoc": "Możliwości, które służą Czarnym, rdzennym mieszkańcom i kolorowym ludziom",
 		"bisexual": "Możliwości, które służą społeczności biseksualnej",
 		"black": "Możliwości, które służą czarnej społeczności",
+		"CATEGORYNAME": "Społeczność",
 		"citizens": "Obywatele {{country}}",
 		"conversion-therapy-survivors": "Możliwości, które służą ocalałym z terapii konwersyjnej",
 		"daca-recipient-seeker": "Możliwości, które służą marzycielom (odbiorcy DACA)",
@@ -58,25 +56,19 @@
 		"seniors": "„senior” zdefiniowany jako 65 lat lub więcej",
 		"sex-workers": "Możliwości, które służą prostytutki",
 		"teens": "„nastolatek” zdefiniowany jako 12-18 lat",
-		"trans-youth": "Możliwości, które służą młodzieży trans",
-		"trans-youth-caregivers": "Możliwości, które służą opiekunom młodzieży trans",
 		"transfeminine": "Możliwości, które służą społeczności transkobiecej",
 		"transgender": "Możliwości, które służą społeczności transpłciowej (w przypadku społeczności niezgodnych lub niebinarnych, użyj właściwości niezgodnych z płcią lub niebinarnych)",
 		"transmasculine": "Możliwości, które służą społeczności Trasmasculine",
+		"trans-youth": "Możliwości, które służą młodzieży trans",
+		"trans-youth-caregivers": "Możliwości, które służą opiekunom młodzieży trans",
 		"unaccompanied-minors": "Możliwości, które służą nieletnim bez opieki",
 		"undocumented": "Szanse, które służą nieudokumentowanym imigrantom"
 	},
 	"cost": {
 		"CATEGORYNAME": "Koszt",
-		"cost-accepts-insurance": "Usługa ta akceptuje ubezpieczenie",
-		"cost-accepts-insurance_default": "Usługa ta akceptuje ubezpieczenie. Aby uzyskać więcej informacji na temat kosztów, opcji pomocy finansowej i szczegółów ubezpieczenia skontaktuj się bezpośrednio z organizacją.",
-		"cost-accepts-insurance_withUrl": "Ta usługa akceptuje ubezpieczenie. <Link href=\"{{url}}\">Kliknij tutaj, aby odwiedzić stronę</Link> , aby uzyskać więcej informacji o kosztach, opcjach pomocy finansowej i szczegółach ubezpieczenia.",
 		"cost-fees": "Kończy się koszt",
-		"cost-free": "Bezpłatnie",
 		"cost-financial-assistance-available": "Dostępna pomoc finansowa",
-		"cost-sliding-scale": "Koszty ustalone w przesuwanej skali",
-		"cost-sliding-scale_default": "Ta usługa ma obniżoną skalę. Kwota którą płacisz za usługi jest dostosowywana w zależności od poziomu dochodów. Aby uzyskać więcej informacji, skontaktuj się bezpośrednio z organizacją.",
-		"cost-sliding-scale_withUrl": "Ta usługa ma obniżoną skalę. Kwota którą płacisz za usługi jest dostosowywana w zależności od poziomu dochodów. <Link href=\"{{url}}\">Kliknij tutaj, aby odwiedzić stronę organizacji po więcej informacji.</Link>"
+		"cost-free": "Bezpłatnie"
 	},
 	"crisis-support-community": {
 		"elders": "Lampy analizujące do kamer telewizyjnych",
@@ -84,10 +76,10 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Wymagania kwalifikacyjne",
-		"elig-age": "Kwalifikowalność do wieku",
 		"elig-age_max": "Pod {{max}}",
 		"elig-age_min": "{{min}} i starsze",
 		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age": "Kwalifikowalność do wieku",
 		"other-describe": "Inne (dowolny opis tekstowy)",
 		"req-medical-insurance": "WYMAGA ubezpieczenia medycznego",
 		"req-photo-id": "WYMAGA dokumentu tożsamości ze zdjęciem",
@@ -98,22 +90,20 @@
 		"time-appointment-required": "Wymagane spotkanie w czasie"
 	},
 	"lang": {
-		"CATEGORYNAME": "Języki",
 		"all-languages-by-interpreter": "Wszystkie języki za pośrednictwem tłumacza",
 		"american-sign-language": "Amerykański język migowy",
+		"CATEGORYNAME": "Języki",
 		"lang-offered": "Określone języki oferowane"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Przywództwo organizacji",
 		"bipoc-led": "BiPOC LED",
 		"black-led": "Czarna dioda LED",
+		"CATEGORYNAME": "Przywództwo organizacji",
 		"immigrant-led": "Prowadzony przez imigrantów",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "Transgender-LED",
-		"women-led": "Zarządzana przez kobiety"
+		"trans-led": "Transgender-LED"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Instrukcje dostępu do usługi",
 		"accessemail": "Instrukcje dostępu - E-mail",
 		"accessfile": "Instrukcje dostępu - Plik",
 		"accesslink": "Instrukcje dostępu - Link",
@@ -122,31 +112,26 @@
 		"accesspublictransit": "Instrukcje dostępu — transport publiczny",
 		"accesssms": "Instrukcje dostępu - SMS",
 		"accesstext": "Instrukcje dostępu - tekst",
-		"accesswhatsapp": "Instrukcje dostępu - WhatsApp"
+		"accesswhatsapp": "Instrukcje dostępu - WhatsApp",
+		"CATEGORYNAME": "Instrukcje dostępu do usługi"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Koncentracja na usługach",
 		"asylum-seekers": "Osoby ubiegające się o azyl",
 		"bipoc-comm": "Społeczność BIPOC",
-		"caregivers": "Społeczność opiekunów",
-		"disabled": "Społeczność osób niepełnosprawnych",
-		"elder": "Koncentruje się na pomocy osobom starszym",
+		"CATEGORYNAME": "Koncentracja na usługach",
 		"gender-nc": "Płeć niezgodna",
 		"hiv-comm": "Społeczność HIV",
 		"immigrant-comm": "Społeczność imigrantów",
-		"incarcerated": "Społeczność osób osadzonych",
 		"lgbtq-youth-focus": "LGBTQ+ Młodzież",
 		"resettled-refugees": "Uchodźcy przesiedleni",
 		"spanish-speakers": "Hiszpańscy mówcy",
 		"trans-comm": "Społeczność Trans",
 		"trans-fem": "Trans Kobiety/Trans Feminine",
 		"trans-masc": "Trans Mężczyźni/Trans Męski",
-		"trans-youth-focus": "Trans Młodzież",
-		"women": "Koncentruje się na pomocy kobietom"
+		"trans-youth-focus": "Trans Młodzież"
 	},
 	"sys": {
-		"CATEGORYNAME": "System",
-		"incompatible-info": "Informacje niezgodne"
+		"CATEGORYNAME": "System"
 	},
 	"tpop": {
 		"other": "Populacja docelowa – inne"
@@ -159,12 +144,9 @@
 		"legal-nonprofit": "Prawna organizacja non-profit"
 	},
 	"userserviceprovider": {
-		"CATEGORYNAME": "Opcje dostawcy usług",
 		"case-mananger": "Psycholog prowadzący",
+		"CATEGORYNAME": "Opcje dostawcy usług",
 		"community-org": "Wolontariusz/pracownicy organizacji społecznej",
-		"friend-family": "Nie dotyczy (Szukam w imieniu znajomych/rodziny)",
-		"govt-agency": "Agencja rządowa",
-		"grassroots-direct": "Oddolna organizacja usług bezpośrednich",
 		"healthcare": "Dostawca opieki zdrowotnej",
 		"lawyer": "Prawnik",
 		"other": "Inne (proszę określić)",
