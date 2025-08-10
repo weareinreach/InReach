@@ -98,10 +98,11 @@ const getAllForOrg = async ({ input }: TRPCHandlerParams<TGetAllForOrgSchema, 'p
 		auditTrailRecords.forEach((record) => {
 			const oldData = record.old as Record<string, JsonValue>
 			const newData = record.new as Record<string, JsonValue>
-			if (oldData && oldData.userId && typeof oldData.userId === 'string') {
+			// Use optional chaining for a more concise check
+			if (typeof oldData?.userId === 'string') {
 				allUserIdsInDiff.add(oldData.userId)
 			}
-			if (newData && newData.userId && typeof newData.userId === 'string') {
+			if (typeof newData?.userId === 'string') {
 				allUserIdsInDiff.add(newData.userId)
 			}
 		})
@@ -140,8 +141,28 @@ const getAllForOrg = async ({ input }: TRPCHandlerParams<TGetAllForOrgSchema, 'p
 			// Add other mappings as needed
 		}
 
-		// 4. Process the raw results to match the desired output format,
-		// including a 'details' object and the table name.
+		// Helper function to generate a human-readable string for a change
+		const getHumanReadableSummary = (
+			key: string,
+			oldValue: JsonValue | undefined,
+			newValue: JsonValue | undefined
+		) => {
+			const label = userFriendlyLabels[key] || key
+			const normalizedOldValue = oldValue === undefined ? null : oldValue
+			const normalizedNewValue = newValue === undefined ? null : newValue
+
+			if (normalizedOldValue === null && normalizedNewValue !== null) {
+				return `${label} was added: ${JSON.stringify(normalizedNewValue)}`
+			} else if (normalizedNewValue === null && normalizedOldValue !== null) {
+				return `${label} was removed (previously ${JSON.stringify(normalizedOldValue)})`
+			} else if (key.includes('geo') || key === 'data') {
+				return `${label} was updated.`
+			} else {
+				return `${label} was changed from "${JSON.stringify(normalizedOldValue)}" to "${JSON.stringify(normalizedNewValue)}".`
+			}
+		}
+
+		// 4. Process the raw results to match the desired output format.
 		const formattedResults = auditTrailRecords.map((record) => {
 			const details: Record<string, string> = {}
 			const summary: string[] = []
@@ -154,9 +175,6 @@ const getAllForOrg = async ({ input }: TRPCHandlerParams<TGetAllForOrgSchema, 'p
 					? (record.new as Record<string, JsonValue>)
 					: {}
 
-			// Combine all unique keys from both old and new data to ensure we catch all changes (additions, updates, deletions)
-			const allKeys = new Set([...Object.keys(oldData), ...Object.keys(newData)])
-
 			// Check if the record is a new creation. If so, provide a simplified message.
 			if (record.operation === 'CREATE') {
 				const recordName =
@@ -164,68 +182,24 @@ const getAllForOrg = async ({ input }: TRPCHandlerParams<TGetAllForOrgSchema, 'p
 				summary.push(`New ${record.table} record was created: "${recordName}"`)
 			} else {
 				// Only include fields that have changed for UPDATE operations
+				const allKeys = new Set([...Object.keys(oldData), ...Object.keys(newData)])
 				allKeys.forEach((key) => {
 					const oldValue = oldData[key]
 					const newValue = newData[key]
-
-					// Normalize undefined and null to be the same for comparison purposes
 					const normalizedOldValue = oldValue === undefined ? null : oldValue
 					const normalizedNewValue = newValue === undefined ? null : newValue
 
-					// Only include fields where the normalized values are different
 					if (normalizedOldValue !== normalizedNewValue) {
-						let displayOldValue: string
-						let displayNewValue: string
+						let displayOldValue = String(normalizedOldValue)
+						let displayNewValue = String(normalizedNewValue)
 
-						// Explicitly convert old value to a string
-						if (normalizedOldValue === null) {
-							displayOldValue = 'null'
-						} else if (typeof normalizedOldValue === 'object') {
-							// Use JSON.stringify for objects to show their content
-							displayOldValue = JSON.stringify(normalizedOldValue)
-						} else {
-							// Use String() for all other primitive types
-							displayOldValue = String(normalizedOldValue)
-						}
-
-						// Explicitly convert new value to a string
-						if (normalizedNewValue === null) {
-							displayNewValue = 'null'
-						} else if (typeof normalizedNewValue === 'object') {
-							// Use JSON.stringify for objects to show their content
-							displayNewValue = JSON.stringify(normalizedNewValue)
-						} else {
-							// Use String() for all other primitive types
-							displayNewValue = String(normalizedNewValue)
-						}
-
-						// If the key is 'userId', use the lookup map to get the user's name
 						if (key === 'userId') {
-							// The display value for userId should be the name if found, otherwise the ID itself
 							displayOldValue = userLookupMap.get(displayOldValue) || displayOldValue
 							displayNewValue = userLookupMap.get(displayNewValue) || displayNewValue
 						}
 
-						// Add to the technical diff object
 						details[key] = `${displayOldValue} → ${displayNewValue}`
-
-						// --- Create the user-friendly string ---
-						const label = userFriendlyLabels[key] || key // Use label or fallback to key
-
-						let humanReadableString = ''
-
-						if (normalizedOldValue === null && normalizedNewValue !== null) {
-							humanReadableString = `${label} was added: ${displayNewValue}`
-						} else if (normalizedNewValue === null && normalizedOldValue !== null) {
-							humanReadableString = `${label} was removed (previously ${displayOldValue})`
-						} else if (key.includes('geo') || key === 'data') {
-							// Special handling for complex, unreadable fields
-							humanReadableString = `${label} was updated.`
-						} else {
-							humanReadableString = `${label} was changed from "${displayOldValue}" to "${displayNewValue}".`
-						}
-
-						summary.push(humanReadableString)
+						summary.push(getHumanReadableSummary(key, oldValue, newValue))
 					}
 				})
 			}
@@ -237,8 +211,9 @@ const getAllForOrg = async ({ input }: TRPCHandlerParams<TGetAllForOrgSchema, 'p
 				operation: record.operation,
 				// The new recordId property, extracted from the 'new' payload
 				recordId: (newData.id as string) || null,
-				details: details,
-				summary: summary, // New human-readable diff field
+				// Use property shorthand
+				details,
+				summary,
 				user: {
 					name: record['user.name'],
 				},
