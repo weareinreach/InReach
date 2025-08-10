@@ -179,6 +179,47 @@ export const InternalNotesDrawer = ({
 		const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0
 		return dateB - dateA
 	})
+
+	// Extracted conditional rendering logic into a separate variable
+	let notesContent
+	if (isNotesLoading) {
+		notesContent = <Text align='center'>Loading notes...</Text>
+	} else if (notesError) {
+		notesContent = (
+			<Text color='red' align='center'>
+				Error loading notes.
+			</Text>
+		)
+	} else if (sortedNotes.length === 0) {
+		notesContent = <Text align='center'>No notes found for this organization.</Text>
+	} else {
+		notesContent = (
+			<div className={classes.scrollableNotes}>
+				<Table striped>
+					<tbody>
+						{sortedNotes.map((note) => (
+							<tr key={note.id}>
+								<td>
+									<div style={{ display: 'flex', flexDirection: 'column' }}>
+										<Text size='sm' weight={500}>
+											{note.user?.name || 'Unknown User'}
+										</Text>
+										<Text size='xs' color='dimmed'>
+											{note.createdAt ? new Date(note.createdAt).toLocaleDateString() : ''}
+										</Text>
+									</div>
+								</td>
+								<td>
+									<Text size='sm'>{note.text}</Text>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</div>
+		)
+	}
+
 	return (
 		<Drawer
 			opened={opened}
@@ -199,41 +240,7 @@ export const InternalNotesDrawer = ({
 					<Text>Organization id: {recordId}</Text>
 				</Stack>
 				<div className={classes.commentsContainer}>
-					<div className={classes.commentsTable}>
-						{isNotesLoading ? (
-							<Text align='center'>Loading notes...</Text>
-						) : sortedNotes.length === 0 ? (
-							<Text align='center'>No notes found for this organization.</Text>
-						) : notesError ? (
-							<Text color='red' align='center'>
-								Error loading notes.
-							</Text>
-						) : (
-							<div className={classes.scrollableNotes}>
-								<Table striped>
-									<tbody>
-										{sortedNotes.map((note) => (
-											<tr key={note.id}>
-												<td>
-													<div style={{ display: 'flex', flexDirection: 'column' }}>
-														<Text size='sm' weight={500}>
-															{note.user?.name || 'Unknown User'}
-														</Text>
-														<Text size='xs' color='dimmed'>
-															{note.createdAt ? new Date(note.createdAt).toLocaleDateString() : ''}
-														</Text>
-													</div>
-												</td>
-												<td>
-													<Text size='sm'>{note.text}</Text>
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</Table>
-							</div>
-						)}
-					</div>
+					<div className={classes.commentsTable}>{notesContent}</div>
 					<div className={classes.commentsForm}>
 						<form
 							onSubmit={form.onSubmit((values) => {

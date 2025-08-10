@@ -105,6 +105,48 @@ export const AuditDrawer = ({
 			</tr>
 		)
 
+	// Use if/else if/else to extract the nested ternary logic
+	let mainContent
+	if (isLoading) {
+		mainContent = <Loader style={{ margin: 'auto', display: 'block' }} />
+	} else if (error) {
+		mainContent = (
+			<Text color='red' style={{ textAlign: 'center' }}>
+				Error loading audit trail data.
+			</Text>
+		)
+	} else {
+		mainContent = (
+			<>
+				<Stack style={{ textAlign: 'center', paddingTop: rem(40) }}>
+					<Title>Activity Log</Title>
+					<Text>{name}</Text>
+					<Text>{recordId}</Text>
+				</Stack>
+				<Group position='right' mb='md'>
+					<Button size='xs' color='green' onClick={toggleAdminDetails}>
+						{showAdminDetails ? 'Hide Admin Details' : 'Show Admin Details'}
+					</Button>
+				</Group>
+				<div className={classes.scrollableTable}>
+					<Table striped style={{ borderCollapse: 'separate', borderSpacing: 0, width: '100%' }}>
+						<thead style={{ background: '#e0e0e0', borderRadius: '10px', overflow: 'hidden' }}>
+							<tr>
+								<th>Time</th>
+								<th>User</th>
+								<th>Table</th>
+								<th>Activity</th>
+								<th>Updated fields</th>
+								{showAdminDetails && <th>Admin details</th>}{' '}
+							</tr>
+						</thead>
+						<tbody>{tableContent}</tbody>
+					</Table>
+				</div>
+			</>
+		)
+	}
+
 	return (
 		<Drawer
 			opened={opened}
@@ -118,44 +160,7 @@ export const AuditDrawer = ({
 				title: classes.drawerTitleWrapper,
 			}}
 		>
-			<div style={{ overflowX: 'auto', marginBottom: rem(32) }}>
-				{isLoading ? (
-					<Loader style={{ margin: 'auto', display: 'block' }} />
-				) : error ? (
-					<Text color='red' style={{ textAlign: 'center' }}>
-						Error loading audit trail data.
-					</Text>
-				) : (
-					<>
-						<Stack style={{ textAlign: 'center', paddingTop: rem(40) }}>
-							<Title>Activity Log</Title>
-							<Text>{name}</Text>
-							<Text>{recordId}</Text>
-						</Stack>
-						<Group position='right' mb='md'>
-							{/* Used the new named function reference */}
-							<Button size='xs' color='green' onClick={toggleAdminDetails}>
-								{showAdminDetails ? 'Hide Admin Details' : 'Show Admin Details'}
-							</Button>
-						</Group>
-						<div className={classes.scrollableTable}>
-							<Table striped style={{ borderCollapse: 'separate', borderSpacing: 0, width: '100%' }}>
-								<thead style={{ background: '#e0e0e0', borderRadius: '10px', overflow: 'hidden' }}>
-									<tr>
-										<th>Time</th>
-										<th>User</th>
-										<th>Table</th>
-										<th>Activity</th>
-										<th>Updated fields</th>
-										{showAdminDetails && <th>Admin details</th>}{' '}
-									</tr>
-								</thead>
-								<tbody>{tableContent}</tbody>
-							</Table>
-						</div>
-					</>
-				)}
-			</div>
+			<div style={{ overflowX: 'auto', marginBottom: rem(32) }}>{mainContent}</div>
 
 			<div style={{ display: 'flex', justifyContent: 'center', marginTop: rem(16) }}>
 				<Pagination total={totalPages} page={page} onChange={setPage} />
