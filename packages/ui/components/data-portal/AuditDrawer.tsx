@@ -48,7 +48,7 @@ export const AuditDrawer = ({
 	const [showAdminDetails, setShowAdminDetails] = useState(false)
 
 	const drawerTitle = useMemo(
-		() => <ModalTitle breadcrumb={{ option: 'close', onClick: onClose }} maxWidth='100%' />,
+		() => <ModalTitle breadcrumb={{ option: 'close', onClick: onClose }} />,
 		[onClose]
 	)
 
