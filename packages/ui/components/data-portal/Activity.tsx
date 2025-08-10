@@ -1,4 +1,13 @@
-import { createStyles, rem, Text } from '@mantine/core'
+import { createStyles, Group, rem, Text } from '@mantine/core'
+
+// Assuming you have a date formatting utility like this
+const formatDate = (date: Date): string => {
+	return date.toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	})
+}
 
 const useMessageBodyStyles = createStyles((theme) => ({
 	textDate: {
@@ -16,6 +25,7 @@ const useMessageBodyStyles = createStyles((theme) => ({
 		gap: rem(16),
 		paddingLeft: rem(20),
 		paddingRight: rem(20),
+		flexWrap: 'wrap',
 	},
 
 	textBlock: {
@@ -23,22 +33,30 @@ const useMessageBodyStyles = createStyles((theme) => ({
 		flexDirection: 'column',
 	},
 }))
-export const Activity = () => {
-	const { classes } = useMessageBodyStyles()
 
+interface ActivityProps {
+	lastUpdated: string | null
+	lastVerified: string | null
+	firstPublished: string | null
+}
+
+export const Activity = ({ lastUpdated, lastVerified, firstPublished }: ActivityProps) => {
+	const { classes } = useMessageBodyStyles()
 	return (
 		<div className={classes.activityBlock}>
 			<div className={classes.textBlock}>
 				<Text className={classes.textStatus}>Last verified</Text>
-				<Text className={classes.textDate}>Coming Soon</Text>
+				<Text className={classes.textDate}>{lastVerified ? formatDate(new Date(lastVerified)) : 'N/A'}</Text>
 			</div>
 			<div className={classes.textBlock}>
 				<Text className={classes.textStatus}>Last updated</Text>
-				<Text className={classes.textDate}>Coming Soon</Text>
+				<Text className={classes.textDate}>{lastUpdated ? formatDate(new Date(lastUpdated)) : 'N/A'}</Text>
 			</div>
 			<div className={classes.textBlock}>
 				<Text className={classes.textStatus}>First published</Text>
-				<Text className={classes.textDate}>Coming Soon</Text>
+				<Text className={classes.textDate}>
+					{firstPublished ? formatDate(new Date(firstPublished)) : 'N/A'}
+				</Text>
 			</div>
 		</div>
 	)

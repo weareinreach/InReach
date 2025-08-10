@@ -12,13 +12,25 @@ const useMessageBodyStyles = createStyles((theme) => ({
 	},
 }))
 
-export const DataToolbar = ({ data }: { data: { id: string; name: string } }) => {
+export const DataToolbar = ({
+	data,
+}: {
+	data: {
+		id: string
+		name: string
+		lastUpdated: string | null
+		lastVerified: string | null
+		firstPublished: string | null
+	}
+}) => {
 	const { classes } = useMessageBodyStyles()
+
+	const { lastUpdated, lastVerified, firstPublished } = data
 
 	return (
 		<>
 			<div className={classes.toolbar}>
-				<Activity />
+				<Activity lastUpdated={lastUpdated} lastVerified={lastVerified} firstPublished={firstPublished} />{' '}
 				<Action data={data} />
 			</div>
 			<div>
