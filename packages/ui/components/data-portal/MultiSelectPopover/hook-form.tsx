@@ -58,7 +58,7 @@ export const MultiSelectPopover = <T extends FieldValues>({
 					className={cx({ [classes.button]: true, [classes.indicateDirty]: indicateWhenDirty })}
 					style={style}
 					w={fullWidth ? '100%' : undefined}
-					data-isDirty={fieldState.isDirty}
+					data-isdirty={fieldState.isDirty}
 				>
 					<Group noWrap position='apart' spacing={16}>
 						<Group noWrap spacing={8}>
