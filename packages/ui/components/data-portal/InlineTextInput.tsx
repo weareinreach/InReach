@@ -25,7 +25,7 @@ const useBaseStyles = createStyles((theme) => ({
 			borderWidth: rem(1),
 			backgroundColor: theme.other.colors.secondary.white,
 		},
-		'&[data-isDirty=true]': {
+		'&[data-isdirty=true]': {
 			backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.6),
 		},
 	},
@@ -63,5 +63,5 @@ type FontSizes = keyof FontStyles
 interface InlineEditProps extends TextInputProps {
 	fontSize?: FontSizes
 	/** Flag if background color should change to indicate that the field was edited */
-	'data-isDirty'?: boolean
+	'data-isdirty'?: boolean
 }

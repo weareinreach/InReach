@@ -20,7 +20,7 @@ const useStyles = createStyles((theme) => ({
 		padding: rem(8),
 		// margin: rem(-8),
 		borderRadius: rem(8),
-		'&[data-isDirty=true]': {
+		'&[data-isdirty=true]': {
 			backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.6),
 		},
 		...theme.fn.hover({ cursor: 'pointer' }),
@@ -102,7 +102,7 @@ export const ServiceSelect = <T extends FieldValues>({
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>
-			<Box onClick={handler.open} className={classes.box} data-isDirty={form.isDirty} {...props} />
+			<Box onClick={handler.open} className={classes.box} data-isdirty={form.isDirty} {...props} />
 		</>
 	)
 }
