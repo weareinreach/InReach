@@ -34,9 +34,15 @@ MapRenderer.displayName = 'GoogleMapRenderer'
 export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
 	const { isEditMode } = useEditMode()
 	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
+
+	// Here is the updated useQuery hook with caching options.
 	const { data, isLoading } = api.location.forGoogleMaps.useQuery(
 		{ locationIds: Array.isArray(locationIds) ? locationIds : [locationIds], isEditMode },
-		{ enabled: mapIsReady }
+		{
+			enabled: mapIsReady,
+			staleTime: 1000 * 60 * 5, // Keep the data fresh for 5 minutes
+			refetchOnWindowFocus: false, // Prevent re-fetching when the window is re-focused
+		}
 	)
 
 	useEffect(() => {
@@ -84,7 +90,7 @@ export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
 
 	return (
 		<Wrapper
-			apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string}
+			apiKey={process.env.NEXT_PUBLIC_Maps_API as string}
 			render={mapRender}
 			libraries={['core', 'maps', 'marker']}
 			id='google-map'
