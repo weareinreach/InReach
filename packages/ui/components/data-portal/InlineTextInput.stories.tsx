@@ -15,7 +15,7 @@ export default {
 			options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'utility1', 'utility2', 'utility3', 'utility4'],
 			control: { type: 'select' },
 		},
-		'data-isDirty': { control: { type: 'boolean' } },
+		'data-isdirty': { control: { type: 'boolean' } },
 	},
 	args: {
 		value: 'Test value',

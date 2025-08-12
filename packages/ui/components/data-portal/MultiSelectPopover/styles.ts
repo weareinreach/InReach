@@ -23,7 +23,7 @@ export const useStyles = createStyles(
 			height: rem(48),
 		},
 		indicateDirty: {
-			'&[data-isDirty=true]': {
+			'&[data-isdirty=true]': {
 				backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.6),
 			},
 		},
