@@ -449,7 +449,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									name='name.text'
 									control={form.control}
 									fontSize='h2'
-									data-isDirty={dirtyFields.name}
+									data-isdirty={dirtyFields.name}
 								/>
 								<InlineTextInput
 									fontSize='utility4'
@@ -457,12 +457,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									label='Description'
 									name='description.text'
 									control={form.control}
-									data-isDirty={dirtyFields.description}
+									data-isdirty={dirtyFields.description}
 									autosize
 								/>
 								<Stack spacing={10}>
 									<Text variant={variants.Text.utility1}>Services</Text>
-									<ServiceSelect name='services' control={form.control} data-isDirty={dirtyFields.services}>
+									<ServiceSelect name='services' control={form.control} data-isdirty={dirtyFields.services}>
 										<Badge.Group>
 											{activeServices.length ? (
 												activeServices.map((activeServiceId) => {

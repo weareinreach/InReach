@@ -37,20 +37,23 @@ export const Action = ({ data }: { data: { id: string; name: string } }) => {
 
 	return (
 		<div className={classes.actionBlock}>
-			{/* Pass a reference to the named functions instead of an inline arrow function */}
 			<Button variant='secondary' size='small' onClick={onAuditOpen}>
 				View activity log
 			</Button>
 			<Button variant='secondary' size='small' onClick={onInternalOpen}>
 				View internal notes
 			</Button>
-			<AuditDrawer opened={auditOpen} onClose={onAuditClose} recordId={data.id} name={data.name} />
-			<InternalNotesDrawer
-				opened={internalOpen}
-				onClose={onInternalClose}
-				recordId={data.id}
-				name={data.name}
-			/>
+			{auditOpen && (
+				<AuditDrawer opened={auditOpen} onClose={onAuditClose} recordId={data.id} name={data.name} />
+			)}
+			{internalOpen && (
+				<InternalNotesDrawer
+					opened={internalOpen}
+					onClose={onInternalClose}
+					recordId={data.id}
+					name={data.name}
+				/>
+			)}
 		</div>
 	)
 }
