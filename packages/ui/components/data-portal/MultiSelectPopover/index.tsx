@@ -20,26 +20,25 @@ import { useStyles } from './styles'
 export const MultiSelectPopover = ({
 	data,
 	label,
-	value,
+	value = [],
 	style,
 	labelClassName,
 	onChange,
 	fullWidth,
 }: MultiSelectPopoverProps) => {
 	const [opened, menuHandler] = useDisclosure()
-	const initialItems = useMemo(
-		() => data?.map((item) => ({ ...item, checked: value?.includes(item.value) ?? false })) ?? [],
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[data]
+	const [items, itemHandlers] = useListState(
+		data?.map((item) => ({ ...item, checked: value?.includes(item.value) ?? false })) ?? []
 	)
 
-	const [items, itemHandlers] = useListState(initialItems)
 	useEffect(() => {
-		if (items.length === 0 && initialItems.length !== 0) {
-			itemHandlers.setState(initialItems)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [initialItems])
+		const newItems =
+			data?.map((item) => ({
+				...item,
+				checked: value?.includes(item.value) ?? false,
+			})) ?? []
+		itemHandlers.setState(newItems)
+	}, [data, value, itemHandlers])
 
 	const selected = items.filter(({ checked }) => checked).length
 

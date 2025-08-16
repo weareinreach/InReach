@@ -171,7 +171,7 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 					name='name'
 					control={form.control}
 					fontSize='h2'
-					data-isDirty={form.formState.dirtyFields['name']}
+					data-isdirty={form.formState.dirtyFields['name']}
 				/>
 				<Group noWrap spacing={8}>
 					{!location && (
@@ -196,7 +196,7 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 							name='description'
 							control={form.control}
 							autosize
-							data-isDirty={form.formState.dirtyFields['description']}
+							data-isdirty={form.formState.dirtyFields['description']}
 						/>
 						<BadgeEdit orgId={data.id} badgeType='service-focus' component='a'>
 							<Badge.Group>{focusedCommBadges}</Badge.Group>
