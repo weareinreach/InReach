@@ -277,7 +277,9 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 			orgSlug: '',
 			orgWebsite: '',
 			orgAddress: {},
+			serviceCategories: [],
 		})
+		setSearchLocation('')
 		modalHandler.close()
 	}, [form, modalHandler])
 
