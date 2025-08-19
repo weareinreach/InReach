@@ -8,7 +8,7 @@ const createNewSuggestion = async ({
 	input,
 }: TRPCHandlerParams<TCreateNewSuggestionSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
-	const { countryId, orgName, orgSlug, communityFocus, orgAddress, orgWebsite } = input
+	const { countryId, orgName, orgSlug, communityFocus, orgAddress, orgWebsite, serviceCategories } = input
 
 	// Use a transaction to ensure all database operations are atomic.
 	// If any operation fails, the entire transaction is rolled back.
@@ -93,6 +93,99 @@ const createNewSuggestion = async ({
 				})
 			)
 			createOperations.push(...communityCreates)
+		}
+
+		// C. Handle the complex OrgService creation, which now depends on a location.
+		// Services are only created if a location is also created.
+		if (serviceCategories && serviceCategories.length > 0 && newOrgLocation) {
+			console.log('Service categories and location exist. Mapping service creation promises.')
+			console.log('Input serviceCategories:', serviceCategories)
+
+			// *** THE FIX: Two-step query to handle the join table correctly. ***
+			// Step 1: Query the ServiceTagToCategory join table to get the serviceTagIds.
+			const serviceTagsToCategory = await tx.serviceTagToCategory.findMany({
+				where: {
+					categoryId: { in: serviceCategories },
+				},
+				select: {
+					serviceTagId: true,
+				},
+			})
+
+			// Step 2: Use the IDs from the first query to get the full ServiceTag records.
+			const serviceTagIds = serviceTagsToCategory.map((item) => item.serviceTagId)
+			const serviceTags = await tx.serviceTag.findMany({
+				where: {
+					id: { in: serviceTagIds },
+				},
+				select: {
+					id: true,
+					name: true,
+				},
+			})
+
+			console.log('Service tags fetched:', serviceTags)
+
+			// Use a map to create a new array of promises
+			const servicePromises = serviceTags.map(async (serviceTag) => {
+				const osvcId = generateId('orgService')
+				const freeTextKey = `${organizationId}.${osvcId}.name`
+
+				// Create the TranslationKey and FreeText records first
+				const newTranslationKey = await tx.translationKey.create({
+					data: {
+						key: freeTextKey,
+						ns: 'org-data',
+						text: serviceTag.name,
+					},
+				})
+
+				const newFreeText = await tx.freeText.create({
+					data: {
+						id: generateId('freeText'),
+						key: newTranslationKey.key,
+						ns: newTranslationKey.ns,
+					},
+				})
+
+				// Create the OrgService record, connecting it to the FreeText and the new location.
+				const createdService = await tx.orgService.create({
+					data: {
+						id: osvcId,
+						organizationId: organizationId,
+						serviceNameId: newFreeText.id,
+						// Use nested 'create' to properly link to the join tables for the many-to-many relationships
+						services: {
+							create: {
+								tagId: serviceTag.id,
+							},
+						},
+						locations: {
+							create: {
+								location: {
+									connect: {
+										id: newOrgLocation.id,
+									},
+								},
+							},
+						},
+					},
+				})
+				console.log('OrgService created with ID:', createdService.id)
+				return createdService
+			})
+
+			// Explicitly await the service creation promises and log the result
+			const createdServices = await Promise.all(servicePromises)
+			console.log(
+				'Successfully created the following OrgService records:',
+				createdServices.map((s) => s.id)
+			)
+
+			// Add the created services to the main operations array
+			createOperations.push(...createdServices)
+		} else {
+			console.log('No services created. Check if categories were selected and a location was provided.')
 		}
 
 		// E. Execute all other create operations in parallel for efficiency.

@@ -11,7 +11,7 @@ export const SuggestionSchema = z.object({
 	countryId: nonEmptyString,
 	orgName: nonEmptyString,
 	orgSlug: nonEmptyString,
-	orgWebsite: nonEmptyStringOpt,
+	orgWebsite: z.union([z.literal(''), z.string().trim().url('Invalid URL format')]).optional(),
 	orgAddress: z
 		.object({
 			street1: z.string(),
