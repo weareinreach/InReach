@@ -22,7 +22,7 @@
 		"org-website": "Organization website",
 		"placeholder-address": "Enter address...",
 		"placeholder-name": "Enter organization name...",
-		"placeholder-website": "Enter URL...",
+		"placeholder-website": "Enter URL, including http:// or https://...",
 		"service-types": "What type(s) of service(s) does this organization provide?"
 	},
 	"modal": {
