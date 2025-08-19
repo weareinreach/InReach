@@ -38,7 +38,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { type SuggestionForm, SuggestionFormProvider, useForm } from './context'
-import { Communities, ServiceTypes } from './modals'
+import { Communities } from './modals'
 
 const useLocationStyles = createStyles((theme) => ({
 	autocompleteWrapper: {
@@ -277,7 +277,9 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 			orgSlug: '',
 			orgWebsite: '',
 			orgAddress: {},
+			serviceCategories: [],
 		})
+		setSearchLocation('')
 		modalHandler.close()
 	}, [form, modalHandler])
 
@@ -337,7 +339,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							value={searchLocation}
 							onChange={setSearchLocation}
 						/>
-						<ServiceTypes disabled={!countrySelected} serviceTypes={formOptions?.serviceTypes ?? []} />
 						<Communities disabled={!countrySelected} communities={formOptions?.communities ?? []} />
 						<Divider />
 						<Stack spacing={16} align='center'>
