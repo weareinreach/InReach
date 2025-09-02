@@ -430,11 +430,11 @@ model Organization {
 
   deleted        Boolean   @default(false)
   published      Boolean   @default(false)
-  crisisResource Boolean?
+  crisisResource Boolean? //If the CrisisResource value is true it will appear on the static international page. The order is determined by the sort value, starting with 1.
   lastVerified   DateTime?
 
   // For International Crisis Support resources
-  crisisResourceSort Int? @unique
+  crisisResourceSort Int? @unique //used to sort the Orgs with crisisResource set to 1
 
   // Outside API connections
   outsideApi OutsideAPI[]
@@ -818,7 +818,7 @@ model OrgService {
   description   FreeText?             @relation("OrgServiceDescription", fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?               @unique
 
-  crisisSupportOnly Boolean?
+  crisisSupportOnly Boolean? //when set to true will make the associated Organization appear in the static search results page when there are no resources for a search within the US.
 
   // attachments
   organization   Organization?        @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1108,7 +1108,7 @@ model ServiceCategory {
   primaryServices   ServiceTag[]
   services          ServiceTagToCategory[]
   defaultAttributes ServiceCategoryDefaultAttribute[]
-  crisisSupportOnly Boolean?
+  crisisSupportOnly Boolean? //when set to true will make the associated Organization appear in the static search results page when there are no resources for a search within the US.
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -1137,7 +1137,7 @@ model ServiceTag {
   primaryCategoryId String
   categories        ServiceTagToCategory[]
 
-  crisisSupportOnly Boolean?
+  crisisSupportOnly Boolean? //when set to true will make the associated Organization appear in the static search results page when there are no resources for a search within the US.
 
   children ServiceTagNesting[] @relation("serviceParentToChild")
   parents  ServiceTagNesting[] @relation("serviceChildToParent")
