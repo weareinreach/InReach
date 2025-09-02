@@ -43,7 +43,7 @@
 		"crud-object-diff": "2.3.6",
 		"escape-string-regexp": "5.0.0",
 		"geolib": "3.3.4",
-		"json-schema-to-zod": "2.0.14",
+		"json-schema-to-zod": "2.6.1",
 		"just-compact": "3.2.0",
 		"just-compare": "2.3.0",
 		"just-filter-object": "3.2.0",
