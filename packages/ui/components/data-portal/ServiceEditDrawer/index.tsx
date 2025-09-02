@@ -10,12 +10,13 @@ import {
 	Stack,
 	Text,
 	Title,
+	Tooltip,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { compareArrayVals } from 'crud-object-diff'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useCallback, useEffect, useMemo } from 'react'
+import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, Textarea, TextInput } from 'react-hook-form-mantine'
 import invariant from 'tiny-invariant'
@@ -53,12 +54,13 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		const serviceId = useMemo(() => passedServiceId ?? generateId('orgService'), [passedServiceId])
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
+		const [hasAttributeChanges, setHasAttributeChanges] = useState(false)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
 		const apiUtils = api.useUtils()
-		// #region Get existing data/populate form
+
 		const { data, error, isPlaceholderData } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
 			enabled: !createNew,
@@ -103,16 +105,10 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 			services: form.formState.dirtyFields.services ?? false,
 		}
 
-		// #endregion
-
-		// #region Get all available service options & filter selected
 		const { data: allServices } = api.service.getOptions.useQuery(undefined, { refetchOnWindowFocus: false })
 
 		const activeServices = form.watch('services') ?? []
 
-		// #endregion
-
-		// #region Get service area options
 		const { data: geoMap } = api.fieldOpt.countryGovDistMap.useQuery(undefined, {
 			refetchOnWindowFocus: false,
 		})
@@ -134,33 +130,42 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 						modalHandler.close()
 					}, 500)
 				}
+				form.reset(form.getValues())
+				setHasAttributeChanges(false)
 			},
 		})
 
-		const handleSave = useCallback(() => {
-			const { name, description, ...baseValues } = form.getValues()
-			const serviceChanges = compareArrayVals<string>([data?.services ?? [], baseValues.services])
+		const hasFormChanges = form.formState.isDirty || hasAttributeChanges
 
-			serviceUpsert.mutate({
-				...baseValues,
-				services: serviceChanges,
-				name: name?.text,
-				description: description?.text,
-				attachToLocation,
-			})
-		}, [attachToLocation, data?.services, form, serviceUpsert])
+		const handleSave = useCallback(
+			(values: TFormSchema) => {
+				const { name, description, ...baseValues } = values
+				const serviceChanges = compareArrayVals<string>([data?.services ?? [], baseValues.services])
+
+				serviceUpsert.mutate({
+					...baseValues,
+					services: serviceChanges,
+					name: name?.text,
+					description: description?.text,
+					attachToLocation,
+				})
+			},
+			[attachToLocation, data?.services, serviceUpsert]
+		)
+
 		const handleCloseAndDiscard = useCallback(() => {
 			form.reset()
+			setHasAttributeChanges(false)
 			drawerHandler.close()
 			modalHandler.close()
 		}, [drawerHandler, form, modalHandler])
 		const handleClose = useCallback(() => {
-			if (form.formState.isDirty) {
+			if (hasFormChanges) {
 				return modalHandler.open()
 			} else {
 				return drawerHandler.close()
 			}
-		}, [form, drawerHandler, modalHandler])
+		}, [hasFormChanges, drawerHandler, modalHandler])
 
 		const serviceAreas = useMemo(() => {
 			const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
@@ -253,10 +258,10 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 			variants.Text.utility4,
 		])
 
-		// #endregion
 		const coverageModalSuccessHandler = useCallback(() => {
 			apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
 			apiUtils.service.forServiceModal.invalidate(serviceId)
+			setHasAttributeChanges(true)
 		}, [apiUtils, serviceId])
 		if (!data && !createNew) {
 			return null
@@ -313,7 +318,6 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 						>
 							Add new service area
 						</CoverageArea>
-						{/* {Boolean(geoMap?.size) && } */}
 					</Stack>
 					<Section.Divider title={t('service.get-help')}>
 						{hasContactInfo(getHelp) && (
@@ -420,21 +424,26 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 							<Group position='apart' w='100%'>
 								<Breadcrumb option='close' onClick={handleClose} />
 								<Group>
-									<AttributeModal
-										component={Button}
-										variant={variants.Button.secondaryLg}
-										leftIcon={<Icon icon='carbon:add-filled' />}
-										parentRecord={{ serviceId }}
-										attachesTo={['SERVICE']}
-										disabled={!data && isNew}
-									>
-										Add Attribute
-									</AttributeModal>
+									<Tooltip label='Must save other changes first' disabled={!hasFormChanges} withArrow>
+										<Box style={{ display: 'inline-block' }}>
+											<AttributeModal
+												component={Button}
+												variant={variants.Button.secondaryLg}
+												leftIcon={<Icon icon='carbon:add-filled' />}
+												parentRecord={{ serviceId }}
+												attachesTo={['SERVICE']}
+												disabled={hasFormChanges || (!data && isNew)}
+											>
+												Add Attribute
+											</AttributeModal>
+										</Box>
+									</Tooltip>
 									<Button
 										variant={variants.Button.primaryLg}
 										leftIcon={<Icon icon='carbon:save' />}
 										loading={serviceUpsert.isLoading}
-										onClick={handleSave}
+										onClick={form.handleSubmit(handleSave)}
+										disabled={!hasFormChanges}
 									>
 										Save
 									</Button>
@@ -493,7 +502,8 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 										variant='primary-icon'
 										leftIcon={<Icon icon='carbon:save' />}
 										loading={serviceUpsert.isLoading}
-										onClick={handleSave}
+										onClick={form.handleSubmit(handleSave)}
+										disabled={!hasFormChanges}
 									>
 										Save
 									</Button>
