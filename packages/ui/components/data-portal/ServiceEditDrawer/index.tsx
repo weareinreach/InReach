@@ -137,21 +137,19 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 
 		const hasFormChanges = form.formState.isDirty || hasAttributeChanges
 
-		const handleSave = useCallback(
-			(values: TFormSchema) => {
-				const { name, description, ...baseValues } = values
-				const serviceChanges = compareArrayVals<string>([data?.services ?? [], baseValues.services])
+		// The handleSave function is reverted to its correct form
+		const handleSave = useCallback(() => {
+			const { name, description, ...baseValues } = form.getValues()
+			const serviceChanges = compareArrayVals<string>([data?.services ?? [], baseValues.services])
 
-				serviceUpsert.mutate({
-					...baseValues,
-					services: serviceChanges,
-					name: name?.text,
-					description: description?.text,
-					attachToLocation,
-				})
-			},
-			[attachToLocation, data?.services, serviceUpsert]
-		)
+			serviceUpsert.mutate({
+				...baseValues,
+				services: serviceChanges,
+				name: name?.text,
+				description: description?.text,
+				attachToLocation,
+			})
+		}, [attachToLocation, data?.services, form, serviceUpsert])
 
 		const handleCloseAndDiscard = useCallback(() => {
 			form.reset()
@@ -442,7 +440,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 										variant={variants.Button.primaryLg}
 										leftIcon={<Icon icon='carbon:save' />}
 										loading={serviceUpsert.isLoading}
-										onClick={form.handleSubmit(handleSave)}
+										onClick={handleSave}
 										disabled={!hasFormChanges}
 									>
 										Save
@@ -502,7 +500,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 										variant='primary-icon'
 										leftIcon={<Icon icon='carbon:save' />}
 										loading={serviceUpsert.isLoading}
-										onClick={form.handleSubmit(handleSave)}
+										onClick={handleSave}
 										disabled={!hasFormChanges}
 									>
 										Save
