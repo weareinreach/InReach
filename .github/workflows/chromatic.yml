@@ -38,7 +38,7 @@ jobs:
         with:
           run_install: false
       - name: Install Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -50,7 +50,7 @@ jobs:
 
       # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
-        uses: chromaui/action@58d9ffb36c90c97a02d061544ecc849cc4a242a9 # v13
+        uses: chromaui/action@8c981a1b5ed6804b29058a5a68ea818a4c954d16 # v13
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
