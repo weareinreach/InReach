@@ -85,8 +85,8 @@ const OutsideServiceArea = () => {
 	}, [router.isReady, router.isFallback, loading])
 
 	const { data } = api.organization.getIntlCrisis.useQuery(
-		{ cca2: 'AU' },
-		{ enabled: notBlank('AU'), onSuccess: () => setLoading(false) }
+		{ cca2: 'ZZ' },
+		{ enabled: notBlank('ZZ'), onSuccess: () => setLoading(false) }
 	)
 	const { t } = useTranslation(['services', 'common', 'attribute'])
 
@@ -145,7 +145,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 	const ssg = await trpcServerClient({ session: null })
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['services', 'common', 'attribute']),
-		ssg.organization.getIntlCrisis.prefetch({ cca2: 'AU' }),
+		ssg.organization.getIntlCrisis.prefetch({ cca2: 'ZZ' }),
 	])
 
 	const props = {

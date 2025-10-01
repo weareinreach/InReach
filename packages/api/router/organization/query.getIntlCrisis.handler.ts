@@ -12,9 +12,25 @@ const isSuperJSON = (input: unknown): input is SuperJSONResult =>
 const AccessInstructionSchema = z.object({ access_type: z.string(), access_value: z.string() })
 
 const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisSchema>) => {
+	let countryFilter
+	if (input.cca2 === 'ZZ' || !input.cca2) {
+		// If the country code is 'ZZ' or not specified, filter for international resources
+		countryFilter = { country: { cca2: { notIn: ['US', 'CA', 'MX'] } } }
+	} else {
+		// Otherwise, filter for the specified country
+		countryFilter = { country: { cca2: input.cca2 } }
+	}
+
+	console.log(countryFilter)
+
 	const orgs = await prisma.organization.findMany({
 		where: {
-			serviceAreas: { active: true, countries: { some: { country: { cca2: input.cca2 } } } },
+			serviceAreas: {
+				active: true,
+				countries: {
+					some: countryFilter,
+				},
+			},
 			crisisResource: true,
 			published: true,
 			deleted: false,
@@ -56,6 +72,14 @@ const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisSchema>)
 		orderBy: {
 			crisisResourceSort: 'asc',
 		},
+	})
+
+	// Log the number of organizations found
+	console.log(`Prisma query found ${orgs.length} organizations.`)
+
+	// Log the names of each organization
+	orgs.forEach((org, index) => {
+		console.log(`${index + 1}: ${org.name}`)
 	})
 
 	const formattedData = orgs.map(({ id, name, description, attributes, services }) => {
