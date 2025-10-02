@@ -22,7 +22,7 @@
 		"org-website": "组织网站",
 		"placeholder-address": "输入地址...",
 		"placeholder-name": "输入组织名称...",
-		"placeholder-website": "输入网址...",
+		"placeholder-website": "输入网址, 包括 http:// 或 https://…",
 		"service-types": "该组织提供什么类型的服务？"
 	},
 	"modal": {
