@@ -10,7 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizaciones",
-		"tab-users": "Usuarios",
+		"tab-users": "Usuaries",
 		"tab-downloads": "Descargas"
 	},
 	"agree-disclaimer": "Al hacer clic en \"{{action}}\" aceptas la <link1>Política de Privacidad</link1> y <link2>Términos de Uso</link2> de InReach.",
@@ -437,7 +437,7 @@
 		"data-portal": "Página principal del portal de datos",
 		"edit-page": "Editar esta página",
 		"user-options": "Opciones de usuario",
-		"user-management": "Gestión de usuario"
+		"user-management": "Gestión de usuaries"
 	},
 	"verify-account": {
 		"verified": "¡Cuenta Verificada!",
