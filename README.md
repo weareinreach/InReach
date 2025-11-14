@@ -39,6 +39,7 @@
   - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Usage](#usage)
+- [Integrations](#integrations)
 - [Roadmap](#roadmap)
 - [Support](#support)
 - [Project assistance](#project-assistance)
@@ -145,6 +146,27 @@ pnpm dev:ui   # Starts Storybook for UI component development
 Next.js based projects will be available at `http://localhost:3000`
 
 Storybook will be available at `http://localhost:6006`
+
+## Integrations
+### Crowdin
+InReach integrates with **Crowdin** to manage multilingual translations for both **common UI content** and **dynamic org-data**.
+
+- **Common translations** (`common`, `landingPage`, `services`) are static JSON files. Updates are made via PR merges after Crowdin export.
+- **Org-data translations** (`orgn_*` namespaces) are dynamic and always live. They are fetched via the **OTA (Over-The-Air) system**, ensuring the latest translations are immediately available in the app.
+
+**OTA Flow:**
+1. Crowdin exports translations for both common and database-backed namespaces.
+2. OTA generates a manifest file (`manifest.json`) that tracks the latest version of each namespace.
+3. The app calls the **Edge API** endpoint `/api/i18n/load` with the requested language (`lng`) and namespaces (`ns`).
+4. The loader fetches translations from:
+   - Redis cache (fastest)
+   - File-based JSON for common namespaces
+   - DB-backed keys for org-data namespaces
+5. Updated translations are stored in Redis for subsequent requests.
+6. Org-data translations appear live in the app immediately, without requiring a PR merge.
+
+- Org-data translations (orgn_*) are live via OTA.
+- Common translations require a PR merge to update dev/main.
 
 ## Roadmap
 
