@@ -168,6 +168,48 @@ InReach integrates with **Crowdin** to manage multilingual translations for both
 - Org-data translations (orgn_*) are live via OTA.
 - Common translations require a PR merge to update dev/main.
 
+## Crowdin Integration - Code Overview
+
+The Crowdin integration in InReach involves a set of packages and files that handle fetching translations from Crowdin, caching them, and serving them to the app. Below is a structured list of the key code files controlling this integration.
+
+---
+
+### 1. Crowdin Client Package (`@weareinreach/crowdin`)
+
+| File | Purpose |
+|------|---------|
+| `ota/index.ts` | Fetches OTA manifests from Crowdin and downloads translation files or keys. |
+| `ota/edge.ts` | Provides edge-compatible functions for OTA, suitable for Next.js Edge runtime. |
+| `cache/index.ts` | Handles Redis caching of translations to reduce repeated network calls. |
+| `api/index.ts` | REST API wrapper for Crowdin interactions (if needed). |
+
+---
+
+### 2. App Layer (`@weareinreach/app`)
+
+| File | Purpose |
+|------|---------|
+| `src/pages/api/i18n/load.ts` | Next.js API Edge route that serves translation data to the app. It reads from Redis cache and falls back to OTA for missing keys. |
+
+---
+
+### 3. DB / Static Migration Layer (`@weareinreach/db`)
+
+| File | Purpose |
+|------|---------|
+| `prisma/data-migrations/*` | Static migration jobs that run once to update translation keys or other data in the database. |
+| `prisma/dataMigrationRunner.ts` | Runner that executes all pending migration jobs against the Prisma database. |
+
+---
+
+### Summary of Flow
+
+1. **Crowdin** produces translation files and an OTA manifest.  
+2. **Crowdin Client (`ota`)** downloads translations and keys, using Redis cache to minimize network calls.  
+3. **App (`i18n/load.ts`)** fetches translations for requested languages and namespaces, reading from cache or OTA as needed.  
+4. **Database (`data-migrations`)** is updated only for static migration jobs via `dataMigrationRunner.ts`. OTA updates for org-data happen dynamically at runtime; static translations are applied once via migrations.  
+
+
 ## Roadmap
 
 See the [open issues](https://github.com/weareinreach/inreach/issues) for a list of proposed features (and known issues).
