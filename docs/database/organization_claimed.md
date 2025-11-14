@@ -24,7 +24,7 @@ This document explains how the **claimed status** of an organization is determin
 ## Claimed Logic
 
 - **Definition:** An organization is claimed if there is at least one authorized `OrganizationPermission`
-- **Implementation:** In the TRPC query `forOrgPageEdits`:
+- **Implementation:** In the TRPC query `forOrgPageEdits`, `forOrgPage`, `forLocationPageEdits`:
   - `isClaimed: Boolean(allowedEditors.length)`
   - `allowedEditors` comes from:
     - `allowedEditors: { where: { authorized: true }, select: { userId: true } }`
@@ -51,3 +51,24 @@ Organization
 │    └─ authorized = true → contributes to isClaimed  
 └─ associatedUsers (UserToOrganization)  
      └─ currently ignored
+
+
+## query to find claimed orgs and the user with permission
+```
+SELECT
+    o.id AS organization_id,
+    o.name AS organization_name,
+    u.id AS user_id,
+    u.name AS user_name,
+	u.email AS user_email,
+    p.name AS permission_name
+FROM public."Organization" o
+JOIN public."OrganizationPermission" op
+    ON op."organizationId" = o.id
+    AND op.authorized = true
+JOIN public."User" u
+    ON u.id = op."userId"
+JOIN public."Permission" p
+    ON p.id = op."permissionId"
+ORDER BY o.name, u.name;
+```
