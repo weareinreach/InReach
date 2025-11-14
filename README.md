@@ -207,8 +207,16 @@ The Crowdin integration in InReach involves a set of packages and files that han
 1. **Crowdin** produces translation files and an OTA manifest.  
 2. **Crowdin Client (`ota`)** downloads translations and keys, using Redis cache to minimize network calls.  
 3. **App (`i18n/load.ts`)** fetches translations for requested languages and namespaces, reading from cache or OTA as needed.  
-4. **Database (`data-migrations`)** is updated only for static migration jobs via `dataMigrationRunner.ts`. OTA updates for org-data happen dynamically at runtime; static translations are applied once via migrations.  
+4. **Database (`data-migrations`)** is updated only for static migration jobs via `dataMigrationRunner.ts`. OTA updates for org-data happen dynamically at runtime; static translations are applied once via migrations.
 
+### Crowdin Costs:
+**Crowdin Usage Overview (from Billing info)**
+- Managers: InReach has 10 users with the ability to manage translations. The plan allows up to 1,000,000 managers, before hitting a limit. 
+- Words: Inreach has used 28,188,094 words of a 100,000,000-word allowance. Crowdin tracks all words in the project, including source strings and translations.
+
+**Implications:**
+- InReach is using the open-source plan, which has very high limits for managers and words.
+- Crowdin doesn’t charge based on how the app fetches translations (OTA or PRs). They charge based on words in the translation project and the number of managers.
 
 ## Roadmap
 
