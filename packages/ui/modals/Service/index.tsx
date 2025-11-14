@@ -266,14 +266,19 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 		)
 	}, [misc, miscWithIcons, t])
 
-	const publicTransitSection = useMemo(
-		() => (
+	const publicTransitSection = useMemo(() => {
+		if (!publicTransit?.length) {
+			return null
+		}
+
+		return (
 			<Section.Divider title={t('service.transit-directions')}>
-				{publicTransit?.map(({ id, children }) => <ModalText key={id}>{children}</ModalText>)}{' '}
+				{publicTransit.map(({ id, children }) => (
+					<ModalText key={id}>{children}</ModalText>
+				))}
 			</Section.Divider>
-		),
-		[publicTransit, t]
-	)
+		)
+	}, [publicTransit, t])
 
 	const modalLaunchPoint = useMemo(() => {
 		if (data && status === 'success') {
