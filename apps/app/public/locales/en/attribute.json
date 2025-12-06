@@ -62,9 +62,11 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Cost",
+		"cost-accepts-insurance": "This service accepts insurance",
 		"cost-fees": "Incurs a cost",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "Free of cost"
+		"cost-free": "Free of cost",
+		"cost-sliding-scale": "Costs determined on a sliding scale"
 	},
 	"crisis-support-community": { "elders": "Elders", "general-lgbtq": "General LGBTQ+" },
 	"eligibility": {
@@ -94,7 +96,8 @@
 		"CATEGORYNAME": "Organization Leadership",
 		"immigrant-led": "Immigrant-led",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "Transgender-led"
+		"trans-led": "Transgender-led",
+		"women-led": "Women-led"
 	},
 	"serviceaccess": {
 		"accessemail": "Access Instructions - Email",
