@@ -13,6 +13,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { type TFunction, useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
 import {
@@ -38,11 +39,40 @@ const supplementDefaults = {
 } as const
 type SupplementFieldsNeeded = { [K in keyof typeof supplementDefaults]: boolean }
 
-const getDynamicSchema = (t: TFunction, dataSchemaName?: string) => {
+const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: string) => {
 	if (dataSchemaName && isAttributeSupplementSchema(dataSchemaName)) {
-		const dynamicSchema = formSchema.extend({
-			data: attributeSupplementSchema[dataSchemaName],
-		})
+		let dataSchema: z.ZodTypeAny = attributeSupplementSchema[dataSchemaName]
+
+		if (dataSchemaName === 'numMinMaxOrRange') {
+			// Age eligibility requires at least a min or a max value.
+			if (attributeKey === 'eligibility.elig-age') {
+				dataSchema = z.preprocess(
+					// If data is undefined (due to cleanup or initialization), provide an empty object for validation.
+					(arg) => arg ?? {},
+					z
+						.object({
+							min: z.number().optional(),
+							max: z.number().optional(),
+						})
+						.superRefine((data, ctx) => {
+							if (data.min === undefined && data.max === undefined) {
+								ctx.addIssue({
+									code: z.ZodIssueCode.custom,
+									path: ['min'],
+									message: t('eligibility.elig-age_error'),
+								})
+							}
+						})
+				)
+			} else {
+				// Other numMinMaxOrRange (like cost) are fully optional.
+				dataSchema = z.union([
+					z.object({ min: z.number().optional(), max: z.number().optional() }),
+					z.undefined(),
+				])
+			}
+		}
+		const dynamicSchema = formSchema.extend({ data: dataSchema })
 		return dynamicSchema
 	}
 
@@ -62,8 +92,8 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 	const { t } = useTranslation(['attribute', 'common'])
 
 	const dynamicSchema = useMemo(
-		() => getDynamicSchema(t, selectedAttr.dataSchemaName ?? undefined),
-		[t, selectedAttr.dataSchemaName]
+		() => getDynamicSchema(t, selectedAttr.dataSchemaName ?? undefined, selectedAttr.tKey),
+		[t, selectedAttr.dataSchemaName, selectedAttr.tKey]
 	)
 
 	const form = useForm<FormSchema>({
@@ -73,6 +103,7 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 			id: generateId('attributeSupplement'),
 			...parentRecord,
 			attributeId: selectedAttr.attributeId,
+			data: undefined,
 		},
 	})
 
@@ -107,11 +138,15 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 					onClick={form.handleSubmit((formData) => {
 						// Clean the data object before sending it to the backend
 						const data = formData.data as Record<string, unknown> | undefined
-						if (data) {
-							for (const key in data) {
+						if (data && typeof data === 'object') {
+							for (const key of Object.keys(data)) {
 								if (data[key] === null || data[key] === undefined) {
 									delete data[key]
 								}
+							}
+							// If the data object is now empty, set it to undefined so it's saved as null.
+							if (Object.keys(data).length === 0) {
+								formData.data = undefined
 							}
 						}
 						onSave(formData)
