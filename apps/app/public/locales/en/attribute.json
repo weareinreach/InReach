@@ -62,9 +62,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Cost",
+		"cost-accepts-insurance": "This service accepts insurance",
 		"cost-fees": "Incurs a cost",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "Free of cost"
+		"cost-sliding-scale": "Costs determined on a sliding scale",
+		"cost-free": "Free of cost",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": { "elders": "Elders", "general-lgbtq": "General LGBTQ+" },
 	"eligibility": {
@@ -73,6 +78,7 @@
 		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Age eligibility",
+		"elig-age_error": "Please specify min, max, or an age range",
 		"other-describe": "Other (free text description)",
 		"req-medical-insurance": "REQUIRES medical insurance",
 		"req-photo-id": "REQUIRES a photo ID",
@@ -94,7 +100,8 @@
 		"CATEGORYNAME": "Organization Leadership",
 		"immigrant-led": "Immigrant-led",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "Transgender-led"
+		"trans-led": "Transgender-led",
+		"women-led": "Women-led"
 	},
 	"serviceaccess": {
 		"accessemail": "Access Instructions - Email",

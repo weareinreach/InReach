@@ -33,7 +33,11 @@ const SuppText = () => {
 	)
 }
 
-const SuppData = ({ schema }: SuppDataProps) => {
+export interface SupplementDataProps {
+	schema: FieldAttributes[] | FieldAttributes[][]
+}
+
+const SuppData = ({ schema }: SupplementDataProps) => {
 	const { control } = useFormContext<FormSchema>()
 
 	const renderField = useCallback(
@@ -77,10 +81,6 @@ const SuppData = ({ schema }: SuppDataProps) => {
 			})}
 		</Stack>
 	)
-}
-interface SuppDataProps {
-	// schema: LiteralUnion<DataSchema, string>
-	schema: FieldAttributes[] | FieldAttributes[][]
 }
 
 const SuppLang = () => {
