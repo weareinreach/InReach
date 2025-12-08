@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Gharama",
+		"cost-accepts-insurance": "Huduma hii inakubali bima",
 		"cost-fees": "Inapata gharama",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "Bure ya gharama"
+		"cost-sliding-scale": "Gharama zilizoamuliwa kwa mizani ya kuteleza",
+		"cost-free": "Bure ya gharama",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Wazee",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} na zaidi",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Kustahiki umri",
+		"elig-age_error": "Please specify min, max, or an age range",
 		"other-describe": "Nyingine (maelezo ya maandishi ya bure)",
 		"req-medical-insurance": "Inahitaji bima ya matibabu",
 		"req-photo-id": "Inahitaji kitambulisho cha picha",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Uongozi wa Shirika",
 		"immigrant-led": "Wakiongozwa na wahamiaji",
 		"lgbtq-led": "LGBTQ+ Inayoongozwa",
-		"trans-led": "Transgender inayoongozwa"
+		"trans-led": "Transgender inayoongozwa",
+		"women-led": "Wanawake wakiongozwa"
 	},
 	"serviceaccess": {
 		"accessemail": "Maagizo ya Ufikiaji - Barua pepe",

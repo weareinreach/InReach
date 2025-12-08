@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "비용",
+		"cost-accepts-insurance": "이 서비스는 보험에 가입할 수 있습니다",
 		"cost-fees": "비용이 들어갑니다",
 		"cost-financial-assistance-available": "재정 지원 이용 가능",
-		"cost-free": "무료입니다"
+		"cost-sliding-scale": "차등제로 결정되는 비용",
+		"cost-free": "무료입니다",
+		"cost-from": "{{price}}부터",
+		"cost-upTo": "최대 {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "노인",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}}과 이상",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "연령 자격",
+		"elig-age_error": "최소, 최대 또는 연령대를 지정하십시오.",
 		"other-describe": "기타 (글로 설명하기)",
 		"req-medical-insurance": "의료 보험은 필수입니다",
 		"req-photo-id": "신분증은 필수입니다",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "단체 지도자",
 		"immigrant-led": "이민자 주도자",
 		"lgbtq-led": "성소수자의 주도",
-		"trans-led": "트랜스젠더 주도자"
+		"trans-led": "트랜스젠더 주도자",
+		"women-led": "여성 주도자"
 	},
 	"serviceaccess": {
 		"accessemail": "교육접속 - 이메일",

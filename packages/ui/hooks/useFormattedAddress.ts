@@ -14,20 +14,25 @@ const AddressSchema = z.object({
 	country: z.object({
 		cca2: z.string(),
 	}),
-	govDist: z.object({
-		abbrev: z.string().nullish(),
-		tsKey: z.string(),
-		tsNs: z.string(),
-	}),
+	govDist: z
+		.object({
+			abbrev: z.string().nullish(),
+			tsKey: z.string().nullish(),
+			tsNs: z.string().nullish(),
+		})
+		.nullish(),
 })
 type ParsedAddress = z.infer<typeof AddressSchema>
 
 const getAdminArea = (location: ParsedAddress, t: TFunction) => {
-	if (location.govDist.abbrev) {
-		return location.govDist.abbrev
-	}
-	if (location.govDist.tsKey) {
-		return t(location.govDist.tsKey, { ns: location.govDist.tsNs })
+	const dist = location.govDist
+	if (!dist) return undefined
+
+	if (dist.abbrev) return dist.abbrev
+
+	if (dist.tsKey) {
+		// Only pass ns if it's defined
+		return t(dist.tsKey, dist.tsNs ? { ns: dist.tsNs } : undefined)
 	}
 	return undefined
 }
