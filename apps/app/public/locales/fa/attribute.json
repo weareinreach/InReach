@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "هزینه",
+		"cost-accepts-insurance": "این سرویس بیمه می پذیرد",
 		"cost-fees": "هزینه ای را متحمل می شود",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "رایگان از هزینه"
+		"cost-sliding-scale": "هزینه ها در مقیاس کشویی تعیین می شود",
+		"cost-free": "رایگان از هزینه",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "بزرگترها",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} و قدیمی تر",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "صلاحیت سنی",
+		"elig-age_error": "Please specify min, max, or an age range",
 		"other-describe": "سایر (توضیحات متن رایگان)",
 		"req-medical-insurance": "نیاز به بیمه درمانی",
 		"req-photo-id": "نیاز به یک شناسه عکس",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "رهبری سازمان",
 		"immigrant-led": "مهاجران به رهبری",
 		"lgbtq-led": "LGBTQ+ LED",
-		"trans-led": "رهبری ترانسجندر"
+		"trans-led": "رهبری ترانسجندر",
+		"women-led": "زنان به رهبری"
 	},
 	"serviceaccess": {
 		"accessemail": "دستورالعمل دسترسی - ایمیل",

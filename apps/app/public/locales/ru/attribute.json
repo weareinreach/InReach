@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Затраты",
+		"cost-accepts-insurance": "Эта услуга принимает страхование",
 		"cost-fees": "Платно",
 		"cost-financial-assistance-available": "Доступна финансовая помощь",
-		"cost-free": "Бесплатно"
+		"cost-sliding-scale": "Расходы, определяемые по скользящей шкале",
+		"cost-free": "Бесплатно",
+		"cost-from": "От {{price}}",
+		"cost-upTo": "До {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Старшие представители",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} и старше",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Право на возраст",
+		"elig-age_error": "Пожалуйста, укажите минимальный, максимальный или возрастной диапазон",
 		"other-describe": "Иное",
 		"req-medical-insurance": "Медицинское страхование",
 		"req-photo-id": "Удостоверение личности с фотографией",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Руководство организации",
 		"immigrant-led": "Возглавляемая представителем иммигрантов",
 		"lgbtq-led": "Led LGBTQ+",
-		"trans-led": "Возглавляемая представителем транслюдей"
+		"trans-led": "Возглавляемая представителем транслюдей",
+		"women-led": "Возглавляемая представителем женского сообщества"
 	},
 	"serviceaccess": {
 		"accessemail": "Email",

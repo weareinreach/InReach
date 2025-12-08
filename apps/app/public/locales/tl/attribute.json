@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Gastos",
+		"cost-accepts-insurance": "Tumatanggap ang serbisyong ito ng insurance",
 		"cost-fees": "Nagkakasakit ng gastos",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "Walang gastos"
+		"cost-sliding-scale": "Natukoy ang mga gastos sa isang sliding scale",
+		"cost-free": "Walang gastos",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Mga matatanda",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} at mas matanda",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Pagiging karapat-dapat sa edad",
+		"elig-age_error": "Please specify min, max, or an age range",
 		"other-describe": "Iba pa (libreng paglalarawan ng teksto)",
 		"req-medical-insurance": "NANGANGAILANGAN ng medikal na seguro",
 		"req-photo-id": "NANGANGAILANGAN ng ID ng larawan",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Pamumuno ng Organisasyon",
 		"immigrant-led": "Pinangunahan ng imigrante",
 		"lgbtq-led": "Pinamunuan ng LGBTQ+",
-		"trans-led": "Pinangunahan ng Transgender"
+		"trans-led": "Pinangunahan ng Transgender",
+		"women-led": "Pinangunahan ng kababaihan"
 	},
 	"serviceaccess": {
 		"accessemail": "Mga Tagubilin sa Pag-access - Email",
