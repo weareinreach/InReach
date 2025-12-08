@@ -96,6 +96,15 @@ export const csvDownloadRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	getServicesCountByCategoryStateCountry: permissionedProcedure('dataPortalManager')
+		.input(schema.ZGetServicesCountByCategoryStateCountrySchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('getServicesCountByCategoryStateCountry'),
+				() => import('./query.getServicesCountByCategoryStateCountry.handler')
+			)
+			return handler(opts)
+		}),
 	getServicesCountByCountryAttribute: permissionedProcedure('dataPortalManager')
 		.input(schema.ZGetServicesCountByCountryAttributeSchema)
 		.mutation(async (opts) => {
