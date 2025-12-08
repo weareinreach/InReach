@@ -37,26 +37,67 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 	const {
 		query: { slug: pageSlug },
 	} = router.isReady ? router : { query: { slug: '' } }
-	const { data, status } = api.organization.forOrgPageEdits.useQuery(
+	const { data, status, isFetching } = api.organization.forOrgPageEdits.useQuery(
 		{ slug: pageSlug },
 		{ enabled: router.isReady }
 	)
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 	const updateBasic = api.organization.updateBasic.useMutation({
-		onSuccess: (newData) => {
-			if (data && newData && data.slug !== newData.slug) {
-				router.replace({ pathname: router.pathname, query: { ...router.query, slug: newData.slug } })
+		// Optimistically update the UI with the new data
+		onMutate: async (newData) => {
+			// Cancel any outgoing refetches so they don't overwrite our optimistic update
+			await apiUtils.organization.forOrgPageEdits.cancel({ slug: pageSlug })
+
+			// Snapshot the previous value
+			const previousData = apiUtils.organization.forOrgPageEdits.getData({ slug: pageSlug })
+
+			// Optimistically update to the new value
+			apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, (oldData) => {
+				if (!oldData) return undefined
+				return {
+					...oldData,
+					name: newData.name ?? oldData.name, // Optimistically update the name
+					// Safely update the nested description object, handling cases where it might be null.
+					description: newData.description
+						? {
+								...(oldData.description ?? { id: '', key: '' }), // Provide a default shape if null
+								tsKey: { text: newData.description },
+							}
+						: oldData.description,
+				}
+			})
+
+			// Return a context object with the snapshotted value
+			return { previousData }
+		},
+		onSuccess: (data, variables) => {
+			// After a successful optimistic update, reset the form with the new values.
+			// This synchronizes react-hook-form's state and correctly sets `isDirty` to false.
+			formMethods.reset({
+				id: variables.id,
+				name: variables.name,
+				description: variables.description,
+			})
+		},
+		// If the mutation fails, use the context returned from onMutate to roll back
+		onError: (err, newData, context) => {
+			if (context?.previousData) {
+				apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, context.previousData)
 			}
+		},
+		// Always refetch after the mutation is settled (either on error or success)
+		onSettled: () => {
 			apiUtils.organization.forOrgPageEdits.invalidate()
 			revalidatePage({ path: router.asPath.replace('/edit', '') })
 		},
 	})
 
 	const formMethods = useForm<FormSchema>({
-		values: {
-			id: data?.id ?? '',
-			name: data?.name,
-			description: data?.description?.tsKey?.text,
+		// Use defaultValues for initialization. We will populate the form via useEffect.
+		defaultValues: {
+			id: data?.id,
+			name: data?.name ?? '',
+			description: data?.description?.tsKey?.text ?? '',
 		},
 	})
 
@@ -104,11 +145,11 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 						<ListingBasicInfo
 							data={{
 								id: data.id,
-								name: data.name,
+								name: data.name ?? '',
 								lastVerified: data.lastVerified,
 								slug,
 								attributes,
-								description,
+								description: data.description,
 								locations,
 								isClaimed,
 							}}

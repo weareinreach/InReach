@@ -10,9 +10,10 @@ import {
 	Stack,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useCallback, useMemo, useRef, useState } from 'react'
+import { type TFunction, useTranslation } from 'next-i18next'
+import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
 import {
@@ -25,7 +26,7 @@ import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
-import { Supplement } from './fields'
+import { Supplement, type SupplementDataProps } from './fields'
 import { formSchema, type FormSchema } from './schema'
 import { SelectionItem } from './SelectionItem'
 
@@ -38,154 +39,237 @@ const supplementDefaults = {
 } as const
 type SupplementFieldsNeeded = { [K in keyof typeof supplementDefaults]: boolean }
 
+const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: string) => {
+	if (dataSchemaName && isAttributeSupplementSchema(dataSchemaName)) {
+		let dataSchema: z.ZodTypeAny = attributeSupplementSchema[dataSchemaName]
+
+		if (dataSchemaName === 'numMinMaxOrRange') {
+			// Age eligibility requires at least a min or a max value.
+			if (attributeKey === 'eligibility.elig-age') {
+				dataSchema = z.preprocess(
+					// If data is undefined (due to cleanup or initialization), provide an empty object for validation.
+					(arg) => arg ?? {},
+					z
+						.object({
+							min: z.number().optional(),
+							max: z.number().optional(),
+						})
+						.superRefine((data, ctx) => {
+							if (data.min === undefined && data.max === undefined) {
+								ctx.addIssue({
+									code: z.ZodIssueCode.custom,
+									path: ['min'],
+									message: t('eligibility.elig-age_error'),
+								})
+							}
+						})
+				)
+			} else {
+				// Other numMinMaxOrRange (like cost) are fully optional.
+				dataSchema = z.union([
+					z.object({ min: z.number().optional(), max: z.number().optional() }),
+					z.undefined(),
+				])
+			}
+		}
+		const dynamicSchema = formSchema.extend({ data: dataSchema })
+		return dynamicSchema
+	}
+
+	return formSchema
+}
+
+/**
+ * This type represents the shape of an attribute after it has been processed by the `select` function. It
+ * explicitly includes all properties from the original API type, plus the new UI-specific `value` and
+ * `label`.
+ */
+type SelectableAttribute = {
+	// Explicitly include all properties from the original API type.
+	// This avoids inference issues with complex nested types.
+	[K in keyof ApiOutput['fieldOpt']['attributesByCategory'][number]]: ApiOutput['fieldOpt']['attributesByCategory'][number][K]
+} & {
+	// Add the properties required for the UI select component.
+	value: string
+	label: string
+}
+
+interface AttributeFormProps {
+	parentRecord: AttributeModalProps['parentRecord']
+	selectedAttr: SelectableAttribute
+	onSave: (data: FormSchema) => void
+	isLoading: boolean
+}
+
+const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: AttributeFormProps) => {
+	const { t } = useTranslation(['attribute', 'common'])
+
+	const dynamicSchema = useMemo(
+		() => getDynamicSchema(t, selectedAttr.dataSchemaName ?? undefined, selectedAttr.attributeKey),
+		[t, selectedAttr.dataSchemaName, selectedAttr.attributeKey]
+	)
+
+	const form = useForm<FormSchema>({
+		resolver: zodResolver(dynamicSchema),
+		mode: 'all',
+		defaultValues: {
+			id: generateId('attributeSupplement'),
+			...parentRecord,
+			attributeId: selectedAttr.attributeId,
+			// Dynamically build the default 'data' object from the attribute's form schema
+			// to prevent "uncontrolled input" warnings. This ensures inputs are controlled
+			// from their first render, regardless of their structure.
+			data: undefined,
+		},
+	})
+
+	useEffect(() => {
+		// @ts-expect-error to make work
+		const supplement = selectedAttr.attributeSupplement?.[0]
+		if (supplement) {
+			const cleanNulls = (obj: unknown): unknown => {
+				if (obj === null) return undefined
+				if (typeof obj !== 'object') return obj
+				if (Array.isArray(obj)) return obj.map(cleanNulls)
+				const newObj: Record<string, unknown> = {}
+				for (const key in obj as Record<string, unknown>)
+					newObj[key] = cleanNulls((obj as Record<string, unknown>)[key])
+				return newObj
+			}
+
+			// @ts-expect-error to make work
+			form.reset({ ...form.formState.defaultValues, ...cleanNulls(supplement) })
+		}
+	}, [selectedAttr, form.reset])
+
+	const supplements = useMemo(() => {
+		const needsSupplementalData = (item: SelectableAttribute) => {
+			const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
+			const check = [requireBoolean, requireGeo, requireData, requireLanguage, requireText]
+			return check.some(Boolean)
+		}
+
+		if (!needsSupplementalData(selectedAttr)) return supplementDefaults
+		const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = selectedAttr
+		return {
+			boolean: requireBoolean ?? false,
+			geo: requireGeo ?? false,
+			language: requireLanguage ?? false,
+			text: requireText ?? false,
+			data: requireData ?? false,
+		}
+	}, [selectedAttr])
+
+	return (
+		<FormProvider {...form}>
+			<Stack>
+				{supplements.boolean && <Supplement.Boolean />}
+				{supplements.text && <Supplement.Text />}
+				{supplements.data && selectedAttr.formSchema && <Supplement.Data schema={selectedAttr.formSchema} />}
+				{supplements.language && <Supplement.Language />}
+				{supplements.geo && <Supplement.Geo />}
+				<Button
+					onClick={form.handleSubmit((formData) => {
+						// Clean the data object before sending it to the backend
+						const data = formData.data as Record<string, unknown> | undefined
+						if (data && typeof data === 'object') {
+							for (const key of Object.keys(data)) {
+								if (data[key] === null || data[key] === undefined) {
+									delete data[key]
+								}
+							}
+							// If the data object is now empty, set it to undefined so it's saved as null.
+							if (Object.keys(data).length === 0) {
+								formData.data = undefined
+							}
+						}
+						onSave(formData)
+					})}
+					type='submit'
+					loading={isLoading}
+				>
+					{t('words.save', { ns: 'common' })}
+				</Button>
+			</Stack>
+		</FormProvider>
+	)
+}
+
+const useAttributeData = (showInactiveAttribs: boolean, attachesTo: AttributeModalProps['attachesTo']) => {
+	const { t } = useTranslation(['attribute'])
+	const { data: attributesByCategory, ...attributesByCategoryApi } =
+		api.fieldOpt.attributesByCategory.useQuery(
+			{ attributeActive: !showInactiveAttribs /* categoryActive: !showInactiveCategories*/ },
+			{
+				select: (data) =>
+					data.map((item) => {
+						const { attributeId, attributeKey } = item
+						return { ...item, value: attributeId, label: t(attributeKey) }
+					}),
+			}
+		)
+
+	const attributeCategories = useMemo(() => {
+		if (!attributesByCategory) return []
+		const categories = new Set<string>()
+		const result: { value: string; label: string }[] = []
+
+		attributesByCategory
+			.filter(({ canAttachTo }) => {
+				if (!attachesTo?.length) {
+					return true
+				}
+				return canAttachTo.some((item) => attachesTo.includes(item))
+			})
+			.forEach(({ categoryName, categoryDisplay }) => {
+				const key = JSON.stringify({ value: categoryName, label: categoryDisplay })
+				if (!categories.has(key)) {
+					categories.add(key)
+					result.push(JSON.parse(key))
+				}
+			})
+		return result
+	}, [attributesByCategory, attachesTo])
+
+	return { attributesByCategory, attributesByCategoryApi, attributeCategories }
+}
+
 const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 	({ restrictCategories: _restrictCategories, attachesTo, parentRecord, ...props }, ref) => {
 		const { t } = useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const showAddedNotification = useNewNotification({ icon: 'added', displayText: 'Added Attribute' })
-		const selectAttrRef = useRef<HTMLInputElement>(null)
-		// #region tRPC
 		const apiUtils = api.useUtils()
 		const [attrCat, setAttrCat] = useState<string | null>()
 		const [showInactiveAttribs, setShowInactiveAttribs] = useState(true)
-		// const [showInactiveCategories, setShowInactiveCategories] = useState(false)
-		const { data: attributesByCategory, ...attributesByCategoryApi } =
-			api.fieldOpt.attributesByCategory.useQuery(
-				{ attributeActive: !showInactiveAttribs /* categoryActive: !showInactiveCategories*/ },
-				{
-					refetchOnWindowFocus: false,
-					select: (data) => {
-						return data.map(({ attributeId, attributeKey, attributeActive, categoryActive, ...rest }) => ({
-							value: attributeId,
-							label: t(attributeKey),
-							tKey: attributeKey,
-							active: attributeActive && categoryActive,
-							...rest,
-						}))
-					},
-				}
-			)
-
-		const attributeCategories = useMemo(() => {
-			return [
-				...new Set(
-					attributesByCategory
-						?.filter(({ canAttachTo }) => {
-							if (!attachesTo?.length) {
-								return true
-							}
-							let match = false
-							for (const item of canAttachTo) {
-								if (attachesTo.includes(item)) {
-									match = true
-									break
-								}
-							}
-							return match
-						})
-						.map(({ categoryName, categoryDisplay }) => {
-							return JSON.stringify({
-								value: categoryName,
-								label: categoryDisplay,
-							})
-						})
-				),
-			].map((v) => {
-				return JSON.parse(v) as { value: string; label: string }
-			})
-		}, [attributesByCategory, attachesTo])
-		const [selectedAttr, setSelectedAttr] = useState<NonNullable<typeof attributesByCategory>[number] | null>(
-			null
+		const { attributesByCategory, attributesByCategoryApi, attributeCategories } = useAttributeData(
+			showInactiveAttribs,
+			attachesTo
 		)
-		const [supplements, setSupplements] = useState<SupplementFieldsNeeded>(supplementDefaults)
-
-		const needsSupplementalData = useCallback((item: NonNullable<typeof attributesByCategory>[number]) => {
-			const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
-
-			const check = [requireBoolean, requireGeo, requireData, requireLanguage, requireText]
-
-			return check.some(Boolean)
-		}, [])
 
 		// #endregion
-
-		// #region Handlers
-		const form = useForm<FormSchema>({
-			resolver: zodResolver(formSchema),
-			mode: 'all',
-
-			defaultValues: {
-				id: generateId('attributeSupplement'),
-				...parentRecord,
-			},
-		})
 		const saveAttributes = api.organization.attachAttribute.useMutation({
 			onSuccess: () => {
 				if (parentRecord.serviceId) {
 					apiUtils.service.forServiceEditDrawer.invalidate(parentRecord.serviceId)
 				}
-				form.reset({
-					id: generateId('attributeSupplement'),
-					...parentRecord,
-				})
-				setSelectedAttr(null)
-				setSupplements(supplementDefaults)
 				showAddedNotification()
 				handler.close()
 			},
 		})
 
-		// const formState = useFormState({ control: form.control })
+		// #region Handlers
+		const [selectedAttributeId, setSelectedAttributeId] = useState<string | null>(null)
 
-		const selectHandler = useCallback(
-			(e: string | null) => {
-				if (e === null) {
-					setSupplements(supplementDefaults)
-					setSelectedAttr(null)
-					form.resetField('attributeId')
-					return
-				}
-				const item = attributesByCategory?.find(({ value }) => value === e)
-				if (item) {
-					setSelectedAttr(item)
-					const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
-					/** Check if supplemental info required */
-					if (needsSupplementalData(item)) {
-						/** Handle if supplemental info is provided */
-						const suppRequired: SupplementFieldsNeeded = {
-							boolean: requireBoolean ?? false,
-							geo: requireGeo ?? false,
-							language: requireLanguage ?? false,
-							text: requireText ?? false,
-							data: requireData ?? false,
-						}
-						setSupplements(suppRequired)
-					}
-					form.setValue('attributeId', item.value)
-					selectAttrRef.current && (selectAttrRef.current.value = '')
-				}
-			},
-			[attributesByCategory, form, needsSupplementalData]
+		const selectedAttr = useMemo(
+			() => attributesByCategory?.find(({ value }) => value === selectedAttributeId),
+			[attributesByCategory, selectedAttributeId]
 		)
-
-		const submitHandler = () => {
-			const formData = form.getValues()
-			const dataSchemaName = selectedAttr?.dataSchemaName
-			if (supplements.data && isAttributeSupplementSchema(dataSchemaName)) {
-				const parsed = attributeSupplementSchema[dataSchemaName].safeParse(formData.data)
-				if (parsed.success) {
-					formData.data = parsed.data
-				}
-			}
-
-			saveAttributes.mutate(formData)
-		}
 
 		// #endregion
 
 		// #region Title & Selected items display
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
-		// const needsSupplement = Object.values(supplements).includes(true)
 
 		const inputContainerWithSkeleton = useCallback(
 			(children: ReactNode) => (
@@ -196,23 +280,16 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			[attrCat, attributesByCategoryApi.isLoading]
 		)
 
-		const handleCategorySelect = useCallback(
-			(e: string | null) => {
-				setAttrCat(e)
-				if (selectedAttr) {
-					setSelectedAttr(null)
-				}
-			},
-			[selectedAttr]
-		)
+		const handleCategorySelect = useCallback((e: string | null) => {
+			// When category changes, clear the selected attribute
+			setSelectedAttributeId(null as string | null)
+			setAttrCat(e)
+		}, [])
 
-		const toggleShowInactiveAttribs = useCallback(
-			() => setShowInactiveAttribs((prev) => !prev),
-			[setShowInactiveAttribs]
-		)
+		const toggleShowInactiveAttribs = useCallback(() => setShowInactiveAttribs((prev) => !prev), [])
 
 		return (
-			<FormProvider {...form}>
+			<>
 				<Modal title={modalTitle} opened={opened} onClose={handler.close}>
 					<Stack>
 						<Stack>
@@ -234,16 +311,15 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 												.filter(({ categoryName }) => categoryName === attrCat)
 												.map(({ label, value, active }) => ({ label, value, active }))
 								}
-								value={selectedAttr?.value ?? null}
 								label='Select Attribute'
 								disabled={!attrCat || !attributesByCategory?.length}
 								withinPortal
 								itemComponent={SelectionItem}
 								searchable={(attributesByCategory?.length ?? 0) > 10}
-								ref={selectAttrRef}
 								clearable
-								onChange={selectHandler}
 								inputContainer={inputContainerWithSkeleton}
+								value={selectedAttributeId}
+								onChange={(value) => setSelectedAttributeId(value)}
 							/>
 							<Checkbox
 								label='Show Inactive Attributes?'
@@ -251,20 +327,19 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								onChange={toggleShowInactiveAttribs}
 							/>
 						</Stack>
-						{supplements.boolean && <Supplement.Boolean />}
-						{supplements.text && <Supplement.Text />}
-						{supplements.data && selectedAttr?.formSchema && (
-							<Supplement.Data schema={selectedAttr.formSchema} />
+						{selectedAttr && (
+							<AttributeForm
+								key={selectedAttr.value}
+								parentRecord={parentRecord}
+								selectedAttr={selectedAttr}
+								onSave={saveAttributes.mutate}
+								isLoading={saveAttributes.isLoading}
+							/>
 						)}
-						{supplements.language && <Supplement.Language />}
-						{supplements.geo && <Supplement.Geo />}
-						<Button onClick={form.handleSubmit(submitHandler)} type='submit'>
-							{t('words.save', { ns: 'common' })}
-						</Button>
 					</Stack>
 				</Modal>
 				<Box component='button' ref={ref} onClick={handler.open} {...props} />
-			</FormProvider>
+			</>
 		)
 	}
 )
