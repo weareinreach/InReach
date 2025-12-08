@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Coûts",
+		"cost-accepts-insurance": "Ce service accepte les assurances",
 		"cost-fees": "Entraîne des frais",
 		"cost-financial-assistance-available": "Assistance financière disponible",
-		"cost-free": "Gratuit"
+		"cost-sliding-scale": "Coûts soumis à des tarifs dégressifs",
+		"cost-free": "Gratuit",
+		"cost-from": "De {{price}}",
+		"cost-upTo": "Jusqu'à {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Personnes âgées",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} et plus",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Éligibilité à l'âge",
+		"elig-age_error": "Veuillez spécifier min, max, ou une tranche d'âge",
 		"other-describe": "Autre (description du texte libre)",
 		"req-medical-insurance": "Exige une assurance maladie",
 		"req-photo-id": "Exige une pièce d'identité avec photo",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Direction de l'organisation",
 		"immigrant-led": "Dirigé par des immigrés",
 		"lgbtq-led": "Dirigé par des personnes LGBTQ+",
-		"trans-led": "Dirigé par des trans"
+		"trans-led": "Dirigé par des trans",
+		"women-led": "Femmes dirigées"
 	},
 	"serviceaccess": {
 		"accessemail": "Instructions d'accès - Email",

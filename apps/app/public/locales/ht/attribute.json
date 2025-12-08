@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Pri",
+		"cost-accepts-insurance": "Sevis sa a aksepte asirans",
 		"cost-fees": "Bay yon pri",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "Gratis nan pri"
+		"cost-sliding-scale": "Pri yo detèmine sou yon echèl glisman",
+		"cost-free": "Gratis nan pri",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Granmoun yo",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} ak plis",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Kondisyon laj",
+		"elig-age_error": "Please specify min, max, or an age range",
 		"other-describe": "Lòt (deskripsyon tèks gratis)",
 		"req-medical-insurance": "Asirans medikal rekòmande",
 		"req-photo-id": "Mande pou yon ID foto",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Lidèchip Òganizasyon",
 		"immigrant-led": "Imigran dirije",
 		"lgbtq-led": "Dirije pa LGBTQ+",
-		"trans-led": "Dirije pa transèksyèl"
+		"trans-led": "Dirije pa transèksyèl",
+		"women-led": "Dirije pa Fanm"
 	},
 	"serviceaccess": {
 		"accessemail": "Aksè Enstriksyon - Imèl",

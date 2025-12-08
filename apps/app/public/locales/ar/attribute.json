@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "التكلفة",
+		"cost-accepts-insurance": "تقبل هذه الخدمة التأمين",
 		"cost-fees": "يتكبد تكلفة",
 		"cost-financial-assistance-available": "المساعدة المالية المتاحة",
-		"cost-free": "مجانا"
+		"cost-sliding-scale": "التكاليف المحددة على أساس جدول متدرج",
+		"cost-free": "مجانا",
+		"cost-from": "من {{price}}",
+		"cost-upTo": "حتى {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "كبار السن",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} وأقدم",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "الأهلية للعمر",
+		"elig-age_error": "الرجاء تحديد الحد الأدنى أو الحد الأقصى أو النطاق العمري",
 		"other-describe": "أخرى (وصف النص المجاني)",
 		"req-medical-insurance": "طلب تأمين طبي",
 		"req-photo-id": "يتطلب معرف صورة",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "قيادة المنظمة",
 		"immigrant-led": "تحت قيادة المهاجرين",
 		"lgbtq-led": "LGBTQ+ مدفوع",
-		"trans-led": "تحت قيادة المتحولين جنسياً"
+		"trans-led": "تحت قيادة المتحولين جنسياً",
+		"women-led": "تحت قيادة المرأة"
 	},
 	"serviceaccess": {
 		"accessemail": "تعليمات الوصول - البريد الإلكتروني",
