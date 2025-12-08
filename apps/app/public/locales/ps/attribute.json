@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "لګښت",
+		"cost-accepts-insurance": "دا خدمت بیمه مني",
 		"cost-fees": "یو لګښت لري",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "د وړیا لګښت"
+		"cost-sliding-scale": "لګښتونه په سلیډینګ پیمانه ټاکل کیږي",
+		"cost-free": "د وړیا لګښت",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "مشرانو",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} او زاړه",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "د عمر وړتیا",
+		"elig-age_error": "Please specify min, max, or an age range",
 		"other-describe": "نور (د وړیا متن توضیحات)",
 		"req-medical-insurance": "طبي بیمې ته اړتیا لري",
 		"req-photo-id": "د عکس ID ته اړتیا لري",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "د سازمان رهبري",
 		"immigrant-led": "د کډوالۍ په مشرۍ",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "د ټرانسجنډر په مشرۍ"
+		"trans-led": "د ټرانسجنډر په مشرۍ",
+		"women-led": "د ښځو په مشرۍ"
 	},
 	"serviceaccess": {
 		"accessemail": "د لاسرسي لارښوونې - بریښنالیک",

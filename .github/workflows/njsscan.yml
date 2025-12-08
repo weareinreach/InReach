@@ -30,7 +30,7 @@ jobs:
     name: njsscan code scanning
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - name: 🧐 nodejsscan scan
         id: njsscan
         uses: ajinabraham/njsscan-action@c7b65a3590ade829628b2b3c87b34ac0ce666a79

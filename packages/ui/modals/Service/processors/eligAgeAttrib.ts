@@ -19,11 +19,9 @@ export const processEligAgeAttrib = (
 	const getContext = (): 'min' | 'max' | 'range' => {
 		if (min && max) {
 			return 'range'
-		} else if (min && !max) {
-			return 'min'
-		} else {
-			return 'max'
 		}
+		if (min) return 'min'
+		return 'max' // This will be returned if max exists, or if neither exist (which is handled by parsed.success)
 	}
 
 	return {

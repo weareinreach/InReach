@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Собівартість",
+		"cost-accepts-insurance": "Ця служба приймає страхування",
 		"cost-fees": "Стягне за собою витрати",
 		"cost-financial-assistance-available": "Фінансова допомога доступна",
-		"cost-free": "Безкоштовно"
+		"cost-sliding-scale": "Витрати, визначені на розтягненні залишку",
+		"cost-free": "Безкоштовно",
+		"cost-from": "З {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Елдерс",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} і старші",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Вікова придатність",
+		"elig-age_error": "Будь ласка, вкажіть мін, макс. або діапазон років",
 		"other-describe": "Інше (безкоштовний текстовий опис)",
 		"req-medical-insurance": "ВИМАГАЄ МЕДИЧНОГО СТРАХУВАННЯ",
 		"req-photo-id": "ПОТРІБНО посвідчення особи з фотографією",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Керівництво організації",
 		"immigrant-led": "Іммігрант-світлодіод",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "Трансгендерний світлодіодний"
+		"trans-led": "Трансгендерний світлодіодний",
+		"women-led": "Жінки-світлодіодні"
 	},
 	"serviceaccess": {
 		"accessemail": "Інструкції щодо доступу - Електронна пошта",

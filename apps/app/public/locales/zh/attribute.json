@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "费用",
+		"cost-accepts-insurance": "此服务接受保险",
 		"cost-fees": "产生成本",
 		"cost-financial-assistance-available": "有经济援助",
-		"cost-free": "免费的"
+		"cost-sliding-scale": "在滑动规模上确定的成本",
+		"cost-free": "免费的",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "年长者",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} 岁及以上",
 		"elig-age_range": "{{min}} 至{{max}} 之间",
 		"elig-age": "年龄资格",
+		"elig-age_error": "请指定最小、最大或年龄范围",
 		"other-describe": "其他（自由文字描述）",
 		"req-medical-insurance": "需要医疗保险",
 		"req-photo-id": "需要带照片的身份证件",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "组织领导",
 		"immigrant-led": "移民者领导的",
 		"lgbtq-led": "LGBTQ+Led",
-		"trans-led": "跨性别者领导的"
+		"trans-led": "跨性别者领导的",
+		"women-led": "女性领导的"
 	},
 	"serviceaccess": {
 		"accessemail": "访问说明-电子邮件",
