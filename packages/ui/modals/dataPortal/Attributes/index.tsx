@@ -79,11 +79,24 @@ const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: 
 	return formSchema
 }
 
-type SelectedAttribute = NonNullable<ReturnType<typeof useAttributeData>['attributesByCategory']>[number]
+/**
+ * This type represents the shape of an attribute after it has been processed by the `select` function. It
+ * explicitly includes all properties from the original API type, plus the new UI-specific `value` and
+ * `label`.
+ */
+type SelectableAttribute = {
+	// Explicitly include all properties from the original API type.
+	// This avoids inference issues with complex nested types.
+	[K in keyof ApiOutput['fieldOpt']['attributesByCategory'][number]]: ApiOutput['fieldOpt']['attributesByCategory'][number][K]
+} & {
+	// Add the properties required for the UI select component.
+	value: string
+	label: string
+}
 
 interface AttributeFormProps {
 	parentRecord: AttributeModalProps['parentRecord']
-	selectedAttr: NonNullable<SelectedAttribute>
+	selectedAttr: SelectableAttribute
 	onSave: (data: FormSchema) => void
 	isLoading: boolean
 }
@@ -92,8 +105,8 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 	const { t } = useTranslation(['attribute', 'common'])
 
 	const dynamicSchema = useMemo(
-		() => getDynamicSchema(t, selectedAttr.dataSchemaName ?? undefined, selectedAttr.tKey),
-		[t, selectedAttr.dataSchemaName, selectedAttr.tKey]
+		() => getDynamicSchema(t, selectedAttr.dataSchemaName ?? undefined, selectedAttr.attributeKey),
+		[t, selectedAttr.dataSchemaName, selectedAttr.attributeKey]
 	)
 
 	const form = useForm<FormSchema>({
@@ -103,19 +116,40 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 			id: generateId('attributeSupplement'),
 			...parentRecord,
 			attributeId: selectedAttr.attributeId,
+			// Dynamically build the default 'data' object from the attribute's form schema
+			// to prevent "uncontrolled input" warnings. This ensures inputs are controlled
+			// from their first render, regardless of their structure.
 			data: undefined,
 		},
 	})
 
+	useEffect(() => {
+		// @ts-expect-error to make work
+		const supplement = selectedAttr.attributeSupplement?.[0]
+		if (supplement) {
+			const cleanNulls = (obj: unknown): unknown => {
+				if (obj === null) return undefined
+				if (typeof obj !== 'object') return obj
+				if (Array.isArray(obj)) return obj.map(cleanNulls)
+				const newObj: Record<string, unknown> = {}
+				for (const key in obj as Record<string, unknown>)
+					newObj[key] = cleanNulls((obj as Record<string, unknown>)[key])
+				return newObj
+			}
+
+			// @ts-expect-error to make work
+			form.reset({ ...form.formState.defaultValues, ...cleanNulls(supplement) })
+		}
+	}, [selectedAttr, form.reset])
+
 	const supplements = useMemo(() => {
-		const needsSupplementalData = (item: NonNullable<SelectedAttribute>) => {
+		const needsSupplementalData = (item: SelectableAttribute) => {
 			const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
 			const check = [requireBoolean, requireGeo, requireData, requireLanguage, requireText]
 			return check.some(Boolean)
 		}
 
 		if (!needsSupplementalData(selectedAttr)) return supplementDefaults
-
 		const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = selectedAttr
 		return {
 			boolean: requireBoolean ?? false,
@@ -167,17 +201,11 @@ const useAttributeData = (showInactiveAttribs: boolean, attachesTo: AttributeMod
 		api.fieldOpt.attributesByCategory.useQuery(
 			{ attributeActive: !showInactiveAttribs /* categoryActive: !showInactiveCategories*/ },
 			{
-				refetchOnWindowFocus: false,
-				select: (data) => {
-					return data.map(({ attributeId, attributeKey, attributeActive, categoryActive, ...rest }) => ({
-						value: attributeId,
-						label: t(attributeKey),
-						tKey: attributeKey,
-						active: attributeActive && categoryActive,
-						attributeId, // explicitly carry this over
-						...rest,
-					}))
-				},
+				select: (data) =>
+					data.map((item) => {
+						const { attributeId, attributeKey } = item
+						return { ...item, value: attributeId, label: t(attributeKey) }
+					}),
 			}
 		)
 
