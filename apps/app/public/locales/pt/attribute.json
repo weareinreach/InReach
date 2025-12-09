@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Custo",
+		"cost-accepts-insurance": "Este serviço aceita seguro/plano",
 		"cost-fees": "Não gratuito",
 		"cost-financial-assistance-available": "Assistência financeira disponível",
-		"cost-free": "Gratuito"
+		"cost-sliding-scale": "Custos determinados em escala flexível",
+		"cost-free": "Gratuito",
+		"cost-from": "De {{price}}",
+		"cost-upTo": "Até {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Pessoas idosas",
@@ -80,6 +85,7 @@
 		"elig-age_min": "De {{min}} para cima",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Elegibilidade por idade",
+		"elig-age_error": "Por favor, especifique uma faixa etária mínima ou máxima",
 		"other-describe": "Outros (descrição em texto livre)",
 		"req-medical-insurance": "EXIGE seguro de saúde",
 		"req-photo-id": "EXIGE um documento de identidade com foto",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Liderança organizacional",
 		"immigrant-led": "Liderado por imigrantes",
 		"lgbtq-led": "Liderado pelo LGBTQ+",
-		"trans-led": "Liderado por pessoas transgêneras"
+		"trans-led": "Liderado por pessoas transgêneras",
+		"women-led": "Liderado por mulheres"
 	},
 	"serviceaccess": {
 		"accessemail": "Instruções de acesso - E-mail",

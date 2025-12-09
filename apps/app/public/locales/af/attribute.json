@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Koste",
+		"cost-accepts-insurance": "Hierdie diens aanvaar versekering",
 		"cost-fees": "Gaan 'n koste aan",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "Vry van koste"
+		"cost-sliding-scale": "Koste word op 'n glyskaal bepaal",
+		"cost-free": "Vry van koste",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Ouderlinge",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} en ouer",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Ouderdom geskiktheid",
+		"elig-age_error": "Please specify min, max, or an age range",
 		"other-describe": "Ander (vrye teks beskrywing)",
 		"req-medical-insurance": "VEREIS mediese versekering",
 		"req-photo-id": "VEREIS 'n foto-ID",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Organisasie Leierskap",
 		"immigrant-led": "Immigrant-gelei",
 		"lgbtq-led": "LGBTQ+ gelei",
-		"trans-led": "Transgender-gelei"
+		"trans-led": "Transgender-gelei",
+		"women-led": "Vroue-gelei"
 	},
 	"serviceaccess": {
 		"accessemail": "Toegangsinstruksies - e-pos",

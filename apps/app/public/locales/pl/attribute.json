@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Koszt",
+		"cost-accepts-insurance": "Usługa ta akceptuje ubezpieczenie",
 		"cost-fees": "Kończy się koszt",
 		"cost-financial-assistance-available": "Dostępna pomoc finansowa",
-		"cost-free": "Bezpłatnie"
+		"cost-sliding-scale": "Koszty ustalone w przesuwanej skali",
+		"cost-free": "Bezpłatnie",
+		"cost-from": "Od {{price}}",
+		"cost-upTo": "Do {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Lampy analizujące do kamer telewizyjnych",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} i starsze",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Kwalifikowalność do wieku",
+		"elig-age_error": "Proszę podać min, maksimum lub przedział wiekowy",
 		"other-describe": "Inne (dowolny opis tekstowy)",
 		"req-medical-insurance": "WYMAGA ubezpieczenia medycznego",
 		"req-photo-id": "WYMAGA dokumentu tożsamości ze zdjęciem",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Przywództwo organizacji",
 		"immigrant-led": "Prowadzony przez imigrantów",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "Transgender-LED"
+		"trans-led": "Transgender-LED",
+		"women-led": "Zarządzana przez kobiety"
 	},
 	"serviceaccess": {
 		"accessemail": "Instrukcje dostępu - E-mail",

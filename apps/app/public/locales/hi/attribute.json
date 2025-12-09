@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "लागत",
+		"cost-accepts-insurance": "यह सेवा बीमा स्वीकार करती है",
 		"cost-fees": "लागत लगाती है",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "मुफ़्त"
+		"cost-sliding-scale": "लागत स्लाइडिंग स्केल पर निर्धारित की जाती है",
+		"cost-free": "मुफ़्त",
+		"cost-from": "From {{price}}",
+		"cost-upTo": "Up to {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "बड़ों",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} और पुराने",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "आयु पात्रता",
+		"elig-age_error": "Please specify min, max, or an age range",
 		"other-describe": "अन्य (मुफ्त टेक्स्ट विवरण)",
 		"req-medical-insurance": "चिकित्सा बीमा की आवश्यकता है",
 		"req-photo-id": "फ़ोटो आईडी की आवश्यकता है",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "संगठन का नेतृत्व",
 		"immigrant-led": "आप्रवासी के नेतृत्व वाली",
 		"lgbtq-led": "LGBTQ+ नेतृत्व",
-		"trans-led": "ट्रांसजेंडर-एलईडी"
+		"trans-led": "ट्रांसजेंडर-एलईडी",
+		"women-led": "महिलाओं के नेतृत्व में"
 	},
 	"serviceaccess": {
 		"accessemail": "एक्सेस निर्देश - ईमेल",

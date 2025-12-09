@@ -66,9 +66,14 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Kosten",
+		"cost-accepts-insurance": "Dieser Service akzeptiert eine Versicherung",
 		"cost-fees": "Incurs einen Preis",
 		"cost-financial-assistance-available": "Finanzhilfe verfügbar",
-		"cost-free": "Kostenlos"
+		"cost-sliding-scale": "Kosten auf Schiebemaßstab ermittelt",
+		"cost-free": "Kostenlos",
+		"cost-from": "Von {{price}}",
+		"cost-upTo": "Bis zu {{price}}",
+		"cost-range": "{{price}}"
 	},
 	"crisis-support-community": {
 		"elders": "Ältere",
@@ -80,6 +85,7 @@
 		"elig-age_min": "{{min}} und älter",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Altersberechtigung",
+		"elig-age_error": "Bitte geben Sie min, max oder einen Altersbereich an",
 		"other-describe": "Andere (kostenlose Textbeschreibung)",
 		"req-medical-insurance": "ANFRAGEN Krankenversicherung",
 		"req-photo-id": "Foto-ID ANFRAGEN",
@@ -101,7 +107,8 @@
 		"CATEGORYNAME": "Organisationsführung",
 		"immigrant-led": "Migrantengeführt",
 		"lgbtq-led": "LGBTQ+ Led",
-		"trans-led": "Transgender-geführt"
+		"trans-led": "Transgender-geführt",
+		"women-led": "Frauen geführt"
 	},
 	"serviceaccess": {
 		"accessemail": "Anleitungen für den Zugriff - E-Mail",

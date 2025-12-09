@@ -95,8 +95,8 @@ ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const { id: orgId } = useOrgInfo()
 	const { t } = useTranslation(orgId)
-	const form = useFormContext()
-	const { attributes, isClaimed } = data
+	const { control, formState } = useFormContext()
+	const { attributes, isClaimed, id: orgIdFromData } = data
 	const theme = useMantineTheme()
 	const leaderAttributes = orderBy(
 		attributes.filter(({ attribute }) =>
@@ -168,15 +168,14 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 			<Stack align='flex-start' spacing={12}>
 				<InlineTextInput
 					component={TextInput}
-					name='name'
-					control={form.control}
+					name='name' // This now gets its value from the form context
 					fontSize='h2'
-					data-isdirty={form.formState.dirtyFields['name']}
+					data-isdirty={formState.dirtyFields['name']}
 				/>
 				<Group noWrap spacing={8}>
 					{!location && (
 						<>
-							<BadgeEdit orgId={data.id} badgeType='organization-leadership' component='a'>
+							<BadgeEdit orgId={orgIdFromData} badgeType='organization-leadership' component='a'>
 								<Badge.Group withSeparator>{leaderBadges()}</Badge.Group>
 							</BadgeEdit>
 							<Divider
@@ -193,12 +192,11 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 					<>
 						<InlineTextInput
 							component={Textarea}
-							name='description'
-							control={form.control}
+							name='description' // This now gets its value from the form context
 							autosize
-							data-isdirty={form.formState.dirtyFields['description']}
+							data-isdirty={formState.dirtyFields['description']}
 						/>
-						<BadgeEdit orgId={data.id} badgeType='service-focus' component='a'>
+						<BadgeEdit orgId={orgIdFromData} badgeType='service-focus' component='a'>
 							<Badge.Group>{focusedCommBadges}</Badge.Group>
 						</BadgeEdit>
 					</>
