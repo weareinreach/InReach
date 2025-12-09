@@ -95,7 +95,7 @@ ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const { id: orgId } = useOrgInfo()
 	const { t } = useTranslation(orgId)
-	const { control, formState } = useFormContext<z.infer<typeof formSchema>>()
+	const { control, formState } = useFormContext()
 	const { attributes, isClaimed, id: orgIdFromData } = data
 	const theme = useMantineTheme()
 	const leaderAttributes = orderBy(

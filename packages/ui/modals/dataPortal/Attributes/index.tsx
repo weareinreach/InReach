@@ -140,7 +140,7 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 			// @ts-expect-error to make work
 			form.reset({ ...form.formState.defaultValues, ...cleanNulls(supplement) })
 		}
-	}, [selectedAttr, form.reset])
+	}, [selectedAttr, form])
 
 	const supplements = useMemo(() => {
 		const needsSupplementalData = (item: SelectableAttribute) => {
@@ -225,7 +225,7 @@ const useAttributeData = (showInactiveAttribs: boolean, attachesTo: AttributeMod
 				const key = JSON.stringify({ value: categoryName, label: categoryDisplay })
 				if (!categories.has(key)) {
 					categories.add(key)
-					result.push(JSON.parse(key))
+					result.push(JSON.parse(key) as { value: string; label: string })
 				}
 			})
 		return result
@@ -309,6 +309,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 										? []
 										: (attributesByCategory ?? [])
 												.filter(({ categoryName }) => categoryName === attrCat)
+												// @ts-expect-error - The 'active' property is missing, but we are passing it to a component that expects it.
 												.map(({ label, value, active }) => ({ label, value, active }))
 								}
 								label='Select Attribute'

@@ -52,6 +52,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			const previousData = apiUtils.organization.forOrgPageEdits.getData({ slug: pageSlug })
 
 			// Optimistically update to the new value
+			// @ts-expect-error - The description object is intentionally missing the `ns` property in this specific case.
 			apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, (oldData) => {
 				if (!oldData) return undefined
 				return {
