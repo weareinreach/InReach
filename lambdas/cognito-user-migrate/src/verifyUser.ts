@@ -39,7 +39,7 @@ export const verifyUser: VerifyUser = async (email, password) => {
 	} catch (error) {
 		if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
 			logger.error(`User not found: ${email}`)
-			throw new Error(`User not found: ${email}`)
+			throw new Error('User does not exist')
 		}
 		if (error instanceof Error) {
 			logger.error({ message: error.message }, { name: error.name, stack: error.stack })

@@ -165,21 +165,38 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 		})
 		const pwResetHandler = api.user.resetPassword.useMutation({
 			onSuccess: () => setSuccess(true),
-			onError: () => setError(true),
+			onError: (err) => {
+				// This line is for developer debugging in the console.
+				console.error('Password reset failed:', err)
+				// This line triggers the UI to show the error message.
+				setError(true)
+			},
 		})
 
 		const [opened, handler] = useDisclosure(autoOpen)
+		const { query, pathname, replace } = router
 		useEffect(() => {
-			const parsedParams = DataSchema.safeParse(router.query)
-			if (router.query.r !== undefined && parsedParams.success) {
+			// This effect should only run when the component mounts with the autoOpen flag.
+			// It populates the form with data from the URL and ensures the modal is open.
+			const parsedParams = DataSchema.safeParse(query)
+			if (autoOpen && parsedParams.success) {
 				passwordResetForm.setValues({ data: parsedParams.data.r, code: parsedParams.data.code })
 				handler.open()
 			}
-		}, [DataSchema, handler, passwordResetForm, router.query, router.query.r])
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [autoOpen, query]) // We only want this to run when autoOpen status or query changes.
+
+		const handleClose = useCallback(() => {
+			handler.close()
+			setSuccess(false)
+			setError(false)
+			// @ts-expect-error pathname is a string
+			replace(pathname, undefined, { shallow: true })
+		}, [handler, replace, pathname])
 
 		const modalTitle = useMemo(
-			() => <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />,
-			[handler]
+			() => <ModalTitle breadcrumb={{ option: 'close', onClick: handleClose }} />,
+			[handleClose]
 		)
 
 		const handlePwResetSubmit = useCallback(() => {
@@ -268,7 +285,7 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 
 		return (
 			<>
-				<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
+				<Modal title={modalTitle} opened={opened} onClose={handleClose} fullScreen={isMobile}>
 					{renderBody}
 				</Modal>
 				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
