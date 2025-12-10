@@ -40,13 +40,8 @@ export const handler: UserMigrationTriggerHandler = async (event: UserMigrationT
 					throw new Error('Bad password')
 				}
 			} catch (error) {
-				if (error instanceof Error) {
-					logger.error({ message: error.message }, { name: error.name, stack: error.stack })
-				}
-				if (typeof error === 'string') {
-					logger.error(error)
-					throw new Error(error)
-				}
+				// Let the specific error from verifyUser propagate up to Cognito.
+				logger.error('Error during UserMigration_Authentication', { error })
 				throw error
 			}
 
@@ -66,13 +61,8 @@ export const handler: UserMigrationTriggerHandler = async (event: UserMigrationT
 					throw new Error('Bad password')
 				}
 			} catch (error) {
-				if (error instanceof Error) {
-					logger.error({ message: error.message }, { name: error.name, stack: error.stack })
-				}
-				if (typeof error === 'string') {
-					logger.error(error)
-					throw new Error(error)
-				}
+				// Let the specific error from getUser propagate up to Cognito.
+				logger.error('Error during UserMigration_ForgotPassword', { error })
 				throw error
 			}
 

@@ -14,7 +14,7 @@ export const getUser: GetUser = async (email) => {
 	} catch (error) {
 		if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
 			logger.error(`User not found: ${email}`)
-			throw new Error('User not found')
+			throw new Error('User does not exist')
 		}
 		throw error
 	}
