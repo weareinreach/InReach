@@ -164,7 +164,7 @@ export const getStaticProps: GetStaticProps<
 	}
 
 	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId.id]),
+		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', 'user', orgId.id]),
 		ssg.organization.getNameFromSlug.prefetch(slug),
 		// ssg.organization.getIdFromSlug.prefetch({ slug }),
 	])

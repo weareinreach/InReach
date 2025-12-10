@@ -201,7 +201,7 @@ export const getStaticProps: GetStaticProps<
 		}
 
 		const [i18n] = await Promise.allSettled([
-			getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId.id]),
+			getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', 'user', orgId.id]),
 			ssg.location.forLocationPage.prefetch({ id: orgLocationId }),
 			ssg.organization.forLocationPage.prefetch({ slug }),
 			ssg.location.getAlerts.prefetch({ id: orgLocationId }),

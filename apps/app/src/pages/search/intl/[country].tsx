@@ -165,7 +165,7 @@ export const getStaticProps: GetStaticProps<
 
 	const ssg = await trpcServerClient({ session: null })
 	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['services', 'common', 'attribute']),
+		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'user']),
 		ssg.organization.getIntlCrisis.prefetch({ cca2: parsedQuery.data.country }),
 	])
 	const props = {

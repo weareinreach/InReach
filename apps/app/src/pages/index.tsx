@@ -351,7 +351,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const ssg = await trpcServerClient({ session: null })
 
 	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['common', 'landingPage', 'attribute']),
+		getServerSideTranslations(locale, ['common', 'landingPage', 'attribute', 'user']),
 		ssg.review.getFeatured.prefetch(3),
 	])
 

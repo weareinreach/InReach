@@ -217,7 +217,7 @@ export const getServerSideProps: GetServerSideProps<{ organizationId: string }, 
 	const [i18n] = await Promise.all([
 		getServerSideTranslations(
 			locale,
-			compact(['common', 'services', 'attribute', 'phone-type', 'gov-dist', organizationId])
+			compact(['common', 'services', 'attribute', 'phone-type', 'gov-dist', 'user', organizationId])
 		),
 		ssg.organization.forOrgPageEdits.prefetch({ slug }),
 		ssg.fieldOpt.countries.prefetch({ activeForOrgs: true }),

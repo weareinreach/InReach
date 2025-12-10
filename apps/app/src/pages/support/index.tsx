@@ -125,7 +125,7 @@ const SupportPage = () => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	return {
 		props: {
-			...(await getServerSideTranslations(locale, ['common', 'attribute'])),
+			...(await getServerSideTranslations(locale, ['common', 'attribute', 'user'])),
 		},
 	}
 }
