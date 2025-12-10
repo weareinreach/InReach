@@ -145,7 +145,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, req, res 
 	return {
 		props: {
 			session,
-			...(await getServerSideTranslations(locale, ['common', 'attribute'])),
+			...(await getServerSideTranslations(locale, ['common', 'attribute', 'user'])),
 		},
 	}
 }
