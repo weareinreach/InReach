@@ -29,4 +29,5 @@ export * from './2025-03-01_update-locationbased-alert-string-add-emoji'
 export * from './2025-03-05_update-attribute-values-asl'
 export * from './2025-03-05_update-attribute-values-lang-inter'
 export * from './2025-03-05_update-nationwide-locationbased-alert'
+export * from './2025-12-10_add_mexico_city_as_state'
 // codegen:end
