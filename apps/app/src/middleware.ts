@@ -17,16 +17,17 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 	const session = req.cookies.get('inreach-session') ?? res.cookies.get('inreach-session')
 
 	if (req.nextUrl.pathname.startsWith('/search') && !req.nextUrl.pathname.startsWith('/search/intl')) {
-		const activeCountries = await get<string[]>('activeCountries')
-		const searchedCountry = req.nextUrl.pathname.split('/').at(2)
-		if (searchedCountry && !activeCountries?.includes(searchedCountry)) {
+		const activeCountries = (await get<string[]>('activeCountries')) ?? ['US', 'CA', 'MX']
+		const pathParts = req.nextUrl.pathname.split('/')
+		const searchedCountry = pathParts[2]
+		if (
+			searchedCountry &&
+			searchedCountry.length === 2 &&
+			!activeCountries?.includes(searchedCountry.toUpperCase())
+		) {
 			const url = req.nextUrl.clone()
-			if (searchedCountry === 'dist') {
-				url.pathname = url.pathname.replace(/\/dist\//, '/US/')
-			} else {
-				url.searchParams.forEach((_v, k) => url.searchParams.delete(k))
-				url.pathname = `/search/intl/${searchedCountry}`
-			}
+			url.searchParams.forEach((_v, k) => url.searchParams.delete(k))
+			url.pathname = `/search/intl/${searchedCountry.toUpperCase()}`
 			const redirected = NextResponse.redirect(url)
 			if (session) {
 				redirected.cookies.set('inreach-session', session.value)
@@ -34,10 +35,8 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 
 			return redirected
 		}
-		return res
-	} else {
-		return res
 	}
+	return res
 }
 
 export const config = {
