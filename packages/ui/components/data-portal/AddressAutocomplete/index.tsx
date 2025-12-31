@@ -79,26 +79,24 @@ const CountryItem = forwardRef<HTMLDivElement, CountryItem>(({ label, flag, ...p
 })
 CountryItem.displayName = 'CountryItem'
 
-export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
+export const AddressAutocomplete = <T extends AddressSchema>({
 	name = 'address' as Path<T>,
+	addressVisibility,
 }: AddressAutocompleteProps<T>) => {
 	const apiUtils = api.useUtils()
 	const form = useFormContext<T>()
 	const { control } = form
-	const formValues = useWatch<T>({
-		control,
-	})
-	const { addressVisibility } = formValues
 	const previousAddressVisibility = usePrevious(addressVisibility)
 	const getFieldName = (field: keyof AddressSchema['address'] | keyof AddressSchema) =>
-		(field === 'addressVisibility' ? field : `${name}.${field}`) as Path<T>
+		(field === 'addressVisibility' ? field : `${name}.${field}`) as Path<T> //
+	const selectedCountryId = useWatch({ control, name: getFieldName('countryId') })
 
 	const [searchTerm, setSearchTerm] = useState<string>('')
 	const [search] = useDebouncedValue(searchTerm, 200)
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
 	const { t, i18n } = useTranslation(['gov-dist'])
 
-	const disableFieldUntilCountry = !formValues.address?.countryId
+	const disableFieldUntilCountry = !selectedCountryId
 	const visibilityIsFull = addressVisibility === AddressVisibility.FULL
 
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
@@ -125,14 +123,12 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 	)
 
 	const govDistOptions = useMemo(() => {
-		const selectedCountryId = formValues.address?.countryId
 		if (typeof selectedCountryId !== 'string') {
 			return []
 		}
-		const govDistItems =
-			countryOptions?.find(({ value: countryId }) => countryId === selectedCountryId)?.govDist ?? []
+		const govDistItems = countryOptions?.find(({ value }) => value === selectedCountryId)?.govDist ?? []
 		return govDistItems
-	}, [countryOptions, formValues.address?.countryId])
+	}, [countryOptions, selectedCountryId])
 
 	const setFormValue = useCallback(
 		(fieldName: Path<T>, value: FieldPathValue<T, typeof fieldName>) => {
@@ -141,10 +137,15 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 		[form]
 	)
 
+	const selectedCountryCca2 = useMemo(() => {
+		if (!selectedCountryId || !countryOptions) return undefined
+		return countryOptions.find((c) => c.value === selectedCountryId)?.cca2
+	}, [countryOptions, selectedCountryId])
+
 	const { data: autoCompleteSearch } = api.geo.autocomplete.useQuery(
-		{ search, fullAddress: visibilityIsFull },
+		{ search, fullAddress: true, locale: selectedCountryCca2 },
 		{
-			enabled: search !== '',
+			enabled: search !== '' && !!selectedCountryCca2,
 			refetchOnWindowFocus: false,
 		}
 	)
@@ -164,28 +165,37 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 					? compact([result.streetNumber, result.streetName]).join(' ')
 					: undefined
 
-			// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-			const valuesToSet = {
-				...formValues.address,
-				...(isFullAddress && {
-					street1: formattedStreet1,
-					street2: result.street2,
-				}),
-				city: result.city,
-				postCode: isFullAddress ? result.postCode : null,
-				...(country && { countryId: country.value }),
-				...(govDist && { govDistId: govDist.value }),
-				latitude: result.geometry.location.lat,
-				longitude: result.geometry.location.lng,
-				geoWKT: createWktFromLatLng({
+			if (isFullAddress) {
+				setFormValue(getFieldName('street1'), formattedStreet1 as FieldPathValue<T, Path<T>>)
+				setFormValue(getFieldName('street2'), result.street2 as FieldPathValue<T, Path<T>>)
+				setFormValue(getFieldName('postCode'), result.postCode as FieldPathValue<T, Path<T>>)
+			} else {
+				setFormValue(getFieldName('postCode'), null as FieldPathValue<T, Path<T>>)
+			}
+
+			setFormValue(getFieldName('city'), result.city as FieldPathValue<T, Path<T>>)
+			if (country) setFormValue(getFieldName('countryId'), country.value as FieldPathValue<T, Path<T>>)
+			if (govDist) setFormValue(getFieldName('govDistId'), govDist.value as FieldPathValue<T, Path<T>>)
+			setFormValue(getFieldName('latitude'), result.geometry.location.lat as FieldPathValue<T, Path<T>>)
+			setFormValue(getFieldName('longitude'), result.geometry.location.lng as FieldPathValue<T, Path<T>>)
+			setFormValue(
+				getFieldName('geoWKT'),
+				createWktFromLatLng({
 					latitude: result.geometry.location.lat,
 					longitude: result.geometry.location.lng,
-				}),
-			} as FieldPathValue<T, typeof name>
-			setFormValue(name, valuesToSet)
+				}) as FieldPathValue<T, Path<T>>
+			)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [geoCodedAddress])
+	}, [
+		geoCodedAddress,
+		addressVisibility,
+		countryOptions,
+		setFormValue,
+		getFieldName,
+		i18n.language,
+		t,
+		govDistOptions,
+	])
 
 	const handleAutocompleteSelection = useCallback(
 		(item: AutocompleteItem) => {
@@ -208,9 +218,13 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 				case AddressVisibility.FULL: {
 					const { street1, street2, city, postCode } = currentFormValues
 					const searchTerms = compact([street1, street2, city, postCode]).join(', ')
+					if (!searchTerms) {
+						break
+					}
 					const { results: autocompleteResults } = await apiUtils.geo.autocomplete.fetch({
-						search: searchTerms,
+						search: searchTerms, //
 						fullAddress: true,
+						locale: selectedCountryCca2,
 					})
 					const placeId =
 						autocompleteResults.length >= 1 && autocompleteResults.at(0)?.placeId
@@ -242,61 +256,39 @@ export const AddressAutocomplete = <T extends AddressSchema = AddressSchema>({
 				}
 			}
 		},
-		[apiUtils, name]
+		[apiUtils, name, selectedCountryCca2]
 	)
 
 	useEffect(() => {
-		if (formValues.addressVisibility && formValues.addressVisibility !== previousAddressVisibility) {
-			getAndSetCoords(form, formValues.addressVisibility)
+		if (addressVisibility && addressVisibility !== previousAddressVisibility) {
+			getAndSetCoords(form, addressVisibility)
 		}
-	}, [form, formValues.addressVisibility, getAndSetCoords, previousAddressVisibility])
+	}, [form, addressVisibility, getAndSetCoords, previousAddressVisibility])
 
-	const Street1Input =
-		addressVisibility === AddressVisibility.FULL ? (
-			<Autocomplete
-				itemComponent={AutoCompleteItem}
-				data={autoCompleteSearch?.results ?? []}
-				label='Address'
-				withinPortal
-				onItemSubmit={handleAutocompleteSelection}
-				control={control}
-				name={getFieldName('street1')}
-				onChange={setSearchTerm}
-				disabled={disableFieldUntilCountry}
-				required
-			/>
-		) : (
-			<TextInput
-				label='Address'
-				control={control}
-				name={getFieldName('street1')}
-				disabled={disableFieldUntilCountry}
-			/>
-		)
+	const Street1Input = (
+		<Autocomplete
+			itemComponent={AutoCompleteItem}
+			data={autoCompleteSearch?.results ?? []}
+			label='Address'
+			withinPortal
+			onItemSubmit={handleAutocompleteSelection}
+			control={control}
+			name={getFieldName('street1')}
+			onChange={setSearchTerm}
+			disabled={disableFieldUntilCountry}
+			required
+		/>
+	)
 
-	const CityInput =
-		addressVisibility === AddressVisibility.FULL ? (
-			<TextInput
-				label='City'
-				required
-				control={control}
-				name={getFieldName('city')}
-				disabled={disableFieldUntilCountry}
-			/>
-		) : (
-			<Autocomplete
-				itemComponent={AutoCompleteItem}
-				data={autoCompleteSearch?.results ?? []}
-				label='City'
-				withinPortal
-				onItemSubmit={handleAutocompleteSelection}
-				control={control}
-				name={getFieldName('city')}
-				onChange={setSearchTerm}
-				disabled={disableFieldUntilCountry}
-				required
-			/>
-		)
+	const CityInput = (
+		<TextInput
+			label='City'
+			required
+			control={control}
+			name={getFieldName('city')}
+			disabled={disableFieldUntilCountry}
+		/>
+	)
 
 	return (
 		<Stack w='100%'>
@@ -373,7 +365,9 @@ interface AddressSchema {
 	addressVisibility: AddressVisibility
 }
 
-export interface AddressAutocompleteProps<T extends FieldValues> extends UseControllerProps<T> {}
+export interface AddressAutocompleteProps<T extends FieldValues> extends UseControllerProps<T> {
+	addressVisibility?: AddressVisibility
+}
 
 interface AutocompleteItem {
 	value: string

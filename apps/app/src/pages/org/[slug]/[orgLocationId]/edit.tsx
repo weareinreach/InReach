@@ -271,6 +271,7 @@ export const getServerSideProps: GetServerSideProps<
 			'phone-type',
 			'country',
 			'gov-dist',
+			'user',
 			orgId,
 		]),
 		ssg.location.forLocationPageEdits.prefetch({ id }),

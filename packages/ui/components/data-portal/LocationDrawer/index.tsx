@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Drawer, Group, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { forwardRef, useCallback, useEffect, useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, useForm, useWatch } from 'react-hook-form'
 import { Select, TextInput } from 'react-hook-form-mantine'
 
 import { type TCreateSchema, ZCreateSchema } from '@weareinreach/api/router/location/mutation.create.schema'
@@ -21,6 +21,12 @@ const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = 
 	{ value: AddressVisibility.HIDDEN, label: 'Hide address' },
 ]
 
+const WatchedAddressAutocomplete = () => {
+	const addressVisibility = useWatch<TCreateSchema>({ name: 'addressVisibility' })
+	// @ts-expect-error trust the address visibility
+	return <AddressAutocomplete name='address' addressVisibility={addressVisibility} />
+}
+
 export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
 	const { id: orgId } = useOrgInfo()
 	const notifySave = useNewNotification({ displayText: 'Location has been created', icon: 'success' })
@@ -32,7 +38,9 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	const form = useForm<TCreateSchema>({
 		resolver: zodResolver(ZCreateSchema),
 		defaultValues: {
-			addressVisibility: AddressVisibility.FULL,
+			name: '',
+			addressVisibility: AddressVisibility.FULL, //
+			orgId,
 		},
 	})
 	const createLocation = api.location.create.useMutation({
@@ -46,17 +54,10 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			form.reset()
 		},
 	})
-	useEffect(() => {
-		const formValues = form.getValues()
-		if (orgId && formValues.orgId !== orgId) {
-			form.setValue('orgId', orgId)
-		}
-	}, [form, orgId])
 
-	const handleSave = useCallback(() => {
-		const valuesToSubmit = form.getValues()
-		createLocation.mutate(valuesToSubmit)
-	}, [createLocation, form])
+	const handleSave = (values: TCreateSchema) => {
+		createLocation.mutate(values)
+	}
 
 	const handleCloseAndDiscard = useCallback(() => {
 		form.reset()
@@ -72,6 +73,12 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 		}
 	}, [drawerHandler, form.formState.isDirty, modalHandler])
 
+	useEffect(() => {
+		if (drawerOpened) {
+			form.reset()
+		}
+	}, [drawerOpened, form])
+
 	return (
 		<FormProvider {...form}>
 			<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right'>
@@ -81,11 +88,11 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 						<Group noWrap position='apart' w='100%'>
 							<Breadcrumb option='close' onClick={handleClose} />
 							<Button
-								variant='primary-icon'
+								variant='primary'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
-								onClick={handleSave}
+								onClick={form.handleSubmit(handleSave)}
 								loading={createLocation.isLoading}
-								disabled={!form.formState.isDirty}
+								disabled={!form.formState.isDirty || !form.formState.isValid}
 							>
 								Save
 							</Button>
@@ -102,7 +109,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 								name='addressVisibility'
 								data={addressVisibilityOptions}
 							/>
-							<AddressAutocomplete name='address' />
+							<WatchedAddressAutocomplete />
 						</Stack>
 					</Drawer.Body>
 					<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
@@ -112,8 +119,8 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 								<Button
 									variant='primary-icon'
 									leftIcon={<Icon icon='carbon:save' />}
-									loading={createLocation.isLoading}
-									onClick={handleSave}
+									loading={createLocation.isLoading} // This should be form.handleSubmit(handleSave)
+									onClick={form.handleSubmit(handleSave)}
 								>
 									Save
 								</Button>

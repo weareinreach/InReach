@@ -302,7 +302,7 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	const ssg = await trpcServerClient({ req, res })
 
 	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['services', 'common', 'attribute']),
+		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'user']),
 		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
 		ssg.organization.getNatlCrisis.prefetch({ cca2: country }),
 		ssg.service.getFilterOptions.prefetch(),
