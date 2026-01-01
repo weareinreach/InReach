@@ -1,8 +1,10 @@
 import { Divider, Flex, Grid, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type ReactNode } from 'react'
+import { type ReactNode, useEffect } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
@@ -37,6 +39,14 @@ interface SupportItemProps {
 const SupportPage = () => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
+	const router = useRouter()
+	const isDesktop = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`)
+
+	useEffect(() => {
+		if (isDesktop) {
+			void router.replace('/')
+		}
+	}, [isDesktop, router])
 
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
