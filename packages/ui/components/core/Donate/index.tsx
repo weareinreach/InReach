@@ -97,56 +97,56 @@ export const DonateModal = () => {
 
 	const isSupportPage = router.pathname === '/support'
 	const isMainPage = router.pathname === '/'
-	const showPopover = !(isSupportPage || isMainPage) && (opened || !showEmoji)
+	const shouldRenderButton = !(isSupportPage || isMainPage)
+	const showPopover = opened || !showEmoji
 
 	return (
 		<>
-			<Popover
-				opened={showPopover}
-				withArrow
-				position='top-end'
-				closeOnClickOutside={false}
-				closeOnEscape={false}
-				keepMounted
-				arrowPosition='center'
-				arrowSize={12}
-				middlewares={{ inline: true, shift: true, flip: false }}
-				withinPortal
-				// width={isMobile ? width - 40 : undefined}
-				styles={{ dropdown: { maxWidth: '90vw', textAlign: 'center' } }}
-				shadow='xl'
-				zIndex={200}
-			>
-				<Popover.Target>
-					<Affix
-						position={buttonPosition}
-						style={{ display: isSupportPage || isMainPage ? 'none' : undefined }}
-					>
-						<Button
-							className={cx(
-								// 'kindful-donate-btn',
-								{ [classes.bounce]: !showEmoji },
-								{
-									[classes.shrink]: showEmoji,
-								}
-							)}
-							variant={variant.Button.primarySm}
-							bg={theme.other.colors.primary.allyGreen}
-							styles={{
-								inner: { color: theme.other.colors.secondary.black },
-							}}
-							onMouseEnter={handler.open}
-							onMouseLeave={handler.close}
-							onClick={buttonHandler}
-						>
-							{showEmoji ? donateEmoji : t('words.donate')}
-						</Button>
-					</Affix>
-				</Popover.Target>
-				<Popover.Dropdown>
-					<Text variant={variant.Text.utility1}>{t(showEmoji ? 'donate.hover' : 'donate.popup')}</Text>
-				</Popover.Dropdown>
-			</Popover>
+			{shouldRenderButton && (
+				<Popover
+					opened={showPopover}
+					withArrow
+					position='top-end'
+					closeOnClickOutside={false}
+					closeOnEscape={false}
+					keepMounted
+					arrowPosition='center'
+					arrowSize={12}
+					middlewares={{ inline: true, shift: true, flip: false }}
+					withinPortal
+					// width={isMobile ? width - 40 : undefined}
+					styles={{ dropdown: { maxWidth: '90vw', textAlign: 'center' } }}
+					shadow='xl'
+					zIndex={200}
+				>
+					<Popover.Target>
+						<Affix position={buttonPosition}>
+							<Button
+								className={cx(
+									// 'kindful-donate-btn',
+									{ [classes.bounce]: !showEmoji },
+									{
+										[classes.shrink]: showEmoji,
+									}
+								)}
+								variant={variant.Button.primarySm}
+								bg={theme.other.colors.primary.allyGreen}
+								styles={{
+									inner: { color: theme.other.colors.secondary.black },
+								}}
+								onMouseEnter={handler.open}
+								onMouseLeave={handler.close}
+								onClick={buttonHandler}
+							>
+								{showEmoji ? donateEmoji : t('words.donate')}
+							</Button>
+						</Affix>
+					</Popover.Target>
+					<Popover.Dropdown>
+						<Text variant={variant.Text.utility1}>{t(showEmoji ? 'donate.hover' : 'donate.popup')}</Text>
+					</Popover.Dropdown>
+				</Popover>
+			)}
 			<Modal.Root
 				opened={modalOpened}
 				onClose={modalHandler.close}
