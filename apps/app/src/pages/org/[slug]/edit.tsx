@@ -1,5 +1,4 @@
 import { Grid, Stack } from '@mantine/core'
-import { useElementSize } from '@mantine/hooks'
 import { t } from 'i18next'
 import compact from 'just-compact'
 import { type InferGetServerSidePropsType } from 'next'
@@ -12,7 +11,6 @@ import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
-import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { LocationDrawer } from '@weareinreach/ui/components/data-portal/LocationDrawer'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { DataToolbar } from '@weareinreach/ui/components/sections/DataToolbar'
@@ -122,7 +120,6 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			select: (result) => result.length !== 0,
 		}
 	)
-	const { ref, width } = useElementSize()
 	useEffect(() => {
 		if (data && status === 'success') {
 			setLoading(false)
@@ -169,15 +166,6 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 				<Grid.Col order={2}>
 					<Stack spacing={40}>
 						<ContactSection role='org' parentId={data.id} edit />
-						<Stack ref={ref} miw='100%'>
-							{!!width && (
-								<GoogleMap
-									locationIds={locations.map(({ id }) => id)}
-									width={width}
-									height={Math.floor(width * 1.185)}
-								/>
-							)}
-						</Stack>
 					</Stack>
 				</Grid.Col>
 			</FormProvider>
