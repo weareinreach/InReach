@@ -81,7 +81,7 @@ export const Footer = () => {
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
 	const support = [
 		<DonateLink key='donate' href='https://inreach.kindful.com/' external {...linkVar}>
-			{t('footer.donate', { defaultValue: 'Donate to InReach 💝' })}
+			{t('donate.to-inreach', { defaultValue: 'Donate to InReach 💝' })}
 		</DonateLink>,
 		<Link
 			key={0}
