@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'
 import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { bounce } from '~ui/theme/animation'
@@ -23,11 +24,20 @@ const useStyles = createStyles((theme) => ({
 	},
 	modalBody: {
 		padding: rem(0),
+		width: '100% !important',
+		height: 'auto !important',
 		[theme.fn.largerThan('xs')]: {
 			padding: `${rem(0)} ${rem(0)}`,
 		},
 		[theme.fn.largerThan('sm')]: {
 			padding: `${rem(0)} ${rem(0)}`,
+		},
+		'& > iframe': {
+			height: '70vh !important',
+			minHeight: rem(500),
+		},
+		'& > iframe:nth-of-type(n+2)': {
+			display: 'none',
 		},
 	},
 }))
@@ -39,7 +49,7 @@ export const DonateModal = () => {
 	const router = useRouter()
 	const variant = useCustomVariant()
 	const theme = useMantineTheme()
-	const { classes, cx } = useStyles()
+	const { classes, cx } = useStyles() // classes used for button styles
 	const { isMobile } = useScreenSize()
 	const donateEmoji = '💝'
 	const [showEmoji, setShowEmoji] = useState(false)
@@ -70,6 +80,12 @@ export const DonateModal = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 	useEffect(() => {
+		const handleOpen = () => modalHandler.open()
+		window.addEventListener('open-donate-modal', handleOpen)
+		return () => window.removeEventListener('open-donate-modal', handleOpen)
+	}, [modalHandler])
+
+	useEffect(() => {
 		start()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -81,62 +97,63 @@ export const DonateModal = () => {
 
 	const isSupportPage = router.pathname === '/support'
 	const isMainPage = router.pathname === '/'
-	const showPopover = !(isSupportPage || isMainPage) && (opened || !showEmoji)
+	const shouldRenderButton = !(isSupportPage || isMainPage)
+	const showPopover = opened || !showEmoji
 
 	return (
 		<>
-			<Popover
-				opened={showPopover}
-				withArrow
-				position='top-end'
-				closeOnClickOutside={false}
-				closeOnEscape={false}
-				keepMounted
-				arrowPosition='center'
-				arrowSize={12}
-				middlewares={{ inline: true, shift: true, flip: false }}
-				withinPortal
-				// width={isMobile ? width - 40 : undefined}
-				styles={{ dropdown: { maxWidth: '90vw', textAlign: 'center' } }}
-				shadow='xl'
-				zIndex={200}
-			>
-				<Popover.Target>
-					<Affix
-						position={buttonPosition}
-						style={{ display: isSupportPage || isMainPage ? 'none' : undefined }}
-					>
-						<Button
-							className={cx(
-								// 'kindful-donate-btn',
-								{ [classes.bounce]: !showEmoji },
-								{
-									[classes.shrink]: showEmoji,
-								}
-							)}
-							variant={variant.Button.primarySm}
-							bg={theme.other.colors.primary.allyGreen}
-							styles={{
-								inner: { color: theme.other.colors.secondary.black },
-							}}
-							onMouseEnter={handler.open}
-							onMouseLeave={handler.close}
-							onClick={buttonHandler}
-						>
-							{showEmoji ? donateEmoji : t('words.donate')}
-						</Button>
-					</Affix>
-				</Popover.Target>
-				<Popover.Dropdown>
-					<Text variant={variant.Text.utility1}>{t(showEmoji ? 'donate.hover' : 'donate.popup')}</Text>
-				</Popover.Dropdown>
-			</Popover>
+			{shouldRenderButton && (
+				<Popover
+					opened={showPopover}
+					withArrow
+					position='top-end'
+					closeOnClickOutside={false}
+					closeOnEscape={false}
+					keepMounted
+					arrowPosition='center'
+					arrowSize={12}
+					middlewares={{ inline: true, shift: true, flip: false }}
+					withinPortal
+					// width={isMobile ? width - 40 : undefined}
+					styles={{ dropdown: { maxWidth: '90vw', textAlign: 'center' } }}
+					shadow='xl'
+					zIndex={200}
+				>
+					<Popover.Target>
+						<Affix position={buttonPosition}>
+							<Button
+								className={cx(
+									// 'kindful-donate-btn',
+									{ [classes.bounce]: !showEmoji },
+									{
+										[classes.shrink]: showEmoji,
+									}
+								)}
+								variant={variant.Button.primarySm}
+								bg={theme.other.colors.primary.allyGreen}
+								styles={{
+									inner: { color: theme.other.colors.secondary.black },
+								}}
+								onMouseEnter={handler.open}
+								onMouseLeave={handler.close}
+								onClick={buttonHandler}
+							>
+								{showEmoji ? donateEmoji : t('words.donate')}
+							</Button>
+						</Affix>
+					</Popover.Target>
+					<Popover.Dropdown>
+						<Text variant={variant.Text.utility1}>{t(showEmoji ? 'donate.hover' : 'donate.popup')}</Text>
+					</Popover.Dropdown>
+				</Popover>
+			)}
 			<Modal.Root
 				opened={modalOpened}
 				onClose={modalHandler.close}
-				styles={{ content: { minWidth: 'unset !important' } }}
 				keepMounted
 				fullScreen={isMobile}
+				size='md'
+				centered
 			>
 				<Modal.Overlay />
 				<Modal.Content>
@@ -149,7 +166,7 @@ export const DonateModal = () => {
 					<Modal.Body
 						id='kindful-donate-form-9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b'
 						className={cx('kindful-embed-wrapper', classes.modalBody)}
-						style={{ paddingLeft: '0 !important', paddingRight: '0 !important' }}
+						style={{ padding: '0 !important' }}
 					></Modal.Body>
 				</Modal.Content>
 			</Modal.Root>
@@ -161,5 +178,40 @@ export const DonateModal = () => {
 				data-styles-off='true'
 			/>
 		</>
+	)
+}
+
+export const DonateLink = ({ children, ...props }: React.ComponentProps<typeof Link>) => {
+	const router = useRouter()
+	const { isMobile } = useScreenSize()
+	const [isMobileApp, setIsMobileApp] = useState(false)
+
+	useEffect(() => {
+		if (router.query.isMobileApp) {
+			setIsMobileApp(true)
+		}
+	}, [router.query.isMobileApp])
+
+	const handleClick = useCallback(
+		(e: React.MouseEvent<HTMLAnchorElement>) => {
+			e.preventDefault()
+			donateEvent.click()
+			if (isMobile && isMobileApp) {
+				window.open(
+					'https://inreach.kindful.com/embeds/9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b',
+					'_blank',
+					'noopener'
+				)
+			} else {
+				window.dispatchEvent(new Event('open-donate-modal'))
+			}
+		},
+		[isMobile, isMobileApp]
+	)
+
+	return (
+		<Link {...props} onClick={handleClick}>
+			{children}
+		</Link>
 	)
 }
