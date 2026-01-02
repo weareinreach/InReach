@@ -88,7 +88,7 @@ export const MobileLangPicker = ({ children }: MobileLangPickerProps) => {
 							</UnstyledButton>
 						))}
 					</Box>
-					<Box p='md'>
+					<Box p='md' pb={`calc(${rem(16)} + env(safe-area-inset-bottom))`}>
 						<Button fullWidth onClick={handleSave} variant={variants.Button.primaryLg}>
 							{t('language_update_button')}
 						</Button>
