@@ -18,7 +18,7 @@ interface MobileLangPickerProps {
 const useStyles = createStyles((theme) => ({
 	langBtn: {
 		width: '100%',
-		padding: `${rem(16)} 0`,
+		padding: `${rem(16)} ${rem(16)}`,
 		borderBottom: `1px solid ${theme.other.colors.tertiary.coolGray}`,
 		display: 'flex',
 		justifyContent: 'space-between',
@@ -63,29 +63,32 @@ export const MobileLangPicker = ({ children }: MobileLangPickerProps) => {
 				fullScreen
 				withCloseButton={false}
 				title={<ModalTitle breadcrumb={{ option: 'close', onClick: close }} />}
-				styles={{
-					content: { display: 'flex', flexDirection: 'column' },
+				padding={0}
+				styles={(theme) => ({
+					content: { display: 'flex', flexDirection: 'column', backgroundColor: theme.white },
 					body: { flex: 1, overflow: 'hidden' },
-				}}
+				})}
 			>
 				<Flex direction='column' h='100%'>
-					<Stack align='center' spacing='md' pt='xl'>
-						<Title order={3}>{t('language_choose_mobile')}</Title>
-						<Text variant={variants.Text.utility1}>{t('language_translations')}</Text>
+					<Stack align='center' spacing='md' pt='xl' px='md'>
+						<Title order={2}>{t('language_choose_mobile')}</Title>
+						<Text variant={variants.Text.darkGray}>{t('language_select_preferred')}</Text>
 					</Stack>
 					<Box mt='xl' style={{ flex: 1, overflowY: 'auto' }}>
-						{translatedLangs.map((lang) => (
+						{translatedLangs?.map((lang) => (
 							<UnstyledButton
 								key={lang.localeCode}
 								className={classes.langBtn}
 								onClick={() => setSelectedLang(lang.localeCode)}
 							>
 								<Text variant={variants.Text.utility1}>{lang.nativeName}</Text>
-								{selectedLang === lang.localeCode && <Icon icon='carbon:checkmark' height={24} width={24} />}
+								{selectedLang === lang.localeCode && (
+									<Icon icon='carbon:checkmark-filled' height={24} width={24} />
+								)}
 							</UnstyledButton>
 						))}
 					</Box>
-					<Box pt='md'>
+					<Box p='md'>
 						<Button fullWidth onClick={handleSave} variant={variants.Button.primaryLg}>
 							{t('language_update_button')}
 						</Button>
