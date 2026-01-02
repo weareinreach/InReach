@@ -1,12 +1,15 @@
 import { Divider, Flex, Grid, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type ReactNode } from 'react'
+import { type ReactNode, useEffect } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
 import { Link } from '@weareinreach/ui/components/core/Link'
+import { MobileLangPicker } from '@weareinreach/ui/components/core/MobileLangPicker'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { Icon } from '@weareinreach/ui/icon'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -37,6 +40,14 @@ interface SupportItemProps {
 const SupportPage = () => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
+	const router = useRouter()
+	const isDesktop = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`)
+
+	useEffect(() => {
+		if (isDesktop) {
+			void router.replace('/')
+		}
+	}, [isDesktop, router])
 
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
@@ -53,6 +64,14 @@ const SupportPage = () => {
 			>
 				<SupportItem tKey='donate.to-inreach' />
 			</Link>,
+		],
+		[
+			8,
+			<MobileLangPicker key={8}>
+				<Link href='/' {...linkVar}>
+					<SupportItem tKey='language_choose_mobile' />
+				</Link>
+			</MobileLangPicker>,
 		],
 		[
 			0,
