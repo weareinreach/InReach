@@ -85,7 +85,7 @@
 		"elig-age_min": "De {{min}} para cima",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Elegibilidade por idade",
-		"elig-age_error": "Por favor, especifique uma faixa etária mínima ou máxima",
+		"elig-age_error": "Por favor, especifique a idade mínima, máxima ou uma faixa etária",
 		"other-describe": "Outros (descrição em texto livre)",
 		"req-medical-insurance": "EXIGE seguro de saúde",
 		"req-photo-id": "EXIGE um documento de identidade com foto",
@@ -96,8 +96,8 @@
 		"time-appointment-required": "Agendamento obrigatório"
 	},
 	"lang": {
-		"all-languages-by-interpreter": "Todos os idiomas através de intérpretes",
-		"american-sign-language": "Língua de sinais americana",
+		"all-languages-by-interpreter": "Assistência linguística disponível. Contacte-nos para mais informações.",
+		"american-sign-language": "Língua de sinais americana (ASL)",
 		"CATEGORYNAME": "Idiomas",
 		"lang-offered": "Idiomas específicos oferecidos"
 	},

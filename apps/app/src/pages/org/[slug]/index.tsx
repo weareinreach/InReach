@@ -1,7 +1,6 @@
 import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
-import { useElementSize, useMediaQuery } from '@mantine/hooks'
+import { useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticProps, type InferGetStaticPropsType } from 'next'
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -22,10 +21,6 @@ import { nsFormatter } from '@weareinreach/ui/lib/nsFormatter'
 import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-
-const GoogleMap = dynamic(() =>
-	import('@weareinreach/ui/components/core/GoogleMap').then((mod) => mod.GoogleMap)
-)
 
 const formatNS = nsFormatter(['common', 'services', 'attribute', 'phone-type'])
 const useStyles = createStyles((theme) => ({
@@ -61,7 +56,6 @@ const OrganizationPage = ({
 		}
 	)
 
-	const { ref, width } = useElementSize()
 	const { searchState } = useSearchState()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
@@ -115,23 +109,9 @@ const OrganizationPage = ({
 					</>
 				)
 			}
-			// Hide google map temporarily for 'sm' breakpoint
-			if (isTablet) {
-				return null
-			}
-			return (
-				<Stack ref={ref} miw='100%'>
-					{Boolean(width) && (
-						<GoogleMap
-							locationIds={locationData.map(({ id }) => id)}
-							width={width}
-							height={Math.floor(width * 1.185)}
-						/>
-					)}
-				</Stack>
-			)
+			return null
 		},
-		[isTablet, ref, width]
+		[isTablet]
 	)
 
 	if (pageFetchIsError && pageFetchError.data?.code === 'NOT_FOUND') {

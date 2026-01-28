@@ -6,6 +6,7 @@ import { type MouseEventHandler } from 'react'
 
 import InReach from '~ui/assets/inreach.svg'
 import Vercel from '~ui/assets/vercel.svg'
+import { DonateLink } from '~ui/components/core/Donate'
 import { type ExternalLink, type InternalLink, Link } from '~ui/components/core/Link'
 import { SocialLink } from '~ui/components/core/SocialLink'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -79,6 +80,9 @@ export const Footer = () => {
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
 	const support = [
+		<DonateLink key='donate' href='https://inreach.kindful.com/' external {...linkVar}>
+			{t('donate.to-inreach', { defaultValue: 'Donate to InReach 💝' })}
+		</DonateLink>,
 		<Link
 			key={0}
 			href='/suggest'

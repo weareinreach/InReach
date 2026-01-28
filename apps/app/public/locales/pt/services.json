@@ -52,7 +52,7 @@
 		"food-assistance": "Assistência alimentar",
 		"food-delivery": "Entrega de alimentos",
 		"food-pantries": "Despensas de alimentos",
-		"hot-meals": "refeições quentes",
+		"hot-meals": "Refeições quentes",
 		"nutrition-education": "Educação nutricional"
 	},
 	"housing": {
@@ -92,7 +92,7 @@
 		"immigration-detention": "Detenção de imigrantes",
 		"legal-advice": "Assessoria Jurídica",
 		"legal-hotlines": "Linhas diretas jurídicas",
-		"legal-info-referrals": "Informações legais e referências",
+		"legal-info-referrals": "Informações e encaminhamentos legais",
 		"name-and-gender-change": "Mudança de nome e marcador de gênero",
 		"refugee-claim": "Pedido de refúgio",
 		"residency": "Residência",
@@ -111,7 +111,7 @@
 		"fertility-and-family-planning-services": "Serviços de fertilidade e planejamento familiar",
 		"hiv-and-sexual-health": "HIV e saúde sexual",
 		"medical-clinics": "Clínicas médicas",
-		"medical-info-and-referrals": "Informações médicas e referências",
+		"medical-info-and-referrals": "Informações e encaminhamentos médicas",
 		"obgyn-services": "Serviços de obstetrícia e ginecologia",
 		"physical-evaluations-for-asylum-claim": "Avaliações físicas para pedido de asilo",
 		"physical-evaluations-for-refugee-claim": "Avaliações físicas para solicitação de refúgio",
@@ -122,14 +122,14 @@
 		"trans-health-hormone-therapy": "Saúde trans - terapia hormonal",
 		"trans-health-primary-care": "Saúde trans - atenção primária",
 		"trans-health-speech-therapy": "Saúde trans - terapia da fala",
-		"trans-health-youth-care": "Saúde de Trans - Cuidados com o jovem"
+		"trans-health-youth-care": "Cuidados para jovens trans"
 	},
 	"mental-health": {
 		"bipoc-support-groups": "Grupos de apoio para BIPOC/pessoas racializadas",
 		"CATEGORYNAME": "Saúde mental",
 		"family-support-groups": "Grupos de suporte familiar",
 		"hotlines": "Linhas diretas",
-		"mental-health-info-referrals": "Informações e indicações sobre saúde mental",
+		"mental-health-info-referrals": "Informações e encaminhamentos para a saúde mental",
 		"private-therapy-and-counseling": "Terapia e aconselhamento individuais",
 		"psychological-evaluations-for-asylum-claim": "Avaliações psicológicas para pedido de asilo",
 		"psychological-evaluations-for-refugee-claim": "Avaliações psicológicas para solicitação de refúgio",

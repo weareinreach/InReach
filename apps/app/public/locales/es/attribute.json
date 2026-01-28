@@ -85,7 +85,7 @@
 		"elig-age_min": "{{min}} y mayor",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Edad elegible",
-		"elig-age_error": "Por favor especifique min, max, o un rango de edad",
+		"elig-age_error": "Por favor especifica min, max, o un rango de edad",
 		"other-describe": "Otro (descripción de texto libre)",
 		"req-medical-insurance": "REQUIERE seguro médico",
 		"req-photo-id": "REQUIERE una identificación con foto",
