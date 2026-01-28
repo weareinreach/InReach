@@ -87,7 +87,7 @@
 		"natl-find-help-now": "Encontre ajuda agora",
 		"natl-these-verified": "<Text>Esses recursos verificados podem ajudar a comunidade LGBTQ+ nos Estados Unidos. Estes serviços são <strong>disponíveis remotamente, confidenciais,</strong> e <strong>gratuitos</strong>.</Text>",
 		"outside-service-area": "A inreach não opera em {{country}}",
-		"only-in-north-america": "O alcance só opera na América do Norte.",
+		"only-in-north-america": "A InReach opera apenas na América do Norte.",
 		"who-this-serves": "<Text><strong>A quem este recurso atende:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Localização atual",
@@ -166,7 +166,7 @@
 	"language_choose": "Por favor, escolha um idioma",
 	"language_common": "Idiomas comuns",
 	"language_select_preferred": "Selecione o idioma de sua preferência",
-	"language_translations": "Traduzido pelo Crowdin.",
+	"language_translations": "Traduzido por Crowdin.",
 	"language_update_button": "Atualizar idioma",
 	"law-practice-other": "Área de prática jurídica",
 	"law-practice-other-placeholder": "Especifique sua área de atuação jurídica",
@@ -272,15 +272,15 @@
 		"body": "Encontre mais informações sobre seus direitos.",
 		"buttons": {
 			"btn-1": {
-				"text": "Mapa de Risco Anti-Trans (Erin Re)",
-				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
+				"text": "Mapa de Risco Anti-Trans (Erin In The Morning)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-legal-risk-assessment"
 			},
 			"btn-2": {
-				"text": "Centro de Documentos ID (A4TE)",
+				"text": "Centro de Documentos de Identificação (A4TE)",
 				"link": "https://transequality.org/documents"
 			},
 			"btn-3": {
-				"text": "LGBTQ+ Direitos dos Imigrantes (Qualidade da Imigração)",
+				"text": "Direitos dos imigrantes LGBTQ+ (Igualdade na imigração)",
 				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
 			},
 			"btn-4": {
@@ -348,7 +348,7 @@
 	"show-less": "Mostrar menos",
 	"show-more": "Mostrar mais",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Bem-vindo à primeira plataforma tecnológica do mundo que combina pessoas LGBTQ+ que enfrentam perseguição ou discriminação com recursos seguros e verificados.</textDarkGray>\n</group>",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Bem-vinde à primeira plataforma open-source do mundo com recursos seguros e verificados para pessoas LGBTQ+ que enfrentam perseguição ou discriminação.</textDarkGray>\n</group>",
 		"lcr-error1": "Infelizmente, você não atende aos requisitos atuais de elegibilidade para ser um revisor comunitário local.\n<Switch>Clique aqui para criar uma conta padrão.</Switch>",
 		"lcr-error2": "Você deve ler e revisar a página <Link><strong>Local Community Reviewer</strong></Link> .",
 		"lcr-screen1": "Selecione todas as opções aplicáveis",
@@ -369,8 +369,8 @@
 		],
 		"modal-body-temp": [
 			"<title3>Que tipo de conta você gostaria de criar?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Profissional/Fornecedor</button>\n</group>",
-			"<loginLink>Already have an account?</loginLink>"
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Profissional/Provedor</button>\n</group>",
+			"<loginLink>Já tem uma conta?</loginLink>"
 		],
 		"name-use-any": "Use qualquer nome com o qual você se sinta confortável.",
 		"name_alias": "Nome ou apelido",
@@ -441,7 +441,7 @@
 		"data-portal": "Início do Portal de Dados",
 		"edit-page": "Editar esta página",
 		"user-options": "Opções do Usuário",
-		"user-management": "Gerenciamento de usuários"
+		"user-management": "Gestão de usuários"
 	},
 	"verify-account": {
 		"verified": "Conta verificada!",
