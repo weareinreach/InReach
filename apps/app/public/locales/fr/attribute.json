@@ -73,7 +73,7 @@
 		"cost-free": "Gratuit",
 		"cost-from": "De {{price}}",
 		"cost-upTo": "Jusqu'à {{price}}",
-		"cost-range": "{{price}}"
+		"cost-range": "{{prix}}"
 	},
 	"crisis-support-community": {
 		"elders": "Personnes âgées",
