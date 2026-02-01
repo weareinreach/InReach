@@ -37,6 +37,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const form = useForm<TCreateSchema>({
 		resolver: zodResolver(ZCreateSchema),
+		mode: 'onChange',
 		defaultValues: {
 			name: '',
 			addressVisibility: AddressVisibility.FULL, //
@@ -51,7 +52,11 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			setIsSaved(true)
 			notifySave()
 			setTimeout(() => drawerHandler.close(), 500)
-			form.reset()
+			form.reset({
+				name: '',
+				addressVisibility: AddressVisibility.FULL,
+				orgId,
+			})
 		},
 	})
 
@@ -75,9 +80,13 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 
 	useEffect(() => {
 		if (drawerOpened) {
-			form.reset()
+			form.reset({
+				name: '',
+				addressVisibility: AddressVisibility.FULL,
+				orgId,
+			})
 		}
-	}, [drawerOpened, form])
+	}, [drawerOpened, form, orgId])
 
 	return (
 		<FormProvider {...form}>
