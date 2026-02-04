@@ -1,0 +1,42 @@
+# 📧 Using Gmail Plus Addressing for Testing
+
+In Gmail, any text added after a **`+`** sign in an email address is ignored by Google’s delivery system, but treated as a **unique string** by most web applications.
+
+## 🛠 How it Works
+If your email is **`dev-team@gmail.com`**, all of the following will deliver to that same inbox:
+* `dev-team+user1@gmail.com`
+* `dev-team+admin@gmail.com`
+* `dev-team+test_case_402@gmail.com`
+
+---
+
+## 🚀 Why Use This for Testing?
+
+### 1. Infinite Unique Accounts
+Most apps require a unique email for every user. Instead of creating ten real email accounts, you can use `yourname+1@gmail.com`, `yourname+2@gmail.com`, etc., to test multi-user features.
+
+### 2. Role-Based Access Testing
+You can quickly differentiate between user roles in your database while keeping notifications in one place:
+* **Admin:** `yourname+admin@gmail.com`
+* **Editor:** `yourname+editor@gmail.com`
+* **Viewer:** `yourname+viewer@gmail.com`
+
+### 3. Automated Filtering
+You can set up a **Gmail Filter** to automatically label or archive emails based on the "To" address.
+* *Example:* Filter all mail sent to `+test` to automatically be marked as "Read" and labeled "QA Logs."
+
+### 4. Tracking System Emails
+If you are testing a complex workflow (like an invitation system), you can use `yourname+inviter@gmail.com` and `yourname+invitee@gmail.com` to see both sides of the conversation in your inbox.
+
+---
+
+## ⚠️ Known Limitations
+* **Validation Errors:** Some older or poorly coded websites use a "Regex" (Regular Expression) for email validation that treats the `+` character as invalid. 
+* **The "Dot" Alternative:** If a site rejects the plus sign, remember that Gmail also ignores **periods**. 
+    * `j.o.h.n.d.o.e@gmail.com` is the same as `johndoe@gmail.com`.
+
+---
+
+## 🔗 Official Documentation
+For more details, see the official Google support page:
+[Gmail Help: Use Gmail aliases](https://support.google.com/mail/answer/22370?hl=en)
