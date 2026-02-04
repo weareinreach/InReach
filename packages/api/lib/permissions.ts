@@ -1,5 +1,11 @@
 import { type Permission } from '@weareinreach/db/generated/permission'
 
+/**
+ * Define the structure for permission definitions This ensures keys are strings and values are valid Prisma
+ * Permissions
+ */
+type PermissionDefs = Record<string, Permission | Permission[]>
+
 const locations = {
 	createNewLocation: 'createLocation',
 	createManyNewLocation: 'createLocation',
@@ -54,20 +60,25 @@ const orgWebsite = {
 } satisfies PermissionDefs
 
 const reviews = {
-	viewUserReviews: ['viewUserReviews'],
-	hideUserReview: ['hideUserReview'],
-	unHideUserReview: ['showUserReview'],
-	deleteUserReview: ['deleteUserReview'],
-	undeleteUserReview: ['undeleteUserReview'],
+	viewUserReviews: 'viewUserReviews',
+	hideUserReview: 'hideUserReview',
+	unHideUserReview: 'showUserReview',
+	deleteUserReview: 'deleteUserReview',
+	undeleteUserReview: 'undeleteUserReview',
 } satisfies PermissionDefs
 
 const system = {
 	createPermission: 'adminPermissions',
-	getDetails: ['dataPortalBasic'],
+	getDetails: 'dataPortalBasic',
 } satisfies PermissionDefs
 
 const user = {
-	viewAllUsers: ['dataPortalAdmin'],
+	// Use existing valid Permission enum values
+	viewAllUsers: 'dataPortalManager',
+	// If your enum doesn't have 'assignAdminRole', use the role name itself
+	// as the permission string, as checkPermissions handles these strings.
+	assignAdminRole: 'dataPortalAdmin',
+	updateUserRole: 'adminRoles',
 } satisfies PermissionDefs
 
 const permissions = {
@@ -85,9 +96,14 @@ const permissions = {
 	...user,
 } satisfies PermissionDefs
 
+/**
+ * Helper to get permissions for a procedure
+ */
 export const getPermissions = (procedure: PermissionedProcedure): { hasPerm: Permission | Permission[] } => ({
-	hasPerm: permissions[procedure],
+	hasPerm: permissions[procedure] as Permission | Permission[],
 })
 
+/**
+ * Exported types for use in tRPC Meta
+ */
 export type PermissionedProcedure = keyof typeof permissions
-type PermissionDefs = Record<string, Permission | Permission[]>

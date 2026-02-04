@@ -42,7 +42,7 @@ const AdminIndex: NextPage = () => {
 	})
 	const canAccessDownloads = checkPermissions({
 		session,
-		permissions: [PERM_DATAPORTAL_MANAGER, PERM_DATAPORTAL_ADMIN, PERM_ROOT],
+		permissions: [PERM_DATAPORTAL_ADMIN, PERM_ROOT],
 		has: 'some', // dataPortalManager and above
 	})
 
