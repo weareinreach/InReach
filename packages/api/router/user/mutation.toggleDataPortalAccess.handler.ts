@@ -6,22 +6,10 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TToggleDataPortalAccessSchema } from './mutation.toggleDataPortalAccess.schema'
 
-// IMPORTANT: Define ALL relevant permission IDs from your database.
-// Replace these with your actual database IDs for these permission names.
-const PERMISSION_IDS = {
-	root: 'perm_01GW2HKXRTRWKY87HNTTFZCBH1',
-	dataPortalBasic: 'perm_01H0QX1XC037A47900JPAX6JBP',
-	dataPortalManager: 'perm_01H0QX1XC04Z9G8H44G464YHQQ',
-	dataPortalAdmin: 'perm_01H0QX1XC0335R04JMGMQ3KXVN',
-}
-
-// Define all permission IDs that are part of the Data Portal Access hierarchy.
-const DATA_PORTAL_HIERARCHY_PERMISSION_IDS = [
-	PERMISSION_IDS.dataPortalBasic,
-	PERMISSION_IDS.dataPortalManager,
-	PERMISSION_IDS.dataPortalAdmin,
-	PERMISSION_IDS.root,
-]
+/**
+ * Define the hierarchy explicitly. Index 0 is the most powerful.
+ */
+const DATA_PORTAL_ROLE_NAMES = ['root', 'dataPortalAdmin', 'dataPortalManager', 'dataPortalBasic']
 
 const toggleDataPortalAccess = async ({
 	ctx,
@@ -30,34 +18,92 @@ const toggleDataPortalAccess = async ({
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
 
+		// 1. Fetch current portal permissions from DB
+		const portalPermissions = await prisma.permission.findMany({
+			where: { name: { in: DATA_PORTAL_ROLE_NAMES } },
+			select: { id: true, name: true },
+		})
+
+		const hierarchyIds = portalPermissions.map((p) => p.id)
 		const targetUserId = input.userId
 		const isAllowAction = input.action === 'allow'
-		const permissionIdToSet = input.permissionId
 
-		if (isAllowAction && !permissionIdToSet) {
+		// The frontend passes the NAME string (e.g., 'dataPortalAdmin') in the permissionId field
+		const permissionNameInput = input.permissionId
+
+		if (isAllowAction && !permissionNameInput) {
 			throw new TRPCError({
 				code: 'BAD_REQUEST',
-				message: 'A permissionId must be provided when action is "allow".',
+				message: 'A permission name must be provided when action is "allow".',
 			})
 		}
 
-		if (permissionIdToSet && !DATA_PORTAL_HIERARCHY_PERMISSION_IDS.includes(permissionIdToSet)) {
+		/**
+		 * SECURITY CHECK: Privilege Escalation Prevention
+		 */
+		const currentUserPerms = ctx.session.user.permissions
+		const currentUserEmail = ctx.session.user.email
+
+		const getRoleIndex = (role: string) => {
+			const idx = DATA_PORTAL_ROLE_NAMES.indexOf(role)
+			return idx === -1 ? 999 : idx
+		}
+
+		// Determine the highest rank of the person making the request
+		const userBestIndex = Math.min(...currentUserPerms.map(getRoleIndex))
+		// Determine the rank of the permission they are trying to assign
+		const targetIndex = permissionNameInput ? getRoleIndex(permissionNameInput) : 999
+
+		// A: Prevent assigning a role higher than your own (e.g., Manager assigning Admin)
+		if (permissionNameInput && targetIndex < userBestIndex) {
 			throw new TRPCError({
-				code: 'BAD_REQUEST',
-				message: `Invalid permissionId: ${permissionIdToSet}. It must be one of the defined data portal access IDs.`,
+				code: 'FORBIDDEN',
+				message: 'You cannot assign a role higher than your own access level.',
 			})
 		}
 
+		// B: Strict Root Lock
+		// Only a user with 'root' AND an '@inreach.org' email can grant 'root' access.
+		if (permissionNameInput === 'root') {
+			const isActorRoot = currentUserPerms.includes('root')
+			const isActorInternal = currentUserEmail.endsWith('@inreach.org')
+
+			if (!isActorRoot || !isActorInternal) {
+				throw new TRPCError({
+					code: 'FORBIDDEN',
+					message: 'Only internal Root administrators can grant Root access.',
+				})
+			}
+		}
+
+		let permissionIdToSet: string | undefined
+
+		if (isAllowAction && permissionNameInput) {
+			const targetPerm = portalPermissions.find((p) => p.name === permissionNameInput)
+			if (!targetPerm) {
+				throw new TRPCError({
+					code: 'BAD_REQUEST',
+					message: `Invalid permission name: ${permissionNameInput}.`,
+				})
+			}
+			permissionIdToSet = targetPerm.id
+		}
+
+		/**
+		 * DATABASE TRANSACTION We clear all existing portal roles first to prevent "Role Stacking"
+		 */
 		await prisma.$transaction(async (tx) => {
+			// Remove any existing Data Portal roles from the target user
 			await tx.userPermission.deleteMany({
 				where: {
 					userId: targetUserId,
 					permissionId: {
-						in: DATA_PORTAL_HIERARCHY_PERMISSION_IDS,
+						in: hierarchyIds,
 					},
 				},
 			})
 
+			// If we are granting access, create the new record
 			if (isAllowAction && permissionIdToSet) {
 				await tx.userPermission.upsert({
 					where: {
@@ -75,27 +121,27 @@ const toggleDataPortalAccess = async ({
 			}
 		})
 
-		// Re-evaluate the current state to return the correct permissionId
+		/**
+		 * RE-EVALUATE STATE Fetch the new current state to return to the UI
+		 */
 		const currentActivePermission = await prisma.userPermission.findFirst({
 			where: {
 				userId: targetUserId,
 				authorized: true,
 				permissionId: {
-					in: DATA_PORTAL_HIERARCHY_PERMISSION_IDS,
+					in: hierarchyIds,
 				},
 			},
 			select: {
 				permissionId: true,
-			},
-			orderBy: {
-				// Order by hierarchy to get the highest level if multiple somehow exist
-				permissionId: 'asc', // Assuming IDs are ordered such that 'root' is higher than 'basic' lexicographically
+				permission: { select: { name: true } },
 			},
 		})
 
 		return {
-			canAccessDataPortal: !!currentActivePermission, // True if any permission is active
-			permissionId: currentActivePermission?.permissionId, // Return the ID of the active permission, or undefined
+			canAccessDataPortal: !!currentActivePermission,
+			permissionId: currentActivePermission?.permissionId,
+			permissionName: currentActivePermission?.permission?.name,
 		}
 	} catch (error) {
 		return handleError(error)
