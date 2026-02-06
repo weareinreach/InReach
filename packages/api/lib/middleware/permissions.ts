@@ -10,62 +10,63 @@ const reject = () => {
 }
 
 export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
-	console.log('checkPermissions: START')
-	console.log('checkPermissions: META:', meta)
-	console.log('checkPermissions: SESSION:', ctx.session)
-
 	try {
 		if (!ctx.session?.user) {
-			console.error('checkPermissions: FAILED - No user in session context.')
 			invariant(ctx.session?.user)
 		}
 
-		console.log('checkPermissions: User permissions:', ctx.session.user.permissions)
+		const { permissions: userPerms, email } = ctx.session.user
 
-		const expandedUserPermissions = ['dataManager', 'dataAdmin', 'sysadmin', 'system', 'root']
-		const hasExpandedUserPermission = ctx.session.user.permissions.some((perm) =>
-			expandedUserPermissions.includes(perm)
-		)
+		// 1. ROOT / SYSADMIN (God Tier)
+		// Goal: Can see and do everything. Full access, no further checks.
+		const isRoot = userPerms.some((p) => ['root', 'sysadmin', 'system'].includes(p))
+		const isValidRoot = isRoot && email.endsWith('@inreach.org')
 
-		if (hasExpandedUserPermission) {
-			console.log('checkPermissions: PASSED - User has a super-user permission.')
+		if (isValidRoot) {
 			return true
 		}
 
-		if (Array.isArray(meta?.hasPerm)) {
-			const hasEveryPermission = meta.hasPerm.every((perm) => ctx.session?.user?.permissions?.includes(perm))
-			console.log(
-				'checkPermissions: Checking multiple permissions. Required:',
-				meta.hasPerm,
-				'Has:',
-				hasEveryPermission
-			)
-			if (hasEveryPermission) {
-				return true
+		// 2. DATA PORTAL HIERARCHY (The Ladder)
+		const isAdminRole = userPerms.includes('dataPortalAdmin')
+		const isManagerRole = isAdminRole || userPerms.includes('dataPortalManager')
+		const isBasicRole = isManagerRole || userPerms.includes('dataPortalBasic')
+
+		if (isBasicRole) {
+			const reqPerms = Array.isArray(meta?.hasPerm) ? meta.hasPerm : meta?.hasPerm ? [meta.hasPerm] : []
+
+			// Blocklist: If the endpoint specifically requires Root strings
+			const systemPerms = ['root', 'sysadmin', 'system', 'adminPermissions']
+			if (reqPerms.some((p) => systemPerms.includes(p))) {
+				return false
 			}
-			return false
+
+			// Blocklist: Only dataPortalAdmin (and Root) can pass these
+			const adminOnly = ['dataPortalAdmin', 'adminRoles']
+			if (reqPerms.some((p) => adminOnly.includes(p))) {
+				return isAdminRole
+			}
+
+			// Blocklist: Only Manager, Admin (and Root) can pass these
+			const managerOnly = ['dataPortalManager', 'viewAllUsers', 'deleteUserReview']
+			if (reqPerms.some((p) => managerOnly.includes(p))) {
+				return isManagerRole
+			}
+
+			// Default: If it's not on a blocklist, Basic users can access it (e.g., all things Org)
+			return true
+		}
+
+		// 3. FALLBACK: Granular Permission Check (For external users/associates)
+		if (Array.isArray(meta?.hasPerm)) {
+			return meta.hasPerm.every((perm) => userPerms.includes(perm))
 		}
 
 		if (typeof meta?.hasPerm === 'string') {
-			const hasSinglePermission = ctx.session.user.permissions.includes(meta.hasPerm)
-			console.log(
-				'checkPermissions: Checking single permission. Required:',
-				meta.hasPerm,
-				'Has:',
-				hasSinglePermission
-			)
-			return hasSinglePermission
+			return userPerms.includes(meta.hasPerm)
 		}
 
-		console.error(
-			'checkPermissions: FAILED - Invalid procedure configuration, missing permission requirements.'
-		)
-		throw new TRPCError({
-			code: 'INTERNAL_SERVER_ERROR',
-			message: 'Invalid procedure configuration, missing permission requirements.',
-		})
+		return false
 	} catch (err) {
-		console.error('checkPermissions: FAILED - Caught an unexpected error:', err)
 		if (err instanceof Error && err.message === 'Invariant failed') {
 			return reject()
 		}
@@ -73,111 +74,84 @@ export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 	}
 }
 
-// NOTE: checkRole is no longer used by isStaff, but is kept for other potential uses.
-export const checkRole = (allowedRoles: string[], userRoles: string[]) => {
-	// NEW LOGGING: Log the roles being checked
-	console.log('checkRole: Checking user roles:', userRoles, 'against allowed roles:', allowedRoles)
-	for (const userRole of userRoles) {
-		if (allowedRoles.includes(userRole)) {
-			console.log('checkRole: PASSED - User role', userRole, 'is in allowed roles.')
-			return true
-		}
-	}
-	console.log('checkRole: FAILED - No user roles match allowed roles.')
-	return false
-}
-
-// NEW HELPER FUNCTION: checkStaffPermissions
+// Helper: Defines who is allowed to enter the dashboard environment
 export const checkStaffPermissions = (userPermissions: string[]) => {
-	const staffPermissions = ['dataManager', 'dataAdmin', 'sysadmin', 'system', 'root']
+	const staffPermissions = [
+		'dataPortalBasic',
+		'dataPortalManager',
+		'dataPortalAdmin',
+		'sysadmin',
+		'system',
+		'root',
+	]
 	return userPermissions.some((perm) => staffPermissions.includes(perm))
 }
 
-export const isAdmin = t.middleware(({ ctx, meta, next }) => {
-	// NEW LOGGING: Log start of middleware
-	console.log('isAdmin: Starting check...')
-	if (ctx.session === null) {
-		console.error('Rejected Admin procedure - no session context')
+/**
+ * IsAdmin Middleware Goal: Used for User Management and sensitive Admin tabs. Access: Root and
+ * dataPortalAdmin only.
+ */
+export const isAdmin = t.middleware(({ ctx, next }) => {
+	if (ctx.session === null) return reject()
+
+	const { permissions, email } = ctx.session.user
+	const isDataPortalAdmin = permissions.includes('dataPortalAdmin')
+	const isRoot = permissions.some((p) => ['root', 'sysadmin', 'system'].includes(p))
+	const isValidRoot = isRoot && email.endsWith('@inreach.org')
+
+	if (!(isDataPortalAdmin || isValidRoot)) {
 		return reject()
 	}
 
-	// Break up the complex if statement to log individual results
-	const hasRootPermission = checkPermissions({ hasPerm: 'root' }, ctx)
-	const hasInreachEmail = ctx.session.user.email.endsWith('@inreach.org')
-	console.log('isAdmin: Permissions check passed:', hasRootPermission, 'Email check passed:', hasInreachEmail)
-
-	if (!(hasRootPermission && hasInreachEmail)) {
-		console.error('Rejected Admin Procedure - Invalid permissions')
-		console.error(ctx.session)
-		return reject()
-	}
-
-	console.log('isAdmin: PASSED.')
 	return next({
 		ctx: {
 			...ctx,
-			session: { ...ctx.session, user: ctx.session.user },
+			session: ctx.session,
 			actorId: ctx.session.user.id,
 			skipCache: true,
 		},
 	})
 })
 
+/**
+ * IsStaff Middleware Goal: The entry point for the /admin dashboard. Access: Basic, Manager, Admin, and Root.
+ */
 export const isStaff = t.middleware(({ ctx, meta, next }) => {
-	// NEW LOGGING: Log start of middleware
-	console.log('isStaff: Starting check...')
-	if (ctx.session === null) {
-		console.error('isStaff: FAILED - No session context.')
-		return reject()
-	}
+	if (ctx.session === null) return reject()
 
-	// UPDATED LOGIC: No longer using checkRole. Check permissions directly.
 	const hasStaffPerms = checkStaffPermissions(ctx.session.user.permissions)
 	const permCheckPassed = checkPermissions(meta, ctx)
 
-	console.log('isStaff: Has Staff Perms:', hasStaffPerms, 'Permission check passed:', permCheckPassed)
-
 	if (!(hasStaffPerms && permCheckPassed)) {
-		console.error('isStaff: FAILED - Invalid permissions or role.')
-		console.error('  - Result of Staff Permissions Check:', hasStaffPerms)
-		console.error('  - Result of Procedure Permission Check:', permCheckPassed)
 		return reject()
 	}
 
-	console.log('isStaff: PASSED.')
 	return next({
 		ctx: {
 			...ctx,
-			session: { ...ctx.session, user: ctx.session.user },
+			session: ctx.session,
 			actorId: ctx.session.user.id,
 			skipCache: true,
 		},
 	})
 })
 
+/**
+ * HasPermissions Middleware Goal: For external Org owners/associates using specific edit points.
+ */
 export const hasPermissions = t.middleware(({ ctx, meta, next }) => {
-	// NEW LOGGING: Log start of middleware
-	console.log('hasPermissions: Starting check...')
-	if (ctx.session === null) {
-		console.error('hasPermissions: FAILED - No session context.')
-		return reject()
-	}
+	if (ctx.session === null) return reject()
 
-	const permCheckPassed = checkPermissions(meta, ctx)
-	console.log('hasPermissions: Permission check passed:', permCheckPassed)
-
-	if (permCheckPassed) {
-		console.log('hasPermissions: PASSED.')
+	if (checkPermissions(meta, ctx)) {
 		return next({
 			ctx: {
 				...ctx,
-				session: { ...ctx.session, user: ctx.session.user },
+				session: ctx.session,
 				actorId: ctx.session.user.id,
 				skipCache: true,
 			},
 		})
 	}
 
-	console.error('hasPermissions: FAILED - Insufficient permissions.')
 	throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Insufficient permissions' })
 })

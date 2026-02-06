@@ -186,7 +186,7 @@ export const getServerSideProps: GetServerSideProps<{ organizationId: string }, 
 
 	const session = await checkServerPermissions({
 		ctx: { req, res },
-		permissions: ['dataPortalBasic'],
+		permissions: ['dataPortalBasic', 'dataPortalManager', 'dataPortalAdmin', 'root'],
 		has: 'some',
 	})
 

@@ -88,6 +88,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 
 	const updateLocation = api.page.LocationEditUpdate.useMutation({
 		onSuccess: () => {
+			formMethods.reset(formMethods.getValues())
 			apiUtils.location.invalidate()
 			apiUtils.service.invalidate()
 			revalidatePage({ path: router.asPath.replace('/edit', '') })
@@ -250,7 +251,7 @@ export const getServerSideProps: GetServerSideProps<
 	const { slug, orgLocationId: id } = urlParams.data
 	const session = await checkServerPermissions({
 		ctx: { req, res },
-		permissions: ['dataPortalBasic'],
+		permissions: ['dataPortalBasic', 'dataPortalManager', 'dataPortalAdmin', 'root'],
 		has: 'some',
 	})
 	if (!session) {
