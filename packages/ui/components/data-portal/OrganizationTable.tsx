@@ -7,8 +7,10 @@ import {
 	type MRT_ColumnFilterFnsState,
 	type MRT_ColumnFiltersState,
 	type MRT_Row,
+	MRT_ShowHideColumnsButton,
 	type MRT_SortingState,
 	type MRT_TableInstance,
+	MRT_ToggleFiltersButton,
 	type MRT_Virtualizer,
 	useMantineReactTable,
 } from 'mantine-react-table'
@@ -214,6 +216,13 @@ export const OrganizationTable = () => {
 	const columns = useMemo<MRT_ColumnDef<RestucturedDataItem>[]>(
 		() => [
 			{
+				accessorKey: 'id',
+				header: 'ID',
+				enableColumnFilter: false,
+				enableSorting: false,
+				size: 220,
+			},
+			{
 				accessorKey: 'name',
 				header: 'Name',
 				columnFilterModeOptions: ['contains', 'fuzzy', 'startsWith', 'endsWith'],
@@ -373,7 +382,7 @@ export const OrganizationTable = () => {
 		// #endregion
 		// #region Enable features / Table options
 
-		enableColumnResizing: false,
+		enableColumnResizing: true,
 		enableFacetedValues: true,
 		enablePinning: true,
 		enableRowActions: true,
@@ -409,6 +418,7 @@ export const OrganizationTable = () => {
 			columnVisibility: {
 				published: false,
 				deleted: false,
+				id: false,
 			},
 			showColumnFilters: false,
 			showGlobalFilter: true,
@@ -439,8 +449,12 @@ export const OrganizationTable = () => {
 		mantineTableProps: { striped: true },
 		// #endregion
 		// #region Override sections
-		renderToolbarInternalActions: () => (
-			<ToolbarButtons columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
+		renderToolbarInternalActions: ({ table }) => (
+			<Group spacing='xs'>
+				<ToolbarButtons columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
+				<MRT_ToggleFiltersButton table={table} />
+				<MRT_ShowHideColumnsButton table={table} />
+			</Group>
 		),
 		renderBottomToolbar: ({ table }) => <BottomBar table={table} />,
 		renderRowActions: ({ row }) => <RowAction row={row} />,
