@@ -5,7 +5,6 @@ import { type UseMutationResult } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 
-import { checkPermissions } from '@weareinreach/auth'
 import { type Permission } from '@weareinreach/db/generated/permission'
 import { Button } from '~ui/components/core/Button'
 import { useCsvDownload } from '~ui/hooks/useCsvDownload'
@@ -17,6 +16,26 @@ interface CsvDownloadProps {
 	/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 	useMutationHook: (options?: any) => UseMutationResult<any, any, void, any>
 	permissionKey?: Permission | Permission[]
+}
+
+// Helper to check permissions with hierarchy support (Additive Permissions)
+const checkHierarchyPermission = (userPerms: string[], requiredPerm: string) => {
+	// Root/System bypass
+	if (userPerms.some((p) => ['root', 'sysadmin', 'system'].includes(p))) return true
+
+	// Hierarchy: Admin > Manager > Basic
+	if (requiredPerm === 'dataPortalManager') {
+		return userPerms.includes('dataPortalManager') || userPerms.includes('dataPortalAdmin')
+	}
+	if (requiredPerm === 'dataPortalBasic') {
+		return (
+			userPerms.includes('dataPortalBasic') ||
+			userPerms.includes('dataPortalManager') ||
+			userPerms.includes('dataPortalAdmin')
+		)
+	}
+	// Default exact match
+	return userPerms.includes(requiredPerm)
 }
 
 export const CsvDownload: React.FC<CsvDownloadProps> = ({
@@ -32,7 +51,8 @@ export const CsvDownload: React.FC<CsvDownloadProps> = ({
 		const requiredPermissions = Array.isArray(permissionKey) ? permissionKey : [permissionKey]
 
 		hasRequiredPermissions = requiredPermissions.every((perm) => {
-			return checkPermissions({ session, permissions: perm, has: 'some' })
+			const userPerms = session?.user?.permissions || []
+			return checkHierarchyPermission(userPerms, perm)
 		})
 	}
 	const hasPermission = hasRequiredPermissions

@@ -3,16 +3,21 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForUserTableSchema } from './query.forUserTable.schema'
 
-// Define the permission names and their corresponding IDs in hierarchical order
-// This must match the IDs defined in your frontend's DATA_PORTAL_ACCESS_OPTIONS
-const DATA_PORTAL_PERMISSIONS_HIERARCHY = [
-	{ name: 'root', id: 'perm_01GW2HKXRTRWKY87HNTTFZCBH1' },
-	{ name: 'dataPortalAdmin', id: 'perm_01H0QX1XC0335R04JMGMQ3KXVN' },
-	{ name: 'dataPortalManager', id: 'perm_01H0QX1XC04Z9G8H44G464YHQQ' },
-	{ name: 'dataPortalBasic', id: 'perm_01H0QX1XC037A47900JPAX6JBP' },
-]
+// Define the permission names in hierarchical order (highest to lowest)
+const DATA_PORTAL_ROLE_NAMES = ['root', 'dataPortalAdmin', 'dataPortalManager', 'dataPortalBasic']
 
-const forUserTable = async ({ input }: TRPCHandlerParams<TForUserTableSchema>) => {
+const forUserTable = async ({ input }: TRPCHandlerParams<TForUserTableSchema, 'protected'>) => {
+	// Dynamically fetch the IDs for the data portal roles
+	const portalPermissions = await prisma.permission.findMany({
+		where: { name: { in: DATA_PORTAL_ROLE_NAMES } },
+		select: { id: true, name: true },
+	})
+
+	// Reconstruct the hierarchy with the fetched IDs, maintaining the order of DATA_PORTAL_ROLE_NAMES
+	const hierarchy = DATA_PORTAL_ROLE_NAMES.map((name) =>
+		portalPermissions.find((p) => p.name === name)
+	).filter((p): p is { id: string; name: string } => !!p)
+
 	const userResults = await prisma.user.findMany({
 		where: input,
 		select: {
@@ -33,17 +38,19 @@ const forUserTable = async ({ input }: TRPCHandlerParams<TForUserTableSchema>) =
 
 	const reformattedResults = userResults.map(({ permissions, ...user }) => {
 		let activePermissionId: string | undefined = undefined // Initialize as undefined
+		let activePermissionName: string | undefined = undefined
 		let canAccessDataPortal: boolean = false
 
 		// Filter for only data portal related permissions that are active
 		const activeDataPortalPermissions = permissions.filter((p) =>
-			DATA_PORTAL_PERMISSIONS_HIERARCHY.some((dp) => dp.id === p.permission.id)
+			hierarchy.some((dp) => dp.id === p.permission.id)
 		)
 
 		// Determine the single active permission ID based on hierarchy
-		for (const level of DATA_PORTAL_PERMISSIONS_HIERARCHY) {
+		for (const level of hierarchy) {
 			if (activeDataPortalPermissions.some((p) => p.permission.id === level.id)) {
 				activePermissionId = level.id
+				activePermissionName = level.name
 				canAccessDataPortal = true // If any data portal permission is active, access is granted
 				break // Found the highest active permission, stop checking
 			}
@@ -53,6 +60,7 @@ const forUserTable = async ({ input }: TRPCHandlerParams<TForUserTableSchema>) =
 			...user,
 			canAccessDataPortal: canAccessDataPortal, // Boolean indicating if any access is granted
 			permissionId: activePermissionId, // The specific permission ID (e.g., 'perm_...', or undefined)
+			permissionName: activePermissionName, // The specific permission Name
 		}
 	})
 

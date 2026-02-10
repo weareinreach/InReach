@@ -346,6 +346,13 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 			),
 		]
 
+		// If there is exactly one location, use its visibility setting.
+		// Otherwise (multiple locations), leave undefined to keep current logic (show list).
+		const addressVisibility =
+			locations.length === 1
+				? (locations[0] as unknown as { addressVisibility: 'FULL' | 'PARTIAL' | 'HIDDEN' }).addressVisibility
+				: undefined
+
 		return {
 			...rest,
 			description: desc,
@@ -353,6 +360,7 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 			orgLeader,
 			orgFocus,
 			locations: sortedCities,
+			addressVisibility,
 		}
 	})
 

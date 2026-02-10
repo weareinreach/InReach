@@ -59,6 +59,7 @@ export const SearchResultLoading = () => {
 
 const SearchResultData = ({ result }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories, national } = result
+	const visibility = result.addressVisibility as 'FULL' | 'PARTIAL' | 'HIDDEN' | undefined
 	const { t, ready: i18nReady } = useTranslation(['common', result.id])
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
@@ -106,6 +107,9 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 
 	const cityList = useCallback(
 		(cities: string[]) => {
+			if (national.length > 0) return null
+			if (visibility === 'HIDDEN') return null
+
 			//check for duplicates and be case insensitive, before switching
 			const dedupedCityList: string[] = []
 			const lowercaseSet: { [key: string]: boolean } = {}
@@ -141,7 +145,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 				}
 			}
 		},
-		[t]
+		[t, visibility, national]
 	)
 	if (!i18nReady) {
 		return <SearchResultLoading />

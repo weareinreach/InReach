@@ -23,43 +23,43 @@ const customIcons: Partial<MRT_Icons> = {
 	IconSortDescending: () => <Icon icon={'carbon:chevron-down'} color='black' />,
 }
 
-// --- COMBINED DATA PORTAL ACCESS OPTIONS ---
-// This array now contains both the display label and the associated database ID (if applicable).
-// The 'value' property will be the permission name string.
-// The 'id' property will be the database ID (or undefined for 'none').
 const DATA_PORTAL_ACCESS_OPTIONS = [
-	{ value: 'none', label: 'None', id: undefined }, // 'none' doesn't have a DB ID
-	{ value: 'dataPortalBasic', label: 'Basic Access', id: 'perm_01H0QX1XC037A47900JPAX6JBP' }, // Replace with actual basic ID
-	{ value: 'dataPortalManager', label: 'Manager Access', id: 'perm_01H0QX1XC04Z9G8H44G464YHQQ' }, // Replace with actual manager ID
-	{ value: 'dataPortalAdmin', label: 'Admin Access', id: 'perm_01H0QX1XC0335R04JMGMQ3KXVN' }, // Replace with actual admin ID
-	{ value: 'root', label: 'Superuser (Root)', id: 'perm_01GW2HKXRTRWKY87HNTTFZCBH1' }, // Replace with actual root ID
+	{ value: 'none', label: 'None' },
+	{ value: 'dataPortalBasic', label: 'Basic Access' },
+	{ value: 'dataPortalManager', label: 'Manager Access' },
+	{ value: 'dataPortalAdmin', label: 'Admin Access' },
+	{ value: 'root', label: 'Superuser (Root)' },
 ]
-// --- END COMBINED DATA PORTAL ACCESS OPTIONS ---
 
-// Helper to format permission names for display (now uses DATA_PORTAL_ACCESS_OPTIONS)
 const formatPermissionName = (name: string) => {
 	const option = DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.value === name)
 	return option ? option.label : name
 }
 
-// Frontend Permission Checking Helper
 type CurrentUserPermissions = string[]
 
-const userHasPermission = (
-	userPermissions: CurrentUserPermissions | undefined,
-	permissionName: string
-): boolean => {
-	if (!userPermissions) return false
-	return userPermissions.includes(permissionName)
+const getRoleLevel = (role: string | undefined) => {
+	switch (role) {
+		case 'root':
+			return 4
+		case 'dataPortalAdmin':
+			return 3
+		case 'dataPortalManager':
+			return 2
+		case 'dataPortalBasic':
+			return 1
+		default:
+			return 0
+	}
 }
 
 // --- DataPortalAccessSelect Component ---
 const DataPortalAccessSelect = ({
-	activePermissionId, // Now receives the specific permission ID or undefined
+	activePermissionName,
 	userId,
 	loggedInUserPermissions,
 }: {
-	activePermissionId: string | undefined // Now expects the specific permission ID or undefined
+	activePermissionName: string | undefined
 	userId: string
 	loggedInUserPermissions: CurrentUserPermissions | undefined
 }) => {
@@ -67,16 +67,15 @@ const DataPortalAccessSelect = ({
 
 	const updateAccess = api.user.toggleDataPortalAccess.useMutation({
 		onSuccess: (data) => {
-			// Optimistic update: Update the cache for the forUserTable query directly
 			apiUtils.user.forUserTable.setData(undefined, (oldData) => {
 				if (!oldData) return oldData
 				return oldData.map((user) => {
 					if (user.id === userId) {
-						// Use the permissionId returned directly from the mutation's response
 						return {
 							...user,
 							canAccessDataPortal: data.canAccessDataPortal,
-							permissionId: data.permissionId, // Crucial: Use data.permissionId from the response
+							permissionId: data.permissionId,
+							permissionName: data.permissionName,
 						}
 					}
 					return user
@@ -94,55 +93,57 @@ const DataPortalAccessSelect = ({
 			const selectedOption = DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.value === newLevelValue)
 
 			if (selectedOption && selectedOption.value === 'none') {
-				// Explicitly type 'action' as 'deny'
-				const payload: { userId: string; action: 'deny'; permissionId?: string } = { userId, action: 'deny' }
-				updateAccess.mutate(payload)
-			} else if (selectedOption && selectedOption.id) {
-				// Explicitly type 'action' as 'allow'
-				const payload: { userId: string; action: 'allow'; permissionId: string } = {
+				updateAccess.mutate({ userId, action: 'deny' })
+			} else if (selectedOption) {
+				updateAccess.mutate({
 					userId,
 					action: 'allow',
-					permissionId: selectedOption.id,
-				}
-				updateAccess.mutate(payload)
+					permissionId: selectedOption.value,
+				})
 			}
 		},
 		[updateAccess, userId]
 	)
 
 	const filteredAccessOptions = useMemo(() => {
-		return DATA_PORTAL_ACCESS_OPTIONS.map((option) => ({ value: option.value, label: option.label }))
-	}, [])
+		const loggedInLevel = Math.max(...(loggedInUserPermissions || []).map(getRoleLevel))
 
-	if (filteredAccessOptions.length === 0) {
-		return (
-			<Text size='sm' color='dimmed'>
-				{activePermissionId
-					? formatPermissionName(
-							DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.id === activePermissionId)?.value || 'none'
-						)
-					: 'None'}
-			</Text>
-		)
-	}
+		return DATA_PORTAL_ACCESS_OPTIONS.filter((opt) => {
+			const optionLevel = getRoleLevel(opt.value)
+			// Always show roles at/below my level OR the specific role the user currently has
+			return optionLevel <= loggedInLevel || opt.value === activePermissionName
+		}).map((option) => ({
+			value: option.value,
+			label: option.label,
+			// Disable the option if it's a higher rank than the logged-in user
+			disabled: getRoleLevel(option.value) > loggedInLevel,
+		}))
+	}, [loggedInUserPermissions, activePermissionName])
 
-	// Determine the currently selected value for the dropdown based on activePermissionId
-	// Find the 'value' (e.g., 'dataPortalBasic') that corresponds to the activePermissionId
-	const currentDropdownValue = activePermissionId
-		? DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.id === activePermissionId)?.value || 'none'
-		: 'none'
+	const loggedInLevel = Math.max(...(loggedInUserPermissions || []).map(getRoleLevel))
+	const targetLevel = getRoleLevel(activePermissionName || 'none')
+	const isTargetHigherThanMe = targetLevel > loggedInLevel
 
 	return (
 		<Select
 			data={filteredAccessOptions}
-			value={currentDropdownValue === 'none' ? null : currentDropdownValue} // Set value based on the found permission name
+			value={activePermissionName || 'none'}
 			onChange={handleLevelChange}
 			placeholder='Select access'
-			searchable
 			size='xs'
+			disabled={isTargetHigherThanMe}
 			styles={{
 				root: { width: '260px' },
-				input: { paddingRight: '24px' },
+				input: {
+					paddingRight: '24px',
+					'&:disabled': {
+						backgroundColor: '#f1f3f5',
+						color: '#495057',
+						opacity: 1,
+						cursor: 'not-allowed',
+						border: '1px solid #dee2e6',
+					},
+				},
 			}}
 			withinPortal={true}
 		/>
@@ -228,8 +229,7 @@ export const UserTable = () => {
 				},
 			},
 			{
-				// Now using 'permissionId' from the backend query
-				accessorKey: 'permissionId', // Access the specific permission ID
+				accessorKey: 'permissionName',
 				header: 'Data Portal Access Level',
 				size: 280,
 				mantineTableBodyCellProps: {
@@ -240,12 +240,11 @@ export const UserTable = () => {
 					},
 				},
 				Cell: ({ cell }) => {
-					// Pass the specific permissionId (string | undefined)
-					const activePermissionId = cell.getValue<string | undefined>()
+					const activePermissionName = cell.getValue<string | undefined>()
 
 					return (
 						<DataPortalAccessSelect
-							activePermissionId={activePermissionId}
+							activePermissionName={activePermissionName}
 							userId={cell.row.original.id}
 							loggedInUserPermissions={loggedInUserPermissions}
 						/>
@@ -294,23 +293,13 @@ export const UserTable = () => {
 			<Text size='16px' fw={500} style={{ marginBottom: '-1rem' }}>
 				Total: {userData?.length ?? 0}
 			</Text>
-			<Group
-				noWrap={true}
-				position='left'
-				spacing={'16px'}
-				style={{
-					marginBottom: '4px',
-				}}
-			>
+			<Group noWrap={true} position='left' spacing={'16px'} style={{ marginBottom: '4px' }}>
 				<MRT_GlobalFilterTextInput table={table} />
 				<NativeSelect
 					rightSection={<Icon icon='carbon:chevron-down' />}
 					data={['Data Entry Teams']}
 					styles={{
-						root: {
-							width: '208px',
-							height: '48px',
-						},
+						root: { width: '208px', height: '48px' },
 						input: { paddingLeft: '16px', paddingRight: '16px', paddingTop: '12px', paddingBottom: '12px' },
 					}}
 				/>
@@ -338,11 +327,8 @@ export const UserTable = () => {
 	)
 }
 
-// --- UPDATED UserDataRecord TYPE DEFINITION ---
-// This type now explicitly matches the structure that your forUserTable handler
-// is *currently* returning, which includes 'canAccessDataPortal: boolean'
-// and 'permissionId: string | undefined'.
 type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>[number] & {
 	canAccessDataPortal: boolean
-	permissionId?: string // Make it optional as it can be undefined/null
+	permissionId?: string
+	permissionName?: string
 }
