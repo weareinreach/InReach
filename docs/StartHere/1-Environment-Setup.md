@@ -71,6 +71,7 @@ Before starting Docker, we must ensure no other Postgres instance is "ghosting" 
 
 1. Once the port is clear, run from the **project root**:
    pnpm docker:up
+   \*\*For windows, you may want to use Git Bash for your terminal
 
 ### Step B: Quick Health Check (Web Tools)
 
