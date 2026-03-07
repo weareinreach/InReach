@@ -123,4 +123,13 @@ export const csvDownloadRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	getServicesCountByCountryStatePostalCode: permissionedProcedure('dataPortalManager')
+		.input(schema.ZGetServicesCountByCountryStatePostalCodeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('getServicesCountByCountryStatePostalCode'),
+				() => import('./query.getServicesCountByCountryStatePostalCode.handler')
+			)
+			return handler(opts)
+		}),
 })
