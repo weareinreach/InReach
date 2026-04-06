@@ -28,14 +28,11 @@ const SavedLists = () => {
 	const { data: session, status } = useSession()
 	const router = useRouter<'/account/saved/[listId]'>()
 	const { listId } = router.query
-	console.log('listId:', listId)
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
 	const { data: queryResult, isLoading } = api.savedList.getById.useQuery(
 		{ id: listId ?? '' },
 		{ enabled: !!listId }
 	)
-	console.log('query result:', queryResult)
-	console.log('loading:', isLoading)
 
 	const apiUtils = api.useUtils()
 	const { query } = router
@@ -47,12 +44,6 @@ const SavedLists = () => {
 		const currentTab = query.tab ? (query.tab as string) : 'organizations'
 		setActiveTab(currentTab)
 	}, [query.tab])
-
-	useEffect(() => {
-		if (!isLoading && queryResult === null) {
-			router.replace('/account/saved')
-		}
-	}, [queryResult, isLoading, router])
 
 	const handleTabChange = useCallback(
 		(tab: string) => {
@@ -71,9 +62,10 @@ const SavedLists = () => {
 		[listId, router]
 	)
 	const deleteMutation = api.savedList.delete.useMutation({
-		onSuccess: () => {
+		onSuccess: async () => {
 			const [, modalHandler] = confirmDeleteModalHandler
-			apiUtils.savedList.invalidate()
+			await apiUtils.savedList.getAll.invalidate()
+			await apiUtils.savedList.invalidate()
 			modalHandler.close()
 			router.replace({ pathname: '/account/saved' })
 		},
@@ -105,9 +97,11 @@ const SavedLists = () => {
 			</Overlay>
 		)
 	}
+
 	if (isLoading) {
 		return <SavedResultLoading />
 	}
+
 	if (!queryResult) {
 		return (
 			<Center>
@@ -117,34 +111,25 @@ const SavedLists = () => {
 	}
 
 	let organizationsContent
-	if (isLoading) {
-		organizationsContent = <SavedResultLoading />
-	} else if (queryResult?._count?.organizations === 0) {
+	if (queryResult?._count?.organizations === 0) {
 		organizationsContent = <Text>{t('list.no-orgs')}</Text>
 	} else {
 		// Assert queryResult and its organizations property are non-null/non-undefined here
-		organizationsContent = queryResult.organizations.map((result) => {
+		organizationsContent = queryResult!.organizations!.map((result) => {
 			return <SavedOrgResultCard key={result.id} result={result} loading={false} />
 		})
 	}
 
 	// Refactored content for 'services' tab
 	let servicesContent
-	if (isLoading) {
-		servicesContent = (
-			<Center>
-				<Loader />
-			</Center>
-		)
-	} else if (queryResult._count?.services === 0) {
+	if (queryResult?._count?.services === 0) {
 		servicesContent = <Text>{t('list.no-services')}</Text>
 	} else {
 		// Assert queryResult and its services property are non-null/non-undefined here
-		servicesContent = queryResult.services.map((result) => {
+		servicesContent = queryResult!.services!.map((result) => {
 			return <SavedServiceResultCard key={result.id} result={result} loading={false} />
 		})
 	}
-	console.log('delete button id:', queryResult?.id)
 
 	return (
 		<Container size='lg' px='md' py='lg' style={{ minWidth: '100%' }}>
@@ -158,6 +143,7 @@ const SavedLists = () => {
 					<Group spacing={16}>
 						<ActionButtons.Print />
 						<ActionButtons.Delete
+							disabled={deleteMutation.isLoading}
 							onClick={() => handleDeleteList(queryResult?.id)}
 							modalHandler={confirmDeleteModalHandler}
 						/>
