@@ -14,13 +14,6 @@ const ReportModalBody = forwardRef<HTMLButtonElement, ReportModalProps>(
 		const modalTitle = (
 			<Group spacing='sm' noWrap>
 				<Breadcrumb onClick={handler.close} option='close' />
-				<Text
-					weight={500}
-					size='md'
-					sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-				>
-					{itemName}
-				</Text>
 			</Group>
 		)
 
