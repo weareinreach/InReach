@@ -21,6 +21,14 @@ export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProp
 			/>
 		),
 		share: <ActionButtons.Share key='modal-title-share' omitLabel />,
+		report: (
+			<ActionButtons.Report
+				key='modal-title-report'
+				omitLabel
+				itemId={serviceId ?? ''}
+				itemName={breadcrumb.backToText ?? ''}
+			/>
+		),
 	} as const
 
 	const displayIcons = icons?.length ? icons.map((item) => iconMap[item]) : undefined
@@ -50,7 +58,7 @@ export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProp
 
 // type TitleIcons = keyof typeof iconMap
 
-type ToolbarIcons = 'save' | 'share'
+type ToolbarIcons = 'save' | 'share' | 'report'
 
 type _ModalTitleProps<TIcons extends ToolbarIcons[]> = {
 	breadcrumb: Omit<BreadcrumbProps, 'onClick'> & {
@@ -58,6 +66,6 @@ type _ModalTitleProps<TIcons extends ToolbarIcons[]> = {
 	}
 	icons?: TIcons
 	rightText?: string
-	serviceId?: 'save' extends TIcons[number] ? string : never
+	serviceId?: 'save' extends TIcons[number] ? string : 'report' extends TIcons[number] ? string : never
 }
 export type ModalTitleProps = _ModalTitleProps<ToolbarIcons[]>

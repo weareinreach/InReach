@@ -27,7 +27,7 @@ import { processAccessInstructions, processAttributes } from './processor'
 import { ModalTitle, type ModalTitleProps } from '../ModalTitle'
 
 const ServiceModalTitle = ({ handler, isMobile, serviceId, slug }: ServiceModalTitleProps) => {
-	const icons = ['share', 'save'] satisfies ModalTitleProps['icons']
+	const icons = ['share', 'save', 'report'] satisfies ModalTitleProps['icons']
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { orgLocationId } = router.query
 	const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
