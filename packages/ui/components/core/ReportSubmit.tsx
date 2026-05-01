@@ -25,6 +25,7 @@ export const ReportSubmit = ({
 	const [incorrectInfoFields, setIncorrectInfoFields] = useState<string[]>([])
 	const [language, setLanguage] = useState<string | undefined>(undefined)
 	const [note, setNote] = useState('')
+	const [successMessage, setSuccessMessage] = useState(false)
 
 	const isIncorrectInfo = issueType === 'incorrect-info'
 	const isSomethingElse = issueType === 'something-else'
@@ -35,6 +36,23 @@ export const ReportSubmit = ({
 		(isIncorrectInfo && (incorrectInfoFields.length === 0 || !note.trim())) ||
 		(isSomethingElse && !note.trim()) ||
 		(isTranslation && (!language || !note.trim()))
+
+	const successBody = (
+		<Stack spacing={24} align='center' py='xl'>
+			<Title order={1}>🎉</Title>
+			<Title order={2} align='center'>
+				{t('report.thank-you', {
+					defaultValue: 'Thank you for helping us make InReach better for everyone!',
+				})}
+			</Title>
+			<Text align='center' variant={variant.Text.darkGray}>
+				{t('report.thank-you-message', {
+					defaultValue:
+						'Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria.',
+				})}
+			</Text>
+		</Stack>
+	)
 
 	const component = (
 		<Stack>
@@ -153,20 +171,28 @@ export const ReportSubmit = ({
 					Sharing more information helps our team incorporate your suggestions or correct the issue.
 				</Text>
 
-				<Button variant='primary' fullWidth mt='md' disabled={isInvalid}>
+				<Button
+					variant='primary'
+					fullWidth
+					mt='md'
+					disabled={isInvalid}
+					onClick={() => setSuccessMessage(true)}
+				>
 					{t('words.save')}
 				</Button>
 			</Stack>
 		</Stack>
 	)
 
+	const body = successMessage ? successBody : component
+
 	if (type === 'modal') {
-		return component
+		return body
 	}
 
 	return (
 		<Paper withBorder radius='lg' p={theme.spacing.lg}>
-			{component}
+			{body}
 		</Paper>
 	)
 }
