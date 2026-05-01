@@ -17,6 +17,16 @@ export const Toolbar = ({ breadcrumbProps, hideBreadcrumb, itemName, ...ids }: P
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 
+	const isService = !!ids.serviceId
+
+	const bc = breadcrumbProps as { backToText?: string }
+	const reportOrgId = ids.organizationId
+	const reportOrgName = isService ? bc.backToText : itemName // Org name for service, or item name for org
+	const reportServiceId = ids.serviceId // Service ID if it's a service
+	const reportServiceName = isService ? itemName : undefined // Service name if it's a service, otherwise undefined
+
+	const displayItemName = itemName ?? bc.backToText ?? 'Report' // Concise name for modal title
+
 	return (
 		<Group position='apart' align='center' w='100%' noWrap className={classes.toolbar}>
 			{hideBreadcrumb ? <Space w={1} /> : <Breadcrumb {...breadcrumbProps} />}
@@ -32,7 +42,11 @@ export const Toolbar = ({ breadcrumbProps, hideBreadcrumb, itemName, ...ids }: P
 				<ActionButtons.Report
 					data-targetid='report'
 					itemId={ids.serviceId || ids.organizationId}
-					itemName={itemName ?? breadcrumbProps.backToText ?? ''}
+					itemName={displayItemName} // A simple display name for the modal title
+					orgId={reportOrgId}
+					orgName={reportOrgName}
+					serviceId={reportServiceId}
+					serviceName={reportServiceName}
 					key='report'
 				/>
 			</ActionButtons.Group>

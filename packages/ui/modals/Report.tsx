@@ -8,7 +8,10 @@ import { ReportSubmit } from '~ui/components/core/ReportSubmit'
 import { useScreenSize } from '~ui/hooks/useScreenSize'
 
 const ReportModalBody = forwardRef<HTMLButtonElement, ReportModalProps>(
-	({ itemId, itemName, component, closeMenuOnClick, ...props }, ref) => {
+	(
+		{ itemId, itemName, orgId, serviceId, orgName, serviceName, component, closeMenuOnClick, ...props },
+		ref
+	) => {
 		const [opened, handler] = useDisclosure(false)
 		const { isMobile } = useScreenSize()
 		const modalTitle = (
@@ -28,7 +31,16 @@ const ReportModalBody = forwardRef<HTMLButtonElement, ReportModalProps>(
 					trapFocus={true}
 					closeOnClickOutside={false}
 				>
-					<ReportSubmit type='modal' closeModalHandler={handler.close} itemId={itemId} itemName={itemName} />
+					<ReportSubmit
+						type='modal'
+						closeModalHandler={handler.close}
+						itemId={itemId}
+						itemName={itemName}
+						orgId={orgId}
+						serviceId={serviceId}
+						orgName={orgName}
+						serviceName={serviceName}
+					/>
 				</Modal>
 				<Box
 					component={component || Button}
@@ -62,6 +74,10 @@ export type ReportModalProps = Omit<ButtonProps, 'variant'> & {
 	variant?: ButtonProps['variant'] | (string & NonNullable<unknown>)
 	itemId: string
 	itemName: string
+	orgId?: string
+	serviceId?: string
+	orgName?: string
+	serviceName?: string
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	component?: any
 	closeMenuOnClick?: boolean

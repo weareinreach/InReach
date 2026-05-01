@@ -15,7 +15,10 @@ import { ReportModal } from '~ui/modals/Report'
 import { useStyles } from './styles'
 
 export const Report = forwardRef<HTMLButtonElement, ReportProps>(
-	({ itemId, itemName, menuItem, omitLabel, className, ...props }, ref) => {
+	(
+		{ itemId, itemName, menuItem, omitLabel, className, orgId, orgName, serviceId, serviceName, ...props },
+		ref
+	) => {
 		const { classes, cx } = useStyles()
 		const theme = useMantineTheme()
 		const { t } = useTranslation('common')
@@ -34,6 +37,10 @@ export const Report = forwardRef<HTMLButtonElement, ReportProps>(
 				className={cx({ [classes.button]: !menuItem }, className)}
 				itemId={itemId}
 				itemName={itemName}
+				orgId={orgId}
+				orgName={orgName}
+				serviceId={serviceId}
+				serviceName={serviceName}
 				{...props}
 			>
 				<Group spacing={0} noWrap>
@@ -61,4 +68,8 @@ export interface ReportProps extends ButtonProps {
 	itemName: string
 	menuItem?: boolean
 	omitLabel?: boolean
+	orgId?: string
+	orgName?: string
+	serviceId?: string
+	serviceName?: string
 }
