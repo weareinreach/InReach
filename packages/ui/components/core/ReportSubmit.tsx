@@ -1,4 +1,5 @@
 import { Box, MultiSelect, Paper, Radio, Stack, Text, TextInput, Title, useMantineTheme } from '@mantine/core'
+import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
@@ -16,6 +17,7 @@ export const ReportSubmit = ({
 	serviceId,
 	serviceName,
 }: ReportSubmitProps) => {
+	const { data: session } = useSession()
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
 	const variant = useCustomVariant()
@@ -36,6 +38,32 @@ export const ReportSubmit = ({
 		(isIncorrectInfo && (incorrectInfoFields.length === 0 || !note.trim())) ||
 		(isSomethingElse && !note.trim()) ||
 		(isTranslation && (!language || !note.trim()))
+
+	const handleSubmit = () => {
+		const payload = {
+			orgName: orgName || (!serviceId ? itemName : undefined),
+			orgId: orgId || (!serviceId ? itemId : undefined),
+			serviceName: serviceId ? serviceName || itemName : undefined,
+			serviceId: serviceId || undefined,
+			issueType,
+			note: note.trim(),
+			// Capturing form-specific fields for completeness
+			incorrectInfoFields: isIncorrectInfo ? incorrectInfoFields : [],
+			language: isTranslation ? language : undefined,
+			// Captured user info if logged in
+			user: session?.user
+				? {
+						name: session.user.name,
+						email: session.user.email,
+					}
+				: null,
+			timestamp: new Date().toISOString(),
+		}
+
+		// This log follows the DB-ready JSON structure pattern
+		console.log('Report Submission:', JSON.stringify(payload, null, 2))
+		setSuccessMessage(true)
+	}
 
 	const successBody = (
 		<Stack spacing={24} align='center' py='xl'>
@@ -171,13 +199,7 @@ export const ReportSubmit = ({
 					Sharing more information helps our team incorporate your suggestions or correct the issue.
 				</Text>
 
-				<Button
-					variant='primary'
-					fullWidth
-					mt='md'
-					disabled={isInvalid}
-					onClick={() => setSuccessMessage(true)}
-				>
+				<Button variant='primary' fullWidth mt='md' disabled={isInvalid} onClick={handleSubmit}>
 					{t('words.save')}
 				</Button>
 			</Stack>
