@@ -326,4 +326,5 @@ export const ServiceModal = createPolymorphicComponent<'button', ServiceModalPro
 export interface ServiceModalProps extends ButtonProps {
 	serviceId: string
 	itemName?: string
+	organizationId?: string
 }
