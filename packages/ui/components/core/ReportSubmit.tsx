@@ -34,7 +34,7 @@ export const ReportSubmit = ({
 		!issueType ||
 		(isIncorrectInfo && (incorrectInfoFields.length === 0 || !note.trim())) ||
 		(isSomethingElse && !note.trim()) ||
-		(isTranslation && !language)
+		(isTranslation && (!language || !note.trim()))
 
 	const component = (
 		<Stack>
@@ -111,13 +111,13 @@ export const ReportSubmit = ({
 						<Box>
 							<Radio value='translation-quality' label={t('Translation quality')} />
 							{isTranslation && (
-								<Box ml='xl' mt='xs' w='100%'>
-									<Stack spacing={4}>
-										<Text size='xs' weight={500}>
-											{t('Select language')}
-										</Text>
-										<LangPicker value={language} onChange={setLanguage} />
-									</Stack>
+								<Box ml='xl' mt='xs'>
+									<LangPicker
+										value={language}
+										onChange={setLanguage}
+										variant='form'
+										label={t('Which language needs correction?')}
+									/>
 								</Box>
 							)}
 						</Box>
@@ -126,23 +126,27 @@ export const ReportSubmit = ({
 					</Stack>
 				</Radio.Group>
 
-				{(isIncorrectInfo || isSomethingElse) && (
+				{(isIncorrectInfo || isSomethingElse || isTranslation) && (
 					<TextInput
 						label={
-							isIncorrectInfo && incorrectInfoFields.length > 0
-								? t('Corrected Information')
-								: t('Add a note (optional)')
+							isTranslation
+								? t('Translation Details')
+								: isIncorrectInfo && incorrectInfoFields.length > 0
+									? t('Corrected Information')
+									: t('Add a note (optional)')
 						}
 						placeholder={
-							isIncorrectInfo && incorrectInfoFields.length > 0
-								? t('Please provide the corrected information for the items selected above')
-								: t('Please provide any other helpful information here')
+							isTranslation
+								? t('Please specify the translation error and provide the correct wording if possible')
+								: isIncorrectInfo && incorrectInfoFields.length > 0
+									? t('Please provide the corrected information for the items selected above')
+									: t('Please provide any other helpful information here')
 						}
 						value={note}
 						onChange={(e) => setNote(e.currentTarget.value)}
 						w='100%'
 						mt='md'
-						required={isIncorrectInfo || isSomethingElse}
+						required={isIncorrectInfo || isSomethingElse || isTranslation}
 					/>
 				)}
 
