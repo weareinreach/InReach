@@ -149,6 +149,9 @@ export const ReportSubmit = ({
 						required={isIncorrectInfo || isSomethingElse || isTranslation}
 					/>
 				)}
+				<Text size='xs' color='dimmed'>
+					Sharing more information helps our team incorporate your suggestions or correct the issue.
+				</Text>
 
 				<Button variant='primary' fullWidth mt='md' disabled={isInvalid}>
 					{t('words.save')}
