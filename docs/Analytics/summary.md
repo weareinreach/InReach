@@ -1,4 +1,24 @@
-# How-To: Tracking the "Report an Issue" Feature in GA4
+# Analytics Overview
+
+InReach uses Google Analytics 4 (GA4) to understand how users interact with the platform. This data helps us improve search accuracy, identify missing services, and ensure the app is performing well.
+
+## General Application Tracking
+
+Beyond the "Report an Issue" feature, the following areas are tracked automatically:
+
+- **Search & Discovery**: We track what terms people search for, the locations they enter, and whether they are searching for specific organizations.
+- **Service Filtering**: We monitor which categories (e.g., "Legal," "Healthcare") and specific service filters are being used to narrow down results.
+- **Content Engagement**: We track when users open service details (modals) and when they click the "Donate" button.
+- **User Actions**: We log when users successfully log in or create a new account.
+- **Safety & Performance**:
+  - **Safety Exit**: We track usage of the "Safety Exit" button to understand the safety needs of our users.
+  - **Web Vitals**: We automatically track technical performance (loading speeds, stability) to ensure a smooth experience across all devices.
+
+---
+
+## Feature Guide: "Report an Issue"
+
+This section explains how we track user interactions specifically with the "Report an Issue" tool.
 
 This guide explains how we track user interactions with the "Report an Issue" tool and how you can set up the Google Analytics 4 (GA4) dashboard to view these insights.
 
