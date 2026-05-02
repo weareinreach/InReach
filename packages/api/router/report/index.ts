@@ -1,6 +1,7 @@
 import { defineRouter, importHandler, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 
 import { ZCreateSchema } from './mutation.create.schema'
+import { ZUpdateSchema } from './mutation.update.schema'
 import { ZForReportsTableSchema } from './query.forReportsTable.schema'
 
 const NAMESPACE = 'report'
@@ -21,6 +22,12 @@ export const reportRouter = defineRouter({
 	// #endregion
 
 	// #region Mutations
+	update: permissionedProcedure('dataPortalManager')
+		.input(ZUpdateSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(namespaced('update'), () => import('./mutation.update.handler'))
+			return handler(opts)
+		}),
 	create: publicProcedure.input(ZCreateSchema).mutation(async (opts) => {
 		const handler = await importHandler(namespaced('create'), () => import('./mutation.create.handler'))
 		return handler(opts)

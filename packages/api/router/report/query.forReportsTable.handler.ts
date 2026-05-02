@@ -14,11 +14,19 @@ const forReportsTable = async ({ input }: TRPCHandlerParams<TForReportsTableSche
 			serviceNameSnapshot: true,
 			issueType: true,
 			status: true,
-			informed: true,
 			userEmail: true,
 			userName: true,
+			note: true,
+			incorrectFields: true,
+			internalNotes: true,
+			language: true,
 			createdAt: true,
 			updatedAt: true,
+			organization: {
+				select: {
+					slug: true,
+				},
+			},
 			reportedBy: {
 				select: {
 					id: true,

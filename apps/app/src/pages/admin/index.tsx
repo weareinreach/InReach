@@ -13,6 +13,7 @@ import { checkPermissions, getServerSession } from '@weareinreach/auth'
 import { permissions as ALL_PERMISSIONS } from '@weareinreach/db/generated/permission' // Renamed to ALL_PERMISSIONS for clarity
 import { DownloadTable } from '@weareinreach/ui/components/data-portal/DownloadTable'
 import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
+import { ReportTable } from '@weareinreach/ui/components/data-portal/ReportTable'
 import { UserTable } from '@weareinreach/ui/components/data-portal/UserTable'
 import { getServerSideTranslations } from '~app/utils/i18n'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -35,6 +36,11 @@ const AdminIndex: NextPage = () => {
 		permissions: [PERM_DATAPORTAL_BASIC, PERM_DATAPORTAL_MANAGER, PERM_DATAPORTAL_ADMIN, PERM_ROOT],
 		has: 'some', // dataPortalBasic and above
 	})
+	const canAccessReports = checkPermissions({
+		session,
+		permissions: [PERM_DATAPORTAL_BASIC, PERM_DATAPORTAL_MANAGER, PERM_DATAPORTAL_ADMIN, PERM_ROOT],
+		has: 'some', // dataPortalBasic and above
+	})
 	const canAccessUsers = checkPermissions({
 		session,
 		permissions: [PERM_DATAPORTAL_MANAGER, PERM_DATAPORTAL_ADMIN, PERM_ROOT],
@@ -50,16 +56,30 @@ const AdminIndex: NextPage = () => {
 	useEffect(() => {
 		// If the current active tab is not accessible, switch to the first accessible one
 		if (activeTab === 'organizations' && !canAccessOrganizations) {
-			if (canAccessUsers) {
+			if (canAccessReports) {
+				setActiveTab('reports')
+			} else if (canAccessUsers) {
 				setActiveTab('users')
 			} else if (canAccessDownloads) {
 				setActiveTab('downloads')
 			} else {
 				setActiveTab(null) // No tabs accessible
 			}
+		} else if (activeTab === 'reports' && !canAccessReports) {
+			if (canAccessOrganizations) {
+				setActiveTab('organizations')
+			} else if (canAccessUsers) {
+				setActiveTab('users')
+			} else if (canAccessDownloads) {
+				setActiveTab('downloads')
+			} else {
+				setActiveTab(null)
+			}
 		} else if (activeTab === 'users' && !canAccessUsers) {
 			if (canAccessOrganizations) {
 				setActiveTab('organizations')
+			} else if (canAccessReports) {
+				setActiveTab('reports')
 			} else if (canAccessDownloads) {
 				setActiveTab('downloads')
 			} else {
@@ -78,7 +98,7 @@ const AdminIndex: NextPage = () => {
 		if (!canAccessOrganizations && !canAccessUsers && !canAccessDownloads && activeTab !== null) {
 			setActiveTab(null)
 		}
-	}, [activeTab, canAccessOrganizations, canAccessUsers, canAccessDownloads])
+	}, [activeTab, canAccessOrganizations, canAccessReports, canAccessUsers, canAccessDownloads])
 	return (
 		<>
 			<Head>
@@ -90,7 +110,8 @@ const AdminIndex: NextPage = () => {
 					<Tabs.List>
 						{canAccessOrganizations && (
 							<Tabs.Tab value='organizations'>{t('admin.tab-organizations')}</Tabs.Tab>
-						)}
+						)}{' '}
+						{canAccessReports && <Tabs.Tab value='reports'>{t('admin.tab-reports')}</Tabs.Tab>}
 						{canAccessUsers && <Tabs.Tab value='users'>{t('admin.tab-users')}</Tabs.Tab>}
 						{canAccessDownloads && <Tabs.Tab value='downloads'>{t('admin.tab-downloads')}</Tabs.Tab>}
 					</Tabs.List>
@@ -98,6 +119,12 @@ const AdminIndex: NextPage = () => {
 					{activeTab === 'organizations' && canAccessOrganizations && (
 						<Tabs.Panel value='organizations' pt='xs'>
 							<OrganizationTable />
+						</Tabs.Panel>
+					)}
+
+					{activeTab === 'reports' && canAccessReports && (
+						<Tabs.Panel value='reports' pt='xs'>
+							<ReportTable />
 						</Tabs.Panel>
 					)}
 
