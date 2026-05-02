@@ -23,7 +23,7 @@ export const ReportSubmit = ({
 	const variant = useCustomVariant()
 	const isBody = type === 'body'
 
-	const [issueType, setIssueType] = useState<string | null>(null)
+	const [issueType, setIssueType] = useState<string | undefined>(undefined)
 	const [incorrectInfoFields, setIncorrectInfoFields] = useState<string[]>([])
 	const [language, setLanguage] = useState<string | undefined>(undefined)
 	const [note, setNote] = useState('')
