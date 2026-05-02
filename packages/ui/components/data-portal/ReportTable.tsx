@@ -15,13 +15,15 @@ import { DateTime } from 'luxon'
 import {
 	MantineReactTable,
 	type MRT_ColumnDef,
+	type MRT_Icons,
 	MRT_ShowHideColumnsButton,
 	type MRT_TableInstance,
 	MRT_ToggleFiltersButton,
+	type MRT_Virtualizer,
 	useMantineReactTable,
 } from 'mantine-react-table'
 import { type Route } from 'nextjs-routes'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { ReportStatus } from '@weareinreach/db/enums'
@@ -32,11 +34,17 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 type ReportRecord = ApiOutput['report']['forReportsTable'][number]
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((_theme) => ({
 	bottomBar: {
 		paddingTop: rem(20),
 	},
 }))
+
+const customIcons: Partial<MRT_Icons> = {
+	IconSearch: (props: Record<string, unknown>) => <Icon icon='carbon:search' color='#40c057' {...props} />,
+	IconSortAscending: () => <Icon icon={'carbon:chevron-up'} color='black' />,
+	IconSortDescending: () => <Icon icon={'carbon:chevron-down'} color='black' />,
+}
 
 const STATUS_OPTIONS = [
 	{ value: ReportStatus.PENDING, label: 'Pending' },
@@ -70,7 +78,10 @@ const ReportDetailsModal = ({
 	opened: boolean
 	onClose: () => void
 }) => {
-	const [internalNote, setInternalNote] = useState(report.internalNotes || '')
+	// Ensure initialization always uses a string even if DB relation is missing or mis-typed
+	const [internalNote, setInternalNote] = useState<string>(
+		typeof report.internalNotes === 'string' ? report.internalNotes : ''
+	)
 	const apiUtils = api.useUtils()
 	const updateMutation = api.report.update.useMutation({
 		onSuccess: () => {
@@ -99,6 +110,14 @@ const ReportDetailsModal = ({
 						<Text size='sm' sx={{ textTransform: 'capitalize' }}>
 							{report.issueType.replace(/-/g, ' ')}
 						</Text>
+						{report.language && (
+							<Text size='xs' color='dimmed'>
+								Language:{' '}
+								{Array.isArray(report.language)
+									? (report.language[0] as unknown as { localeCode: string })?.localeCode
+									: (report.language as unknown as { localeCode: string })?.localeCode || 'Unknown'}
+							</Text>
+						)}
 					</Stack>
 				</Group>
 
@@ -149,7 +168,7 @@ const ReportDetailsModal = ({
 						variant='filled'
 						color='blue'
 						size='lg'
-						onClick={() => updateMutation.mutate({ id: report.id, internalNote })}
+						onClick={() => updateMutation.mutate({ id: report.id, internalNotes: internalNote })}
 						loading={updateMutation.isLoading}
 					>
 						<Icon icon='carbon:save' />
@@ -160,10 +179,32 @@ const ReportDetailsModal = ({
 	)
 }
 
-export const ReportTable = () => {
+const BottomBar = ({ table }: { table: MRT_TableInstance<ReportRecord> }) => {
 	const { classes } = useStyles()
+	const filteredRowCount = table.getFilteredRowModel().rows.length
+	const preFilteredRowCount = table.getPreFilteredRowModel().rows.length
+
+	if (preFilteredRowCount !== filteredRowCount) {
+		return (
+			<div className={classes.bottomBar}>
+				<Text variant='utility3'>
+					Showing {filteredRowCount} of {preFilteredRowCount} results
+				</Text>
+			</div>
+		)
+	}
+
+	return (
+		<div className={classes.bottomBar}>
+			<Text variant='utility3'>{preFilteredRowCount} results</Text>
+		</div>
+	)
+}
+
+export const ReportTable = () => {
 	const variants = useCustomVariant()
 	const [selectedReport, setSelectedReport] = useState<ReportRecord | null>(null)
+	const rowVirtualizerInstanceRef = useRef<MRT_Virtualizer<HTMLDivElement, HTMLTableRowElement>>(null)
 	const [detailsOpened, { open: openDetails, close: closeDetails }] = useDisclosure(false)
 
 	const { data, isLoading, isError, isFetching } = api.report.forReportsTable.useQuery(undefined, {
@@ -184,7 +225,13 @@ export const ReportTable = () => {
 				size: 250,
 				Cell: ({ row }) => (
 					<Stack spacing={0}>
-						<Text weight={500} size='sm' variant={variants.Text.utility4}>
+						<Text
+							weight={500}
+							size='sm'
+							variant={
+								row.original.status === 'RESOLVED' ? variants.Text.utility4darkGray : variants.Text.utility4
+							}
+						>
 							{row.original.serviceNameSnapshot || row.original.orgNameSnapshot}
 						</Text>
 						<Text size='xs' color='dimmed' italic>
@@ -234,7 +281,7 @@ export const ReportTable = () => {
 				sortingFn: 'datetime',
 			},
 		],
-		[variants.Text.utility4]
+		[variants.Text.utility4, variants.Text.utility4darkGray]
 	)
 
 	const handleViewDetails = useCallback(
@@ -248,25 +295,49 @@ export const ReportTable = () => {
 	const table = useMantineReactTable({
 		columns,
 		data: data ?? [],
+		icons: customIcons,
 		enableColumnResizing: true,
+		enableGlobalFilterModes: true,
 		enableFacetedValues: true,
 		enablePagination: false,
-		enableRowActions: true,
 		enablePinning: true,
+		enableRowActions: true,
 		enableRowVirtualization: true,
+		rowVirtualizerInstanceRef,
+		positionGlobalFilter: 'left',
+		mantineSearchTextInputProps: {
+			placeholder: 'Search Reports',
+			icon: null, // Ensure the icon is not rendered inside the box
+			sx: {
+				'& .mantine-TextInput-input': {
+					borderRadius: 0,
+					height: rem(48),
+					width: rem(400),
+				},
+			},
+			variant: 'default',
+		},
+		globalFilterModeOptions: ['contains', 'fuzzy', 'startsWith', 'endsWith'],
 		columnFilterDisplayMode: 'popover',
 		initialState: {
 			sorting: [{ id: 'createdAt', desc: true }],
 			columnVisibility: { id: false },
-			columnPinning: { left: ['mrt-row-actions', 'target'] },
+			columnPinning: { left: ['mrt-row-actions'] },
+			showGlobalFilter: true,
 		},
 		state: {
 			isLoading,
-			showAlertBanner: isError || isLoading,
+			showAlertBanner: isError,
 			showProgressBars: isFetching,
 			density: 'xs',
 		},
+		mantinePaperProps: { miw: '85%' },
 		mantineTableContainerProps: { mah: '60vh' },
+		mantineTableBodyCellProps: ({ row }) => ({
+			sx: (theme) => ({
+				color: row.original.status === 'RESOLVED' ? theme.other.colors.secondary.darkGray : undefined,
+			}),
+		}),
 		mantineTableProps: { striped: true },
 		renderRowActions: ({ row }) => {
 			const editUrl: Route = row.original.serviceId
@@ -287,7 +358,12 @@ export const ReportTable = () => {
 						</ActionIcon>
 					</Tooltip>
 					<Tooltip label='Edit Target' withinPortal>
-						<ActionIcon component={Link} href={editUrl} target='_blank'>
+						<ActionIcon
+							component={Link}
+							href={editUrl}
+							// @ts-expect-error ignore the blank target error
+							target='_blank'
+						>
 							<Icon icon='carbon:edit' />
 						</ActionIcon>
 					</Tooltip>
@@ -300,16 +376,7 @@ export const ReportTable = () => {
 				<MRT_ShowHideColumnsButton table={table} />
 			</Group>
 		),
-		renderBottomToolbar: ({ table }) => {
-			const filteredRowCount = table.getFilteredRowModel().rows.length
-			return (
-				<div className={classes.bottomBar}>
-					<Text variant='utility3'>
-						{filteredRowCount} {filteredRowCount === 1 ? 'report' : 'reports'} found
-					</Text>
-				</div>
-			)
-		},
+		renderBottomToolbar: ({ table }) => <BottomBar table={table} />,
 	})
 
 	return (
