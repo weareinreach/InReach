@@ -1,4 +1,15 @@
-import { Box, MultiSelect, Paper, Radio, Stack, Text, TextInput, Title, useMantineTheme } from '@mantine/core'
+import {
+	Alert,
+	Box,
+	MultiSelect,
+	Paper,
+	Radio,
+	Stack,
+	Text,
+	TextInput,
+	Title,
+	useMantineTheme,
+} from '@mantine/core'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
@@ -7,9 +18,11 @@ import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
+import { trpc } from '~ui/lib/trpcClient'
 
 export const ReportSubmit = ({
 	type = 'body',
+	closeModalHandler,
 	itemId,
 	itemName,
 	orgId,
@@ -28,6 +41,7 @@ export const ReportSubmit = ({
 	const [language, setLanguage] = useState<string | undefined>(undefined)
 	const [note, setNote] = useState('')
 	const [successMessage, setSuccessMessage] = useState(false)
+	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
 	const isIncorrectInfo = issueType === 'incorrect-info'
 	const isSomethingElse = issueType === 'something-else'
@@ -39,30 +53,38 @@ export const ReportSubmit = ({
 		(isSomethingElse && !note.trim()) ||
 		(isTranslation && (!language || !note.trim()))
 
+	const reportMutation = trpc.report.create.useMutation({
+		onSuccess: () => {
+			setTimeout(() => {
+				setSuccessMessage(true)
+				setErrorMessage(null)
+			}, 100)
+		},
+		onError: (error) => {
+			setErrorMessage(error.message || t('errors.something-went-wrong'))
+		},
+	})
+
 	const handleSubmit = () => {
-		const payload = {
+		if (isInvalid) return
+		setErrorMessage(null)
+
+		reportMutation.mutate({
+			orgId: orgId || (!serviceId ? itemId : ''),
 			orgName: orgName || (!serviceId ? itemName : undefined),
-			orgId: orgId || (!serviceId ? itemId : undefined),
-			serviceName: serviceId ? serviceName || itemName : undefined,
 			serviceId: serviceId || undefined,
-			issueType,
+			serviceName: serviceId ? serviceName || itemName : undefined,
+			issueType: issueType as 'closed-inactive' | 'incorrect-info' | 'translation-quality' | 'something-else',
 			note: note.trim(),
-			// Capturing form-specific fields for completeness
 			incorrectInfoFields: isIncorrectInfo ? incorrectInfoFields : [],
 			language: isTranslation ? language : undefined,
-			// Captured user info if logged in
 			user: session?.user
 				? {
-						name: session.user.name,
-						email: session.user.email,
+						name: session.user.name ?? null,
+						email: session.user.email ?? null,
 					}
 				: null,
-			timestamp: new Date().toISOString(),
-		}
-
-		// This log follows the DB-ready JSON structure pattern
-		console.log('Report Submission:', JSON.stringify(payload, null, 2))
-		setSuccessMessage(true)
+		})
 	}
 
 	const successBody = (
@@ -79,6 +101,11 @@ export const ReportSubmit = ({
 						'Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria.',
 				})}
 			</Text>
+			{closeModalHandler && (
+				<Button variant='outline' mt='xl' onClick={closeModalHandler}>
+					{t('words.close', { defaultValue: 'Close' })}
+				</Button>
+			)}
 		</Stack>
 	)
 
@@ -199,7 +226,20 @@ export const ReportSubmit = ({
 					Sharing more information helps our team incorporate your suggestions or correct the issue.
 				</Text>
 
-				<Button variant='primary' fullWidth mt='md' disabled={isInvalid} onClick={handleSubmit}>
+				{errorMessage && (
+					<Alert icon={<Icon icon='AlertCircle' />} title='Error' color='red'>
+						{errorMessage}
+					</Alert>
+				)}
+
+				<Button
+					variant='primary'
+					fullWidth
+					mt='md'
+					disabled={isInvalid}
+					loading={reportMutation.isLoading}
+					onClick={handleSubmit}
+				>
 					{t('words.save')}
 				</Button>
 			</Stack>
