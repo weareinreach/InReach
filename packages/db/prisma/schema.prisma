@@ -6,7 +6,7 @@ generator client {
 generator aws {
   provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views", "driverAdapters", "nativeDistinct", "relationJoins"]
-  binaryTargets   = ["native", "linux-arm64-openssl-3.0.x"]
+  binaryTargets   = ["linux-arm64-openssl-3.0.x"]
 }
 
 generator enum {
@@ -163,9 +163,9 @@ model User {
   updatedAt DateTime @updatedAt
 
   //@@schema("user")
-  Suggestion       Suggestion[]
-  reportsSubmitted Report[]     @relation("ReportedByUser")
-  reportsHandled   Report[]     @relation("HandledReports")
+  Suggestion      Suggestion[]
+  reportsReported Report[]     @relation("reportedBy")
+  reportsHandled  Report[]     @relation("handledBy")
 
   @@index([userTypeId])
 }
@@ -445,6 +445,7 @@ model Organization {
   sourceId String
 
   suggestions Suggestion[]
+  reports     Report[]     @relation("OrganizationReports")
 
   // attachments
   userLists       SavedOrganization[]
@@ -457,11 +458,6 @@ model Organization {
 
   notes    InternalNote[]
   oldSlugs SlugRedirect[]
-
-  /// Does this record need to be checked by staff after migration?
-  checkMigration Boolean?
-  //@@schema("org")
-  reports        Report[] @relation("OrganizationReports")
 
   @@index([name(sort: Asc)])
   @@index([published, deleted])
@@ -828,17 +824,13 @@ model OrgService {
   organizationId String?
   locations      OrgLocationService[]
   userLists      SavedService[]
+  reports        Report[]             @relation("ServiceReports")
   websites       OrgServiceWebsite[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   internalNotes InternalNote[]
-
-  /// Does this record need to be checked by staff after migration?
-  checkMigration Boolean?
-  //@@schema("org")
-  reports        Report[] @relation("ServiceReports")
 
   @@index([organizationId(sort: Asc)])
   @@index([organizationId, published(sort: Desc), deleted])
@@ -1300,7 +1292,7 @@ model Report {
   note            String?         @db.Text // Free-text input from the user
 
   // User who reported (if logged in)
-  reportedBy   User?   @relation("ReportedByUser", fields: [reportedById], references: [id])
+  reportedBy   User?   @relation("reportedBy", fields: [reportedById], references: [id])
   reportedById String?
   userEmail    String? // Snapshot of user email for easier reference, or if not logged in
   userName     String? // Snapshot of user name
@@ -1308,7 +1300,7 @@ model Report {
   // Workflow and Status Tracking
   status        ReportStatus   @default(PENDING)
   informed      Boolean        @default(false) // Whether the reporting user has been informed of resolution
-  handledBy     User?          @relation("HandledReports", fields: [handledById], references: [id]) // Staff member who handled the report
+  handledBy     User?          @relation("handledBy", fields: [handledById], references: [id]) // Staff member who handled the report
   handledById   String?
   internalNotes InternalNote[] // Use existing InternalNote for staff comments
 
@@ -1531,14 +1523,12 @@ model Language {
   phones               OrgPhoneLanguage[]
   websites             OrgWebsiteLanguage[]
   reviewTranslation    TranslatedReview[]
+  reports              Report[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   internalNotes InternalNote[]
-
-  //@@schema("system")
-  reports Report[]
 }
 
 //
