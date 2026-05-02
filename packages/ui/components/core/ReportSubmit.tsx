@@ -12,8 +12,9 @@ import {
 } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { reportEvent } from '@weareinreach/analytics/events'
 import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -36,6 +37,8 @@ export const ReportSubmit = ({
 	const variant = useCustomVariant()
 	const isBody = type === 'body'
 
+	const reportTarget = serviceId ? 'service' : 'organization'
+
 	const [issueType, setIssueType] = useState<string | undefined>(undefined)
 	const [incorrectInfoFields, setIncorrectInfoFields] = useState<string[]>([])
 	const [language, setLanguage] = useState<string | undefined>(undefined)
@@ -53,8 +56,13 @@ export const ReportSubmit = ({
 		(isSomethingElse && !note.trim()) ||
 		(isTranslation && (!language || !note.trim()))
 
+	useEffect(() => {
+		reportEvent.open(reportTarget, itemId)
+	}, [reportTarget, itemId])
+
 	const reportMutation = trpc.report.create.useMutation({
 		onSuccess: () => {
+			reportEvent.submitSuccess(reportTarget, itemId, issueType, language)
 			setTimeout(() => {
 				setSuccessMessage(true)
 				setErrorMessage(null)
