@@ -1,6 +1,7 @@
 import {
 	ActionIcon,
 	Badge,
+	Checkbox,
 	createStyles,
 	Divider,
 	Group,
@@ -32,6 +33,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { ReportStatus } from '@weareinreach/db/enums'
+import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
@@ -42,6 +44,14 @@ type ReportRecord = ApiOutput['report']['forReportsTable'][number]
 const useStyles = createStyles((theme) => ({
 	warning: { color: theme.other.colors.tertiary.red },
 	bottomBar: { paddingTop: rem(20) },
+	notesList: {
+		maxHeight: rem(200),
+		overflowY: 'auto',
+		padding: theme.spacing.xs,
+		backgroundColor: theme.colors.gray[0],
+		borderRadius: theme.radius.sm,
+		border: `${rem(1)} solid ${theme.colors.gray[3]}`,
+	},
 }))
 
 // --- Helper Components ---
@@ -55,14 +65,29 @@ const ReportDetailsModal = ({
 	opened: boolean
 	onClose: () => void
 }) => {
-	const [internalNote, setInternalNote] = useState<string>('')
+	const { classes } = useStyles()
+	const [status, setStatus] = useState<ReportStatus>(report.status as ReportStatus)
+	const [informed, setInformed] = useState<boolean>(report.informed)
+	const [newNote, setNewNote] = useState<string>('')
+
 	const apiUtils = api.useUtils()
 	const updateMutation = api.report.update.useMutation({
-		onSuccess: () => {
-			apiUtils.report.forReportsTable.invalidate()
+		onSuccess: async () => {
+			await apiUtils.report.forReportsTable.invalidate()
+			setNewNote('')
 			onClose()
 		},
 	})
+
+	useEffect(() => {
+		setStatus(report.status as ReportStatus)
+		setInformed(report.informed)
+		setNewNote('')
+	}, [report.id, report.status, report.informed])
+
+	const isDirty = status !== report.status || informed !== report.informed || newNote.trim().length > 0
+	const isValid = status === ReportStatus.RESOLVED ? newNote.trim().length > 0 : true
+	const canSave = isDirty && isValid
 
 	const languageName = useMemo(() => {
 		const l = Array.isArray(report.language) ? report.language[0] : report.language
@@ -168,6 +193,27 @@ const ReportDetailsModal = ({
 					)}
 				</Group>
 
+				<Divider />
+
+				<Group grow align='flex-end'>
+					<Select
+						label='Status'
+						data={[
+							{ value: ReportStatus.PENDING, label: 'Pending' },
+							{ value: ReportStatus.ACKNOWLEDGED, label: 'Acknowledged' },
+							{ value: ReportStatus.RESOLVED, label: 'Resolved' },
+						]}
+						value={status}
+						onChange={(val) => setStatus(val as ReportStatus)}
+					/>
+					<Checkbox
+						label='User Informed'
+						checked={informed}
+						onChange={(event) => setInformed(event.currentTarget.checked)}
+						mb={10}
+					/>
+				</Group>
+
 				{/* Reported Content Section */}
 				{report.incorrectFields && report.incorrectFields.length > 0 && (
 					<Stack spacing={4}>
@@ -207,51 +253,62 @@ const ReportDetailsModal = ({
 					</Text>
 				</Stack>
 
+				{/* Internal Notes History */}
+				{report.internalNotes && report.internalNotes.length > 0 && (
+					<Stack spacing={4}>
+						<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+							Internal History
+						</Text>
+						<div className={classes.notesList}>
+							<Stack spacing='xs'>
+								{report.internalNotes.map((note) => (
+									<div key={note.id}>
+										<Group spacing={4} align='center'>
+											<Text size='xs' weight={700}>
+												{note.user?.name || 'System'}
+											</Text>
+											<Text size='xs' color='dimmed'>
+												•{' '}
+												{DateTime.fromJSDate(new Date(note.createdAt)).toLocaleString(
+													DateTime.DATETIME_SHORT
+												)}
+											</Text>
+										</Group>
+										<Text size='sm'>{note.text}</Text>
+									</div>
+								))}
+							</Stack>
+						</div>
+					</Stack>
+				)}
+
 				<Divider />
 
 				{/* Admin Actions */}
 				<Textarea
-					label='Internal Resolution Note'
-					placeholder='Describe how this was handled...'
-					value={internalNote}
-					onChange={(e) => setInternalNote(e.currentTarget.value)}
+					label={status === ReportStatus.RESOLVED ? 'Resolution Note (Required)' : 'Internal Note'}
+					placeholder={
+						status === ReportStatus.RESOLVED
+							? 'Describe how this was resolved...'
+							: 'Add any internal notes here...'
+					}
+					value={newNote}
+					onChange={(e) => setNewNote(e.currentTarget.value)}
 					minRows={3}
 				/>
 
 				<Group position='right' mt='md'>
-					<ActionIcon
-						variant='filled'
-						color='blue'
-						size='lg'
-						onClick={() => updateMutation.mutate({ id: report.id, internalNotes: internalNote })}
+					<Button
+						variant='primary'
+						onClick={() => updateMutation.mutate({ id: report.id, status, informed, internalNotes: newNote })}
 						loading={updateMutation.isLoading}
+						disabled={!canSave}
 					>
-						<Icon icon='carbon:save' />
-					</ActionIcon>
+						Save Changes
+					</Button>
 				</Group>
 			</Stack>
 		</Modal>
-	)
-}
-
-const StatusSelect = ({ report }: { report: ReportRecord }) => {
-	const apiUtils = api.useUtils()
-	const updateMutation = api.report.update.useMutation({
-		onSuccess: () => apiUtils.report.forReportsTable.invalidate(),
-	})
-
-	return (
-		<Select
-			data={[
-				{ value: ReportStatus.PENDING, label: 'Pending' },
-				{ value: ReportStatus.ACKNOWLEDGED, label: 'Acknowledged' },
-				{ value: ReportStatus.RESOLVED, label: 'Resolved' },
-			]}
-			value={report.status}
-			onChange={(val) => updateMutation.mutate({ id: report.id, status: val as ReportStatus })}
-			size='xs'
-			sx={{ width: rem(130) }}
-		/>
 	)
 }
 
@@ -286,6 +343,7 @@ export const ReportTable = () => {
 	// and to allow the table to reset to the full list.
 	const handleCloseDetails = useCallback(() => {
 		closeDetails()
+		setSelectedReport(null)
 		if (router.query.reportId) {
 			const { reportId: _removed, ...query } = router.query
 			router.replace({ query }, undefined, { shallow: true })
@@ -335,27 +393,32 @@ export const ReportTable = () => {
 				size: 90,
 			},
 			{
-				id: 'target',
-				header: 'Reported Item',
-				accessorFn: (row) => row.serviceNameSnapshot || row.orgNameSnapshot,
-				size: 250,
-				Cell: ({ row }) => {
+				accessorKey: 'orgNameSnapshot',
+				header: 'Organization Name',
+				size: 200,
+				Cell: ({ cell, row }) => {
 					const isResolved = row.original.status === ReportStatus.RESOLVED
 					return (
-						<Stack spacing={0}>
-							<Text
-								weight={500}
-								size='sm'
-								variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}
-							>
-								{row.original.serviceNameSnapshot || row.original.orgNameSnapshot}
-							</Text>
-							<Text size='xs' color='dimmed' italic>
-								{row.original.serviceId
-									? `ID: ${row.original.serviceId}`
-									: `ID: ${row.original.organizationId}`}
-							</Text>
-						</Stack>
+						<Text
+							weight={500}
+							size='sm'
+							variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}
+						>
+							{cell.getValue<string>() || 'Unknown'}
+						</Text>
+					)
+				},
+			},
+			{
+				accessorKey: 'serviceNameSnapshot',
+				header: 'Service or Location Name',
+				size: 200,
+				Cell: ({ cell, row }) => {
+					const isResolved = row.original.status === ReportStatus.RESOLVED
+					return (
+						<Text size='sm' variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}>
+							{cell.getValue<string>() || '-'}
+						</Text>
 					)
 				},
 			},
@@ -369,12 +432,67 @@ export const ReportTable = () => {
 				accessorKey: 'status',
 				header: 'Status',
 				size: 150,
-				Cell: ({ row }) => <StatusSelect report={row.original} />,
+				Cell: ({ cell, row }) => {
+					const status = cell.getValue<ReportStatus>()
+					const updatedAt = DateTime.fromJSDate(new Date(row.original.updatedAt))
+					const diff = DateTime.now().diff(updatedAt, ['days'])
+
+					let color = theme.colors.gray[7]
+					let weight: number = 500
+
+					if (status === ReportStatus.PENDING) {
+						weight = 700
+						if (diff.days >= 3) color = theme.colors.red[7]
+						else if (diff.days >= 1) color = theme.colors.orange[8]
+						else color = theme.black
+					} else if (status === ReportStatus.ACKNOWLEDGED) {
+						color = theme.colors.blue[7]
+						if (diff.days >= 7) color = theme.colors.orange[7]
+					} else if (status === ReportStatus.RESOLVED) {
+						color = theme.colors.gray[5]
+						weight = 400
+					}
+
+					return (
+						<Text size='sm' weight={weight} color={color} sx={{ textTransform: 'capitalize' }}>
+							{status.toLowerCase()}
+						</Text>
+					)
+				},
 				filterVariant: 'select',
 			},
 			{
+				accessorKey: 'informed',
+				header: 'Informed',
+				size: 100,
+				Cell: ({ cell }) => (
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<Icon
+							icon={cell.getValue<boolean>() ? 'carbon:checkmark-filled' : 'carbon:checkmark-outline'}
+							color={cell.getValue<boolean>() ? 'green' : 'gray'}
+							size={18}
+						/>
+					</div>
+				),
+				filterVariant: 'checkbox',
+			},
+			{
 				accessorKey: 'createdAt',
-				header: 'Submitted',
+				header: 'Created At',
+				size: 150,
+				Cell: ({ cell }) => {
+					const date = DateTime.fromJSDate(cell.getValue<Date>())
+					return (
+						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)} withinPortal>
+							<span>{date.toRelativeCalendar()}</span>
+						</Tooltip>
+					)
+				},
+				sortingFn: 'datetime',
+			},
+			{
+				accessorKey: 'updatedAt',
+				header: 'Updated At',
 				size: 150,
 				Cell: ({ cell }) => {
 					const date = DateTime.fromJSDate(cell.getValue<Date>())

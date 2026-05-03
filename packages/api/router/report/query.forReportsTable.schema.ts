@@ -8,6 +8,7 @@ export const ZForReportsTableSchema = z
 		status: z.nativeEnum(ReportStatus),
 		issueType: z.nativeEnum(ReportIssueType),
 		organizationId: z.string(),
+		informed: z.boolean(),
 	})
 	.partial()
 	.optional()

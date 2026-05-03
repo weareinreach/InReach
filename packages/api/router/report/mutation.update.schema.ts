@@ -5,6 +5,7 @@ import { ReportStatus } from '@weareinreach/db/enums'
 export const ZUpdateSchema = z.object({
 	id: z.string(),
 	status: z.nativeEnum(ReportStatus).optional(),
+	informed: z.boolean().optional(),
 	internalNotes: z.string().optional(),
 })
 
