@@ -267,6 +267,10 @@
 	},
 	"remote-services": "Services available remotely",
 	"remote-services-page-title": "Remote services",
+	"report": {
+		"thank-you": "Thank you for helping us make InReach better for everyone!",
+		"thank-you-message": "Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria."
+	},
 	"reset-password": "Reset your password",
 	"reset-password-message": "We will send you an email to reset your password",
 	"resource-saved": "Resource saved.",

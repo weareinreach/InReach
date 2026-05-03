@@ -69,7 +69,7 @@ export const ReportSubmit = ({
 			}, 100)
 		},
 		onError: (error) => {
-			setErrorMessage(error.message || t('errors.something-went-wrong'))
+			setErrorMessage(error.message || t('errors.500-body'))
 		},
 	})
 
