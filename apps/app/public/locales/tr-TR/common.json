@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Kuruluşlar",
+		"tab-reports": "Raporlar",
 		"tab-users": "Kullanıcılar",
 		"tab-downloads": "İndirilenler"
 	},
@@ -295,6 +296,10 @@
 	},
 	"remote-services": "Uzaktan sunulan hizmetler",
 	"remote-services-page-title": "Uzaktan servisler",
+	"report": {
+		"thank-you": "inReach\"i herkes için daha iyi hale getirmemize yardımcı olduğunuz için teşekkür ederiz!",
+		"thank-you-message": "Ekibimiz gönderiminizi inceleyecek, bilgileri doğrulayacak ve kriterlerimizi karşılıyorsa buna göre değişiklikler yapacaktır."
+	},
 	"reset-password": "Şifrenizi sıfırla",
 	"reset-password-message": "Şifrenizi sıfırlamak için size bir e-posta göndereceğiz",
 	"resource-saved": "Kaynak kaydedildi.",
@@ -485,6 +490,7 @@
 		"prev": "Önceki",
 		"print": "Yazdır",
 		"publish": "Yayınla",
+		"report": "Rapor",
 		"restore": "Geri Yükleme",
 		"reverify": "Yeniden Doğrulayın",
 		"review": "Gözden Geçirme",

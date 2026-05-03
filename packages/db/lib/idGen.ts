@@ -43,6 +43,7 @@ export const idPrefix = {
 	outsideAPI: 'oapi',
 	permission: 'perm',
 	phoneType: 'phtp',
+	report: 'rpt',
 	serviceArea: 'svar',
 	serviceCategory: 'svct',
 	serviceTag: 'svtg',

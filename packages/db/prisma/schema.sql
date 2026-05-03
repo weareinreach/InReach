@@ -162,6 +162,8 @@ model User {
   updatedAt DateTime @updatedAt
 
   //@@schema("user")
+  reportsReported Report[] @relation("reportedBy")
+  reportsHandled  Report[] @relation("handledBy")
   Suggestion Suggestion[]
 
   @@index([userTypeId])
@@ -442,6 +444,7 @@ model Organization {
   sourceId String
 
   suggestions Suggestion[]
+  reports     Report[]
 
   // attachments
   userLists       SavedOrganization[]
@@ -824,6 +827,7 @@ model OrgService {
   organizationId String?
   locations      OrgLocationService[]
   userLists      SavedService[]
+  reports        Report[]
   websites       OrgServiceWebsite[]
 
   createdAt DateTime @default(now())
@@ -1697,6 +1701,8 @@ model InternalNote {
   orgWebsiteId                    String?
   outsideApi                      OutsideAPI?                    @relation(fields: [outsideApiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   outsideApiId                    String?
+  report                          Report?                        @relation(fields: [reportId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  reportId                        String?
   outsideAPIService               OutsideAPIService?             @relation(fields: [outsideAPIServiceService], references: [service], onDelete: Cascade, onUpdate: Cascade)
   outsideAPIServiceService        String?
   permission                      Permission?                    @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1742,6 +1748,52 @@ model AuditTrail {
   @@index([actorId])
   @@index([table_oid])
   @@index([timestamp], type: Brin)
+}
+
+enum ReportIssueType {
+  CLOSED_INACTIVE
+  INCORRECT_INFO
+  TRANSLATION_QUALITY
+  SOMETHING_ELSE
+}
+
+enum ReportStatus {
+  PENDING
+  ACKNOWLEDGED
+  RESOLVED
+}
+
+model Report {
+  id                  String          @id @default(cuid())
+  organization        Organization    @relation(fields: [organizationId], references: [id])
+  organizationId      String
+  orgNameSnapshot     String?
+  service             OrgService?     @relation(fields: [serviceId], references: [id])
+  serviceId           String?
+  serviceNameSnapshot String?
+  issueType           ReportIssueType
+  incorrectFields     String[]
+  language            Language?       @relation(fields: [languageId], references: [id])
+  languageId          String?
+  userNote            String?
+  reportedBy          User?           @relation("reportedBy", fields: [reportedById], references: [id])
+  reportedById        String?
+  userEmail           String?
+  userName            String?
+  status              ReportStatus    @default(PENDING)
+  informed            Boolean         @default(false)
+  handledBy           User?           @relation("handledBy", fields: [handledById], references: [id])
+  handledById         String?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  internalNotes       InternalNote[]
+
+  @@index([organizationId])
+  @@index([serviceId])
+  @@index([reportedById])
+  @@index([handledById])
+  @@index([status])
+  @@index([issueType])
 }
 
 enum AuditTrailOperation {

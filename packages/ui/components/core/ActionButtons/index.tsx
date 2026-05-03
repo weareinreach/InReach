@@ -4,6 +4,7 @@ import { Delete } from './Delete'
 import { ActionButtonGroup } from './Group'
 import { OverflowMenu } from './Menu'
 import { Print } from './Print'
+import { Report } from './Report'
 import { Review } from './Review'
 import { Save } from './Save'
 import { Share } from './Share'
@@ -17,6 +18,7 @@ ActionButtons.Delete = Delete
 ActionButtons.Loading = Loading
 ActionButtons.Menu = OverflowMenu
 ActionButtons.Print = Print
+ActionButtons.Report = Report
 ActionButtons.Review = Review
 ActionButtons.Save = Save
 ActionButtons.Share = Share
