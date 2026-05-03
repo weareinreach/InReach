@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "組織",
+		"tab-reports": "レポート",
 		"tab-users": "ユーザー",
 		"tab-downloads": "ダウンロード"
 	},
@@ -294,6 +295,10 @@
 	},
 	"remote-services": "リモートで利用できるサービス",
 	"remote-services-page-title": "リモートサービス",
+	"report": {
+		"thank-you": "InReachをより良くするお手伝いをしていただき、ありがとうございます!",
+		"thank-you-message": "私たちのチームは、あなたの提出物を確認し、情報を確認し、それが私たちの基準を満たしている場合、それに応じて変更を行います。"
+	},
 	"reset-password": "パスワードをリセット",
 	"reset-password-message": "パスワードをリセットするためのメールが送信されます",
 	"resource-saved": "リソースが保存されました。",
@@ -484,6 +489,7 @@
 		"prev": "前へ",
 		"print": "印刷",
 		"publish": "公開する",
+		"report": "レポート",
 		"restore": "修復する",
 		"reverify": "再確認する",
 		"review": "レビュー",

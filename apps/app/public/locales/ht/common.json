@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizations",
+		"tab-reports": "Reports",
 		"tab-users": "Users",
 		"tab-downloads": "Downloads"
 	},
@@ -295,6 +296,10 @@
 	},
 	"remote-services": "Sèvis ki disponib adistans",
 	"remote-services-page-title": "Sèvis aleka",
+	"report": {
+		"thank-you": "Thank you for helping us make InReach better for everyone!",
+		"thank-you-message": "Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria."
+	},
 	"reset-password": "Reyajiste modpas ou",
 	"reset-password-message": "Nou pral voye ba ou yon imèl Reyajiste modpas ou",
 	"resource-saved": "Resous sofgade yo.",
@@ -485,6 +490,7 @@
 		"prev": "Prev",
 		"print": "Enprime",
 		"publish": "Pibliye",
+		"report": "Report",
 		"restore": "Rekipere",
 		"reverify": "Reverify",
 		"review": "Revize",
