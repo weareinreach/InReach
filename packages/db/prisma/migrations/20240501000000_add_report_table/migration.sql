@@ -14,7 +14,7 @@ CREATE TABLE "Report" (
     "issueType" "ReportIssueType" NOT NULL,
     "incorrectFields" TEXT[],
     "languageId" TEXT,
-    "note" TEXT,
+    "userNote" TEXT,
     "reportedById" TEXT,
     "userEmail" TEXT,
     "userName" TEXT,
