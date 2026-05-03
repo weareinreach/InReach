@@ -1,13 +1,16 @@
 SELECT
   c.name AS country,
   gd.name AS state_or_territory,
-  count(DISTINCT os.id) AS organization_count
+  count(os.id) AS service_count
 FROM
   (
     (
       (
-        "Organization" os
-        JOIN "OrgLocation" ol ON ((os.id = ol."orgId"))
+        (
+          "OrgService" os
+          JOIN "OrgLocationService" ols ON ((os.id = ols."serviceId"))
+        )
+        JOIN "OrgLocation" ol ON ((ols."orgLocationId" = ol.id))
       )
       LEFT JOIN "GovDist" gd ON ((ol."govDistId" = gd.id))
     )

@@ -174,6 +174,7 @@ const OrganizationPage = ({
 						backTo: 'search',
 					}}
 					organizationId={organizationId}
+					itemName={data.name}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					<ListingBasicInfo

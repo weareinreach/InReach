@@ -1,10 +1,24 @@
-import { createStyles, Drawer, rem, Stack, Table, Text, Textarea, Title } from '@mantine/core'
+import {
+	ActionIcon,
+	createStyles,
+	Drawer,
+	Group,
+	rem,
+	Stack,
+	Table,
+	Text,
+	Textarea,
+	Title,
+	Tooltip,
+} from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useSession } from 'next-auth/react'
 import { useEffect, useMemo } from 'react'
 import { z } from 'zod'
 
 import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
@@ -146,6 +160,7 @@ export const InternalNotesDrawer = ({
 				socialMediaServiceId: null,
 				sourceId: null,
 				suggestionId: null,
+				reportId: null,
 				translationKey: null,
 				translationNs: null,
 				translationNamespaceName: null,
@@ -204,9 +219,30 @@ export const InternalNotesDrawer = ({
 										<Text size='sm' weight={500}>
 											{note.user?.name || 'Unknown User'}
 										</Text>
-										<Text size='xs' color='dimmed'>
-											{note.createdAt ? new Date(note.createdAt).toLocaleDateString() : ''}
-										</Text>
+										<Group spacing={8}>
+											<Text size='xs' color='dimmed'>
+												{note.createdAt ? new Date(note.createdAt).toLocaleDateString() : ''}
+											</Text>
+											{note.reportId && (
+												<Tooltip label='View Report' withinPortal>
+													<ActionIcon
+														component={Link}
+														href={{
+															pathname: '/admin',
+															query: { tab: 'reports', reportId: note.reportId },
+														}}
+														// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+														// @ts-expect-error ignore blank target error
+														target='_blank'
+														size='xs'
+														variant='subtle'
+														color='blue'
+													>
+														<Icon icon='carbon:search' />
+													</ActionIcon>
+												</Tooltip>
+											)}
+										</Group>
 									</div>
 								</td>
 								<td>
