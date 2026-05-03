@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizations",
+		"tab-reports": "Reports",
 		"tab-users": "Users",
 		"tab-downloads": "Downloads"
 	},
@@ -295,6 +296,10 @@
 	},
 	"remote-services": "दूर से उपलब्ध सेवाएँ",
 	"remote-services-page-title": "रिमोट सेवाएं",
+	"report": {
+		"thank-you": "Thank you for helping us make InReach better for everyone!",
+		"thank-you-message": "Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria."
+	},
 	"reset-password": "अपना पासवर्ड रीसेट करें",
 	"reset-password-message": "हम आपको अपना पासवर्ड रीसेट करने के लिए एक ईमेल भेजेंगे",
 	"resource-saved": "संसाधन सहेजा गया।",
@@ -485,6 +490,7 @@
 		"prev": "पिछला",
 		"print": "प्रिंट करें",
 		"publish": "प्रकाशित करना",
+		"report": "Report",
 		"restore": "पुनर्स्थापित करना",
 		"reverify": "पुनर्सत्यापन",
 		"review": "समीक्षा",

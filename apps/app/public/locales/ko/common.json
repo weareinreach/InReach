@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "단체",
+		"tab-reports": "보고서",
 		"tab-users": "유저",
 		"tab-downloads": "다운로드"
 	},
@@ -294,6 +295,10 @@
 	},
 	"remote-services": "원격 서비스 이용 가능합니다",
 	"remote-services-page-title": "원격 서비스",
+	"report": {
+		"thank-you": "모두를 위해 더 나은 inReach를 만들 수 있도록 도와주셔서 감사합니다!",
+		"thank-you-message": "저희 팀이 제출하신 내용을 검토하고, 정보를 확인한 후 기준에 부합하는 경우 그에 따라 변경합니다."
+	},
 	"reset-password": "비밀번호 재설정하세요",
 	"reset-password-message": "비밀번호 재설정 이메일을 보내드립니다",
 	"resource-saved": "자원은 저장됐습니다.",
@@ -484,6 +489,7 @@
 		"prev": "이전",
 		"print": "프린트하기",
 		"publish": "게시하기",
+		"report": "리포트",
 		"restore": "복원하기",
 		"reverify": "재확인하기",
 		"review": "후기 남기기",

@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizations",
+		"tab-reports": "Reports",
 		"tab-users": "Users",
 		"tab-downloads": "Downloads"
 	},
@@ -295,6 +296,10 @@
 	},
 	"remote-services": "خدمات موجود از راه دور",
 	"remote-services-page-title": "خدمات از راه دور",
+	"report": {
+		"thank-you": "Thank you for helping us make InReach better for everyone!",
+		"thank-you-message": "Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria."
+	},
 	"reset-password": "رمز عبور خود را بازنشانی کنید",
 	"reset-password-message": "ما یک ایمیل برای تنظیم مجدد رمز عبور شما ارسال خواهیم کرد",
 	"resource-saved": "منابع ذخیره شده.",
@@ -485,6 +490,7 @@
 		"prev": "قبلی",
 		"print": "چاپ",
 		"publish": "انتشار",
+		"report": "Report",
 		"restore": "بازگرداندن",
 		"reverify": "تأیید مجدد",
 		"review": "مرور",

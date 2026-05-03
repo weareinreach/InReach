@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizaciones",
+		"tab-reports": "Informes",
 		"tab-users": "Usuaries",
 		"tab-downloads": "Descargas"
 	},
@@ -295,6 +296,10 @@
 	},
 	"remote-services": "Servicios disponibles de forma remota",
 	"remote-services-page-title": "Servicios remotos",
+	"report": {
+		"thank-you": "¡Gracias por ayudarnos a hacer InReach mejor para todos!",
+		"thank-you-message": "Nuestro equipo revisará su envío, verificará la información y realizará cambios en consecuencia si cumple con nuestros criterios."
+	},
 	"reset-password": "Restablece tu contraseña",
 	"reset-password-message": "Te enviaremos un correo electrónico para restablecer tu contraseña",
 	"resource-saved": "Recurso guardado.",
@@ -485,6 +490,7 @@
 		"prev": "Anterior",
 		"print": "Imprimir",
 		"publish": "Publicar",
+		"report": "Reporte",
 		"restore": "Restaurar",
 		"reverify": "Reverificar",
 		"review": "Reseña",

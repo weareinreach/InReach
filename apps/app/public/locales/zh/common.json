@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "组织",
+		"tab-reports": "报告",
 		"tab-users": "用户",
 		"tab-downloads": "下载"
 	},
@@ -294,6 +295,10 @@
 	},
 	"remote-services": "远程可用的服务",
 	"remote-services-page-title": "远程服务",
+	"report": {
+		"thank-you": "感谢您帮助我们让Inach更好地为每个人服务！",
+		"thank-you-message": "我们的团队将审查您的提交，核实信息，并在符合我们的标准时做出相应的修改。"
+	},
 	"reset-password": "重置你的密码",
 	"reset-password-message": "我们将向您发送一封电子邮件以重置您的密码",
 	"resource-saved": "资源已保存。",
@@ -484,6 +489,7 @@
 		"prev": "上一页",
 		"print": "打印",
 		"publish": "发布",
+		"report": "报告",
 		"restore": "恢复",
 		"reverify": "重新验证",
 		"review": "点评",
