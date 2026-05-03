@@ -1,85 +1,35 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { Button } from '~ui/components/core/Button'
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
-
 import { ReportModal } from './Report'
 
-export default {
-	title: 'Modals/Report',
+const meta: Meta<typeof ReportModal> = {
+	title: 'Modals/ReportModal',
 	component: ReportModal,
 	parameters: {
-		layout: 'fullscreen',
-		layoutWrapper: 'centeredHalf',
-		nextjs: {
-			router: {
-				pathname: '/org/[slug]',
-				asPath: '/org/mockOrg',
-				query: {
-					slug: 'mockOrg',
-				},
-			},
-		},
-		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['organization', 'getIdFromSlug'],
-					type: 'query',
-					response: {
-						id: 'orgn_ORGANIZATIONID',
-					},
-				}),
-				getTRPCMock({
-					path: ['review', 'create'],
-					type: 'mutation',
-					response: {
-						id: 'orev_NEWREVIEWID',
-					},
-				}),
-			],
-		},
+		layout: 'centered',
 	},
-	args: {
-		component: Button,
-		children: 'Open Report Modal',
-		variant: 'inlineInvertedUtil1',
-		itemId: 'orgn_MOCKORGID', // Example ID
-		itemName: 'Mock Organization', // Example Name
-	},
-} satisfies Meta<typeof ReportModal>
+}
+
+export default meta
 
 type Story = StoryObj<typeof ReportModal>
 
 export const Organization: Story = {
-	parameters: {
-		nextAuthMock: {
-			session: 'userPic',
-		},
-	},
 	args: {
-		itemId: 'orgn_MOCKORGID',
-		itemName: 'Mock Organization',
+		itemId: 'org_test_123',
+		itemName: 'Example Support Organization',
+		children: 'Report Organization',
 	},
 }
 
 export const Service: Story = {
-	parameters: {
-		nextAuthMock: {
-			session: 'userPic',
-		},
-		nextjs: {
-			router: {
-				pathname: '/org/[slug]/service/[serviceId]',
-				asPath: '/org/mockOrg/service/mockService',
-				query: {
-					slug: 'mockOrg',
-					serviceId: 'mockService',
-				},
-			},
-		},
-	},
 	args: {
-		itemId: 'serv_MOCKSERVICEID',
-		itemName: 'Mock Service',
+		itemId: 'svc_test_456',
+		itemName: 'Crisis Intervention Program',
+		orgId: 'org_test_123',
+		orgName: 'Example Support Organization',
+		serviceId: 'svc_test_456',
+		serviceName: 'Crisis Intervention Program',
+		children: 'Report Service',
 	},
 }
