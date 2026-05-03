@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizations",
+		"tab-reports": "Reports",
 		"tab-users": "Users",
 		"tab-downloads": "Downloads"
 	},
@@ -295,6 +296,10 @@
 	},
 	"remote-services": "Magagamit ang mga serbisyo nang malayuan",
 	"remote-services-page-title": "Remote serbisyo",
+	"report": {
+		"thank-you": "Thank you for helping us make InReach better for everyone!",
+		"thank-you-message": "Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria."
+	},
 	"reset-password": "I-reset ang iyong password",
 	"reset-password-message": "Padadalhan ka namin ng isang email upang i-reset ang iyong password",
 	"resource-saved": "Nai-save ang mapagkukunan.",
@@ -485,6 +490,7 @@
 		"prev": "Prev",
 		"print": "I-print",
 		"publish": "I-publish",
+		"report": "Report",
 		"restore": "Ibalik",
 		"reverify": "I-verify muli",
 		"review": "Suriin",
