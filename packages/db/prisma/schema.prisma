@@ -1289,7 +1289,7 @@ model Report {
   incorrectFields String[] // Stores selected incorrect info fields (e.g., ['name', 'description'])
   language        Language?       @relation(fields: [languageId], references: [id]) // For translation reports
   languageId      String?
-  note            String?         @db.Text // Free-text input from the user
+  userNote        String?         @db.Text // Free-text input from the user
 
   // User who reported (if logged in)
   reportedBy   User?   @relation("reportedBy", fields: [reportedById], references: [id])

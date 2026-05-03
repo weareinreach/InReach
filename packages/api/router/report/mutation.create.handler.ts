@@ -35,7 +35,7 @@ const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'public'>
 	const actorId = hasActorId(ctx) ? ctx.actorId : 'user_00000000000000000000000000'
 
 	const prisma = getAuditedClient(actorId)
-	const { orgId, orgName, serviceId, serviceName, issueType, note, incorrectInfoFields, language, user } =
+	const { orgId, orgName, serviceId, serviceName, issueType, userNote, incorrectInfoFields, language, user } =
 		input
 
 	const result = await prisma.report.create({
@@ -53,7 +53,7 @@ const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'public'>
 			issueType: issueTypeMap[issueType],
 			incorrectFields: incorrectInfoFields || [],
 			language: language ? { connect: { localeCode: language } } : undefined,
-			note,
+			userNote,
 			reportedBy: hasActorId(ctx) ? { connect: { id: ctx.actorId } } : undefined,
 			userEmail: user?.email || undefined,
 			userName: user?.name || undefined,

@@ -16,7 +16,7 @@ const forReportsTable = async ({ input }: TRPCHandlerParams<TForReportsTableSche
 			status: true,
 			userEmail: true,
 			userName: true,
-			note: true,
+			userNote: true,
 			incorrectFields: true,
 			internalNotes: true,
 			language: true,

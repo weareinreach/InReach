@@ -6,7 +6,7 @@ export const ZCreateSchema = z.object({
 	serviceId: z.string().optional(),
 	serviceName: z.string().optional(),
 	issueType: z.enum(['closed-inactive', 'incorrect-info', 'translation-quality', 'something-else']),
-	note: z.string(),
+	userNote: z.string(),
 	incorrectInfoFields: z.array(z.string()).optional(),
 	language: z.string().optional(),
 	user: z

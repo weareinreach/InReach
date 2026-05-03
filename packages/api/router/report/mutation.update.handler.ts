@@ -4,19 +4,32 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TUpdateSchema } from './mutation.update.schema'
 
 const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'dataPortalManager'>) => {
-	const { id, ...data } = input
+	const { id, status, internalNotes } = input
 
-	const result = await prisma.report.update({
-		where: { id },
-		data: {
-			...data,
-			handledBy: {
-				connect: { id: ctx.actorId },
+	return await prisma.$transaction(async (tx) => {
+		const updatedReport = await tx.report.update({
+			where: { id },
+			data: {
+				status,
+				handledBy: {
+					connect: { id: ctx.actorId },
+				},
 			},
-		},
-	})
+		})
 
-	return result
+		if (internalNotes) {
+			await tx.internalNote.create({
+				data: {
+					text: internalNotes.trim(),
+					organization: { connect: { id: updatedReport.organizationId } },
+					report: { connect: { id: updatedReport.id } },
+					user: { connect: { id: ctx.actorId } },
+				},
+			})
+		}
+
+		return updatedReport
+	})
 }
 
 export default update

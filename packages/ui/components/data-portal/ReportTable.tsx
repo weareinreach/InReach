@@ -1,6 +1,8 @@
 import {
 	ActionIcon,
+	Badge,
 	createStyles,
+	Divider,
 	Group,
 	Modal,
 	rem,
@@ -24,6 +26,7 @@ import {
 	type MRT_Virtualizer,
 	useMantineReactTable,
 } from 'mantine-react-table'
+import { useRouter } from 'next/router'
 import { type Route } from 'nextjs-routes'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
@@ -52,9 +55,7 @@ const ReportDetailsModal = ({
 	opened: boolean
 	onClose: () => void
 }) => {
-	const [internalNote, setInternalNote] = useState<string>(
-		typeof report.internalNotes === 'string' ? report.internalNotes : ''
-	)
+	const [internalNote, setInternalNote] = useState<string>('')
 	const apiUtils = api.useUtils()
 	const updateMutation = api.report.update.useMutation({
 		onSuccess: () => {
@@ -63,28 +64,131 @@ const ReportDetailsModal = ({
 		},
 	})
 
+	const languageName = useMemo(() => {
+		const l = Array.isArray(report.language) ? report.language[0] : report.language
+		if (!l) return null
+		// Cast to a known structure to safely access name fields
+		const typedL = l as unknown as { name?: string; nativeName?: string; localeCode: string }
+
+		// Attempt to resolve the English name using the Intl API to ensure it's always available for admins
+		let englishName = typedL.name
+		if (typedL.localeCode) {
+			try {
+				englishName = new Intl.DisplayNames(['en'], { type: 'language' }).of(typedL.localeCode) || typedL.name
+			} catch (e) {
+				// Fallback to name in DB if Intl API fails or locale is invalid
+			}
+		}
+
+		const parts = []
+		if (englishName) parts.push(englishName)
+		if (typedL.nativeName && typedL.nativeName !== englishName) {
+			parts.push(`(${typedL.nativeName})`)
+		}
+		if (typedL.localeCode) parts.push(`[${typedL.localeCode}]`)
+
+		return parts.length > 0 ? parts.join(' ') : null
+	}, [report.language])
+
 	return (
 		<Modal opened={opened} onClose={onClose} title='Report Details' size='lg'>
-			<Stack>
-				<Group grow>
-					<Stack spacing={0}>
+			<Stack spacing='md'>
+				{/* Header: Organization and Service Info */}
+				<Stack align='flex-start' spacing='xs'>
+					<Group spacing='xs' align='center'>
+						<Stack spacing={0}>
+							<Text size='sm'>
+								Organization Name: <strong>{report.orgNameSnapshot || 'Unknown'}</strong>
+							</Text>
+							<Text size='xs' color='dimmed' italic>
+								Organization ID: {report.organizationId}
+							</Text>
+						</Stack>
+						<Tooltip label='Edit Organization' withinPortal>
+							<ActionIcon
+								component={Link}
+								href={{
+									pathname: '/org/[slug]/edit',
+									query: { slug: report.organization.slug },
+								}}
+								// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+								// @ts-expect-error ignore blank target error
+								target='_blank'
+								variant='subtle'
+								size='sm'
+							>
+								<Icon icon='carbon:edit' />
+							</ActionIcon>
+						</Tooltip>
+					</Group>
+					{report.serviceId && (
+						<Stack spacing={0}>
+							<Text size='sm'>
+								Service Name: <strong>{report.serviceNameSnapshot || 'Unknown'}</strong>
+							</Text>
+							<Text size='xs' color='dimmed' italic>
+								Service ID: {report.serviceId}
+							</Text>
+						</Stack>
+					)}
+				</Stack>
+
+				<Divider />
+
+				{/* Metadata Section */}
+				<Group grow align='flex-start'>
+					<Stack spacing={4}>
 						<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
 							Reporter
 						</Text>
-						<Text size='sm'>{report.userName || 'Anonymous'}</Text>
-						<Text size='xs' color='dimmed'>
-							{report.userEmail}
-						</Text>
+						<Stack spacing={0}>
+							<Text size='sm'>{report.userName || 'Anonymous'}</Text>
+							<Text size='xs' color='dimmed'>
+								{report.userEmail}
+							</Text>
+						</Stack>
 					</Stack>
-					<Stack spacing={0}>
+					<Stack spacing={4}>
 						<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
 							Issue Type
 						</Text>
-						<Text size='sm' sx={{ textTransform: 'capitalize' }}>
-							{report.issueType.replace(/-/g, ' ')}
-						</Text>
+						<Stack spacing={0}>
+							<Text size='sm' sx={{ textTransform: 'capitalize' }}>
+								{report.issueType.replace(/-/g, ' ')}
+							</Text>
+						</Stack>
 					</Stack>
+					{languageName && (
+						<Stack spacing={4}>
+							<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+								Language
+							</Text>
+							<Text size='sm'>{languageName}</Text>
+						</Stack>
+					)}
 				</Group>
+
+				{/* Reported Content Section */}
+				{report.incorrectFields && report.incorrectFields.length > 0 && (
+					<Stack spacing={4}>
+						<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+							Fields Identified as Incorrect
+						</Text>
+						<Group spacing='xs'>
+							{report.incorrectFields.map((field) => (
+								<Badge
+									key={field}
+									variant='outline'
+									size='sm'
+									color='gray'
+									sx={{ textTransform: 'capitalize' }}
+								>
+									{field.replace(/-/g, ' ')}
+								</Badge>
+							))}
+						</Group>
+					</Stack>
+				)}
 
 				<Stack spacing={4}>
 					<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
@@ -93,12 +197,19 @@ const ReportDetailsModal = ({
 					<Text
 						size='sm'
 						p='xs'
-						sx={(theme) => ({ backgroundColor: theme.colors.gray[0], borderRadius: theme.radius.sm })}
+						sx={(theme) => ({
+							backgroundColor: theme.colors.gray[0],
+							borderRadius: theme.radius.sm,
+							whiteSpace: 'pre-wrap',
+						})}
 					>
-						{report.note || 'No note provided.'}
+						{report.userNote || 'No note provided.'}
 					</Text>
 				</Stack>
 
+				<Divider />
+
+				{/* Admin Actions */}
 				<Textarea
 					label='Internal Resolution Note'
 					placeholder='Describe how this was handled...'
@@ -165,8 +276,21 @@ const BottomBar = ({ table }: { table: MRT_TableInstance<ReportRecord> }) => {
 export const ReportTable = () => {
 	const { classes, theme } = useStyles()
 	const variants = useCustomVariant()
+	const router = useRouter()
+	const { reportId } = router.query
+
 	const [selectedReport, setSelectedReport] = useState<ReportRecord | null>(null)
 	const [detailsOpened, { open: openDetails, close: closeDetails }] = useDisclosure(false)
+
+	// Clean up the URL when the modal is closed to prevent it from re-opening on refresh
+	// and to allow the table to reset to the full list.
+	const handleCloseDetails = useCallback(() => {
+		closeDetails()
+		if (router.query.reportId) {
+			const { reportId: _removed, ...query } = router.query
+			router.replace({ query }, undefined, { shallow: true })
+		}
+	}, [closeDetails, router])
 
 	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([])
 	const [globalFilter, setGlobalFilter] = useState('')
@@ -183,9 +307,24 @@ export const ReportTable = () => {
 		}
 	}, [sorting])
 
-	const { data, isLoading, isError, isFetching } = api.report.forReportsTable.useQuery(undefined, {
-		refetchOnWindowFocus: false,
-	})
+	const { data, isLoading, isError, isFetching } = api.report.forReportsTable.useQuery(
+		router.isReady && reportId ? { id: reportId as string } : undefined,
+		{
+			enabled: router.isReady,
+			refetchOnWindowFocus: false,
+		}
+	)
+
+	useEffect(() => {
+		if (router.isReady && reportId && data?.length) {
+			const report = data.find((r) => r.id === reportId)
+			// Only trigger if a matching report is found and the details aren't already visible
+			if (report && !detailsOpened && selectedReport?.id !== report.id) {
+				setSelectedReport(report)
+				openDetails()
+			}
+		}
+	}, [router.isReady, reportId, data, openDetails, detailsOpened, selectedReport?.id])
 
 	const columns = useMemo<MRT_ColumnDef<ReportRecord>[]>(
 		() => [
@@ -313,15 +452,10 @@ export const ReportTable = () => {
 		),
 		renderBottomToolbar: ({ table }) => <BottomBar table={table} />,
 		renderRowActions: ({ row }) => {
-			const editUrl: Route = row.original.serviceId
-				? {
-						pathname: '/org/[slug]/[orgLocationId]/edit',
-						query: { slug: row.original.organization.slug, orgLocationId: row.original.serviceId },
-					}
-				: {
-						pathname: '/org/[slug]/edit',
-						query: { slug: row.original.organization.slug },
-					}
+			const editUrl: Route = {
+				pathname: '/org/[slug]/edit',
+				query: { slug: row.original.organization.slug },
+			}
 
 			return (
 				<Group noWrap spacing={8}>
@@ -360,7 +494,7 @@ export const ReportTable = () => {
 		<>
 			<MantineReactTable table={table} />
 			{selectedReport && (
-				<ReportDetailsModal report={selectedReport} opened={detailsOpened} onClose={closeDetails} />
+				<ReportDetailsModal report={selectedReport} opened={detailsOpened} onClose={handleCloseDetails} />
 			)}
 		</>
 	)

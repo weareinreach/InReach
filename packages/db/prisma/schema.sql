@@ -1775,7 +1775,7 @@ model Report {
   incorrectFields     String[]
   language            Language?       @relation(fields: [languageId], references: [id])
   languageId          String?
-  note                String?
+  userNote            String?
   reportedBy          User?           @relation("reportedBy", fields: [reportedById], references: [id])
   reportedById        String?
   userEmail           String?

@@ -3,10 +3,11 @@
 import { Group, Stack, Tabs, Title } from '@mantine/core'
 import { type GetServerSideProps, type NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { type Route, route } from 'nextjs-routes'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
 // Import the 'permissions' array (which is a runtime value)
@@ -21,6 +22,9 @@ import { trpc as api } from '~ui/lib/trpcClient'
 const AdminIndex: NextPage = () => {
 	const { t } = useTranslation(['common'])
 	const { data: session } = useSession()
+	const router = useRouter()
+	const { tab } = router.query
+
 	const [activeTab, setActiveTab] = useState<string | null>('organizations')
 
 	// Define permission string literals for readability
@@ -52,53 +56,48 @@ const AdminIndex: NextPage = () => {
 		has: 'some', // dataPortalManager and above
 	})
 
-	// Effect to manage activeTab based on permissions
+	// Sync activeTab with URL query and handle permission-based fallbacks
 	useEffect(() => {
-		// If the current active tab is not accessible, switch to the first accessible one
-		if (activeTab === 'organizations' && !canAccessOrganizations) {
-			if (canAccessReports) {
-				setActiveTab('reports')
-			} else if (canAccessUsers) {
-				setActiveTab('users')
-			} else if (canAccessDownloads) {
-				setActiveTab('downloads')
-			} else {
-				setActiveTab(null) // No tabs accessible
-			}
-		} else if (activeTab === 'reports' && !canAccessReports) {
-			if (canAccessOrganizations) {
-				setActiveTab('organizations')
-			} else if (canAccessUsers) {
-				setActiveTab('users')
-			} else if (canAccessDownloads) {
-				setActiveTab('downloads')
-			} else {
-				setActiveTab(null)
-			}
-		} else if (activeTab === 'users' && !canAccessUsers) {
-			if (canAccessOrganizations) {
-				setActiveTab('organizations')
-			} else if (canAccessReports) {
-				setActiveTab('reports')
-			} else if (canAccessDownloads) {
-				setActiveTab('downloads')
-			} else {
-				setActiveTab(null) // No tabs accessible
-			}
-		} else if (activeTab === 'downloads' && !canAccessDownloads) {
-			if (canAccessOrganizations) {
-				setActiveTab('organizations')
-			} else if (canAccessUsers) {
-				setActiveTab('users')
-			} else {
-				setActiveTab(null) // No tabs accessible
-			}
+		if (!router.isReady) return
+
+		const requestedTab = (tab as string) || activeTab || 'organizations'
+		let targetTab: string | null = requestedTab
+
+		// Verify accessibility
+		if (requestedTab === 'organizations' && !canAccessOrganizations) targetTab = null
+		if (requestedTab === 'reports' && !canAccessReports) targetTab = null
+		if (requestedTab === 'users' && !canAccessUsers) targetTab = null
+		if (requestedTab === 'downloads' && !canAccessDownloads) targetTab = null
+
+		// Fallback logic if the requested tab isn't allowed
+		if (targetTab === null) {
+			if (canAccessOrganizations) targetTab = 'organizations'
+			else if (canAccessReports) targetTab = 'reports'
+			else if (canAccessUsers) targetTab = 'users'
+			else if (canAccessDownloads) targetTab = 'downloads'
 		}
-		// If no tabs are accessible at all, ensure activeTab is null
-		if (!canAccessOrganizations && !canAccessUsers && !canAccessDownloads && activeTab !== null) {
-			setActiveTab(null)
+
+		if (targetTab !== activeTab) {
+			setActiveTab(targetTab)
 		}
-	}, [activeTab, canAccessOrganizations, canAccessReports, canAccessUsers, canAccessDownloads])
+	}, [
+		router.isReady,
+		tab,
+		canAccessOrganizations,
+		canAccessReports,
+		canAccessUsers,
+		canAccessDownloads,
+		activeTab,
+	])
+
+	const handleTabChange = useCallback(
+		(val: string) => {
+			setActiveTab(val)
+			router.replace({ query: { ...router.query, tab: val } }, undefined, { shallow: true })
+		},
+		[router]
+	)
+
 	return (
 		<>
 			<Head>
@@ -106,7 +105,7 @@ const AdminIndex: NextPage = () => {
 			</Head>
 			<Stack spacing={40} miw='80vw'>
 				<Title order={2}>{t('welcome-name', { name: session?.user?.name })}</Title>
-				<Tabs value={activeTab} onTabChange={setActiveTab} keepMounted={false}>
+				<Tabs value={activeTab} onTabChange={handleTabChange} keepMounted={false}>
 					<Tabs.List>
 						{canAccessOrganizations && (
 							<Tabs.Tab value='organizations'>{t('admin.tab-organizations')}</Tabs.Tab>

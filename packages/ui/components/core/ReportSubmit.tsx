@@ -83,7 +83,7 @@ export const ReportSubmit = ({
 			serviceId: serviceId || undefined,
 			serviceName: serviceId ? serviceName || itemName : undefined,
 			issueType: issueType as 'closed-inactive' | 'incorrect-info' | 'translation-quality' | 'something-else',
-			note: note.trim(),
+			userNote: note.trim(),
 			incorrectInfoFields: isIncorrectInfo ? incorrectInfoFields : [],
 			language: isTranslation ? language : undefined,
 			user: session?.user
