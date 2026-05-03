@@ -227,7 +227,10 @@ export const InternalNotesDrawer = ({
 												<Tooltip label='View Report' withinPortal>
 													<ActionIcon
 														component={Link}
-														href={`/admin?tab=reports&reportId=${note.reportId}`}
+														href={{
+															pathname: '/admin',
+															query: { tab: 'reports', reportId: note.reportId },
+														}}
 														// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 														// @ts-expect-error ignore blank target error
 														target='_blank'
