@@ -31,6 +31,7 @@ export const orgInclude: OrgIncludeKeys = z.object({
 	outsideApi: boolFalse,
 	phones: boolFalse,
 	photos: boolFalse,
+	reports: boolFalse,
 	reviews: boolFalse,
 	serviceAreas: boolFalse,
 	services: boolFalse,
