@@ -119,6 +119,8 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 						<ServiceModal
 							key={service.id}
 							serviceId={service.id}
+							itemName={serviceName}
+							organizationId={orgId?.id}
 							component={Group}
 							position='apart'
 							noWrap

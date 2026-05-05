@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizations",
+		"tab-reports": "Reports",
 		"tab-users": "Users",
 		"tab-downloads": "Downloads"
 	},
@@ -295,6 +296,10 @@
 	},
 	"remote-services": "خدمات په لرې ډول شتون لري",
 	"remote-services-page-title": "لیرې خدمتونه",
+	"report": {
+		"thank-you": "Thank you for helping us make InReach better for everyone!",
+		"thank-you-message": "Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria."
+	},
 	"reset-password": "خپل رمز بیا تنظیم کړئ",
 	"reset-password-message": "موږ به تاسو ته ستاسو د رمز له سره تنظیم کولو لپاره بریښنالیک واستوو",
 	"resource-saved": "سرچینه خوندي شوې.",
@@ -485,6 +490,7 @@
 		"prev": "مخکی",
 		"print": "چاپ",
 		"publish": "خپور کړئ",
+		"report": "Report",
 		"restore": "بیا رغول",
 		"reverify": "بیا تایید کړئ",
 		"review": "بیاکتنه",

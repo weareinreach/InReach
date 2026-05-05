@@ -1,103 +1,100 @@
-import { Box, createStyles } from '@mantine/core'
-import { Children, cloneElement, type ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import { Box, createStyles, rem } from '@mantine/core'
+import { Children, cloneElement, type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 
 import { OverflowMenu } from './Menu'
 
 const useStyles = createStyles(() => ({
-	visible: {
-		order: 0,
-		visibility: 'visible',
-		opacity: 1,
-	},
-	inVisible: {
-		order: 100,
-		visibility: 'hidden',
-		pointerEvents: 'none',
-	},
 	groupWrapper: {
 		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'flex-end',
 		overflow: 'hidden',
 		flexWrap: 'nowrap',
-		maxWidth: '100%',
+		width: '100%',
+		gap: rem(8),
+	},
+	visible: {
+		display: 'flex',
+		flexShrink: 0,
+	},
+	inVisible: {
+		// We use a "Soft Hide" so the Save menu dropdown doesn't lose its anchor
+		position: 'absolute',
+		visibility: 'hidden',
+		pointerEvents: 'none',
+		zIndex: -1,
 	},
 	overflowStyle: {
-		order: 99,
-		position: 'sticky',
-		right: 0,
+		flexShrink: 0,
 	},
 }))
-
-const isHTMLElement = (e: unknown): e is HTMLElement => e instanceof HTMLElement
-
-const getTargetId = (e: ReactElement) => {
-	const targetId = typeof e.props['data-targetid'] === 'string' && e.props['data-targetid']
-	if (!targetId) {
-		return null
-	}
-	return targetId
-}
 
 export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 	const { classes, cx } = useStyles()
 	const containerRef = useRef<HTMLDivElement>(null)
-	const [visibilityMap, setVisibilityMap] = useState<Record<string, boolean>>({})
-	const handleIntersection: IntersectionObserverCallbackFn = useCallback((entries) => {
-		const updatedEntries: Record<string, boolean> = {}
-		entries.forEach((entry) => {
-			if (isHTMLElement(entry.target)) {
-				const targetid = entry.target.dataset.targetid
-				if (!targetid) {
-					return
-				}
-				if (entry.isIntersecting) {
-					updatedEntries[targetid] = true
+	const [containerWidth, setContainerWidth] = useState(0)
+
+	// Approximate width of your buttons + gaps (adjust based on your actual button sizes)
+	// Review (~80px), Share (~80px), Save (~80px), Report (~80px) + 3 gaps (~24px) + Menu (~40px)
+	const BUTTON_WIDTH = 90
+	const MENU_WIDTH = 50
+
+	useEffect(() => {
+		const container = containerRef.current
+		if (!container) return
+
+		const observer = new ResizeObserver((entries) => {
+			// Standard guard clause for the first entry
+			const entry = entries[0]
+			if (!entry) return
+
+			setContainerWidth(entry.contentRect.width)
+		})
+
+		observer.observe(container)
+		return () => observer.disconnect()
+	}, [])
+
+	const visibilityMap = useMemo(() => {
+		const childrenArray = Children.toArray(children)
+		const map: Record<string, boolean> = {}
+
+		// Logic: How many buttons fit in the current width?
+		// We reserve space for the overflow menu icon
+		let availableSpace = containerWidth - MENU_WIDTH
+
+		childrenArray.forEach((child) => {
+			const id = (child as ReactElement).props['data-targetid']
+			if (id) {
+				if (availableSpace > BUTTON_WIDTH) {
+					map[id] = true
+					availableSpace -= BUTTON_WIDTH
 				} else {
-					updatedEntries[targetid] = false
+					map[id] = false
 				}
 			}
 		})
-
-		setVisibilityMap((prev) => ({
-			...prev,
-			...updatedEntries,
-		}))
-	}, [])
-	useEffect(() => {
-		const observer = new IntersectionObserver(handleIntersection, {
-			root: containerRef.current,
-			threshold: 1,
-		})
-
-		// We are addting observers to child elements of the container div
-		// with ref as navRef. Notice that we are adding observers
-		// only if we have the data attribute observerid on the child elemeent
-		containerRef.current &&
-			Array.from(containerRef.current.children).forEach((item) => {
-				if (isHTMLElement(item) && item.dataset.targetid) {
-					observer.observe(item)
-				}
-			})
-		return () => observer.disconnect()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		return map
+	}, [children, containerWidth])
 
 	return (
 		<Box ref={containerRef} className={classes.groupWrapper}>
-			{...Children.map(children, (child) => {
-				const targetId = getTargetId(child)
-				if (!targetId) {
-					return child
-				}
-				const isVisible = visibilityMap[targetId] ?? false
-				const clonedChild = cloneElement(child, {
-					...child.props,
-					className: cx(child.props.className, {
+			{Children.map(children, (child) => {
+				const reactChild = child as ReactElement
+				const targetId = reactChild.props['data-targetid']
+				if (!targetId) return child
+
+				const isVisible = visibilityMap[targetId] ?? true
+
+				return cloneElement(reactChild, {
+					className: cx(reactChild.props.className, {
 						[classes.visible]: isVisible,
 						[classes.inVisible]: !isVisible,
 					}),
 				})
-				return clonedChild
 			})}
+
 			<OverflowMenu visibilityMap={visibilityMap} className={classes.overflowStyle}>
 				{children}
 			</OverflowMenu>
@@ -108,5 +105,3 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 interface ActionButtonGroupProps {
 	children: ReactElement | ReactElement[]
 }
-
-type IntersectionObserverCallbackFn = ConstructorParameters<typeof IntersectionObserver>[0]

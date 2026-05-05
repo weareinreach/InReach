@@ -50,3 +50,20 @@ export const userEvent = {
 	signup: (userType?: string) => event('sign_up', { userType }),
 	login: () => event('login'),
 }
+
+export const reportEvent = {
+	open: (target: 'service' | 'organization', itemId: string) =>
+		event('report_open', { report_target: target, item_id: itemId }),
+	submitSuccess: (
+		target: 'service' | 'organization',
+		itemId: string,
+		issueType?: string,
+		language?: string
+	) =>
+		event('report_submit_success', {
+			report_target: target,
+			item_id: itemId,
+			issue_type: issueType,
+			language,
+		}),
+}

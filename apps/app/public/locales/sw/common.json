@@ -10,6 +10,7 @@
 	},
 	"admin": {
 		"tab-organizations": "Organizations",
+		"tab-reports": "Reports",
 		"tab-users": "Users",
 		"tab-downloads": "Downloads"
 	},
@@ -295,6 +296,10 @@
 	},
 	"remote-services": "Huduma zinapatikana kwa mbali",
 	"remote-services-page-title": "Huduma za mbali",
+	"report": {
+		"thank-you": "Thank you for helping us make InReach better for everyone!",
+		"thank-you-message": "Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria."
+	},
 	"reset-password": "Weka upya nenosiri lako",
 	"reset-password-message": "Tutakutumia barua pepe ili kuweka upya nenosiri lako",
 	"resource-saved": "Rasilimali zimehifadhiwa.",
@@ -485,6 +490,7 @@
 		"prev": "Kabla",
 		"print": "Chapisha",
 		"publish": "Kuchapisha",
+		"report": "Report",
 		"restore": "Rejesha",
 		"reverify": "Thibitisha tena",
 		"review": "Mapitio",

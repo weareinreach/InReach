@@ -19,6 +19,7 @@ import { orgPhotoRouter } from './orgPhoto'
 import { orgSocialMediaRouter } from './orgSocialMedia'
 import { orgWebsiteRouter } from './orgWebsite'
 import { quickLinkRouter } from './quicklink'
+import { reportRouter } from './report'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
 import { serviceRouter } from './service'
@@ -46,6 +47,7 @@ export const appRouter = defineRouter({
 	orgSocialMedia: orgSocialMediaRouter,
 	page: pageRouter,
 	quicklink: quickLinkRouter,
+	report: reportRouter,
 	review: reviewRouter,
 	savedList: savedListRouter,
 	service: serviceRouter,
