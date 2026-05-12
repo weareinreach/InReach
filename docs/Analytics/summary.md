@@ -21,15 +21,35 @@ Tracking is handled via **Direct Injection** of the Google Tag (`gtag.js`) insid
 
 ## General Application Tracking
 
-Beyond the "Report an Issue" feature, the following areas are tracked automatically:
+Below is a comprehensive list of the specific user actions and interactions we track to improve the InReach experience.
 
-- **Search & Discovery**: We track what terms people search for, the locations they enter, and whether they are searching for specific organizations.
-- **Service Filtering**: We monitor which categories (e.g., "Legal," "Healthcare") and specific service filters are being used to narrow down results.
-- **Content Engagement**: We track when users open service details (modals) and when they click the "Donate" button.
-- **User Actions**: We log when users successfully log in or create a new account.
-- **Safety & Performance**:
-  - **Safety Exit**: We track usage of the "Safety Exit" button to understand the safety needs of our users.
-  - **Web Vitals**: We automatically track technical performance (loading speeds, stability) to ensure a smooth experience across all devices.
+### User Actions (Manual Click Events)
+
+| Click Event                                                   | What triggers this?                                                                         |
+| :------------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
+| **Search by Location** (`search`)                             | Fired when a user enters a city or ZIP code to find nearby resources.                       |
+| **Search for Organization** (`orgSearch`)                     | Fired when a user types an organization's name directly into the search bar.                |
+| **Select Service Filter** (`service_filter_select`)           | Fired when a user selects a specific service type (like "Shelter") to narrow their results. |
+| **Remove Service Filter** (`service_filter_unselect`)         | Fired when a user unchecks a service filter they previously selected.                       |
+| **Toggle Filter Category** (`service_filter_category_toggle`) | Fired when a user clicks to expand or hide a whole group of filters (like "Medical").       |
+| **Clear All Filters** (`service_filter_deselect_all`)         | Fired when a user clicks the button to reset all active search filters at once.             |
+| **View Service Details** (`select_content`)                   | Fired when a user clicks on a program in the search results to see its full information.    |
+| **Quick Exit** (`safety_exit`)                                | Fired when a user clicks the "Safety Exit" button to immediately leave the site.            |
+| **Donate** (`select_content`)                                 | Fired when a user clicks the "Donate" button to support InReach.                            |
+| **Account Sign Up** (`sign_up`)                               | Fired when a user successfully creates a new InReach account.                               |
+| **Account Log In** (`login`)                                  | Fired when a user successfully signs into their existing account.                           |
+| **Open Report Form** (`report_open`)                          | Fired when a user clicks to report an issue or correction for a service or organization.    |
+| **Submit Report** (`report_submit_success`)                   | Fired only after a user successfully sends their data correction report to our team.        |
+
+### System Interactions (Automatic Events)
+
+| System Event                                 | What triggers this?                                                                                |
+| :------------------------------------------- | :------------------------------------------------------------------------------------------------- |
+| **Start Visit** (`session_start`)            | Recorded automatically as soon as a person opens the InReach app in their browser.                 |
+| **Page View** (`page_view`)                  | Recorded whenever a user navigates between different pages on the site.                            |
+| **External Website Click** (`click`)         | Recorded when a user clicks a link that takes them to a provider's website or other external site. |
+| **File Download** (`file_download`)          | Recorded when a user clicks a link to download a resource, such as a PDF.                          |
+| **Performance Metrics** (e.g., `LCP`, `CLS`) | Technical events that measure how quickly and smoothly the app is running for the user.            |
 
 ---
 
