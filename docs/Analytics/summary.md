@@ -2,6 +2,23 @@
 
 InReach uses Google Analytics 4 (GA4) to understand how users interact with the platform. This data helps us improve search accuracy, identify missing services, and ensure the app is performing well.
 
+## Our Tracking Philosophy (Post-2024 Updates)
+
+### Simply Explained (Non-Technical)
+
+We follow a "Privacy First" approach. When you first visit InReach, we don't track your specific actions until you give us permission via the **Cookie Banner**.
+
+- **If you click "Accept":** We can see how you use the site (e.g., which filters you pick) to make the app better.
+- **If you don't click anything:** We still see that a person visited, but we don't know what you did. This keeps your data private while giving us a rough idea of how many people use the site.
+
+### Technically Explained (Engineering)
+
+Tracking is handled via **Direct Injection** of the Google Tag (`gtag.js`) inside the Next.js application. We do not use an external GTM container, ensuring all tracking logic is version-controlled in the codebase.
+
+- **Consent Mode v2:** We default `analytics_storage` to `denied` in `_app.tsx`.
+- **Explicit Update:** We use `react-hook-consent`. When a user accepts, we fire a `gtag('consent', 'update', ...)` command.
+- **Data Recovery:** This explicit transition from "Denied" to "Granted" is required by Google's latest algorithms to restore Session IDs and Engagement Timers, which are otherwise stripped from the data stream.
+
 ## General Application Tracking
 
 Beyond the "Report an Issue" feature, the following areas are tracked automatically:
