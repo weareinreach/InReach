@@ -2,6 +2,7 @@ import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { type ReactElement, useCallback } from 'react'
 
+import { productEvent } from '@weareinreach/analytics/events'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { PhoneDrawer } from '~ui/components/data-portal/PhoneDrawer'
@@ -26,8 +27,8 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 	const output: ReactElement[] = []
 	const slug = useSlug()
 	const { isEditMode } = useEditMode()
-	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(formatNs(orgId?.id))
+	const { data: org } = api.organization.forOrgPage.useQuery({ slug })
+	const { t } = useTranslation(formatNs(org?.id))
 	const variants = useCustomVariant()
 	const { data } = api.orgPhone.forContactInfo.useQuery(
 		{ parentId, locationOnly },
@@ -35,17 +36,24 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 	)
 
 	const componentData = passedData ?? data
+	const handleTrackClick = useCallback(
+		(url: string) => () => {
+			productEvent.outboundClick('phone', url, org?.name ?? 'unknown')
+		},
+		[org?.name]
+	)
+
 	const getDescription = useCallback(
 		(description: FreeTextItem | null, phoneType: FreeTextItem | null) => {
-			if (description && orgId) {
-				return t(description.key, { ns: orgId.id, defaultValue: description.defaultText })
+			if (description && org) {
+				return t(description.key, { ns: org.id, defaultValue: description.defaultText })
 			}
 			if (phoneType) {
 				return t(phoneType.key, { ns: 'phone-type' })
 			}
 			return null
 		},
-		[orgId, t]
+		[org, t]
 	)
 
 	if (!componentData?.length) {
@@ -69,7 +77,12 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 			<AttributeEditWrapper key={phone.id} id={phone.id} active={phone.active ?? false}>
 				<Stack spacing={4}>
 					{isExternal(dialURL) ? (
-						<Link external href={dialURL} variant={variants.Link.inlineInverted}>
+						<Link
+							external
+							href={dialURL}
+							variant={variants.Link.inlineInverted}
+							onClick={handleTrackClick(dialURL)}
+						>
 							{phoneNumber}
 						</Link>
 					) : (
@@ -81,7 +94,12 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 		) : (
 			<Stack spacing={4} key={phone.id}>
 				{isExternal(dialURL) ? (
-					<Link external href={dialURL} variant={variants.Link.inlineInverted}>
+					<Link
+						external
+						href={dialURL}
+						variant={variants.Link.inlineInverted}
+						onClick={handleTrackClick(dialURL)}
+					>
 						{phoneNumber}
 					</Link>
 				) : (

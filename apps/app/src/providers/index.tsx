@@ -8,6 +8,7 @@ import { Trans, useTranslation } from 'next-i18next'
 import { type ComponentPropsWithoutRef, useMemo } from 'react'
 import { ConsentBanner, type ConsentOptions, ConsentProvider } from 'react-hook-consent'
 
+import { consentEvent } from '@weareinreach/analytics/events'
 import { EditModeProvider } from '@weareinreach/ui/providers/EditMode'
 import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
@@ -44,6 +45,9 @@ const Link = dynamic(() => import('@weareinreach/ui/components/core/Link').then(
 export const Providers = ({ children, session }: ProviderProps) => {
 	const { t } = useTranslation('common')
 
+	const mantineTheme = useMemo(() => ({ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }), [])
+	const mantineCache = useMemo(() => appCache, [])
+
 	const consentOptions: ConsentOptions = useMemo(
 		() => ({
 			services: [
@@ -55,10 +59,20 @@ export const Providers = ({ children, session }: ProviderProps) => {
 				{
 					id: 'ga4',
 					name: t('cookie-consent.item-ga4'),
+					onAccept: () => {
+						window.gtag &&
+							window.gtag('consent', 'update', { ad_storage: 'granted', analytics_storage: 'granted' })
+						consentEvent.update('granted', 'ga4')
+					},
+					onDeny: () => {
+						window.gtag &&
+							window.gtag('consent', 'update', { ad_storage: 'denied', analytics_storage: 'denied' })
+						consentEvent.update('denied', 'ga4')
+					},
 					scripts: [
 						{
 							id: 'ga4-consent',
-							code: `window.gtag && window.gtag('consent', 'update', {ad_storage: 'granted',	analytics_storage: 'granted'})`,
+							code: `window.gtag && window.gtag('consent', 'update', { ad_storage: 'granted', analytics_storage: 'granted' });`,
 						},
 					],
 				},
@@ -96,8 +110,6 @@ export const Providers = ({ children, session }: ProviderProps) => {
 		[t]
 	)
 
-	const mantineTheme = useMemo(() => ({ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }), [])
-	const mantineCache = useMemo(() => appCache, [])
 	return (
 		<MantineProvider withGlobalStyles withNormalizeCSS theme={mantineTheme} emotionCache={mantineCache}>
 			<ConsentProvider options={consentOptions}>
