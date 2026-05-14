@@ -11,8 +11,8 @@ jobs:
       HUSKY: 0
     steps:
       - name: Checkout repository
-        uses: actions/checkout@master
-      - uses: connor-baer/action-sync-branch@main
+        uses: actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
+      - uses: connor-baer/action-sync-branch@d4b277a94f00ecb3016fcfd2286388535f889404 # main
         with:
           branch: dev
           token: ${{ secrets.GH_ACT_PAT }}
