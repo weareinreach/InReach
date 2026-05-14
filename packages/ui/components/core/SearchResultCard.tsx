@@ -3,8 +3,9 @@ import { useHover } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useCallback, useMemo } from 'react'
 
+import { productEvent } from '@weareinreach/analytics/events'
 import { type ApiOutput } from '@weareinreach/api'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useSearchState } from '~ui/hooks'
 
 import { ActionButtons } from './ActionButtons'
 import { Badge } from './Badge'
@@ -57,13 +58,23 @@ export const SearchResultLoading = () => {
 	)
 }
 
-const SearchResultData = ({ result }: SearchResultHasData) => {
+const SearchResultData = ({ result, index }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories, national } = result
 	const visibility = result.addressVisibility as 'FULL' | 'PARTIAL' | 'HIDDEN' | undefined
 	const { t, ready: i18nReady } = useTranslation(['common', result.id])
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
+	const { searchState } = useSearchState()
+
+	const handleTrackClick = useCallback(() => {
+		productEvent.profileView(
+			result.id,
+			name,
+			JSON.stringify(searchState.params), // Converting search context to a string for GA4
+			index // Passing the position rank
+		)
+	}, [result.id, name, searchState.params, index])
 
 	const leaderBadgeGroup = useMemo(
 		() =>
@@ -167,6 +178,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 								href={{ pathname: '/org/[slug]', query: { slug } }}
 								variant={variants.Link.inheritStyle}
 								td='none'
+								onClick={handleTrackClick}
 							>
 								{name}
 								<Space w={4} display='inline-block' />
@@ -179,6 +191,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 						href={{ pathname: '/org/[slug]', query: { slug } }}
 						variant={variants.Link.inheritStyle}
 						td='none'
+						onClick={handleTrackClick}
 					>
 						<Stack spacing={12}>
 							<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
@@ -206,6 +219,7 @@ export type SearchResultCardProps = SearchResultHasData | SearchResultLoading
 type SearchResultHasData = {
 	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
 	loading?: boolean
+	index: number
 }
 type SearchResultLoading = {
 	loading: true
