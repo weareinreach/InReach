@@ -25,93 +25,125 @@ Below is a comprehensive list of the specific user actions and interactions we t
 
 ### User Actions (Manual Click Events)
 
-| Click Event                                                   | What triggers this?                                                                         |
-| :------------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
-| **Search by Location** (`search`)                             | Fired when a user enters a city or ZIP code to find nearby resources.                       |
-| **Search for Organization** (`orgSearch`)                     | Fired when a user types an organization's name directly into the search bar.                |
-| **Select Service Filter** (`service_filter_select`)           | Fired when a user selects a specific service type (like "Shelter") to narrow their results. |
-| **Remove Service Filter** (`service_filter_unselect`)         | Fired when a user unchecks a service filter they previously selected.                       |
-| **Toggle Filter Category** (`service_filter_category_toggle`) | Fired when a user clicks to expand or hide a whole group of filters (like "Medical").       |
-| **Clear All Filters** (`service_filter_deselect_all`)         | Fired when a user clicks the button to reset all active search filters at once.             |
-| **View Service Details** (`select_content`)                   | Fired when a user clicks on a program in the search results to see its full information.    |
-| **Quick Exit** (`safety_exit`)                                | Fired when a user clicks the "Safety Exit" button to immediately leave the site.            |
-| **Donate** (`select_content`)                                 | Fired when a user clicks the "Donate" button to support InReach.                            |
-| **Account Sign Up** (`sign_up`)                               | Fired when a user successfully creates a new InReach account.                               |
-| **Account Log In** (`login`)                                  | Fired when a user successfully signs into their existing account.                           |
-| **Open Report Form** (`report_open`)                          | Fired when a user clicks to report an issue or correction for a service or organization.    |
-| **Submit Report** (`report_submit_success`)                   | Fired only after a user successfully sends their data correction report to our team.        |
+| Click Event                                                   | What triggers this?                                                                      |
+| :------------------------------------------------------------ | :--------------------------------------------------------------------------------------- |
+| **Search by Location** (`search`)                             | User enters a city or ZIP code to find nearby resources.                                 |
+| **Search for Organization** (`orgSearch`)                     | User types an organization's name directly into the search bar.                          |
+| **Zero Results** (`search_zero_results`)                      | Fired when a search query returns no results (critical for identifying coverage gaps).   |
+| **Suggest a Resource** (`suggest_resource_click`)             | User clicks the "Suggest a Resource" link in the search autocomplete.                    |
+| **Submit Resource Suggestion** (`suggest_resource_submit`)    | User successfully submits a "Suggest a Resource" form.                                   |
+| **Apply Filter** (`filter_select`)                            | User selects a specific service type to narrow their results.                            |
+| **Remove Filter** (`service_filter_unselect`)                 | User unchecks a service filter they previously selected.                                 |
+| **Toggle Filter Category** (`service_filter_category_toggle`) | User clicks to expand or hide a whole group of filters.                                  |
+| **Clear All Filters** (`service_filter_deselect_all`)         | User clicks the button to reset all active search filters.                               |
+| **Profile/Modal View** (`profile_view`)                       | User opens an organization page, clicks a result card, or opens a service preview modal. |
+| **Save/Unsave Item** (`item_save`)                            | User adds or removes a resource from their saved lists.                                  |
+| **Outbound Click** (`outbound_click`)                         | User clicks an external link (website, email, phone, or directions).                     |
+| **Consent Update** (`consent_update`)                         | User interacts with the cookie banner to grant or deny tracking permissions.             |
+| **Quick Exit** (`safety_exit`)                                | User clicks the "Safety Exit" button to immediately leave the site.                      |
+| **Donate** (`select_content`)                                 | User clicks the "Donate" button to support InReach.                                      |
+| **Account Sign Up** (`sign_up`)                               | User successfully creates a new InReach account.                                         |
+| **Account Log In** (`login`)                                  | User successfully signs into their existing account.                                     |
+| **Open Report Form** (`report_open`)                          | User clicks to report an issue or correction.                                            |
+| **Submit Report** (`report_submit_success`)                   | Fired after a user successfully sends a data correction report.                          |
+| **View Service Details** (`select_content`)                   | Legacy event fired alongside `profile_view` when a service modal is opened.              |
 
 ### System Interactions (Automatic Events)
 
-| System Event                                 | What triggers this?                                                                                |
-| :------------------------------------------- | :------------------------------------------------------------------------------------------------- |
-| **Start Visit** (`session_start`)            | Recorded automatically as soon as a person opens the InReach app in their browser.                 |
-| **Page View** (`page_view`)                  | Recorded whenever a user navigates between different pages on the site.                            |
-| **External Website Click** (`click`)         | Recorded when a user clicks a link that takes them to a provider's website or other external site. |
-| **File Download** (`file_download`)          | Recorded when a user clicks a link to download a resource, such as a PDF.                          |
-| **Performance Metrics** (e.g., `LCP`, `CLS`) | Technical events that measure how quickly and smoothly the app is running for the user.            |
+| System Event                                 | What triggers this?                                                                     |
+| :------------------------------------------- | :-------------------------------------------------------------------------------------- |
+| **Start Visit** (`session_start`)            | Recorded automatically as soon as a person opens the InReach app in their browser.      |
+| **Page View** (`page_view`)                  | Recorded whenever a user navigates between different pages on the site.                 |
+| **Performance Metrics** (e.g., `LCP`, `CLS`) | Technical events that measure how quickly and smoothly the app is running for the user. |
 
 ---
 
-## Feature Guide: "Report an Issue"
+## GA4 Dashboard Setup & Usage Guide
 
-This section explains how we track user interactions specifically with the "Report an Issue" tool.
+Since Google Analytics 4 is a "privacy-first" tool, it collects data but hides specific details (like which link was clicked or what filter was picked) until you manually register "Custom Dimensions." **If you don't do this, your reports will look empty.**
 
-This guide explains how we track user interactions with the "Report an Issue" tool and how you can set up the Google Analytics 4 (GA4) dashboard to view these insights.
-
-## Overview of Tracked Data
-
-We track two main actions to help us understand how users are helping improve our data:
-
-1.  **Opening the Form (`report_open`)**: This happens whenever a user clicks a button to report an issue for a service or organization.
-2.  **Successful Submission (`report_submit_success`)**: This happens only after a user successfully sends their feedback to us.
-
-## Step-by-Step GA4 Setup
-
-While GA4 logs that these events happened automatically, it won't show you specific details (like _which_ issue was reported) until you register "Custom Dimensions."
-
-### Steps to Register Dimensions:
+### 1. Registering Custom Dimensions (Required)
 
 1.  Log in to your **Google Analytics** account.
 2.  Click the **Admin** (gear icon) at the bottom left.
 3.  Under **Data display**, select **Custom definitions**.
-4.  Click the blue **Create custom dimension** button and add these four items one by one:
+4.  Click **Create custom dimension** and add these items one by one. Use the exact "Event Parameter" names listed below.
 
-| Dimension Name       | Scope | Event Parameter | What it tells us                                                       |
-| :------------------- | :---- | :-------------- | :--------------------------------------------------------------------- |
-| **Report Target**    | Event | `report_target` | Is this about a specific 'service' or the whole 'organization'?        |
-| **Issue Type**       | Event | `issue_type`    | Which category did they pick? (e.g., Incorrect Info, Closed/Inactive). |
-| **Report Language**  | Event | `language`      | Used if they reported a translation error.                             |
-| **Reported Item ID** | Event | `item_id`       | The database ID of what they are reporting.                            |
+| Dimension Name       | Scope | Event Parameter       | What it tells us                                                        |
+| :------------------- | :---- | :-------------------- | :---------------------------------------------------------------------- |
+| **Search Term**      | Event | `search_term`         | The specific text or location a user searched for.                      |
+| **Search Context**   | Event | `search_term_context` | A snapshot of the search filters active when a result was clicked.      |
+| **Item Name**        | Event | `item_name`           | The name of the organization or service being viewed.                   |
+| **Item ID**          | Event | `item_id`             | The internal database ID of the organization or service.                |
+| **Link Type**        | Event | `link_type`           | The type of outbound click (website, email, phone, directions, social). |
+| **Link URL**         | Event | `link_url`            | The destination URL or email address of an outbound click.              |
+| **Result Position**  | Event | `position`            | The rank (1, 2, 3...) of a search result when it was selected.          |
+| **Service Name**     | Event | `service_name`        | The specific filter name applied (e.g., "Shelter").                     |
+| **Service Category** | Event | `service_category`    | The broad category of a filter (e.g., "Housing").                       |
+| **Action**           | Event | `action`              | The specific sub-action taken (e.g., 'save' vs 'unsave').               |
+| **Consent Status**   | Event | `status`              | Whether consent was 'granted' or 'denied'.                              |
+| **Consent Service**  | Event | `service`             | The specific service for which consent was updated (e.g., 'ga4').       |
+| **Report Target**    | Event | `report_target`       | Whether a report is for a 'service' or 'organization'.                  |
+| **Issue Type**       | Event | `issue_type`          | The category of issue reported by a user.                               |
+
+### 2. How to See All Tracked Events
+
+To see a quick overview of how often every action (like a search or a filter click) happens:
+
+1.  Go to **Reports** > **Engagement** > **Events**.
+2.  This table lists every event name (e.g., `filter_select`, `outbound_click`).
+3.  Click on any event name to see a deeper report, including the custom dimensions you registered in Step 1.
+
+### 3. Real-Time Verification (DebugView)
+
+If you want to test if tracking is working while you use the app:
+
+1.  Go to **Admin** > **Data display** > **DebugView**.
+2.  Open InReach in your browser and perform some actions (like searching or clicking a website link).
+3.  You will see events appear in the timeline. Click an event to see all the metadata (parameters) we are sending with it.
+
+### 4. Building the Search Funnel (Explorations)
+
+Standard reports don't show the "path" a user takes. To see the funnel (`Start` -> `Filter` -> `View` -> `Click`), you must create an **Exploration**:
+
+1.  Click **Explore** (compass icon) in the left menu.
+2.  Start a new **Blank** exploration.
+3.  In the "Technique" dropdown, select **Funnel exploration**.
+4.  In the **Steps** section (click the pencil icon), add these steps in order:
+    - **Step 1: Start Session** (Event: `session_start`)
+    - **Step 2: Applied Filter** (Event: `filter_select`)
+    - **Step 3: Viewed Profile** (Event: `profile_view`)
+    - **Step 4: Clicked Outbound** (Event: `outbound_click`)
+5.  Click **Apply**. This creates a chart showing where users are dropping off in the journey from search to contacting a provider.
 
 ---
 
-## How to Find Your Answers
+## Feature Guide: Analyzing Your Data
 
-### 1. How many people are clicking the "Report" button?
+### Search Effectiveness
 
-In your standard reports, look for the **Event count** of `report_open`. This represents every time someone opened the reporting tool with the intention of giving feedback.
+- **Identify Coverage Gaps**: Look at the `search_zero_results` event. If you see a high volume of `search_term` values (like "Housing" in a specific city) returning zero results, it's a signal that we need to add more providers in that area.
+- **Relevance Tracking**: Look at `position` for `profile_view`. If users are consistently clicking results at position 10 or higher, it means our search ranking algorithm isn't putting the most relevant things at the top.
 
-### 2. What is our "Submission Rate"?
+### Conversion & Engagement
 
-This helps us see if the form is too hard to fill out.
+- **Preferred Contact Methods**: Use the `link_type` dimension for `outbound_click`. Do users prefer to click the website link, or do they prefer to email directly?
+- **Submission Rates**: Compare `report_submit_success` vs `report_open`. If 100 people open the form but only 5 submit it, the form might be too confusing or asking for too much info.
 
-- **How to calculate**: Compare the number of `report_submit_success` events to `report_open` events.
-- **Insight**: If 100 people open it but only 5 submit it (a 5% rate), we may need to simplify the form.
+### Monitoring Consent Rates Over Time
 
-### 3. Which issues are reported most often?
+To see how many users are opting into tracking vs. declining, create a "Free-form Exploration":
 
-Use the **Explore** tab in GA4 to create a custom table:
+1.  Go to **Explore** > **Blank**.
+2.  In the **Dimensions** list, click `+` and import: `Date` and `Consent Status`.
+3.  In the **Metrics** list, click `+` and import: `Event count`.
+4.  Set **Rows** to: `Date`.
+5.  Set **Columns** to: `Consent Status`.
+6.  Set **Values** to: `Event count`.
+7.  Under **Filters**, add a filter for **Event name** exactly matches `consent_update`.
+8.  Change the visualization at the top to a **Line chart** or **Stacked bar chart**.
 
-- **Rows**: `Issue Type`
-- **Values**: `Event count`
-- **Insight**: This shows you if most problems are related to "Incorrect Information" versus services that are "Closed or Inactive."
-
-### 4. Are people reporting Services or Organizations?
-
-You can filter any report using the `Report Target` dimension.
-
-- **Insight**: This helps us decide if we need to focus on cleaning up high-level agency data or the specific services they provide.
+This report will show you the daily trend of users who granted consent versus those who denied it.
 
 ---
 

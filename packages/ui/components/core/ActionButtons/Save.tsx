@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { type ComponentPropsWithRef, forwardRef, useCallback, useMemo } from 'react'
 
+import { productEvent } from '@weareinreach/analytics/events'
 import { type ApiInput } from '@weareinreach/api'
 import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
@@ -48,7 +49,7 @@ const useNotifications = (listName: string) => {
  * @param name - List name : string
  * @returns JSX.Element
  */
-const ListItem = ({ data, name, action }: ListMenuProps) => {
+const ListItem = ({ data, name, action, itemName }: ListMenuProps & { itemName: string }) => {
 	const { t } = useTranslation()
 	const utils = api.useUtils()
 
@@ -72,6 +73,7 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 	const saveItem = api.savedList.saveItem.useMutation({
 		onSuccess: () => {
 			savedInList()
+			productEvent.itemSave(data.itemId ?? '', itemName, 'save')
 			utils.savedList.invalidate()
 		},
 		onError: errorSaving,
@@ -79,6 +81,7 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 	const removeItem = api.savedList.deleteItem.useMutation({
 		onSuccess: () => {
 			deletedInList()
+			productEvent.itemSave(data.itemId ?? '', itemName, 'unsave')
 			utils.savedList.invalidate()
 		},
 		onError: errorRemoving,
@@ -120,6 +123,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 		const removeItem = api.savedList.deleteItem.useMutation({
 			onSuccess: () => {
 				notifications.deleted()
+				productEvent.itemSave(itemId, itemName, 'unsave')
 				utils.savedList.isSaved.invalidate(itemId)
 				utils.savedList.getAll.invalidate()
 			},
@@ -210,7 +214,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 						<>
 							<CreateNewList component={Menu.Item}>{t('list.create-new')}</CreateNewList>
 							{availableLists?.map(({ id, name }) => (
-								<ListItem key={id} data={{ id, itemId }} action='save' name={name} />
+								<ListItem key={id} data={{ id, itemId }} action='save' name={name} itemName={itemName} />
 							))}
 						</>
 					)}
