@@ -18,10 +18,13 @@ export const SocialMedia = ({ edit, ...props }: SocialMediaProps) =>
 	edit ? <SocialMediaEdit {...props} /> : <SocialMediaDisplay {...props} />
 
 const SocialMediaDisplay = ({ parentId = '', passedData, locationOnly }: SocialMediaProps) => {
+	const slug = useSlug()
 	const { data } = api.orgSocialMedia.forContactInfo.useQuery(
 		{ parentId, locationOnly },
 		{ enabled: !passedData }
 	)
+
+	const { data: org } = api.organization.getNameFromSlug.useQuery(slug)
 
 	const componentData = passedData ?? data
 
@@ -44,7 +47,7 @@ const SocialMediaDisplay = ({ parentId = '', passedData, locationOnly }: SocialM
 	if (!items.length) {
 		return null
 	}
-	return <SocialLink.Group links={items} header />
+	return <SocialLink.Group links={items} header itemName={org?.name} />
 }
 
 const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {

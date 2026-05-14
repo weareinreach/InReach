@@ -146,10 +146,12 @@ const useLocationSearch = () => {
 
 const SuggestItem = () => {
 	const { classes } = useStyles()
+	const { form } = useSearchBoxContext()
 	const router = useRouter()
 	const suggestClickHandler = useCallback(() => {
+		searchBoxEvent.suggestResource(form.values.search)
 		router.push('/suggest')
-	}, [router])
+	}, [form.values.search, router])
 
 	return (
 		<Box className={classes.itemComponent} onClick={suggestClickHandler}>
