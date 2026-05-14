@@ -32,7 +32,7 @@
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
-		"ajv": "8.17.1",
+		"ajv": "8.18.0",
 		"alex": "11.0.1",
 		"crud-object-diff": "2.3.6",
 		"geo-tz": "8.1.2",

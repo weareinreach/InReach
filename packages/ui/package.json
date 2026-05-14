@@ -36,7 +36,7 @@
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"ahooks": "3.8.1",
-		"ajv": "8.17.1",
+		"ajv": "8.18.0",
 		"ajv-errors": "3.0.0",
 		"alex": "11.0.1",
 		"cookies-next": "4.3.0",
