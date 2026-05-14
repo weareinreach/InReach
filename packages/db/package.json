@@ -84,7 +84,7 @@
 		"dotenv": "16.4.5",
 		"dotenv-cli": "7.4.2",
 		"eslint": "8.57.1",
-		"fast-xml-parser": "4.5.0",
+		"fast-xml-parser": "5.7.0",
 		"flat": "6.0.1",
 		"google-auth-library": "9.14.2",
 		"google-spreadsheet": "4.1.4",
