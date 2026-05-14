@@ -13,7 +13,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useCallback, useMemo } from 'react'
 
-import { serviceModalEvent } from '@weareinreach/analytics/events'
+import { productEvent, serviceModalEvent } from '@weareinreach/analytics/events'
 import { AlertMessage } from '~ui/components/core/AlertMessage'
 import { Badge } from '~ui/components/core/Badge'
 import { Section } from '~ui/components/core/Section'
@@ -48,7 +48,7 @@ const ServiceModalTitle = ({
 				...(backToText && { backToText }),
 			}}
 			icons={icons}
-			itemName={itemName}
+			itemName={itemName ?? 'Unknown Service'} // Provide a default string if itemName is undefined
 			organizationId={organizationId}
 			serviceId={serviceId}
 		/>
@@ -96,8 +96,14 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 
 		const handleOpen = useCallback(() => {
 			serviceModalEvent.opened({ serviceId, serviceName: data?.serviceName?.tsKey?.text, orgSlug: slug })
+			// Aligning with Jira requirement: profile_view fires when modal is opened
+			productEvent.profileView(
+				serviceId,
+				data?.serviceName?.tsKey?.text ?? itemName ?? 'unknown',
+				'modal_preview'
+			)
 			handler.open()
-		}, [data?.serviceName?.tsKey?.text, handler, serviceId, slug])
+		}, [data?.serviceName?.tsKey?.text, handler, serviceId, slug, itemName])
 		const serviceBadges = useMemo(
 			() =>
 				data?.services?.length !== 0 ? (
