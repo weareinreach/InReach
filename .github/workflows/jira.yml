@@ -16,7 +16,7 @@ jobs:
           JIRA_USER_EMAIL: '${{ secrets.JIRA_USER_EMAIL }}'
           JIRA_API_TOKEN: '${{ secrets.JIRA_API_TOKEN }}'
       - name: Create Jira Issue
-        uses: weareinreach/action-create-jira-issue@main
+        uses: weareinreach/action-create-jira-issue@fd701b138d0348e99d66e0ac83fed2da75ff9346 # main
         with:
           project: IN
           issuetype: GitHub
