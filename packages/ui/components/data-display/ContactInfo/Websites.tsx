@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { type ReactElement, useCallback, useMemo } from 'react'
 import invariant from 'tiny-invariant'
 
+import { productEvent } from '@weareinreach/analytics/events'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
@@ -31,8 +32,8 @@ const WebsitesDisplay = ({
 	websiteDesc,
 }: WebsitesProps) => {
 	const slug = useSlug()
-	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(formatNs(orgId?.id))
+	const { data: org } = api.organization.forOrgPage.useQuery({ slug })
+	const { t } = useTranslation(formatNs(org?.id))
 	const { isEditMode } = useEditMode()
 	const variants = useCustomVariant()
 	const { data } = api.orgWebsite.forContactInfo.useQuery(
@@ -40,6 +41,13 @@ const WebsitesDisplay = ({
 		{ enabled: !passedData, select: (data) => data?.map((res) => ({ ...res, active: undefined })) }
 	)
 	const domainExtract = useMemo(() => /https?:\/\/([^:/\n?]+)/, [])
+
+	const handleTrackClick = useCallback(
+		(url: string) => () => {
+			productEvent.outboundClick('website', url, org?.name ?? 'unknown')
+		},
+		[org?.name]
+	)
 
 	const componentData = useMemo(() => passedData ?? data ?? [], [data, passedData])
 
@@ -64,19 +72,19 @@ const WebsitesDisplay = ({
 
 			const desc =
 				websiteDesc && description
-					? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
+					? t(description.key, { ns: org?.id, defaultText: description.defaultText })
 					: urlBase
 
 			const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
 
 			const item = isEditMode ? (
 				<AttributeEditWrapper key={id} active={website.active ?? false} id={id}>
-					<Link external href={url} variant={linkVariant}>
+					<Link external href={url} variant={linkVariant} onClick={handleTrackClick(url)}>
 						{desc}
 					</Link>
 				</AttributeEditWrapper>
 			) : (
-				<Link external key={id} href={url} variant={linkVariant}>
+				<Link external key={id} href={url} variant={linkVariant} onClick={handleTrackClick(url)}>
 					{desc}
 				</Link>
 			)
@@ -88,8 +96,9 @@ const WebsitesDisplay = ({
 		componentData,
 		direct,
 		domainExtract,
+		handleTrackClick,
 		locationOnly,
-		orgId?.id,
+		org?.id,
 		t,
 		variants.Link.inline,
 		variants.Link.inlineInverted,
