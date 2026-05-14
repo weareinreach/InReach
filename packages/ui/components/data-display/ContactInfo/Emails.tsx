@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { type ReactElement, useCallback, useMemo } from 'react'
 import invariant from 'tiny-invariant'
 
+import { productEvent } from '@weareinreach/analytics/events'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { EmailDrawer } from '~ui/components/data-portal/EmailDrawer'
@@ -33,8 +34,9 @@ const EmailsDisplay = ({
 	locationOnly = false,
 	serviceOnly = false,
 }: EmailsProps) => {
-	const { id: orgId } = useOrgInfo()
-	const { t } = useTranslation(formatNs(orgId))
+	const slug = useSlug()
+	const { data: org } = api.organization.forOrgPage.useQuery({ slug })
+	const { t } = useTranslation(formatNs(org?.id))
 	const variants = useCustomVariant()
 	const { isEditMode } = useEditMode()
 	const { data } = api.orgEmail.forContactInfo.useQuery(
@@ -44,6 +46,14 @@ const EmailsDisplay = ({
 			select: (data) => data?.map((res) => ({ ...res, active: undefined })),
 		}
 	)
+
+	const handleTrackClick = useCallback(
+		(address: string) => () => {
+			productEvent.outboundClick('email', address, org?.name ?? 'unknown')
+		},
+		[org?.name]
+	)
+
 	const componentData = useMemo(() => passedData ?? data ?? [], [data, passedData])
 	const { output: content, showDirectHeading: shouldShowDirectHeading } = useMemo(() => {
 		const output: ReactElement[] = []
@@ -73,7 +83,7 @@ const EmailsDisplay = ({
 					return t(title.key, { ns: 'user-title' })
 				}
 				if (description?.key) {
-					return t(description.key, { defaultValue: description.defaultText, ns: orgId })
+					return t(description.key, { defaultValue: description.defaultText, ns: org?.id })
 				}
 
 				return null
@@ -82,7 +92,7 @@ const EmailsDisplay = ({
 			const item = isEditMode ? (
 				<AttributeEditWrapper key={id} active={email.active ?? false} id={id}>
 					<Stack spacing={4} key={id}>
-						<Link external href={href} variant={linkVariant}>
+						<Link external href={href} variant={linkVariant} onClick={handleTrackClick(address)}>
 							{address}
 						</Link>
 						{desc && <Text variant={variants.Text.utility4darkGray}>{desc}</Text>}
@@ -90,7 +100,7 @@ const EmailsDisplay = ({
 				</AttributeEditWrapper>
 			) : (
 				<Stack spacing={4} key={id}>
-					<Link external href={href} variant={linkVariant}>
+					<Link external href={href} variant={linkVariant} onClick={handleTrackClick(address)}>
 						{address}
 					</Link>
 					{desc && <Text variant={variants.Text.utility4darkGray}>{desc}</Text>}
@@ -104,8 +114,9 @@ const EmailsDisplay = ({
 		isEditMode,
 		componentData,
 		direct,
+		handleTrackClick,
 		locationOnly,
-		orgId,
+		org,
 		serviceOnly,
 		t,
 		variants.Link.inline,
