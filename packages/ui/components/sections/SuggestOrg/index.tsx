@@ -29,6 +29,7 @@ import {
 	useState,
 } from 'react'
 
+import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
 import { Link } from '~ui/components/core/Link'
@@ -144,7 +145,10 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const [modalOpen, modalHandler] = useDisclosure(false)
 	const { overlay, setOverlay, hasAuth } = authPromptState
 	const suggestOrgApi = api.organization.createNewSuggestion.useMutation({
-		onSuccess: () => modalHandler.open(),
+		onSuccess: () => {
+			searchBoxEvent.suggestResourceSubmit(form.values.orgName)
+			modalHandler.open()
+		},
 	})
 	const form = useForm({
 		validate: zodResolver(SuggestionSchema),

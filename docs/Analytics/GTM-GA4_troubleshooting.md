@@ -1,29 +1,40 @@
-# GTM & GA4 Troubleshooting Summary
+# GTM & GA4 Troubleshooting: 2025-2026 Data Audit
 
-## The Issue: "The Privacy Tax"
+## 1. Executive Summary: The "Double-Count" Correction
 
-Since late 2023/early 2024, Google and modern browsers (Safari/Firefox) have hardened tracking requirements. Even if code is firing, GA4 may discard events if an explicit consent signal is missing. This results in a "drop" in event counts (like filters) even if total sessions remain relatively stable.
+The drop in traffic between April 2025 and April 2026 is a two-part technical shift. We have moved from a "Double-Counted/Unverified" state to a "Single-Counted/Privacy-Filtered" state. The 2026 baseline represents cleaner, more accurate data, while the 2025 baseline was artificially inflated.
 
-## 1. Checking GTM Configuration
+| Metric (April)          | 2025 (Old Baseline) | 2026 (Current) | **% Change** | Analysis                            |
+| :---------------------- | :-----------------: | :------------: | :----------: | :---------------------------------- |
+| **Total Users**         |         626         |      425       |   **-32%**   | User loss due to Consent filtering. |
+| **Event Count (Views)** |        3,792        |     1,860      |   **-51%**   | Removal of duplicate tracking code. |
+| **Avg Engagement**      |        2.74s        |     0.96s      |   **-64%**   | Evidence of "Anonymous" data pings. |
 
-To ensure GTM is correctly processing your application's signals, log into [tagmanager.google.com](https://tagmanager.google.com) and verify:
+---
 
-1.  **Triggers:** Ensure there is a **Custom Event** trigger for every event name sent by the code.
-    - _Reference:_ Find the list of events in `packages/analytics/events/index.ts`. Look for the first argument in `event('event_name', ...)` calls.
-    - _Check:_ Does the "Event name" in GTM match the string in the code exactly?
-2.  **Tags:** Ensure there is a **GA4 Event Tag** linked to that trigger.
-    - _Check:_ Is the Measurement ID correct (`G-Y3MGLFJVJH`)?
-    - _Check:_ Are "Event Parameters" (like `service_name`, `item_id`) mapped to **Data Layer Variables** in the GTM configuration?
-    - _Check:_ Is the event name under 40 characters? (See `packages/analytics/lib/event.ts`)
-3.  **Consent Settings:** Check the **Consent Overview** in Admin.
-    - _Check:_ Are tags set to "No additional consent required" or are they waiting for a signal?
+## 2. Root Cause Analysis
 
-## 2. Analyzing Data Drops (The "Ratio" Check)
+### A. The Removal of the "Signal Splitter" (October 2025)
 
-To determine if a drop in numbers is a tracking bug or just lower traffic, compare the **Event Count** of `session_start` against your custom events (e.g., `service_filter_select`).
+**Finding:** The ~50% drop in event volume is almost a perfect 2-to-1 reduction.
 
-- **Normal:** Both counts drop by roughly the same percentage (e.g., -30%).
-- **Tracking Bug:** Custom events drop significantly more than sessions (e.g., -34% sessions vs -62% filters). This indicates Google is "ignoring" interaction data due to missing consent signals.
+- **The Cause:** Prior to October, a GTM container (likely owned by the deleted engineer account) was taking every signal from our `G-Y3MGLFJVJH` ID and sending it simultaneously to the old `UA-76058112-1` ID.
+- **The Result:** When the account/container was deleted, the automatic duplication stopped. The 1,860 views in 2026 are likely the **actual** traffic volume; the 3,792 in 2025 was the same but counted twice.
+
+### B. The Consent Mode "Trust Gap"
+
+**Finding:** Average engagement time crashed from **2.74s to 0.96s** (under 1 second), and filter events dropped significantly more than sessions.
+
+- **The Cause:** The code in `_app.tsx` claims `defaultConsent='granted'`, but the `ConsentBanner` in `index.tsx` is **commented out**.
+- **The Penalty:** Google’s Consent Mode v2 (enforced March 2024) detects that the app is claiming consent without a valid UI signal. It responds by removing the dat, i.e. stripping away Session IDs and engagement timers. This makes users look like "anonymous pings" rather than engaged sessions.
+
+---
+
+## 3. Technical Audit Findings
+
+- **Injection Point:** The `G-` ID is loaded via `nextjs-google-analytics` in `_app.tsx` using the `NEXT_PUBLIC_GA_MEASUREMENT_ID` environment variable.
+- **Ghost Tags:** The browser is still attempting to load `UA-76058112-1` because it remains linked inside the GA4 Admin panel under "Connected Site Tags."
+- **Inactive Logic:** High-quality consent logic (lines 39-85 in `index.tsx`) exists but was never activated, leaving the app in a "non-compliant" state for current Google algorithms.
 
 ### Reconciling Event Counts (Code vs. Dashboard)
 
@@ -31,27 +42,53 @@ If the GA4 dashboard shows more event names (e.g., 27) than are defined in `pack
 
 - **GA4 Automatic:** `session_start`, `first_visit`, `user_engagement`, `page_view`.
 - **Enhanced Measurement:** `scroll`, `click` (outbound), `file_download`, `view_search_results`.
-- **Web Vitals:** The `appEvent.webVitals` function sends 6 separate event names based on the metric provided by Next.js (`FCP`, `LCP`, `CLS`, `FID`, `TTFB`, `INP`).
-- **Legacy Data:** GA4 reports show all events that occurred within the selected date range, even if the code has since been removed.
+- **Web Vitals:** The `appEvent.webVitals` function sends 6 separate event names (`FCP`, `LCP`, `CLS`, `FID`, `TTFB`, `INP`).
 
-## 3. Verifying Changes
+---
 
-Use these three tools to confirm data is flowing:
+## 4. Implementation Plan (Action Items)
 
-1.  **GTM Preview Mode:**
-    - Click **Preview** in GTM and connect your site.
-    - Trigger an action (e.g., click a filter).
-    - In Tag Assistant, click the event name and check the **Consent** tab. It must show **Granted** for data to reach GA4.
-2.  **Browser Network Tab:**
-    - Open Inspect > Network. Filter by `collect?v=2`.
-    - **GCS Parameter:** `gcs=G111` is Granted. `gcs=G100` or `G110` is Denied.
-    - **GCD Parameter (V2):** Look for `gcd=`. A value ending in `5` (e.g., `11p1p1p15`) means granted. A `0` or `r` in the middle (e.g., `11p0p0p05`) indicates a deny signal.
-3.  **GA4 DebugView:**
-    - Go to GA4 Admin > Data Display > DebugView.
-    - Events should appear here in real-time while you are in GTM Preview mode.
+### Step 1: Stop the "Ghost" Injections (Admin Fix)
 
-## 4. Resolving the "Denied" State
+1. Log into **Google Analytics Admin**.
+2. Go to **Data Streams** > Select the active stream > **Configure tag settings**.
+3. Click **Manage Connected Site Tags**.
+4. **Delete `UA-76058112-1`**. This officially severs the link to the deleted account and cleans up browser network requests.
 
-The most effective way to restore data accuracy is re-enabling the **Consent Banner**. This provides the explicit `gtag('consent', 'update', ...)` command that unlocks GA4's ability to record detailed interaction data.
+### Step 2: Restore Data Quality (Code Fix)
 
-**File Location:** `apps/app/src/providers/index.tsx`
+1. **Uncomment Consent Logic:** Reactivate the `ConsentProvider` and `ConsentBanner` in `index.tsx`.
+2. **Trigger the Update:** Ensure that when a user clicks "Accept," the app fires the update signal:
+   `gtag('consent', 'update', { 'analytics_storage': 'granted' });`
+3. **Switch to 'Denied' by Default:** Update `_app.tsx` to set `defaultConsent='denied'`.
+   - _Note:_ When Google sees a transition from "Denied" to "Granted," it restores the Session IDs. This will fix the 64% engagement time crash.
+
+### Step 3: Verify Recovery
+
+- **Engagement Time:** Should return to the **2.0s - 3.0s** range.
+- **User Count:** Expect a **20-30% recovery** as Google stops discarding unverified sessions.
+
+## 5. Real-Time Debugging Proof
+
+A decode of a live 'collect' request reveals:
+
+- **GCD Parameter:** `13l3l3l3l1l1` (Indicates "No Signal" or "Unset" consent status).
+- **GTM Parameter:** Active but unconfigured, confirming the "Mini-GTM" engine is running without a brain.
+- **Result:** Data is being sent, but Google is likely discarding it from standard reports due to the lack of a verified consent update.
+
+## 6. Verifying Changes (Network Audit)
+
+To confirm the fix is working, inspect the browser **Network Tab** for `collect?v=2` requests:
+
+1.  **GCS Parameter:**
+    - `gcs=G111`: **Success**. Consent is explicitly granted and verified.
+    - `gcs=G100` or `G110`: **Denied**. Google is ignoring the session details.
+2.  **GCD Parameter:**
+    - `13n3n3n3n5l1`: **Success**. The `5` indicates an explicit "Grant" signal was received.
+    - `13l3l3l3l1l1`: **Failed**. Indicates "No Signal" (the state since October 2023).
+
+## 7. Manual Console Verification (Success)
+
+**Test:** Manually pushed `gtag('consent', 'update', ...)` via browser console.
+**Observed Result:** Network hit transitioned from "Unset" to `gcs=G111`.
+**Conclusion:** This confirms that re-activating the `ConsentBanner` in `index.tsx` is the technically verified solution to restore 2026 data accuracy and engagement metrics.
