@@ -71,7 +71,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 			</Head>
 			<Providers session={session}>
 				<DefaultSeo {...defaultSEO} />
-				<GoogleAnalytics trackPageViews defaultConsent='granted' />
+				<GoogleAnalytics trackPageViews defaultConsent='denied' />
 				{/* <Script id='gtm_conversion'>
 					{`
 					if (window.gtag) {
