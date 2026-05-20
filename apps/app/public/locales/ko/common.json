@@ -258,7 +258,8 @@
 		"<textDarkGray>사용자 인구 통계는 InReach의 영향을 기록하고 제품 결정을 평가하는 데 도움이 됩니다. 사용자는 자발적으로 정보를 공유해 주셔서 감사합니다. 사용자의 개인 정보와 익명성을 보호하기 위해 조치합니다.</textDarkGray>",
 		"<textDarkGray><title2>사이트 사용 분석 자료</title2></textDarkGray>",
 		"<textDarkGray>InReach는 Google Analytics를 사용하여 앱 사용 데이터(예: 사용자 검색과 다른 행동)를 익명으로 분석합니다. Google Analytics는 GDPR을 준수하며 개인 식별 정보를 수집하지 않으며 모든 데이터를 익명으로 수집합니다. 사용자를 확인할 수 없으며 웹사이트 전체에 추적하지 않습니다.</textDarkGray>",
-		"<textDarkGray>InReach는 Vercel Analytics를 사용하여 웹 자료와 성능을 분석합니다. Vercel Analytics은 개별 방문자와 IP 주소에 연결되지 않으며 사이트에 사용하는 정보를 제공하지 않습니다. 데이터 포인트의 기록은 익명이며, 분석 기능은 Vercel 페이지 전체에 브라우징 세션을 재구성하거나 사용자를 식별할 수 있는 정보를 저장하지 않습니다.</textDarkGray>"
+		"<textDarkGray>InReach는 Vercel Analytics를 사용하여 웹 자료와 성능을 분석합니다. Vercel Analytics은 개별 방문자와 IP 주소에 연결되지 않으며 사이트에 사용하는 정보를 제공하지 않습니다. 데이터 포인트의 기록은 익명이며, 분석 기능은 Vercel 페이지 전체에 브라우징 세션을 재구성하거나 사용자를 식별할 수 있는 정보를 저장하지 않습니다.</textDarkGray>",
+		"<textDarkGray>여기 <linkCookieSettings>를 클릭하여 언제든지 쿠키 기본 설정을 업데이트할 수 있습니다</linkCookieSettings>.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>개인정보 보호정책 전문을 자세히 읽어 보세요</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>개인정보 보호정책</title2>"],

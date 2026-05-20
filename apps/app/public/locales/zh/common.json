@@ -258,7 +258,8 @@
 		"<textDarkGray>了解我们的用户人口统计可以帮助我们量化我们的影响力、筹集资金和评估未来的产品决策。我们感谢用户自愿与我们分享这些信息，我们采取这些措施来保护您的隐私和匿名性。</textDarkGray>",
 		"<textDarkGray><title2>网站使用情况分析</title2></textDarkGray>",
 		"<textDarkGray>inReach 使用谷歌分析来匿名分析和跟踪应用程序的总体使用数据(例如，用户搜索和其他行为)。Google Analytics 符合 GDPR，不收集任何个人身份信息，也不会对收集的所有数据进行匿名化。无法识别用户，也永远不会在网站上跟踪用户。</textDarkGray>",
-		"<textDarkGray>inReach 还使用 Vercel Analytics 来分析网络指标和性能。Vercel Analytics 提供网站使用信息，不绑定或关联任何个人访客或 IP 地址。数据点的记录是匿名的，分析功能不会收集或存储使Vercel能够跨页面重构浏览会话或识别用户的信息。</textDarkGray>"
+		"<textDarkGray>inReach 还使用 Vercel Analytics 来分析网络指标和性能。Vercel Analytics 提供网站使用信息，不绑定或关联任何个人访客或 IP 地址。数据点的记录是匿名的，分析功能不会收集或存储使Vercel能够跨页面重构浏览会话或识别用户的信息。</textDarkGray>",
+		"<textDarkGray>您可以随时通过点击 <linkCookieSettings></linkCookieSettings>来更新您的 cookie 首选项</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>阅读我们的完整隐私政策以获取更多信息</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>隐私声明</title2>"],
