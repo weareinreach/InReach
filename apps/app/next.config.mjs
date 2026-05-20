@@ -46,6 +46,7 @@ const nextConfig = {
 		'@weareinreach/env',
 		'@weareinreach/ui',
 		'@weareinreach/util',
+		'react-hook-consent',
 	],
 	compiler: {
 		...(isVercelProd ? { removeConsole: { exclude: ['error'] } } : {}),
