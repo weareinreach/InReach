@@ -148,5 +148,3 @@ This report will show you the daily trend of users who granted consent versus th
 ---
 
 **Important Note**: Once you add these dimensions, Google Analytics takes **24 to 48 hours** to process the data before it starts appearing in your reports.
-
-delete this line later
