@@ -71,3 +71,4 @@ ___*.ts
 # 1password shell plugins
 .op/
 .env*.local
+.env
