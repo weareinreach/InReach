@@ -26,7 +26,7 @@ import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
-import { Supplement, type SupplementDataProps } from './fields'
+import { Supplement } from './fields'
 import { formSchema, type FormSchema } from './schema'
 import { SelectionItem } from './SelectionItem'
 
@@ -37,7 +37,6 @@ const supplementDefaults = {
 	text: false,
 	data: false,
 } as const
-type SupplementFieldsNeeded = { [K in keyof typeof supplementDefaults]: boolean }
 
 const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: string) => {
 	if (dataSchemaName && isAttributeSupplementSchema(dataSchemaName)) {
@@ -236,7 +235,7 @@ const useAttributeData = (showInactiveAttribs: boolean, attachesTo: AttributeMod
 
 const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 	({ restrictCategories: _restrictCategories, attachesTo, parentRecord, ...props }, ref) => {
-		const { t } = useTranslation(['attribute', 'common'])
+		useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const showAddedNotification = useNewNotification({ icon: 'added', displayText: 'Added Attribute' })
 		const apiUtils = api.useUtils()

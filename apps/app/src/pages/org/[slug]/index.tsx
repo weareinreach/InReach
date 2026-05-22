@@ -7,6 +7,7 @@ import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { productEvent } from '@weareinreach/analytics/events'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
@@ -71,8 +72,10 @@ const OrganizationPage = ({
 			if (data.locations?.length > 1) {
 				setActiveTab('locations')
 			}
+			// Track profile view on page load
+			productEvent.profileView(data.id, data.name, JSON.stringify(searchState.params))
 		}
-	}, [data, status, router.isFallback])
+	}, [data, status, router.isFallback, searchState.params])
 
 	const handleTabChange = useCallback((tab: string) => {
 		setActiveTab(tab)

@@ -35,10 +35,11 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 	const {
 		query: { slug: pageSlug },
 	} = router.isReady ? router : { query: { slug: '' } }
-	const { data, status, isFetching } = api.organization.forOrgPageEdits.useQuery(
-		{ slug: pageSlug },
-		{ enabled: router.isReady }
-	)
+	const {
+		data,
+		status,
+		isFetching: _isFetching,
+	} = api.organization.forOrgPageEdits.useQuery({ slug: pageSlug }, { enabled: router.isReady })
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 	const updateBasic = api.organization.updateBasic.useMutation({
 		// Optimistically update the UI with the new data
@@ -129,7 +130,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		return <OrgPageLoading />
 	}
 
-	const { attributes, description, slug, locations, isClaimed } = data
+	const { attributes, description: _description, slug, locations, isClaimed } = data
 
 	return (
 		<>

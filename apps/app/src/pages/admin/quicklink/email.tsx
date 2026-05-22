@@ -215,7 +215,6 @@ const QuickLink = () => {
 												pathname: '/org/[slug]',
 												query: { slug },
 											}}
-											// @ts-expect-error ignore the blank target error
 											target='_blank'
 											rel='noopener noreferrer'
 											variant={variants.Link.inheritStyle}

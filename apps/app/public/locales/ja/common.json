@@ -258,7 +258,8 @@
 		"<textDarkGray>ユーザー層を把握することは、影響の定量化、資金調達、将来の製品決定に関する評価に役立ちます。ユーザーの自発的な情報提供に感謝し、私たちは利用者の個人情報と匿名性を保護するために措置を講じています。</textDarkGray>",
 		"<textDarkGray><title2>サイト利用分析</title2></textDarkGray>",
 		"<textDarkGray>InReach は、Google Analyticsを使用しアプリの使用状況データ (ユーザーの検索事項やその他) を匿名で分析及び追跡します。Google AnalyticsはGDPRに準拠しており、個人を特定できる情報は収集せず、収集されたデータは匿名化されます。ウェブサイトをまたいでユーザーは特定されたり、追跡されたりすることはありません。</textDarkGray>",
-		"<textDarkGray>InReachは、ウェブの重要な情報や動作の分析にもVercel Analyticsを使用しています。Vercel Analyticsは、個々の閲覧者やIPアドレスを関連付けることなく、サイトの利用状況に関する情報を提供します。データポイントの記録は匿名で行われ、Analiticsの機能は、Vercelがページ間のブラウジングセッションを再構築したり、ユーザーを特定できるような情報を収集または保存しません。</textDarkGray>"
+		"<textDarkGray>InReachは、ウェブの重要な情報や動作の分析にもVercel Analyticsを使用しています。Vercel Analyticsは、個々の閲覧者やIPアドレスを関連付けることなく、サイトの利用状況に関する情報を提供します。データポイントの記録は匿名で行われ、Analiticsの機能は、Vercelがページ間のブラウジングセッションを再構築したり、ユーザーを特定できるような情報を収集または保存しません。</textDarkGray>",
+		"<textDarkGray>You can update your cookie preferences at any time by clicking <linkCookieSettings>here</linkCookieSettings>.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>詳細については、当社の個人情報保護方針をお読みください。</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>個人情報保護方針</title2>"],

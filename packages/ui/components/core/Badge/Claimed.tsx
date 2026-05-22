@@ -1,5 +1,5 @@
-import { Badge, type BadgeProps, Text, Tooltip, useMantineTheme } from '@mantine/core'
-import { Trans, useTranslation } from 'next-i18next'
+import { Badge, type BadgeProps, useMantineTheme } from '@mantine/core'
+import { useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
 
 import { Link } from '~ui/components/core/Link'
@@ -22,76 +22,13 @@ export const _Claimed = forwardRef<HTMLDivElement, BadgeClaimedProps>(
 		) : (
 			<Icon icon='carbon:help-filled' color={theme.other.colors.tertiary.orange} height={20} />
 		)
-		const badgeProps = {
+
+		const badgePropsTemp = {
 			variant: 'outline',
 			classNames: classes,
 			leftSection,
 			...(isClaimed ? { ref } : {}),
 			...props,
-		} as const
-
-		const badgePropsTemp = {
-			variant: 'outline',
-			classNames: classes,
-			...(isClaimed ? { ref } : {}),
-			...props,
-		} as const
-
-		const badge = isClaimed ? (
-			<Badge {...badgeProps}>
-				<Text>{t('badge.claimed')}</Text>
-			</Badge>
-		) : (
-			<Text>{t('badge.unclaimed')}</Text>
-		)
-
-		const label = isClaimed ? (
-			<Trans
-				i18nKey='badge.claimed-tool-tip'
-				components={{
-					link1: (
-						<Link
-							external
-							href='https://inreach.org/claimed-organizations/'
-							variant={variants.Link.inheritStyle}
-						/>
-					),
-				}}
-			/>
-		) : (
-			<Trans
-				i18nKey='badge.unclaimed-tool-tip'
-				components={{
-					link1: <Link external onClick={() => setModalOpen(true)} variant={variants.Link.inheritStyle} />,
-				}}
-			/>
-		)
-
-		const tooltipProps = {
-			label,
-			multiline: true,
-			maw: { base: '90vw', xs: 600 },
-			closeDelay: 500,
-			style: { pointerEvents: 'auto' },
-			events: { hover: true, focus: true, touch: true },
-			variant: variants.Tooltip.utility1,
-			disabled: hideTooltip,
-			...(!isClaimed
-				? {
-						px: 16,
-						py: 10,
-						ref,
-					}
-				: {}),
-		} as const
-
-		const claimOrgModalProps = {
-			component: Badge,
-			...badgeProps,
-			w: 'fit-content',
-			externalOpen: modalOpen,
-			externalStateHandler: setModalOpen,
-			className: classes.root,
 		} as const
 
 		const claimOrgModalPropsTemp = {

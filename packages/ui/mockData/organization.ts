@@ -112,14 +112,30 @@ export const organization = {
 		path: ['organization', 'searchDistance'],
 		response: async () => {
 			const { default: data } = await import('./json/organization.searchDistance.json')
-			return data as ApiOutput['organization']['searchDistance']
+			const typedData: ApiOutput['organization']['searchDistance'] = {
+				...data,
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				orgs: data.orgs.map((org: any) => ({
+					...org,
+					addressVisibility: org.addressVisibility ?? 'FULL',
+				})),
+			}
+			return typedData
 		},
 	}),
 	searchDistanceLongTitle: getTRPCMock({
 		path: ['organization', 'searchDistance'],
 		response: async () => {
 			const { default: data } = await import('./json/organization.searchDistanceLongTitle.json')
-			return data as ApiOutput['organization']['searchDistance']
+			const typedData: ApiOutput['organization']['searchDistance'] = {
+				...data,
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				orgs: data.orgs.map((org: any) => ({
+					...org,
+					addressVisibility: org.addressVisibility ?? 'FULL',
+				})),
+			}
+			return typedData
 		},
 	}),
 	forBadgeEditModal: getTRPCMock({

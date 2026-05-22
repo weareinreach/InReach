@@ -9,6 +9,7 @@ import { type RoutedQuery } from 'nextjs-routes'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
+import { productEvent } from '@weareinreach/analytics/events'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
@@ -17,6 +18,7 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -37,6 +39,7 @@ const OrgLocationPage: NextPage = () => {
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const theme = useMantineTheme()
+	const { searchState } = useSearchState()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
 	const {
@@ -61,8 +64,10 @@ const OrgLocationPage: NextPage = () => {
 	useEffect(() => {
 		if (data && status === 'success' && orgData && orgDataStatus === 'success') {
 			setLoading(false)
+			// Track profile view on page load
+			productEvent.profileView(data.id, data.name ?? orgData.name, JSON.stringify(searchState.params))
 		}
-	}, [data, status, orgData, orgDataStatus])
+	}, [data, status, orgData, orgDataStatus, searchState.params])
 
 	const handleTabChange = useCallback((tab: Tabname) => {
 		setActiveTab(tab)

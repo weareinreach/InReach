@@ -5,10 +5,6 @@ import { type FieldValues } from 'react-hook-form'
 
 import { MultiSelectPopover, type MultiSelectPopoverProps } from './hook-form'
 
-type FormSchema = {
-	formValue: string[]
-}
-
 const StoryRender = <T extends FieldValues>(args: MultiSelectPopoverProps<T>) => {
 	const form = useForm<T>()
 

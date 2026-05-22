@@ -12,7 +12,7 @@ export const defaultInterval = (tz: string | null) => {
 	return interval.toISO()
 }
 
-export const updateClosed = ({ dayIndex, newValue, form, formData }: UpdateClosedArgs) =>
+export const updateClosed = ({ dayIndex, newValue, form }: UpdateClosedArgs) =>
 	form.setValue(
 		'data',
 		form.getValues()?.data.map((item) => {
@@ -27,7 +27,7 @@ export const updateClosed = ({ dayIndex, newValue, form, formData }: UpdateClose
 		})
 	)
 
-export const updateOpen24 = ({ dayIndex, newValue, form, formData }: UpdateOpen24Args) =>
+export const updateOpen24 = ({ dayIndex, newValue, form }: UpdateOpen24Args) =>
 	form.setValue(
 		'data',
 		form.getValues()?.data.map((item) => {
@@ -41,7 +41,7 @@ export const updateOpen24 = ({ dayIndex, newValue, form, formData }: UpdateOpen2
 			}
 		})
 	)
-export const updateTz = ({ form, newValue, formData }: UpdateTzArgs) =>
+export const updateTz = ({ form, newValue }: UpdateTzArgs) =>
 	form.setValue(
 		'data',
 		form.getValues()?.data.map((item) => ({
@@ -50,19 +50,16 @@ export const updateTz = ({ form, newValue, formData }: UpdateTzArgs) =>
 		}))
 	)
 interface UpdateClosedArgs {
-	formData: ZFormSchema['data']
 	dayIndex: DayIndex
 	newValue: boolean
 	form: UseFormReturn<ZFormSchema>
 }
 interface UpdateOpen24Args {
-	formData: ZFormSchema['data']
 	dayIndex: DayIndex
 	newValue: boolean
 	form: UseFormReturn<ZFormSchema>
 }
 interface UpdateTzArgs {
-	formData: ZFormSchema['data']
 	form: UseFormReturn<ZFormSchema>
 	newValue: string
 }

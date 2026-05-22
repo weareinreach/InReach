@@ -1,4 +1,4 @@
-import { Box, createPolymorphicComponent, Group, Modal, Text } from '@mantine/core'
+import { Box, createPolymorphicComponent, Group, Modal } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { forwardRef, type MouseEventHandler } from 'react'
 

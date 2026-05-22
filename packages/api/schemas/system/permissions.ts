@@ -12,7 +12,7 @@ const createNewSchema = z.object({
 export const CreateNew = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(createNewSchema)
 
-	const dataParser = parser.transform(({ data, actorId, operation }) =>
+	const dataParser = parser.transform(({ data }) =>
 		Prisma.validator<Prisma.PermissionCreateArgs>()({
 			data: {
 				name: data.name,

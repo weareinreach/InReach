@@ -20,6 +20,7 @@ import { type GetServerSideProps } from 'nextjs-routes'
 import { type JSX, memo, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
+import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { LocationBasedAlertBanner } from '@weareinreach/ui/components/core/LocationBasedAlertBanner'
@@ -168,18 +169,24 @@ const SearchResults = () => {
 			setResultCount(searchQuery.data.resultCount)
 			setData(searchQuery.data)
 			setLoadingPage(false)
+
+			if (searchQuery.data.resultCount === 0) {
+				searchBoxEvent.zeroResults(searchState.searchTerm ?? '', searchState.params)
+			}
 		}
-	}, [searchQuery.data, searchIsLoading, loadingPage])
+	}, [searchQuery.data, searchIsLoading, loadingPage, searchState.searchTerm, searchState.params])
 
 	useEffect(() => {
 		if (data) {
 			setResultDisplay(
-				data.orgs.map((result) => {
-					return <SearchResultCard key={result.id} result={result} loading={loadingPage} />
+				data.orgs.map((result, index) => {
+					return (
+						<SearchResultCard key={result.id} result={result} loading={loadingPage} index={skip + index} />
+					)
 				})
 			)
 		}
-	}, [data, loadingPage])
+	}, [data, loadingPage, skip])
 
 	useEffect(
 		() => {

@@ -1,20 +1,19 @@
 'use client'
 import { MantineProvider } from '@mantine/core'
-// import dynamic, { type LoaderComponent } from 'next/dynamic'
-import { /*Noto_Color_Emoji,*/ Work_Sans } from 'next/font/google'
+import dynamic from 'next/dynamic'
+import { Work_Sans } from 'next/font/google'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
-// import { Trans, useTranslation } from 'next-i18next'
-import { useMemo } from 'react'
-// import { type ConsentBanner, type ConsentOptions } from 'react-hook-consent'
+import { Trans, useTranslation } from 'next-i18next'
+import { type ComponentPropsWithoutRef, useEffect, useMemo } from 'react'
+import { ConsentBanner, type ConsentOptions, ConsentProvider } from 'react-hook-consent'
 
+import { consentEvent } from '@weareinreach/analytics/events'
 import { EditModeProvider } from '@weareinreach/ui/providers/EditMode'
 import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import 'react-hook-consent/dist/styles/style.css'
-
-// const fallbackEmoji = Noto_Color_Emoji({ weight: '400', subsets: ['emoji'] })
 
 const fontWorkSans = Work_Sans({
 	subsets: ['latin-ext'],
@@ -33,92 +32,105 @@ const fontWorkSans = Work_Sans({
 	],
 })
 
-// const PrivacyStatementModal = dynamic(
-// 	() =>
-// 		import('@weareinreach/ui/modals/PrivacyStatement').then(
-// 			(mod) => mod.PrivacyStatementModal
-// 		) satisfies LoaderComponent
-// )
-// const Link = dynamic(() => import('@weareinreach/ui/components/core/Link').then((mod) => mod.Link))
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PrivacyStatementModal = dynamic<any>(() =>
+	import('@weareinreach/ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
+)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Link = dynamic<any>(() => import('@weareinreach/ui/components/core/Link').then((mod) => mod.Link))
 
 export const Providers = ({ children, session }: ProviderProps) => {
-	// const { t } = useTranslation('common')
+	const { t } = useTranslation('common')
 
-	// const consentOptions: ConsentOptions = useMemo(
-	// 	() => ({
-	// 		services: [
-	// 			{
-	// 				id: 'basic',
-	// 				name: t('cookie-consent.item-basic'),
-	// 				mandatory: true,
-	// 			},
-	// 			{
-	// 				id: 'ga4',
-	// 				name: t('cookie-consent.item-ga4'),
-	// 				scripts: [
-	// 					{
-	// 						id: 'ga4-consent',
-	// 						code: `window.gtag && window.gtag('consent', 'update', {ad_storage: 'granted',	analytics_storage: 'granted'})`,
-	// 					},
-	// 				],
-	// 			},
-	// 		],
-	// 		theme: 'light',
-	// 	}),
-	// 	[t]
-	// )
-
-	// const consentBannerSettings: ConsentBannerOpts = useMemo(
-	// 	() => ({
-	// 		settings: {
-	// 			modal: {
-	// 				title: t('cookie-consent.modal-title'),
-	// 				approve: { label: t('cookie-consent.approve-selected') },
-	// 				approveAll: { label: t('cookie-consent.approve-all') },
-	// 				decline: { label: t('words.decline') },
-	// 				description: (
-	// 					<Trans
-	// 						i18nKey='cookie-consent.body'
-	// 						components={{
-	// 							PrivacyLink: (
-	// 								/* @ts-expect-error -> This is a dynamic component */
-	// 								<PrivacyStatementModal component={Link} variant='inlineInvertedUtil1' />
-	// 							),
-	// 						}}
-	// 					/>
-	// 				),
-	// 			},
-	// 			label: t('words.customize'),
-	// 		},
-	// 		approve: { label: t('words.accept') },
-	// 		decline: { label: t('words.decline') },
-	// 	}),
-	// 	[t]
-	// )
+	// Global trigger for consent settings
+	useEffect(() => {
+		window.reopenConsent = () => {
+			// Clear specific consent storage if known, or simply reload
+			// to force the library to re-check storage and re-mount the banner
+			window.location.reload()
+		}
+	}, [])
 
 	const mantineTheme = useMemo(() => ({ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }), [])
 	const mantineCache = useMemo(() => appCache, [])
+
+	const consentOptions: ConsentOptions = useMemo(
+		() => ({
+			services: [
+				{ id: 'basic', name: t('cookie-consent.item-basic'), mandatory: true },
+				{
+					id: 'ga4',
+					name: t('cookie-consent.item-ga4'),
+					onAccept: () => {
+						window.gtag?.('consent', 'update', { ad_storage: 'denied', analytics_storage: 'granted' })
+						consentEvent.update('granted', 'ga4')
+					},
+					onDeny: () => {
+						window.gtag?.('consent', 'update', { ad_storage: 'denied', analytics_storage: 'denied' })
+						consentEvent.update('denied', 'ga4')
+					},
+					scripts: [
+						{
+							id: 'ga4-consent',
+							code: `window.gtag?.('consent', 'update', { ad_storage: 'denied', analytics_storage: 'granted' });`,
+						},
+					],
+				},
+			],
+			theme: 'light',
+		}),
+		[t]
+	)
+
+	const consentBannerSettings: ConsentBannerOpts = useMemo(
+		() => ({
+			settings: {
+				modal: {
+					title: t('cookie-consent.modal-title'),
+					approve: { label: t('cookie-consent.approve-selected') },
+					approveAll: { label: t('cookie-consent.approve-all') },
+					decline: { label: t('words.decline') },
+					description: (
+						<Trans
+							i18nKey='cookie-consent.body'
+							components={{
+								PrivacyLink: <PrivacyStatementModal component={Link} variant='inlineInvertedUtil1' />,
+							}}
+						/>
+					),
+				},
+				label: t('words.customize'),
+			},
+			approve: { label: t('words.accept') },
+			decline: { label: t('words.decline') },
+		}),
+		[t]
+	)
+
 	return (
 		<MantineProvider withGlobalStyles withNormalizeCSS theme={mantineTheme} emotionCache={mantineCache}>
-			{/* <ConsentProvider options={consentOptions}> */}
-			<SessionProvider session={session}>
-				<EditModeProvider>
-					<SearchStateProvider>
-						<GoogleMapsProvider>
-							{children}
-							{/* <ConsentBanner {...consentBannerSettings}>{t('cookie-consent.intro')}</ConsentBanner> */}
-						</GoogleMapsProvider>
-					</SearchStateProvider>
-				</EditModeProvider>
-			</SessionProvider>
-			{/* </ConsentProvider> */}
+			<ConsentProvider options={consentOptions}>
+				<SessionProvider session={session}>
+					<EditModeProvider>
+						<SearchStateProvider>
+							<GoogleMapsProvider>
+								{children}
+								<ConsentBanner {...consentBannerSettings}>{t('cookie-consent.intro')}</ConsentBanner>
+							</GoogleMapsProvider>
+						</SearchStateProvider>
+					</EditModeProvider>
+				</SessionProvider>
+			</ConsentProvider>
 		</MantineProvider>
 	)
 }
 
-type ProviderProps = {
-	children: React.ReactNode
-	session: Session
-}
+type ProviderProps = { children: React.ReactNode; session: Session }
+type ConsentBannerOpts = ComponentPropsWithoutRef<typeof ConsentBanner>
 
-// type ConsentBannerOpts = ComponentPropsWithoutRef<typeof ConsentBanner>
+// Add type declaration for the global function
+declare global {
+	interface Window {
+		reopenConsent: () => void
+	}
+}

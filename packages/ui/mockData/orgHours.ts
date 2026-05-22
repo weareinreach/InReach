@@ -9,8 +9,7 @@ export function createInterval(
 	start: Time,
 	end: Time,
 	dayIndex: number,
-	tz: string,
-	toString?: boolean
+	tz: string
 ): string /*| Interval<true> */ {
 	const { weekYear, weekNumber } = DateTime.now()
 	const interval = Interval.fromDateTimes(
