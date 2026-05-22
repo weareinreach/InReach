@@ -113,11 +113,8 @@ GeoItem.displayName = 'GeoItem'
 const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 	// const { control } = useFormContext<FormSchema>()
 	const { t } = useTranslation(['country', 'gov-dist'])
-	// const [primaryList, setPrimaryList] = useState<GeoList[] | undefined>()
-	const [secondaryList, setSecondaryList] = useState<GeoList['districts'] | undefined>()
-	const [tertiaryList, setTertiaryList] = useState<
-		NonNullable<GeoList['districts']>[number]['subDistricts'] | undefined
-	>()
+	const [secondaryList] = useState<GeoList['districts'] | undefined>()
+	const [tertiaryList] = useState<NonNullable<GeoList['districts']>[number]['subDistricts'] | undefined>()
 	const [primarySearch, setPrimarySearch] = useState<string | null>(null)
 	const [secondarySearch, setSecondarySearch] = useState<string | null>(null)
 	const [tertiarySearch, setTertiarySearch] = useState<string | null>(null)

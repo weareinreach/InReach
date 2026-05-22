@@ -33,4 +33,6 @@ export interface LinkProps extends Omit<NextLinkProps, 'href' | 'color'>, Anchor
 	href?: InternalLink | ExternalLink
 	external?: boolean
 	variant?: Variants<'inline' | 'inlineInverted'>
+	target?: string
+	rel?: string
 }

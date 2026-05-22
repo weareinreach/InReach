@@ -4,7 +4,6 @@ import { commonTheme as theme } from '~ui/theme/common'
 
 import { Badge } from './index'
 
-const accessToken = process.env.STORYBOOK_FIGMA_ACCESS_TOKEN as string
 const figmaSpec = (url: `https://${string}`) => ({
 	type: 'figspec' as const,
 	url,
@@ -19,10 +18,9 @@ export default {
 		),
 	},
 } satisfies Meta<typeof Badge>
-type StoryDef = StoryObj<typeof Badge>
 type GroupStory = StoryObj<typeof Badge.Group>
 
-const groupParams = {
+export const Group = {
 	argTypes: {
 		withSeparator: {
 			control: 'boolean',

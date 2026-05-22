@@ -1,6 +1,6 @@
 // apps/app/src/pages/admin/index.tsx
 
-import { Group, Stack, Tabs, Title } from '@mantine/core'
+import { Stack, Tabs, Title } from '@mantine/core'
 import { type GetServerSideProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -10,14 +10,11 @@ import { type Route, route } from 'nextjs-routes'
 import { useCallback, useEffect, useState } from 'react'
 
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
-// Import the 'permissions' array (which is a runtime value)
-import { permissions as ALL_PERMISSIONS } from '@weareinreach/db/generated/permission' // Renamed to ALL_PERMISSIONS for clarity
 import { DownloadTable } from '@weareinreach/ui/components/data-portal/DownloadTable'
 import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
 import { ReportTable } from '@weareinreach/ui/components/data-portal/ReportTable'
 import { UserTable } from '@weareinreach/ui/components/data-portal/UserTable'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { trpc as api } from '~ui/lib/trpcClient'
 
 const AdminIndex: NextPage = () => {
 	const { t } = useTranslation(['common'])
@@ -143,9 +140,7 @@ const AdminIndex: NextPage = () => {
 					{activeTab === null && (
 						<Tabs.Panel value='no-access' pt='xs'>
 							<div className='text-center py-8'>
-								<p className='text-gray-500 text-lg'>
-									You do not have permission to access any sections of the admin dashboard.
-								</p>
+								<p className='text-gray-500 text-lg'>{t('admin.no-access-message')}</p>
 							</div>
 						</Tabs.Panel>
 					)}

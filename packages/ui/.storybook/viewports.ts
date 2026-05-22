@@ -1,6 +1,5 @@
-import { type ViewportAddonParameter } from '@storybook/addon-viewport'
-
-export const viewport: ViewportAddonParameter = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const viewport: any = {
 	viewports: {
 		iphonex: {
 			name: 'iPhone X',

@@ -17,5 +17,6 @@ export const ZCreateNewSuggestionSchema = z.object({
 		.partial()
 		.nullish(),
 	communityFocus: prefixedId('attribute').array().nullish(),
+	serviceCategories: z.string().array().nullish(),
 })
 export type TCreateNewSuggestionSchema = z.infer<typeof ZCreateNewSuggestionSchema>

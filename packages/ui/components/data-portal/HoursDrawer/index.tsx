@@ -71,8 +71,8 @@ const sortedTimezoneData = timezoneData.sort((a, b) => {
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
-	const [isSaved, setIsSaved] = useState(false)
 	const [globalTz, setGlobalTz] = useState<string | null>(null)
+	const [isSaved, setIsSaved] = useState(false)
 	// const [initialData, setInitialData] = useState<ZFormSchema | null>(null)
 	//data comes from api here
 	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '', {
@@ -80,7 +80,10 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	})
 	const utils = api.useUtils()
 	const mutationApi = api.orgHours.processDrawer.useMutation({
-		onSuccess: () => utils.orgHours.forHoursDrawer.invalidate(locationId),
+		onSuccess: () => {
+			utils.orgHours.forHoursDrawer.invalidate(locationId)
+			setIsSaved(true)
+		},
 	})
 
 	const form = useForm<ZFormSchema>({
@@ -120,6 +123,12 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formData])
 
+	useEffect(() => {
+		if (isSaved && form.formState.isDirty) {
+			setIsSaved(false)
+		}
+	}, [form.formState.isDirty, isSaved])
+
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
@@ -152,7 +161,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						onChange={(event) => {
 							updateOpen24({
 								form,
-								formData,
 								dayIndex,
 								newValue: event.target.checked,
 							})
@@ -166,7 +174,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						onChange={(event) => {
 							updateClosed({
 								form,
-								formData,
 								dayIndex,
 								newValue: event.target.checked,
 							})
@@ -243,7 +250,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							<Title order={2}>Hours</Title>
 							<Select
 								onChange={(newValue) => {
-									newValue && updateTz({ form, newValue, formData })
+									newValue && updateTz({ form, newValue })
 									setGlobalTz(newValue)
 								}}
 								value={globalTz}

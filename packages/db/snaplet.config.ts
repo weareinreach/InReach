@@ -6,9 +6,9 @@ import { defineConfig } from 'snaplet'
 
 type SnapletConfig = ReturnType<typeof defineConfig>
 
-type SystemTableArray = NonNullable<SnapletConfig['subset']>['targets'][number]['table'][]
+type _SystemTableArray = NonNullable<SnapletConfig['subset']>['targets'][number]['table'][]
 
-type SystemTableSubset = {
+type _SystemTableSubset = {
 	table: NonNullable<SnapletConfig['subset']>['targets'][number]['table']
 	percent: number
 }

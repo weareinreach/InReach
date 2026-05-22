@@ -1,7 +1,6 @@
 // packages/ui/mockData/downloads.ts
 
-import { type ApiOutput } from '@weareinreach/api'
-import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 interface OrganizationCsvExportRow {
 	id: string
@@ -57,21 +56,25 @@ const parseCsvString = (csvString: string): OrganizationCsvExportRow[] => {
 
 export const downloads = {
 	getAllPublishedOrganizations: getTRPCMock({
-		path: ['organization', 'getAllPublishedForCSV'],
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		path: ['organization', 'getAllPublishedForCSV' as any],
 		response: async () => {
 			const rawCsvContent: string = (await import('./json/downloads.forAllPublishedOrganizations.json'))
 				.default
-			const parsedData: ApiOutput['organization']['getAllPublishedForCSV'] = parseCsvString(rawCsvContent)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const parsedData: any = parseCsvString(rawCsvContent)
 			return parsedData
 		},
 	}),
 
 	getAllUnpublishedOrganizations: getTRPCMock({
-		path: ['organization', 'getAllUnpublishedForCSV'],
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		path: ['organization', 'getAllUnpublishedForCSV' as any],
 		response: async () => {
 			const rawCsvContent: string = (await import('./json/downloads.forAllUnpublishedOrganizations.json'))
 				.default
-			const parsedData: ApiOutput['organization']['getAllUnpublishedForCSV'] = parseCsvString(rawCsvContent)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const parsedData: any = parseCsvString(rawCsvContent)
 			return parsedData
 		},
 	}),

@@ -136,8 +136,6 @@ const ReportDetailsModal = ({
 									pathname: '/org/[slug]/edit',
 									query: { slug: report.organization.slug },
 								}}
-								// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-								// @ts-expect-error ignore blank target error
 								target='_blank'
 								variant='subtle'
 								size='sm'
@@ -331,7 +329,7 @@ const BottomBar = ({ table }: { table: MRT_TableInstance<ReportRecord> }) => {
 // --- Main Table Component ---
 
 export const ReportTable = () => {
-	const { classes, theme } = useStyles()
+	const { theme } = useStyles()
 	const variants = useCustomVariant()
 	const router = useRouter()
 	const { reportId } = router.query
@@ -505,7 +503,7 @@ export const ReportTable = () => {
 				sortingFn: 'datetime',
 			},
 		],
-		[variants]
+		[variants, theme]
 	)
 
 	const table = useMantineReactTable({
@@ -588,13 +586,7 @@ export const ReportTable = () => {
 						</ActionIcon>
 					</Tooltip>
 					<Tooltip label='Edit Target' withinPortal>
-						<ActionIcon
-							component={Link}
-							href={editUrl}
-							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-							// @ts-expect-error ignore blank target error
-							target='_blank'
-						>
+						<ActionIcon component={Link} href={editUrl} target='_blank'>
 							<Icon icon='carbon:edit' />
 						</ActionIcon>
 					</Tooltip>

@@ -1,6 +1,5 @@
 import './wdyr'
 import './font.css'
-import { type ViewportAddonParameter } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { type WhyDidYouRenderOptions } from '@welldone-software/why-did-you-render'
 import { http, passthrough, type RequestHandler } from 'msw'
@@ -90,7 +89,8 @@ const preview: Preview = {
 	decorators: [
 		(Story, context) => {
 			const sessionKey = context.parameters.nextAuthMock?.session
-			const session = sessionKey ? authStates[sessionKey] : null
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const session = sessionKey ? (authStates[sessionKey] as any).session : null
 
 			return (
 				<SessionProvider session={session}>
@@ -122,7 +122,8 @@ declare module '@storybook/react' {
 		}
 		locale?: LocaleCodes
 		i18n?: typeof i18n
-		viewport?: ViewportAddonParameter
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		viewport?: any
 		design?: DesignParams | DesignParams[]
 		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
 		nextAuthMock?: { session: keyof typeof authStates }

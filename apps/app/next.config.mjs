@@ -54,13 +54,13 @@ const nextConfig = {
 	experimental: {
 		// outputFileTracingRoot: path.join(__dirname, '../../'),
 		instrumentationHook: true,
-		webpackBuildWorker: true,
+		webpackBuildWorker: false, // Set to false to avoid potential issues with build workers and complex monorepos
 	},
 	eslint: {
-		ignoreDuringBuilds: !(isVercelProd || isRenovatePR || isVercelStaging),
+		ignoreDuringBuilds: false, // Temporarily set to false to enable local linting during build
 	},
 	typescript: {
-		ignoreBuildErrors: !(isVercelProd || isRenovatePR || isVercelStaging),
+		ignoreBuildErrors: false, // Temporarily set to false to enable local type checking during build
 	},
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],

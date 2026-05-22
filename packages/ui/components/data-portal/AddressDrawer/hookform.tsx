@@ -122,7 +122,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	// #endregion
 
 	// #region Get initial address
-	const { data, isLoading } = api.location.getAddress.useQuery(locationId ?? '', {
+	const { data } = api.location.getAddress.useQuery(locationId ?? '', {
 		enabled: Boolean(locationId) && Boolean(countryOptions?.length),
 		refetchOnWindowFocus: false,
 		select: ({ id, data: { addressVisibility, ...rest } }) => ({

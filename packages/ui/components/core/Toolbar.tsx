@@ -1,12 +1,9 @@
-import { Box, createStyles, Group, Menu, rem, Space } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
-
-import { Icon } from '~ui/icon'
+import { createStyles, Group, rem, Space } from '@mantine/core'
 
 import { ActionButtons } from './ActionButtons'
 import { Breadcrumb, type BreadcrumbProps } from './Breadcrumb'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	toolbar: {
 		// padding: `${rem(0)} ${rem(8)} ${rem(0)} ${rem(12)}`,
 		marginLeft: rem(-8),
@@ -15,7 +12,6 @@ const useStyles = createStyles((theme) => ({
 
 export const Toolbar = ({ breadcrumbProps, hideBreadcrumb, itemName, ...ids }: Props) => {
 	const { classes } = useStyles()
-	const { t } = useTranslation('common')
 
 	const isService = !!ids.serviceId
 

@@ -34,7 +34,7 @@ const QuickPromotionModal = dynamic(() =>
 	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
 )
 
-const useStyles = createStyles((_theme) => ({
+const useStyles = createStyles(() => ({
 	lessRoundedButton: {
 		borderRadius: '6px',
 		width: 'fit-content',

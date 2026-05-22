@@ -1,9 +1,8 @@
 import { geojsonToWKT } from '@terraformer/wkt'
 import { z } from 'zod'
 
-import { createPoint, generateId, GeoJSONPointSchema, Geometry, Prisma } from '@weareinreach/db'
-import { allAttributes } from '@weareinreach/db/generated/allAttributes'
-import { idString, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
+import { createPoint, generateId, GeoJSONPointSchema, Prisma } from '@weareinreach/db'
+import { idString, MutationBase, MutationBaseArray } from '~api/schemas/common'
 import { createManyRequired } from '~api/schemas/nestedOps'
 
 export const LinkOrgLocationServiceSchema = z.object({

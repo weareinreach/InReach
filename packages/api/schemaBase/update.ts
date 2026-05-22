@@ -5,13 +5,13 @@ export const UpdateBase = <T extends z.ZodRawShape>(
 ) => ({
 	dataParser: z.object({
 		actorId: z.string(),
-		from: schema.deepPartial().optional(),
+		from: schema.partial().optional(),
 		to: schema,
 		operation: z.enum(['CREATE', 'UPDATE', 'DELETE', 'LINK', 'UNLINK']),
 	}),
 	inputSchema: z
 		.object({
-			from: schema.deepPartial().optional(),
+			from: schema.partial().optional(),
 			to: schema,
 		})
 		.or(schema),

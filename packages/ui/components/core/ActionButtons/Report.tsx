@@ -1,28 +1,33 @@
-import { Box, Group, Menu, Text, useMantineTheme } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { useSession } from 'next-auth/react'
+import { Group, Menu, Text, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ComponentPropsWithRef, forwardRef, useCallback, useMemo } from 'react'
+import { forwardRef } from 'react'
 
-import { type ApiInput } from '@weareinreach/api'
 import { type ButtonProps } from '~ui/components/core/Button'
-import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { Icon } from '~ui/icon'
-import { trpc as api } from '~ui/lib/trpcClient'
-import { QuickPromotionModal } from '~ui/modals/QuickPromotion'
 import { ReportModal } from '~ui/modals/Report'
 
 import { useStyles } from './styles'
 
 export const Report = forwardRef<HTMLButtonElement, ReportProps>(
 	(
-		{ itemId, itemName, menuItem, omitLabel, className, orgId, orgName, serviceId, serviceName, ...props },
+		{
+			itemId,
+			itemName,
+			menuItem,
+			omitLabel,
+			className,
+			orgId,
+			orgName,
+			serviceId,
+			serviceName,
+			variant: _variant,
+			...props
+		},
 		ref
 	) => {
 		const { classes, cx } = useStyles()
 		const theme = useMantineTheme()
 		const { t } = useTranslation('common')
-		const { status: sessionStatus } = useSession()
 
 		// Use ReportModal directly to preserve its polymorphic type signature
 		// If you re-introduce QuickPromotionModal, ensure both share a compatible interface
