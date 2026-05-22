@@ -1,14 +1,4 @@
-import {
-	Checkbox,
-	createStyles,
-	Group,
-	LoadingOverlay,
-	Popover,
-	rem,
-	ScrollArea,
-	Text,
-	UnstyledButton,
-} from '@mantine/core'
+import { Checkbox, Group, LoadingOverlay, Popover, ScrollArea, Text, UnstyledButton } from '@mantine/core'
 import { useDisclosure, useListState } from '@mantine/hooks'
 import compare from 'just-compare'
 import { type CSSProperties, useCallback, useEffect, useMemo } from 'react'

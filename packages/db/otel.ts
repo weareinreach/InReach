@@ -4,13 +4,13 @@ import { registerInstrumentations } from '@opentelemetry/instrumentation'
 import { Resource } from '@opentelemetry/resources'
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base'
 import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node'
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions'
 import { PrismaInstrumentation } from '@prisma/instrumentation'
 
 // Configure the trace provider
 const provider = new NodeTracerProvider({
 	resource: new Resource({
-		[SemanticResourceAttributes.SERVICE_NAME]: 'prisma',
+		[ATTR_SERVICE_NAME]: 'prisma',
 	}),
 })
 

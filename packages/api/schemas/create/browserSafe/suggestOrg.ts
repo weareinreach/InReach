@@ -1,11 +1,6 @@
 import { z } from 'zod'
 
 const nonEmptyString = z.string().trim().min(2)
-const nonEmptyStringOpt = z
-	.string()
-	.trim()
-	.transform((data) => (data === '' ? undefined : data))
-	.optional()
 
 export const SuggestionSchema = z.object({
 	countryId: nonEmptyString,

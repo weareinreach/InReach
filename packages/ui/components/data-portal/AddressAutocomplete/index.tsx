@@ -87,8 +87,11 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 	const form = useFormContext<T>()
 	const { control } = form
 	const previousAddressVisibility = usePrevious(addressVisibility)
-	const getFieldName = (field: keyof AddressSchema['address'] | keyof AddressSchema) =>
-		(field === 'addressVisibility' ? field : `${name}.${field}`) as Path<T> //
+	const getFieldName = useCallback(
+		(field: keyof AddressSchema['address'] | keyof AddressSchema) =>
+			(field === 'addressVisibility' ? field : `${name}.${field}`) as Path<T>, //
+		[name]
+	)
 	const selectedCountryId = useWatch({ control, name: getFieldName('countryId') })
 
 	const [searchTerm, setSearchTerm] = useState<string>('')

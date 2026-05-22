@@ -87,7 +87,7 @@ export const CreateNote = () => {
 				}
 			}
 		})
-		.transform(({ actorId, operation, data }) => {
+		.transform(({ data }) => {
 			const { text, ...links } = data
 			const trimmedLinks = flush(links)
 			const id = generateId('internalNote')

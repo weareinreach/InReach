@@ -71,13 +71,13 @@ export const MutationBase = <T extends z.ZodRawShape>(
 ) => ({
 	dataParser: z.object({
 		actorId: z.string(),
-		from: schema.deepPartial().optional(),
+		from: schema.partial().optional(),
 		to: schema,
 		operation: z.enum(['CREATE', 'UPDATE', 'DELETE', 'LINK', 'UNLINK']),
 	}),
 	inputSchema: z
 		.object({
-			from: schema.deepPartial().optional(),
+			from: schema.partial().optional(),
 			to: schema,
 		})
 		.or(schema),
@@ -129,7 +129,7 @@ export const MutationBaseArray = <T extends z.ZodRawShape>(
 		actorId: z.string(),
 		data: z
 			.object({
-				from: schema.deepPartial().optional(),
+				from: schema.partial().optional(),
 				to: schema,
 			})
 			.array(),
@@ -137,7 +137,7 @@ export const MutationBaseArray = <T extends z.ZodRawShape>(
 	}),
 	inputSchema: z
 		.object({
-			from: schema.deepPartial().optional(),
+			from: schema.partial().optional(),
 			to: schema,
 		})
 		.array(),

@@ -15,7 +15,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useEffect, useMemo, useState } from 'react'
 import Toggle from 'react-toggle'
-import 'react-toggle/style.css' // This CSS file MUST be present
+import 'react-toggle/style.css'
 
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
@@ -34,7 +34,8 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 		if (settingsOpened) {
 			const raw = localStorage.getItem('react-hook-consent')
 			try {
-				const p = raw ? JSON.parse(raw) : {}
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const p = raw ? (JSON.parse(raw) as any) : {}
 				setGa4Enabled(p.services?.ga4 === true)
 			} catch {
 				// Ignore JSON parsing errors for stale or malformed localStorage data
@@ -45,7 +46,8 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 	const toggleGa4 = (val: boolean) => {
 		setGa4Enabled(val)
 		const raw = localStorage.getItem('react-hook-consent') || '{}'
-		const p = JSON.parse(raw)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const p = JSON.parse(raw) as any
 		localStorage.setItem(
 			'react-hook-consent',
 			JSON.stringify({
@@ -150,7 +152,10 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 					</Group>
 					<Group position='apart'>
 						<Text weight={500}>{t('cookie-consent.item-ga4')}</Text>
-						<Toggle checked={ga4Enabled} onChange={(e) => toggleGa4(e.target.checked)} />
+						<Toggle
+							checked={ga4Enabled}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => toggleGa4(e.target.checked)}
+						/>
 					</Group>
 					<Divider />
 					<Button onClick={closeSettings} fullWidth>
@@ -168,4 +173,6 @@ PrivacyStatementModalBody.displayName = 'PrivacyStatementModal'
 export const PrivacyStatementModal = createPolymorphicComponent<'button', PrivacyModalProps>(
 	PrivacyStatementModalBody
 )
-export type PrivacyModalProps = ButtonProps
+export type PrivacyModalProps = Omit<ButtonProps, 'variant'> & {
+	variant?: ButtonProps['variant'] | (string & NonNullable<unknown>)
+}

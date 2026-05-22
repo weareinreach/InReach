@@ -31,11 +31,6 @@ const DATA_PORTAL_ACCESS_OPTIONS = [
 	{ value: 'root', label: 'Superuser (Root)' },
 ]
 
-const formatPermissionName = (name: string) => {
-	const option = DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.value === name)
-	return option ? option.label : name
-}
-
 type CurrentUserPermissions = string[]
 
 const getRoleLevel = (role: string | undefined) => {

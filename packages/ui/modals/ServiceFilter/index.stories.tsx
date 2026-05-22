@@ -3,7 +3,6 @@ import { type Meta } from '@storybook/react'
 import { useEffect, useState } from 'react'
 
 import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { service } from '~ui/mockData/service'
 
 import { ServiceFilter } from './index'

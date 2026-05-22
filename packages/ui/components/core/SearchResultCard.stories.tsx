@@ -40,7 +40,7 @@ export const SingleResult = {
 		if (!item) {
 			return <>Something is wrong with the mock data</>
 		}
-		return <SearchResultCard result={item} />
+		return <SearchResultCard result={item} index={0} />
 	},
 }
 export const SingleResultWithLongName = {
@@ -63,7 +63,7 @@ export const SingleResultWithLongName = {
 		if (!item) {
 			return <>Something is wrong with the mock data</>
 		}
-		return <SearchResultCard result={item} />
+		return <SearchResultCard result={item} index={0} />
 	},
 }
 
@@ -90,7 +90,7 @@ export const MultipleResults = {
 		return (
 			<>
 				{data.orgs.map((result) => (
-					<SearchResultCard key={result.id} result={result} />
+					<SearchResultCard key={result.id} result={result} index={0} />
 				))}
 			</>
 		)

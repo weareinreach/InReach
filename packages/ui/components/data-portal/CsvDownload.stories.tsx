@@ -2,14 +2,6 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { CsvDownload } from './CsvDownload' // Adjust the import path as necessary
 
-const mockUseMutationHook = () =>
-	({
-		mutate: (input: unknown) => {
-			console.log('Simulating CSV download for input:', input)
-			console.log('A mock download action would occur here.')
-		},
-		isLoading: false,
-	}) as unknown
 export default {
 	title: 'Data Portal/Components/CsvDownload',
 	component: CsvDownload,
