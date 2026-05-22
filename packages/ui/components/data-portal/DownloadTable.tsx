@@ -1,4 +1,4 @@
-import { Group, SimpleGrid, Stack, Title } from '@mantine/core'
+import { SimpleGrid, Stack, Title } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
@@ -9,7 +9,7 @@ export interface DownloadTableProps {
 	// Add any props your table will eventually need here
 }
 
-export const DownloadTable = (props: DownloadTableProps) => {
+export const DownloadTable = () => {
 	const { t } = useTranslation('common')
 	const { data: session } = useSession()
 

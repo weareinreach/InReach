@@ -1,4 +1,4 @@
-import { Flex, Text, UnstyledButton } from '@mantine/core'
+import { Flex, Text } from '@mantine/core'
 import { action } from '@storybook/addon-actions'
 import { type Meta, type StoryObj } from '@storybook/react'
 

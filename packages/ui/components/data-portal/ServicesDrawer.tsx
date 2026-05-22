@@ -17,10 +17,8 @@ import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { Badge } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
-import { Button } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
@@ -50,11 +48,11 @@ const useStyles = createStyles((theme) => ({
 
 const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(true)
-	const { id: organizationId, slug: orgSlug } = useOrgInfo()
+	const { id: organizationId } = useOrgInfo()
 	const { classes } = useStyles()
 	const { t } = useTranslation(['services'])
 	const variants = useCustomVariant()
-	const { data, isLoading } = api.service.forServiceDrawer.useQuery(
+	const { data } = api.service.forServiceDrawer.useQuery(
 		{ organizationId: organizationId ?? '' },
 		{ enabled: Boolean(organizationId), refetchOnWindowFocus: false }
 	)
@@ -86,7 +84,7 @@ const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((prop
 												<Stack key={key}>
 													<Badge.Service>{t(key, { ns: 'services' })}</Badge.Service>
 													<Stack>
-														{value.map(({ id, locations, name, attributes }) => {
+														{value.map(({ id, locations, name }) => {
 															return (
 																<UnstyledButton key={id} w='100%'>
 																	<Group noWrap position='apart'>

@@ -32,10 +32,12 @@ const fontWorkSans = Work_Sans({
 	],
 })
 
-const PrivacyStatementModal = dynamic(() =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PrivacyStatementModal = dynamic<any>(() =>
 	import('@weareinreach/ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
 )
-const Link = dynamic(() => import('@weareinreach/ui/components/core/Link').then((mod) => mod.Link))
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Link = dynamic<any>(() => import('@weareinreach/ui/components/core/Link').then((mod) => mod.Link))
 
 export const Providers = ({ children, session }: ProviderProps) => {
 	const { t } = useTranslation('common')
@@ -92,10 +94,7 @@ export const Providers = ({ children, session }: ProviderProps) => {
 						<Trans
 							i18nKey='cookie-consent.body'
 							components={{
-								PrivacyLink: (
-									// @ts-expect-error: Prop type mismatch between polymorphic component and dynamic import
-									<PrivacyStatementModal component={Link} variant='inlineInvertedUtil1' />
-								),
+								PrivacyLink: <PrivacyStatementModal component={Link} variant='inlineInvertedUtil1' />,
 							}}
 						/>
 					),

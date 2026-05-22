@@ -83,13 +83,7 @@ export const Footer = () => {
 		<DonateLink key='donate' href='https://inreach.kindful.com/' external {...linkVar}>
 			{t('donate.to-inreach', { defaultValue: 'Donate to InReach 💝' })}
 		</DonateLink>,
-		<Link
-			key={0}
-			href='/suggest'
-			// @ts-expect-error ignore the blank target error
-			target='_self'
-			{...linkVar}
-		>
+		<Link key={0} href='/suggest' target='_self' {...linkVar}>
 			{t('footer.suggest-org', { defaultValue: 'Suggest an organization' })}
 		</Link>,
 		<Link key={1} href='https://www.surveymonkey.com/r/96QD8ZQ' external {...linkVar}>

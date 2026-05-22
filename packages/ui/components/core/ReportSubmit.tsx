@@ -35,7 +35,6 @@ export const ReportSubmit = ({
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
 	const variant = useCustomVariant()
-	const isBody = type === 'body'
 
 	const reportTarget = serviceId ? 'service' : 'organization'
 

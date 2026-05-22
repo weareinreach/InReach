@@ -1,6 +1,6 @@
 import { createStyles, rem } from '@mantine/core'
 
-export const useCountrySelectStyles = createStyles((theme) => ({
+export const useCountrySelectStyles = createStyles(() => ({
 	dropdown: {
 		width: 'max-content !important',
 		left: 'unset !important',

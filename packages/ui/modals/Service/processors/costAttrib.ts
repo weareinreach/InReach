@@ -1,7 +1,6 @@
 import { type TFunction } from 'next-i18next'
 import { z } from 'zod'
 
-import { attributeSupplementSchema } from '@weareinreach/db/generated/attributeSupplementSchema'
 import { getFreeText } from '~ui/hooks/useFreeText'
 import { isValidIcon } from '~ui/icon'
 
@@ -12,7 +11,7 @@ export const processCostAttrib = (
 	t: TFunction,
 	locale: string
 ): CostAttribReturn => {
-	const { text, data, supplementId: id, active, icon, tsKey, tsNs } = record
+	const { text, data, supplementId: id, active, icon, tsKey } = record
 	if (!isValidIcon(icon)) {
 		return null
 	}

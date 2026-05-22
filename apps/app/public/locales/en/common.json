@@ -8,7 +8,8 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
 	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
 	"alert-message": "Alert message",
