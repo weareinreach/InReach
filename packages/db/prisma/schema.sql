@@ -2516,3 +2516,14 @@ view pg_index_usage {
 
 //   @@ignore
 // }
+
+view ServicesCountByCategoryByStateByPostalCode {
+  category            String
+  postal_code         String
+  state_province_name String
+  country_name        String
+  service_count       Int
+
+  @@unique([category, postal_code, state_province_name, country_name])
+  @@map("ServicesCountByCategoryByStateByPostalCode")
+}

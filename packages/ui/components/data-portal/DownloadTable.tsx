@@ -106,6 +106,12 @@ export const DownloadTable = () => {
 						permissionKey='dataPortalAdmin'
 					/>
 					<CsvDownload
+						label='Published Services By Country & State & Postal Code'
+						fileName='count_of_services_by_category_zipcode_state_country'
+						useMutationHook={() => api.csvDownload.getServicesCountByCountryStatePostalCode.useMutation()}
+						permissionKey='dataPortalAdmin'
+					/>
+					<CsvDownload
 						label='Published Services By Attribute & Country'
 						fileName='count_of_services_by_attribute_country'
 						useMutationHook={() => api.csvDownload.getServicesCountByCountryAttribute.useMutation()}
