@@ -1,5 +1,4 @@
 import { prisma } from '@weareinreach/db'
-import { ReportStatus } from '@weareinreach/db/enums'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateSchema } from './mutation.update.schema'

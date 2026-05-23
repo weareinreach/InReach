@@ -1,4 +1,4 @@
-import { defineRouter, importHandler, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
+import { defineRouter, importHandler, permissionedProcedure } from '~api/lib/trpc'
 
 import * as schema from './schemas'
 
