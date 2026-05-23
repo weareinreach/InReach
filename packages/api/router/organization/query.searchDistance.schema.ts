@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { coerceCoordItems, pagination } from '~api/schemas/common'
-
 export const ZSearchDistanceSchema = z.object({
 	lat: z.number().gte(-90).lte(90),
 	lon: z.number().gte(-180).lte(180),

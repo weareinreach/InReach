@@ -41,6 +41,8 @@ import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import { trackSearchPerformance } from './search'
+
 const DEFAULT_RADIUS = 200
 const DEFAULT_UNIT = 'mi'
 
@@ -282,6 +284,12 @@ export const SearchBox = ({
 			if (orgSearchData && !orgSearchLoading && notBlank(search)) {
 				if (orgSearchData.length === 0) {
 					setNoResults(true)
+					// Fired when a search query returns no results (critical for identifying coverage gaps).
+					window.gtag?.('event', 'search_zero_results', {
+						search_term: search,
+						search_type: 'organization',
+						service_category: searchState.services[0] || 'all',
+					})
 				}
 				setResults(orgSearchData)
 				setSearchLoading(false)
@@ -289,6 +297,12 @@ export const SearchBox = ({
 		} else if (autocompleteData && !autocompleteLoading && notBlank(search)) {
 			if (autocompleteData.status === 'ZERO_RESULTS') {
 				setNoResults(true)
+				// Fired when a search query returns no results (critical for identifying coverage gaps).
+				window.gtag?.('event', 'search_zero_results', {
+					search_term: search,
+					search_type: 'location',
+					service_category: searchState.services[0] || 'all',
+				})
 			}
 			setResults(autocompleteData.results)
 			setSearchLoading(false)
@@ -393,11 +407,17 @@ export const SearchBox = ({
 					return
 				}
 				searchBoxEvent.searchLocation(item.value, item.placeId)
+				// Capture the location demand in GA4 for demand analysis
+				trackSearchPerformance({
+					location: item.value,
+					query: search,
+					categoryId: searchState.services[0],
+				})
 				searchStateActions.setSearchTerm(item.value)
 				setLocationSearch(item.placeId)
 			}
 		},
-		[isOrgSearch, router, search, searchStateActions, setLoading, setLocationSearch]
+		[isOrgSearch, router, search, searchState.services, searchStateActions, setLoading, setLocationSearch]
 	)
 
 	const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(

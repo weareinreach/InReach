@@ -142,6 +142,7 @@ const excludedTables = [
 	'ServiceTagNesting',
 	'ServiceTagCountry',
 	'AttributesByCategory',
+	'spatial_ref_sys',
 	'user_refresh_token',
 	'user_access_token',
 	'AuditTrail',

@@ -28,6 +28,7 @@ Below is a comprehensive list of the specific user actions and interactions we t
 | Click Event                                                   | What triggers this?                                                                      |
 | :------------------------------------------------------------ | :--------------------------------------------------------------------------------------- |
 | **Search by Location** (`search`)                             | User enters a city or ZIP code to find nearby resources.                                 |
+| **Search Performance** (`search_executed`)                    | Fired when a search is successfully initiated, capturing location and demand data.       |
 | **Search for Organization** (`orgSearch`)                     | User types an organization's name directly into the search bar.                          |
 | **Zero Results** (`search_zero_results`)                      | Fired when a search query returns no results (critical for identifying coverage gaps).   |
 | **Suggest a Resource** (`suggest_resource_click`)             | User clicks the "Suggest a Resource" link in the search autocomplete.                    |
@@ -74,6 +75,7 @@ Since Google Analytics 4 is a "privacy-first" tool, it collects data but hides s
 | **Search Term**      | Event | `search_term`         | The specific text or location a user searched for.                      |
 | **Search Context**   | Event | `search_term_context` | A snapshot of the search filters active when a result was clicked.      |
 | **Item Name**        | Event | `item_name`           | The name of the organization or service being viewed.                   |
+| **Search Location**  | Event | `search_location`     | The ZIP code or city name being searched (demand tracking).             |
 | **Item ID**          | Event | `item_id`             | The internal database ID of the organization or service.                |
 | **Link Type**        | Event | `link_type`           | The type of outbound click (website, email, phone, directions, social). |
 | **Link URL**         | Event | `link_url`            | The destination URL or email address of an outbound click.              |
@@ -115,6 +117,35 @@ Standard reports don't show the "path" a user takes. To see the funnel (`Start` 
     - **Step 3: Viewed Profile** (Event: `profile_view`)
     - **Step 4: Clicked Outbound** (Event: `outbound_click`)
 5.  Click **Apply**. This creates a chart showing where users are dropping off in the journey from search to contacting a provider.
+
+### 5. Identifying Top Search Locations (Demand Analysis)
+
+To understand which geographical areas users are most frequently searching for services, follow these steps to create a custom report:
+
+1.  Click **Explore** (compass icon) in the left menu.
+2.  Start a new **Blank** exploration.
+3.  In the **Variables** column (left side):
+    - Under **Dimensions**, click `+` and import: `Event name` and `Search Location`.
+    - Under **Metrics**, click `+` and import: `Event count`.
+4.  In the **Tab settings** column (right side):
+    - Drag `Search Location` from Dimensions to the **Rows** section.
+    - Drag `Event count` from Metrics to the **Values** section.
+    - Under **Filters**, add a filter for **Event name** exactly matches `search_executed`.
+5.  This will display a table showing each unique `search_location` (ZIP code or city) and the total number of times a search was executed for that location.
+
+### 6. Verifying Implementation (Technical Verification)
+
+To confirm that ZIP codes and search terms are being sent to Google Analytics correctly:
+
+1. Open the InReach app and open **Developer Tools** (F12).
+2. Go to the **Network** tab and filter by `collect?v=2`.
+3. Perform a search (e.g., enter a ZIP code).
+4. Look for a request in the list, click it, and go to the **Payload** tab.
+5. Verify the following parameters:
+   - `en` (Event Name): `search_executed` (or `search_zero_results`).
+   - `ep.search_location`: Should match the ZIP code or city entered.
+   - `ep.search_term`: Should match the query text.
+   - `ep.service_category`: Should show the active category ID.
 
 ---
 
