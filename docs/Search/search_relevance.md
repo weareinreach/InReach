@@ -1,5 +1,29 @@
 # InReach Search Algorithm Upgrade
 
+<!-- TOC -->
+
+- [1. Big Picture Vision](#1-big-picture-vision)
+- [2. Phase 1 Scope](#2-phase-1-scope)
+  - [2.1. Scoring Factors (Phase 1)](#21-scoring-factors-phase-1)
+- [3. UI Requirements](#3-ui-requirements)
+  - [3.1. Big Picture (Future State)](#31-big-picture-future-state)
+  - [3.2. Phase 1 (Immediate Needs)](#32-phase-1-immediate-needs)
+- [4. Technical Architecture & Decisions](#4-technical-architecture--decisions)
+  - [4.1. Side-by-Side Implementation (V2 Strategy)](#41-side-by-side-implementation-v2-strategy)
+  - [4.2. Explicit Search Trigger](#42-explicit-search-trigger)
+  - [4.3. Scoring over Filtering](#43-scoring-over-filtering)
+  - [4.4. Performance Safeguard](#44-performance-safeguard)
+  - [4.5. System Tuning vs. User Control (Code-Based Config)](#45-system-tuning-vs-user-control-code-based-config)
+  - [4.6. Backend Logic (Shared Utility)](#46-backend-logic-shared-utility)
+- [5. Implementation Steps](#5-implementation-steps)
+  - [5.1. Step 1: V2 Foundation (MVP)](#51-step-1-v2-foundation-mvp)
+- [6. User Experience Scenarios & Examples](#6-user-experience-scenarios--examples)
+- [7. QA Checklist & Verification](#7-qa-checklist--verification)
+- [8. Analytics & Monitoring](#8-analytics--monitoring)
+- [9. Strategic Recommendations](#9-strategic-recommendations)
+- [10. AI Discussion Prompt](#10-ai-discussion-prompt)
+<!-- /TOC -->
+
 ## 1. Big Picture Vision
 
 Build an **Empowered Search** engine that transitions from rigid "yes/no" filtering to a flexible, user-tuned scoring system. The goal is to ensure users in high-stress situations can find the most relevant resources without encountering "no results" dead ends.
@@ -14,7 +38,7 @@ The algorithm prioritizes user choice, allowing individuals to decide what "rele
 
 **Goal**: Establish the Weighted Relevance Scoring system, enable "LGBTQ+ Community Focus" ranking, and implement the "Update Results" workflow.
 
-### Scoring Factors (Phase 1)
+### 2.1. Scoring Factors (Phase 1)
 
 The algorithm will score results based on the following weighted criteria:
 
@@ -27,11 +51,11 @@ The algorithm will score results based on the following weighted criteria:
 
 ## 3. UI Requirements
 
-### Big Picture (Future State)
+### 3.1. Big Picture (Future State)
 
 The UI facilitates a two-step process: **Quick Selection** in the sidebar and **Fine-Tuning** in an Advanced Modal.
 
-### Phase 1 (Immediate Needs)
+### 3.2. Phase 1 (Immediate Needs)
 
 1.  **Sidebar Updates**:
     - Add an **"Update Results"** button to trigger the search explicitly (improving performance/stability).
@@ -50,7 +74,7 @@ The UI facilitates a two-step process: **Quick Selection** in the sidebar and **
 
 ## 4. Technical Architecture & Decisions
 
-### 1. Side-by-Side Implementation (V2 Strategy)
+### 4.1. Side-by-Side Implementation (V2 Strategy)
 
 - **API Isolation**: Create new endpoints (e.g., `searchDistanceV2.handler.ts`) to avoid regressions in legacy search.
 - **Component Isolation**: Create new versions of UI components (e.g., `SearchResultSidebarV2.tsx`, `AdvancedSearchModal.tsx`).
@@ -58,33 +82,33 @@ The UI facilitates a two-step process: **Quick Selection** in the sidebar and **
 - **A/B Testing & Coexistence**: The co-existence of V1 and V2 allows for internal A/B testing and performance benchmarking. Developers and QA can compare the "Distance-Only" vs. "Weighted Relevance" results in real-time.
 - **Gradual Cutover**: A feature flag or internal routing mechanism will be used to toggle between search versions. V2 will remain in a "Beta" or "Experimental" state until quality benchmarks are met, ensuring the legacy search remains a reliable fallback.
 
-### 2. Explicit Search Trigger
+### 4.2. Explicit Search Trigger
 
 - **Decision**: Search will no longer execute instantly on every toggle. Users click an **"Update Results"** button. This preserves backend performance and provides a more stable experience for users in high-stress situations.
 
-### 3. Scoring over Filtering
+### 4.3. Scoring over Filtering
 
 - **Decision**: In "Match Any" mode, we use "Virtual Distance Reducers." A high match count or focus rank makes an organization "feel" closer to the user in the sort order, pulling it toward the top without physically changing its distance.
 
-### 4. Performance Safeguard
+### 4.4. Performance Safeguard
 
 - **Decision**: Even in "Match Any" mode, the database will only score organizations that match at least one selected service/attribute within the search radius. This avoids full-table scans.
 
-### 5. System Tuning vs. User Control (Code-Based Config)
+### 4.5. System Tuning vs. User Control (Code-Based Config)
 
 - **User Control**: The user defines the _relative_ importance of items (e.g., "A is more important than B").
 - **Code-Based Config (Developer)**: For Phase 1, mathematical weights (e.g., "A Priority #1 item is worth 100 points") will be stored in a centralized code file (`searchConfig.ts`).
 - **Why?**: This avoids the complexity of database migrations and the need for an administrative UI in the data-portal during initial development. We can migrate these to a database table in Phase 2 if frequent tuning is required.
 
-### Backend Logic (Shared Utility)
+### 4.6. Backend Logic (Shared Utility)
 
-**File**: `packages/api/src/lib/search/relevanceScore.ts`
+**File Location**: `packages/api/src/lib/search/relevanceScore.ts`
 
 The utility generates a SQL `ORDER BY` fragment that balances user-defined priorities with physical distance.
 
 ## 5. Implementation Steps
 
-### Step 1: V2 Foundation (MVP)
+### 5.1. Step 1: V2 Foundation (MVP)
 
 1.  **Backend (Sr/Mid)**: Create `relevanceScore.ts` with user-led multipliers. Create V2 API handler.
 2.  **Frontend (Mid/Jr)**: Update Sidebar with "Update" button and "Customize" modal.
@@ -92,51 +116,51 @@ The utility generates a SQL `ORDER BY` fragment that balances user-defined prior
 
 ## 6. User Experience Scenarios & Examples
 
-### Scenario 1: Basic Search (Default)
+### 6.1. Scenario 1: Basic Search (Default)
 
 - **User Action**: Enters location "90210" and clicks search.
 - **System Default**: 50-mile radius, "Match All" mode, "Distance" sort bias.
 - **Expected Result**: A list of all nearby organizations, strictly ordered by proximity (closest at top).
 
-### Scenario 2: Service Filtering
+### 6.2. Scenario 2: Service Filtering
 
 - **User Action**: Selects "Food Assistance".
 - **System Behavior**: Filters out any organization that does not offer food.
 - **Expected Result**: Closest food pantries at the top.
 
-### Scenario 3: Multiple Services (AND vs OR)
+### 6.3. Scenario 3: Multiple Services (AND vs OR)
 
 - **User Action**: Selects "Food Assistance" AND "Legal help".
 - **"Match All" (AND) Mode**: Only orgs offering BOTH Food and Legal help are shown.
 - **"Match Any" (OR) Mode**: Orgs offering either Food or Legal help stay on the list.
 - **Bubble Effect**: In OR mode, an org offering both will appear higher than an org offering only one.
 
-### Scenario 4: Just "More Options"
+### 6.4. Scenario 4: Just "More Options"
 
 - **User Action**: Selects "Free of cost" (from "More filters").
 - **System Behavior**: Filters out any organization that is not free.
 - **Expected Result**: Closest free resources at the top.
 
-### Scenario 5: Service + More Options (AND vs OR)
+### 6.5. Scenario 5: Service + More Options (AND vs OR)
 
 - **User Action**: Selects "Food Assistance" AND "Free of cost".
 - **"Match All" (AND) Mode**: Only orgs with BOTH "Food" and "Free" are shown.
 - **"Match Any" (OR) Mode**: Orgs with either "Food" or "Free" stay on the list.
 - **Bubble Effect**: In OR mode, an org that has BOTH will appear higher than an org that only has one, even if the "Both" org is 2 miles further away.
 
-### Scenario 6: Community Focus Priority
+### 6.6. Scenario 6: Community Focus Priority
 
 - **User Action**: User selects "BIPOC" and "Youth" as Community Focuses. They set "BIPOC" = **1** and "Youth" = **2**.
 - **System Behavior**: The list still honors any selected Service or More Options filters, but now "bubbles" BIPOC-focused organizations to the very top based on the user's priority.
 - **Priority Range**: Since 2 items are picked, priority is 1-2. If 5 items are picked, priority is 1-5.
 
-### Scenario 7: Distance vs. Best Match
+### 6.7. Scenario 7: Distance vs. Best Match
 
 - **User Action**: User toggles from "Closest" to "Best Match".
 - **System Behavior**: The math shifts focus. The "Virtual Distance Reducers" become much stronger.
 - **Expected Result**: A Spanish-speaking BIPOC-focused food bank 20 miles away may now jump above a local 1-mile food bank that matches zero priorities.
 
-### Scenario 8: National vs. Local
+### 6.8. Scenario 8: National vs. Local
 
 - **User Action**: User toggles "Include National/Remote".
 - **System Behavior**: Resources like "The Trevor Project" (phone/online only) are added to the result set.
@@ -198,7 +222,7 @@ To measure the success of the Empowered Search (V2) engine, we will track the fo
 
 ---
 
-## 6. AI Discussion Prompt
+## 10. AI Discussion Prompt
 
 _Copy the text below to start the implementation discussion:_
 
