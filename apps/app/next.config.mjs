@@ -57,10 +57,10 @@ const nextConfig = {
 		webpackBuildWorker: true,
 	},
 	eslint: {
-		ignoreDuringBuilds: true,
+		ignoreDuringBuilds: !(isVercelProd || isRenovatePR || isVercelStaging),
 	},
 	typescript: {
-		ignoreBuildErrors: true,
+		ignoreBuildErrors: !(isVercelProd || isRenovatePR || isVercelStaging),
 	},
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
