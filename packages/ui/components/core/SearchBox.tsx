@@ -34,6 +34,7 @@ import {
 import reactStringReplace from 'react-string-replace'
 
 import { searchBoxEvent } from '@weareinreach/analytics/events'
+import { trackSearchPerformance } from '@weareinreach/analytics/src/search'
 import { type ApiOutput } from '@weareinreach/api'
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -282,6 +283,12 @@ export const SearchBox = ({
 			if (orgSearchData && !orgSearchLoading && notBlank(search)) {
 				if (orgSearchData.length === 0) {
 					setNoResults(true)
+					// Fired when a search query returns no results (critical for identifying coverage gaps).
+					window.gtag?.('event', 'search_zero_results', {
+						search_term: search,
+						search_type: 'organization',
+						service_category: searchState.services[0] || 'all',
+					})
 				}
 				setResults(orgSearchData)
 				setSearchLoading(false)
@@ -289,6 +296,12 @@ export const SearchBox = ({
 		} else if (autocompleteData && !autocompleteLoading && notBlank(search)) {
 			if (autocompleteData.status === 'ZERO_RESULTS') {
 				setNoResults(true)
+				// Fired when a search query returns no results (critical for identifying coverage gaps).
+				window.gtag?.('event', 'search_zero_results', {
+					search_term: search,
+					search_type: 'location',
+					service_category: searchState.services[0] || 'all',
+				})
 			}
 			setResults(autocompleteData.results)
 			setSearchLoading(false)
@@ -393,6 +406,12 @@ export const SearchBox = ({
 					return
 				}
 				searchBoxEvent.searchLocation(item.value, item.placeId)
+				// Capture the location demand in GA4 for demand analysis
+				trackSearchPerformance({
+					location: item.value,
+					query: search,
+					categoryId: searchState.services[0],
+				})
 				searchStateActions.setSearchTerm(item.value)
 				setLocationSearch(item.placeId)
 			}
