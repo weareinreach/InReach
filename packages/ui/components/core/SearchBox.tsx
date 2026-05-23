@@ -34,13 +34,14 @@ import {
 import reactStringReplace from 'react-string-replace'
 
 import { searchBoxEvent } from '@weareinreach/analytics/events'
-import { trackSearchPerformance } from '@weareinreach/analytics/src/search'
 import { type ApiOutput } from '@weareinreach/api'
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+
+import { trackSearchPerformance } from './search'
 
 const DEFAULT_RADIUS = 200
 const DEFAULT_UNIT = 'mi'
@@ -416,7 +417,7 @@ export const SearchBox = ({
 				setLocationSearch(item.placeId)
 			}
 		},
-		[isOrgSearch, router, search, searchStateActions, setLoading, setLocationSearch]
+		[isOrgSearch, router, search, searchState.services, searchStateActions, setLoading, setLocationSearch]
 	)
 
 	const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
