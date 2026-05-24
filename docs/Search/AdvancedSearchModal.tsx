@@ -1,4 +1,5 @@
 import { Button, Group, Modal, SegmentedControl, Slider, Stack, Switch, Text, Title } from '@mantine/core'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import { trackSearchV2Action } from './search-v2-analytics-tracker'
@@ -7,6 +8,25 @@ import { trackSearchV2Action } from './search-v2-analytics-tracker'
  * DRAFT UI BLUEPRINT: AdvancedSearchModal Provides the "Pilot" controls for the weighted relevance engine.
  */
 export const AdvancedSearchModal = ({ opened, onClose }: { opened: boolean; onClose: () => void }) => {
+	const router = useRouter()
+
+	const handleApply = () => {
+		trackSearchV2Action('search_v2_applied', { source: 'modal' })
+
+		if (typeof window !== 'undefined') {
+			// Commit to V2 Engine
+			localStorage.setItem('ir_search_version', 'v2')
+
+			// Transition route
+			const nextPathname = router.pathname.includes('/v2')
+				? router.pathname
+				: router.pathname.replace('/search', '/search/v2')
+
+			router.push({ pathname: nextPathname as never, query: router.query })
+		}
+		onClose()
+	}
+
 	return (
 		<Modal
 			opened={opened}
@@ -75,7 +95,7 @@ export const AdvancedSearchModal = ({ opened, onClose }: { opened: boolean; onCl
 					<Group mt={10}>[ Priority List Placeholder ]</Group>
 				</section>
 
-				<Button fullWidth size='lg' onClick={onClose}>
+				<Button fullWidth size='lg' onClick={handleApply}>
 					Apply Settings
 				</Button>
 			</Stack>

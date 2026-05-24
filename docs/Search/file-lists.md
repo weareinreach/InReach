@@ -45,6 +45,8 @@ This document tracks the files involved in the Search V2 (Empowered Search) upgr
 
 - **New**: `packages/ui/components/sections/SearchResultSidebarV2.tsx`
   - **Purpose**: Updated sidebar for V2 search with "Update Results" and "Tune Priority" triggers.
+- **New**: `packages/ui/components/sections/AdvancedSearchToggle.tsx`
+  - **Purpose**: Toggle to switch between V1 and V2 search experiences.
 - **New**: `packages/ui/components/modals/AdvancedSearchModal.tsx`
   - **Purpose**: Fine-tuning interface for priorities, radius, and search modes.
 

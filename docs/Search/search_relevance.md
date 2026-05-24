@@ -24,7 +24,12 @@
 - [6. User Experience Scenarios & Examples](#6-user-experience-scenarios--examples)
 - [7. QA Checklist & Verification](#7-qa-checklist--verification)
 - [8. Analytics & Monitoring](#8-analytics--monitoring)
+  - [8.1. Feature Discovery & Engagement](#81-feature-discovery--engagement)
+  - [8.2. Search Performance & Quality](#82-search-performance--quality)
+  - [8.3. Conversion & Relevance (A/B Metrics)](#83-conversion--relevance-ab-metrics)
+  - [8.4. Technical Health](#84-technical-health)
 - [9. Strategic Recommendations](#9-strategic-recommendations)
+  - [9.1. Internal "Search Debug" Mode](#91-internal-search-debug-mode)
 - [10. AI Discussion Prompt](#10-ai-discussion-prompt)
 <!-- /TOC -->
 
@@ -64,7 +69,6 @@ The UI facilitates a two-step process: **Quick Selection** in the sidebar and **
 1.  **Sidebar Updates**:
     - Add an **"Update Results"** button to trigger the search explicitly (improving performance/stability).
     - Add a **"Customize Search"** button to open the Advanced Modal.
-    - Add a **"Try Search V2 (Beta)"** toggle or link in the legacy sidebar to enable enhanced mode.
 2.  **Advanced Search Modal**:
     - **Priority Ranking**: Interface for users to assign ranks (1 to N) to selected Community Focus items, where N is the number of items chosen (max 5).
     - **Scope Toggles**: "Include National/Remote" and "Match All vs. Match Any".
@@ -127,8 +131,9 @@ To ensure consistent behavior, we apply the following mathematical standards:
 ### 4.8. Toggle Mechanism
 
 - **Manual**: Direct URL navigation between `/search` and `/search/v2`.
-- **Session-based**: A `?v2=true` query parameter that sets a persistent `ir_search_version` cookie.
-- **UI-based**: A "Try Search V2" toggle link in the legacy sidebar for staff/beta-eligible users.
+- **Persistence**: Choice is saved in `localStorage` (key: `ir_search_version`) to maintain user preference across visits.
+- **Query Overrides**: Navigation can be triggered via a `?v2=true` or similar query parameter.
+  - **UI-based**: An "Advanced Search" toggle located in the upper right results header, ensuring visibility across desktop and mobile devices.
 
 ### 4.9. Backend Logic (Shared Utility)
 
@@ -214,7 +219,7 @@ The utility generates a SQL `ORDER BY` fragment that balances user-defined prior
 
 To measure the success of the Empowered Search (V2) engine, we will track the following events via the `@weareinreach/analytics` package.
 
-### 1. Feature Discovery & Engagement
+### 8.1. Feature Discovery & Engagement
 
 - **`advanced_search_opened`**: Frequency of users engaging with fine-tuning options.
 - **`search_v2_applied`**: Usage of the "Update Results" button.
@@ -222,7 +227,7 @@ To measure the success of the Empowered Search (V2) engine, we will track the fo
 - **`priority_tags_configured`**: Usage of the 1-N ranking system.
   - _Parameters_: `tag_count`, `top_priority_tag`.
 
-### 2. Search Performance & Quality
+### 8.2. Search Performance & Quality
 
 - **`search_v2_results_summary`**: Backend efficiency and data density.
   - _Parameters_: `result_count`, `search_latency_ms`.
@@ -241,7 +246,7 @@ To measure the success of the Empowered Search (V2) engine, we will track the fo
 
 ## 9. Strategic Recommendations
 
-### Internal "Search Debug" Mode
+### 9.1. Internal "Search Debug" Mode
 
 **Recommendation**: Implement a "Debug Mode" accessible only to InReach staff and developers.
 

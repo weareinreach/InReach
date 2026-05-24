@@ -27,6 +27,7 @@ import { LocationBasedAlertBanner } from '@weareinreach/ui/components/core/Locat
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
+import { AdvancedSearchToggle } from '@weareinreach/ui/components/sections/AdvancedSearchToggle'
 import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSupport'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
@@ -245,6 +246,7 @@ const SearchResults = () => {
 				pb={30}
 				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
 			>
+				<AdvancedSearchToggle />
 				<Group spacing={20} w='100%' className={classes.searchControls}>
 					<Group maw={{ md: '50%', base: '100%' }} w='100%'>
 						<SearchBox

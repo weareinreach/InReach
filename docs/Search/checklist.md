@@ -41,6 +41,7 @@ This checklist tracks the status of the Search V2 upgrade, ensuring all architec
   - Radius Slider (1-200 miles).
   - National/Remote toggle.
   - **Priority Ranking UI**: Drag-and-drop or numbered ordering for selected focuses.
+- [x] **Advanced Search Toggle**: Implement `AdvancedSearchToggle.tsx` to handle route and persistence.
 - [ ] **Legacy Entry Point**: Update `SearchResultSidebar.tsx` (V1) to include the "Try Search V2 (Beta)" link.
 - [ ] **Routing**: Set up the `/search/v2` page to house the new experience side-by-side with `/search`.
 

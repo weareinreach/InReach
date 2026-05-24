@@ -1,4 +1,5 @@
 import { Button, Divider, Skeleton, Stack, Switch, Text, Title } from '@mantine/core'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 import { trackSearchV2Action } from './search-v2-analytics-tracker'
@@ -14,9 +15,21 @@ export const SearchResultSidebarV2 = ({
 	resultCount?: number
 	isLoading: boolean
 }) => {
+	const router = useRouter()
+
 	const handleUpdate = () => {
 		trackSearchV2Action('search_v2_applied', { source: 'sidebar' })
-		// TODO: Trigger V2 TRPC Query
+
+		if (typeof window !== 'undefined') {
+			// Switch the engine to V2
+			localStorage.setItem('ir_search_version', 'v2')
+
+			// Navigate to the V2 route if not already there
+			if (!router.pathname.includes('/v2')) {
+				const nextPathname = router.pathname.replace('/search', '/search/v2')
+				router.push({ pathname: nextPathname as never, query: router.query })
+			}
+		}
 	}
 
 	return (
