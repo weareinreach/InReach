@@ -34,17 +34,9 @@ Build an **Empowered Search** engine that transitions from rigid "yes/no" filter
 
 The algorithm prioritizes user choice, allowing individuals to decide what "relevance" means for their current crisis. Factors considered:
 
-### 1.1. User-Led Prioritization
-
-Users rank selected community focuses (e.g., BIPOC, Youth) in priority order (1 to N, where N is the number of items selected, up to 5) to "bubble" them to the top.
-
-### 1.2. Flexible Matching
-
-"Match Any" (OR) logic to ensure resources are shown even if they don't meet every single criteria.
-
-### 1.3. Distance vs. Fit
-
-A user-controlled toggle to prioritize physical proximity or service relevance.
+1.  **User-Led Prioritization**: Users rank selected community focuses (e.g., BIPOC, Youth) in priority order (1 to N, where N is the number of items selected, up to 5) to "bubble" them to the top.
+2.  **Flexible Matching**: "Match Any" (OR) logic to ensure resources are shown even if they don't meet every single criteria.
+3.  **Distance vs. Fit**: A user-controlled toggle to prioritize physical proximity or service relevance.
 
 ## 2. Phase 1 Scope
 
@@ -72,12 +64,11 @@ The UI facilitates a two-step process: **Quick Selection** in the sidebar and **
 1.  **Sidebar Updates**:
     - Add an **"Update Results"** button to trigger the search explicitly (improving performance/stability).
     - Add a **"Customize Search"** button to open the Advanced Modal.
+    - Add a **"Try Search V2 (Beta)"** toggle or link in the legacy sidebar to enable enhanced mode.
 2.  **Advanced Search Modal**:
     - **Priority Ranking**: Interface for users to assign ranks (1 to N) to selected Community Focus items, where N is the number of items chosen (max 5).
     - **Scope Toggles**: "Include National/Remote" and "Match All vs. Match Any".
     - **Sort Bias**: Toggle between "Closest" (Distance-heavy) and "Best Match" (Attribute-heavy).
-
-### 3.3. Filter Definitions
 
 > **Note on "More Options"**: These filters are distinct from Community Focus. They include:
 >
@@ -223,7 +214,7 @@ The utility generates a SQL `ORDER BY` fragment that balances user-defined prior
 
 To measure the success of the Empowered Search (V2) engine, we will track the following events via the `@weareinreach/analytics` package.
 
-### 8.1. Feature Discovery & Engagement
+### 1. Feature Discovery & Engagement
 
 - **`advanced_search_opened`**: Frequency of users engaging with fine-tuning options.
 - **`search_v2_applied`**: Usage of the "Update Results" button.
@@ -231,7 +222,7 @@ To measure the success of the Empowered Search (V2) engine, we will track the fo
 - **`priority_tags_configured`**: Usage of the 1-N ranking system.
   - _Parameters_: `tag_count`, `top_priority_tag`.
 
-### 8.2. Search Performance & Quality
+### 2. Search Performance & Quality
 
 - **`search_v2_results_summary`**: Backend efficiency and data density.
   - _Parameters_: `result_count`, `search_latency_ms`.
@@ -250,7 +241,7 @@ To measure the success of the Empowered Search (V2) engine, we will track the fo
 
 ## 9. Strategic Recommendations
 
-### 9.1. Internal "Search Debug" Mode
+### Internal "Search Debug" Mode
 
 **Recommendation**: Implement a "Debug Mode" accessible only to InReach staff and developers.
 
