@@ -8,13 +8,17 @@
 - [3. UI Requirements](#3-ui-requirements)
   - [3.1. Big Picture (Future State)](#31-big-picture-future-state)
   - [3.2. Phase 1 (Immediate Needs)](#32-phase-1-immediate-needs)
+  - [3.3. Filter Definitions](#33-filter-definitions)
 - [4. Technical Architecture & Decisions](#4-technical-architecture--decisions)
   - [4.1. Side-by-Side Implementation (V2 Strategy)](#41-side-by-side-implementation-v2-strategy)
   - [4.2. Explicit Search Trigger](#42-explicit-search-trigger)
-  - [4.3. Scoring over Filtering](#43-scoring-over-filtering)
+  - [4.3. Candidates and Indexing](#43-candidates-and-indexing)
   - [4.4. Performance Safeguard](#44-performance-safeguard)
-  - [4.5. System Tuning vs. User Control (Code-Based Config)](#45-system-tuning-vs-user-control-code-based-config)
-  - [4.6. Backend Logic (Shared Utility)](#46-backend-logic-shared-utility)
+  - [4.5. Deterministic Tie-Breaking](#45-deterministic-tie-breaking)
+  - [4.6. System Tuning vs. User Control (Code-Based Config)](#46-system-tuning-vs-user-control-code-based-config)
+  - [4.7. The "Weighting Contract" (Industry Standards)](#47-the-weighting-contract-industry-standards)
+  - [4.8. Toggle Mechanism](#48-toggle-mechanism)
+  - [4.9. Backend Logic (Shared Utility)](#49-backend-logic-shared-utility)
 - [5. Implementation Steps](#5-implementation-steps)
   - [5.1. Step 1: V2 Foundation (MVP)](#51-step-1-v2-foundation-mvp)
 - [6. User Experience Scenarios & Examples](#6-user-experience-scenarios--examples)
@@ -30,9 +34,17 @@ Build an **Empowered Search** engine that transitions from rigid "yes/no" filter
 
 The algorithm prioritizes user choice, allowing individuals to decide what "relevance" means for their current crisis. Factors considered:
 
-1.  **User-Led Prioritization**: Users rank selected community focuses (e.g., BIPOC, Youth) in priority order (1 to N, where N is the number of items selected, up to 5) to "bubble" them to the top.
-2.  **Flexible Matching**: "Match Any" (OR) logic to ensure resources are shown even if they don't meet every single criteria.
-3.  **Distance vs. Fit**: A user-controlled toggle to prioritize physical proximity or service relevance.
+### 1.1. User-Led Prioritization
+
+Users rank selected community focuses (e.g., BIPOC, Youth) in priority order (1 to N, where N is the number of items selected, up to 5) to "bubble" them to the top.
+
+### 1.2. Flexible Matching
+
+"Match Any" (OR) logic to ensure resources are shown even if they don't meet every single criteria.
+
+### 1.3. Distance vs. Fit
+
+A user-controlled toggle to prioritize physical proximity or service relevance.
 
 ## 2. Phase 1 Scope
 
@@ -65,6 +77,8 @@ The UI facilitates a two-step process: **Quick Selection** in the sidebar and **
     - **Scope Toggles**: "Include National/Remote" and "Match All vs. Match Any".
     - **Sort Bias**: Toggle between "Closest" (Distance-heavy) and "Best Match" (Attribute-heavy).
 
+### 3.3. Filter Definitions
+
 > **Note on "More Options"**: These filters are distinct from Community Focus. They include:
 >
 > - **Include**: Has A Confidentiality Policy, Remote, Free of cost.
@@ -84,26 +98,50 @@ The UI facilitates a two-step process: **Quick Selection** in the sidebar and **
 
 ### 4.2. Explicit Search Trigger
 
-- **Decision**: Search will no longer execute instantly on every toggle. Users click an **"Update Results"** button. This preserves backend performance and provides a more stable experience for users in high-stress situations.
+- **Decision**: Search will no longer execute instantly on every toggle. Users click an **"Update Results"** button.
+- **UI Impact**: Both the `SearchResultSidebarV2` and filter modals (Services, More Filters) will transition to this explicit trigger model. Clicking the button initiates the V2 weighted search query and refreshes the list.
 
-### 4.3. Scoring over Filtering
+### 4.3. Candidates and Indexing
 
 - **Decision**: In "Match Any" mode, we use "Virtual Distance Reducers." A high match count or focus rank makes an organization "feel" closer to the user in the sort order, pulling it toward the top without physically changing its distance.
+- **National Pre-filtering**: "National" organizations will be pre-filtered into a temporary candidate set before scoring to prevent unnecessary distance calculations on non-geospatial resources.
+- **Performance Index**: We will implement a **GIN Index** on attribute and service arrays. This requires a DB migration but allows for near-instant "Match Any" lookups.
 
 ### 4.4. Performance Safeguard
 
 - **Decision**: Even in "Match Any" mode, the database will only score organizations that match at least one selected service/attribute within the search radius. This avoids full-table scans.
 
-### 4.5. System Tuning vs. User Control (Code-Based Config)
+### 4.5. Deterministic Tie-Breaking
+
+If relevance scores and distances are equal, the system applies the following tie-breakers to ensure stable pagination:
+
+1. **Verified Status**: Verified organizations rank higher.
+2. **Rating**: Organizations with higher average ratings rank higher.
+3. **Alphabetical**: Sort A-Z by organization `slug`.
+
+### 4.6. System Tuning vs. User Control (Code-Based Config)
 
 - **User Control**: The user defines the _relative_ importance of items (e.g., "A is more important than B").
 - **Code-Based Config (Developer)**: For Phase 1, mathematical weights (e.g., "A Priority #1 item is worth 100 points") will be stored in a centralized code file (`searchConfig.ts`).
 - **Why?**: This avoids the complexity of database migrations and the need for an administrative UI in the data-portal during initial development. We can migrate these to a database table in Phase 2 if frequent tuning is required.
 
-### 4.6. Backend Logic (Shared Utility)
+### 4.7. The "Weighting Contract" (Industry Standards)
+
+To ensure consistent behavior, we apply the following mathematical standards:
+
+- **Distance Baseline**: Uses a dampened reciprocal function ($1 / (1 + distance)$) to ensure proximity is a curve, not a cliff.
+- **Priority Multipliers**: Uses exponential weighting (e.g., Rank 1 = 1000pts, Rank 2 = 100pts) to ensure top priorities are never "outvoted" by multiple lower priorities.
+- **Verified Bonus**: Verified organizations receive a flat score boost to prioritize vetted data.
+
+### 4.8. Toggle Mechanism
+
+- **Manual**: Direct URL navigation between `/search` and `/search/v2`.
+- **Session-based**: A `?v2=true` query parameter that sets a persistent `ir_search_version` cookie.
+- **UI-based**: A "Try Search V2" toggle link in the legacy sidebar for staff/beta-eligible users.
+
+### 4.9. Backend Logic (Shared Utility)
 
 **File Location**: `packages/api/src/lib/search/relevanceScore.ts`
-
 The utility generates a SQL `ORDER BY` fragment that balances user-defined priorities with physical distance.
 
 ## 5. Implementation Steps
@@ -185,7 +223,7 @@ The utility generates a SQL `ORDER BY` fragment that balances user-defined prior
 
 To measure the success of the Empowered Search (V2) engine, we will track the following events via the `@weareinreach/analytics` package.
 
-### 1. Feature Discovery & Engagement
+### 8.1. Feature Discovery & Engagement
 
 - **`advanced_search_opened`**: Frequency of users engaging with fine-tuning options.
 - **`search_v2_applied`**: Usage of the "Update Results" button.
@@ -193,26 +231,26 @@ To measure the success of the Empowered Search (V2) engine, we will track the fo
 - **`priority_tags_configured`**: Usage of the 1-N ranking system.
   - _Parameters_: `tag_count`, `top_priority_tag`.
 
-### 2. Search Performance & Quality
+### 8.2. Search Performance & Quality
 
 - **`search_v2_results_summary`**: Backend efficiency and data density.
   - _Parameters_: `result_count`, `search_latency_ms`.
 - **`zero_results_reached`**: Identifying high-friction filter combinations.
   - _Parameters_: `match_mode`, `radius`, `active_filter_count`.
 
-### 3. Conversion & Relevance (A/B Metrics)
+### 8.3. Conversion & Relevance (A/B Metrics)
 
 - **`search_result_click` (Enhanced)**: The primary metric for algorithm success.
   - _Parameters_: `rank` (list position), `search_version` ('V1' vs 'V2'), `distance_meters`, `was_national`.
   - _Success Criteria_: A higher percentage of clicks in the top 3 results for V2 compared to V1.
 
-### 4. Technical Health
+### 8.4. Technical Health
 
 - **`search_v2_error`**: Tracking failures in the SQL scoring generator or database timeouts.
 
 ## 9. Strategic Recommendations
 
-### Internal "Search Debug" Mode
+### 9.1. Internal "Search Debug" Mode
 
 **Recommendation**: Implement a "Debug Mode" accessible only to InReach staff and developers.
 
