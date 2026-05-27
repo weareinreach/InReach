@@ -151,7 +151,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 		() => viewportSize.height + viewportOffset,
 		[viewportOffset, viewportSize.height]
 	)
-	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
+	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 : viewportHeight * 0.6 - 88
 	// #endregion
 
 	const preSelected = searchState.services
@@ -179,8 +179,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 
 	useEffect(() => {
 		searchStateActions.setServices(selectedValues)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedValues])
+	}, [selectedValues, searchStateActions])
 
 	const hasAll = useCallback(
 		(categoryId: string) => {

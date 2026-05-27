@@ -10,7 +10,7 @@ import {
 	Text,
 	useMantineTheme,
 } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
+import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import compare from 'just-compare'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
@@ -114,6 +114,17 @@ const SearchResults = () => {
 	const { searchState, searchStateActions } = useSearchState()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	const [isAdvanced, setIsAdvanced] = useState(false)
+
+	useEffect(() => {
+		const checkMode = () => {
+			const mode = localStorage.getItem('ir_advanced_mode')
+			setIsAdvanced(mode === 'true')
+		}
+		checkMode()
+		window.addEventListener('ir_advanced_mode_changed', checkMode)
+		return () => window.removeEventListener('ir_advanced_mode_changed', checkMode)
+	}, [])
 
 	const { t } = useTranslation(['services', 'common'])
 	const queryParams = SearchParamsSchema.safeParse(router.query.params)
@@ -247,25 +258,27 @@ const SearchResults = () => {
 				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
 			>
 				<AdvancedSearchToggle />
-				<Group spacing={20} w='100%' className={classes.searchControls}>
-					<Group maw={{ md: '50%', base: '100%' }} w='100%'>
+				<Group spacing={20} w='100%' className={classes.searchControls} align='flex-start'>
+					<Stack spacing={8} maw={{ md: '50%', base: '100%' }} w='100%'>
 						<SearchBox
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
 						/>
-					</Group>
-					<Group noWrap w={{ base: '100%', md: '50%' }}>
-						<ServiceFilter
-							resultCount={resultCount}
-							isFetching={searchIsFetching}
-							current={searchState.services}
-						/>
-						{/* @ts-expect-error `component` prop not needed.. */}
-						<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
-							{t('more.filters')}
-						</MoreFilter>
-					</Group>
+					</Stack>
+					<Stack spacing={16} align='flex-end' w={{ base: '100%', md: '50%' }}>
+						<Group noWrap spacing={16} align='flex-end'>
+							<ServiceFilter
+								resultCount={resultCount}
+								isFetching={searchIsFetching}
+								current={searchState.services}
+							/>
+							{/* @ts-expect-error `component` prop not needed.. */}
+							<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
+								{t('more.filters')}
+							</MoreFilter>
+						</Group>
+					</Stack>
 					{isTablet && (
 						<>
 							<Divider w='100%' />

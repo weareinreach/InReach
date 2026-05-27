@@ -14,7 +14,9 @@ export const ZSearchDistanceSchemaV2 = z.object({
 	attributes: z.string().array().optional(),
 	priorityTags: z.record(z.string(), z.number().min(1).max(5)).optional(),
 	sortBias: z.enum(['DISTANCE', 'RELEVANCE']).default('DISTANCE'),
-	matchMode: z.enum(['AND', 'OR']).default('AND'),
+	serviceMatchMode: z.enum(['AND', 'OR']).default('OR'),
+	attributeMatchMode: z.enum(['AND', 'OR']).default('AND'),
+	interGroupMatchMode: z.enum(['AND', 'OR']).default('AND'),
 	includeNational: z.boolean().default(false),
 })
 
