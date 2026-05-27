@@ -4,7 +4,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { Divider, Group, Overlay, Skeleton, Stack, Switch, Text, Title, useMantineTheme } from '@mantine/core'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 
 import { AntiHateMessage } from '~ui/components/core/AntiHateMessage'
 import { SearchBox } from '~ui/components/core/SearchBox'
@@ -59,13 +59,44 @@ export const SearchResultSidebar = ({
 	const [activeFocuses, setActiveFocuses] = useState<string[]>([])
 	const [focusOrder, setFocusOrder] = useState(DEFAULT_FOCUS_ORDER)
 
+	useEffect(() => {
+		const savedActive = localStorage.getItem('ir_active_focuses')
+		if (savedActive) {
+			try {
+				setActiveFocuses(JSON.parse(savedActive))
+			} catch (e) {
+				// Silent fail for malformed JSON
+			}
+		}
+
+		const savedOrder = localStorage.getItem('ir_focus_order')
+		if (savedOrder) {
+			try {
+				const parsed = JSON.parse(savedOrder) as string[]
+				// Sync saved order with current DEFAULT_FOCUS_ORDER to handle code changes
+				const validItems = parsed.filter((item) => DEFAULT_FOCUS_ORDER.includes(item))
+				const newItems = DEFAULT_FOCUS_ORDER.filter((item) => !validItems.includes(item))
+				setFocusOrder([...validItems, ...newItems])
+			} catch (e) {
+				// Silent fail
+			}
+		}
+	}, [])
+
+	const handleActiveFocusesChange = (val: string[]) => {
+		setActiveFocuses(val)
+		localStorage.setItem('ir_active_focuses', JSON.stringify(val))
+	}
+
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event
 		if (over && active.id !== over.id) {
 			setFocusOrder((items) => {
 				const oldIndex = items.indexOf(active.id as string)
 				const newIndex = items.indexOf(over.id as string)
-				return arrayMove(items, oldIndex, newIndex)
+				const nextOrder = arrayMove(items, oldIndex, newIndex)
+				localStorage.setItem('ir_focus_order', JSON.stringify(nextOrder))
+				return nextOrder
 			})
 		}
 	}
@@ -80,7 +111,7 @@ export const SearchResultSidebar = ({
 				label={t('sort.by-lgbtq-focus')}
 				pos='relative'
 				value={activeFocuses}
-				onChange={setActiveFocuses}
+				onChange={handleActiveFocusesChange}
 			>
 				<DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
 					<SortableContext items={focusOrder} strategy={verticalListSortingStrategy}>
