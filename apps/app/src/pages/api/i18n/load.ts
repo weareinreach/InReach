@@ -88,7 +88,7 @@ export default async function handler(req: NextRequest) {
 				results.set(lang, Object.fromEntries(langResult))
 			} catch (error) {
 				log.error(error)
-				return new Response(JSON.stringify({ error }), {
+				return new Response(JSON.stringify({ error: 'Internal server error' }), {
 					status: 500,
 				})
 			}
