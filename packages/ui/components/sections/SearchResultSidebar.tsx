@@ -63,7 +63,7 @@ export const SearchResultSidebar = ({
 		const savedActive = localStorage.getItem('ir_active_focuses')
 		if (savedActive) {
 			try {
-				setActiveFocuses(JSON.parse(savedActive))
+				setActiveFocuses(JSON.parse(savedActive) as string[])
 			} catch (e) {
 				// Silent fail for malformed JSON
 			}
