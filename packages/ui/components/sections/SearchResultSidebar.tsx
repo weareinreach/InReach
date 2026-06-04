@@ -86,6 +86,7 @@ export const SearchResultSidebar = ({
 	const handleActiveFocusesChange = (val: string[]) => {
 		setActiveFocuses(val)
 		localStorage.setItem('ir_active_focuses', JSON.stringify(val))
+		window.dispatchEvent(new Event('ir_focus_changed'))
 	}
 
 	const handleDragEnd = (event: DragEndEvent) => {
@@ -96,6 +97,7 @@ export const SearchResultSidebar = ({
 				const newIndex = items.indexOf(over.id as string)
 				const nextOrder = arrayMove(items, oldIndex, newIndex)
 				localStorage.setItem('ir_focus_order', JSON.stringify(nextOrder))
+				window.dispatchEvent(new Event('ir_focus_changed'))
 				return nextOrder
 			})
 		}
@@ -137,6 +139,7 @@ export const SearchResultSidebar = ({
 					</Overlay>
 				)}
 			</Switch.Group>
+
 			<Divider />
 
 			{/* <SearchDistance />

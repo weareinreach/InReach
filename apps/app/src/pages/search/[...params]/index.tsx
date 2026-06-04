@@ -115,15 +115,39 @@ const SearchResults = () => {
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	const [isAdvanced, setIsAdvanced] = useState(false)
+	const [advancedParams, setAdvancedParams] = useState<{
+		focuses: string[]
+		order: string[]
+	}>({ focuses: [], order: [] })
 
 	useEffect(() => {
+		const updateAdvancedParams = () => {
+			const savedFocuses = localStorage.getItem('ir_active_focuses')
+			const savedOrder = localStorage.getItem('ir_focus_order')
+
+			try {
+				setAdvancedParams({
+					focuses: savedFocuses ? (JSON.parse(savedFocuses) as string[]) : [],
+					order: savedOrder ? (JSON.parse(savedOrder) as string[]) : [],
+				})
+			} catch (e) {
+				setAdvancedParams({ focuses: [], order: [] })
+			}
+		}
+
 		const checkMode = () => {
 			const mode = localStorage.getItem('ir_advanced_mode')
-			setIsAdvanced(mode === 'true')
+			const isAdv = mode === 'true'
+			setIsAdvanced(isAdv)
+			if (isAdv) updateAdvancedParams()
 		}
 		checkMode()
 		window.addEventListener('ir_advanced_mode_changed', checkMode)
-		return () => window.removeEventListener('ir_advanced_mode_changed', checkMode)
+		window.addEventListener('ir_focus_changed', updateAdvancedParams)
+		return () => {
+			window.removeEventListener('ir_advanced_mode_changed', checkMode)
+			window.removeEventListener('ir_focus_changed', updateAdvancedParams)
+		}
 	}, [])
 
 	const { t } = useTranslation(['services', 'common'])
@@ -161,6 +185,8 @@ const SearchResults = () => {
 			unit,
 			skip,
 			take,
+			version: isAdvanced ? 'v2' : 'v1',
+			...(isAdvanced ? { focuses: advancedParams.focuses, priorityOrder: advancedParams.order } : {}),
 			...(searchState.services.length ? { services: searchState.services } : {}),
 			...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
 		},
