@@ -187,6 +187,11 @@ const SearchResultData = ({ result, index }: SearchResultHasData) => {
 						</Title>
 						<ActionButtons.Save itemId={result.id} itemName={result.name} />
 					</Group>
+					{result.relevanceScore !== undefined && (
+						<Text size='xs' color='dimmed' mt={-8} mb={8}>
+							Debug Score: {result.relevanceScore ?? 'null'} | Dist: {result.distance}
+						</Text>
+					)}
 					<Link
 						href={{ pathname: '/org/[slug]', query: { slug } }}
 						variant={variants.Link.inheritStyle}

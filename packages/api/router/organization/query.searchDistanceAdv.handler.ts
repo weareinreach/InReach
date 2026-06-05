@@ -12,10 +12,12 @@ import { type TSearchDistanceAdvSchema } from './query.searchDistanceAdv.schema'
  * ADVANCED SEARCH HANDLER (V2) This handler uses the Weighted Relevance Scoring engine to bubble results.
  */
 const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
-	const { lat, lon, dist, skip, take, services, focuses, sortBias, unit } = params
+	const { lat, lon, dist, skip, take, services, attributes, focuses, sortBias, unit } = params
 
 	console.log('[SearchV2] Search Parameters:', {
 		coords: { lat, lon },
+		services,
+		attributes,
 		activeFocuses: focuses,
 		sortBias,
 	})
@@ -26,6 +28,11 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 	const relevanceScoreSql = buildRelevanceSortSql({ focuses }, sortBias)
 	const tieBreakerSql = buildTieBreakerSql()
 
+	console.log('[SearchV2] Generated Scoring SQL:', {
+		relevance: relevanceScoreSql.text,
+		values: relevanceScoreSql.values,
+	})
+
 	const results = await prisma.$queryRaw<SearchResult[]>`
 		WITH points AS (
 			SELECT
@@ -35,27 +42,63 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 		covered_areas AS (
 			SELECT id FROM "GeoData" g WHERE ST_CoveredBy((select degrees from points), g.geo)
 		),
+		service_area as (
+			SELECT
+			 (CASE
+					WHEN sa."organizationId" IS NOT NULL THEN sa."organizationId"
+					WHEN sa."orgLocationId" IS NOT NULL THEN (SELECT "orgId" FROM "OrgLocation" loc WHERE loc.id = sa."orgLocationId" )
+					WHEN sa."orgServiceId" IS NOT NULL THEN COALESCE((SELECT DISTINCT loc."orgId" FROM "OrgLocationService" ols LEFT JOIN "OrgLocation" loc ON ols."orgLocationId" = loc.id WHERE ols."serviceId" = sa."orgServiceId"),
+						(SELECT os."organizationId" FROM "OrgService" os WHERE os.id = sa."orgServiceId")
+					)
+				END
+				) AS "orgId",
+				ARRAY_agg(DISTINCT CASE
+					WHEN country."geoDataId" IS NOT NULL THEN country."geoDataId"
+					WHEN district."geoDataId" IS NOT NULL THEN district."geoDataId"
+				END) AS "geoId",
+				array_remove(array_agg(DISTINCT country.cca2),NULL) AS "matchedCountries"
+			FROM "ServiceArea" sa
+				LEFT JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id AND sac.active
+				LEFT JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id AND sad.active
+				LEFT JOIN "Country" country ON country.id = sac. "countryId" AND country. "geoDataId" = ANY(SELECT id FROM covered_areas)
+				LEFT JOIN "GovDist" district ON district.id = sad. "govDistId" AND district. "geoDataId" = ANY(SELECT id FROM covered_areas)
+			WHERE sa.active
+				AND (
+					country. "geoDataId" = ANY(
+						SELECT id
+						FROM covered_areas
+					)
+					OR district. "geoDataId" = ANY(
+						SELECT id
+						FROM covered_areas
+					)
+				)
+				GROUP BY "orgId"
+		),
 		candidates AS (
 			SELECT
 				org.id,
 				org."lastVerified",
-				org."avgRating",
 				org.slug,
-				MIN(ROUND(ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int)) AS distance,
-				ARRAY_AGG(DISTINCT ost."tagId") FILTER (WHERE ost."tagId" IS NOT NULL) AS "matchedServices",
-				ARRAY_AGG(DISTINCT asup."attributeId") FILTER (WHERE asup."attributeId" IS NOT NULL) AS "matchedAttributes"
+				COALESCE(MIN(ROUND(ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int)), 0) AS distance,
+				COALESCE(ARRAY_AGG(DISTINCT ost."tagId") FILTER (WHERE ost."tagId" IS NOT NULL), ARRAY[]::text[]) AS "matchedServices",
+				COALESCE(ARRAY_AGG(DISTINCT asup."attributeId") FILTER (WHERE asup."attributeId" IS NOT NULL), ARRAY[]::text[]) AS "matchedAttributes",
+				sa."matchedCountries" AS "national"
 			FROM "Organization" org
 			INNER JOIN "OrgLocation" loc ON org.id = loc."orgId"
-			LEFT JOIN "OrgService" os ON os."organizationId" = org.id AND os.published AND NOT os.deleted
-			LEFT JOIN "OrgServiceTag" ost ON ost."serviceId" = os.id AND ost.active
-			LEFT JOIN "AttributeSupplement" asup ON asup."organizationId" = org.id OR asup."locationId" = loc.id
+			LEFT JOIN service_area sa ON sa."orgId" = org.id
+			LEFT JOIN "OrgService" os ON os."organizationId" = org.id AND os."published" AND NOT os."deleted"
+			LEFT JOIN "OrgServiceTag" ost ON ost."serviceId" = os.id AND ost."active"
+			-- Phase 1 Parity: Only join attributes at the Org or Loc level to match V1 behavior.
+			LEFT JOIN "AttributeSupplement" asup ON (asup."organizationId" = org.id OR asup."locationId" = loc.id) AND asup.active
 			WHERE
 				(
 					ST_DWithin(ST_Transform(loc.geo, 3857), (SELECT meters FROM points), ${searchRadius})
+					OR sa."geoId" && ARRAY(SELECT id FROM covered_areas)
 					-- TODO: National/Remote ServiceArea check
 				)
-				AND loc.published AND org.published AND NOT loc.deleted AND NOT org.deleted
-			GROUP BY org.id, org.slug, org."lastVerified", org."avgRating"
+				AND loc."published" AND org."published" AND NOT loc."deleted" AND NOT org."deleted"
+			GROUP BY org.id, org.slug, org."lastVerified", sa."matchedCountries"
 		)
 		SELECT
 			*,
@@ -65,10 +108,16 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 			COUNT(*) OVER ()::int AS total
 		FROM candidates
 		WHERE
-			-- Intra-group logic: OR (ANY)
+			-- Services Filter: OR logic (ANY)
 			(${
 				services?.length
 					? Prisma.sql`"matchedServices" && ARRAY[${Prisma.join(services)}]::text[]`
+					: Prisma.sql`TRUE`
+			})
+			-- Attributes Filter: Parity with V1 INNER JOIN logic (Matches ANY selected attribute)
+			AND (${
+				attributes?.length
+					? Prisma.sql`"matchedAttributes" && ARRAY[${Prisma.join(attributes)}]::text[]`
 					: Prisma.sql`TRUE`
 			})
 		ORDER BY
@@ -97,7 +146,7 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 			id: result.id,
 			distMeters: parseInt(result.distance),
 			relevanceScore: result.relevance_score, // Passing back to help frontend debugging
-			national: [] as string[], // Placeholder for now
+			national: result.national ?? [],
 		}
 	})
 	return { results: formattedResults, total }
@@ -111,6 +160,7 @@ type SearchResult = {
 	slug: string
 	matchedAttributes: string[]
 	matchedServices: string[]
+	national: string[] | null
 }
 
 type IdKeyNs = {
@@ -243,11 +293,17 @@ const searchDistanceAdv = async ({ input }: TRPCHandlerParams<TSearchDistanceAdv
 		national: string[]
 	})[] = []
 
-	orgs.results.forEach(({ id, distMeters, relevanceScore }) => {
+	orgs.results.forEach(({ id, distMeters, relevanceScore, national }) => {
 		const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
 		const sort = results.find((result) => result.id === id)
 		if (sort) {
-			orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, relevanceScore, national: [] })
+			orderedResults.push({
+				...sort,
+				distance: +distance.toFixed(2),
+				unit,
+				relevanceScore,
+				national,
+			})
 		}
 	})
 

@@ -38,10 +38,8 @@ import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const RecommendedLinksModal = dynamic<any>(
-	() =>
-		// eslint-disable-line @typescript-eslint/no-explicit-any
-		import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+const RecommendedLinksModal = dynamic<any>( // eslint-disable-line @typescript-eslint/no-explicit-any
+	() => import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 )
 
 const MoreFilter = dynamic<any>(() =>
@@ -193,29 +191,37 @@ const SearchResults = () => {
 		isLoading: searchIsLoading,
 		...searchQuery
 	} = api.organization.searchDistance.useQuery(
-		isAdvanced
-			? {
-					lat,
-					lon,
-					dist,
-					unit,
-					skip,
-					take,
-					version: 'v2',
-					focuses: advancedParams.focuses,
-					...(searchState.services.length ? { services: searchState.services } : {}),
-					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-				}
-			: {
-					lat,
-					lon,
-					dist,
-					unit,
-					skip,
-					take,
-					...(searchState.services.length ? { services: searchState.services } : {}),
-					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-				},
+		(() => {
+			const label = isAdvanced ? 'V2 (ADVANCED)' : 'V1 (STANDARD)'
+			console.log(`[SearchPage] Preparing Request: ${label}`, {
+				isAdvanced,
+				focusCount: advancedParams.focuses.length,
+			})
+			return isAdvanced
+				? {
+						lat,
+						lon,
+						dist,
+						unit,
+						skip,
+						take,
+						version: 'v2',
+						sortBias: (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias,
+						focuses: advancedParams.focuses,
+						...(searchState.services.length ? { services: searchState.services } : {}),
+						...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+					}
+				: {
+						lat,
+						lon,
+						dist,
+						unit,
+						skip,
+						take,
+						...(searchState.services.length ? { services: searchState.services } : {}),
+						...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+					}
+		})(),
 		{
 			enabled: queryParams.success,
 		}
@@ -278,6 +284,7 @@ const SearchResults = () => {
 					dist,
 					unit,
 					version: 'v2',
+					sortBias: (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias,
 					focuses: advancedParams.focuses,
 					skip: nextSkip,
 					take,
@@ -300,8 +307,22 @@ const SearchResults = () => {
 		if (queryParams.success && !compare(queryParams.data, searchState.params)) {
 			searchStateActions.setParams(queryParams.data.map((x) => x.toString()))
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [
+		data?.resultCount,
+		router.query.page,
+		isAdvanced,
+		advancedParams.focuses,
+		nextSkip,
+		lat,
+		lon,
+		dist,
+		unit,
+		take,
+		searchState.services,
+		searchState.attributes,
+		(searchState as { sortBias?: string }).sortBias,
+		apiUtils.organization.searchDistance,
+	])
 
 	if (error) {
 		return <>Error</>

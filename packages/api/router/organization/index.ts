@@ -39,10 +39,15 @@ export const orgRouter = defineRouter({
 		return handler(opts)
 	}),
 	searchDistance: publicProcedure
-		.input(z.union([schema.ZSearchDistanceSchema, schema.ZSearchDistanceAdvSchema]))
+		.input(z.union([schema.ZSearchDistanceAdvSchema, schema.ZSearchDistanceSchema]))
 		.query(async (opts) => {
 			const { input } = opts
 			const isAdvanced = 'version' in input && input.version === 'v2'
+
+			console.log(`>>> [SearchRouter] Routing to: ${isAdvanced ? 'V2 Handler' : 'V1 Handler'}`, {
+				inputVersion: (input as { version?: string }).version,
+				hasFocuses: Boolean((input as { focuses?: string[] }).focuses?.length),
+			})
 
 			const handler = await importHandler(
 				namespaced(isAdvanced ? 'searchDistanceAdv' : 'searchDistance'),

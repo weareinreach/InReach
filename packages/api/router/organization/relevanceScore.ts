@@ -6,36 +6,26 @@ export const buildRelevanceSortSql = (
 	params: { focuses?: string[] },
 	sortBias: 'DISTANCE' | 'RELEVANCE' = 'DISTANCE'
 ) => {
-	const { focuses = [] } = params
+	const { focuses: _focuses = [] } = params
 
-	// 1. Distance Decay
-	const distanceImpact = sortBias === 'DISTANCE' ? 1.0 : 0.1
-	const distanceSql = Prisma.sql`(${distanceImpact} / (1.0 + (distance / ${SEARCH_CONFIG.distanceDecayDampener})))`
+	// Phase 1: Distance-only scoring to ensure parity with standard search.
+	// Nuanced multipliers (verified bonus, service match, community focus) are currently disabled.
 
-	// 2. Priority Multipliers (The list is now pre-filtered and ordered by the frontend)
-	const prioritySql =
-		focuses.length > 0
-			? Prisma.sql` + (${Prisma.join(
-					focuses.map((tagId, index) => {
-						const rank = index + 1
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						const weight = (SEARCH_CONFIG.priorityWeights as any)[rank] ?? 0
-						return Prisma.sql`CASE WHEN "matchedAttributes" @> ARRAY[${tagId}]::text[] THEN ${weight} ELSE 0 END`
-					}),
-					' + '
-				)})`
-			: Prisma.empty
+	// 1. Distance Decay (Score approaches 1.0 as distance approaches 0)
+	const distanceSql = Prisma.sql`COALESCE((1.0 / (1.0 + (distance / ${SEARCH_CONFIG.distanceDecayDampener}))), 0)`
 
-	const serviceSql = Prisma.sql` + (COALESCE(cardinality("matchedServices"), 0) * ${SEARCH_CONFIG.serviceMatchWeight})`
-	const verifiedSql = Prisma.sql` + (CASE WHEN org."lastVerified" IS NOT NULL THEN ${SEARCH_CONFIG.verifiedBonus} ELSE 0 END)`
+	// 2. Priority Multipliers (Community Focus) - Disabled for Phase 1
+	const prioritySql = Prisma.empty
 
-	return Prisma.sql`${distanceSql}${prioritySql}${serviceSql}${verifiedSql}`
+	// 3. Service Match and Verified Bonus - Disabled for Phase 1
+	const serviceSql = Prisma.empty
+	const verifiedSql = Prisma.empty
+
+	return Prisma.sql`COALESCE((${distanceSql}${prioritySql}${serviceSql}${verifiedSql}), 0)`
 }
 
 export const buildTieBreakerSql = () => {
 	return Prisma.sql`
-		CASE WHEN org."lastVerified" IS NOT NULL THEN 0 ELSE 1 END ASC,
-		org."avgRating" DESC NULLS LAST,
-		org.slug ASC
+		"slug" ASC
 	`
 }
