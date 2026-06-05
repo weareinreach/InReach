@@ -10,7 +10,7 @@ import {
 	Text,
 	useMantineTheme,
 } from '@mantine/core'
-import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { useMediaQuery } from '@mantine/hooks'
 import compare from 'just-compare'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
@@ -32,6 +32,8 @@ import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSuppor
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
+import { type MoreFilterProps } from '@weareinreach/ui/modals/MoreFilter'
+import { type ServiceFilterProps } from '@weareinreach/ui/modals/ServiceFilter'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -41,9 +43,15 @@ const RecommendedLinksModal = dynamic(() =>
 	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal)
 )
 
-const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
-const ServiceFilter = dynamic(() =>
-	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
+const MoreFilter = dynamic<MoreFilterProps>(() =>
+	import('@weareinreach/ui/modals/MoreFilter').then(
+		(mod) => mod.MoreFilter as any // eslint-disable-line @typescript-eslint/no-explicit-any
+	)
+)
+const ServiceFilter = dynamic<ServiceFilterProps>(() =>
+	import('@weareinreach/ui/modals/ServiceFilter').then(
+		(mod) => mod.ServiceFilter as any // eslint-disable-line @typescript-eslint/no-explicit-any
+	)
 )
 
 const PageIndexSchema = z.coerce.number().default(1)
@@ -185,6 +193,7 @@ const SearchResults = () => {
 			unit,
 			skip,
 			take,
+			// @ts-expect-error - version, focuses, and priorityOrder are part of the V2 upgrade and pending API schema updates.
 			version: isAdvanced ? 'v2' : 'v1',
 			...(isAdvanced ? { focuses: advancedParams.focuses, priorityOrder: advancedParams.order } : {}),
 			...(searchState.services.length ? { services: searchState.services } : {}),
@@ -299,7 +308,6 @@ const SearchResults = () => {
 								isFetching={searchIsFetching}
 								current={searchState.services}
 							/>
-							{/* @ts-expect-error `component` prop not needed.. */}
 							<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
 								{t('more.filters')}
 							</MoreFilter>

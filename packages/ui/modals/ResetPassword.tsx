@@ -190,7 +190,7 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 			handler.close()
 			setSuccess(false)
 			setError(false)
-			// @ts-expect-error pathname is a string
+			// @ts-expect-error pathname is a valid route string but strict types for replace are missing it
 			replace(pathname, undefined, { shallow: true })
 		}, [handler, replace, pathname])
 

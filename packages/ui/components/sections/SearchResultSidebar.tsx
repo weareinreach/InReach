@@ -152,7 +152,7 @@ export const SearchResultSidebar = ({
 				pinToLeft
 			/>
 			<Divider mt={-10} />
-			{/* @ts-expect-error - component arg should be valid... */}
+			{/* @ts-expect-error component and href types conflict between Mantine and nextjs-routes */}
 			<Button variant={variants.Button.primaryLg} component={Link} href='/suggest'>
 				{t('suggest-a-resource')}
 			</Button>
