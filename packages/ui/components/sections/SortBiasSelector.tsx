@@ -22,16 +22,16 @@ export const SortBiasSelector = () => {
 	const { t } = useTranslation('common')
 	const { searchState, searchStateActions } = useSearchState()
 
-	// @ts-expect-error evolving searchState
-	const value = searchState.sortBias || 'DISTANCE'
+	const value = (searchState as { sortBias?: string }).sortBias || 'DISTANCE'
 
 	return (
 		<Select
 			label={t('words.sort-by')}
 			classNames={{ root: classes.root, label: classes.label }}
 			value={value}
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			onChange={(val) => (searchStateActions as any).setSortBias?.(val)}
+			onChange={(val) =>
+				(searchStateActions as { setSortBias?: (v: string | null) => void }).setSortBias?.(val)
+			}
 			data={[
 				{ label: t('words.distance'), value: 'DISTANCE' },
 				{ label: t('words.best-match'), value: 'RELEVANCE' },

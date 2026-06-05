@@ -13,13 +13,15 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { BodyGridNoTopMargin } from '~ui/layouts'
 // import { GenericContentModal, PrivacyStatementModal } from '~ui/modals'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const GenericContentModal = dynamic(() =>
-	import('~ui/modals/GenericContent').then((mod) => mod.GenericContentModal)
+const GenericContentModal = dynamic<any>(
+	() =>
+		// eslint-disable-line @typescript-eslint/no-explicit-any
+		import('~ui/modals/GenericContent').then((mod) => mod.GenericContentModal as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 )
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const PrivacyStatementModal = dynamic(() =>
-	import('~ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
+const PrivacyStatementModal = dynamic<any>(
+	() =>
+		// eslint-disable-line @typescript-eslint/no-explicit-any
+		import('~ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 )
 
 const useStyles = createStyles((theme) => ({

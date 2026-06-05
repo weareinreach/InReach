@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 import {
 	defineRouter,
 	importHandler,
@@ -36,13 +38,21 @@ export const orgRouter = defineRouter({
 		const handler = await importHandler(namespaced('searchName'), () => import('./query.searchName.handler'))
 		return handler(opts)
 	}),
-	searchDistance: publicProcedure.input(schema.ZSearchDistanceSchema).query(async (opts) => {
-		const handler = await importHandler(
-			namespaced('searchDistance'),
-			() => import('./query.searchDistance.handler')
-		)
-		return handler(opts)
-	}),
+	searchDistance: publicProcedure
+		.input(z.union([schema.ZSearchDistanceSchema, schema.ZSearchDistanceAdvSchema]))
+		.query(async (opts) => {
+			const { input } = opts
+			const isAdvanced = 'version' in input && input.version === 'v2'
+
+			const handler = await importHandler(
+				namespaced(isAdvanced ? 'searchDistanceAdv' : 'searchDistance'),
+				isAdvanced
+					? () => import('./query.searchDistanceAdv.handler')
+					: () => import('./query.searchDistance.handler')
+			)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			return handler(opts as any)
+		}),
 	getNameFromSlug: publicProcedure.input(schema.ZGetNameFromSlugSchema).query(async (opts) => {
 		const handler = await importHandler(
 			namespaced('getNameFromSlug'),
@@ -58,6 +68,13 @@ export const orgRouter = defineRouter({
 		const handler = await importHandler(
 			namespaced('suggestionOptions'),
 			() => import('./query.suggestionOptions.handler')
+		)
+		return handler()
+	}),
+	getCommunityFocusOptions: publicProcedure.query(async () => {
+		const handler = await importHandler(
+			namespaced('getCommunityFocusOptions'),
+			() => import('./query.getCommunityFocusOptions.handler')
 		)
 		return handler()
 	}),

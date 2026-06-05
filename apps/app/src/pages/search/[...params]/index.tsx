@@ -38,17 +38,20 @@ import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const RecommendedLinksModal = dynamic(() =>
-	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal)
+const RecommendedLinksModal = dynamic<any>(
+	() =>
+		// eslint-disable-line @typescript-eslint/no-explicit-any
+		import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 )
 
-const MoreFilter = dynamic<MoreFilterProps>(() =>
+const MoreFilter = dynamic<any>(() =>
+	// eslint-disable-line @typescript-eslint/no-explicit-any
 	import('@weareinreach/ui/modals/MoreFilter').then(
 		(mod) => mod.MoreFilter as any // eslint-disable-line @typescript-eslint/no-explicit-any
 	)
 )
-const ServiceFilter = dynamic<ServiceFilterProps>(() =>
+const ServiceFilter = dynamic<any>(() =>
+	// eslint-disable-line @typescript-eslint/no-explicit-any
 	import('@weareinreach/ui/modals/ServiceFilter').then(
 		(mod) => mod.ServiceFilter as any // eslint-disable-line @typescript-eslint/no-explicit-any
 	)
@@ -125,8 +128,7 @@ const SearchResults = () => {
 	const [isAdvanced, setIsAdvanced] = useState(false)
 	const [advancedParams, setAdvancedParams] = useState<{
 		focuses: string[]
-		order: string[]
-	}>({ focuses: [], order: [] })
+	}>({ focuses: [] })
 
 	useEffect(() => {
 		const updateAdvancedParams = () => {
@@ -134,12 +136,17 @@ const SearchResults = () => {
 			const savedOrder = localStorage.getItem('ir_focus_order')
 
 			try {
+				const focuses = savedFocuses ? (JSON.parse(savedFocuses) as string[]) : []
+				const order = savedOrder ? (JSON.parse(savedOrder) as string[]) : []
+
+				// Intersect the master order with active toggles to create the priority list
+				const orderedActive = order.filter((id) => focuses.includes(id))
+
 				setAdvancedParams({
-					focuses: savedFocuses ? (JSON.parse(savedFocuses) as string[]) : [],
-					order: savedOrder ? (JSON.parse(savedOrder) as string[]) : [],
+					focuses: orderedActive.length > 0 ? orderedActive : focuses,
 				})
 			} catch (e) {
-				setAdvancedParams({ focuses: [], order: [] })
+				setAdvancedParams({ focuses: [] })
 			}
 		}
 
@@ -186,19 +193,29 @@ const SearchResults = () => {
 		isLoading: searchIsLoading,
 		...searchQuery
 	} = api.organization.searchDistance.useQuery(
-		{
-			lat,
-			lon,
-			dist,
-			unit,
-			skip,
-			take,
-			// @ts-expect-error - version, focuses, and priorityOrder are part of the V2 upgrade and pending API schema updates.
-			version: isAdvanced ? 'v2' : 'v1',
-			...(isAdvanced ? { focuses: advancedParams.focuses, priorityOrder: advancedParams.order } : {}),
-			...(searchState.services.length ? { services: searchState.services } : {}),
-			...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-		},
+		isAdvanced
+			? {
+					lat,
+					lon,
+					dist,
+					unit,
+					skip,
+					take,
+					version: 'v2',
+					focuses: advancedParams.focuses,
+					...(searchState.services.length ? { services: searchState.services } : {}),
+					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+				}
+			: {
+					lat,
+					lon,
+					dist,
+					unit,
+					skip,
+					take,
+					...(searchState.services.length ? { services: searchState.services } : {}),
+					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+				},
 		{
 			enabled: queryParams.success,
 		}
@@ -254,16 +271,31 @@ const SearchResults = () => {
 			router.query.page &&
 			PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)
 		) {
-			apiUtils.organization.searchDistance.prefetch({
-				lat,
-				lon,
-				dist,
-				unit,
-				skip: nextSkip,
-				take,
-				...(searchState.services.length ? { services: searchState.services } : {}),
-				...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-			})
+			if (isAdvanced) {
+				apiUtils.organization.searchDistance.prefetch({
+					lat,
+					lon,
+					dist,
+					unit,
+					version: 'v2',
+					focuses: advancedParams.focuses,
+					skip: nextSkip,
+					take,
+					...(searchState.services.length ? { services: searchState.services } : {}),
+					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+				})
+			} else {
+				apiUtils.organization.searchDistance.prefetch({
+					lat,
+					lon,
+					dist,
+					unit,
+					skip: nextSkip,
+					take,
+					...(searchState.services.length ? { services: searchState.services } : {}),
+					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+				})
+			}
 		}
 		if (queryParams.success && !compare(queryParams.data, searchState.params)) {
 			searchStateActions.setParams(queryParams.data.map((x) => x.toString()))

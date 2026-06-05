@@ -1,5 +1,4 @@
 import { createStyles, Group, Switch } from '@mantine/core'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
@@ -11,7 +10,6 @@ const useStyles = createStyles((theme) => ({
 
 export const AdvancedSearchToggle = () => {
 	const { classes } = useStyles()
-	const router = useRouter()
 
 	// Determine initial state from local storage or default to false
 	const [checked, setChecked] = useState(false)
