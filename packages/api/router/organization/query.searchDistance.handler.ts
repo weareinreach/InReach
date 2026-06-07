@@ -237,15 +237,6 @@ ORDER BY
 LIMIT ${take}
 OFFSET ${skip}`
 
-	// PARITY LOG: Check which IDs are being found by V1
-	console.log('[SearchV1] Results:', {
-		count: results.length,
-		items: results.map((r) => ({
-			id: r.id,
-			dist: r.distance,
-		})),
-	})
-
 	let total = 0
 	const formattedResults = results.map((result) => {
 		if (parseInt(result.total) !== total) {

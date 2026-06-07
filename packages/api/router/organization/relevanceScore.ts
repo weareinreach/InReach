@@ -9,9 +9,8 @@ export const buildRelevanceSortSql = (
 	const { focuses = [] } = params
 
 	// 1. Distance Decay (Scale 0 to 1)
-	// We maintain proximity importance as the baseline.
-	const distanceImpact = 1.0
-	const distanceSql = Prisma.sql`CASE WHEN distance IS NULL THEN 0 ELSE (${distanceImpact} / (1.0 + (distance / 1000.0))) END`
+	// If distance is NULL (National), it contributes 0 to the relevance score.
+	const distanceSql = Prisma.sql`CASE WHEN distance IS NULL THEN 0 ELSE (1.0 / (1.0 + (distance::float / 1000.0))) END`
 
 	// 2. Priority Multipliers (Community Focus)
 	// Restores bubbling for focuses selected/ordered in the sidebar.

@@ -36,19 +36,21 @@ import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const RecommendedLinksModal = dynamic<any>(() =>
-	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal as any)
-)
+interface SearchResultV2Metadata {
+	relevanceScore?: number
+	tier?: string
+	isLocal?: boolean
+}
 
-const MoreFilter = dynamic<any>(() =>
-	import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter as any)
+const RecommendedLinksModal = dynamic(() =>
+	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal as never)
 )
-
-const ServiceFilter = dynamic<any>(() =>
-	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter as any)
+const MoreFilter = dynamic(() =>
+	import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter as never)
 )
-/* eslint-enable @typescript-eslint/no-explicit-any */
+const ServiceFilter = dynamic(() =>
+	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter as never)
+)
 
 const PageIndexSchema = z.coerce.number().default(1)
 
@@ -131,13 +133,8 @@ const SearchResults = () => {
 			try {
 				const focuses = savedFocuses ? (JSON.parse(savedFocuses) as string[]) : []
 				const order = savedOrder ? (JSON.parse(savedOrder) as string[]) : []
-
-				// Intersect the master order with active toggles to create the priority list
 				const orderedActive = order.filter((id) => focuses.includes(id))
-
-				setAdvancedParams({
-					focuses: orderedActive.length > 0 ? orderedActive : focuses,
-				})
+				setAdvancedParams({ focuses: orderedActive.length > 0 ? orderedActive : focuses })
 			} catch (e) {
 				setAdvancedParams({ focuses: [] })
 			}
@@ -170,103 +167,147 @@ const SearchResults = () => {
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
 	const [resultCount, setResultCount] = useState(0)
 	const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
-		Array.from({ length: 10 }, (_x, i) => <SearchResultCard key={i} loading />)
+		Array.from({ length: 10 }, (_x, i) => <SearchResultCard key={i} loading index={0} />)
 	)
 	const [loadingPage, setLoadingPage] = useState(false)
 
 	if (!queryParams.success) {
 		setError(true)
 	}
+
 	const [country, lon, lat, dist, unit] = queryParams.success
 		? queryParams.data
 		: (['US', 0, 0, 0, 'mi'] as const)
+
+	const currentSortBias = (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias
+
+	const searchInput = useMemo(() => {
+		const label = isAdvanced ? 'V2 (ADVANCED)' : 'V1 (STANDARD)'
+		console.log(`[SearchPage] Preparing Request: ${label}`, {
+			isAdvanced,
+			focusCount: advancedParams.focuses.length,
+		})
+		const baseParams = {
+			lat,
+			lon,
+			dist,
+			unit,
+			skip,
+			take,
+			...(searchState.services.length ? { services: searchState.services } : {}),
+			...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+		}
+		if (isAdvanced) {
+			return {
+				...baseParams,
+				version: 'v2' as const,
+				sortBias: currentSortBias,
+				focuses: advancedParams.focuses,
+			}
+		}
+		return baseParams
+	}, [
+		isAdvanced,
+		advancedParams.focuses,
+		lat,
+		lon,
+		dist,
+		unit,
+		skip,
+		take,
+		searchState.services,
+		searchState.attributes,
+		currentSortBias,
+	])
+
 	const {
-		isSuccess,
 		isFetching: searchIsFetching,
 		isLoading: searchIsLoading,
 		...searchQuery
-	} = api.organization.searchDistance.useQuery(
-		(() => {
-			const label = isAdvanced ? 'V2 (ADVANCED)' : 'V1 (STANDARD)'
-			console.log(`[SearchPage] Preparing Request: ${label}`, {
-				isAdvanced,
-				focusCount: advancedParams.focuses.length,
-			})
-			return isAdvanced
-				? {
-						lat,
-						lon,
-						dist,
-						unit,
-						skip,
-						take,
-						version: 'v2',
-						sortBias: (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias,
-						focuses: advancedParams.focuses,
-						...(searchState.services.length ? { services: searchState.services } : {}),
-						...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-					}
-				: {
-						lat,
-						lon,
-						dist,
-						unit,
-						skip,
-						take,
-						...(searchState.services.length ? { services: searchState.services } : {}),
-						...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-					}
-		})(),
-		{
-			enabled: queryParams.success,
-		}
-	)
-
-	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({
-		cca2: country,
+	} = api.organization.searchDistance.useQuery(searchInput, {
+		enabled: queryParams.success,
 	})
 
+	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({ cca2: country })
+
 	useEffect(() => {
-		if (loadingPage !== searchIsLoading) {
-			setLoadingPage(searchIsLoading)
-		}
+		if (loadingPage !== searchIsLoading) setLoadingPage(searchIsLoading)
 		if (searchQuery.data) {
 			setResultCount(searchQuery.data.resultCount)
+
+			// DEBUG: Structured Comparison Log
+			console.group(`[Search Debug] Result Set Summary (${isAdvanced ? 'V2' : 'V1'})`)
+			console.table(
+				searchQuery.data.orgs.map((org, i) => ({
+					rank: i + 1,
+					name: org.name,
+					distance: org.distance,
+					score: (org as SearchResultV2Metadata).relevanceScore ?? 'N/A',
+				}))
+			)
+			console.groupEnd()
+
 			setData(searchQuery.data)
 			setLoadingPage(false)
-
 			if (searchQuery.data.resultCount === 0) {
 				searchBoxEvent.zeroResults(searchState.searchTerm ?? '', searchState.params)
 			}
 		}
-	}, [searchQuery.data, searchIsLoading, loadingPage, searchState.searchTerm, searchState.params])
+	}, [searchQuery.data, searchIsLoading, loadingPage, searchState.searchTerm, searchState.params, isAdvanced])
 
 	useEffect(() => {
 		if (data) {
-			setResultDisplay(
-				data.orgs.map((result, index) => {
-					return (
-						<SearchResultCard key={result.id} result={result} loading={loadingPage} index={skip + index} />
-					)
-				})
-			)
-		}
-	}, [data, loadingPage, skip])
+			const renderedTiers = new Set<string>()
+			const display = data.orgs.flatMap((result, index) => {
+				const items: JSX.Element[] = []
+				const currentTier = (result as SearchResultV2Metadata).tier
 
-	useEffect(
-		() => {
-			if (typeof router.query.page === 'string' && searchState.page !== router.query.page) {
-				searchStateActions.setPage(router.query.page)
-			}
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[router.query.page]
-	)
+				// Inject tier header when moving between proximity zones in Advanced Search
+				if (isAdvanced && currentTier && !renderedTiers.has(currentTier)) {
+					renderedTiers.add(currentTier)
+					const labelMap: Record<string, string> = {
+						NEIGHBORHOOD: 'Neighborhood Resources (<= 10 miles)',
+						LOCAL: 'Local Resources (11 - 25 miles)',
+						REGION: 'Regional Resources (26 - 50 miles)',
+						EXTENDED_REGION: 'Extended Region Resources (51 - 200 miles)',
+						NATIONAL:
+							'The items below match your filters but are remote/national resources available to you regardless of your physical location.',
+					}
+
+					items.push(
+						<Stack spacing={16} py={24} key={`tier-divider-${currentTier}`}>
+							<Divider
+								label={
+									<Text variant={variants.Text.utility2darkGray} align='center' weight={600}>
+										{labelMap[currentTier] || currentTier}
+									</Text>
+								}
+								labelPosition='center'
+							/>
+						</Stack>
+					)
+				}
+
+				items.push(
+					<SearchResultCard key={result.id} result={result} loading={loadingPage} index={skip + index} />
+				)
+				return items
+			})
+			setResultDisplay(display)
+		}
+	}, [data, loadingPage, skip, variants.Text.utility2darkGray, isAdvanced])
+
+	useEffect(() => {
+		if (typeof router.query.page === 'string' && searchState.page !== router.query.page) {
+			searchStateActions.setPage(router.query.page)
+		}
+	}, [router.query.page, searchState.page, searchStateActions])
 
 	const nextSkip = useMemo(
 		() => PageIndexSchema.parse(router.query.page) * SEARCH_RESULT_PAGE_SIZE,
 		[router.query.page]
 	)
+
 	useEffect(() => {
 		if (
 			router.query.page &&
@@ -320,11 +361,9 @@ const SearchResults = () => {
 		if (queryParams.success && !compare(queryParams.data, searchState.params)) {
 			searchStateActions.setParams(queryParams.data.map((x) => x.toString()))
 		}
-	}, [queryParams.data, queryParams.success, searchState.params, searchStateActions])
+	}, [queryParams.data, queryParams.success, searchState, searchState.params, searchStateActions])
 
-	if (error) {
-		return <>Error</>
-	}
+	if (error) return <>Error</>
 	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
 
 	return (
@@ -332,11 +371,9 @@ const SearchResults = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-
 			<RecommendedLinksModal component={'div'}>
 				<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
 			</RecommendedLinksModal>
-
 			<Grid.Col
 				xs={12}
 				sm={12}
@@ -408,7 +445,6 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient({ req, res })
-
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'user']),
 		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
@@ -416,14 +452,7 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 		ssg.service.getFilterOptions.prefetch(),
 		ssg.attribute.getFilterOptions.prefetch(),
 	])
-	const props = {
-		trpcState: ssg.dehydrate(),
-		...(i18n.status === 'fulfilled' ? i18n.value : {}),
-	}
-
-	return {
-		props,
-	}
+	return { props: { trpcState: ssg.dehydrate(), ...(i18n.status === 'fulfilled' ? i18n.value : {}) } }
 }
 
 export default SearchResults

@@ -80,13 +80,7 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 				org.id,
 				org."lastVerified",
 				org.slug,
-				MIN(
-					CASE
-						WHEN ST_DWithin(ST_Transform(loc.geo, 3857), (SELECT meters FROM points), ${searchRadius})
-						THEN ROUND(ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int)
-						ELSE NULL
-					END
-				) AS distance,
+				MIN(ROUND(ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int)) AS distance,
 				COALESCE(ARRAY_AGG(DISTINCT ost."tagId") FILTER (WHERE ost."tagId" IS NOT NULL), ARRAY[]::text[]) AS "matchedServices",
 				COALESCE(ARRAY_AGG(DISTINCT asup."attributeId") FILTER (WHERE asup."attributeId" IS NOT NULL), ARRAY[]::text[]) AS "matchedAttributes",
 				sa."matchedCountries" AS "national"
@@ -111,7 +105,14 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 		)
 		SELECT
 			*,
-			(distance IS NOT NULL) AS "isLocal",
+			CASE
+				WHEN distance <= 16093 THEN 'NEIGHBORHOOD'
+				WHEN distance <= 40234 THEN 'LOCAL'
+				WHEN distance <= 80467 THEN 'REGION'
+				WHEN distance <= ${searchRadius} THEN 'EXTENDED_REGION'
+				ELSE 'NATIONAL'
+			END AS "tier",
+			(distance <= ${searchRadius}) AS "isLocal",
 			(${relevanceScoreSql}) as relevance_score,
 			"matchedAttributes",
 			"matchedServices",
@@ -131,8 +132,13 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 					: Prisma.sql`TRUE`
 			})
 		ORDER BY
-			(distance <= 80467) DESC, -- Tier 1: Hyper-Local (< 50 miles)
-			(distance IS NOT NULL) DESC, -- Tier 2: Physical (Remaining radius)
+			CASE
+				WHEN distance <= 16093 THEN 1
+				WHEN distance <= 40234 THEN 2
+				WHEN distance <= 80467 THEN 3
+				WHEN distance <= ${searchRadius} THEN 4
+				ELSE 5
+			END ASC,
 			relevance_score DESC,
 			${tieBreakerSql}
 		LIMIT ${take}
@@ -145,6 +151,7 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 		results.slice(0, 3).map((r) => ({
 			slug: r.slug,
 			score: r.relevance_score,
+			rawDist: r.distance,
 			matched: r.matchedAttributes,
 		}))
 	)
@@ -156,9 +163,10 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 		}
 		return {
 			id: result.id,
-			distMeters: result.distance ? parseInt(result.distance) : 0,
+			distMeters: result.distance ? parseInt(result.distance) : null,
 			relevanceScore: result.relevance_score, // Passing back to help frontend debugging
 			isLocal: result.isLocal,
+			tier: result.tier,
 			national: result.national ?? [],
 		}
 	})
@@ -167,8 +175,9 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 
 type SearchResult = {
 	id: string
-	distance: string
+	distance: string | null
 	isLocal: boolean
+	tier: string
 	total: string
 	relevance_score: number
 	slug: string
@@ -301,23 +310,25 @@ const searchDistanceAdv = async ({ input }: TRPCHandlerParams<TSearchDistanceAdv
 	const results = await prismaDistSearchDetails({ ...input, resultIds })
 
 	const orderedResults: ((typeof results)[number] & {
-		distance: number
+		distance: number | null
 		unit: 'km' | 'mi'
 		relevanceScore?: number
 		isLocal: boolean
+		tier: string
 		national: string[]
 	})[] = []
 
-	orgs.results.forEach(({ id, distMeters, relevanceScore, isLocal, national }) => {
-		const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
+	orgs.results.forEach(({ id, distMeters, relevanceScore, isLocal, tier, national }) => {
+		const distance = distMeters ? (unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934) : null
 		const sort = results.find((result) => result.id === id)
 		if (sort) {
 			orderedResults.push({
 				...sort,
-				distance: +distance.toFixed(2),
+				distance: distance ? +distance.toFixed(2) : null,
 				unit,
 				relevanceScore,
 				isLocal,
+				tier,
 				national,
 			})
 		}
