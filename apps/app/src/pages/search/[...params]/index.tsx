@@ -32,24 +32,23 @@ import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSuppor
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
-import { type MoreFilterProps } from '@weareinreach/ui/modals/MoreFilter'
-import { type ServiceFilterProps } from '@weareinreach/ui/modals/ServiceFilter'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const RecommendedLinksModal = dynamic<any>( // eslint-disable-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const RecommendedLinksModal = dynamic<any>(
 	() => import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 )
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MoreFilter = dynamic<any>(() =>
-	// eslint-disable-line @typescript-eslint/no-explicit-any
 	import('@weareinreach/ui/modals/MoreFilter').then(
 		(mod) => mod.MoreFilter as any // eslint-disable-line @typescript-eslint/no-explicit-any
 	)
 )
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ServiceFilter = dynamic<any>(() =>
-	// eslint-disable-line @typescript-eslint/no-explicit-any
 	import('@weareinreach/ui/modals/ServiceFilter').then(
 		(mod) => mod.ServiceFilter as any // eslint-disable-line @typescript-eslint/no-explicit-any
 	)
@@ -185,47 +184,40 @@ const SearchResults = () => {
 	const [country, lon, lat, dist, unit] = queryParams.success
 		? queryParams.data
 		: (['US', 0, 0, 0, 'mi'] as const)
+
+	const searchInput = isAdvanced
+		? {
+				lat,
+				lon,
+				dist,
+				unit,
+				skip,
+				take,
+				version: 'v2' as const,
+				sortBias: currentSortBias,
+				focuses: advancedParams.focuses,
+				...(searchState.services.length ? { services: searchState.services } : {}),
+				...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+			}
+		: {
+				lat,
+				lon,
+				dist,
+				unit,
+				skip,
+				take,
+				...(searchState.services.length ? { services: searchState.services } : {}),
+				...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+			}
+
 	const {
 		isSuccess,
 		isFetching: searchIsFetching,
 		isLoading: searchIsLoading,
 		...searchQuery
-	} = api.organization.searchDistance.useQuery(
-		(() => {
-			const label = isAdvanced ? 'V2 (ADVANCED)' : 'V1 (STANDARD)'
-			console.log(`[SearchPage] Preparing Request: ${label}`, {
-				isAdvanced,
-				focusCount: advancedParams.focuses.length,
-			})
-			return isAdvanced
-				? {
-						lat,
-						lon,
-						dist,
-						unit,
-						skip,
-						take,
-						version: 'v2',
-						sortBias: (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias,
-						focuses: advancedParams.focuses,
-						...(searchState.services.length ? { services: searchState.services } : {}),
-						...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-					}
-				: {
-						lat,
-						lon,
-						dist,
-						unit,
-						skip,
-						take,
-						...(searchState.services.length ? { services: searchState.services } : {}),
-						...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-					}
-		})(),
-		{
-			enabled: queryParams.success,
-		}
-	)
+	} = api.organization.searchDistance.useQuery(searchInput, {
+		enabled: queryParams.success,
+	})
 
 	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({
 		cca2: country,
@@ -284,7 +276,7 @@ const SearchResults = () => {
 					dist,
 					unit,
 					version: 'v2',
-					sortBias: (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias,
+					sortBias: currentSortBias,
 					focuses: advancedParams.focuses,
 					skip: nextSkip,
 					take,
@@ -320,9 +312,15 @@ const SearchResults = () => {
 		take,
 		searchState.services,
 		searchState.attributes,
-		(searchState as { sortBias?: string }).sortBias,
+		currentSortBias,
 		apiUtils.organization.searchDistance,
 	])
+
+	useEffect(() => {
+		if (queryParams.success && !compare(queryParams.data, searchState.params)) {
+			searchStateActions.setParams(queryParams.data.map((x) => x.toString()))
+		}
+	}, [queryParams.data, queryParams.success, searchState.params, searchStateActions])
 
 	if (error) {
 		return <>Error</>

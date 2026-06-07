@@ -80,7 +80,7 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 				org.id,
 				org."lastVerified",
 				org.slug,
-				COALESCE(MIN(ROUND(ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int)), 0) AS distance,
+				MIN(ROUND(ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int)) AS distance,
 				COALESCE(ARRAY_AGG(DISTINCT ost."tagId") FILTER (WHERE ost."tagId" IS NOT NULL), ARRAY[]::text[]) AS "matchedServices",
 				COALESCE(ARRAY_AGG(DISTINCT asup."attributeId") FILTER (WHERE asup."attributeId" IS NOT NULL), ARRAY[]::text[]) AS "matchedAttributes",
 				sa."matchedCountries" AS "national"
@@ -88,7 +88,8 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 			INNER JOIN "OrgLocation" loc ON org.id = loc."orgId"
 			LEFT JOIN service_area sa ON sa."orgId" = org.id
 			LEFT JOIN "OrgService" os ON os."organizationId" = org.id AND os."published" AND NOT os."deleted"
-			LEFT JOIN "OrgServiceTag" ost ON ost."serviceId" = os.id AND ost."active"
+			LEFT JOIN "OrgLocationService" ols ON ols."serviceId" = os.id AND ols."orgLocationId" = loc.id AND ols.active
+			LEFT JOIN "OrgServiceTag" ost ON ost."serviceId" = os.id AND ost."active" AND (ols.id IS NOT NULL OR sa."orgId" IS NOT NULL)
 			-- Phase 1 Parity: Only join attributes at the Org or Loc level to match V1 behavior.
 			LEFT JOIN "AttributeSupplement" asup ON (asup."organizationId" = org.id OR asup."locationId" = loc.id) AND asup.active
 			WHERE

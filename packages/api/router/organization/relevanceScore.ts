@@ -12,7 +12,7 @@ export const buildRelevanceSortSql = (
 	// Nuanced multipliers (verified bonus, service match, community focus) are currently disabled.
 
 	// 1. Distance Decay (Score approaches 1.0 as distance approaches 0)
-	const distanceSql = Prisma.sql`COALESCE((1.0 / (1.0 + (distance / ${SEARCH_CONFIG.distanceDecayDampener}))), 0)`
+	const distanceSql = Prisma.sql`CASE WHEN distance IS NULL THEN 0 ELSE (1.0 / (1.0 + (distance / 1000.0))) END`
 
 	// 2. Priority Multipliers (Community Focus) - Disabled for Phase 1
 	const prioritySql = Prisma.empty
