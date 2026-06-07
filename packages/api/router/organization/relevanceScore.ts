@@ -6,18 +6,29 @@ export const buildRelevanceSortSql = (
 	params: { focuses?: string[] },
 	sortBias: 'DISTANCE' | 'RELEVANCE' = 'DISTANCE'
 ) => {
-	const { focuses: _focuses = [] } = params
+	const { focuses = [] } = params
 
-	// Phase 1: Distance-only scoring to ensure parity with standard search.
-	// Nuanced multipliers (verified bonus, service match, community focus) are currently disabled.
+	// 1. Distance Decay (Scale 0 to 1)
+	// We maintain proximity importance as the baseline.
+	const distanceImpact = 1.0
+	const distanceSql = Prisma.sql`CASE WHEN distance IS NULL THEN 0 ELSE (${distanceImpact} / (1.0 + (distance / 1000.0))) END`
 
-	// 1. Distance Decay (Score approaches 1.0 as distance approaches 0)
-	const distanceSql = Prisma.sql`CASE WHEN distance IS NULL THEN 0 ELSE (1.0 / (1.0 + (distance / 1000.0))) END`
+	// 2. Priority Multipliers (Community Focus)
+	// Restores bubbling for focuses selected/ordered in the sidebar.
+	const prioritySql =
+		focuses.length > 0
+			? Prisma.sql` + (${Prisma.join(
+					focuses.map((tagId, index) => {
+						const rank = index + 1
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						const weight = (SEARCH_CONFIG.priorityWeights as any)[rank] ?? 0
+						return Prisma.sql`COALESCE(CASE WHEN "matchedAttributes" @> ARRAY[${tagId}]::text[] THEN ${weight} ELSE 0 END, 0)`
+					}),
+					' + '
+				)})`
+			: Prisma.empty
 
-	// 2. Priority Multipliers (Community Focus) - Disabled for Phase 1
-	const prioritySql = Prisma.empty
-
-	// 3. Service Match and Verified Bonus - Disabled for Phase 1
+	// 3. Service Density & Verification Bonuses - Disabled for Phase 2
 	const serviceSql = Prisma.empty
 	const verifiedSql = Prisma.empty
 
