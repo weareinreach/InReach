@@ -58,7 +58,7 @@ export const SearchResultLoading = () => {
 	)
 }
 
-const SearchResultData = ({ result, index }: SearchResultHasData) => {
+const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories, national } = result
 	const visibility = result.addressVisibility as 'FULL' | 'PARTIAL' | 'HIDDEN' | undefined
 	const { t, ready: i18nReady } = useTranslation(['common', result.id])
@@ -187,7 +187,7 @@ const SearchResultData = ({ result, index }: SearchResultHasData) => {
 						</Title>
 						<ActionButtons.Save itemId={result.id} itemName={result.name} />
 					</Group>
-					{result && 'relevanceScore' in result && (
+					{isAdvanced && result && 'relevanceScore' in result && (
 						<Text size='xs' color='dimmed' mt={-8} mb={8}>
 							Debug Score: {(result as { relevanceScore?: number }).relevanceScore ?? 'null'} | Dist:{' '}
 							{result.distance ?? 'N/A'} | Locality:{' '}
@@ -228,8 +228,10 @@ type SearchResultHasData = {
 	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
 	loading?: boolean
 	index: number
+	isAdvanced?: boolean
 }
 type SearchResultLoading = {
 	loading: true
 	result?: never
+	isAdvanced?: boolean
 }

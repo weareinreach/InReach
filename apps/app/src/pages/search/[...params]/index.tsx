@@ -289,7 +289,13 @@ const SearchResults = () => {
 				}
 
 				items.push(
-					<SearchResultCard key={result.id} result={result} loading={loadingPage} index={skip + index} />
+					<SearchResultCard
+						key={result.id}
+						result={result}
+						loading={loadingPage}
+						index={skip + index}
+						isAdvanced={isAdvanced}
+					/>
 				)
 				return items
 			})
