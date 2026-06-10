@@ -14,7 +14,6 @@ import {
 import { useForm, type UseFormReturnType } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import regexEscape from 'escape-string-regexp'
-import { localeIncludes } from 'locale-includes'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import {
@@ -26,7 +25,6 @@ import {
 	type SetStateAction,
 	useCallback,
 	useContext,
-	useDebugValue,
 	useEffect,
 	useMemo,
 	useState,
@@ -125,27 +123,6 @@ const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.
 
 const notBlank = (value?: string) => !!value && value.length > 0
 
-const useResults = () => {
-	const [results, setResults] = useState<AutocompleteItem[]>([])
-	useDebugValue(results)
-	return [results, setResults] as [typeof results, typeof setResults]
-}
-const useNoResults = () => {
-	const [noResults, setNoResults] = useState(false)
-	useDebugValue(noResults)
-	return [noResults, setNoResults] as [typeof noResults, typeof setNoResults]
-}
-const useSearchLoading = () => {
-	const [searchLoading, setSearchLoading] = useState(false)
-	useDebugValue(searchLoading)
-	return [searchLoading, setSearchLoading] as [typeof searchLoading, typeof setSearchLoading]
-}
-const useLocationSearch = () => {
-	const [locationSearch, setLocationSearch] = useState('')
-	useDebugValue(locationSearch)
-	return [locationSearch, setLocationSearch] as [typeof locationSearch, typeof setLocationSearch]
-}
-
 const SuggestItem = () => {
 	const { classes } = useStyles()
 	const { form } = useSearchBoxContext()
@@ -235,7 +212,7 @@ export const SearchBox = ({
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
-	const [locationSearch, setLocationSearch] = useLocationSearch()
+	const [locationSearch, setLocationSearch] = useState('')
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
 	const { searchStateActions, searchState } = useSearchState()
@@ -257,9 +234,9 @@ export const SearchBox = ({
 			refetchOnWindowFocus: false,
 		}
 	)
-	const [results, setResults] = useResults()
-	const [noResults, setNoResults] = useNoResults()
-	const [searchLoading, setSearchLoading] = useSearchLoading()
+	const [results, setResults] = useState<AutocompleteItem[]>([])
+	const [noResults, setNoResults] = useState(false)
+	const [searchLoading, setSearchLoading] = useState(false)
 
 	const isOrgSearchLoading = useCallback(
 		(searchVal: string) => !orgSearchData && orgSearchLoading && notBlank(searchVal),
@@ -436,15 +413,6 @@ export const SearchBox = ({
 		[isOrgSearch, form, orgSearchLoading]
 	)
 
-	const filterFn = useCallback(
-		(value: string, item: AutocompleteItem) =>
-			localeIncludes(item.value, value, {
-				usage: 'search',
-				sensitivity: 'base',
-			}),
-		[]
-	)
-
 	return (
 		<SearchBoxContext.Provider value={searchBoxContentValues}>
 			<Autocomplete
@@ -462,6 +430,7 @@ export const SearchBox = ({
 				radius='xl'
 				onItemSubmit={selectionHandler}
 				onKeyDown={handleKeyDown}
+				limit={20}
 				disabled={isLoading}
 				label={label}
 				withinPortal
@@ -469,7 +438,7 @@ export const SearchBox = ({
 					noResults ? <Text variant={variants.Text.utility1}>{t('search.no-results')}</Text> : null
 				}
 				defaultValue={initialValue}
-				filter={filterFn}
+				filter={() => true}
 				{...fieldRole}
 				{...form.getInputProps('search')}
 			/>

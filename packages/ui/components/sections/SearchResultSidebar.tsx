@@ -213,9 +213,9 @@ export const SearchResultSidebar = ({
 				pinToLeft
 			/>
 			<Divider mt={-10} />
+			{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
 			<Button variant={variants.Button.primaryLg} component={Link as any} {...({ href: '/suggest' } as any)}>
 				{' '}
-				{/* eslint-disable-line @typescript-eslint/no-explicit-any */}
 				{t('suggest-a-resource')}
 			</Button>
 			<AntiHateMessage />

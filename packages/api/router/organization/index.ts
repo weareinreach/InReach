@@ -7,6 +7,7 @@ import {
 	protectedProcedure,
 	publicProcedure,
 } from '~api/lib/trpc'
+import { type TRPCHandlerParams } from '~api/types/handler'
 
 import * as schema from './schemas'
 
@@ -44,19 +45,24 @@ export const orgRouter = defineRouter({
 			const { input } = opts
 			const isAdvanced = 'version' in input && input.version === 'v2'
 
-			console.log(`>>> [SearchRouter] Routing to: ${isAdvanced ? 'V2 Handler' : 'V1 Handler'}`, {
-				inputVersion: (input as { version?: string }).version,
-				hasFocuses: Boolean((input as { focuses?: string[] }).focuses?.length),
-			})
+			if (isAdvanced) {
+				console.log('>>> [SearchRouter] Routing to: V2 Handler', {
+					inputVersion: 'v2',
+					hasFocuses: Boolean(input.focuses?.length),
+				})
+
+				const handler = await importHandler(
+					namespaced('searchDistanceAdv'),
+					() => import('./query.searchDistanceAdv.handler')
+				)
+				return handler(opts as TRPCHandlerParams<schema.TSearchDistanceAdvSchema>)
+			}
 
 			const handler = await importHandler(
-				namespaced(isAdvanced ? 'searchDistanceAdv' : 'searchDistance'),
-				isAdvanced
-					? () => import('./query.searchDistanceAdv.handler')
-					: () => import('./query.searchDistance.handler')
+				namespaced('searchDistance'),
+				() => import('./query.searchDistance.handler')
 			)
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			return handler(opts as any)
+			return handler(opts as TRPCHandlerParams<schema.TSearchDistanceSchema>)
 		}),
 	getNameFromSlug: publicProcedure.input(schema.ZGetNameFromSlugSchema).query(async (opts) => {
 		const handler = await importHandler(

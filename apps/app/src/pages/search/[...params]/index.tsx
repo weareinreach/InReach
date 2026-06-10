@@ -42,14 +42,13 @@ interface SearchResultV2Metadata {
 	isLocal?: boolean
 }
 
+// @ts-expect-error - Next Dynamic has trouble with polymorphic components
 const RecommendedLinksModal = dynamic(() =>
-	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal as never)
+	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal)
 )
-const MoreFilter = dynamic(() =>
-	import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter as never)
-)
+const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
-	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter as never)
+	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
 )
 
 const PageIndexSchema = z.coerce.number().default(1)
@@ -402,6 +401,7 @@ const SearchResults = () => {
 								isFetching={searchIsFetching}
 								current={searchState.services}
 							/>
+							{/* @ts-expect-error - Next Dynamic has trouble with polymorphic components */}
 							<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
 								{t('more.filters')}
 							</MoreFilter>

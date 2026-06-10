@@ -4,7 +4,8 @@ import { SEARCH_CONFIG } from './searchConfig'
 
 export const buildRelevanceSortSql = (
 	params: { focuses?: string[] },
-	sortBias: 'DISTANCE' | 'RELEVANCE' = 'DISTANCE'
+	// it's ok to have this unused var for now as it will be used in the future
+	_sortBias: 'DISTANCE' | 'RELEVANCE' = 'DISTANCE'
 ) => {
 	const { focuses = [] } = params
 
