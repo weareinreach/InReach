@@ -14,24 +14,11 @@ import { type TSearchDistanceAdvSchema } from './query.searchDistanceAdv.schema'
 const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 	const { lat, lon, dist, skip, take, services, attributes, focuses, sortBias, unit } = params
 
-	console.log('[SearchV2] Search Parameters:', {
-		coords: { lat, lon },
-		services,
-		attributes,
-		activeFocuses: focuses,
-		sortBias,
-	})
-
 	const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
 
 	// Generate the SQL fragments for the scoring engine
 	const relevanceScoreSql = buildRelevanceSortSql({ focuses }, sortBias)
 	const tieBreakerSql = buildTieBreakerSql()
-
-	console.log('[SearchV2] Generated Scoring SQL:', {
-		relevance: relevanceScoreSql.text,
-		values: relevanceScoreSql.values,
-	})
 
 	const results = await prisma.$queryRaw<SearchResult[]>`
 		WITH points AS (
@@ -144,17 +131,6 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 		LIMIT ${take}
 		OFFSET ${skip}
 	`
-
-	// Log the scores of the top 3 results to verify the math
-	console.log(
-		'[SearchV2] Top Result Scores:',
-		results.slice(0, 3).map((r) => ({
-			slug: r.slug,
-			score: r.relevance_score,
-			rawDist: r.distance,
-			matched: r.matchedAttributes,
-		}))
-	)
 
 	let total = 0
 	const formattedResults = results.map((result) => {

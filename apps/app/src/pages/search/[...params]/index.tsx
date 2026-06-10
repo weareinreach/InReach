@@ -182,10 +182,7 @@ const SearchResults = () => {
 
 	const searchInput = useMemo(() => {
 		const label = isAdvanced ? 'V2 (ADVANCED)' : 'V1 (STANDARD)'
-		console.log(`[SearchPage] Preparing Request: ${label}`, {
-			isAdvanced,
-			focusCount: advancedParams.focuses.length,
-		})
+
 		const baseParams = {
 			lat,
 			lon,

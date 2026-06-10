@@ -46,11 +46,6 @@ export const orgRouter = defineRouter({
 			const isAdvanced = 'version' in input && input.version === 'v2'
 
 			if (isAdvanced) {
-				console.log('>>> [SearchRouter] Routing to: V2 Handler', {
-					inputVersion: 'v2',
-					hasFocuses: Boolean(input.focuses?.length),
-				})
-
 				const handler = await importHandler(
 					namespaced('searchDistanceAdv'),
 					() => import('./query.searchDistanceAdv.handler')

@@ -30,8 +30,18 @@ export const searchBoxEvent = {
 		event('search', { search_term: term, google_place_id: placeId }),
 	searchOrg: (term: string, selectedOrg: string) =>
 		event('orgSearch', { search_term: term, selected_org: selectedOrg }),
-	zeroResults: (term: string, params: string[]) =>
-		event('search_zero_results', { search_term: term, location_params: params }),
+	zeroResults: (
+		term: string,
+		type: 'location' | 'organization',
+		serviceCategory?: string,
+		params?: string[]
+	) =>
+		event('search_zero_results', {
+			search_term: term,
+			search_type: type,
+			service_category: serviceCategory,
+			location_params: params,
+		}),
 	suggestResource: (term: string) => event('suggest_resource_click', { search_term: term }),
 	suggestResourceSubmit: (orgName: string) => event('suggest_resource_submit', { item_name: orgName }),
 }
@@ -81,12 +91,23 @@ export const productEvent = {
 	 * Profile_view: Tracks when a user selects a result from the search list. Includes 'search_term_context' to
 	 * link anonymous searches to clicks.
 	 */
-	profileView: (itemId: string, itemName: string, searchTermContext?: string, position?: number) =>
+	profileView: (
+		itemId: string,
+		itemName: string,
+		metadata: {
+			searchTermContext?: string
+			position?: number
+			searchVersion?: 'V1' | 'V2'
+			distanceMeters?: number
+		}
+	) =>
 		event('profile_view', {
 			item_id: itemId,
 			item_name: itemName,
-			search_term_context: searchTermContext,
-			position, // Tracking the rank in the search list
+			search_term_context: metadata.searchTermContext,
+			position: metadata.position, // Tracking the rank in the search list
+			search_version: metadata.searchVersion,
+			distance_meters: metadata.distanceMeters,
 		}),
 
 	/**
@@ -112,4 +133,32 @@ export const productEvent = {
 			link_url: url,
 			item_name: itemName,
 		}),
+}
+
+export const searchV2Event = {
+	/**
+	 * Tracks engagement with the advanced settings modal.
+	 */
+	opened: (source: string) => event('advanced_search_opened', { source }),
+	closed: (applied: boolean) => event('advanced_search_closed', { applied }),
+
+	/**
+	 * Tracks when the V2 algorithm is executed.
+	 */
+	applied: (metadata: {
+		source: string
+		match_mode?: string
+		sort_bias?: string
+		include_national?: boolean
+		priority_count?: number
+	}) => event('search_v2_applied', metadata),
+
+	/**
+	 * Performance and Quality metrics.
+	 */
+	summary: (resultCount: number, latencyMs: number) =>
+		event('search_v2_results_summary', { result_count: resultCount, search_latency_ms: latencyMs }),
+
+	zeroResults: (matchMode: string, radius: number, filterCount: number) =>
+		event('zero_results_reached', { match_mode: matchMode, radius, active_filter_count: filterCount }),
 }

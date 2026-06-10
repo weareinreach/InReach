@@ -183,10 +183,7 @@ const SearchResults = () => {
 	} = api.organization.searchDistance.useQuery(
 		(() => {
 			const label = isAdvanced ? 'V2 (ADVANCED)' : 'V1 (STANDARD)'
-			console.log(`[SearchPage] Preparing Request: ${label}`, {
-				isAdvanced,
-				focusCount: advancedParams.focuses.length,
-			})
+
 			return isAdvanced
 				? {
 						lat,
