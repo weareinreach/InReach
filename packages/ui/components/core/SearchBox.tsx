@@ -261,12 +261,7 @@ export const SearchBox = ({
 			if (orgSearchData && !orgSearchLoading && notBlank(search)) {
 				if (orgSearchData.length === 0) {
 					setNoResults(true)
-					// Fired when a search query returns no results (critical for identifying coverage gaps).
-					window.gtag?.('event', 'search_zero_results', {
-						search_term: search,
-						search_type: 'organization',
-						service_category: searchState.services[0] || 'all',
-					})
+					searchBoxEvent.zeroResults(search, 'organization', searchState.services[0] || 'all')
 				}
 				setResults(orgSearchData)
 				setSearchLoading(false)
@@ -274,12 +269,7 @@ export const SearchBox = ({
 		} else if (autocompleteData && !autocompleteLoading && notBlank(search)) {
 			if (autocompleteData.status === 'ZERO_RESULTS') {
 				setNoResults(true)
-				// Fired when a search query returns no results (critical for identifying coverage gaps).
-				window.gtag?.('event', 'search_zero_results', {
-					search_term: search,
-					search_type: 'location',
-					service_category: searchState.services[0] || 'all',
-				})
+				searchBoxEvent.zeroResults(search, 'location', searchState.services[0] || 'all')
 			}
 			setResults(autocompleteData.results)
 			setSearchLoading(false)

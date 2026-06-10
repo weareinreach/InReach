@@ -35,3 +35,19 @@ export default {
 type StoryDef = StoryObj<typeof SearchDistance>
 
 export const Default = {} satisfies StoryDef
+
+export const WithRemoteIncluded = {
+	parameters: {
+		nextjs: {
+			router: {
+				pathname: '/search/[...params]',
+				asPath: 'search/dist/-77.0368707/38.9071923/50/mi?page=1&extended=true',
+				query: {
+					params: ['dist', '-77.0368707', '38.9071923', '50', 'mi'],
+					page: '1',
+					extended: 'true',
+				},
+			},
+		},
+	},
+} satisfies StoryDef
