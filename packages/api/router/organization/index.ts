@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 import {
 	defineRouter,
 	importHandler,
@@ -5,6 +7,7 @@ import {
 	protectedProcedure,
 	publicProcedure,
 } from '~api/lib/trpc'
+import { type TRPCHandlerParams } from '~api/types/handler'
 
 import * as schema from './schemas'
 
@@ -36,13 +39,26 @@ export const orgRouter = defineRouter({
 		const handler = await importHandler(namespaced('searchName'), () => import('./query.searchName.handler'))
 		return handler(opts)
 	}),
-	searchDistance: publicProcedure.input(schema.ZSearchDistanceSchema).query(async (opts) => {
-		const handler = await importHandler(
-			namespaced('searchDistance'),
-			() => import('./query.searchDistance.handler')
-		)
-		return handler(opts)
-	}),
+	searchDistance: publicProcedure
+		.input(z.union([schema.ZSearchDistanceAdvSchema, schema.ZSearchDistanceSchema]))
+		.query(async (opts) => {
+			const { input } = opts
+			const isAdvanced = 'version' in input && input.version === 'v2'
+
+			if (isAdvanced) {
+				const handler = await importHandler(
+					namespaced('searchDistanceAdv'),
+					() => import('./query.searchDistanceAdv.handler')
+				)
+				return handler(opts as TRPCHandlerParams<schema.TSearchDistanceAdvSchema>)
+			}
+
+			const handler = await importHandler(
+				namespaced('searchDistance'),
+				() => import('./query.searchDistance.handler')
+			)
+			return handler(opts as TRPCHandlerParams<schema.TSearchDistanceSchema>)
+		}),
 	getNameFromSlug: publicProcedure.input(schema.ZGetNameFromSlugSchema).query(async (opts) => {
 		const handler = await importHandler(
 			namespaced('getNameFromSlug'),
@@ -58,6 +74,13 @@ export const orgRouter = defineRouter({
 		const handler = await importHandler(
 			namespaced('suggestionOptions'),
 			() => import('./query.suggestionOptions.handler')
+		)
+		return handler()
+	}),
+	getCommunityFocusOptions: publicProcedure.query(async () => {
+		const handler = await importHandler(
+			namespaced('getCommunityFocusOptions'),
+			() => import('./query.getCommunityFocusOptions.handler')
 		)
 		return handler()
 	}),

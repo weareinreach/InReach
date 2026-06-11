@@ -275,8 +275,8 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 		const attribIds = new Set<string>()
 		const cities: City[] = []
 		const serviceTagMap = new Map<string, IdKeyNs>()
-		const serviceCategoryMap = new Map<string, IdKeyNs>()
-		const attributeMap = new Map<string, Attribute>()
+		const serviceCategoryMap = new Map<string, CategoryWithId>()
+		const attributeMap = new Map<string, AttributeWithCategory>()
 
 		services.forEach(({ services: innerServices }) =>
 			innerServices.forEach(({ tag, service }) => {
@@ -333,11 +333,13 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 			: null
 
 		// const serviceTags = Array.from(serviceTagMap.values())
-		const serviceCategories = Array.from(serviceCategoryMap.values())
+		const serviceCategories: CategoryWithId[] = Array.from(serviceCategoryMap.values())
 		const allAttributes = Array.from(attributeMap.values())
 
-		const orgLeader = allAttributes.filter(({ category }) => category.tag === 'organization-leadership')
-		const orgFocus = allAttributes.filter(
+		const orgLeader: AttributeWithCategory[] = allAttributes.filter(
+			({ category }) => category.tag === 'organization-leadership'
+		)
+		const orgFocus: AttributeWithCategory[] = allAttributes.filter(
 			({ category, _count: count }) => category.tag === 'service-focus' && count.parents === 0
 		)
 		const sortedCities = [
@@ -374,18 +376,18 @@ type IdKeyNs = {
 	tsKey: string
 	tsNs: string
 }
-type Attribute = {
+type CategoryWithId = IdKeyNs & { id: string }
+
+interface AttributeWithCategory {
+	category: { tag: string }
 	id: string
 	tsKey: string
-	icon: string | null
-	iconBg: string | null
-	category: {
-		tag: string
-	}
-	_count: {
-		parents: number
-	}
+	tsNs?: string
+	icon?: string | null
+	iconBg?: string | null
+	_count: { parents: number }
 }
+
 type City = {
 	city: string
 	dist: number
@@ -402,13 +404,20 @@ const searchDistance = async ({ input }: TRPCHandlerParams<TSearchDistanceSchema
 	const orderedResults: ((typeof results)[number] & {
 		distance: number
 		unit: 'km' | 'mi'
+		relevanceScore?: number
 		national: string[]
 	})[] = []
 	orgs.results.forEach(({ id, distMeters, national }) => {
 		const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
 		const sort = results.find((result) => result.id === id)
 		if (sort) {
-			orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, national })
+			orderedResults.push({
+				...sort,
+				distance: +distance.toFixed(2),
+				unit,
+				relevanceScore: undefined,
+				national,
+			})
 		}
 	})
 	return { orgs: orderedResults, resultCount: orgs.total }

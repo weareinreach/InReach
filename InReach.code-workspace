@@ -189,6 +189,7 @@
 			"**/.git": true,
 			"**/Thumbs.db": true,
 			"node_modules": true,
+			"docs/Search/**": true
 		},
 		"files.watcherExclude": {
 			"**/.git/objects/**": true,
@@ -203,6 +204,7 @@
 			"**/.turbo/**": true,
 			"**/generated/**": true,
 			"_queries/**": true,
+			"docs/Search/**": true
 		},
 		"search.exclude": {
 			"**/node_modules": true,
