@@ -12,7 +12,8 @@
 		"tab-organizations": "Organisations",
 		"tab-reports": "Rapports",
 		"tab-users": "Utilisateurs",
-		"tab-downloads": "Téléchargements"
+		"tab-downloads": "Téléchargements",
+		"no-access-message": "Vous n'avez pas la permission d'accéder à toutes les sections du tableau de bord de l'administration."
 	},
 	"agree-disclaimer": "En cliquant sur \"{{action}}\", vous acceptez la <link1>Politique de confidentialité d'InReach</link1> et les <link2>Conditions d'utilisation</link2>.",
 	"alert-message": "Message d'alerte",
@@ -316,14 +317,27 @@
 	"saved": "Enregistré",
 	"search": {
 		"include-remote": "Inclure les services à distance",
+		"local": "Locale",
+		"local-description": "Ressources locales (11 - 25 miles)",
 		"location-placeholder": "Entrer la ville ou le code postal...",
 		"location-placeholder-searchby": "Chercher par ville ou par code postal...",
+		"locality-label": "Localité",
 		"look-up-org": "Rechercher une organisation par son nom",
+		"na": "N/A",
+		"neighborhood": "Voisinage",
+		"neighborhood-description": "Ressources de quartier (<= 10 milles)",
 		"no-results": "Aucun résultat trouvé. Veuillez réessayer.",
 		"no-results-adjust": "Aucun résultat trouvé pour votre recherche. Essayez d'ajuster la localisation ou les filtres sélectionnés.",
 		"organization-placeholder": "Entrer le nom de l'organisation...",
 		"organization-placeholder-searchby": "Chercher par nom d'organisme...",
-		"suggest-resource": "Vous ne le trouvez pas ? <strong>Proposez une organisation</strong> qui devrait être incluse."
+		"region": "Région",
+		"region-description": "Ressources régionales (26 - 50 milles)",
+		"region-extended": "Région étendue",
+		"region-extended-description": "Ressources régionales étendues (51 - 200 milles)",
+		"remote-national": "À distance",
+		"remote-national-description": "Les éléments ci-dessous correspondent à vos filtres mais sont des ressources à distance ou nationales disponibles pour vous, quel que soit votre emplacement physique.",
+		"suggest-resource": "Vous ne le trouvez pas ? <strong>Proposez une organisation</strong> qui devrait être incluse.",
+		"tier-label": "Palier"
 	},
 	"select": {
 		"base": "Sélectionnez {{- item}}"

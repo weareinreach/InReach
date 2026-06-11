@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
 	"agree-disclaimer": "\"{{action}}\" पर क्लिक करके आप InReach की <link1>गोपनीयता नीति</link1> और <link2>उपयोग की शर्तों</link2>से सहमत होते हैं।",
 	"alert-message": "चेतावनी संदेश",
@@ -316,14 +317,27 @@
 	"saved": "सहेजा गया",
 	"search": {
 		"include-remote": "रिमोट सेवाओं को शामिल करें",
+		"local": "Local",
+		"local-description": "Local Resources (11 - 25 miles)",
 		"location-placeholder": "शहर या ज़िप कोड डालें...",
 		"location-placeholder-searchby": "शहर अथवा पिन कोड द्वारा खोजें...",
+		"locality-label": "Locality",
 		"look-up-org": "किसी संगठन को नाम से ढूंढें",
+		"na": "N/A",
+		"neighborhood": "Neighborhood",
+		"neighborhood-description": "Neighborhood Resources (<= 10 miles)",
 		"no-results": "कोई परिणाम नहीं मिला। कृपया फिर से कोशिश करें।",
 		"no-results-adjust": "आपकी खोज के लिए कोई परिणाम नहीं मिला। अपने चयनित स्थान या फ़िल्टर को समायोजित करने का प्रयास करें।",
 		"organization-placeholder": "संगठन का नाम दर्ज करें...",
 		"organization-placeholder-searchby": "संगठन के नाम से खोजें...",
-		"suggest-resource": "यह नहीं मिल रहा है? <1>एक ऐसे संगठन का सुझाव दें जो</1> आपको लगता है कि इसमें शामिल किया जाना चाहिए।"
+		"region": "Region",
+		"region-description": "Regional Resources (26 - 50 miles)",
+		"region-extended": "Extended Region",
+		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
+		"remote-national": "रिमोट",
+		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"suggest-resource": "यह नहीं मिल रहा है? <1>एक ऐसे संगठन का सुझाव दें जो</1> आपको लगता है कि इसमें शामिल किया जाना चाहिए।",
+		"tier-label": "Tier"
 	},
 	"select": {
 		"base": "{{- item}}चुनें"

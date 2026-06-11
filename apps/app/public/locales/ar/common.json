@@ -12,7 +12,8 @@
 		"tab-organizations": "المنظمات",
 		"tab-reports": "التقارير",
 		"tab-users": "المستخدمون",
-		"tab-downloads": "التنزيلات"
+		"tab-downloads": "التنزيلات",
+		"no-access-message": "ليس لديك الصلاحية للوصول إلى أي أقسام من لوحة التحكم للمشرف."
 	},
 	"agree-disclaimer": "بالضغط على \"{{action}}\" أنت توافق على <link1>سياسة الخصوصية لـ InReach</link1> و <link2>شروط الاستخدام</link2>.",
 	"alert-message": "رسالة تنبيه",
@@ -320,14 +321,27 @@
 	"saved": "محفوظ",
 	"search": {
 		"include-remote": "تضمين الخدمات عن بعد",
+		"local": "محلي",
+		"local-description": "الموارد المحلية (11-25 ميلاً)",
 		"location-placeholder": "أدخل الكود البريدي للولاية، أو المدينة، أو البريد...",
 		"location-placeholder-searchby": "البحث حسب رمز المدينة أو البريد...",
+		"locality-label": "المحلة",
 		"look-up-org": "ابحث عن منظمة",
+		"na": "لا",
+		"neighborhood": "الحي",
+		"neighborhood-description": "موارد الحي (أقل من 10 أميال )",
 		"no-results": "لم يتم العثور على نتائج. الرجاء المحاولة مرة أخرى.",
 		"no-results-adjust": "لم يتم العثور على نتائج للبحث الخاص بك. حاول تعديل موقعك أو التصفية المحددة.",
 		"organization-placeholder": "أدخل اسم المنظمة...",
 		"organization-placeholder-searchby": "البحث حسب اسم المنظمة...",
-		"suggest-resource": "لا يمكن العثور عليه؟ <1>اقترح منظمة</1> تعتقد أنه ينبغي إدراجها."
+		"region": "المنطقة",
+		"region-description": "الموارد الإقليمية (26-50 ميلاً)",
+		"region-extended": "المنطقة الموسعة",
+		"region-extended-description": "الموارد الإقليمية الموسعة (51 - 200 ميل)",
+		"remote-national": "عن بعد",
+		"remote-national-description": "العناصر أدناه تتطابق مع الفلاتر الخاصة بك، ولكن الموارد الوطنية/البعيدة المتاحة لك بغض النظر عن موقعك المادي.",
+		"suggest-resource": "لا يمكن العثور عليه؟ <1>اقترح منظمة</1> تعتقد أنه ينبغي إدراجها.",
+		"tier-label": "مستوى"
 	},
 	"select": {
 		"base": "حدد {{- item}}"

@@ -12,7 +12,8 @@
 		"tab-organizations": "Organisationen",
 		"tab-reports": "Berichte",
 		"tab-users": "Benutzer",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "Sie haben keine Berechtigung auf alle Bereiche des Admin-Dashboards zuzugreifen."
 	},
 	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
 	"alert-message": "Warnmeldung",
@@ -316,14 +317,27 @@
 	"saved": "Gespeichert",
 	"search": {
 		"include-remote": "Remote-Dienste einbeziehen",
+		"local": "Lokal",
+		"local-description": "Lokale Ressourcen (11 - 25 Meilen)",
 		"location-placeholder": "Stadt oder Postleitzahl eingeben...",
 		"location-placeholder-searchby": "Suche nach Stadt oder Postleitzahl ...",
+		"locality-label": "Ort",
 		"look-up-org": "Organisation nach Namen suchen",
+		"na": "N/A",
+		"neighborhood": "Nachbarschaft",
+		"neighborhood-description": "Nachbarschaftsressourcen (<= 10 Meilen)",
 		"no-results": "Keine Ergebnisse gefunden. Bitte versuchen Sie es erneut.",
 		"no-results-adjust": "Keine Ergebnisse für Ihre Suche gefunden. Versuchen Sie, Ihren ausgewählten Standort oder Filter anzupassen.",
 		"organization-placeholder": "Organisationsname eingeben...",
 		"organization-placeholder-searchby": "Suche nach Organisationsnamen...",
-		"suggest-resource": "Sie finden es nicht? <strong>schlagen Sie eine Organisation</strong> vor, die Ihrer Meinung nach enthalten sein sollte."
+		"region": "Region",
+		"region-description": "Regionale Ressourcen (26 - 50 Meilen)",
+		"region-extended": "Erweiterte Region",
+		"region-extended-description": "Erweiterte regionale Ressourcen (51 - 200 Meilen)",
+		"remote-national": "Entfernt",
+		"remote-national-description": "Die folgenden Artikel stimmen mit Ihren Filtern überein, sind aber unabhängig von Ihrem physikalischen Standort für Sie verfügbar/nationale Ressourcen verfügbar.",
+		"suggest-resource": "Sie finden es nicht? <strong>schlagen Sie eine Organisation</strong> vor, die Ihrer Meinung nach enthalten sein sollte.",
+		"tier-label": "Stufe"
 	},
 	"select": {
 		"base": "{{- item}} auswählen"

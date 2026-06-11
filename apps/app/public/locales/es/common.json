@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizaciones",
 		"tab-reports": "Informes",
 		"tab-users": "Usuaries",
-		"tab-downloads": "Descargas"
+		"tab-downloads": "Descargas",
+		"no-access-message": "No tienes permiso para acceder a ninguna sección del panel de administración."
 	},
 	"agree-disclaimer": "Al hacer clic en \"{{action}}\" aceptas la <link1>Política de Privacidad</link1> y <link2>Términos de Uso</link2> de InReach.",
 	"alert-message": "Mensaje de alerta",
@@ -110,7 +111,7 @@
 	"edit-profile": "Editar perfil",
 	"email_professional": "Correo Electrónico Profesional",
 	"email_student-pro": "Correo Electrónico profesional o de estudiante",
-	"email-sent": "Haz clic en el enlace en tu correo electrónico para reiniciar tu contraseña.",
+	"email-sent": "Haz clic en el enlace de tu correo electrónico para restablecer tu contraseña.",
 	"enter-email-placeholder": "Introduce la dirección de correo electrónico...",
 	"enter-password-placeholder": "Introduce contraseña...",
 	"enter-review": "Ingresa tu reseña...",
@@ -163,10 +164,10 @@
 	"inreach-org": "InReach.org",
 	"language": "Idioma",
 	"language_all-other": "Todos los demás idiomas",
-	"language_choose_mobile": "Elije un idioma",
+	"language_choose_mobile": "Elige un idioma",
 	"language_choose": "Por favor, elige un idioma",
 	"language_common": "Idiomas comunes",
-	"language_select_preferred": "Selecciona tu idioma preferido",
+	"language_select_preferred": "Selecciona el idioma preferido",
 	"language_translations": "Traducido por Crowdin.",
 	"language_update_button": "Actualizar idioma",
 	"law-practice-other": "Área de prácticas legales",
@@ -258,9 +259,9 @@
 		"<textUtility4>(*La única excepción es el tipo de cuenta de usuario del Revisor de la Comunidad Local, que aprovecha cualquier información demográfica recopilada para mejorar la experiencia y el impacto voluntario de los Revisores de la Comunidad Local. Para las cuentas del Revisor de la Comunidad Local, necesitamos ubicación y toda la información demográfica es opcional, pero estaría vinculada a su registro de usuario. Estos datos sólo serían visibles fuera del personal de InReach si el Revisor de la Comunidad Local decide hacerlo visible a través de la configuración de privacidad de su cuenta. Compartir un perfil de cara al público, ayudará a otros usuarios a sentirse más seguros en tus revisiones.)</textUtility4>",
 		"<textDarkGray>Entender nuestra demostración de usuario puede ayudarnos a cuantificar nuestro impacto, recaudar fondos y evaluar futuras decisiones de productos. Agradecemos que los usuarios compartan voluntariamente esta información con nosotros, y tomamos estas medidas para proteger su privacidad y anonimato.</textDarkGray>",
 		"<textDarkGray><title2>Análisis de uso del sitio</title2></textDarkGray>",
-		"<textDarkGray>inReach usa Google Analytics para analizar y rastrear de forma anónima los datos de uso de las aplicaciones (por ejemplo, las búsquedas de les usuaries y otros comportamientos) en conjunto. Google Analytics cumple con el RGPD y no recopila ninguna información de identificación personal y anonimiza todos los datos recopilados. Les usuaries no pueden ser identificades y nunca se les rastrea dew un sitio web a otro.</textDarkGray>",
+		"<textDarkGray>Con tu consentimiento, inReach utiliza Google Analytics para analizar y rastrear de forma anónima los datos de uso de las aplicaciones (por ejemplo, las búsquedas de les usuaries y otros comportamientos) en conjunto. Esta implementación cumple con el RGPD, no recopila ninguna información de identificación personal y anonimiza todos los datos recopilados. Les usuaries no pueden ser identificades y nunca se rastreasen en los sitios web con fines publicitarios.</textDarkGray>",
 		"<textDarkGray>InReach también utiliza Vercel Analytics para analizar los datos vitales y el rendimiento de la web. Vercel Analytics proporciona información sobre el uso del sitio sin vincularse ni asociarse con ningún visitante individual o dirección IP. El registro de puntos de datos es anónimo y la función Analytics no recopila ni almacena información que permitiría a Vercel reconstruir una sesión de navegación a través de páginas o identificar a un usuario.</textDarkGray>",
-		"<textDarkGray>You can update your cookie preferences at any time by clicking <linkCookieSettings>here</linkCookieSettings>.</textDarkGray>"
+		"<textDarkGray>Puedes actualizar tus preferencias de cookies en cualquier momento haciendo clic <linkCookieSettings>aquí</linkCookieSettings>.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Lea nuestra política de privacidad completa para obtener más información</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Declaración de privacidad</title2>"],
@@ -298,8 +299,8 @@
 	"remote-services": "Servicios disponibles de forma remota",
 	"remote-services-page-title": "Servicios remotos",
 	"report": {
-		"thank-you": "¡Gracias por ayudarnos a hacer InReach mejor para todos!",
-		"thank-you-message": "Nuestro equipo revisará su envío, verificará la información y realizará cambios en consecuencia si cumple con nuestros criterios."
+		"thank-you": "¡Gracias por ayudarnos a mejorar InReach para todes!",
+		"thank-you-message": "Nuestro equipo revisará tu envío, verificará la información y realizará cambios en consecuencia si cumple con nuestros criterios."
 	},
 	"reset-password": "Restablece tu contraseña",
 	"reset-password-message": "Te enviaremos un correo electrónico para restablecer tu contraseña",
@@ -316,14 +317,27 @@
 	"saved": "Guardado",
 	"search": {
 		"include-remote": "Incluye servicios remotos",
+		"local": "Local",
+		"local-description": "Recursos locales (11 - 25 millas)",
 		"location-placeholder": "Introduzca la ciudad o código postal...",
 		"location-placeholder-searchby": "Buscar por código postal o ciudad...",
+		"locality-label": "Localidad",
 		"look-up-org": "Buscar una organización por nombre",
+		"na": "N/A",
+		"neighborhood": "Niguridad",
+		"neighborhood-description": "Recursos de Neighborhood (<= 10 millas)",
 		"no-results": "No se han encontrado resultados. Vuelva a intentarlo.",
 		"no-results-adjust": "No se han encontrado resultados para su búsqueda. Intente ajustar la ubicación o los filtros seleccionados.",
 		"organization-placeholder": "Introduzca el nombre de la organización...",
 		"organization-placeholder-searchby": "Buscar por nombre de organización...",
-		"suggest-resource": "¿No lo encuentras? <strong>Sugiera una organización</strong> que crea que debería incluirse."
+		"region": "Región",
+		"region-description": "Recursos regionales (26 - 50 millas)",
+		"region-extended": "Región extendida",
+		"region-extended-description": "Recursos regionales ampliados (51 - 200 millas)",
+		"remote-national": "Remoto",
+		"remote-national-description": "Los siguientes elementos coinciden con sus filtros, pero son recursos remotos o nacionales disponibles para usted independientemente de su ubicación física.",
+		"suggest-resource": "¿No lo encuentras? <strong>Sugiera una organización</strong> que crea que debería incluirse.",
+		"tier-label": "Nivel"
 	},
 	"select": {
 		"base": "Selecciona {{- item}}"
@@ -491,7 +505,7 @@
 		"prev": "Anterior",
 		"print": "Imprimir",
 		"publish": "Publicar",
-		"report": "Reporte",
+		"report": "Informe",
 		"restore": "Restaurar",
 		"reverify": "Reverificar",
 		"review": "Reseña",

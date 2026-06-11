@@ -85,7 +85,7 @@
 		"elig-age_min": "{{min}}과 이상",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "연령 자격",
-		"elig-age_error": "최소, 최대 또는 연령대를 지정하십시오.",
+		"elig-age_error": "최소 연령, 최대 또는 연령 범위를 지정해 주세요",
 		"other-describe": "기타 (글로 설명하기)",
 		"req-medical-insurance": "의료 보험은 필수입니다",
 		"req-photo-id": "신분증은 필수입니다",
@@ -96,8 +96,8 @@
 		"time-appointment-required": "예약은 필수입니다"
 	},
 	"lang": {
-		"all-languages-by-interpreter": "통역사를 통해 모든 언어는 가능합니다",
-		"american-sign-language": "미국 수화",
+		"all-languages-by-interpreter": "언어 지원이 제공됩니다. 자세한 내용은 문의해 주세요.",
+		"american-sign-language": "미국 수어 (ASL)",
 		"CATEGORYNAME": "언어",
 		"lang-offered": "특정 언어 제공"
 	},
