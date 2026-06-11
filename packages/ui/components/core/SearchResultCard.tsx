@@ -58,6 +58,14 @@ export const SearchResultLoading = () => {
 	)
 }
 
+const TIER_KEY_MAP: Record<string, string> = {
+	NEIGHBORHOOD: 'neighborhood',
+	LOCAL: 'local',
+	REGION: 'region',
+	EXTENDED_REGION: 'region-extended',
+	NATIONAL: 'remote-national',
+}
+
 const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories, national } = result
 	const visibility = result.addressVisibility as 'FULL' | 'PARTIAL' | 'HIDDEN' | undefined
@@ -187,12 +195,6 @@ const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) =>
 						</Title>
 						<ActionButtons.Save itemId={result.id} itemName={result.name} />
 					</Group>
-					{isAdvanced && result && 'relevanceScore' in result && (
-						<Text size='xs' color='dimmed' mt={-8} mb={8}>
-							Locality: {(result as { isLocal?: boolean }).isLocal ? 'LOCAL' : 'REMOTE'} | Tier:{' '}
-							{(result as { tier?: string }).tier ?? 'N/A'}
-						</Text>
-					)}
 					<Link
 						href={{ pathname: '/org/[slug]', query: { slug } }}
 						variant={variants.Link.inheritStyle}

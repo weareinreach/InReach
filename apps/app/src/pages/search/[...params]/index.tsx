@@ -27,7 +27,6 @@ import { LocationBasedAlertBanner } from '@weareinreach/ui/components/core/Locat
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
-import { AdvancedSearchToggle } from '@weareinreach/ui/components/sections/AdvancedSearchToggle'
 import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSupport'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
@@ -102,7 +101,7 @@ const NoResults = memo(
 		const { t } = useTranslation('common')
 		return (
 			<Stack className={classes.noResultsStack}>
-				<Text>{t('common:search.no-results-adjust')}</Text>
+				<Text>{t('search.no-results-adjust')}</Text>
 				<CrisisSupport role='national'>
 					{crisisData.map((result) => (
 						<CrisisSupport.National data={result} key={result.id} />
@@ -119,7 +118,7 @@ const SearchResults = () => {
 	const { searchState, searchStateActions } = useSearchState()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
-	const [isAdvanced, setIsAdvanced] = useState(false)
+	const isAdvanced = true
 	const [advancedParams, setAdvancedParams] = useState<{
 		focuses: string[]
 	}>({ focuses: [] })
@@ -139,17 +138,9 @@ const SearchResults = () => {
 			}
 		}
 
-		const checkMode = () => {
-			const mode = localStorage.getItem('ir_advanced_mode')
-			const isAdv = mode === 'true'
-			setIsAdvanced(isAdv)
-			if (isAdv) updateAdvancedParams()
-		}
-		checkMode()
-		window.addEventListener('ir_advanced_mode_changed', checkMode)
+		updateAdvancedParams()
 		window.addEventListener('ir_focus_changed', updateAdvancedParams)
 		return () => {
-			window.removeEventListener('ir_advanced_mode_changed', checkMode)
 			window.removeEventListener('ir_focus_changed', updateAdvancedParams)
 		}
 	}, [])
@@ -181,8 +172,6 @@ const SearchResults = () => {
 	const currentSortBias = (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias
 
 	const searchInput = useMemo(() => {
-		const label = isAdvanced ? 'V2 (ADVANCED)' : 'V1 (STANDARD)'
-
 		const baseParams = {
 			lat,
 			lon,
@@ -193,18 +182,13 @@ const SearchResults = () => {
 			...(searchState.services.length ? { services: searchState.services } : {}),
 			...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
 		}
-		if (isAdvanced) {
-			return {
-				...baseParams,
-				version: 'v2' as const,
-				sortBias: currentSortBias,
-				focuses: advancedParams.focuses,
-			}
+		return {
+			...baseParams,
+			version: 'v2' as const,
+			sortBias: currentSortBias,
+			focuses: advancedParams.focuses,
 		}
-		return baseParams
 	}, [
-		isAdvanced,
-		advancedParams.focuses,
 		lat,
 		lon,
 		dist,
@@ -214,6 +198,7 @@ const SearchResults = () => {
 		searchState.services,
 		searchState.attributes,
 		currentSortBias,
+		advancedParams.focuses,
 	])
 
 	const {
@@ -230,26 +215,13 @@ const SearchResults = () => {
 		if (loadingPage !== searchIsLoading) setLoadingPage(searchIsLoading)
 		if (searchQuery.data) {
 			setResultCount(searchQuery.data.resultCount)
-
-			// DEBUG: Structured Comparison Log
-			console.group(`[Search Debug] Result Set Summary (${isAdvanced ? 'V2' : 'V1'})`)
-			console.table(
-				searchQuery.data.orgs.map((org, i) => ({
-					rank: i + 1,
-					name: org.name,
-					distance: org.distance,
-					score: (org as SearchResultV2Metadata).relevanceScore ?? 'N/A',
-				}))
-			)
-			console.groupEnd()
-
 			setData(searchQuery.data)
 			setLoadingPage(false)
 			if (searchQuery.data.resultCount === 0) {
-				searchBoxEvent.zeroResults(searchState.searchTerm ?? '', searchState.params)
+				searchBoxEvent.zeroResults(searchState.searchTerm ?? '', 'location', searchState.services[0] || 'all')
 			}
 		}
-	}, [searchQuery.data, searchIsLoading, loadingPage, searchState.searchTerm, searchState.params, isAdvanced])
+	}, [searchQuery.data, searchIsLoading, loadingPage, searchState.searchTerm, searchState.services])
 
 	useEffect(() => {
 		if (data) {
@@ -262,12 +234,11 @@ const SearchResults = () => {
 				if (isAdvanced && currentTier && !renderedTiers.has(currentTier)) {
 					renderedTiers.add(currentTier)
 					const labelMap: Record<string, string> = {
-						NEIGHBORHOOD: 'Neighborhood Resources (<= 10 miles)',
-						LOCAL: 'Local Resources (11 - 25 miles)',
-						REGION: 'Regional Resources (26 - 50 miles)',
-						EXTENDED_REGION: 'Extended Region Resources (51 - 200 miles)',
-						NATIONAL:
-							'The items below match your filters but are remote/national resources available to you regardless of your physical location.',
+						NEIGHBORHOOD: t('common:search.neighborhood-description'),
+						LOCAL: t('common:search.local-description'),
+						REGION: t('common:search.region-description'),
+						EXTENDED_REGION: t('common:search.region-extended-description'),
+						NATIONAL: t('common:search.remote-national-description'),
 					}
 
 					items.push(
@@ -297,7 +268,7 @@ const SearchResults = () => {
 			})
 			setResultDisplay(display)
 		}
-	}, [data, loadingPage, skip, variants.Text.utility2darkGray, isAdvanced])
+	}, [data, loadingPage, skip, variants.Text.utility2darkGray, isAdvanced, t])
 
 	useEffect(() => {
 		if (typeof router.query.page === 'string' && searchState.page !== router.query.page) {
@@ -315,32 +286,19 @@ const SearchResults = () => {
 			router.query.page &&
 			PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)
 		) {
-			if (isAdvanced) {
-				apiUtils.organization.searchDistance.prefetch({
-					lat,
-					lon,
-					dist,
-					unit,
-					version: 'v2',
-					sortBias: currentSortBias,
-					focuses: advancedParams.focuses,
-					skip: nextSkip,
-					take,
-					...(searchState.services.length ? { services: searchState.services } : {}),
-					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-				})
-			} else {
-				apiUtils.organization.searchDistance.prefetch({
-					lat,
-					lon,
-					dist,
-					unit,
-					skip: nextSkip,
-					take,
-					...(searchState.services.length ? { services: searchState.services } : {}),
-					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-				})
-			}
+			apiUtils.organization.searchDistance.prefetch({
+				lat,
+				lon,
+				dist,
+				unit,
+				version: 'v2',
+				sortBias: currentSortBias,
+				focuses: advancedParams.focuses,
+				skip: nextSkip,
+				take,
+				...(searchState.services.length ? { services: searchState.services } : {}),
+				...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+			})
 		}
 	}, [
 		data?.resultCount,
@@ -382,7 +340,6 @@ const SearchResults = () => {
 				pb={30}
 				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
 			>
-				<AdvancedSearchToggle />
 				<Group spacing={20} w='100%' className={classes.searchControls} align='flex-start'>
 					<Stack spacing={8} maw={{ md: '50%', base: '100%' }} w='100%'>
 						<SearchBox
@@ -450,7 +407,7 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	const ssg = await trpcServerClient({ req, res })
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'user']),
-		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
+		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take, version: 'v2' }),
 		ssg.organization.getNatlCrisis.prefetch({ cca2: country }),
 		ssg.service.getFilterOptions.prefetch(),
 		ssg.attribute.getFilterOptions.prefetch(),
