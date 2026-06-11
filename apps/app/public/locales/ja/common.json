@@ -12,7 +12,8 @@
 		"tab-organizations": "組織",
 		"tab-reports": "レポート",
 		"tab-users": "ユーザー",
-		"tab-downloads": "ダウンロード"
+		"tab-downloads": "ダウンロード",
+		"no-access-message": "管理者ダッシュボードのセクションにアクセスする権限がありません。"
 	},
 	"agree-disclaimer": "「{{action}}」をクリックすると、InReachの <link1>プライバシーポリシー</link1> および <link2>利用規約</link2>に同意したことになります。",
 	"alert-message": "警告メッセージ",
@@ -315,14 +316,27 @@
 	"saved": "保存しました",
 	"search": {
 		"include-remote": "リモートサービスを含む",
+		"local": "ローカル",
+		"local-description": "ローカルリソース (11 - 25 マイル)",
 		"location-placeholder": "都市または郵便番号を入力...",
 		"location-placeholder-searchby": "都市または郵便番号で検索...",
+		"locality-label": "地域",
 		"look-up-org": "組織名で検索",
+		"na": "該当なし",
+		"neighborhood": "Neighborhood",
+		"neighborhood-description": "隣接資源（10マイル未満）",
 		"no-results": "結果が見つかりませんでした。もう一度やり直してください。",
 		"no-results-adjust": "検索結果が見つかりませんでした。選択した所在地またはフィルターを調整してください。",
 		"organization-placeholder": "組織名を入力...",
 		"organization-placeholder-searchby": "組織名で検索...",
-		"suggest-resource": "見つかりませんか？ <strong>掲載すべき組織</strong> を提案してください。"
+		"region": "地域",
+		"region-description": "地域資源（26～50マイル）",
+		"region-extended": "拡張地域",
+		"region-extended-description": "拡張地域資源（51 - 200マイル）",
+		"remote-national": "リモート",
+		"remote-national-description": "以下の項目はフィルタに一致しますが、物理的な場所に関係なく、リモート/ナショナルリソースが利用できます。",
+		"suggest-resource": "見つかりませんか？ <strong>掲載すべき組織</strong> を提案してください。",
+		"tier-label": "段階"
 	},
 	"select": {
 		"base": "{{- item}} を選択"

@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
 	"agree-disclaimer": "Le ou klike \"{{action}}\" ou dakò ak <link1>Règleman sou enfòmasyon prive InReach la</link1> ak <link2>Regleman p Itilizasyon</link2>.",
 	"alert-message": "Mesaj alèt",
@@ -316,14 +317,27 @@
 	"saved": "Sove",
 	"search": {
 		"include-remote": "Mete sèvis aleka",
+		"local": "Local",
+		"local-description": "Local Resources (11 - 25 miles)",
 		"location-placeholder": "Antre nan vil la oswa kòd postal...",
 		"location-placeholder-searchby": "Chèche pa vil oswa kòd postal...",
+		"locality-label": "Locality",
 		"look-up-org": "Gade yon òganizasyon pa non",
+		"na": "N/A",
+		"neighborhood": "Neighborhood",
+		"neighborhood-description": "Neighborhood Resources (<= 10 miles)",
 		"no-results": "Pa gen rezilta yo te jwenn. Tanpri eseye ankò.",
 		"no-results-adjust": "Pa gen rezilta pou rechèch ou a. Eseye ajiste kote ou chwazi a oswa filtè yo.",
 		"organization-placeholder": "Mete non òganizasyon...",
 		"organization-placeholder-searchby": "Chèche pa non òganizasyon...",
-		"suggest-resource": "Pa ka jwenn li? <1>Sijere yon òganizasyon</1> ou panse yo ta dwe enkli."
+		"region": "Region",
+		"region-description": "Regional Resources (26 - 50 miles)",
+		"region-extended": "Extended Region",
+		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
+		"remote-national": "Tele travay",
+		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"suggest-resource": "Pa ka jwenn li? <1>Sijere yon òganizasyon</1> ou panse yo ta dwe enkli.",
+		"tier-label": "Tier"
 	},
 	"select": {
 		"base": "Chwazi {{- item}}"

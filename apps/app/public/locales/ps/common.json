@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
 	"agree-disclaimer": "د \"{{action}}\" کلیک کولو سره تاسو د inREACH <link1>محرمیت پالیسي</link1> او <link2>د کارولو شرایط</link2>سره موافق یاست.",
 	"alert-message": "د خبرتیا پیغام",
@@ -316,14 +317,27 @@
 	"saved": "خوندي شوی",
 	"search": {
 		"include-remote": "لیرې خدمتونه شامل کړئ",
+		"local": "Local",
+		"local-description": "Local Resources (11 - 25 miles)",
 		"location-placeholder": "ښار یا زپ کوډ دننه کړئ...",
 		"location-placeholder-searchby": "د ښار یا زپ کوډ لخوا لټون وکړئ ...",
+		"locality-label": "Locality",
 		"look-up-org": "د نوم په واسطه یو سازمان وګورئ",
+		"na": "N/A",
+		"neighborhood": "Neighborhood",
+		"neighborhood-description": "Neighborhood Resources (<= 10 miles)",
 		"no-results": "هیڅ پایله ونه موندل شوه. مهرباني وکړئ بیا هڅه وکړئ.",
 		"no-results-adjust": "ستاسو د لټون لپاره هیڅ پایله ونه موندل شوه. هڅه وکړئ خپل ټاکل شوي ځای یا فلټرونه تنظیم کړئ.",
 		"organization-placeholder": "د سازمان نوم دننه کړئ...",
 		"organization-placeholder-searchby": "د سازمان په نوم لټون...",
-		"suggest-resource": "دا نشي موندلی؟ <1>هغه سازمان وړاندیز</1> کړئ چې تاسو فکر کوئ باید پکې شامل شي."
+		"region": "Region",
+		"region-description": "Regional Resources (26 - 50 miles)",
+		"region-extended": "Extended Region",
+		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
+		"remote-national": "Remote",
+		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"suggest-resource": "دا نشي موندلی؟ <1>هغه سازمان وړاندیز</1> کړئ چې تاسو فکر کوئ باید پکې شامل شي.",
+		"tier-label": "Tier"
 	},
 	"select": {
 		"base": "{{- item}}غوره کړئ"

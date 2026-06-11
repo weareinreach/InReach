@@ -12,7 +12,8 @@
 		"tab-organizations": "Kuruluşlar",
 		"tab-reports": "Raporlar",
 		"tab-users": "Kullanıcılar",
-		"tab-downloads": "İndirilenler"
+		"tab-downloads": "İndirilenler",
+		"no-access-message": "Yönetici panosunun herhangi bir bölümüne erişme izniniz yok."
 	},
 	"agree-disclaimer": "“{{action}}\" ı tıklayarak inReach'in <link1>Gizlilik Politikası</link1> ve <link2>Kullanım Şartları</link2>kabul etmiş olursunuz.",
 	"alert-message": "Uyarı mesajı",
@@ -316,14 +317,27 @@
 	"saved": "Kaydedildi",
 	"search": {
 		"include-remote": "Uzaktan hizmetleri dahil et",
+		"local": "Yerel",
+		"local-description": "Yerel Kaynaklar (11 - 25 mil)",
 		"location-placeholder": "Şehir veya posta kodunu girin...",
 		"location-placeholder-searchby": "Şehir veya posta koduna göre ara...",
+		"locality-label": "mahal",
 		"look-up-org": "Bir kuruluşu ismine göre arayın",
+		"na": "YOK",
+		"neighborhood": "Mahalle",
+		"neighborhood-description": "Mahalle Kaynakları (<= 10 mil)",
 		"no-results": "Hiçbir sonuç bulunamadı. Lütfen tekrar deneyin.",
 		"no-results-adjust": "Aramanız için sonuç bulunamadı. Seçtiğiniz konumu veya filtreleri ayarlamayı deneyin.",
 		"organization-placeholder": "Kuruluş adını girin...",
 		"organization-placeholder-searchby": "Kuruluş adına göre ara...",
-		"suggest-resource": "Bulamıyor musunuz? <strong>Dahil edilmesi gerektiğini düşündüğünüz bir kuruluş</strong> önerin."
+		"region": "Bölge",
+		"region-description": "Bölgesel Kaynaklar (26 - 50 mil)",
+		"region-extended": "Genişletilmiş Bölge",
+		"region-extended-description": "Genişletilmiş Bölgesel Kaynaklar (51 - 200 mil)",
+		"remote-national": "Uzaktan",
+		"remote-national-description": "Aşağıdaki öğeler filtrelerinizle eşleşir, ancak fiziksel konumunuz ne olursa olsun size sunulan uzak/ulusal kaynaklardır.",
+		"suggest-resource": "Bulamıyor musunuz? <strong>Dahil edilmesi gerektiğini düşündüğünüz bir kuruluş</strong> önerin.",
+		"tier-label": "Seviye"
 	},
 	"select": {
 		"base": "{{- item}}öğesini seçin"
