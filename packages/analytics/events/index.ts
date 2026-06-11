@@ -42,6 +42,23 @@ export const searchBoxEvent = {
 			service_category: serviceCategory,
 			location_params: params,
 		}),
+	searchExecuted: (metadata: {
+		location?: string
+		services?: string[]
+		attributes?: string[]
+		searchTerm?: string
+		version: 'v1' | 'v2'
+		sortBias?: 'DISTANCE' | 'RELEVANCE'
+		focuses?: string[]
+	}) =>
+		event('search_executed', {
+			search_location: metadata.location || 'remote',
+			service_category: metadata.services?.[0] || 'all',
+			search_term: metadata.searchTerm || '',
+			search_version: metadata.version,
+			sort_bias: metadata.sortBias,
+			search_focuses: metadata.focuses?.join(','),
+		}),
 	suggestResource: (term: string) => event('suggest_resource_click', { search_term: term }),
 	suggestResourceSubmit: (orgName: string) => event('suggest_resource_submit', { item_name: orgName }),
 }
@@ -97,8 +114,10 @@ export const productEvent = {
 		metadata: {
 			searchTermContext?: string
 			position?: number
-			searchVersion?: 'V1' | 'V2'
+			searchVersion?: 'v1' | 'v2'
 			distanceMeters?: number
+			relevanceScore?: number
+			proximityTier?: string
 		}
 	) =>
 		event('profile_view', {
@@ -108,6 +127,8 @@ export const productEvent = {
 			position: metadata.position, // Tracking the rank in the search list
 			search_version: metadata.searchVersion,
 			distance_meters: metadata.distanceMeters,
+			relevance_score: metadata.relevanceScore,
+			proximity_tier: metadata.proximityTier,
 		}),
 
 	/**

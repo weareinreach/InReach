@@ -219,9 +219,29 @@ const SearchResults = () => {
 			setLoadingPage(false)
 			if (searchQuery.data.resultCount === 0) {
 				searchBoxEvent.zeroResults(searchState.searchTerm ?? '', 'location', searchState.services[0] || 'all')
+			} else {
+				searchBoxEvent.searchExecuted({
+					location: country,
+					services: searchState.services,
+					attributes: searchState.attributes,
+					searchTerm: searchState.searchTerm,
+					version: 'v2',
+					sortBias: currentSortBias,
+					focuses: advancedParams.focuses,
+				})
 			}
 		}
-	}, [searchQuery.data, searchIsLoading, loadingPage, searchState.searchTerm, searchState.services])
+	}, [
+		searchQuery.data,
+		searchIsLoading,
+		loadingPage,
+		searchState.searchTerm,
+		searchState.services,
+		searchState.attributes,
+		country,
+		currentSortBias,
+		advancedParams.focuses,
+	])
 
 	useEffect(() => {
 		if (data) {
