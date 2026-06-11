@@ -6,7 +6,7 @@ generator client {
 generator aws {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters", "fullTextSearch", "nativeDistinct", "postgresqlExtensions", "tracing", "views", "relationJoins"]
-  binaryTargets   = ["linux-arm64-openssl-3.0.x"]
+  binaryTargets   = ["native", "linux-arm64-openssl-3.0.x"]
 }
 
 generator enum {
@@ -18,7 +18,7 @@ datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
   directUrl  = env("DB_DIRECT_URL")
-  extensions = [pg_stat_statements, plpgsql, postgis]
+  extensions = [pg_stat_statements, plpgsql, postgis, unaccent, pg_trgm]
 }
 
 /// NextAuth Account **DO NOT ALTER**
@@ -318,6 +318,10 @@ model Organization {
   updatedAt          DateTime                 @updatedAt
   crisisResource     Boolean?
   crisisResourceSort Int?                     @unique
+  /// Materialized for V2 Search performance (GIN indexing)
+  attributeIds       String[]                 @default([])
+  /// Materialized for V2 Search performance (GIN indexing)
+  serviceIds         String[]                 @default([])
   attributes         AttributeSupplement[]
   notes              InternalNote[]
   hours              OrgHours[]
@@ -341,6 +345,8 @@ model Organization {
   associatedUsers    UserToOrganization[]
 
   @@index([name])
+  @@index([attributeIds], type: Gin)
+  @@index([serviceIds], type: Gin)
   @@index([published, deleted])
   @@index([slug])
   @@index([slug, published, deleted])
@@ -1841,6 +1847,15 @@ model DataMigration {
   createdBy   String
   appliedAt   DateTime @default(now())
   jobId       String   @unique
+}
+
+/// Thesaurus for name-based search expansions (e.g., st, saint)
+model SearchSynonym {
+  id        String   @id @default(cuid())
+  /// All terms in this cluster are treated as identical
+  terms     String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.

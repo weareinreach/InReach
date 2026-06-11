@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
 	"agree-disclaimer": "Sa pamamagitan ng pag-click sa \"{{action}}\" sumasang-ayon ka sa <link1>Patakaran sa Privacy ng inReach</link1> at <link2>Mga Tuntunin ng Paggamit</link2>.",
 	"alert-message": "Mensahe ng alerto",
@@ -316,14 +317,27 @@
 	"saved": "Nai-save",
 	"search": {
 		"include-remote": "Isama ang mga remote na serbisyo",
+		"local": "Local",
+		"local-description": "Local Resources (11 - 25 miles)",
 		"location-placeholder": "Ipasok ang lungsod o zip code...",
 		"location-placeholder-searchby": "Maghanap ayon sa lungsod o zip code...",
+		"locality-label": "Locality",
 		"look-up-org": "Maghanap ng isang samahan ayon sa pangalan",
+		"na": "N/A",
+		"neighborhood": "Neighborhood",
+		"neighborhood-description": "Neighborhood Resources (<= 10 miles)",
 		"no-results": "Walang nahanap na mga resulta. Mangyaring subukang muli.",
 		"no-results-adjust": "Walang nakitang mga resulta para sa iyong paghahanap. Subukang isaayos ang iyong napiling lokasyon o mga filter.",
 		"organization-placeholder": "Ipasok ang pangalan ng samahan...",
 		"organization-placeholder-searchby": "Maghanap ayon sa pangalan ng organisasyon...",
-		"suggest-resource": "Hindi mahanap ito? <1>Magmungkahi ng isang samahan</1> na sa palagay mo ay dapat isama."
+		"region": "Region",
+		"region-description": "Regional Resources (26 - 50 miles)",
+		"region-extended": "Extended Region",
+		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
+		"remote-national": "Remote",
+		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"suggest-resource": "Hindi mahanap ito? <1>Magmungkahi ng isang samahan</1> na sa palagay mo ay dapat isama.",
+		"tier-label": "Tier"
 	},
 	"select": {
 		"base": "Piliin ang {{- item}}"

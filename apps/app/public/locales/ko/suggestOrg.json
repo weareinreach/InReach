@@ -22,7 +22,7 @@
 		"org-website": "단체의 웹사이트",
 		"placeholder-address": "주소를 입력해주세요...",
 		"placeholder-name": "단체 이름을 입력해주세요...",
-		"placeholder-website": "URL 입력해주세요...",
+		"placeholder-website": "http:// 또는 https://를 포함하여 URL을 입력하세요.",
 		"service-types": "이 단체는 어떤 서비스를 제공합니까?"
 	},
 	"modal": {

@@ -49,6 +49,7 @@ export const idPrefix = {
 	serviceTag: 'svtg',
 	session: 'sess',
 	slugRedirect: 'slgr',
+	searchSynonym: 'ssyn',
 	socialMediaLink: 'smdl',
 	socialMediaService: 'smsv',
 	source: 'srce',

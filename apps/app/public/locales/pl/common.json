@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizacje",
 		"tab-reports": "Raporty",
 		"tab-users": "Użytkownicy",
-		"tab-downloads": "Pobrania"
+		"tab-downloads": "Pobrania",
+		"no-access-message": "Nie masz uprawnień dostępu do żadnych sekcji panelu administracyjnego."
 	},
 	"agree-disclaimer": "Klikając „{{action}}”, wyrażasz zgodę na <link1>Politykę prywatności inReach</link1> i <link2>Warunki użytkowania</link2>.",
 	"alert-message": "Komunikat alarmowy",
@@ -318,14 +319,27 @@
 	"saved": "Zapisano",
 	"search": {
 		"include-remote": "Uwzględnij usługi zdalne",
+		"local": "Lokalny",
+		"local-description": "Zasoby lokalne (11-25 mil)",
 		"location-placeholder": "Wpisz miasto lub kod pocztowy...",
 		"location-placeholder-searchby": "Szukaj według miasta lub kodu pocztowego...",
+		"locality-label": "Miejscowość",
 		"look-up-org": "Wyszukaj organizację według nazwy",
+		"na": "Nie dotyczy.",
+		"neighborhood": "Sąsiedztwo",
+		"neighborhood-description": "Zasoby sąsiedzkie (<= 10 mil)",
 		"no-results": "Nie znaleziono wyników. Proszę spróbować ponownie.",
 		"no-results-adjust": "Nie znaleziono wyników wyszukiwania. Spróbuj dostosować wybraną lokalizację lub filtry.",
 		"organization-placeholder": "Wprowadź nazwę organizacji...",
 		"organization-placeholder-searchby": "Szukaj według nazwy organizacji...",
-		"suggest-resource": "Nie możesz go znaleźć? <1>Zaproponuj organizację, która</1> Twoim zdaniem powinna zostać uwzględniona."
+		"region": "Region",
+		"region-description": "Zasoby regionalne (26–50 mil)",
+		"region-extended": "Rozszerzony region",
+		"region-extended-description": "Rozszerzone zasoby regionalne (51-200 mil)",
+		"remote-national": "Zdalny",
+		"remote-national-description": "Poniższe elementy pasują do Twoich filtrów, ale są zdalnymi/krajowymi zasobami dostępnymi dla Ciebie niezależnie od Twojej fizycznej lokalizacji.",
+		"suggest-resource": "Nie możesz go znaleźć? <1>Zaproponuj organizację, która</1> Twoim zdaniem powinna zostać uwzględniona.",
+		"tier-label": "Poziom"
 	},
 	"select": {
 		"base": "Wybierz {{- item}}"

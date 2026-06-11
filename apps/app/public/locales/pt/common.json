@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizações",
 		"tab-reports": "relatórios",
 		"tab-users": "Utilizadores",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "Você não tem permissão para acessar nenhuma seção do Painel de Administração."
 	},
 	"agree-disclaimer": "Ao clicar em \"{{action}}\", você concorda com a Política de Privacidade <link1></link1> e <link2>Termos de Uso</link2>da inReach.",
 	"alert-message": "Mensagem de alerta",
@@ -316,14 +317,27 @@
 	"saved": "Salvo",
 	"search": {
 		"include-remote": "Inclua serviços remotos",
+		"local": "Localização",
+		"local-description": "Recursos locais (11 a 25 milhas)",
 		"location-placeholder": "Insira a cidade ou código postal...",
 		"location-placeholder-searchby": "Procurar por cidade ou CEP...",
+		"locality-label": "Localidade",
 		"look-up-org": "Procure uma organização pelo nome",
+		"na": "N/D",
+		"neighborhood": "Vizinhança",
+		"neighborhood-description": "Recursos de Vizinhança (<= 10 milhas)",
 		"no-results": "Nenhum resultado encontrado. Por favor, tente novamente.",
 		"no-results-adjust": "Nenhum resultado encontrado. Tente ajustar a localização selecionada ou filtros.",
 		"organization-placeholder": "Insira o nome da organização...",
 		"organization-placeholder-searchby": "Pesquisar por nome da organização...",
-		"suggest-resource": "Não consegue encontrá-lo? <1>Sugira uma organização</1> que você acha que deveria ser incluída."
+		"region": "Região",
+		"region-description": "Recursos Regionais (26 - 50 milhas)",
+		"region-extended": "Região estendida",
+		"region-extended-description": "Recursos Regionais Estendidos (51 a 200 milhas)",
+		"remote-national": "Oferece serviços remotos",
+		"remote-national-description": "Os itens abaixo correspondem aos seus filtros, mas são recursos remotos/nacionais disponíveis para você, independentemente da sua localização física.",
+		"suggest-resource": "Não consegue encontrá-lo? <1>Sugira uma organização</1> que você acha que deveria ser incluída.",
+		"tier-label": "Camada"
 	},
 	"select": {
 		"base": "Selecionar {{- item}}"

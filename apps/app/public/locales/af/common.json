@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
 	"agree-disclaimer": "Deur op \"{{action}}\" te klik, stem jy in tot InReach se <link1>Privaatheidsbeleid</link1> en <link2>Gebruiksvoorwaardes</link2>.",
 	"alert-message": "Waarskuwingsboodskap",
@@ -316,14 +317,27 @@
 	"saved": "Gered",
 	"search": {
 		"include-remote": "Sluit afgeleë dienste in",
+		"local": "Local",
+		"local-description": "Local Resources (11 - 25 miles)",
 		"location-placeholder": "Voer stad of poskode in...",
 		"location-placeholder-searchby": "Soek volgens stad of poskode...",
+		"locality-label": "Locality",
 		"look-up-org": "Soek 'n organisasie op naam",
+		"na": "N/A",
+		"neighborhood": "Neighborhood",
+		"neighborhood-description": "Neighborhood Resources (<= 10 miles)",
 		"no-results": "Geen resultate gevind nie. Probeer asseblief weer.",
 		"no-results-adjust": "Geen resultate vir jou soektog gevind nie. Probeer jou geselekteerde ligging of filters aanpas.",
 		"organization-placeholder": "Voer organisasie naam in...",
 		"organization-placeholder-searchby": "Soek volgens organisasienaam...",
-		"suggest-resource": "Kan jy dit nie vind nie? <1>Stel 'n organisasie</1> voor wat u dink ingesluit moet word."
+		"region": "Region",
+		"region-description": "Regional Resources (26 - 50 miles)",
+		"region-extended": "Extended Region",
+		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
+		"remote-national": "Remote",
+		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"suggest-resource": "Kan jy dit nie vind nie? <1>Stel 'n organisasie</1> voor wat u dink ingesluit moet word.",
+		"tier-label": "Tier"
 	},
 	"select": {
 		"base": "Kies {{- item}}"

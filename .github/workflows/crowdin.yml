@@ -108,7 +108,7 @@ jobs:
         id: run-prettier
         run: |
           echo 'Installing package dependencies'
-          pnpm install
+          pnpm install --config.engine-strict=false
           echo 'Running prettier'
           pnpm format
 

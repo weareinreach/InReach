@@ -58,7 +58,21 @@ export const SearchResultLoading = () => {
 	)
 }
 
-const SearchResultData = ({ result, index }: SearchResultHasData) => {
+interface SearchResultV2Metadata {
+	relevanceScore?: number
+	tier?: string
+	isLocal?: boolean
+}
+
+const TIER_KEY_MAP: Record<string, string> = {
+	NEIGHBORHOOD: 'neighborhood',
+	LOCAL: 'local',
+	REGION: 'region',
+	EXTENDED_REGION: 'region-extended',
+	NATIONAL: 'remote-national',
+}
+
+const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories, national } = result
 	const visibility = result.addressVisibility as 'FULL' | 'PARTIAL' | 'HIDDEN' | undefined
 	const { t, ready: i18nReady } = useTranslation(['common', result.id])
@@ -68,13 +82,17 @@ const SearchResultData = ({ result, index }: SearchResultHasData) => {
 	const { searchState } = useSearchState()
 
 	const handleTrackClick = useCallback(() => {
-		productEvent.profileView(
-			result.id,
-			name,
-			JSON.stringify(searchState.params), // Converting search context to a string for GA4
-			index // Passing the position rank
-		)
-	}, [result.id, name, searchState.params, index])
+		productEvent.profileView(result.id, name, {
+			searchTermContext: JSON.stringify(searchState.params),
+			position: index,
+			searchVersion: isAdvanced ? 'v2' : 'v1',
+			distanceMeters: result.distance
+				? Math.round(result.unit === 'mi' ? result.distance * 1609.34 : result.distance * 1000)
+				: undefined,
+			relevanceScore: (result as SearchResultV2Metadata).relevanceScore,
+			proximityTier: (result as SearchResultV2Metadata).tier,
+		})
+	}, [result.id, name, searchState.params, index, result, isAdvanced])
 
 	const leaderBadgeGroup = useMemo(
 		() =>
@@ -220,8 +238,10 @@ type SearchResultHasData = {
 	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
 	loading?: boolean
 	index: number
+	isAdvanced?: boolean
 }
 type SearchResultLoading = {
 	loading: true
 	result?: never
+	isAdvanced?: boolean
 }

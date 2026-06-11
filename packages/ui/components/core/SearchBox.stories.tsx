@@ -40,9 +40,70 @@ export const ByLocation = {
 	// render: (args) => <StateWrapper {...args} />,
 } satisfies StoryDef
 
+/**
+ * SMART SEARCH SCENARIOS These stories test the 'searchName' handler's ability to handle typos, synonyms,
+ * punctuation, and acronyms via PostgreSQL extensions.
+ */
+
+export const SmartSearchTypo = {
+	name: 'Smart Search: Typo (Edit Distance)',
+	args: {
+		type: 'organization',
+		initialValue: 'St Louis Queer+ Support Helplien',
+	},
+} satisfies StoryDef
+
+export const SmartSearchSynonym = {
+	name: 'Smart Search: Synonym Expansion',
+	args: {
+		type: 'organization',
+		initialValue: 'Saint Louis Queer',
+	},
+} satisfies StoryDef
+
+export const SmartSearchAcronym = {
+	name: 'Smart Search: Acronym Match',
+	args: {
+		type: 'organization',
+		initialValue: 'SQSH',
+	},
+} satisfies StoryDef
+
+export const SmartSearchPunctuation = {
+	name: 'Smart Search: Punctuation resilience',
+	args: {
+		type: 'organization',
+		initialValue: 'St-Louis Queer & Support',
+	},
+} satisfies StoryDef
+
+export const SmartSearchPartial = {
+	name: 'Smart Search: Partial Phrase',
+	args: {
+		type: 'organization',
+		initialValue: 'Queer Support Helpline',
+	},
+} satisfies StoryDef
+
+export const SmartSearchSemantic = {
+	name: 'Smart Search: Semantic Variation',
+	args: {
+		type: 'organization',
+		initialValue: 'LGBTQ+',
+	},
+} satisfies StoryDef
+
 export const ByOrganization = {
 	args: {
 		type: 'organization',
 	},
 	// render: (args) => <StateWrapper {...args} />,
+} satisfies StoryDef
+
+export const SmartSearchQueerPlus = {
+	name: 'Smart Search: Queer+ (Single Word)',
+	args: {
+		type: 'organization',
+		initialValue: 'Queer+',
+	},
 } satisfies StoryDef
