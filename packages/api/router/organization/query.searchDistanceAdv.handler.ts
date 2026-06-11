@@ -68,19 +68,12 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 				org."lastVerified",
 				org.slug,
 				MIN(ROUND(ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int)) AS distance,
-				COALESCE(ARRAY_AGG(DISTINCT ost."tagId") FILTER (WHERE ost."tagId" IS NOT NULL), ARRAY[]::text[]) AS "matchedServices",
-				COALESCE(ARRAY_AGG(DISTINCT asup."attributeId") FILTER (WHERE asup."attributeId" IS NOT NULL), ARRAY[]::text[]) AS "matchedAttributes",
+				org."serviceIds" AS "matchedServices",
+				org."attributeIds" AS "matchedAttributes",
 				sa."matchedCountries" AS "national"
 			FROM "Organization" org
 			INNER JOIN "OrgLocation" loc ON org.id = loc."orgId"
 			LEFT JOIN service_area sa ON sa."orgId" = org.id
-			LEFT JOIN "OrgService" os ON os."organizationId" = org.id AND os."published" AND NOT os."deleted"
-			-- Phase 1 Parity: Services must be linked to a location to be counted, matching V1 behavior.
-			LEFT JOIN "OrgLocationService" ols ON ols."serviceId" = os.id AND ols.active
-			LEFT JOIN "OrgServiceTag" ost ON ost."serviceId" = os.id AND ost."active" AND ols."orgLocationId" IS NOT NULL
-			-- Phase 1 Parity: Only join attributes at the Org or Loc level to match V1 behavior.
-			-- This prevents false positives like matching an org for "Free" when only their "Snacks" are free.
-			LEFT JOIN "AttributeSupplement" asup ON (asup."organizationId" = org.id OR asup."locationId" = loc.id) AND asup."active"
 			WHERE
 				(
 					ST_DWithin(ST_Transform(loc.geo, 3857), (SELECT meters FROM points), ${searchRadius})
@@ -88,7 +81,7 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 					-- TODO: National/Remote ServiceArea check
 				)
 				AND loc."published" AND org."published" AND NOT loc."deleted" AND NOT org."deleted"
-			GROUP BY org.id, org.slug, org."lastVerified", sa."matchedCountries"
+			GROUP BY org.id, org.slug, org."lastVerified", sa."matchedCountries", org."serviceIds", org."attributeIds"
 		)
 		SELECT
 			*,

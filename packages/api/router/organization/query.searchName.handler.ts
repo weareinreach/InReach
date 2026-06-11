@@ -51,21 +51,21 @@ const searchName = async ({ input }: TRPCHandlerParams<TSearchNameSchema>) => {
 			slug,
 			-- Calculate similarity score for ranking (1.0 is exact match)
 			similarity(
-				lower(unaccent(regexp_replace(name, '[^a-zA-Z0-9 ]', '', 'g'))),
-				lower(unaccent(regexp_replace(${searchTerm}, '[^a-zA-Z0-9 ]', '', 'g')))
+				lower(public.immutable_unaccent(regexp_replace(name, '[^a-zA-Z0-9 ]', '', 'g'))),
+				lower(public.immutable_unaccent(regexp_replace(${searchTerm}, '[^a-zA-Z0-9 ]', '', 'g')))
 			) as score
 		FROM "Organization"
 		WHERE
 			(
 				-- 2. Expanded Term Matching
 				-- Checks the name against the original term and any synonyms
-				lower(unaccent(regexp_replace(name, '[^a-zA-Z0-9 ]', '', 'g'))) ILIKE ANY(
+				lower(public.immutable_unaccent(regexp_replace(name, '[^a-zA-Z0-9 ]', '', 'g'))) ILIKE ANY(
 					ARRAY[${Prisma.join(uniqueExpandedTerms.map((t) => `%${t.replace(/[^a-zA-Z0-9 ]/g, '')}%`))}]
 				)
 				OR
 				-- 3. Trigram fuzzy match for typos (still using original term for best accuracy)
-				lower(unaccent(regexp_replace(name, '[^a-zA-Z0-9 ]', '', 'g'))) %
-				lower(unaccent(regexp_replace(${searchTerm}, '[^a-zA-Z0-9 ]', '', 'g')))
+				lower(public.immutable_unaccent(regexp_replace(name, '[^a-zA-Z0-9 ]', '', 'g'))) %
+				lower(public.immutable_unaccent(regexp_replace(${searchTerm}, '[^a-zA-Z0-9 ]', '', 'g')))
 			)
 			AND published = true
 			AND deleted = false
@@ -73,7 +73,7 @@ const searchName = async ({ input }: TRPCHandlerParams<TSearchNameSchema>) => {
 		LIMIT 20
 	`
 
-	const shaped = results.map(({ name, id, slug }) => ({ value: name, label: name, id, slug }))
+	const shaped = results.map(({ name, id, slug, score }) => ({ value: name, label: name, id, slug, score }))
 
 	return shaped
 }

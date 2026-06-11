@@ -318,6 +318,10 @@ model Organization {
   updatedAt          DateTime                 @updatedAt
   crisisResource     Boolean?
   crisisResourceSort Int?                     @unique
+  /// Materialized for V2 Search performance (GIN indexing)
+  attributeIds       String[]                 @default([])
+  /// Materialized for V2 Search performance (GIN indexing)
+  serviceIds         String[]                 @default([])
   attributes         AttributeSupplement[]
   notes              InternalNote[]
   hours              OrgHours[]
@@ -341,6 +345,8 @@ model Organization {
   associatedUsers    UserToOrganization[]
 
   @@index([name])
+  @@index([attributeIds], type: Gin)
+  @@index([serviceIds], type: Gin)
   @@index([published, deleted])
   @@index([slug])
   @@index([slug, published, deleted])

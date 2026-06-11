@@ -138,7 +138,10 @@ This is the current search behavior and will not change with advanced search:
 
 - **Decision**: In "Match Any" mode, use "Virtual Distance Reducers" to pull relevant results toward the top.
 - **National Pre-filtering**: "National" organizations are pre-filtered into a temporary candidate set before scoring to optimize calculations.
-- **Performance Index**: Implement **GIN Indexes** on attribute and service arrays via DB migration for near-instant lookups.
+- **Performance Index (Implemented)**:
+  - **Materialized Arrays**: `attributeIds` and `serviceIds` have been added as materialized columns on the `Organization` model to allow for O(1) array overlap (`&&`) filtering.
+  - **GIN Array Indexes**: Standard GIN indexes are applied to these materialized array columns via Prisma.
+  - **Functional Trigram Index**: A manual SQL migration implements a GIN index on the normalized name expression using `gin_trgm_ops` to support high-performance fuzzy matching.
 
 ### 4.4. Performance Safeguard
 
@@ -431,3 +434,4 @@ The updated implementation uses PostgreSQL's advanced text processing extensions
 5.  **Ranked Results**: Instead of a binary "yes/no", results are ordered by a similarity `score` (0.0 to 1.0), ensuring the closest matches appear first.
 6.  **Trust-the-Server UI**: Client-side filtering is disabled (`filter={() => true}`) to ensure the UI doesn't hide the "smart" matches found by the database.
 7.  **Adaptive Highlighting**: The UI highlighting logic uses a regex that ignores punctuation between characters, allowing "st johns" to correctly highlight "St. John's".
+8.  **Manual Migration Requirement**: Because Prisma cannot represent functional indexes or specific operator classes, the trigram index must be maintained in the `v2_search_gin_optimization` manual migration file.
