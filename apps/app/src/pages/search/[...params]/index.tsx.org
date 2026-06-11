@@ -27,6 +27,7 @@ import { LocationBasedAlertBanner } from '@weareinreach/ui/components/core/Locat
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
+import { AdvancedSearchToggle } from '@weareinreach/ui/components/sections/AdvancedSearchToggle'
 import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSupport'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
@@ -35,20 +36,14 @@ import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-interface SearchResultV2Metadata {
-	relevanceScore?: number
-	tier?: string
-	isLocal?: boolean
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const RecommendedLinksModal = dynamic<any>(() => import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal as any)) // eslint-disable-line @typescript-eslint/no-explicit-any
 
-// @ts-expect-error - Next Dynamic has trouble with polymorphic components
-const RecommendedLinksModal = dynamic(() =>
-	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal)
-)
-const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
-const ServiceFilter = dynamic(() =>
-	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
-)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const MoreFilter = dynamic<any>(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter as any)) // eslint-disable-line @typescript-eslint/no-explicit-any
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ServiceFilter = dynamic<any>(() => import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter as any)) // eslint-disable-line @typescript-eslint/no-explicit-any
 
 const PageIndexSchema = z.coerce.number().default(1)
 
@@ -101,7 +96,7 @@ const NoResults = memo(
 		const { t } = useTranslation('common')
 		return (
 			<Stack className={classes.noResultsStack}>
-				<Text>{t('search.no-results-adjust')}</Text>
+				<Text>{t('common:search.no-results-adjust')}</Text>
 				<CrisisSupport role='national'>
 					{crisisData.map((result) => (
 						<CrisisSupport.National data={result} key={result.id} />
@@ -118,7 +113,7 @@ const SearchResults = () => {
 	const { searchState, searchStateActions } = useSearchState()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
-	const isAdvanced = true
+	const [isAdvanced, setIsAdvanced] = useState(false)
 	const [advancedParams, setAdvancedParams] = useState<{
 		focuses: string[]
 	}>({ focuses: [] })
@@ -131,16 +126,29 @@ const SearchResults = () => {
 			try {
 				const focuses = savedFocuses ? (JSON.parse(savedFocuses) as string[]) : []
 				const order = savedOrder ? (JSON.parse(savedOrder) as string[]) : []
+
+				// Intersect the master order with active toggles to create the priority list
 				const orderedActive = order.filter((id) => focuses.includes(id))
-				setAdvancedParams({ focuses: orderedActive.length > 0 ? orderedActive : focuses })
+
+				setAdvancedParams({
+					focuses: orderedActive.length > 0 ? orderedActive : focuses,
+				})
 			} catch (e) {
 				setAdvancedParams({ focuses: [] })
 			}
 		}
 
-		updateAdvancedParams()
+		const checkMode = () => {
+			const mode = localStorage.getItem('ir_advanced_mode')
+			const isAdv = mode === 'true'
+			setIsAdvanced(isAdv)
+			if (isAdv) updateAdvancedParams()
+		}
+		checkMode()
+		window.addEventListener('ir_advanced_mode_changed', checkMode)
 		window.addEventListener('ir_focus_changed', updateAdvancedParams)
 		return () => {
+			window.removeEventListener('ir_advanced_mode_changed', checkMode)
 			window.removeEventListener('ir_focus_changed', updateAdvancedParams)
 		}
 	}, [])
@@ -157,168 +165,131 @@ const SearchResults = () => {
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
 	const [resultCount, setResultCount] = useState(0)
 	const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
-		Array.from({ length: 10 }, (_x, i) => <SearchResultCard key={i} loading index={0} />)
+		Array.from({ length: 10 }, (_x, i) => <SearchResultCard key={i} loading />)
 	)
 	const [loadingPage, setLoadingPage] = useState(false)
 
 	if (!queryParams.success) {
 		setError(true)
 	}
-
 	const [country, lon, lat, dist, unit] = queryParams.success
 		? queryParams.data
 		: (['US', 0, 0, 0, 'mi'] as const)
-
-	const currentSortBias = (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias
-
-	const searchInput = useMemo(() => {
-		const baseParams = {
-			lat,
-			lon,
-			dist,
-			unit,
-			skip,
-			take,
-			...(searchState.services.length ? { services: searchState.services } : {}),
-			...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-		}
-		return {
-			...baseParams,
-			version: 'v2' as const,
-			sortBias: currentSortBias,
-			focuses: advancedParams.focuses,
-		}
-	}, [
-		lat,
-		lon,
-		dist,
-		unit,
-		skip,
-		take,
-		searchState.services,
-		searchState.attributes,
-		currentSortBias,
-		advancedParams.focuses,
-	])
-
 	const {
+		isSuccess,
 		isFetching: searchIsFetching,
 		isLoading: searchIsLoading,
 		...searchQuery
-	} = api.organization.searchDistance.useQuery(searchInput, {
-		enabled: queryParams.success,
+	} = api.organization.searchDistance.useQuery(
+		(() => {
+			const label = isAdvanced ? 'V2 (ADVANCED)' : 'V1 (STANDARD)'
+
+			return isAdvanced
+				? {
+						lat,
+						lon,
+						dist,
+						unit,
+						skip,
+						take,
+						version: 'v2',
+						sortBias: (searchState as { sortBias?: 'DISTANCE' | 'RELEVANCE' }).sortBias,
+						focuses: advancedParams.focuses,
+						...(searchState.services.length ? { services: searchState.services } : {}),
+						...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+					}
+				: {
+						lat,
+						lon,
+						dist,
+						unit,
+						skip,
+						take,
+						...(searchState.services.length ? { services: searchState.services } : {}),
+						...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+					}
+		})(),
+		{
+			enabled: queryParams.success,
+		}
+	)
+
+	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({
+		cca2: country,
 	})
 
-	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({ cca2: country })
-
 	useEffect(() => {
-		if (loadingPage !== searchIsLoading) setLoadingPage(searchIsLoading)
+		if (loadingPage !== searchIsLoading) {
+			setLoadingPage(searchIsLoading)
+		}
 		if (searchQuery.data) {
 			setResultCount(searchQuery.data.resultCount)
 			setData(searchQuery.data)
 			setLoadingPage(false)
+
 			if (searchQuery.data.resultCount === 0) {
-				searchBoxEvent.zeroResults(searchState.searchTerm ?? '', 'location', searchState.services[0] || 'all')
-			} else {
-				searchBoxEvent.searchExecuted({
-					location: country,
-					services: searchState.services,
-					attributes: searchState.attributes,
-					searchTerm: searchState.searchTerm,
-					version: 'v2',
-					sortBias: currentSortBias,
-					focuses: advancedParams.focuses,
-				})
+				searchBoxEvent.zeroResults(searchState.searchTerm ?? '', searchState.params)
 			}
 		}
-	}, [
-		searchQuery.data,
-		searchIsLoading,
-		loadingPage,
-		searchState.searchTerm,
-		searchState.services,
-		searchState.attributes,
-		country,
-		currentSortBias,
-		advancedParams.focuses,
-	])
+	}, [searchQuery.data, searchIsLoading, loadingPage, searchState.searchTerm, searchState.params])
 
 	useEffect(() => {
 		if (data) {
-			const renderedTiers = new Set<string>()
-			const display = data.orgs.flatMap((result, index) => {
-				const items: JSX.Element[] = []
-				const currentTier = (result as SearchResultV2Metadata).tier
-
-				// Inject tier header when moving between proximity zones in Advanced Search
-				if (isAdvanced && currentTier && !renderedTiers.has(currentTier)) {
-					renderedTiers.add(currentTier)
-					const labelMap: Record<string, string> = {
-						NEIGHBORHOOD: t('common:search.neighborhood-description'),
-						LOCAL: t('common:search.local-description'),
-						REGION: t('common:search.region-description'),
-						EXTENDED_REGION: t('common:search.region-extended-description'),
-						NATIONAL: t('common:search.remote-national-description'),
-					}
-
-					items.push(
-						<Stack spacing={16} py={24} key={`tier-divider-${currentTier}`}>
-							<Divider
-								label={
-									<Text variant={variants.Text.utility2darkGray} align='center' weight={600}>
-										{labelMap[currentTier] || currentTier}
-									</Text>
-								}
-								labelPosition='center'
-							/>
-						</Stack>
+			setResultDisplay(
+				data.orgs.map((result, index) => {
+					return (
+						<SearchResultCard key={result.id} result={result} loading={loadingPage} index={skip + index} />
 					)
-				}
-
-				items.push(
-					<SearchResultCard
-						key={result.id}
-						result={result}
-						loading={loadingPage}
-						index={skip + index}
-						isAdvanced={isAdvanced}
-					/>
-				)
-				return items
-			})
-			setResultDisplay(display)
+				})
+			)
 		}
-	}, [data, loadingPage, skip, variants.Text.utility2darkGray, isAdvanced, t])
+	}, [data, loadingPage, skip])
 
-	useEffect(() => {
-		if (typeof router.query.page === 'string' && searchState.page !== router.query.page) {
-			searchStateActions.setPage(router.query.page)
-		}
-	}, [router.query.page, searchState.page, searchStateActions])
+	useEffect(
+		() => {
+			if (typeof router.query.page === 'string' && searchState.page !== router.query.page) {
+				searchStateActions.setPage(router.query.page)
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[router.query.page]
+	)
 
 	const nextSkip = useMemo(
 		() => PageIndexSchema.parse(router.query.page) * SEARCH_RESULT_PAGE_SIZE,
 		[router.query.page]
 	)
-
 	useEffect(() => {
 		if (
 			router.query.page &&
 			PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)
 		) {
-			apiUtils.organization.searchDistance.prefetch({
-				lat,
-				lon,
-				dist,
-				unit,
-				version: 'v2',
-				sortBias: currentSortBias,
-				focuses: advancedParams.focuses,
-				skip: nextSkip,
-				take,
-				...(searchState.services.length ? { services: searchState.services } : {}),
-				...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
-			})
+			if (isAdvanced) {
+				apiUtils.organization.searchDistance.prefetch({
+					lat,
+					lon,
+					dist,
+					unit,
+					version: 'v2',
+					sortBias: currentSortBias,
+					focuses: advancedParams.focuses,
+					skip: nextSkip,
+					take,
+					...(searchState.services.length ? { services: searchState.services } : {}),
+					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+				})
+			} else {
+				apiUtils.organization.searchDistance.prefetch({
+					lat,
+					lon,
+					dist,
+					unit,
+					skip: nextSkip,
+					take,
+					...(searchState.services.length ? { services: searchState.services } : {}),
+					...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+				})
+			}
 		}
 	}, [
 		data?.resultCount,
@@ -341,9 +312,11 @@ const SearchResults = () => {
 		if (queryParams.success && !compare(queryParams.data, searchState.params)) {
 			searchStateActions.setParams(queryParams.data.map((x) => x.toString()))
 		}
-	}, [queryParams.data, queryParams.success, searchState, searchState.params, searchStateActions])
+	}, [queryParams.data, queryParams.success, searchState.params, searchStateActions])
 
-	if (error) return <>Error</>
+	if (error) {
+		return <>Error</>
+	}
 	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
 
 	return (
@@ -351,15 +324,18 @@ const SearchResults = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
+
 			<RecommendedLinksModal component={'div'}>
 				<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
 			</RecommendedLinksModal>
+
 			<Grid.Col
 				xs={12}
 				sm={12}
 				pb={30}
 				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
 			>
+				<AdvancedSearchToggle />
 				<Group spacing={20} w='100%' className={classes.searchControls} align='flex-start'>
 					<Stack spacing={8} maw={{ md: '50%', base: '100%' }} w='100%'>
 						<SearchBox
@@ -375,7 +351,6 @@ const SearchResults = () => {
 								isFetching={searchIsFetching}
 								current={searchState.services}
 							/>
-							{/* @ts-expect-error - Next Dynamic has trouble with polymorphic components */}
 							<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
 								{t('more.filters')}
 							</MoreFilter>
@@ -425,14 +400,22 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient({ req, res })
+
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'user']),
-		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take, version: 'v2' }),
+		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
 		ssg.organization.getNatlCrisis.prefetch({ cca2: country }),
 		ssg.service.getFilterOptions.prefetch(),
 		ssg.attribute.getFilterOptions.prefetch(),
 	])
-	return { props: { trpcState: ssg.dehydrate(), ...(i18n.status === 'fulfilled' ? i18n.value : {}) } }
+	const props = {
+		trpcState: ssg.dehydrate(),
+		...(i18n.status === 'fulfilled' ? i18n.value : {}),
+	}
+
+	return {
+		props,
+	}
 }
 
 export default SearchResults

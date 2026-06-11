@@ -87,6 +87,11 @@ Since Google Analytics 4 is a "privacy-first" tool, it collects data but hides s
 | **Consent Service**  | Event | `service`             | The specific service for which consent was updated (e.g., 'ga4').       |
 | **Report Target**    | Event | `report_target`       | Whether a report is for a 'service' or 'organization'.                  |
 | **Issue Type**       | Event | `issue_type`          | The category of issue reported by a user.                               |
+| **Search Version**   | Event | `search_version`      | Tracks if the query used the V2 Relevance engine or V1 Standard.        |
+| **Sort Bias**        | Event | `sort_bias`           | Whether the user prioritized 'DISTANCE' or 'RELEVANCE'.                 |
+| **Search Focuses**   | Event | `search_focuses`      | The ordered list of Community Focus IDs used for bubbling.              |
+| **Relevance Score**  | Event | `relevance_score`     | The numeric score assigned to a result by the V2 engine.                |
+| **Proximity Tier**   | Event | `proximity_tier`      | The distance tier (NEIGHBORHOOD, REGION, etc.) of the result.           |
 
 ### 2. How to See All Tracked Events
 
@@ -155,10 +160,12 @@ To confirm that ZIP codes and search terms are being sent to Google Analytics co
 
 - **Identify Coverage Gaps**: Look at the `search_zero_results` event. If you see a high volume of `search_term` values (like "Housing" in a specific city) returning zero results, it's a signal that we need to add more providers in that area.
 - **Relevance Tracking**: Look at `position` for `profile_view`. If users are consistently clicking results at position 10 or higher, it means our search ranking algorithm isn't putting the most relevant things at the top.
+- **V2 Engine Evaluation**: Compare `relevance_score` across `profile_view` events. Higher scores for clicked items confirm the "bubbling" logic is working; low scores on clicks suggest the weights need adjustment.
 
 ### Conversion & Engagement
 
 - **Preferred Contact Methods**: Use the `link_type` dimension for `outbound_click`. Do users prefer to click the website link, or do they prefer to email directly?
+- **Proximity Influence**: Use `proximity_tier` on `profile_view` to see if users are willing to travel to the `REGION` tier for certain services (like legal) but stay in `NEIGHBORHOOD` for others (like food).
 - **Submission Rates**: Compare `report_submit_success` vs `report_open`. If 100 people open the form but only 5 submit it, the form might be too confusing or asking for too much info.
 
 ### Monitoring Consent Rates Over Time
