@@ -189,9 +189,7 @@ const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) =>
 					</Group>
 					{isAdvanced && result && 'relevanceScore' in result && (
 						<Text size='xs' color='dimmed' mt={-8} mb={8}>
-							Debug Score: {(result as { relevanceScore?: number }).relevanceScore ?? 'null'} | Dist:{' '}
-							{result.distance ?? 'N/A'} | Locality:{' '}
-							{(result as { isLocal?: boolean }).isLocal ? 'LOCAL' : 'REMOTE'} | Tier:{' '}
+							Locality: {(result as { isLocal?: boolean }).isLocal ? 'LOCAL' : 'REMOTE'} | Tier:{' '}
 							{(result as { tier?: string }).tier ?? 'N/A'}
 						</Text>
 					)}
