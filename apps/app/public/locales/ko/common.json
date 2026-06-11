@@ -11,8 +11,9 @@
 	"admin": {
 		"tab-organizations": "단체",
 		"tab-reports": "보고서",
-		"tab-users": "유저",
-		"tab-downloads": "다운로드"
+		"tab-users": "사용자",
+		"tab-downloads": "다운로드",
+		"no-access-message": "관리자 대시보드의 어떤 섹션에도 액세스할 권한이 없습니다."
 	},
 	"agree-disclaimer": "\"{{action}}\"을 선택하면 InReach의 <link1>개인정보 보안 정책</link1> 과 <link2>이용약관</link2>과 동의합니다.",
 	"alert-message": "알림 메시지",
@@ -87,7 +88,7 @@
 		"natl-find-help-now": "도움은 당장 구하세요",
 		"natl-these-verified": "<Text>이 자원은 검증됐으므로 미국의 LGBTQ+ 공동체에게 도움이 될 수 있습니다. 이 서비스는 <strong>원격으로 이용이 가능하며 기밀 유지 </strong>와<strong>무료입니다</strong>.</Text>",
 		"outside-service-area": "InReach는 {{country}}에서 작동하지 않습니다",
-		"only-in-north-america": "inReach는 북미 지역에서만 운영됩니다.",
+		"only-in-north-america": "InReach는 북미 지역에서만 운영됩니다.",
 		"who-this-serves": "<Text><strong>자원을 제공하는 수령인:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "현재 위치",
@@ -109,7 +110,7 @@
 	"edit-profile": "프로필 편집하기",
 	"email_professional": "전문 이메일",
 	"email_student-pro": "전문/학생 이메일",
-	"email-sent": "이메일 보냈습니다.",
+	"email-sent": "이메일로 보내진 링크에 접속하여 비밀번호를 재설정하세요.",
 	"enter-email-placeholder": "이메일 주소 입력하세요...",
 	"enter-password-placeholder": "비밀번호 입력하세요...",
 	"enter-review": "후기를 입력하세요...",
@@ -166,7 +167,7 @@
 	"language_choose": "언어를 선택하세요",
 	"language_common": "공통 언어",
 	"language_select_preferred": "선호하는 언어 선택",
-	"language_translations": "크라우드인 번역.",
+	"language_translations": "Crowdin 번역본.",
 	"language_update_button": "언어 업데이트",
 	"law-practice-other": "법률 사업 영역",
 	"law-practice-other-placeholder": "법률 사업 영역을 지정하십시오.",
@@ -257,9 +258,9 @@
 		"<textUtility4>(*지역 사회 검토자 계정은 유일한 예외입니다. 인구 통계 정보를 활용하여 지역 사회 검토자의 자원봉사 경험과 영향력 수준을 개선합니다. 지역 사회 검토자 계정의 위치는 필수입니다. 나머지 인구 통계 정보는 선택이며 사용자의 기록과 연결돼 있습니다. 개인 계정 정보 보호 설정에 승인을 주시면 언급한 데이터는 InReach 직원에게 공유 할 수 있습니다. 공개 프로필을 공유하면 다른 사용자는 후기를 더 확신하게 \n 자신할 수 있습니다.)</textUtility4>",
 		"<textDarkGray>사용자 인구 통계는 InReach의 영향을 기록하고 제품 결정을 평가하는 데 도움이 됩니다. 사용자는 자발적으로 정보를 공유해 주셔서 감사합니다. 사용자의 개인 정보와 익명성을 보호하기 위해 조치합니다.</textDarkGray>",
 		"<textDarkGray><title2>사이트 사용 분석 자료</title2></textDarkGray>",
-		"<textDarkGray>InReach는 Google Analytics를 사용하여 앱 사용 데이터(예: 사용자 검색과 다른 행동)를 익명으로 분석합니다. Google Analytics는 GDPR을 준수하며 개인 식별 정보를 수집하지 않으며 모든 데이터를 익명으로 수집합니다. 사용자를 확인할 수 없으며 웹사이트 전체에 추적하지 않습니다.</textDarkGray>",
+		"<textDarkGray>InReach는 사용자의 동의하에 Google 애널리틱스를 사용하여 앱 사용 데이터(예: 사용자 검색과 다른 행동)를 익명으로 분석하고 추적합니다. Google 애널리틱스는 일반 데이터 보호 규정(GDPR)을 준수하며 개인 식별 정보를 수집하지 않고 수집된 모든 데이터를 익명화합니다. 사용자는 식별될 수 없으며 광고 목적으로 추적되지 않습니다.</textDarkGray>",
 		"<textDarkGray>InReach는 Vercel Analytics를 사용하여 웹 자료와 성능을 분석합니다. Vercel Analytics은 개별 방문자와 IP 주소에 연결되지 않으며 사이트에 사용하는 정보를 제공하지 않습니다. 데이터 포인트의 기록은 익명이며, 분석 기능은 Vercel 페이지 전체에 브라우징 세션을 재구성하거나 사용자를 식별할 수 있는 정보를 저장하지 않습니다.</textDarkGray>",
-		"<textDarkGray>여기 <linkCookieSettings>를 클릭하여 언제든지 쿠키 기본 설정을 업데이트할 수 있습니다</linkCookieSettings>.</textDarkGray>"
+		"<textDarkGray> 이 링크<linkCookieSettings>를 클릭하여 언제든지 쿠키 기본 설정을 업데이트할 수 있습니다</linkCookieSettings>.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>개인정보 보호정책 전문을 자세히 읽어 보세요</linkPolicy>",
 	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>개인정보 보호정책</title2>"],
@@ -269,23 +270,23 @@
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>로그인 먼저 해야 합니다.</title2>\n<textDarkGray>무료 InReach 계정으로 추가 기능을 접근할 수 있습니다.</textDarkGray>",
 	"recommended-links": {
 		"emoji": "🌈",
-		"title": "권장 링크",
-		"body": "귀하의 권리에 대한 자세한 정보를 찾아보십시오.",
+		"title": "추천 링크",
+		"body": "귀하의 권리에 대한 자세한 정보 찾아보기.",
 		"buttons": {
 			"btn-1": {
-				"text": "안티트랜스 리스크 맵 (에린 리드)",
-				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-trans-risk"
+				"text": "반젠더주의 위험 평가 지도 (에린 인 더 모닝)",
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-legal-risk-assessment"
 			},
 			"btn-2": {
 				"text": "신분증 문서 센터 (A4TE)",
 				"link": "https://transequality.org/documents"
 			},
 			"btn-3": {
-				"text": "LGBTQ+ 이민자의 권리 (이민 평등)",
+				"text": "LGBTQ+ 이민자 권리 (이민 평등)",
 				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
 			},
 			"btn-4": {
-				"text": "망명 자료 (CWS)",
+				"text": "망명 지원 자료 (CWS)",
 				"link": "https://asylumandborderresources.org/"
 			},
 			"btn-5": {
@@ -297,7 +298,7 @@
 	"remote-services": "원격 서비스 이용 가능합니다",
 	"remote-services-page-title": "원격 서비스",
 	"report": {
-		"thank-you": "모두를 위해 더 나은 inReach를 만들 수 있도록 도와주셔서 감사합니다!",
+		"thank-you": "모두를 위해 더 나은 InReach를 만들 수 있도록 도와주셔서 감사합니다!",
 		"thank-you-message": "저희 팀이 제출하신 내용을 검토하고, 정보를 확인한 후 기준에 부합하는 경우 그에 따라 변경합니다."
 	},
 	"reset-password": "비밀번호 재설정하세요",
@@ -315,14 +316,27 @@
 	"saved": "저장됐습니다",
 	"search": {
 		"include-remote": "원격 서비스 포함하기",
+		"local": "현지",
+		"local-description": "현지 자원 (11-25마일)",
 		"location-placeholder": "도시/우편번호 입력하세요...",
 		"location-placeholder-searchby": "도시/우편번호로 검색하세요...",
+		"locality-label": "소재지",
 		"look-up-org": "단체 이름으로 검색하기",
+		"na": "해당 사항 없음",
+		"neighborhood": "인근 지역",
+		"neighborhood-description": "인근 자원 (10마일 미만)",
 		"no-results": "검색 결과가 없습니다. 다시 시도해보세요.",
 		"no-results-adjust": "검색한 결과가 없습니다. 선택한 위치나 필터를 조정하세요.",
 		"organization-placeholder": "단체 이름 입력하세요...",
 		"organization-placeholder-searchby": "단체 이름으로 검색하세요...",
-		"suggest-resource": "찾은 내용을 찾을 수 없나요? <strong>새로운 단체를 제안하세요</strong>."
+		"region": "지역",
+		"region-description": "지역 자원 (26-50마일)",
+		"region-extended": "확장 지역",
+		"region-extended-description": "확장 지역 자원 (51-200마일)",
+		"remote-national": "원격의",
+		"remote-national-description": "아래 항목은 필터 조건에 부합하지만, 실제 위치와 관계없이 이용 가능한 원격/국가 자원입니다.",
+		"suggest-resource": "찾은 내용을 찾을 수 없나요? <strong>새로운 단체를 제안하세요</strong>.",
+		"tier-label": "등급"
 	},
 	"select": {
 		"base": "{{- item}}선택"

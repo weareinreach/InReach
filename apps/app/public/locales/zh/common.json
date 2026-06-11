@@ -12,7 +12,8 @@
 		"tab-organizations": "组织",
 		"tab-reports": "报告",
 		"tab-users": "用户",
-		"tab-downloads": "下载"
+		"tab-downloads": "下载",
+		"no-access-message": "您没有权限访问管理员面板的任何部分。"
 	},
 	"agree-disclaimer": "点击\"{{action}}\"，您同意InReach的 <link1>隐私政策</link1> 和 <link2>使用条款</link2>。",
 	"alert-message": "警报消息",
@@ -315,14 +316,27 @@
 	"saved": "已保存",
 	"search": {
 		"include-remote": "包括远程服务",
+		"local": "本地",
+		"local-description": "当地资源（11-25英里）",
 		"location-placeholder": "输入城市或邮政编码...",
 		"location-placeholder-searchby": "通过城市或邮政编码搜索...",
+		"locality-label": "地点",
 		"look-up-org": "按名称查找组织",
+		"na": "无",
+		"neighborhood": "居民区",
+		"neighborhood-description": "邻里资源 (<= 10英里)",
 		"no-results": "未找到任何结果。请再试一次。",
 		"no-results-adjust": "未找到与您的搜索相关的结果。尝试调整您选择的位置或过滤器。",
 		"organization-placeholder": "输入组织名称...",
 		"organization-placeholder-searchby": "按组织名称搜索...",
-		"suggest-resource": "找不到？<1>建议一个你认为应该包括的组织</1>。"
+		"region": "地区",
+		"region-description": "区域资源（26-50英里）",
+		"region-extended": "扩展区域",
+		"region-extended-description": "扩展的区域资源（51-200英里）",
+		"remote-national": "远程",
+		"remote-national-description": "下面的条目与您的过滤器匹配，但是是您可以使用的远程/国家资源，不管您的实际位置如何。",
+		"suggest-resource": "找不到？<1>建议一个你认为应该包括的组织</1>。",
+		"tier-label": "层"
 	},
 	"select": {
 		"base": "选择 {{- item}}"

@@ -92,7 +92,7 @@
 		"immigration-detention": "이민자 수용소",
 		"legal-advice": "법률상담",
 		"legal-hotlines": "법률 핫라인",
-		"legal-info-referrals": "법률 정보 및 추천",
+		"legal-info-referrals": "법률 정보 및 추천서",
 		"name-and-gender-change": "개명과 법률 성전환",
 		"refugee-claim": "난민 신청",
 		"residency": "거주",
@@ -122,14 +122,14 @@
 		"trans-health-hormone-therapy": "트랜스 건강 - 호르몬 요법",
 		"trans-health-primary-care": "트랜스 건강 - 일차 진료",
 		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료",
-		"trans-health-youth-care": "트랜스 건강 - 청소년 진료"
+		"trans-health-youth-care": "트랜스젠더 - 청소년 진료"
 	},
 	"mental-health": {
 		"bipoc-support-groups": "BIPOC 지원단",
 		"CATEGORYNAME": "정신건강",
 		"family-support-groups": "가족 지원단",
 		"hotlines": "핫라인",
-		"mental-health-info-referrals": "정신 건강 정보 및 추천",
+		"mental-health-info-referrals": "정신 건강 정보 및 추천서",
 		"private-therapy-and-counseling": "사적 요법과 상담",
 		"psychological-evaluations-for-asylum-claim": "망명 신청을 위한 심리평가",
 		"psychological-evaluations-for-refugee-claim": "난민 신청을 위한 심리평가",

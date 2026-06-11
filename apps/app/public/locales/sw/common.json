@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
 	"agree-disclaimer": "Kwa kubofya \"{{action}}\" unakubaliana na InReach <link1>Sera ya faragha</link1> na <link2>Masharti ya Matumizi</link2>.",
 	"alert-message": "Ujumbe wa tahadhari",
@@ -316,14 +317,27 @@
 	"saved": "Kuokolewa",
 	"search": {
 		"include-remote": "Jumuisha huduma za mbali",
+		"local": "Local",
+		"local-description": "Local Resources (11 - 25 miles)",
 		"location-placeholder": "Ingiza jiji au msimbo wa zip...",
 		"location-placeholder-searchby": "Tafuta kwa jiji au msimbo wa posta...",
+		"locality-label": "Locality",
 		"look-up-org": "Tafuta shirika kwa jina",
+		"na": "N/A",
+		"neighborhood": "Neighborhood",
+		"neighborhood-description": "Neighborhood Resources (<= 10 miles)",
 		"no-results": "Hakuna matokeo yaliyopatikana. Tafadhali jaribu tena.",
 		"no-results-adjust": "Hakuna matokeo yaliyopatikana ya utafutaji wako. Jaribu kurekebisha eneo ulilochagua au vichujio.",
 		"organization-placeholder": "Ingiza jina la shirika...",
 		"organization-placeholder-searchby": "Tafuta kwa jina la shirika...",
-		"suggest-resource": "Haiwezi kuipata? <1>Pendekeza shirika unalofikiria</1> linapaswa kujumuishwa."
+		"region": "Region",
+		"region-description": "Regional Resources (26 - 50 miles)",
+		"region-extended": "Extended Region",
+		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
+		"remote-national": "Remote",
+		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"suggest-resource": "Haiwezi kuipata? <1>Pendekeza shirika unalofikiria</1> linapaswa kujumuishwa.",
+		"tier-label": "Tier"
 	},
 	"select": {
 		"base": "Chagua {{- item}}"

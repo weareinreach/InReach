@@ -12,7 +12,8 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
-		"tab-downloads": "Downloads"
+		"tab-downloads": "Downloads",
+		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
 	"agree-disclaimer": "با کلیک کردن بر روی \"{{action}}\" شما موافقت می کنید <link1>سیاست حفظ حریم خصوصی</link1> و <link2>شرایط استفاده</link2>.",
 	"alert-message": "پیام هشدار",
@@ -316,14 +317,27 @@
 	"saved": "ذخیره شده",
 	"search": {
 		"include-remote": "شامل خدمات از راه دور",
+		"local": "Local",
+		"local-description": "Local Resources (11 - 25 miles)",
 		"location-placeholder": "شهر یا کد پستی را وارد کنید...",
 		"location-placeholder-searchby": "جستجو بر اساس شهر یا کد پستی...",
+		"locality-label": "Locality",
 		"look-up-org": "یک سازمان را با نام جستجو کنید",
+		"na": "N/A",
+		"neighborhood": "Neighborhood",
+		"neighborhood-description": "Neighborhood Resources (<= 10 miles)",
 		"no-results": "نتیجه ای یافت نشد. لطفا دوباره امتحان کنید",
 		"no-results-adjust": "هیچ نتیجه ای برای جستجوی شما یافت نشد. مکان یا فیلترهای انتخابی خود را تنظیم کنید.",
 		"organization-placeholder": "نام سازمان را وارد کنید...",
 		"organization-placeholder-searchby": "جستجو بر اساس نام سازمان...",
-		"suggest-resource": "نمی توانید آن را پیدا کنید؟ <1>پیشنهاد یک سازمان</1> شما فکر می کنم باید شامل شود."
+		"region": "Region",
+		"region-description": "Regional Resources (26 - 50 miles)",
+		"region-extended": "Extended Region",
+		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
+		"remote-national": "Remote",
+		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"suggest-resource": "نمی توانید آن را پیدا کنید؟ <1>پیشنهاد یک سازمان</1> شما فکر می کنم باید شامل شود.",
+		"tier-label": "Tier"
 	},
 	"select": {
 		"base": "{{- item}} را انتخاب کنید"
