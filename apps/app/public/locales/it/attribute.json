@@ -11,15 +11,11 @@
 		"wheelchair-accessible_false": "Not Accessible",
 		"wheelchair-accessible": "Accessible"
 	},
-<<<<<<< HEAD
-	"alerts": { "CATEGORYNAME": "Alerts", "info": "Informational Alert", "warn": "Warning Alert" },
-=======
 	"alerts": {
 		"CATEGORYNAME": "Alerts",
 		"info": "Informational Alert",
 		"warn": "Warning Alert"
 	},
->>>>>>> 4fc8907b (correct folder for italian)
 	"community": {
 		"adults": "\"adult\" defined as 18 years or older",
 		"africa-immigrant": "Opportunities that serve those from African countries",
@@ -70,13 +66,6 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Cost",
-<<<<<<< HEAD
-		"cost-fees": "Incurs a cost",
-		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-free": "Free of cost"
-	},
-	"crisis-support-community": { "elders": "Elders", "general-lgbtq": "General LGBTQ+" },
-=======
 		"cost-accepts-insurance": "This service accepts insurance",
 		"cost-fees": "Incurs a cost",
 		"cost-financial-assistance-available": "Financial assistance available",
@@ -90,17 +79,13 @@
 		"elders": "Elders",
 		"general-lgbtq": "General LGBTQ+"
 	},
->>>>>>> 4fc8907b (correct folder for italian)
 	"eligibility": {
 		"CATEGORYNAME": "Eligibility Requirements",
 		"elig-age_max": "Under {{max}}",
 		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"elig-age": "Age eligibility",
-<<<<<<< HEAD
-=======
 		"elig-age_error": "Please specify min, max, or an age range",
->>>>>>> 4fc8907b (correct folder for italian)
 		"other-describe": "Other (free text description)",
 		"req-medical-insurance": "REQUIRES medical insurance",
 		"req-photo-id": "REQUIRES a photo ID",
@@ -122,12 +107,8 @@
 		"CATEGORYNAME": "Organization Leadership",
 		"immigrant-led": "Immigrant-led",
 		"lgbtq-led": "LGBTQ+ Led",
-<<<<<<< HEAD
-		"trans-led": "Transgender-led"
-=======
 		"trans-led": "Transgender-led",
 		"women-led": "Women-led"
->>>>>>> 4fc8907b (correct folder for italian)
 	},
 	"serviceaccess": {
 		"accessemail": "Access Instructions - Email",
@@ -156,17 +137,12 @@
 		"trans-masc": "Trans Men/Trans Masculine",
 		"trans-youth-focus": "Trans Youth"
 	},
-<<<<<<< HEAD
-	"sys": { "CATEGORYNAME": "System" },
-	"tpop": { "other": "Target Population - Other" },
-=======
 	"sys": {
 		"CATEGORYNAME": "System"
 	},
 	"tpop": {
 		"other": "Target Population - Other"
 	},
->>>>>>> 4fc8907b (correct folder for italian)
 	"userlawpractice": {
 		"CATEGORYNAME": "Law Practice Options",
 		"corp-law-firm": "Corporate law firm",
