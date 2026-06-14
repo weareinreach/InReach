@@ -1,4 +1,5 @@
 // codegen:start {preset: barrel, include: ["./*.tsx", "./**/index.tsx"], exclude: "*.stories.tsx"}
+export * from './AdvancedSearchToggle'
 export * from './CallOut'
 export * from './ContactSection/index'
 export * from './CrisisSupport/index'
@@ -12,6 +13,8 @@ export * from './Photos'
 export * from './Reviews'
 export * from './SearchResultSidebar'
 export * from './ServicesInfo'
+export * from './SortBiasSelector'
+export * from './SortResults'
 export * from './SuggestOrg/index'
 export * from './VisitCard'
 // codegen:end

@@ -1,7 +1,9 @@
 /* eslint-disable i18next/no-literal-string */
 import {
+	Button,
 	createStyles,
 	Divider,
+	Drawer,
 	Grid,
 	Group,
 	rem,
@@ -10,7 +12,7 @@ import {
 	Text,
 	useMantineTheme,
 } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
+import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import compare from 'just-compare'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
@@ -48,6 +50,9 @@ const RecommendedLinksModal = dynamic(() =>
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
+)
+const SortResults = dynamic(() =>
+	import('@weareinreach/ui/components/sections/SortResults').then((mod) => mod.SortResults)
 )
 
 const PageIndexSchema = z.coerce.number().default(1)
@@ -117,13 +122,15 @@ const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
 	const { searchState, searchStateActions } = useSearchState()
 	const theme = useMantineTheme()
-	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	const [mounted, setMounted] = useState(false)
+	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	const isAdvanced = true
 	const [advancedParams, setAdvancedParams] = useState<{
 		focuses: string[]
 	}>({ focuses: [] })
 
 	useEffect(() => {
+		setMounted(true)
 		const updateAdvancedParams = () => {
 			const savedFocuses = localStorage.getItem('ir_active_focuses')
 			const savedOrder = localStorage.getItem('ir_focus_order')
@@ -344,6 +351,10 @@ const SearchResults = () => {
 	}, [queryParams.data, queryParams.success, searchState, searchState.params, searchStateActions])
 
 	if (error) return <>Error</>
+	if (!mounted) {
+		return null
+	}
+
 	const showAlertMessage = ['PW', 'AS', 'UM', 'MP', 'MH', 'US', 'VI', 'GU', 'PR'].includes(country)
 
 	return (
@@ -381,7 +392,7 @@ const SearchResults = () => {
 							</MoreFilter>
 						</Group>
 					</Stack>
-					{isTablet && (
+					{isMobile && (
 						<>
 							<Divider w='100%' />
 							<Skeleton visible={searchIsFetching}>
@@ -406,6 +417,14 @@ const SearchResults = () => {
 				) : (
 					<>
 						<LocationBasedAlertBanner lat={lat} lon={lon} type='secondary' />
+						{isMobile && (
+							<SortResults
+								resultCount={resultCount}
+								loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
+							>
+								{t('common:sort.results')}
+							</SortResults>
+						)}
 						{resultDisplay}
 						<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 					</>
