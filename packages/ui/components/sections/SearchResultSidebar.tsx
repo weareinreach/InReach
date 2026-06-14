@@ -56,7 +56,7 @@ const SortableFocusSwitch = ({
 			{isSelected && !disabled && (
 				<Icon icon='carbon:draggable' {...attributes} {...listeners} style={{ cursor: 'grab' }} />
 			)}
-			<Switch value={id} label={label} style={{ flex: 1 }} />
+			<Switch value={id} label={label} style={{ flex: 1 }} disabled={disabled} />
 		</Group>
 	)
 }
@@ -64,11 +64,14 @@ const SortableFocusSwitch = ({
 export const SearchResultSidebar = ({
 	resultCount,
 	loadingManager,
-	isAdvanced,
+	isAdvanced = false,
+	disabled = false,
+	onlySort = false,
 }: SearchResultSidebarProps) => {
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
+	const isInteractionDisabled = !isAdvanced || resultCount === 0 || disabled
 	const [activeFocuses, setActiveFocuses] = useState<string[]>([])
 	const [focusOrder, setFocusOrder] = useState<string[]>([])
 
@@ -153,10 +156,12 @@ export const SearchResultSidebar = ({
 	}
 
 	return (
-		<Stack spacing={32} maw={300}>
-			<Skeleton visible={typeof resultCount !== 'number'}>
-				<Text variant={variants.Text.utility1}>{t('count.result', { count: resultCount })}</Text>
-			</Skeleton>
+		<Stack spacing={32} maw={300} align={onlySort ? 'center' : 'flex-start'}>
+			{!onlySort && (
+				<Skeleton visible={typeof resultCount !== 'number'}>
+					<Text variant={variants.Text.utility1}>{t('count.result', { count: resultCount })}</Text>
+				</Skeleton>
+			)}
 
 			<Switch.Group
 				label={t('sort.by-lgbtq-focus')}
@@ -183,7 +188,7 @@ export const SearchResultSidebar = ({
 											id={id}
 											label={t(`sort.${SIDEBAR_TAG_CONFIG[item.tag] || item.tag}`)}
 											isSelected={activeFocuses.includes(id)}
-											disabled={!isAdvanced}
+											disabled={isInteractionDisabled}
 										/>
 									)
 								})}
@@ -201,24 +206,32 @@ export const SearchResultSidebar = ({
 				)}
 			</Switch.Group>
 
-			<Divider />
+			{!onlySort && (
+				<>
+					<Divider />
 
-			{/* <SearchDistance />
+					{/* <SearchDistance />
 			<Divider /> */}
 
-			<SearchBox
-				type='organization'
-				label={<Title order={3}>{t('search.look-up-org')}</Title>}
-				loadingManager={loadingManager}
-				pinToLeft
-			/>
-			<Divider mt={-10} />
-			{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-			<Button variant={variants.Button.primaryLg} component={Link as any} {...({ href: '/suggest' } as any)}>
-				{' '}
-				{t('suggest-a-resource')}
-			</Button>
-			<AntiHateMessage />
+					<SearchBox
+						type='organization'
+						label={<Title order={3}>{t('search.look-up-org')}</Title>}
+						loadingManager={loadingManager}
+						pinToLeft
+					/>
+					<Divider mt={-10} />
+					{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+					<Button
+						variant={variants.Button.primaryLg}
+						component={Link as any}
+						{...({ href: '/suggest' } as any)}
+					>
+						{' '}
+						{t('suggest-a-resource')}
+					</Button>
+					<AntiHateMessage />
+				</>
+			)}
 		</Stack>
 	)
 }
@@ -230,4 +243,6 @@ interface SearchResultSidebarProps {
 		isLoading: boolean
 	}
 	isAdvanced?: boolean
+	disabled?: boolean
+	onlySort?: boolean
 }
