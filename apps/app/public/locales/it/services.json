@@ -23,7 +23,14 @@
 		"CATEGORYNAME": "Computers and Internet",
 		"computers-and-internet": "Computers and internet"
 	},
+<<<<<<< HEAD
 	"crisis-support": { "CATEGORYNAME": "Crisis Support", "crisis-support": "Crisis support" },
+=======
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis support"
+	},
+>>>>>>> 4fc8907b (correct folder for italian)
 	"education-and-employment": {
 		"career-counseling": "Career counseling",
 		"CATEGORYNAME": "Education and Employment",
@@ -98,7 +105,13 @@
 		"t-visa": "T visa",
 		"u-visa": "U visa"
 	},
+<<<<<<< HEAD
 	"mail": { "CATEGORYNAME": "Mail" },
+=======
+	"mail": {
+		"CATEGORYNAME": "Mail"
+	},
+>>>>>>> 4fc8907b (correct folder for italian)
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 services",
