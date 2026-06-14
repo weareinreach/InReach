@@ -1,7 +1,9 @@
 // import { type GetServerSideProps } from 'next'
 import {
+	Button,
 	createStyles,
 	Divider,
+	Drawer,
 	Grid,
 	Group,
 	rem,
@@ -11,7 +13,7 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
+import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
@@ -32,6 +34,9 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
 const ServiceFilter = dynamic(() =>
 	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
+)
+const SortResults = dynamic(() =>
+	import('@weareinreach/ui/components/sections/SortResults').then((mod) => mod.SortResults)
 )
 const useStyles = createStyles((theme) => ({
 	searchControls: {
@@ -72,19 +77,34 @@ const notBlank = (value?: string) => !!value && value.length > 0
 
 const OutsideServiceArea = () => {
 	const [loading, setLoading] = useState(false)
+	const [mounted, setMounted] = useState(false)
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
-	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	const isAdvanced = true
 	const router = useRouter<'/search/intl/[country]'>()
 
 	useEffect(() => {
+		setMounted(true)
 		if (!router.isReady && !loading) {
 			setLoading(true)
 		} else if (router.isReady && loading) {
 			setLoading(false)
 		}
 	}, [router.isReady, router.isFallback, loading])
+
+	useEffect(() => {
+		if (mounted && router.isReady && typeof router.query.country === 'string') {
+			const country = router.query.country.toUpperCase()
+			if (['US', 'CA', 'MX'].includes(country)) {
+				void router.replace({
+					pathname: '/search/[...params]',
+					query: { params: [country, '0', '0', '0', 'mi'] },
+				})
+			}
+		}
+	}, [mounted, router.isReady, router.query.country, router])
 
 	const { data } = api.organization.getIntlCrisis.useQuery(
 		{ cca2: router.query.country ?? '' },
@@ -94,6 +114,10 @@ const OutsideServiceArea = () => {
 	const countryTranslate = new Intl.DisplayNames(router.locale, { type: 'region' })
 
 	const resultCount = 0
+
+	if (!mounted) {
+		return null
+	}
 
 	return (
 		<>
@@ -112,7 +136,7 @@ const OutsideServiceArea = () => {
 							{t('more.filters')}
 						</MoreFilter>
 					</Group>
-					{isTablet && (
+					{isMobile && (
 						<>
 							<Divider w='100%' />
 							<Skeleton visible={typeof resultCount !== 'number'}>
@@ -125,17 +149,32 @@ const OutsideServiceArea = () => {
 				</Group>
 			</Grid.Col>
 			<Grid.Col className={classes.hideMobile}>
-				<SearchResultSidebar resultCount={resultCount} loadingManager={{ setLoading, isLoading: loading }} />
+				<SearchResultSidebar
+					resultCount={resultCount}
+					loadingManager={{ setLoading, isLoading: loading }}
+					isAdvanced={isAdvanced}
+				/>
 			</Grid.Col>
 			<Grid.Col xs={12} sm={8} md={8}>
 				<Stack spacing={48}>
-					<Title order={2}>
-						<Skeleton visible={loading}>
-							{t('common:crisis-support.outside-service-area', {
-								country: countryTranslate.of(router.query.country ?? ''),
-							})}
-						</Skeleton>
-					</Title>
+					<Stack spacing={16}>
+						<Title order={2}>
+							<Skeleton visible={loading}>
+								{t('common:crisis-support.outside-service-area', {
+									country: countryTranslate.of(router.query.country ?? ''),
+								})}
+							</Skeleton>
+						</Title>
+						{isMobile && (
+							<SortResults
+								resultCount={resultCount}
+								loadingManager={{ setLoading, isLoading: loading }}
+								disabled={resultCount === 0}
+							>
+								{t('common:sort.results')}
+							</SortResults>
+						)}
+					</Stack>
 					<Skeleton visible={loading}>
 						<CrisisSupport role='international'>
 							{data?.map((resource) => <CrisisSupport.International data={resource} key={resource.id} />)}
