@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-{ "fax": "Fax", "hotline": "Hotline", "office": "Office", "sms": "SMS", "whatsapp": "WhatsApp" }
-=======
 {
 	"fax": "Fax",
 	"hotline": "Hotline",
@@ -8,4 +5,3 @@
 	"sms": "SMS",
 	"whatsapp": "WhatsApp"
 }
->>>>>>> 4fc8907b (correct folder for italian)

@@ -123,23 +123,6 @@
 	"pr-villalba": "Villalba",
 	"pr-yabucoa": "Yabucoa",
 	"pr-yauco": "Yauco",
-<<<<<<< HEAD
-	"type-city_one": "city",
-	"type-city_other": "cities",
-	"type-county_one": "county",
-	"type-county_other": "counties",
-	"type-district_one": "district",
-	"type-district_other": "districts",
-	"type-outlying-area_one": "outlying area",
-	"type-outlying-area_other": "outlying areas",
-	"type-province_one": "province",
-	"type-province_other": "provinces",
-	"type-state_one": "state",
-	"type-state_other": "states",
-	"type-territory_one": "territory",
-	"type-territory_other": "territories",
-=======
->>>>>>> 4fc8907b (correct folder for italian)
 	"us-alabama": "Alabama",
 	"us-alabama-autauga-county": "Autauga",
 	"us-alabama-baldwin-county": "Baldwin",
@@ -3333,9 +3316,6 @@
 	"us-wyoming-teton-county": "Teton",
 	"us-wyoming-uinta-county": "Uinta",
 	"us-wyoming-washakie-county": "Washakie",
-<<<<<<< HEAD
-	"us-wyoming-weston-county": "Weston"
-=======
 	"us-wyoming-weston-county": "Weston",
 	"type-city_one": "city",
 	"type-city_other": "cities",
@@ -3351,5 +3331,4 @@
 	"type-state_other": "states",
 	"type-territory_one": "territory",
 	"type-territory_other": "territories"
->>>>>>> 4fc8907b (correct folder for italian)
 }
