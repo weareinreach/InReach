@@ -35,6 +35,13 @@ export const translatedLangs = [
 		groupCommon: true,
 	},
 	{
+		nativeName: 'Italiano',
+		localeCode: 'it',
+		languageName: 'Italian',
+		activelyTranslated: true,
+		groupCommon: null,
+	},
+	{
 		nativeName: '日本語',
 		localeCode: 'ja',
 		languageName: 'Japanese',
@@ -77,8 +84,8 @@ export const translatedLangs = [
 		groupCommon: null,
 	},
 ] as const
-export const locales = ['en', 'es', 'fr', 'ar', 'zh', 'ja', 'ko', 'pl', 'pt', 'ru', 'uk'] as const
-export const localeList = ['en', 'es', 'fr', 'ar', 'zh', 'ja', 'ko', 'pl', 'pt', 'ru', 'uk']
+export const locales = ['en', 'es', 'fr', 'ar', 'zh', 'it', 'ja', 'ko', 'pl', 'pt', 'ru', 'uk'] as const
+export const localeList = ['en', 'es', 'fr', 'ar', 'zh', 'it', 'ja', 'ko', 'pl', 'pt', 'ru', 'uk']
 export const languageList = [
 	{ label: 'English', value: 'en', description: 'English', common: true },
 	{ label: 'Spanish', value: 'es', description: 'Español', common: true },
@@ -172,8 +179,8 @@ export const languageList = [
 	{ label: 'Irish', value: 'ga', description: 'Gaeilge', common: false },
 	{ label: 'Italian', value: 'it', description: 'Italiano', common: false },
 	{ label: 'Japanese', value: 'ja', description: '日本語', common: false },
-	{ label: 'Javanese', value: 'jw', description: 'ꦧꦱꦗꦮ', common: false },
 	{ label: 'Javanese', value: 'jv', description: 'Basa jawa', common: false },
+	{ label: 'Javanese', value: 'jw', description: 'ꦧꦱꦗꦮ', common: false },
 	{ label: 'Kalaallisut', value: 'kl', description: 'Kalaallisut', common: false },
 	{ label: 'Kannada', value: 'kn', description: 'ಕನ್ನಡ', common: false },
 	{ label: 'Kanuri', value: 'kr', description: 'Kanuri', common: false },
