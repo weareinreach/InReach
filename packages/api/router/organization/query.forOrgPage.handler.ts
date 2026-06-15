@@ -8,11 +8,11 @@ import { formatAddressVisiblity } from '../location/lib.formatAddressVisibility'
 
 const forOrgPage = async ({ input }: TRPCHandlerParams<TForOrgPageSchema>) => {
 	try {
-		const { slug } = input
+		const { slug, includeArchived } = input
 		const org = await prisma.organization.findUniqueOrThrow({
 			where: {
 				slug,
-				...isPublic,
+				...(includeArchived ? {} : isPublic),
 			},
 			select: {
 				id: true,
@@ -28,7 +28,7 @@ const forOrgPage = async ({ input }: TRPCHandlerParams<TForOrgPageSchema>) => {
 					select: { id: true },
 				},
 				locations: {
-					where: isPublic,
+					where: includeArchived ? {} : isPublic,
 					select: {
 						id: true,
 						street1: true,
