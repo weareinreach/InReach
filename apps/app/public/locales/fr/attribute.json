@@ -71,8 +71,8 @@
 		"cost-financial-assistance-available": "Assistance financière disponible",
 		"cost-sliding-scale": "Coûts soumis à des tarifs dégressifs",
 		"cost-free": "Gratuit",
-		"cost-from": "De {{price}}",
-		"cost-upTo": "Jusqu'à {{price}}",
+		"cost-from": "De {{prix}}",
+		"cost-upTo": "Jusqu'à {{prix}}",
 		"cost-range": "{{prix}}"
 	},
 	"crisis-support-community": {
@@ -96,8 +96,8 @@
 		"time-appointment-required": "Rendez-vous obligatoire"
 	},
 	"lang": {
-		"all-languages-by-interpreter": "Toutes les langues via l'interprète",
-		"american-sign-language": "Langue des signes américaine",
+		"all-languages-by-interpreter": "Assistance d'interprétation disponible. Renseignez-vous pour en savoir plus.",
+		"american-sign-language": "Lange de Signe Américaine (LSA)",
 		"CATEGORYNAME": "Langues",
 		"lang-offered": "Langues spécifiques proposées"
 	},
