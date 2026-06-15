@@ -123,7 +123,7 @@ const SearchResults = () => {
 	const { searchState, searchStateActions } = useSearchState()
 	const theme = useMantineTheme()
 	const [mounted, setMounted] = useState(false)
-	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 	const isAdvanced = true
 	const [advancedParams, setAdvancedParams] = useState<{
 		focuses: string[]
