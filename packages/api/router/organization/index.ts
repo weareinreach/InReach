@@ -91,6 +91,13 @@ export const orgRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	getPotentialMatches: publicProcedure.input(schema.getPotentialMatchesSchema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('getPotentialMatches'),
+			() => import('./query.getPotentialMatches.handler')
+		)
+		return handler(opts)
+	}),
 	generateSlug: protectedProcedure.input(schema.ZGenerateSlugSchema).query(async (opts) => {
 		const handler = await importHandler(
 			namespaced('generateSlug'),
