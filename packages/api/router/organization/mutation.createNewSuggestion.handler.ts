@@ -8,23 +8,29 @@ const createNewSuggestion = async ({
 	input,
 }: TRPCHandlerParams<TCreateNewSuggestionSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
-	const { countryId, orgName, orgSlug, communityFocus, orgAddress, orgWebsite } = input
+	const { countryId, orgName, orgSlug, communityFocus, orgAddress, orgWebsite, existingOrgId } = input
 
 	// Use a transaction to ensure all database operations are atomic.
 	// If any operation fails, the entire transaction is rolled back.
 	const result = await prisma.$transaction(async (tx) => {
-		console.log('Starting transaction to create a new organization and related records.')
-		// 1. Create the new Organization record first.
-		const newOrganization = await tx.organization.create({
-			data: {
-				id: generateId('organization'),
-				name: orgName,
-				slug: orgSlug,
-				source: { connect: { source: 'suggestion' } },
-			},
-		})
+		console.log('Starting transaction for organization suggestion.')
 
-		const organizationId = newOrganization.id
+		let organizationId = existingOrgId
+
+		if (!organizationId) {
+			console.log('Creating a new organization record.')
+			// 1. Create the new Organization record first.
+			const newOrganization = await tx.organization.create({
+				data: {
+					id: generateId('organization'),
+					name: orgName,
+					slug: orgSlug,
+					source: { connect: { source: 'suggestion' } },
+				},
+			})
+			organizationId = newOrganization.id
+		}
+
 		console.log('Organization created with ID:', organizationId)
 
 		// 2. Create the Suggestion record.

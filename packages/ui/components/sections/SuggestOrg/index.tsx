@@ -7,13 +7,12 @@ import {
 	Modal,
 	Radio,
 	rem,
-	Space,
 	Stack,
 	Text,
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { type UseFormReturnType, zodResolver } from '@mantine/form'
+import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
@@ -32,14 +31,13 @@ import {
 import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
-import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
-import { type SuggestionForm, SuggestionFormProvider, useForm } from './context'
-import { Communities } from './modals'
+import { SuggestionFormProvider, useForm } from './context'
+import { Communities, OrgQuickView, ServiceTypes } from './modals'
 
 const useLocationStyles = createStyles((theme) => ({
 	autocompleteWrapper: {
@@ -78,97 +76,69 @@ const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, descr
 	return (
 		<Stack ref={ref} spacing={4} {...others} className={classes.twoLines}>
 			<Text variant={variants.Text.utility1}>{label}</Text>
-			<Text variant={variants.Text.utility4darkGray}>{description}</Text>
+			{description && <Text variant={variants.Text.utility4darkGray}>{description}</Text>}
 		</Stack>
 	)
 })
 SelectItemTwoLines.displayName = 'Selection Item'
 
-interface OrgExistsErrorProps {
-	queryResult: ApiOutput['organization']['checkForExisting']
-	form: UseFormReturnType<SuggestionForm, (values: SuggestionForm) => SuggestionForm>
-	setGenerateSlug: Dispatch<SetStateAction<boolean>>
-}
-interface SuggestOrgProps {
-	authPromptState: {
-		overlay: boolean
-		setOverlay: Dispatch<SetStateAction<boolean>>
-		hasAuth: boolean
-	}
-}
-
-const OrgExistsError = ({ queryResult, form, setGenerateSlug }: OrgExistsErrorProps) => {
-	const variants = useCustomVariant()
-	const handleDismiss = useCallback(() => {
-		form.clearFieldError('orgName')
-		setGenerateSlug(true)
-	}, [form, setGenerateSlug])
-
-	if (!queryResult) {
-		return null
-	}
-	const { name, published, slug } = queryResult
-	const key = published ? 'form.error-exists-active' : 'form.error-exists-inactive'
-
-	return (
-		<>
-			<Trans
-				i18nKey={key}
-				ns='suggestOrg'
-				values={{ org: name }}
-				components={{
-					Link: (
-						<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.inheritStyle}>
-							.
-						</Link>
-					),
-				}}
-				shouldUnescape={true}
-			/>
-			<Space h={8} />
-			<Trans
-				i18nKey='form.error-exists-dismiss'
-				ns='suggestOrg'
-				components={{
-					Dismiss: (
-						<Link variant={variants.Link.inheritStyle} onClick={handleDismiss}>
-							.
-						</Link>
-					),
-				}}
-			/>
-		</>
-	)
-}
-
 export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
+	const [mounted, setMounted] = useState(false)
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
 	const [modalOpen, modalHandler] = useDisclosure(false)
 	const { overlay, setOverlay, hasAuth } = authPromptState
+
 	const suggestOrgApi = api.organization.createNewSuggestion.useMutation({
 		onSuccess: () => {
 			searchBoxEvent.suggestResourceSubmit(form.values.orgName)
 			modalHandler.open()
 		},
 	})
+	const validate = useMemo(() => zodResolver(SuggestionSchema), [])
 	const form = useForm({
-		validate: zodResolver(SuggestionSchema),
+		validate,
 		validateInputOnBlur: true,
 	})
 	const { classes: locationClasses } = useLocationStyles()
-	const { t } = useTranslation(['suggestOrg', 'services', 'attribute'])
-	const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
+	const { t } = useTranslation(['suggestOrg', 'services', 'attribute', 'common'])
+	const simpleLocale = useCallback(
+		(locale?: string) => (!locale || locale.length === 2 ? (locale ?? 'en') : locale.substring(0, 2)),
+		[]
+	)
+	const normalize = useCallback((str: string) => {
+		return str
+			.toLowerCase()
+			.trim()
+			.replace(/[^a-z0-9]/g, '')
+	}, [])
+
 	const variants = useCustomVariant()
 	const [placeId, setPlaceId] = useState('')
 	const [loading, setLoading] = useState(true)
 	const [searchLocation, setSearchLocation] = useState('')
 	const [locSearchInput] = useDebouncedValue(searchLocation, 400)
-	const [orgName, setOrgName] = useState<string>()
+	const [orgNameInput, setOrgNameInput] = useState('')
+	const [debouncedOrgName] = useDebouncedValue(orgNameInput, 400)
+	const [orgWebsite, setOrgWebsite] = useState<string>()
+	const [inspectMatch, setInspectMatch] = useState<
+		ApiOutput['organization']['getPotentialMatches'][number] | null
+	>(null)
+	const [dismissMatches, setDismissMatches] = useState(false)
 	const [generateSlug, setGenerateSlug] = useState(false)
 	const router = useRouter()
 
 	const countrySelected = Boolean(form.values.countryId)
 
-	const { data: formOptions, isLoading, isSuccess } = api.organization.suggestionOptions.useQuery()
+	const { data: formOptions, isLoading, isSuccess, isError } = api.organization.suggestionOptions.useQuery()
+
+	useEffect(() => {
+		if (isSuccess || isError) {
+			setLoading(false)
+		}
+	}, [isSuccess, isError])
 
 	const { data: addressCandidates } = api.geo.autocomplete.useQuery(
 		{ search: locSearchInput, locale: simpleLocale(router.locale), fullAddress: true },
@@ -181,68 +151,121 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		() =>
 			addressCandidates?.results.map((result) => ({
 				value: `${result.value}, ${result.subheading}`,
-				label: `${result.value}, ${result.subheading}`,
+				label: result.value,
+				description: result.subheading,
 				placeId: result.placeId,
 			})) ?? [],
 		[addressCandidates]
 	)
 
-	const { data: addressResult } = api.geo.geoByPlaceId.useQuery(placeId, {
-		enabled: Boolean(placeId) && placeId !== '',
+	const { data: addressResult } = api.geo.geoByPlaceId.useQuery(placeId || undefined, {
+		enabled: !!placeId,
+		retry: false,
 	})
+
+	const currentPostCode = form.values.orgAddress?.postCode
 	useEffect(() => {
 		if (addressResult?.result) {
 			const { result } = addressResult
-			form.setFieldValue('orgAddress', {
-				street1: `${result.streetNumber} ${result.streetName}`,
-				city: result.city,
-				govDist: result.govDist,
-				postCode: result.postCode,
-			})
+			if (currentPostCode !== result.postCode) {
+				form.setFieldValue('orgAddress', {
+					street1: `${result.streetNumber} ${result.streetName}`,
+					city: result.city,
+					govDist: result.govDist,
+					postCode: result.postCode,
+				})
+			}
 		}
-	}, [addressResult, form])
+	}, [addressResult, currentPostCode, form.setFieldValue])
 
-	const { data: existingOrg } = api.organization.checkForExisting.useQuery(orgName ?? '', {
-		enabled: Boolean(orgName && orgName !== ''),
-	})
+	const potentialMatchesInput = useMemo(
+		() => ({ name: debouncedOrgName, website: orgWebsite ?? '' }),
+		[debouncedOrgName, orgWebsite]
+	)
+	const { data: potentialMatches, isFetching: isSearchingMatches } =
+		api.organization.getPotentialMatches.useQuery(potentialMatchesInput, {
+			enabled: Boolean(debouncedOrgName || orgWebsite),
+		})
+
+	const hasMatches = Boolean(potentialMatches && potentialMatches.length > 0)
+	const isMatchingPending = isSearchingMatches || orgNameInput !== debouncedOrgName
+	const currentOrgSlug = form.values.orgSlug
+
+	const isExactMatch = useMemo(() => {
+		if (!potentialMatches || potentialMatches.length === 0) return false
+		const normalizedInput = normalize(orgNameInput)
+		if (!normalizedInput) return false
+
+		return potentialMatches.some((match) => normalize(match.name) === normalizedInput)
+	}, [potentialMatches, orgNameInput, normalize])
+
+	const orgAutocompleteOptions = useMemo(
+		() =>
+			potentialMatches?.map((match) => ({
+				value: match.name,
+				label: match.name,
+				match,
+			})) ?? [],
+		[potentialMatches]
+	)
+
 	useEffect(() => {
-		if (!existingOrg && !generateSlug) {
-			form.clearFieldError('orgName')
+		if (
+			mounted &&
+			!isExactMatch &&
+			!generateSlug &&
+			debouncedOrgName.trim() !== '' &&
+			potentialMatches?.length === 0
+		) {
 			setGenerateSlug(true)
-		} else if (existingOrg) {
-			form.setFieldError(
-				'orgName',
-				<OrgExistsError {...{ queryResult: existingOrg, form, setGenerateSlug }} />
-			)
 		}
-	}, [existingOrg, generateSlug, form])
 
-	const { data: generatedSlug } = api.organization.generateSlug.useQuery(orgName ?? '', {
-		enabled: Boolean(orgName && orgName !== '' && generateSlug),
+		if (mounted && isExactMatch) {
+			if (currentOrgSlug !== '') {
+				form.setFieldValue('orgSlug', '')
+			}
+			if (generateSlug) {
+				setGenerateSlug(false)
+			}
+		}
+	}, [
+		mounted,
+		isExactMatch,
+		generateSlug,
+		currentOrgSlug,
+		debouncedOrgName,
+		potentialMatches?.length,
+		form.setFieldValue,
+	])
+
+	const handleInspectMatch = (match: ApiOutput['organization']['getPotentialMatches'][number]) =>
+		setInspectMatch(match)
+
+	const handleWebsiteBlur = useCallback<FocusEventHandler<HTMLInputElement>>((e) => {
+		setOrgWebsite(e.target.value)
+	}, [])
+
+	const { data: generatedSlug } = api.organization.generateSlug.useQuery(debouncedOrgName, {
+		enabled: Boolean(debouncedOrgName && debouncedOrgName !== '' && generateSlug),
 	})
 	useEffect(() => {
-		if (generatedSlug) {
+		if (generatedSlug && currentOrgSlug !== generatedSlug) {
 			form.setFieldValue('orgSlug', generatedSlug)
-			setGenerateSlug(false)
+			if (generateSlug) setGenerateSlug(false)
 		}
-	}, [form, generatedSlug])
+	}, [generatedSlug, currentOrgSlug, generateSlug, form.setFieldValue])
 
+	const countryIdValue = form.values.countryId
 	useEffect(() => {
-		if (loading && formOptions && isSuccess && !isLoading) {
-			setLoading(false)
-		}
-	}, [loading, formOptions, isSuccess, isLoading])
-
-	useEffect(() => {
-		if (!hasAuth && !overlay && form.values.countryId) {
+		if (mounted && !hasAuth && !overlay && countryIdValue) {
 			setOverlay(true)
 			form.setFieldValue('countryId', '')
 		}
-	}, [hasAuth, overlay, form.values.countryId, form, setOverlay])
+	}, [mounted, hasAuth, overlay, countryIdValue, setOverlay, form.setFieldValue])
 
 	const countryTranslation = useMemo(
 		() =>
-			new Intl.DisplayNames([router.locale.toLowerCase()], {
+			new Intl.DisplayNames([simpleLocale(router.locale).toLowerCase()], {
 				type: 'region',
 			}),
 		[router.locale]
@@ -258,13 +281,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		[formOptions?.countries, countryTranslation]
 	)
 
-	const handleOrgNameBlur = useCallback<FocusEventHandler<HTMLInputElement>>(
-		(e) => {
-			setOrgName(e.target.value)
-		},
-		[setOrgName]
-	)
-
 	const handleAddressSelection = useCallback(
 		(e: AutocompleteItem) => {
 			setPlaceId(e.placeId)
@@ -275,7 +291,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const handleDismiss = useCallback(() => {
 		form.setValues({
 			communityFocus: [],
-			// communityParent: [],
 			countryId: '',
 			orgName: '',
 			orgSlug: '',
@@ -284,10 +299,11 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 			serviceCategories: [],
 		})
 		setSearchLocation('')
+		setOrgNameInput('')
 		modalHandler.close()
-	}, [form, modalHandler])
+	}, [form, modalHandler, setOrgNameInput, setSearchLocation])
 
-	if (loading) {
+	if (!mounted || loading) {
 		return null
 	}
 	return (
@@ -313,21 +329,31 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						>
 							<Stack spacing={0}>{countrySelections}</Stack>
 						</Radio.Group>
-						<TextInput
+						<Autocomplete
+							itemComponent={SelectItemTwoLines}
 							label={t('form.org-name')}
 							placeholder={t('form.placeholder-name')}
 							required
 							disabled={!countrySelected}
 							{...form.getInputProps('orgName')}
-							onBlur={handleOrgNameBlur}
+							value={orgNameInput}
+							onChange={(val) => {
+								setOrgNameInput(val)
+								form.setFieldValue('orgName', val)
+							}}
+							data={orgAutocompleteOptions as OrgAutocompleteItem[]}
+							onItemSubmit={(item: OrgAutocompleteItem) => handleInspectMatch(item.match)}
+							filter={() => true} // Let the similarity-based server results drive the list
 						/>
 						<TextInput
 							label={t('form.org-website')}
 							placeholder={t('form.placeholder-website')}
 							disabled={!countrySelected}
 							{...form.getInputProps('orgWebsite')}
+							onBlur={handleWebsiteBlur}
 						/>
 					</Stack>
+
 					<Divider />
 					<Stack spacing={40}>
 						<Title order={2}>{t('body.additional-info')}</Title>
@@ -339,17 +365,24 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							icon={<Icon icon='carbon:search' className={locationClasses.leftIcon} />}
 							placeholder={t('form.placeholder-address')}
 							disabled={!countrySelected}
+							autoComplete='off'
 							onItemSubmit={handleAddressSelection}
 							value={searchLocation}
 							onChange={setSearchLocation}
 						/>
+						<ServiceTypes disabled={!countrySelected} serviceTypes={formOptions?.serviceTypes ?? []} />
 						<Communities disabled={!countrySelected} communities={formOptions?.communities ?? []} />
 						<Divider />
 						<Stack spacing={16} align='center'>
 							<Button
 								w='fit-content'
 								variant={variants.Button.primaryLg}
-								disabled={!form.isValid() || Object.keys(form.errors).length !== 0}
+								disabled={
+									!form.isValid() ||
+									Object.keys(form.errors).length !== 0 ||
+									isExactMatch ||
+									isMatchingPending
+								}
 								type='submit'
 							>
 								{t('form.btn-submit')}
@@ -374,11 +407,25 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						</Button>
 					</Stack>
 				</Modal>
+
+				<OrgQuickView opened={!!inspectMatch} onClose={() => setInspectMatch(null)} match={inspectMatch} />
 			</form>
 		</SuggestionFormProvider>
 	)
 }
 interface ItemProps extends ComponentPropsWithRef<'div'> {
 	label: string
-	description: string
+	description?: string
+}
+
+interface OrgAutocompleteItem extends AutocompleteItem {
+	match: ApiOutput['organization']['getPotentialMatches'][number]
+}
+
+interface SuggestOrgProps {
+	authPromptState: {
+		overlay: boolean
+		setOverlay: Dispatch<SetStateAction<boolean>>
+		hasAuth: boolean
+	}
 }

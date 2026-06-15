@@ -1,10 +1,25 @@
-import { Button, Checkbox, createStyles, Divider, Group, Modal, rem, Stack, Text, Title } from '@mantine/core'
+import {
+	Alert,
+	Button,
+	Checkbox,
+	createStyles,
+	Divider,
+	Group,
+	Modal,
+	rem,
+	Skeleton,
+	Stack,
+	Text,
+	Title,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { type ReactNode, useCallback, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { Icon } from '~ui/icon'
+import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { useFormContext } from './context'
@@ -87,6 +102,59 @@ export const ServiceTypes = ({ disabled, serviceTypes }: ServiceModalProps) => {
 				</Button>
 			</Stack>
 		</>
+	)
+}
+
+interface OrgQuickViewProps {
+	opened: boolean
+	onClose: () => void
+	match: ApiOutput['organization']['getPotentialMatches'][number] | null
+}
+
+export const OrgQuickView = ({ opened, onClose, match }: OrgQuickViewProps) => {
+	const { t } = useTranslation(['suggestOrg', 'common'])
+	const variants = useCustomVariant()
+
+	// We fetch the full data for the preview
+	const { data, isLoading } = api.organization.forOrgPage.useQuery(
+		{ slug: match?.slug ?? '', includeArchived: true },
+		{ enabled: opened && !!match?.slug }
+	)
+
+	const primaryLocationId = useMemo(() => data?.locations?.[0]?.id, [data?.locations])
+
+	return (
+		<Modal
+			opened={opened}
+			onClose={onClose}
+			title={<ModalTitle breadcrumb={{ option: 'close', onClick: onClose }} />}
+			scrollAreaComponent={Modal.NativeScrollArea}
+			size='lg'
+		>
+			<Stack spacing={32}>
+				{match?.deleted && (
+					<Alert color='orange' icon={<Icon icon='carbon:warning' />} title={t('modal.archived-alert-title')}>
+						<Text size='sm'>{t('modal.archived-alert-body')}</Text>
+					</Alert>
+				)}
+
+				<Skeleton visible={isLoading}>
+					{data && (
+						<Stack spacing={24}>
+							<Stack spacing={8}>
+								<Title order={2}>{data.name}</Title>
+								{data.locations?.[0] && (
+									<Text color='dimmed' size='md' weight={500}>
+										{data.locations[0].city}, {data.locations[0].govDist?.abbrev}
+									</Text>
+								)}
+							</Stack>
+							{data.description && <Text size='sm'>{data.description.tsKey?.text}</Text>}
+						</Stack>
+					)}
+				</Skeleton>
+			</Stack>
+		</Modal>
 	)
 }
 
