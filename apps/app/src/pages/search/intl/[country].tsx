@@ -81,7 +81,7 @@ const OutsideServiceArea = () => {
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
-	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 	const isAdvanced = true
 	const router = useRouter<'/search/intl/[country]'>()
 
