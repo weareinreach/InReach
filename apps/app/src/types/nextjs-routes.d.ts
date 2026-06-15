@@ -70,6 +70,7 @@ declare module "nextjs-routes" {
     | "fr"
     | "ar"
     | "zh"
+    | "it"
     | "ja"
     | "ko"
     | "pl"
@@ -109,6 +110,7 @@ declare module "nextjs-routes" {
           "fr",
           "ar",
           "zh",
+          "it",
           "ja",
           "ko",
           "pl",
@@ -208,6 +210,7 @@ declare module "next/router" {
           "fr",
           "ar",
           "zh",
+          "it",
           "ja",
           "ko",
           "pl",

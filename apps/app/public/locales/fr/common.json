@@ -111,7 +111,7 @@
 	"edit-profile": "Modifier le profil",
 	"email_professional": "E-mail professionnel",
 	"email_student-pro": "Email professionnel ou étudiant",
-	"email-sent": "Email envoyé.",
+	"email-sent": "Cliquez sur le lien envoyé pour réinitialiser votre mot de passe.",
 	"enter-email-placeholder": "Entrer une adresse email...",
 	"enter-password-placeholder": "Entrer le mot de passe...",
 	"enter-review": "Entrer votre avis...",
@@ -169,7 +169,7 @@
 	"language_common": "Langues fréquentes",
 	"language_select_preferred": "Sélectionnez votre langue préférée",
 	"language_translations": "Traduit par Crowdin.",
-	"language_update_button": "Mettre à jour la langue",
+	"language_update_button": "Modifier la langue",
 	"law-practice-other": "Zone de cabinet juridique",
 	"law-practice-other-placeholder": "Veuillez spécifier votre zone de pratique juridique",
 	"link-copied": "Lien copié dans le presse-papiers",
@@ -190,7 +190,7 @@
 		"none-yet": "Aucune liste pour le moment.",
 		"removedMulti": "Ressource retirée de la liste : {{name}}",
 		"removedSingle": "Ressource retirée de la liste",
-		"resourcesCount": "{{count}} ressources",
+		"resourcesCount": "{{nombre}} ressources",
 		"updated": "Mise à jour {{date}}"
 	},
 	"loading-page": "Chargement de la page...",
@@ -259,7 +259,7 @@
 		"<textDarkGray><listGroup><listItem>Année de naissance</listItem>\n<listItem>Pays d'origine</listItem>\n<listItem>Identité LGBTQ+ (orientation sexuelle et identité de genre)</listItem>\n<listItem>Race/ethnicité</listItem>\n<listItem>Statut d'immigration</listItem>\n<listItem>Emplacement actuel</listItem></listGroup></textDarkGray>",
 		"<textDarkGray>Comprendre les caractéristiques démographiques de nos utilisateurs peut nous aider à quantifier notre impact, à lever des fonds et à évaluer les décisions futures en matière de produits. Nous apprécions que les utilisateurs partagent volontairement ces informations avec nous, et nous prenons ces mesures pour protéger votre vie privée et votre anonymat.\n</textDarkGray>",
 		"<textDarkGray><title2>Analyse d'utilisation du site</title2></textDarkGray>",
-		"<textDarkGray>InReach utilise Google Analytics pour analyser et suivre de manière anonyme les données d'utilisation de l'application (par exemple, les recherches des utilisateurs et d'autres comportements) dans l'ensemble. Google Analytics est conforme au GDPR et ne recueille aucune information personnellement identifiable et anonymise toutes les données collectées. Les utilisateurs ne peuvent pas être identifiés et ne sont jamais suivis à travers les sites web.</textDarkGray>",
+		"<textDarkGray> InReach utilise Google Analytics pour analyser et suivre de manière anonyme les données d'utilisation de l'application (par exemple, les recherches des utilisateurs et d'autres comportements) dans l'ensemble. Google Analytics est conforme au GDPR et ne recueille aucune information personnellement identifiable et anonymise toutes les données collectées. Les utilisateurs ne peuvent pas être identifiés et ne sont jamais suivis à travers les sites web.</textDarkGray>",
 		"<textDarkGray>InReach utilise également Vercel Analytics pour analyser la performance et les composants essentiels du web. Vercel Analytics fournit des informations d'utilisation du site sans être lié à, ou associé à un visiteur ou à une adresse IP individuelle. L'enregistrement des données est anonyme et la fonction Analytics ne collecte pas ou ne garde pas d'informations qui permettraient à Vercel de reconstruire une session de navigation à travers des pages ou d'identifier un utilisateur.</textDarkGray>",
 		"<textDarkGray>You can update your cookie preferences at any time by clicking <linkCookieSettings>here</linkCookieSettings>.</textDarkGray>"
 	],
@@ -272,10 +272,10 @@
 	"recommended-links": {
 		"emoji": "🌈",
 		"title": "Liens recommandés",
-		"body": "Pour en savoir plus sur vos droits.",
+		"body": "En savoir plus sur vos droits.",
 		"buttons": {
 			"btn-1": {
-				"text": "Carte des risques anti-trans (érin roseau)",
+				"text": "Carte des Risques Anti-Trans (Erin In The Morning)",
 				"link": "https://www.erinthemorning.com/p/post-election-2024-anti-risque"
 			},
 			"btn-2": {
@@ -287,7 +287,7 @@
 				"link": "https://immigrationequality.org/legal/help/legal-help/ressources/savoir-faire/"
 			},
 			"btn-4": {
-				"text": "Ressources pour l'asile (CWS)",
+				"text": "Ressources pour L'asile (CWS)",
 				"link": "https://asileborderresources.org/"
 			},
 			"btn-5": {
@@ -300,7 +300,7 @@
 	"remote-services-page-title": "Services à distance",
 	"report": {
 		"thank-you": "Merci de nous aider à améliorer InReach pour tout le monde!",
-		"thank-you-message": "Notre équipe examinera votre soumission, vérifiera l'information et apportera des changements en conséquence si elle répond à nos critères."
+		"thank-you-message": "Notre équipe examinera votre soumission, vérifiera l'information et fera des changements en conséquence si elle tient à nos critères."
 	},
 	"reset-password": "Rerégler votre mot de passe",
 	"reset-password-message": "Nous vous enverrons un email pour rerégler votre mot de passe",
@@ -318,20 +318,20 @@
 	"search": {
 		"include-remote": "Inclure les services à distance",
 		"local": "Locale",
-		"local-description": "Ressources locales (11 - 25 miles)",
+		"local-description": "Ressources Locales (18 - 40 kilomètres)",
 		"location-placeholder": "Entrer la ville ou le code postal...",
 		"location-placeholder-searchby": "Chercher par ville ou par code postal...",
 		"locality-label": "Localité",
 		"look-up-org": "Rechercher une organisation par son nom",
 		"na": "N/A",
-		"neighborhood": "Voisinage",
-		"neighborhood-description": "Ressources de quartier (<= 10 milles)",
+		"neighborhood": "Quartier",
+		"neighborhood-description": "Ressources de quartier (≤ 16 kilomètres)",
 		"no-results": "Aucun résultat trouvé. Veuillez réessayer.",
 		"no-results-adjust": "Aucun résultat trouvé pour votre recherche. Essayez d'ajuster la localisation ou les filtres sélectionnés.",
 		"organization-placeholder": "Entrer le nom de l'organisation...",
 		"organization-placeholder-searchby": "Chercher par nom d'organisme...",
 		"region": "Région",
-		"region-description": "Ressources régionales (26 - 50 milles)",
+		"region-description": "Ressources régionales (41 - 80 kilomètres)",
 		"region-extended": "Région étendue",
 		"region-extended-description": "Ressources régionales étendues (51 - 200 milles)",
 		"remote-national": "À distance",
@@ -422,6 +422,7 @@
 		"by-lgbtq-focus": "Trier par focalisation sur la communauté LGBTQ+",
 		"hiv": "La communauté séropositive+",
 		"immigrants": "Les immigrants",
+		"results": "Trier les résultats",
 		"spanish-speakers": "Les hispanophones",
 		"transgender": "La communauté transgenre",
 		"youth": "Les jeunes"

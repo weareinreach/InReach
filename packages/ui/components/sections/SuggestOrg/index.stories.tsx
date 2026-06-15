@@ -15,8 +15,7 @@ export default {
 			geo.autocompleteFullAddress,
 			geo.geocodeFullAddress,
 			organization.suggestionOptions,
-			organization.createNewSuggestion,
-			organization.checkForExisting,
+			organization.createNewSuggestion, // Keep this for the actual submission
 			organization.generateSlug,
 		],
 	},

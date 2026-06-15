@@ -7,6 +7,7 @@ export interface SuggestionForm {
 	orgName: string
 	orgSlug: string
 	orgWebsite?: string
+	existingOrgId?: string
 	orgAddress?: {
 		street1?: string
 		city?: string
