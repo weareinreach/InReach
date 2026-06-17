@@ -1,10 +1,22 @@
-import { ActionIcon, Badge, createStyles, Group, rem, Switch, Text, Tooltip } from '@mantine/core'
+import {
+	ActionIcon,
+	Badge,
+	createStyles,
+	Group,
+	rem,
+	Stack,
+	Switch,
+	Text,
+	Tooltip,
+	useMantineTheme,
+} from '@mantine/core'
 import { DateTime } from 'luxon'
 import {
 	MantineReactTable,
 	type MRT_ColumnDef,
 	type MRT_ColumnFilterFnsState,
 	type MRT_ColumnFiltersState,
+	type MRT_Row,
 	MRT_ShowHideColumnsButton,
 	type MRT_SortingState,
 	type MRT_TableInstance,
@@ -13,7 +25,8 @@ import {
 	useMantineReactTable,
 } from 'mantine-react-table'
 import { useSession } from 'next-auth/react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type Route } from 'nextjs-routes'
+import { type Dispatch, type SetStateAction, useEffect, useMemo, useRef, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
@@ -26,6 +39,89 @@ type ReviewRecord = ApiOutput['review']['forReviewTable'][number]
 const useStyles = createStyles(() => ({
 	bottomBar: { paddingTop: rem(20) },
 }))
+
+const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps) => {
+	const theme = useMantineTheme()
+
+	const toggle = (key: 'visible' | 'deleted') => {
+		const current = columnFilters.find(({ id }) => key === id)
+		const options = key === 'visible' ? [undefined, true, false] : [false, true, undefined]
+		const currentIdx = options.indexOf(current?.value as boolean | undefined)
+		const nextIdx = (currentIdx + 1) % options.length
+
+		setColumnFilters((prev) =>
+			options[nextIdx] === undefined
+				? prev.filter(({ id }) => id !== key)
+				: [...prev.filter(({ id }) => id !== key), { id: key, value: options[nextIdx] }]
+		)
+	}
+
+	const visibleState = columnFilters.find(({ id }) => id === 'visible')?.value as boolean | undefined
+	const deletedState = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
+
+	return (
+		<Group>
+			<Tooltip
+				label={
+					visibleState
+						? 'Show only hidden reviews'
+						: visibleState === undefined
+							? 'Show only visible reviews'
+							: 'Show all reviews'
+				}
+				withinPortal
+			>
+				<ActionIcon onClick={() => toggle('visible')}>
+					<Icon
+						icon={
+							visibleState
+								? 'carbon:view-filled'
+								: visibleState === undefined
+									? 'carbon:view'
+									: 'carbon:view-off-filled'
+						}
+						style={{
+							color: visibleState === undefined ? theme.other.colors.secondary.darkGray : undefined,
+						}}
+						height={24}
+					/>
+				</ActionIcon>
+			</Tooltip>
+			<Tooltip
+				label={
+					deletedState
+						? 'Show all reviews'
+						: deletedState === undefined
+							? 'Hide deleted reviews'
+							: 'Show deleted reviews'
+				}
+				withinPortal
+			>
+				<ActionIcon onClick={() => toggle('deleted')}>
+					<Group noWrap ml={8}>
+						<Icon
+							icon='carbon:trash-can'
+							style={{
+								color: deletedState === undefined ? theme.other.colors.secondary.darkGray : undefined,
+							}}
+							height={24}
+						/>
+						<Icon
+							icon='carbon:close'
+							height={40}
+							style={{
+								position: 'relative',
+								right: rem(48),
+								marginRight: rem(-48),
+								opacity: deletedState === false ? 1 : 0,
+							}}
+						/>
+					</Group>
+				</ActionIcon>
+			</Tooltip>
+		</Group>
+	)
+}
 
 const BottomBar = ({ table }: { table: MRT_TableInstance<ReviewRecord> }) => {
 	const { classes } = useStyles()
@@ -44,6 +140,7 @@ const BottomBar = ({ table }: { table: MRT_TableInstance<ReviewRecord> }) => {
 }
 
 export const ReviewTable = () => {
+	const theme = useMantineTheme()
 	const variants = useCustomVariant()
 	const { data: session } = useSession()
 	const userPerms = session?.user?.permissions || []
@@ -54,28 +151,17 @@ export const ReviewTable = () => {
 
 	const apiUtils = api.useUtils()
 
-	// Mutations for visibility
 	const hideMutation = api.review.hide.useMutation({
-		onSuccess: () => {
-			void apiUtils.review.forReviewTable.invalidate()
-		},
+		onSuccess: () => void apiUtils.review.forReviewTable.invalidate(),
 	})
 	const unHideMutation = api.review.unHide.useMutation({
-		onSuccess: () => {
-			void apiUtils.review.forReviewTable.invalidate()
-		},
+		onSuccess: () => void apiUtils.review.forReviewTable.invalidate(),
 	})
-
-	// Mutations for deletion
 	const deleteMutation = api.review.delete.useMutation({
-		onSuccess: () => {
-			void apiUtils.review.forReviewTable.invalidate()
-		},
+		onSuccess: () => void apiUtils.review.forReviewTable.invalidate(),
 	})
 	const unDeleteMutation = api.review.unDelete.useMutation({
-		onSuccess: () => {
-			void apiUtils.review.forReviewTable.invalidate()
-		},
+		onSuccess: () => void apiUtils.review.forReviewTable.invalidate(),
 	})
 
 	const handleToggleVisibility = async (id: string, currentVisible: boolean) => {
@@ -86,7 +172,9 @@ export const ReviewTable = () => {
 		}
 	}
 
-	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([])
+	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([
+		{ id: 'deleted', value: false },
+	])
 	const [globalFilter, setGlobalFilter] = useState('')
 	const [sorting, setSorting] = useState<MRT_SortingState>([{ id: 'createdAt', desc: true }])
 	const [columnFilterFns, setColumnFilterFns] = useState<MRT_ColumnFilterFnsState>({})
@@ -129,11 +217,7 @@ export const ReviewTable = () => {
 				header: 'User Email',
 				size: 160,
 				accessorFn: (row) => row.user?.email || '',
-				Cell: ({ cell }) => (
-					<Text size='sm' color='dimmed'>
-						{cell.getValue<string>()}
-					</Text>
-				),
+				Cell: ({ cell }) => <Text size='sm'>{cell.getValue<string>()}</Text>,
 			},
 			{
 				id: 'rating',
@@ -147,9 +231,7 @@ export const ReviewTable = () => {
 							⭐ {rating}/5
 						</Text>
 					) : (
-						<Text size='sm' color='dimmed'>
-							No Rating
-						</Text>
+						<Text size='sm'>No Rating</Text>
 					)
 				},
 				filterVariant: 'select',
@@ -173,38 +255,26 @@ export const ReviewTable = () => {
 			},
 			{
 				id: 'organization',
-				header: 'Target Details',
+				header: 'Organization',
 				size: 200,
 				accessorFn: (row) => row.organization?.name || 'Unknown',
 				Cell: ({ row }) => {
 					const org = row.original.organization
-					const service = row.original.orgService
-					const serviceName = service?.serviceName?.tsKey?.text || 'Service'
+					const location = row.original.orgLocation
+					const serviceName = row.original.orgService
+						? row.original.orgService.serviceName?.tsKey?.text ||
+							row.original.orgService.legacyName ||
+							'Service'
+						: null
+
 					return (
-						<div>
-							{org ? (
-								<Link
-									href={{
-										pathname: '/org/[slug]',
-										query: { slug: org.slug },
-									}}
-									target='_blank'
-								>
-									<Text size='sm' weight={500} color='green'>
-										{org.name}
-									</Text>
-								</Link>
-							) : (
-								<Text size='sm' color='dimmed' italic>
-									Unknown Organization
-								</Text>
-							)}
-							{service && (
-								<Text size='xs' color='dimmed'>
-									Service: {serviceName}
-								</Text>
-							)}
-						</div>
+						<Stack spacing='xs'>
+							<Text size='sm' weight={500}>
+								{org?.name || 'Unknown Organization'}
+							</Text>
+							{location && <Text size='xs'>Location: {location.name || 'Unnamed Location'}</Text>}
+							{serviceName && <Text size='xs'>Service: {serviceName}</Text>}
+						</Stack>
 					)
 				},
 			},
@@ -263,9 +333,16 @@ export const ReviewTable = () => {
 				},
 				sortingFn: 'datetime',
 			},
+			{
+				accessorKey: 'deleted',
+				header: 'Deleted',
+				columnFilterModeOptions: ['equals'],
+				filterVariant: 'checkbox',
+				visibleInShowHideMenu: false,
+				size: 0,
+			},
 		],
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[variants]
+		[variants, theme]
 	)
 
 	const table = useMantineReactTable({
@@ -274,7 +351,7 @@ export const ReviewTable = () => {
 		enableColumnResizing: true,
 		enableFacetedValues: true,
 		enablePinning: true,
-		enableRowActions: isManagerOrHigher,
+		enableRowActions: true,
 		enableRowVirtualization: true,
 		enablePagination: false,
 		enableGlobalFilterModes: true,
@@ -283,7 +360,7 @@ export const ReviewTable = () => {
 
 		initialState: {
 			columnPinning: { left: ['mrt-row-actions'] },
-			columnVisibility: { id: false },
+			columnVisibility: { id: false, visible: false, deleted: false },
 			showGlobalFilter: true,
 		},
 
@@ -318,31 +395,53 @@ export const ReviewTable = () => {
 
 		renderToolbarInternalActions: ({ table }) => (
 			<Group spacing='xs'>
+				<ToolbarButtons columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
 				<MRT_ToggleFiltersButton table={table} />
 				<MRT_ShowHideColumnsButton table={table} />
 			</Group>
 		),
 		renderBottomToolbar: ({ table }) => <BottomBar table={table} />,
 		renderRowActions: ({ row }) => {
+			const org = row.original.organization
+			const location = row.original.orgLocation
 			const isDeleted = row.original.deleted
+
+			const getViewUrl = (): Route => {
+				if (location && org) {
+					return {
+						pathname: '/org/[slug]/[orgLocationId]',
+						query: { slug: org.slug, orgLocationId: location.id },
+					}
+				} else {
+					return { pathname: '/org/[slug]', query: { slug: org?.slug || '' } }
+				}
+			}
+
 			return (
 				<Group noWrap spacing={8}>
-					<Tooltip label={isDeleted ? 'Undelete Review' : 'Delete Review'} withinPortal>
-						<ActionIcon
-							onClick={() => {
-								if (isDeleted) {
-									unDeleteMutation.mutate({ id: row.original.id })
-								} else {
-									deleteMutation.mutate({ id: row.original.id })
-								}
-							}}
-							color={isDeleted ? 'green' : 'red'}
-							variant='subtle'
-							size='sm'
-						>
-							<Icon icon={isDeleted ? 'carbon:undo' : 'carbon:trash-can'} />
+					<Tooltip label='View Target' withinPortal>
+						<ActionIcon component={Link} href={getViewUrl()} target='_blank'>
+							<Icon icon='carbon:search' />
 						</ActionIcon>
 					</Tooltip>
+					{isManagerOrHigher && (
+						<Tooltip label={isDeleted ? 'Undelete Review' : 'Delete Review'} withinPortal>
+							<ActionIcon
+								onClick={() => {
+									if (isDeleted) {
+										unDeleteMutation.mutate({ id: row.original.id })
+									} else {
+										deleteMutation.mutate({ id: row.original.id })
+									}
+								}}
+								color={isDeleted ? 'green' : 'red'}
+								variant='subtle'
+								size='sm'
+							>
+								<Icon icon={isDeleted ? 'carbon:undo' : 'carbon:trash-can'} />
+							</ActionIcon>
+						</Tooltip>
+					)}
 				</Group>
 			)
 		},
@@ -354,4 +453,9 @@ export const ReviewTable = () => {
 	})
 
 	return <MantineReactTable table={table} />
+}
+
+interface ToolbarButtonsProps {
+	columnFilters: MRT_ColumnFiltersState
+	setColumnFilters: Dispatch<SetStateAction<MRT_ColumnFiltersState>>
 }

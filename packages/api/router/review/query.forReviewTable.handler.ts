@@ -11,6 +11,7 @@ const forReviewTable = async (_params: TRPCHandlerParams<TForReviewTableSchema>)
 			reviewText: true,
 			visible: true,
 			deleted: true,
+			featured: true,
 			createdAt: true,
 			updatedAt: true,
 			organization: {
@@ -20,9 +21,17 @@ const forReviewTable = async (_params: TRPCHandlerParams<TForReviewTableSchema>)
 					slug: true,
 				},
 			},
+			orgLocationId: true,
+			orgLocation: {
+				select: {
+					id: true,
+					name: true,
+				},
+			},
 			orgService: {
 				select: {
 					id: true,
+					legacyName: true,
 					serviceName: {
 						select: {
 							key: true,

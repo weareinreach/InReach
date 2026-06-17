@@ -20,9 +20,11 @@ We have successfully implemented the Reviews moderation table and integrated it 
   - Implemented [ReviewTable.tsx](file:///Users/dlg/Projects/InReach_2024/InReach/packages/ui/components/data-portal/ReviewTable.tsx) using `mantine-react-table`.
   - Split user details into separate **User Name** and **User Email** columns for independent sorting, filtering, and a cleaner tabular layout.
   - Added clean formatting for rating (`⭐ X/5`), content, relative creation time with detail tooltip, and current visibility status badge.
+  - Configured layout to render services as nested **sub-rows** (expandable rows beneath the main review row), matching the [OrganizationTable](file:///Users/dlg/Projects/InReach_2024/InReach/packages/ui/components/data-portal/OrganizationTable.tsx) sub-row layout.
   - Added a Mantine `Switch` component in each row for toggling review visibility (hide/unhide mutations).
-  - Configured delete/undelete action buttons (restricting them to Manager-level permissions or higher).
-  - Provided direct links in the "Target Details" column to view/edit the associated organization details page (`/org/[slug]`).
+  - Placed a view details **magnifying glass (`carbon:search`)** icon in the row actions column to link users directly to the organization or location page.
+  - Configured delete/undelete action buttons in the row actions column (restricting them to Manager-level permissions or higher).
+  - Safely falls back to service `legacyName` if standard translations are unavailable.
   - Added null safety checks for the `organization` relation in accessor functions and renderers to prevent UI crashes in the event of dangling review records.
 - **Storybook Support**:
   - Created [ReviewTable.stories.tsx](file:///Users/dlg/Projects/InReach_2024/InReach/packages/ui/components/data-portal/ReviewTable.stories.tsx) to showcase and test the table using MSW handlers to mock all backend queries and toggle/delete mutations in isolation.
