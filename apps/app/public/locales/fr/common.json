@@ -276,7 +276,7 @@
 		"buttons": {
 			"btn-1": {
 				"text": "Carte des Risques Anti-Trans (Erin In The Morning)",
-				"link": "https://www.erininthemorning.com/p/post-election-2024-anti-risque"
+				"link": "https://www.erininthemorning.com/p/anti-trans-national-legal-risk-assessment"
 			},
 			"btn-2": {
 				"text": "Centre de Documents d'Identification (A4TE)",
@@ -284,7 +284,7 @@
 			},
 			"btn-3": {
 				"text": "Droits des immigrants LGBTQ+ (Égalité de l'immigration)",
-				"link": "https://immigrationequality.org/legal/help/legal-help/ressources/savoir-faire/"
+				"link": "https://immigrationequality.org/legal/legal-help/resources/know-your-rights/"
 			},
 			"btn-4": {
 				"text": "Ressources pour L'asile (CWS)",
@@ -292,7 +292,7 @@
 			},
 			"btn-5": {
 				"text": "Droits des immigrants (ACLU)",
-				"link": "https://www.aclu.org/fr/savoir-faire/droits des immigrants/"
+				"link": "https://www.aclu.org/know-your-rights/immigrants-rights"
 			}
 		}
 	},
@@ -333,11 +333,11 @@
 		"region": "Région",
 		"region-description": "Ressources régionales (41 - 80 kilomètres)",
 		"region-extended": "Région étendue",
-		"region-extended-description": "Ressources régionales étendues (51 - 200 milles)",
+		"region-extended-description": "Ressources régionales étendues (82 - 321 kilomètres)",
 		"remote-national": "À distance",
 		"remote-national-description": "Les éléments ci-dessous correspondent à vos filtres mais sont des ressources à distance ou nationales disponibles pour vous, quel que soit votre emplacement physique.",
 		"suggest-resource": "Vous ne le trouvez pas ? <strong>Proposez une organisation</strong> qui devrait être incluse.",
-		"tier-label": "Palier"
+		"tier-label": "Niveau"
 	},
 	"select": {
 		"base": "Sélectionnez {{- item}}"

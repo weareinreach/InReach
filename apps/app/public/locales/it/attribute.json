@@ -66,10 +66,10 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "Cost",
-		"cost-accepts-insurance": "This service accepts insurance",
+		"cost-accepts-insurance": "Questo servizio accetta l'assicurazione",
 		"cost-fees": "Incurs a cost",
 		"cost-financial-assistance-available": "Financial assistance available",
-		"cost-sliding-scale": "Costs determined on a sliding scale",
+		"cost-sliding-scale": "Costi determinati su una scala mobile",
 		"cost-free": "Free of cost",
 		"cost-from": "From {{price}}",
 		"cost-upTo": "Up to {{price}}",
@@ -108,7 +108,7 @@
 		"immigrant-led": "Immigrant-led",
 		"lgbtq-led": "LGBTQ+ Led",
 		"trans-led": "Transgender-led",
-		"women-led": "Women-led"
+		"women-led": "Guidato da donne"
 	},
 	"serviceaccess": {
 		"accessemail": "Access Instructions - Email",
