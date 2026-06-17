@@ -88,4 +88,13 @@ export const reviewRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	forReviewTable: permissionedProcedure('viewAllReviews')
+		.input(schema.ZForReviewTableSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('forReviewTable'),
+				() => import('./query.forReviewTable.handler')
+			)
+			return handler(opts)
+		}),
 })
