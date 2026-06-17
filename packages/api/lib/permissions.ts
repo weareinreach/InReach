@@ -65,6 +65,7 @@ const reviews = {
 	unHideUserReview: 'showUserReview',
 	deleteUserReview: 'deleteUserReview',
 	undeleteUserReview: 'undeleteUserReview',
+	viewAllReviews: 'dataPortalBasic',
 } satisfies PermissionDefs
 
 const system = {
