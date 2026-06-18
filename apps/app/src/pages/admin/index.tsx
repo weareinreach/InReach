@@ -14,6 +14,7 @@ import { DownloadTable } from '@weareinreach/ui/components/data-portal/DownloadT
 import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
 import { ReportTable } from '@weareinreach/ui/components/data-portal/ReportTable'
 import { ReviewTable } from '@weareinreach/ui/components/data-portal/ReviewTable'
+import { SuggestionTable } from '@weareinreach/ui/components/data-portal/SuggestionTable'
 import { UserTable } from '@weareinreach/ui/components/data-portal/UserTable'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -43,6 +44,11 @@ const AdminIndex: NextPage = () => {
 		permissions: [PERM_DATAPORTAL_BASIC, PERM_DATAPORTAL_MANAGER, PERM_DATAPORTAL_ADMIN, PERM_ROOT],
 		has: 'some', // dataPortalBasic and above
 	})
+	const canAccessSuggestions = checkPermissions({
+		session,
+		permissions: [PERM_DATAPORTAL_BASIC, PERM_DATAPORTAL_MANAGER, PERM_DATAPORTAL_ADMIN, PERM_ROOT],
+		has: 'some', // dataPortalBasic and above
+	})
 	const canAccessReports = checkPermissions({
 		session,
 		permissions: [PERM_DATAPORTAL_BASIC, PERM_DATAPORTAL_MANAGER, PERM_DATAPORTAL_ADMIN, PERM_ROOT],
@@ -68,6 +74,7 @@ const AdminIndex: NextPage = () => {
 
 		// Verify accessibility
 		if (requestedTab === 'organizations' && !canAccessOrganizations) targetTab = null
+		if (requestedTab === 'suggestions' && !canAccessSuggestions) targetTab = null
 		if (requestedTab === 'reviews' && !canAccessReviews) targetTab = null
 		if (requestedTab === 'reports' && !canAccessReports) targetTab = null
 		if (requestedTab === 'users' && !canAccessUsers) targetTab = null
@@ -76,6 +83,7 @@ const AdminIndex: NextPage = () => {
 		// Fallback logic if the requested tab isn't allowed
 		if (targetTab === null) {
 			if (canAccessOrganizations) targetTab = 'organizations'
+			else if (canAccessSuggestions) targetTab = 'suggestions'
 			else if (canAccessReviews) targetTab = 'reviews'
 			else if (canAccessReports) targetTab = 'reports'
 			else if (canAccessUsers) targetTab = 'users'
@@ -89,6 +97,7 @@ const AdminIndex: NextPage = () => {
 		router.isReady,
 		tab,
 		canAccessOrganizations,
+		canAccessSuggestions,
 		canAccessReviews,
 		canAccessReports,
 		canAccessUsers,
@@ -114,17 +123,28 @@ const AdminIndex: NextPage = () => {
 				<Tabs value={activeTab} onTabChange={handleTabChange} keepMounted={false}>
 					<Tabs.List>
 						{canAccessOrganizations && (
-							<Tabs.Tab value='organizations'>{t('admin.tab-organizations')}</Tabs.Tab>
-						)}{' '}
+							<Tabs.Tab value='organizations'>{t('admin.tab-organizations', 'Organizations')}</Tabs.Tab>
+						)}
+						{canAccessSuggestions && (
+							<Tabs.Tab value='suggestions'>{t('admin.tab-suggestions', 'Suggestions')}</Tabs.Tab>
+						)}
 						{canAccessReviews && <Tabs.Tab value='reviews'>{t('admin.tab-reviews', 'Reviews')}</Tabs.Tab>}
-						{canAccessReports && <Tabs.Tab value='reports'>{t('admin.tab-reports')}</Tabs.Tab>}
-						{canAccessUsers && <Tabs.Tab value='users'>{t('admin.tab-users')}</Tabs.Tab>}
-						{canAccessDownloads && <Tabs.Tab value='downloads'>{t('admin.tab-downloads')}</Tabs.Tab>}
+						{canAccessReports && <Tabs.Tab value='reports'>{t('admin.tab-reports', 'Reports')}</Tabs.Tab>}
+						{canAccessUsers && <Tabs.Tab value='users'>{t('admin.tab-users', 'Users')}</Tabs.Tab>}
+						{canAccessDownloads && (
+							<Tabs.Tab value='downloads'>{t('admin.tab-downloads', 'Downloads')}</Tabs.Tab>
+						)}
 					</Tabs.List>
 
 					{activeTab === 'organizations' && canAccessOrganizations && (
 						<Tabs.Panel value='organizations' pt='xs'>
 							<OrganizationTable />
+						</Tabs.Panel>
+					)}
+
+					{activeTab === 'suggestions' && canAccessSuggestions && (
+						<Tabs.Panel value='suggestions' pt='xs'>
+							<SuggestionTable />
 						</Tabs.Panel>
 					)}
 

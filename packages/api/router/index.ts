@@ -24,6 +24,7 @@ import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
 import { serviceRouter } from './service'
 import { serviceAreaRouter } from './serviceArea'
+import { suggestionRouter } from './suggest'
 import { systemRouter } from './system'
 import { userRouter } from './user'
 
@@ -52,6 +53,7 @@ export const appRouter = defineRouter({
 	savedList: savedListRouter,
 	service: serviceRouter,
 	serviceArea: serviceAreaRouter,
+	suggestion: suggestionRouter,
 	system: systemRouter,
 	user: userRouter,
 })

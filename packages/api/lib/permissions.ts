@@ -68,6 +68,11 @@ const reviews = {
 	viewAllReviews: 'dataPortalBasic',
 } satisfies PermissionDefs
 
+const suggestions = {
+	viewAllSuggestions: 'dataPortalBasic',
+	toggleSuggestionHandled: 'dataPortalBasic',
+} satisfies PermissionDefs
+
 const system = {
 	createPermission: 'adminPermissions',
 	getDetails: 'dataPortalBasic',
@@ -93,6 +98,7 @@ const permissions = {
 	...orgSocialMedia,
 	...orgWebsite,
 	...reviews,
+	...suggestions,
 	...system,
 	...user,
 } satisfies PermissionDefs
