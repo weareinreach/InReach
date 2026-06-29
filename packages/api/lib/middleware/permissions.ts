@@ -47,7 +47,7 @@ export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 			}
 
 			// Blocklist: Only Manager, Admin (and Root) can pass these
-			const managerOnly = ['dataPortalManager', 'viewAllUsers', 'deleteUserReview']
+			const managerOnly = ['dataPortalManager', 'viewAllUsers', 'deleteUserReview', 'undeleteUserReview']
 			if (reqPerms.some((p) => managerOnly.includes(p))) {
 				return isManagerRole
 			}
