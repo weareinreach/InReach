@@ -2,6 +2,7 @@ import {
 	Autocomplete,
 	type AutocompleteItem,
 	Button,
+	Checkbox,
 	createStyles,
 	Divider,
 	Modal,
@@ -97,6 +98,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 			modalHandler.open()
 		},
 	})
+
 	const validate = useMemo(() => zodResolver(SuggestionSchema), [])
 	const form = useForm({
 		validate,
@@ -128,6 +130,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	>(null)
 	const [dismissMatches, setDismissMatches] = useState(false)
 	const [generateSlug, setGenerateSlug] = useState(false)
+	const [bypassExactMatch, setBypassExactMatch] = useState(false)
 	const router = useRouter()
 
 	const countrySelected = Boolean(form.values.countryId)
@@ -193,11 +196,27 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 
 	const isExactMatch = useMemo(() => {
 		if (!potentialMatches || potentialMatches.length === 0) return false
-		const normalizedInput = normalize(orgNameInput)
+
+		const cleanForStrictMatch = (str: string) => {
+			return str
+				.toLowerCase()
+				.trim()
+				.replace(/^(the|a|an)\s+/i, '')
+				.replace(/[^a-z0-9]/g, '')
+		}
+
+		const normalizedInput = cleanForStrictMatch(orgNameInput)
 		if (!normalizedInput) return false
 
-		return potentialMatches.some((match) => normalize(match.name) === normalizedInput)
-	}, [potentialMatches, orgNameInput, normalize])
+		return potentialMatches.some((match) => {
+			const normalizedMatch = cleanForStrictMatch(match.name)
+			return (
+				normalizedMatch === normalizedInput ||
+				normalizedMatch.includes(normalizedInput) ||
+				normalizedInput.includes(normalizedMatch)
+			)
+		})
+	}, [potentialMatches, orgNameInput])
 
 	const orgAutocompleteOptions = useMemo(
 		() =>
@@ -210,17 +229,15 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	)
 
 	useEffect(() => {
-		if (
-			mounted &&
-			!isExactMatch &&
-			!generateSlug &&
-			debouncedOrgName.trim() !== '' &&
-			potentialMatches?.length === 0
-		) {
+		setBypassExactMatch(false)
+	}, [orgNameInput])
+
+	useEffect(() => {
+		if (mounted && !isExactMatch && !generateSlug && debouncedOrgName.trim() !== '') {
 			setGenerateSlug(true)
 		}
 
-		if (mounted && isExactMatch) {
+		if (mounted && isExactMatch && !bypassExactMatch) {
 			if (currentOrgSlug !== '') {
 				form.setFieldValue('orgSlug', '')
 			}
@@ -234,7 +251,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		generateSlug,
 		currentOrgSlug,
 		debouncedOrgName,
-		potentialMatches?.length,
+		bypassExactMatch,
 		form.setFieldValue,
 	])
 
@@ -343,8 +360,21 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							}}
 							data={orgAutocompleteOptions as OrgAutocompleteItem[]}
 							onItemSubmit={(item: OrgAutocompleteItem) => handleInspectMatch(item.match)}
-							filter={() => true} // Let the similarity-based server results drive the list
+							filter={() => true}
 						/>
+
+						{isExactMatch && (
+							<Checkbox
+								mt='sm'
+								label='This is a different organization with a similar name, let me submit anyway.'
+								checked={bypassExactMatch}
+								onChange={(event) => setBypassExactMatch(event.currentTarget.checked)}
+								styles={(theme) => ({
+									label: { color: theme.colors.red?.[7] ?? 'red', fontWeight: 500 },
+								})}
+							/>
+						)}
+
 						<TextInput
 							label={t('form.org-website')}
 							placeholder={t('form.placeholder-website')}
@@ -380,8 +410,8 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 								disabled={
 									!form.isValid() ||
 									Object.keys(form.errors).length !== 0 ||
-									isExactMatch ||
-									isMatchingPending
+									isMatchingPending ||
+									(isExactMatch && !bypassExactMatch)
 								}
 								type='submit'
 							>
