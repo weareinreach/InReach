@@ -34,9 +34,9 @@ export const SimilarNameWarning = {} satisfies StoryDef
 // and disables submit.
 export const DuplicateWebsiteBlocked = {} satisfies StoryDef
 
-// Type "Existing Organization" as the name AND a website containing "existingorg2.org" (a typo of
-// existingorg.org, but still a valid TLD) - shows the dismissable "Did you mean existingorg.org?"
-// checkbox; submit stays disabled until it's checked.
+// Type "Existing Organization" as the name AND a website containing either "existingorg2.org" (an
+// edit-distance typo) or "existingorg.com" (same name, wrong-but-valid TLD) - both shapes show the
+// dismissable "Did you mean existingorg.org?" checkbox; submit stays disabled until it's checked.
 export const NearMissWebsiteWarning = {} satisfies StoryDef
 
 // Fill out the form with a valid, non-matching website (e.g. https://brandneworg.org) and submit - the

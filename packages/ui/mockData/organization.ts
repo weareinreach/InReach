@@ -88,16 +88,19 @@ export const organization = {
 		},
 	}),
 	// Flags "Existing Organization" as a name match (soft warning, non-blocking), any website containing
-	// "example.org" as a domain match (hard block), and "existingorg2.org" as a near-miss (typo, but still
-	// a valid TLD) of that same org's domain (dismissable checkbox) - used to demo the SuggestOrg
-	// duplicate-detection UI. Note: the near-miss trigger must have a *valid* TLD, or TLD validation in the
-	// form schema rejects it outright before the near-miss check ever gets a chance to run.
+	// "example.org" as a domain match (hard block), and either "existingorg2.org" (edit-distance typo) or
+	// "existingorg.com" / "existingorg.net" (same name, wrong-but-valid TLD) as a near-miss of that same
+	// org's domain (dismissable checkbox) - used to demo the SuggestOrg duplicate-detection UI. Note: near-
+	// miss triggers must have a *valid* TLD, or TLD validation in the form schema rejects them outright
+	// before the near-miss check ever gets a chance to run.
 	getPotentialMatches: getTRPCMock({
 		path: ['organization', 'getPotentialMatches'],
 		response: (input): ApiOutput['organization']['getPotentialMatches'] => {
 			const matches: ApiOutput['organization']['getPotentialMatches'] = []
 			const name = input.name?.trim().toLowerCase() ?? ''
 			const website = input.website?.trim().toLowerCase() ?? ''
+			const isNearMissTypo = website.includes('existingorg2.org')
+			const isNearMissWrongTld = website.includes('existingorg.com') || website.includes('existingorg.net')
 
 			if (name.includes('existing organization')) {
 				matches.push({
@@ -109,7 +112,7 @@ export const organization = {
 					deleted: false,
 					published: true,
 					websiteMatch: false,
-					websiteNearMatch: website.includes('existingorg2.org') ? 'existingorg.org' : null,
+					websiteNearMatch: isNearMissTypo || isNearMissWrongTld ? 'existingorg.org' : null,
 				})
 			}
 

@@ -35,6 +35,16 @@ const levenshteinDistance = (a: string, b: string) => {
 
 const NEAR_MISS_MAX_DISTANCE = 2
 
+// Splits a normalized domain into its name and TLD (e.g. "aclu.org" -> { name: "aclu", tld: "org" }) on
+// the last dot. Good enough for the simple .com/.org/.net-style TLDs expected here - not meant to handle
+// multi-part TLDs like ".co.uk".
+const splitDomain = (domain: string) => {
+	const lastDot = domain.lastIndexOf('.')
+	return lastDot === -1
+		? { name: domain, tld: '' }
+		: { name: domain.slice(0, lastDot), tld: domain.slice(lastDot + 1) }
+}
+
 type MatchRow = {
 	id: string
 	name: string
@@ -163,10 +173,14 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 	const merged = [...nameResults, ...extraOrgs].slice(0, 5)
 
 	// Near-miss website check: only against orgs whose NAME already matched (a strong prior), and only
-	// those that aren't already an exact website match - catches typos like "aclu.or" vs "aclu.org" that a
-	// name match alone wouldn't flag as a website duplicate, without fuzzy-matching every domain in the DB.
+	// those that aren't already an exact website match. Two independent signals catch two different typo
+	// shapes: edit distance catches a dropped/extra/swapped letter (e.g. "aclu.or" vs "aclu.org"), while
+	// the same-name-different-TLD check catches a wrong-but-valid TLD (e.g. "aclu.com" vs "aclu.org") -
+	// those can differ by 3+ characters, well past the edit-distance threshold, despite being an obvious
+	// mistake once you notice the name part is identical.
 	const nearMissByOrgId = new Map<string, string>()
 	if (normalizedWebsite) {
+		const inputDomain = splitDomain(normalizedWebsite)
 		const nameMatchIdsWithoutExactWebsite = nameResults
 			.map((r) => r.id)
 			.filter((id) => !websiteMatchOrgIds.has(id))
@@ -178,8 +192,13 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 			for (const candidate of candidateWebsites) {
 				if (!candidate.organizationId || nearMissByOrgId.has(candidate.organizationId)) continue
 				const candidateDomain = normalizeToDomain(candidate.url)
+				const candidateSplit = splitDomain(candidateDomain)
 				const distance = levenshteinDistance(normalizedWebsite, candidateDomain)
-				if (distance > 0 && distance <= NEAR_MISS_MAX_DISTANCE) {
+				const sameNameDifferentTld =
+					inputDomain.name !== '' &&
+					inputDomain.name === candidateSplit.name &&
+					inputDomain.tld !== candidateSplit.tld
+				if ((distance > 0 && distance <= NEAR_MISS_MAX_DISTANCE) || sameNameDifferentTld) {
 					nearMissByOrgId.set(candidate.organizationId, candidateDomain)
 				}
 			}
