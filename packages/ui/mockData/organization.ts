@@ -87,8 +87,9 @@ export const organization = {
 			message: 'This website is already associated with an existing organization in our system.',
 		},
 	}),
-	// Flags "Existing Organization" as a name match (soft warning, non-blocking) and any website containing
-	// "example.org" as a domain match (hard block) - used to demo the SuggestOrg duplicate-detection UI.
+	// Flags "Existing Organization" as a name match (soft warning, non-blocking), any website containing
+	// "example.org" as a domain match (hard block), and "existingorg.or" as a near-miss of that same org's
+	// domain (dismissable checkbox) - used to demo the SuggestOrg duplicate-detection UI.
 	getPotentialMatches: getTRPCMock({
 		path: ['organization', 'getPotentialMatches'],
 		response: (input): ApiOutput['organization']['getPotentialMatches'] => {
@@ -106,6 +107,7 @@ export const organization = {
 					deleted: false,
 					published: true,
 					websiteMatch: false,
+					websiteNearMatch: website.includes('existingorg.or') ? 'existingorg.org' : null,
 				})
 			}
 
@@ -119,6 +121,7 @@ export const organization = {
 					deleted: false,
 					published: true,
 					websiteMatch: true,
+					websiteNearMatch: null,
 				})
 			}
 

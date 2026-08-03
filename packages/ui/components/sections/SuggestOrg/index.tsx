@@ -3,6 +3,7 @@ import {
 	Autocomplete,
 	type AutocompleteItem,
 	Button,
+	Checkbox,
 	createStyles,
 	Divider,
 	Modal,
@@ -93,10 +94,13 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const { overlay, setOverlay, hasAuth } = authPromptState
 
 	const [submitError, setSubmitError] = useState<string | null>(null)
+	const [submittedOrgName, setSubmittedOrgName] = useState('')
 	const suggestOrgApi = api.organization.createNewSuggestion.useMutation({
 		onSuccess: () => {
 			searchBoxEvent.suggestResourceSubmit(form.values.orgName)
 			setSubmitError(null)
+			setSubmittedOrgName(form.values.orgName)
+			resetFormState()
 			modalHandler.open()
 		},
 		onError: (error) => {
@@ -135,6 +139,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	>(null)
 	const [dismissMatches, setDismissMatches] = useState(false)
 	const [generateSlug, setGenerateSlug] = useState(false)
+	const [bypassNearMissWebsite, setBypassNearMissWebsite] = useState(false)
 	const router = useRouter()
 
 	const countrySelected = Boolean(form.values.countryId)
@@ -237,6 +242,17 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		[potentialMatches]
 	)
 
+	// Suggested domain when the typed website is a near-miss (e.g. a typo) of an org whose name already
+	// matched - a softer signal than an exact match, so it's dismissable rather than a hard block.
+	const websiteNearMatch = useMemo(
+		() => potentialMatches?.find((match) => match.websiteNearMatch)?.websiteNearMatch ?? null,
+		[potentialMatches]
+	)
+
+	useEffect(() => {
+		setBypassNearMissWebsite(false)
+	}, [orgWebsite])
+
 	// Name similarity is informational only - it never blocks slug generation or submission.
 	// Only a website/domain match (below) is treated as an actual duplicate.
 	useEffect(() => {
@@ -295,7 +311,9 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		[setPlaceId]
 	)
 
-	const handleDismiss = useCallback(() => {
+	// Clears every piece of state that drives the duplicate-detection warnings, so a successful
+	// submission doesn't leave a stale "this is a duplicate" message on screen for the next entry.
+	const resetFormState = useCallback(() => {
 		form.setValues({
 			communityFocus: [],
 			countryId: '',
@@ -307,8 +325,13 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		})
 		setSearchLocation('')
 		setOrgNameInput('')
+		setOrgWebsite(undefined)
+		setBypassNearMissWebsite(false)
+	}, [form, setBypassNearMissWebsite, setOrgNameInput, setOrgWebsite, setSearchLocation])
+
+	const handleDismiss = useCallback(() => {
 		modalHandler.close()
-	}, [form, modalHandler, setOrgNameInput, setSearchLocation])
+	}, [modalHandler])
 
 	if (!mounted || loading) {
 		return null
@@ -357,7 +380,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							onItemSubmit={(item: OrgAutocompleteItem) => handleInspectMatch(item.match)}
 							filter={() => true}
 						/>
-
 						{isExactMatch && (
 							<Text size='sm' color='red' mt='sm'>
 								An organization with a similar name already exists. This can happen legitimately (e.g.
@@ -373,7 +395,12 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							withAsterisk
 							disabled={!countrySelected}
 							{...form.getInputProps('orgWebsite')}
-							onBlur={handleWebsiteBlur}
+							onBlur={(e) => {
+								// form.getInputProps' own onBlur runs the field's validation (shows the error
+								// text below) - it must not be replaced by our own onBlur, only supplemented.
+								form.getInputProps('orgWebsite').onBlur(e)
+								handleWebsiteBlur(e)
+							}}
 						/>
 
 						{isWebsiteMatch && (
@@ -381,6 +408,18 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 								This website is already associated with an existing organization in our system. If you believe
 								this is an error, please double check the URL you entered.
 							</Text>
+						)}
+
+						{!isWebsiteMatch && websiteNearMatch && (
+							<Checkbox
+								mt='sm'
+								label={`Did you mean ${websiteNearMatch}? Check this box if the website you entered is correct and this is a different organization.`}
+								checked={bypassNearMissWebsite}
+								onChange={(event) => setBypassNearMissWebsite(event.currentTarget.checked)}
+								styles={(theme) => ({
+									label: { color: theme.colors.red?.[7] ?? 'red', fontWeight: 500 },
+								})}
+							/>
 						)}
 					</Stack>
 
@@ -416,7 +455,8 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 									!form.isValid() ||
 									Object.keys(form.errors).length !== 0 ||
 									isMatchingPending ||
-									isWebsiteMatch
+									isWebsiteMatch ||
+									(Boolean(websiteNearMatch) && !bypassNearMissWebsite)
 								}
 								type='submit'
 							>
@@ -433,7 +473,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 				>
 					<Stack align='center' spacing={16}>
 						<Title order={1}>🎉</Title>
-						<Title order={2}>{t('modal.thank-you', { org: form.values.orgName })}</Title>
+						<Title order={2}>{t('modal.thank-you', { org: submittedOrgName })}</Title>
 						<Text variant={variants.Text.darkGray} align='center'>
 							{t('modal.thank-you-sub')}
 						</Text>

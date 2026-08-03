@@ -5,6 +5,46 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetPotentialMatchesSchema } from './query.getPotentialMatches.schema'
 
+// Reduces a URL to its bare domain - strips protocol, "www.", and everything from the first /, ?, or #
+// onward - so "https://www.example.org/donate" and "example.org" are treated as the same organization.
+const normalizeToDomain = (url: string) =>
+	url
+		.trim()
+		.toLowerCase()
+		.replace(/^https?:\/\//, '')
+		.replace(/^www\./, '')
+		.split(/[/?#]/)[0] ?? ''
+
+const levenshteinDistance = (a: string, b: string) => {
+	const rows = Array.from({ length: a.length + 1 }, (_, i) =>
+		Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+	)
+	for (let i = 1; i <= a.length; i++) {
+		for (let j = 1; j <= b.length; j++) {
+			const row = rows[i]
+			const prevRow = rows[i - 1]
+			if (!row || !prevRow) continue
+			row[j] =
+				a[i - 1] === b[j - 1]
+					? (prevRow[j - 1] ?? 0)
+					: 1 + Math.min(prevRow[j] ?? 0, row[j - 1] ?? 0, prevRow[j - 1] ?? 0)
+		}
+	}
+	return rows[a.length]?.[b.length] ?? Math.max(a.length, b.length)
+}
+
+const NEAR_MISS_MAX_DISTANCE = 2
+
+type MatchRow = {
+	id: string
+	name: string
+	slug: string
+	city: string | null
+	state: string | null
+	deleted: boolean
+	published: boolean
+}
+
 const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMatchesSchema>) => {
 	const { name, website } = input
 
@@ -36,33 +76,31 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 			? Prisma.sql`ARRAY[${Prisma.join(uniqueExpandedTerms.map((t) => `%${t.replace(/[^a-zA-Z0-9 ]/g, '')}%`))}]`
 			: Prisma.sql`ARRAY[]::text[]`
 
-	// Normalize website down to its bare domain (strip protocol, www, and everything from the first
-	// /, ?, or # onward) so "https://www.example.org/donate" and "example.org" count as the same site.
-	const normalizedWebsite = website
-		? website
-				.trim()
-				.toLowerCase()
-				.replace(/^https?:\/\//, '')
-				.replace(/^www\./, '')
-				.split(/[/?#]/)[0]
-		: undefined
+	const normalizedWebsite = website ? normalizeToDomain(website) : undefined
+
+	// Website duplicates: a broad substring pre-filter in SQL (via Prisma's query builder, not raw SQL),
+	// then an exact domain comparison in JS - avoids hand-rolling regex/backreference logic in raw SQL,
+	// which proved fragile (both a SQL syntax error and a silent false-negative in practice).
+	let websiteMatchOrgIds = new Set<string>()
+	if (normalizedWebsite) {
+		const candidates = await prisma.orgWebsite.findMany({
+			where: { url: { contains: normalizedWebsite, mode: 'insensitive' } },
+			select: { url: true, organizationId: true },
+		})
+		websiteMatchOrgIds = new Set(
+			candidates
+				.filter((candidate) => normalizeToDomain(candidate.url) === normalizedWebsite)
+				.map((candidate) => candidate.organizationId)
+				.filter((id): id is string => Boolean(id))
+		)
+	}
 
 	/**
-	 * Raw SQL query leveraging Trigram similarity and normalization. We match on fuzzy name similarity OR an
-	 * exact domain-level website match.
+	 * Raw SQL query leveraging Trigram similarity and synonym expansion for fuzzy name matching - there's no
+	 * Prisma query-builder equivalent for trigram similarity, so this part stays raw SQL.
 	 */
-	const results = await prisma.$queryRaw<
-		{
-			id: string
-			name: string
-			slug: string
-			city: string | null
-			state: string | null
-			deleted: boolean
-			published: boolean
-			websiteMatch: boolean
-		}[]
-	>`
+	const nameResults = searchTerm
+		? await prisma.$queryRaw<MatchRow[]>`
     SELECT
       o.id,
       o.name,
@@ -70,57 +108,90 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
       o.deleted,
       o.published,
       l.city,
-      gd.abbrev as state,
-      (
-        ${!!normalizedWebsite} AND
-        EXISTS (
-          SELECT 1 FROM "OrgWebsite" ow
-          WHERE ow."organizationId" = o.id
-          AND regexp_replace(lower(ow.url), '^(https?://)?(www\.)?([^/?#]+).*$', '\3') = ${normalizedWebsite ?? ''}
-        )
-      ) as "websiteMatch"
+      gd.abbrev as state
     FROM "Organization" o
     LEFT JOIN "OrgLocation" l ON l."orgId" = o.id AND l.primary = true
     LEFT JOIN "GovDist" gd ON l."govDistId" = gd.id
     WHERE
-      (
-        (
-          ${!!searchTerm} AND
-          (
-            -- 1. Expanded Term Matching (Synonyms and substrings)
-            lower(public.immutable_unaccent(regexp_replace(o.name, '[^a-zA-Z0-9 ]', '', 'g'))) ILIKE ANY(
-              ${expandedTermsSql}
-            )
-            OR
-            -- 2. Trigram similarity for typos
-            similarity(
-              lower(public.immutable_unaccent(regexp_replace(o.name, '[^a-zA-Z0-9 ]', '', 'g'))),
-              lower(public.immutable_unaccent(regexp_replace(${searchTerm}, '[^a-zA-Z0-9 ]', '', 'g')))
-            ) > 0.3
-          )
-        )
-        OR
-        (
-          ${!!normalizedWebsite} AND
-          EXISTS (
-            SELECT 1 FROM "OrgWebsite" ow
-            WHERE ow."organizationId" = o.id
-            AND regexp_replace(lower(ow.url), '^(https?://)?(www\.)?([^/?#]+).*$', '\3') = ${normalizedWebsite ?? ''}
-          )
-        )
+      -- 1. Expanded Term Matching (Synonyms and substrings)
+      lower(public.immutable_unaccent(regexp_replace(o.name, '[^a-zA-Z0-9 ]', '', 'g'))) ILIKE ANY(
+        ${expandedTermsSql}
       )
+      OR
+      -- 2. Trigram similarity for typos
+      similarity(
+        lower(public.immutable_unaccent(regexp_replace(o.name, '[^a-zA-Z0-9 ]', '', 'g'))),
+        lower(public.immutable_unaccent(regexp_replace(${searchTerm}, '[^a-zA-Z0-9 ]', '', 'g')))
+      ) > 0.3
     ORDER BY
-      CASE WHEN ${!!searchTerm} THEN similarity(o.name, ${searchTerm}) ELSE 0 END DESC
+      similarity(o.name, ${searchTerm}) DESC
     LIMIT 5;
   `
+		: []
 
-	return results.map((r) => ({
+	// If the website matched an organization the name search didn't already surface (different/unrelated
+	// name, same domain), fetch its display info too, so a pure website-only duplicate still gets flagged.
+	const missingIds = [...websiteMatchOrgIds].filter((id) => !nameResults.some((r) => r.id === id))
+	const extraOrgs: MatchRow[] = missingIds.length
+		? (
+				await prisma.organization.findMany({
+					where: { id: { in: missingIds } },
+					select: {
+						id: true,
+						name: true,
+						slug: true,
+						deleted: true,
+						published: true,
+						locations: {
+							where: { primary: true },
+							take: 1,
+							select: { city: true, govDist: { select: { abbrev: true } } },
+						},
+					},
+				})
+			).map((org) => ({
+				id: org.id,
+				name: org.name,
+				slug: org.slug,
+				deleted: org.deleted,
+				published: org.published,
+				city: org.locations[0]?.city ?? null,
+				state: org.locations[0]?.govDist?.abbrev ?? null,
+			}))
+		: []
+
+	const merged = [...nameResults, ...extraOrgs].slice(0, 5)
+
+	// Near-miss website check: only against orgs whose NAME already matched (a strong prior), and only
+	// those that aren't already an exact website match - catches typos like "aclu.or" vs "aclu.org" that a
+	// name match alone wouldn't flag as a website duplicate, without fuzzy-matching every domain in the DB.
+	const nearMissByOrgId = new Map<string, string>()
+	if (normalizedWebsite) {
+		const nameMatchIdsWithoutExactWebsite = nameResults
+			.map((r) => r.id)
+			.filter((id) => !websiteMatchOrgIds.has(id))
+		if (nameMatchIdsWithoutExactWebsite.length > 0) {
+			const candidateWebsites = await prisma.orgWebsite.findMany({
+				where: { organizationId: { in: nameMatchIdsWithoutExactWebsite } },
+				select: { organizationId: true, url: true },
+			})
+			for (const candidate of candidateWebsites) {
+				if (!candidate.organizationId || nearMissByOrgId.has(candidate.organizationId)) continue
+				const candidateDomain = normalizeToDomain(candidate.url)
+				const distance = levenshteinDistance(normalizedWebsite, candidateDomain)
+				if (distance > 0 && distance <= NEAR_MISS_MAX_DISTANCE) {
+					nearMissByOrgId.set(candidate.organizationId, candidateDomain)
+				}
+			}
+		}
+	}
+
+	return merged.map((r) => ({
 		...r,
 		city: r.city ?? 'Remote',
 		state: r.state ?? '',
-		deleted: r.deleted,
-		published: r.published,
-		websiteMatch: r.websiteMatch,
+		websiteMatch: websiteMatchOrgIds.has(r.id),
+		websiteNearMatch: nearMissByOrgId.get(r.id) ?? null,
 	}))
 }
 

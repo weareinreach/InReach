@@ -5,6 +5,16 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateNewSuggestionSchema } from './mutation.createNewSuggestion.schema'
 
+// Reduces a URL to its bare domain - strips protocol, "www.", and everything from the first /, ?, or #
+// onward - so "https://www.example.org/donate" and "example.org" are treated as the same organization.
+const normalizeToDomain = (url: string) =>
+	url
+		.trim()
+		.toLowerCase()
+		.replace(/^https?:\/\//, '')
+		.replace(/^www\./, '')
+		.split(/[/?#]/)[0] ?? ''
+
 const createNewSuggestion = async ({
 	ctx,
 	input,
@@ -20,19 +30,17 @@ const createNewSuggestion = async ({
 		if (!existingOrgId) {
 			// Normalize down to the bare domain, the same way query.getPotentialMatches does, so
 			// "already flagged while typing" and "blocked on submit" agree on what counts as a duplicate.
-			const normalizedWebsite = orgWebsite
-				.trim()
-				.toLowerCase()
-				.replace(/^https?:\/\//, '')
-				.replace(/^www\./, '')
-				.split(/[/?#]/)[0]
-			const existingWebsiteMatch = await tx.$queryRaw<{ organizationId: string }[]>`
-				SELECT "organizationId"
-				FROM "OrgWebsite"
-				WHERE regexp_replace(lower(url), '^(https?://)?(www\.)?([^/?#]+).*$', '\3') = ${normalizedWebsite}
-				LIMIT 1
-			`
-			if (existingWebsiteMatch.length > 0) {
+			// A broad substring pre-filter narrows the candidates cheaply, then the exact domain
+			// comparison happens in JS - this avoids hand-rolling regex/backreference logic in raw SQL.
+			const normalizedWebsite = normalizeToDomain(orgWebsite)
+			const candidates = await tx.orgWebsite.findMany({
+				where: { url: { contains: normalizedWebsite, mode: 'insensitive' } },
+				select: { url: true },
+			})
+			const isDuplicate = candidates.some(
+				(candidate) => normalizeToDomain(candidate.url) === normalizedWebsite
+			)
+			if (isDuplicate) {
 				throw new TRPCError({
 					code: 'CONFLICT',
 					message: 'This website is already associated with an existing organization in our system.',

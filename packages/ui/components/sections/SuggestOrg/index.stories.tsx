@@ -34,6 +34,11 @@ export const SimilarNameWarning = {} satisfies StoryDef
 // and disables submit.
 export const DuplicateWebsiteBlocked = {} satisfies StoryDef
 
+// Type "Existing Organization" as the name AND a website containing "existingorg.or" (note: missing the
+// final "g") - shows the dismissable "Did you mean existingorg.org?" checkbox; submit stays disabled
+// until it's checked.
+export const NearMissWebsiteWarning = {} satisfies StoryDef
+
 // Fill out the form with a non-matching website and submit - the mutation always rejects with
 // CONFLICT, demonstrating the server-side error alert (e.g. for a race-condition duplicate).
 export const SubmitConflictError = {
