@@ -88,8 +88,10 @@ export const organization = {
 		},
 	}),
 	// Flags "Existing Organization" as a name match (soft warning, non-blocking), any website containing
-	// "example.org" as a domain match (hard block), and "existingorg.or" as a near-miss of that same org's
-	// domain (dismissable checkbox) - used to demo the SuggestOrg duplicate-detection UI.
+	// "example.org" as a domain match (hard block), and "existingorg2.org" as a near-miss (typo, but still
+	// a valid TLD) of that same org's domain (dismissable checkbox) - used to demo the SuggestOrg
+	// duplicate-detection UI. Note: the near-miss trigger must have a *valid* TLD, or TLD validation in the
+	// form schema rejects it outright before the near-miss check ever gets a chance to run.
 	getPotentialMatches: getTRPCMock({
 		path: ['organization', 'getPotentialMatches'],
 		response: (input): ApiOutput['organization']['getPotentialMatches'] => {
@@ -107,7 +109,7 @@ export const organization = {
 					deleted: false,
 					published: true,
 					websiteMatch: false,
-					websiteNearMatch: website.includes('existingorg.or') ? 'existingorg.org' : null,
+					websiteNearMatch: website.includes('existingorg2.org') ? 'existingorg.org' : null,
 				})
 			}
 
