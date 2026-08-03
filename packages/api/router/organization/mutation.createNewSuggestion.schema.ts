@@ -6,7 +6,7 @@ export const ZCreateNewSuggestionSchema = z.object({
 	countryId: prefixedId('country'),
 	orgName: z.string().trim().min(2),
 	orgSlug: z.string().regex(/^[A-Za-z0-9-]*$/, 'Slug must only contain letters, numbers, and hyphens'),
-	orgWebsite: z.string().trim().url().optional(),
+	orgWebsite: z.string().trim().min(1, 'Organization website is required').url(),
 	orgAddress: z
 		.object({
 			street1: z.string(),

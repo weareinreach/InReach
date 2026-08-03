@@ -1,3 +1,5 @@
+import { TRPCError } from '@trpc/server'
+
 import { generateId, getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -14,6 +16,29 @@ const createNewSuggestion = async ({
 	// If any operation fails, the entire transaction is rolled back.
 	const result = await prisma.$transaction(async (tx) => {
 		console.log('Starting transaction for organization suggestion.')
+
+		if (!existingOrgId) {
+			// Normalize down to the bare domain, the same way query.getPotentialMatches does, so
+			// "already flagged while typing" and "blocked on submit" agree on what counts as a duplicate.
+			const normalizedWebsite = orgWebsite
+				.trim()
+				.toLowerCase()
+				.replace(/^https?:\/\//, '')
+				.replace(/^www\./, '')
+				.split(/[/?#]/)[0]
+			const existingWebsiteMatch = await tx.$queryRaw<{ organizationId: string }[]>`
+				SELECT "organizationId"
+				FROM "OrgWebsite"
+				WHERE regexp_replace(lower(url), '^(https?://)?(www\.)?([^/?#]+).*$', '\3') = ${normalizedWebsite}
+				LIMIT 1
+			`
+			if (existingWebsiteMatch.length > 0) {
+				throw new TRPCError({
+					code: 'CONFLICT',
+					message: 'This website is already associated with an existing organization in our system.',
+				})
+			}
+		}
 
 		let organizationId = existingOrgId
 

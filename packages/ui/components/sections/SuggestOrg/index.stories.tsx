@@ -17,6 +17,7 @@ export default {
 			organization.suggestionOptions,
 			organization.createNewSuggestion, // Keep this for the actual submission
 			organization.generateSlug,
+			organization.getPotentialMatches,
 		],
 	},
 } satisfies Meta<typeof SuggestOrg>
@@ -24,3 +25,26 @@ export default {
 type StoryDef = StoryObj<typeof SuggestOrg>
 
 export const Desktop = {} satisfies StoryDef
+
+// Type "Existing Organization" as the org name - shows the non-blocking "similar name" warning,
+// submit stays enabled.
+export const SimilarNameWarning = {} satisfies StoryDef
+
+// Type any website containing "example.org" - shows the hard-blocking "duplicate website" message
+// and disables submit.
+export const DuplicateWebsiteBlocked = {} satisfies StoryDef
+
+// Fill out the form with a non-matching website and submit - the mutation always rejects with
+// CONFLICT, demonstrating the server-side error alert (e.g. for a race-condition duplicate).
+export const SubmitConflictError = {
+	parameters: {
+		msw: [
+			geo.autocompleteFullAddress,
+			geo.geocodeFullAddress,
+			organization.suggestionOptions,
+			organization.createNewSuggestionConflict,
+			organization.generateSlug,
+			organization.getPotentialMatches,
+		],
+	},
+} satisfies StoryDef

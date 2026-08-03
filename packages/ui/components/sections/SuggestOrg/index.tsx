@@ -1,8 +1,8 @@
 import {
+	Alert,
 	Autocomplete,
 	type AutocompleteItem,
 	Button,
-	Checkbox,
 	createStyles,
 	Divider,
 	Modal,
@@ -92,10 +92,15 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const [modalOpen, modalHandler] = useDisclosure(false)
 	const { overlay, setOverlay, hasAuth } = authPromptState
 
+	const [submitError, setSubmitError] = useState<string | null>(null)
 	const suggestOrgApi = api.organization.createNewSuggestion.useMutation({
 		onSuccess: () => {
 			searchBoxEvent.suggestResourceSubmit(form.values.orgName)
+			setSubmitError(null)
 			modalHandler.open()
+		},
+		onError: (error) => {
+			setSubmitError(error.message)
 		},
 	})
 
@@ -130,7 +135,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	>(null)
 	const [dismissMatches, setDismissMatches] = useState(false)
 	const [generateSlug, setGenerateSlug] = useState(false)
-	const [bypassExactMatch, setBypassExactMatch] = useState(false)
 	const router = useRouter()
 
 	const countrySelected = Boolean(form.values.countryId)
@@ -228,32 +232,18 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		[potentialMatches]
 	)
 
-	useEffect(() => {
-		setBypassExactMatch(false)
-	}, [orgNameInput])
+	const isWebsiteMatch = useMemo(
+		() => Boolean(potentialMatches?.some((match) => match.websiteMatch)),
+		[potentialMatches]
+	)
 
+	// Name similarity is informational only - it never blocks slug generation or submission.
+	// Only a website/domain match (below) is treated as an actual duplicate.
 	useEffect(() => {
-		if (mounted && !isExactMatch && !generateSlug && debouncedOrgName.trim() !== '') {
+		if (mounted && !generateSlug && debouncedOrgName.trim() !== '') {
 			setGenerateSlug(true)
 		}
-
-		if (mounted && isExactMatch && !bypassExactMatch) {
-			if (currentOrgSlug !== '') {
-				form.setFieldValue('orgSlug', '')
-			}
-			if (generateSlug) {
-				setGenerateSlug(false)
-			}
-		}
-	}, [
-		mounted,
-		isExactMatch,
-		generateSlug,
-		currentOrgSlug,
-		debouncedOrgName,
-		bypassExactMatch,
-		form.setFieldValue,
-	])
+	}, [mounted, generateSlug, debouncedOrgName])
 
 	const handleInspectMatch = (match: ApiOutput['organization']['getPotentialMatches'][number]) =>
 		setInspectMatch(match)
@@ -325,7 +315,12 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	}
 	return (
 		<SuggestionFormProvider form={form}>
-			<form onSubmit={form.onSubmit(() => suggestOrgApi.mutate(form.values))}>
+			<form
+				onSubmit={form.onSubmit(() => {
+					setSubmitError(null)
+					suggestOrgApi.mutate(form.values)
+				})}
+			>
 				<Stack spacing={40} pb={40}>
 					<Stack spacing={24}>
 						<Title order={1}>{t('body.suggest-org')}</Title>
@@ -364,24 +359,29 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						/>
 
 						{isExactMatch && (
-							<Checkbox
-								mt='sm'
-								label='This is a different organization with a similar name, let me submit anyway.'
-								checked={bypassExactMatch}
-								onChange={(event) => setBypassExactMatch(event.currentTarget.checked)}
-								styles={(theme) => ({
-									label: { color: theme.colors.red?.[7] ?? 'red', fontWeight: 500 },
-								})}
-							/>
+							<Text size='sm' color='red' mt='sm'>
+								An organization with a similar name already exists. This can happen legitimately (e.g.
+								different chapters, or unrelated organizations that happen to share a name) - you can continue
+								if you're sure this is a different organization.
+							</Text>
 						)}
 
 						<TextInput
 							label={t('form.org-website')}
 							placeholder={t('form.placeholder-website')}
+							required
+							withAsterisk
 							disabled={!countrySelected}
 							{...form.getInputProps('orgWebsite')}
 							onBlur={handleWebsiteBlur}
 						/>
+
+						{isWebsiteMatch && (
+							<Text size='sm' color='red'>
+								This website is already associated with an existing organization in our system. If you believe
+								this is an error, please double check the URL you entered.
+							</Text>
+						)}
 					</Stack>
 
 					<Divider />
@@ -403,6 +403,11 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						<ServiceTypes disabled={!countrySelected} serviceTypes={formOptions?.serviceTypes ?? []} />
 						<Communities disabled={!countrySelected} communities={formOptions?.communities ?? []} />
 						<Divider />
+						{submitError && (
+							<Alert icon={<Icon icon='carbon:warning' />} title='Unable to submit' color='red'>
+								{submitError}
+							</Alert>
+						)}
 						<Stack spacing={16} align='center'>
 							<Button
 								w='fit-content'
@@ -411,7 +416,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 									!form.isValid() ||
 									Object.keys(form.errors).length !== 0 ||
 									isMatchingPending ||
-									(isExactMatch && !bypassExactMatch)
+									isWebsiteMatch
 								}
 								type='submit'
 							>

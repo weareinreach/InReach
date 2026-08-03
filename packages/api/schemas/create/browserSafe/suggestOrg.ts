@@ -6,7 +6,11 @@ export const SuggestionSchema = z.object({
 	countryId: nonEmptyString,
 	orgName: nonEmptyString,
 	orgSlug: nonEmptyString,
-	orgWebsite: z.union([z.literal(''), z.string().trim().url('Invalid URL format')]).optional(),
+	orgWebsite: z
+		.string({ required_error: 'Organization website is required' })
+		.trim()
+		.min(1, 'Organization website is required')
+		.url('Invalid URL format'),
 	orgAddress: z
 		.object({
 			street1: z.string(),

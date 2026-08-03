@@ -36,12 +36,20 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 			? Prisma.sql`ARRAY[${Prisma.join(uniqueExpandedTerms.map((t) => `%${t.replace(/[^a-zA-Z0-9 ]/g, '')}%`))}]`
 			: Prisma.sql`ARRAY[]::text[]`
 
-	// Normalize website for comparison (strip protocol, www, and trailing slashes)
-	const normalizedWebsite = website?.replace(/^(https?:\/\/)?(www\.)?/, '').replace(/\/$/, '')
+	// Normalize website down to its bare domain (strip protocol, www, and everything from the first
+	// /, ?, or # onward) so "https://www.example.org/donate" and "example.org" count as the same site.
+	const normalizedWebsite = website
+		? website
+				.trim()
+				.toLowerCase()
+				.replace(/^https?:\/\//, '')
+				.replace(/^www\./, '')
+				.split(/[/?#]/)[0]
+		: undefined
 
 	/**
-	 * Raw SQL query leveraging Trigram similarity and normalization. We match on fuzzy name similarity OR exact
-	 * normalized website match.
+	 * Raw SQL query leveraging Trigram similarity and normalization. We match on fuzzy name similarity OR an
+	 * exact domain-level website match.
 	 */
 	const results = await prisma.$queryRaw<
 		{
@@ -52,6 +60,7 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 			state: string | null
 			deleted: boolean
 			published: boolean
+			websiteMatch: boolean
 		}[]
 	>`
     SELECT
@@ -61,7 +70,15 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
       o.deleted,
       o.published,
       l.city,
-      gd.abbrev as state
+      gd.abbrev as state,
+      (
+        ${!!normalizedWebsite} AND
+        EXISTS (
+          SELECT 1 FROM "OrgWebsite" ow
+          WHERE ow."organizationId" = o.id
+          AND regexp_replace(lower(ow.url), '^(https?://)?(www\.)?([^/?#]+).*$', '\3') = ${normalizedWebsite ?? ''}
+        )
+      ) as "websiteMatch"
     FROM "Organization" o
     LEFT JOIN "OrgLocation" l ON l."orgId" = o.id AND l.primary = true
     LEFT JOIN "GovDist" gd ON l."govDistId" = gd.id
@@ -88,7 +105,7 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
           EXISTS (
             SELECT 1 FROM "OrgWebsite" ow
             WHERE ow."organizationId" = o.id
-            AND (ow.url ILIKE ${'%' + (normalizedWebsite ?? '') + '%'} OR REPLACE(REPLACE(REPLACE(ow.url, 'https://', ''), 'http://', ''), 'www.', '') ILIKE ${normalizedWebsite ?? ''})
+            AND regexp_replace(lower(ow.url), '^(https?://)?(www\.)?([^/?#]+).*$', '\3') = ${normalizedWebsite ?? ''}
           )
         )
       )
@@ -103,6 +120,7 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 		state: r.state ?? '',
 		deleted: r.deleted,
 		published: r.published,
+		websiteMatch: r.websiteMatch,
 	}))
 }
 
