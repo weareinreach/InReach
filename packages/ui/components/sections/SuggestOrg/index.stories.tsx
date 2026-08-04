@@ -26,10 +26,6 @@ type StoryDef = StoryObj<typeof SuggestOrg>
 
 export const Desktop = {} satisfies StoryDef
 
-// Type "Existing Organization" as the org name - shows the non-blocking "similar name" warning,
-// submit stays enabled.
-export const SimilarNameWarning = {} satisfies StoryDef
-
 // Type any website containing "example.org" - shows the hard-blocking "duplicate website" message
 // and disables submit.
 export const DuplicateWebsiteBlocked = {} satisfies StoryDef

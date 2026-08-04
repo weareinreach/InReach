@@ -203,30 +203,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const isMatchingPending = isSearchingMatches || orgNameInput !== debouncedOrgName
 	const currentOrgSlug = form.values.orgSlug
 
-	const isExactMatch = useMemo(() => {
-		if (!potentialMatches || potentialMatches.length === 0) return false
-
-		const cleanForStrictMatch = (str: string) => {
-			return str
-				.toLowerCase()
-				.trim()
-				.replace(/^(the|a|an)\s+/i, '')
-				.replace(/[^a-z0-9]/g, '')
-		}
-
-		const normalizedInput = cleanForStrictMatch(orgNameInput)
-		if (!normalizedInput) return false
-
-		return potentialMatches.some((match) => {
-			const normalizedMatch = cleanForStrictMatch(match.name)
-			return (
-				normalizedMatch === normalizedInput ||
-				normalizedMatch.includes(normalizedInput) ||
-				normalizedInput.includes(normalizedMatch)
-			)
-		})
-	}, [potentialMatches, orgNameInput])
-
 	const orgAutocompleteOptions = useMemo(
 		() =>
 			potentialMatches?.map((match) => ({
@@ -380,13 +356,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							onItemSubmit={(item: OrgAutocompleteItem) => handleInspectMatch(item.match)}
 							filter={() => true}
 						/>
-						{isExactMatch && (
-							<Text size='sm' color='red' mt='sm'>
-								An organization with a similar name already exists. This can happen legitimately (e.g.
-								different chapters, or unrelated organizations that happen to share a name) - you can continue
-								if you're sure this is a different organization.
-							</Text>
-						)}
 
 						<TextInput
 							label={t('form.org-website')}
