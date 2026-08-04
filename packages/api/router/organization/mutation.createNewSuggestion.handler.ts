@@ -1,7 +1,19 @@
+import { TRPCError } from '@trpc/server'
+
 import { generateId, getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateNewSuggestionSchema } from './mutation.createNewSuggestion.schema'
+
+// Reduces a URL to its bare domain - strips protocol, "www.", and everything from the first /, ?, or #
+// onward - so "https://www.example.org/donate" and "example.org" are treated as the same organization.
+const normalizeToDomain = (url: string) =>
+	url
+		.trim()
+		.toLowerCase()
+		.replace(/^https?:\/\//, '')
+		.replace(/^www\./, '')
+		.split(/[/?#]/)[0] ?? ''
 
 const createNewSuggestion = async ({
 	ctx,
@@ -14,6 +26,27 @@ const createNewSuggestion = async ({
 	// If any operation fails, the entire transaction is rolled back.
 	const result = await prisma.$transaction(async (tx) => {
 		console.log('Starting transaction for organization suggestion.')
+
+		if (!existingOrgId) {
+			// Normalize down to the bare domain, the same way query.getPotentialMatches does, so
+			// "already flagged while typing" and "blocked on submit" agree on what counts as a duplicate.
+			// A broad substring pre-filter narrows the candidates cheaply, then the exact domain
+			// comparison happens in JS - this avoids hand-rolling regex/backreference logic in raw SQL.
+			const normalizedWebsite = normalizeToDomain(orgWebsite)
+			const candidates = await tx.orgWebsite.findMany({
+				where: { url: { contains: normalizedWebsite, mode: 'insensitive' } },
+				select: { url: true },
+			})
+			const isDuplicate = candidates.some(
+				(candidate) => normalizeToDomain(candidate.url) === normalizedWebsite
+			)
+			if (isDuplicate) {
+				throw new TRPCError({
+					code: 'CONFLICT',
+					message: 'This website is already associated with an existing organization in our system.',
+				})
+			}
+		}
 
 		let organizationId = existingOrgId
 

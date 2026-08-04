@@ -77,6 +77,62 @@ export const organization = {
 		type: 'mutation',
 		response: { id: 'sugg_LKSDJFIOW156AWER15' },
 	}),
+	// Always rejects, to demo the "duplicate website" error the form shows when the server-side check fires
+	// (e.g. a race condition, or the client-side domain check was bypassed).
+	createNewSuggestionConflict: getTRPCMock({
+		path: ['organization', 'createNewSuggestion'],
+		type: 'mutation',
+		error: {
+			code: 'CONFLICT',
+			message: 'This website is already associated with an existing organization in our system.',
+		},
+	}),
+	// Flags "Existing Organization" as a name match (soft warning, non-blocking), any website containing
+	// "example.org" as a domain match (hard block), and either "existingorg2.org" (edit-distance typo) or
+	// "existingorg.com" / "existingorg.net" (same name, wrong-but-valid TLD) as a near-miss of that same
+	// org's domain (dismissable checkbox) - used to demo the SuggestOrg duplicate-detection UI. Note: near-
+	// miss triggers must have a *valid* TLD, or TLD validation in the form schema rejects them outright
+	// before the near-miss check ever gets a chance to run.
+	getPotentialMatches: getTRPCMock({
+		path: ['organization', 'getPotentialMatches'],
+		response: (input): ApiOutput['organization']['getPotentialMatches'] => {
+			const matches: ApiOutput['organization']['getPotentialMatches'] = []
+			const name = input.name?.trim().toLowerCase() ?? ''
+			const website = input.website?.trim().toLowerCase() ?? ''
+			const isNearMissTypo = website.includes('existingorg2.org')
+			const isNearMissWrongTld = website.includes('existingorg.com') || website.includes('existingorg.net')
+
+			if (name.includes('existing organization')) {
+				matches.push({
+					id: 'orgn_MOCKEDNAMEMATCH00001',
+					name: 'Existing Organization',
+					slug: 'existing-org',
+					city: 'Springfield',
+					state: 'IL',
+					deleted: false,
+					published: true,
+					websiteMatch: false,
+					websiteNearMatch: isNearMissTypo || isNearMissWrongTld ? 'existingorg.org' : null,
+				})
+			}
+
+			if (website.includes('example.org')) {
+				matches.push({
+					id: 'orgn_MOCKEDSITEMATCH00001',
+					name: 'A Totally Different Org',
+					slug: 'a-totally-different-org',
+					city: 'Denver',
+					state: 'CO',
+					deleted: false,
+					published: true,
+					websiteMatch: true,
+					websiteNearMatch: null,
+				})
+			}
+
+			return matches
+		},
+	}),
 	generateSlug: getTRPCMock({
 		path: ['organization', 'generateSlug'],
 		response: 'this-is-a-generated-slug',
@@ -169,4 +225,7 @@ export const organization = {
 			id: 'atts_NEW0ID',
 		}),
 	}),
-} satisfies MockHandlerObject<'organization'> & { searchDistanceLongTitle: HttpHandler }
+} satisfies MockHandlerObject<'organization'> & {
+	searchDistanceLongTitle: HttpHandler
+	createNewSuggestionConflict: HttpHandler
+}
