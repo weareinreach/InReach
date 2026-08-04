@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Autocomplete,
 	type AutocompleteItem,
 	Button,
@@ -92,10 +93,18 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const [modalOpen, modalHandler] = useDisclosure(false)
 	const { overlay, setOverlay, hasAuth } = authPromptState
 
+	const [submitError, setSubmitError] = useState<string | null>(null)
+	const [submittedOrgName, setSubmittedOrgName] = useState('')
 	const suggestOrgApi = api.organization.createNewSuggestion.useMutation({
 		onSuccess: () => {
 			searchBoxEvent.suggestResourceSubmit(form.values.orgName)
+			setSubmitError(null)
+			setSubmittedOrgName(form.values.orgName)
+			resetFormState()
 			modalHandler.open()
+		},
+		onError: (error) => {
+			setSubmitError(error.message)
 		},
 	})
 
@@ -130,7 +139,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	>(null)
 	const [dismissMatches, setDismissMatches] = useState(false)
 	const [generateSlug, setGenerateSlug] = useState(false)
-	const [bypassExactMatch, setBypassExactMatch] = useState(false)
+	const [bypassNearMissWebsite, setBypassNearMissWebsite] = useState(false)
 	const router = useRouter()
 
 	const countrySelected = Boolean(form.values.countryId)
@@ -194,30 +203,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const isMatchingPending = isSearchingMatches || orgNameInput !== debouncedOrgName
 	const currentOrgSlug = form.values.orgSlug
 
-	const isExactMatch = useMemo(() => {
-		if (!potentialMatches || potentialMatches.length === 0) return false
-
-		const cleanForStrictMatch = (str: string) => {
-			return str
-				.toLowerCase()
-				.trim()
-				.replace(/^(the|a|an)\s+/i, '')
-				.replace(/[^a-z0-9]/g, '')
-		}
-
-		const normalizedInput = cleanForStrictMatch(orgNameInput)
-		if (!normalizedInput) return false
-
-		return potentialMatches.some((match) => {
-			const normalizedMatch = cleanForStrictMatch(match.name)
-			return (
-				normalizedMatch === normalizedInput ||
-				normalizedMatch.includes(normalizedInput) ||
-				normalizedInput.includes(normalizedMatch)
-			)
-		})
-	}, [potentialMatches, orgNameInput])
-
 	const orgAutocompleteOptions = useMemo(
 		() =>
 			potentialMatches?.map((match) => ({
@@ -228,32 +213,29 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		[potentialMatches]
 	)
 
-	useEffect(() => {
-		setBypassExactMatch(false)
-	}, [orgNameInput])
+	const isWebsiteMatch = useMemo(
+		() => Boolean(potentialMatches?.some((match) => match.websiteMatch)),
+		[potentialMatches]
+	)
+
+	// Suggested domain when the typed website is a near-miss (e.g. a typo) of an org whose name already
+	// matched - a softer signal than an exact match, so it's dismissable rather than a hard block.
+	const websiteNearMatch = useMemo(
+		() => potentialMatches?.find((match) => match.websiteNearMatch)?.websiteNearMatch ?? null,
+		[potentialMatches]
+	)
 
 	useEffect(() => {
-		if (mounted && !isExactMatch && !generateSlug && debouncedOrgName.trim() !== '') {
+		setBypassNearMissWebsite(false)
+	}, [orgWebsite])
+
+	// Name similarity is informational only - it never blocks slug generation or submission.
+	// Only a website/domain match (below) is treated as an actual duplicate.
+	useEffect(() => {
+		if (mounted && !generateSlug && debouncedOrgName.trim() !== '') {
 			setGenerateSlug(true)
 		}
-
-		if (mounted && isExactMatch && !bypassExactMatch) {
-			if (currentOrgSlug !== '') {
-				form.setFieldValue('orgSlug', '')
-			}
-			if (generateSlug) {
-				setGenerateSlug(false)
-			}
-		}
-	}, [
-		mounted,
-		isExactMatch,
-		generateSlug,
-		currentOrgSlug,
-		debouncedOrgName,
-		bypassExactMatch,
-		form.setFieldValue,
-	])
+	}, [mounted, generateSlug, debouncedOrgName])
 
 	const handleInspectMatch = (match: ApiOutput['organization']['getPotentialMatches'][number]) =>
 		setInspectMatch(match)
@@ -305,7 +287,9 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		[setPlaceId]
 	)
 
-	const handleDismiss = useCallback(() => {
+	// Clears every piece of state that drives the duplicate-detection warnings, so a successful
+	// submission doesn't leave a stale "this is a duplicate" message on screen for the next entry.
+	const resetFormState = useCallback(() => {
 		form.setValues({
 			communityFocus: [],
 			countryId: '',
@@ -317,15 +301,25 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		})
 		setSearchLocation('')
 		setOrgNameInput('')
+		setOrgWebsite(undefined)
+		setBypassNearMissWebsite(false)
+	}, [form, setBypassNearMissWebsite, setOrgNameInput, setOrgWebsite, setSearchLocation])
+
+	const handleDismiss = useCallback(() => {
 		modalHandler.close()
-	}, [form, modalHandler, setOrgNameInput, setSearchLocation])
+	}, [modalHandler])
 
 	if (!mounted || loading) {
 		return null
 	}
 	return (
 		<SuggestionFormProvider form={form}>
-			<form onSubmit={form.onSubmit(() => suggestOrgApi.mutate(form.values))}>
+			<form
+				onSubmit={form.onSubmit(() => {
+					setSubmitError(null)
+					suggestOrgApi.mutate(form.values)
+				})}
+			>
 				<Stack spacing={40} pb={40}>
 					<Stack spacing={24}>
 						<Title order={1}>{t('body.suggest-org')}</Title>
@@ -363,25 +357,39 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							filter={() => true}
 						/>
 
-						{isExactMatch && (
+						<TextInput
+							label={t('form.org-website')}
+							placeholder={t('form.placeholder-website')}
+							required
+							withAsterisk
+							disabled={!countrySelected}
+							{...form.getInputProps('orgWebsite')}
+							onBlur={(e) => {
+								// form.getInputProps' own onBlur runs the field's validation (shows the error
+								// text below) - it must not be replaced by our own onBlur, only supplemented.
+								form.getInputProps('orgWebsite').onBlur(e)
+								handleWebsiteBlur(e)
+							}}
+						/>
+
+						{isWebsiteMatch && (
+							<Text size='sm' color='red'>
+								This website is already associated with an existing organization in our system. If you believe
+								this is an error, please double check the URL you entered.
+							</Text>
+						)}
+
+						{!isWebsiteMatch && websiteNearMatch && (
 							<Checkbox
 								mt='sm'
-								label='This is a different organization with a similar name, let me submit anyway.'
-								checked={bypassExactMatch}
-								onChange={(event) => setBypassExactMatch(event.currentTarget.checked)}
+								label={`Did you mean ${websiteNearMatch}? Check this box if the website you entered is correct and this is a different organization.`}
+								checked={bypassNearMissWebsite}
+								onChange={(event) => setBypassNearMissWebsite(event.currentTarget.checked)}
 								styles={(theme) => ({
 									label: { color: theme.colors.red?.[7] ?? 'red', fontWeight: 500 },
 								})}
 							/>
 						)}
-
-						<TextInput
-							label={t('form.org-website')}
-							placeholder={t('form.placeholder-website')}
-							disabled={!countrySelected}
-							{...form.getInputProps('orgWebsite')}
-							onBlur={handleWebsiteBlur}
-						/>
 					</Stack>
 
 					<Divider />
@@ -403,6 +411,11 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						<ServiceTypes disabled={!countrySelected} serviceTypes={formOptions?.serviceTypes ?? []} />
 						<Communities disabled={!countrySelected} communities={formOptions?.communities ?? []} />
 						<Divider />
+						{submitError && (
+							<Alert icon={<Icon icon='carbon:warning' />} title='Unable to submit' color='red'>
+								{submitError}
+							</Alert>
+						)}
 						<Stack spacing={16} align='center'>
 							<Button
 								w='fit-content'
@@ -411,7 +424,8 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 									!form.isValid() ||
 									Object.keys(form.errors).length !== 0 ||
 									isMatchingPending ||
-									(isExactMatch && !bypassExactMatch)
+									isWebsiteMatch ||
+									(Boolean(websiteNearMatch) && !bypassNearMissWebsite)
 								}
 								type='submit'
 							>
@@ -428,7 +442,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 				>
 					<Stack align='center' spacing={16}>
 						<Title order={1}>🎉</Title>
-						<Title order={2}>{t('modal.thank-you', { org: form.values.orgName })}</Title>
+						<Title order={2}>{t('modal.thank-you', { org: submittedOrgName })}</Title>
 						<Text variant={variants.Text.darkGray} align='center'>
 							{t('modal.thank-you-sub')}
 						</Text>
