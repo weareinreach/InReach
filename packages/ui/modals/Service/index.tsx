@@ -96,12 +96,12 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 
 		const handleOpen = useCallback(() => {
 			serviceModalEvent.opened({ serviceId, serviceName: data?.serviceName?.tsKey?.text, orgSlug: slug })
-			// Aligning with Jira requirement: profile_view fires when modal is opened
-			productEvent.profileView(
-				serviceId,
-				data?.serviceName?.tsKey?.text ?? itemName ?? 'unknown',
-				'modal_preview'
-			)
+			// Aligning with Jira requirement: profile_view fires when modal is opened. searchTermContext
+			// is set to a sentinel rather than a real search term since this view didn't come from
+			// clicking a search result.
+			productEvent.profileView(serviceId, data?.serviceName?.tsKey?.text ?? itemName ?? 'unknown', {
+				searchTermContext: 'modal_preview',
+			})
 			handler.open()
 		}, [data?.serviceName?.tsKey?.text, handler, serviceId, slug, itemName])
 		const serviceBadges = useMemo(
