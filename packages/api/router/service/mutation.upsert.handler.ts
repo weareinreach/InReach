@@ -1,4 +1,4 @@
-import { upsertSingleKey } from '@weareinreach/crowdin/api'
+import { buildContextUrl, upsertSingleKey } from '@weareinreach/crowdin/api'
 import { generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -30,24 +30,33 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 				text: input.description,
 			})
 		: undefined
-	const result = await prisma.$transaction(async (tx) => {
-		if (serviceName) {
-			const crowdin = await upsertSingleKey({
-				isDatabaseString: true,
-				key: serviceName.upsert.create.tsKey.create.key,
-				text: serviceName.upsert.create.tsKey.create.text,
-			})
-			serviceName.upsert.create.tsKey.create.crowdinId = crowdin.id
-		}
-		if (description) {
-			const crowdin = await upsertSingleKey({
-				isDatabaseString: true,
-				key: description.upsert.create.tsKey.create.key,
-				text: description.upsert.create.tsKey.create.text,
-			})
-			description.upsert.create.tsKey.create.crowdinId = crowdin.id
-		}
+	// Crowdin sync (a network call to a third party) must not happen inside the DB transaction below -
+	// Prisma's interactive transactions have a ~5s timeout, and holding it open across an external API
+	// call risks "Transaction already closed" once Crowdin is slow to respond.
+	const { slug } = await prisma.organization.findUniqueOrThrow({
+		where: { id: orgId },
+		select: { slug: true },
+	})
+	if (serviceName) {
+		const crowdin = await upsertSingleKey({
+			isDatabaseString: true,
+			key: serviceName.upsert.create.tsKey.create.key,
+			text: serviceName.upsert.create.tsKey.create.text,
+			context: buildContextUrl(slug, attachToLocation),
+		})
+		serviceName.upsert.create.tsKey.create.crowdinId = crowdin.id
+	}
+	if (description) {
+		const crowdin = await upsertSingleKey({
+			isDatabaseString: true,
+			key: description.upsert.create.tsKey.create.key,
+			text: description.upsert.create.tsKey.create.text,
+			context: buildContextUrl(slug, attachToLocation),
+		})
+		description.upsert.create.tsKey.create.crowdinId = crowdin.id
+	}
 
+	const result = await prisma.$transaction(async (tx) => {
 		const upsertedRecord = await tx.orgService.upsert({
 			where: {
 				id,

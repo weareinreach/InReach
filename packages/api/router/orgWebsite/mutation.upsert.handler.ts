@@ -1,4 +1,4 @@
-import { upsertSingleKey } from '@weareinreach/crowdin/api'
+import { buildContextUrl, upsertSingleKey } from '@weareinreach/crowdin/api'
 import {
 	generateId,
 	generateNestedFreeText,
@@ -62,17 +62,25 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 		}
 		const description = generateDescription()
 
-		const result = await prisma.$transaction(async (tx) => {
-			if (description) {
-				const crowdin = await upsertSingleKey({
-					isDatabaseString: true,
-					...description.crowdinArgs,
-				})
-				if (description.prisma.create?.tsKey?.create) {
-					description.prisma.create.tsKey.create.crowdinId = crowdin.id
-				}
+		// Crowdin sync (a network call to a third party) must not happen inside the DB transaction below -
+		// Prisma's interactive transactions have a ~5s timeout, and holding it open across an external API
+		// call risks "Transaction already closed" once Crowdin is slow to respond.
+		if (description && organizationId) {
+			const { slug } = await prisma.organization.findUniqueOrThrow({
+				where: { id: organizationId },
+				select: { slug: true },
+			})
+			const crowdin = await upsertSingleKey({
+				isDatabaseString: true,
+				...description.crowdinArgs,
+				context: buildContextUrl(slug, orgLocationId ?? undefined),
+			})
+			if (description.prisma.create?.tsKey?.create) {
+				description.prisma.create.tsKey.create.crowdinId = crowdin.id
 			}
+		}
 
+		const result = await prisma.$transaction(async (tx) => {
 			const txnResult = isCreateData(operation, data)
 				? await tx.orgWebsite.create({
 						data: {

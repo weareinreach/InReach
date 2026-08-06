@@ -21,6 +21,18 @@ const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = 
 	{ value: AddressVisibility.HIDDEN, label: 'Hide address' },
 ]
 
+// Seeds every string-typed address field so react-hook-form-mantine's inputs start controlled -
+// otherwise they render with value={undefined} until the user (or geocoding) sets a real value,
+// which trips React's uncontrolled-to-controlled input warning.
+const defaultAddress: TCreateSchema['address'] = {
+	street1: '',
+	street2: '',
+	city: '',
+	postCode: '',
+	govDistId: '',
+	countryId: '',
+}
+
 const WatchedAddressAutocomplete = () => {
 	const addressVisibility = useWatch<TCreateSchema>({ name: 'addressVisibility' })
 	// @ts-expect-error trust the address visibility
@@ -41,6 +53,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 		defaultValues: {
 			name: '',
 			addressVisibility: AddressVisibility.FULL, //
+			address: defaultAddress,
 			orgId,
 		},
 	})
@@ -55,6 +68,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			form.reset({
 				name: '',
 				addressVisibility: AddressVisibility.FULL,
+				address: defaultAddress,
 				orgId,
 			})
 		},
@@ -83,6 +97,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			form.reset({
 				name: '',
 				addressVisibility: AddressVisibility.FULL,
+				address: defaultAddress,
 				orgId,
 			})
 		}

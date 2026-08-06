@@ -1,4 +1,4 @@
-import { upsertSingleKey } from '@weareinreach/crowdin/api'
+import { buildContextUrl, upsertSingleKey } from '@weareinreach/crowdin/api'
 import { generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -32,17 +32,26 @@ const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protecte
 			})
 		: undefined
 
-	const result = await prisma.$transaction(async (tx) => {
-		if (updateDescriptionText) {
-			const crowdin = await upsertSingleKey({
-				isDatabaseString: true,
-				key: updateDescriptionText.upsert.create.tsKey.create.key,
-				text: updateDescriptionText.upsert.create.tsKey.create.text,
-			})
-			if (crowdin.id) {
-				updateDescriptionText.upsert.create.tsKey.create.crowdinId = crowdin.id
-			}
+	// Crowdin sync (a network call to a third party) must not happen inside the DB transaction below -
+	// Prisma's interactive transactions have a ~5s timeout, and holding it open across an external API
+	// call risks "Transaction already closed" once Crowdin is slow to respond.
+	if (updateDescriptionText) {
+		const { slug } = await prisma.organization.findUniqueOrThrow({
+			where: { id: orgId },
+			select: { slug: true },
+		})
+		const crowdin = await upsertSingleKey({
+			isDatabaseString: true,
+			key: updateDescriptionText.upsert.create.tsKey.create.key,
+			text: updateDescriptionText.upsert.create.tsKey.create.text,
+			context: buildContextUrl(slug, linkLocationId ?? undefined),
+		})
+		if (crowdin.id) {
+			updateDescriptionText.upsert.create.tsKey.create.crowdinId = crowdin.id
 		}
+	}
+
+	const result = await prisma.$transaction(async (tx) => {
 		const updated = email
 			? await tx.orgEmail.upsert({
 					where: { id },

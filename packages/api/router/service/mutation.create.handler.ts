@@ -1,4 +1,4 @@
-import { addSingleKey } from '@weareinreach/crowdin/api'
+import { addSingleKey, buildContextUrl } from '@weareinreach/crowdin/api'
 import { generateId, generateNestedFreeText, getAuditedClient } from '@weareinreach/db'
 import { connectOneId } from '~api/schemas/nestedOps'
 import { type TRPCHandlerParams } from '~api/types/handler'
@@ -21,23 +21,33 @@ const create = async ({ ctx, input }: TRPCHandlerParams<TCreateSchema, 'protecte
 	const organization = connectOneId(data.organizationId)
 	const { published } = data
 
+	// Crowdin sync (a network call to a third party) must not happen inside the DB transaction below -
+	// Prisma's interactive transactions have a ~5s timeout, and holding it open across an external API
+	// call risks "Transaction already closed" once Crowdin is slow to respond.
+	const { slug } = await prisma.organization.findUniqueOrThrow({
+		where: { id: orgId },
+		select: { slug: true },
+	})
+	if (serviceName) {
+		const crowdin = await addSingleKey({
+			isDatabaseString: true,
+			key: serviceName.create.tsKey.create.key,
+			text: serviceName.create.tsKey.create.text,
+			context: buildContextUrl(slug),
+		})
+		serviceName.create.tsKey.create.crowdinId = crowdin.id
+	}
+	if (description) {
+		const crowdin = await addSingleKey({
+			isDatabaseString: true,
+			key: description.create.tsKey.create.key,
+			text: description.create.tsKey.create.text,
+			context: buildContextUrl(slug),
+		})
+		description.create.tsKey.create.crowdinId = crowdin.id
+	}
+
 	const result = await prisma.$transaction(async (tx) => {
-		if (serviceName) {
-			const crowdin = await addSingleKey({
-				isDatabaseString: true,
-				key: serviceName.create.tsKey.create.key,
-				text: serviceName.create.tsKey.create.text,
-			})
-			serviceName.create.tsKey.create.crowdinId = crowdin.id
-		}
-		if (description) {
-			const crowdin = await addSingleKey({
-				isDatabaseString: true,
-				key: description.create.tsKey.create.key,
-				text: description.create.tsKey.create.text,
-			})
-			description.create.tsKey.create.crowdinId = crowdin.id
-		}
 		const createData = {
 			id,
 			serviceName,

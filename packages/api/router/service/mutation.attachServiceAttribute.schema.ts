@@ -43,9 +43,12 @@ export const ZAttachServiceAttributeSchema = z
 		}
 
 		return {
+			orgId,
 			freeText: freeText ? Prisma.validator<Prisma.FreeTextCreateArgs>()({ data: freeText }) : undefined,
 			translationKey: translationKey
-				? Prisma.validator<Prisma.TranslationKeyCreateArgs>()({ data: translationKey })
+				? Prisma.validator<Prisma.TranslationKeyCreateArgs>()({
+						data: { ...translationKey, crowdinId: undefined as number | undefined },
+					})
 				: undefined,
 			attributeSupplement: supplementData
 				? Prisma.validator<Prisma.AttributeSupplementCreateArgs>()({
