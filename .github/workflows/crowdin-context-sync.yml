@@ -2,9 +2,11 @@ name: Crowdin Context Sync
 
 # Standalone workflow. Does not modify or depend on the existing "Crowdin Action" workflow.
 #
-# Runs packages/crowdin/api/syncContext.ts, which sets the Crowdin `context` field on
-# org-data strings to a link back to the live organization page, replacing Crowdin's
-# auto-generated identifier breadcrumb.
+# Runs packages/db/lib/syncCrowdinContext.ts, which sets the Crowdin `context` field on
+# org-data strings to a link back to the live organization (or, for location-scoped
+# strings, the specific location) page, replacing Crowdin's auto-generated identifier
+# breadcrumb. Lives in packages/db rather than packages/crowdin - see the comment at the
+# top of the script for why.
 
 on:
   workflow_dispatch:
@@ -48,6 +50,6 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           APP_BASE_URL: 'https://app.inreach.org'
         run: |
-          pnpm tsx packages/crowdin/api/syncContext.ts \
+          pnpm --filter @weareinreach/db exec tsx lib/syncCrowdinContext.ts \
             ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
             ${{ github.event.inputs.force == 'true' && '--force' || '' }}

@@ -19,7 +19,7 @@ Translations are stored in JSON files in `public/locales/<lang>`. For organizati
 
 - **Namespaces (`ns`)**: Grouping of translation keys. For example, `org-data` contains organization-specific translations.
 - **TranslationKey table**: Stores all keys (`key`) and associated text (`text`), along with an optional `crowdinId` linking back to the corresponding Crowdin string.
-- **ID prefixes**: Every table in the app has a fixed prefix used when generating IDs (`generateId()`, in the ID-generation lib), e.g. `orgn_` for `Organization`, `osvc_` for `OrgService`. Translation keys for org data are built by concatenating these prefixed IDs, e.g. `orgn_<id>.osvc_<id>.name` — there is no separate prefixing step; the prefix comes from `generateId()` itself.
+- **ID prefixes**: Every table in the app has a fixed prefix used when generating IDs (`generateId()`, in `packages/db/lib/idGen.ts`), e.g. `orgn_` for `Organization`, `osvc_` for `OrgService`, `oloc_` for `OrgLocation`. Translation keys for org data are built by concatenating these prefixed IDs, e.g. `orgn_<id>.osvc_<id>.name` — there is no separate prefixing step; the prefix comes from `generateId()` itself.
 - **OTA (Over-the-Air)**: Crowdin OTA integration is used to fetch the latest translations dynamically into the app.
 - **Redis cache**: Caches translations for quick access at runtime.
 
@@ -27,21 +27,35 @@ Translations are stored in JSON files in `public/locales/<lang>`. For organizati
 
 ## How It Works
 
-### 1. Two paths write `TranslationKey` rows
+### 1. TranslationKey rows are created two ways: real-time sync, or batch-only
 
-Not all `TranslationKey` rows are created the same way. There are (at least) three known call sites, with two different sync behaviors:
+**Real-time sync** is the dominant pattern, not an exception. Any mutation handler that writes a free-text field (org basics, phone, email, website, service name/description, access instructions) follows the same convention: call `addSingleKey()` (or `updateSingleKey()`/`upsertSingleKey()` for edits) against Crowdin first, stamp the returned Crowdin string ID onto the nested `tsKey.create` payload as `crowdinId`, then let Prisma create the `TranslationKey` row as part of that nested create. Confirmed examples of this pattern:
 
-| Handler                                                   | Creates `TranslationKey`?                             | Syncs to Crowdin immediately?                                                                        |
-| --------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `mutation.createNewSuggestion_with_OrgService.handler.ts` | Yes (one per service, via `generateId('orgService')`) | No — batch only                                                                                      |
-| `mutation.attachServiceAttribute.handler.ts`              | Yes (passed-in translationKey object)                 | No — batch only                                                                                      |
-| `mutation.createAccessInstructions.handler.ts`            | Yes                                                   | **Yes** — calls `addSingleKey()` and stores the returned Crowdin string ID as `crowdinId` on the row |
+| Handler                                                                               | Field(s) synced in real time     |
+| ------------------------------------------------------------------------------------- | -------------------------------- |
+| `service/mutation.createAccessInstructions.handler.ts`                                | access instructions              |
+| `organization/mutation.updateBasic.handler.ts`                                        | org description                  |
+| `organization/mutation.createNewQuick.handler.ts`                                     | org description                  |
+| `organization/mutation.attachAttribute.handler.ts`                                    | attribute free text              |
+| `orgPhone/mutation.create.handler.ts`, `.upsert.handler.ts`, `.update.handler.ts`     | phone description                |
+| `orgWebsite/mutation.create.handler.ts`, `.upsert.handler.ts`                         | website description              |
+| `orgEmail/mutation.create.handler.ts`, `.update.handler.ts`, `.upsertMany.handler.ts` | email description                |
+| `service/mutation.create.handler.ts`, `.upsert.handler.ts`                            | service name **and** description |
 
-A fourth entry point, `addSingleKeyFromNestedFreetextCreate` (`packages/crowdin/api`), wraps `addSingleKey()` for a specific Prisma nested-create pattern (`freeText.create.tsKey.create`) and should be treated as part of the same real-time sync path.
+A separate wrapper, `addSingleKeyFromNestedFreetextCreate` (`packages/crowdin/api/index.ts`), exists specifically to make this "sync first, then stamp `crowdinId` onto the nested create" pattern reusable for the `freeText.create.tsKey.create` shape.
 
-No `translationKey.upsert` calls exist in the codebase as of this writing — only `.create`.
+**Batch-only** (no immediate Crowdin sync — relies on the export/push pipeline in §3) is the exception, currently limited to:
 
-### 2. Real-time sync (`addSingleKey` / `packages/crowdin/api`)
+| Handler                                                                | Creates `TranslationKey`?                           |
+| ---------------------------------------------------------------------- | --------------------------------------------------- |
+| `organization/mutation.createNewSuggestion_with_OrgService.handler.ts` | Yes, one per service via `generateId('orgService')` |
+| `service/mutation.attachServiceAttribute.handler.ts`                   | Yes, using a passed-in translationKey object        |
+
+This list of call sites is not guaranteed exhaustive — any new mutation that adds a free-text field should follow the real-time-sync convention above.
+
+No `translationKey.upsert` calls exist in the codebase as of this writing — only `.create` (the `upsertSingleKey`/`upsertMany` names above refer to the _Crowdin-side_ API call or the parent model's Prisma upsert, not the `TranslationKey` row itself, which is always a plain nested `.create`).
+
+### 2. Real-time sync implementation (`packages/crowdin/common/apiFns.ts`)
 
 `packages/crowdin/common/apiFns.ts` wraps the official `@crowdin/crowdin-api-client` and exposes:
 
@@ -52,22 +66,42 @@ No `translationKey.upsert` calls exist in the codebase as of this writing — on
 
 All of these accept an `isDatabaseString` flag, which determines which Crowdin project/branch the string is routed to (`projectId.dbContent` + `branches.database` vs. `projectId.base` + `branches.main`).
 
-**Known gap:** none of these functions currently send Crowdin's `context` field. Only `identifier` (the key) and `text` are ever passed in the request payload. This means the CONTEXT panel in the Crowdin editor only ever shows the raw key string — there is currently no way for a translator to see a link back to the live org/service the string belongs to, even though Crowdin's API supports it.
+**Context field:** none of the functions in `apiFns.ts` send Crowdin's `context` field — their request payloads only ever include `identifier`/`text` (create) or a `/text` patch (update). This means every string created or edited through the real-time-sync path above gets no context at creation time.
+
+That gap is partially addressed after the fact by a standalone script, `packages/db/lib/syncCrowdinContext.ts` (see [Context Backfill](#4-context-backfill-packagesdbsynccrowdincontextts) below), which is not part of `apiFns.ts` and does not run at string-creation time.
 
 ### 3. Batch export (DB → JSON → Crowdin)
 
-For `TranslationKey` rows that aren't synced immediately (i.e., most of them):
+For `TranslationKey` rows that aren't synced immediately (i.e., the batch-only handlers above):
 
-1. **Export**: `lib/generators/translationKeys.ts` (`generateTranslationKeys`) queries `TranslationNamespace` → `TranslationKey` from the DB and writes flat JSON files to `public/locales/en/<namespace>.json`. It filters by namespace/active status depending on `EXPORT_ALL` / `EXPORT_DB` env flags, and handles pluralization/interpolation.
-   - Note: this file lives at `lib/generators/translationKeys.ts`, **not** `scripts/generateTranslationKeys.ts`.
-   - This script has no visibility into `Organization`/`OrgService` records — it only reads what's already in `TranslationKey`. It cannot add context/slug data on its own; that data isn't in scope here.
-2. **Push**: A scheduled/triggered GitHub Actions workflow (`Crowdin Action`, runs on push/PR-close/schedule/manual dispatch) runs `crowdin push sources`, uploading the generated JSON files to Crowdin via the Crowdin CLI.
+1. **Export**: `apps/app/lib/generators/translationKeys.ts` (`generateTranslationKeys`) queries `TranslationNamespace` → `TranslationKey` from the DB and writes flat JSON files to `public/locales/en/<namespace>.json`. It filters by namespace/active status depending on `EXPORT_ALL` / `EXPORT_DB` env flags, and handles pluralization/interpolation.
+   - This script has no visibility into `Organization`/`OrgService` records — it only reads what's already in `TranslationKey`. It cannot add context/slug data on its own.
+2. **Push**: A GitHub Actions workflow (`.github/workflows/crowdin.yml`, triggers: push/PR-close/schedule/manual dispatch) runs `crowdin push sources`, uploading the generated JSON files to Crowdin via the Crowdin CLI.
 3. **Pull**: The same workflow runs `crowdin pull` (on `dev` branch or schedule) to bring translated JSON files back into the repo, opening a PR with the changes.
 
-### 4. Runtime fetch
+### 4. Context backfill (`packages/db/lib/syncCrowdinContext.ts`)
 
-- `apps/app/src/pages/api/i18n/load.ts` — API route that fetches translations via Crowdin's OTA client (`@weareinreach/crowdin/ota`).
-- Dynamic org data is fetched per-organization and cached in **Redis** for performance; cache is invalidated when new Crowdin manifests are published.
+A standalone, additive script (does not modify any `apiFns.ts` function or mutation handler) that backfills the Crowdin `context` field for strings that already exist on Crowdin. It lives in `packages/db` rather than `packages/crowdin` because it needs both Prisma and the Crowdin API client, and `packages/db` already depends on `@weareinreach/crowdin` — the reverse dependency would create a cycle.
+
+- Fetches every string in the `org-data` database branch.
+- Parses the leading `orgn_<id>` segment out of each string's `identifier`, and a `oloc_<id>` segment if present anywhere in it.
+- Looks up that organization's `slug` and sets `context` to:
+  - `https://app.inreach.org/org/<slug>/<oloc_id>` when the identifier includes a location ID, or
+  - `https://app.inreach.org/org/<slug>` otherwise (this covers plain org-level keys and service-scoped (`osvc_`) keys alike, since services don't have their own page/anchor in the app).
+- Skips strings that already have a real (non-auto-generated) context, unless run with `--force`. Supports `--dry-run`.
+- Before writing anything for real, backs up every changed string's previous `context` value to a timestamped JSON file under `packages/db/crowdin-backups/` (gitignored). `--revert <path>` replays a backup file to restore the old values (also supports `--dry-run` to preview the revert).
+- Run via `pnpm --filter @weareinreach/db crowdin:sync-context` (add `-- --dry-run` / `-- --force` / `-- --sample-skipped` / `-- --revert <path>` as needed).
+
+**Detecting Crowdin's auto-generated fallback is trickier than it looks.** Crowdin doesn't leave `context` empty for a string that's never had one set — it populates it with the identifier-breadcrumb fallback text, and in practice that fallback is **two lines**: the raw identifier, then the arrow-breadcrumb form, joined by `\n` (e.g. `"orgn_xxx.osvc_xxx.name\norgn_xxx -> osvc_xxx -> name"`). An early version of `isAutoGeneratedContext` only checked for _one_ of those two forms and treated the combined two-line value as "real, custom context" — which meant it silently skipped ~89% of all strings, all of which were actually still on the auto-generated fallback. The fix: check that _every line_ of the context matches one of the two known forms. If you're ever touching this function again, verify against real sample data (`--sample-skipped`) before trusting a "skipped, has real context" count — a plausible-looking count is not the same as a correct one.
+
+**Verified baseline (production, as of this writing):** ~69,634 strings in the branch, 0 with genuinely real/custom context (i.e., Crowdin has never had real context set on anything in this branch), and 32 with no matching organization — of which 30 are for organizations that have been fully deleted from the production database (not soft-deleted, just gone — their Crowdin strings were never cleaned up when the org was removed) and 2 are `locationBasedAlert.alrt_<id>` keys, a different, non-org-scoped key format that happens to live in the same branch. None of that 32 indicates a bug in the matching logic — if a future run finds a very different "no matching org" count, that's worth investigating, but 32-ish orphaned/non-org strings is the known-expected baseline, not a red flag.
+
+**Current limitations** (see [Known Gaps](#known-gaps--open-questions)):
+
+- The `oloc_` handling is not yet exercised by any real data — no location-scoped `TranslationKey` currently exists (see gap 2 below). The logic is in place so such keys get the right URL as soon as one does.
+- Runs after the fact, on a schedule/manual trigger (`.github/workflows/crowdin-context-sync.yml`, currently `workflow_dispatch` only — the schedule trigger is commented out) — not at string-creation time.
+
+**This script's correctness depends entirely on which database it's pointed at.** It resolves org slugs by querying whatever `DATABASE_URL` is active, and that URL must reflect the same org data the live Crowdin strings were generated from (i.e., production) or the slugs it writes will be wrong or spuriously missing. Confirmed empirically: the same dry-run against a local dev database reported 469 "no matching org" strings; against production, that dropped to 32 (see above) — the local database was simply missing/diverging on hundreds of orgs that exist in production. See [Local vs. production database](#local-vs-production-database-gotchas) below before running this for anything other than a local sanity check.
 
 ---
 
@@ -75,24 +109,60 @@ For `TranslationKey` rows that aren't synced immediately (i.e., most of them):
 
 ```text
 packages/crowdin/
-├── api/          # Crowdin API wrappers (addSingleKey, updateSingleKey, upsertSingleKey, etc.)
-│   └── common/apiFns.ts   # Actual implementation; index.ts re-exports these
-├── cache/        # Redis cache handlers
-├── ota/          # Over-the-air (OTA) integration
-│   ├── edge/     # Edge-specific OTA logic
-└── index.ts
+├── api/
+│   ├── edge.ts         # Edge-safe subset of the API wrappers
+│   └── index.ts        # Re-exports common/apiFns; also defines addSingleKeyFromNestedFreetextCreate
+├── cache/
+│   └── index.ts        # Redis (Vercel KV) cache read/write for OTA content
+├── common/
+│   ├── apiFns.ts        # addSingleKey, updateSingleKey, upsertSingleKey, getStringIdByKey, etc.
+│   └── otaFns.ts
+├── ota/
+│   ├── edge.ts          # Edge-safe OTA fetch
+│   └── index.ts
+├── constants.ts         # projectId, branches
+├── package.json
+└── tsconfig.json
 
-lib/generators/translationKeys.ts   # Generates public/locales/en/<ns>.json from the DB (batch export)
-
-apps/app/src/pages/api/i18n/load.ts  # API route for fetching translations at runtime
+packages/db/lib/syncCrowdinContext.ts        # Context backfill script (see "Context backfill" above)
+apps/app/lib/generators/translationKeys.ts   # Batch export: DB -> public/locales/en/<ns>.json
+apps/app/src/pages/api/i18n/load.ts          # Runtime fetch API route (OTA)
 ```
+
+Note: `packages/crowdin/package.json` declares `"main"`/`"types": "./index.ts"`, but no `packages/crowdin/index.ts` file currently exists — a pre-existing dangling reference, unrelated to this doc.
+
+---
+
+## Operational Notes / Gotchas
+
+Things that cost real time to figure out while building the context-backfill script — captured so the next person doesn't have to re-derive them.
+
+### `packages/db` and `packages/crowdin` have a one-way dependency
+
+`packages/db` depends on `@weareinreach/crowdin` (`packages/db/package.json`), not the other way around. If you ever need code in `packages/crowdin` to touch the database, **don't add `@weareinreach/db` as a dependency of `packages/crowdin`** — that creates a cycle, which breaks `pnpm install`'s `postinstall` step outright (`turbo`'s task graph refuses to build with a cyclic dependency). Instead, put that code in `packages/db` and import `@weareinreach/crowdin`'s public exports (e.g. `@weareinreach/crowdin/api`) from there — that's why `syncCrowdinContext.ts` lives in `packages/db/lib/`, not `packages/crowdin/api/`.
+
+### `~xxx/*` path aliases work fine in scripts run via bare `tsx`
+
+`tsx` (unlike bare `ts-node`) resolves each package's `tsconfig.json` `paths` automatically, with no extra config, flags, or `tsconfig-paths` registration needed — confirmed by `packages/db/prisma/dataMigrationRunner.ts`, which imports `~db/client` etc. directly and is run via `pnpm with-env tsx ./prisma/dataMigrationRunner.ts`. So a standalone script like `syncCrowdinContext.ts` can freely use `~db/client` instead of a fragile relative path, even though it's never bundled by webpack/Next.js.
+
+### Local vs. production database gotchas
+
+- **`packages/db/package.json`'s `with-env` script is hardcoded to `dotenv -e ../../.env --`** — it _always_ loads the **repo-root** `.env`, regardless of your current working directory. It never reads `packages/db/.env` (a separate file that exists only for Prisma CLI's own auto-loading when you run `prisma` commands directly, bypassing `pnpm with-env` — unrelated to any `pnpm db:*`/`crowdin:sync-context` script). Putting `DATABASE_URL` or `CROWDIN_TOKEN` in `packages/db/.env` has no effect on this script.
+- **To point this script at a different database than your local one (e.g., production, for a real run) without risking every other `pnpm db:*` script**, override the env var inline for that one invocation instead of editing the shared root `.env`:
+  ```bash
+  DATABASE_URL="<connection string>" pnpm --filter @weareinreach/db exec tsx lib/syncCrowdinContext.ts -- --dry-run
+  ```
+  `dotenv` does not override a variable that's already set in the environment, so the inline value wins. If you do edit the root `.env` directly instead, remember to revert it immediately after — every `db:migrate`/`db:reset`/etc. script reads that same file, and a stale production connection string sitting there is a real footgun.
+- **GitHub Actions secrets and Vercel environment variables are two completely separate stores with no automatic sync.** If `secrets.DATABASE_URL` (used by `.github/workflows/crowdin-context-sync.yml` and a couple other workflows) matches Vercel's production value today, it's only because someone manually set both to the same thing — there's no live link, and no GitHub Environment scoping exists anywhere in this repo's workflows to enforce which secret is "production." Don't assume the two are in sync without checking.
+
+### Confirming you're looking at the right branch in Crowdin's UI
+
+The keys in `packages/crowdin/constants.ts`'s `branches` object (`main`, `dev`, `database`, `database-draft`) are our own internal aliases for numeric Crowdin branch IDs — they are **not guaranteed to match whatever Crowdin's UI displays as that branch's name**. When comparing a count from this script against what you see in the Crowdin dashboard, don't trust the branch label shown in the UI; check the actual numeric ID instead (visible in the editor URL, e.g. `https://inreach.crowdin.com/editor/{projectId}/{branchOrFileId}/{lang}` — the `{branchOrFileId}` segment) and compare it against the value of `branches.database` (currently `5412`) in code. Also note that Crowdin's "Strings" list view and branch-level summary counts can be scoped differently (one file vs. the whole branch), so a mismatch between two different UI screens doesn't necessarily mean either one is wrong.
 
 ---
 
 ## Known Gaps / Open Questions
 
-1. **No context/URL support in Crowdin sync.** Translators currently only see a string's raw key (e.g., `orgn_01GVH3V92WRQC2VFANN0M43X71.osvc_....name`) in the Crowdin editor's CONTEXT panel — with no link to view the corresponding organization/service live in the app. Fixing this requires:
-   - Adding a `context` (or similar) field to `apiFns.ts`'s request payloads (`addSingleKey`, `addMultipleKeys`), and
-   - Passing a value for it from each call site — e.g., in `createNewSuggestion_with_OrgService.handler.ts`, `orgSlug`/`newOrganization.slug` is already in scope at the point `TranslationKey` rows are created and could be used to build a URL such as `https://app.inreach.org/org/<slug>`.
-   - The batch export path (`translationKeys.ts`) has no access to org/service metadata and would need a separate mechanism (e.g., a follow-up script using the Crowdin API directly, keyed by `crowdinId` or the `orgn_`/`osvc_` IDs in the key) if context needs to be backfilled for existing/batch-synced strings.
-2. **Exhaustiveness of write paths.** Three handlers are confirmed to create `TranslationKey` rows. This list may not be exhaustive if other creation paths exist outside of tRPC mutation handlers (e.g., seed scripts, admin tooling, raw SQL).
+1. **Context backfill only runs after the fact.** `syncCrowdinContext.ts` (§4 above) doesn't run at string-creation time, so newly-created strings show Crowdin's auto-generated identifier breadcrumb until the next backfill run. Under consideration: adding `context` directly in `apiFns.ts` at creation time (covering the real-time-sync handlers in §1), so new strings don't have to wait for the next backfill run at all.
+2. **No location-scoped (`oloc_`) translation keys exist yet.** `OrgLocation` create/update handlers don't create any `TranslationKey` rows today — there's no existing free-text field on a location that's synced to Crowdin. If/when one is added, its key format will need to be designed from scratch (there's no existing precedent to match), but the context-backfill script already knows how to build the right URL for it once the `oloc_<id>` segment appears in a key.
+3. **Exhaustiveness of write paths.** The real-time-sync handlers listed in §1 were found by searching for the `tsKey.create` + `crowdinId`-stamping pattern; this is believed to be complete as of this writing but should be re-verified if this doc is revisited, since new mutations could introduce additional call sites without following the existing convention.
