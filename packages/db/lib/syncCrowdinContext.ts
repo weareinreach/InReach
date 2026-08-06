@@ -229,20 +229,15 @@ const applyBatch = async (batch: PendingUpdate[]): Promise<BackupEntry[]> => {
 	}
 }
 
-const run = async () => {
-	console.log(`Starting Crowdin context sync (dryRun=${DRY_RUN}, force=${FORCE})`)
+type ClassifiedStrings = {
+	skippedHasContext: number
+	skippedNoOrgMatch: number
+	skippedHasContextSample: Array<{ identifier: string; context: string | null }>
+	pendingUpdates: PendingUpdate[]
+}
 
-	// 1. Pull every string currently in the org-data (database) branch on Crowdin.
-	const allStrings = await fetchAllStrings()
-	console.log(
-		`Fetched ${allStrings.length} strings from Crowdin (project ${projectId.dbContent}, branch ${branches.database})`
-	)
-
-	// 2. Build a slug lookup for every org referenced by these strings, in one query.
-	const { slugById, orgIdCount } = await buildSlugLookup(allStrings)
-	console.log(`Resolved ${slugById.size}/${orgIdCount} organization slugs`)
-
-	// 3. Decide what every string needs. Pure/local - no network calls yet.
+/** Decides what every string needs. Pure/local - no network calls. */
+const classifyStrings = (allStrings: CrowdinString[], slugById: Map<string, string>): ClassifiedStrings => {
 	let skippedHasContext = 0
 	let skippedNoOrgMatch = 0
 	const skippedHasContextSample: Array<{ identifier: string; context: string | null }> = []
@@ -272,6 +267,73 @@ const run = async () => {
 		}
 	}
 
+	return { skippedHasContext, skippedNoOrgMatch, skippedHasContextSample, pendingUpdates }
+}
+
+/** Applies (or, under --dry-run, previews) every pending update, batched. Logs progress as it goes. */
+const applyUpdates = async (updatesToApply: PendingUpdate[]): Promise<{ updated: number }> => {
+	if (DRY_RUN) {
+		for (const { identifier, newContext } of updatesToApply) {
+			console.log(`[dry-run] Would set context for "${identifier}" -> "${newContext}"`)
+		}
+		return { updated: updatesToApply.length }
+	}
+
+	const batches = chunk(updatesToApply, BATCH_SIZE)
+	console.log(
+		`Applying ${updatesToApply.length} update(s) in ${batches.length} batch(es) of up to ${BATCH_SIZE}`
+	)
+
+	let updated = 0
+	const backupEntries: BackupEntry[] = []
+	try {
+		for (const [i, batch] of batches.entries()) {
+			const applied = await applyBatch(batch)
+			backupEntries.push(...applied)
+			updated += applied.length
+			const percentComplete = (((i + 1) / batches.length) * 100).toFixed(1)
+			console.log(
+				`Batch ${i + 1}/${batches.length} (${percentComplete}%): ${applied.length}/${batch.length} applied ` +
+					`- ${updated}/${updatesToApply.length} total`
+			)
+		}
+	} finally {
+		// Persist whatever was actually written, even if the loop above throws partway through - a partial
+		// backup is still a valid revert path for everything that did get changed.
+		writeBackup(backupEntries)
+	}
+	return { updated }
+}
+
+const printSkippedSample = (sample: Array<{ identifier: string; context: string | null }>) => {
+	if (sample.length === 0) {
+		return
+	}
+	console.log(`\nSample of ${sample.length} skipped "already has real context" strings:`)
+	for (const { identifier, context } of sample) {
+		console.log(`  "${identifier}" -> ${JSON.stringify(context)}`)
+	}
+}
+
+const run = async () => {
+	console.log(`Starting Crowdin context sync (dryRun=${DRY_RUN}, force=${FORCE})`)
+
+	// 1. Pull every string currently in the org-data (database) branch on Crowdin.
+	const allStrings = await fetchAllStrings()
+	console.log(
+		`Fetched ${allStrings.length} strings from Crowdin (project ${projectId.dbContent}, branch ${branches.database})`
+	)
+
+	// 2. Build a slug lookup for every org referenced by these strings, in one query.
+	const { slugById, orgIdCount } = await buildSlugLookup(allStrings)
+	console.log(`Resolved ${slugById.size}/${orgIdCount} organization slugs`)
+
+	// 3. Decide what every string needs.
+	const { skippedHasContext, skippedNoOrgMatch, skippedHasContextSample, pendingUpdates } = classifyStrings(
+		allStrings,
+		slugById
+	)
+
 	const updatesToApply = LIMIT ? pendingUpdates.slice(0, LIMIT) : pendingUpdates
 	if (LIMIT) {
 		console.log(
@@ -280,47 +342,15 @@ const run = async () => {
 	}
 
 	// 4. Apply the change, batched (see the file header comment for why batching over editString()).
-	let updated = 0
-	const backupEntries: BackupEntry[] = []
-
-	if (DRY_RUN) {
-		for (const { identifier, newContext } of updatesToApply) {
-			console.log(`[dry-run] Would set context for "${identifier}" -> "${newContext}"`)
-		}
-		updated = updatesToApply.length
-	} else {
-		const batches = chunk(updatesToApply, BATCH_SIZE)
-		console.log(
-			`Applying ${updatesToApply.length} update(s) in ${batches.length} batch(es) of up to ${BATCH_SIZE}`
-		)
-		try {
-			for (const [i, batch] of batches.entries()) {
-				const applied = await applyBatch(batch)
-				backupEntries.push(...applied)
-				updated += applied.length
-				const percentComplete = (((i + 1) / batches.length) * 100).toFixed(1)
-				console.log(
-					`Batch ${i + 1}/${batches.length} (${percentComplete}%): ${applied.length}/${batch.length} applied ` +
-						`- ${updated}/${updatesToApply.length} total`
-				)
-			}
-		} finally {
-			// Persist whatever was actually written, even if the loop above throws partway through - a partial
-			// backup is still a valid revert path for everything that did get changed.
-			writeBackup(backupEntries)
-		}
-	}
+	const { updated } = await applyUpdates(updatesToApply)
 
 	console.log('Done.')
 	console.log(`  Updated:            ${updated}`)
 	console.log(`  Skipped (has real context, use --force to override): ${skippedHasContext}`)
 	console.log(`  Skipped (no matching org):                          ${skippedNoOrgMatch}`)
 
-	if (SAMPLE_SKIPPED && skippedHasContextSample.length > 0) {
-		console.log(`\nSample of ${skippedHasContextSample.length} skipped "already has real context" strings:`)
-		for (const { identifier, context } of skippedHasContextSample) {
-			console.log(`  "${identifier}" -> ${JSON.stringify(context)}`)
-		}
+	if (SAMPLE_SKIPPED) {
+		printSkippedSample(skippedHasContextSample)
 	}
 }
 
