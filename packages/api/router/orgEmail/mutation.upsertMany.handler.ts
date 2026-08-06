@@ -1,6 +1,6 @@
 import compact from 'just-compact'
 
-import { upsertSingleKey } from '@weareinreach/crowdin/api'
+import { buildContextUrl, upsertSingleKey } from '@weareinreach/crowdin/api'
 import { generateId, generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
 import {
 	connectOneId,
@@ -23,46 +23,73 @@ const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySchema, '
 		include: { services: true, locations: true },
 	})
 
+	// Crowdin sync (a network call to a third party) must not happen inside the DB transaction below -
+	// Prisma's interactive transactions have a ~5s timeout, and holding it open across an external API
+	// call risks "Transaction already closed" once Crowdin is slow to respond. Precompute all per-item
+	// data (including any Crowdin syncing) here, then use the results in a DB-only transaction below.
+	const { slug } = await prisma.organization.findUniqueOrThrow({
+		where: { id: orgId },
+		select: { slug: true },
+	})
+
+	const preparedItems = await Promise.all(
+		data.map(
+			async ({
+				title,
+				services: servicesArr,
+				locations: locationsArr,
+				description,
+				id: passedId,
+				...record
+			}) => {
+				const before = passedId ? existing.find(({ id: existingId }) => existingId === passedId) : undefined
+				const servicesBefore = before?.services?.map(({ serviceId }) => ({ serviceId })) ?? []
+				const locationsBefore = before?.locations?.map(({ orgLocationId }) => ({ orgLocationId })) ?? []
+				const id = passedId ?? ctx.generateId('orgEmail')
+
+				const services = servicesArr.map((serviceId) => ({ serviceId }))
+				const locations = locationsArr.map((orgLocationId) => ({ orgLocationId }))
+
+				const descriptionText = description
+					? generateNestedFreeTextUpsert({
+							orgId,
+							text: description,
+							type: 'emailDesc',
+							itemId: id,
+							freeTextId: generateId('freeText'),
+						})
+					: undefined
+
+				if (descriptionText) {
+					const crowdin = await upsertSingleKey({
+						isDatabaseString: true,
+						key: descriptionText.upsert.create.tsKey.create.key,
+						text: descriptionText.upsert.create.tsKey.create.text,
+						context: buildContextUrl(slug),
+					})
+					if (crowdin.id) {
+						descriptionText.upsert.create.tsKey.create.crowdinId = crowdin.id
+					}
+				}
+
+				return { id, record, title, services, servicesBefore, locations, locationsBefore, descriptionText }
+			}
+		)
+	)
+
 	const results: Array<{ id: string }> = []
 
 	const upserts = await prisma.$transaction(async (tx) => {
 		for (const {
+			id,
+			record,
 			title,
-			services: servicesArr,
-			locations: locationsArr,
-			description,
-			id: passedId,
-			...record
-		} of data) {
-			const before = passedId ? existing.find(({ id: existingId }) => existingId === passedId) : undefined
-			const servicesBefore = before?.services?.map(({ serviceId }) => ({ serviceId })) ?? []
-			const locationsBefore = before?.locations?.map(({ orgLocationId }) => ({ orgLocationId })) ?? []
-			const id = passedId ?? ctx.generateId('orgEmail')
-
-			const services = servicesArr.map((serviceId) => ({ serviceId }))
-			const locations = locationsArr.map((orgLocationId) => ({ orgLocationId }))
-
-			const descriptionText = description
-				? generateNestedFreeTextUpsert({
-						orgId,
-						text: description,
-						type: 'emailDesc',
-						itemId: id,
-						freeTextId: generateId('freeText'),
-					})
-				: undefined
-
-			if (descriptionText) {
-				const crowdin = await upsertSingleKey({
-					isDatabaseString: true,
-					key: descriptionText.upsert.create.tsKey.create.key,
-					text: descriptionText.upsert.create.tsKey.create.text,
-				})
-				if (crowdin.id) {
-					descriptionText.upsert.create.tsKey.create.crowdinId = crowdin.id
-				}
-			}
-
+			services,
+			servicesBefore,
+			locations,
+			locationsBefore,
+			descriptionText,
+		} of preparedItems) {
 			const txnResult = await tx.orgEmail.upsert({
 				where: { id },
 				create: {

@@ -146,7 +146,11 @@ export const organization = {
 		response: async (input) => {
 			const { default: data } = await import('./json/organization.searchName.json')
 			const searchRegex = new RegExp(`.*${input.search}.*`, 'i')
-			const results = data.filter(({ label }) => searchRegex.test(label))
+			// The fixture has no similarity score (unlike the real pg_trgm-backed handler) - mocked
+			// consumers don't sort or filter by it, so a constant placeholder satisfies the response shape.
+			const results = data
+				.filter(({ label }) => searchRegex.test(label))
+				.map((result) => ({ ...result, score: 1 }))
 			return results
 		},
 	}),

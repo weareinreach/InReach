@@ -31,4 +31,5 @@ export * from './2025-03-05_update-attribute-values-lang-inter'
 export * from './2025-03-05_update-nationwide-locationbased-alert'
 export * from './2025-12-10_add_mexico_city_as_state'
 export * from './2026-06-11_add-italian-language'
+export * from './20260611000000_backfill_search_arrays'
 // codegen:end

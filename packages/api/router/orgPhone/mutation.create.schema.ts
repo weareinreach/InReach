@@ -48,16 +48,19 @@ export const ZCreateSchema = z
 		const phoneType = handlePhoneType()
 
 		const { number, ext, locationOnly, primary, published } = data
-		return Prisma.validator<Prisma.OrgPhoneCreateInput>()({
-			id,
-			number,
-			ext,
-			locationOnly,
-			primary,
-			published,
-			description,
-			phoneType,
-			country: { connect: { id: data.countryId } },
-		})
+		return {
+			orgId,
+			data: Prisma.validator<Prisma.OrgPhoneCreateInput>()({
+				id,
+				number,
+				ext,
+				locationOnly,
+				primary,
+				published,
+				description,
+				phoneType,
+				country: { connect: { id: data.countryId } },
+			}),
+		}
 	})
 export type TCreateSchema = z.infer<typeof ZCreateSchema>

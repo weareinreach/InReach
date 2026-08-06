@@ -47,12 +47,15 @@ export const ZCreateSchema = z
 			return undefined
 		}
 
-		return Prisma.validator<Prisma.OrgEmailCreateInput>()({
-			...data,
-			description: description
-				? generateNestedFreeText({ orgId, itemId: id, text: description, type: 'emailDesc' })
-				: undefined,
-			title: handleTitle(),
-		})
+		return {
+			orgId,
+			data: Prisma.validator<Prisma.OrgEmailCreateInput>()({
+				...data,
+				description: description
+					? generateNestedFreeText({ orgId, itemId: id, text: description, type: 'emailDesc' })
+					: undefined,
+				title: handleTitle(),
+			}),
+		}
 	})
 export type TCreateSchema = z.infer<typeof ZCreateSchema>

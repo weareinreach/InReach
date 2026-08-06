@@ -22,20 +22,25 @@ export const createCommonFns = (client: CrowdinApi) => {
 		return crowdinString.find(({ data }) => data.identifier === key)?.data.id
 	}
 
-	const updateSingleKey: UpdateSingleString = async ({ updatedString, isDatabaseString, ...params }) => {
+	const updateSingleKey: UpdateSingleString = async (args) => {
+		const { updatedString, isDatabaseString, context, ...params } = args
 		const stringId = params.crowdinId ?? (await getStringIdByKey(params.key, isDatabaseString))
 		invariant(stringId)
+		const patchOps: PatchRequest[] = [{ op: 'replace', path: '/text', value: updatedString }]
+		if (context) {
+			patchOps.push({ op: 'replace', path: '/context', value: context })
+		}
 		const { data: response } = await client.sourceStringsApi.editString(
 			getProjectId(isDatabaseString),
 			stringId,
-			[{ op: 'replace', path: '/text', value: updatedString }]
+			patchOps
 		)
 		return response
 	}
 	const updateMultipleKeys: UpdateMultipleStrings = async (updates) => {
 		const baseRequest: PatchRequest[] = []
 		const dbRequest: PatchRequest[] = []
-		for (const { updatedString, isDatabaseString, ...params } of updates) {
+		for (const { updatedString, isDatabaseString, context, ...params } of updates) {
 			const stringId = params.crowdinId ?? (await getStringIdByKey(params.key, isDatabaseString))
 			invariant(stringId)
 			const requestArgs: PatchRequest = {
@@ -45,6 +50,15 @@ export const createCommonFns = (client: CrowdinApi) => {
 			}
 
 			isDatabaseString ? dbRequest.push(requestArgs) : baseRequest.push(requestArgs)
+
+			if (context) {
+				const contextArgs: PatchRequest = {
+					op: 'replace',
+					path: `${stringId}/context`,
+					value: context,
+				}
+				isDatabaseString ? dbRequest.push(contextArgs) : baseRequest.push(contextArgs)
+			}
 		}
 		const response: Array<ResponseObject<SourceStringsModel.String>> = []
 
@@ -64,7 +78,8 @@ export const createCommonFns = (client: CrowdinApi) => {
 		}
 		return response
 	}
-	const addSingleKey: AddSingleKey = async ({ isDatabaseString, key, text, ...params }) => {
+	const addSingleKey: AddSingleKey = async (args) => {
+		const { isDatabaseString, key, text, context, ...params } = args
 		const identifier = key
 
 		const requestArgs:
@@ -74,11 +89,13 @@ export const createCommonFns = (client: CrowdinApi) => {
 					branchId: branches.database,
 					identifier,
 					text,
+					context,
 				} satisfies SourceStringsModel.CreateStringStringsBasedRequest)
 			: ({
 					fileId: fileIds.main[params.ns ?? 'common'],
 					identifier,
 					text,
+					context,
 				} satisfies SourceStringsModel.CreateStringRequest)
 
 		const { data: response } = await client.sourceStringsApi.addString(
@@ -92,7 +109,7 @@ export const createCommonFns = (client: CrowdinApi) => {
 		const baseRequest: Array<PatchRequest> = []
 		const dbRequest: Array<PatchRequest> = []
 
-		for (const { isDatabaseString, key: identifier, ns, text } of newStrings) {
+		for (const { isDatabaseString, key: identifier, ns, text, context } of newStrings) {
 			const branchId = isDatabaseString ? branches.database : undefined
 			const fileId = isDatabaseString ? undefined : fileIds.main[ns ?? 'common']
 			const addArgs: PatchRequest = {
@@ -103,6 +120,7 @@ export const createCommonFns = (client: CrowdinApi) => {
 					fileId,
 					identifier,
 					text,
+					context,
 				},
 			}
 			isDatabaseString ? dbRequest.push(addArgs) : baseRequest.push(addArgs)
@@ -128,11 +146,11 @@ export const createCommonFns = (client: CrowdinApi) => {
 	}
 
 	const upsertSingleKey: UpsertSingleKey = async (params) => {
-		const { isDatabaseString, key, text } = params
+		const { isDatabaseString, key, text, context } = params
 		const existingId = await getStringIdByKey(key, isDatabaseString)
 
 		if (existingId) {
-			return await updateSingleKey({ crowdinId: existingId, updatedString: text, isDatabaseString })
+			return await updateSingleKey({ crowdinId: existingId, updatedString: text, isDatabaseString, context })
 		}
 		if (isDatabaseString) {
 			return await addSingleKey(params)
@@ -155,12 +173,16 @@ interface UpdateStringById {
 	crowdinId: number
 	updatedString: string
 	key?: never
+	/** A link back to the live app (e.g. https://app.inreach.org/org/<slug>) shown in Crowdin's context panel. */
+	context?: string
 }
 interface UpdateStringByKey {
 	isDatabaseString: boolean
 	crowdinId?: never
 	updatedString: string
 	key: string
+	/** A link back to the live app (e.g. https://app.inreach.org/org/<slug>) shown in Crowdin's context panel. */
+	context?: string
 }
 
 interface UpdateSingleString {
@@ -186,12 +208,16 @@ interface AddDatabaseStringParams {
 	ns?: never
 	key: string
 	text: string
+	/** A link back to the live app (e.g. https://app.inreach.org/org/<slug>) shown in Crowdin's context panel. */
+	context?: string
 }
 interface AddFileStringParams {
 	isDatabaseString: false
 	ns: keyof (typeof fileIds)['main']
 	key: string
 	text: string
+	/** A link back to the live app (e.g. https://app.inreach.org/org/<slug>) shown in Crowdin's context panel. */
+	context?: string
 }
 
 interface UpsertSingleKey {
@@ -204,10 +230,14 @@ interface UpsertDatabaseString {
 	ns?: never
 	text: string
 	key: string
+	/** A link back to the live app (e.g. https://app.inreach.org/org/<slug>) shown in Crowdin's context panel. */
+	context?: string
 }
 interface UpsertFileString {
 	isDatabaseString: false
 	ns: keyof (typeof fileIds)['main']
 	text: string
 	key: string
+	/** A link back to the live app (e.g. https://app.inreach.org/org/<slug>) shown in Crowdin's context panel. */
+	context?: string
 }

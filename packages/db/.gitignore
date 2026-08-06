@@ -11,6 +11,7 @@ data-transfer/temp/*.js
 *.log
 lib/output/*
 !lib/output/.gitkeep
+crowdin-backups/
 seed/migrate-v1/out/*
 !seed/migrate-v1/out/.gitkeep
 seed/migrate-v1/_generated/*

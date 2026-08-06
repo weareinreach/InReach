@@ -29,6 +29,7 @@ import {
 	useMemo,
 	useState,
 } from 'react'
+import invariant from 'tiny-invariant'
 
 import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { type ApiOutput } from '@weareinreach/api'
@@ -170,7 +171,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		[addressCandidates]
 	)
 
-	const { data: addressResult } = api.geo.geoByPlaceId.useQuery(placeId || undefined, {
+	const { data: addressResult } = api.geo.geoByPlaceId.useQuery(placeId, {
 		enabled: !!placeId,
 		retry: false,
 	})
@@ -316,8 +317,12 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		<SuggestionFormProvider form={form}>
 			<form
 				onSubmit={form.onSubmit(() => {
+					// form.onSubmit only invokes this callback once SuggestionSchema validation passes, which
+					// requires orgWebsite to be a non-empty, valid URL - so it's always defined here even
+					// though SuggestionForm types it as optional to allow an empty initial value.
+					invariant(form.values.orgWebsite)
 					setSubmitError(null)
-					suggestOrgApi.mutate(form.values)
+					suggestOrgApi.mutate({ ...form.values, orgWebsite: form.values.orgWebsite })
 				})}
 			>
 				<Stack spacing={40} pb={40}>

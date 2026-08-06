@@ -1,4 +1,4 @@
-import { addSingleKey, updateSingleKey } from '@weareinreach/crowdin/api'
+import { addSingleKey, buildContextUrl, updateSingleKey } from '@weareinreach/crowdin/api'
 import {
 	generateId,
 	generateNestedFreeTextUpsert,
@@ -38,6 +38,10 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 		// Extract previous slugs for easier checking
 		const previousSlugs = existing.oldSlugs.map((s) => s.from)
 
+		// Tracked separately from data.slug, which Prisma's update-input type allows to be either a plain
+		// string or a { set: string } wrapper - this stays a plain string for building the Crowdin context URL.
+		let orgSlug = existing.slug
+
 		// Only generate a new slug if the name has actually changed
 		if (input.name && input.name !== existing.name) {
 			// Create a temporary slug to check if it's the same as the existing one.
@@ -49,6 +53,7 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 				// we simply update the name and the slug. No new redirect is created in this specific case.
 				data.name = input.name
 				data.slug = newSlugCandidate
+				orgSlug = newSlugCandidate
 			} else {
 				// If the new name is truly different from all previous slugs,
 				// we generate a unique slug and create a redirect.
@@ -56,6 +61,7 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 				data.name = input.name
 				data.slug = newSlug
 				data.oldSlugs = { create: { from: existing.slug, to: newSlug, id: generateId('slugRedirect') } }
+				orgSlug = newSlug
 			}
 		}
 
@@ -75,6 +81,7 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 					key: existing.description.tsKey.key,
 					isDatabaseString: true,
 					updatedString: upsertDescription.upsert.update.tsKey.update.text,
+					context: buildContextUrl(orgSlug),
 				})
 			} else {
 				console.log('add crowdin', {
@@ -86,6 +93,7 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 					isDatabaseString: true,
 					key: upsertDescription.upsert.create.tsKey.create.key,
 					text: upsertDescription.upsert.create.tsKey.create.text,
+					context: buildContextUrl(orgSlug),
 				})
 				upsertDescription.upsert.create.tsKey.create.crowdinId = crowdinId
 			}
