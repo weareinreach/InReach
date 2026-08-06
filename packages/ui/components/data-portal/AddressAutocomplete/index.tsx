@@ -242,13 +242,13 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 				case AddressVisibility.PARTIAL:
 				case AddressVisibility.HIDDEN: {
 					const { city, countryId: country, govDistId: govDist } = currentFormValues
-					if (typeof city !== 'string') {
+					if (!city) {
 						break
 					}
 					const { results: cityResults } = await apiUtils.geo.cityCoords.fetch({
 						city,
 						country,
-						govDist,
+						govDist: govDist || undefined,
 					})
 					if (cityResults && !Array.isArray(cityResults)) {
 						const { place_id } = cityResults

@@ -45,6 +45,7 @@ export const ZCreateAccessInstructionsSchema = z
 		}
 
 		return {
+			orgId,
 			freeText: freeText ? Prisma.validator<Prisma.FreeTextCreateArgs>()({ data: freeText }) : undefined,
 			translationKey: translationKey
 				? (Prisma.validator<Prisma.TranslationKeyCreateArgs>()({
