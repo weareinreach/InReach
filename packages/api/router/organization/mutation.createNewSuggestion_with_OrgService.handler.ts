@@ -29,13 +29,13 @@ const createNewSuggestion = async ({
 			},
 		})
 
-		const organizationId = newOrganization.id
-		console.log('Organization created with ID:', organizationId)
+		const newOrganizationId = newOrganization.id
+		console.log('Organization created with ID:', newOrganizationId)
 
 		// 2. Create the Suggestion record.
 		await tx.suggestion.create({
 			data: {
-				organizationId: organizationId,
+				organizationId: newOrganizationId,
 				suggestedById: ctx.actorId,
 				data: input,
 			},
@@ -51,7 +51,7 @@ const createNewSuggestion = async ({
 			createOperations.push(
 				tx.orgWebsite.create({
 					data: {
-						organizationId: organizationId,
+						organizationId: newOrganizationId,
 						url: orgWebsite,
 					},
 				})
@@ -59,7 +59,7 @@ const createNewSuggestion = async ({
 		}
 
 		// B. Create the OrgLocation record if an address was provided.
-		let newOrgLocation = null
+		let orgLocation = null
 		if (orgAddress && Object.keys(orgAddress).length > 0) {
 			console.log('Creating OrgLocation record...')
 			const cleanedStreet1 = orgAddress.street1?.replace('undefined', '').trim()
@@ -72,9 +72,9 @@ const createNewSuggestion = async ({
 				select: { id: true },
 			})
 
-			newOrgLocation = await tx.orgLocation.create({
+			orgLocation = await tx.orgLocation.create({
 				data: {
-					orgId: organizationId,
+					orgId: newOrganizationId,
 					name: orgName,
 					street1: cleanedStreet1,
 					city: orgAddress.city ?? '',
@@ -83,7 +83,7 @@ const createNewSuggestion = async ({
 					countryId: countryId,
 				},
 			})
-			console.log('OrgLocation created with ID:', newOrgLocation.id)
+			console.log('OrgLocation created with ID:', orgLocation.id)
 		}
 
 		// D. Add AttributeSupplement records for each selected community.
@@ -92,7 +92,7 @@ const createNewSuggestion = async ({
 			const communityCreates = communityFocus.map((attributeId) =>
 				tx.attributeSupplement.create({
 					data: {
-						organizationId: organizationId,
+						organizationId: newOrganizationId,
 						attributeId: attributeId,
 					},
 				})
@@ -102,8 +102,8 @@ const createNewSuggestion = async ({
 
 		// C. Look up the service tags to create, if any. The actual OrgService creation happens after
 		// Crowdin sync, in phase 3 below, since it needs the crowdinId from that sync.
-		let serviceTags: Array<{ id: string; name: string }> = []
-		if (serviceCategories && serviceCategories.length > 0 && newOrgLocation) {
+		let matchedServiceTags: Array<{ id: string; name: string }> = []
+		if (serviceCategories && serviceCategories.length > 0 && orgLocation) {
 			console.log('Service categories and location exist. Looking up matching service tags.')
 			console.log('Input serviceCategories:', serviceCategories)
 
@@ -120,7 +120,7 @@ const createNewSuggestion = async ({
 
 			// Step 2: Use the IDs from the first query to get the full ServiceTag records.
 			const serviceTagIds = serviceTagsToCategory.map((item) => item.serviceTagId)
-			serviceTags = await tx.serviceTag.findMany({
+			matchedServiceTags = await tx.serviceTag.findMany({
 				where: {
 					id: { in: serviceTagIds },
 				},
@@ -130,7 +130,7 @@ const createNewSuggestion = async ({
 				},
 			})
 
-			console.log('Service tags fetched:', serviceTags)
+			console.log('Service tags fetched:', matchedServiceTags)
 		} else {
 			console.log('No services to create. Check if categories were selected and a location was provided.')
 		}
@@ -140,7 +140,7 @@ const createNewSuggestion = async ({
 		await Promise.all(createOperations)
 		console.log('All creation operations completed successfully.')
 
-		return { organizationId, newOrgLocation, serviceTags }
+		return { organizationId: newOrganizationId, newOrgLocation: orgLocation, serviceTags: matchedServiceTags }
 	})
 	console.log('Phase 1 transaction finalized successfully.')
 

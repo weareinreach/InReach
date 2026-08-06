@@ -53,8 +53,8 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 		defaultValues: {
 			name: '',
 			addressVisibility: AddressVisibility.FULL, //
-			orgId,
 			address: defaultAddress,
+			orgId,
 		},
 	})
 	const createLocation = api.location.create.useMutation({
@@ -68,8 +68,8 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			form.reset({
 				name: '',
 				addressVisibility: AddressVisibility.FULL,
-				orgId,
 				address: defaultAddress,
+				orgId,
 			})
 		},
 	})
@@ -97,8 +97,8 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			form.reset({
 				name: '',
 				addressVisibility: AddressVisibility.FULL,
-				orgId,
 				address: defaultAddress,
+				orgId,
 			})
 		}
 	}, [drawerOpened, form, orgId])
