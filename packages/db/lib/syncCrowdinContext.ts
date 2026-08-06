@@ -253,16 +253,26 @@ const run = async () => {
 	}
 }
 
+/**
+ * Reverts a prior run's changes from its backup file.
+ *
+ * The two `console.log` calls below that read from `entries` each trip SonarCloud's "confidential data should
+ * not be logged" rule (tssecurity:S8689). That rule treats any `readFileSync` result as unconditionally
+ * "credential data" (password/API key/secret/token) without inspecting what the file actually contains - and
+ * no amount of extracting values into intermediate variables changes that, since the taint tracking follows
+ * dataflow through assignment. `backupPath` here only ever points at this same script's own backup JSON
+ * (Crowdin string ids, org-data key identifiers, and public context URLs written by writeBackup() above) -
+ * never a secrets/credentials file - so there is nothing confidential to leak.
+ */
 const revert = async (backupPath: string) => {
 	console.log(`Reverting from ${backupPath} (dryRun=${DRY_RUN})`)
 	const entries: BackupEntry[] = JSON.parse(readFileSync(backupPath, 'utf-8'))
-	const entryCount = entries.length
-	console.log(`Loaded ${entryCount} entries to revert`)
+	console.log(`Loaded ${entries.length} entries to revert`) // NOSONAR - see function comment
 
 	let reverted = 0
 	for (const entry of entries) {
 		if (DRY_RUN) {
-			console.log(`[dry-run] Would restore "${entry.identifier}" -> ${JSON.stringify(entry.oldContext)}`)
+			console.log(`[dry-run] Would restore "${entry.identifier}" -> ${JSON.stringify(entry.oldContext)}`) // NOSONAR - see function comment
 			reverted++
 			continue
 		}
