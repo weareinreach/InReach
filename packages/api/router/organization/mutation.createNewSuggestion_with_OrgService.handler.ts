@@ -1,3 +1,4 @@
+import { addSingleKey, buildContextUrl } from '@weareinreach/crowdin/api'
 import { generateId, getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -10,9 +11,13 @@ const createNewSuggestion = async ({
 	const prisma = getAuditedClient(ctx.actorId)
 	const { countryId, orgName, orgSlug, communityFocus, orgAddress, orgWebsite, serviceCategories } = input
 
-	// Use a transaction to ensure all database operations are atomic.
-	// If any operation fails, the entire transaction is rolled back.
-	const result = await prisma.$transaction(async (tx) => {
+	// Phase 1: DB-only transaction. Creates the organization, its location, and other placeholder
+	// records. This must run before Crowdin sync because the per-service Crowdin context URL needs the
+	// new location's id, and it must run in a transaction of its own (not the one below) because Crowdin
+	// sync (a network call to a third party) must not happen inside a Prisma interactive transaction -
+	// those have a ~5s timeout, and holding one open across an external API call risks "Transaction
+	// already closed" once Crowdin is slow to respond.
+	const { organizationId, newOrgLocation, serviceTags } = await prisma.$transaction(async (tx) => {
 		console.log('Starting transaction to create a new organization and related records.')
 		// 1. Create the new Organization record first.
 		const newOrganization = await tx.organization.create({
@@ -24,13 +29,13 @@ const createNewSuggestion = async ({
 			},
 		})
 
-		const organizationId = newOrganization.id
-		console.log('Organization created with ID:', organizationId)
+		const newOrganizationId = newOrganization.id
+		console.log('Organization created with ID:', newOrganizationId)
 
 		// 2. Create the Suggestion record.
 		await tx.suggestion.create({
 			data: {
-				organizationId: organizationId,
+				organizationId: newOrganizationId,
 				suggestedById: ctx.actorId,
 				data: input,
 			},
@@ -46,7 +51,7 @@ const createNewSuggestion = async ({
 			createOperations.push(
 				tx.orgWebsite.create({
 					data: {
-						organizationId: organizationId,
+						organizationId: newOrganizationId,
 						url: orgWebsite,
 					},
 				})
@@ -54,7 +59,7 @@ const createNewSuggestion = async ({
 		}
 
 		// B. Create the OrgLocation record if an address was provided.
-		let newOrgLocation = null
+		let orgLocation = null
 		if (orgAddress && Object.keys(orgAddress).length > 0) {
 			console.log('Creating OrgLocation record...')
 			const cleanedStreet1 = orgAddress.street1?.replace('undefined', '').trim()
@@ -67,9 +72,9 @@ const createNewSuggestion = async ({
 				select: { id: true },
 			})
 
-			newOrgLocation = await tx.orgLocation.create({
+			orgLocation = await tx.orgLocation.create({
 				data: {
-					orgId: organizationId,
+					orgId: newOrganizationId,
 					name: orgName,
 					street1: cleanedStreet1,
 					city: orgAddress.city ?? '',
@@ -78,7 +83,7 @@ const createNewSuggestion = async ({
 					countryId: countryId,
 				},
 			})
-			console.log('OrgLocation created with ID:', newOrgLocation.id)
+			console.log('OrgLocation created with ID:', orgLocation.id)
 		}
 
 		// D. Add AttributeSupplement records for each selected community.
@@ -87,7 +92,7 @@ const createNewSuggestion = async ({
 			const communityCreates = communityFocus.map((attributeId) =>
 				tx.attributeSupplement.create({
 					data: {
-						organizationId: organizationId,
+						organizationId: newOrganizationId,
 						attributeId: attributeId,
 					},
 				})
@@ -95,10 +100,11 @@ const createNewSuggestion = async ({
 			createOperations.push(...communityCreates)
 		}
 
-		// C. Handle the complex OrgService creation, which now depends on a location.
-		// Services are only created if a location is also created.
-		if (serviceCategories && serviceCategories.length > 0 && newOrgLocation) {
-			console.log('Service categories and location exist. Mapping service creation promises.')
+		// C. Look up the service tags to create, if any. The actual OrgService creation happens after
+		// Crowdin sync, in phase 3 below, since it needs the crowdinId from that sync.
+		let matchedServiceTags: Array<{ id: string; name: string }> = []
+		if (serviceCategories && serviceCategories.length > 0 && orgLocation) {
+			console.log('Service categories and location exist. Looking up matching service tags.')
 			console.log('Input serviceCategories:', serviceCategories)
 
 			// *** THE FIX: Two-step query to handle the join table correctly. ***
@@ -114,7 +120,7 @@ const createNewSuggestion = async ({
 
 			// Step 2: Use the IDs from the first query to get the full ServiceTag records.
 			const serviceTagIds = serviceTagsToCategory.map((item) => item.serviceTagId)
-			const serviceTags = await tx.serviceTag.findMany({
+			matchedServiceTags = await tx.serviceTag.findMany({
 				where: {
 					id: { in: serviceTagIds },
 				},
@@ -124,68 +130,9 @@ const createNewSuggestion = async ({
 				},
 			})
 
-			console.log('Service tags fetched:', serviceTags)
-
-			// Use a map to create a new array of promises
-			const servicePromises = serviceTags.map(async (serviceTag) => {
-				const osvcId = generateId('orgService')
-				const freeTextKey = `${organizationId}.${osvcId}.name`
-
-				// Create the TranslationKey and FreeText records first
-				const newTranslationKey = await tx.translationKey.create({
-					data: {
-						key: freeTextKey,
-						ns: 'org-data',
-						text: serviceTag.name,
-					},
-				})
-
-				const newFreeText = await tx.freeText.create({
-					data: {
-						id: generateId('freeText'),
-						key: newTranslationKey.key,
-						ns: newTranslationKey.ns,
-					},
-				})
-
-				// Create the OrgService record, connecting it to the FreeText and the new location.
-				const createdService = await tx.orgService.create({
-					data: {
-						id: osvcId,
-						organizationId: organizationId,
-						serviceNameId: newFreeText.id,
-						// Use nested 'create' to properly link to the join tables for the many-to-many relationships
-						services: {
-							create: {
-								tagId: serviceTag.id,
-							},
-						},
-						locations: {
-							create: {
-								location: {
-									connect: {
-										id: newOrgLocation.id,
-									},
-								},
-							},
-						},
-					},
-				})
-				console.log('OrgService created with ID:', createdService.id)
-				return createdService
-			})
-
-			// Explicitly await the service creation promises and log the result
-			const createdServices = await Promise.all(servicePromises)
-			console.log(
-				'Successfully created the following OrgService records:',
-				createdServices.map((s) => s.id)
-			)
-
-			// Add the created services to the main operations array
-			createOperations.push(...createdServices)
+			console.log('Service tags fetched:', matchedServiceTags)
 		} else {
-			console.log('No services created. Check if categories were selected and a location was provided.')
+			console.log('No services to create. Check if categories were selected and a location was provided.')
 		}
 
 		// E. Execute all other create operations in parallel for efficiency.
@@ -193,10 +140,89 @@ const createNewSuggestion = async ({
 		await Promise.all(createOperations)
 		console.log('All creation operations completed successfully.')
 
-		// Return the newly created organization's ID.
-		return { id: organizationId }
+		return { organizationId: newOrganizationId, newOrgLocation: orgLocation, serviceTags: matchedServiceTags }
 	})
+	console.log('Phase 1 transaction finalized successfully.')
+
+	// Phase 2: Crowdin sync for each service tag, outside any DB transaction.
+	const serviceSyncData = newOrgLocation
+		? await Promise.all(
+				serviceTags.map(async (serviceTag) => {
+					const osvcId = generateId('orgService')
+					const freeTextKey = `${organizationId}.${osvcId}.name`
+
+					// Sync to Crowdin first, so the string is created with context from the start (see the
+					// real-time-sync convention used throughout packages/api/router/**/mutation.*.handler.ts).
+					const crowdin = await addSingleKey({
+						isDatabaseString: true,
+						key: freeTextKey,
+						text: serviceTag.name,
+						context: buildContextUrl(orgSlug, newOrgLocation.id),
+					})
+
+					return { serviceTag, osvcId, freeTextKey, crowdinId: crowdin.id }
+				})
+			)
+		: []
+
+	// Phase 3: DB-only transaction. Creates the TranslationKey, FreeText, and OrgService records for
+	// each service tag synced in phase 2.
+	if (serviceSyncData.length > 0 && newOrgLocation) {
+		const createdServices = await prisma.$transaction(async (tx) => {
+			return Promise.all(
+				serviceSyncData.map(async ({ serviceTag, osvcId, freeTextKey, crowdinId }) => {
+					const newTranslationKey = await tx.translationKey.create({
+						data: {
+							key: freeTextKey,
+							ns: 'org-data',
+							text: serviceTag.name,
+							crowdinId,
+						},
+					})
+
+					const newFreeText = await tx.freeText.create({
+						data: {
+							id: generateId('freeText'),
+							key: newTranslationKey.key,
+							ns: newTranslationKey.ns,
+						},
+					})
+
+					// Create the OrgService record, connecting it to the FreeText and the new location.
+					const createdService = await tx.orgService.create({
+						data: {
+							id: osvcId,
+							organizationId: organizationId,
+							serviceNameId: newFreeText.id,
+							// Use nested 'create' to properly link to the join tables for the many-to-many relationships
+							services: {
+								create: {
+									tagId: serviceTag.id,
+								},
+							},
+							locations: {
+								create: {
+									location: {
+										connect: {
+											id: newOrgLocation.id,
+										},
+									},
+								},
+							},
+						},
+					})
+					console.log('OrgService created with ID:', createdService.id)
+					return createdService
+				})
+			)
+		})
+		console.log(
+			'Successfully created the following OrgService records:',
+			createdServices.map((s) => s.id)
+		)
+	}
+
 	console.log('Transaction finalized successfully.')
-	return result
+	return { id: organizationId }
 }
 export default createNewSuggestion
