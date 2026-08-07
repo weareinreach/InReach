@@ -413,6 +413,7 @@ export const orgSearchSelect = {
 			city: true,
 			latitude: true,
 			longitude: true,
+			addressVisibility: true,
 			services: {
 				select: {
 					service: selectServ,
