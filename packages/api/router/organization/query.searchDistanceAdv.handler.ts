@@ -204,29 +204,32 @@ const prismaDistSearchDetails = async (input: { resultIds: string[]; lat: number
 			})
 		)
 
-		locations.forEach(({ services: locationServices, city, ...coords }) => {
-			city &&
-				cities.push({
-					city,
-					dist: getDistance(
-						{ latitude, longitude },
-						{ latitude: coords.latitude ?? 0, longitude: coords.longitude ?? 0 },
-						1000
-					),
-				})
-			locationServices.forEach(({ service }) =>
-				service.services.forEach(({ tag, service: innerService }) => {
-					const { primaryCategory } = tag
-					serviceCategoryMap.set(primaryCategory.id, primaryCategory)
-					innerService.attributes.forEach(({ attribute }) => {
-						const { categories, ...attrib } = attribute
-						categories.forEach(({ category }) =>
-							attributeMap.set(`${attrib.id}${category.tag}`, { category, ...attrib })
-						)
+		locations.forEach(
+			({ services: locationServices, city, addressVisibility: locationVisibility, ...coords }) => {
+				city &&
+					locationVisibility !== 'HIDDEN' &&
+					cities.push({
+						city,
+						dist: getDistance(
+							{ latitude, longitude },
+							{ latitude: coords.latitude ?? 0, longitude: coords.longitude ?? 0 },
+							1000
+						),
 					})
-				})
-			)
-		})
+				locationServices.forEach(({ service }) =>
+					service.services.forEach(({ tag, service: innerService }) => {
+						const { primaryCategory } = tag
+						serviceCategoryMap.set(primaryCategory.id, primaryCategory)
+						innerService.attributes.forEach(({ attribute }) => {
+							const { categories, ...attrib } = attribute
+							categories.forEach(({ category }) =>
+								attributeMap.set(`${attrib.id}${category.tag}`, { category, ...attrib })
+							)
+						})
+					})
+				)
+			}
+		)
 		attributes.forEach(({ attribute }) => {
 			const { categories, ...attrib } = attribute
 			categories.forEach(({ category }) =>
@@ -251,10 +254,7 @@ const prismaDistSearchDetails = async (input: { resultIds: string[]; lat: number
 			),
 		]
 
-		const addressVisibility =
-			locations.length === 1
-				? (locations[0] as unknown as { addressVisibility: 'FULL' | 'PARTIAL' | 'HIDDEN' }).addressVisibility
-				: undefined
+		const addressVisibility = locations.length === 1 ? locations[0]?.addressVisibility : undefined
 
 		return {
 			...rest,

@@ -294,32 +294,35 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 			})
 		)
 
-		locations.forEach(({ services: locationServices, city, ...coords }) => {
-			city &&
-				cities.push({
-					city,
-					dist: getDistance(
-						{ latitude, longitude },
-						{ latitude: coords.latitude ?? 0, longitude: coords.longitude ?? 0 },
-						1000
-					),
-				})
-			locationServices.forEach(({ service }) =>
-				service.services.forEach(({ tag, service: innerService }) => {
-					const { id, tsKey, tsNs, primaryCategory } = tag
-					servIds.add(id)
-					serviceCategoryMap.set(primaryCategory.id, primaryCategory)
-					serviceTagMap.set(id, { id, tsKey, tsNs })
-					innerService.attributes.forEach(({ attribute }) => {
-						const { categories, ...attrib } = attribute
-						attribIds.add(attrib.id)
-						categories.forEach(({ category }) =>
-							attributeMap.set(`${attrib.id}${category.tag}`, { category, ...attrib })
-						)
+		locations.forEach(
+			({ services: locationServices, city, addressVisibility: locationVisibility, ...coords }) => {
+				city &&
+					locationVisibility !== 'HIDDEN' &&
+					cities.push({
+						city,
+						dist: getDistance(
+							{ latitude, longitude },
+							{ latitude: coords.latitude ?? 0, longitude: coords.longitude ?? 0 },
+							1000
+						),
 					})
-				})
-			)
-		})
+				locationServices.forEach(({ service }) =>
+					service.services.forEach(({ tag, service: innerService }) => {
+						const { id, tsKey, tsNs, primaryCategory } = tag
+						servIds.add(id)
+						serviceCategoryMap.set(primaryCategory.id, primaryCategory)
+						serviceTagMap.set(id, { id, tsKey, tsNs })
+						innerService.attributes.forEach(({ attribute }) => {
+							const { categories, ...attrib } = attribute
+							attribIds.add(attrib.id)
+							categories.forEach(({ category }) =>
+								attributeMap.set(`${attrib.id}${category.tag}`, { category, ...attrib })
+							)
+						})
+					})
+				)
+			}
+		)
 		attributes.forEach(({ attribute }) => {
 			const { categories, ...attrib } = attribute
 			attribIds.add(attrib.id)
@@ -350,10 +353,7 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 
 		// If there is exactly one location, use its visibility setting.
 		// Otherwise (multiple locations), leave undefined to keep current logic (show list).
-		const addressVisibility =
-			locations.length === 1
-				? (locations[0] as unknown as { addressVisibility: 'FULL' | 'PARTIAL' | 'HIDDEN' }).addressVisibility
-				: undefined
+		const addressVisibility = locations.length === 1 ? locations[0]?.addressVisibility : undefined
 
 		return {
 			...rest,
