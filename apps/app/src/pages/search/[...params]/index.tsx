@@ -13,6 +13,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { getCookie } from 'cookies-next'
 import compare from 'just-compare'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
@@ -30,7 +31,6 @@ import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
 import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSupport'
-import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { api } from '~app/utils/api'
@@ -43,6 +43,36 @@ interface SearchResultV2Metadata {
 	isLocal?: boolean
 }
 
+// Both written by SearchResultSidebar.tsx as cookies (not localStorage) specifically so this
+// page's getServerSideProps can read the same preference and prefetch focus-aware results
+// server-side - a user who already has a preference set shouldn't need to wait for a client-side
+// refetch to see it applied on a fresh page load.
+const ACTIVE_FOCUSES_COOKIE = 'ir_active_focuses'
+const FOCUS_ORDER_COOKIE = 'ir_focus_order'
+
+const parseStringArray = (raw: string | undefined): string[] => {
+	if (!raw) {
+		return []
+	}
+	try {
+		const parsed = JSON.parse(raw) as unknown
+		return Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === 'string') : []
+	} catch {
+		return []
+	}
+}
+
+/**
+ * Mirrors the reordering SearchResultSidebar.tsx applies: the saved order wins when it actually covers the
+ * active set, otherwise fall back to the active set's own (unordered) sequence.
+ */
+const resolveOrderedFocuses = (rawActive: string | undefined, rawOrder: string | undefined): string[] => {
+	const focuses = parseStringArray(rawActive)
+	const order = parseStringArray(rawOrder)
+	const orderedActive = order.filter((id) => focuses.includes(id))
+	return orderedActive.length > 0 ? orderedActive : focuses
+}
+
 // @ts-expect-error - Next Dynamic has trouble with polymorphic components
 const RecommendedLinksModal = dynamic(() =>
 	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal)
@@ -53,6 +83,11 @@ const ServiceFilter = dynamic(() =>
 )
 const SortResults = dynamic(() =>
 	import('@weareinreach/ui/components/sections/SortResults').then((mod) => mod.SortResults)
+)
+// Pulls in @dnd-kit/core + @dnd-kit/sortable for its drag-to-reorder focus list - real weight in
+// the initial bundle for a secondary interaction most visitors won't use on a given visit.
+const SearchResultSidebar = dynamic(() =>
+	import('@weareinreach/ui/components/sections/SearchResultSidebar').then((mod) => mod.SearchResultSidebar)
 )
 
 const PageIndexSchema = z.coerce.number().default(1)
@@ -125,27 +160,23 @@ const SearchResults = () => {
 	const [mounted, setMounted] = useState(false)
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 	const isAdvanced = true
-	const [advancedParams, setAdvancedParams] = useState<{
-		focuses: string[]
-	}>({ focuses: [] })
+	// Lazy initializer (not useEffect) so this reads synchronously on the very first client render
+	// instead of one render/effect cycle later - a user with a saved preference gets their (still
+	// necessarily client-only, since this specific render pass is the first place `window` exists)
+	// refetch kicked off immediately rather than after an extra tick. Safe from a hydration
+	// mismatch: this only feeds the query input below, never rendered JSX/DOM directly.
+	const [advancedParams, setAdvancedParams] = useState<{ focuses: string[] }>(() => ({
+		focuses: resolveOrderedFocuses(getCookie(ACTIVE_FOCUSES_COOKIE), getCookie(FOCUS_ORDER_COOKIE)),
+	}))
 
 	useEffect(() => {
 		setMounted(true)
 		const updateAdvancedParams = () => {
-			const savedFocuses = localStorage.getItem('ir_active_focuses')
-			const savedOrder = localStorage.getItem('ir_focus_order')
-
-			try {
-				const focuses = savedFocuses ? (JSON.parse(savedFocuses) as string[]) : []
-				const order = savedOrder ? (JSON.parse(savedOrder) as string[]) : []
-				const orderedActive = order.filter((id) => focuses.includes(id))
-				setAdvancedParams({ focuses: orderedActive.length > 0 ? orderedActive : focuses })
-			} catch (e) {
-				setAdvancedParams({ focuses: [] })
-			}
+			setAdvancedParams({
+				focuses: resolveOrderedFocuses(getCookie(ACTIVE_FOCUSES_COOKIE), getCookie(FOCUS_ORDER_COOKIE)),
+			})
 		}
 
-		updateAdvancedParams()
 		window.addEventListener('ir_focus_changed', updateAdvancedParams)
 		return () => {
 			window.removeEventListener('ir_focus_changed', updateAdvancedParams)
@@ -188,12 +219,15 @@ const SearchResults = () => {
 			take,
 			...(searchState.services.length ? { services: searchState.services } : {}),
 			...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+			// Omitted (not sent as an empty array) when there's nothing saved, matching services/
+			// attributes above - this is what lets the common case (no saved focus preference)
+			// match getServerSideProps's prefetch below instead of forcing a redundant refetch.
+			...(advancedParams.focuses.length ? { focuses: advancedParams.focuses } : {}),
 		}
 		return {
 			...baseParams,
-			version: 'v2' as const,
+			version: 'v3' as const,
 			sortBias: currentSortBias,
-			focuses: advancedParams.focuses,
 		}
 	}, [
 		lat,
@@ -232,7 +266,10 @@ const SearchResults = () => {
 					services: searchState.services,
 					attributes: searchState.attributes,
 					searchTerm: searchState.searchTerm,
-					version: 'v2',
+					// Reads the actual version being queried (searchInput.version) rather than a
+					// second hardcoded literal, so analytics can't silently drift out of sync with
+					// which engine is really running - this exact drift is what happened before.
+					version: searchInput.version,
 					sortBias: currentSortBias,
 					focuses: advancedParams.focuses,
 				})
@@ -318,13 +355,13 @@ const SearchResults = () => {
 				lon,
 				dist,
 				unit,
-				version: 'v2',
+				version: 'v3' as const,
 				sortBias: currentSortBias,
-				focuses: advancedParams.focuses,
 				skip: nextSkip,
 				take,
 				...(searchState.services.length ? { services: searchState.services } : {}),
 				...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
+				...(advancedParams.focuses.length ? { focuses: advancedParams.focuses } : {}),
 			})
 		}
 	}, [
@@ -444,9 +481,28 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient({ req, res })
+	// Mirrors the client's own query input exactly (packages/ui/components/sections/
+	// SearchResultSidebar.tsx writes these same cookies) so a user who already has a focus
+	// preference set gets it applied in this server-rendered prefetch too, not just after a
+	// client-side refetch - and so a user with nothing saved gets a prefetch that matches what
+	// the client will ask for, instead of the two silently diverging.
+	const focuses = resolveOrderedFocuses(
+		getCookie(ACTIVE_FOCUSES_COOKIE, { req, res }),
+		getCookie(FOCUS_ORDER_COOKIE, { req, res })
+	)
+
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'user']),
-		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take, version: 'v2' }),
+		ssg.organization.searchDistance.prefetch({
+			lat,
+			lon,
+			dist,
+			unit,
+			skip,
+			take,
+			version: 'v3' as const,
+			...(focuses.length ? { focuses } : {}),
+		}),
 		ssg.organization.getNatlCrisis.prefetch({ cca2: country }),
 		ssg.service.getFilterOptions.prefetch(),
 		ssg.attribute.getFilterOptions.prefetch(),

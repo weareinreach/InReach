@@ -5,7 +5,7 @@ import { isPublic } from '~api/schemas/selects/common'
 import { orgSearchSelect } from '~api/schemas/selects/org'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TSearchDistanceSchema } from './query.searchDistance.schema'
+import { type TSearchDistanceV1Schema } from './query.searchDistanceV1.schema'
 
 const generateAttributesWhere = (filters: AttributeFilters) => {
 	if (filters.include.length && filters.exclude.length) {
@@ -93,7 +93,7 @@ const getServiceFilters = (servicesToFilter?: string[]) => {
 	return { serviceFilterSQL, serviceFilterSelectSQL, serviceFilterJoinSQL }
 }
 
-const searchOrgByDistance = async (params: TSearchDistanceSchema) => {
+const searchOrgByDistance = async (params: TSearchDistanceV1Schema) => {
 	const { lat, lon, dist, skip, take, services: serviceFilter, attributes: attribsToFilter, unit } = params
 
 	const { attributeFilterSQL, attributesWhereSQL, attributeFilterSelectSQL, attributeFilterJoinSQL } =
@@ -260,7 +260,7 @@ type SearchResult = {
 	// serviceAreas: string[]
 	total: string
 }
-const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultIds: string[] }) => {
+const prismaDistSearchDetails = async (input: TSearchDistanceV1Schema & { resultIds: string[] }) => {
 	const { resultIds, lat: latitude, lon: longitude } = input
 	const results = await prisma.organization.findMany({
 		where: {
@@ -393,7 +393,7 @@ type City = {
 	dist: number
 }
 
-const searchDistance = async ({ input }: TRPCHandlerParams<TSearchDistanceSchema>) => {
+const searchDistanceV1 = async ({ input }: TRPCHandlerParams<TSearchDistanceV1Schema>) => {
 	const { unit } = input
 
 	const orgs = await searchOrgByDistance(input)
@@ -427,4 +427,4 @@ type AttributeFilters = {
 	include: string[]
 	exclude: string[]
 }
-export default searchDistance
+export default searchDistanceV1

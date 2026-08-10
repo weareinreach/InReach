@@ -73,7 +73,9 @@ const OrganizationPage = ({
 				setActiveTab('locations')
 			}
 			// Track profile view on page load
-			productEvent.profileView(data.id, data.name, JSON.stringify(searchState.params))
+			productEvent.profileView(data.id, data.name, {
+				searchTermContext: JSON.stringify(searchState.params),
+			})
 		}
 	}, [data, status, router.isFallback, searchState.params])
 
