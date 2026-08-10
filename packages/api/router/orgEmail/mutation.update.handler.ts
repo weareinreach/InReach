@@ -1,4 +1,4 @@
-import { buildContextUrl, upsertSingleKey } from '@weareinreach/crowdin/api'
+import { buildContextUrl, syncDatabaseStringIfChanged } from '@weareinreach/crowdin/api'
 import { generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -40,14 +40,19 @@ const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protecte
 			where: { id: orgId },
 			select: { slug: true },
 		})
-		const crowdin = await upsertSingleKey({
-			isDatabaseString: true,
+		const existing = await prisma.orgEmail.findUnique({
+			where: { id },
+			select: { description: { select: { tsKey: { select: { text: true, crowdinId: true } } } } },
+		})
+		const crowdinId = await syncDatabaseStringIfChanged({
 			key: updateDescriptionText.upsert.create.tsKey.create.key,
-			text: updateDescriptionText.upsert.create.tsKey.create.text,
+			newText: updateDescriptionText.upsert.create.tsKey.create.text,
+			previousText: existing?.description?.tsKey.text,
+			previousCrowdinId: existing?.description?.tsKey.crowdinId,
 			context: buildContextUrl(slug, linkLocationId ?? undefined),
 		})
-		if (crowdin.id) {
-			updateDescriptionText.upsert.create.tsKey.create.crowdinId = crowdin.id
+		if (crowdinId) {
+			updateDescriptionText.upsert.create.tsKey.create.crowdinId = crowdinId
 		}
 	}
 

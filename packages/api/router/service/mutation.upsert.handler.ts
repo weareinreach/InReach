@@ -1,4 +1,4 @@
-import { buildContextUrl, upsertSingleKey } from '@weareinreach/crowdin/api'
+import { buildContextUrl, syncDatabaseStringIfChanged } from '@weareinreach/crowdin/api'
 import { generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -37,23 +37,38 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 		where: { id: orgId },
 		select: { slug: true },
 	})
+	const existing = input.id
+		? await prisma.orgService.findUnique({
+				where: { id: input.id },
+				select: {
+					serviceName: { select: { tsKey: { select: { text: true, crowdinId: true } } } },
+					description: { select: { tsKey: { select: { text: true, crowdinId: true } } } },
+				},
+			})
+		: null
 	if (serviceName) {
-		const crowdin = await upsertSingleKey({
-			isDatabaseString: true,
+		const crowdinId = await syncDatabaseStringIfChanged({
 			key: serviceName.upsert.create.tsKey.create.key,
-			text: serviceName.upsert.create.tsKey.create.text,
+			newText: serviceName.upsert.create.tsKey.create.text,
+			previousText: existing?.serviceName?.tsKey.text,
+			previousCrowdinId: existing?.serviceName?.tsKey.crowdinId,
 			context: buildContextUrl(slug, attachToLocation),
 		})
-		serviceName.upsert.create.tsKey.create.crowdinId = crowdin.id
+		if (crowdinId) {
+			serviceName.upsert.create.tsKey.create.crowdinId = crowdinId
+		}
 	}
 	if (description) {
-		const crowdin = await upsertSingleKey({
-			isDatabaseString: true,
+		const crowdinId = await syncDatabaseStringIfChanged({
 			key: description.upsert.create.tsKey.create.key,
-			text: description.upsert.create.tsKey.create.text,
+			newText: description.upsert.create.tsKey.create.text,
+			previousText: existing?.description?.tsKey.text,
+			previousCrowdinId: existing?.description?.tsKey.crowdinId,
 			context: buildContextUrl(slug, attachToLocation),
 		})
-		description.upsert.create.tsKey.create.crowdinId = crowdin.id
+		if (crowdinId) {
+			description.upsert.create.tsKey.create.crowdinId = crowdinId
+		}
 	}
 
 	const result = await prisma.$transaction(async (tx) => {

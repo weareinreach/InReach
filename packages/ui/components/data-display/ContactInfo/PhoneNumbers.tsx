@@ -135,7 +135,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		}
 	)
 	const linkToLocation = api.orgPhone.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgPhone.invalidate(),
+		onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate({ parentId }),
 	})
 	const getTextVariant = useCallback(
 		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {

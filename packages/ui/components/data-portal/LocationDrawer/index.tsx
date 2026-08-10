@@ -60,8 +60,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	const createLocation = api.location.create.useMutation({
 		onSuccess: () => {
 			modalHandler.close()
-			apiUtils.location.invalidate()
-			apiUtils.organization.invalidate()
+			apiUtils.organization.forOrgPageEdits.invalidate()
 			setIsSaved(true)
 			notifySave()
 			setTimeout(() => drawerHandler.close(), 500)

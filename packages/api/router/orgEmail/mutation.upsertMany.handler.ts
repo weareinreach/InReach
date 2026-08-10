@@ -1,6 +1,6 @@
 import compact from 'just-compact'
 
-import { buildContextUrl, upsertSingleKey } from '@weareinreach/crowdin/api'
+import { buildContextUrl, syncDatabaseStringIfChanged } from '@weareinreach/crowdin/api'
 import { generateId, generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
 import {
 	connectOneId,
@@ -20,7 +20,11 @@ const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySchema, '
 		where: {
 			id: { in: compact(data.map(({ id }) => id)) },
 		},
-		include: { services: true, locations: true },
+		include: {
+			services: true,
+			locations: true,
+			description: { select: { tsKey: { select: { text: true, crowdinId: true } } } },
+		},
 	})
 
 	// Crowdin sync (a network call to a third party) must not happen inside the DB transaction below -
@@ -61,14 +65,15 @@ const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySchema, '
 					: undefined
 
 				if (descriptionText) {
-					const crowdin = await upsertSingleKey({
-						isDatabaseString: true,
+					const crowdinId = await syncDatabaseStringIfChanged({
 						key: descriptionText.upsert.create.tsKey.create.key,
-						text: descriptionText.upsert.create.tsKey.create.text,
+						newText: descriptionText.upsert.create.tsKey.create.text,
+						previousText: before?.description?.tsKey.text,
+						previousCrowdinId: before?.description?.tsKey.crowdinId,
 						context: buildContextUrl(slug),
 					})
-					if (crowdin.id) {
-						descriptionText.upsert.create.tsKey.create.crowdinId = crowdin.id
+					if (crowdinId) {
+						descriptionText.upsert.create.tsKey.create.crowdinId = crowdinId
 					}
 				}
 

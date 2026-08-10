@@ -84,12 +84,12 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 		const { id: organizationId } = useOrgInfo()
 		const socialId = useMemo(() => (createNew ? generateId('orgSocialMedia') : id), [createNew, id])
-		const { data, isFetching } = api.orgSocialMedia.forEditDrawer.useQuery(
-			{ id: socialId },
-			{ enabled: !createNew }
-		)
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
+		const { data, isFetching } = api.orgSocialMedia.forEditDrawer.useQuery(
+			{ id: socialId },
+			{ enabled: drawerOpened && !createNew }
+		)
 		const { classes } = useStyles()
 		const {
 			control,
@@ -121,7 +121,17 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 		const databaseUpdate = api.orgSocialMedia.upsert.useMutation({
 			onSettled: () => {
-				apiUtils.orgSocialMedia.invalidate()
+				apiUtils.orgSocialMedia.forContactInfoEdits.invalidate()
+				apiUtils.orgSocialMedia.forContactInfo.invalidate()
+				// This drawer's own detail query is keyed by this specific social media id -
+				// without marking it stale too, reopening this same record later would show the
+				// pre-save data, making a second edit silently start from a stale field state
+				// instead of what was just saved. `refetchType: 'none'` marks it stale for next
+				// time without forcing an immediate refetch here - nothing is displaying this
+				// query while the drawer is closed, and forcing one batches it alongside the
+				// forContactInfoEdits refetch above in a way that ends up blocking that one from
+				// reaching the list.
+				apiUtils.orgSocialMedia.forEditDrawer.invalidate({ id: socialId }, { refetchType: 'none' })
 				reset()
 			},
 			onSuccess: () => {
@@ -134,7 +144,9 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 		})
 		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 		const unlinkFromLocation = api.orgSocialMedia.locationLink.useMutation({
-			onSuccess: () => apiUtils.orgSocialMedia.invalidate(),
+			onSuccess: () => {
+				apiUtils.orgSocialMedia.forContactInfoEdits.invalidate()
+			},
 		})
 
 		const [urlValue] = useDebouncedValue(watch('url'), 300)
