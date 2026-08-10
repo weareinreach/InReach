@@ -13,7 +13,7 @@ import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useFormattedAddress } from '~ui/hooks/useFormattedAddress'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
-import { BadgeEdit } from '~ui/modals/BadgeEdit'
+import { type BadgeAttributeRecord, BadgeEdit } from '~ui/modals/BadgeEdit'
 
 export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	const { id: orgId } = useOrgInfo()
@@ -92,7 +92,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 })
 ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 
-export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
+export const ListingBasicEdit = ({ data, location, onBadgesChange }: ListingBasicInfoProps) => {
 	const { id: orgId } = useOrgInfo()
 	const { t } = useTranslation(orgId)
 	const { formState } = useFormContext()
@@ -175,7 +175,12 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 				<Group noWrap spacing={8}>
 					{!location && (
 						<>
-							<BadgeEdit orgId={orgIdFromData} badgeType='organization-leadership' component='a'>
+							<BadgeEdit
+								orgId={orgIdFromData}
+								badgeType='organization-leadership'
+								component='a'
+								onSaved={(newAttributes) => onBadgesChange?.('organization-leadership', newAttributes)}
+							>
 								<Badge.Group withSeparator>{leaderBadges()}</Badge.Group>
 							</BadgeEdit>
 							<Divider
@@ -196,7 +201,12 @@ export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 							autosize
 							data-isdirty={formState.dirtyFields['description']}
 						/>
-						<BadgeEdit orgId={orgIdFromData} badgeType='service-focus' component='a'>
+						<BadgeEdit
+							orgId={orgIdFromData}
+							badgeType='service-focus'
+							component='a'
+							onSaved={(newAttributes) => onBadgesChange?.('service-focus', newAttributes)}
+						>
 							<Badge.Group>{focusedCommBadges}</Badge.Group>
 						</BadgeEdit>
 					</>
@@ -212,6 +222,16 @@ export const ListingBasicInfo = ({ edit, ...props }: ListingBasicInfoProps) =>
 export interface ListingBasicInfoProps extends OrgInfoProps {
 	edit?: boolean
 	location?: boolean
+	/**
+	 * Fires right after a leadership/service-focus badge selection is saved, with the full new selection in the
+	 * same shape as `data.attributes`. The org edit page uses this to patch its own `forOrgPageEdits` cache
+	 * directly, since `BadgeEdit` (in this shared UI package) runs on a separate tRPC client/QueryClient and
+	 * has no way to update the page's cache itself.
+	 */
+	onBadgesChange?: (
+		badgeType: 'organization-leadership' | 'service-focus',
+		newAttributes: BadgeAttributeRecord[]
+	) => void
 }
 
 export interface OrgInfoProps {
@@ -225,6 +245,7 @@ export interface OrgInfoProps {
 		attributes:
 			| NonNullable<ApiOutput['organization']['forOrgPage']>['attributes']
 			| NonNullable<ApiOutput['location']['forLocationPage']>['attributes']
+			| NonNullable<ApiOutput['organization']['forOrgPageEdits']>['attributes']
 		description:
 			| NonNullable<ApiOutput['organization']['forOrgPage']>['description']
 			| NonNullable<ApiOutput['location']['forLocationPage']>['description']

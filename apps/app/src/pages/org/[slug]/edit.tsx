@@ -92,6 +92,23 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		},
 	})
 
+	// `BadgeEdit` lives in the shared UI package and runs on its own tRPC client/QueryClient, so
+	// it has no way to update this page's `forOrgPageEdits` cache after a save. It calls this back
+	// with the freshly-saved badge selection so we can patch our own cache directly, the same way
+	// `updateBasic` above does for name/description.
+	const handleBadgesChange = (
+		badgeType: 'organization-leadership' | 'service-focus',
+		newAttributes: NonNullable<typeof data>['attributes']
+	) => {
+		apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, (oldData) => {
+			if (!oldData) return oldData
+			const otherAttributes = oldData.attributes.filter(
+				({ attribute }) => !attribute.categories.some(({ category }) => category.tag === badgeType)
+			)
+			return { ...oldData, attributes: [...otherAttributes, ...newAttributes] }
+		})
+	}
+
 	const formMethods = useForm<FormSchema>({
 		// Use defaultValues for initialization. We will populate the form via useEffect.
 		defaultValues: {
@@ -153,6 +170,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 								isClaimed,
 							}}
 							edit
+							onBadgesChange={handleBadgesChange}
 						/>
 						{/* eslint-disable-next-line i18next/no-literal-string */}
 						<LocationDrawer>Create new Location</LocationDrawer>

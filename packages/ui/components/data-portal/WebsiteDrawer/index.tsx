@@ -46,18 +46,18 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			return id
 		}, [createNew, id])
 
+		const [drawerOpened, drawerHandler] = useDisclosure(false)
+		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { data: websiteData, isFetching } = api.orgWebsite.forEditDrawer.useQuery(
 			{ id: websiteId },
 			{
-				enabled: !createNew,
+				enabled: drawerOpened && !createNew,
 				// select: (returnedData) => ({
 				// 	...returnedData,
 				// 	...(createNew && hasLocationId && { orgLocationId: hasLocationId }),
 				// }),
 			}
 		)
-		const [drawerOpened, drawerHandler] = useDisclosure(false)
-		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const {
 			control,
@@ -95,7 +95,17 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 
 		const siteUpdate = api.orgWebsite.upsert.useMutation({
 			onSettled: () => {
-				apiUtils.orgWebsite.invalidate()
+				apiUtils.orgWebsite.forContactInfoEdit.invalidate()
+				apiUtils.orgWebsite.forContactInfo.invalidate()
+				// This drawer's own detail query is keyed by this specific website id - without
+				// marking it stale too, reopening this same website later would show the
+				// pre-save data, making a second edit silently start from a stale field state
+				// instead of what was just saved. `refetchType: 'none'` marks it stale for next
+				// time without forcing an immediate refetch here - nothing is displaying this
+				// query while the drawer is closed, and forcing one batches it alongside the
+				// forContactInfoEdit refetch above in a way that ends up blocking that one from
+				// reaching the list.
+				apiUtils.orgWebsite.forEditDrawer.invalidate({ id: websiteId }, { refetchType: 'none' })
 			},
 			onSuccess: () => {
 				setIsSaved(true)
@@ -107,7 +117,9 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 		})
 
 		const unlinkFromLocation = api.orgWebsite.locationLink.useMutation({
-			onSuccess: () => apiUtils.orgWebsite.invalidate(),
+			onSuccess: () => {
+				apiUtils.orgWebsite.forContactInfoEdit.invalidate()
+			},
 		})
 		useEffect(() => {
 			if (createNew && organizationId) {

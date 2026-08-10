@@ -7,24 +7,12 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TForEditDrawerSchema } from './query.forEditDrawer.schema'
 
 const isExtension = (ext: string | null): ext is Extension => typeof ext === 'string' && ext.length > 0
-const getOrgId = async (phoneId: string) => {
-	const org = await prisma.organization.findFirstOrThrow({
-		where: {
-			OR: [
-				{ phones: { some: { phoneId } } },
-				{ locations: { some: { phones: { some: { phoneId } } } } },
-				{ services: { some: { phones: { some: { orgPhoneId: phoneId } } } } },
-			],
-		},
-		select: { id: true },
-	})
-	return org.id
-}
 
 const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	try {
+		const { id, orgId } = input
 		const result = await prisma.orgPhone.findUnique({
-			where: input,
+			where: { id },
 			select: {
 				id: true,
 				number: true,
@@ -43,7 +31,6 @@ const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>)
 		if (!result) {
 			return null
 		}
-		const orgId = await getOrgId(input.id)
 		const { country, description, number, ext, ...rest } = result
 
 		const parsedPhone = parsePhoneNumber(number, isSupportedCountry(country.cca2) ? country.cca2 : undefined)

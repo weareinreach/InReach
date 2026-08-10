@@ -50,7 +50,7 @@ const matchText = (
 }
 
 const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
-	({ value, subheading, placeId: _placeId, ...others }: AutocompleteItem, ref) => {
+	({ value, subheading, placeId: _placeId, label: _label, ...others }: AutocompleteItem, ref) => {
 		const { classes, cx } = useStyles()
 		const form = useFormContext()
 		if (!form) {
@@ -97,6 +97,15 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 	const [searchTerm, setSearchTerm] = useState<string>('')
 	const [search] = useDebouncedValue(searchTerm, 200)
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
+	// The street text of whatever suggestion the user actually picked, kept alongside the placeId
+	// it came from. Google's geocode lookup for a placeId sometimes has no confirmed street number
+	// (common for routes/interpolated ranges) even though the suggestion the user selected showed
+	// one - in that case we fall back to what they selected rather than silently dropping it.
+	// Tying it to the placeId (not just setting/clearing it) means a later, unrelated geocode
+	// lookup (e.g. from `getAndSetCoords` below) can never accidentally reuse a stale value.
+	const [selectedPrediction, setSelectedPrediction] = useState<{ placeId: string; label: string } | null>(
+		null
+	)
 	const { t, i18n } = useTranslation(['gov-dist'])
 
 	const disableFieldUntilCountry = !selectedCountryId
@@ -163,10 +172,13 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 			const country = countryOptions?.find(({ cca2 }) => cca2 === result.country)
 			invariant(country)
 			const govDist = country?.govDist.find(({ abbrev }) => abbrev === result.govDist)
-			const formattedStreet1 =
-				compact([result.streetNumber, result.streetName]).length === 2
-					? compact([result.streetNumber, result.streetName]).join(' ')
+			const streetParts = compact([result.streetNumber, result.streetName])
+			const geocodedStreet1 = streetParts.length ? streetParts.join(' ') : undefined
+			const predictedFallback =
+				!result.streetNumber && selectedPrediction?.placeId === googlePlaceId
+					? selectedPrediction.label
 					: undefined
+			const formattedStreet1 = predictedFallback ?? geocodedStreet1
 
 			if (isFullAddress) {
 				setFormValue(getFieldName('street1'), formattedStreet1 as FieldPathValue<T, Path<T>>)
@@ -191,6 +203,8 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 		}
 	}, [
 		geoCodedAddress,
+		googlePlaceId,
+		selectedPrediction,
 		addressVisibility,
 		countryOptions,
 		setFormValue,
@@ -205,9 +219,26 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 			if (!item.placeId) {
 				return
 			}
+			setSelectedPrediction({ placeId: item.placeId, label: item.label ?? item.value })
 			setGooglePlaceId(item.placeId)
 		},
 		[setGooglePlaceId]
+	)
+
+	// Mantine's Autocomplete fires `onChange` both when the user types AND when they commit a
+	// suggestion (the commit writes the suggestion's full display text into the field, which
+	// bubbles through this same onChange). Without this guard, committing a suggestion re-feeds
+	// that full text back in as a brand-new search term, kicking off a second, unwanted lookup
+	// that races the geocode-by-place-id call and can clobber street1 with a different match.
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			const isSelectionEcho = autoCompleteSearch?.results.some((item) => item.value === value)
+			if (isSelectionEcho) {
+				return
+			}
+			setSearchTerm(value)
+		},
+		[autoCompleteSearch]
 	)
 
 	const getAndSetCoords = useCallback(
@@ -277,7 +308,7 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 			onItemSubmit={handleAutocompleteSelection}
 			control={control}
 			name={getFieldName('street1')}
-			onChange={setSearchTerm}
+			onChange={handleSearchChange}
 			disabled={disableFieldUntilCountry}
 			required
 		/>
@@ -375,6 +406,8 @@ export interface AddressAutocompleteProps<T extends FieldValues> extends UseCont
 interface AutocompleteItem {
 	value: string
 	name?: string
+	/** The street-only portion of the suggestion (Google's `structured_formatting.main_text`). */
+	label?: string
 	subheading?: string
 	placeId?: string
 }
