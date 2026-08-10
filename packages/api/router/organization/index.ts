@@ -40,24 +40,35 @@ export const orgRouter = defineRouter({
 		return handler(opts)
 	}),
 	searchDistance: publicProcedure
-		.input(z.union([schema.ZSearchDistanceAdvSchema, schema.ZSearchDistanceSchema]))
+		.input(
+			z.union([
+				schema.ZSearchDistanceV3Schema,
+				schema.ZSearchDistanceV2Schema,
+				schema.ZSearchDistanceV1Schema,
+			])
+		)
 		.query(async (opts) => {
 			const { input } = opts
-			const isAdvanced = 'version' in input && input.version === 'v2'
 
-			if (isAdvanced) {
+			if ('version' in input && input.version === 'v2') {
 				const handler = await importHandler(
-					namespaced('searchDistanceAdv'),
-					() => import('./query.searchDistanceAdv.handler')
+					namespaced('searchDistanceV2'),
+					() => import('./query.searchDistanceV2.handler')
 				)
-				return handler(opts as TRPCHandlerParams<schema.TSearchDistanceAdvSchema>)
+				return handler(opts as TRPCHandlerParams<schema.TSearchDistanceV2Schema>)
 			}
 
+			// v3 is the fallback for everything else, including a caller that sends no `version` at
+			// all (which validates against v1's looser schema, since that's the only one of the three
+			// with no `version` literal requirement) - re-parsed through v3's own schema so its
+			// defaults (focuses, sortBias) are actually applied, instead of handing v3's handler an
+			// object shaped like v1's input where those fields would just be undefined.
 			const handler = await importHandler(
-				namespaced('searchDistance'),
-				() => import('./query.searchDistance.handler')
+				namespaced('searchDistanceV3'),
+				() => import('./query.searchDistanceV3.handler')
 			)
-			return handler(opts as TRPCHandlerParams<schema.TSearchDistanceSchema>)
+			const v3Input = schema.ZSearchDistanceV3Schema.parse({ ...input, version: 'v3' })
+			return handler({ ...opts, input: v3Input } as TRPCHandlerParams<schema.TSearchDistanceV3Schema>)
 		}),
 	getNameFromSlug: publicProcedure.input(schema.ZGetNameFromSlugSchema).query(async (opts) => {
 		const handler = await importHandler(

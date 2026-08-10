@@ -65,7 +65,9 @@ const OrgLocationPage: NextPage = () => {
 		if (data && status === 'success' && orgData && orgDataStatus === 'success') {
 			setLoading(false)
 			// Track profile view on page load
-			productEvent.profileView(data.id, data.name ?? orgData.name, JSON.stringify(searchState.params))
+			productEvent.profileView(data.id, data.name ?? orgData.name, {
+				searchTermContext: JSON.stringify(searchState.params),
+			})
 		}
 	}, [data, status, orgData, orgDataStatus, searchState.params])
 

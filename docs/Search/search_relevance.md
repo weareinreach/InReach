@@ -1,5 +1,45 @@
 # InReach Search Algorithm Upgrade
 
+> ## Current State Summary (Updated 2026-08-10)
+>
+> This document was originally written around the time V2 (Advanced Search / Weighted Relevance
+> Scoring) was built, and much of it describes a **planned** feature set - some shipped, a lot
+> didn't. Read the rest of this doc as a mix of "what's real" and "what was envisioned," not as a
+> description of the current app. Here's the honest, verified-against-code breakdown as of this
+> update:
+>
+> **What's actually live today:**
+>
+> - The matching/ranking engine described in [Section 2](#2-phase-1-scope) and
+>   [Section 11](#11-enhanced-search-behavior-v2) (weighted relevance scoring, Community Focus
+>   bubbling, distance tiers/buckets) is real and running - just under the name **V3**, not V2 (see
+>   [Section 4.10](#410-v3-performance-rewrite)).
+> - Community Focus priority + ordering persists via cookies (`ir_active_focuses`/`ir_focus_order`,
+>   written by the sidebar), read by both the client and `getServerSideProps` so a returning user's
+>   preference is honored immediately, including in the server-rendered page.
+> - `searchBoxEvent.searchExecuted` (`search_executed` analytics event) fires live on every search.
+>
+> **What's described here but was never actually wired up (built, but orphaned):**
+>
+> - The **"Advanced Search" toggle UI** ([Section 3.1](#31-phase-1-immediate-needs),
+>   [Section 4.8](#48-unified-routing--toggle-mechanism)) - a `AdvancedSearchToggle` component
+>   exists (`packages/ui/components/sections/AdvancedSearchToggle.tsx`) implementing exactly the
+>   `ir_advanced_mode`/`ir_search_version` localStorage scheme described below, but it is **not
+>   rendered anywhere in the app**. There is no user-facing control over which search engine runs.
+> - The **Distance vs. Best Match sort toggle** ([Scenario 6.7](#67-scenario-7-distance-vs-best-match-not-yet-implemented),
+>   [Section 11.4](#114-user-controlled-bias-not-yet-implemented)) - the backend fully supports it
+>   (`sortBias` field, `buildRelevanceSortSql`), and a `SortBiasSelector` component exists, but it's
+>   also never rendered. `sortBias` is always `'DISTANCE'` in production today.
+> - The **`searchV2Event` analytics** (`advanced_search_opened/closed/applied`,
+>   `search_v2_results_summary`) defined in `packages/analytics/events/index.ts` - defined, never
+>   called anywhere. None of these events actually fire.
+> - Smart Fallback, National/Remote toggle UI, Verified/Freshness bonuses, and the Debug Mode
+>   (Sections 6.4/6.8/9/11.3/11.4/11.5) - still purely conceptual, no implementation exists.
+>
+> **Bottom line**: treat every "(Not Yet Implemented)" tag in this doc as accurate, and additionally
+> treat [Section 4.8](#48-unified-routing--toggle-mechanism) as describing a toggle mechanism that
+> was built as standalone components but never connected to anything - not as current behavior.
+
 <!-- TOC -->
 
 - [1. Big Picture Vision](#1-big-picture-vision)
@@ -9,7 +49,7 @@
   - [3.1. Phase 1 (Immediate Needs)](#31-phase-1-immediate-needs)
   - [3.2. Phase 2 (Nice to Have)](#32-phase-2-nice-to-have)
 - [4. Technical Architecture & Decisions](#4-technical-architecture--decisions)
-  - [4.1. Side-by-Side Implementation (V2 Strategy)](#41-side-by-side-implementation-v2-strategy)
+  - [4.1. Side-by-Side Implementation (V1/V2/V3 Strategy)](#41-side-by-side-implementation-v1v2v3-strategy)
   - [4.2. Boolean Logic Defaults (V2)](#42-boolean-logic-defaults-v2)
   - [4.3. Candidates and Indexing](#43-candidates-and-indexing)
   - [4.4. Performance Safeguard](#44-performance-safeguard)
@@ -18,6 +58,7 @@
   - [4.7. The "Weighting Contract" (Industry Standards)](#47-the-weighting-contract-industry-standards)
   - [4.8. Unified Routing & Toggle Mechanism](#48-unified-routing--toggle-mechanism)
   - [4.9. Backend Logic (Shared Utility)](#49-backend-logic-shared-utility)
+  - [4.10. V3 Performance Rewrite](#410-v3-performance-rewrite)
 - [5. Implementation Steps](#5-implementation-steps)
   - [5.1. Step 1: V2 Foundation (MVP)](#51-step-1-v2-foundation-mvp)
 - [6. User Experience Scenarios & Examples](#6-user-experience-scenarios--examples)
@@ -30,9 +71,10 @@
   - [6.7. Scenario 7: Distance vs. Best Match (Not Yet Implemented)](#67-scenario-7-distance-vs-best-match-not-yet-implemented)
   - [6.8. Scenario 8: National vs. Local (Not Yet Implemented)](#68-scenario-8-national-vs-local-not-yet-implemented)
 - [7. QA Checklist & Verification](#7-qa-checklist--verification)
-  - [7.1. Stakeholder Test Cases (Advanced Search)](#71-stakeholder-test-cases-advanced-search)
-  - [7.2. Nuances and Edge Cases](#72-nuances-and-edge-cases)
-  - [7.3. Technical Parity Scenarios (V1 vs V2)](#73-technical-parity-scenarios-v1-vs-v2)
+  - [7.1. Quick Verification Table](#71-quick-verification-table)
+  - [7.2. Stakeholder Test Cases (Advanced Search)](#72-stakeholder-test-cases-advanced-search)
+  - [7.3. Nuances and Edge Cases](#73-nuances-and-edge-cases)
+  - [7.4. Technical Parity Scenarios (V1 vs V2)](#74-technical-parity-scenarios-v1-vs-v2)
 - [8. Analytics & Monitoring](#8-analytics--monitoring)
   - [8.1. Feature Discovery & Engagement](#81-feature-discovery--engagement)
   - [8.2. Search Performance & Quality](#82-search-performance--quality)
@@ -122,10 +164,25 @@ The algorithm will score results based on the following weighted criteria:
 
 ## 4. Technical Architecture & Decisions
 
-### 4.1. Side-by-Side Implementation (V2 Strategy)
+### 4.1. Side-by-Side Implementation (V1/V2/V3 Strategy)
 
-- **API Isolation**: Create new endpoints (e.g., `searchDistanceV2.handler.ts`) to avoid regressions in legacy search.
-- **Advanced Search Toggle**: the new search will be used when the Advanced search toggle is enabled
+- **API Isolation**: Each engine version is a fully separate, self-contained handler/schema pair -
+  `query.searchDistanceV1.handler.ts` (legacy), `query.searchDistanceV2.handler.ts` (Weighted
+  Relevance Scoring, as originally designed in this doc), `query.searchDistanceV3.handler.ts`
+  (performance rewrite of V2's matching query - see [4.10](#410-v3-performance-rewrite)). Each
+  handler deliberately keeps its own copy of shared-looking logic (e.g. the detail-fetch step)
+  rather than importing from another version's file, specifically so a change to one version can
+  never accidentally regress another.
+- **No user-facing toggle**: unlike the original plan (see the correction at the top of this doc
+  and [4.8](#48-unified-routing--toggle-mechanism)), there is no "Advanced Search" UI control. The
+  engine version is a hardcoded literal (`version: 'v3' as const`) in
+  `apps/app/src/pages/search/[...params]/index.tsx` - the same literal is passed by the client
+  query, the pagination prefetch, and `getServerSideProps`, so all three stay in sync. Changing the
+  live engine today means editing that one literal in those three spots and redeploying.
+- **Live status (current)**: V3 is the default and what every real user hits. V2 is preserved
+  byte-for-byte as an instant rollback target (flip the literal back to `'v2'`, no other code
+  changes needed). V1 is preserved for reference but is no longer reachable through the
+  `organization.searchDistance` router at all - see [4.10](#410-v3-performance-rewrite).
 
 ### 4.2. Boolean Logic Defaults (V2)
 
@@ -171,15 +228,72 @@ To ensure consistent behavior, we apply the following mathematical standards:
 
 ### 4.8. Unified Routing & Toggle Mechanism
 
-- **Single Route Strategy**: V1 and V2 coexist on the `/search` route. The engine choice is handled via a code-level conditional based on search state.
-- **Persistence**: Choice is saved in `localStorage` (key: `ir_search_version`).
-- **UI-based**: An "Advanced Search" toggle sets an `ir_advanced_mode` parameter.
+> **Status: built as standalone pieces, never connected.** Everything below was actually
+> implemented as isolated components/logic, but nothing in the live app renders or reads them. This
+> section is kept for reference in case a future user-facing toggle gets built on top of this
+> groundwork - do not read it as current behavior.
+
+- **Single Route Strategy**: V1, V2, and V3 all live on the same `/search` route. Engine choice is a
+  server-side dispatch (`packages/api/router/organization/index.ts`) keyed off a `version` field in
+  the tRPC input, not a client-side conditional.
+- **Persistence (unwired)**: `AdvancedSearchToggle.tsx` writes `localStorage` keys `ir_advanced_mode`
+  and `ir_search_version` exactly as originally planned - but no page renders this component, and
+  nothing reads these keys back. They have no effect on what a user actually sees.
+- **UI-based (unwired)**: The same component dispatches a `ir_advanced_mode_changed` window event on
+  toggle, intended to let the search page react without a full reload - again, unused, since the
+  toggle is never mounted.
+- **What actually decides the engine today**: a hardcoded literal in the search results page
+  component (see [4.1](#41-side-by-side-implementation-v1v2v3-strategy)) - not user choice, not
+  `localStorage`, not search state.
 
 ### 4.9. Backend Logic (Shared Utility)
 
-**File Location**: `packages/api/src/lib/search/relevanceScore.ts`
+**File Location**: `packages/api/router/organization/relevanceScore.ts` (`buildRelevanceSortSql`,
+`buildTieBreakerSql`)
 The utility generates a SQL `ORDER BY` fragment that balances user-defined priorities with physical distance.
 Advanced search remains **reactive**; results update immediately as the user adjusts community priorities or filters, matching standard search behavior.
+This file is shared by V2 and V3 (both import it directly) since it has nothing to do with matching
+candidates - only with scoring/ordering ones already matched - so there's no isolation concern here
+the way there is with the per-version matching queries.
+
+### 4.10. V3 Performance Rewrite
+
+**Status: implemented and live (current default).**
+
+V2's matching query (`searchOrgByRelevance` in `query.searchDistanceV2.handler.ts`) resolves each
+`ServiceArea` row (an org's national/regional coverage, independent of physical location) to the
+org id it applies to via a single SQL `CASE` expression, with a correlated subquery in two of its
+three branches (one for org-level coverage, one for location-level, one for service-level).
+
+This turned out to be the actual root cause of "search feels slow," predating and independent of
+anything in this doc's V1/V2 comparison. Postgres's query planner has no statistics for the
+_output_ of a `CASE` expression, and can't tell how often each branch is actually taken - so it
+priced the query as if every row might hit every branch's subquery. Confirmed via
+`EXPLAIN ANALYZE`: the affected CTE's estimated cost was **~660,000**, roughly 8000x its actual
+~80ms runtime. That inflated estimate pushed the whole query over Postgres's JIT-compilation
+threshold (`jit_above_cost`, default 100,000) - so Postgres spent upwards of 1-2 seconds
+JIT-compiling a query that only needed about 100ms to actually run, on _every single search_.
+
+**The fix** (`query.searchDistanceV3.handler.ts`): the same `service_area` resolution, restructured
+as three independent, plain-filtered branches (`service_area_by_org`, `service_area_by_location`,
+`service_area_by_service`) unioned together, each resolving its org id via a normal `JOIN` instead
+of a scalar subquery, and each explicitly excluding the higher-priority column(s) so the union stays
+equivalent to the original `CASE`'s `WHEN...THEN` priority order. This gives the planner ordinary,
+accurate cardinality estimates instead of a black box, and the query's real cost estimate drops to
+~7,000 - safely under the JIT threshold, so the compilation tax disappears entirely.
+
+**Verification before shipping**: real search inputs covering all three `ServiceArea` linkage types
+(org/location/service-level) at both country- and district-level coverage, plus plain local
+baselines, were diffed field-by-field (including result order) between V2 and V3 - all matched
+exactly. Measured speedup: **4x-14x** depending on location, with the query's own `EXPLAIN ANALYZE`
+execution time dropping from ~2 seconds to ~50-150ms.
+
+**What this does _not_ change**: the relevance scoring/Community Focus bubbling logic
+([4.9](#49-backend-logic-shared-utility)), tier buckets, or result set for any given input - V3 is a
+faster way to compute the same matches, not a different matching algorithm. V1 also contains its own
+copy of the original slow `CASE` pattern and was left untouched (confirmed to have no live callers
+in the app today, so it wasn't a live performance problem, but it hasn't received this fix either -
+worth revisiting if V1 is ever reactivated for something).
 
 ## 5. Implementation Steps
 
@@ -319,28 +433,43 @@ National appears at the bottom of the list by default.
 
 ## 8. Analytics & Monitoring
 
-To measure the success of the Empowered Search (V2) engine, we will track the following events via the `@weareinreach/analytics` package.
+To measure the success of the Empowered Search engine, we will track the following events via the `@weareinreach/analytics` package.
+
+> **Status check (verified against `packages/analytics/events/index.ts` and every call site in the
+> app)**: most of what's described below was defined as a `searchV2Event` object but never called
+> from anywhere in the app - defined, but not actually tracking anything today. Corrections inline.
 
 ### 8.1. Feature Discovery & Engagement
 
-- **`advanced_search_toggle`**: track on/off toggle - are poeple using it?
+- **`advanced_search_toggle`**: **Not implemented.** No event by this name exists. The closest
+  real definitions are `searchV2Event.opened`/`.closed` (`advanced_search_opened`/
+  `advanced_search_closed`), but neither is ever called - there's no toggle UI to trigger them (see
+  [4.8](#48-unified-routing--toggle-mechanism)).
 
 ### 8.2. Search Performance & Quality
 
-- **`search_v2_results_summary`**: Backend efficiency and data density.
-  - _Parameters_: `result_count`, `search_latency_ms`.
-- **`zero_results_reached`**: Identifying high-friction filter combinations.
-  - _Parameters_: `match_mode`, `radius`, `active_filter_count`.
+- **`search_v2_results_summary`** (`searchV2Event.summary`): **Defined, never called.** Not
+  actually tracked.
+- **`zero_results_reached`** (`searchV2Event.zeroResults`): **Defined, never called.** A
+  _different_, real event does fire for this case today: `searchBoxEvent.zeroResults` →
+  `search_zero_results`, called live in the search page with `(searchTerm, 'location', firstSelectedService)`
+  - different name and parameters than documented here.
 
 ### 8.3. Conversion & Relevance (A/B Metrics)
 
-- **`search_result_click` (Enhanced)**: The primary metric for algorithm success.
-  - _Parameters_: `rank` (list position), `search_version` ('V1' vs 'V2'), `distance_meters`, `was_national`.
-  - _Success Criteria_: A higher percentage of clicks in the top 3 results for V2 compared to V1.
+- **`search_result_click` (Enhanced)**: The real, live equivalent is `productEvent.profileView` →
+  event `profile_view`, which does fire from `SearchResultCard` and the service detail modal with a
+  `searchVersion?: 'v1' | 'v2'` field (**not yet updated to include `'v3'`** - worth fixing when V3
+  usage needs to show up in this metric). Two other call sites
+  (`apps/app/src/pages/org/[slug]/index.tsx` and `.../[orgLocationId]/index.tsx`) currently pass a
+  `JSON.stringify(...)` string where this event expects a metadata object - a pre-existing bug
+  (unrelated to the V3 work in this doc) that means those two call sites don't actually record
+  `searchTermContext`/`position`/`searchVersion` correctly today.
 
 ### 8.4. Technical Health
 
-- **`search_v2_error`**: Tracking failures in the SQL scoring generator or database timeouts.
+- **`search_v2_error`**: **Not implemented.** No event by this name, or anything tracking search
+  handler failures, exists in the analytics package today.
 
 ## 9. Strategic Recommendations
 
@@ -355,6 +484,13 @@ To measure the success of the Empowered Search (V2) engine, we will track the fo
 ---
 
 ## 10. Legacy/Standard Search Behavior (V1)
+
+> **Current status: preserved, but unreachable.** `query.searchDistanceV1.handler.ts` still exists
+> and implements exactly what's described below, but nothing in the live app calls it without an
+> explicit `version`, and the router's fallback (for a caller that omits `version` entirely) now
+> points to V3, not V1 (see [4.10](#410-v3-performance-rewrite)). V1 has had no live callers for a
+> while - this section remains useful for understanding the logic it implements, not for
+> understanding current user-facing behavior.
 
 To understand the improvements in V2, it is helpful to note the default behavior of the Legacy (V1) search engine:
 
@@ -371,6 +507,13 @@ The relationship between the **Service Filter** and the **More Filter** (Attribu
 ---
 
 ## 11. Enhanced Search Behavior (V2)
+
+> **Current status: this is the live matching/ranking logic - running as V3, not V2.** Everything
+> in this section (boolean logic, soft-sort bubbling) describes real, currently-running behavior.
+> V2 (`query.searchDistanceV2.handler.ts`) implements it exactly as written here and is preserved as
+> an intact rollback target; V3 (`query.searchDistanceV3.handler.ts`, the current default) is a
+> faster query that produces identical results - see [4.10](#410-v3-performance-rewrite) for what
+> actually changed and why. Sections 11.3-11.5 remain accurately labeled "Not Yet Implemented."
 
 ### 11.1. Hierarchical Logic & Boolean Operators
 
