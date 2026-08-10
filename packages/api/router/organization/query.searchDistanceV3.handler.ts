@@ -6,12 +6,28 @@ import { isPublic } from '~api/schemas/selects/common'
 import { orgSearchSelect } from '~api/schemas/selects/org'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TSearchDistanceAdvSchema } from './query.searchDistanceAdv.schema'
+import { type TSearchDistanceV3Schema } from './query.searchDistanceV3.schema'
 
 /**
- * ADVANCED SEARCH HANDLER (V2) This handler uses the Weighted Relevance Scoring engine to bubble results.
+ * SEARCH HANDLER (V3) - identical matching/ranking semantics to query.searchDistanceV2.handler.ts (v2),
+ * except for how the `service_area` CTE resolves each `ServiceArea` row to the org id it applies to. v2 does
+ * this via a single CASE expression with a correlated subquery in each of its orgLocationId/orgServiceId
+ * branches; v3 does it via three independent, plain-filtered branches (org-level, location-level,
+ * service-level) unioned together.
+ *
+ * Why: Postgres's planner has no statistics for the _output_ of a CASE expression, and can't discount a
+ * branch's subquery cost based on how often that branch is actually taken - so it prices v2's CASE as if
+ * every row might hit every branch's subquery (confirmed via EXPLAIN ANALYZE: that CTE's cost estimate was
+ * ~8000x its actual runtime), which pushes the whole query over Postgres's JIT-compilation threshold for no
+ * real benefit. Each branch below is filtered by a plain `IS NOT NULL` check on an actual column and resolves
+ * its org id via a normal JOIN instead of a scalar subquery, which the planner can size up accurately. Each
+ * branch also excludes the higher-priority column(s) explicitly (e.g. the orgLocationId branch requires
+ * organizationId IS NULL) so this stays equivalent to v2's CASE's WHEN...THEN priority order even if a row
+ * somehow had more than one of these three FKs populated. Verified against v2 across real search locations
+ * covering all three ServiceArea linkage types (org/location/service-level) - identical results and ordering,
+ * 4x-12x faster.
  */
-const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
+const searchOrgByRelevance = async (params: TSearchDistanceV3Schema) => {
 	const { lat, lon, dist, skip, take, services, attributes, focuses, sortBias, unit } = params
 
 	const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
@@ -29,38 +45,84 @@ const searchOrgByRelevance = async (params: TSearchDistanceAdvSchema) => {
 		covered_areas AS (
 			SELECT id FROM "GeoData" g WHERE ST_CoveredBy((select degrees from points), g.geo)
 		),
-		service_area as (
+		service_area_by_org AS (
 			SELECT
-			 (CASE
-					WHEN sa."organizationId" IS NOT NULL THEN sa."organizationId"
-					WHEN sa."orgLocationId" IS NOT NULL THEN (SELECT "orgId" FROM "OrgLocation" loc WHERE loc.id = sa."orgLocationId" )
-					WHEN sa."orgServiceId" IS NOT NULL THEN COALESCE((SELECT DISTINCT loc."orgId" FROM "OrgLocationService" ols LEFT JOIN "OrgLocation" loc ON ols."orgLocationId" = loc.id WHERE ols."serviceId" = sa."orgServiceId"),
-						(SELECT os."organizationId" FROM "OrgService" os WHERE os.id = sa."orgServiceId")
-					)
-				END
-				) AS "orgId",
-				ARRAY_agg(DISTINCT CASE
-					WHEN country."geoDataId" IS NOT NULL THEN country."geoDataId"
-					WHEN district."geoDataId" IS NOT NULL THEN district."geoDataId"
-				END) AS "geoId",
-				array_remove(array_agg(DISTINCT country.cca2),NULL) AS "matchedCountries"
+				sa."organizationId" AS "orgId",
+				country."geoDataId" AS "countryGeoId",
+				district."geoDataId" AS "districtGeoId",
+				country.cca2
 			FROM "ServiceArea" sa
-				LEFT JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id AND sac.active
-				LEFT JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id AND sad.active
-				LEFT JOIN "Country" country ON country.id = sac. "countryId" AND country. "geoDataId" = ANY(SELECT id FROM covered_areas)
-				LEFT JOIN "GovDist" district ON district.id = sad. "govDistId" AND district. "geoDataId" = ANY(SELECT id FROM covered_areas)
+				LEFT JOIN "ServiceAreaCountry" sac ON sac."serviceAreaId" = sa.id AND sac.active
+				LEFT JOIN "ServiceAreaDist" sad ON sad."serviceAreaId" = sa.id AND sad.active
+				LEFT JOIN "Country" country ON country.id = sac."countryId" AND country."geoDataId" = ANY(SELECT id FROM covered_areas)
+				LEFT JOIN "GovDist" district ON district.id = sad."govDistId" AND district."geoDataId" = ANY(SELECT id FROM covered_areas)
 			WHERE sa.active
+				AND sa."organizationId" IS NOT NULL
 				AND (
-					country. "geoDataId" = ANY(
-						SELECT id
-						FROM covered_areas
-					)
-					OR district. "geoDataId" = ANY(
-						SELECT id
-						FROM covered_areas
-					)
+					country."geoDataId" = ANY(SELECT id FROM covered_areas)
+					OR district."geoDataId" = ANY(SELECT id FROM covered_areas)
 				)
-				GROUP BY "orgId"
+		),
+		service_area_by_location AS (
+			SELECT
+				loc."orgId" AS "orgId",
+				country."geoDataId" AS "countryGeoId",
+				district."geoDataId" AS "districtGeoId",
+				country.cca2
+			FROM "ServiceArea" sa
+				JOIN "OrgLocation" loc ON loc.id = sa."orgLocationId"
+				LEFT JOIN "ServiceAreaCountry" sac ON sac."serviceAreaId" = sa.id AND sac.active
+				LEFT JOIN "ServiceAreaDist" sad ON sad."serviceAreaId" = sa.id AND sad.active
+				LEFT JOIN "Country" country ON country.id = sac."countryId" AND country."geoDataId" = ANY(SELECT id FROM covered_areas)
+				LEFT JOIN "GovDist" district ON district.id = sad."govDistId" AND district."geoDataId" = ANY(SELECT id FROM covered_areas)
+			WHERE sa.active
+				AND sa."organizationId" IS NULL
+				AND sa."orgLocationId" IS NOT NULL
+				AND (
+					country."geoDataId" = ANY(SELECT id FROM covered_areas)
+					OR district."geoDataId" = ANY(SELECT id FROM covered_areas)
+				)
+		),
+		service_area_by_service AS (
+			SELECT
+				COALESCE(loc2."orgId", os."organizationId") AS "orgId",
+				country."geoDataId" AS "countryGeoId",
+				district."geoDataId" AS "districtGeoId",
+				country.cca2
+			FROM "ServiceArea" sa
+				LEFT JOIN "OrgLocationService" ols ON ols."serviceId" = sa."orgServiceId"
+				LEFT JOIN "OrgLocation" loc2 ON loc2.id = ols."orgLocationId"
+				LEFT JOIN "OrgService" os ON os.id = sa."orgServiceId"
+				LEFT JOIN "ServiceAreaCountry" sac ON sac."serviceAreaId" = sa.id AND sac.active
+				LEFT JOIN "ServiceAreaDist" sad ON sad."serviceAreaId" = sa.id AND sad.active
+				LEFT JOIN "Country" country ON country.id = sac."countryId" AND country."geoDataId" = ANY(SELECT id FROM covered_areas)
+				LEFT JOIN "GovDist" district ON district.id = sad."govDistId" AND district."geoDataId" = ANY(SELECT id FROM covered_areas)
+			WHERE sa.active
+				AND sa."organizationId" IS NULL
+				AND sa."orgLocationId" IS NULL
+				AND sa."orgServiceId" IS NOT NULL
+				AND (
+					country."geoDataId" = ANY(SELECT id FROM covered_areas)
+					OR district."geoDataId" = ANY(SELECT id FROM covered_areas)
+				)
+		),
+		service_area_raw AS (
+			SELECT * FROM service_area_by_org
+			UNION ALL
+			SELECT * FROM service_area_by_location
+			UNION ALL
+			SELECT * FROM service_area_by_service
+		),
+		service_area AS (
+			SELECT
+				"orgId",
+				ARRAY_agg(DISTINCT CASE
+					WHEN "countryGeoId" IS NOT NULL THEN "countryGeoId"
+					WHEN "districtGeoId" IS NOT NULL THEN "districtGeoId"
+				END) AS "geoId",
+				array_remove(array_agg(DISTINCT cca2), NULL) AS "matchedCountries"
+			FROM service_area_raw
+			GROUP BY "orgId"
 		),
 		candidates AS (
 			SELECT
@@ -174,7 +236,7 @@ interface AttributeWithCategory {
 }
 
 /**
- * Copied from query.searchDistance.handler.ts to ensure isolation.
+ * Copied from query.searchDistanceV2.handler.ts to ensure isolation.
  */
 const prismaDistSearchDetails = async (input: { resultIds: string[]; lat: number; lon: number }) => {
 	const { resultIds, lat: latitude, lon: longitude } = input
@@ -270,7 +332,7 @@ const prismaDistSearchDetails = async (input: { resultIds: string[]; lat: number
 	return transformed
 }
 
-const searchDistanceAdv = async ({ input }: TRPCHandlerParams<TSearchDistanceAdvSchema>) => {
+const searchDistanceV3 = async ({ input }: TRPCHandlerParams<TSearchDistanceV3Schema>) => {
 	const { unit } = input
 
 	const orgs = await searchOrgByRelevance(input)
@@ -306,4 +368,4 @@ const searchDistanceAdv = async ({ input }: TRPCHandlerParams<TSearchDistanceAdv
 	return { orgs: orderedResults, resultCount: orgs.total }
 }
 
-export default searchDistanceAdv
+export default searchDistanceV3

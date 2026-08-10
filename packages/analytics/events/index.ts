@@ -47,7 +47,7 @@ export const searchBoxEvent = {
 		services?: string[]
 		attributes?: string[]
 		searchTerm?: string
-		version: 'v1' | 'v2'
+		version: 'v1' | 'v2' | 'v3'
 		sortBias?: 'DISTANCE' | 'RELEVANCE'
 		focuses?: string[]
 	}) =>
@@ -114,7 +114,7 @@ export const productEvent = {
 		metadata: {
 			searchTermContext?: string
 			position?: number
-			searchVersion?: 'v1' | 'v2'
+			searchVersion?: 'v1' | 'v2' | 'v3'
 			distanceMeters?: number
 			relevanceScore?: number
 			proximityTier?: string

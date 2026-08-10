@@ -2,6 +2,7 @@ import { closestCenter, DndContext, type DragEndEvent } from '@dnd-kit/core'
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Divider, Group, Overlay, Skeleton, Stack, Switch, Text, Title, useMantineTheme } from '@mantine/core'
+import { getCookie, setCookie } from 'cookies-next'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { type Dispatch, type SetStateAction, useEffect, useMemo, useState } from 'react'
@@ -28,6 +29,33 @@ const SIDEBAR_TAG_CONFIG: Record<string, string> = {
 }
 
 const TARGET_TAGS = Object.keys(SIDEBAR_TAG_CONFIG)
+
+// Cookies (not localStorage) so the search results page's SSR can read this same preference on
+// the server and prefetch focus-aware results, instead of only finding out client-side after the
+// page has already loaded. One year mirrors how long localStorage would have kept this around.
+const FOCUS_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
+const ACTIVE_FOCUSES_COOKIE = 'ir_active_focuses'
+const FOCUS_ORDER_COOKIE = 'ir_focus_order'
+
+/**
+ * One-time migration for anyone who already saved a focus preference under the old localStorage-only
+ * mechanism this replaced: if the new cookie isn't set yet but the legacy localStorage value still is, carry
+ * it over into the cookie (so future page loads, including server-side ones, see it) and clear the legacy key
+ * so this only ever runs once per browser. Returns whether a migration actually happened, so the caller can
+ * notify listeners (namely the search results page) that now have a value to pick up on this same visit.
+ */
+const migrateLegacyFocusStorage = (cookieKey: string): boolean => {
+	if (getCookie(cookieKey) !== undefined) {
+		return false
+	}
+	const legacyValue = localStorage.getItem(cookieKey)
+	if (legacyValue === null) {
+		return false
+	}
+	setCookie(cookieKey, legacyValue, { maxAge: FOCUS_COOKIE_MAX_AGE })
+	localStorage.removeItem(cookieKey)
+	return true
+}
 
 const SortableFocusSwitch = ({
 	id,
@@ -88,7 +116,16 @@ export const SearchResultSidebar = ({
 	useEffect(() => {
 		if (isOptionsLoading || !sidebarFocuses.length) return
 
-		const savedActive = localStorage.getItem('ir_active_focuses')
+		const migratedActive = migrateLegacyFocusStorage(ACTIVE_FOCUSES_COOKIE)
+		const migratedOrder = migrateLegacyFocusStorage(FOCUS_ORDER_COOKIE)
+		if (migratedActive || migratedOrder) {
+			// The search results page reads these cookies once on its own first render and
+			// otherwise only re-checks them on this event - without dispatching it here, a
+			// migration that just happened wouldn't be picked up until the next page load.
+			window.dispatchEvent(new Event('ir_focus_changed'))
+		}
+
+		const savedActive = getCookie(ACTIVE_FOCUSES_COOKIE)
 		if (savedActive) {
 			try {
 				const parsed = JSON.parse(savedActive) as string[]
@@ -103,7 +140,7 @@ export const SearchResultSidebar = ({
 			}
 		}
 
-		const savedOrder = localStorage.getItem('ir_focus_order')
+		const savedOrder = getCookie(FOCUS_ORDER_COOKIE)
 		try {
 			const parsed = savedOrder ? (JSON.parse(savedOrder) as string[]) : []
 			const validItems = parsed.filter((id) => focusIds.includes(id))
@@ -118,7 +155,7 @@ export const SearchResultSidebar = ({
 		const newlyActivated = val.filter((id) => !activeFocuses.includes(id))
 
 		setActiveFocuses(val)
-		localStorage.setItem('ir_active_focuses', JSON.stringify(val))
+		setCookie(ACTIVE_FOCUSES_COOKIE, val, { maxAge: FOCUS_COOKIE_MAX_AGE })
 
 		setFocusOrder((prev) => {
 			const activeBlock = prev.filter((id) => val.includes(id))
@@ -134,7 +171,7 @@ export const SearchResultSidebar = ({
 				nextOrder = [...activeBlock, ...inactiveBlock]
 			}
 
-			localStorage.setItem('ir_focus_order', JSON.stringify(nextOrder))
+			setCookie(FOCUS_ORDER_COOKIE, nextOrder, { maxAge: FOCUS_COOKIE_MAX_AGE })
 			return nextOrder
 		})
 
@@ -148,7 +185,7 @@ export const SearchResultSidebar = ({
 				const oldIndex = items.indexOf(active.id as string)
 				const newIndex = items.indexOf(over.id as string)
 				const nextOrder = arrayMove(items, oldIndex, newIndex)
-				localStorage.setItem('ir_focus_order', JSON.stringify(nextOrder))
+				setCookie(FOCUS_ORDER_COOKIE, nextOrder, { maxAge: FOCUS_COOKIE_MAX_AGE })
 				window.dispatchEvent(new Event('ir_focus_changed'))
 				return nextOrder
 			})
@@ -220,7 +257,8 @@ export const SearchResultSidebar = ({
 						pinToLeft
 					/>
 					<Divider mt={-10} />
-					{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+					{/* eslint-disable @typescript-eslint/no-explicit-any -- Mantine's polymorphic `component`
+					prop and next/link's `Link` don't type-check cleanly together */}
 					<Button
 						variant={variants.Button.primaryLg}
 						component={Link as any}
@@ -229,6 +267,7 @@ export const SearchResultSidebar = ({
 						{' '}
 						{t('suggest-a-resource')}
 					</Button>
+					{/* eslint-enable @typescript-eslint/no-explicit-any */}
 					<AntiHateMessage />
 				</>
 			)}
