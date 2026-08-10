@@ -1,7 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { TextInput, type TextInputProps } from '@mantine/core'
+import { Text, TextInput, type TextInputProps } from '@mantine/core'
 import { AsYouType } from 'libphonenumber-js'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
 	type Control,
 	type FieldValues,
@@ -9,8 +9,8 @@ import {
 	type UseControllerProps,
 	useWatch,
 } from 'react-hook-form'
-import { Select, type SelectProps } from 'react-hook-form-mantine'
-import { parsePhoneNumber } from 'react-phone-number-input'
+import { TextInput as FormTextInput, Select, type SelectProps } from 'react-hook-form-mantine'
+import { isValidPhoneNumber, parsePhoneNumber } from 'react-phone-number-input'
 import PhoneInput, { type Props as PhoneInputProps } from 'react-phone-number-input/react-hook-form-input'
 
 import { isCountryCode } from '~ui/hooks/usePhoneNumber'
@@ -88,6 +88,24 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 
 	const phoneFormatter = new AsYouType(activeCountry)
 
+	// The masked phone input below can only display values it can actually parse. Some existing
+	// records (bad legacy data, or a malformed number that was saved before validation caught it)
+	// don't parse at all, which made the field render blank with no indication anything was even
+	// saved. This checks the value once, the first time it loads in (not on every keystroke, so
+	// correcting it doesn't cause the input to flicker/swap mid-edit), and falls back to a plain
+	// text field showing the raw value if the masked input can't represent it.
+	const [showRawFallback, setShowRawFallback] = useState(false)
+	const hasCheckedInitialValue = useRef(false)
+	useEffect(() => {
+		if (hasCheckedInitialValue.current || !phoneNumber) {
+			return
+		}
+		hasCheckedInitialValue.current = true
+		if (!parsePhoneNumber(phoneNumber, activeCountry)) {
+			setShowRawFallback(true)
+		}
+	}, [phoneNumber, activeCountry])
+
 	useEffect(() => {
 		if (phoneNumber) {
 			phoneFormatter.input(phoneNumber)
@@ -136,11 +154,20 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	) : undefined
 	const phoneValidationRules = {
 		validate: {
+			// Catches anything that isn't a real, deliverable number for the selected country
+			// (wrong length, bad area code, etc.) - without this, a malformed number silently
+			// saved as-is, since neither this form nor the API rejected it.
+			validPhoneNumber: (number?: string) => {
+				if (!number || !activeCountry) {
+					return true
+				}
+				return isValidPhoneNumber(number, activeCountry) || `Not a valid phone number for ${activeCountry}`
+			},
 			invalidCountry: (number?: string) => {
 				if (number) {
 					const parsed = parsePhoneNumber(number)
 					if (parsed?.country) {
-						return validCountries.includes(parsed.country) ?? `Country not enabled: ${parsed.country}`
+						return validCountries.includes(parsed.country) || `Country not enabled: ${parsed.country}`
 					}
 				}
 				return true
@@ -148,8 +175,29 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		},
 	}
 
+	if (showRawFallback) {
+		return (
+			<>
+				<FormTextInput
+					name={peName}
+					control={control}
+					label={label}
+					required={required}
+					rules={phoneValidationRules}
+					rightSection={countrySelection}
+					rightSectionWidth={56}
+				/>
+				<Text size='xs' color='dimmed'>
+					This number couldn&apos;t be displayed in the normal format - showing the raw saved value. Re-enter
+					it to fix.
+				</Text>
+			</>
+		)
+	}
+
 	return (
 		<PhoneInput<TextInputProps, T>
+			country={activeCountry}
 			defaultCountry={DEFAULT_COUNTRY}
 			inputComponent={TextInput}
 			rightSection={countrySelection}

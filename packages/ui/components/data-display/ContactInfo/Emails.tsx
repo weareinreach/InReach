@@ -153,7 +153,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		}
 	)
 	const linkToLocation = api.orgEmail.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgEmail.invalidate(),
+		onSuccess: () => apiUtils.orgEmail.forContactInfoEdit.invalidate({ parentId }),
 	})
 	const getTextVariant = useCallback(
 		(kind: 'email' | 'desc', published: boolean, deleted: boolean) => {

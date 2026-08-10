@@ -63,15 +63,15 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 
 		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 
+		const [drawerOpened, drawerHandler] = useDisclosure(false)
+		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { data: initialData, isFetching } = api.orgEmail.forEditDrawer.useQuery(
 			{ id: emailId },
 			{
-				enabled: !!orgId && (!!id || !createNew),
+				enabled: drawerOpened && !!orgId && (!!id || !createNew),
 				select: (data) => (data ? { ...data, orgId: orgId ?? '' } : data),
 			}
 		)
-		const [drawerOpened, drawerHandler] = useDisclosure(false)
-		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const apiUtils = api.useUtils()
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
@@ -104,9 +104,20 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 
 		const emailUpdate = api.orgEmail.update.useMutation({
+			onSettled: () => {
+				apiUtils.orgEmail.forContactInfoEdit.invalidate()
+				apiUtils.orgEmail.forContactInfo.invalidate()
+				// This drawer's own detail query is keyed by this specific email id - without
+				// marking it stale too, reopening this same email later would show the pre-save
+				// data, making a second edit silently start from a stale field state instead of
+				// what was just saved. `refetchType: 'none'` marks it stale for next time without
+				// forcing an immediate refetch here - nothing is displaying this query while the
+				// drawer is closed, and forcing one batches it alongside the forContactInfoEdit
+				// refetch above in a way that ends up blocking that one from reaching the list.
+				apiUtils.orgEmail.forEditDrawer.invalidate({ id: emailId }, { refetchType: 'none' })
+			},
 			onSuccess: (data) => {
 				setIsSaved(true)
-				apiUtils.orgEmail.invalidate()
 				reset(data)
 				notifySave()
 				modalHandler.close()
@@ -114,7 +125,9 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 			},
 		})
 		const unlinkFromLocation = api.orgEmail.locationLink.useMutation({
-			onSuccess: () => apiUtils.orgEmail.invalidate(),
+			onSuccess: () => {
+				apiUtils.orgEmail.forContactInfoEdit.invalidate()
+			},
 		})
 		// useEffect(() => {
 		// 	if (createNew && orgId) {

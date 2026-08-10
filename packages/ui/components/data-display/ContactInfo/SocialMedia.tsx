@@ -66,7 +66,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 		}
 	)
 	const linkToLocation = api.orgSocialMedia.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgSocialMedia.invalidate(),
+		onSuccess: () => apiUtils.orgSocialMedia.forContactInfoEdits.invalidate({ parentId }),
 	})
 	const getTextVariants = useCallback(
 		({ published, deleted }: { published: boolean; deleted: boolean }) => {

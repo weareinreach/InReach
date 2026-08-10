@@ -5,6 +5,52 @@ import { type Context } from '~api/lib'
 
 import { attributes, countryWithoutGeo, freeText, isPublic, phoneSelectPublic } from './common'
 
+/**
+ * Trimmed version of `attributes` (./common) for the org edit page, which only ever renders
+ * leadership/service-focus badges -- not the full public-page detail (country, language, translation text,
+ * govDist chains) that the shared select also pulls in.
+ */
+export const attributesForOrgEdit = {
+	where: {
+		attribute: {
+			active: true,
+			categories: {
+				some: {
+					category: {
+						active: true,
+					},
+				},
+			},
+		},
+	},
+	select: {
+		id: true,
+		attribute: {
+			select: {
+				id: true,
+				tsKey: true,
+				tsNs: true,
+				icon: true,
+				iconBg: true,
+				categories: {
+					select: {
+						category: {
+							select: {
+								tag: true,
+							},
+						},
+					},
+				},
+				_count: {
+					select: {
+						parents: true,
+					},
+				},
+			},
+		},
+	},
+} satisfies Prisma.OrgService$attributesArgs
+
 type OrgIncludeKeys = z.ZodObject<
 	{
 		[k in keyof Omit<Prisma.OrganizationInclude, '_count'>]-?: z.ZodDefault<z.ZodBoolean>
