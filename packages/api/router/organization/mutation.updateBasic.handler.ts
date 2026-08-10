@@ -1,4 +1,4 @@
-import { addSingleKey, buildContextUrl, updateSingleKey } from '@weareinreach/crowdin/api'
+import { buildContextUrl, syncDatabaseStringIfChanged } from '@weareinreach/crowdin/api'
 import {
 	generateId,
 	generateNestedFreeTextUpsert,
@@ -31,7 +31,7 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 				oldSlugs: {
 					select: { from: true },
 				},
-				description: { select: { tsKey: { select: { crowdinId: true, key: true } } } },
+				description: { select: { tsKey: { select: { crowdinId: true, key: true, text: true } } } },
 			},
 		})
 
@@ -71,30 +71,14 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 				type: 'orgDesc',
 				text: input.description,
 			})
-			if (existing.description?.tsKey.crowdinId) {
-				console.log('update crowdin', {
-					key: existing.description.tsKey.key,
-					isDatabaseString: true,
-					updatedString: upsertDescription.upsert.update.tsKey.update.text,
-				})
-				await updateSingleKey({
-					key: existing.description.tsKey.key,
-					isDatabaseString: true,
-					updatedString: upsertDescription.upsert.update.tsKey.update.text,
-					context: buildContextUrl(orgSlug),
-				})
-			} else {
-				console.log('add crowdin', {
-					isDatabaseString: true,
-					key: upsertDescription.upsert.create.tsKey.create.key,
-					text: upsertDescription.upsert.create.tsKey.create.text,
-				})
-				const { id: crowdinId } = await addSingleKey({
-					isDatabaseString: true,
-					key: upsertDescription.upsert.create.tsKey.create.key,
-					text: upsertDescription.upsert.create.tsKey.create.text,
-					context: buildContextUrl(orgSlug),
-				})
+			const crowdinId = await syncDatabaseStringIfChanged({
+				key: existing.description?.tsKey.key ?? upsertDescription.upsert.create.tsKey.create.key,
+				newText: upsertDescription.upsert.create.tsKey.create.text,
+				previousText: existing.description?.tsKey.text,
+				previousCrowdinId: existing.description?.tsKey.crowdinId,
+				context: buildContextUrl(orgSlug),
+			})
+			if (crowdinId) {
 				upsertDescription.upsert.create.tsKey.create.crowdinId = crowdinId
 			}
 			data.description = upsertDescription

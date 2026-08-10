@@ -139,7 +139,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		{ enabled: isLocation }
 	)
 	const linkToLocation = api.orgWebsite.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgWebsite.invalidate(),
+		onSuccess: () => apiUtils.orgWebsite.forContactInfoEdit.invalidate({ parentId }),
 	})
 	const getTextVariant = useCallback(
 		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {

@@ -2,6 +2,7 @@ import { ActionIcon, Button, Group, Modal, Text, Tooltip, useMantineTheme } from
 import { useDisclosure } from '@mantine/hooks'
 import { type ReactNode, useCallback, useMemo } from 'react'
 
+import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalText } from '~ui/modals/Service/ModalText'
@@ -11,7 +12,21 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 	const [confirmModalOpen, confirmModalHandler] = useDisclosure(false)
 	const apiUtils = api.useUtils()
 	const toggleOrDeleteAttribute = api.component.AttributeEditWrapper.useMutation({
-		onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(),
+		// `id` can belong to a phone/email/website row (when this wrapper is used from
+		// ContactInfo) or a service attribute (its original use in ServiceEditDrawer) --
+		// invalidate whichever router's cache actually holds the record that changed.
+		onSuccess: () => {
+			if (isIdFor('orgPhone', id)) {
+				return apiUtils.orgPhone.invalidate()
+			}
+			if (isIdFor('orgEmail', id)) {
+				return apiUtils.orgEmail.invalidate()
+			}
+			if (isIdFor('orgWebsite', id)) {
+				return apiUtils.orgWebsite.invalidate()
+			}
+			return apiUtils.service.forServiceEditDrawer.invalidate()
+		},
 	})
 	const handleToggle = useCallback(
 		() => toggleOrDeleteAttribute.mutate({ id, action: 'toggleActive' }),
