@@ -1,4 +1,3 @@
-// import { type GetServerSideProps } from 'next'
 import {
 	Button,
 	createStyles,
@@ -14,7 +13,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
-import { type GetStaticPaths, type GetStaticProps } from 'next'
+import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -92,7 +91,7 @@ const OutsideServiceArea = () => {
 		} else if (router.isReady && loading) {
 			setLoading(false)
 		}
-	}, [router.isReady, router.isFallback, loading])
+	}, [router.isReady, loading])
 
 	useEffect(() => {
 		if (mounted && router.isReady && typeof router.query.country === 'string') {
@@ -185,13 +184,13 @@ const OutsideServiceArea = () => {
 		</>
 	)
 }
-export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking',
-	}
-}
-export const getStaticProps: GetStaticProps<
+// Server-rendered (not statically generated) specifically to avoid a Next.js framework bug: when
+// a dynamic route param's value case-insensitively matches one of this app's configured locales
+// (e.g. country "ES" vs. locale "es" - also affects FR/AR/IT/PL/PT/RU), Next's internal
+// locale-detection logic throws "Invariant: The detected locale does not match the locale in the
+// query" during static-page background revalidation (vercel/next.js#65167, closed "not planned").
+// SSR bypasses that code path entirely since there's no static generation/revalidation involved.
+export const getServerSideProps: GetServerSideProps<
 	Record<string, unknown>,
 	RoutedQuery<'/search/intl/[country]'>
 > = async ({ params, locale }) => {
@@ -212,10 +211,7 @@ export const getStaticProps: GetStaticProps<
 		...(i18n.status === 'fulfilled' ? i18n.value : {}),
 	}
 
-	return {
-		props,
-		revalidate: 60 * 60 * 24 * 7, // 7 days
-	}
+	return { props }
 }
 
 OutsideServiceArea.autoResetState = true
