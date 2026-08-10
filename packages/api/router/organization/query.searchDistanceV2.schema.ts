@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const ZSearchDistanceAdvSchema = z.object({
+export const ZSearchDistanceV2Schema = z.object({
 	lat: z.number().gte(-90).lte(90),
 	lon: z.number().gte(-180).lte(180),
 	dist: z.coerce.number().default(200),
@@ -15,4 +15,4 @@ export const ZSearchDistanceAdvSchema = z.object({
 	sortBias: z.enum(['DISTANCE', 'RELEVANCE']).optional().default('DISTANCE'),
 })
 
-export type TSearchDistanceAdvSchema = z.infer<typeof ZSearchDistanceAdvSchema>
+export type TSearchDistanceV2Schema = z.infer<typeof ZSearchDistanceV2Schema>

@@ -31,7 +31,6 @@ import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
 import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSupport'
-import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { api } from '~app/utils/api'
@@ -84,6 +83,11 @@ const ServiceFilter = dynamic(() =>
 )
 const SortResults = dynamic(() =>
 	import('@weareinreach/ui/components/sections/SortResults').then((mod) => mod.SortResults)
+)
+// Pulls in @dnd-kit/core + @dnd-kit/sortable for its drag-to-reorder focus list - real weight in
+// the initial bundle for a secondary interaction most visitors won't use on a given visit.
+const SearchResultSidebar = dynamic(() =>
+	import('@weareinreach/ui/components/sections/SearchResultSidebar').then((mod) => mod.SearchResultSidebar)
 )
 
 const PageIndexSchema = z.coerce.number().default(1)
@@ -222,7 +226,7 @@ const SearchResults = () => {
 		}
 		return {
 			...baseParams,
-			version: 'v2' as const,
+			version: 'v3' as const,
 			sortBias: currentSortBias,
 		}
 	}, [
@@ -262,7 +266,10 @@ const SearchResults = () => {
 					services: searchState.services,
 					attributes: searchState.attributes,
 					searchTerm: searchState.searchTerm,
-					version: 'v2',
+					// Reads the actual version being queried (searchInput.version) rather than a
+					// second hardcoded literal, so analytics can't silently drift out of sync with
+					// which engine is really running - this exact drift is what happened before.
+					version: searchInput.version,
 					sortBias: currentSortBias,
 					focuses: advancedParams.focuses,
 				})
@@ -348,7 +355,7 @@ const SearchResults = () => {
 				lon,
 				dist,
 				unit,
-				version: 'v2',
+				version: 'v3' as const,
 				sortBias: currentSortBias,
 				skip: nextSkip,
 				take,
@@ -483,6 +490,7 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 		getCookie(ACTIVE_FOCUSES_COOKIE, { req, res }),
 		getCookie(FOCUS_ORDER_COOKIE, { req, res })
 	)
+
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'user']),
 		ssg.organization.searchDistance.prefetch({
@@ -492,7 +500,7 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 			unit,
 			skip,
 			take,
-			version: 'v2',
+			version: 'v3' as const,
 			...(focuses.length ? { focuses } : {}),
 		}),
 		ssg.organization.getNatlCrisis.prefetch({ cca2: country }),
