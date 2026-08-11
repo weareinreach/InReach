@@ -24,10 +24,6 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	const formattedAddress = useFormattedAddress(data)
 	const hasMapData = !!data?.latitude && !!data?.longitude && !!data?.name
 
-	// const isAccessible = location.attributes.some(
-	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
-	// )
-
 	if (!data) {
 		return null
 	}
@@ -52,26 +48,24 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 		</Stack>
 	)
 
+	const accessibleSection = data.accessible !== undefined && (
+		<Stack spacing={12} align='flex-start'>
+			<Badge.Attribute icon={data.accessible ? 'carbon:accessibility' : 'carbon:warning'}>
+				{t('additional.wheelchair-accessible', { ns: 'attribute', context: `${data.accessible}` })}
+			</Badge.Attribute>
+			<Text variant={variants.Text.utility2}>
+				{t('badge.accessible-building', { context: `${data.accessible}` })}
+			</Text>
+		</Stack>
+	)
+
 	const body = (
 		<Stack spacing={isMobile ? 32 : 40}>
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}
+			{accessibleSection}
 			{/* <Hours parentId={locationId} /> */}
-			{/* TODO: [IN-807] Validate accessibility data points before enabling.
-			<Stack spacing={12} align='flex-start'>
-				<Badge
-					variant='attribute'
-					tsNs='attribute'
-					tsKey='additional.wheelchair-accessible'
-					tProps={{ context: `${isAccessible}` }}
-					icon={isAccessible ? 'carbon:accessibility' : 'carbon:warning'}
-					style={{ marginLeft: 0 }}
-				/>
-				<Text variant={variants.Text.utility2}>
-					{t('accessible-building', { context: `${isAccessible}` })}
-				</Text>
-			</Stack> */}
 		</Stack>
 	)
 	if (!formattedAddress && !data.hasHours) {
@@ -102,10 +96,6 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 	const formattedAddress = useFormattedAddress(data)
 	const hasMapData = !!data?.latitude && !!data?.longitude && !!data?.name
-
-	// const isAccessible = location.attributes.some(
-	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
-	// )
 
 	if (!data) {
 		return null
@@ -148,11 +138,23 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 		</Stack>
 	)
 
+	const accessibleSection = data.accessible !== undefined && (
+		<Stack spacing={12} align='flex-start'>
+			<Badge.Attribute icon={data.accessible ? 'carbon:accessibility' : 'carbon:warning'}>
+				{t('additional.wheelchair-accessible', { ns: 'attribute', context: `${data.accessible}` })}
+			</Badge.Attribute>
+			<Text variant={variants.Text.utility2}>
+				{t('badge.accessible-building', { context: `${data.accessible}` })}
+			</Text>
+		</Stack>
+	)
+
 	const body = (
 		<Stack spacing={isMobile ? 32 : 40}>
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}
+			{accessibleSection}
 			{/* <Hours parentId={locationId} edit /> */}
 		</Stack>
 	)

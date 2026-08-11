@@ -35,7 +35,12 @@ const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCar
 					...(!canSeeAll && { where: { phone: globalWhere.isPublic() } }),
 					select: { phone: { select: { primary: true, number: true, country: { select: { cca2: true } } } } },
 				},
-				attributes: { select: { attribute: { select: { tsNs: true, tsKey: true, icon: true } } } },
+				attributes: {
+					select: {
+						attribute: { select: { tsNs: true, tsKey: true, icon: true, tag: true } },
+						boolean: true,
+					},
+				},
 				services: {
 					select: {
 						service: {
@@ -53,7 +58,11 @@ const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCar
 			...formatAddressVisiblity(result),
 			country: result.country.cca2,
 			phones: result.phones.map(({ phone }) => ({ ...phone, country: phone.country.cca2 })),
-			attributes: result.attributes.map(({ attribute }) => attribute),
+			attributes: result.attributes
+				.filter(({ attribute }) => attribute.tag !== 'wheelchair-accessible')
+				.map(({ attribute }) => ({ tsNs: attribute.tsNs, tsKey: attribute.tsKey, icon: attribute.icon })),
+			accessible: result.attributes.find(({ attribute }) => attribute.tag === 'wheelchair-accessible')
+				?.boolean,
 			services: [
 				...new Set(
 					result.services.flatMap(({ service }) =>
