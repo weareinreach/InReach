@@ -159,7 +159,7 @@ export const ListingBasicEdit = ({ data, location, onBadgesChange }: ListingBasi
 			))
 		: [
 				<Badge.Community icon='➕' key='add-new-community-badge'>
-					Add Focused Community badge(s)
+					Add Community Focus Badge(s)
 				</Badge.Community>,
 			]
 
