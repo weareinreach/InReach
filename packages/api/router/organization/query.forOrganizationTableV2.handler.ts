@@ -95,6 +95,7 @@ const searchIds = async (
 			${normalize(Prisma.sql`o.name`)} ILIKE ANY(${expandedTermsSql})
 			OR ${normalize(Prisma.sql`o.name`)} % ${normalize(Prisma.sql`${input.search}::text`)}
 			OR o.slug ILIKE ${`%${input.search}%`}
+			OR o.id ILIKE ${`%${input.search}%`}
 		)`,
 	]
 	if (input.published !== undefined) conditions.push(Prisma.sql`o.published = ${input.published}`)
