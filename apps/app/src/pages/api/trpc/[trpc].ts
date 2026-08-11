@@ -2,7 +2,6 @@ import * as Sentry from '@sentry/nextjs'
 import { createNextApiHandler } from '@trpc/server/adapters/next'
 
 import { appRouter, createContext } from '@weareinreach/api'
-import { getSkipCache } from '@weareinreach/api/lib/context'
 import { createLoggerInstance } from '@weareinreach/util/logger'
 
 const log = createLoggerInstance('tRPC')
@@ -43,7 +42,7 @@ export default createNextApiHandler({
 	responseMeta(opts) {
 		const { ctx, errors, type } = opts
 
-		const shouldSkip = getSkipCache(ctx?.res)
+		const shouldSkip = ctx?.skipCache ?? false
 		const allOk = errors.length === 0
 		const isQuery = type === 'query'
 

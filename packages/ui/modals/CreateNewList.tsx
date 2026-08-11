@@ -15,7 +15,6 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef, useCallback, useMemo } from 'react'
 import { z } from 'zod'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { useCustomVariant, useNewNotification, useScreenSize } from '~ui/hooks'
@@ -43,65 +42,21 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 		icon: 'heartFilled',
 		displayText: t('list.added', { name: form.values.name }),
 	})
-	const errorNotification = useNewNotification({
-		icon: 'warning',
-		displayText: t('error-generic'),
-	})
-
-	/**
-	 * Optimistically add a placeholder list to the `getAll` cache so it shows up instantly, before the server
-	 * confirms creation. The real `invalidate()` in `onSuccess` reconciles it with the actual record.
-	 */
-	const insertOptimisticList = (name: string) => {
-		const previousLists = utils.savedList.getAll.getData()
-		utils.savedList.getAll.setData(undefined, (old = []) => [
-			...old,
-			{
-				id: `optimistic-${Date.now()}`,
-				name,
-				updatedAt: new Date(),
-				_count: { organizations: 0, services: 0, sharedWith: 0 },
-			},
-		])
-		return { previousLists }
-	}
-	const rollbackOptimisticList = (previousLists?: ApiOutput['savedList']['getAll']) => {
-		if (previousLists) {
-			utils.savedList.getAll.setData(undefined, previousLists)
-		}
-		errorNotification()
-	}
 
 	const createListOnly = api.savedList.create.useMutation({
-		onMutate: async ({ name }) => {
-			await utils.savedList.getAll.cancel()
-			return insertOptimisticList(name)
-		},
-		onSuccess: async () => {
-			await utils.savedList.getAll.invalidate()
+		onSuccess: () => {
 			newListNotification()
+			utils.savedList.getAll.invalidate()
 			handler.close()
-		},
-		onError: (_err, _variables, context) => {
-			rollbackOptimisticList(context?.previousLists)
 		},
 	})
 	const createListAndSaveItem = api.savedList.createAndSaveItem.useMutation({
-		onMutate: async ({ name }) => {
-			await utils.savedList.getAll.cancel()
-			return insertOptimisticList(name)
-		},
-		onSuccess: async (_, { organizationId, serviceId }) => {
-			await Promise.all([
-				utils.savedList.getAll.invalidate(),
-				utils.savedList.isSaved.invalidate(serviceId ?? organizationId),
-			])
+		onSuccess: (_, { organizationId, serviceId }) => {
 			newListNotification()
 			resourceSavedNotification()
+			utils.savedList.getAll.invalidate()
+			utils.savedList.isSaved.invalidate(serviceId ?? organizationId)
 			handler.close()
-		},
-		onError: (_err, _variables, context) => {
-			rollbackOptimisticList(context?.previousLists)
 		},
 	})
 	const isLoading = createListOnly.isLoading || createListAndSaveItem.isLoading

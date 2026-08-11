@@ -12,23 +12,6 @@ export type CreateContextOptions = {
 }
 
 /**
- * `responseMeta` (used to set cache-control headers) only ever sees the context object returned by
- * `createContext`, not the merged context middleware produces via `next({ ctx })` — that merge only flows to
- * the downstream procedure resolver. `res` is the one reference shared across the whole request lifecycle, so
- * middleware that needs to opt a response out of caching must mark it here.
- */
-export type ResponseWithSkipCache = NextApiResponse & { skipCache?: boolean }
-
-export const markSkipCache = (res?: NextApiResponse) => {
-	if (res) {
-		;(res as ResponseWithSkipCache).skipCache = true
-	}
-}
-
-export const getSkipCache = (res?: NextApiResponse) =>
-	Boolean((res as ResponseWithSkipCache | undefined)?.skipCache)
-
-/**
  * Use this helper for:
  *
  * - Testing, so we dont have to mock Next.js' req/res

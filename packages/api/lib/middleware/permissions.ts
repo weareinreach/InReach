@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
 import invariant from 'tiny-invariant'
 
-import { type Context, markSkipCache } from '../context'
+import { type Context } from '../context'
 import { type Meta, t } from '../initTRPC'
 
 /** Send unauthorized rejection via middleware */
@@ -103,7 +103,6 @@ export const isAdmin = t.middleware(({ ctx, next }) => {
 		return reject()
 	}
 
-	markSkipCache(ctx.res)
 	return next({
 		ctx: {
 			...ctx,
@@ -127,7 +126,6 @@ export const isStaff = t.middleware(({ ctx, meta, next }) => {
 		return reject()
 	}
 
-	markSkipCache(ctx.res)
 	return next({
 		ctx: {
 			...ctx,
@@ -145,7 +143,6 @@ export const hasPermissions = t.middleware(({ ctx, meta, next }) => {
 	if (ctx.session === null) return reject()
 
 	if (checkPermissions(meta, ctx)) {
-		markSkipCache(ctx.res)
 		return next({
 			ctx: {
 				...ctx,
