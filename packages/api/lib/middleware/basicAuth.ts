@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server'
 
+import { markSkipCache } from '../context'
 import { checkPermissions } from './permissions'
 import { t } from '../initTRPC'
 
@@ -7,6 +8,7 @@ export const isAuthed = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user || (meta && !checkPermissions(meta, ctx))) {
 		return reject()
 	}
+	markSkipCache(ctx.res)
 	return next({
 		ctx: {
 			// infers the `session` as non-nullable
