@@ -6,7 +6,7 @@ import { type TDeleteSchema } from './mutation.delete.schema'
 
 const deleteList = async ({ ctx, input }: TRPCHandlerParams<TDeleteSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
-	checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
+	await checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
 
 	const result = await prisma.userSavedList.delete({
 		where: {
