@@ -151,7 +151,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 								</>
 							)}
 							<Menu.Item component={Link} href='/account/saved' target='_self'>
-								{t('words.saved', { defaultValue: 'Saved' })}
+								{t('words.saved')}
 							</Menu.Item>
 							<Menu.Item component={Link} href='/account/reviews' target='_self'>
 								{t('words.reviews')}
