@@ -115,8 +115,18 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	})
 	useEffect(() => {
 		if (data && !isLoading) {
-			form.setValues(data)
-			form.resetDirty(data)
+			const { accessible, ...restData } = data.data
+			const accessibleBoolean =
+				accessible?.boolean === undefined ? 'null' : accessible.boolean ? 'true' : 'false'
+			// FormSchema's inferred type reflects boolOrNull's post-transform output (boolean | null),
+			// but Radio.Group requires the pre-transform string values ('true' | 'false' | 'null'),
+			// which boolOrNull also accepts as input and converts back to boolean | null on submit.
+			const formValues = {
+				...data,
+				data: { ...restData, accessible: { ...accessible, boolean: accessibleBoolean } },
+			} as unknown as typeof data
+			form.setValues(formValues)
+			form.resetDirty(formValues)
 			setIsSaved(false)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -401,24 +411,13 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								<Divider />
 								<Radio.Group
 									label='Is this location wheelchair accessible?'
+									size='xs'
 									{...form.getInputProps('data.accessible.boolean')}
 								>
 									<Group noWrap>
-										<Radio
-											value='true'
-											label='Accessible'
-											classNames={{ label: classes.radioLabel, radio: classes.radioButton }}
-										/>
-										<Radio
-											value='false'
-											label='Not accessible'
-											classNames={{ label: classes.radioLabel, radio: classes.radioButton }}
-										/>
-										<Radio
-											value='null'
-											label='No info'
-											classNames={{ label: classes.radioLabel, radio: classes.radioButton }}
-										/>
+										<Radio value='true' label='Accessible' classNames={{ label: classes.radioLabel }} />
+										<Radio value='false' label='Not accessible' classNames={{ label: classes.radioLabel }} />
+										<Radio value='null' label='No info' classNames={{ label: classes.radioLabel }} />
 									</Group>
 								</Radio.Group>
 							</Stack>
