@@ -305,11 +305,7 @@ export const OrganizationTableV2 = () => {
 							</Group>
 						)
 					const date = DateTime.fromJSDate(cell.getValue<Date>())
-					return (
-						<Tooltip label={date.toLocaleString(DateTime.DATE_HUGE)} withinPortal>
-							<span>{date.toRelativeCalendar()}</span>
-						</Tooltip>
-					)
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
 				filterVariant: 'date-range',
 				enableColumnFilterModes: false,
