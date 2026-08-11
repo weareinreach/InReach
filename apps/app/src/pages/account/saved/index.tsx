@@ -11,6 +11,7 @@ import {
 	Text,
 	Title,
 } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 import { DateTime } from 'luxon'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
@@ -24,7 +25,6 @@ import { ActionButtons } from '@weareinreach/ui/components/core/ActionButtons'
 import { Button } from '@weareinreach/ui/components/core/Button'
 import { Link } from '@weareinreach/ui/components/core/Link'
 import { SavedResultLoading } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
-import { useNewNotification } from '@weareinreach/ui/hooks/useNewNotification'
 import { CreateNewList } from '@weareinreach/ui/modals/CreateNewList'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -64,14 +64,11 @@ const SavedLists = () => {
 	const { data: allSavedLists, isLoading } = api.savedList.getAll.useQuery()
 	const handleReturnHome = useCallback(() => router.replace('/'), [router])
 	const apiUtils = api.useUtils()
-	const notifyError = useNewNotification({ displayText: t('error-generic'), icon: 'warning' })
+	const deleteConfirmModalHandler = useDisclosure(false)
 
 	const deleteMutation = api.savedList.delete.useMutation({
-		onSuccess: async () => {
-			await apiUtils.savedList.getAll.invalidate()
-		},
-		onError: () => {
-			notifyError()
+		onSuccess: () => {
+			apiUtils.savedList.getAll.invalidate()
 		},
 	})
 
@@ -95,7 +92,7 @@ const SavedLists = () => {
 	return (
 		<Grid.Col xs={12} sm={12}>
 			<Stack>
-				<Title order={1}> {t('words.saved', { defaultValue: 'Saved' })} </Title>
+				<Title order={1}> {t('words.saved')} </Title>
 				<Text size='lg'>{t('list.create-new-sub')}</Text>
 
 				<CreateNewList component={Button} className={classes.lessRoundedButton}>
@@ -128,7 +125,10 @@ const SavedLists = () => {
 											</Text>
 										</Link>
 									</Stack>
-									<ActionButtons.Delete onClick={handleDelete(list.id)} disabled={deleteMutation.isLoading} />
+									<ActionButtons.Delete
+										onClick={handleDelete(list.id)}
+										modalHandler={deleteConfirmModalHandler}
+									/>
 								</Group>
 							</Stack>
 						</Card>

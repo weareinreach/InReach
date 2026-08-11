@@ -157,9 +157,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 						color={iconColor}
 						className={cx({ [classes.text]: !menuItem })}
 					>
-						{t(isSaved ? 'words.saved' : 'words.save', {
-							defaultValue: isSaved ? 'Saved' : 'Save',
-						})}
+						{t(isSaved ? 'words.saved' : 'words.save')}
 					</Text>
 				)}
 			</Group>
