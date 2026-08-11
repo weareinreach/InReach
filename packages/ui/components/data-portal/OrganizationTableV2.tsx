@@ -17,6 +17,8 @@ import { useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
+import { AuditDrawer } from '~ui/components/data-portal/AuditDrawer'
+import { InternalNotesDrawer } from '~ui/components/data-portal/InternalNotesDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -150,6 +152,13 @@ interface RowActionProps {
 	row: MRT_Row<RowItem>
 }
 const RowAction = ({ row }: RowActionProps) => {
+	const [auditOpen, setAuditOpen] = useState(false)
+	const [notesOpen, setNotesOpen] = useState(false)
+	// Same check the Name column's Cell already uses successfully to distinguish org rows from location
+	// sub-rows - row.parentId is a plain react-table row-model property, more reliable here than
+	// row.getParentRow() (a lookup helper) for a simple boolean gate.
+	const isSubRow = row.parentId !== undefined
+
 	const getViewUrl = (): Route => {
 		const parent = row.getParentRow()
 		if (parent) {
@@ -182,6 +191,38 @@ const RowAction = ({ row }: RowActionProps) => {
 					<Icon icon='carbon:edit' />
 				</ActionIcon>
 			</Tooltip>
+			{/* Activity log / internal notes are org-scoped only - neither drawer has a location-level
+			equivalent today, so these two actions don't appear on location sub-rows. */}
+			{!isSubRow && (
+				<>
+					<Tooltip label='View activity log' withinPortal>
+						<ActionIcon onClick={() => setAuditOpen(true)}>
+							<Icon icon='carbon:time' />
+						</ActionIcon>
+					</Tooltip>
+					<Tooltip label='View internal notes' withinPortal>
+						<ActionIcon onClick={() => setNotesOpen(true)}>
+							<Icon icon='carbon:notebook' />
+						</ActionIcon>
+					</Tooltip>
+					{auditOpen && (
+						<AuditDrawer
+							opened={auditOpen}
+							onClose={() => setAuditOpen(false)}
+							recordId={row.original.id}
+							name={row.original.name}
+						/>
+					)}
+					{notesOpen && (
+						<InternalNotesDrawer
+							opened={notesOpen}
+							onClose={() => setNotesOpen(false)}
+							recordId={row.original.id}
+							name={row.original.name}
+						/>
+					)}
+				</>
+			)}
 		</Group>
 	)
 }
@@ -368,6 +409,11 @@ export const OrganizationTableV2 = () => {
 	const table = useMantineReactTable({
 		columns,
 		data: results,
+
+		// Default actions-column width is sized for the original 2 icons (View/Edit) - with 4 now, the
+		// extra 2 (Activity Log/Notes) were overflowing the fixed-width cell and getting silently clipped,
+		// not failing to render.
+		displayColumnDefOptions: { 'mrt-row-actions': { size: 180 } },
 
 		enableColumnResizing: true,
 		enablePinning: true,
