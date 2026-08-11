@@ -31,9 +31,16 @@ on every visit to this tab. The table component then does all filtering, sorting
 and the global search box entirely client-side (`enablePagination: false`,
 `enableRowVirtualization: true` render the full dataset via virtualized rows rather
 than paging it). The query's input schema already supports `published`/`deleted`
-filters, but the component always calls the query with `undefined` — so toggling
-"hide deleted" in the UI filters _after_ the full deleted-org set has already been
-fetched, not before.
+filters, but the component always calls the query with `undefined` — meaning the
+`findMany` runs with **no `WHERE` clause at all**, not just one that fails to use
+an index. Toggling "hide deleted" in the UI filters _after_ the full deleted-org
+set has already been fetched, not before.
+
+Two more client-side costs compound this: `enableFacetedValues: true` recomputes
+unique-value facets (for the name autocomplete and checkbox filters) across the
+entire loaded dataset on every data change, and the query's `select` option
+re-maps every row (`locations` → `subRows`) on every fetch. Both run over the same
+oversized, unpaginated array as everything else here.
 
 This is the direct cause of the tab's slow initial load, and is being tracked
 separately as a performance fix (move filtering/sorting/pagination server-side,
@@ -55,12 +62,24 @@ cap the nested `locations` select, add an index matching the actual sort order).
 
 - **No pagination** — the query fetches the entire org+location dataset on every
   load; this is the tab's main performance problem.
-- **Client-side-only filter/sort/search** — the `published`/`deleted` filters the
-  API already supports are never sent as query input, so server-side filtering
-  gains nothing today even though the plumbing exists.
-- **No index matches the `orderBy`** — `Organization` has `@@index([published,
-deleted])` and others, but nothing covering `[deleted, name]`, so the sort can't
-  use an index once the table grows.
+- **No `WHERE` clause at all** — the `published`/`deleted` filters the API schema
+  supports are never sent as query input, so `findMany` runs fully unfiltered.
+  This is stronger than "server-side filtering isn't wired up": it means
+  `@@index([published, deleted])` never gets a chance to help, because nothing is
+  ever filtered on those columns in the first place.
+- **No index matches the `orderBy`** — `Organization`'s actual indexes are
+  `[name]`, `[attributeIds] Gin`, `[serviceIds] Gin`, `[published, deleted]`,
+  `[slug]`, `[slug, published, deleted]`, and `[id, published desc, deleted]` —
+  none cover `[deleted, name]`, so the sort can't use an index once the table
+  grows.
+- **`enableFacetedValues: true`** (`OrganizationTable.tsx`) computes per-column
+  unique-value facets over the entire client-side dataset, on load and on every
+  data change — added CPU cost layered on top of the oversized payload, separate
+  from the virtualization/pagination problem.
+- **No stable `getRowId`** — it's commented out in the table config. Row identity
+  falls back to index-based defaults, which can churn expanded-row/selection
+  state on refetch and undercuts memoization; this compounds with virtualization,
+  which relies on stable row identity to avoid remounting visible rows.
 - **No "publish date" column** — `Organization.published` is a plain boolean with
   no timestamp. A real "first published" date can be derived from the `AuditTrail`
   table (see the pattern in `query.forOrgPageEdits.handler.ts`, which finds the

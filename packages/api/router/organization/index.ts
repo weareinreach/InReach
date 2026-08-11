@@ -155,6 +155,13 @@ export const orgRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	forOrganizationTableV2: publicProcedure.input(schema.ZForOrganizationTableV2Schema).query(async (opts) => {
+		const handler = await importHandler(
+			namespaced('forOrganizationTableV2'),
+			() => import('./query.forOrganizationTableV2.handler')
+		)
+		return handler(opts)
+	}),
 	forOrgPageEdits: publicProcedure.input(schema.ZForOrgPageEditsSchema).query(async (opts) => {
 		const handler = await importHandler(
 			namespaced('forOrgPageEdits'),
