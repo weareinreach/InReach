@@ -14,6 +14,7 @@ import {
 	SavedResultLoading,
 } from '@weareinreach/ui/components/core/Saved/SavedOrgResultCard'
 import { SavedServiceResultCard } from '@weareinreach/ui/components/core/Saved/SavedServiceResultCard'
+import { useNewNotification } from '@weareinreach/ui/hooks/useNewNotification'
 import { Icon } from '@weareinreach/ui/icon'
 import { formatDate } from '~app/pages/account/saved'
 import { api } from '~app/utils/api'
@@ -45,6 +46,12 @@ const SavedLists = () => {
 		setActiveTab(currentTab)
 	}, [query.tab])
 
+	useEffect(() => {
+		if (!isLoading && queryResult === null) {
+			router.replace('/account/saved')
+		}
+	}, [queryResult, isLoading, router])
+
 	const handleTabChange = useCallback(
 		(tab: string) => {
 			setActiveTab(tab)
@@ -61,6 +68,7 @@ const SavedLists = () => {
 		},
 		[listId, router]
 	)
+	const notifyError = useNewNotification({ displayText: t('error-generic'), icon: 'warning' })
 	const deleteMutation = api.savedList.delete.useMutation({
 		onSuccess: async () => {
 			const [, modalHandler] = confirmDeleteModalHandler
@@ -68,6 +76,11 @@ const SavedLists = () => {
 			await apiUtils.savedList.invalidate()
 			modalHandler.close()
 			router.replace({ pathname: '/account/saved' })
+		},
+		onError: () => {
+			const [, modalHandler] = confirmDeleteModalHandler
+			modalHandler.close()
+			notifyError()
 		},
 	})
 	const handleDeleteList = useCallback(
