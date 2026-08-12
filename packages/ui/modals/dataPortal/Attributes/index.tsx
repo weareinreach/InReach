@@ -70,6 +70,20 @@ const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: 
 					z.undefined(),
 				])
 			}
+		} else if (dataSchemaName === 'access-instruction-email') {
+			// Trim whitespace before validating so a pasted address with incidental leading/trailing
+			// spaces doesn't fail format validation, and use the same error copy as other email fields.
+			dataSchema = z
+				.object({
+					access_type: z.literal('email').default('email'),
+					access_value: z
+						.string()
+						.trim()
+						.email({ message: t('form-error-enter-valid-email', { ns: 'common' }) })
+						.nullish(),
+					instructions: z.string().optional(),
+				})
+				.strict()
 		}
 		const dynamicSchema = formSchema.extend({ data: dataSchema })
 		return dynamicSchema
@@ -186,6 +200,7 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 					})}
 					type='submit'
 					loading={isLoading}
+					disabled={!form.formState.isValid}
 				>
 					{t('words.save', { ns: 'common' })}
 				</Button>
@@ -238,6 +253,10 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const showAddedNotification = useNewNotification({ icon: 'added', displayText: 'Added Attribute' })
+		const showErrorNotification = useNewNotification({
+			icon: 'warning',
+			displayText: 'Error Saving Attribute',
+		})
 		const apiUtils = api.useUtils()
 		const [attrCat, setAttrCat] = useState<string | null>()
 		const [showInactiveAttribs, setShowInactiveAttribs] = useState(true)
@@ -255,6 +274,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				showAddedNotification()
 				handler.close()
 			},
+			onError: showErrorNotification,
 		})
 
 		// #region Handlers
