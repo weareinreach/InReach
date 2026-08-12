@@ -83,7 +83,11 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
 		has: 'some',
 	})
-	const editablePaths: (typeof router.pathname)[] = ['/org/[slug]', '/org/[slug]/[orgLocationId]']
+	const editablePaths: (typeof router.pathname)[] = [
+		'/org/[slug]',
+		'/org/[slug]/[orgLocationId]',
+		'/org/[slug]/remote',
+	]
 	const isEditablePage = editablePaths.includes(router.pathname)
 	const getEditPathname = useCallback((): typeof router.pathname => {
 		switch (router.pathname) {
@@ -92,6 +96,9 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 			}
 			case '/org/[slug]/[orgLocationId]': {
 				return '/org/[slug]/[orgLocationId]/edit'
+			}
+			case '/org/[slug]/remote': {
+				return '/org/[slug]/remote/edit'
 			}
 			default: {
 				return router.pathname
