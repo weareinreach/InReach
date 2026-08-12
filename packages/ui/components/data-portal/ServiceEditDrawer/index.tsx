@@ -16,7 +16,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { compareArrayVals } from 'crud-object-diff'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, Textarea, TextInput } from 'react-hook-form-mantine'
 import invariant from 'tiny-invariant'
@@ -48,13 +48,15 @@ import { InlineTextInput } from '../InlineTextInput'
 const isObject = (x: unknown): x is object => typeof x === 'object'
 
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
-	({ serviceId: passedServiceId, createNew, ...props }, ref) => {
+	({ serviceId: passedServiceId, createNew, autoAttachAttributeTag, ...props }, ref) => {
 		const { id: organizationId } = useOrgInfo()
 		const router = useRouter()
 		const serviceId = useMemo(() => passedServiceId ?? generateId('orgService'), [passedServiceId])
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const [hasAttributeChanges, setHasAttributeChanges] = useState(false)
+		const [pendingAutoAttach, setPendingAutoAttach] = useState(false)
+		const hasAutoAttachedRef = useRef(false)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 		const { classes } = useStyles()
 		const variants = useCustomVariant()
@@ -116,6 +118,21 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 			{ activeForOrgs: true },
 			{ refetchOnWindowFocus: false }
 		)
+		const { data: autoAttachAttributes } = api.fieldOpt.attributesByCategory.useQuery(
+			{ attributeActive: true },
+			{ enabled: !!autoAttachAttributeTag, refetchOnWindowFocus: false }
+		)
+		const autoAttachAttributeId = useMemo(
+			() =>
+				autoAttachAttributes?.find(({ attributeName }) => attributeName === autoAttachAttributeTag)
+					?.attributeId,
+			[autoAttachAttributes, autoAttachAttributeTag]
+		)
+		const attachAttribute = api.organization.attachAttribute.useMutation({
+			onSuccess: () => {
+				apiUtils.service.invalidate()
+			},
+		})
 		const serviceUpsert = api.service.upsert.useMutation({
 			onSuccess: () => {
 				notifySave()
@@ -123,6 +140,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 				apiUtils.service.invalidate()
 				if (isNew) {
 					apiUtils.service.forServiceEditDrawer.invalidate(serviceId)
+					if (autoAttachAttributeTag) {
+						setPendingAutoAttach(true)
+					}
 				}
 				if (!isNew) {
 					setTimeout(() => {
@@ -134,6 +154,18 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 				setHasAttributeChanges(false)
 			},
 		})
+
+		useEffect(() => {
+			if (pendingAutoAttach && autoAttachAttributeId && !hasAutoAttachedRef.current) {
+				hasAutoAttachedRef.current = true
+				attachAttribute.mutate({
+					id: generateId('attributeSupplement'),
+					attributeId: autoAttachAttributeId,
+					serviceId,
+				})
+				setPendingAutoAttach(false)
+			}
+		}, [pendingAutoAttach, autoAttachAttributeId, attachAttribute, serviceId])
 
 		const hasFormChanges = form.formState.isDirty || hasAttributeChanges
 
@@ -527,9 +559,12 @@ export const ServiceEditDrawer = createPolymorphicComponent<'button', ServiceDra
 interface ServiceEditDrawerProps extends ButtonProps {
 	serviceId: string
 	createNew?: never
+	autoAttachAttributeTag?: never
 }
 interface ServiceNewDrawerProps extends ButtonProps {
 	createNew: true
 	serviceId?: never
+	/** Attribute tag to attach automatically once the new service is first saved. */
+	autoAttachAttributeTag?: string
 }
 type ServiceDrawerProps = ServiceEditDrawerProps | ServiceNewDrawerProps
