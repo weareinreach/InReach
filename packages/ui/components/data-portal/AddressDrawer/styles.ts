@@ -23,10 +23,6 @@ export const useStyles = createStyles((theme) => ({
 	radioLabel: {
 		...theme.other.utilityFonts.utility4,
 	},
-	radioButton: {
-		height: rem(16),
-		width: rem(16),
-	},
 	overlay: {
 		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
 		borderRadius: rem(16),

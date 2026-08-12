@@ -16,8 +16,8 @@ Before diving in, it is highly recommended that you review all of the resources 
 
 **Current State:**
 
-1. The button says: "Add Focused Community badge(s)".
-2. The popup header says: "Edit Service Focus Badges".
+1. The button says: "Add Community Focus Badge(s)".
+2. The popup header says: "Edit Community Focus Badges".
 
 **Desired State:**
 
@@ -46,7 +46,7 @@ This is usually the fastest way to find unique text.
 1.  **Search for the Button Text:**
 
     - Open your editor's global search.
-    - Search for: `"Add Focused Community badge(s)"`.
+    - Search for: `"Add Community Focus Badge(s)"`.
     - _Question:_ Did you find it?
     - _Hint:_ You should see a result in `packages/ui/.../ListingBasicInfo.tsx`.
 
@@ -58,7 +58,7 @@ This is usually the fastest way to find unique text.
     - _Decision:_ If it's hardcoded, you change it right there. If it's a translation key, you have to find the JSON file.
 
 3.  **Search for the Popup Header:**
-    - Search for: `"Edit Service Focus Badges"`.
+    - Search for: `"Edit Community Focus Badges"`.
     - _Scenario:_ Let's pretend you **didn't** find it. (This happens often with dynamic text like `Edit ${type} Badges`).
     - _Question:_ If you can't find the text, how do you find the code?
 
@@ -77,7 +77,7 @@ If text search fails, we trace the UI components.
 3.  **Investigate the Child Component:**
     - Now you are in `packages/ui/modals/BadgeEdit/index.tsx`.
     - Look for the `<Title>` component (around line 61).
-    - _Observation:_ You find a ternary operator: `` `Edit ${badgeType === '...' ? '...' : 'Service Focus'} Badges` ``.
+    - _Observation:_ You find a ternary operator: `` `Edit ${badgeType === '...' ? '...' : 'Community Focus'} Badges` ``.
     - _Conclusion:_ The text is hardcoded logic inside the component, not a simple string or translation key.
 
 ---

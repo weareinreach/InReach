@@ -99,7 +99,7 @@ const _BadgeEditModal = forwardRef<HTMLButtonElement, Props>(
 					<Stack spacing={20} align='center'>
 						<Title
 							order={2}
-						>{`Edit ${badgeType === 'organization-leadership' ? 'Organization Leadership' : 'Service Focus'} Badges`}</Title>
+						>{`Edit ${badgeType === 'organization-leadership' ? 'Organization Leadership' : 'Community Focus'} Badges`}</Title>
 						<Chip.Group multiple control={form.control} name='badges'>
 							<Stack spacing={12}>
 								{badgeOptions &&

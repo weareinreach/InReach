@@ -36,6 +36,7 @@ declare module "nextjs-routes" {
     | DynamicRoute<"/org/[slug]/[orgLocationId]/edit", { "slug": string; "orgLocationId": string }>
     | DynamicRoute<"/org/[slug]/edit", { "slug": string }>
     | DynamicRoute<"/org/[slug]/remote", { "slug": string }>
+    | DynamicRoute<"/org/[slug]/remote/edit", { "slug": string }>
     | StaticRoute<"/profile">
     | DynamicRoute<"/search/[...params]", { "params": string[] }>
     | StaticRoute<"/search/intl">

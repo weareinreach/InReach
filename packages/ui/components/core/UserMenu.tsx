@@ -83,7 +83,11 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
 		has: 'some',
 	})
-	const editablePaths: (typeof router.pathname)[] = ['/org/[slug]', '/org/[slug]/[orgLocationId]']
+	const editablePaths: (typeof router.pathname)[] = [
+		'/org/[slug]',
+		'/org/[slug]/[orgLocationId]',
+		'/org/[slug]/remote',
+	]
 	const isEditablePage = editablePaths.includes(router.pathname)
 	const getEditPathname = useCallback((): typeof router.pathname => {
 		switch (router.pathname) {
@@ -92,6 +96,9 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 			}
 			case '/org/[slug]/[orgLocationId]': {
 				return '/org/[slug]/[orgLocationId]/edit'
+			}
+			case '/org/[slug]/remote': {
+				return '/org/[slug]/remote/edit'
 			}
 			default: {
 				return router.pathname
@@ -151,7 +158,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 								</>
 							)}
 							<Menu.Item component={Link} href='/account/saved' target='_self'>
-								{t('words.saved')}
+								{t('words.saved', { defaultValue: 'Saved' })}
 							</Menu.Item>
 							<Menu.Item component={Link} href='/account/reviews' target='_self'>
 								{t('words.reviews')}

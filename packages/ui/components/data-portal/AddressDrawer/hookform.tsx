@@ -457,25 +457,18 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								<Divider />
 								<Radio.Group
 									label='Is this location wheelchair accessible?'
+									size='xs'
 									control={form.control}
 									name='data.accessible.boolean'
 								>
 									<Group noWrap>
-										<Radio.Item
-											value='true'
-											label='Accessible'
-											classNames={{ label: classes.radioLabel, radio: classes.radioButton }}
-										/>
+										<Radio.Item value='true' label='Accessible' classNames={{ label: classes.radioLabel }} />
 										<Radio.Item
 											value='false'
 											label='Not accessible'
-											classNames={{ label: classes.radioLabel, radio: classes.radioButton }}
+											classNames={{ label: classes.radioLabel }}
 										/>
-										<Radio.Item
-											value='null'
-											label='No info'
-											classNames={{ label: classes.radioLabel, radio: classes.radioButton }}
-										/>
+										<Radio.Item value='null' label='No info' classNames={{ label: classes.radioLabel }} />
 									</Group>
 								</Radio.Group>
 							</Stack>

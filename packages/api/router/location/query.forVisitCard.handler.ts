@@ -23,8 +23,8 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 				country: { select: { cca2: true } },
 				govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
 				attributes: {
-					where: { attribute: { tsKey: 'additional.offers-remote-services' } },
-					select: { attribute: { select: { tsKey: true, icon: true } } },
+					where: { attribute: { tag: { in: ['offers-remote-services', 'wheelchair-accessible'] } } },
+					select: { attribute: { select: { tag: true, tsKey: true, icon: true } }, boolean: true },
 				},
 				latitude: true,
 				longitude: true,
@@ -39,8 +39,8 @@ const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) =
 		const transformed = {
 			...rest,
 			...formatAddressVisiblity(rest),
-			remote: attributes.find(({ attribute }) => attribute.tsKey === 'additional.offers-remote-services')
-				?.attribute,
+			remote: attributes.find(({ attribute }) => attribute.tag === 'offers-remote-services')?.attribute,
+			accessible: attributes.find(({ attribute }) => attribute.tag === 'wheelchair-accessible')?.boolean,
 			hasHours: hours.length > 0,
 		}
 		return transformed

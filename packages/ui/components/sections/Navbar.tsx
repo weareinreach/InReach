@@ -63,9 +63,16 @@ const EditModeBar = () => {
 	const apiUtils = api.useUtils()
 	const { unsaved, saveEvent } = useEditMode()
 	const { t } = useTranslation('common')
-	const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
+	const router = useRouter<
+		'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit' | '/org/[slug]/remote/edit'
+	>()
 	const { orgLocationId, slug, orgServiceId } = router.query
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
+	// This bar's actions target a single org/location/service record, keyed off whichever route
+	// param is present. `/org/[slug]/remote/edit` has none of those - it lists services across the
+	// whole org - so there's no correct record for Save/Reverify/Publish/Delete to act on here.
+	// Keep the bar visible (so edit mode is still visually obvious) but disable those actions.
+	const isRemoteServicesRoute = router.pathname === '/org/[slug]/remote/edit'
 	const apiQuery = (() => {
 		switch (true) {
 			case typeof orgServiceId === 'string': {
@@ -81,7 +88,7 @@ const EditModeBar = () => {
 	})()
 
 	const { data } = api.component.EditModeBar.useQuery(apiQuery, {
-		enabled: typeof orgLocationId === 'string' || typeof slug === 'string',
+		enabled: !isRemoteServicesRoute && (typeof orgLocationId === 'string' || typeof slug === 'string'),
 	})
 	const reverifyNotification = useNewNotification({
 		displayText: 'Organization reverification date has been updated.',
@@ -128,6 +135,9 @@ const EditModeBar = () => {
 			case '/org/[slug]/[orgLocationId]/edit': {
 				return '/org/[slug]/[orgLocationId]'
 			}
+			case '/org/[slug]/remote/edit': {
+				return '/org/[slug]/remote'
+			}
 			default: {
 				return router.pathname
 			}
@@ -161,7 +171,7 @@ const EditModeBar = () => {
 			</UnstyledButton>
 			<Group noWrap>
 				<UnstyledButton
-					disabled={!unsaved.state}
+					disabled={!unsaved.state || isRemoteServicesRoute}
 					className={classes.editBarButtonText}
 					onClick={saveEvent.save}
 				>
@@ -175,20 +185,32 @@ const EditModeBar = () => {
 					</Group>
 				</UnstyledButton>
 				{slug && !orgLocationId && (
-					<UnstyledButton className={classes.editBarButtonText} onClick={handleReverify}>
+					<UnstyledButton
+						disabled={isRemoteServicesRoute}
+						className={classes.editBarButtonText}
+						onClick={handleReverify}
+					>
 						<Group noWrap spacing={8}>
 							<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} height={20} />
 							{t('words.reverify')}
 						</Group>
 					</UnstyledButton>
 				)}
-				<UnstyledButton className={classes.editBarButtonText} onClick={handlePublishToggle}>
+				<UnstyledButton
+					disabled={isRemoteServicesRoute}
+					className={classes.editBarButtonText}
+					onClick={handlePublishToggle}
+				>
 					<Group noWrap spacing={8}>
 						<Icon icon={data?.published ? 'carbon:view-off' : 'carbon:view-filled'} height={20} />
 						{t(data?.published ? 'words.unpublish' : 'words.publish')}
 					</Group>
 				</UnstyledButton>
-				<UnstyledButton className={classes.editBarButtonText} onClick={handleDeleteToggle}>
+				<UnstyledButton
+					disabled={isRemoteServicesRoute}
+					className={classes.editBarButtonText}
+					onClick={handleDeleteToggle}
+				>
 					<Group noWrap spacing={8}>
 						<Icon icon={data?.deleted ? 'fluent-mdl2:remove-from-trash' : 'carbon:trash-can'} height={20} />
 						{t(data?.deleted ? 'words.restore' : 'words.delete')}

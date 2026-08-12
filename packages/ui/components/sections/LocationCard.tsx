@@ -61,7 +61,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		}
 	)
 	const { data: remoteServices, isLoading: remoteIsLoading } = api.service.forServiceInfoCard.useQuery(
-		{ parentId: orgId?.id ?? '', remoteOnly },
+		{ parentId: orgId?.id ?? '', remoteOnly, isEditMode: edit },
 		{ enabled: remoteOnly && orgId?.id !== undefined }
 	)
 	const formattedAddressParts = useMemo(() => {
@@ -234,7 +234,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		return (
 			<Link
 				href={{
-					pathname: '/org/[slug]/remote',
+					pathname: edit ? '/org/[slug]/remote/edit' : '/org/[slug]/remote',
 					query: {
 						slug: router.query.slug ?? '',
 					},
@@ -298,7 +298,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 	)
 	const listProps = { variant: addressListVariant, icon: separator, ref: addressRef }
 	const hasServices = Boolean(data.services.length)
-	const hasAttributes = Boolean(data.attributes.length)
+	const hasAttributes = Boolean(data.attributes.length) || data.accessible !== undefined
 	return (
 		<Link
 			href={{
@@ -340,6 +340,14 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 					<Group spacing={24}>
 						{hasAttributes && (
 							<Badge.Group>
+								{data.accessible !== undefined && (
+									<Badge.Attribute icon={data.accessible ? 'carbon:accessibility' : 'carbon:warning'}>
+										{t('additional.wheelchair-accessible', {
+											ns: 'attribute',
+											context: `${data.accessible}`,
+										})}
+									</Badge.Attribute>
+								)}
 								{data.attributes.map((attribute) => (
 									<Badge.Attribute icon={attribute.icon as IconList} key={attribute.tsKey}>
 										{t(attribute.tsKey, { ns: attribute.tsNs })}

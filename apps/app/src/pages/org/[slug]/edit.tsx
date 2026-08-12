@@ -1,4 +1,4 @@
-import { Grid, Stack } from '@mantine/core'
+import { Box, Grid, Group, Stack, Tooltip } from '@mantine/core'
 import { t } from 'i18next'
 import compact from 'just-compact'
 import { type InferGetServerSidePropsType } from 'next'
@@ -11,7 +11,9 @@ import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
+import { Button } from '@weareinreach/ui/components/core'
 import { LocationDrawer } from '@weareinreach/ui/components/data-portal/LocationDrawer'
+import { ServiceEditDrawer } from '@weareinreach/ui/components/data-portal/ServiceEditDrawer'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { DataToolbar } from '@weareinreach/ui/components/sections/DataToolbar'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -28,6 +30,9 @@ const formSchema = z.object({
 	description: z.string().optional(),
 })
 type FormSchema = z.infer<typeof formSchema>
+
+// eslint-disable-next-line i18next/no-literal-string
+const addRemoteServiceLabel = 'Add Remote Service'
 
 const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
 	const router = useRouter<'/org/[slug]'>()
@@ -118,7 +123,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		},
 	})
 
-	const { unsaved, saveEvent } = useEditMode()
+	const { unsaved, saveEvent, isEditMode } = useEditMode()
 	saveEvent.subscribe(() => {
 		const values = formMethods.getValues()
 		updateBasic.mutate(values)
@@ -132,9 +137,9 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 
 	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
-		{ parentId: data?.id ?? '', remoteOnly: true },
+		{ parentId: data?.id ?? '', remoteOnly: true, isEditMode },
 		{
-			enabled: !!data?.id && data?.locations?.length > 1,
+			enabled: !!data?.id,
 			select: (result) => result.length !== 0,
 		}
 	)
@@ -172,13 +177,45 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 							edit
 							onBadgesChange={handleBadgesChange}
 						/>
-						{/* eslint-disable-next-line i18next/no-literal-string */}
-						<LocationDrawer>Create new Location</LocationDrawer>
+						<Group>
+							{/* eslint-disable-next-line i18next/no-literal-string */}
+							<Tooltip
+								label='Use for a physical address where this org provides services in person.'
+								withArrow
+								multiline
+								w={260}
+							>
+								<Box style={{ display: 'inline-block' }}>
+									{/* eslint-disable-next-line i18next/no-literal-string */}
+									<LocationDrawer>Create new Location</LocationDrawer>
+								</Box>
+							</Tooltip>
+							{!hasRemote && (
+								// eslint-disable-next-line i18next/no-literal-string
+								<Tooltip
+									label="Use for a service with no physical office — offered by phone, video, or online. If this service is also offered at one of the org's locations, add it from that location's page instead."
+									withArrow
+									multiline
+									w={260}
+								>
+									<Box style={{ display: 'inline-block' }}>
+										<ServiceEditDrawer
+											createNew
+											autoAttachAttributeTag='offers-remote-services'
+											component={Button}
+											variant='primary'
+										>
+											{addRemoteServiceLabel}
+										</ServiceEditDrawer>
+									</Box>
+								</Tooltip>
+							)}
+						</Group>
 						<Stack spacing={40} w='100%'>
 							{locations.map((location) => (
 								<LocationCard key={location.id} locationId={location.id} edit />
 							))}
-							{hasRemote && <LocationCard remoteOnly />}
+							{hasRemote && <LocationCard remoteOnly edit />}
 						</Stack>
 					</Stack>
 				</Grid.Col>
