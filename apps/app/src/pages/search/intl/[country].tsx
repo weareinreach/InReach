@@ -1,8 +1,6 @@
 import {
-	Button,
 	createStyles,
 	Divider,
-	Drawer,
 	Grid,
 	Group,
 	rem,
@@ -12,7 +10,7 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
-import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { useMediaQuery } from '@mantine/hooks'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'

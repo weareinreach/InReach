@@ -58,7 +58,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 
-	const { data: alertData } = api.location.getAlerts.useQuery(
+	const { data: _alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
 	)

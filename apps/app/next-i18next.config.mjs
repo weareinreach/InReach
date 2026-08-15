@@ -48,7 +48,30 @@ const backendConfig = {
 		backend: HttpBackend,
 		backendOption: {
 			loadPath: getUrl('/locales/{{lng}}/{{ns}}.json'),
+			// NOTE: allowMultiLoading is not implemented by the installed i18next-http-backend/
+			// i18next-multiload-backend-adapter versions - it's inert. i18next-multiload-backend-adapter
+			// unconditionally batches every pending read() within its debounce window and calls
+			// readMulti(), and i18next-http-backend's readMulti() unconditionally joins all given
+			// namespaces with '+' into one URL. There is no supported way to stop this backend from
+			// being asked to load a combined namespace, so the `request` override below is the actual
+			// enforcement: this backend only ever serves single, real static-file namespaces, and any
+			// namespace that reaches it has already failed to resolve upstream (e.g. CrowdinOTA
+			// intentionally skips English) with no static-file equivalent (e.g. per-organization
+			// namespaces). Fetching a literal file named after several joined IDs will always 404, so
+			// skip the request and resolve empty instead of hitting a dead URL.
 			allowMultiLoading: false,
+			/** @type {import('i18next-http-backend').HttpBackendOptions['request']} */
+			request: (_options, url, _payload, callback) => {
+				if (url.includes('+')) {
+					callback(null, { status: 200, data: {} })
+					return
+				}
+				fetch(url)
+					.then((response) =>
+						response.text().then((data) => callback(null, { status: response.status, data }))
+					)
+					.catch((err) => callback(err, null))
+			},
 		},
 	},
 }
