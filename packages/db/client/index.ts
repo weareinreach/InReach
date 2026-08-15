@@ -1,9 +1,8 @@
 /* eslint-disable node/no-process-env */
 import { type Prisma, PrismaClient } from '@prisma/client'
-// import { createPrismaQueryEventHandler } from 'prisma-query-log'
-
 import { isLocalDev, isVercelDev } from '@weareinreach/env'
 import { createLoggerInstance } from '@weareinreach/util/logger'
+
 import { idGeneratorExtension } from '~db/client/extensions/idGenerator'
 import { jsonExtension } from '~db/client/extensions/json'
 
