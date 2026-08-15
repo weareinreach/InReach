@@ -68,7 +68,7 @@ const FeatureSchema = z.object({
 	 */
 	geometry: Geometry,
 	/** @param properties - Any misc metadata */
-	properties: z.record(z.any()).optional(),
+	properties: z.record(z.string(), z.any()).optional(),
 })
 
 const FeatureCollectionSchema = z.object({

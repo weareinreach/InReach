@@ -16,8 +16,8 @@ export const processEmailAccess = (record: AccessDetailRecord): EmailAccessRetur
 		description: null,
 		email: access_value,
 		// legacyDesc: parsed.data.instructions,
-		// firstName: null,
-		// lastName: null,
+		firstName: null,
+		lastName: null,
 		primary: false,
 		locationOnly: false,
 		serviceOnly: false,
@@ -29,6 +29,8 @@ export interface EmailAccessOutput {
 	title: { key: string } | null
 	description: { key: string; defaultText: string } | null
 	email: string
+	firstName: string | null
+	lastName: string | null
 	primary: boolean
 	locationOnly: boolean
 	serviceOnly: boolean

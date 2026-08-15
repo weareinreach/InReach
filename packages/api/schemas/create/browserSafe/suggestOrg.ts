@@ -37,10 +37,10 @@ export const SuggestionSchema = z.object({
 	orgName: nonEmptyString,
 	orgSlug: nonEmptyString,
 	orgWebsite: z
-		.string({ required_error: 'Organization website is required' })
+		.string({ error: 'Organization website is required' })
 		.trim()
 		.min(1, 'Organization website is required')
-		.url('Please enter a valid, complete URL (e.g. https://example.org)')
+		.pipe(z.url({ error: 'Please enter a valid, complete URL (e.g. https://example.org)' }))
 		.refine(hasValidTld, {
 			message:
 				"That doesn't look like a valid website address - please double check for typos (e.g. https://example.org)",

@@ -17,7 +17,7 @@ import { compareArrayVals } from 'crud-object-diff'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type Resolver, useForm } from 'react-hook-form'
 import { Checkbox, Textarea, TextInput } from 'react-hook-form-mantine'
 import invariant from 'tiny-invariant'
 
@@ -78,8 +78,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 				published: false,
 				serviceAreas: null,
 				services: [],
-				description: undefined,
-				name: undefined,
+				// Seeded as `{ text: '' }` rather than `undefined` so the name/description
+				// InlineTextInputs start controlled - otherwise they render with value={undefined}
+				// until the field is first touched, which trips React's uncontrolled-to-controlled
+				// input warning.
+				description: { text: '', key: '', ns: '', crowdinId: null },
+				name: { text: '', key: '', ns: '', crowdinId: null },
 			},
 		})
 
@@ -89,7 +93,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 			[router.query.orgLocationId]
 		)
 		const form = useForm<TFormSchema>({
-			resolver: zodResolver(FormSchema),
+			resolver: zodResolver(FormSchema) as Resolver<TFormSchema>,
 			values: data ? { ...data, organizationId: organizationId ?? '' } : undefined,
 		})
 

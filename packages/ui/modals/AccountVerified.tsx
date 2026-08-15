@@ -25,7 +25,7 @@ import { ModalTitle } from './ModalTitle'
 import { PrivacyStatementModal } from './PrivacyStatement'
 import { UserSurveyModalLauncher } from './UserSurvey'
 
-const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success
+const isRecord = (data: unknown) => z.record(z.string(), z.any()).safeParse(data).success
 const UrlParams = z.object({ c: z.string(), code: z.string() }).refine((data) => {
 	try {
 		const obj = decodeUrl(data.c)

@@ -55,7 +55,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 	const UserSurveySchema = z
 		.object({
 			birthYear: z
-				.number({ invalid_type_error: birthYearError })
+				.number({ error: birthYearError })
 				.gte(minYear, { message: birthYearError })
 				.lte(maxYear, { message: birthYearError })
 				.or(z.literal('')),
@@ -70,15 +70,21 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 
 	const form = useUserSurveyForm({
 		validate: zodResolver(UserSurveySchema),
-		// initialValues: {
-		// 	birthYear: undefined,
-		// 	reasonForJoin: '',
-		// 	communityIds: [],
-		// 	ethnicityIds: [],
-		// 	identifyIds: [],
-		// 	countryOriginId: '',
-		// 	immigrationId: '',
-		// },
+		// Seeds every field so the TextInputs/NumberInput below start controlled - otherwise
+		// they render with value={undefined} until touched, tripping React's
+		// uncontrolled-to-controlled input warning (immigrationOther/ethnicityOther only render
+		// conditionally, but still need seeding for whenever they do appear).
+		initialValues: {
+			birthYear: undefined,
+			reasonForJoin: '',
+			communityIds: [],
+			ethnicityIds: [],
+			identifyIds: [],
+			countryOriginId: '',
+			immigrationId: '',
+			immigrationOther: '',
+			ethnicityOther: '',
+		},
 		validateInputOnBlur: true,
 	})
 

@@ -60,7 +60,7 @@
 		"prisma-kysely": "1.8.0",
 		"sql-bricks": "3.0.1",
 		"superjson": "2.2.6",
-		"zod": "3.23.8"
+		"zod": "4.4.3"
 	},
 	"devDependencies": {
 		"@octokit/core": "5.2.0",
@@ -115,8 +115,8 @@
 		"type-fest": "4.26.1",
 		"typescript": "5.6.3",
 		"xliff": "6.4.0",
-		"zod-prisma-types": "3.1.8",
-		"zod-to-json-schema": "3.23.5"
+		"zod-prisma-types": "3.3.11",
+		"zod-to-json-schema": "3.25.2"
 	},
 	"prisma": {
 		"seed": "turbo run db:run-seed"
