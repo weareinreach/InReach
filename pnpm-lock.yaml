@@ -297,8 +297,8 @@ importers:
         specifier: 4.1.3
         version: 4.1.3(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.76
+        version: 3.25.76
     devDependencies:
       '@hookform/devtools':
         specifier: 4.4.0
@@ -389,10 +389,10 @@ importers:
         version: 3.9.6
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.23.8)
+        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.76)
       trpc-playground:
         specifier: 1.0.4
-        version: 1.0.4(@trpc/server@10.45.2)(@types/node@20.17.0)(express@4.22.2)(terser@5.50.0)(typescript@5.6.3)(zod@3.23.8)
+        version: 1.0.4(@trpc/server@10.45.2)(@types/node@20.17.0)(express@4.22.2)(terser@5.50.0)(typescript@5.6.3)(zod@3.25.76)
       type-fest:
         specifier: 4.26.1
         version: 4.26.1
@@ -725,8 +725,8 @@ importers:
         specifier: 1.3.3
         version: 1.3.3
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.76
+        version: 3.25.76
     devDependencies:
       '@turbo/gen':
         specifier: 2.10.10
@@ -775,7 +775,7 @@ importers:
         version: 3.9.6
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.23.8)
+        version: 1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.76)
       type-fest:
         specifier: 4.26.1
         version: 4.26.1
@@ -810,8 +810,8 @@ importers:
         specifier: 4.9.3
         version: 4.9.3
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.76
+        version: 3.25.76
     devDependencies:
       '@types/eslint':
         specifier: 8.56.12
@@ -986,8 +986,8 @@ importers:
         specifier: 2.2.6
         version: 2.2.6
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.76
+        version: 3.25.76
     devDependencies:
       '@octokit/core':
         specifier: 5.2.0
@@ -1146,17 +1146,17 @@ importers:
         specifier: 6.4.0
         version: 6.4.0
       zod-prisma-types:
-        specifier: 3.1.8
-        version: 3.1.8
+        specifier: 3.3.11
+        version: 3.3.11(@prisma/client@5.21.1(prisma@5.21.1))(prisma@5.21.1)(zod@3.25.76)
       zod-to-json-schema:
-        specifier: 3.23.5
-        version: 3.23.5(zod@3.23.8)
+        specifier: 3.25.2
+        version: 3.25.2(zod@3.25.76)
 
   packages/env:
     dependencies:
       '@t3-oss/env-nextjs':
-        specifier: 0.9.2
-        version: 0.9.2(typescript@5.6.3)(zod@3.23.8)
+        specifier: 0.13.11
+        version: 0.13.11(typescript@5.6.3)(zod@3.25.76)
       '@weareinreach/util':
         specifier: workspace:*
         version: link:../util
@@ -1164,8 +1164,8 @@ importers:
         specifier: 11.15.0
         version: 11.15.0
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.76
+        version: 3.25.76
     devDependencies:
       '@types/eslint':
         specifier: 8.56.12
@@ -1718,8 +1718,8 @@ importers:
         specifier: 5.109.2
         version: 5.109.2(@swc/core@1.16.0(@swc/helpers@0.5.23))(esbuild@0.23.1)(postcss@8.5.15)
       zod:
-        specifier: 3.23.8
-        version: 3.23.8
+        specifier: 3.25.76
+        version: 3.25.76
 
   packages/util:
     dependencies:
@@ -4566,6 +4566,9 @@ packages:
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
+  '@prisma/client-runtime-utils@7.9.1':
+    resolution: {integrity: sha512-mVIBGYdO5CFmK0HvjxrtfIyQQcPdb88pSCeVQriVQPVZyDovIWblpHfOgcS8QO187j3QF0ePArH8qPhp0AU2vg==}
+
   '@prisma/client@4.9.0':
     resolution: {integrity: sha512-bz6QARw54sWcbyR1lLnF2QHvRW5R/Jxnbbmwh3u+969vUKXtBkXgSgjDA85nji31ZBlf7+FrHDy5x+5ydGyQDg==}
     engines: {node: '>=14.17'}
@@ -4593,11 +4596,14 @@ packages:
   '@prisma/debug@5.21.1':
     resolution: {integrity: sha512-uY8SAhcnORhvgtOrNdvWS98Aq/nkQ9QDUxrWAgW8XrCZaI3j2X7zb7Xe6GQSh6xSesKffFbFlkw0c2luHQviZA==}
 
-  '@prisma/debug@5.22.0':
-    resolution: {integrity: sha512-AUt44v3YJeggO2ZU5BkXI7M4hu9BF2zzH2iF2V5pyXT/lRTyWiElZ7It+bRH1EshoMRxHgpYg4VB6rCM+mG5jQ==}
-
   '@prisma/debug@5.3.1':
     resolution: {integrity: sha512-eYrxqslEKf+wpMFIIHgbcNYuZBXUdiJLA85Or3TwOhgPIN1ZoXT9CwJph3ynW8H1Xg0LkdYLwVmuULCwiMoU5A==}
+
+  '@prisma/debug@7.9.1':
+    resolution: {integrity: sha512-/cpVZ4itxtcgB8GHBvZtcmuEjq+lWsLrRJxFMbwZrT1RIdtuKmUm7PPGo/wzfbYpBrk+9WmmBE8CHJw2rybKDQ==}
+
+  '@prisma/dmmf@7.9.1':
+    resolution: {integrity: sha512-pN0i19C8OZwiOBum2ZcIQZqMN0mfNjKp4APrDZcAFtUAgoY7oTF9IjF8HwL6WNYjO5pNW+v1yyLrUvs7U2Vjhg==}
 
   '@prisma/engines-version@4.9.0-42.ceb5c99003b99c9ee2c1d2e618e359c14aef2ea5':
     resolution: {integrity: sha512-M16aibbxi/FhW7z1sJCX8u+0DriyQYY5AyeTH7plQm9MLnURoiyn3CZBqAyIoQ+Z1pS77usCIibYJWSgleBMBA==}
@@ -4629,11 +4635,14 @@ packages:
   '@prisma/generator-helper@5.0.0':
     resolution: {integrity: sha512-pufQ1mhoH6WzKNtzL79HZDoW4Ql3Lf8QEKVmBoW8e3Tdb50bxpYBYue5LBqp9vNW1xd1pgZO53cNiRfLX2d4Zg==}
 
-  '@prisma/generator-helper@5.22.0':
-    resolution: {integrity: sha512-LwqcBQ5/QsuAaLNQZAIVIAJDJBMjHwMwn16e06IYx/3Okj/xEEfw9IvrqB2cJCl3b2mCBlh3eVH0w9WGmi4aHg==}
-
   '@prisma/generator-helper@5.3.1':
     resolution: {integrity: sha512-zrYS0iHLgPlOJjYnd5KvVMMvSS+ktOL39EwooS5EnyvfzwfzxlKCeOUgxTfiKYs0WUWqzEvyNAYtramYgSknsQ==}
+
+  '@prisma/generator-helper@7.9.1':
+    resolution: {integrity: sha512-VsBA5PJ0itmF+b90EziGEE6s/PS2LJMkwe7RDfOjeswy+12AjgE9NTcOkSthAodo6huWsarL6gT0HE20HmccNQ==}
+
+  '@prisma/generator@7.9.1':
+    resolution: {integrity: sha512-zCZSJW8nElZpZZiCkPTrZGhKuW8hTd4qlcsQDHAd7+D5E9KeeSap0o+/iCa09UrtF45tJPfUK/SVHAnZO6fLHw==}
 
   '@prisma/get-platform@5.0.0':
     resolution: {integrity: sha512-JT/rz/jaMTggDkd9OIma50si9rPLzSFe7XSrV3mKXwtv9t+rdwx5ZhmKJd+Rz6S1vhn/291k21JLfaxOW6u8KQ==}
@@ -5476,22 +5485,38 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@t3-oss/env-core@0.9.2':
-    resolution: {integrity: sha512-KgWXljUTHgO3o7GMZQPAD5+P+HqpauMNNHowlm7V2b9IeMitSUpNKwG6xQrup/xARWHTdxRVIl0mSI4wCevQhQ==}
+  '@t3-oss/env-core@0.13.11':
+    resolution: {integrity: sha512-sM7GYY+KL7H/Hl0BE0inWfk3nRHZOLhmVn7sHGxaZt9FAR6KqREXAE+6TqKfiavfXmpRxO/OZ2QgKRd+oiBYRQ==}
     peerDependencies:
+      arktype: ^2.1.0
       typescript: '>=5.0.0'
-      zod: ^3.0.0
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0 || ^4.0.0
     peerDependenciesMeta:
+      arktype:
+        optional: true
       typescript:
         optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
 
-  '@t3-oss/env-nextjs@0.9.2':
-    resolution: {integrity: sha512-dklHrgKLESStNVB67Jdbu6osxDYA+xNKaPBRerlnkEvzbCccSKMvZENx6EZebJuR4snqB3/yRykNMn/bdIAyiQ==}
+  '@t3-oss/env-nextjs@0.13.11':
+    resolution: {integrity: sha512-NC+3j7YWgpzdFu1t5y/8wqibTK0lm5RS4bjXA1n8uwik3wIR4iZM4Fa+U2BaMa5k3Qk8RZiYhoAIX0WogmGkzg==}
     peerDependencies:
+      arktype: ^2.1.0
       typescript: '>=5.0.0'
-      zod: ^3.0.0
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0 || ^4.0.0
     peerDependenciesMeta:
+      arktype:
+        optional: true
       typescript:
+        optional: true
+      valibot:
+        optional: true
+      zod:
         optional: true
 
   '@tabler/icons-react@3.44.0':
@@ -7252,8 +7277,8 @@ packages:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
 
-  code-block-writer@12.0.0:
-    resolution: {integrity: sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==}
+  code-block-writer@13.0.3:
+    resolution: {integrity: sha512-Oofo0pq3IKnsFtuHqSF7TqBfr71aeyZDVJ0HpmqB7FBM2qEigL0iPONSCZSO9pE9dZTAxANe5XHG9Uy0YMv8cg==}
 
   collect-v8-coverage@1.0.3:
     resolution: {integrity: sha512-1L5aqIkwPfiodaMgQunkF1zRhNqifHBmtbbbxcr6yVxxBnliw4TDOW6NxpO8DJLgJ16OT+Y4ztZqP6p/FtXnAw==}
@@ -14284,14 +14309,23 @@ packages:
     resolution: {integrity: sha512-9qv4rlDiopXg4E69k+vMHjNN63YFMe9sZMrdlvKnCjlCRWeCBswPPMPUfx+ipsAWq1LXHe70RcbaHdJJpS6hyQ==}
     engines: {node: '>= 10'}
 
-  zod-prisma-types@3.1.8:
-    resolution: {integrity: sha512-5oe0ays3ur4u2GtuUqlhgCraKBcsuMaMI8o7VMV4YAnFeOuVid7K2zGvjI19V0ue9PeNF2ICyVREQVohaQm5dw==}
+  zod-prisma-types@3.3.11:
+    resolution: {integrity: sha512-fP00cL+MLPhG3GDNep3cro5iXWTaFUcOqWoGfNGFFmaIxHjKoViXGKpZGwFg8RdXZdng1i1/EIh/Pv5kGQeKNA==}
     hasBin: true
+    peerDependencies:
+      '@prisma/client': ^4.x.x || ^5.x.x || ^6.x.x || ^7.x.x
+      prisma: ^4.x.x || ^5.x.x || ^6.x.x || ^7.x.x
+      zod: ^3.25.0 || ^4.0.0
 
   zod-to-json-schema@3.23.5:
     resolution: {integrity: sha512-5wlSS0bXfF/BrL4jPAbz9da5hDlDptdEppYfe+x4eIJ7jioqKG9uUxOwPzqof09u/XeVdrgFu29lZi+8XNDJtA==}
     peerDependencies:
       zod: ^3.23.3
+
+  zod-to-json-schema@3.25.2:
+    resolution: {integrity: sha512-O/PgfnpT1xKSDeQYSCfRI5Gy3hPf91mKVDuYLUHZJMiDFptvP41MSnWofm8dnCm0256ZNfZIM7DSzuSMAFnjHA==}
+    peerDependencies:
+      zod: ^3.25.28 || ^4
 
   zod-to-ts@1.2.0:
     resolution: {integrity: sha512-x30XE43V+InwGpvTySRNz9kB7qFU8DlyEy7BsSTCHPH1R0QasMmHWZDCzYm6bVXtj/9NNJAZF3jW8rzFvH5OFA==}
@@ -14304,9 +14338,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       zod: ^3.24.4
-
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
@@ -17773,6 +17804,8 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
+  '@prisma/client-runtime-utils@7.9.1': {}
+
   '@prisma/client@4.9.0(prisma@5.21.1)':
     dependencies:
       '@prisma/engines-version': 4.9.0-42.ceb5c99003b99c9ee2c1d2e618e359c14aef2ea5
@@ -17801,8 +17834,6 @@ snapshots:
 
   '@prisma/debug@5.21.1': {}
 
-  '@prisma/debug@5.22.0': {}
-
   '@prisma/debug@5.3.1':
     dependencies:
       '@types/debug': 4.1.8
@@ -17810,6 +17841,10 @@ snapshots:
       strip-ansi: 6.0.1
     transitivePeerDependencies:
       - supports-color
+
+  '@prisma/debug@7.9.1': {}
+
+  '@prisma/dmmf@7.9.1': {}
 
   '@prisma/engines-version@4.9.0-42.ceb5c99003b99c9ee2c1d2e618e359c14aef2ea5': {}
 
@@ -17896,10 +17931,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@prisma/generator-helper@5.22.0':
-    dependencies:
-      '@prisma/debug': 5.22.0
-
   '@prisma/generator-helper@5.3.1':
     dependencies:
       '@prisma/debug': 5.3.1
@@ -17908,6 +17939,14 @@ snapshots:
       kleur: 4.1.5
     transitivePeerDependencies:
       - supports-color
+
+  '@prisma/generator-helper@7.9.1':
+    dependencies:
+      '@prisma/debug': 7.9.1
+      '@prisma/dmmf': 7.9.1
+      '@prisma/generator': 7.9.1
+
+  '@prisma/generator@7.9.1': {}
 
   '@prisma/get-platform@5.0.0':
     dependencies:
@@ -19270,18 +19309,17 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@t3-oss/env-core@0.9.2(typescript@5.6.3)(zod@3.23.8)':
-    dependencies:
-      zod: 3.23.8
+  '@t3-oss/env-core@0.13.11(typescript@5.6.3)(zod@3.25.76)':
     optionalDependencies:
       typescript: 5.6.3
+      zod: 3.25.76
 
-  '@t3-oss/env-nextjs@0.9.2(typescript@5.6.3)(zod@3.23.8)':
+  '@t3-oss/env-nextjs@0.13.11(typescript@5.6.3)(zod@3.25.76)':
     dependencies:
-      '@t3-oss/env-core': 0.9.2(typescript@5.6.3)(zod@3.23.8)
-      zod: 3.23.8
+      '@t3-oss/env-core': 0.13.11(typescript@5.6.3)(zod@3.25.76)
     optionalDependencies:
       typescript: 5.6.3
+      zod: 3.25.76
 
   '@tabler/icons-react@3.44.0(react@18.3.1)':
     dependencies:
@@ -21281,7 +21319,7 @@ snapshots:
 
   co@4.6.0: {}
 
-  code-block-writer@12.0.0: {}
+  code-block-writer@13.0.3: {}
 
   collect-v8-coverage@1.0.3: {}
 
@@ -24786,8 +24824,8 @@ snapshots:
       strip-json-comments: 5.0.1
       summary: 2.1.0
       typescript: 5.6.3
-      zod: 3.23.8
-      zod-validation-error: 3.5.4(zod@3.23.8)
+      zod: 3.25.76
+      zod-validation-error: 3.5.4(zod@3.25.76)
 
   kolorist@1.8.0: {}
 
@@ -27054,7 +27092,7 @@ snapshots:
       '@prisma/generator-helper': 5.3.1
       '@prisma/internals': 5.3.1(encoding@0.1.13)
       typescript: 5.6.3
-      zod: 3.23.8
+      zod: 3.25.76
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -28852,24 +28890,24 @@ snapshots:
 
   trough@2.2.0: {}
 
-  trpc-panel@1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.23.8):
+  trpc-panel@1.3.4(patch_hash=be2c59d347729bc6f7aa671a08699fc8de5e93b4ed34724aaf3aa28598cb03f7)(@trpc/server@10.45.2)(zod@3.25.76):
     dependencies:
       '@trpc/server': 10.45.2
       fuzzysort: 2.0.4
       path: 0.12.7
       url: 0.11.4
-      zod: 3.23.8
-      zod-to-json-schema: 3.23.5(zod@3.23.8)
+      zod: 3.25.76
+      zod-to-json-schema: 3.23.5(zod@3.25.76)
 
-  trpc-playground@1.0.4(@trpc/server@10.45.2)(@types/node@20.17.0)(express@4.22.2)(terser@5.50.0)(typescript@5.6.3)(zod@3.23.8):
+  trpc-playground@1.0.4(@trpc/server@10.45.2)(@types/node@20.17.0)(express@4.22.2)(terser@5.50.0)(typescript@5.6.3)(zod@3.25.76):
     dependencies:
       '@trpc-playground/html': 1.0.4(@types/node@20.17.0)(terser@5.50.0)
       '@trpc-playground/types': 1.0.0(@trpc/server@10.45.2)(typescript@5.6.3)
       '@trpc/server': 10.45.2
       lodash: 4.18.1
       uttp: 0.1.3(express@4.22.2)
-      zod: 3.23.8
-      zod-to-ts: 1.2.0(typescript@5.6.3)(zod@3.23.8)
+      zod: 3.25.76
+      zod-to-ts: 1.2.0(typescript@5.6.3)(zod@3.25.76)
     transitivePeerDependencies:
       - '@types/node'
       - express
@@ -29946,27 +29984,33 @@ snapshots:
       compress-commons: 4.1.2
       readable-stream: 3.6.2
 
-  zod-prisma-types@3.1.8:
+  zod-prisma-types@3.3.11(@prisma/client@5.21.1(prisma@5.21.1))(prisma@5.21.1)(zod@3.25.76):
     dependencies:
-      '@prisma/generator-helper': 5.22.0
-      code-block-writer: 12.0.0
+      '@prisma/client': 5.21.1(prisma@5.21.1)
+      '@prisma/client-runtime-utils': 7.9.1
+      '@prisma/dmmf': 7.9.1
+      '@prisma/generator-helper': 7.9.1
+      code-block-writer: 13.0.3
       lodash: 4.18.1
-      zod: 3.23.8
+      prisma: 5.21.1
+      zod: 3.25.76
 
-  zod-to-json-schema@3.23.5(zod@3.23.8):
+  zod-to-json-schema@3.23.5(zod@3.25.76):
     dependencies:
-      zod: 3.23.8
+      zod: 3.25.76
 
-  zod-to-ts@1.2.0(typescript@5.6.3)(zod@3.23.8):
+  zod-to-json-schema@3.25.2(zod@3.25.76):
+    dependencies:
+      zod: 3.25.76
+
+  zod-to-ts@1.2.0(typescript@5.6.3)(zod@3.25.76):
     dependencies:
       typescript: 5.6.3
-      zod: 3.23.8
+      zod: 3.25.76
 
-  zod-validation-error@3.5.4(zod@3.23.8):
+  zod-validation-error@3.5.4(zod@3.25.76):
     dependencies:
-      zod: 3.23.8
-
-  zod@3.23.8: {}
+      zod: 3.25.76
 
   zod@3.25.76: {}
 
