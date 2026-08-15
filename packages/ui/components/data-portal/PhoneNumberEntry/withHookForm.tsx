@@ -197,8 +197,10 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 
 	return (
 		<PhoneInput<TextInputProps, T>
-			country={activeCountry}
-			defaultCountry={DEFAULT_COUNTRY}
+			// `defaultCountry` only has an effect when `country` is unset - passing both
+			// unconditionally trips this library's own console.error on every render once a
+			// country is selected, since it treats that as a mistake rather than a fallback.
+			{...(activeCountry ? { country: activeCountry } : { defaultCountry: DEFAULT_COUNTRY })}
 			inputComponent={TextInput}
 			rightSection={countrySelection}
 			rightSectionWidth={56}

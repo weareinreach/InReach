@@ -78,8 +78,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 				published: false,
 				serviceAreas: null,
 				services: [],
-				description: undefined,
-				name: undefined,
+				// Seeded as `{ text: '' }` rather than `undefined` so the name/description
+				// InlineTextInputs start controlled - otherwise they render with value={undefined}
+				// until the field is first touched, which trips React's uncontrolled-to-controlled
+				// input warning.
+				description: { text: '', key: '', ns: '', crowdinId: null },
+				name: { text: '', key: '', ns: '', crowdinId: null },
 			},
 		})
 

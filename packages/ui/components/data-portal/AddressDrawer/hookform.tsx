@@ -125,10 +125,25 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const { data } = api.location.getAddress.useQuery(locationId ?? '', {
 		enabled: Boolean(locationId) && Boolean(countryOptions?.length),
 		refetchOnWindowFocus: false,
-		select: ({ id, data: { addressVisibility, ...rest } }) => ({
+		// react-hook-form-mantine's TextInput forwards `field.value` straight to the DOM input's
+		// `value` - the API can legitimately return `null` for any of these (no second address line,
+		// no coordinates yet, etc.), which React warns about and can flip an input from controlled to
+		// uncontrolled mid-edit. Coerce to the same "empty" representation `LocationDrawer` uses for
+		// new locations so these inputs start (and stay) controlled.
+		select: ({
+			id,
+			data: { addressVisibility, name, street1, street2, city, postCode, longitude, latitude, ...rest },
+		}) => ({
 			id,
 			data: {
 				...rest,
+				name: name ?? '',
+				street1: street1 ?? '',
+				street2: street2 ?? '',
+				city: city ?? '',
+				postCode: postCode ?? '',
+				longitude: longitude ?? undefined,
+				latitude: latitude ?? undefined,
 				addressVisibility: AddressVisibilitySchema.parse(addressVisibility),
 			},
 		}),
