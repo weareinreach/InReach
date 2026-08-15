@@ -21,7 +21,7 @@ import { type PhoneNumbersProps } from './types'
 const formatNs = nsFormatter(['common', 'phone-type'])
 // US and Canada share the +1 calling code, so showing it doesn't distinguish between them -
 // Mexico has its own distinct +52 and isn't included here.
-const SHARED_CODE_COUNTRIES = ['US', 'CA']
+const SHARED_CODE_COUNTRIES = new Set(['US', 'CA'])
 
 export const PhoneNumbers = ({ edit, ...props }: PhoneNumbersProps) =>
 	edit ? <PhoneNumbersEdit {...props} /> : <PhoneNumbersDisplay {...props} />
@@ -73,7 +73,7 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 			parsedPhone.setExt(ext)
 		}
 		const dialURL = parsedPhone.getURI()
-		const phoneNumber = SHARED_CODE_COUNTRIES.includes(country)
+		const phoneNumber = SHARED_CODE_COUNTRIES.has(country)
 			? parsedPhone.formatNational()
 			: parsedPhone.formatInternational()
 		const desc = getDescription(description, phoneType)
@@ -189,7 +189,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		if (isExtension(ext)) {
 			parsedPhone.setExt(ext)
 		}
-		const phoneNumber = SHARED_CODE_COUNTRIES.includes(country)
+		const phoneNumber = SHARED_CODE_COUNTRIES.has(country)
 			? parsedPhone.formatNational()
 			: parsedPhone.formatInternational()
 

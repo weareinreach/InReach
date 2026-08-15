@@ -73,6 +73,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			{ id: phoneId, orgId: orgId ?? '' },
 			{
 				enabled: drawerOpened && !!orgId,
+				// `ext`/`description` come back `null` when unset - fed straight into `values` below,
+				// that would hand a controlled TextInput a `null` value and trip React's
+				// uncontrolled-to-controlled warning. `phoneTypeId` is deliberately left alone: `null`
+				// is a real sentinel value there (selects the "Custom Text" option).
+				select: (data) =>
+					data ? { ...data, ext: data.ext ?? '', description: data.description ?? '' } : data,
 			}
 		)
 		// No `initialData` here - combined with the client's 10-minute default `staleTime`, an
@@ -86,12 +92,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		const { data: countryList } = api.fieldOpt.countries.useQuery({ activeForOrgs: true })
 		const countryCca2ById = useMemo(() => {
 			const lookup = new Map<string, string>()
-			countryList?.forEach(({ id, cca2 }) => lookup.set(id, cca2))
+			countryList?.forEach(({ id: countryId, cca2 }) => lookup.set(countryId, cca2))
 			return lookup
 		}, [countryList])
 		const countryNameById = useMemo(() => {
 			const lookup = new Map<string, string>()
-			countryList?.forEach(({ id, name }) => lookup.set(id, name))
+			countryList?.forEach(({ id: countryId, name }) => lookup.set(countryId, name))
 			return lookup
 		}, [countryList])
 
@@ -141,6 +147,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				id: phoneId,
 				number: '',
 				countryId: '',
+				ext: '',
 				description: '',
 				published: true,
 				deleted: false,
