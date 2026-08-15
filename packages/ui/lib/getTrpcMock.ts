@@ -159,5 +159,4 @@ export type MockAPIHandler<K1 extends keyof ApiOutput, K2 extends keyof ApiOutpu
 ) => Promisable<ApiOutput[K1][K2]>
 
 type MockOutput<K1 extends keyof ApiOutput, K2 extends keyof ApiOutput[K1]> =
-	| ApiOutput[K1][K2]
-	| MockAPIHandler<K1, K2>
+	ApiOutput[K1][K2] | MockAPIHandler<K1, K2>

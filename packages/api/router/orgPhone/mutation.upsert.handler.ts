@@ -128,6 +128,5 @@ type CrowdinData = {
 type GeneratedDescription = {
 	crowdinArgs: CrowdinData
 	prisma:
-		| Prisma.FreeTextCreateNestedOneWithoutOrgPhoneInput
-		| Prisma.FreeTextUpdateOneWithoutOrgPhoneNestedInput
+		Prisma.FreeTextCreateNestedOneWithoutOrgPhoneInput | Prisma.FreeTextUpdateOneWithoutOrgPhoneNestedInput
 }

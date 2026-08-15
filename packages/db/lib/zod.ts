@@ -3,12 +3,7 @@ import { z } from 'zod'
 import { Prisma } from '~db/client'
 
 export type NullableJsonInput =
-	| Prisma.JsonValue
-	| null
-	| 'JsonNull'
-	| 'DbNull'
-	| Prisma.NullTypes.DbNull
-	| Prisma.NullTypes.JsonNull
+	Prisma.JsonValue | null | 'JsonNull' | 'DbNull' | Prisma.NullTypes.DbNull | Prisma.NullTypes.JsonNull
 
 export const transformJsonNull = (v?: NullableJsonInput) => {
 	if (!v || v === 'DbNull') return Prisma.DbNull

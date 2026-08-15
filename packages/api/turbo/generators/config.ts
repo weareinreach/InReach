@@ -18,7 +18,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
 		prompts: [
 			{
 				type: 'searchList',
-				// @ts-expect-error This is fine...
 				choices: getRouters(),
 				message: 'Choose a router',
 				name: 'routerDir',

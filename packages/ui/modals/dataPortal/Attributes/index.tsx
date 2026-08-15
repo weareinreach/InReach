@@ -100,7 +100,9 @@ const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: 
 type SelectableAttribute = {
 	// Explicitly include all properties from the original API type.
 	// This avoids inference issues with complex nested types.
-	[K in keyof ApiOutput['fieldOpt']['attributesByCategory'][number]]: ApiOutput['fieldOpt']['attributesByCategory'][number][K]
+	[
+		K in keyof ApiOutput['fieldOpt']['attributesByCategory'][number]
+	]: ApiOutput['fieldOpt']['attributesByCategory'][number][K]
 } & {
 	// Add the properties required for the UI select component.
 	value: string
