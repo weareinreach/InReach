@@ -32,9 +32,6 @@ importers:
       '@turbo/gen':
         specifier: 2.2.3
         version: 2.2.3(@swc/core@1.7.39(@swc/helpers@0.5.13))(@types/node@20.17.0)(typescript@5.6.3)
-      '@types/lint-staged':
-        specifier: 13.3.0
-        version: 13.3.0
       '@types/node':
         specifier: 20.17.0
         version: 20.17.0
@@ -5661,9 +5658,6 @@ packages:
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
-
-  '@types/lint-staged@13.3.0':
-    resolution: {integrity: sha512-WxGjVP+rA4OJlEdbZdT9MS9PFKQ7kVPhLn26gC+2tnBWBEFEj/KW+IbFfz6sxdxY5U6V7BvyF+3BzCGsAMHhNg==}
 
   '@types/lodash@4.17.24':
     resolution: {integrity: sha512-gIW7lQLZbue7lRSWEFql49QJJWThrTFFeIMJdp3eH4tKoxm1OvEPg02rm4wCCSHS0cL3/Fizimb35b7k8atwsQ==}
@@ -19488,8 +19482,6 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/json5@0.0.29': {}
-
-  '@types/lint-staged@13.3.0': {}
 
   '@types/lodash@4.17.24': {}
 
