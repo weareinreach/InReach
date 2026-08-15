@@ -137,14 +137,7 @@ declare module '@storybook/react' {
 	}
 }
 type PseudoStates =
-	| 'hover'
-	| 'active'
-	| 'focusVisible'
-	| 'focusWithin'
-	| 'focus'
-	| 'visited'
-	| 'link'
-	| 'target'
+	'hover' | 'active' | 'focusVisible' | 'focusWithin' | 'focus' | 'visited' | 'link' | 'target'
 
 type DesignParams = ({ name?: string } & DesignFigma) | DesignFigspec
 type DesignFigma = {

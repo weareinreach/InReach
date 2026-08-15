@@ -151,11 +151,4 @@ type GenerateFreeTextParams<T extends GenerateFreeTextType> = {
 	(T extends 'orgDesc' ? {} : { itemId: string })
 
 type GenerateFreeTextType =
-	| 'attSupp'
-	| 'svcName'
-	| 'svcDesc'
-	| 'emailDesc'
-	| 'phoneDesc'
-	| 'websiteDesc'
-	| 'orgDesc'
-	| 'locationAlert'
+	'attSupp' | 'svcName' | 'svcDesc' | 'emailDesc' | 'phoneDesc' | 'websiteDesc' | 'orgDesc' | 'locationAlert'

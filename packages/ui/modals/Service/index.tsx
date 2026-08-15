@@ -192,7 +192,9 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 						)}
 						{Boolean(clientsServed?.targetPop.length) && (
 							<Section.Sub title={t('service.target-population')}>
-								{clientsServed?.targetPop.map(({ id, childProps }) => <ModalText key={id} {...childProps} />)}{' '}
+								{clientsServed?.targetPop.map(({ id, childProps }) => (
+									<ModalText key={id} {...childProps} />
+								))}{' '}
 							</Section.Sub>
 						)}
 					</Section.Divider>

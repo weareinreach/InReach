@@ -169,9 +169,7 @@ const orgWebsiteInclude = {
 } satisfies Prisma.Organization$websitesArgs
 
 type AttributeInclude =
-	| Prisma.Organization$attributesArgs
-	| Prisma.OrgLocation$attributesArgs
-	| Prisma.OrgService$attributesArgs
+	Prisma.Organization$attributesArgs | Prisma.OrgLocation$attributesArgs | Prisma.OrgService$attributesArgs
 
 const attributeInclude = attributes satisfies AttributeInclude
 
