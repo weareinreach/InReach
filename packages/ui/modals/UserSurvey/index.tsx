@@ -55,7 +55,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 	const UserSurveySchema = z
 		.object({
 			birthYear: z
-				.number({ invalid_type_error: birthYearError })
+				.number({ error: birthYearError })
 				.gte(minYear, { message: birthYearError })
 				.lte(maxYear, { message: birthYearError })
 				.or(z.literal('')),

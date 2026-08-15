@@ -60,7 +60,7 @@
 		"prisma-kysely": "1.8.0",
 		"sql-bricks": "3.0.1",
 		"superjson": "2.2.6",
-		"zod": "3.25.76"
+		"zod": "4.4.3"
 	},
 	"devDependencies": {
 		"@octokit/core": "5.2.0",

@@ -23,7 +23,7 @@ import {
 	useMemo,
 	useState,
 } from 'react'
-import { useForm } from 'react-hook-form'
+import { type Resolver, useForm } from 'react-hook-form'
 import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
 import SocialLinks from 'social-links'
 import { z } from 'zod'
@@ -100,7 +100,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 			setValue: setFormValue,
 			watch,
 		} = useForm<FormSchema>({
-			resolver: zodResolver(FormSchema),
+			resolver: zodResolver(FormSchema) as Resolver<FormSchema>,
 			values: data ?? undefined,
 		})
 		const apiUtils = api.useUtils()

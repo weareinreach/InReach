@@ -16,7 +16,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type Resolver, useForm } from 'react-hook-form'
 import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import { z } from 'zod'
@@ -103,13 +103,13 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 						const cca2 = rawCca2 && isCountryCode(rawCca2) ? rawCca2 : undefined
 						if (!isValidPhoneNumber(data.number, cca2)) {
 							ctx.addIssue({
-								code: z.ZodIssueCode.custom,
+								code: 'custom',
 								path: ['number'],
 								message: cca2 ? `Not a valid phone number for ${cca2}` : 'Not a valid phone number',
 							})
 						}
 					})
-				),
+				) as Resolver<FormSchema>,
 			[countryCca2ById]
 		)
 		const {

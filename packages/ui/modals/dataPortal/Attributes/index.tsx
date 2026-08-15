@@ -12,7 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { type TFunction, useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, type Resolver, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -40,7 +40,8 @@ const supplementDefaults = {
 
 const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: string) => {
 	if (dataSchemaName && isAttributeSupplementSchema(dataSchemaName)) {
-		let dataSchema: z.ZodTypeAny = attributeSupplementSchema[dataSchemaName]
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let dataSchema: z.ZodType<any, any> = attributeSupplementSchema[dataSchemaName]
 
 		if (dataSchemaName === 'numMinMaxOrRange') {
 			// Age eligibility requires at least a min or a max value.
@@ -56,7 +57,7 @@ const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: 
 						.superRefine((data, ctx) => {
 							if (data.min === undefined && data.max === undefined) {
 								ctx.addIssue({
-									code: z.ZodIssueCode.custom,
+									code: 'custom',
 									path: ['min'],
 									message: t('eligibility.elig-age_error'),
 								})
@@ -79,7 +80,7 @@ const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: 
 					access_value: z
 						.string()
 						.trim()
-						.email({ message: t('form-error-enter-valid-email', { ns: 'common' }) })
+						.pipe(z.email({ error: t('form-error-enter-valid-email', { ns: 'common' }) }))
 						.nullish(),
 					instructions: z.string().optional(),
 				})
@@ -125,7 +126,7 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 	)
 
 	const form = useForm<FormSchema>({
-		resolver: zodResolver(dynamicSchema),
+		resolver: zodResolver(dynamicSchema) as Resolver<FormSchema>,
 		mode: 'all',
 		defaultValues: {
 			id: generateId('attributeSupplement'),

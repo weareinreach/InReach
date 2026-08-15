@@ -17,7 +17,7 @@ import compact from 'just-compact'
 import filterObject from 'just-filter-object'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type Resolver, useForm } from 'react-hook-form'
 import { Autocomplete, Radio, Select, TextInput } from 'react-hook-form-mantine'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -144,7 +144,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	// // #endregion
 
 	const form = useForm<FormSchema>({
-		resolver: zodResolver(FormSchema),
+		resolver: zodResolver(FormSchema) as Resolver<FormSchema>,
 		values: data,
 		defaultValues: {},
 		// transformValues: FormSchema.transform(schemaTransform).parse,
