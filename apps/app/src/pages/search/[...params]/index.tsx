@@ -1,9 +1,7 @@
 /* eslint-disable i18next/no-literal-string */
 import {
-	Button,
 	createStyles,
 	Divider,
-	Drawer,
 	Grid,
 	Group,
 	rem,
@@ -12,7 +10,7 @@ import {
 	Text,
 	useMantineTheme,
 } from '@mantine/core'
-import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { useMediaQuery } from '@mantine/hooks'
 import { getCookie } from 'cookies-next'
 import compare from 'just-compare'
 import dynamic from 'next/dynamic'
@@ -282,6 +280,7 @@ const SearchResults = () => {
 		searchState.searchTerm,
 		searchState.services,
 		searchState.attributes,
+		searchInput.version,
 		country,
 		currentSortBias,
 		advancedParams.focuses,

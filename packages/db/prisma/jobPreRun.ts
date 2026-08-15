@@ -4,8 +4,8 @@ import { DateTime } from 'luxon'
 import fs from 'fs'
 import path from 'path'
 
-import { type PassedTask } from './dataMigrationRunner'
 import { prisma } from '..'
+import { type PassedTask } from './dataMigrationRunner'
 
 const getTimestamp = () => DateTime.now().toFormat('yyyy-MM-dd_HH.mm.ss')
 

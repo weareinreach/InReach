@@ -1,3 +1,4 @@
+import { getStringIdByKey } from '@weareinreach/crowdin/api'
 import { Listr } from 'listr2'
 import PQueue from 'p-queue'
 import ms from 'pretty-ms'
@@ -5,7 +6,6 @@ import ms from 'pretty-ms'
 import fs from 'fs'
 import path from 'path'
 
-import { getStringIdByKey } from '@weareinreach/crowdin/api'
 import { prisma } from '~db/client'
 
 const queue = new PQueue({
