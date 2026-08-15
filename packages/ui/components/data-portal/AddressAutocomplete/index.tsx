@@ -15,6 +15,7 @@ import { Autocomplete, Select, TextInput } from 'react-hook-form-mantine'
 import reactStringReplace from 'react-string-replace'
 import invariant from 'tiny-invariant'
 
+import { type ApiOutput } from '@weareinreach/api'
 import { AddressVisibility } from '@weareinreach/db/enums'
 import { AddressVisibilitySchema } from '~ui/components/data-portal/AddressDrawer/schema'
 import { createWktFromLatLng } from '~ui/lib/geotools'
@@ -122,17 +123,7 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 		[i18n.language]
 	)
 	const selectCountryOptions = useCallback(
-		(
-			result: Parameters<
-				Parameters<typeof api.fieldOpt.govDistsByCountryNoSub.useQuery>[1] extends {
-					select?: infer S
-				}
-					? S extends (arg: infer A) => unknown
-						? (arg: A) => unknown
-						: never
-					: never
-			>[0]
-		) =>
+		(result: ApiOutput['fieldOpt']['govDistsByCountryNoSub']) =>
 			result
 				.map(({ id, flag, cca2, govDist }) => ({
 					flag,
