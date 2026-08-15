@@ -15,7 +15,7 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type Resolver, useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
 
@@ -33,7 +33,7 @@ const FormSchema = z.object({
 	firstName: z.string().nullish(),
 	lastName: z.string().nullish(),
 	primary: z.boolean().optional(),
-	email: z.string().email(),
+	email: z.email(),
 	published: z.boolean().default(true),
 	deleted: z.boolean().default(false),
 	titleId: z.string().nullish(),
@@ -84,7 +84,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 			getValues,
 			setValue: setFormValue,
 		} = useForm<FormSchema>({
-			resolver: zodResolver(FormSchema),
+			resolver: zodResolver(FormSchema) as Resolver<FormSchema>,
 			values: initialData ?? undefined,
 			defaultValues: {
 				id: emailId,

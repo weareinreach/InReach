@@ -34,7 +34,7 @@ const incompatible = z
 		/** Incompatible data from migration - needs to be cleaned up. */
 		type: z.literal('incompatible'),
 	})
-	.catchall(z.record(z.any()))
+	.catchall(z.record(z.string(), z.any()))
 
 const commonAccessInstructions = {
 	access_value: z.string().nullish(),

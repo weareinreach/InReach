@@ -27,7 +27,7 @@ export const FormSchema = z.object({
 					if (interval.interval.overlaps(item.interval)) {
 						const path = idIdx.indexOf(interval.id)
 						ctx.addIssue({
-							code: z.ZodIssueCode.custom,
+							code: 'custom',
 							message: 'Opening times cannot overlap on the same day!',
 							fatal: true,
 							path: [path],

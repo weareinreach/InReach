@@ -36,16 +36,16 @@ export const nonEmptyString = z
 // .optional()
 export const searchTerm = z.object({ search: z.string().trim() })
 export const pagination = {
-	skip: z.union([z.number(), z.string()]).pipe(z.coerce.number()),
-	take: z.union([z.number(), z.string()]).pipe(z.coerce.number()),
+	skip: z.coerce.number(),
+	take: z.coerce.number(),
 }
 export const coordItems = {
 	lat: z.number().gte(-90).lte(90),
 	lon: z.number().gte(-180).lte(180),
 }
 export const coerceCoordItems = {
-	lat: z.union([z.number(), z.string()]).pipe(z.coerce.number().gte(-90).lte(90)),
-	lon: z.union([z.number(), z.string()]).pipe(z.coerce.number().gte(-180).lte(180)),
+	lat: z.coerce.number().gte(-90).lte(90),
+	lon: z.coerce.number().gte(-180).lte(180),
 }
 export const coord = z.object(coordItems)
 export const reviewAvgId = z
@@ -66,9 +66,7 @@ export const JsonInputOrNullSuperJSON = z.preprocess((data) => superjson.seriali
  */
 
 /** For an update operation */
-export const MutationBase = <T extends z.ZodRawShape>(
-	schema: z.ZodObject<T, 'strip', z.ZodTypeAny, z.objectOutputType<T, z.ZodTypeAny>>
-) => ({
+export const MutationBase = <T extends z.ZodRawShape>(schema: z.ZodObject<T>) => ({
 	dataParser: z.object({
 		actorId: z.string(),
 		from: schema.partial().optional(),
@@ -83,9 +81,7 @@ export const MutationBase = <T extends z.ZodRawShape>(
 		.or(schema),
 })
 /** For a create or m-to-n link operation */
-export const CreationBase = <T extends z.ZodRawShape>(
-	schema: z.ZodObject<T, 'strip', z.ZodTypeAny, z.objectOutputType<T, z.ZodTypeAny>>
-) => ({
+export const CreationBase = <T extends z.ZodRawShape>(schema: z.ZodObject<T>) => ({
 	dataParser: z.object({
 		actorId: z.string(),
 		data: schema,
@@ -104,12 +100,7 @@ export const CreationManyBase = <T extends z.ZodArray<z.ZodTypeAny>>(schema: T) 
 	inputSchema: schema,
 })
 export const CreationOneOrManyBase = <
-	T extends z.ZodUnion<
-		[
-			z.ZodObject<z.ZodRawShape, 'strip', z.ZodTypeAny, z.objectOutputType<z.ZodRawShape, z.ZodTypeAny>>,
-			z.ZodArray<z.ZodTypeAny>,
-		]
-	>,
+	T extends z.ZodUnion<[z.ZodObject<z.ZodRawShape>, z.ZodArray<z.ZodTypeAny>]>,
 >(
 	schema: T
 ) => ({
@@ -122,9 +113,7 @@ export const CreationOneOrManyBase = <
 })
 
 /** For a createMany or updateMany operation */
-export const MutationBaseArray = <T extends z.ZodRawShape>(
-	schema: z.ZodObject<T, 'strip', z.ZodTypeAny, z.objectOutputType<T, z.ZodTypeAny>>
-) => ({
+export const MutationBaseArray = <T extends z.ZodRawShape>(schema: z.ZodObject<T>) => ({
 	dataParser: z.object({
 		actorId: z.string(),
 		data: z

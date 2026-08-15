@@ -15,6 +15,7 @@ import { Autocomplete, Select, TextInput } from 'react-hook-form-mantine'
 import reactStringReplace from 'react-string-replace'
 import invariant from 'tiny-invariant'
 
+import { type ApiOutput } from '@weareinreach/api'
 import { AddressVisibility } from '@weareinreach/db/enums'
 import { AddressVisibilitySchema } from '~ui/components/data-portal/AddressDrawer/schema'
 import { createWktFromLatLng } from '~ui/lib/geotools'
@@ -111,26 +112,39 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 	const disableFieldUntilCountry = !selectedCountryId
 	const visibilityIsFull = addressVisibility === AddressVisibility.FULL
 
-	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
+	// Both `countryTranslation` and `selectCountryOptions` must stay referentially stable across
+	// renders - react-query does NOT memoize a query's `select` output on its own, so an inline
+	// selector recomputes (returning a brand-new array/object every time) on every render, not just
+	// when the underlying data changes. `countryOptions` feeds both `govDistOptions` and the
+	// geocode-result effect below as dependencies, so an unstable reference here previously caused
+	// that effect to re-run on every render once a place was selected - a tight render loop.
+	const countryTranslation = useMemo(
+		() => new Intl.DisplayNames(i18n.language, { type: 'region' }),
+		[i18n.language]
+	)
+	const selectCountryOptions = useCallback(
+		(result: ApiOutput['fieldOpt']['govDistsByCountryNoSub']) =>
+			result
+				.map(({ id, flag, cca2, govDist }) => ({
+					flag,
+					cca2,
+					value: id,
+					label: countryTranslation.of(cca2) ?? cca2,
+					group: ['CA', 'US', 'MX'].includes(cca2) ? 'Popular' : 'All',
+					govDist: govDist.map(({ id: govDistId, tsKey, tsNs, abbrev }) => ({
+						label: t(tsKey, { ns: tsNs }),
+						value: govDistId,
+						abbrev,
+					})),
+				}))
+				.toSorted((a) => (a.group === 'Popular' ? -1 : 1)),
+		[countryTranslation, t]
+	)
 	const { data: countryOptions } = api.fieldOpt.govDistsByCountryNoSub.useQuery(
 		{ activeForOrgs: true },
 		{
 			refetchOnWindowFocus: false,
-			select: (result) =>
-				result
-					.map(({ id, flag, cca2, govDist }) => ({
-						flag,
-						cca2,
-						value: id,
-						label: countryTranslation.of(cca2) ?? cca2,
-						group: ['CA', 'US', 'MX'].includes(cca2) ? 'Popular' : 'All',
-						govDist: govDist.map(({ id: govDistId, tsKey, tsNs, abbrev }) => ({
-							label: t(tsKey, { ns: tsNs }),
-							value: govDistId,
-							abbrev,
-						})),
-					}))
-					.toSorted((a) => (a.group === 'Popular' ? -1 : 1)),
+			select: selectCountryOptions,
 		}
 	)
 

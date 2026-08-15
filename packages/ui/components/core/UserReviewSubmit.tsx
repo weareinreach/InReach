@@ -48,6 +48,8 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 			organizationId: orgQuery?.id ?? '',
 			orgServiceId: serviceId,
 			rating: 0,
+			// Without this, the Textarea below starts uncontrolled until typed into.
+			reviewText: '',
 		},
 		validate: zodResolver(ReviewSchema),
 	})

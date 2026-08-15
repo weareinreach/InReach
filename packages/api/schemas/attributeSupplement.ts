@@ -23,7 +23,7 @@ const number = z.object({
 
 const incompatible = z
 	.object({/** Incompatible data from migration - needs to be cleaned up. */})
-	.catchall(z.record(z.any()))
+	.catchall(z.record(z.string(), z.any()))
 // const accessInstructions = z.object({
 // 	access_value: z.string().nullish(),
 // 	access_type: z.enum(['email', 'file', 'link', 'location', 'other', 'phone', '', 'publicTransit']),

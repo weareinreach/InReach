@@ -33,6 +33,9 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 	const form = useForm<FormProps>({
 		validate: zodResolver(FormSchema),
 		validateInputOnBlur: true,
+		// Without this, `name` starts `undefined` and the TextInput below renders uncontrolled until
+		// the user types, tripping React's uncontrolled-to-controlled input warning.
+		initialValues: { name: '' },
 	})
 
 	const newListNotification = useNewNotification({

@@ -43,7 +43,7 @@ export const GetNoteByRecord = z.object(idFields).superRefine((data, ctx) => {
 	const keys = Object.keys(flush(data))
 	if (keys.length === 0) {
 		ctx.addIssue({
-			code: z.ZodIssueCode.custom,
+			code: 'custom',
 			message: 'At least one key required',
 		})
 		return z.NEVER
@@ -51,7 +51,7 @@ export const GetNoteByRecord = z.object(idFields).superRefine((data, ctx) => {
 	if (keys.includes('translationKey') || keys.includes('translationNs')) {
 		if (!keys.includes('translationKey') && keys.includes('translationNs')) {
 			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
+				code: 'custom',
 				message: '`translationKey` and `translationNs` are both required.',
 			})
 			return z.NEVER
@@ -72,7 +72,7 @@ export const CreateNote = () => {
 			const keys = Object.keys(links).filter((key) => key !== 'text')
 			if (keys.length === 0) {
 				ctx.addIssue({
-					code: z.ZodIssueCode.custom,
+					code: 'custom',
 					message: 'At least one ID key required',
 				})
 				return z.NEVER
@@ -80,7 +80,7 @@ export const CreateNote = () => {
 			if (keys.includes('translationKey') || keys.includes('translationNs')) {
 				if (!keys.includes('translationKey') || !keys.includes('translationNs')) {
 					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
+						code: 'custom',
 						message: '`translationKey` and `translationNs` are both required.',
 					})
 					return z.NEVER

@@ -13,7 +13,7 @@ const LoginBody = dynamic(() => import('@weareinreach/ui/modals/LoginSignUp').th
 
 const RouteSchema = z.object({
 	pathname: z.string(),
-	query: z.record(z.string()).optional(),
+	query: z.record(z.string(), z.string()).optional(),
 	locale: z.string().optional(),
 })
 

@@ -64,6 +64,8 @@ const EmailsDisplay = ({
 				primary,
 				title,
 				description,
+				firstName,
+				lastName,
 				email: address,
 				locationOnly: showLocOnly = false,
 				serviceOnly: showServOnly = false,
@@ -79,11 +81,21 @@ const EmailsDisplay = ({
 			const linkVariant = direct ? variants.Link.inlineInverted : variants.Link.inline
 
 			const desc = (() => {
+				const name = compact([firstName, lastName]).join(' ') || null
+				const descText = description?.key
+					? t(description.key, { defaultValue: description.defaultText, ns: org?.id })
+					: null
+				if (name && descText) {
+					return `${name} (${descText})`
+				}
+				if (name) {
+					return name
+				}
+				if (descText) {
+					return descText
+				}
 				if (title) {
 					return t(title.key, { ns: 'user-title' })
-				}
-				if (description?.key) {
-					return t(description.key, { defaultValue: description.defaultText, ns: org?.id })
 				}
 
 				return null
@@ -190,14 +202,34 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		[linkToLocation]
 	)
 	const output = data?.map((email) => {
-		const { primary: _primary, title, description, email: address, published, deleted, id } = email
+		const {
+			primary: _primary,
+			title,
+			description,
+			firstName,
+			lastName,
+			email: address,
+			published,
+			deleted,
+			id,
+		} = email
 
 		const desc = (() => {
+			const name = compact([firstName, lastName]).join(' ') || null
+			const descText = description?.key
+				? t(description.key, { defaultValue: description.defaultText, ns: orgId })
+				: null
+			if (name && descText) {
+				return `${name} (${descText})`
+			}
+			if (name) {
+				return name
+			}
+			if (descText) {
+				return descText
+			}
 			if (title) {
 				return t(title.key, { ns: 'user-title' })
-			}
-			if (description?.key) {
-				return t(description.key, { defaultValue: description.defaultText, ns: orgId })
 			}
 
 			return null

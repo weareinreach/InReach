@@ -109,63 +109,10 @@ export const SearchDetailsOutput = z
 		})
 		return result
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	}) satisfies z.ZodType<any, any, SearchReturn>
+	}) satisfies z.ZodType<any, any>
 
 type ServCat = {
 	id: string
 	tsKey: string
 	tsNs: string
 }
-
-type SearchReturn = {
-	id: string
-	name: string
-	slug: string
-	distance: number
-	unit: 'km' | 'mi'
-	attributes: {
-		attribute: {
-			categories: {
-				attribute: {
-					tsKey: string
-					icon: string | null
-					iconBg: string | null
-				}
-				category: {
-					tag: string
-				}
-			}[]
-		}
-	}[]
-	description: {
-		key: string
-		ns: string
-	} | null
-	services: {
-		services: {
-			tag: {
-				category: {
-					id: string
-					tsNs: string
-					tsKey: string
-				}
-			}
-		}[]
-	}[]
-	locations: {
-		city: string
-		services: {
-			service: {
-				services: {
-					tag: {
-						category: {
-							id: string
-							tsNs: string
-							tsKey: string
-						}
-					}
-				}[]
-			}
-		}[]
-	}[]
-}[]
