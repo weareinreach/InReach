@@ -1,0 +1,28 @@
+diff --git a/lib/main.js b/lib/main.js
+index 014539859aafd7103da98b65e31c60bcaf74750f..59a64dfd7c7b4061600ab1f0aea10207a60a5487 100644
+--- a/lib/main.js
++++ b/lib/main.js
+@@ -55,7 +55,7 @@ var profiles_1 = require("./profiles/");
+ Object.defineProperty(exports, "PREDEFINED_PROFILES", { enumerable: true, get: function () { return profiles_1.PREDEFINED_PROFILES; } });
+ var types_1 = require("./types");
+ __exportStar(require("./types"), exports);
+-var PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
++var PROFILE_ID = '[A-Za-z0-9_\\-\\.%]+';
+ var QUERY_PARAM = '(\\?.*)?';
+ var createRegexp = function (profileMatch, config) {
+     var str = profileMatch.match.replace('{PROFILE_ID}', "".concat(PROFILE_ID));
+diff --git a/lib/profiles/linkedin.js b/lib/profiles/linkedin.js
+index 17bda9bb9fad300231293a84410d524158a10dd3..f0565fecd6ec086a6491a9112ba43fbced608547 100644
+--- a/lib/profiles/linkedin.js
++++ b/lib/profiles/linkedin.js
+@@ -14,6 +14,10 @@ exports.linkedin = {
+             pattern: 'https://linkedin.com/mwlite/in/{PROFILE_ID}'
+         },
+         { match: '({PROFILE_ID})', group: 1 },
++        {
++            match: '(https?://)?([a-z]{2,3}.)?linkedin.com/company/({PROFILE_ID})/?', group: 3, type: types_1.TYPE_DESKTOP,
++            pattern: 'https://linkedin.com/company/{PROFILE_ID}'
++        },
+     ]
+ };
+ //# sourceMappingURL=linkedin.js.map

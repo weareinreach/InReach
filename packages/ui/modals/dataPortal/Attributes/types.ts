@@ -38,7 +38,4 @@ interface CurrencyFieldAttributes extends BaseFieldAttributes {
 	type: FieldType.currency
 }
 export type FieldAttributes =
-	| TextFieldAttributes
-	| SelectFieldAttributes
-	| NumberFieldAttributes
-	| CurrencyFieldAttributes
+	TextFieldAttributes | SelectFieldAttributes | NumberFieldAttributes | CurrencyFieldAttributes

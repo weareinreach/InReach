@@ -77,7 +77,7 @@
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "8.57.1",
 		"next": "14.2.32",
-		"next-auth": "4.24.12",
+		"next-auth": "4.24.15",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
 		"typescript": "5.6.3"

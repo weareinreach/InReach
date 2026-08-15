@@ -22,9 +22,7 @@ const number = z.object({
 })
 
 const incompatible = z
-	.object({
-		/** Incompatible data from migration - needs to be cleaned up. */
-	})
+	.object({/** Incompatible data from migration - needs to be cleaned up. */})
 	.catchall(z.record(z.any()))
 // const accessInstructions = z.object({
 // 	access_value: z.string().nullish(),

@@ -174,7 +174,9 @@ const OutsideServiceArea = () => {
 					</Stack>
 					<Skeleton visible={loading}>
 						<CrisisSupport role='international'>
-							{data?.map((resource) => <CrisisSupport.International data={resource} key={resource.id} />)}
+							{data?.map((resource) => (
+								<CrisisSupport.International data={resource} key={resource.id} />
+							))}
 						</CrisisSupport>
 					</Skeleton>
 				</Stack>
