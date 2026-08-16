@@ -24,6 +24,9 @@ on:
     #       │ │ │ │ │
     - cron: 0 8 * * *
 
+permissions:
+  contents: read
+
 jobs:
   synchronize-with-crowdin:
     name: Crowdin Actions

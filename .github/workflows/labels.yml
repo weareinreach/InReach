@@ -8,6 +8,13 @@ on:
     paths:
       - .github/labels.yml
 
+# action-label-syncer creates/updates/deletes repo labels via the default GITHUB_TOKEN, which
+# needs `issues: write` (label management lives under the Issues API) - `contents: read` alone
+# would let this checkout but fail (403) when it tries to actually sync labels.
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   labels:
     name: ♻️ Sync labels
