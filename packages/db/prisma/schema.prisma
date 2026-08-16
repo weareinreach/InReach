@@ -1,11 +1,11 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters", "fullTextSearch", "nativeDistinct", "postgresqlExtensions", "tracing", "views", "relationJoins"]
+  previewFeatures = ["fullTextSearchPostgres", "nativeDistinct", "postgresqlExtensions", "views", "relationJoins"]
 }
 
 generator aws {
   provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters", "fullTextSearch", "nativeDistinct", "postgresqlExtensions", "tracing", "views", "relationJoins"]
+  previewFeatures = ["fullTextSearchPostgres", "nativeDistinct", "postgresqlExtensions", "views", "relationJoins"]
   binaryTargets   = ["native", "linux-arm64-openssl-3.0.x"]
 }
 
