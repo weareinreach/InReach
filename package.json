@@ -74,6 +74,16 @@
 				"webpack": "5"
 			}
 		},
+		"onlyBuiltDependencies": [
+			"better-sqlite3",
+			"bufferutil",
+			"esbuild",
+			"msw",
+			"prisma",
+			"protobufjs",
+			"sharp",
+			"unrs-resolver"
+		],
 		"overrides": {
 			"better-sqlite3@<9": "9.6.0",
 			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec"
