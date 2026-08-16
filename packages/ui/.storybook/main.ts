@@ -1,3 +1,4 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
 /* eslint-disable node/no-process-env */
 import { type StorybookConfig } from '@storybook/nextjs'
 import isChromatic from 'chromatic/isChromatic'
@@ -6,7 +7,13 @@ import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import { mergeAndConcat } from 'merge-anything'
 import { type PropItem } from 'react-docgen-typescript'
 
+import { createRequire } from 'node:module'
+import { fileURLToPath } from 'node:url'
 import path, { dirname, join } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const require = createRequire(import.meta.url)
 
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') })
 
@@ -38,22 +45,22 @@ const storybookConfig: StorybookConfig = {
 		'../public',
 	],
 	addons: [
-		getAbsolutePath('@storybook/addon-essentials'),
 		getAbsolutePath('@storybook/addon-a11y'),
 		getAbsolutePath('@storybook/addon-designs'),
 		getAbsolutePath('storybook-addon-pseudo-states'),
-		getAbsolutePath('@storybook/addon-interactions'),
 		getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
-
-		getAbsolutePath('@storybook/addon-mdx-gfm'),
 		getAbsolutePath('@chromatic-com/storybook'),
-
+		getAbsolutePath('@storybook/addon-docs'),
 		// This addon doesn't like to be wrapped.
 		// eslint-disable-next-line storybook/no-uninstalled-addons
 		'@tomfreudenberg/next-auth-mock/storybook',
+		// This addon's package.json doesn't have a `./package.json` export, which getAbsolutePath needs.
+		// eslint-disable-next-line storybook/no-uninstalled-addons
+		'msw-storybook-addon',
+		getAbsolutePath('@storybook/addon-mcp'),
 	],
 	framework: {
-		name: '@storybook/nextjs',
+		name: getAbsolutePath('@storybook/nextjs'),
 		options: {
 			builder: {
 				lazyCompilation: Boolean(process.env.SB_LAZY),

@@ -1,4 +1,4 @@
-import { type StoryContext, type StoryFn } from '@storybook/react'
+import { type StoryContext, type StoryFn } from '@storybook/nextjs'
 import { StrictMode } from 'react'
 
 export const WithStrictMode = (Story: StoryFn, context: StoryContext) =>

@@ -13,6 +13,9 @@ import path from 'path'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { localeList } from '@weareinreach/db/generated/locales.mjs'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { namespaces } from '@weareinreach/db/generated/namespaces.mjs'
 
 const isBrowser = typeof window !== 'undefined'
 const isDev = process.env.NODE_ENV !== 'production' && !process.env.CI
@@ -57,12 +60,20 @@ const backendConfig = {
 			// enforcement: this backend only ever serves single, real static-file namespaces, and any
 			// namespace that reaches it has already failed to resolve upstream (e.g. CrowdinOTA
 			// intentionally skips English) with no static-file equivalent (e.g. per-organization
-			// namespaces). Fetching a literal file named after several joined IDs will always 404, so
-			// skip the request and resolve empty instead of hitting a dead URL.
+			// namespaces, which are named after the org's ID rather than a real namespace). Fetching a
+			// literal file named after several joined IDs, or after a single ID-shaped namespace, will
+			// always 404, so skip the request and resolve empty instead of hitting a dead URL.
 			allowMultiLoading: false,
 			/** @type {import('i18next-http-backend').HttpBackendOptions['request']} */
 			request: (_options, url, _payload, callback) => {
-				if (url.includes('+')) {
+				const requestedNs =
+					url
+						.split('/')
+						.pop()
+						?.replace(/\.json$/, '') ?? ''
+				const isSingleKnownNamespace =
+					!requestedNs.includes('+') && /** @type {readonly string[]} */ (namespaces).includes(requestedNs)
+				if (!isSingleKnownNamespace) {
 					callback(null, { status: 200, data: {} })
 					return
 				}

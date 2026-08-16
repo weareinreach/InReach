@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { fieldOpt } from '~ui/mockData/fieldOpt'
 import { geo } from '~ui/mockData/geo'
@@ -9,9 +9,20 @@ import { LocationDrawer } from './index'
 const meta = {
 	title: 'Data Portal/Drawers/Create Location',
 	component: LocationDrawer,
+
+	beforeEach({ msw }) {
+		msw.use(
+			geo.autocompleteFullAddress,
+			geo.geocodeFullAddress,
+			fieldOpt.govDistsByCountryNoSub,
+			location.create
+		)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		rqDevtools: true,
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]/edit',
@@ -21,12 +32,7 @@ const meta = {
 				},
 			},
 		},
-		msw: [
-			geo.autocompleteFullAddress,
-			geo.geocodeFullAddress,
-			fieldOpt.govDistsByCountryNoSub,
-			location.create,
-		],
+
 		wdyr: true,
 	},
 } satisfies Meta<typeof LocationDrawer>

@@ -1,4 +1,4 @@
-import { type StoryContext, type StoryFn } from '@storybook/react'
+import { type StoryContext, type StoryFn } from '@storybook/nextjs'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { httpLink, loggerLink } from '@trpc/client'

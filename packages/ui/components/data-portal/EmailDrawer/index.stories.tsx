@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { organization } from '~ui/mockData/organization'
@@ -9,9 +9,15 @@ import { EmailDrawer } from './index'
 export default {
 	title: 'Data Portal/Drawers/Email',
 	component: EmailDrawer,
+
+	beforeEach({ msw }) {
+		msw.use(organization.getIdFromSlug, orgEmail.forContactInfoEdit, orgEmail.forEditDrawer, orgEmail.update)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		rqDevtools: true,
+
 		// wdyr: true,
 		nextjs: {
 			router: {
@@ -22,8 +28,8 @@ export default {
 				},
 			},
 		},
-		msw: [organization.getIdFromSlug, orgEmail.forContactInfoEdit, orgEmail.forEditDrawer, orgEmail.update],
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Drawer',

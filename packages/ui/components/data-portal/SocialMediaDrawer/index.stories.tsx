@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { organization } from '~ui/mockData/organization'
@@ -9,9 +9,20 @@ import { SocialMediaDrawer } from './index'
 export default {
 	title: 'Data Portal/Drawers/Social Media',
 	component: SocialMediaDrawer,
+
+	beforeEach({ msw }) {
+		msw.use(
+			organization.getIdFromSlug,
+			orgSocialMedia.forEditDrawer,
+			orgSocialMedia.update,
+			orgSocialMedia.getServiceTypes
+		)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		rqDevtools: true,
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]/edit',
@@ -21,13 +32,8 @@ export default {
 				},
 			},
 		},
-		msw: [
-			organization.getIdFromSlug,
-			orgSocialMedia.forEditDrawer,
-			orgSocialMedia.update,
-			orgSocialMedia.getServiceTypes,
-		],
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Drawer',

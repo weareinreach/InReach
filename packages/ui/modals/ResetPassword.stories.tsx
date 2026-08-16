@@ -1,4 +1,4 @@
-import { type Meta } from '@storybook/react'
+import { type Meta } from '@storybook/nextjs'
 
 import { ResetPasswordModal } from './ResetPassword'
 import { getTRPCMock } from '../lib/getTrpcMock'
@@ -6,14 +6,18 @@ import { getTRPCMock } from '../lib/getTrpcMock'
 export default {
 	title: 'Modals/Reset Password',
 	component: ResetPasswordModal,
-	parameters: {
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			getTRPCMock({
 				path: ['user', 'resetPassword'],
 				type: 'mutation',
 				response: { $metadata: {} },
-			}),
-		],
+			})
+		)
+	},
+
+	parameters: {
 		nextjs: {
 			router: {
 				query: {
@@ -22,9 +26,11 @@ export default {
 				},
 			},
 		},
+
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
 	},
+
 	args: {
 		// component: Button,
 		// children: 'Open Reset Password Modal',

@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { organization } from '~ui/mockData/organization'
 import { orgEmail } from '~ui/mockData/orgEmail'
@@ -11,9 +11,21 @@ import { ContactInfo } from './index'
 export default {
 	title: 'Data Display/Contact Info - Individual API',
 	component: ContactInfo,
+
 	args: {
 		parentId: 'parentId',
 	},
+
+	beforeEach({ msw }) {
+		msw.use(
+			organization.getIdFromSlug,
+			orgEmail.forContactInfo,
+			orgPhone.forContactInfo,
+			orgWebsite.forContactInfo,
+			orgSocialMedia.forContactInfo
+		)
+	},
+
 	parameters: {
 		nextjs: {
 			router: {
@@ -24,13 +36,6 @@ export default {
 				},
 			},
 		},
-		msw: [
-			organization.getIdFromSlug,
-			orgEmail.forContactInfo,
-			orgPhone.forContactInfo,
-			orgWebsite.forContactInfo,
-			orgSocialMedia.forContactInfo,
-		],
 	},
 } satisfies Meta<typeof ContactInfo>
 

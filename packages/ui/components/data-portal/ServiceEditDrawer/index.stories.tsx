@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { component } from '~ui/mockData/component'
@@ -13,9 +13,25 @@ import { ServiceEditDrawer } from './index'
 export default {
 	title: 'Data Portal/Drawers/Service Edit',
 	component: ServiceEditDrawer,
+
+	beforeEach({ msw }) {
+		msw.use(
+			organization.getIdFromSlug,
+			service.getNames,
+			service.forServiceEditDrawer,
+			service.getOptions,
+			component.ServiceSelect,
+			orgHours.forHoursDisplay,
+			serviceArea.addToArea,
+			serviceArea.delFromArea,
+			...allFieldOptHandlers
+		)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		rqDevtools: true,
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]/edit',
@@ -25,18 +41,8 @@ export default {
 				},
 			},
 		},
-		msw: [
-			organization.getIdFromSlug,
-			service.getNames,
-			service.forServiceEditDrawer,
-			service.getOptions,
-			component.ServiceSelect,
-			orgHours.forHoursDisplay,
-			serviceArea.addToArea,
-			serviceArea.delFromArea,
-			...allFieldOptHandlers,
-		],
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Drawer',

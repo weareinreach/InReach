@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mantine/core'
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 import React from 'react'
 
 import { BodyGrid as BodyGridComponent } from './BodyGrid'
@@ -21,7 +21,7 @@ export const BodyGrid: StoryObj<typeof BodyGridComponent> = {
 		const columns = []
 		for (let i = 0; i < 6; i++) {
 			columns.push(
-				<Grid.Col>
+				<Grid.Col key={i}>
 					<Box
 						sx={(theme) => ({
 							backgroundColor: theme.other.colors.tertiary.lightBlue,

@@ -1,6 +1,6 @@
 import { MantineProvider, type MantineProviderProps } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
-import { type StoryFn } from '@storybook/react'
+import { type StoryFn } from '@storybook/nextjs'
 
 import { storybookTheme } from '~ui/theme/storybook'
 

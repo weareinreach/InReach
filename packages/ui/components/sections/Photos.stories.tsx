@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { StorybookGridDouble } from '~ui/layouts'
 import { orgPhoto } from '~ui/mockData/orgPhoto'
@@ -8,10 +8,15 @@ import { PhotosSection } from './Photos'
 export default {
 	title: 'Sections/Photos',
 	component: PhotosSection,
+
+	beforeEach({ msw }) {
+		msw.use(orgPhoto.getByParent)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
-		msw: [orgPhoto.getByParent],
 	},
+
 	args: {
 		parentId: 'parentId',
 	},
@@ -23,14 +28,14 @@ type StoryDef = StoryObj<typeof PhotosSection>
 export const Desktop10Photos = {} satisfies StoryDef
 
 export const Desktop2Photos = {
-	parameters: {
-		msw: [orgPhoto.getByParent2],
+	beforeEach({ msw }) {
+		msw.use(orgPhoto.getByParent2)
 	},
 } satisfies StoryDef
 
 export const Desktop4Photos = {
-	parameters: {
-		msw: [orgPhoto.getByParent4],
+	beforeEach({ msw }) {
+		msw.use(orgPhoto.getByParent4)
 	},
 } satisfies StoryDef
 
@@ -43,16 +48,19 @@ export const Mobile = {
 } satisfies StoryDef
 
 export const Mobile2Photos = {
+	beforeEach({ msw }) {
+		msw.use(orgPhoto.getByParent2)
+	},
+
 	parameters: {
 		viewport: {
 			defaultViewport: 'iphonex',
 		},
-		msw: [orgPhoto.getByParent2],
 	},
 } satisfies StoryDef
 
 export const NoPhotos = {
-	parameters: {
-		msw: [orgPhoto.getByParent0],
+	beforeEach({ msw }) {
+		msw.use(orgPhoto.getByParent0)
 	},
 } satisfies StoryDef

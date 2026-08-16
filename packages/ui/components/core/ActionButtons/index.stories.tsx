@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { organization } from '~ui/mockData/organization'
 import { review } from '~ui/mockData/review'
@@ -9,20 +9,26 @@ import { ActionButtons as ActionButtonsComponent } from './index'
 export default {
 	title: 'Design System/Action Buttons',
 	component: ActionButtonsComponent,
+
+	beforeEach({ msw }) {
+		msw.use(
+			organization.getIdFromSlug,
+			review.create,
+			savedList.getAll,
+			savedList.saveItem,
+			savedList.createAndSaveItem
+		)
+	},
+
 	parameters: {
 		design: {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=52%3A1420&t=sleVeGl2lJv7Df18-4',
 		},
+
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
-		msw: [
-			organization.getIdFromSlug,
-			review.create,
-			savedList.getAll,
-			savedList.saveItem,
-			savedList.createAndSaveItem,
-		],
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',
@@ -32,6 +38,7 @@ export default {
 				},
 			},
 		},
+
 		nextAuthMock: { session: 'noAuth' },
 	},
 } satisfies Meta<typeof ActionButtonsComponent>
@@ -59,22 +66,30 @@ export const SaveLoggedOut = {
 } satisfies StoryObj<typeof ActionButtonsComponent.Save>
 
 export const SavedToSingleList = {
+	beforeEach({ msw }) {
+		msw.use(savedList.isSavedSingle, savedList.deleteItem, organization.getIdFromSlug)
+	},
+
 	parameters: {
 		nextAuthMock: {
 			session: 'userPic',
 		},
-		msw: [savedList.isSavedSingle, savedList.deleteItem, organization.getIdFromSlug],
 	},
+
 	args: { itemId: 'orgn_1234', itemName: 'Test item name' },
 	render: (args) => <ActionButtonsComponent.Save {...args} />,
 } satisfies StoryObj<typeof ActionButtonsComponent.Save>
 export const SavedToMultipleLists = {
+	beforeEach({ msw }) {
+		msw.use(savedList.isSavedMultiple, savedList.getAll, savedList.deleteItem, organization.getIdFromSlug)
+	},
+
 	parameters: {
 		nextAuthMock: {
 			session: 'userPic',
 		},
-		msw: [savedList.isSavedMultiple, savedList.getAll, savedList.deleteItem, organization.getIdFromSlug],
 	},
+
 	args: { itemId: 'orgn_1234', itemName: 'Test item name' },
 	render: (args) => <ActionButtonsComponent.Save {...args} />,
 } satisfies StoryObj<typeof ActionButtonsComponent.Save>

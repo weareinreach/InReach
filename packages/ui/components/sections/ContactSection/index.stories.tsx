@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { StorybookGridSingle } from '~ui/layouts'
 import { miscMock } from '~ui/mockData/misc'
@@ -13,12 +13,26 @@ import { ContactSection } from './index'
 export default {
 	title: 'Sections/Contact Info - Individual API',
 	component: ContactSection,
+
 	args: {
 		parentId: 'parentId',
 		role: 'org',
 	},
+
+	beforeEach({ msw }) {
+		msw.use(
+			organization.getIdFromSlug,
+			orgEmail.forContactInfo,
+			orgPhone.forContactInfo,
+			orgWebsite.forContactInfo,
+			orgSocialMedia.forContactInfo,
+			miscMock.hasContactInfo
+		)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',
@@ -28,15 +42,8 @@ export default {
 				},
 			},
 		},
-		msw: [
-			organization.getIdFromSlug,
-			orgEmail.forContactInfo,
-			orgPhone.forContactInfo,
-			orgWebsite.forContactInfo,
-			orgSocialMedia.forContactInfo,
-			miscMock.hasContactInfo,
-		],
 	},
+
 	decorators: [StorybookGridSingle],
 } satisfies Meta<typeof ContactSection>
 

@@ -1,5 +1,5 @@
 import { Checkbox, Grid, Radio, Space, Stack, Switch, Textarea, TextInput, Title } from '@mantine/core'
-import { type Meta } from '@storybook/react'
+import { type Meta } from '@storybook/nextjs'
 import { useState } from 'react'
 
 import { StorybookGrid } from '~ui/layouts/BodyGrid'

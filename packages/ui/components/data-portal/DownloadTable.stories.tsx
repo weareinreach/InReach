@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { downloads } from '~ui/mockData/downloads'
 
@@ -7,8 +7,12 @@ import { DownloadTable } from './DownloadTable'
 export default {
 	title: 'Data Portal/Tables/CSV Downloads',
 	component: DownloadTable,
+
+	beforeEach({ msw }) {
+		msw.use(downloads.getAllPublishedOrganizations, downloads.getAllUnpublishedOrganizations)
+	},
+
 	parameters: {
-		msw: [downloads.getAllPublishedOrganizations, downloads.getAllUnpublishedOrganizations],
 		nextAuthMock: {
 			session: 'adminAuthed',
 		},

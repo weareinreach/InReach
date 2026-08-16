@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { orgHours } from '~ui/mockData/orgHours'
 
@@ -7,11 +7,13 @@ import { Hours } from './Hours'
 export default {
 	title: 'Data Display/Hours',
 	component: Hours,
+
 	args: {
 		parentId: 'parentId',
 	},
-	parameters: {
-		msw: [orgHours.forHoursDisplay],
+
+	beforeEach({ msw }) {
+		msw.use(orgHours.forHoursDisplay)
 	},
 } satisfies Meta<typeof Hours>
 

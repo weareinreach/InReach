@@ -1,4 +1,4 @@
-import { type Meta, type StoryFn, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryFn, type StoryObj } from '@storybook/nextjs'
 import { Fragment } from 'react'
 
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'

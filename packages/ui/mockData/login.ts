@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions'
 import { delay, http, HttpResponse, type PathParams } from 'msw'
+import { action } from 'storybook/actions'
 
 import querystring from 'querystring'
 

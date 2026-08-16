@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { StorybookGridSingle } from '~ui/layouts'
 import { location } from '~ui/mockData/location'
@@ -9,13 +9,19 @@ import { VisitCard } from './VisitCard'
 export default {
 	title: 'Sections/Visit Info',
 	component: VisitCard,
+
 	args: {
 		locationId: 'locationId',
 	},
+
 	decorators: [StorybookGridSingle],
+
+	beforeEach({ msw }) {
+		msw.use(location.forVisitCard, location.forGoogleMaps, orgHours.forHoursDisplay)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
-		msw: [location.forVisitCard, location.forGoogleMaps, orgHours.forHoursDisplay],
 	},
 } satisfies Meta<typeof VisitCard>
 
