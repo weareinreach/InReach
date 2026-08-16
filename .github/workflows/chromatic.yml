@@ -11,6 +11,10 @@ on:
       ref:
         description: The head branch associated with the pull request.
         required: true
+
+permissions:
+  contents: read
+
 jobs:
   chromatic-deployment:
     env:
