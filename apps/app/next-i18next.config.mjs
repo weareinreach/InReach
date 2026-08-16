@@ -12,10 +12,10 @@ import path from 'path'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import { namespaces } from '@weareinreach/db/generated/i18nNamespaceList.mjs'
 import { localeList } from '@weareinreach/db/generated/locales.mjs'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { namespaces } from '@weareinreach/db/generated/namespaces.mjs'
 
 const isBrowser = typeof window !== 'undefined'
 const isDev = process.env.NODE_ENV !== 'production' && !process.env.CI
