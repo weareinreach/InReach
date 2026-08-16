@@ -56,7 +56,11 @@ jobs:
     name: 🏭 Add misc PR labels
     runs-on: ubuntu-latest
     if: github.base_ref != 'main'
-    permissions: {}
+    # actions-ecosystem/action-add-labels takes its token via a `github_token` *input*
+    # (defaulting to `${{ github.token }}`), not the ambient GITHUB_TOKEN env var below - so
+    # despite that env var, this job actually runs on the default token and needs real write access.
+    permissions:
+      pull-requests: write
     env:
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:

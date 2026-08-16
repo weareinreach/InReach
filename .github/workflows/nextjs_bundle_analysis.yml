@@ -72,7 +72,7 @@ jobs:
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
       - name: Analyze bundle
-        run: pnpm exec nextjs-bundle-analysis report
+        run: pnpm exec report
 
       - name: Upload bundle
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -103,7 +103,7 @@ jobs:
       # entry in your package.json file.
       - name: Compare with base branch bundle
         if: success() && github.event.number
-        run: ls -laR /home/runner/work/InReach/InReach/apps/app/.next/analyze/base && pnpm exec nextjs-bundle-analysis compare
+        run: ls -laR /home/runner/work/InReach/InReach/apps/app/.next/analyze/base && pnpm exec compare
 
       - name: Get Comment Body
         id: get-comment-body
