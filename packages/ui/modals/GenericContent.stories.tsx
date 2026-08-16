@@ -1,5 +1,5 @@
 import { List, Stack, Title } from '@mantine/core'
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { GenericContentModal } from './GenericContent'
 import { Button, Link } from '../components/core'

@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core'
 import { fieldOpt } from '~ui/mockData/fieldOpt'
@@ -10,13 +10,18 @@ type StoryDef = StoryObj<typeof BadgeEdit>
 export default {
 	title: 'Data Portal/Modals/Badge Edit',
 	component: BadgeEdit,
+
+	beforeEach({ msw }) {
+		msw.use(fieldOpt.orgBadges, organization.forBadgeEditModal, organization.updateAttributesBasic)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
-		msw: [fieldOpt.orgBadges, organization.forBadgeEditModal, organization.updateAttributesBasic],
 		rqDevtools: true,
 		whyDidYouRender: { collapseGroups: true },
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Modal',

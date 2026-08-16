@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
@@ -8,12 +8,34 @@ import { UserReviewSubmit as UserReviewPromptCompnt } from './UserReviewSubmit'
 export default {
 	title: 'Design System/User Review',
 	component: UserReviewPromptCompnt,
+
+	beforeEach({ msw }) {
+		msw.use(
+			getTRPCMock({
+				path: ['organization', 'getIdFromSlug'],
+				type: 'query',
+				response: {
+					id: 'orgn_ORGANIZATIONID',
+				},
+			}),
+			getTRPCMock({
+				path: ['review', 'create'],
+				type: 'mutation',
+				response: {
+					id: 'orev_NEWREVIEWID',
+				},
+			})
+		)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
+
 		design: {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=339%3A6891&t=sleVeGl2lJv7Df18-4',
 		},
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',
@@ -23,25 +45,8 @@ export default {
 				},
 			},
 		},
-		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['organization', 'getIdFromSlug'],
-					type: 'query',
-					response: {
-						id: 'orgn_ORGANIZATIONID',
-					},
-				}),
-				getTRPCMock({
-					path: ['review', 'create'],
-					type: 'mutation',
-					response: {
-						id: 'orev_NEWREVIEWID',
-					},
-				}),
-			],
-		},
 	},
+
 	args: {},
 	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof UserReviewPromptCompnt>

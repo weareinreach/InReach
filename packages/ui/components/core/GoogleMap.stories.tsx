@@ -1,6 +1,6 @@
-import { action } from '@storybook/addon-actions'
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 import { useEffect } from 'react'
+import { action } from 'storybook/actions'
 
 import { useGoogleMapMarker } from '~ui/hooks/useGoogleMapMarker'
 import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
@@ -62,8 +62,8 @@ export default {
 
 type StoryDef = StoryObj<typeof GoogleMap>
 export const SingleLocation = {
-	parameters: {
-		msw: [
+	beforeEach({ msw }) {
+		msw.use(
 			getTRPCMock({
 				path: ['location', 'forGoogleMaps'],
 				response: {
@@ -82,9 +82,10 @@ export const SingleLocation = {
 					},
 					zoom: 13,
 				},
-			}),
-		],
+			})
+		)
 	},
+
 	args: {
 		locationIds: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
 	},
@@ -97,8 +98,9 @@ export const MultipleLocations = {
 			'oloc_01GVH3VFDPYPNQDWZEGHW9QWM9',
 		],
 	},
-	parameters: {
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			getTRPCMock({
 				path: ['location', 'forGoogleMaps'],
 				response: {
@@ -134,7 +136,7 @@ export const MultipleLocations = {
 					},
 					zoom: null,
 				},
-			}),
-		],
+			})
+		)
 	},
 } satisfies StoryDef

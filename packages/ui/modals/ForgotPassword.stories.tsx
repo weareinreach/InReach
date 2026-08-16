@@ -1,4 +1,4 @@
-import { type Meta } from '@storybook/react'
+import { type Meta } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 
@@ -8,8 +8,9 @@ import { getTRPCMock } from '../lib/getTrpcMock'
 export default {
 	title: 'Modals/Forgot Password',
 	component: ForgotPasswordModal,
-	parameters: {
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			getTRPCMock({
 				path: ['user', 'forgotPassword'],
 				type: 'mutation',
@@ -19,11 +20,15 @@ export default {
 					},
 					$metadata: {},
 				},
-			}),
-		],
+			})
+		)
+	},
+
+	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Forgot Password Modal',

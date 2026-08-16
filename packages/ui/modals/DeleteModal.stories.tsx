@@ -1,4 +1,4 @@
-import { type Meta } from '@storybook/react'
+import { type Meta } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 
@@ -8,17 +8,22 @@ import { getTRPCMock } from '../lib/getTrpcMock'
 export default {
 	title: 'Modals/Delete Account',
 	component: DeleteModal,
-	parameters: {
-		layout: 'fullscreen',
-		layoutWrapper: 'centeredHalf',
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			getTRPCMock({
 				path: ['user', 'deleteAccount'],
 				type: 'mutation',
 				response: true,
-			}),
-		],
+			})
+		)
 	},
+
+	parameters: {
+		layout: 'fullscreen',
+		layoutWrapper: 'centeredHalf',
+	},
+
 	args: {
 		component: Button,
 		children: 'Open Delete Account Modal',

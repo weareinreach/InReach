@@ -1,4 +1,4 @@
-import { type Meta } from '@storybook/react'
+import { type Meta } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
@@ -8,9 +8,30 @@ import { ReviewModal } from './Review'
 export default {
 	title: 'Modals/Review',
 	component: ReviewModal,
+
+	beforeEach({ msw }) {
+		msw.use(
+			getTRPCMock({
+				path: ['organization', 'getIdFromSlug'],
+				type: 'query',
+				response: {
+					id: 'orgn_ORGANIZATIONID',
+				},
+			}),
+			getTRPCMock({
+				path: ['review', 'create'],
+				type: 'mutation',
+				response: {
+					id: 'orev_NEWREVIEWID',
+				},
+			})
+		)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',
@@ -20,25 +41,8 @@ export default {
 				},
 			},
 		},
-		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['organization', 'getIdFromSlug'],
-					type: 'query',
-					response: {
-						id: 'orgn_ORGANIZATIONID',
-					},
-				}),
-				getTRPCMock({
-					path: ['review', 'create'],
-					type: 'mutation',
-					response: {
-						id: 'orev_NEWREVIEWID',
-					},
-				}),
-			],
-		},
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Review Modal',

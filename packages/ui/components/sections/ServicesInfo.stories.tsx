@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { StorybookGridDouble } from '~ui/layouts'
 import { service } from '~ui/mockData/service'
@@ -8,14 +8,22 @@ import { ServicesInfoCard } from './ServicesInfo'
 export default {
 	title: 'Sections/Services Info',
 	component: ServicesInfoCard,
+
 	args: {
 		parentId: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH',
 	},
+
 	argTypes: {
 		hideRemoteBadges: { control: 'boolean' },
 	},
+
+	beforeEach({ msw }) {
+		msw.use(service.forServiceInfoCard, service.getParentName, service.forServiceModal)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',
@@ -25,9 +33,10 @@ export default {
 				},
 			},
 		},
-		msw: [service.forServiceInfoCard, service.getParentName, service.forServiceModal],
+
 		rqDevtools: true,
 	},
+
 	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof ServicesInfoCard>
 

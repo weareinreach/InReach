@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 import { type ComponentProps, useState } from 'react'
 import { type SetOptional } from 'type-fest'
 
@@ -16,15 +16,21 @@ const StateWrapper = (args: SetOptional<ComponentProps<typeof SearchBoxComp>, 'l
 export default {
 	title: 'Design System/Search Box',
 	component: SearchBoxComp,
+
+	beforeEach({ msw }) {
+		msw.use(organization.searchName, geo.autocompleteSearchBox, geo.geocodeSearchBox)
+	},
+
 	parameters: {
 		design: {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=51%3A493&t=AVaWASBVFglQPwtW-0',
 		},
-		msw: [organization.searchName, geo.autocompleteSearchBox, geo.geocodeSearchBox],
+
 		layoutWrapper: 'centeredFullscreen',
 		rqDevtools: true,
 	},
+
 	render: (args) => (
 		<div style={{ minWidth: '600px' }}>
 			<StateWrapper {...args} />

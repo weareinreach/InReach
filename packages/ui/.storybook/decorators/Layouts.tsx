@@ -1,5 +1,5 @@
 import { Center, Grid } from '@mantine/core'
-import { type StoryContext, type StoryFn } from '@storybook/react'
+import { type StoryContext, type StoryFn } from '@storybook/nextjs'
 
 import { BodyGrid } from '~ui/layouts/BodyGrid'
 

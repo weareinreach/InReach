@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { trpc } from '~ui/lib/trpcClient'
 import { organization } from '~ui/mockData/organization'
@@ -8,9 +8,13 @@ import { CrisisSupport } from './index'
 export default {
 	title: 'Sections/Crisis Support',
 	component: CrisisSupport,
+
+	beforeEach({ msw }) {
+		msw.use(organization.getIntlCrisis, organization.getNatlCrisis)
+	},
+
 	parameters: {
 		layoutWrapper: 'gridDouble',
-		msw: [organization.getIntlCrisis, organization.getNatlCrisis],
 	},
 } satisfies Meta<typeof CrisisSupport>
 

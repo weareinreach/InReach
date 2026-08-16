@@ -1,5 +1,5 @@
 import { DevTool } from '@hookform/devtools'
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 import { useForm } from 'react-hook-form'
 import { type FieldValues } from 'react-hook-form'
 

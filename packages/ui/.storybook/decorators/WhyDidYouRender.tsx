@@ -1,4 +1,4 @@
-import { type StoryContext, type StoryFn } from '@storybook/react'
+import { type StoryContext, type StoryFn } from '@storybook/nextjs'
 
 export const WithWhyDidYouRender = (Story: StoryFn, { parameters, component }: StoryContext) => {
 	const { wdyr } = parameters

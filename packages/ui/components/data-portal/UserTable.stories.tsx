@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { user } from '~ui/mockData/user'
 
@@ -7,8 +7,12 @@ import { UserTable } from './UserTable'
 export default {
 	title: 'Data Portal/Tables/User Management',
 	component: UserTable,
+
+	beforeEach({ msw }) {
+		msw.use(user.forUserTable)
+	},
+
 	parameters: {
-		msw: [user.forUserTable],
 		rqDevtools: true,
 	},
 } satisfies Meta<typeof UserTable>

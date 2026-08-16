@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { fieldOpt } from '~ui/mockData/fieldOpt'
@@ -10,9 +10,15 @@ import { PhoneDrawer } from '.'
 export default {
 	title: 'Data Portal/Drawers/Phone',
 	component: PhoneDrawer,
+
+	beforeEach({ msw }) {
+		msw.use(organization.getIdFromSlug, fieldOpt.countries, orgPhone.forEditDrawer, fieldOpt.phoneTypes)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		rqDevtools: true,
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]/edit',
@@ -22,8 +28,8 @@ export default {
 				},
 			},
 		},
-		msw: [organization.getIdFromSlug, fieldOpt.countries, orgPhone.forEditDrawer, fieldOpt.phoneTypes],
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Drawer',

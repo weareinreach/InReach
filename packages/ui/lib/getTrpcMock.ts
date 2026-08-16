@@ -1,4 +1,3 @@
-import { action } from '@storybook/addon-actions'
 import {
 	type DefaultBodyType,
 	delay,
@@ -8,6 +7,7 @@ import {
 	type PathParams,
 	type StrictRequest,
 } from 'msw'
+import { action } from 'storybook/actions'
 import { type Promisable } from 'type-fest'
 
 import path from 'path'

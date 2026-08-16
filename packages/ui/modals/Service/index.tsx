@@ -37,7 +37,10 @@ const ServiceModalTitle = ({
 	const icons = ['share', 'save', 'report'] satisfies ModalTitleProps['icons']
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { orgLocationId } = router.query
-	const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
+	const apiQuery =
+		typeof orgLocationId === 'string'
+			? { orgLocationId, slug: undefined }
+			: { slug, orgLocationId: undefined }
 	const { data, status } = api.service.getParentName.useQuery(apiQuery)
 	const renderModalTitle = (backToText?: string | null) => (
 		<ModalTitle

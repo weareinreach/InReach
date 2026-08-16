@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { organization } from '~ui/mockData/organization'
@@ -9,9 +9,15 @@ import { WebsiteDrawer } from './index'
 export default {
 	title: 'Data Portal/Drawers/Website',
 	component: WebsiteDrawer,
+
+	beforeEach({ msw }) {
+		msw.use(organization.getIdFromSlug, orgWebsite.forEditDrawer, orgWebsite.update)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		rqDevtools: true,
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]/edit',
@@ -21,8 +27,8 @@ export default {
 				},
 			},
 		},
-		msw: [organization.getIdFromSlug, orgWebsite.forEditDrawer, orgWebsite.update],
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Drawer',

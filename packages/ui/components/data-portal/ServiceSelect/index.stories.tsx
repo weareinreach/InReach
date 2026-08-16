@@ -1,5 +1,5 @@
 import { DevTool } from '@hookform/devtools'
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 import { type FieldValues, useForm } from 'react-hook-form'
 
 import { component } from '~ui/mockData/component'
@@ -22,14 +22,20 @@ const StoryRender = <T extends FieldValues>(args: ServiceSelectProps<T>) => {
 export default {
 	title: 'Data Portal/Drawers/Service Selection',
 	component: ServiceSelect,
+
+	beforeEach({ msw }) {
+		msw.use(component.ServiceSelect)
+	},
+
 	parameters: {
-		msw: [component.ServiceSelect],
 		layout: 'fullscreen',
 		rqDevtools: true,
 	},
+
 	args: {
 		name: 'services',
 	},
+
 	render: StoryRender,
 } satisfies Meta<typeof ServiceSelect>
 

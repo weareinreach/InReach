@@ -1,4 +1,4 @@
-import { type Meta } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { StorybookGridDouble } from '~ui/layouts'
 import { trpc } from '~ui/lib/trpcClient'
@@ -20,10 +20,13 @@ export default {
 	},
 } satisfies Meta<typeof SearchResultCard>
 
+type StoryDef = StoryObj<typeof SearchResultCard>
+
 export const SingleResult = {
-	parameters: {
-		msw: [organization.searchDistance],
+	beforeEach({ msw }) {
+		msw.use(organization.searchDistance)
 	},
+
 	render: () => {
 		const { data } = trpc.organization.searchDistance.useQuery({
 			dist: 0,
@@ -42,11 +45,12 @@ export const SingleResult = {
 		}
 		return <SearchResultCard result={item} index={0} />
 	},
-}
+} satisfies StoryDef
 export const SingleResultWithLongName = {
-	parameters: {
-		msw: [organization.searchDistanceLongTitle],
+	beforeEach({ msw }) {
+		msw.use(organization.searchDistanceLongTitle)
 	},
+
 	render: () => {
 		const { data } = trpc.organization.searchDistance.useQuery({
 			dist: 0,
@@ -65,12 +69,13 @@ export const SingleResultWithLongName = {
 		}
 		return <SearchResultCard result={item} index={0} />
 	},
-}
+} satisfies StoryDef
 
 export const MultipleResults = {
-	parameters: {
-		msw: [organization.searchDistance],
+	beforeEach({ msw }) {
+		msw.use(organization.searchDistance)
 	},
+
 	render: () => {
 		const { data } = trpc.organization.searchDistance.useQuery({
 			dist: 0,
@@ -95,9 +100,9 @@ export const MultipleResults = {
 			</>
 		)
 	},
-}
+} satisfies StoryDef
 export const SingleLoading = {
 	args: {
 		loading: true,
 	},
-}
+} satisfies StoryDef

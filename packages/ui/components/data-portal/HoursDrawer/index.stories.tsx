@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
@@ -13,20 +13,9 @@ import { HoursDrawer } from './index'
 export default {
 	title: 'Data Portal/Drawers/Hours',
 	component: HoursDrawer,
-	parameters: {
-		layout: 'fullscreen',
-		rqDevtools: true,
-		// wdyr: true,
-		nextjs: {
-			router: {
-				pathname: '/org/[slug]/edit',
-				asPath: '/org/mock-org-slug',
-				query: {
-					slug: 'mock-org-slug',
-				},
-			},
-		},
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			fieldOpt.govDistsByCountryNoSub,
 			organization.getIdFromSlug,
 			service.getNames,
@@ -37,9 +26,26 @@ export default {
 				response: { id: 'oloc_00000RECORD22ID' },
 			}),
 			orgHours.forHoursDrawer,
-			orgHours.processDrawer,
-		],
+			orgHours.processDrawer
+		)
 	},
+
+	parameters: {
+		layout: 'fullscreen',
+		rqDevtools: true,
+
+		// wdyr: true,
+		nextjs: {
+			router: {
+				pathname: '/org/[slug]/edit',
+				asPath: '/org/mock-org-slug',
+				query: {
+					slug: 'mock-org-slug',
+				},
+			},
+		},
+	},
+
 	args: {
 		component: Button,
 		children: 'Open Drawer',

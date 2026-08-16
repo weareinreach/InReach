@@ -38,22 +38,22 @@ const storybookConfig: StorybookConfig = {
 		'../public',
 	],
 	addons: [
-		getAbsolutePath('@storybook/addon-essentials'),
 		getAbsolutePath('@storybook/addon-a11y'),
 		getAbsolutePath('@storybook/addon-designs'),
 		getAbsolutePath('storybook-addon-pseudo-states'),
-		getAbsolutePath('@storybook/addon-interactions'),
 		getAbsolutePath('@storybook/addon-webpack5-compiler-swc'),
-
-		getAbsolutePath('@storybook/addon-mdx-gfm'),
 		getAbsolutePath('@chromatic-com/storybook'),
-
+		getAbsolutePath('@storybook/addon-docs'),
 		// This addon doesn't like to be wrapped.
 		// eslint-disable-next-line storybook/no-uninstalled-addons
 		'@tomfreudenberg/next-auth-mock/storybook',
+
+		// This addon's package.json doesn't have a `./package.json` export, which getAbsolutePath needs.
+		// eslint-disable-next-line storybook/no-uninstalled-addons
+		'msw-storybook-addon',
 	],
 	framework: {
-		name: '@storybook/nextjs',
+		name: getAbsolutePath('@storybook/nextjs'),
 		options: {
 			builder: {
 				lazyCompilation: Boolean(process.env.SB_LAZY),

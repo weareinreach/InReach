@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
@@ -10,12 +10,17 @@ type StoryDef = StoryObj<typeof AttributeModal>
 export default {
 	title: 'Data Portal/Modals/Attributes',
 	component: AttributeModal,
+
+	beforeEach({ msw }) {
+		msw.use(...allFieldOptHandlers, organization.attachAttribute)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
-		msw: [...allFieldOptHandlers, organization.attachAttribute],
 		rqDevtools: true,
 	},
+
 	args: {
 		component: Button,
 		children: 'Open Modal',
