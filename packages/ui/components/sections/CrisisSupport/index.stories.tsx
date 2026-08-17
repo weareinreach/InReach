@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { trpc } from '~ui/lib/trpcClient'
 import { organization } from '~ui/mockData/organization'
@@ -8,9 +8,13 @@ import { CrisisSupport } from './index'
 export default {
 	title: 'Sections/Crisis Support',
 	component: CrisisSupport,
+
+	beforeEach({ msw }) {
+		msw.use(organization.getIntlCrisis, organization.getNatlCrisis)
+	},
+
 	parameters: {
 		layoutWrapper: 'gridDouble',
-		msw: [organization.getIntlCrisis, organization.getNatlCrisis],
 	},
 } satisfies Meta<typeof CrisisSupport>
 
@@ -20,7 +24,9 @@ export const InternationalContainer = {
 
 		return (
 			<CrisisSupport role='international'>
-				{data?.map((item) => <CrisisSupport.International data={item} key={item.id} />)}{' '}
+				{data?.map((item) => (
+					<CrisisSupport.International data={item} key={item.id} />
+				))}{' '}
 			</CrisisSupport>
 		)
 	},
@@ -41,7 +47,9 @@ export const NationalContainer = {
 		const { data } = trpc.organization.getNatlCrisis.useQuery({ cca2: '' })
 		return (
 			<CrisisSupport role='national'>
-				{data?.map((item) => <CrisisSupport.National data={item} key={item.id} />)}{' '}
+				{data?.map((item) => (
+					<CrisisSupport.National data={item} key={item.id} />
+				))}{' '}
 			</CrisisSupport>
 		)
 	},

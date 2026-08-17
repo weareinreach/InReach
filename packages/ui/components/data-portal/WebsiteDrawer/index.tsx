@@ -15,7 +15,7 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type Resolver, useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
 
 import { type TUpsertSchema, ZUpsertSchema } from '@weareinreach/api/router/orgWebsite/mutation.upsert.schema'
@@ -67,7 +67,10 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			getValues,
 			setValue: setFormValue,
 		} = useForm<TUpsertSchema>({
-			resolver: zodResolver(ZUpsertSchema),
+			// zod's `.preprocess()` on `orgLocationId` makes @hookform/resolvers' structural
+			// inference of the resolver's raw input type widen to `unknown`; the schema's actual
+			// parsed output is `TUpsertSchema`, confirmed via z.infer.
+			resolver: zodResolver(ZUpsertSchema) as Resolver<TUpsertSchema>,
 			values:
 				websiteData && organizationId
 					? {

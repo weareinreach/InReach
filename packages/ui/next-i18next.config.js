@@ -2,7 +2,7 @@
 // @ts-check
 /* eslint-disable import/no-unused-modules */
 // const { env } = require('@weareinreach/config')
-/** @type {import('next-i18next').UserConfig} */
+/** @type {import('next-i18next/pages').UserConfig} */
 const config = {
 	i18n: {
 		defaultLocale: 'en',

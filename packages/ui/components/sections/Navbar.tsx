@@ -1,7 +1,7 @@
 import { Container, createStyles, Flex, Group, rem, UnstyledButton, useMantineTheme } from '@mantine/core'
 import Image from 'next/image'
 import { type NextRouter, useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 import { navbarEvent } from '@weareinreach/analytics/events'

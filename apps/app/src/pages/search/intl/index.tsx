@@ -16,7 +16,7 @@ import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useEffect, useState } from 'react'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { z } from 'zod'
@@ -131,7 +131,9 @@ const OutsideServiceArea = () => {
 					</Title>
 					<Skeleton visible={loading}>
 						<CrisisSupport role='international'>
-							{data?.map((resource) => <CrisisSupport.International data={resource} key={resource.id} />)}
+							{data?.map((resource) => (
+								<CrisisSupport.International data={resource} key={resource.id} />
+							))}
 						</CrisisSupport>
 					</Skeleton>
 				</Stack>

@@ -14,7 +14,7 @@ import {
 	Checkbox as VanillaCheckbox,
 } from '@mantine/core'
 import { useDisclosure, useMediaQuery, useViewportSize } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import {
 	type BaseSyntheticEvent,
 	type MouseEvent,

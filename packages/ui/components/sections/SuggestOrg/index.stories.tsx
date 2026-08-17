@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { geo } from '~ui/mockData/geo'
 import { organization } from '~ui/mockData/organization'
@@ -8,17 +8,33 @@ import { SuggestOrg } from '.'
 export default {
 	title: 'Sections/Suggest an Organization',
 	component: SuggestOrg,
-	parameters: {
-		layout: 'fullscreen',
-		layoutWrapper: 'gridDouble',
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			geo.autocompleteFullAddress,
 			geo.geocodeFullAddress,
 			organization.suggestionOptions,
-			organization.createNewSuggestion, // Keep this for the actual submission
+			// Keep this for the actual submission
+			organization.createNewSuggestion,
 			organization.generateSlug,
-			organization.getPotentialMatches,
-		],
+			organization.getPotentialMatches
+		)
+	},
+
+	parameters: {
+		layout: 'fullscreen',
+		layoutWrapper: 'gridDouble',
+	},
+
+	// None of these stories ever passed authPromptState - it's a required prop, so every story here
+	// crashed reading `.overlay` off of undefined. setOverlay is a no-op since these stories don't
+	// need to observe the overlay's own open/close behavior.
+	args: {
+		authPromptState: {
+			overlay: false,
+			setOverlay: () => {},
+			hasAuth: true,
+		},
 	},
 } satisfies Meta<typeof SuggestOrg>
 
@@ -39,14 +55,14 @@ export const NearMissWebsiteWarning = {} satisfies StoryDef
 // mutation always rejects with CONFLICT, demonstrating the server-side error alert (e.g. for a
 // race-condition duplicate).
 export const SubmitConflictError = {
-	parameters: {
-		msw: [
+	beforeEach({ msw }) {
+		msw.use(
 			geo.autocompleteFullAddress,
 			geo.geocodeFullAddress,
 			organization.suggestionOptions,
 			organization.createNewSuggestionConflict,
 			organization.generateSlug,
-			organization.getPotentialMatches,
-		],
+			organization.getPotentialMatches
+		)
 	},
 } satisfies StoryDef

@@ -1,7 +1,7 @@
 import { Card, createStyles, Modal, rem, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { setCookie } from 'cookies-next'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 import { useCustomVariant, useScreenSize } from '~ui/hooks'

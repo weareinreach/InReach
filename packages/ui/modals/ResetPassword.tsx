@@ -15,7 +15,7 @@ import {
 import { useForm, type UseFormReturnType, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
@@ -131,168 +131,168 @@ const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: Fo
 	)
 }
 
-const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalBodyProps>(
-	(/*props, ref*/) => {
-		const { t } = useTranslation(['common'])
-		const router = useRouter()
-		const autoOpen = Boolean(router.query['r'])
-		const variants = useCustomVariant()
-		const [success, setSuccess] = useState(false)
-		const [error, setError] = useState(false)
-		const { isMobile } = useScreenSize()
-		const FormSchema = z
-			.object({
-				password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
-					message: t('form-error-password-req'),
-				}),
-				confirmPassword: z.string(),
-			})
-			.refine((data) => data.password === data.confirmPassword, {
-				message: t('password-error-match'),
-				path: ['confirmPassword'],
-			})
-		const DataSchema = z.object({ r: z.string(), code: z.string() })
-
-		const passwordResetForm = useForm<FormProps>({
-			validate: zodResolver(FormSchema),
-			validateInputOnBlur: true,
-			initialValues: {
-				data: '',
-				code: '',
-				password: '',
-				confirmPassword: '',
-			},
+const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalBodyProps>((
+	/*props, ref*/
+) => {
+	const { t } = useTranslation(['common'])
+	const router = useRouter()
+	const autoOpen = Boolean(router.query['r'])
+	const variants = useCustomVariant()
+	const [success, setSuccess] = useState(false)
+	const [error, setError] = useState(false)
+	const { isMobile } = useScreenSize()
+	const FormSchema = z
+		.object({
+			password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
+				message: t('form-error-password-req'),
+			}),
+			confirmPassword: z.string(),
 		})
-		const pwResetHandler = api.user.resetPassword.useMutation({
-			onSuccess: () => setSuccess(true),
-			onError: (err) => {
-				// This line is for developer debugging in the console.
-				console.error('Password reset failed:', err)
-				// This line triggers the UI to show the error message.
-				setError(true)
-			},
+		.refine((data) => data.password === data.confirmPassword, {
+			message: t('password-error-match'),
+			path: ['confirmPassword'],
 		})
+	const DataSchema = z.object({ r: z.string(), code: z.string() })
 
-		const [opened, handler] = useDisclosure(autoOpen)
-		const { query, pathname, replace } = router
-		useEffect(() => {
-			// This effect should only run when the component mounts with the autoOpen flag.
-			// It populates the form with data from the URL and ensures the modal is open.
-			const parsedParams = DataSchema.safeParse(query)
-			if (autoOpen && parsedParams.success) {
-				passwordResetForm.setValues({ data: parsedParams.data.r, code: parsedParams.data.code })
-				handler.open()
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [autoOpen, query]) // We only want this to run when autoOpen status or query changes.
+	const passwordResetForm = useForm<FormProps>({
+		validate: zodResolver(FormSchema),
+		validateInputOnBlur: true,
+		initialValues: {
+			data: '',
+			code: '',
+			password: '',
+			confirmPassword: '',
+		},
+	})
+	const pwResetHandler = api.user.resetPassword.useMutation({
+		onSuccess: () => setSuccess(true),
+		onError: (err) => {
+			// This line is for developer debugging in the console.
+			console.error('Password reset failed:', err)
+			// This line triggers the UI to show the error message.
+			setError(true)
+		},
+	})
 
-		const handleClose = useCallback(() => {
-			handler.close()
-			setSuccess(false)
-			setError(false)
-			// @ts-expect-error pathname is a valid route string but strict types for replace are missing it
-			replace(pathname, undefined, { shallow: true })
-		}, [handler, replace, pathname])
+	const [opened, handler] = useDisclosure(autoOpen)
+	const { query, pathname, replace } = router
+	useEffect(() => {
+		// This effect should only run when the component mounts with the autoOpen flag.
+		// It populates the form with data from the URL and ensures the modal is open.
+		const parsedParams = DataSchema.safeParse(query)
+		if (autoOpen && parsedParams.success) {
+			passwordResetForm.setValues({ data: parsedParams.data.r, code: parsedParams.data.code })
+			handler.open()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [autoOpen, query]) // We only want this to run when autoOpen status or query changes.
 
-		const modalTitle = useMemo(
-			() => <ModalTitle breadcrumb={{ option: 'close', onClick: handleClose }} />,
-			[handleClose]
-		)
+	const handleClose = useCallback(() => {
+		handler.close()
+		setSuccess(false)
+		setError(false)
+		// @ts-expect-error pathname is a valid route string but strict types for replace are missing it
+		replace(pathname, undefined, { shallow: true })
+	}, [handler, replace, pathname])
 
-		const handlePwResetSubmit = useCallback(() => {
-			const values = passwordResetForm.getTransformedValues()
-			pwResetHandler.mutate(values)
-		}, [passwordResetForm, pwResetHandler])
+	const modalTitle = useMemo(
+		() => <ModalTitle breadcrumb={{ option: 'close', onClick: handleClose }} />,
+		[handleClose]
+	)
 
-		const bodyReset = useMemo(
-			() => (
-				<Stack align='center' spacing={24}>
-					<Stack spacing={0} align='center'>
-						<Title order={1}>🔐</Title>
-						<Title order={2}>{t('reset-password')}</Title>
-					</Stack>
-					<FormPassword form={passwordResetForm} />
-					<PasswordInput
-						required
-						label={t('password-confirm')}
-						placeholder={t('password-reenter-placeholder')}
-						{...passwordResetForm.getInputProps('confirmPassword')}
-					/>
-					<Button
-						onClick={handlePwResetSubmit}
-						variant='primary-icon'
-						fullWidth
-						loaderPosition='center'
-						loading={pwResetHandler.isLoading}
-						disabled={!passwordResetForm.isValid()}
-					>
-						{t('save')}
-					</Button>
+	const handlePwResetSubmit = useCallback(() => {
+		const values = passwordResetForm.getTransformedValues()
+		pwResetHandler.mutate(values)
+	}, [passwordResetForm, pwResetHandler])
+
+	const bodyReset = useMemo(
+		() => (
+			<Stack align='center' spacing={24}>
+				<Stack spacing={0} align='center'>
+					<Title order={1}>🔐</Title>
+					<Title order={2}>{t('reset-password')}</Title>
 				</Stack>
-			),
-			[t, passwordResetForm, pwResetHandler, handlePwResetSubmit]
-		)
+				<FormPassword form={passwordResetForm} />
+				<PasswordInput
+					required
+					label={t('password-confirm')}
+					placeholder={t('password-reenter-placeholder')}
+					{...passwordResetForm.getInputProps('confirmPassword')}
+				/>
+				<Button
+					onClick={handlePwResetSubmit}
+					variant='primary-icon'
+					fullWidth
+					loaderPosition='center'
+					loading={pwResetHandler.isLoading}
+					disabled={!passwordResetForm.isValid()}
+				>
+					{t('save')}
+				</Button>
+			</Stack>
+		),
+		[t, passwordResetForm, pwResetHandler, handlePwResetSubmit]
+	)
 
-		const bodySuccess = useMemo(
-			() => (
-				<Stack align='center' spacing={24}>
-					<Stack spacing={0} align='center'>
-						<Title order={1}>✅</Title>
-						<Title order={2}>{t('password-saved')}</Title>
-					</Stack>
-					<Trans
-						i18nKey='password-reset-success'
-						components={{
-							LoginModal: (
-								<LoginModalLauncher component={Link} key={0} variant={variants.Link.inheritStyle}>
-									.
-								</LoginModalLauncher>
-							),
-							Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
-						}}
-					/>
+	const bodySuccess = useMemo(
+		() => (
+			<Stack align='center' spacing={24}>
+				<Stack spacing={0} align='center'>
+					<Title order={1}>✅</Title>
+					<Title order={2}>{t('password-saved')}</Title>
 				</Stack>
-			),
-			[t, variants]
-		)
-		const bodyError = useMemo(
-			() => (
-				<Stack align='center' spacing={24}>
-					<Stack spacing={0} align='center'>
-						<Title order={1}>🫣</Title>
-						<Title order={2}>{t('errors.oh-no')}</Title>
-					</Stack>
-					<Trans
-						i18nKey='errors.try-again-text'
-						components={{
-							Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
-						}}
-					/>
+				<Trans
+					i18nKey='password-reset-success'
+					components={{
+						LoginModal: (
+							<LoginModalLauncher component={Link} key={0} variant={variants.Link.inheritStyle}>
+								.
+							</LoginModalLauncher>
+						),
+						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
+					}}
+				/>
+			</Stack>
+		),
+		[t, variants]
+	)
+	const bodyError = useMemo(
+		() => (
+			<Stack align='center' spacing={24}>
+				<Stack spacing={0} align='center'>
+					<Title order={1}>🫣</Title>
+					<Title order={2}>{t('errors.oh-no')}</Title>
 				</Stack>
-			),
-			[variants, t]
-		)
+				<Trans
+					i18nKey='errors.try-again-text'
+					components={{
+						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
+					}}
+				/>
+			</Stack>
+		),
+		[variants, t]
+	)
 
-		const renderBody = useMemo(() => {
-			if (success) {
-				return bodySuccess
-			}
-			if (error) {
-				return bodyError
-			}
-			return bodyReset
-		}, [bodyError, bodyReset, bodySuccess, error, success])
+	const renderBody = useMemo(() => {
+		if (success) {
+			return bodySuccess
+		}
+		if (error) {
+			return bodyError
+		}
+		return bodyReset
+	}, [bodyError, bodyReset, bodySuccess, error, success])
 
-		return (
-			<>
-				<Modal title={modalTitle} opened={opened} onClose={handleClose} fullScreen={isMobile}>
-					{renderBody}
-				</Modal>
-				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
-			</>
-		)
-	}
-)
+	return (
+		<>
+			<Modal title={modalTitle} opened={opened} onClose={handleClose} fullScreen={isMobile}>
+				{renderBody}
+			</Modal>
+			{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
+		</>
+	)
+})
 
 ResetPasswordModalBody.displayName = 'ResetPasswordModal'
 

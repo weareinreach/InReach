@@ -1,8 +1,6 @@
 import { z } from 'zod'
 
-export const CreateBase = <T extends z.ZodRawShape>(
-	schema: z.ZodObject<T, 'strip', z.ZodTypeAny, z.objectOutputType<T, z.ZodTypeAny>>
-) => ({
+export const CreateBase = <T extends z.ZodRawShape>(schema: z.ZodObject<T>) => ({
 	dataParser: z.object({
 		actorId: z.string(),
 		data: schema,

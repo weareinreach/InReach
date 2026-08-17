@@ -1,6 +1,6 @@
 import { Box, Group, Modal, Stack, Text, useMantineTheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef } from 'react'
 
 import { Button, type ButtonProps } from '~ui/components/core/Button'

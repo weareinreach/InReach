@@ -1,6 +1,6 @@
 import { createStyles, rem, Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 import { useSearchState } from '~ui/hooks/useSearchState'

@@ -13,7 +13,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type ReactNode, useCallback, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'

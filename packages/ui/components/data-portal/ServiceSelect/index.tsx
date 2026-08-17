@@ -1,6 +1,6 @@
 import { Box, type BoxProps, createStyles, Drawer, Group, rem, Stack, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type FieldValues, type UseControllerProps, useFormState } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 

@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { component } from '~ui/mockData/component'
 
@@ -15,8 +15,12 @@ const RenderWrapper = ({ lat, lon, type }: LocationBasedAlertBannerProps) => {
 export default {
 	title: 'Design System/Location Based Alert Banner',
 	component: RenderWrapper,
+
+	beforeEach({ msw }) {
+		msw.use(component.LocationBasedAlertBanner)
+	},
+
 	parameters: {
-		msw: [component.LocationBasedAlertBanner],
 		layout: 'fullscreen',
 	},
 } satisfies Meta<typeof RenderWrapper>

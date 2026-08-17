@@ -1,5 +1,5 @@
 import { Center } from '@mantine/core'
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { geo } from '~ui/mockData/geo'
@@ -10,9 +10,9 @@ import { getTRPCMock } from '../../lib/getTrpcMock'
 export default {
 	title: 'Modals/Sign Up',
 	component: SignupModalLauncher,
-	parameters: {
-		layout: 'fullscreen',
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			geo.autocompleteCityState,
 			geo.placeIdCityState,
 			getTRPCMock({
@@ -21,13 +21,19 @@ export default {
 				response: {
 					success: true,
 				},
-			}),
-		],
+			})
+		)
 	},
+
+	parameters: {
+		layout: 'fullscreen',
+	},
+
 	args: {
 		component: Button,
 		children: 'Launch Signup Modal',
 	},
+
 	render: (args) => (
 		<Center h='50vh'>
 			<SignupModalLauncher {...args} />
@@ -39,8 +45,8 @@ type StoryDef = StoryObj<typeof SignupModalLauncher>
 export const Modal = {} satisfies StoryDef
 
 export const ExistingUser = {
-	parameters: {
-		msw: [
+	beforeEach({ msw }) {
+		msw.use(
 			getTRPCMock({
 				path: ['user', 'create'],
 				type: 'mutation',
@@ -58,7 +64,7 @@ export const ExistingUser = {
 					},
 					$metadata: {},
 				},
-			}),
-		],
+			})
+		)
 	},
 } satisfies StoryDef

@@ -1,7 +1,7 @@
-import { type StoryContext, type StoryFn } from '@storybook/react'
-import { type GlobalTypes } from '@storybook/types'
+import { type StoryContext, type StoryFn } from '@storybook/nextjs'
 import { useEffect, useState } from 'react'
 import { I18nextProvider } from 'react-i18next'
+import { type GlobalTypes } from 'storybook/internal/types'
 
 import { translatedLangs } from '@weareinreach/db/generated/languages'
 

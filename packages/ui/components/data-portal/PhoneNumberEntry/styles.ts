@@ -2,9 +2,13 @@ import { createStyles, rem } from '@mantine/core'
 
 export const useCountrySelectStyles = createStyles(() => ({
 	dropdown: {
+		// This trigger sits at the far right edge of the phone number field, so Mantine's default
+		// left-anchored dropdown positioning would expand it off past the right edge of the
+		// screen. Anchoring the right edge instead makes it expand leftward, back over the phone
+		// number field, which is also what keeps it fully on screen.
 		width: 'max-content !important',
 		left: 'unset !important',
-		// right: 0,
+		right: 0,
 	},
 	root: {
 		width: rem(48),

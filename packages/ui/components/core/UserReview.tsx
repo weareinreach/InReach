@@ -1,6 +1,6 @@
 import { createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useViewportSize } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useEffect, useRef, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'

@@ -2,7 +2,7 @@ import { Carousel, type Embla, useAnimationOffsetEffect } from '@mantine/carouse
 import { AspectRatio, createStyles, Group, Modal, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import Image from 'next/image'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'

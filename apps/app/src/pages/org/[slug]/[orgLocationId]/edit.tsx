@@ -3,7 +3,7 @@ import { compareArrayVals } from 'crud-object-diff'
 import { type InferGetServerSidePropsType, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type GetServerSideProps } from 'nextjs-routes'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -58,7 +58,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
 	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
 
-	const { data: alertData } = api.location.getAlerts.useQuery(
+	const { data: _alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },
 		{ enabled: router.isReady }
 	)

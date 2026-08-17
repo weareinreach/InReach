@@ -11,7 +11,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useEffect, useState } from 'react'
 
 import { reportEvent } from '@weareinreach/analytics/events'

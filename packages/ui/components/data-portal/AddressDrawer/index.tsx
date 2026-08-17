@@ -19,7 +19,7 @@ import { useForm, zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import filterObject from 'just-filter-object'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -105,10 +105,24 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const { data, isLoading } = api.location.getAddress.useQuery(locationId ?? '', {
 		enabled: Boolean(locationId) && countryOptionsLoaded,
 		refetchOnWindowFocus: false,
-		select: ({ id, data: { addressVisibility, ...rest } }) => ({
+		// @mantine/form's getInputProps forwards `value` straight to the DOM input - the API can
+		// legitimately return `null` for any of these (no second address line, no coordinates yet,
+		// etc.), which React warns about and can flip an input from controlled to uncontrolled
+		// mid-edit. Coerce to the same "empty" representation used elsewhere for these fields.
+		select: ({
+			id,
+			data: { addressVisibility, name, street1, street2, city, postCode, longitude, latitude, ...rest },
+		}) => ({
 			id,
 			data: {
 				...rest,
+				name: name ?? '',
+				street1: street1 ?? '',
+				street2: street2 ?? '',
+				city: city ?? '',
+				postCode: postCode ?? '',
+				longitude: longitude ?? undefined,
+				latitude: latitude ?? undefined,
 				addressVisibility: AddressVisibilitySchema.parse(addressVisibility),
 			},
 		}),

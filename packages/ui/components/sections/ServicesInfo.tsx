@@ -1,6 +1,6 @@
 import { Card, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 import { transformer } from '@weareinreach/util/transformer'
@@ -41,7 +41,11 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	const { isEditMode } = useEditMode()
 	const { slug } = router.isReady ? router.query : { slug: '' }
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const namespaces = orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services']
+	// Array length must stay constant across renders - react-i18next's useTranslation passes
+	// this array in as a useMemo dependency list. Substitute an already-loaded namespace
+	// ('common') as a harmless placeholder until the org ID resolves, instead of omitting
+	// the slot.
+	const namespaces = ['common', 'services', orgId?.id ?? 'common']
 
 	const { t } = useTranslation(namespaces)
 	const { classes } = useServiceSectionStyles()

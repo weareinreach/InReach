@@ -30,6 +30,8 @@ const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContactInfoEd
 			select: {
 				id: true,
 				email: true,
+				firstName: true,
+				lastName: true,
 				primary: true,
 				title: { select: { key: { select: { key: true } } } },
 				description: { select: { tsKey: { select: { text: true, key: true } } } },

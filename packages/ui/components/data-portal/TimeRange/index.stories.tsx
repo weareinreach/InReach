@@ -1,8 +1,8 @@
-import { action } from '@storybook/addon-actions'
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 import { type Interval } from 'luxon'
 import { type ComponentProps } from 'react'
 import { Form, useForm } from 'react-hook-form'
+import { action } from 'storybook/actions'
 
 import { createInterval } from '~ui/mockData/orgHours'
 
@@ -36,6 +36,9 @@ export default {
 		defaultValue: createInterval('08:00', '17:00', 0, 'America/New_York'),
 		deleteHandler: action('delete interval'),
 		name: 'date',
+		// This story never passed dayIndex - it's a required prop, so convertToLuxonWeekday(undefined)
+		// returned NaN, which luxon's DateTime#set({ weekday: NaN }) rejects.
+		dayIndex: 0,
 	},
 } satisfies Meta<typeof TimeRange>
 

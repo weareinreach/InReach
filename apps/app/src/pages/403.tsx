@@ -1,6 +1,6 @@
 import { Container, rem, Stack, Text, Title } from '@mantine/core'
 import { type GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { getServerSideTranslations } from '~app/utils/i18n'
 

@@ -13,10 +13,12 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { getExampleNumber } from 'libphonenumber-js'
+import examples from 'libphonenumber-js/examples.mobile.json'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type Resolver, useForm } from 'react-hook-form'
 import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import { z } from 'zod'
@@ -71,10 +73,18 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			{ id: phoneId, orgId: orgId ?? '' },
 			{
 				enabled: drawerOpened && !!orgId,
+				// `ext`/`description` come back `null` when unset - fed straight into `values` below,
+				// that would hand a controlled TextInput a `null` value and trip React's
+				// uncontrolled-to-controlled warning. `phoneTypeId` is deliberately left alone: `null`
+				// is a real sentinel value there (selects the "Custom Text" option).
+				select: (data) =>
+					data ? { ...data, ext: data.ext ?? '', description: data.description ?? '' } : data,
 			}
 		)
+		// No `initialData` here - combined with the client's 10-minute default `staleTime`, an
+		// `initialData: []` would make react-query treat the query as already-fresh on mount and
+		// never actually fetch, permanently stuck showing zero phone types.
 		const { data: phoneTypes } = api.fieldOpt.phoneTypes.useQuery(undefined, {
-			initialData: [],
 			select: (data) => data.map(({ id: value, tsKey, tsNs }) => ({ value, label: t(tsKey, { ns: tsNs }) })),
 		})
 		// Same query PhoneNumberEntry already makes internally - React Query dedupes this against
@@ -82,7 +92,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		const { data: countryList } = api.fieldOpt.countries.useQuery({ activeForOrgs: true })
 		const countryCca2ById = useMemo(() => {
 			const lookup = new Map<string, string>()
-			countryList?.forEach(({ id, cca2 }) => lookup.set(id, cca2))
+			countryList?.forEach(({ id: countryId, cca2 }) => lookup.set(countryId, cca2))
+			return lookup
+		}, [countryList])
+		const countryNameById = useMemo(() => {
+			const lookup = new Map<string, string>()
+			countryList?.forEach(({ id: countryId, name }) => lookup.set(countryId, name))
 			return lookup
 		}, [countryList])
 
@@ -102,15 +117,20 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 						const rawCca2 = countryCca2ById.get(data.countryId)
 						const cca2 = rawCca2 && isCountryCode(rawCca2) ? rawCca2 : undefined
 						if (!isValidPhoneNumber(data.number, cca2)) {
-							ctx.addIssue({
-								code: z.ZodIssueCode.custom,
-								path: ['number'],
-								message: cca2 ? `Not a valid phone number for ${cca2}` : 'Not a valid phone number',
-							})
+							if (!cca2) {
+								ctx.addIssue({ code: 'custom', path: ['number'], message: 'Not a valid phone number' })
+								return
+							}
+							const countryName = countryNameById.get(data.countryId) ?? cca2
+							const example = getExampleNumber(cca2, examples)
+							const message = example
+								? `Not a valid phone number for ${countryName}. Example: ${example.formatNational()}`
+								: `Not a valid phone number for ${countryName}`
+							ctx.addIssue({ code: 'custom', path: ['number'], message })
 						}
 					})
-				),
-			[countryCca2ById]
+				) as Resolver<FormSchema>,
+			[countryCca2ById, countryNameById]
 		)
 		const {
 			control,
@@ -127,6 +147,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				id: phoneId,
 				number: '',
 				countryId: '',
+				ext: '',
 				description: '',
 				published: true,
 				deleted: false,
@@ -191,8 +212,19 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 
 		const siteUpdate = api.orgPhone.upsert.useMutation({
 			onSettled: (data, _error, variables) => {
-				patchContactListCaches(variables)
-				apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' })
+				if (variables.operation === 'create') {
+					// A brand-new phone has no existing entry in the cached list for the patch below to
+					// match against - `patchContactListCaches` only updates an item it can find by id, so
+					// for a create it would silently do nothing and the new phone just wouldn't appear
+					// until something else happened to refetch the list. Doing a real (not
+					// `refetchType: 'none'`) invalidate here is safe specifically for creates: there's no
+					// existing cached data for this id that a slower, earlier response could race against
+					// and stomp - unlike the update path below.
+					apiUtils.orgPhone.forContactInfoEdit.invalidate()
+				} else {
+					patchContactListCaches(variables)
+					apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' })
+				}
 				apiUtils.orgPhone.forContactInfo.invalidate()
 				// This drawer's own detail query is keyed by this specific phone id - without
 				// marking it stale too, reopening this same phone later would show the pre-save
@@ -318,12 +350,13 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 											phoneInput={{ name: 'number' }}
 											control={control}
 										/>
+										<TextInput label='Extension' name='ext' control={control} />
 										<Select
 											label='Type'
 											control={control}
 											name='phoneTypeId'
 											data={[
-												...phoneTypes,
+												...(phoneTypes ?? []),
 												{ value: null as unknown as string, label: 'Custom Text (enter below)' },
 											]}
 										/>

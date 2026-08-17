@@ -1,6 +1,6 @@
 import { SimpleGrid, Stack, Title } from '@mantine/core'
 import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { CsvDownload } from '~ui/components/data-portal/CsvDownload'
 import { trpc as api } from '~ui/lib/trpcClient'

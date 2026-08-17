@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 import { DateTime } from 'luxon'
 import { http, HttpResponse } from 'msw'
 
@@ -54,40 +54,44 @@ const mockReports = [
 export default {
 	title: 'Data Portal/Tables/Reports',
 	component: ReportTable,
+
+	beforeEach({ msw }) {
+		msw.use(
+			http.get('*/trpc/report.forReportsTable*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: mockReports,
+							},
+						},
+					},
+				])
+			}),
+			http.post('*/trpc/report.update*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: { id: 'report_1', status: ReportStatus.RESOLVED },
+							},
+						},
+					},
+				])
+			})
+		)
+	},
+
 	parameters: {
 		layoutWrapper: 'centeredFullscreen',
+
 		nextjs: {
 			router: {
 				// @ts-expect-error - isReady is used by the Next.js Storybook addon but missing in BaseRouter types
 				isReady: true,
 			},
 		},
-		msw: {
-			handlers: [
-				http.get('*/trpc/report.forReportsTable*', () => {
-					return HttpResponse.json([
-						{
-							result: {
-								data: {
-									json: mockReports,
-								},
-							},
-						},
-					])
-				}),
-				http.post('*/trpc/report.update*', () => {
-					return HttpResponse.json([
-						{
-							result: {
-								data: {
-									json: { id: 'report_1', status: ReportStatus.RESOLVED },
-								},
-							},
-						},
-					])
-				}),
-			],
-		},
+
 		rqDevtools: true,
 	},
 } satisfies Meta<typeof ReportTable>

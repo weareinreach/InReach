@@ -16,7 +16,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { type Route } from 'nextjs-routes'
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import { type LiteralUnion } from 'type-fest'
@@ -173,6 +173,10 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 			userType: 'individual',
 			cognitoSubject: t('confirm-account.subject') satisfies string,
 			cognitoMessage: t('confirm-account.message') satisfies string,
+			// Seeded even though these fields only render conditionally (after picking "other") -
+			// otherwise their TextInputs start uncontrolled and trip React's warning once revealed.
+			otherLawPractice: '',
+			servProviderOther: '',
 		},
 		validateInputOnBlur: true,
 	})
@@ -475,6 +479,9 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 		const form = useForm<LoginFormProps>({
 			validate: zodResolver(LoginSchema),
 			validateInputOnBlur: true,
+			// Without this, email/password start `undefined` and their inputs render uncontrolled
+			// until typed into, tripping React's uncontrolled-to-controlled input warning.
+			initialValues: { email: '', password: '' },
 		})
 		const loginHandle = async (email: string, password: string) => {
 			try {

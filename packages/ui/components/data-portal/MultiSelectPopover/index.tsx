@@ -27,7 +27,14 @@ export const MultiSelectPopover = ({
 				...item,
 				checked: value?.includes(item.value) ?? false,
 			})) ?? []
-		itemHandlers.setState(newItems)
+		// `data`/`value` can be a new reference every render (e.g. a caller passing an inline `?? []`
+		// fallback, or leaving `value` undefined so the default parameter above re-creates it). Without
+		// this check, that instability combined with `setState` re-rendering this component would
+		// re-trigger the effect on every render - an infinite loop ("Maximum update depth exceeded").
+		if (!compare(items, newItems)) {
+			itemHandlers.setState(newItems)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, value, itemHandlers])
 
 	const selected = items.filter(({ checked }) => checked).length

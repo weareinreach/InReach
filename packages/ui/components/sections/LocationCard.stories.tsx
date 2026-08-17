@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { StorybookGridDouble } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
@@ -10,9 +10,11 @@ import { LocationCard } from './LocationCard'
 export default {
 	title: 'Sections/Location Info',
 	component: LocationCard,
+
 	args: {
 		locationId: '',
 	},
+
 	decorators: [
 		StorybookGridDouble,
 		(Story) => (
@@ -21,21 +23,24 @@ export default {
 			</GoogleMapsProvider>
 		),
 	],
+
+	beforeEach({ msw }) {
+		msw.use(
+			getTRPCMock({
+				path: ['review', 'getAverage'],
+				type: 'query',
+				response: {
+					average: 4.3,
+					count: 10,
+				},
+			}),
+			location.forLocationCard
+		)
+	},
+
 	parameters: {
 		layout: 'fullscreen',
-		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['review', 'getAverage'],
-					type: 'query',
-					response: {
-						average: 4.3,
-						count: 10,
-					},
-				}),
-				location.forLocationCard,
-			],
-		},
+
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',

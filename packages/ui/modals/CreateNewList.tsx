@@ -11,7 +11,7 @@ import {
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useMemo } from 'react'
 import { z } from 'zod'
 
@@ -33,6 +33,9 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 	const form = useForm<FormProps>({
 		validate: zodResolver(FormSchema),
 		validateInputOnBlur: true,
+		// Without this, `name` starts `undefined` and the TextInput below renders uncontrolled until
+		// the user types, tripping React's uncontrolled-to-controlled input warning.
+		initialValues: { name: '' },
 	})
 
 	const newListNotification = useNewNotification({

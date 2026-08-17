@@ -71,7 +71,7 @@ export const attributeSupplementSchema = {
 		})
 		.strict(),
 	currency: z.object({ cost: z.number(), currency: z.union([z.string(), z.null()]).optional() }).strict(),
-	incompatibleData: z.array(z.record(z.any())),
+	incompatibleData: z.array(z.record(z.string(), z.any())),
 	number: z.object({ num: z.number() }),
 	numMax: z.object({ max: z.number() }),
 	numMin: z.object({ min: z.number() }),

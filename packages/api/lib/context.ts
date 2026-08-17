@@ -21,7 +21,8 @@ export type ResponseWithSkipCache = NextApiResponse & { skipCache?: boolean }
 
 export const markSkipCache = (res?: NextApiResponse) => {
 	if (res) {
-		;(res as ResponseWithSkipCache).skipCache = true
+		const typedRes = res as ResponseWithSkipCache
+		typedRes.skipCache = true
 	}
 }
 

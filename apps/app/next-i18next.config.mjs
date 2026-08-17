@@ -12,7 +12,10 @@ import path from 'path'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+import { namespaces } from '@weareinreach/db/generated/i18nNamespaceList.mjs'
 import { localeList } from '@weareinreach/db/generated/locales.mjs'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 
 const isBrowser = typeof window !== 'undefined'
 const isDev = process.env.NODE_ENV !== 'production' && !process.env.CI
@@ -48,7 +51,38 @@ const backendConfig = {
 		backend: HttpBackend,
 		backendOption: {
 			loadPath: getUrl('/locales/{{lng}}/{{ns}}.json'),
+			// NOTE: allowMultiLoading is not implemented by the installed i18next-http-backend/
+			// i18next-multiload-backend-adapter versions - it's inert. i18next-multiload-backend-adapter
+			// unconditionally batches every pending read() within its debounce window and calls
+			// readMulti(), and i18next-http-backend's readMulti() unconditionally joins all given
+			// namespaces with '+' into one URL. There is no supported way to stop this backend from
+			// being asked to load a combined namespace, so the `request` override below is the actual
+			// enforcement: this backend only ever serves single, real static-file namespaces, and any
+			// namespace that reaches it has already failed to resolve upstream (e.g. CrowdinOTA
+			// intentionally skips English) with no static-file equivalent (e.g. per-organization
+			// namespaces, which are named after the org's ID rather than a real namespace). Fetching a
+			// literal file named after several joined IDs, or after a single ID-shaped namespace, will
+			// always 404, so skip the request and resolve empty instead of hitting a dead URL.
 			allowMultiLoading: false,
+			/** @type {import('i18next-http-backend').HttpBackendOptions['request']} */
+			request: (_options, url, _payload, callback) => {
+				const requestedNs =
+					url
+						.split('/')
+						.pop()
+						?.replace(/\.json$/, '') ?? ''
+				const isSingleKnownNamespace =
+					!requestedNs.includes('+') && /** @type {readonly string[]} */ (namespaces).includes(requestedNs)
+				if (!isSingleKnownNamespace) {
+					callback(null, { status: 200, data: {} })
+					return
+				}
+				fetch(url)
+					.then((response) =>
+						response.text().then((data) => callback(null, { status: response.status, data }))
+					)
+					.catch((err) => callback(err, null))
+			},
 		},
 	},
 }
@@ -56,9 +90,23 @@ const backendConfig = {
 const CrowdinOTA = new MultiBackend(null, backendConfig.CrowdinOTA)
 const LocalHTTP = new MultiBackend(null, backendConfig.LocalHTTP)
 
+// i18next 26 removed the `interpolation.format` callback option - custom formats (like `{{value,
+// lowercase}}`) are now registered via `services.formatter.add()` on the live instance instead. A
+// `type: '3rdParty'` plugin's `init(i18next)` hook is the way next-i18next's `use` array exposes
+// that instance uniformly for both the browser and server instance-creation paths.
+/** @type {import('i18next').ThirdPartyModule} */
+const lowercaseFormatter = {
+	type: '3rdParty',
+	init: (i18nextInstance) => {
+		i18nextInstance.services.formatter?.add('lowercase', (value) =>
+			typeof value === 'string' ? value.toLowerCase() : value
+		)
+	},
+}
+
 const plugins = () => {
 	/** @type {any[]} */
-	const pluginsToUse = [intervalPlural, LanguageDetector]
+	const pluginsToUse = [intervalPlural, LanguageDetector, lowercaseFormatter]
 	if (isBrowser) {
 		pluginsToUse.push(ChainedBackend)
 	}
@@ -77,7 +125,7 @@ const plugins = () => {
 	return compact(pluginsToUse)
 }
 
-/** @type {import('next-i18next').UserConfig} */
+/** @type {import('next-i18next/pages').UserConfig} */
 const config = {
 	i18n: {
 		defaultLocale: 'en',
@@ -110,12 +158,6 @@ const config = {
 	interpolation: {
 		skipOnVariables: false,
 		alwaysFormat: true,
-		format: (value, format) => {
-			if (format === 'lowercase' && typeof value === 'string') {
-				return value.toLowerCase()
-			}
-			return value
-		},
 	},
 }
 export default config

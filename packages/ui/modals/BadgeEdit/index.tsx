@@ -3,7 +3,7 @@ import { Box, createPolymorphicComponent, Modal, Stack, Title } from '@mantine/c
 import { useDisclosure } from '@mantine/hooks'
 import { compareArrayVals } from 'crud-object-diff'
 import compact from 'just-compact'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { Chip } from 'react-hook-form-mantine'

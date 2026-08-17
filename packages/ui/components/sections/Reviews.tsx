@@ -1,6 +1,6 @@
 import { Group, Stack, Text, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { ActionButtons } from '~ui/components/core/ActionButtons'

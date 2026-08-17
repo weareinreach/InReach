@@ -1,5 +1,5 @@
 import { DevTool } from '@hookform/devtools'
-import { type Meta, type StoryFn, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryFn, type StoryObj } from '@storybook/nextjs'
 import { FormProvider, useForm as useHookForm } from 'react-hook-form'
 
 import { fieldOpt } from '~ui/mockData/fieldOpt'
@@ -34,8 +34,12 @@ const HookFormContextDecorator = (Story: StoryFn) => {
 export default {
 	title: 'Data Portal/Fields/Phone Number Entry',
 	component: PhoneNumberEntry,
+
+	beforeEach({ msw }) {
+		msw.use(fieldOpt.countries)
+	},
+
 	parameters: {
-		msw: [fieldOpt.countries],
 		rqDevtools: true,
 	},
 } satisfies Meta<typeof PhoneNumberEntry>

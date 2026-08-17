@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Drawer, Group, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { forwardRef, useCallback, useEffect, useState } from 'react'
-import { FormProvider, useForm, useWatch } from 'react-hook-form'
+import { FormProvider, type Resolver, useForm, useWatch } from 'react-hook-form'
 import { Select, TextInput } from 'react-hook-form-mantine'
 
 import { type TCreateSchema, ZCreateSchema } from '@weareinreach/api/router/location/mutation.create.schema'
@@ -48,7 +48,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	const [drawerOpened, drawerHandler] = useDisclosure(false)
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const form = useForm<TCreateSchema>({
-		resolver: zodResolver(ZCreateSchema),
+		resolver: zodResolver(ZCreateSchema) as Resolver<TCreateSchema>,
 		mode: 'onChange',
 		defaultValues: {
 			name: '',

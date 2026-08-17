@@ -2,7 +2,7 @@ import { Container, rem, Stack, Title } from '@mantine/core'
 import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type Route } from 'nextjs-routes'
 import { z } from 'zod'
 
@@ -13,7 +13,7 @@ const LoginBody = dynamic(() => import('@weareinreach/ui/modals/LoginSignUp').th
 
 const RouteSchema = z.object({
 	pathname: z.string(),
-	query: z.record(z.string()).optional(),
+	query: z.record(z.string(), z.string()).optional(),
 	locale: z.string().optional(),
 })
 

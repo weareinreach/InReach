@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { organization } from '~ui/mockData/organization'
 
@@ -7,9 +7,13 @@ import { OrganizationTable } from './OrganizationTable'
 export default {
 	title: 'Data Portal/Tables/Organizations',
 	component: OrganizationTable,
+
+	beforeEach({ msw }) {
+		msw.use(organization.forOrganizationTable)
+	},
+
 	parameters: {
 		layoutWrapper: 'centeredFullscreen',
-		msw: [organization.forOrganizationTable],
 		rqDevtools: true,
 	},
 } satisfies Meta<typeof OrganizationTable>

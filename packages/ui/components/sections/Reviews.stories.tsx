@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { StorybookGridDouble } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
@@ -10,13 +10,16 @@ import { ReviewSection } from './Reviews'
 export default {
 	title: 'Sections/Reviews',
 	component: ReviewSection,
+
 	args: {
 		reviews: [],
 	},
+
+	beforeEach({ msw }) {
+		msw.use(review.getByIds, review.getAverage, organization.getIdFromSlug, review.create)
+	},
+
 	parameters: {
-		msw: {
-			handlers: [review.getByIds, review.getAverage, organization.getIdFromSlug, review.create],
-		},
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',
@@ -26,8 +29,10 @@ export default {
 				},
 			},
 		},
+
 		layout: 'fullscreen',
 	},
+
 	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof ReviewSection>
 

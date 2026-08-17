@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
@@ -13,19 +13,9 @@ import { AddressDrawer } from './index'
 export default {
 	title: 'Data Portal/Drawers/Address',
 	component: AddressDrawer,
-	parameters: {
-		layout: 'fullscreen',
-		rqDevtools: true,
-		nextjs: {
-			router: {
-				pathname: '/org/[slug]/edit',
-				asPath: '/org/mock-org-slug',
-				query: {
-					slug: 'mock-org-slug',
-				},
-			},
-		},
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			geo.autocompleteFullAddress,
 			geo.geocodeFullAddress,
 			fieldOpt.govDistsByCountryNoSub,
@@ -36,9 +26,25 @@ export default {
 				path: ['location', 'update'],
 				type: 'mutation',
 				response: { id: 'oloc_00000RECORD22ID' },
-			}),
-		],
+			})
+		)
 	},
+
+	parameters: {
+		layout: 'fullscreen',
+		rqDevtools: true,
+
+		nextjs: {
+			router: {
+				pathname: '/org/[slug]/edit',
+				asPath: '/org/mock-org-slug',
+				query: {
+					slug: 'mock-org-slug',
+				},
+			},
+		},
+	},
+
 	args: {
 		component: Button,
 		children: 'Open Drawer',

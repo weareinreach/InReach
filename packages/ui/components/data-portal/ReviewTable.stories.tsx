@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
 import { DateTime } from 'luxon'
 import { http, HttpResponse } from 'msw'
 
@@ -60,73 +60,77 @@ const mockReviews = [
 export default {
 	title: 'Data Portal/Tables/Reviews',
 	component: ReviewTable,
+
+	beforeEach({ msw }) {
+		msw.use(
+			http.get('*/trpc/review.forReviewTable*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: mockReviews,
+							},
+						},
+					},
+				])
+			}),
+			http.post('*/trpc/review.hide*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: { id: 'review_1', visible: false },
+							},
+						},
+					},
+				])
+			}),
+			http.post('*/trpc/review.unHide*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: { id: 'review_2', visible: true },
+							},
+						},
+					},
+				])
+			}),
+			http.post('*/trpc/review.delete*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: { id: 'review_1', deleted: true },
+							},
+						},
+					},
+				])
+			}),
+			http.post('*/trpc/review.unDelete*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: { id: 'review_3', deleted: false },
+							},
+						},
+					},
+				])
+			})
+		)
+	},
+
 	parameters: {
 		layoutWrapper: 'centeredFullscreen',
+
 		nextjs: {
 			router: {
 				// @ts-expect-error - isReady is used by Next.js Storybook addon but missing in BaseRouter types
 				isReady: true,
 			},
 		},
-		msw: {
-			handlers: [
-				http.get('*/trpc/review.forReviewTable*', () => {
-					return HttpResponse.json([
-						{
-							result: {
-								data: {
-									json: mockReviews,
-								},
-							},
-						},
-					])
-				}),
-				http.post('*/trpc/review.hide*', () => {
-					return HttpResponse.json([
-						{
-							result: {
-								data: {
-									json: { id: 'review_1', visible: false },
-								},
-							},
-						},
-					])
-				}),
-				http.post('*/trpc/review.unHide*', () => {
-					return HttpResponse.json([
-						{
-							result: {
-								data: {
-									json: { id: 'review_2', visible: true },
-								},
-							},
-						},
-					])
-				}),
-				http.post('*/trpc/review.delete*', () => {
-					return HttpResponse.json([
-						{
-							result: {
-								data: {
-									json: { id: 'review_1', deleted: true },
-								},
-							},
-						},
-					])
-				}),
-				http.post('*/trpc/review.unDelete*', () => {
-					return HttpResponse.json([
-						{
-							result: {
-								data: {
-									json: { id: 'review_3', deleted: false },
-								},
-							},
-						},
-					])
-				}),
-			],
-		},
+
 		rqDevtools: true,
 	},
 } satisfies Meta<typeof ReviewTable>

@@ -38,10 +38,11 @@
  * --limit run before trusting this against the full backlog.
  */
 
+import { branches, crowdinApi, projectId } from '@weareinreach/crowdin/api'
+
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
-import { branches, crowdinApi, projectId } from '@weareinreach/crowdin/api'
 import { prisma } from '~db/client'
 
 const APP_BASE_URL = process.env.APP_BASE_URL ?? 'https://app.inreach.org'

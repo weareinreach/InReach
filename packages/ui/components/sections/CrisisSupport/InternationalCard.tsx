@@ -1,5 +1,5 @@
 import { Card, createStyles, rem, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Badge } from '~ui/components/core/Badge'

@@ -8,6 +8,7 @@ import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import createJiti from 'jiti'
 import routes from 'nextjs-routes/config'
 
+import { createRequire } from 'module'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -15,7 +16,13 @@ import i18nConfig from './next-i18next.config.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const require = createRequire(import.meta.url)
 const jiti = createJiti(__filename)
+// next-i18next's package.json `exports` map only exposes `./pages`, `./package.json`, etc. -
+// deep dist paths aren't declared subpaths, so `require.resolve()` on them directly throws
+// ERR_PACKAGE_PATH_NOT_EXPORTED. Resolve the package root via the declared `./package.json`
+// subpath instead, then join the relative dist path manually.
+const nextI18nextRoot = path.dirname(require.resolve('next-i18next/package.json'))
 jiti('../../packages/env')
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
@@ -29,6 +36,35 @@ const isRenovatePR = renovateRegex.test(process.env.VERCEL_GIT_COMMIT_REF)
 
 const withRoutes = routes({ outDir: './src/types' })
 const withBundleAnalyzer = bundleAnalyze({ enabled: shouldAnalyze, openAnalyzer: false })
+
+// A stray barrel export (`export * from './Rating.test'`) once let a Vitest test file get
+// bundled into the real app, crashing the build with `vi.queueMock() is forbidden` (vitest's
+// mocking internals only work inside its own test runner). Webpack only bundles what's
+// actually reachable from an entry point, so this can only happen via an accidental import -
+// fail the build loudly if it ever happens again, instead of silently shipping broken code.
+class ForbidTestFilesInBundlePlugin {
+	static testFilePattern = /\.(test|spec)\.[cm]?[jt]sx?$/
+	apply(/** @type {import('webpack').Compiler} */ compiler) {
+		compiler.hooks.compilation.tap('ForbidTestFilesInBundlePlugin', (compilation) => {
+			compilation.hooks.finishModules.tap('ForbidTestFilesInBundlePlugin', (modules) => {
+				for (const webpackModule of modules) {
+					const resource = /** @type {{ resource?: string }} */ (webpackModule).resource
+					if (resource && ForbidTestFilesInBundlePlugin.testFilePattern.test(resource)) {
+						compilation.errors.push(
+							/** @type {any} */ (
+								new Error(
+									`Test file is reachable from the app bundle: ${resource}\n` +
+										'Something imports this test file, directly or via a barrel export - ' +
+										'check for a stray `export * from` in a codegen-managed index file.'
+								)
+							)
+						)
+					}
+				}
+			})
+		})
+	}
+}
 /**
  * @type {import('next').NextConfig}
  */
@@ -57,16 +93,31 @@ const nextConfig = {
 		webpackBuildWorker: true,
 	},
 	eslint: {
-		ignoreDuringBuilds: true,
+		ignoreDuringBuilds: false,
 	},
 	typescript: {
-		ignoreBuildErrors: true,
+		ignoreBuildErrors: false,
 	},
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
 	},
 	rewrites: async () => [{ source: '/search', destination: '/' }],
 	webpack: (config, { dev, isServer, webpack }) => {
+		config.plugins.push(new ForbidTestFilesInBundlePlugin())
+
+		// next-i18next@16's `./pages` export declares matching `import`/`require` conditions
+		// pointing at separate .mjs/.cjs builds. Next's SWC/webpack pipeline sometimes
+		// misjudges which one it's looking at for this package, emitting CJS-shaped output
+		// (`Object.defineProperty(exports, ...)`) into a chunk wrapped as ESM (no `exports`
+		// binding), throwing `ReferenceError: exports is not defined` in the client bundle
+		// (see vercel/next.js#59603 for the same signature on a different package). Aliasing
+		// straight to the unambiguous .cjs build removes the import/require condition
+		// ambiguity that triggers the misdetection.
+		config.resolve.alias['next-i18next/pages'] = path.join(nextI18nextRoot, 'dist/pagesRouter/index.cjs')
+		config.resolve.alias['next-i18next/pages/serverSideTranslations'] = path.join(
+			nextI18nextRoot,
+			'dist/pagesRouter/serverSideTranslations.cjs'
+		)
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
@@ -160,9 +211,6 @@ const defineSentryConfig = (nextConfig) =>
 
 		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
 		tunnelRoute: '/monitoring',
-
-		// Hides source maps from generated client bundles
-		hideSourceMaps: !isLocalDev,
 
 		// Automatically tree-shake Sentry logger statements to reduce bundle size
 		disableLogger: isVercelProd || isVercelActiveDev,

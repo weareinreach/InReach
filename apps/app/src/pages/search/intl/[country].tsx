@@ -1,8 +1,6 @@
 import {
-	Button,
 	createStyles,
 	Divider,
-	Drawer,
 	Grid,
 	Group,
 	rem,
@@ -12,12 +10,12 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
-import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { useMediaQuery } from '@mantine/hooks'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
@@ -176,7 +174,9 @@ const OutsideServiceArea = () => {
 					</Stack>
 					<Skeleton visible={loading}>
 						<CrisisSupport role='international'>
-							{data?.map((resource) => <CrisisSupport.International data={resource} key={resource.id} />)}
+							{data?.map((resource) => (
+								<CrisisSupport.International data={resource} key={resource.id} />
+							))}
 						</CrisisSupport>
 					</Skeleton>
 				</Stack>

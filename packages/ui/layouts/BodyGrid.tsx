@@ -1,5 +1,5 @@
 import { Container, Grid, type GridProps } from '@mantine/core'
-import { type StoryFn } from '@storybook/react'
+import { type StoryFn } from '@storybook/nextjs'
 
 export const BodyGrid = ({ children, className, ...others }: GridProps) => {
 	return (

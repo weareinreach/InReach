@@ -1,6 +1,6 @@
 import { createStyles, Divider, Group, Space, Stack, Text, Title } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { SavedResultLoading } from '~ui/components/core/Saved/SavedOrgResultCard'

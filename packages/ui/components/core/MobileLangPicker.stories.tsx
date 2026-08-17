@@ -1,6 +1,6 @@
 import { Flex, Text } from '@mantine/core'
-import { action } from '@storybook/addon-actions'
-import { type Meta, type StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/nextjs'
+import { action } from 'storybook/actions'
 
 import { MobileLangPicker } from './MobileLangPicker'
 

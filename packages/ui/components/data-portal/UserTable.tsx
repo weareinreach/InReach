@@ -10,7 +10,7 @@ import {
 	useMantineReactTable,
 } from 'mantine-react-table'
 import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useCallback, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'

@@ -1,7 +1,7 @@
 import { Paper, Rating, Stack, Textarea, useMantineTheme } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useEffect } from 'react'
 import { z } from 'zod'
 
@@ -48,6 +48,8 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 			organizationId: orgQuery?.id ?? '',
 			orgServiceId: serviceId,
 			rating: 0,
+			// Without this, the Textarea below starts uncontrolled until typed into.
+			reviewText: '',
 		},
 		validate: zodResolver(ReviewSchema),
 	})

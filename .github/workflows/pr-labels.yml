@@ -6,9 +6,12 @@ on:
     types: [opened, labeled, unlabeled, synchronize, reopened, edited, ready_for_review]
 
 jobs:
+  # This job (and pr_wip_check/squash_merge below) only ever uses GH_ACT_PAT, never the default
+  # GITHUB_TOKEN, so it needs no permissions of its own.
   pr_labels:
     name: 🏭 Verify labels
     runs-on: ubuntu-latest
+    permissions: {}
     env:
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
@@ -21,6 +24,7 @@ jobs:
   pr_wip_check:
     runs-on: ubuntu-latest
     name: 🏭 Check for blocking labels
+    permissions: {}
     env:
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
@@ -33,6 +37,10 @@ jobs:
     name: 🏭 Label PR With Repo(s)
     runs-on: ubuntu-latest
     if: contains(fromJson('["main", "l10_*"]'), github.base_ref) != true
+    # Unlike the other jobs here, this one's step overrides GITHUB_TOKEN back to the default
+    # token (see below) to actually apply labels, so it needs real write access.
+    permissions:
+      pull-requests: write
     env:
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
@@ -48,6 +56,11 @@ jobs:
     name: 🏭 Add misc PR labels
     runs-on: ubuntu-latest
     if: github.base_ref != 'main'
+    # actions-ecosystem/action-add-labels takes its token via a `github_token` *input*
+    # (defaulting to `${{ github.token }}`), not the ambient GITHUB_TOKEN env var below - so
+    # despite that env var, this job actually runs on the default token and needs real write access.
+    permissions:
+      pull-requests: write
     env:
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:

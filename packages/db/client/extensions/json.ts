@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
-
 import { isSuperJSONResult, superjson } from '@weareinreach/util/transformer'
+
 import { JsonInputOrNullSuperJSON } from '~db/zod_util/prismaJson'
 
 const deserialize = (data: unknown) => (isSuperJSONResult(data) ? superjson.deserialize(data) : data)

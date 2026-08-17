@@ -1,6 +1,6 @@
 import { Box, type ButtonProps, createPolymorphicComponent, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { type Dispatch, forwardRef, type SetStateAction, useCallback } from 'react'
 
 import { Button } from '~ui/components/core/Button'

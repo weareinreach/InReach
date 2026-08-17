@@ -5,7 +5,7 @@ import { type GetServerSideProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type Route, route } from 'nextjs-routes'
 import { useCallback, useEffect, useState } from 'react'
 

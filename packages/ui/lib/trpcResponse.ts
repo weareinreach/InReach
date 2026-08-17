@@ -1,5 +1,5 @@
-import { action } from '@storybook/addon-actions'
 import prettyBytes from 'pretty-bytes'
+import { action } from 'storybook/actions'
 import { type Promisable } from 'type-fest'
 
 import { type ApiInput, type ApiOutput } from '@weareinreach/api'

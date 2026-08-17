@@ -10,9 +10,9 @@ import {
 	Stack,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { type TFunction, useTranslation } from 'next-i18next'
+import { type TFunction, useTranslation } from 'next-i18next/pages'
 import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, type Resolver, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -21,6 +21,7 @@ import {
 	isAttributeSupplementSchema,
 } from '@weareinreach/db/generated/attributeSupplementSchema'
 import { generateId } from '@weareinreach/db/lib/idGen'
+import { type FieldAttributes } from '@weareinreach/db/zod_util/attributeSupplement'
 import { Button } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -40,7 +41,8 @@ const supplementDefaults = {
 
 const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: string) => {
 	if (dataSchemaName && isAttributeSupplementSchema(dataSchemaName)) {
-		let dataSchema: z.ZodTypeAny = attributeSupplementSchema[dataSchemaName]
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let dataSchema: z.ZodType<any, any> = attributeSupplementSchema[dataSchemaName]
 
 		if (dataSchemaName === 'numMinMaxOrRange') {
 			// Age eligibility requires at least a min or a max value.
@@ -56,7 +58,7 @@ const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: 
 						.superRefine((data, ctx) => {
 							if (data.min === undefined && data.max === undefined) {
 								ctx.addIssue({
-									code: z.ZodIssueCode.custom,
+									code: 'custom',
 									path: ['min'],
 									message: t('eligibility.elig-age_error'),
 								})
@@ -79,7 +81,7 @@ const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: 
 					access_value: z
 						.string()
 						.trim()
-						.email({ message: t('form-error-enter-valid-email', { ns: 'common' }) })
+						.pipe(z.email({ error: t('form-error-enter-valid-email', { ns: 'common' }) }))
 						.nullish(),
 					instructions: z.string().optional(),
 				})
@@ -100,7 +102,9 @@ const getDynamicSchema = (t: TFunction, dataSchemaName?: string, attributeKey?: 
 type SelectableAttribute = {
 	// Explicitly include all properties from the original API type.
 	// This avoids inference issues with complex nested types.
-	[K in keyof ApiOutput['fieldOpt']['attributesByCategory'][number]]: ApiOutput['fieldOpt']['attributesByCategory'][number][K]
+	[
+		K in keyof ApiOutput['fieldOpt']['attributesByCategory'][number]
+	]: ApiOutput['fieldOpt']['attributesByCategory'][number][K]
 } & {
 	// Add the properties required for the UI select component.
 	value: string
@@ -114,6 +118,17 @@ interface AttributeFormProps {
 	isLoading: boolean
 }
 
+// `Supplement.Data` renders one input per field in the attribute's `formSchema`, addressed as
+// `data.<name>`. Leaving `data` as `undefined` means every one of those inputs starts uncontrolled,
+// then flips to controlled the moment the user types - this seeds each field with `''` up front so
+// they're controlled from the first render, regardless of the schema's shape.
+const getDefaultData = (schema?: FieldAttributes[] | FieldAttributes[][] | null) => {
+	if (!schema) {
+		return undefined
+	}
+	return Object.fromEntries(schema.flat().map(({ name }) => [name, '']))
+}
+
 const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: AttributeFormProps) => {
 	const { t } = useTranslation(['attribute', 'common'])
 
@@ -123,16 +138,15 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 	)
 
 	const form = useForm<FormSchema>({
-		resolver: zodResolver(dynamicSchema),
+		resolver: zodResolver(dynamicSchema) as Resolver<FormSchema>,
 		mode: 'all',
 		defaultValues: {
 			id: generateId('attributeSupplement'),
 			...parentRecord,
 			attributeId: selectedAttr.attributeId,
-			// Dynamically build the default 'data' object from the attribute's form schema
-			// to prevent "uncontrolled input" warnings. This ensures inputs are controlled
-			// from their first render, regardless of their structure.
-			data: undefined,
+			// `SuppText` binds a TextInput to top-level `text` - same uncontrolled-input trap as `data`.
+			text: '',
+			data: getDefaultData(selectedAttr.formSchema),
 		},
 	})
 

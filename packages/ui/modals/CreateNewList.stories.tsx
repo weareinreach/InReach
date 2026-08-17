@@ -1,4 +1,4 @@
-import { type Meta } from '@storybook/react'
+import { type Meta } from '@storybook/nextjs'
 
 import { Button } from '~ui/components/core/Button'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
@@ -8,10 +8,9 @@ import { CreateNewList } from './CreateNewList'
 export default {
 	title: 'Modals/Create New List',
 	component: CreateNewList,
-	parameters: {
-		layout: 'fullscreen',
-		layoutWrapper: 'centeredHalf',
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			getTRPCMock({
 				path: ['savedList', 'create'],
 				type: 'mutation',
@@ -29,9 +28,15 @@ export default {
 					organizations: [],
 					services: [],
 				},
-			}),
-		],
+			})
+		)
 	},
+
+	parameters: {
+		layout: 'fullscreen',
+		layoutWrapper: 'centeredHalf',
+	},
+
 	args: {
 		component: Button,
 		children: 'Open Create New List Modal',

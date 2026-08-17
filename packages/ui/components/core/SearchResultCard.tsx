@@ -1,6 +1,6 @@
 import { createStyles, Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useCallback, useMemo } from 'react'
 
 import { productEvent } from '@weareinreach/analytics/events'

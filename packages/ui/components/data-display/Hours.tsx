@@ -1,6 +1,6 @@
 import { createStyles, Group, List, rem, Skeleton, Stack, Table, Text, Title } from '@mantine/core'
 import { Interval } from 'luxon'
-import { type TFunction, useTranslation } from 'next-i18next'
+import { type TFunction, useTranslation } from 'next-i18next/pages'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { HoursDrawer } from '~ui/components/data-portal/HoursDrawer'

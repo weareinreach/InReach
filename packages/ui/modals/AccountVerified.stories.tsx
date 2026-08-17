@@ -1,4 +1,4 @@
-import { type Meta } from '@storybook/react'
+import { type Meta } from '@storybook/nextjs'
 
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { user } from '~ui/mockData/user'
@@ -8,8 +8,9 @@ import { AccountVerifyModal } from './AccountVerified'
 export default {
 	title: 'Modals/Account Verify',
 	component: AccountVerifyModal,
-	parameters: {
-		msw: [
+
+	beforeEach({ msw }) {
+		msw.use(
 			getTRPCMock({
 				path: ['user', 'confirmAccount'],
 				type: 'mutation',
@@ -21,8 +22,11 @@ export default {
 				type: 'mutation',
 				response: 'not a real id',
 			}),
-			user.surveyOptions,
-		],
+			user.surveyOptions
+		)
+	},
+
+	parameters: {
 		nextjs: {
 			router: {
 				query: {
@@ -31,9 +35,11 @@ export default {
 				},
 			},
 		},
+
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
 	},
+
 	args: {
 		// component: Button,
 		// children: 'Open Reset Password Modal',

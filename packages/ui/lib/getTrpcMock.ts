@@ -1,4 +1,3 @@
-import { action } from '@storybook/addon-actions'
 import {
 	type DefaultBodyType,
 	delay,
@@ -8,6 +7,7 @@ import {
 	type PathParams,
 	type StrictRequest,
 } from 'msw'
+import { action } from 'storybook/actions'
 import { type Promisable } from 'type-fest'
 
 import path from 'path'
@@ -159,5 +159,4 @@ export type MockAPIHandler<K1 extends keyof ApiOutput, K2 extends keyof ApiOutpu
 ) => Promisable<ApiOutput[K1][K2]>
 
 type MockOutput<K1 extends keyof ApiOutput, K2 extends keyof ApiOutput[K1]> =
-	| ApiOutput[K1][K2]
-	| MockAPIHandler<K1, K2>
+	ApiOutput[K1][K2] | MockAPIHandler<K1, K2>

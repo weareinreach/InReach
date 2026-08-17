@@ -3,7 +3,7 @@ import { useMediaQuery } from '@mantine/hooks'
 import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type ReactNode, useEffect } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'

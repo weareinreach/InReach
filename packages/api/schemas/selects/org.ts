@@ -55,7 +55,7 @@ type OrgIncludeKeys = z.ZodObject<
 	{
 		[k in keyof Omit<Prisma.OrganizationInclude, '_count'>]-?: z.ZodDefault<z.ZodBoolean>
 	},
-	'strip'
+	z.core.$strip
 >
 // type OrgSelectKeys = {
 // 	[k in keyof Prisma.OrganizationSelect]: z.infer<typeof boolFalse>
@@ -169,9 +169,7 @@ const orgWebsiteInclude = {
 } satisfies Prisma.Organization$websitesArgs
 
 type AttributeInclude =
-	| Prisma.Organization$attributesArgs
-	| Prisma.OrgLocation$attributesArgs
-	| Prisma.OrgService$attributesArgs
+	Prisma.Organization$attributesArgs | Prisma.OrgLocation$attributesArgs | Prisma.OrgService$attributesArgs
 
 const attributeInclude = attributes satisfies AttributeInclude
 

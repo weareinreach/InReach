@@ -1,5 +1,5 @@
 import { Badge, type BadgeProps, Text, useMantineTheme } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef } from 'react'
 
 import { Icon } from '~ui/icon'

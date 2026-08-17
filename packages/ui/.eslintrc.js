@@ -1,5 +1,9 @@
 module.exports = {
-	extends: ['@weareinreach/eslint-config/storybook', '@weareinreach/eslint-config/next'],
+	extends: [
+		'@weareinreach/eslint-config/storybook',
+		'@weareinreach/eslint-config/next',
+		'plugin:storybook/recommended',
+	],
 	// overrides: [
 	// 	{
 	// 		files: ['**/*.ts?(x)'],

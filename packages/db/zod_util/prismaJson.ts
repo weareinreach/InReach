@@ -1,6 +1,5 @@
-import { z } from 'zod'
-
 import { superjson } from '@weareinreach/util/transformer'
+import { z } from 'zod'
 
 import { type Prisma } from '..'
 
@@ -9,7 +8,7 @@ export const InputJsonValue: z.ZodType<Prisma.InputJsonValue> = z.union([
 	z.number(),
 	z.boolean(),
 	z.lazy(() => z.array(InputJsonValue.nullable())),
-	z.lazy(() => z.record(InputJsonValue.nullable())),
+	z.lazy(() => z.record(z.string(), InputJsonValue.nullable())),
 ])
 export type InputJsonValueType = z.infer<typeof InputJsonValue>
 export const JsonNullValueInputSchema = z.enum(['JsonNull'])

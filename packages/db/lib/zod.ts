@@ -3,12 +3,7 @@ import { z } from 'zod'
 import { Prisma } from '~db/client'
 
 export type NullableJsonInput =
-	| Prisma.JsonValue
-	| null
-	| 'JsonNull'
-	| 'DbNull'
-	| Prisma.NullTypes.DbNull
-	| Prisma.NullTypes.JsonNull
+	Prisma.JsonValue | null | 'JsonNull' | 'DbNull' | Prisma.NullTypes.DbNull | Prisma.NullTypes.JsonNull
 
 export const transformJsonNull = (v?: NullableJsonInput) => {
 	if (!v || v === 'DbNull') return Prisma.DbNull
@@ -21,14 +16,14 @@ export const JsonValue: z.ZodType<Prisma.JsonValue> = z.union([
 	z.number(),
 	z.boolean(),
 	z.lazy(() => z.array(JsonValue)),
-	z.lazy(() => z.record(JsonValue)),
+	z.lazy(() => z.record(z.string(), JsonValue)),
 ])
 export const InputJsonValue: z.ZodType<Prisma.InputJsonValue> = z.union([
 	z.string(),
 	z.number(),
 	z.boolean(),
 	z.lazy(() => z.array(InputJsonValue)),
-	z.lazy(() => z.record(InputJsonValue)),
+	z.lazy(() => z.record(z.string(), InputJsonValue)),
 ])
 export type JsonValueType = z.infer<typeof JsonValue>
 export const NullableJsonValue = z
