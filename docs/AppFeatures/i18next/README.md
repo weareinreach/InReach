@@ -30,9 +30,9 @@ The overwhelming majority of calls (e.g. `packages/ui/components/sections/Navbar
 | `apps/app/src/pages/admin/index.tsx:122`                                      | `welcome-name`      | `"Welcome, {{name}}!"`                        | Low (admin only)                                |
 | `account/saved/index.tsx:124`, `[listId].tsx:163`                             | `list.updated`      | `"Updated {{date}}"`                          | Medium                                          |
 
-### 3. `<Trans>` with nested HTML — highest priority for QA
+### 3. `<Trans>` with nested HTML
 
-React-i18next v17 changed how `transKeepBasicHtmlNodesFor` serializes a kept-HTML tag that _wraps an interpolated variable_ (e.g. `<strong>{{name}}</strong>`). 26 total `<Trans>` call sites found; the ones below are the tag-wraps-a-variable shape most affected:
+26 total `<Trans>` call sites found. All of them supply an explicit `i18nKey`, which rules out the v17 `nodesToString` auto-generated-key change as a risk here (see Known Issues). The tag-wraps-a-variable shape below is still worth a QA pass on its own merits (interpolation correctness):
 
 | File                                                                        | i18nKey                          | Locale string                                                                                                                                                              | Traffic                                     |
 | --------------------------------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
@@ -59,7 +59,9 @@ Array-valued / multi-component Trans usage (lower priority, still worth a pass):
 
 ### 5. URLs/links in translation strings
 
-No raw `<a href>` or markdown-link syntax in any locale JSON. All links go through named `<Trans>` components with hrefs supplied in JSX (`link1`/`link2`, `PrivacyLink`, `LoginModal`, `Link`, etc.) — a subset of §3, no separate risk surface.
+No raw `<a href>` or markdown-link syntax in any **static locale JSON** — those links all go through named `<Trans>` components with hrefs supplied in JSX (`link1`/`link2`, `PrivacyLink`, `LoginModal`, `Link`, etc.), a subset of §3 with no separate risk surface.
+
+**DB-authored content is a different case.** `LocationBasedAlertBanner` (`packages/ui/components/core/LocationBasedAlertBanner/index.tsx:101-110`) and `AlertMessage` render `<Trans components={{ Link: <Link external ... /> }} />` where the code-side `Link` element has **no `href`** — the href is meant to come from inside the translated string itself, e.g. `<Link href="https://...">text</Link>` stored in the `TranslationKey` table (`ns: 'org-data'`, confirmed live: `locationBasedAlert.alrt_01J1D1GAT5G5S6QNMCND5PMDAX`, see `packages/db/prisma/data-migrations/2025-01-07_update-locationbased-alert-string.ts`). Verified against the installed react-i18next source (`TransWithoutContext.js`): `mapAST` parses attributes straight off the tag in the translated string, and `mergeProps` spreads them onto the matched `components` entry with the string's attributes taking precedence. This means a Crowdin translator can set a **different href per language** for the same link — by design, not a bug — but it also means the URL is content, not code, and nothing currently checks that a translator-edited href is valid. See Known Issues.
 
 ### 6. Namespace-scoped translations
 
@@ -81,29 +83,31 @@ None found in any locale string — only the custom `lowercase` formatter exists
 
 No automated coverage exists yet for rendering correctness (see `docs/AppFeatures/testing-strategy.md` — TODO once that doc exists). Until unit/UI tests are built out, use this table as the manual regression checklist after any i18next-family dependency bump or config change.
 
-| Page / flow                                | What to check                                                                                            |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| Any page footer                            | Copyright line year interpolates correctly                                                               |
-| Any org/search page browser tab            | `<title>` reads correctly — no literal `{{- title}}` or `$t(...)` leaking through                        |
-| First visit / new session                  | Cookie consent banner — "Privacy Statement" renders as a working link                                    |
-| Org/service detail pages                   | Breadcrumb "Back to **[page name]**" — styled correctly, not raw tags                                    |
-| Login/signup forms                         | Privacy Policy / Terms of Use disclaimer — both links work, nested `$t()` action text resolves correctly |
-| Any org/location/service detail page       | Org-authored custom text renders (per-org namespace), not stuck on English fallback                      |
-| Search results pages                       | Result count and review count pluralization ("1 result" vs "N results")                                  |
-| Privacy Statement modal                    | Nested list items render correctly                                                                       |
-| Password reset / account verification      | `<strong>`-wrapped and `<Switch>`/`<Link>`-nested copy renders correctly                                 |
-| Crisis-support pages                       | `<strong>{{targetPop}}</strong>`-style interpolation                                                     |
-| Marketing homepage                         | Multi-component `CardTranslation` feature cards                                                          |
-| Any page, if org content looks oddly cased | Check whether the `lowercase` custom formatter is in play (org-authored content only)                    |
+| Page / flow                                                              | What to check                                                                                                        |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Any page footer                                                          | Copyright line year interpolates correctly                                                                           |
+| Any org/search page browser tab                                          | `<title>` reads correctly — no literal `{{- title}}` or `$t(...)` leaking through                                    |
+| First visit / new session                                                | Cookie consent banner — "Privacy Statement" renders as a working link                                                |
+| Org/service detail pages                                                 | Breadcrumb "Back to **[page name]**" — styled correctly, not raw tags                                                |
+| Login/signup forms                                                       | Privacy Policy / Terms of Use disclaimer — both links work, nested `$t()` action text resolves correctly             |
+| Any org/location/service detail page                                     | Org-authored custom text renders (per-org namespace), not stuck on English fallback                                  |
+| Search results pages                                                     | Result count and review count pluralization ("1 result" vs "N results")                                              |
+| Privacy Statement modal                                                  | Nested list items render correctly                                                                                   |
+| Password reset / account verification                                    | `<strong>`-wrapped and `<Switch>`/`<Link>`-nested copy renders correctly                                             |
+| Crisis-support pages                                                     | `<strong>{{targetPop}}</strong>`-style interpolation                                                                 |
+| Marketing homepage                                                       | Multi-component `CardTranslation` feature cards                                                                      |
+| Any page, if org content looks oddly cased                               | Check whether the `lowercase` custom formatter is in play (org-authored content only)                                |
+| Location-based alert banner (if one is configured for the test location) | Link renders and its href points somewhere sensible — can't be fully verified from real data alone, see Known Issues |
 
-Automated-test equivalents worth building first (highest ROI given the traffic tiers above): a Storybook interaction test or snapshot for `Breadcrumb`, `LoginSignUp` disclaimer, `Footer`, and the cookie-consent banner; a unit test for the pluralization keys in `Rating.tsx` and search result counts; an integration test asserting a per-org namespace falls back to `defaultValue` correctly when no org translation exists.
+Automated-test equivalents worth building first (highest ROI given the traffic tiers above): a Storybook interaction test or snapshot for `Breadcrumb`, `LoginSignUp` disclaimer, `Footer`, and the cookie-consent banner; a unit test for the pluralization keys in `Rating.tsx` and search result counts; an integration test asserting a per-org namespace falls back to `defaultValue` correctly when no org translation exists; a **mock-data unit test** for the DB-authored attribute-passthrough case (§5 / Known Issues) — render `<Trans components={{ Link: <Link/> }}>` (no `href` on the component, matching `LocationBasedAlertBanner`/`AlertMessage`) against two mock translation strings with different `<Link href="...">` values and assert each renders its own string-supplied href, since real data currently can't exercise this reliably.
 
 ## Known Issues / Gotchas
 
 - **`next-i18next@16` split the package into separate App Router and Pages Router builds.** The bare `next-i18next` import now resolves to the App Router build, which doesn't export `useTranslation`/`Trans`/`appWithTranslation` at all. This app is 100% Pages Router — always import from `next-i18next/pages` (and `next-i18next/pages/serverSideTranslations` for that helper), never the bare package name. Getting this wrong is loud, not silent (TypeScript errors immediately, and the app fails to render at all if somehow bypassed) — but it's an easy mistake to reintroduce in a new file via editor auto-import.
 - **i18next 26 removed the `interpolation.format` callback option.** Custom formats are now registered via `i18nInstance.services.formatter.add(name, fn)`. Since next-i18next manages instance creation internally for both browser and server contexts, this is wired in via a `type: '3rdParty'` plugin module in the `use` array (see `next-i18next.config.mjs`), not a direct post-init call.
 - **The `lowercase` custom formatter is currently unused** by any static English string. If it's ever exercised (likely only via org-authored Crowdin content), it hasn't been tested since the i18next 26 port.
-- **react-i18next v17's `<Trans>` HTML-tag serialization changed** for tags that wrap an interpolated variable — this is a rendering-only change with no compile-time or runtime error signal, so it will not surface in CI without a visual-regression test. See the Testing checklist above.
+- **react-i18next v17's `<Trans>` HTML-tag serialization change does not apply to this codebase.** The v17 changelog scopes the behavior change to auto-generated Trans keys (no explicit `i18nKey` supplied); every one of the 26 `<Trans>` call sites here, including the generic wrappers `RichTranslate` and `TransContent`, supplies an explicit `i18nKey`, so the `nodesToString` codepath the change affects is never invoked. Confirmed by reading both the changelog and the relevant source. No testing burden from the version bump itself.
+- **DB-authored translation strings can carry a real HTML attribute (e.g. `href`) with a different value per language, by design** (see Usage Patterns §5). This is a content-governance risk, not one introduced by any dependency bump — a Crowdin translator editing that attribute can silently retarget a link — but it's untested, and only one live example currently exists (`locationBasedAlert.alrt_01J1D1GAT5G5S6QNMCND5PMDAX`). It can't be reliably covered by testing against real data alone, since that one DB record doesn't consistently carry the attribute (confirmed empty of `href` in the local dev DB snapshot as of this writing) — needs a mock-data unit test instead (see Testing checklist).
 
 ## Related Files
 
@@ -118,4 +122,4 @@ Automated-test equivalents worth building first (highest ROI given the traffic t
 
 ---
 
-_Last verified against code: 2026-08-17. If you change any file listed above, update this doc in the same PR and bump this date._
+_Last verified against code: 2026-08-16. If you change any file listed above, update this doc in the same PR and bump this date._
