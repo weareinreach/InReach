@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./*.ts}
+// codegen:start {preset: barrel, include: ./*.ts, exclude: "*.test.ts"}
 export * from './additionalAttrib'
 export * from './costAttrib'
 export * from './eligAgeAttrib'

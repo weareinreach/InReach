@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./*.ts*, exclude: "*.stories.*"}
+// codegen:start {preset: barrel, include: ./*.ts*, exclude: "*.{stories,test}.*"}
 export * from './AlertMessage'
 export * from './AntiHateMessage'
 export * from './Breadcrumb'

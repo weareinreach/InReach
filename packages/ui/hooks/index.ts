@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./*.ts*, exclude: "*.stories.*"}
+// codegen:start {preset: barrel, include: ./*.ts*, exclude: "*.{stories,test}.*"}
 export * from './useCsvDownload'
 export * from './useCustomVariant'
 export * from './useEditMode'

@@ -20,6 +20,8 @@
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
 		"start": "next start",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
 		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
 	},

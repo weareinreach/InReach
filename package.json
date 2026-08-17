@@ -76,7 +76,6 @@
 		},
 		"onlyBuiltDependencies": [
 			"@sentry/cli",
-			"better-sqlite3",
 			"bufferutil",
 			"esbuild",
 			"msw",
@@ -86,7 +85,7 @@
 			"unrs-resolver"
 		],
 		"overrides": {
-			"better-sqlite3@<9": "9.6.0",
+			"better-sqlite3": "13.0.3",
 			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec"
 		},
 		"patchedDependencies": {

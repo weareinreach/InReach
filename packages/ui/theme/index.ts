@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./*.ts*}
+// codegen:start {preset: barrel, include: ./*.ts*, exclude: "*.test.*"}
 export * from './animation'
 export * from './app'
 export * from './appCache'
