@@ -22,6 +22,7 @@ import {
 	useCallback,
 	useEffect,
 	useMemo,
+	useRef,
 } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
@@ -177,7 +178,16 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 	)
 	const selectedValues = useWatch({ name: 'selected', control: form.control })
 
+	// react-hook-form applies the `values` option asynchronously on mount, so `selectedValues`
+	// can briefly reflect a stale/empty form state before syncing to `preSelected`. Writing that
+	// transient value back into search state clobbers filters that were already applied, so we
+	// only write back once the form has settled past its initial mount render.
+	const hasMounted = useRef(false)
 	useEffect(() => {
+		if (!hasMounted.current) {
+			hasMounted.current = true
+			return
+		}
 		searchStateActions.setServices(selectedValues)
 	}, [selectedValues, searchStateActions])
 
