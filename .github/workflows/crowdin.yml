@@ -111,6 +111,11 @@ jobs:
         id: run-prettier
         run: |
           echo 'Installing package dependencies'
+          # --ignore-scripts is intentionally not used: it would also skip this workspace's
+          # own postinstall hooks (e.g. packages/db's Prisma client generation), not just
+          # third-party scripts. Untrusted third-party install scripts are already blocked
+          # by pnpm's `onlyBuiltDependencies` allowlist in package.json - see SonarCloud
+          # rule githubactions:S6505 (resolved as a deliberate exception, not overlooked).
           pnpm install
           echo 'Running prettier'
           pnpm format
