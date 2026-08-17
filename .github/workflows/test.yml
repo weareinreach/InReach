@@ -31,13 +31,14 @@ jobs:
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
 
-      # --ignore-scripts is intentionally not used: it would also skip this workspace's own
-      # postinstall hooks (e.g. packages/db's Prisma client generation), not just third-party
-      # scripts. Untrusted third-party install scripts are already blocked by pnpm's
-      # `onlyBuiltDependencies` allowlist in package.json - see SonarCloud rule
-      # githubactions:S6505 (resolved as a deliberate exception, not overlooked).
+      # --ignore-scripts is safe here (unlike the other workflows in this repo): this job
+      # only runs packages/ui's Vitest suite, whose only cross-package reference is a
+      # type-only import of AppRouter (packages/ui/lib/trpcClient.ts) - erased at transform
+      # time, so it never needs packages/db's postinstall-generated Prisma client. Verified
+      # empirically: `pnpm install --ignore-scripts` then `pnpm --filter @weareinreach/ui
+      # test` passes 4/4 with no generated Prisma client present at all.
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --ignore-scripts
 
       - name: Run unit & component tests
         run: pnpm --filter @weareinreach/ui test
