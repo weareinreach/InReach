@@ -103,7 +103,14 @@ const storybookConfig: StorybookConfig = {
 						__dirname,
 						'mockAuthStates.ts'
 					),
-					'next-i18next': 'react-i18next',
+					// Storybook has no real Next.js server context, so next-i18next's Pages Router
+					// build (which the rest of the app imports as `next-i18next/pages` since the
+					// v16 upgrade) isn't usable here - alias straight to react-i18next instead.
+					// Must be the full `/pages` path, not bare `next-i18next`: without a trailing
+					// `$`, webpack's alias is a prefix match, so a bare-key alias here would also
+					// rewrite `next-i18next/pages` -> `react-i18next/pages`, a subpath that
+					// doesn't exist on react-i18next.
+					'next-i18next/pages': 'react-i18next',
 					'msw/native': path.resolve(__dirname, '../node_modules/msw/lib/native/index.mjs'),
 				},
 				roots: [publicStatic],
