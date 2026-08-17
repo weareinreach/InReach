@@ -36,6 +36,35 @@ const isRenovatePR = renovateRegex.test(process.env.VERCEL_GIT_COMMIT_REF)
 
 const withRoutes = routes({ outDir: './src/types' })
 const withBundleAnalyzer = bundleAnalyze({ enabled: shouldAnalyze, openAnalyzer: false })
+
+// A stray barrel export (`export * from './Rating.test'`) once let a Vitest test file get
+// bundled into the real app, crashing the build with `vi.queueMock() is forbidden` (vitest's
+// mocking internals only work inside its own test runner). Webpack only bundles what's
+// actually reachable from an entry point, so this can only happen via an accidental import -
+// fail the build loudly if it ever happens again, instead of silently shipping broken code.
+class ForbidTestFilesInBundlePlugin {
+	static testFilePattern = /\.(test|spec)\.[cm]?[jt]sx?$/
+	apply(/** @type {import('webpack').Compiler} */ compiler) {
+		compiler.hooks.compilation.tap('ForbidTestFilesInBundlePlugin', (compilation) => {
+			compilation.hooks.finishModules.tap('ForbidTestFilesInBundlePlugin', (modules) => {
+				for (const webpackModule of modules) {
+					const resource = /** @type {{ resource?: string }} */ (webpackModule).resource
+					if (resource && ForbidTestFilesInBundlePlugin.testFilePattern.test(resource)) {
+						compilation.errors.push(
+							/** @type {any} */ (
+								new Error(
+									`Test file is reachable from the app bundle: ${resource}\n` +
+										'Something imports this test file, directly or via a barrel export - ' +
+										'check for a stray `export * from` in a codegen-managed index file.'
+								)
+							)
+						)
+					}
+				}
+			})
+		})
+	}
+}
 /**
  * @type {import('next').NextConfig}
  */
@@ -74,6 +103,8 @@ const nextConfig = {
 	},
 	rewrites: async () => [{ source: '/search', destination: '/' }],
 	webpack: (config, { dev, isServer, webpack }) => {
+		config.plugins.push(new ForbidTestFilesInBundlePlugin())
+
 		// next-i18next@16's `./pages` export declares matching `import`/`require` conditions
 		// pointing at separate .mjs/.cjs builds. Next's SWC/webpack pipeline sometimes
 		// misjudges which one it's looking at for this package, emitting CJS-shaped output
