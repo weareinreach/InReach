@@ -1,5 +1,5 @@
 import { Box, createStyles, rem, Stack, Text } from '@mantine/core'
-import { Trans } from 'next-i18next'
+import { Trans } from 'next-i18next/pages'
 
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'

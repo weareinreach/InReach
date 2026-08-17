@@ -11,4 +11,3 @@ export {
 	generateNestedFreeTextUpsert,
 } from './lib/generateFreeText'
 export { generateId, getIdPrefixRegex, isIdFor } from './lib/idGen'
-export { PrismaInstrumentation } from '@prisma/instrumentation'

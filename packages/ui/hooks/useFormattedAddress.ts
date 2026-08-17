@@ -1,6 +1,6 @@
 import compact from 'just-compact'
 import { formatAddress } from 'localized-address-format'
-import { type TFunction, useTranslation } from 'next-i18next'
+import { type TFunction, useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 import { z } from 'zod'
 

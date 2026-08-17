@@ -21,8 +21,8 @@
 		"prune-clients": "find ./dist/client -type f -not -name '*libquery_engine-linux-arm64-openssl-*' -delete -print"
 	},
 	"dependencies": {
-		"@aws-lambda-powertools/logger": "1.18.1",
-		"@prisma/client": "5.21.1",
+		"@aws-lambda-powertools/logger": "2.34.0",
+		"@prisma/client": "7.9.1",
 		"@weareinreach/db": "workspace:*"
 	},
 	"devDependencies": {
@@ -35,7 +35,7 @@
 		"aws-lambda": "1.0.7",
 		"eslint": "8.57.1",
 		"prettier": "3.9.6",
-		"prisma": "5.21.1",
+		"prisma": "7.9.1",
 		"typescript": "5.6.3"
 	}
 }

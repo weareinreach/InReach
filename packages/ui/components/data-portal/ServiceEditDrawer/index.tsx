@@ -15,7 +15,7 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { compareArrayVals } from 'crud-object-diff'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { type Resolver, useForm } from 'react-hook-form'
 import { Checkbox, Textarea, TextInput } from 'react-hook-form-mantine'

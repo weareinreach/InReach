@@ -1,7 +1,7 @@
 import { Checkbox, Slider, Stack, Title } from '@mantine/core'
 import { useUncontrolled } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type ChangeEventHandler, useCallback, useMemo, useState } from 'react'
 import { z } from 'zod'
 

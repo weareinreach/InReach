@@ -10,7 +10,7 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useEffect, useRef, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'

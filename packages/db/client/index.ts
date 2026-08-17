@@ -1,4 +1,5 @@
 /* eslint-disable node/no-process-env */
+import { PrismaPg } from '@prisma/adapter-pg'
 import { type Prisma, PrismaClient } from '@prisma/client'
 import { isLocalDev, isVercelDev } from '@weareinreach/env'
 import { createLoggerInstance } from '@weareinreach/util/logger'
@@ -42,7 +43,11 @@ const clientOptions = {
 } satisfies Prisma.PrismaClientOptions
 
 const generateClient = () => {
-	const client = new PrismaClient(clientOptions)
+	// Driver adapters are mandatory as of Prisma 7 - the client no longer connects from a bare
+	// connection string. Uses DATABASE_URL (not DB_DIRECT_URL) since this is the runtime
+	// connection pool, same URL the client always used before this adapter was required.
+	const adapter = new PrismaPg(process.env.DATABASE_URL as string)
+	const client = new PrismaClient({ ...clientOptions, adapter })
 
 	// if (verboseLogging) {
 	// 	const queryLogger = createPrismaQueryEventHandler({

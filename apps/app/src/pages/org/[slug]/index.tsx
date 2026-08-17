@@ -3,7 +3,7 @@ import { useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticProps, type InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type RoutedQuery } from 'nextjs-routes'
 import { useCallback, useEffect, useRef, useState } from 'react'
 

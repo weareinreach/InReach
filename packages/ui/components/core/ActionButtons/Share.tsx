@@ -1,7 +1,7 @@
 import { Box, Group, Text, useMantineTheme } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback } from 'react'
 
 import { Button, type ButtonProps } from '~ui/components/core/Button'

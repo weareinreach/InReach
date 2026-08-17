@@ -2,7 +2,7 @@ import { Box, createStyles, Flex, Modal, rem, Stack, Text, Title, UnstyledButton
 import { useDisclosure } from '@mantine/hooks'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import React, { useState } from 'react'
 
 import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'

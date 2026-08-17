@@ -1,5 +1,5 @@
 import { Card, Checkbox, Select, Stack, Text } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useEffect, useState } from 'react'
 
 import { MultiSelectPopover } from '~ui/components/data-portal/MultiSelectPopover'

@@ -3,7 +3,7 @@ import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 

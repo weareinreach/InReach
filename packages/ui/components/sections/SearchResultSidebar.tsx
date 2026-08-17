@@ -4,7 +4,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { Divider, Group, Overlay, Skeleton, Stack, Switch, Text, Title, useMantineTheme } from '@mantine/core'
 import { getCookie, setCookie } from 'cookies-next'
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type Dispatch, type SetStateAction, useEffect, useMemo, useState } from 'react'
 
 // import { SearchDistance } from '~ui/components/core/SearchDistance'

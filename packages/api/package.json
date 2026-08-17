@@ -17,8 +17,8 @@
 	"dependencies": {
 		"@googlemaps/google-maps-services-js": "3.4.2",
 		"@opentelemetry/api": "1.9.1",
-		"@prisma/client": "5.21.1",
-		"@sentry/nextjs": "8.49.0",
+		"@prisma/client": "7.9.1",
+		"@sentry/nextjs": "10.70.0",
 		"@tanstack/react-query": "4.36.1",
 		"@terraformer/wkt": "2.2.2",
 		"@trpc/client": "10.45.2",

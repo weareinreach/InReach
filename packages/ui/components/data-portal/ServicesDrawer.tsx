@@ -14,7 +14,7 @@ import {
 	UnstyledButton,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, type ReactNode } from 'react'
 
 import { Badge } from '~ui/components/core/Badge'

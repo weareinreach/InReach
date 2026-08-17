@@ -2,7 +2,7 @@ import { Affix, createStyles, Modal, Popover, rem, Text, useMantineTheme } from 
 import { useDisclosure, useTimeout } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useCallback, useEffect, useState } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'

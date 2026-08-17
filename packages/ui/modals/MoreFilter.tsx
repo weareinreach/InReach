@@ -21,7 +21,7 @@ import { useForm } from '@mantine/form'
 import { useDisclosure, useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import compact from 'just-compact'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import {
 	forwardRef,
 	memo,

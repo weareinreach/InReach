@@ -1,5 +1,5 @@
 import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type ComponentPropsWithoutRef, forwardRef, useCallback, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { NumberInput, Radio, Select, TextInput } from 'react-hook-form-mantine'

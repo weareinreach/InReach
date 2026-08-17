@@ -38,14 +38,6 @@ i18n
 		interpolation: {
 			escapeValue: true,
 			skipOnVariables: false,
-			format: (value, format) => {
-				switch (format) {
-					case 'lowercase': {
-						if (typeof value === 'string') return value.toLowerCase()
-					}
-				}
-				return value
-			},
 		},
 		react: { useSuspense: false, bindI18nStore: 'added loaded', bindI18n: 'languageChanged loaded' },
 		cleanCode: true,
@@ -54,5 +46,11 @@ i18n
 		joinArrays: '',
 		// resources,
 	})
+
+// i18next 26 removed the `interpolation.format` callback option - custom formats (like
+// `{{value, lowercase}}`) are now registered via `services.formatter.add()` on the live instance.
+i18n.services.formatter?.add('lowercase', (value) =>
+	typeof value === 'string' ? value.toLowerCase() : value
+)
 
 export { i18n }

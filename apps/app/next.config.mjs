@@ -8,6 +8,7 @@ import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import createJiti from 'jiti'
 import routes from 'nextjs-routes/config'
 
+import { createRequire } from 'module'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -15,7 +16,13 @@ import i18nConfig from './next-i18next.config.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const require = createRequire(import.meta.url)
 const jiti = createJiti(__filename)
+// next-i18next's package.json `exports` map only exposes `./pages`, `./package.json`, etc. -
+// deep dist paths aren't declared subpaths, so `require.resolve()` on them directly throws
+// ERR_PACKAGE_PATH_NOT_EXPORTED. Resolve the package root via the declared `./package.json`
+// subpath instead, then join the relative dist path manually.
+const nextI18nextRoot = path.dirname(require.resolve('next-i18next/package.json'))
 jiti('../../packages/env')
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
@@ -67,6 +74,19 @@ const nextConfig = {
 	},
 	rewrites: async () => [{ source: '/search', destination: '/' }],
 	webpack: (config, { dev, isServer, webpack }) => {
+		// next-i18next@16's `./pages` export declares matching `import`/`require` conditions
+		// pointing at separate .mjs/.cjs builds. Next's SWC/webpack pipeline sometimes
+		// misjudges which one it's looking at for this package, emitting CJS-shaped output
+		// (`Object.defineProperty(exports, ...)`) into a chunk wrapped as ESM (no `exports`
+		// binding), throwing `ReferenceError: exports is not defined` in the client bundle
+		// (see vercel/next.js#59603 for the same signature on a different package). Aliasing
+		// straight to the unambiguous .cjs build removes the import/require condition
+		// ambiguity that triggers the misdetection.
+		config.resolve.alias['next-i18next/pages'] = path.join(nextI18nextRoot, 'dist/pagesRouter/index.cjs')
+		config.resolve.alias['next-i18next/pages/serverSideTranslations'] = path.join(
+			nextI18nextRoot,
+			'dist/pagesRouter/serverSideTranslations.cjs'
+		)
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
@@ -160,9 +180,6 @@ const defineSentryConfig = (nextConfig) =>
 
 		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
 		tunnelRoute: '/monitoring',
-
-		// Hides source maps from generated client bundles
-		hideSourceMaps: !isLocalDev,
 
 		// Automatically tree-shake Sentry logger statements to reduce bundle size
 		disableLogger: isVercelProd || isVercelActiveDev,

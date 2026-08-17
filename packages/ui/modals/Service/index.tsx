@@ -10,7 +10,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useMemo } from 'react'
 
 import { productEvent, serviceModalEvent } from '@weareinreach/analytics/events'
@@ -87,9 +87,11 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 		const slug = useSlug()
 		const { data, status } = api.service.forServiceModal.useQuery(serviceId)
 		const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-		const { t, i18n } = useTranslation(
-			orgId?.id ? ['common', 'attribute', orgId.id] : ['common', 'attribute']
-		)
+		// Array length must stay constant across renders - react-i18next's useTranslation passes
+		// this array in as a useMemo dependency list. Substitute an already-loaded namespace
+		// ('common') as a harmless placeholder until the org ID resolves, instead of omitting
+		// the slot.
+		const { t, i18n } = useTranslation(['common', 'attribute', orgId?.id ?? 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const { isMobile } = useScreenSize()
 		const modalTitle = useMemo(

@@ -1,6 +1,6 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import compact from 'just-compact'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type ReactElement, useCallback, useMemo } from 'react'
 import invariant from 'tiny-invariant'
 

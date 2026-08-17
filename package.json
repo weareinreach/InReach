@@ -75,6 +75,7 @@
 			}
 		},
 		"onlyBuiltDependencies": [
+			"@sentry/cli",
 			"better-sqlite3",
 			"bufferutil",
 			"esbuild",

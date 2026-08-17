@@ -1,6 +1,6 @@
 import { Divider, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import orderBy from 'just-order-by'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { memo, type ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'
@@ -17,9 +17,11 @@ import { type BadgeAttributeRecord, BadgeEdit } from '~ui/modals/BadgeEdit'
 
 export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	const { id: orgId } = useOrgInfo()
-	const { t, ready: i18nReady } = useTranslation(
-		orgId ? ['services', 'attribute', orgId] : ['services', 'attribute']
-	)
+	// Array length must stay constant across renders - react-i18next's useTranslation passes
+	// this array in as a useMemo dependency list. Substitute an already-loaded namespace
+	// ('services') as a harmless placeholder until the org ID resolves, instead of omitting
+	// the slot.
+	const { t, ready: i18nReady } = useTranslation(['services', 'attribute', orgId ?? 'services'])
 	const variants = useCustomVariant()
 	const { attributes, isClaimed, locations, description, id } = data
 

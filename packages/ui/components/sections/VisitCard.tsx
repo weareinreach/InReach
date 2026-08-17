@@ -1,6 +1,6 @@
 import { Card, createStyles, Group, rem, Stack, Text, Title, Tooltip, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { AddressVisibility } from '@weareinreach/db/enums'
 import { Badge } from '~ui/components/core/Badge'

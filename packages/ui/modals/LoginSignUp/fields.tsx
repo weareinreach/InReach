@@ -14,7 +14,7 @@ import {
 } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import compact from 'just-compact'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type ComponentPropsWithRef, forwardRef, useEffect, useRef, useState } from 'react'
 
 import { allAttributes } from '@weareinreach/db/generated/allAttributes'

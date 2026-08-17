@@ -2,7 +2,7 @@ import { Box, createPolymorphicComponent, Group, Modal, Stack, Text, Title } fro
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { forwardRef, type MouseEventHandler, useCallback, useEffect, useMemo } from 'react'
 
 import { Breadcrumb, type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
