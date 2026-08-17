@@ -90,9 +90,23 @@ const backendConfig = {
 const CrowdinOTA = new MultiBackend(null, backendConfig.CrowdinOTA)
 const LocalHTTP = new MultiBackend(null, backendConfig.LocalHTTP)
 
+// i18next 26 removed the `interpolation.format` callback option - custom formats (like `{{value,
+// lowercase}}`) are now registered via `services.formatter.add()` on the live instance instead. A
+// `type: '3rdParty'` plugin's `init(i18next)` hook is the way next-i18next's `use` array exposes
+// that instance uniformly for both the browser and server instance-creation paths.
+/** @type {import('i18next').ThirdPartyModule} */
+const lowercaseFormatter = {
+	type: '3rdParty',
+	init: (i18nextInstance) => {
+		i18nextInstance.services.formatter?.add('lowercase', (value) =>
+			typeof value === 'string' ? value.toLowerCase() : value
+		)
+	},
+}
+
 const plugins = () => {
 	/** @type {any[]} */
-	const pluginsToUse = [intervalPlural, LanguageDetector]
+	const pluginsToUse = [intervalPlural, LanguageDetector, lowercaseFormatter]
 	if (isBrowser) {
 		pluginsToUse.push(ChainedBackend)
 	}
@@ -111,7 +125,7 @@ const plugins = () => {
 	return compact(pluginsToUse)
 }
 
-/** @type {import('next-i18next').UserConfig} */
+/** @type {import('next-i18next/pages').UserConfig} */
 const config = {
 	i18n: {
 		defaultLocale: 'en',
@@ -144,12 +158,6 @@ const config = {
 	interpolation: {
 		skipOnVariables: false,
 		alwaysFormat: true,
-		format: (value, format) => {
-			if (format === 'lowercase' && typeof value === 'string') {
-				return value.toLowerCase()
-			}
-			return value
-		},
 	},
 }
 export default config

@@ -10,7 +10,7 @@ import {
 } from '@mantine/core'
 import { hasCookie, setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect, useMemo } from 'react'
 
 import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'

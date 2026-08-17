@@ -1,7 +1,7 @@
 import { Tabs as MantineTabs } from '@mantine/core'
 import { type Meta } from '@storybook/nextjs'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 const Story = () => {

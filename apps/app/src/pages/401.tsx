@@ -2,7 +2,7 @@ import { Container, rem, Stack, Title } from '@mantine/core'
 import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type Route } from 'nextjs-routes'
 import { z } from 'zod'
 

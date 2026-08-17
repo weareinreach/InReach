@@ -12,7 +12,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { forwardRef, useEffect, useMemo, useState } from 'react'
 import Toggle from 'react-toggle'
 import 'react-toggle/style.css'

@@ -1,7 +1,7 @@
 import { Box, Center, Group, Menu, Text, useMantineTheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type ComponentPropsWithRef, forwardRef, useCallback, useMemo } from 'react'
 
 import { productEvent } from '@weareinreach/analytics/events'

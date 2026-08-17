@@ -12,7 +12,7 @@ import {
 } from '@mantine/core'
 import { useReducedMotion } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { useEffect, useState } from 'react'
 
 import { Link } from '~ui/components/core/Link'

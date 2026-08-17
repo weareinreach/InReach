@@ -1,7 +1,7 @@
 import { Center, Container, rem, Stack, Tabs, Text, Title } from '@mantine/core'
 import * as Sentry from '@sentry/nextjs'
 import { type GetStaticProps, type NextPage, type NextPageContext } from 'next'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { useState } from 'react'
 
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'

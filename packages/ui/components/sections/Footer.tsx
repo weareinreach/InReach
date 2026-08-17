@@ -1,7 +1,7 @@
 import { createStyles, Grid, Group, rem, Stack, Text, Title } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { type MouseEventHandler } from 'react'
 
 import InReach from '~ui/assets/inreach.svg'

@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { Work_Sans } from 'next/font/google'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { type ComponentPropsWithoutRef, useEffect, useMemo } from 'react'
 import { ConsentBanner, type ConsentOptions, ConsentProvider } from 'react-hook-consent'
 

@@ -1,5 +1,5 @@
 import { type CountryCode } from 'libphonenumber-js'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { type LiteralUnion } from 'type-fest'
 
 import { isExternal, Link, type LinkProps } from '~ui/components/core/Link'

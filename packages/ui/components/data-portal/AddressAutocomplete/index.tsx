@@ -1,7 +1,7 @@
 import { createStyles, Group, Stack, Text } from '@mantine/core'
 import { useDebouncedValue, usePrevious } from '@mantine/hooks'
 import compact from 'just-compact'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import {
 	type FieldPathValue,

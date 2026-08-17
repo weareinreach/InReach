@@ -1,5 +1,5 @@
 import { type TOptions } from 'i18next'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { type DB } from '@weareinreach/api/prisma/types'
 

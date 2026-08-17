@@ -1,5 +1,5 @@
 import { createStyles, Paper, Text, useMantineTheme } from '@mantine/core'
-import { Trans } from 'next-i18next'
+import { Trans } from 'next-i18next/pages'
 import { type LiteralUnion } from 'type-fest'
 
 import { Icon, type IconList } from '~ui/icon'

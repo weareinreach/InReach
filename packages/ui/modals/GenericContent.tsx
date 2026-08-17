@@ -1,6 +1,6 @@
 import { Box, type ButtonProps, createPolymorphicComponent, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { forwardRef, type ReactNode } from 'react'
 
 import { AntiHateMessage, Button, Link } from '~ui/components/core'

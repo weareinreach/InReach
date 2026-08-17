@@ -1,6 +1,6 @@
 import { createStyles, Group, rem, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { type MouseEvent, type MouseEventHandler, useCallback, useMemo } from 'react'
 
 import { useScreenSize } from '~ui/hooks/useScreenSize'

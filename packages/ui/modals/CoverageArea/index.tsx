@@ -9,7 +9,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { type TFunction, useTranslation } from 'next-i18next'
+import { type TFunction, useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect } from 'react'
 
 import { trpc as api } from '~ui/lib/trpcClient'

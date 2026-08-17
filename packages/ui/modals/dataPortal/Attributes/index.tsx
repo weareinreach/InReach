@@ -10,7 +10,7 @@ import {
 	Stack,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { type TFunction, useTranslation } from 'next-i18next'
+import { type TFunction, useTranslation } from 'next-i18next/pages'
 import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { FormProvider, type Resolver, useForm } from 'react-hook-form'
 import { z } from 'zod'

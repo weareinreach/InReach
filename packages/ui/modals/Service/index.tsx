@@ -10,7 +10,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useMemo } from 'react'
 
 import { productEvent, serviceModalEvent } from '@weareinreach/analytics/events'

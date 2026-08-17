@@ -11,7 +11,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 

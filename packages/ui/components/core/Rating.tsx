@@ -1,5 +1,5 @@
 import { createStyles, Group, rem, Skeleton, Text, Tooltip } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'

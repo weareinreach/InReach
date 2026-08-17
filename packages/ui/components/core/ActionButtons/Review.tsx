@@ -1,6 +1,6 @@
 import { Box, Group, Text, useMantineTheme } from '@mantine/core'
 import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useMemo } from 'react'
 
 import { type ButtonProps } from '~ui/components/core/Button'

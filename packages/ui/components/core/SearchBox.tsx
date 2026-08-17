@@ -15,7 +15,7 @@ import { useForm, type UseFormReturnType } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import regexEscape from 'escape-string-regexp'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import {
 	createContext,
 	type Dispatch,

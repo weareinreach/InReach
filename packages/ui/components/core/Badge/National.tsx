@@ -1,6 +1,6 @@
 import { Badge, type BadgeProps, Tooltip, useMantineTheme } from '@mantine/core'
 import compact from 'just-compact'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef } from 'react'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'

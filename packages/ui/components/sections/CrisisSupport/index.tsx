@@ -1,5 +1,5 @@
 import { Card, createStyles, rem, Stack, Text, Title } from '@mantine/core'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import { type ReactNode } from 'react'
 
 import { Badge } from '~ui/components/core/Badge'

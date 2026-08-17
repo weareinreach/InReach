@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-imports */
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { serverSideTranslations } from 'next-i18next/pages/serverSideTranslations'
 import { type LiteralUnion } from 'type-fest'
 
 import { type Namespaces } from '@weareinreach/db/generated/namespaces'

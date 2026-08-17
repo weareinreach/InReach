@@ -1,5 +1,5 @@
 import { Card, Stack, Title } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { ContactInfo } from '~ui/components/data-display/ContactInfo'
 import { useScreenSize } from '~ui/hooks'

@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import { type User } from 'next-auth'
 import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 import { Icon } from '~ui/icon'
 

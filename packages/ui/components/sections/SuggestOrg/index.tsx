@@ -17,7 +17,7 @@ import {
 import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next/pages'
 import {
 	type ComponentPropsWithRef,
 	type Dispatch,

@@ -10,7 +10,7 @@ import {
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type MouseEventHandler, useCallback, useMemo } from 'react'
 
 import { checkPermissions } from '@weareinreach/auth'

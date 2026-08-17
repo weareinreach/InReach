@@ -1,5 +1,5 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type ReactElement, useCallback } from 'react'
 
 import { productEvent } from '@weareinreach/analytics/events'

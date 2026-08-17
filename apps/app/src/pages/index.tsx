@@ -17,7 +17,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import { type GetStaticProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { type TFunction, Trans, useTranslation } from 'next-i18next'
+import { type TFunction, Trans, useTranslation } from 'next-i18next/pages'
 import { useEffect, useRef, useState } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'

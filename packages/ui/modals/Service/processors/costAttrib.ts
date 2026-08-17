@@ -1,4 +1,4 @@
-import { type TFunction } from 'next-i18next'
+import { type TFunction } from 'next-i18next/pages'
 import { z } from 'zod'
 
 import { getFreeText } from '~ui/hooks/useFreeText'

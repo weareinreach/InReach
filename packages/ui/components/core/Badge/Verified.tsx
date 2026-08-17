@@ -1,6 +1,6 @@
 import { Badge, type BadgeProps, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { forwardRef } from 'react'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'

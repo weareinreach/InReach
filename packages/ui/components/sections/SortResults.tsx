@@ -1,6 +1,6 @@
 import { Button, Drawer, Stack } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { type Dispatch, type SetStateAction } from 'react'
 
 import { SearchResultSidebar } from './SearchResultSidebar'

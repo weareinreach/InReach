@@ -1,6 +1,6 @@
 import { Divider, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import orderBy from 'just-order-by'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 import { memo, type ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Textarea, TextInput } from 'react-hook-form-mantine'

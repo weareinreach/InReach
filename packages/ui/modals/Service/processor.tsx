@@ -1,4 +1,4 @@
-import { type TFunction } from 'next-i18next'
+import { type TFunction } from 'next-i18next/pages'
 
 import { accessInstructions } from '@weareinreach/db/zod_util/attributeSupplement'
 import { type PassedDataObject } from '~ui/components/data-display/ContactInfo/types'
