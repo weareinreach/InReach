@@ -30,6 +30,7 @@ import {
 	useCallback,
 	useEffect,
 	useMemo,
+	useRef,
 } from 'react'
 
 import { Button } from '~ui/components/core/Button'
@@ -365,15 +366,37 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 			[moreFilterOptionData, preSelected]
 		)
 
+		// Tracks whether `form.values` has been populated from `preSelected` at least once. Until
+		// then `form.values` is just its empty `initialValues`, and writing that back to search
+		// state would clobber filters that were already applied before this component (re)mounted.
+		const hasHydrated = useRef(false)
+		// `form.setValues` below doesn't take effect on `form.values` synchronously - the write-back
+		// effect can fire in the same cycle and still observe the *previous* form.values snapshot.
+		// Left unguarded, that stale read writes the opposite of what hydration just set, which
+		// flips `preSelected` on the next render and re-triggers hydration - a self-sustaining
+		// two-step oscillation between the full and empty selection. This flag marks the write-back
+		// firing that immediately follows our own setValues call so it can be skipped as an echo
+		// rather than treated as a real user-driven change.
+		const suppressNextWriteback = useRef(false)
+
 		useEffect(() => {
 			if (moreFilterOptionData && status === 'success') {
 				const initialValues = generateInitialData()
+				suppressNextWriteback.current = true
 				form.setValues(initialValues)
+				hasHydrated.current = true
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [generateInitialData, moreFilterOptionData, status])
 
 		useEffect(() => {
+			if (!hasHydrated.current) {
+				return
+			}
+			if (suppressNextWriteback.current) {
+				suppressNextWriteback.current = false
+				return
+			}
 			const itemsSelected: string[] = []
 			Object.values(form.values).forEach(({ checked, id }) => {
 				if (checked) {
