@@ -107,7 +107,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 			rollbackOptimisticList(context?.previousLists)
 		},
 	})
-	const isLoading = createListOnly.isLoading || createListAndSaveItem.isLoading
+	const isLoading = createListOnly.isPending || createListAndSaveItem.isPending
 
 	const createHandler = useCallback(() => {
 		const { organizationId, serviceId } = props

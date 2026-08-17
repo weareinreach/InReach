@@ -59,7 +59,7 @@ export const CsvDownload: React.FC<CsvDownloadProps> = ({
 
 	const {
 		mutate: fetchDataAndDownload,
-		isLoading: isMutationLoading,
+		isPending: isMutationLoading,
 		isSuccess: isMutationSuccess,
 		data: mutationData,
 		error: mutationError,

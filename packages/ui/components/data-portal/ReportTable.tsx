@@ -299,7 +299,7 @@ const ReportDetailsModal = ({
 					<Button
 						variant='primary'
 						onClick={() => updateMutation.mutate({ id: report.id, status, informed, internalNotes: newNote })}
-						loading={updateMutation.isLoading}
+						loading={updateMutation.isPending}
 						disabled={!canSave}
 					>
 						Save Changes

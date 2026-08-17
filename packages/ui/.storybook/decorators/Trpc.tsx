@@ -17,7 +17,7 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 					queries: {
 						refetchOnWindowFocus: false,
 						staleTime: 1000 * 60 * 10, // 10 Minutes
-						cacheTime: 1000 * 60 * 60, // 1 Hour
+						gcTime: 1000 * 60 * 60, // 1 Hour
 					},
 				},
 			})
@@ -28,9 +28,9 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 			loggerLink(),
 			httpLink({
 				url: '/trpc',
+				transformer,
 			}),
 		],
-		transformer,
 	}
 
 	const [trpcClient, _setTRPCClient] = useState(storybookTRPC.createClient(trpcClientOpts))

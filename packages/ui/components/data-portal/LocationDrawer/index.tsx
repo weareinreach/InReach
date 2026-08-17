@@ -114,7 +114,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 								variant='primary'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={form.handleSubmit(handleSave)}
-								loading={createLocation.isLoading}
+								loading={createLocation.isPending}
 								disabled={!form.formState.isDirty || !form.formState.isValid}
 							>
 								Save
@@ -142,7 +142,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 								<Button
 									variant='primary-icon'
 									leftIcon={<Icon icon='carbon:save' />}
-									loading={createLocation.isLoading} // This should be form.handleSubmit(handleSave)
+									loading={createLocation.isPending} // This should be form.handleSubmit(handleSave)
 									onClick={form.handleSubmit(handleSave)}
 								>
 									Save

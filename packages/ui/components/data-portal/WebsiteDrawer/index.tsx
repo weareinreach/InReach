@@ -187,7 +187,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
-										loading={siteUpdate.isLoading}
+										loading={siteUpdate.isPending}
 										disabled={!formState.isDirty}
 										type='submit'
 									>
@@ -227,7 +227,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 										<Button
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
-											loading={siteUpdate.isLoading}
+											loading={siteUpdate.isPending}
 											onClick={handleSaveFromModal}
 										>
 											Save

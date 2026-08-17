@@ -391,7 +391,7 @@ const QuickLink = () => {
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={handleMutation}
-								loading={updateServices.isLoading}
+								loading={updateServices.isPending}
 								disabled={!form.isDirty()}
 							>
 								Save
@@ -406,7 +406,7 @@ const QuickLink = () => {
 									variant='primary-icon'
 									leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 									onClick={handleMutation}
-									loading={updateServices.isLoading}
+									loading={updateServices.isPending}
 								>
 									Save
 								</Button>

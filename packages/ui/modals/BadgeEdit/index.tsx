@@ -117,7 +117,7 @@ const _BadgeEditModal = forwardRef<HTMLButtonElement, Props>(
 							onClick={handleSubmit}
 							disabled={!form.formState.isDirty}
 							leftIcon={<Icon icon={updateAttributes.isSuccess ? 'carbon:checkmark' : 'carbon:save'} />}
-							loading={updateAttributes.isLoading}
+							loading={updateAttributes.isPending}
 						>
 							{t('save-changes')}
 						</Button>

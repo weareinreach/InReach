@@ -226,28 +226,34 @@ export const FormLocation = () => {
 	const [locationSearch, setLocationSearch] = useState('')
 	const [search] = useDebouncedValue(form.values.searchLocation, 400)
 	const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
-	api.geo.autocomplete.useQuery(
+	const { data: autocompleteData } = api.geo.autocomplete.useQuery(
 		{ search, locale: simpleLocale(i18n.language), cityOnly: true },
 		{
 			enabled: search !== '',
-			onSuccess: ({ results }) =>
-				form.setValues({
-					locationOptions: results.map((result) => ({
-						value: `${result.value}, ${result.subheading}`,
-						label: `${result.value}, ${result.subheading}`,
-						placeId: result.placeId,
-					})),
-				}),
 			refetchOnWindowFocus: false,
 		}
 	)
-	api.geo.geoByPlaceId.useQuery(locationSearch, {
+	useEffect(() => {
+		if (!autocompleteData) return
+		form.setValues({
+			locationOptions: autocompleteData.results.map((result) => ({
+				value: `${result.value}, ${result.subheading}`,
+				label: `${result.value}, ${result.subheading}`,
+				placeId: result.placeId,
+			})),
+		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [autocompleteData])
+
+	const { data: geoByPlaceIdData } = api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: locationSearch !== '',
-		onSuccess: ({ result }) => {
-			if (result && result.city && result.govDist && result.country)
-				form.setValues({ location: { city: result.city, govDist: result.govDist, country: result.country } })
-		},
 	})
+	useEffect(() => {
+		const result = geoByPlaceIdData?.result
+		if (result && result.city && result.govDist && result.country)
+			form.setValues({ location: { city: result.city, govDist: result.govDist, country: result.country } })
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [geoByPlaceIdData])
 	return (
 		<Autocomplete
 			itemComponent={SelectItemSingleLine}

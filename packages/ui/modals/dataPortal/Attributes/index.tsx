@@ -367,7 +367,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								parentRecord={parentRecord}
 								selectedAttr={selectedAttr}
 								onSave={saveAttributes.mutate}
-								isLoading={saveAttributes.isLoading}
+								isLoading={saveAttributes.isPending}
 							/>
 						)}
 					</Stack>

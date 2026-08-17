@@ -163,18 +163,21 @@ SelectItem.displayName = 'Selection Item'
 
 export const FormCountry = () => {
 	const [selectOptions, setSelectOptions] = useState<{ label: string; value: string }[]>([])
-	api.user.surveyOptions.useQuery(undefined, {
-		onSuccess: (data) =>
-			setSelectOptions(
-				data.countries.map(({ id, tsKey, tsNs }) => ({
-					value: id,
-					label: t(tsKey, { ns: tsNs }) satisfies string,
-				}))
-			),
-	})
+	const { data: surveyOptionsData } = api.user.surveyOptions.useQuery(undefined)
 	const { t } = useTranslation(['common', 'country'])
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
+
+	useEffect(() => {
+		if (!surveyOptionsData) return
+		setSelectOptions(
+			surveyOptionsData.countries.map(({ id, tsKey, tsNs }) => ({
+				value: id,
+				label: t(tsKey, { ns: tsNs }) satisfies string,
+			}))
+		)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [surveyOptionsData])
 
 	const handleCountrySelect = (event: string) => {
 		form.setFieldValue('countryOriginId', event)

@@ -84,11 +84,11 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 		[parsedData.success, parsedData?.data]
 	)
 	const readyToVerify = useMemo(() => {
-		if (success || error || verifyAccount.isLoading) {
+		if (success || error || verifyAccount.isPending) {
 			return false
 		}
 		return opened && dataToVerify !== null
-	}, [success, error, verifyAccount.isLoading, opened, dataToVerify])
+	}, [success, error, verifyAccount.isPending, opened, dataToVerify])
 	useEffect(() => {
 		if (readyToVerify && dataToVerify !== null) {
 			verifyAccount.mutate(dataToVerify)

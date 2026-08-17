@@ -56,7 +56,7 @@ const ServiceModalTitle = ({
 			serviceId={serviceId}
 		/>
 	)
-	if (isMobile || status === 'loading') {
+	if (isMobile || status === 'pending') {
 		return renderModalTitle()
 	}
 	if (data && status === 'success') {

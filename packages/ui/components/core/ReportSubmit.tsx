@@ -244,7 +244,7 @@ export const ReportSubmit = ({
 					fullWidth
 					mt='md'
 					disabled={isInvalid}
-					loading={reportMutation.isLoading}
+					loading={reportMutation.isPending}
 					onClick={handleSubmit}
 				>
 					{t('words.save')}

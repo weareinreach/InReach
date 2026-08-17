@@ -105,8 +105,11 @@ const OutsideServiceArea = () => {
 
 	const { data } = api.organization.getIntlCrisis.useQuery(
 		{ cca2: router.query.country ?? '' },
-		{ enabled: notBlank(router.query.country), onSuccess: () => setLoading(false) }
+		{ enabled: notBlank(router.query.country) }
 	)
+	useEffect(() => {
+		if (data) setLoading(false)
+	}, [data])
 	const { t } = useTranslation(['services', 'common', 'attribute'])
 	const countryTranslate = new Intl.DisplayNames(router.locale, { type: 'region' })
 

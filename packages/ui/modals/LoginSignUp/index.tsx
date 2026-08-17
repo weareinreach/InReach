@@ -212,7 +212,7 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 
 	const signUpButton = (
 		<>
-			<Button disabled={!form.isValid()} onClick={submitHandler} loading={signUpAction.isLoading}>
+			<Button disabled={!form.isValid()} onClick={submitHandler} loading={signUpAction.isPending}>
 				{t('words.sign-up')}
 			</Button>
 			<Text variant={variants.Text.utility4darkGray}>

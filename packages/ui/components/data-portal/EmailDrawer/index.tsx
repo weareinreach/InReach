@@ -190,7 +190,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
-										loading={emailUpdate.isLoading}
+										loading={emailUpdate.isPending}
 										disabled={!formState.isDirty}
 										type='submit'
 									>
@@ -235,7 +235,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 										<Button
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
-											loading={emailUpdate.isLoading}
+											loading={emailUpdate.isPending}
 											onClick={handleSaveFromModal}
 										>
 											Save

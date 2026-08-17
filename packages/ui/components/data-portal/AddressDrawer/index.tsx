@@ -345,7 +345,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={handleUpdate}
-								loading={updateLocation.isLoading}
+								loading={updateLocation.isPending}
 								disabled={!form.isDirty()}
 							>
 								Save

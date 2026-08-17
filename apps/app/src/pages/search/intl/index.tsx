@@ -84,10 +84,10 @@ const OutsideServiceArea = () => {
 		}
 	}, [router.isReady, router.isFallback, loading])
 
-	const { data } = api.organization.getIntlCrisis.useQuery(
-		{ cca2: 'ZZ' },
-		{ enabled: notBlank('ZZ'), onSuccess: () => setLoading(false) }
-	)
+	const { data } = api.organization.getIntlCrisis.useQuery({ cca2: 'ZZ' }, { enabled: notBlank('ZZ') })
+	useEffect(() => {
+		if (data) setLoading(false)
+	}, [data])
 	const { t } = useTranslation(['services', 'common', 'attribute'])
 
 	const resultCount = 0

@@ -128,7 +128,7 @@ const SavedLists = () => {
 											</Text>
 										</Link>
 									</Stack>
-									<ActionButtons.Delete onClick={handleDelete(list.id)} disabled={deleteMutation.isLoading} />
+									<ActionButtons.Delete onClick={handleDelete(list.id)} disabled={deleteMutation.isPending} />
 								</Group>
 							</Stack>
 						</Card>

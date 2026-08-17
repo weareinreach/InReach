@@ -224,7 +224,7 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 					variant='primary-icon'
 					fullWidth
 					loaderPosition='center'
-					loading={pwResetHandler.isLoading}
+					loading={pwResetHandler.isPending}
 					disabled={!passwordResetForm.isValid()}
 				>
 					{t('save')}

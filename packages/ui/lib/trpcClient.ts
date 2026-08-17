@@ -1,7 +1,7 @@
 /* eslint-disable node/no-process-env */
 import {
 	// httpBatchLink,
-	unstable_httpBatchStreamLink as httpBatchStreamLink,
+	httpBatchStreamLink,
 	loggerLink,
 } from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
@@ -30,7 +30,6 @@ export const nextTRPC = () =>
 	createTRPCNext<AppRouter>({
 		config() {
 			return {
-				transformer,
 				links: [
 					...(isDev
 						? [
@@ -41,18 +40,20 @@ export const nextTRPC = () =>
 						: []),
 					httpBatchStreamLink({
 						url: `${getBaseUrl()}/api/trpc`,
+						transformer,
 					}),
 				],
 				queryClientConfig: {
 					defaultOptions: {
 						queries: {
 							staleTime: 1000 * 60 * 10, // 10 Minutes
-							cacheTime: 1000 * 60 * 60, // 1 Hour
+							gcTime: 1000 * 60 * 60, // 1 Hour
 						},
 					},
 				},
 			}
 		},
+		transformer,
 		ssr: false,
 	})
 

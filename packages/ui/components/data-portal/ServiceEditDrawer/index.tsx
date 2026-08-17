@@ -475,7 +475,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									<Button
 										variant={variants.Button.primaryLg}
 										leftIcon={<Icon icon='carbon:save' />}
-										loading={serviceUpsert.isLoading}
+										loading={serviceUpsert.isPending}
 										onClick={handleSave}
 										disabled={!hasFormChanges}
 									>
@@ -535,7 +535,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon='carbon:save' />}
-										loading={serviceUpsert.isLoading}
+										loading={serviceUpsert.isPending}
 										onClick={handleSave}
 										disabled={!hasFormChanges}
 									>

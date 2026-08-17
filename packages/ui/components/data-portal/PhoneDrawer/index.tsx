@@ -330,7 +330,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
-										loading={siteUpdate.isLoading}
+										loading={siteUpdate.isPending}
 										disabled={!formIsDirty}
 										type='submit'
 									>
@@ -388,7 +388,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 										<Button
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
-											loading={siteUpdate.isLoading}
+											loading={siteUpdate.isPending}
 											onClick={handleModalSave}
 										>
 											Save

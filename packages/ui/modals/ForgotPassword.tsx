@@ -95,7 +95,7 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 						variant='primary-icon'
 						fullWidth
 						loaderPosition='center'
-						loading={pwResetHandler.isLoading}
+						loading={pwResetHandler.isPending}
 						// disabled={!passwordResetForm.isValid()}
 					>
 						{t(pwResetHandler.isSuccess ? 'words.close' : 'send-email')}

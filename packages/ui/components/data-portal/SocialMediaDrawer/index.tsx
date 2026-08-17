@@ -234,7 +234,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
-										loading={databaseUpdate.isLoading}
+										loading={databaseUpdate.isPending}
 										disabled={!formState.isDirty}
 										type='submit'
 									>
@@ -282,7 +282,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 										<Button
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
-											loading={databaseUpdate.isLoading}
+											loading={databaseUpdate.isPending}
 											onClick={handleModalSubmit}
 										>
 											Save

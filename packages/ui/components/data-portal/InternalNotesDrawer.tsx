@@ -113,7 +113,7 @@ export const InternalNotesDrawer = ({
 		}
 	)
 
-	const { mutate: createNote, isLoading: isCreatingNote } = api.internalNote.create.useMutation({
+	const { mutate: createNote, isPending: isCreatingNote } = api.internalNote.create.useMutation({
 		onSuccess: (newNote, variables) => {
 			if (!variables.organizationId) {
 				return

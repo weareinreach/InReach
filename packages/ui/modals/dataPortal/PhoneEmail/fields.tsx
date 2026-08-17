@@ -20,10 +20,13 @@ export const PhoneTypeSelect = () => {
 	const [options, setOptions] = useState<PhoneTypeSelectItem[]>([])
 	const { t } = useTranslation(['phone-type'])
 	const form = useFormContext()
-	api.fieldOpt.phoneTypes.useQuery(undefined, {
-		onSuccess: (data) =>
-			setOptions(data.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) }))),
-	})
+	const { data: phoneTypesData } = api.fieldOpt.phoneTypes.useQuery(undefined)
+
+	useEffect(() => {
+		if (!phoneTypesData) return
+		setOptions(phoneTypesData.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })))
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [phoneTypesData])
 
 	//TODO: Alter dropdown component to match figma design
 	return <Select data={options} {...form.getInputProps('phoneTypeId')} />

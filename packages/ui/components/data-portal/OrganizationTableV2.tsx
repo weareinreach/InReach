@@ -1,5 +1,6 @@
 import { ActionIcon, createStyles, Group, rem, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
+import { keepPreviousData } from '@tanstack/react-query'
 import { DateTime } from 'luxon'
 import {
 	MantineReactTable,
@@ -282,7 +283,7 @@ export const OrganizationTableV2 = () => {
 				...data,
 				results: data.results.map(({ locations, ...rest }) => ({ ...rest, subRows: locations })),
 			}),
-			keepPreviousData: true,
+			placeholderData: keepPreviousData,
 			refetchOnWindowFocus: false,
 		}
 	)

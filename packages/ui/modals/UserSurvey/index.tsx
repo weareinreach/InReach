@@ -147,7 +147,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 				className={classes.skipNext}
 				variant={'secondary-icon'}
 				onClick={submitHandler}
-				loading={UserSurveyAction.isLoading}
+				loading={UserSurveyAction.isPending}
 			>
 				{t('words.skip')}
 			</Button>
@@ -155,7 +155,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 				className={classes.skipNext}
 				variant={'primary-icon'}
 				onClick={submitHandler}
-				loading={UserSurveyAction.isLoading}
+				loading={UserSurveyAction.isPending}
 			>
 				{t('survey.finish')}
 			</Button>
