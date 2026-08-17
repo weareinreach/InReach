@@ -1,4 +1,5 @@
 /* eslint-disable node/no-process-env */
+import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@prisma/client'
 import {
 	Listr,
@@ -30,7 +31,8 @@ export const writeOutput = async (filename: string, data: string, isJs = false) 
 	writeFileSync(outFile, formattedOutput)
 }
 
-const prisma = new PrismaClient()
+const adapter = new PrismaPg(process.env.DATABASE_URL as string)
+const prisma = new PrismaClient({ adapter })
 
 const rendererOptions = {
 	bottomBar: 10,
