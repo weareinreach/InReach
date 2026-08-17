@@ -161,9 +161,6 @@ const defineSentryConfig = (nextConfig) =>
 		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
 		tunnelRoute: '/monitoring',
 
-		// Hides source maps from generated client bundles
-		hideSourceMaps: !isLocalDev,
-
 		// Automatically tree-shake Sentry logger statements to reduce bundle size
 		disableLogger: isVercelProd || isVercelActiveDev,
 		automaticVercelMonitors: true,

@@ -39,15 +39,8 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@opentelemetry/exporter-trace-otlp-http": "0.54.0",
-		"@opentelemetry/instrumentation": "0.54.0",
-		"@opentelemetry/resources": "1.27.0",
-		"@opentelemetry/sdk-trace-base": "1.27.0",
-		"@opentelemetry/sdk-trace-node": "1.27.0",
-		"@opentelemetry/semantic-conventions": "1.43.0",
 		"@prisma/adapter-pg": "7.9.1",
 		"@prisma/client": "7.9.1",
-		"@prisma/instrumentation": "7.9.1",
 		"@vercel/kv": "2.0.0",
 		"@vercel/postgres-kysely": "0.10.0",
 		"@weareinreach/crowdin": "workspace:*",

@@ -14,11 +14,7 @@ export function register() {
 			profilesSampleRate: 0.5,
 			// uncomment the line below to enable Spotlight (https://spotlightjs.com)
 			spotlight: process.env.NODE_ENV === 'development',
-			// prismaIntegration() removed: its OTel instrumentation patches PrismaClient at
-			// require-time regardless of `enabled`, and Sentry 8's version of it calls a Prisma 6
-			// tracing-helper method (dispatchEngineSpans) that no longer exists, breaking every
-			// query. Re-add once @sentry/nextjs is upgraded to a Prisma-6-compatible version.
-			integrations: [Sentry.requestDataIntegration()],
+			integrations: [Sentry.requestDataIntegration(), Sentry.prismaIntegration()],
 		})
 	}
 
