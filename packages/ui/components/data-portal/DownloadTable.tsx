@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next/pages'
 import { CsvDownload } from '~ui/components/data-portal/CsvDownload'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type -- placeholder for future props
 export interface DownloadTableProps {
 	// Add any props your table will eventually need here
 }

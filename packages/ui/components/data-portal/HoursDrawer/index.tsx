@@ -14,13 +14,14 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 // import { DateTime, Interval } from 'luxon'
+import { generateId } from '@weareinreach/db/lib/idGen'
 import { compareObjectVals } from 'crud-object-diff'
 import groupBy from 'just-group-by'
 import { forwardRef, useEffect, useState } from 'react'
+import * as ReactHookForm from 'react-hook-form'
 import { useFieldArray, useForm } from 'react-hook-form'
 import timezones from 'timezones-list'
 
-import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { TimeRange } from '~ui/components/data-portal/TimeRange'
@@ -279,7 +280,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 })
 _HoursDrawer.displayName = 'HoursDrawer'
 _HoursDrawer.whyDidYouRender = {
-	trackExtraHooks: [[require('react-hook-form'), 'useFieldArray']],
+	trackExtraHooks: [[ReactHookForm, 'useFieldArray']],
 }
 export const HoursDrawer = createPolymorphicComponent<'button', HoursDrawerProps>(_HoursDrawer)
 

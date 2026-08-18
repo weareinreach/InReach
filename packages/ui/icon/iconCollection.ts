@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { addCollection } from '@iconify/react'
 import { getIcons } from '@iconify/utils'
 

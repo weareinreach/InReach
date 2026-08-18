@@ -55,7 +55,7 @@
 	},
 	"devDependencies": {
 		"@turbo/gen": "2.10.10",
-		"@types/eslint": "8.56.12",
+		"@types/eslint": "9.6.1",
 		"@types/google.maps": "3.65.5",
 		"@types/luxon": "3.7.4",
 		"@types/node": "20.17.0",
@@ -63,7 +63,7 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"dotenv-cli": "7.4.2",
-		"eslint": "8.57.1",
+		"eslint": "9.39.5",
 		"i18next": "23.16.3",
 		"inquirer-search-list": "1.2.6",
 		"just-pascal-case": "3.2.0",

@@ -86,7 +86,8 @@
 		],
 		"overrides": {
 			"better-sqlite3": "13.0.3",
-			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec"
+			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec",
+			"zod-validation-error": "4.0.2"
 		},
 		"patchedDependencies": {
 			"@crowdin/ota-client@1.0.0": "patches/@crowdin__ota-client@1.0.0.patch",
