@@ -309,9 +309,6 @@ importers:
       '@playwright/test':
         specifier: 1.62.1
         version: 1.62.1
-      '@prisma/nextjs-monorepo-workaround-plugin':
-        specifier: 5.21.1
-        version: 5.21.1
       '@relative-ci/agent':
         specifier: 4.3.1
         version: 4.3.1(encoding@0.1.13)(typescript@5.6.3)(webpack@5.109.2)
@@ -4372,9 +4369,6 @@ packages:
 
   '@prisma/internals@5.0.0':
     resolution: {integrity: sha512-VGWyFk6QlSBXT8z65Alq5F3o9E8IiTtaBoa3rmKkGpZjUk85kJy3jZz4xkRv53TaeghGE5rWfwkfak26KtY5yQ==}
-
-  '@prisma/nextjs-monorepo-workaround-plugin@5.21.1':
-    resolution: {integrity: sha512-nbrAetFfGXw3Czg9+u/Hs4a5uLnT8MNsVRK7mSzl+Y2zi5badgpN8hmlhv2WEX1+GSDKMxJ8rAKpTwiIqH7fdQ==}
 
   '@prisma/prisma-schema-wasm@4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584':
     resolution: {integrity: sha512-JFdsnSgBPN8reDTLOI9Vh/6ccCb2aD1LbY/LWQnkcIgNo6IdpzvuM+qRVbBuA6IZP2SdqQI8Lu6RL2P8EFBQUA==}
@@ -17640,8 +17634,6 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
-
-  '@prisma/nextjs-monorepo-workaround-plugin@5.21.1': {}
 
   '@prisma/prisma-schema-wasm@4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584': {}
 
