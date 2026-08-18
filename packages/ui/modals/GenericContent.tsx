@@ -85,3 +85,9 @@ export interface GenericContentModalProps extends ButtonProps {
 	content: keyof typeof presetContent
 	accept?: boolean
 }
+
+// Turbopack has a confirmed history of hydration mismatches specifically for `next/dynamic(() =>
+// import(...).then((mod) => mod.NamedExport))` (vercel/next.js#70795) - a default export sidesteps
+// the named-export resolution path entirely, letting `dynamic(() => import('./GenericContent'))`
+// be used directly with no `.then()`.
+export default GenericContentModal

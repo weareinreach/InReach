@@ -1,5 +1,6 @@
 import { DevTool } from '@hookform/devtools'
 import { type Meta, type StoryFn, type StoryObj } from '@storybook/nextjs'
+import { type ComponentType } from 'react'
 import { FormProvider, useForm as useHookForm } from 'react-hook-form'
 
 import { fieldOpt } from '~ui/mockData/fieldOpt'
@@ -15,18 +16,20 @@ import { PhoneNumberEntry as PhoneNumberEntryHookForm } from './withHookForm'
 
 const FormContextDecorator = (Story: StoryFn) => {
 	const form = useForm(formHookParams)
+	const StoryComponent = Story as ComponentType
 	return (
 		<PhoneEmailFormProvider form={form}>
-			<Story />
+			<StoryComponent />
 		</PhoneEmailFormProvider>
 	)
 }
 const HookFormContextDecorator = (Story: StoryFn) => {
 	const form = useHookForm<HookFormParams>()
+	const StoryComponent = Story as ComponentType
 	return (
 		<FormProvider {...form}>
 			<form>
-				<Story />
+				<StoryComponent />
 			</form>
 		</FormProvider>
 	)

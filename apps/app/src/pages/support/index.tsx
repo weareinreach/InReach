@@ -15,13 +15,11 @@ import { Icon } from '@weareinreach/ui/icon'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
-const GenericContentModal = dynamic(() =>
-	import('@weareinreach/ui/modals/GenericContent').then((mod) => mod.GenericContentModal)
-)
+const GenericContentModal = dynamic(() => import('@weareinreach/ui/modals/GenericContent'), { ssr: false })
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
-const PrivacyStatementModal = dynamic(() =>
-	import('@weareinreach/ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
-)
+const PrivacyStatementModal = dynamic(() => import('@weareinreach/ui/modals/PrivacyStatement'), {
+	ssr: false,
+})
 
 const SupportItem = ({ tKey }: SupportItemProps) => {
 	const { t } = useTranslation('common')

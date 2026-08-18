@@ -1,10 +1,7 @@
 /* eslint-disable node/no-process-env */
 
 import bundleAnalyze from '@next/bundle-analyzer'
-import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
-import { RelativeCiAgentWebpackPlugin } from '@relative-ci/agent'
 import { withSentryConfig } from '@sentry/nextjs'
-import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import createJiti from 'jiti'
 import routes from 'nextjs-routes/config'
 
@@ -37,41 +34,12 @@ const isRenovatePR = renovateRegex.test(process.env.VERCEL_GIT_COMMIT_REF)
 const withRoutes = routes({ outDir: './src/types' })
 const withBundleAnalyzer = bundleAnalyze({ enabled: shouldAnalyze, openAnalyzer: false })
 
-// A stray barrel export (`export * from './Rating.test'`) once let a Vitest test file get
-// bundled into the real app, crashing the build with `vi.queueMock() is forbidden` (vitest's
-// mocking internals only work inside its own test runner). Webpack only bundles what's
-// actually reachable from an entry point, so this can only happen via an accidental import -
-// fail the build loudly if it ever happens again, instead of silently shipping broken code.
-class ForbidTestFilesInBundlePlugin {
-	static testFilePattern = /\.(test|spec)\.[cm]?[jt]sx?$/
-	apply(/** @type {import('webpack').Compiler} */ compiler) {
-		compiler.hooks.compilation.tap('ForbidTestFilesInBundlePlugin', (compilation) => {
-			compilation.hooks.finishModules.tap('ForbidTestFilesInBundlePlugin', (modules) => {
-				for (const webpackModule of modules) {
-					const resource = /** @type {{ resource?: string }} */ (webpackModule).resource
-					if (resource && ForbidTestFilesInBundlePlugin.testFilePattern.test(resource)) {
-						compilation.errors.push(
-							/** @type {any} */ (
-								new Error(
-									`Test file is reachable from the app bundle: ${resource}\n` +
-										'Something imports this test file, directly or via a barrel export - ' +
-										'check for a stray `export * from` in a codegen-managed index file.'
-								)
-							)
-						)
-					}
-				}
-			})
-		})
-	}
-}
 /**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
-	swcMinify: true,
 	transpilePackages: [
 		'@weareinreach/analytics',
 		'@weareinreach/api',
@@ -87,14 +55,6 @@ const nextConfig = {
 	compiler: {
 		...(isVercelProd ? { removeConsole: { exclude: ['error'] } } : {}),
 	},
-	experimental: {
-		// outputFileTracingRoot: path.join(__dirname, '../../'),
-		instrumentationHook: true,
-		webpackBuildWorker: true,
-	},
-	eslint: {
-		ignoreDuringBuilds: false,
-	},
 	typescript: {
 		ignoreBuildErrors: false,
 	},
@@ -102,63 +62,19 @@ const nextConfig = {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
 	},
 	rewrites: async () => [{ source: '/search', destination: '/' }],
-	webpack: (config, { dev, isServer, webpack }) => {
-		config.plugins.push(new ForbidTestFilesInBundlePlugin())
-
-		// next-i18next@16's `./pages` export declares matching `import`/`require` conditions
-		// pointing at separate .mjs/.cjs builds. Next's SWC/webpack pipeline sometimes
-		// misjudges which one it's looking at for this package, emitting CJS-shaped output
-		// (`Object.defineProperty(exports, ...)`) into a chunk wrapped as ESM (no `exports`
-		// binding), throwing `ReferenceError: exports is not defined` in the client bundle
-		// (see vercel/next.js#59603 for the same signature on a different package). Aliasing
-		// straight to the unambiguous .cjs build removes the import/require condition
-		// ambiguity that triggers the misdetection.
-		config.resolve.alias['next-i18next/pages'] = path.join(nextI18nextRoot, 'dist/pagesRouter/index.cjs')
-		config.resolve.alias['next-i18next/pages/serverSideTranslations'] = path.join(
-			nextI18nextRoot,
-			'dist/pagesRouter/serverSideTranslations.cjs'
-		)
-		if (isServer) {
-			config.plugins = [...config.plugins, new PrismaPlugin()]
-		}
-		if (!dev && !isServer) {
-			config.plugins.push(
-				new RelativeCiAgentWebpackPlugin({
-					stats: { excludeAssets: [/.*\/webpack-stats\.json/, /build-manifest\.json/] },
-				})
-			)
-		}
-		if (dev && !isServer) {
-			/** WDYR */
-			const origEntry = config.entry
-			config.entry = async () => {
-				const wdyrPath = path.resolve(__dirname, './lib/wdyr.ts')
-				const entries = await origEntry()
-				if (entries['main.js'] && !entries['main.js'].includes(wdyrPath)) {
-					entries['main.js'].push(wdyrPath)
-				}
-				return entries
-			}
-			/** I18 HMR */
-
-			config.plugins.push(
-				new I18NextHMRPlugin({
-					localesDir: path.resolve(__dirname, './public/locales'),
-				})
-			)
-		}
-
-		if (!isLocalDev) {
-			config.plugins.push(
-				new webpack.DefinePlugin({
-					__SENTRY_DEBUG__: false,
-					__RRWEB_EXCLUDE_CANVAS__: true,
-					__RRWEB_EXCLUDE_IFRAME__: true,
-					__RRWEB_EXCLUDE_SHADOW_DOM__: true,
-				})
-			)
-		}
-		return config
+	// next-i18next@16's `./pages` export declares matching `import`/`require` conditions
+	// pointing at separate .mjs/.cjs builds. Next's bundler pipeline has previously misjudged
+	// which one it's looking at for this package, emitting CJS-shaped output into a chunk
+	// wrapped as ESM (see vercel/next.js#59603 for the same signature on a different package).
+	// Aliasing straight to the unambiguous .cjs build removes the import/require condition
+	// ambiguity that triggers the misdetection.
+	turbopack: {
+		// Turbopack's resolveAlias doesn't accept raw absolute filesystem paths the way webpack's
+		// resolve.alias does - it needs a path relative to this config file.
+		resolveAlias: {
+			'next-i18next/pages': `./${path.relative(__dirname, path.join(nextI18nextRoot, 'dist/pagesRouter/index.cjs'))}`,
+			'next-i18next/pages/serverSideTranslations': `./${path.relative(__dirname, path.join(nextI18nextRoot, 'dist/pagesRouter/serverSideTranslations.cjs'))}`,
+		},
 	},
 	async headers() {
 		return [
@@ -212,11 +128,12 @@ const defineSentryConfig = (nextConfig) =>
 		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
 		tunnelRoute: '/monitoring',
 
-		// Automatically tree-shake Sentry logger statements to reduce bundle size
-		disableLogger: isVercelProd || isVercelActiveDev,
-		automaticVercelMonitors: true,
-		autoInstrumentMiddleware: true,
+		// Bundler-agnostic (works under Turbopack, unlike the older webpack.treeshake.* options).
+		bundleSizeOptimizations: {
+			excludeDebugStatements: isVercelProd || isVercelActiveDev,
+			excludeReplayShadowDom: true,
+			excludeReplayIframe: true,
+		},
 	})
 
 export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
-// export default defineSentryConfig(defineNextConfig(nextConfig))

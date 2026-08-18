@@ -14,9 +14,10 @@ import {
 import { Button } from '~ui/components/core/Button'
 import { Icon, type IconifyIconHTMLElement } from '~ui/icon'
 
+import { type ActionButtonElementProps } from './Group'
 import { useStyles } from './styles'
 
-const getTargetId = (e: ReactElement) => {
+const getTargetId = (e: ReactElement<ActionButtonElementProps>) => {
 	const targetId = typeof e.props['data-targetid'] === 'string' && e.props['data-targetid']
 	if (!targetId) {
 		return null
@@ -82,8 +83,8 @@ export const OverflowMenu = forwardRef<HTMLButtonElement, ActionButtonMenuProps>
 				</Menu.Target>
 				<Menu.Dropdown>
 					{Children.map(children, (child) => {
-						const targetId = getTargetId(child as ReactElement)
-						if (isValidElement<HTMLInputElement>(child) && targetId && !visibilityMap[targetId]) {
+						const targetId = getTargetId(child as ReactElement<ActionButtonElementProps>)
+						if (isValidElement<ActionButtonElementProps>(child) && targetId && !visibilityMap[targetId]) {
 							const clonedElement = cloneElement(child, {
 								className: cx(child.props.className, classes.inOverflowMenu, classes.item),
 							})

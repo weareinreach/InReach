@@ -1,12 +1,14 @@
 import { type StoryContext, type StoryFn } from '@storybook/nextjs'
-import { StrictMode } from 'react'
+import { type ComponentType, StrictMode } from 'react'
 
-export const WithStrictMode = (Story: StoryFn, context: StoryContext) =>
-	context.parameters.disableStrictMode ? (
-		<Story />
+export const WithStrictMode = (Story: StoryFn, context: StoryContext) => {
+	const StoryComponent = Story as ComponentType
+	return context.parameters.disableStrictMode ? (
+		<StoryComponent />
 	) : (
 		<StrictMode>
-			<Story />
+			<StoryComponent />
 		</StrictMode>
 	)
+}
 WithStrictMode.displayName = 'StrictModeWrapper'

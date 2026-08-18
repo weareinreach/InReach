@@ -1,5 +1,6 @@
 import { Container, Grid, type GridProps } from '@mantine/core'
 import { type StoryFn } from '@storybook/nextjs'
+import { type ComponentType } from 'react'
 
 export const BodyGrid = ({ children, className, ...others }: GridProps) => {
 	return (
@@ -19,23 +20,32 @@ export const BodyGridNoTopMargin = ({ children, className, ...others }: GridProp
 	)
 }
 
-export const StorybookGrid = (Story: StoryFn) => (
-	<BodyGrid pt={16}>
-		<Story />
-	</BodyGrid>
-)
+export const StorybookGrid = (Story: StoryFn) => {
+	const StoryComponent = Story as ComponentType
+	return (
+		<BodyGrid pt={16}>
+			<StoryComponent />
+		</BodyGrid>
+	)
+}
 
-export const StorybookGridSingle = (Story: StoryFn) => (
-	<BodyGrid pt={16}>
-		<Grid.Col>
-			<Story />
-		</Grid.Col>
-	</BodyGrid>
-)
-export const StorybookGridDouble = (Story: StoryFn) => (
-	<BodyGrid pt={16}>
-		<Grid.Col xs={12} sm={8}>
-			<Story />
-		</Grid.Col>
-	</BodyGrid>
-)
+export const StorybookGridSingle = (Story: StoryFn) => {
+	const StoryComponent = Story as ComponentType
+	return (
+		<BodyGrid pt={16}>
+			<Grid.Col>
+				<StoryComponent />
+			</Grid.Col>
+		</BodyGrid>
+	)
+}
+export const StorybookGridDouble = (Story: StoryFn) => {
+	const StoryComponent = Story as ComponentType
+	return (
+		<BodyGrid pt={16}>
+			<Grid.Col xs={12} sm={8}>
+				<StoryComponent />
+			</Grid.Col>
+		</BodyGrid>
+	)
+}

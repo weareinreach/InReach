@@ -19,16 +19,18 @@ import { LangPicker } from '~ui/components/core/LangPicker'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const LoginModalLauncher = dynamic(() =>
-	import('~ui/modals/LoginSignUp').then((mod) => mod.LoginModalLauncher)
+const LoginModalLauncher = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('~ui/modals/LoginSignUp').then((mod) => mod.LoginModalLauncher),
+	{ ssr: false }
 )
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const SignupModalLauncher = dynamic(() =>
-	import('~ui/modals/LoginSignUp').then((mod) => mod.SignupModalLauncher)
+const SignupModalLauncher = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('~ui/modals/LoginSignUp').then((mod) => mod.SignupModalLauncher),
+	{ ssr: false }
 )
 
-const UserAvatar = dynamic(() => import('./UserAvatar').then((mod) => mod.UserAvatar))
+const UserAvatar = dynamic(() => import('./UserAvatar').then((mod) => mod.UserAvatar), { ssr: false })
 
 const useStyles = createStyles((theme) => ({
 	buttons: {

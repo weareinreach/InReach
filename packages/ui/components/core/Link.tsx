@@ -36,3 +36,9 @@ export interface LinkProps extends Omit<NextLinkProps, 'href' | 'color'>, Anchor
 	target?: string
 	rel?: string
 }
+
+// Turbopack has a confirmed history of hydration mismatches specifically for `next/dynamic(() =>
+// import(...).then((mod) => mod.NamedExport))` (vercel/next.js#70795) - a default export sidesteps
+// the named-export resolution path entirely, letting `dynamic(() => import('./Link'))` be used
+// directly with no `.then()`.
+export default Link

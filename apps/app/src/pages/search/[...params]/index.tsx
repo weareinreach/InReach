@@ -71,21 +71,28 @@ const resolveOrderedFocuses = (rawActive: string | undefined, rawOrder: string |
 	return orderedActive.length > 0 ? orderedActive : focuses
 }
 
-// @ts-expect-error - Next Dynamic has trouble with polymorphic components
-const RecommendedLinksModal = dynamic(() =>
-	import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal)
+const RecommendedLinksModal = dynamic(
+	// @ts-expect-error - Next Dynamic has trouble with polymorphic components
+	() => import('@weareinreach/ui/modals/RecommendedLinks').then((mod) => mod.RecommendedLinksModal),
+	{ ssr: false }
 )
-const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
-const ServiceFilter = dynamic(() =>
-	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
+const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter), {
+	ssr: false,
+})
+const ServiceFilter = dynamic(
+	() => import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter),
+	{ ssr: false }
 )
-const SortResults = dynamic(() =>
-	import('@weareinreach/ui/components/sections/SortResults').then((mod) => mod.SortResults)
+const SortResults = dynamic(
+	() => import('@weareinreach/ui/components/sections/SortResults').then((mod) => mod.SortResults),
+	{ ssr: false }
 )
 // Pulls in @dnd-kit/core + @dnd-kit/sortable for its drag-to-reorder focus list - real weight in
 // the initial bundle for a secondary interaction most visitors won't use on a given visit.
-const SearchResultSidebar = dynamic(() =>
-	import('@weareinreach/ui/components/sections/SearchResultSidebar').then((mod) => mod.SearchResultSidebar)
+const SearchResultSidebar = dynamic(
+	() =>
+		import('@weareinreach/ui/components/sections/SearchResultSidebar').then((mod) => mod.SearchResultSidebar),
+	{ ssr: false }
 )
 
 const PageIndexSchema = z.coerce.number().default(1)

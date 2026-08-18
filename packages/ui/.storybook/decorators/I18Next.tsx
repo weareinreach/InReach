@@ -1,5 +1,5 @@
 import { type StoryContext, type StoryFn } from '@storybook/nextjs'
-import { useEffect, useState } from 'react'
+import { type ComponentType, useEffect, useState } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { type GlobalTypes } from 'storybook/internal/types'
 
@@ -19,9 +19,10 @@ export const WithI18n = (Story: StoryFn, context: StoryContext) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [globals?.locale])
 
+	const StoryComponent = Story as ComponentType
 	return (
 		<I18nextProvider i18n={i18n}>
-			<Story />
+			<StoryComponent />
 		</I18nextProvider>
 	)
 }

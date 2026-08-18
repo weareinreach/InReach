@@ -19,9 +19,11 @@ import { Icon } from '@weareinreach/ui/icon'
 import { formatDate } from '~app/pages/account/saved'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const QuickPromotionModal = dynamic(() =>
-	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
+
+const QuickPromotionModal = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal),
+	{ ssr: false }
 )
 
 const SavedLists = () => {

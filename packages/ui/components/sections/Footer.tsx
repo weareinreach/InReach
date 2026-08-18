@@ -14,13 +14,9 @@ import { BodyGridNoTopMargin } from '~ui/layouts'
 // import { GenericContentModal, PrivacyStatementModal } from '~ui/modals'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- dynamic() requires an explicit generic here
-const GenericContentModal = dynamic<any>(
-	() => import('~ui/modals/GenericContent').then((mod) => mod.GenericContentModal as any) // eslint-disable-line @typescript-eslint/no-explicit-any
-)
+const GenericContentModal = dynamic<any>(() => import('~ui/modals/GenericContent'), { ssr: false })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- dynamic() requires an explicit generic here
-const PrivacyStatementModal = dynamic<any>(
-	() => import('~ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal as any) // eslint-disable-line @typescript-eslint/no-explicit-any
-)
+const PrivacyStatementModal = dynamic<any>(() => import('~ui/modals/PrivacyStatement'), { ssr: false })
 
 const useStyles = createStyles((theme) => ({
 	link: {

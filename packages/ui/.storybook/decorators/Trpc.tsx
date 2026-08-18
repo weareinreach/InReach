@@ -2,7 +2,7 @@ import { type StoryContext, type StoryFn } from '@storybook/nextjs'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { httpLink, loggerLink } from '@trpc/client'
-import { useState } from 'react'
+import { type ComponentType, useState } from 'react'
 
 import { transformer } from '@weareinreach/util/transformer'
 import { type StorybookTRPC, trpc } from '~ui/lib/trpcClient'
@@ -34,11 +34,12 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 	}
 
 	const [trpcClient, _setTRPCClient] = useState(storybookTRPC.createClient(trpcClientOpts))
+	const StoryComponent = Story as ComponentType
 
 	return (
 		<storybookTRPC.Provider client={trpcClient} queryClient={queryClient}>
 			<QueryClientProvider client={queryClient}>
-				<Story />
+				<StoryComponent />
 				{parameters.rqDevtools && <ReactQueryDevtools />}
 			</QueryClientProvider>
 		</storybookTRPC.Provider>

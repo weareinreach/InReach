@@ -37,7 +37,7 @@ export const MobileLangPicker = ({ children }: MobileLangPickerProps) => {
 		router.locale as LocaleCodes | undefined
 	)
 
-	const trigger = React.cloneElement(children as React.ReactElement, {
+	const trigger = React.cloneElement(children as React.ReactElement<{ onClick?: React.MouseEventHandler }>, {
 		onClick: (e: React.MouseEvent) => {
 			e.preventDefault()
 			setSelectedLang(router.locale as LocaleCodes | undefined)

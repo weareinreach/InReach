@@ -176,3 +176,9 @@ export const PrivacyStatementModal = createPolymorphicComponent<'button', Privac
 export type PrivacyModalProps = Omit<ButtonProps, 'variant'> & {
 	variant?: ButtonProps['variant'] | (string & NonNullable<unknown>)
 }
+
+// Turbopack has a confirmed history of hydration mismatches specifically for `next/dynamic(() =>
+// import(...).then((mod) => mod.NamedExport))` (vercel/next.js#70795) - a default export sidesteps
+// the named-export resolution path entirely, letting `dynamic(() => import('./PrivacyStatement'))`
+// be used directly with no `.then()`.
+export default PrivacyStatementModal

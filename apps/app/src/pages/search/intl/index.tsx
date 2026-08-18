@@ -29,9 +29,12 @@ import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
-const ServiceFilter = dynamic(() =>
-	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
+const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter), {
+	ssr: false,
+})
+const ServiceFilter = dynamic(
+	() => import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter),
+	{ ssr: false }
 )
 const useStyles = createStyles((theme) => ({
 	searchControls: {

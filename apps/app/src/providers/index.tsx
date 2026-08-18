@@ -1,4 +1,3 @@
-'use client'
 import { MantineProvider } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import { Work_Sans } from 'next/font/google'
@@ -33,11 +32,11 @@ const fontWorkSans = Work_Sans({
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PrivacyStatementModal = dynamic<any>(() =>
-	import('@weareinreach/ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
-)
+const PrivacyStatementModal = dynamic<any>(() => import('@weareinreach/ui/modals/PrivacyStatement'), {
+	ssr: false,
+})
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Link = dynamic<any>(() => import('@weareinreach/ui/components/core/Link').then((mod) => mod.Link))
+const Link = dynamic<any>(() => import('@weareinreach/ui/components/core/Link'), { ssr: false })
 
 export const Providers = ({ children, session }: ProviderProps) => {
 	const { t } = useTranslation('common')

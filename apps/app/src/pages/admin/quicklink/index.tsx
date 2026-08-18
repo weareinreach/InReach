@@ -14,9 +14,10 @@ import { Icon } from '@weareinreach/ui/icon'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { QuickPromotionModal } from '@weareinreach/ui/modals'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const QuickPromotionModal = dynamic(() =>
-	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
+const QuickPromotionModal = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal),
+	{ ssr: false }
 )
 
 const QuickLinkIndex = () => {

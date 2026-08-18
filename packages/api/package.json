@@ -67,13 +67,13 @@
 		"i18next": "23.16.3",
 		"inquirer-search-list": "1.2.6",
 		"just-pascal-case": "3.2.0",
-		"next": "14.2.32",
+		"next": "16.3.1",
 		"prettier": "3.9.6",
 		"type-fest": "4.26.1",
 		"typescript": "5.6.3"
 	},
 	"peerDependencies": {
 		"i18next": "23.16.3",
-		"next": "14.2.32"
+		"next": "16.3.1"
 	}
 }

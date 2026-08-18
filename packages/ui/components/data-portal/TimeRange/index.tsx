@@ -1,6 +1,6 @@
 import { ActionIcon, Group, Input, type InputProps, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime, Interval } from 'luxon'
-import { useEffect, useState } from 'react'
+import { type ChangeEvent, useEffect, useState } from 'react'
 import { type FieldValues, useController, type UseControllerProps, useFormContext } from 'react-hook-form'
 
 import { convertToLuxonWeekday } from '@weareinreach/util/luxon/weekday'
@@ -89,7 +89,7 @@ export const TimeRange = <T extends FieldValues>({
 							type='time'
 							value={openValue}
 							// error={fieldState.error?.message}
-							onChange={(e) => setOpenValue(e.target.value)}
+							onChange={(e: ChangeEvent<HTMLInputElement>) => setOpenValue(e.target.value)}
 							disabled={disabled}
 							{...field}
 							{...props}
@@ -101,7 +101,7 @@ export const TimeRange = <T extends FieldValues>({
 							type='time'
 							value={closeValue}
 							// error={fieldState.error?.message}
-							onChange={(e) => setCloseValue(e.target.value)}
+							onChange={(e: ChangeEvent<HTMLInputElement>) => setCloseValue(e.target.value)}
 							disabled={disabled}
 							{...field}
 							{...props}

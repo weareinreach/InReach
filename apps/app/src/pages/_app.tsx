@@ -26,8 +26,9 @@ import { ConditionalReactQueryDevtool } from '~app/utils/RQDevtool'
 
 import nextI18nConfig from '../../next-i18next.config.mjs'
 
-const DonateModal = dynamic(() =>
-	import('@weareinreach/ui/components/core/Donate').then((mod) => mod.DonateModal)
+const DonateModal = dynamic(
+	() => import('@weareinreach/ui/components/core/Donate').then((mod) => mod.DonateModal),
+	{ ssr: false }
 )
 
 const defaultSEO = {

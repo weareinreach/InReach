@@ -65,7 +65,7 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 		let availableSpace = containerWidth - MENU_WIDTH
 
 		childrenArray.forEach((child) => {
-			const id = (child as ReactElement).props['data-targetid']
+			const id = (child as ReactElement<ActionButtonElementProps>).props['data-targetid']
 			if (id) {
 				if (availableSpace > BUTTON_WIDTH) {
 					map[id] = true
@@ -81,7 +81,7 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 	return (
 		<Box ref={containerRef} className={classes.groupWrapper}>
 			{Children.map(children, (child) => {
-				const reactChild = child as ReactElement
+				const reactChild = child as ReactElement<ActionButtonElementProps>
 				const targetId = reactChild.props['data-targetid']
 				if (!targetId) return child
 
@@ -104,4 +104,9 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 
 interface ActionButtonGroupProps {
 	children: ReactElement | ReactElement[]
+}
+
+export interface ActionButtonElementProps {
+	'data-targetid'?: string
+	className?: string
 }
