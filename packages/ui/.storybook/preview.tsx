@@ -120,22 +120,30 @@ const preview: Preview = {
 		mswLoader(async () => {
 			const worker = setupWorker()
 
-			await worker.start({
-				serviceWorker: {
-					options: {
-						type: 'module',
+			try {
+				await worker.start({
+					serviceWorker: {
+						options: {
+							type: 'module',
+						},
 					},
-				},
-				onUnhandledRequest: ({ method, url }) => {
-					if (url.startsWith('/trpc') || url.startsWith('/api')) {
-						console.error(`Unhandled ${method} request to ${url}.
+					onUnhandledRequest: ({ method, url }) => {
+						if (url.startsWith('/trpc') || url.startsWith('/api')) {
+							console.error(`Unhandled ${method} request to ${url}.
 
                         This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
                         If you wish to mock an error response, please refer to this guide: https://mswjs.io/docs/recipes/mocking-error-responses
                     `)
-					}
-				},
-			})
+						}
+					},
+				})
+			} catch (error) {
+				// Some hosts gate preview assets behind their own auth for private projects (Chromatic
+				// does this), which can make the Service Worker registration fetch itself get rejected
+				// (401) - that's an environment limitation no story can recover from. Degrade to
+				// unmocked passthrough requests rather than failing every story's initialization.
+				console.error('MSW failed to start - falling back to unmocked network requests.', error)
+			}
 
 			return worker
 		}),
