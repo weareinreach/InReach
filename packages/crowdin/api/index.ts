@@ -16,7 +16,6 @@ if (process.env.NODE_ENV !== 'production') {
 	global.crowdinApi = crowdinApi
 }
 declare global {
-	// eslint-disable-next-line no-var
 	var crowdinApi: Crowdin | undefined
 }
 export const {

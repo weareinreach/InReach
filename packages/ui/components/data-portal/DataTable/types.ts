@@ -39,8 +39,10 @@ export interface DataTableColumn<T> {
 	pin?: 'left'
 	/** Hidden by default, but still toggleable from the column-visibility menu. */
 	hiddenByDefault?: boolean
-	/** Removes this column from the visibility menu entirely - it's always shown/hidden by `hiddenByDefault`
-alone. */
+	/**
+	 * Removes this column from the visibility menu entirely - it's always shown/hidden by `hiddenByDefault`
+	 * alone.
+	 */
 	hideable?: boolean
 }
 

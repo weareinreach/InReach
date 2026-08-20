@@ -1,6 +1,7 @@
+const storybookPlugin = require('eslint-plugin-storybook')
+
 const nextConfig = require('@weareinreach/eslint-config/next')
 const storybookConfig = require('@weareinreach/eslint-config/storybook')
-const storybookPlugin = require('eslint-plugin-storybook')
 
 /** @type {import('eslint').Linter.Config[]} */
 module.exports = [

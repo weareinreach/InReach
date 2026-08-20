@@ -55,7 +55,7 @@ const storybookConfig: StorybookConfig = {
 		// eslint-disable-next-line storybook/no-uninstalled-addons
 		'@tomfreudenberg/next-auth-mock/storybook',
 		// This addon's package.json doesn't have a `./package.json` export, which getAbsolutePath needs.
-		// eslint-disable-next-line storybook/no-uninstalled-addons
+
 		'msw-storybook-addon',
 		getAbsolutePath('@storybook/addon-mcp'),
 	],

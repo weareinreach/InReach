@@ -1,12 +1,12 @@
 /* eslint-disable node/no-process-env */
 import dotenv from 'dotenv'
 import { flatten, unflatten } from 'flat'
+import { type PassedTask } from 'lib/generate'
 import prettier from 'prettier'
 
 import fs from 'fs'
 
 import { prisma, type Prisma } from '@weareinreach/db/client'
-import { type PassedTask } from 'lib/generate'
 
 const localePath = 'public/locales/en'
 

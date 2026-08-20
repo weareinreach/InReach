@@ -1,6 +1,6 @@
-import { Prisma, prisma } from '@weareinreach/db'
-
 import crypto from 'crypto'
+
+import { Prisma, prisma } from '@weareinreach/db'
 
 import { logger } from './logger'
 
