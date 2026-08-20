@@ -1,4 +1,6 @@
-import { createStyles, rem, Text } from '@mantine/core'
+import { Text } from '@mantine/core'
+
+import classes from './Activity.module.css'
 
 // Assuming you have a date formatting utility like this
 const formatDate = (date: Date): string => {
@@ -9,31 +11,6 @@ const formatDate = (date: Date): string => {
 	})
 }
 
-const useMessageBodyStyles = createStyles((theme) => ({
-	textDate: {
-		fontSize: rem(12),
-		fontWeight: 400,
-		color: theme.other.colors.secondary.darkGray,
-	},
-
-	textStatus: {
-		fontSize: rem(16),
-		fontWeight: 500,
-	},
-	activityBlock: {
-		display: 'flex',
-		gap: rem(16),
-		paddingLeft: rem(20),
-		paddingRight: rem(20),
-		flexWrap: 'wrap',
-	},
-
-	textBlock: {
-		display: 'flex',
-		flexDirection: 'column',
-	},
-}))
-
 interface ActivityProps {
 	lastUpdated: string | null
 	lastVerified: string | null
@@ -41,7 +18,6 @@ interface ActivityProps {
 }
 
 export const Activity = ({ lastUpdated, lastVerified, firstPublished }: ActivityProps) => {
-	const { classes } = useMessageBodyStyles()
 	return (
 		<div className={classes.activityBlock}>
 			<div className={classes.textBlock}>

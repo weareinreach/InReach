@@ -1,7 +1,15 @@
-import { Box, type ButtonProps, createStyles, Group, Modal, rem, Stack, Text, Title } from '@mantine/core'
+import {
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	Group,
+	Modal,
+	Stack,
+	Text,
+	Title,
+} from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useState } from 'react'
@@ -14,18 +22,8 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { UserSurveyFormProvider, useUserSurveyForm } from './context'
 import { FormBirthyear, FormCountry, FormEthnicity, FormIdentity, FormImmigration } from './fields'
+import classes from './index.module.css'
 import { ModalTitle } from '../ModalTitle'
-
-const useStyles = createStyles((theme) => ({
-	btnGroup: {
-		width: '100%',
-		paddingTop: rem(20),
-		borderTop: `solid ${rem(1)} ${theme.other.colors.primary.lightGray}`,
-	},
-	skipNext: {
-		width: '50%',
-	},
-}))
 
 const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
 	const { t } = useTranslation(['common', 'country', 'user'])
@@ -35,8 +33,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 	const [step, setStep] = useState<number>(1)
 	const [successMessage, setSuccessMessage] = useState(false)
 	const variants = useCustomVariant()
-	const { classes } = useStyles()
-	const { animateCSS, fireEvent: startShake } = useShake({ variant: 1 })
+	const { animateStyle, fireEvent: startShake } = useShake({ variant: 1 })
 	const UserSurveyAction = api.user.submitSurvey.useMutation({
 		onSuccess: () => {
 			setSuccessMessage(true)
@@ -117,7 +114,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 
 	const modalButtons = (stepNumber: number) => {
 		return (
-			<Group position='center' className={classes.btnGroup} noWrap>
+			<Group justify='center' className={classes.btnGroup} wrap='nowrap'>
 				<Button
 					className={classes.skipNext}
 					variant={'secondary-icon'}
@@ -142,7 +139,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 	}
 
 	const modalSubmitBtn = (
-		<Group position='center' className={classes.btnGroup} noWrap>
+		<Group justify='center' className={classes.btnGroup} wrap='nowrap'>
 			<Button
 				className={classes.skipNext}
 				variant={'secondary-icon'}
@@ -239,15 +236,14 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 		<>
 			<Modal
 				title={modalTitle}
-				scrollAreaComponent={Modal.NativeScrollArea}
 				opened={opened}
 				onClose={() => handler.close()}
 				fullScreen={isMobile}
 				zIndex={500}
-				className={animateCSS}
+				style={animateStyle}
 			>
 				<UserSurveyFormProvider form={form}>
-					<Stack spacing={24} align='center'>
+					<Stack gap={24} align='center'>
 						{modalBody()}
 					</Stack>
 				</UserSurveyFormProvider>

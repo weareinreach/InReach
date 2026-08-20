@@ -1,4 +1,4 @@
-import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
+import { Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 // import compact from 'just-compact'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
@@ -23,14 +23,7 @@ import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocat
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const useStyles = createStyles((theme) => ({
-	tabsList: {
-		position: 'sticky',
-		top: 0,
-		zIndex: 10,
-		backgroundColor: theme.other.colors.secondary.white,
-	},
-}))
+import classes from './index.module.css'
 
 const OrgLocationPage: NextPage = () => {
 	const { t } = useTranslation()
@@ -55,8 +48,6 @@ const OrgLocationPage: NextPage = () => {
 		error: pageFetchError,
 	} = api.location.forLocationPage.useQuery({ id: orgLocationId }, { enabled: router.isReady })
 
-	const { classes } = useStyles()
-
 	const servicesRef = useRef<HTMLDivElement>(null)
 	const photosRef = useRef<HTMLDivElement>(null)
 	const reviewsRef = useRef<HTMLDivElement>(null)
@@ -71,7 +62,8 @@ const OrgLocationPage: NextPage = () => {
 		}
 	}, [data, status, orgData, orgDataStatus, searchState.params])
 
-	const handleTabChange = useCallback((tab: Tabname) => {
+	const handleTabChange = useCallback((tab: string | null) => {
+		if (!tab) return
 		setActiveTab(tab)
 		switch (tab) {
 			case 'services': {
@@ -106,7 +98,7 @@ const OrgLocationPage: NextPage = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: `${orgData.name} - ${data.name}` })}</title>
 			</Head>
-			<Grid.Col xs={12} sm={8} order={1}>
+			<Grid.Col span={{ base: 12, sm: 8 }} order={1}>
 				<Toolbar
 					breadcrumbProps={{
 						option: 'back',
@@ -121,7 +113,7 @@ const OrgLocationPage: NextPage = () => {
 					}}
 					organizationId={orgData.id}
 				/>
-				<Stack pt={24} align='flex-start' spacing={40}>
+				<Stack pt={24} align='flex-start' gap={40}>
 					<ListingBasicInfo
 						data={{
 							name: data.name ?? orgData.name,
@@ -135,20 +127,20 @@ const OrgLocationPage: NextPage = () => {
 						}}
 					/>
 					{isTablet && (
-						<Stack spacing={40} w='100%'>
+						<Stack gap={40} w='100%'>
 							<Divider />
 							<ContactSection role='org' parentId={data.id} />
 							<Divider />
 							<VisitCard locationId={data.id} />
 						</Stack>
 					)}
-					<Tabs w='100%' value={activeTab} onTabChange={handleTabChange}>
+					<Tabs w='100%' value={activeTab} onChange={handleTabChange}>
 						<Tabs.List className={classes.tabsList}>
 							<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 							<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
 							<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 						</Tabs.List>
-						<Stack spacing={40} pt={40}>
+						<Stack gap={40} pt={40}>
 							<div ref={servicesRef}>
 								<ServicesInfoCard parentId={data.id} />
 							</div>
@@ -164,7 +156,7 @@ const OrgLocationPage: NextPage = () => {
 			</Grid.Col>
 			{!isTablet && (
 				<Grid.Col order={2}>
-					<Stack spacing={40}>
+					<Stack gap={40}>
 						<ContactSection role='org' parentId={data.id} />
 						<VisitCard locationId={data.id} />
 					</Stack>
@@ -230,5 +222,4 @@ export const getStaticProps: GetStaticProps<
 		return { redirect: { destination: '/500', permanent: false } }
 	}
 }
-type Tabname = 'services' | 'photos' | 'reviews'
 export default OrgLocationPage

@@ -1,4 +1,4 @@
-import { createStyles, Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
+import { Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { useCallback, useMemo } from 'react'
@@ -10,32 +10,15 @@ import { useCustomVariant, useSearchState } from '~ui/hooks'
 import { ActionButtons } from './ActionButtons'
 import { Badge } from './Badge'
 import { Link } from './Link'
-
-const useStyles = createStyles((theme) => ({
-	cardBody: {
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-		},
-	},
-	hoverText: {
-		'&[data-hovered]': {
-			textDecoration: 'underline',
-		},
-	},
-	description: {
-		[theme.fn.smallerThan('xs')]: {
-			display: 'none',
-		},
-	},
-}))
+import classes from './SearchResultCard.module.css'
 
 export const SearchResultLoading = () => {
 	const variants = useCustomVariant()
 	return (
 		<>
-			<Stack spacing={16}>
-				<Stack spacing={12}>
-					<Group position='apart'>
+			<Stack gap={16}>
+				<Stack gap={12}>
+					<Group justify='space-between'>
 						<Skeleton variant={variants.Skeleton.h2} w='80%' />
 						<ActionButtons.Loading />
 					</Group>
@@ -47,7 +30,7 @@ export const SearchResultLoading = () => {
 						<Skeleton variant={variants.Skeleton.text} w='60%' />
 					</Stack>
 				</Stack>
-				<Group spacing={16}>
+				<Group gap={16}>
 					<Skeleton h={32} w={75} />
 					<Skeleton h={32} w={75} />
 					<Skeleton h={32} w={75} />
@@ -77,7 +60,6 @@ const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) =>
 	const visibility = result.addressVisibility as 'FULL' | 'PARTIAL' | 'HIDDEN' | undefined
 	const { t, ready: i18nReady } = useTranslation(['common', result.id])
 	const variants = useCustomVariant()
-	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
 	const { searchState } = useSearchState()
 
@@ -182,9 +164,9 @@ const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) =>
 
 	return (
 		<>
-			<Stack spacing={16} ref={hoverRef}>
-				<Stack spacing={0}>
-					<Group align='center' position='apart' noWrap>
+			<Stack gap={16} ref={hoverRef}>
+				<Stack gap={0}>
+					<Group align='center' justify='space-between' wrap='nowrap'>
 						<Title
 							order={2}
 							className={classes.hoverText}
@@ -211,7 +193,7 @@ const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) =>
 						td='none'
 						onClick={handleTrackClick}
 					>
-						<Stack spacing={12}>
+						<Stack gap={12}>
 							<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
 							{description && (
 								<Text className={classes.description}>

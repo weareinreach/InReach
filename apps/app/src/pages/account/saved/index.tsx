@@ -1,16 +1,4 @@
-import {
-	Card,
-	Center,
-	createStyles,
-	Divider,
-	Grid,
-	Group,
-	Loader,
-	Overlay,
-	Stack,
-	Text,
-	Title,
-} from '@mantine/core'
+import { Card, Center, Divider, Grid, Group, Loader, Overlay, Stack, Text, Title } from '@mantine/core'
 import { DateTime } from 'luxon'
 import { type GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
@@ -29,27 +17,13 @@ import { CreateNewList } from '@weareinreach/ui/modals/CreateNewList'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+import classes from './index.module.css'
+
 const QuickPromotionModal = dynamic(
 	// @ts-expect-error Next Dynamic doesn't like polymorphic components
 	() => import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal),
 	{ ssr: false }
 )
-
-const useStyles = createStyles(() => ({
-	lessRoundedButton: {
-		borderRadius: '6px',
-		width: 'fit-content',
-	},
-	deleteButton: {
-		background: 'none',
-		border: 'none',
-		cursor: 'pointer',
-		padding: '8px',
-		display: 'inline-flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-}))
 
 export const formatDate = (date: Date, locale = 'en') => {
 	const dateTime = DateTime.fromJSDate(date).setLocale(locale)
@@ -59,7 +33,6 @@ export const formatDate = (date: Date, locale = 'en') => {
 
 const SavedLists = () => {
 	const { t } = useTranslation('common')
-	const { classes } = useStyles()
 	const { data: session, status } = useSession()
 	const router = useRouter()
 	const { data: allSavedLists, isLoading } = api.savedList.getAll.useQuery()
@@ -94,7 +67,7 @@ const SavedLists = () => {
 	}
 
 	return (
-		<Grid.Col xs={12} sm={12}>
+		<Grid.Col span={{ base: 12, sm: 12 }}>
 			<Stack>
 				<Title order={1}> {t('words.saved', { defaultValue: 'Saved' })} </Title>
 				<Text size='lg'>{t('list.create-new-sub')}</Text>
@@ -113,9 +86,9 @@ const SavedLists = () => {
 				) : (
 					allSavedLists?.map((list) => (
 						<Card key={list.id}>
-							<Stack spacing='sm'>
-								<Group position='apart' align='center' style={{ width: '100%' }}>
-									<Stack spacing='sm' style={{ flex: 1 }}>
+							<Stack gap='sm'>
+								<Group justify='space-between' align='center' style={{ width: '100%' }}>
+									<Stack gap='sm' style={{ flex: 1 }}>
 										<Link
 											href={{ pathname: '/account/saved/[listId]', query: { listId: list.id } }}
 											style={{ textDecoration: 'none', color: 'inherit' }}

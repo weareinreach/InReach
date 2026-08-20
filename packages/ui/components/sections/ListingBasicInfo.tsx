@@ -82,7 +82,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 		) : null
 
 	return (
-		<Stack align='flex-start' spacing={12}>
+		<Stack align='flex-start' gap={12}>
 			<Title order={2}>{data.name}</Title>
 			{isSingleLoc && <Rating recordId={data.id} noMargin />}
 			{addressLine}
@@ -167,14 +167,14 @@ export const ListingBasicEdit = ({ data, location, onBadgesChange }: ListingBasi
 
 	return (
 		<form autoComplete='off' style={{ width: '100%' }}>
-			<Stack align='flex-start' spacing={12}>
+			<Stack align='flex-start' gap={12}>
 				<InlineTextInput
 					component={TextInput}
 					name='name' // This now gets its value from the form context
 					fontSize='h2'
 					data-isdirty={formState.dirtyFields['name']}
 				/>
-				<Group noWrap spacing={8}>
+				<Group wrap='nowrap' gap={8}>
 					{!location && (
 						<>
 							<BadgeEdit

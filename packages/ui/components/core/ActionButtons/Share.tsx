@@ -7,11 +7,11 @@ import { forwardRef, useCallback } from 'react'
 import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 export const Share = forwardRef<HTMLButtonElement, ShareProps>(({ omitLabel, className, ...props }, ref) => {
-	const { classes, cx } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
 	const { asPath } = useRouter()
@@ -42,7 +42,7 @@ export const Share = forwardRef<HTMLButtonElement, ShareProps>(({ omitLabel, cla
 			className={cx(classes.button, className)}
 			{...props}
 		>
-			<Group spacing={0} noWrap>
+			<Group gap={0} wrap='nowrap'>
 				<Icon
 					icon='carbon:share'
 					color={theme.other.colors.secondary.black}

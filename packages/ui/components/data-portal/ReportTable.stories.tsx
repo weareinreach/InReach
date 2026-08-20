@@ -62,7 +62,7 @@ export default {
 					{
 						result: {
 							data: {
-								json: mockReports,
+								json: { results: mockReports, total: mockReports.length },
 							},
 						},
 					},

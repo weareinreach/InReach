@@ -38,7 +38,7 @@ export const Layouts = (Story: StoryFn, context: StoryContext) => {
 		case 'gridDouble': {
 			return (
 				<BodyGrid pt={16}>
-					<Grid.Col xs={12} sm={8}>
+					<Grid.Col span={{ base: 12, sm: 8 }}>
 						<StoryComponent />
 					</Grid.Col>
 				</BodyGrid>

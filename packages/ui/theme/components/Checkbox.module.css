@@ -1,0 +1,59 @@
+.root {
+	padding: rem(8px) 0 rem(8px) rem(4px);
+}
+@media (hover: hover) {
+	.root:hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}
+
+.label {
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+	padding-left: var(--mantine-spacing-xs);
+}
+.label:disabled {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.labelWrapper {
+	justify-content: center;
+}
+
+.input {
+	border-color: var(--ir-color-tertiary-cool-gray);
+	height: var(--mantine-spacing-xl);
+	width: var(--mantine-spacing-xl);
+}
+.input:checked {
+	background-color: var(--ir-color-secondary-black);
+	color: var(--ir-color-secondary-white);
+	border-color: var(--ir-color-secondary-black);
+}
+.input:checked[data-indeterminate] {
+	background-color: var(--ir-color-secondary-white);
+	color: var(--ir-color-secondary-black);
+	border-color: unset;
+}
+.input:disabled {
+	background-color: var(--ir-color-primary-light-gray);
+}
+
+.inner {
+	height: rem(24px);
+	width: rem(24px);
+}
+
+.icon {
+	width: rem(14px);
+	height: rem(10.5px);
+	margin: rem(6.75px) rem(5px);
+}
+/* Mantine sets `data-indeterminate` on the input; `.input` and `.inner` are siblings under `.root` */
+.root:has(.input[data-indeterminate]) .icon {
+	width: rem(12px);
+	height: rem(3px);
+	margin: rem(10.5px) rem(6px);
+}

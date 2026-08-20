@@ -23,16 +23,16 @@ export const organization = {
 	}),
 	forOrganizationTable: getTRPCMock({
 		path: ['organization', 'forOrganizationTable'],
-		response: () => {
+		response: (input) => {
 			const totalRecords = 1000
 			faker.seed(1024)
-			const data: ApiOutput['organization']['forOrganizationTable'] = []
+			const allResults: ApiOutput['organization']['forOrganizationTable']['results'] = []
 
 			for (let index = 0; index < totalRecords; index++) {
 				const lastVerified = faker.date.past()
 				const updatedAt = faker.date.past({ refDate: lastVerified })
 				const createdAt = faker.date.past({ refDate: updatedAt })
-				const locations: NonNullable<ApiOutput['organization']['forOrganizationTable']>[number]['locations'] =
+				const locations: ApiOutput['organization']['forOrganizationTable']['results'][number]['locations'] =
 					[]
 
 				const totalLocations = faker.number.int({ min: 0, max: 7 })
@@ -50,7 +50,7 @@ export const organization = {
 					})
 				}
 
-				data.push({
+				allResults.push({
 					id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
 					name: faker.company.name(),
 					slug: faker.lorem.slug(3),
@@ -62,7 +62,32 @@ export const organization = {
 					locations,
 				})
 			}
-			return data
+
+			const filtered = allResults.filter((org) => {
+				if (input.published !== undefined && org.published !== input.published) return false
+				if (input.deleted !== undefined && org.deleted !== input.deleted) return false
+				if (input.search && !org.name.toLowerCase().includes(input.search.toLowerCase())) return false
+				return true
+			})
+
+			const sorting = input.sorting?.length ? input.sorting : [{ id: 'name' as const, desc: false }]
+			const sorted = [...filtered].sort((a, b) => {
+				for (const { id, desc } of sorting) {
+					const av = a[id]
+					const bv = b[id]
+					if (av == null && bv == null) continue
+					if (av == null) return desc ? -1 : 1
+					if (bv == null) return desc ? 1 : -1
+					if (av < bv) return desc ? 1 : -1
+					if (av > bv) return desc ? -1 : 1
+				}
+				return 0
+			})
+
+			const skip = input.skip ?? 0
+			const take = input.take ?? 50
+			const results = sorted.slice(skip, skip + take)
+			return { results, total: filtered.length }
 		},
 	}),
 	suggestionOptions: getTRPCMock({

@@ -1,0 +1,17 @@
+.table {
+	--table-vertical-spacing: var(--mantine-spacing-xs);
+}
+
+.th {
+	white-space: nowrap;
+	background-color: var(--mantine-color-body);
+}
+
+.td {
+	vertical-align: middle;
+}
+
+.sortable {
+	cursor: pointer;
+	user-select: none;
+}

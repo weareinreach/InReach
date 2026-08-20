@@ -1,0 +1,12 @@
+@media (min-width: $mantine-breakpoint-sm) {
+	.root {
+		padding: rem(24px);
+	}
+}
+
+@media (hover: hover) {
+	.hoverCoolGray:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		cursor: pointer;
+	}
+}

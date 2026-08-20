@@ -1,0 +1,5 @@
+.actionBlock {
+	display: flex;
+	gap: rem(10px);
+	padding-right: rem(20px);
+}

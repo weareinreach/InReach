@@ -43,7 +43,7 @@ export const StorybookGridDouble = (Story: StoryFn) => {
 	const StoryComponent = Story as ComponentType
 	return (
 		<BodyGrid pt={16}>
-			<Grid.Col xs={12} sm={8}>
+			<Grid.Col span={{ base: 12, sm: 8 }}>
 				<StoryComponent />
 			</Grid.Col>
 		</BodyGrid>

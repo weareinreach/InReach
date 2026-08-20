@@ -82,8 +82,8 @@ export const TimeRange = <T extends FieldValues>({
 	return (
 		<Stack>
 			<Input.Wrapper ref={ref}>
-				<Group noWrap>
-					<Stack spacing={0}>
+				<Group wrap='nowrap'>
+					<Stack gap={0}>
 						<Text variant={variant.Text.utility1}>Open</Text>
 						<Input
 							type='time'
@@ -95,7 +95,7 @@ export const TimeRange = <T extends FieldValues>({
 							{...props}
 						/>
 					</Stack>
-					<Stack spacing={0}>
+					<Stack gap={0}>
 						<Text variant={variant.Text.utility1}>Close</Text>
 						<Input
 							type='time'

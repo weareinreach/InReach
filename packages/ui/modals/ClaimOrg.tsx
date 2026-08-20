@@ -34,31 +34,31 @@ const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProps>(
 		return (
 			<>
 				<Modal title={modalTitle} opened={externalOpen ?? opened} onClose={handleClose} fullScreen={isMobile}>
-					<Stack align='center' spacing={24}>
-						<Stack align='center' spacing={16}>
+					<Stack align='center' gap={24}>
+						<Stack align='center' gap={16}>
 							<Trans
 								i18nKey='claim-org-modal.title'
 								components={{
 									emojiLg: <Text fz={40}>.</Text>,
 									title2: (
-										<Title order={2} align='center'>
+										<Title order={2} ta='center'>
 											.
 										</Title>
 									),
 									textDarkGray: (
-										<Text variant={variants.Text.darkGray} align='center'>
+										<Text variant={variants.Text.darkGray} ta='center'>
 											.
 										</Text>
 									),
 								}}
 							/>
 						</Stack>
-						<Stack align='center' spacing={14}>
+						<Stack align='center' gap={14}>
 							<Trans
 								i18nKey='claim-org-modal.list'
 								components={{
 									textUtility1: (
-										<Text variant={variants.Text.utility1} align='center'>
+										<Text variant={variants.Text.utility1} ta='center'>
 											.
 										</Text>
 									),

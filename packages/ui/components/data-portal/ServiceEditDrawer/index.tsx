@@ -42,7 +42,7 @@ import { processAccessInstructions, processAttributes } from '~ui/modals/Service
 import { AttributeEditWrapper } from './AttributeEditWrapper'
 import { FormSchema, type TFormSchema } from './schemas'
 import { ServiceAreaItem } from './ServiceAreaItem'
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 import { InlineTextInput } from '../InlineTextInput'
 
 const isObject = (x: unknown): x is object => typeof x === 'object'
@@ -58,7 +58,6 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		const [pendingAutoAttach, setPendingAutoAttach] = useState(false)
 		const hasAutoAttachedRef = useRef(false)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
-		const { classes } = useStyles()
 		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
 		const apiUtils = api.useUtils()
@@ -273,7 +272,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					return null
 				}
 				return (
-					<Stack key={key} spacing={0}>
+					<Stack key={key} gap={0}>
 						<Title order={3}>{countryTranslation.of(country)}</Title>
 						<List className={classes.badgeGroup} listStyleType='none'>
 							{value}
@@ -337,7 +336,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 			data && !isNew ? (
 				<>
 					<Text variant={variants.Text.utility1}>Visibility Status</Text>
-					<Group noWrap>
+					<Group wrap='nowrap'>
 						<Checkbox name='published' control={form.control} label='Published' />
 						<Checkbox name='deleted' control={form.control} label='Deleted' />
 					</Group>
@@ -383,7 +382,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					<Section.Divider title={t('service.cost')}>
 						{attributes.cost.map(({ badgeProps, detailProps, ...wrapperProps }) => (
 							<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-								<Stack align='start' spacing={0}>
+								<Stack align='start' gap={0}>
 									{badgeProps && <Badge.Attribute {...badgeProps} />}
 									{detailProps && <ModalText {...detailProps} />}
 								</Stack>
@@ -455,7 +454,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
 						<Drawer.Header>
-							<Group position='apart' w='100%'>
+							<Group justify='space-between' w='100%'>
 								<Breadcrumb option='close' onClick={handleClose} />
 								<Group>
 									<Tooltip label='Must save other changes first' disabled={!hasFormChanges} withArrow>
@@ -503,7 +502,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									data-isdirty={dirtyFields.description}
 									autosize
 								/>
-								<Stack spacing={10}>
+								<Stack gap={10}>
 									<Text variant={variants.Text.utility1}>Services</Text>
 									<ServiceSelect name='services' control={form.control} data-isdirty={dirtyFields.services}>
 										<Badge.Group>
@@ -531,7 +530,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 							<Stack align='center'>
 								<Text>You have unsaved changes</Text>
-								<Group noWrap>
+								<Group wrap='nowrap'>
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon='carbon:save' />}

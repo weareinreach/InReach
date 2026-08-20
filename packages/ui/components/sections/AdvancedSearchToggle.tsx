@@ -1,16 +1,9 @@
-import { createStyles, Group, Switch } from '@mantine/core'
+import { Group, Switch } from '@mantine/core'
 import { useEffect, useState } from 'react'
 
-const useStyles = createStyles((theme) => ({
-	label: {
-		fontWeight: 600,
-		fontSize: theme.fontSizes.sm,
-	},
-}))
+import classes from './AdvancedSearchToggle.module.css'
 
 export const AdvancedSearchToggle = () => {
-	const { classes } = useStyles()
-
 	// Determine initial state from local storage or default to false
 	const [checked, setChecked] = useState(false)
 
@@ -35,7 +28,7 @@ export const AdvancedSearchToggle = () => {
 	}
 
 	return (
-		<Group spacing={8} position='right'>
+		<Group gap={8} justify='flex-end'>
 			<Switch
 				label='Advanced Search'
 				classNames={{ label: classes.label }}

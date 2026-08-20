@@ -2,7 +2,6 @@ import {
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
-	createStyles,
 	Modal,
 	PasswordInput,
 	Popover,
@@ -27,19 +26,12 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { LoginModalLauncher } from './LoginSignUp'
 import { ModalTitle } from './ModalTitle'
-
-const usePasswordRequirementStyles = createStyles(() => ({
-	text: {
-		display: 'flex',
-		alignItems: 'center',
-	},
-}))
+import classes from './ResetPassword.module.css'
 
 const PasswordRequirement = ({ meets, label }: PasswordRequirementProps) => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
-	const { classes } = usePasswordRequirementStyles()
 	const textColor = useMemo(
 		() => (meets ? theme.other.colors.primary.lightGray : theme.other.colors.tertiary.red),
 		[meets, theme]
@@ -207,8 +199,8 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 
 	const bodyReset = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>🔐</Title>
 					<Title order={2}>{t('reset-password')}</Title>
 				</Stack>
@@ -223,7 +215,6 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 					onClick={handlePwResetSubmit}
 					variant='primary-icon'
 					fullWidth
-					loaderPosition='center'
 					loading={pwResetHandler.isPending}
 					disabled={!passwordResetForm.isValid()}
 				>
@@ -236,8 +227,8 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 
 	const bodySuccess = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>✅</Title>
 					<Title order={2}>{t('password-saved')}</Title>
 				</Stack>
@@ -258,8 +249,8 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 	)
 	const bodyError = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>🫣</Title>
 					<Title order={2}>{t('errors.oh-no')}</Title>
 				</Stack>

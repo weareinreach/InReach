@@ -1,0 +1,189 @@
+/**
+ * Consolidated from 3 separate createStyles hooks (useStyles/useAccordionStyles/
+ * useModalStyles). The accordion/modal ones are applied *wholesale* via
+ * `classNames={...}` directly on <Accordion>/<Modal> (not via explicit
+ * `className={classes.x}` refs), so their keys are real even though grepping for
+ * direct references alone would miss them - kept namespaced (`accordion*`/
+ * `modal*`) here and wired up explicitly per-component at the call site to avoid
+ * colliding with Accordion's own real `label` stylesName.
+ */
+
+/* --- useStyles (explicit className refs) --- */
+.serviceLabel {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (max-width: $mantine-breakpoint-sm) {
+	.serviceLabel {
+		text-align: center;
+	}
+}
+.serviceLabel[data-disabled] {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.launchButton:disabled,
+.launchButton[data-disabled] {
+	color: var(--ir-color-secondary-dark-gray);
+	pointer-events: none;
+}
+
+.count {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	background: var(--ir-color-secondary-black);
+	border-radius: 100%;
+	color: var(--ir-color-secondary-white);
+	width: rem(24px);
+	height: rem(24px);
+	text-align: center;
+	display: inline-block;
+	vertical-align: center;
+	line-height: 1.5;
+}
+
+.button {
+	padding: rem(14px) rem(16px);
+	background-color: var(--ir-color-secondary-white);
+	border-radius: rem(8px);
+	border: var(--ir-color-tertiary-cool-gray) rem(1px) solid;
+	height: rem(48px);
+}
+.button:disabled,
+.button[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+}
+
+.itemChild {
+	margin-left: rem(40px);
+}
+
+.uncheckBtn {
+	width: 50%;
+	border-radius: rem(8px);
+	padding: rem(6px) rem(8px);
+	height: rem(48px);
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.uncheckBtn {
+		display: none;
+	}
+}
+@media (max-width: em(375px)) {
+	.uncheckBtn {
+		margin-right: unset;
+	}
+	.uncheckBtn * {
+		font-size: rem(14px) !important;
+	}
+}
+
+.resultsBtn {
+	border-radius: rem(8px);
+	width: 100%;
+	height: rem(48px);
+}
+@media (max-width: $mantine-breakpoint-sm) {
+	.resultsBtn {
+		width: 50%;
+		padding: rem(6px) rem(8px);
+	}
+}
+@media (max-width: em(375px)) {
+	.resultsBtn {
+		margin-left: unset;
+	}
+	.resultsBtn * {
+		font-size: rem(14px) !important;
+	}
+}
+
+/* --- useAccordionStyles (applied wholesale via <Accordion classNames={...}>) --- */
+.accordionLabel {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.accordionContent {
+	padding: 0 0 rem(12px) 0;
+}
+.accordionItem {
+	margin: 0;
+	min-height: rem(48px);
+}
+.accordionItem:last-of-type {
+	margin-bottom: rem(40px);
+}
+.accordionChevron[data-rotate] {
+	transform: rotate(90deg);
+}
+.accordionControl {
+	padding: 0;
+}
+@media (hover: hover) {
+	.accordionControl:hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}
+.accordionPanel {
+	padding: 0;
+}
+.scrollArea {
+	padding-right: rem(12px);
+}
+
+/* --- useModalStyles (applied wholesale via <Modal classNames={...}>) --- */
+.modalBody {
+	padding: rem(10px) rem(4px) rem(10px) rem(16px);
+}
+@media (min-width: $mantine-breakpoint-xs) {
+	.modalBody {
+		padding: rem(40px) rem(8px) rem(20px) rem(20px);
+	}
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.modalBody {
+		padding: rem(40px) rem(20px) rem(20px) rem(32px);
+	}
+}
+@media (max-width: $mantine-breakpoint-sm) {
+	.modalBody {
+		max-height: none;
+		padding: rem(10px) rem(9px) rem(30px) rem(20px);
+	}
+}
+@media (orientation: landscape) and (max-height: em(376px)) {
+	.modalBody {
+		padding-bottom: rem(20px);
+	}
+}
+@media (orientation: landscape) and (max-height: em(430px)) {
+	.modalBody {
+		max-height: none;
+		padding-top: rem(20px);
+	}
+}
+
+.modalTitle {
+	padding: rem(8px) 0 rem(8px) rem(8px);
+	width: 100%;
+}
+
+.footer {
+	border-top: solid rem(1px) var(--ir-color-primary-light-gray);
+	padding: rem(20px) rem(12px) 0 0;
+}
+@media (max-width: $mantine-breakpoint-sm) {
+	.footer {
+		padding: rem(32px) rem(12px) 0 0;
+	}
+}
+@media (max-width: em(375px)), (orientation: landscape) and (max-height: em(376px)) {
+	.footer {
+		padding-top: rem(20px);
+	}
+}

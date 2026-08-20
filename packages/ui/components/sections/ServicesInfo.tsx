@@ -1,4 +1,4 @@
-import { Card, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Card, Group, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
@@ -14,27 +14,13 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ServiceModal } from '~ui/modals/Service'
 
+import classes from './ServicesInfo.module.css'
+
 type ServiceSectionProps = {
 	category: string | string[]
 	services: ServItem[]
 	hideRemoteBadges?: boolean
 }
-
-const useServiceSectionStyles = createStyles((theme) => ({
-	group: {
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-		// paddingBottom: rem(12),
-		padding: `${rem(12)} ${rem(0)}`,
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-	},
-	icon: {
-		minHeight: rem(24),
-		minWidth: rem(24),
-	},
-}))
 
 const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
@@ -48,7 +34,6 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	const namespaces = ['common', 'services', orgId?.id ?? 'common']
 
 	const { t } = useTranslation(namespaces)
-	const { classes } = useServiceSectionStyles()
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
 	const apiUtils = api.useUtils()
@@ -71,7 +56,7 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	)
 
 	return (
-		<Stack spacing={8}>
+		<Stack gap={8}>
 			{Array.isArray(category) ? (
 				<Badge.Group>
 					{category.map((tsKey) => (
@@ -83,13 +68,13 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 			) : (
 				<Badge.Service>{t(category, { ns: 'services' })}</Badge.Service>
 			)}
-			<Stack spacing={0}>
+			<Stack gap={0}>
 				{services.map((service) => {
 					const serviceName = t(service.tsKey, { ns: orgId?.id, defaultValue: service.defaultText })
 					const children = (
 						<>
 							{service.offersRemote && !hideRemoteBadges ? (
-								<Group spacing={8} align='center'>
+								<Group gap={8} align='center'>
 									{!service.published && (
 										<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
 									)}
@@ -97,7 +82,7 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 									<Badge.Remote />
 								</Group>
 							) : (
-								<Group spacing={8}>
+								<Group gap={8}>
 									{!service.published && (
 										<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
 									)}
@@ -115,7 +100,7 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 							variant={variants.Link.inlineInverted}
 							component={Link}
 						>
-							<Group noWrap position='apart' className={classes.group}>
+							<Group wrap='nowrap' justify='space-between' className={classes.group}>
 								{children}
 							</Group>
 						</ServiceEditDrawer>
@@ -126,8 +111,8 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 							itemName={serviceName}
 							organizationId={orgId?.id}
 							component={Group}
-							position='apart'
-							noWrap
+							justify='space-between'
+							wrap='nowrap'
 							className={classes.group}
 							onMouseOver={preloadService(service.id)}
 						>
@@ -226,7 +211,7 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: Ser
 		)
 	})
 
-	const body = <Stack spacing={40}>{sections}</Stack>
+	const body = <Stack gap={40}>{sections}</Stack>
 
 	return isMobile ? body : <Card>{body}</Card>
 }

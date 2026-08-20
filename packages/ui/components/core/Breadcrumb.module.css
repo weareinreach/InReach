@@ -1,0 +1,19 @@
+.root {
+	height: rem(40px);
+	max-width: 100%;
+	padding: rem(10px) rem(8px);
+	color: var(--ir-color-secondary-black);
+	background-color: var(--ir-color-secondary-white);
+	border-radius: rem(8px);
+}
+@media (hover: hover) {
+	.root:hover {
+		background-color: var(--ir-color-primary-light-gray) !important;
+		text-decoration: none !important;
+	}
+}
+
+.icon {
+	width: rem(24px);
+	height: rem(24px);
+}

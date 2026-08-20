@@ -66,7 +66,7 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 			title2: <Title order={2}>.</Title>,
 			textDarkGray: <Text variant={variants.Text.darkGray}>.</Text>,
 			textDarkGrayCentered: (
-				<Text align='center' variant={variants.Text.darkGray}>
+				<Text ta='center' variant={variants.Text.darkGray}>
 					.
 				</Text>
 			),
@@ -127,9 +127,9 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 	return (
 		<>
 			<Modal title={modalTitle} opened={opened} onClose={closeModal} fullScreen={isMobile} zIndex={999999}>
-				<Stack align='center' spacing={16}>
+				<Stack align='center' gap={16}>
 					<Trans i18nKey='privacy-statement-head' tOptions={tOptions} components={components} />
-					<Stack spacing={16}>
+					<Stack gap={16}>
 						<Trans i18nKey='privacy-statement-body' tOptions={tOptions} components={components} />
 					</Stack>
 					<Trans i18nKey='privacy-statement-foot' tOptions={tOptions} components={components} />
@@ -143,15 +143,15 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 				centered
 				zIndex={9999999}
 			>
-				<Stack spacing='md'>
+				<Stack gap='md'>
 					<Divider />
-					<Group position='apart'>
-						<Text weight={500}>{t('cookie-consent.item-basic')}</Text>
+					<Group justify='space-between'>
+						<Text fw={500}>{t('cookie-consent.item-basic')}</Text>
 						{/* Native react-toggle without custom icons picks up existing CSS */}
 						<Toggle checked={true} disabled={true} />
 					</Group>
-					<Group position='apart'>
-						<Text weight={500}>{t('cookie-consent.item-ga4')}</Text>
+					<Group justify='space-between'>
+						<Text fw={500}>{t('cookie-consent.item-ga4')}</Text>
 						<Toggle
 							checked={ga4Enabled}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) => toggleGa4(e.target.checked)}

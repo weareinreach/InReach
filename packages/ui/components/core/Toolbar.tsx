@@ -1,18 +1,10 @@
-import { createStyles, Group, rem, Space } from '@mantine/core'
+import { Group, Space } from '@mantine/core'
 
 import { ActionButtons } from './ActionButtons'
 import { Breadcrumb, type BreadcrumbProps } from './Breadcrumb'
-
-const useStyles = createStyles(() => ({
-	toolbar: {
-		// padding: `${rem(0)} ${rem(8)} ${rem(0)} ${rem(12)}`,
-		marginLeft: rem(-8),
-	},
-}))
+import classes from './Toolbar.module.css'
 
 export const Toolbar = ({ breadcrumbProps, hideBreadcrumb, itemName, ...ids }: Props) => {
-	const { classes } = useStyles()
-
 	const isService = !!ids.serviceId
 
 	const bc = breadcrumbProps as { backToText?: string }
@@ -24,7 +16,7 @@ export const Toolbar = ({ breadcrumbProps, hideBreadcrumb, itemName, ...ids }: P
 	const displayItemName = itemName ?? bc.backToText ?? 'Report' // Concise name for modal title
 
 	return (
-		<Group position='apart' align='center' w='100%' noWrap className={classes.toolbar}>
+		<Group justify='space-between' align='center' w='100%' wrap='nowrap' className={classes.toolbar}>
 			{hideBreadcrumb ? <Space w={1} /> : <Breadcrumb {...breadcrumbProps} />}
 			<ActionButtons.Group>
 				<ActionButtons.Review data-targetid='review' key='review' />

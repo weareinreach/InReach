@@ -2,27 +2,17 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	createPolymorphicComponent,
-	createStyles,
 	Drawer,
 	Group,
 	LoadingOverlay,
 	Modal,
-	rem,
 	Stack,
 	Text,
 	Title,
 } from '@mantine/core'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import {
-	type ComponentPropsWithoutRef,
-	forwardRef,
-	type ReactElement,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { type Resolver, useForm } from 'react-hook-form'
 import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
 import SocialLinks from 'social-links'
@@ -37,14 +27,9 @@ import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const socialLinkValidator = new SocialLinks()
+import classes from './index.module.css'
 
-const useStyles = createStyles(() => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-}))
+const socialLinkValidator = new SocialLinks()
 
 const FormSchema = z.object({
 	id: prefixedId('orgSocialMedia'),
@@ -65,19 +50,6 @@ const FormSchema = z.object({
 	orgLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
-interface ItemProps extends ComponentPropsWithoutRef<'div'> {
-	value: string
-	label: string
-	icon: ReactElement
-}
-const SelectItem = forwardRef<HTMLDivElement, ItemProps>(({ value: _value, label, icon, ...props }, ref) => (
-	<div ref={ref} {...props}>
-		<Group noWrap spacing={12}>
-			{icon} {label}
-		</Group>
-	</div>
-))
-SelectItem.displayName = 'SelectItem'
 
 const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
@@ -90,7 +62,6 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 			{ id: socialId },
 			{ enabled: drawerOpened && !createNew }
 		)
-		const { classes } = useStyles()
 		const {
 			control,
 			handleSubmit,
@@ -229,7 +200,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 							)}
 						>
 							<Drawer.Header>
-								<Group noWrap position='apart' w='100%'>
+								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
 									<Button
 										variant='primary-icon'
@@ -244,20 +215,27 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 							</Drawer.Header>
 							<Drawer.Body>
 								<LoadingOverlay visible={isFetching && !createNew} />
-								<Stack spacing={24} align='center'>
+								<Stack gap={24} align='center'>
 									<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Social Media`}</Title>
-									<Stack spacing={24} align='flex-start' w='100%'>
+									<Stack gap={24} align='flex-start' w='100%'>
 										<Select
 											label='Service'
 											required
 											name='serviceId'
 											control={control}
 											data={socialMediaServices ?? []}
-											itemComponent={SelectItem}
+											renderOption={({ option }) => {
+												const service = socialMediaServices?.find(({ value }) => value === option.value)
+												return (
+													<Group wrap='nowrap' gap={12}>
+														{service?.icon} {option.label}
+													</Group>
+												)
+											}}
 										/>
 										<TextInput label='Website URL' required name='url' control={control} />
 										<TextInput label='Username/handle' required name='username' control={control} />
-										<Group noWrap position='apart' w='100%'>
+										<Group wrap='nowrap' justify='space-between' w='100%'>
 											<Stack>
 												<Checkbox label='Published' name='published' control={control} />
 												<Checkbox label='Deleted' name='deleted' control={control} />
@@ -278,7 +256,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 							<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 								<Stack align='center'>
 									<Text>You have unsaved changes</Text>
-									<Group noWrap>
+									<Group wrap='nowrap'>
 										<Button
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}

@@ -6,11 +6,11 @@ import { forwardRef } from 'react'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 
-import { useSharedStyles } from './styles'
+import { sharedBadgeClasses } from './styles'
 
 export const _National = forwardRef<HTMLDivElement, BadgeNationalProps>(
 	({ hideTooltip, countries, ...props }, ref) => {
-		const { classes } = useSharedStyles('national')
+		const classes = sharedBadgeClasses.national
 		const theme = useMantineTheme()
 		const { t, i18n } = useTranslation('common')
 		const variants = useCustomVariant()

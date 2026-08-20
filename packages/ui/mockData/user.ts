@@ -14,7 +14,7 @@ export const user = {
 		response: async () => {
 			const data = (await import('./json/user.forUserTable.json')).default
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const typedData: NonNullable<ApiOutput['user']['forUserTable']> = data.map((user: any) => ({
+			const results: NonNullable<ApiOutput['user']['forUserTable']>['results'] = data.map((user: any) => ({
 				...user,
 				createdAt: new Date(user.createdAt),
 				updatedAt: new Date(user.updatedAt),
@@ -22,7 +22,7 @@ export const user = {
 				name: user.name === null ? null : String(user.name),
 				canAccessDataPortal: user.canAccessDataPortal,
 			}))
-			return typedData
+			return { results, total: results.length }
 		},
 	}),
 } satisfies MockHandlerObject<'user'>

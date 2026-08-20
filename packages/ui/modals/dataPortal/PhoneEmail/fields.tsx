@@ -94,7 +94,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 	return (
 		<Card withBorder>
 			<Stack>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text variant={variants.Text.utility1}>Primary</Text>
 					<Checkbox
 						label={`This is the primary ${
@@ -103,7 +103,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 						{...form.getInputProps('isPrimary', { type: 'checkbox' })}
 					/>
 				</Stack>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text variant={variants.Text.utility1}>Show on Organization</Text>
 					<Checkbox
 						label={`This ${
@@ -112,7 +112,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 						{...form.getInputProps('published', { type: 'checkbox' })}
 					/>
 				</Stack>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text variant={variants.Text.utility1}>Show on Locations</Text>
 					{locations && locations.length > 1 ? (
 						<MultiSelectPopover data={locations} label='Locations' {...form.getInputProps('orgLocationId')} />
@@ -120,7 +120,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 						<Text variant={variants.Text.utility4}>xx</Text>
 					)}
 				</Stack>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text variant={variants.Text.utility1}>Show on Services</Text>
 					{services && services.length > 1 ? (
 						<MultiSelectPopover data={services} label='Services' {...form.getInputProps('orgServiceId')} />

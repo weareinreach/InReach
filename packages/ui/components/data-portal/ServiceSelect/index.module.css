@@ -1,0 +1,24 @@
+.drawerContent {
+	border-radius: rem(32px) 0 0 0;
+	min-width: 40vw;
+}
+.checkboxLabel {
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.box {
+	background-color: lighten(#28939c, 0.9);
+	width: 100%;
+	padding: rem(8px);
+	border-radius: rem(8px);
+}
+.box[data-isdirty='true'] {
+	background-color: lighten(#28939c, 0.6);
+}
+@media (hover: hover) {
+	.box:hover {
+		cursor: pointer;
+	}
+}

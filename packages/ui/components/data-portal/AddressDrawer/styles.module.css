@@ -1,0 +1,38 @@
+.drawerContent {
+	border-radius: rem(32px) 0 0 0;
+	min-width: 40vw;
+}
+.drawerBody {
+	padding: rem(40px) rem(32px);
+}
+.drawerBody:not(:only-child) {
+	padding-top: rem(40px);
+}
+
+.unmatchedText {
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray);
+	display: block;
+}
+.secondLine {
+	font-size: rem(14px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray);
+}
+.matchedText {
+	color: var(--ir-color-secondary-black);
+}
+.radioLabel {
+	font-size: rem(14px);
+	font-weight: 400;
+	line-height: 1.25;
+}
+.overlay {
+	background-color: lighten(#28939c, 0.9);
+	border-radius: rem(16px);
+	margin: rem(-8px);
+	padding: rem(8px);
+}

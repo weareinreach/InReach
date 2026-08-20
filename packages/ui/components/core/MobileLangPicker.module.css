@@ -1,0 +1,18 @@
+.langBtn {
+	width: 100%;
+	padding: rem(16px) rem(16px);
+	border-bottom: 1px solid var(--ir-color-tertiary-cool-gray);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.modalContent {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--ir-color-secondary-white);
+}
+.modalBody {
+	flex: 1;
+	overflow: hidden;
+}

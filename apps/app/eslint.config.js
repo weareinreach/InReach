@@ -1,5 +1,6 @@
-const nextConfig = require('@weareinreach/eslint-config/next')
 const i18nextPlugin = require('eslint-plugin-i18next')
+
+const nextConfig = require('@weareinreach/eslint-config/next')
 
 /** @type {import('eslint').Linter.Config[]} */
 module.exports = [
@@ -24,7 +25,7 @@ module.exports = [
 	{
 		files: ['**/*.d.ts'],
 		rules: {
-			'import/no-unused-modules': 'off',
+			'import-x/no-unused-modules': 'off',
 		},
 	},
 ]

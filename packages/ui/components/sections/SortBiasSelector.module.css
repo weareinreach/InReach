@@ -1,0 +1,10 @@
+.root {
+	min-width: 180px;
+}
+.label {
+	font-weight: 700;
+	font-size: var(--mantine-font-size-xs);
+	text-transform: uppercase;
+	color: var(--ir-color-secondary-dark-gray);
+	margin-bottom: 4px;
+}

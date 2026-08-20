@@ -1,30 +1,23 @@
-import { Anchor } from './Anchor'
-import { Badge } from './Badge'
-import { Button } from './Button'
-import { Card } from './Card'
-import { Divider } from './Divider'
-import { Input } from './Input'
-import { List } from './List'
-import { Skeleton } from './Skeleton'
-import { Text } from './Text'
-import { Title } from './Title'
-import { Tooltip } from './Tooltip'
-
-export const variants = {
-	Anchor,
-	Badge,
-	Button,
-	Card,
-	Divider,
-	Input,
-	List,
-	Skeleton,
-	Text,
-	Title,
-	Tooltip,
-} as const
-
-export const variantNames: VariantNames = {
+/**
+ * Registry of valid custom variant name strings, used for call-site type-safety
+ * (`variant={variants.Text.utility1}` via `useCustomVariant()`). The actual style implementations live in
+ * each component's own file/CSS module and are wired directly into `theme/common.tsx` (or, for Button,
+ * entirely within `~ui/components/core/Button` itself) - this is no longer an aggregated object fed into a
+ * theme-level `variants` key (that mechanism doesn't exist in v7).
+ *
+ * Badge, Divider, and Input's old theme-level variant systems were removed entirely - confirmed dead (Badge
+ * superseded by newer component-local styles, Divider/Input's sole variants had zero usage). Button's own old
+ * system's `accent`/`accentLg` were also dropped (confirmed dead / permanently shadowed); its other 5
+ * variants are alive and now live in Button.tsx's own CSS module.
+ */
+export const variantNames = {
+	Button: {
+		primarySm: 'primarySm',
+		secondarySm: 'secondarySm',
+		primaryLg: 'primaryLg',
+		primaryLgRed: 'primaryLgRed',
+		secondaryLg: 'secondaryLg',
+	},
 	Anchor: {
 		inline: 'inline',
 		inlineInverted: 'inlineInverted',
@@ -39,40 +32,12 @@ export const variantNames: VariantNames = {
 		inlineUtil2darkGray: 'inlineUtil2darkGray',
 		navMenu: 'navMenu',
 	},
-	Badge: {
-		community: 'community',
-		service: 'service',
-		leader: 'leader',
-		attributeBadge: 'attributeBadge',
-		privatePractice: 'privatePractice',
-		claimed: 'claimed',
-		unclaimed: 'unclaimed',
-		verified: 'verified',
-		attribute: 'attribute',
-	},
-	Button: {
-		accent: 'accent',
-		accentLg: 'accentLg',
-		primaryLg: 'primaryLg',
-		primaryLgRed: 'primaryLgRed',
-		primarySm: 'primarySm',
-		secondaryLg: 'secondaryLg',
-		secondarySm: 'secondarySm',
-	},
 	Card: {
 		hoverCoolGray: 'hoverCoolGray',
-	},
-	Divider: {
-		dot: 'dot',
-	},
-	Input: {
-		small: 'small',
 	},
 	List: {
 		inline: 'inline',
 		inlineBullet: 'inlineBullet',
-		inlineBulletUtil2: 'inlineBulletUtil2',
-		inlineUtil2: 'inlineUtil2',
 		textDarkGray: 'textDarkGray',
 		inlineBulletUtil2DarkGray: 'inlineBulletUtil2DarkGray',
 		inlineUtil2DarkGray: 'inlineUtil2DarkGray',
@@ -83,11 +48,7 @@ export const variantNames: VariantNames = {
 		utility: 'utility',
 		/** Utility 3 & 4 */
 		utilitySm: 'utilitySm',
-		h1: 'h1',
 		h2: 'h2',
-		h3: 'h3',
-		badgeGroup: 'badgeGroup',
-		textArea: 'textArea',
 	},
 	Text: {
 		utility1: 'utility1',
@@ -102,16 +63,10 @@ export const variantNames: VariantNames = {
 		darkGray: 'darkGray',
 		darkGrayStrikethru: 'darkGrayStrikethru',
 		utility1white: 'utility1white',
-		coolGray: 'coolGray',
-		coolGrayStrikethru: 'coolGrayStrikethru',
 		utility3darkGrayStrikethru: 'utility3darkGrayStrikethru',
 		utility4darkGrayStrikethru: 'utility4darkGrayStrikethru',
-		utility4coolGray: 'utility4coolGray',
-		utility4coolGrayStrikethru: 'utility4coolGrayStrikethru',
 	},
 	Title: {
-		coolGray: 'coolGray',
-		coolGrayStrikethru: 'coolGrayStrikethru',
 		darkGray: 'darkGray',
 		darkGrayStrikethru: 'darkGrayStrikethru',
 	},
@@ -121,7 +76,7 @@ export const variantNames: VariantNames = {
 } as const
 
 export type VariantNames = {
-	[K in keyof typeof variants]: {
-		[V in keyof (typeof variants)[K]]: V
+	[K in keyof typeof variantNames]: {
+		[V in keyof (typeof variantNames)[K]]: V
 	}
 }

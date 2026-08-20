@@ -3,7 +3,6 @@ import {
 	type ButtonProps,
 	Card,
 	createPolymorphicComponent,
-	createStyles,
 	Divider,
 	Drawer,
 	Group,
@@ -24,32 +23,11 @@ import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-	drawerBody: {
-		padding: `${rem(40)} ${rem(32)}`,
-		'&:not(:only-child)': {
-			paddingTop: rem(40),
-		},
-	},
-	addNewButton: {
-		width: '100%',
-		border: `${rem(1)} dashed ${theme.other.colors.secondary.teal}`,
-		borderRadius: rem(8),
-		padding: rem(12),
-	},
-	addNewText: {
-		color: theme.other.colors.secondary.teal,
-	},
-}))
+import classes from './ServicesDrawer.module.css'
 
 const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(true)
 	const { id: organizationId } = useOrgInfo()
-	const { classes } = useStyles()
 	const { t } = useTranslation(['services'])
 	const variants = useCustomVariant()
 	const { data } = api.service.forServiceDrawer.useQuery(
@@ -66,10 +44,10 @@ const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((prop
 						<Breadcrumb option='close' onClick={handler.close} />
 					</Drawer.Header>
 					<Drawer.Body className={classes.drawerBody}>
-						<Stack spacing={24} align='center'>
+						<Stack gap={24} align='center'>
 							<Title order={2}>All services</Title>
 							<UnstyledButton className={classes.addNewButton}>
-								<Group noWrap spacing={8}>
+								<Group wrap='nowrap' gap={8}>
 									<Icon icon='carbon:add' className={classes.addNewText} height={24} />
 									<Text variant={variants.Text.utility2} className={classes.addNewText}>
 										Add new service
@@ -78,7 +56,7 @@ const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((prop
 							</UnstyledButton>
 							{data && (
 								<Card w='100%'>
-									<Stack spacing={40}>
+									<Stack gap={40}>
 										{Object.entries(data).map(([key, value]) => {
 											return (
 												<Stack key={key}>
@@ -87,8 +65,8 @@ const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((prop
 														{value.map(({ id, locations, name }) => {
 															return (
 																<UnstyledButton key={id} w='100%'>
-																	<Group noWrap position='apart'>
-																		<Stack spacing={8}>
+																	<Group wrap='nowrap' justify='space-between'>
+																		<Stack gap={8}>
 																			<Text variant={variants.Text.utility1}>
 																				{
 																					t(name.tsKey ?? '', {

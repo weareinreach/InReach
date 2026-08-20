@@ -1,58 +1,14 @@
-import {
-	Checkbox,
-	createStyles,
-	NumberInput,
-	Radio,
-	rem,
-	ScrollArea,
-	Select,
-	Text,
-	TextInput,
-	Title,
-} from '@mantine/core'
+import { Checkbox, NumberInput, Radio, rem, ScrollArea, Select, Text, TextInput, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useUserSurveyFormContext } from './context'
-
-const useSelectItemStyles = createStyles((theme) => ({
-	checkIcon: { paddingLeft: rem(4), color: theme.other.colors.secondary.black },
-	selected: {},
-	singleLine: {
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-		alignItems: 'center',
-		display: 'flex',
-
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-		'&:last-child': {
-			borderBottom: 'none',
-		},
-	},
-	twoLines: {
-		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-	},
-}))
-
-const useStyles = createStyles(() => ({
-	answerContainer: {
-		height: '336px',
-	},
-	scroll: {
-		width: '100%',
-	},
-}))
+import classes from './fields.module.css'
 
 export const TitleSubtitle = (t1: string, t2: string) => {
 	const variants = useCustomVariant()
@@ -70,7 +26,6 @@ export const TitleSubtitle = (t1: string, t2: string) => {
 export const FormImmigration = () => {
 	const { data: surveyOptions } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
-	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 	const otherRef = useRef<HTMLInputElement>(null)
 
@@ -131,42 +86,12 @@ export const FormImmigration = () => {
 	)
 }
 
-interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
-	cca2: string
-	id: string
-	tsKey: string
-	tsNs: string
-	label: string
-	selected?: boolean
-}
-
-const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-	({ cca2, id, tsKey, tsNs, label, selected, ...others }, ref) => {
-		const variants = useCustomVariant()
-		const { classes, cx } = useSelectItemStyles()
-
-		return (
-			<div
-				className={selected ? cx(classes.singleLine, classes.selected) : classes.singleLine}
-				ref={ref}
-				{...others}
-			>
-				<Text variant={variants.Text.utility2} size='sm'>
-					{label}
-				</Text>
-				{selected && <Icon icon='carbon:checkmark-filled' height={rem(20)} className={classes.checkIcon} />}
-			</div>
-		)
-	}
-)
-SelectItem.displayName = 'Selection Item'
-
 export const FormCountry = () => {
 	const [selectOptions, setSelectOptions] = useState<{ label: string; value: string }[]>([])
 	const { data: surveyOptionsData } = api.user.surveyOptions.useQuery(undefined)
 	const { t } = useTranslation(['common', 'country'])
-	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
+	const variants = useCustomVariant()
 
 	useEffect(() => {
 		if (!surveyOptionsData) return
@@ -179,8 +104,8 @@ export const FormCountry = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [surveyOptionsData])
 
-	const handleCountrySelect = (event: string) => {
-		form.setFieldValue('countryOriginId', event)
+	const handleCountrySelect = (event: string | null) => {
+		if (event) form.setFieldValue('countryOriginId', event)
 	}
 
 	return (
@@ -189,26 +114,30 @@ export const FormCountry = () => {
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 				<Select
 					placeholder={t('survey.question-2-placeholder') as string}
-					itemComponent={SelectItem}
-					icon={<Icon icon='carbon:search' />}
+					renderOption={({ option, checked }) => (
+						<div className={checked ? cx(classes.singleLine, classes.selected) : classes.singleLine}>
+							<Text variant={variants.Text.utility2} size='sm'>
+								{option.label}
+							</Text>
+							{checked && (
+								<Icon icon='carbon:checkmark-filled' height={rem(20)} className={classes.checkIcon} />
+							)}
+						</div>
+					)}
+					leftSection={<Icon icon='carbon:search' />}
 					data={selectOptions}
 					searchable
 					maxDropdownHeight={325}
-					dropdownComponent='div'
-					// styles={{ rightSection: { display: 'none' } }}
 					styles={{
 						root: { borderLeft: 'none', borderRight: 'none' },
 						dropdown: { borderLeft: 'none', borderRight: 'none', borderRadius: 0 },
-						item: { borderBottom: '1px solid #EAEAEA' },
-						// selected: { backgroundColor: '#EAEAEA' },
-						rightSection: { display: 'none' },
+						option: { borderBottom: '1px solid #EAEAEA' },
+						section: { display: 'none' },
 					}}
-					filter={(value, item) =>
-						item &&
-						item.label &&
-						(item.label.toLowerCase().includes((value || '').toLowerCase().trim()) ||
-							item.tsKey.toLowerCase().includes((value || '').toLowerCase().trim()))
-					}
+					filter={({ options, search }) => {
+						const query = search.toLowerCase().trim()
+						return options.filter((option) => 'label' in option && option.label.toLowerCase().includes(query))
+					}}
 					onChange={handleCountrySelect}
 				/>
 			</ScrollArea>
@@ -221,10 +150,9 @@ export const FormCountry = () => {
 export const FormIdentity = () => {
 	const { data: surveyOptions } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
-	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
-	const handleCheckboxChange = (event: []) => {
+	const handleCheckboxChange = (event: string[]) => {
 		form.setFieldValue('identifyIds', event)
 	}
 
@@ -249,11 +177,10 @@ export const FormIdentity = () => {
 export const FormEthnicity = () => {
 	const { data: surveyOptions } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
-	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 	const otherRef = useRef<HTMLInputElement>(null)
 
-	const handleCheckboxChange = (event: []) => {
+	const handleCheckboxChange = (event: string[]) => {
 		form.setFieldValue('ethnicityIds', event)
 	}
 
@@ -302,7 +229,6 @@ export const FormEthnicity = () => {
 // birthyear component start
 export const FormBirthyear = () => {
 	const { t } = useTranslation('common')
-	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
 	return (

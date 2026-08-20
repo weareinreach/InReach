@@ -1,132 +1,26 @@
-import { type ListStylesNames, type ListStylesParams, rem, type Styles } from '@mantine/core'
+import classes from '../components/List.module.css'
 
-import { type VariantObj } from '~ui/types/mantine'
+type ListClassNames = Partial<Record<'root' | 'item' | 'itemIcon' | 'itemWrapper', string>>
 
-export const List = {
-	inlineUtil2: (theme) =>
-		({
-			root: {
-				...theme.other.utilityFonts.utility2,
-				display: 'inline-flex',
-				gap: rem(16),
-				flexWrap: 'wrap',
-			},
-			item: {
-				display: 'inline-block',
-				listStyle: 'none',
-			},
-			itemIcon: {
-				display: 'none',
-			},
-		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-	inlineBulletUtil2: (theme) =>
-		({
-			root: {
-				...theme.other.utilityFonts.utility2,
-				display: 'inline-flex',
-				columnGap: rem(8),
-				rowGap: rem(16),
-				flexWrap: 'wrap',
-				alignItems: 'center',
-			},
-			item: {
-				'&:first-of-type .mantine-List-itemIcon': {
-					display: 'none',
-				},
-			},
-			itemIcon: {
-				marginTop: 'auto',
-				marginBottom: 'auto',
-				marginRight: rem(8),
-			},
-			itemWrapper: {
-				alignItems: 'center',
-			},
-		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-	inlineUtil2DarkGray: (theme) =>
-		({
-			root: {
-				...theme.other.utilityFonts.utility2,
-				display: 'inline-flex',
-				gap: rem(16),
-				flexWrap: 'wrap',
-			},
-			item: {
-				display: 'inline-block',
-				listStyle: 'none',
-				color: theme.other.colors.secondary.darkGray,
-			},
-			itemIcon: {
-				display: 'none',
-			},
-		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-	inlineBulletUtil2DarkGray: (theme) =>
-		({
-			root: {
-				...theme.other.utilityFonts.utility2,
-				display: 'inline-flex',
-				columnGap: rem(8),
-				rowGap: rem(16),
-				flexWrap: 'wrap',
-				alignItems: 'center',
-			},
-			item: {
-				'&:first-of-type .mantine-List-itemIcon': {
-					display: 'none',
-				},
-				color: theme.other.colors.secondary.darkGray,
-			},
-			itemIcon: {
-				marginTop: 'auto',
-				marginBottom: 'auto',
-				marginRight: rem(8),
-			},
-			itemWrapper: {
-				alignItems: 'center',
-			},
-		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-	inlineBullet: () =>
-		({
-			root: {
-				display: 'inline-flex',
-				columnGap: rem(8),
-				rowGap: rem(12),
-				flexWrap: 'wrap',
-				alignItems: 'center',
-			},
-			item: {
-				'&:first-of-type .mantine-List-itemIcon': {
-					display: 'none',
-				},
-			},
-			itemIcon: {
-				marginTop: 'auto',
-				marginBottom: 'auto',
-				marginRight: rem(8),
-			},
-			itemWrapper: {
-				alignItems: 'center',
-			},
-		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-	inline: () =>
-		({
-			root: {
-				display: 'inline-flex',
-				gap: rem(12),
-				flexWrap: 'wrap',
-			},
-			item: {
-				display: 'inline-block',
-				listStyle: 'none',
-			},
-			itemIcon: {
-				display: 'none',
-			},
-		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-	textDarkGray: (theme) =>
-		({
-			item: {
-				color: theme.other.colors.secondary.darkGray,
-			},
-		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-} satisfies VariantObj
+/** `inlineUtil2`/`inlineBulletUtil2` were dropped - confirmed zero usage repo-wide. */
+export const List: Record<string, ListClassNames> = {
+	inline: { root: classes.inline, item: classes.inlineItem, itemIcon: classes.inlineItemIcon },
+	inlineBullet: {
+		root: classes.inlineBullet,
+		item: classes.inlineBulletItem,
+		itemIcon: classes.inlineBulletItemIcon,
+		itemWrapper: classes.inlineBulletItemWrapper,
+	},
+	textDarkGray: { item: classes.textDarkGrayItem },
+	inlineBulletUtil2DarkGray: {
+		root: classes.inlineBulletUtil2DarkGray,
+		item: classes.inlineBulletUtil2DarkGrayItem,
+		itemIcon: classes.inlineBulletUtil2DarkGrayItemIcon,
+		itemWrapper: classes.inlineBulletUtil2DarkGrayItemWrapper,
+	},
+	inlineUtil2DarkGray: {
+		root: classes.inlineUtil2DarkGray,
+		item: classes.inlineUtil2DarkGrayItem,
+		itemIcon: classes.inlineUtil2DarkGrayItemIcon,
+	},
+}

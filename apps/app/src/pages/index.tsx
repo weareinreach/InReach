@@ -1,17 +1,5 @@
 import { Carousel, type Embla, useAnimationOffsetEffect } from '@mantine/carousel'
-import {
-	Box,
-	Card,
-	Container,
-	createStyles,
-	Grid,
-	Group,
-	rem,
-	Stack,
-	Text,
-	Title,
-	useMantineTheme,
-} from '@mantine/core'
+import { Box, Card, Container, Grid, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { getCookie } from 'cookies-next'
 import Autoplay from 'embla-carousel-autoplay'
 import { type GetStaticProps } from 'next'
@@ -29,6 +17,7 @@ import { UserReview } from '@weareinreach/ui/components/core/UserReview'
 import { CallOut } from '@weareinreach/ui/components/sections/CallOut'
 import { Hero } from '@weareinreach/ui/components/sections/Hero'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
+import { cx } from '@weareinreach/ui/lib/cx'
 import { AccountVerifyModal } from '@weareinreach/ui/modals/AccountVerified'
 import { PrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
 import { ResetPasswordModal } from '@weareinreach/ui/modals/ResetPassword'
@@ -36,84 +25,7 @@ import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 import { type NextPageWithOptions } from './_app'
-
-const useStyles = createStyles((theme) => ({
-	callout1text: {
-		color: theme.other.colors.secondary.white,
-	},
-	callout1font: {
-		fontSize: rem(24),
-		textAlign: 'center',
-	},
-	cardStack: {
-		gap: rem(32),
-		[theme.fn.largerThan('md')]: {
-			gap: rem(40),
-		},
-	},
-	cardLink: {
-		// paddingTop: rem(8),
-	},
-	noHover: {
-		'&hover': {
-			backgroundColor: 'transparent !important',
-		},
-	},
-	card: {
-		minHeight: rem(198 + 24 + 24),
-		borderRadius: rem(8),
-		width: '100%',
-		[theme.fn.largerThan('md')]: {
-			maxWidth: '45%',
-		},
-	},
-	cardGroup: {},
-	reviewCard: {
-		border: 'none !important',
-	},
-	banner: {
-		backgroundColor: theme.other.colors.secondary.cornflower,
-		...theme.other.utilityFonts.utility1,
-		color: theme.other.colors.secondary.white,
-		width: '100%',
-		height: rem(52),
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		textAlign: 'center',
-		[theme.fn.largerThan('sm')]: {
-			marginTop: rem(-40),
-		},
-	},
-}))
-
-const useCarouselStyles = createStyles((theme) => ({
-	indicators: {
-		bottom: rem(-40),
-		gap: rem(16),
-		position: 'relative',
-		marginBottom: rem(40),
-	},
-	indicator: {
-		height: rem(12),
-		width: rem(12),
-		backgroundColor: theme.other.colors.secondary.black,
-		opacity: 0.3,
-		'&[data-active]': {
-			opacity: 0.8,
-		},
-	},
-	viewport: {
-		borderRadius: rem(16),
-		boxShadow: `${rem(0)} ${rem(8)} ${rem(24)} rgba(0, 0, 0, 0.1)`,
-	},
-	container: {
-		maxWidth: rem(350),
-		[theme.fn.largerThan('xs')]: {
-			maxWidth: 'unset',
-		},
-	},
-}))
+import classes from './index.module.css'
 
 const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 	const variants = useCustomVariant()
@@ -164,8 +76,6 @@ const Home: NextPageWithOptions = () => {
 	const { t } = useTranslation('landingPage')
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
-	const { classes, cx } = useStyles()
-	const { classes: carouselStyles } = useCarouselStyles()
 	const { data: reviews } = api.review.getFeatured.useQuery(3, { staleTime: ms.minutes(2) })
 	const [embla, setEmbla] = useState<Embla | null>(null)
 	const autoplay = useRef(Autoplay({ delay: 5000 }))
@@ -223,8 +133,8 @@ const Home: NextPageWithOptions = () => {
 			<CallOut backgroundColor={theme.other.colors.tertiary.darkBlue}>
 				<Container>
 					<Grid>
-						<Grid.Col xs={12} sm={12} md={10} lg={8}>
-							<Stack align='center' spacing={24}>
+						<Grid.Col span={{ base: 12, sm: 12, md: 10, lg: 8 }}>
+							<Stack align='center' gap={24}>
 								<Trans
 									i18nKey='call-out.who-we-are'
 									t={t}
@@ -256,11 +166,11 @@ const Home: NextPageWithOptions = () => {
 			<CallOut backgroundColor={theme.other.colors.secondary.white}>
 				<Container>
 					<Grid>
-						<Stack spacing={40} align='center'>
+						<Stack gap={40} align='center'>
 							<Title order={1} ta='center'>
 								{t('values.our-values')}
 							</Title>
-							<Group spacing={40} position='center'>
+							<Group gap={40} justify='center'>
 								<Card className={classes.card}>
 									<CardTranslation t={t} i18nKey='values.safety-first' />
 								</Card>
@@ -281,15 +191,15 @@ const Home: NextPageWithOptions = () => {
 			<CallOut backgroundColor={theme.other.colors.tertiary.lightBlue}>
 				<Container>
 					<Grid>
-						<Grid.Col xs={12} sm={12} md={10} lg={8} xl={6} p={0}>
-							<Stack spacing={40} align='center'>
+						<Grid.Col span={{ base: 12, sm: 12, md: 10, lg: 8, xl: 6 }} p={0}>
+							<Stack gap={40} align='center'>
 								<Trans
 									i18nKey='call-out.hear-from-users'
 									t={t}
 									ns='landingPage'
 									components={{
 										Title1: (
-											<Title order={1} align='center'>
+											<Title order={1} ta='center'>
 												.
 											</Title>
 										),
@@ -302,7 +212,12 @@ const Home: NextPageWithOptions = () => {
 									plugins={[autoplay.current]}
 									onMouseEnter={autoplay.current.stop}
 									onMouseLeave={autoplay.current.reset}
-									classNames={carouselStyles}
+									classNames={{
+										indicators: classes.indicators,
+										indicator: classes.indicator,
+										viewport: classes.viewport,
+										container: classes.container,
+									}}
 								>
 									{!reviews ? (
 										<Carousel.Slide>

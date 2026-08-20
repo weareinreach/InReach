@@ -69,7 +69,7 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 				submitReview.mutate(values)
 			})}
 		>
-			<Stack align='flex-start' spacing='xl'>
+			<Stack align='flex-start' gap='xl'>
 				<UserAvatar useLoggedIn={true} avatarSize={48} />
 				<Rating {...form.getInputProps('rating')} />
 				<Textarea

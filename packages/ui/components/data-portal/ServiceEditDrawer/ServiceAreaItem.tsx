@@ -27,7 +27,7 @@ export const ServiceAreaItem = ({
 	}
 
 	return (
-		<Group noWrap spacing={0}>
+		<Group wrap='nowrap' gap={0}>
 			<Tooltip label='Delete'>
 				<ActionIcon onClick={actionHandler}>
 					<Icon icon='carbon:trash-can' />

@@ -13,7 +13,7 @@ module.exports = [
 	{
 		files: ['**/*.spec.ts', '**/*.d.ts'],
 		rules: {
-			'import/no-unused-modules': 'off',
+			'import-x/no-unused-modules': 'off',
 		},
 	},
 ]

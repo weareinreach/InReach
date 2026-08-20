@@ -1,43 +1,39 @@
-import { createStyles, Group, Stack, Text } from '@mantine/core'
+import {
+	Combobox,
+	type ComboboxItemGroup,
+	Group,
+	TextInput as MantineTextInput,
+	Stack,
+	Text,
+	useCombobox,
+} from '@mantine/core'
 import { useDebouncedValue, usePrevious } from '@mantine/hooks'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next/pages'
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
 	type FieldPathValue,
 	type FieldValues,
 	type Path,
+	useController,
 	type UseControllerProps,
 	useFormContext,
 	useWatch,
 } from 'react-hook-form'
-import { Autocomplete, Select, TextInput } from 'react-hook-form-mantine'
+import { Select, TextInput } from 'react-hook-form-mantine'
 import reactStringReplace from 'react-string-replace'
 import invariant from 'tiny-invariant'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { AddressVisibility } from '@weareinreach/db/enums'
 import { AddressVisibilitySchema } from '~ui/components/data-portal/AddressDrawer/schema'
+import { cx } from '~ui/lib/cx'
 import { createWktFromLatLng } from '~ui/lib/geotools'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
-	matchedText: {
-		color: theme.other.colors.secondary.black,
-	},
-	unmatchedText: {
-		...theme.other.utilityFonts.utility2,
-		color: theme.other.colors.secondary.darkGray,
-		display: 'block',
-	},
-	secondLine: { ...theme.other.utilityFonts.utility4, color: theme.other.colors.secondary.darkGray },
-}))
+import classes from './index.module.css'
 
-const matchText = (
-	result: string,
-	textToMatch: string | undefined | null,
-	classes: ReturnType<typeof useStyles>['classes']
-) => {
+const matchText = (result: string, textToMatch: string | undefined | null) => {
 	if (!textToMatch) {
 		return result
 	}
@@ -49,36 +45,6 @@ const matchText = (
 	))
 	return replaced
 }
-
-const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
-	({ value, subheading, placeId: _placeId, label: _label, ...others }: AutocompleteItem, ref) => {
-		const { classes, cx } = useStyles()
-		const form = useFormContext()
-		if (!form) {
-			return null
-		}
-		return (
-			<div ref={ref} {...others}>
-				<Text className={classes.unmatchedText} truncate>
-					{matchText(value, form.getValues()?.address?.street1 ?? '', classes)}
-				</Text>
-				<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
-					{subheading}
-				</Text>
-			</div>
-		)
-	}
-)
-AutoCompleteItem.displayName = 'AutoCompleteItem'
-
-const CountryItem = forwardRef<HTMLDivElement, CountryItem>(({ label, flag, ...props }, ref) => {
-	return (
-		<div ref={ref} {...props}>
-			<Text>{`${flag} ${label}`}</Text>
-		</div>
-	)
-})
-CountryItem.displayName = 'CountryItem'
 
 export const AddressAutocomplete = <T extends AddressSchema>({
 	name = 'address' as Path<T>,
@@ -147,6 +113,23 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 			select: selectCountryOptions,
 		}
 	)
+
+	// `Select`'s `data` items in v7 can only be `{value, label}` - the flat `countryOptions` above
+	// (kept for its `flag`/`cca2`/`govDist` lookups) is regrouped into real `ComboboxItemGroup`s here
+	// instead of the old flat per-item `group` field, which v7 no longer renders as a group header.
+	const groupedCountryOptions = useMemo<ComboboxItemGroup[]>(() => {
+		if (!countryOptions) return []
+		const groups = new Map<string, typeof countryOptions>()
+		for (const item of countryOptions) {
+			const list = groups.get(item.group) ?? []
+			list.push(item)
+			groups.set(item.group, list)
+		}
+		return [...groups.entries()].map(([group, items]) => ({
+			group,
+			items: items.map(({ value, label }) => ({ value, label })),
+		}))
+	}, [countryOptions])
 
 	const govDistOptions = useMemo(() => {
 		if (typeof selectedCountryId !== 'string') {
@@ -239,21 +222,10 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 		[setGooglePlaceId]
 	)
 
-	// Mantine's Autocomplete fires `onChange` both when the user types AND when they commit a
-	// suggestion (the commit writes the suggestion's full display text into the field, which
-	// bubbles through this same onChange). Without this guard, committing a suggestion re-feeds
-	// that full text back in as a brand-new search term, kicking off a second, unwanted lookup
-	// that races the geocode-by-place-id call and can clobber street1 with a different match.
-	const handleSearchChange = useCallback(
-		(value: string) => {
-			const isSelectionEcho = autoCompleteSearch?.results.some((item) => item.value === value)
-			if (isSelectionEcho) {
-				return
-			}
-			setSearchTerm(value)
-		},
-		[autoCompleteSearch]
-	)
+	const street1Controller = useController<T>({ control, name: getFieldName('street1') })
+	const street1Combobox = useCombobox({
+		onDropdownClose: () => street1Combobox.resetSelectedOption(),
+	})
 
 	const getAndSetCoords = useCallback(
 		async (hookForm: typeof form, visibilityVal: AddressVisibility | string | null) => {
@@ -313,19 +285,55 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 		}
 	}, [form, addressVisibility, getAndSetCoords, previousAddressVisibility])
 
+	const street1Value = (street1Controller.field.value ?? '') as string
+
 	const Street1Input = (
-		<Autocomplete
-			itemComponent={AutoCompleteItem}
-			data={autoCompleteSearch?.results ?? []}
-			label='Address'
-			withinPortal
-			onItemSubmit={handleAutocompleteSelection}
-			control={control}
-			name={getFieldName('street1')}
-			onChange={handleSearchChange}
-			disabled={disableFieldUntilCountry}
-			required
-		/>
+		<Combobox
+			store={street1Combobox}
+			onOptionSubmit={(value) => {
+				const item = autoCompleteSearch?.results.find((result) => result.value === value)
+				if (item) {
+					handleAutocompleteSelection(item)
+					street1Controller.field.onChange(item.value)
+				}
+				street1Combobox.closeDropdown()
+			}}
+		>
+			<Combobox.Target>
+				<MantineTextInput
+					label='Address'
+					required
+					disabled={disableFieldUntilCountry}
+					error={street1Controller.fieldState.error?.message}
+					value={street1Value}
+					onChange={(event) => {
+						const value = event.currentTarget.value
+						street1Controller.field.onChange(value)
+						setSearchTerm(value)
+						street1Combobox.openDropdown()
+					}}
+					onFocus={() => street1Combobox.openDropdown()}
+					onBlur={() => {
+						street1Controller.field.onBlur()
+						street1Combobox.closeDropdown()
+					}}
+				/>
+			</Combobox.Target>
+			<Combobox.Dropdown>
+				<Combobox.Options>
+					{(autoCompleteSearch?.results ?? []).map((item) => (
+						<Combobox.Option value={item.value} key={item.value}>
+							<Text className={classes.unmatchedText} truncate>
+								{matchText(item.value, street1Value)}
+							</Text>
+							<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
+								{item.subheading}
+							</Text>
+						</Combobox.Option>
+					))}
+				</Combobox.Options>
+			</Combobox.Dropdown>
+		</Combobox>
 	)
 
 	const CityInput = (
@@ -340,13 +348,15 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 
 	return (
 		<Stack w='100%'>
-			<Stack spacing={0}>
+			<Stack gap={0}>
 				<Select
 					label='Country'
-					data={countryOptions ?? []}
-					itemComponent={CountryItem}
+					data={groupedCountryOptions}
+					renderOption={({ option }) => {
+						const country = countryOptions?.find(({ value }) => value === option.value)
+						return <Text>{`${country?.flag ?? ''} ${option.label}`}</Text>
+					}}
 					required
-					withinPortal
 					searchable
 					styles={{ dropdown: { width: 'fit-content !important' } }}
 					control={control}
@@ -355,15 +365,14 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 				{Street1Input}
 				<TextInput control={control} name={getFieldName('street2')} disabled={disableFieldUntilCountry} />
 			</Stack>
-			<Group noWrap>{CityInput}</Group>
-			<Group noWrap>
+			<Group wrap='nowrap'>{CityInput}</Group>
+			<Group wrap='nowrap'>
 				<Select
 					label='State/Province'
 					data={govDistOptions}
 					required={Boolean(govDistOptions.length)}
 					disabled={!govDistOptions.length}
 					searchable
-					withinPortal
 					styles={{ dropdown: { width: 'fit-content !important' } }}
 					control={control}
 					name={getFieldName('govDistId')}
@@ -376,8 +385,8 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 					name={getFieldName('postCode')}
 				/>
 			</Group>
-			<Stack spacing={0}>
-				<Group noWrap>
+			<Stack gap={0}>
+				<Group wrap='nowrap'>
 					<TextInput
 						required
 						label='Latitude'

@@ -1,0 +1,22 @@
+.panel {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: rem(464px);
+	z-index: 99999;
+}
+.panel button {
+	background-color: var(--ir-color-tertiary-dark-blue);
+	border-radius: rem(8px);
+}
+.panel div:not(:first-of-type) * {
+	font-size: rem(12px) !important;
+}
+
+.toggleButton {
+	position: fixed;
+	bottom: rem(2px);
+	left: rem(52px);
+	z-index: 99998;
+}

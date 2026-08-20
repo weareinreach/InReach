@@ -19,11 +19,15 @@ Known Issues.
 
 ## How It Works
 
-- **UI**: [`ReportTable.tsx`](../../../packages/ui/components/data-portal/ReportTable.tsx)
+- **UI**: [`ReportTable.tsx`](../../../packages/ui/components/data-portal/ReportTable.tsx),
+  built on the shared
+  [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
+  component.
 - **API**:
-  - `report.forReportsTable` → `query.forReportsTable.handler.ts` — fetches
-    `Report` rows joined to `organization`, `reportedBy`/`handledBy` (`User`), and
-    `internalNotes`.
+  - `report.forReportsTable` → `query.forReportsTable.handler.ts` — filters,
+    sorts, and paginates `Report` rows server-side (status/issue-type/informed
+    filters, a text search across org/service/user fields, `take`/`skip`), joined
+    to `organization`, `reportedBy`/`handledBy` (`User`), and `internalNotes`.
   - `report.update` → `mutation.update.handler.ts` — updates `status`/`informed`,
     sets `handledBy` to the acting user, and inside the same transaction writes a
     new `InternalNote` whenever a note is supplied or the status changes.
@@ -43,7 +47,8 @@ Known Issues.
   something Resolved with no explanation.
 - **Edit Target** opens the reported organization's edit page in a new tab.
 - A report can be deep-linked directly via `?reportId=<id>` in the URL, which
-  auto-opens its details modal on load.
+  auto-opens its details modal on load - via an independent lookup, not by
+  searching whatever page of the table happens to be loaded.
 - Every status change or note is retained as internal history, visible in the same
   modal.
 
@@ -66,4 +71,4 @@ Known Issues.
 
 ---
 
-_Last verified against code: 2026-08-10._
+_Last verified against code: 2026-08-19._

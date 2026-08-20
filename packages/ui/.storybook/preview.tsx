@@ -1,10 +1,16 @@
 // This import exists only to pull in msw-storybook-addon's `StoryContext.msw` type augmentation - the
 // empty named block is intentional (the module has no exports we need), and `import type` erases it
 // entirely at build time so webpack doesn't try to bundle this .d.mts-only subpath as real JS.
-// eslint-disable-next-line import/no-empty-named-blocks
+// eslint-disable-next-line import-x/no-empty-named-blocks
 import type {} from 'msw-storybook-addon/types'
 import { setupWorker } from 'msw/browser'
 import './wdyr'
+import '@mantine/core/styles.css'
+import '@mantine/carousel/styles.css'
+import '@mantine/notifications/styles.css'
+import '@mantine/nprogress/styles.css'
+import '../theme/tokens.css'
+import '../theme/animations.css'
 import './font.css'
 import { type Preview } from '@storybook/nextjs'
 import { type WhyDidYouRenderOptions } from '@welldone-software/why-did-you-render'

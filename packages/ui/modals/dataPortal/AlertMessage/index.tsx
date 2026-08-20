@@ -18,6 +18,8 @@ import z from 'zod'
 
 import { ModalTitle } from '~ui/modals'
 
+import classes from './index.module.css'
+
 const schema = z.object({
 	title: z.string().optional(),
 	text: z.string().min(1, 'no-empty-text'),
@@ -44,12 +46,12 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 				opened={opened}
 				onClose={close}
 			>
-				<Stack spacing={24}>
-					<Stack spacing={8}>
+				<Stack gap={24}>
+					<Stack gap={8}>
 						<Title ta='center' order={2}>
 							{t('alert-message')}
 						</Title>
-						<Text ta='center' color='black' sx={(theme) => theme.other.utilityFonts.utility4}>
+						<Text ta='center' color='black' className={classes.utility4Text}>
 							{`${t('organization')}: ${orgName}`}
 						</Text>
 					</Stack>
@@ -60,9 +62,7 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 							{...form.getInputProps('title')}
 						/>
 						<Textarea
-							sx={(theme) => ({
-								'& .mantine-Textarea-required': { color: theme.other.colors.secondary.black },
-							})}
+							classNames={{ required: classes.requiredAsterisk }}
 							withAsterisk
 							label={t('message_text')}
 							placeholder={t('alert-message-instructions') as string}

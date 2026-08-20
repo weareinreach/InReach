@@ -1,27 +1,18 @@
 import { Button, Group, Modal, NativeSelect, Select, Stack, Text } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { keepPreviousData } from '@tanstack/react-query'
+import { type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
-import {
-	MantineReactTable,
-	type MRT_ColumnDef,
-	MRT_GlobalFilterTextInput,
-	type MRT_Icons,
-	MRT_TablePagination,
-	useMantineReactTable,
-} from 'mantine-react-table'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const customIcons: Partial<MRT_Icons> = {
-	IconSortAscending: () => <Icon icon={'carbon:chevron-up'} color='black' />,
-	IconSortDescending: () => <Icon icon={'carbon:chevron-down'} color='black' />,
-}
+import { DataTable, type DataTableColumn } from './DataTable'
 
 const DATA_PORTAL_ACCESS_OPTIONS = [
 	{ value: 'none', label: 'None' },
@@ -61,21 +52,8 @@ const DataPortalAccessSelect = ({
 	const apiUtils = api.useUtils()
 
 	const updateAccess = api.user.toggleDataPortalAccess.useMutation({
-		onSuccess: (data) => {
-			apiUtils.user.forUserTable.setData(undefined, (oldData) => {
-				if (!oldData) return oldData
-				return oldData.map((user) => {
-					if (user.id === userId) {
-						return {
-							...user,
-							canAccessDataPortal: data.canAccessDataPortal,
-							permissionId: data.permissionId,
-							permissionName: data.permissionName,
-						}
-					}
-					return user
-				})
-			})
+		onSuccess: () => {
+			apiUtils.user.forUserTable.invalidate()
 		},
 		onError: (error) => {
 			console.error('Error updating data portal access:', error)
@@ -140,7 +118,6 @@ const DataPortalAccessSelect = ({
 					},
 				},
 			}}
-			withinPortal={true}
 		/>
 	)
 }
@@ -174,156 +151,117 @@ const PasswordResetModal = ({ email }: { email: string }) => {
 }
 
 export const UserTable = () => {
-	const { data: userData } = api.user.forUserTable.useQuery()
 	const { data: session } = useSession()
 	const loggedInUserPermissions = session?.user?.permissions as CurrentUserPermissions | undefined
 
-	const columns = useMemo<MRT_ColumnDef<UserDataRecord>[]>(
+	const [globalFilter, setGlobalFilter] = useState('')
+	const [debouncedGlobalFilter] = useDebouncedValue(globalFilter, 300)
+	const [sorting, setSorting] = useState<SortingState>([{ id: 'name', desc: false }])
+	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
+
+	const { data, isLoading, isFetching, isError } = api.user.forUserTable.useQuery(
+		{
+			search: debouncedGlobalFilter || undefined,
+			sorting: sorting.map(({ id, desc }) => ({
+				id: id as 'name' | 'email' | 'createdAt' | 'updatedAt' | 'active',
+				desc,
+			})),
+			take: pagination.pageSize,
+			skip: pagination.pageIndex * pagination.pageSize,
+		},
+		{ placeholderData: keepPreviousData, refetchOnWindowFocus: false }
+	)
+
+	const columns = useMemo<DataTableColumn<UserDataRecord>[]>(
 		() => [
+			{ id: 'name', header: 'Name' },
+			{ id: 'email', header: 'Email' },
 			{
-				accessorKey: 'name',
-				header: 'Name',
-			},
-			{
-				accessorKey: 'email',
-				header: 'Email',
-			},
-			{
-				accessorKey: 'emailVerified',
+				id: 'emailVerified',
 				header: 'Email Verified',
-				Cell: ({ cell }) => {
-					const cellValue = cell.getValue<Date | null>()
-					if (!cellValue) return null
-					const date = DateTime.fromJSDate(cellValue)
+				cell: ({ value }) => {
+					if (!value) return null
+					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
 			},
 			{
-				accessorKey: 'updatedAt',
+				id: 'updatedAt',
 				header: 'Last updated',
-				Cell: ({ cell }) => {
-					const cellValue = cell.getValue<Date>()
-					const date = DateTime.fromJSDate(cellValue)
+				cell: ({ value }) => {
+					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
 			},
 			{
-				accessorKey: 'createdAt',
+				id: 'createdAt',
 				header: 'Created At',
-				Cell: ({ cell }) => {
-					const cellValue = cell.getValue<Date>()
-					const date = DateTime.fromJSDate(cellValue)
+				cell: ({ value }) => {
+					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
 			},
 			{
-				accessorKey: 'active',
+				id: 'active',
 				header: 'Active',
-				Cell: ({ cell }) => {
-					return cell.getValue<boolean>() ? 'Yes' : 'No'
-				},
+				cell: ({ value }) => (value ? 'Yes' : 'No'),
 			},
 			{
-				accessorKey: 'permissionName',
+				id: 'permissionName',
 				header: 'Data Portal Access Level',
 				size: 280,
-				mantineTableBodyCellProps: {
-					align: 'left',
-					sx: {
-						display: 'flex',
-						alignItems: 'center',
-					},
-				},
-				Cell: ({ cell }) => {
-					const activePermissionName = cell.getValue<string | undefined>()
-
-					return (
-						<DataPortalAccessSelect
-							activePermissionName={activePermissionName}
-							userId={cell.row.original.id}
-							loggedInUserPermissions={loggedInUserPermissions}
-						/>
-					)
-				},
+				enableSorting: false,
+				enableGlobalFilter: false,
+				cell: ({ row }) => (
+					<DataPortalAccessSelect
+						activePermissionName={row.permissionName}
+						userId={row.id}
+						loggedInUserPermissions={loggedInUserPermissions}
+					/>
+				),
 			},
 			{
+				id: 'resetPassword',
 				header: 'Reset Password',
-				Cell: ({ cell }) => {
-					return <PasswordResetModal email={cell.row.original.email} />
-				},
+				enableSorting: false,
+				enableGlobalFilter: false,
+				accessorFn: () => undefined,
+				cell: ({ row }) => <PasswordResetModal email={row.email} />,
 			},
 		],
 		[loggedInUserPermissions]
 	)
 
-	const table = useMantineReactTable({
-		columns,
-		data: userData ?? [],
-		icons: customIcons,
-		enableGlobalFilter: true,
-		enableFilterMatchHighlighting: false,
-		positionGlobalFilter: 'left',
-		enableRowSelection: true,
-		mantineSearchTextInputProps: {
-			placeholder: 'Enter Name',
-			sx: { minWidth: '734px', height: '48px' },
-		},
-		initialState: {
-			showGlobalFilter: true,
-		},
-		enableTopToolbar: false,
-		enableBottomToolbar: false,
-		enablePagination: true,
-		mantinePaginationProps: {
-			withEdges: false,
-			siblings: 0,
-			showRowsPerPage: false,
-		},
-		paginationDisplayMode: 'pages',
-		layoutMode: 'semantic',
-	})
-
 	return (
 		<Stack>
 			<Text size='16px' fw={500} style={{ marginBottom: '-1rem' }}>
-				Total: {userData?.length ?? 0}
+				Total: {data?.total ?? 0}
 			</Text>
-			<Group noWrap={true} position='left' spacing={'16px'} style={{ marginBottom: '4px' }}>
-				<MRT_GlobalFilterTextInput table={table} />
-				<NativeSelect
-					rightSection={<Icon icon='carbon:chevron-down' />}
-					data={['Data Entry Teams']}
-					styles={{
-						root: { width: '208px', height: '48px' },
-						input: { paddingLeft: '16px', paddingRight: '16px', paddingTop: '12px', paddingBottom: '12px' },
-					}}
-				/>
-				<Button
-					styles={{
-						root: {
-							backgroundColor: 'inherit',
-							border: 'none',
-							width: '48px',
-							height: '48px',
-							padding: '12px',
-							marginTop: '10px',
-						},
-						label: { color: 'black' },
-					}}
-				>
-					<Icon icon='carbon:overflow-menu-horizontal' />
-				</Button>
-			</Group>
-			<Stack>
-				<MantineReactTable table={table} />
-				<MRT_TablePagination table={table} />
-			</Stack>
+			<DataTable
+				data={data?.results ?? []}
+				columns={columns}
+				sorting={sorting}
+				onSortingChange={setSorting}
+				globalFilter={globalFilter}
+				onGlobalFilterChange={setGlobalFilter}
+				globalFilterPlaceholder='Enter Name'
+				pagination={pagination}
+				onPaginationChange={setPagination}
+				mode={{ serverSide: true, rowCount: data?.total ?? 0 }}
+				isLoading={isLoading}
+				isFetching={isFetching}
+				isError={isError}
+				toolbarExtra={
+					<Group wrap='nowrap' gap='xs'>
+						<NativeSelect rightSection={<Icon icon='carbon:chevron-down' />} data={['Data Entry Teams']} />
+						<Button variant='subtle' px='xs'>
+							<Icon icon='carbon:overflow-menu-horizontal' />
+						</Button>
+					</Group>
+				}
+			/>
 		</Stack>
 	)
 }
 
-type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>[number] & {
-	canAccessDataPortal: boolean
-	permissionId?: string
-	permissionName?: string
-}
+type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>['results'][number]

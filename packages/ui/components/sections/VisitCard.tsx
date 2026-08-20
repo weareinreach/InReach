@@ -1,4 +1,4 @@
-import { Card, createStyles, Group, rem, Stack, Text, Title, Tooltip, useMantineTheme } from '@mantine/core'
+import { Card, Group, Stack, Text, Title, Tooltip, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 
@@ -9,6 +9,8 @@ import { AddressDrawer } from '~ui/components/data-portal/AddressDrawer'
 import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
 import { Icon, validateIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+
+import classes from './VisitCard.module.css'
 
 export const VisitCard = ({ edit = false, ...props }: VisitCardProps & { edit?: boolean }) =>
 	edit ? <VisitCardEdit {...props} /> : <VisitCardDisplay {...props} />
@@ -29,7 +31,7 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	}
 
 	const address = formattedAddress && (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>
 				{t(hasMapData ? 'words.address' : 'words.location', {
 					context: data.remote ? 'physical' : undefined,
@@ -40,7 +42,7 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	)
 
 	const remoteSection = data.remote && (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Badge.Attribute icon={validateIcon(data.remote.icon)}>
 				{t(data.remote.tsKey, { ns: 'attribute' })}
 			</Badge.Attribute>
@@ -49,7 +51,7 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	)
 
 	const accessibleSection = data.accessible !== undefined && (
-		<Stack spacing={12} align='flex-start'>
+		<Stack gap={12} align='flex-start'>
 			<Badge.Attribute icon={data.accessible ? 'carbon:accessibility' : 'carbon:warning'}>
 				{t('additional.wheelchair-accessible', { ns: 'attribute', context: `${data.accessible}` })}
 			</Badge.Attribute>
@@ -60,7 +62,7 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	)
 
 	const body = (
-		<Stack spacing={isMobile ? 32 : 40}>
+		<Stack gap={isMobile ? 32 : 40}>
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}
@@ -75,19 +77,8 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	return isTablet ? body : <Card>{body}</Card>
 }
 
-const useEditStyles = createStyles((theme) => ({
-	overlay: {
-		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
-		borderRadius: rem(16),
-		margin: rem(-8),
-	},
-	overlayInner: {
-		padding: rem(8),
-	},
-}))
 const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	const { isMobile } = useScreenSize()
-	const { classes } = useEditStyles()
 	const { t } = useTranslation(['common', 'attribute'])
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
@@ -108,7 +99,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	)
 
 	const address = formattedAddress && (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>
 				{t(hasMapData ? 'words.address' : 'words.location', {
 					context: data.remote ? 'physical' : undefined,
@@ -130,7 +121,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	)
 
 	const remoteSection = data.remote && (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Badge.Attribute icon={validateIcon(data.remote.icon)}>
 				{t(data.remote.tsKey, { ns: 'attribute' })}
 			</Badge.Attribute>
@@ -139,7 +130,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	)
 
 	const accessibleSection = data.accessible !== undefined && (
-		<Stack spacing={12} align='flex-start'>
+		<Stack gap={12} align='flex-start'>
 			<Badge.Attribute icon={data.accessible ? 'carbon:accessibility' : 'carbon:warning'}>
 				{t('additional.wheelchair-accessible', { ns: 'attribute', context: `${data.accessible}` })}
 			</Badge.Attribute>
@@ -150,7 +141,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	)
 
 	const body = (
-		<Stack spacing={isMobile ? 32 : 40}>
+		<Stack gap={isMobile ? 32 : 40}>
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}

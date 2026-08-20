@@ -1,0 +1,36 @@
+.count {
+	font-size: rem(16px);
+	font-weight: 500;
+	border-radius: 100%;
+	color: var(--ir-color-secondary-white);
+	width: rem(24px);
+	height: rem(24px);
+	text-align: center;
+	display: inline-block;
+	vertical-align: center;
+	line-height: 1.5;
+}
+.countBgDark {
+	background: var(--ir-color-secondary-dark-gray);
+}
+.countBgBlack {
+	background: var(--ir-color-secondary-black);
+}
+.countHidden {
+	opacity: 0;
+}
+.countVisible {
+	opacity: 1;
+}
+
+.button {
+	padding: rem(14px) rem(16px);
+	background-color: var(--ir-color-secondary-white);
+	border-radius: rem(8px);
+	border: var(--ir-color-tertiary-cool-gray) rem(1px) solid;
+	height: rem(48px);
+}
+
+.indicateDirty[data-isdirty='true'] {
+	background-color: lighten(#28939c, 0.6);
+}

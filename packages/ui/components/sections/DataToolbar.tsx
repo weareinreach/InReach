@@ -1,16 +1,9 @@
-import { createStyles, Divider } from '@mantine/core'
+import { Divider } from '@mantine/core'
 
 import { Action } from '~ui/components/data-portal/Action'
 import { Activity } from '~ui/components/data-portal/Activity'
 
-const useMessageBodyStyles = createStyles(() => ({
-	toolbar: {
-		display: 'flex',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		width: '100%',
-	},
-}))
+import classes from './DataToolbar.module.css'
 
 export const DataToolbar = ({
 	data,
@@ -24,8 +17,6 @@ export const DataToolbar = ({
 		firstPublished: string | null
 	}
 }) => {
-	const { classes } = useMessageBodyStyles()
-
 	// Convert the Date object to a string before passing to the Activity component
 	const lastVerified = data.lastVerified ? data.lastVerified.toISOString() : null
 

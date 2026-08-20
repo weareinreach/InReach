@@ -17,20 +17,22 @@ Visible to `dataPortalBasic` and above.
 
 ## How It Works
 
-- **UI**: [`ReviewTable.tsx`](../../../packages/ui/components/data-portal/ReviewTable.tsx)
-  — built with `mantine-react-table`, rendering each review's associated services
-  as expandable sub-rows (same pattern as the Organizations tab).
+- **UI**: [`ReviewTable.tsx`](../../../packages/ui/components/data-portal/ReviewTable.tsx),
+  built on the shared
+  [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
+  component.
 - **API**: `review.forReviewTable` in
   [`packages/api/router/review/index.ts`](../../../packages/api/router/review/index.ts)
   → `query.forReviewTable.handler.ts`
 - **Data**: `OrgReview`, joined to the reviewing `User`, `Organization`, and the
   reviewed `OrgService`.
 
-The query fetches all reviews with their user/org/service relations, sorted by
-`createdAt` descending. Both the handler and the table's cell renderers have
-deliberate null-safety fallbacks (e.g. falling back to a service's `legacyName`)
-so a dangling relation — a review pointing at a deleted org/service — degrades
-gracefully instead of crashing the table.
+Filtering (visible/deleted/rating), a text search across review content and
+user/org/location names, sorting, and pagination all run server-side rather than
+loading every review up front. Both the handler and the table's cell renderers
+have deliberate null-safety fallbacks (e.g. falling back to a service's
+`legacyName`) so a dangling relation — a review pointing at a deleted org/service
+— degrades gracefully instead of crashing the table.
 
 ## How to Use It
 
@@ -64,4 +66,4 @@ gracefully instead of crashing the table.
 
 ---
 
-_Last verified against code: 2026-08-10._
+_Last verified against code: 2026-08-19._

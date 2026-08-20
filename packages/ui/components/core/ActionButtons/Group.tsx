@@ -1,37 +1,10 @@
-import { Box, createStyles, rem } from '@mantine/core'
+import { Box } from '@mantine/core'
 import { Children, cloneElement, type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 
+import classes from './Group.module.css'
 import { OverflowMenu } from './Menu'
 
-const useStyles = createStyles(() => ({
-	groupWrapper: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'flex-end',
-		overflow: 'hidden',
-		flexWrap: 'nowrap',
-		width: '100%',
-		gap: rem(8),
-	},
-	visible: {
-		display: 'flex',
-		flexShrink: 0,
-	},
-	inVisible: {
-		// We use a "Soft Hide" so the Save menu dropdown doesn't lose its anchor
-		position: 'absolute',
-		visibility: 'hidden',
-		pointerEvents: 'none',
-		zIndex: -1,
-	},
-	overflowStyle: {
-		flexShrink: 0,
-	},
-}))
-
 export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
-	const { classes, cx } = useStyles()
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [containerWidth, setContainerWidth] = useState(0)
 
@@ -88,14 +61,13 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 				const isVisible = visibilityMap[targetId] ?? true
 
 				return cloneElement(reactChild, {
-					className: cx(reactChild.props.className, {
-						[classes.visible]: isVisible,
-						[classes.inVisible]: !isVisible,
-					}),
+					className: [reactChild.props.className, isVisible ? classes.visible : classes.inVisible]
+						.filter(Boolean)
+						.join(' '),
 				})
 			})}
 
-			<OverflowMenu visibilityMap={visibilityMap} className={classes.overflowStyle}>
+			<OverflowMenu visibilityMap={visibilityMap} className={classes.overflowStyle as string}>
 				{children}
 			</OverflowMenu>
 		</Box>

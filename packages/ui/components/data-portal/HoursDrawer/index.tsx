@@ -13,8 +13,8 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+
 // import { DateTime, Interval } from 'luxon'
-import { generateId } from '@weareinreach/db/lib/idGen'
 import { compareObjectVals } from 'crud-object-diff'
 import groupBy from 'just-group-by'
 import { forwardRef, useEffect, useState } from 'react'
@@ -22,6 +22,7 @@ import * as ReactHookForm from 'react-hook-form'
 import { useFieldArray, useForm } from 'react-hook-form'
 import timezones from 'timezones-list'
 
+import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { TimeRange } from '~ui/components/data-portal/TimeRange'
@@ -31,7 +32,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { defaultInterval, updateClosed, updateOpen24, updateTz } from './fieldArray'
 import { type DayIndex, dayIndicies, FormSchema, type ZFormSchema } from './schema'
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 const tzGroup = new Set([
 	'Pacific/Honolulu',
@@ -130,7 +131,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		}
 	}, [form.formState.isDirty, isSaved])
 
-	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
 	const handleUpdate = () => {
@@ -154,7 +154,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		const shouldDisable = isClosed || isOpen24Hours
 		return (
 			<Stack>
-				<Group position='apart'>
+				<Group justify='space-between'>
 					<Title order={3}>{days[dayIndex] ?? ''}</Title>
 					<Checkbox
 						label='Open 24 Hours'
@@ -211,7 +211,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 					}
 					disabled={shouldDisable}
 				>
-					<Group noWrap spacing={8}>
+					<Group wrap='nowrap' gap={8}>
 						<Icon icon='carbon:add' className={classes.addNewText} height={24} />
 						<Text variant={variants.Text.utility2} className={classes.addNewText}>
 							Add time range
@@ -235,7 +235,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<Drawer.Header>
-						<Group noWrap position='apart' w='100%'>
+						<Group wrap='nowrap' justify='space-between' w='100%'>
 							<Breadcrumb option='close' onClick={handler.close} />
 							<Button
 								variant='primary-icon'
@@ -247,7 +247,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						</Group>
 					</Drawer.Header>
 					<Drawer.Body className={classes.drawerBody}>
-						<Stack spacing={24} align='center'>
+						<Stack gap={24} align='center'>
 							<Title order={2}>Hours</Title>
 							<Select
 								onChange={(newValue) => {
@@ -258,7 +258,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 								label='Select a timezone for this location'
 								placeholder='Search for timezone'
 								searchable
-								nothingFound='No options'
+								nothingFoundMessage='No options'
 								maxDropdownHeight={280}
 								data={sortedTimezoneData}
 							/>

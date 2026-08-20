@@ -25,7 +25,7 @@ const TransContent = ({ i18nKey }: { i18nKey: string }) => {
 					</Text>
 				),
 				stack16: (
-					<Stack align='center' spacing={16}>
+					<Stack align='center' gap={16}>
 						.
 					</Stack>
 				),
@@ -61,7 +61,7 @@ const GenericContentModalBody = forwardRef<HTMLButtonElement, GenericContentModa
 		return (
 			<>
 				<Modal opened={opened} onClose={handlers.close} title={modalTitle} fullScreen={isMobile}>
-					<Stack align='center' spacing={24}>
+					<Stack align='center' gap={24}>
 						{modalChildren}
 						{accept ? (
 							<Button variant={variants.Button.primaryLg} onClick={handlers.close} fullWidth>

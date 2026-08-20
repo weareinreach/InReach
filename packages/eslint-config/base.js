@@ -90,14 +90,14 @@ const config = tseslint.config(
 			'node/no-unsupported-features/node-builtins': 'error',
 			'codegen/codegen': 'error',
 			// 'turbo/no-undeclared-env-vars': 'warn',
-			'import/first': 'error',
-			'import/newline-after-import': 'error',
-			'import/no-absolute-path': 'error',
-			'import/no-duplicates': 'error',
-			'import/no-empty-named-blocks': 'error',
-			'import/no-extraneous-dependencies': 'error',
-			'import/no-unused-modules': 'off',
-			'import/no-useless-path-segments': 'error',
+			'import-x/first': 'error',
+			'import-x/newline-after-import': 'error',
+			'import-x/no-absolute-path': 'error',
+			'import-x/no-duplicates': 'error',
+			'import-x/no-empty-named-blocks': 'error',
+			'import-x/no-extraneous-dependencies': 'error',
+			'import-x/no-unused-modules': 'off',
+			'import-x/no-useless-path-segments': 'error',
 			'sort-imports': [
 				'error',
 				{
@@ -105,8 +105,8 @@ const config = tseslint.config(
 					ignoreDeclarationSort: true,
 				},
 			],
-			'import/consistent-type-specifier-style': ['error', 'prefer-inline'],
-			'import/order': [
+			'import-x/consistent-type-specifier-style': ['error', 'prefer-inline'],
+			'import-x/order': [
 				'warn',
 				{
 					groups: ['external', 'builtin', 'internal', ['index', 'sibling', 'parent'], 'object', 'type'],
@@ -119,8 +119,8 @@ const config = tseslint.config(
 					},
 				},
 			],
-			'import/no-self-import': 'error',
-			'import/no-cycle': [
+			'import-x/no-self-import': 'error',
+			'import-x/no-cycle': [
 				process.env.ESLINT_FULL ? 'error' : 'off',
 				{
 					ignoreExternal: true,
@@ -156,7 +156,7 @@ const config = tseslint.config(
 	{
 		files: ['**/index.tsx?'],
 		rules: {
-			'import/no-unused-modules': 'off',
+			'import-x/no-unused-modules': 'off',
 		},
 	},
 	{

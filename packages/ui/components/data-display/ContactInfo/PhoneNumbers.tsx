@@ -15,7 +15,7 @@ import { Icon } from '~ui/icon'
 import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useCommonStyles } from './common.styles'
+import classes from './common.module.css'
 import { type PhoneNumbersProps } from './types'
 
 const formatNs = nsFormatter(['common', 'phone-type'])
@@ -80,7 +80,7 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 
 		const item = isEditMode ? (
 			<AttributeEditWrapper key={phone.id} id={phone.id} active={phone.active ?? false}>
-				<Stack spacing={4}>
+				<Stack gap={4}>
 					{isExternal(dialURL) ? (
 						<Link
 							external
@@ -97,7 +97,7 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 				</Stack>
 			</AttributeEditWrapper>
 		) : (
-			<Stack spacing={4} key={phone.id}>
+			<Stack gap={4} key={phone.id}>
 				{isExternal(dialURL) ? (
 					<Link
 						external
@@ -116,7 +116,7 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 		primary ? output.unshift(item) : output.push(item)
 	}
 	return (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>{t(direct ? 'direct.phone' : 'words.phone')}</Title>
 			{output}
 		</Stack>
@@ -126,7 +126,6 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
-	const { classes } = useCommonStyles()
 	const slug = useSlug()
 	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
@@ -200,7 +199,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 				case phone.deleted: {
 					return {
 						number: (
-							<Group spacing={4} noWrap>
+							<Group gap={4} wrap='nowrap'>
 								<Text variant={variants.Text.darkGrayStrikethru}>{phoneNumber}</Text>
 							</Group>
 						),
@@ -210,7 +209,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 				case !phone.published: {
 					return {
 						number: (
-							<Group spacing={4} noWrap>
+							<Group gap={4} wrap='nowrap'>
 								<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
 								<Text variant={variants.Text.darkGray}>{phoneNumber}</Text>
 							</Group>
@@ -230,7 +229,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		const itemDisplay = renderItem()
 
 		const item = (
-			<Stack spacing={4} key={phone.id}>
+			<Stack gap={4} key={phone.id}>
 				<PhoneDrawer id={phone.id} component={Link} variant={variants.Link.inlineInverted}>
 					{itemDisplay.number}
 				</PhoneDrawer>
@@ -244,7 +243,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		<Menu keepMounted withinPortal>
 			<Menu.Target>
 				<Link variant={variants.Link.inlineInverted}>
-					<Group noWrap spacing={4}>
+					<Group wrap='nowrap' gap={4}>
 						<Icon icon='carbon:document-add' height={20} />
 						<Text variant={variants.Text.utility3}>Link or create new...</Text>
 					</Group>
@@ -256,9 +255,9 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 					const descTextVariant = getTextVariant('desc', published, deleted)
 					return (
 						<Menu.Item key={id} onClick={linkToLocationHandler(parentId, id)}>
-							<Group noWrap>
+							<Group wrap='nowrap'>
 								<Icon icon='carbon:link' />
-								<Stack spacing={0}>
+								<Stack gap={0}>
 									<Text variant={phoneTextVariant}>{number}</Text>
 									{Boolean(phoneType) && <Text variant={descTextVariant}>{phoneType}</Text>}
 									<Text variant={descTextVariant}>{description}</Text>
@@ -270,7 +269,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 				<Menu.Divider />
 				<Menu.Item key='new'>
 					<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-						<Group noWrap>
+						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
@@ -280,7 +279,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		</Menu>
 	) : (
 		<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-			<Group noWrap>
+			<Group wrap='nowrap'>
 				<Icon icon='carbon:add' />
 				<Text variant={variants.Text.utility3}>Create new</Text>
 			</Group>
@@ -288,11 +287,11 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	)
 
 	return (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>{t('words.phone')}</Title>
-			<Stack spacing={12} className={classes.overlay}>
+			<Stack gap={12} className={classes.overlay}>
 				{output}
-				<Stack spacing={4}>{addOrLink}</Stack>
+				<Stack gap={4}>{addOrLink}</Stack>
 			</Stack>
 		</Stack>
 	)

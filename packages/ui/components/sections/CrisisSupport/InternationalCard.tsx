@@ -1,4 +1,4 @@
-import { Card, createStyles, rem, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Card, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { Trans, useTranslation } from 'next-i18next/pages'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -7,15 +7,7 @@ import { isExternal, Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 
-const useStyles = createStyles((theme) => ({
-	getHelpCard: {
-		border: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-		borderRadius: rem(16),
-	},
-	cardShadow: {
-		boxShadow: `${rem(0)} ${rem(4)} ${rem(20)} ${rem(0)} rgba(0, 0, 0, 0.1)`,
-	},
-}))
+import classes from './shared.module.css'
 
 export const InternationalCard = ({
 	data,
@@ -24,14 +16,13 @@ export const InternationalCard = ({
 }) => {
 	const { accessInstructions, description, id, name, services, targetPop } = data
 	const theme = useMantineTheme()
-	const { classes } = useStyles()
 	const variant = useCustomVariant()
 	const { t, ready } = useTranslation(['common', 'attribute', id])
 
 	return (
 		<Skeleton visible={!ready} radius={16}>
 			<Card className={classes.cardShadow}>
-				<Stack spacing={16}>
+				<Stack gap={16}>
 					{Boolean(services?.length) && (
 						<Badge.Group>
 							{services?.map(({ tsKey }, i) => (
@@ -56,7 +47,7 @@ export const InternationalCard = ({
 						/>
 					)}
 					{!!accessInstructions?.length && (
-						<Stack spacing={12} p={16} className={classes.getHelpCard}>
+						<Stack gap={12} p={16} className={classes.getHelpCard}>
 							<Title order={3}>{t('common:service.get-help')}</Title>
 							{accessInstructions.map(({ access_type, access_value }, i) => {
 								const parseValue = () => {
@@ -122,7 +113,7 @@ export const InternationalCard = ({
 								return accessInstructions.length === 1 ? (
 									parseValue()
 								) : (
-									<Stack spacing={0} key={`${i}-${access_type}`}>
+									<Stack gap={0} key={`${i}-${access_type}`}>
 										{parseValue()}
 										<Text color={theme.other.colors.secondary.darkGray}>{getLabel(access_type)}</Text>
 									</Stack>

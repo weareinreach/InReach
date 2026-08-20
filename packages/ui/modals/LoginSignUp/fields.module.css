@@ -1,0 +1,34 @@
+.autocompleteWrapper {
+	padding: 0;
+	border-bottom: rem(1px) solid var(--ir-color-tertiary-cool-gray);
+}
+
+.singleLine {
+	border-bottom: rem(1px) solid var(--ir-color-tertiary-cool-gray);
+	padding: var(--mantine-spacing-sm) var(--mantine-spacing-xl);
+	align-items: center;
+}
+@media (hover: hover) {
+	.singleLine:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		cursor: pointer;
+	}
+}
+.singleLine:last-child {
+	border-bottom: none;
+}
+
+.twoLines {
+	padding: var(--mantine-spacing-sm) var(--mantine-spacing-xl);
+}
+@media (hover: hover) {
+	.twoLines:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		cursor: pointer;
+	}
+}
+
+.passwordText {
+	display: flex;
+	align-items: center;
+}

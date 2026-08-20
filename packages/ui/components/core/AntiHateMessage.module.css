@@ -1,0 +1,17 @@
+.text {
+	color: var(--ir-color-secondary-dark-gray);
+}
+.card {
+	padding: rem(20px) !important;
+}
+
+.popupContent {
+}
+@media (max-width: $mantine-breakpoint-xs) {
+	.popupContent {
+		margin-top: auto;
+		margin-bottom: auto;
+		height: rem(340px);
+		border-radius: rem(16px) !important;
+	}
+}

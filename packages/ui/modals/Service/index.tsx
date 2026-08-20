@@ -95,7 +95,11 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 		const [opened, handler] = useDisclosure(false)
 		const { isMobile } = useScreenSize()
 		const modalTitle = useMemo(
-			() => <ServiceModalTitle {...{ handler, isMobile, serviceId, slug, itemName, organizationId }} />,
+			() => (
+				<ServiceModalTitle
+					{...{ handler, isMobile: isMobile ?? false, serviceId, slug, itemName, organizationId }}
+				/>
+			),
 			[handler, isMobile, serviceId, slug, itemName, organizationId]
 		)
 
@@ -155,7 +159,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 			}
 			const { serviceName, description } = data
 			return (
-				<Stack spacing={16}>
+				<Stack gap={16}>
 					{atCapacity && <AlertMessage textKey={'service.at-capacity'} iconKey='information' />}
 					{serviceName && (
 						<Title order={2}>
@@ -316,7 +320,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile} withinPortal>
-					<Stack spacing={24}>
+					<Stack gap={24}>
 						{basicInfoSection}
 						{serviceBadges}
 						{getHelpSection}

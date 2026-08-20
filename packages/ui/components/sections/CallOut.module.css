@@ -1,0 +1,13 @@
+.root {
+	background-color: var(--callout-bg);
+	left: 0;
+	right: 0;
+	z-index: -1;
+	overflow: visible;
+	padding: rem(48px) 0;
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.root {
+		padding: rem(80px) 0;
+	}
+}

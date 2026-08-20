@@ -1,0 +1,23 @@
+.textDate {
+	font-size: rem(12px);
+	font-weight: 400;
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.textStatus {
+	font-size: rem(16px);
+	font-weight: 500;
+}
+
+.activityBlock {
+	display: flex;
+	gap: rem(16px);
+	padding-left: rem(20px);
+	padding-right: rem(20px);
+	flex-wrap: wrap;
+}
+
+.textBlock {
+	display: flex;
+	flex-direction: column;
+}

@@ -95,14 +95,14 @@ export const ReportSubmit = ({
 	}
 
 	const successBody = (
-		<Stack spacing={24} align='center' py='xl'>
+		<Stack gap={24} align='center' py='xl'>
 			<Title order={1}>🎉</Title>
-			<Title order={2} align='center'>
+			<Title order={2} ta='center'>
 				{t('report.thank-you', {
 					defaultValue: 'Thank you for helping us make InReach better for everyone!',
 				})}
 			</Title>
-			<Text align='center' variant={variant.Text.darkGray}>
+			<Text ta='center' variant={variant.Text.darkGray}>
 				{t('report.thank-you-message', {
 					defaultValue:
 						'Our team will review your submission, verify the information, and make changes accordingly if it meets our criteria.',
@@ -118,26 +118,26 @@ export const ReportSubmit = ({
 
 	const component = (
 		<Stack>
-			<Stack align='flex-start' spacing='xs'>
+			<Stack align='flex-start' gap='xs'>
 				<Title order={4}>Report an issue</Title>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text size='sm'>
 						Organization Name:{' '}
 						<strong>
 							{orgName || (!serviceId ? itemName : '') || t('words.unknown', { defaultValue: 'Unknown' })}
 						</strong>
 					</Text>
-					<Text size='xs' color='dimmed' italic>
+					<Text size='xs' color='dimmed' style={{ fontStyle: 'italic' }}>
 						Organization ID: {orgId || (!serviceId ? itemId : '') || 'N/A'}
 					</Text>
 				</Stack>
 				{serviceId && (
-					<Stack spacing={0} mt='xs'>
+					<Stack gap={0} mt='xs'>
 						<Text size='sm'>
 							Service Name:{' '}
 							<strong>{serviceName || itemName || t('words.unknown', { defaultValue: 'Unknown' })}</strong>
 						</Text>
-						<Text size='xs' color='dimmed' italic>
+						<Text size='xs' color='dimmed' style={{ fontStyle: 'italic' }}>
 							Service ID: {serviceId || itemId || 'N/A'}
 						</Text>
 					</Stack>
@@ -145,7 +145,7 @@ export const ReportSubmit = ({
 			</Stack>
 			<Stack>
 				<Radio.Group label={t('Issue Type')} mt='md' size='xs' value={issueType} onChange={setIssueType}>
-					<Stack spacing='sm' mt='xs'>
+					<Stack gap='sm' mt='xs'>
 						<Radio
 							value='closed-inactive'
 							label={

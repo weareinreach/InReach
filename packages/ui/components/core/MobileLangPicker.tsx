@@ -1,4 +1,4 @@
-import { Box, createStyles, Flex, Modal, rem, Stack, Text, Title, UnstyledButton } from '@mantine/core'
+import { Box, Flex, Modal, rem, Stack, Text, Title, UnstyledButton } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
@@ -11,24 +11,14 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
+import classes from './MobileLangPicker.module.css'
+
 interface MobileLangPickerProps {
 	children: React.ReactNode
 }
 
-const useStyles = createStyles((theme) => ({
-	langBtn: {
-		width: '100%',
-		padding: `${rem(16)} ${rem(16)}`,
-		borderBottom: `1px solid ${theme.other.colors.tertiary.coolGray}`,
-		display: 'flex',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-}))
-
 export const MobileLangPicker = ({ children }: MobileLangPickerProps) => {
 	const [opened, { open, close }] = useDisclosure(false)
-	const { classes } = useStyles()
 	const router = useRouter()
 	const { t } = useTranslation(['common', 'country', 'user'])
 	const { i18n } = useTranslation()
@@ -64,13 +54,10 @@ export const MobileLangPicker = ({ children }: MobileLangPickerProps) => {
 				withCloseButton={false}
 				title={<ModalTitle breadcrumb={{ option: 'close', onClick: close }} />}
 				padding={0}
-				styles={(theme) => ({
-					content: { display: 'flex', flexDirection: 'column', backgroundColor: theme.white },
-					body: { flex: 1, overflow: 'hidden' },
-				})}
+				classNames={{ content: classes.modalContent, body: classes.modalBody }}
 			>
 				<Flex direction='column' h='100%'>
-					<Stack align='center' spacing='md' pt='xl' px='md'>
+					<Stack align='center' gap='md' pt='xl' px='md'>
 						<Title order={2}>{t('language_choose_mobile')}</Title>
 						<Text variant={variants.Text.darkGray}>{t('language_select_preferred')}</Text>
 					</Stack>

@@ -116,10 +116,10 @@ const SupportPage = () => {
 	]
 
 	return (
-		<Grid.Col xs={12} sm={12}>
-			<Stack align='flex-start' spacing={32} w='100%'>
+		<Grid.Col span={{ base: 12, sm: 12 }}>
+			<Stack align='flex-start' gap={32} w='100%'>
 				<Title order={2}>{t('words.support')}</Title>
-				<Stack w='100%' spacing={0}>
+				<Stack w='100%' gap={0}>
 					{support.map(([key, item]) => (
 						<div key={key} style={{ width: '100%' }}>
 							{item}

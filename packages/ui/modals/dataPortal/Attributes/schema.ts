@@ -14,7 +14,14 @@ export const formSchema = z.object({
 	govDistId: z.string().optional(),
 	languageId: z.string().optional(),
 	text: z.string().optional(),
-	boolean: z.coerce.boolean().optional(),
+	// `Radio.Item` values are always strings ('true'/'false') - `z.coerce.boolean()` would coerce the
+	// string 'false' to `true` (any non-empty string is truthy), so both representations are accepted
+	// explicitly and mapped by equality instead.
+	boolean: z
+		.enum(['true', 'false'])
+		.or(z.boolean())
+		.transform((val) => val === true || val === 'true')
+		.optional(),
 	data: JsonInputOrNull.optional(),
 })
 export type FormSchema = z.infer<typeof formSchema>

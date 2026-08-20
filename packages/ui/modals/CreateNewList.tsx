@@ -122,7 +122,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 
 	const modalTitle = useMemo(
 		() => (
-			<Group position='apart' align='center' noWrap>
+			<Group justify='space-between' align='center' wrap='nowrap'>
 				<Box maw='70%' style={{ overflow: 'hidden' }}>
 					<Breadcrumb option='close' onClick={handler.close} />
 				</Box>
@@ -134,7 +134,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 	return (
 		<>
 			<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
-				<Stack align='center' spacing={24}>
+				<Stack align='center' gap={24}>
 					<Title order={2}>{t('list.create-new')}</Title>
 					<Text variant={variants.Text.utility4darkGray}>{t('list.create-new-sub')}</Text>
 					<TextInput
@@ -148,7 +148,6 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 						onClick={createHandler}
 						variant='primary-icon'
 						fullWidth
-						loaderPosition='center'
 						loading={isLoading}
 						disabled={!form.isValid()}
 					>

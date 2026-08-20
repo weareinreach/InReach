@@ -21,7 +21,7 @@ const SuggestResource = () => {
 
 	return (
 		<>
-			<Grid.Col sm={8}>
+			<Grid.Col span={{ sm: 8 }}>
 				<SuggestOrg
 					authPromptState={{ overlay, setOverlay, hasAuth: Boolean(session && status === 'authenticated') }}
 				/>

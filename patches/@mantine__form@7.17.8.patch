@@ -1,0 +1,47 @@
+diff --git a/cjs/resolvers/zod-resolver/zod-resolver.cjs b/cjs/resolvers/zod-resolver/zod-resolver.cjs
+index ff206f309ae04b3f231e163993176ee5110e95ef..bb73c1f6b48f889fc8f77bff91301fe53215c41c 100644
+--- a/cjs/resolvers/zod-resolver/zod-resolver.cjs
++++ b/cjs/resolvers/zod-resolver/zod-resolver.cjs
+@@ -8,7 +8,7 @@ function zodResolver(schema) {
+       return {};
+     }
+     const results = {};
+-    parsed.error.errors.forEach((error) => {
++    parsed.error.issues.forEach((error) => {
+       results[error.path.join(".")] = error.message;
+     });
+     return results;
+diff --git a/esm/resolvers/zod-resolver/zod-resolver.mjs b/esm/resolvers/zod-resolver/zod-resolver.mjs
+index b15ce621ed47770660f5e1fdf2310416dec2175a..f9e4d4adf00e25bfefc88ab68c9a08bc73e81ccf 100644
+--- a/esm/resolvers/zod-resolver/zod-resolver.mjs
++++ b/esm/resolvers/zod-resolver/zod-resolver.mjs
+@@ -6,7 +6,7 @@ function zodResolver(schema) {
+       return {};
+     }
+     const results = {};
+-    parsed.error.errors.forEach((error) => {
++    parsed.error.issues.forEach((error) => {
+       results[error.path.join(".")] = error.message;
+     });
+     return results;
+diff --git a/lib/resolvers/zod-resolver/zod-resolver.d.ts b/lib/resolvers/zod-resolver/zod-resolver.d.ts
+index 3c19bf3d9f8fa8633b05b0d6d861e38fa4690075..605e2e2a2aae57eb0a050c08765eb0a0e4524111 100644
+--- a/lib/resolvers/zod-resolver/zod-resolver.d.ts
++++ b/lib/resolvers/zod-resolver/zod-resolver.d.ts
+@@ -1,6 +1,6 @@
+ import type { FormErrors } from '../../types';
+ interface ZodError {
+-    path: (string | number)[];
++    path: PropertyKey[];
+     message: string;
+ }
+ interface ZodParseSuccess {
+@@ -9,7 +9,7 @@ interface ZodParseSuccess {
+ interface ZodParseError {
+     success: false;
+     error: {
+-        errors: ZodError[];
++        issues: ZodError[];
+     };
+ }
+ interface ZodSchema<T extends Record<string, any>> {

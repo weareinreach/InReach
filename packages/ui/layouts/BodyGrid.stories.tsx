@@ -3,6 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/nextjs'
 import React from 'react'
 
 import { BodyGrid as BodyGridComponent } from './BodyGrid'
+import classes from './BodyGrid.stories.module.css'
 
 const Story: Meta<typeof BodyGridComponent> = {
 	title: 'App/Layout/Body',
@@ -22,15 +23,7 @@ export const BodyGrid: StoryObj<typeof BodyGridComponent> = {
 		for (let i = 0; i < 6; i++) {
 			columns.push(
 				<Grid.Col key={i}>
-					<Box
-						sx={(theme) => ({
-							backgroundColor: theme.other.colors.tertiary.lightBlue,
-							height: '35vh',
-							textAlign: 'center',
-						})}
-					>
-						{i + 1}
-					</Box>
+					<Box className={classes.demoBox}>{i + 1}</Box>
 				</Grid.Col>
 			)
 		}

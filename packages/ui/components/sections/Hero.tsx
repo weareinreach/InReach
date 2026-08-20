@@ -1,15 +1,4 @@
-import {
-	Box,
-	createStyles,
-	Group,
-	rem,
-	Stack,
-	Tabs,
-	Text,
-	Title,
-	Transition,
-	useMantineTheme,
-} from '@mantine/core'
+import { Box, Group, Stack, Tabs, Text, Title, Transition, useMantineTheme } from '@mantine/core'
 import { useReducedMotion } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
@@ -18,59 +7,10 @@ import { useEffect, useState } from 'react'
 import { Link } from '~ui/components/core/Link'
 import { SearchBox } from '~ui/components/core/SearchBox'
 import { useCustomVariant } from '~ui/hooks'
+import { cx } from '~ui/lib/cx'
 import { PrivacyStatementModal } from '~ui/modals/PrivacyStatement'
 
-const useBoxStyles = createStyles((theme) => ({
-	base: {
-		width: '100%',
-		height: '100%',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		borderRadius: rem(8),
-	},
-	wrapper: {
-		height: rem(40),
-		borderRadius: rem(8),
-	},
-	text: {
-		...theme.other.utilityFonts.utility1,
-		textAlign: 'center',
-		verticalAlign: 'center',
-	},
-	service: {
-		width: rem(200),
-	},
-	community: {
-		width: rem(250),
-	},
-}))
-
-const useHeroStyles = createStyles((theme) => ({
-	stack: {
-		margin: `${rem(48)} ${rem(0)}`,
-		[theme.fn.largerThan('xs')]: {
-			margin: `${rem(80)} ${rem(0)}`,
-		},
-		[theme.fn.largerThan('sm')]: {
-			margin: `${rem(100)} ${rem(0)}`,
-		},
-	},
-	subheading: {
-		fontSize: rem(16),
-		lineHeight: 1.5,
-		[theme.fn.largerThan('sm')]: {
-			fontSize: rem(24),
-			lineHeight: 1.25,
-		},
-	},
-	findText: {
-		...theme.other.utilityFonts.utility3,
-		[theme.fn.largerThan('sm')]: {
-			...theme.other.utilityFonts.utility2,
-		},
-	},
-}))
+import classes from './Hero.module.css'
 
 type RevolvingBoxProps = {
 	role: 'services' | 'community'
@@ -184,7 +124,6 @@ const RevolvingBox = ({ role }: RevolvingBoxProps) => {
 	const [item, setItem] = useState(initialItem)
 
 	const [previousItem, setPreviousItem] = useState(initialItem)
-	const { classes, cx } = useBoxStyles()
 	const style = cx(classes.wrapper, role === 'community' ? classes.community : classes.service)
 
 	const [transition, setTransition] = useState(true)
@@ -239,22 +178,21 @@ const RevolvingBox = ({ role }: RevolvingBoxProps) => {
 
 export const Hero = () => {
 	const { t } = useTranslation(['landingPage', 'common'])
-	const { classes } = useHeroStyles()
 	const [isLoading, setLoading] = useState(false)
 	const variants = useCustomVariant()
 
 	return (
-		<Stack spacing={32} align='center' className={classes.stack}>
-			<Stack spacing={0} align='center'>
+		<Stack gap={32} align='center' className={classes.stack}>
+			<Stack gap={0} align='center'>
 				<Title order={1}>🌈</Title>
-				<Title order={1} align='center'>
+				<Title order={1} ta='center'>
 					{t('hero.heading')}
 				</Title>
 			</Stack>
-			<Text align='center' className={classes.subheading}>
+			<Text ta='center' className={classes.subheading}>
 				{t('hero.subheading')}
 			</Text>
-			<Group spacing={12} position='center'>
+			<Group gap={12} justify='center'>
 				<Trans
 					i18nKey='hero.find-resources'
 					ns='landingPage'
@@ -267,10 +205,10 @@ export const Hero = () => {
 					}}
 				/>
 			</Group>
-			<Stack spacing={0} align='center'>
+			<Stack gap={0} align='center'>
 				<Group maw={636} w='100%'>
 					<Tabs defaultValue='location' w='100%'>
-						<Tabs.List grow position='apart'>
+						<Tabs.List grow justify='space-between'>
 							<Tabs.Tab value='location'>{t('common:words.location')}</Tabs.Tab>
 							<Tabs.Tab value='name'>{t('common:words.organization')}</Tabs.Tab>
 						</Tabs.List>

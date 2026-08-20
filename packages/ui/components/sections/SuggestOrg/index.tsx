@@ -1,28 +1,24 @@
 import {
 	Alert,
-	Autocomplete,
-	type AutocompleteItem,
 	Button,
 	Checkbox,
-	createStyles,
+	Combobox,
 	Divider,
 	Modal,
 	Radio,
-	rem,
 	Stack,
 	Text,
 	TextInput,
 	Title,
+	useCombobox,
 } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { Trans, useTranslation } from 'next-i18next/pages'
+import { useTranslation } from 'next-i18next/pages'
 import {
-	type ComponentPropsWithRef,
 	type Dispatch,
 	type FocusEventHandler,
-	forwardRef,
 	type SetStateAction,
 	useCallback,
 	useEffect,
@@ -40,50 +36,8 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { SuggestionFormProvider, useForm } from './context'
+import classes from './index.module.css'
 import { Communities, OrgQuickView, ServiceTypes } from './modals'
-
-const useLocationStyles = createStyles((theme) => ({
-	autocompleteWrapper: {
-		padding: 0,
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-	},
-	leftIcon: {
-		color: theme.other.colors.secondary.black,
-	},
-}))
-const useSelectItemStyles = createStyles((theme) => ({
-	singleLine: {
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-		alignItems: 'center',
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-		'&:last-child': {
-			borderBottom: 'none',
-		},
-	},
-	twoLines: {
-		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-	},
-}))
-
-const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, description, ...others }, ref) => {
-	const variants = useCustomVariant()
-	const { classes } = useSelectItemStyles()
-	return (
-		<Stack ref={ref} spacing={4} {...others} className={classes.twoLines}>
-			<Text variant={variants.Text.utility1}>{label}</Text>
-			{description && <Text variant={variants.Text.utility4darkGray}>{description}</Text>}
-		</Stack>
-	)
-})
-SelectItemTwoLines.displayName = 'Selection Item'
 
 export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const [mounted, setMounted] = useState(false)
@@ -114,7 +68,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		validate,
 		validateInputOnBlur: true,
 	})
-	const { classes: locationClasses } = useLocationStyles()
 	const { t } = useTranslation(['suggestOrg', 'services', 'attribute', 'common'])
 	const simpleLocale = useCallback(
 		(locale?: string) => (!locale || locale.length === 2 ? (locale ?? 'en') : locale.substring(0, 2)),
@@ -128,6 +81,21 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	}, [])
 
 	const variants = useCustomVariant()
+	const renderTwoLineOption = useCallback(
+		(label: string, description?: string) => (
+			<Stack gap={4} className={classes.twoLines}>
+				<Text variant={variants.Text.utility1}>{label}</Text>
+				{description && <Text variant={variants.Text.utility4darkGray}>{description}</Text>}
+			</Stack>
+		),
+		[variants]
+	)
+	const orgNameCombobox = useCombobox({
+		onDropdownClose: () => orgNameCombobox.resetSelectedOption(),
+	})
+	const addressCombobox = useCombobox({
+		onDropdownClose: () => addressCombobox.resetSelectedOption(),
+	})
 	const [placeId, setPlaceId] = useState('')
 	const [loading, setLoading] = useState(true)
 	const [searchLocation, setSearchLocation] = useState('')
@@ -281,13 +249,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		[formOptions?.countries, countryTranslation]
 	)
 
-	const handleAddressSelection = useCallback(
-		(e: AutocompleteItem) => {
-			setPlaceId(e.placeId)
-		},
-		[setPlaceId]
-	)
-
 	// Clears every piece of state that drives the duplicate-detection warnings, so a successful
 	// submission doesn't leave a stale "this is a duplicate" message on screen for the next entry.
 	const resetFormState = useCallback(() => {
@@ -325,14 +286,14 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 					suggestOrgApi.mutate({ ...form.values, orgWebsite: form.values.orgWebsite })
 				})}
 			>
-				<Stack spacing={40} pb={40}>
-					<Stack spacing={24}>
+				<Stack gap={40} pb={40}>
+					<Stack gap={24}>
 						<Title order={1}>{t('body.suggest-org')}</Title>
 						<Text>{t('body.intro-text')}</Text>
 					</Stack>
 					<Divider />
-					<Stack spacing={40}>
-						<Stack spacing={16}>
+					<Stack gap={40}>
+						<Stack gap={16}>
 							<Title order={2}>{t('body.required-info')}</Title>
 							<Text>{t('body.accept-country')}</Text>
 						</Stack>
@@ -343,24 +304,51 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							withAsterisk
 							{...form.getInputProps('countryId')}
 						>
-							<Stack spacing={0}>{countrySelections}</Stack>
+							<Stack gap={0}>{countrySelections}</Stack>
 						</Radio.Group>
-						<Autocomplete
-							itemComponent={SelectItemTwoLines}
-							label={t('form.org-name')}
-							placeholder={t('form.placeholder-name')}
-							required
-							disabled={!countrySelected}
-							{...form.getInputProps('orgName')}
-							value={orgNameInput}
-							onChange={(val) => {
-								setOrgNameInput(val)
-								form.setFieldValue('orgName', val)
+						<Combobox
+							store={orgNameCombobox}
+							onOptionSubmit={(value) => {
+								const item = orgAutocompleteOptions.find((option) => option.value === value)
+								if (item) {
+									setOrgNameInput(item.label)
+									form.setFieldValue('orgName', item.label)
+									handleInspectMatch(item.match)
+								}
+								orgNameCombobox.closeDropdown()
 							}}
-							data={orgAutocompleteOptions as OrgAutocompleteItem[]}
-							onItemSubmit={(item: OrgAutocompleteItem) => handleInspectMatch(item.match)}
-							filter={() => true}
-						/>
+						>
+							<Combobox.Target>
+								<TextInput
+									label={t('form.org-name')}
+									placeholder={t('form.placeholder-name')}
+									required
+									disabled={!countrySelected}
+									error={form.getInputProps('orgName').error}
+									value={orgNameInput}
+									onChange={(event) => {
+										const val = event.currentTarget.value
+										setOrgNameInput(val)
+										form.setFieldValue('orgName', val)
+										orgNameCombobox.openDropdown()
+									}}
+									onFocus={() => orgNameCombobox.openDropdown()}
+									onBlur={(event) => {
+										form.getInputProps('orgName').onBlur(event)
+										orgNameCombobox.closeDropdown()
+									}}
+								/>
+							</Combobox.Target>
+							<Combobox.Dropdown>
+								<Combobox.Options>
+									{orgAutocompleteOptions.map((option) => (
+										<Combobox.Option value={option.value} key={option.value}>
+											{renderTwoLineOption(option.label)}
+										</Combobox.Option>
+									))}
+								</Combobox.Options>
+							</Combobox.Dropdown>
+						</Combobox>
 
 						<TextInput
 							label={t('form.org-website')}
@@ -398,21 +386,45 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 					</Stack>
 
 					<Divider />
-					<Stack spacing={40}>
+					<Stack gap={40}>
 						<Title order={2}>{t('body.additional-info')}</Title>
-						<Autocomplete
-							itemComponent={SelectItemTwoLines}
-							classNames={{ itemsWrapper: locationClasses.autocompleteWrapper }}
-							data={addressAutocompleteOptions}
-							label={t('form.org-address')}
-							icon={<Icon icon='carbon:search' className={locationClasses.leftIcon} />}
-							placeholder={t('form.placeholder-address')}
-							disabled={!countrySelected}
-							autoComplete='off'
-							onItemSubmit={handleAddressSelection}
-							value={searchLocation}
-							onChange={setSearchLocation}
-						/>
+						<Combobox
+							store={addressCombobox}
+							onOptionSubmit={(value) => {
+								const item = addressAutocompleteOptions.find((option) => option.value === value)
+								if (item) {
+									setSearchLocation(item.value)
+									setPlaceId(item.placeId)
+								}
+								addressCombobox.closeDropdown()
+							}}
+						>
+							<Combobox.Target>
+								<TextInput
+									label={t('form.org-address')}
+									leftSection={<Icon icon='carbon:search' className={classes.leftIcon} />}
+									placeholder={t('form.placeholder-address')}
+									disabled={!countrySelected}
+									autoComplete='off'
+									value={searchLocation}
+									onChange={(event) => {
+										setSearchLocation(event.currentTarget.value)
+										addressCombobox.openDropdown()
+									}}
+									onFocus={() => addressCombobox.openDropdown()}
+									onBlur={() => addressCombobox.closeDropdown()}
+								/>
+							</Combobox.Target>
+							<Combobox.Dropdown>
+								<Combobox.Options className={classes.autocompleteWrapper}>
+									{addressAutocompleteOptions.map((option) => (
+										<Combobox.Option value={option.value} key={option.value}>
+											{renderTwoLineOption(option.label, option.description)}
+										</Combobox.Option>
+									))}
+								</Combobox.Options>
+							</Combobox.Dropdown>
+						</Combobox>
 						<ServiceTypes disabled={!countrySelected} serviceTypes={formOptions?.serviceTypes ?? []} />
 						<Communities disabled={!countrySelected} communities={formOptions?.communities ?? []} />
 						<Divider />
@@ -421,7 +433,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 								{submitError}
 							</Alert>
 						)}
-						<Stack spacing={16} align='center'>
+						<Stack gap={16} align='center'>
 							<Button
 								w='fit-content'
 								variant={variants.Button.primaryLg}
@@ -445,10 +457,10 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 					onClose={modalHandler.close}
 					title={<ModalTitle breadcrumb={{ option: 'close', onClick: modalHandler.close }} />}
 				>
-					<Stack align='center' spacing={16}>
+					<Stack align='center' gap={16}>
 						<Title order={1}>🎉</Title>
 						<Title order={2}>{t('modal.thank-you', { org: submittedOrgName })}</Title>
-						<Text variant={variants.Text.darkGray} align='center'>
+						<Text variant={variants.Text.darkGray} ta='center'>
 							{t('modal.thank-you-sub')}
 						</Text>
 						<Button variant={variants.Button.secondarySm} onClick={handleDismiss}>
@@ -462,15 +474,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		</SuggestionFormProvider>
 	)
 }
-interface ItemProps extends ComponentPropsWithRef<'div'> {
-	label: string
-	description?: string
-}
-
-interface OrgAutocompleteItem extends AutocompleteItem {
-	match: ApiOutput['organization']['getPotentialMatches'][number]
-}
-
 interface SuggestOrgProps {
 	authPromptState: {
 		overlay: boolean

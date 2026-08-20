@@ -1,0 +1,34 @@
+.contentContainer {
+	gap: rem(24px);
+	padding: rem(40px) rem(64px) rem(40px) rem(64px);
+}
+.commentsContainer {
+	display: flex;
+	gap: rem(40px);
+	width: 100%;
+	align-items: flex-start;
+	padding-top: rem(40px);
+}
+.commentsTable {
+	flex: 3;
+	padding-right: 20px;
+	min-height: 200px;
+	gap: rem(24px);
+	display: flex;
+	flex-direction: column;
+}
+.commentsForm {
+	flex: 1;
+	min-width: 250px;
+	gap: rem(24px);
+}
+.drawerTitleWrapper {
+	max-width: 100% !important;
+}
+.drawerTitleWrapper div:global(.mantine-Group-root) > div:first-of-type {
+	max-width: 100% !important;
+}
+.scrollableNotes {
+	max-height: 400px;
+	overflow: auto;
+}

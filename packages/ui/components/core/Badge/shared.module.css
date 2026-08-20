@@ -1,0 +1,108 @@
+/* leader / national */
+.leaderSection {
+	align-self: center;
+}
+.leaderSection * {
+	font-size: rem(12px);
+	border-radius: rem(32px);
+	height: rem(24px);
+	width: rem(24px);
+	margin: 0;
+	text-align: center;
+	padding-bottom: rem(4px);
+	color: var(--ir-color-secondary-black);
+}
+.nationalSection {
+	align-self: center;
+	line-height: 0;
+}
+.nationalSection * {
+	font-size: rem(12px);
+	border-radius: rem(32px);
+	height: rem(24px);
+	width: rem(24px);
+	margin: 0;
+	text-align: center;
+	padding-bottom: 0;
+	color: var(--ir-color-secondary-black);
+}
+.iconBadgeLabel * {
+	color: var(--ir-color-secondary-black);
+	margin-left: var(--mantine-spacing-xs);
+}
+.iconBadgeRoot {
+	border: 0;
+	padding: 0;
+}
+.iconBadgeRoot[data-minify] {
+	height: rem(40px);
+	width: rem(40px);
+	padding: 0;
+}
+@media (hover: hover) {
+	.iconBadgeRoot[data-minify]:hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}
+.iconBadgeRoot[data-hidebg] {
+	background-color: unset;
+	height: unset;
+	width: unset;
+	padding-left: rem(6px);
+	padding-right: rem(6px);
+}
+
+/* community */
+.communityRoot {
+	background-color: var(--ir-color-secondary-white);
+	border-color: var(--ir-color-tertiary-cool-gray);
+}
+.communityLabel {
+	font-size: var(--mantine-font-size-sm);
+}
+.communitySection {
+	font-size: var(--mantine-font-size-sm);
+	margin-right: rem(6px);
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.communityLabel {
+		font-size: var(--mantine-font-size-md);
+	}
+	.communitySection {
+		font-size: var(--mantine-font-size-md);
+	}
+}
+
+/* privatePractice / claimed / unclaimed / verified / verifiedReviewer / attribute */
+.utilityLabel *,
+.utilityLabel span {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+	width: auto;
+	margin-left: var(--mantine-spacing-xs);
+	text-transform: none;
+}
+.utilityRoot {
+	border: 0;
+	min-height: rem(24px);
+	padding: 0;
+	line-height: inherit;
+	border-radius: 0;
+}
+.utilitySection {
+	height: rem(24px);
+}
+
+/* remote */
+.remoteRoot {
+	border: 0;
+	height: rem(20px);
+	padding: 0;
+	line-height: inherit;
+	border-radius: 0;
+}
+.remoteSection {
+	height: rem(20px);
+}

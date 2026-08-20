@@ -1,0 +1,5 @@
+.demoBox {
+	background-color: var(--ir-color-tertiary-light-blue);
+	height: 35vh;
+	text-align: center;
+}

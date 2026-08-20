@@ -4,11 +4,11 @@ import { forwardRef } from 'react'
 
 import { Icon } from '~ui/icon'
 
-import { useSharedStyles } from './styles'
+import { sharedBadgeClasses } from './styles'
 
 export const _VerifiedReviewer = forwardRef<HTMLDivElement, BadgeVerifiedReviewerProps>(
 	({ hideTooltip, ...props }, ref) => {
-		const { classes } = useSharedStyles('verifiedReviewer')
+		const classes = sharedBadgeClasses.verifiedReviewer
 		const theme = useMantineTheme()
 		const { t } = useTranslation(['common'])
 

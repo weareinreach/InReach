@@ -1,28 +1,12 @@
-import { Avatar, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Avatar, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import { type User } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
 
+import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
-
-const useStyles = createStyles((theme, { avatarSize }: { avatarSize: number }) => ({
-	group: {
-		gap: rem(avatarSize >= 48 ? 12 : 4),
-	},
-	name: {
-		...theme.other.utilityFonts.utility1,
-	},
-	subText: {
-		...theme.other.utilityFonts.utility2,
-		color: theme.other.colors.secondary.darkGray,
-	},
-	avatarPlaceholder: {
-		height: rem(avatarSize),
-		width: rem(avatarSize),
-	},
-}))
 
 export const UserAvatar = ({
 	subheading,
@@ -31,7 +15,7 @@ export const UserAvatar = ({
 	loading = false,
 	avatarSize = 40,
 }: UserAvatarProps) => {
-	const { classes } = useStyles({ avatarSize })
+	const variants = useCustomVariant()
 	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
 	const theme = useMantineTheme()
@@ -39,7 +23,7 @@ export const UserAvatar = ({
 
 	const subText = () => {
 		if (!user && useLoggedIn && subheading !== undefined) {
-			return <Text className={classes.subText}>{session?.user.email}</Text>
+			return <Text variant={variants.Text.utility2darkGray}>{session?.user.email}</Text>
 		}
 		switch (typeof subheading) {
 			case null: {
@@ -49,14 +33,14 @@ export const UserAvatar = ({
 				return undefined
 			}
 			case 'string': {
-				return <Text className={classes.subText}>{subheading as string}</Text>
+				return <Text variant={variants.Text.utility2darkGray}>{subheading as string}</Text>
 			}
 			default: {
 				if (!(subheading instanceof Date)) {
 					return null
 				}
 				return (
-					<Text className={classes.subText}>
+					<Text variant={variants.Text.utility2darkGray}>
 						{DateTime.fromJSDate(subheading)
 							.setLocale(i18n.resolvedLanguage ?? 'en')
 							.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}
@@ -77,11 +61,12 @@ export const UserAvatar = ({
 	}
 
 	const showLoadingState = areWeStillLoading()
+	const groupGap = rem(avatarSize >= 48 ? 12 : 4)
 	if (showLoadingState) {
 		return (
-			<Group className={classes.group}>
+			<Group style={{ gap: groupGap }}>
 				<Skeleton height={avatarSize} circle />
-				<Stack align='flex-start' justify='center' spacing={4}>
+				<Stack align='flex-start' justify='center' gap={4}>
 					<Skeleton variant='utility' />
 					{Boolean(subText()) && <Skeleton variant='utility'>{subText()}</Skeleton>}
 				</Stack>
@@ -95,16 +80,19 @@ export const UserAvatar = ({
 	}
 
 	return (
-		<Group className={classes.group} align='center'>
+		<Group style={{ gap: groupGap }} align='center'>
 			<Avatar
 				src={displayData.image}
 				alt={displayData.name ?? t('user-avatar')}
-				classNames={{ root: classes.avatarPlaceholder, placeholder: classes.avatarPlaceholder }}
+				styles={{
+					root: { height: rem(avatarSize), width: rem(avatarSize) },
+					placeholder: { height: rem(avatarSize), width: rem(avatarSize) },
+				}}
 			>
 				<Icon icon='carbon:user' height={24} color={theme.other.colors.secondary.darkGray} />
 			</Avatar>
-			<Stack align='flex-start' justify='center' spacing={4}>
-				<Text className={classes.name}>{displayData.name ?? t('in-reach-user')}</Text>
+			<Stack align='flex-start' justify='center' gap={4}>
+				<Text variant={variants.Text.utility1}>{displayData.name ?? t('in-reach-user')}</Text>
 				{subText()}
 			</Stack>
 		</Group>

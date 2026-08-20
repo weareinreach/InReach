@@ -1,5 +1,12 @@
 import '../../lib/wdyr'
 
+import '@mantine/core/styles.css'
+import '@mantine/carousel/styles.css'
+import '@mantine/notifications/styles.css'
+import '@mantine/nprogress/styles.css'
+import '@weareinreach/ui/theme/tokens.css'
+import '@weareinreach/ui/theme/animations.css'
+
 import { Space } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { Analytics } from '@vercel/analytics/react'
@@ -59,11 +66,40 @@ const PageContent = ({ Component, pageProps }: AppPropsWithGridSwitch) => {
 	)
 }
 
+// `useScreenSize` calls `useMantineTheme()`, which needs to run inside `<Providers>` (where
+// `MantineProvider` actually renders) - `MyApp` itself is never a descendant of the provider tree
+// it returns, so this must live in a component rendered as `Providers`' child, not in `MyApp`.
+const AppBody = (appProps: AppPropsWithGridSwitch) => {
+	const { isMobile, isTablet } = useScreenSize()
+
+	return (
+		<>
+			<DefaultSeo {...defaultSEO} />
+			<GoogleAnalytics trackPageViews defaultConsent='denied' />
+			{/* <Script id='gtm_conversion'>
+				{`
+				if (window.gtag) {
+					gtag?.('config','G-RL8CR7T4EP')
+				}
+				`}
+			</Script> */}
+			<PageLoadProgress />
+			<Navbar />
+			<PageContent {...appProps} />
+			{(isMobile || isTablet) && <Space h={80} />}
+			<Footer />
+			<Notifications transitionDuration={500} />
+			<ConditionalReactQueryDevtool />
+			<Analytics />
+			<DonateModal />
+		</>
+	)
+}
+
 const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	const {
 		pageProps: { session },
 	} = appProps
-	const { isMobile, isTablet } = useScreenSize()
 
 	return (
 		<>
@@ -71,24 +107,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 				<meta name='viewport' content='initial-scale=1, width=device-width, viewport-fit=cover'></meta>
 			</Head>
 			<Providers session={session}>
-				<DefaultSeo {...defaultSEO} />
-				<GoogleAnalytics trackPageViews defaultConsent='denied' />
-				{/* <Script id='gtm_conversion'>
-					{`
-					if (window.gtag) {
-						gtag?.('config','G-RL8CR7T4EP')
-					}
-					`}
-				</Script> */}
-				<PageLoadProgress />
-				<Navbar />
-				<PageContent {...appProps} />
-				{(isMobile || isTablet) && <Space h={80} />}
-				<Footer />
-				<Notifications transitionDuration={500} />
-				<ConditionalReactQueryDevtool />
-				<Analytics />
-				<DonateModal />
+				<AppBody {...appProps} />
 			</Providers>
 			<SpeedInsights />
 		</>

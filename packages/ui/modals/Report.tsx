@@ -15,7 +15,7 @@ const ReportModalBody = forwardRef<HTMLButtonElement, ReportModalProps>(
 		const [opened, handler] = useDisclosure(false)
 		const { isMobile } = useScreenSize()
 		const modalTitle = (
-			<Group spacing='sm' noWrap>
+			<Group gap='sm' wrap='nowrap'>
 				<Breadcrumb onClick={handler.close} option='close' />
 			</Group>
 		)
@@ -69,7 +69,6 @@ ReportModalBody.displayName = 'ReportModal'
 
 export const ReportModal = createPolymorphicComponent<typeof Button, ReportModalProps>(ReportModalBody)
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ReportModalProps = Omit<ButtonProps, 'variant'> & {
 	variant?: ButtonProps['variant'] | (string & NonNullable<unknown>)
 	itemId: string

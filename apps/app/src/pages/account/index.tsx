@@ -37,10 +37,10 @@ const SavedLists = () => {
 	}
 
 	return (
-		<Grid.Col xs={12} sm={12}>
+		<Grid.Col span={{ base: 12, sm: 12 }}>
 			<Stack h='100vh' align='flex-start' w='100%'>
 				<Title order={2}>{t('words.account')}</Title>
-				<Stack spacing={0} align='center' justify='center' h='100%' w='100%'>
+				<Stack gap={0} align='center' justify='center' h='100%' w='100%'>
 					<Title order={2}>🚧</Title>
 					<Title order={2}>{t('words.coming-soon')}</Title>
 				</Stack>

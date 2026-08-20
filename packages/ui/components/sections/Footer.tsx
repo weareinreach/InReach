@@ -1,4 +1,4 @@
-import { createStyles, Grid, Group, rem, Stack, Text, Title } from '@mantine/core'
+import { Grid, Group, Stack, Text, Title } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { Trans, useTranslation } from 'next-i18next/pages'
@@ -13,30 +13,12 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { BodyGridNoTopMargin } from '~ui/layouts'
 // import { GenericContentModal, PrivacyStatementModal } from '~ui/modals'
 
+import classes from './Footer.module.css'
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- dynamic() requires an explicit generic here
 const GenericContentModal = dynamic<any>(() => import('~ui/modals/GenericContent'), { ssr: false })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- dynamic() requires an explicit generic here
 const PrivacyStatementModal = dynamic<any>(() => import('~ui/modals/PrivacyStatement'), { ssr: false })
-
-const useStyles = createStyles((theme) => ({
-	link: {
-		color: `${theme.other.colors.secondary.black} !important`,
-	},
-	copyrightText: {
-		...theme.other.utilityFonts.utility4,
-		color: theme.other.colors.secondary.darkGray,
-	},
-	background: {
-		backgroundColor: theme.other.colors.tertiary.footer,
-		padding: `${rem(40)} ${rem(0)}`,
-		[theme.fn.smallerThan('sm')]: {
-			display: 'none',
-		},
-	},
-	iconGroup: {
-		maxWidth: rem(176),
-	},
-}))
 
 type FooterLinkInt = {
 	key: string
@@ -72,7 +54,6 @@ const connectLinks: LinkArr = [
 
 export const Footer = () => {
 	const { t } = useTranslation('common')
-	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
 	const support = [
@@ -111,9 +92,9 @@ export const Footer = () => {
 	return (
 		<div className={classes.background}>
 			<BodyGridNoTopMargin>
-				<Grid.Col xs={12} sm={6} pl={0} pt={0} pb={0}>
+				<Grid.Col span={{ base: 12, sm: 6 }} pl={0} pt={0} pb={0}>
 					<Stack justify='space-between' style={{ height: '100%' }}>
-						<Stack align='start' spacing={24}>
+						<Stack align='start' gap={24}>
 							<Image
 								src={InReach}
 								alt={t('inreach-logo', { defaultValue: 'InReach logo' })}
@@ -145,17 +126,17 @@ export const Footer = () => {
 						</Text>
 					</Stack>
 				</Grid.Col>
-				<Grid.Col xs={6} sm={3} pt={0} pb={0}>
-					<Stack justify='space-between' style={{ height: '100%' }} align='start' spacing='xl'>
+				<Grid.Col span={{ base: 6, sm: 3 }} pt={0} pb={0}>
+					<Stack justify='space-between' style={{ height: '100%' }} align='start' gap='xl'>
 						<Text fw={600}>{t('support', { defaultValue: 'Support' })}</Text>
 						{support}
 					</Stack>
 				</Grid.Col>
-				<Grid.Col xs={6} sm={3} pr={0} pt={0} pb={0}>
-					<Stack spacing='xl'>
+				<Grid.Col span={{ base: 6, sm: 3 }} pr={0} pt={0} pb={0}>
+					<Stack gap='xl'>
 						<Text fw={600}>{t('connect', { defaultValue: 'Connect' })}</Text>
 						{connect}
-						<Group noWrap className={classes.iconGroup}>
+						<Group wrap='nowrap' className={classes.iconGroup}>
 							<SocialLink
 								icon='facebook'
 								href='https://www.facebook.com/weareinreach'
@@ -177,7 +158,7 @@ export const Footer = () => {
 								title={t('social.youtube', { defaultValue: 'YouTube' })}
 							/>
 						</Group>
-						<Group noWrap className={classes.iconGroup} pb='24px'>
+						<Group wrap='nowrap' className={classes.iconGroup} pb='24px'>
 							<SocialLink
 								icon='tiktok'
 								href='https://www.tiktok.com/@weareinreach'

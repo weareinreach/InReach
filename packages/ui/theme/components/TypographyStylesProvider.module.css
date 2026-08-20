@@ -1,0 +1,27 @@
+.root h1,
+.root h2,
+.root h3,
+.root h4,
+.root h5,
+.root h6,
+.root p {
+	margin-bottom: 0;
+}
+
+@media (max-width: em(755px)) {
+	.root h1 {
+		font-size: rem(40px);
+	}
+	.root h2 {
+		font-size: rem(24px);
+	}
+	.root h3,
+	.root h4,
+	.root h5,
+	.root h6 {
+		font-size: rem(16px);
+	}
+	.root p {
+		font-size: var(--mantine-font-size-md);
+	}
+}

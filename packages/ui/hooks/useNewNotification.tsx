@@ -1,21 +1,11 @@
-import { createStyles, Group, Text, useMantineTheme } from '@mantine/core'
-import { type NotificationProps, showNotification } from '@mantine/notifications'
+import { Group, Text, useMantineTheme } from '@mantine/core'
+import { type NotificationData, showNotification } from '@mantine/notifications'
 import Link, { type LinkProps } from 'next/link'
 
 import { Icon } from '~ui/icon'
 import { commonTheme } from '~ui/theme/common'
 
-export const useStyles = createStyles((theme) => ({
-	notificationBg: {
-		backgroundColor: theme.other.colors.secondary.black,
-	},
-	iconBg: {
-		background: `${theme.other.colors.secondary.black} !important`,
-	},
-	link: {
-		color: theme.other.colors.tertiary.lightBlue,
-	},
-}))
+import classes from './useNewNotification.module.css'
 
 export const iconList = {
 	heartFilled: { code: 'carbon:favorite-filled', color: undefined },
@@ -31,7 +21,7 @@ export const InstantFeedback = ({ displayText, link }: NotificationInnerProps) =
 	const theme = useMantineTheme()
 
 	return (
-		<Group position='apart' spacing='lg'>
+		<Group justify='space-between' gap='lg'>
 			<Text color={theme.other.colors.secondary.white} fw={theme.other.fontWeight.semibold}>
 				{displayText}
 			</Text>
@@ -62,12 +52,11 @@ export const InstantFeedback = ({ displayText, link }: NotificationInnerProps) =
  * @returns A function that shows a notification
  */
 export const useNewNotification = ({ icon, ...others }: UseNotificationProps) => {
-	const { classes } = useStyles()
 	const iconStyle = { color: iconList[icon].color }
 
 	const displayIcon = <Icon icon={iconList[icon].code} style={iconStyle} height={24} />
 
-	const notificationProps: NotificationProps = {
+	const notificationProps: NotificationData = {
 		message: <InstantFeedback {...others} />,
 		icon: displayIcon,
 		radius: 'lg',

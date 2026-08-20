@@ -35,7 +35,7 @@ const QuickLinkIndex = () => {
 
 	return (
 		<>
-			<Tabs value={router.pathname} onTabChange={(value) => router.push(value as unknown as Route)}>
+			<Tabs value={router.pathname} onChange={(value) => router.push(value as unknown as Route)}>
 				<Tabs.List>
 					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
 					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>

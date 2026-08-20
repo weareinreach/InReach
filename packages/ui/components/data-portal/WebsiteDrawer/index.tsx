@@ -2,12 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	createPolymorphicComponent,
-	createStyles,
 	Drawer,
 	Group,
 	LoadingOverlay,
 	Modal,
-	rem,
 	Stack,
 	Text,
 	Title,
@@ -27,12 +25,7 @@ import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles(() => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-}))
+import classes from './index.module.css'
 
 const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
@@ -58,7 +51,6 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 				// }),
 			}
 		)
-		const { classes } = useStyles()
 		const {
 			control,
 			handleSubmit,
@@ -182,7 +174,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 							)}
 						>
 							<Drawer.Header>
-								<Group noWrap position='apart' w='100%'>
+								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
 									<Button
 										variant='primary-icon'
@@ -197,12 +189,12 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 							</Drawer.Header>
 							<Drawer.Body>
 								<LoadingOverlay visible={isFetching && !createNew} />
-								<Stack spacing={24} align='center'>
+								<Stack gap={24} align='center'>
 									<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Website`}</Title>
-									<Stack spacing={24} align='flex-start' w='100%'>
+									<Stack gap={24} align='flex-start' w='100%'>
 										<TextInput label='Website URL' required name='url' type='url' control={control} />
 										{/* <TextInput label='Description' name='description' control={control} /> */}
-										<Group noWrap position='apart' w='100%'>
+										<Group wrap='nowrap' justify='space-between' w='100%'>
 											<Stack>
 												<Checkbox label='Published' name='published' control={control} />
 												<Checkbox label='Deleted' name='deleted' control={control} />
@@ -223,7 +215,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 							<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 								<Stack align='center'>
 									<Text>You have unsaved changes</Text>
-									<Group noWrap>
+									<Group wrap='nowrap'>
 										<Button
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}

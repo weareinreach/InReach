@@ -2,10 +2,10 @@ import { Grid, Skeleton, Stack } from '@mantine/core'
 
 export const OrgPageLoading = () => (
 	<>
-		<Grid.Col sm={8} order={1} pb={40}>
+		<Grid.Col span={{ sm: 8 }} order={1} pb={40}>
 			{/* Toolbar */}
 			<Skeleton h={48} w='100%' radius={8} />
-			<Stack pt={24} align='flex-start' spacing={40}>
+			<Stack pt={24} align='flex-start' gap={40}>
 				{/* Listing Basic */}
 				<Skeleton h={260} w='100%' />
 				{/* Body */}
@@ -14,7 +14,7 @@ export const OrgPageLoading = () => (
 			</Stack>
 		</Grid.Col>
 		<Grid.Col order={2}>
-			<Stack spacing={40}>
+			<Stack gap={40}>
 				{/* Contact Card */}
 				<Skeleton h={520} w='100%' />
 				{/* Visit Card  */}

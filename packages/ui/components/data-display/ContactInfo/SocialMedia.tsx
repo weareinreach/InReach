@@ -11,7 +11,7 @@ import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useCommonStyles } from './common.styles'
+import classes from './common.module.css'
 import { type SocialMediaProps } from './types'
 
 export const SocialMedia = ({ edit, ...props }: SocialMediaProps) =>
@@ -55,7 +55,6 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 	const slug = useSlug()
 	const { data } = api.orgSocialMedia.forContactInfoEdits.useQuery({ parentId })
 	const { t } = useTranslation(['common'])
-	const { classes } = useCommonStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const isLocation = isIdFor('orgLocation', parentId)
@@ -109,7 +108,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 		<Menu keepMounted withinPortal>
 			<Menu.Target>
 				<Link variant={variants.Link.inlineInverted}>
-					<Group noWrap spacing={4}>
+					<Group wrap='nowrap' gap={4}>
 						<Icon icon='carbon:document-add' height={20} />
 						<Text variant={variants.Text.utility3}>Link or create new...</Text>
 					</Group>
@@ -123,10 +122,10 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 							key={id}
 							onClick={handleLinkToLocation({ orgLocationId: parentId, orgSocialMediaId: id })}
 						>
-							<Group noWrap>
+							<Group wrap='nowrap'>
 								<Icon icon='carbon:link' />
-								<Stack spacing={0}>
-									<Group noWrap spacing={8}>
+								<Stack gap={0}>
+									<Group wrap='nowrap' gap={8}>
 										<Icon icon={service.logoIcon} />
 										<Text variant={socialTextVariant}>{service.name}</Text>
 									</Group>
@@ -146,7 +145,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 						variant={variants.Link.inlineInverted}
 						createNew
 					>
-						<Group noWrap>
+						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
@@ -156,7 +155,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 		</Menu>
 	) : (
 		<SocialMediaDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-			<Group noWrap>
+			<Group wrap='nowrap'>
 				<Icon icon='carbon:add' />
 				<Text variant={variants.Text.utility3}>Create new</Text>
 			</Group>
@@ -164,16 +163,16 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 	)
 
 	return (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>{t('social.group-header')}</Title>
-			<Stack spacing={12} className={classes.overlay}>
+			<Stack gap={12} className={classes.overlay}>
 				<List listStyleType='none'>
 					{data?.map((link) => {
 						const renderItem = () => {
 							switch (true) {
 								case link.deleted: {
 									return (
-										<Group noWrap spacing={8}>
+										<Group wrap='nowrap' gap={8}>
 											<Icon icon={link.serviceIcon} color={theme.other.colors.secondary.darkGray} />
 											<Text variant={variants.Text.darkGrayStrikethru}>{link.service}</Text>
 											<Text variant={variants.Text.utility4darkGrayStrikethru}>({link.username})</Text>
@@ -182,13 +181,13 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 								}
 								case !link.published: {
 									return (
-										<Group noWrap spacing={12}>
+										<Group wrap='nowrap' gap={12}>
 											<Icon
 												icon='carbon:view-off'
 												color={theme.other.colors.secondary.darkGray}
 												height={24}
 											/>
-											<Group noWrap spacing={8}>
+											<Group wrap='nowrap' gap={8}>
 												<Icon icon={link.serviceIcon} color={theme.other.colors.secondary.darkGray} />
 												<Text variant={variants.Text.darkGray}>{link.service}</Text>
 												<Text variant={variants.Text.utility4darkGray}>({link.username})</Text>
@@ -198,7 +197,7 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 								}
 								default: {
 									return (
-										<Group noWrap spacing={8}>
+										<Group wrap='nowrap' gap={8}>
 											<Icon icon={link.serviceIcon} />
 											<Text>{link.service}</Text>
 											<Text variant={variants.Text.utility4}>({link.username})</Text>

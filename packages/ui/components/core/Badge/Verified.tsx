@@ -6,11 +6,11 @@ import { forwardRef } from 'react'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 
-import { useSharedStyles } from './styles'
+import { sharedBadgeClasses } from './styles'
 
 export const _Verified = forwardRef<HTMLDivElement, BadgeVerifiedProps>(
 	({ hideTooltip, lastverified, ...props }, ref) => {
-		const { classes } = useSharedStyles('verified')
+		const classes = sharedBadgeClasses.verified
 		const variants = useCustomVariant()
 		const theme = useMantineTheme()
 		const { t, i18n } = useTranslation('common')

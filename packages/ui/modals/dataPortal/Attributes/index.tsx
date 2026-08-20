@@ -4,6 +4,7 @@ import {
 	type ButtonProps,
 	Checkbox,
 	createPolymorphicComponent,
+	Group,
 	Select as MantineSelect,
 	Modal,
 	Skeleton,
@@ -24,12 +25,20 @@ import { generateId } from '@weareinreach/db/lib/idGen'
 import { type FieldAttributes } from '@weareinreach/db/zod_util/attributeSupplement'
 import { Button } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { Supplement } from './fields'
 import { formSchema, type FormSchema } from './schema'
-import { SelectionItem } from './SelectionItem'
+import classes from './SelectionItem.module.css'
+
+const renderAttributeOption = (label: string, active: boolean) => (
+	<Group className={classes.item}>
+		{label}
+		{!active && <Icon icon='carbon:view-off' />}
+	</Group>
+)
 
 const supplementDefaults = {
 	boolean: false,
@@ -164,8 +173,14 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 				return newObj
 			}
 
-			// @ts-expect-error to make work
-			form.reset({ ...form.formState.defaultValues, ...cleanNulls(supplement) })
+			const cleanedSupplement = cleanNulls(supplement) as Record<string, unknown>
+			// `Radio.Item` (used by `Supplement.Boolean`) only matches its value against a string -
+			// a raw DB boolean needs stringifying here so the correct option pre-selects on load.
+			if (typeof cleanedSupplement.boolean === 'boolean') {
+				cleanedSupplement.boolean = cleanedSupplement.boolean ? 'true' : 'false'
+			}
+
+			form.reset({ ...form.formState.defaultValues, ...cleanedSupplement })
 		}
 	}, [selectedAttr, form])
 
@@ -331,7 +346,6 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 									data={attributeCategories ?? []}
 									label='Select Category'
 									onChange={handleCategorySelect}
-									withinPortal
 									searchable
 									clearable
 								/>
@@ -342,13 +356,15 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 										? []
 										: (attributesByCategory ?? [])
 												.filter(({ categoryName }) => categoryName === attrCat)
-												// @ts-expect-error - The 'active' property is missing, but we are passing it to a component that expects it.
-												.map(({ label, value, active }) => ({ label, value, active }))
+												.map(({ label, value }) => ({ label, value }))
 								}
 								label='Select Attribute'
 								disabled={!attrCat || !attributesByCategory?.length}
-								withinPortal
-								itemComponent={SelectionItem}
+								renderOption={({ option }) => {
+									// @ts-expect-error - The 'active' property is missing from the source type.
+									const active = attributesByCategory?.find(({ value }) => value === option.value)?.active
+									return renderAttributeOption(option.label, active)
+								}}
 								searchable={(attributesByCategory?.length ?? 0) > 10}
 								clearable
 								inputContainer={inputContainerWithSkeleton}

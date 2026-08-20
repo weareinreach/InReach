@@ -209,7 +209,7 @@ const QuickLink = () => {
 						cell: (info) => {
 							const slug = info.row.original.slug
 							return (
-								<Group noWrap spacing={8}>
+								<Group wrap='nowrap' gap={8}>
 									<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
 									{slug !== undefined && (
 										<Link
@@ -237,7 +237,7 @@ const QuickLink = () => {
 							const country = form.values.data[info.row.index]?.country.cca2
 							const formattedPhone = parsePhoneNumber(info.getValue() ?? '', country)?.formatNational()
 							return (
-								<Group noWrap spacing={8}>
+								<Group wrap='nowrap' gap={8}>
 									<Text variant={variants.Text.utility4}>{formattedPhone}</Text>
 									{formattedPhone !== undefined && (
 										<Link
@@ -380,7 +380,7 @@ const QuickLink = () => {
 	})
 	return (
 		<>
-			<Tabs value={router.pathname} onTabChange={(value) => router.push(value as unknown as Route)}>
+			<Tabs value={router.pathname} onChange={(value) => router.push(value as unknown as Route)}>
 				<Tabs.List>
 					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
 					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>
@@ -423,7 +423,7 @@ const QuickLink = () => {
 									{row.getVisibleCells().map((cell) => {
 										return cell.getIsGrouped() ? (
 											<td key={cell.id} colSpan={8}>
-												<Group noWrap>
+												<Group wrap='nowrap'>
 													<ActionIcon onClick={row.getToggleExpandedHandler()}>
 														{row.getIsExpanded() ? (
 															<Icon icon='carbon:chevron-down' />
@@ -444,7 +444,7 @@ const QuickLink = () => {
 							))}
 						</tbody>
 					</Table>
-					<Group noWrap position='apart' mt={40}>
+					<Group wrap='nowrap' justify='space-between' mt={40}>
 						<Pagination
 							onChange={handlePageChange}
 							onNextPage={() => handlePageChange('next')} // table.nextPage()}

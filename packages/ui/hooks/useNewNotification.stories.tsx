@@ -7,8 +7,8 @@ import {
 	InstantFeedback,
 	useNewNotification,
 	type UseNotificationProps,
-	useStyles,
 } from './useNewNotification'
+import classes from './useNewNotification.module.css'
 import { Button } from '../components/core'
 import { Icon } from '../icon'
 
@@ -20,7 +20,6 @@ const StoryDemo = ({ icon = 'heartFilled', displayText, link }: UseNotificationP
 }
 
 const NotificationPreviewComp = ({ icon = 'heartFilled', ...others }: UseNotificationProps) => {
-	const { classes } = useStyles()
 	const iconStyle = { color: iconList[icon].color }
 	const displayIcon = <Icon icon={iconList[icon].code} style={iconStyle} height={24} />
 	return (

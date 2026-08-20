@@ -4,8 +4,9 @@ import compare from 'just-compare'
 import { type CSSProperties, useCallback, useEffect, useMemo } from 'react'
 
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 export const MultiSelectPopover = ({
 	data,
@@ -38,10 +39,19 @@ export const MultiSelectPopover = ({
 	}, [data, value, itemHandlers])
 
 	const selected = items.filter(({ checked }) => checked).length
+	const dimmed = Boolean(labelClassName)
 
-	const { classes } = useStyles({ selectedCount: selected, dimmed: Boolean(labelClassName) })
-
-	const selectedCountIcon = <Text className={classes.count}>{selected}</Text>
+	const selectedCountIcon = (
+		<Text
+			className={cx(
+				classes.count,
+				dimmed ? classes.countBgDark : classes.countBgBlack,
+				selected < 1 ? classes.countHidden : classes.countVisible
+			)}
+		>
+			{selected}
+		</Text>
+	)
 
 	const currentValues = useMemo(
 		() => items.filter(({ checked }) => checked).map(({ value }) => value),
@@ -74,8 +84,8 @@ export const MultiSelectPopover = ({
 						style={style}
 						w={fullWidth ? '100%' : undefined}
 					>
-						<Group noWrap position='apart' spacing={16}>
-							<Group noWrap spacing={8}>
+						<Group wrap='nowrap' justify='space-between' gap={16}>
+							<Group wrap='nowrap' gap={8}>
 								{selectedCountIcon}
 								<Text style={{ display: 'inline-block' }} className={labelClassName}>
 									{label}
@@ -86,13 +96,7 @@ export const MultiSelectPopover = ({
 					</UnstyledButton>
 				</Popover.Target>
 				<Popover.Dropdown>
-					<ScrollArea.Autosize
-						mah={250}
-						placeholder={null}
-						// TODO: Typescript wants these two properties all of a sudden -- why?
-						onPointerEnterCapture={undefined}
-						onPointerLeaveCapture={undefined}
-					>
+					<ScrollArea.Autosize mah={250}>
 						{items.map((props, index) => (
 							<Checkbox
 								key={props.value}

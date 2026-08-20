@@ -44,7 +44,7 @@ export const ContactInfo = ({
 		),
 	}
 	const items = order.map((item) => sections[item])
-	return <Stack spacing={gap}>{items}</Stack>
+	return <Stack gap={gap}>{items}</Stack>
 }
 
 export const hasContactInfo = (data: PassedDataObject | null | undefined): data is PassedDataObject => {

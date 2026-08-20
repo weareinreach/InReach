@@ -1,0 +1,40 @@
+.buttons {
+	padding: rem(4px) rem(12px);
+	border-radius: rem(8px);
+}
+
+.navText {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black) !important;
+}
+@media (hover: hover) {
+	.navText:hover {
+		text-decoration: underline;
+	}
+}
+
+.menuItem {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black) !important;
+	padding: rem(16px);
+}
+
+.menuTarget[data-expanded] {
+	background-color: var(--ir-color-primary-light-gray);
+}
+@media (hover: hover) {
+	.menuTarget:not(:disabled):hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+	.menuTarget:disabled:hover {
+		cursor: auto;
+	}
+}
+
+.logoutButton {
+	padding: rem(14px) rem(12px);
+}

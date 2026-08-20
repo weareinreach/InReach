@@ -8,6 +8,11 @@ const config = tseslint.config(
 	...base,
 	...nextCoreWebVitals,
 	{
+		// Matches the `files` glob `eslint-config-next/core-web-vitals` itself uses to register
+		// the `react`/`react-hooks`/`jsx-a11y` plugins - without it, these rules apply globally
+		// (e.g. to `.cjs` files) where those plugins were never registered, and ESLint errors with
+		// "could not find plugin" instead of just skipping the rule.
+		files: ['**/*.{js,jsx,mjs,ts,tsx,mts,cts}'],
 		rules: {
 			'@next/next/no-html-link-for-pages': 'off',
 			'react/jsx-key': 'off',
@@ -50,7 +55,7 @@ const config = tseslint.config(
 	{
 		files: ['*/pages/**/*.tsx'],
 		rules: {
-			'import/prefer-default-export': ['error', { target: 'any' }],
+			'import-x/prefer-default-export': ['error', { target: 'any' }],
 		},
 	}
 )

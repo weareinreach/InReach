@@ -1,4 +1,4 @@
-import { createStyles, Divider, Group, Space, Stack, Text, Title } from '@mantine/core'
+import { Divider, Group, Space, Stack, Text, Title } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 
@@ -8,30 +8,12 @@ import { useCustomVariant } from '~ui/hooks'
 
 import { ActionButtons } from '../ActionButtons'
 import { Link } from '../Link'
-
-const useStyles = createStyles((theme) => ({
-	cardBody: {
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-		},
-	},
-	hoverText: {
-		'&[data-hovered]': {
-			textDecoration: 'underline',
-		},
-	},
-	description: {
-		[theme.fn.smallerThan('xs')]: {
-			display: 'none',
-		},
-	},
-}))
+import classes from './shared.module.css'
 
 const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 	const { description, slug, orgName } = savedItem
 	const { t, ready: i18nReady } = useTranslation(['common', savedItem.id])
 	const variants = useCustomVariant()
-	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
 
 	if (!i18nReady) {
@@ -40,9 +22,9 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 
 	return (
 		<>
-			<Stack spacing={16} ref={hoverRef}>
-				<Stack spacing={0}>
-					<Group align='center' position='apart' noWrap>
+			<Stack gap={16} ref={hoverRef}>
+				<Stack gap={0}>
+					<Group align='center' justify='space-between' wrap='nowrap'>
 						<Title
 							order={2}
 							className={classes.hoverText}
@@ -74,7 +56,7 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						variant={variants.Link.inheritStyle}
 						td='none'
 					>
-						<Stack spacing={12}>
+						<Stack gap={12}>
 							<Text variant={variants.Text.utility2darkGray}>{orgName}</Text>
 							{description && (
 								<Text className={classes.description}>

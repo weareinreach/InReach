@@ -1,0 +1,59 @@
+.input {
+	border-color: var(--ir-color-tertiary-cool-gray);
+	border-radius: rem(8px);
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+	padding: rem(14px) rem(16px);
+	margin: rem(10px) 0;
+	height: rem(48px);
+}
+.input::placeholder {
+	color: var(--ir-color-secondary-dark-gray);
+}
+.input:focus,
+.input:focus-within {
+	border-color: var(--ir-color-secondary-black);
+	border-width: rem(2px);
+}
+.input[data-with-icon] {
+	border-radius: var(--mantine-radius-xl);
+	padding-left: rem(36px);
+}
+.input[data-invalid]::placeholder {
+	color: var(--ir-color-secondary-dark-gray);
+}
+.input[data-invalid]:focus,
+.input[data-invalid]:focus-within {
+	color: var(--ir-color-secondary-black);
+	border-color: var(--ir-color-tertiary-red);
+	border-width: rem(2px);
+}
+.input[data-disabled],
+.input:disabled {
+	background-color: var(--ir-color-primary-light-gray);
+	color: var(--ir-color-secondary-dark-gray);
+	opacity: 1;
+}
+.input[data-disabled]::placeholder,
+.input:disabled::placeholder {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+/* was the `icon` stylesName in v6 - v7 collapses left/right into `section` */
+.section {
+	color: var(--ir-color-secondary-black);
+	width: fit-content;
+}
+.section[data-position='left'] {
+	margin-left: var(--mantine-spacing-md);
+}
+.section[data-position='right'] {
+	padding-right: var(--mantine-spacing-md);
+	margin-right: 0;
+}
+
+.wrapper {
+	margin: 0;
+}

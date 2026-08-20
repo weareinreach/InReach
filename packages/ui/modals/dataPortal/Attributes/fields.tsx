@@ -1,6 +1,6 @@
 import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
-import { type ComponentPropsWithoutRef, forwardRef, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { NumberInput, Radio, Select, TextInput } from 'react-hook-form-mantine'
 
@@ -16,8 +16,8 @@ const SuppBoolean = () => {
 	return (
 		<Radio.Group<FormSchema> name='boolean' control={control}>
 			<Group>
-				<Radio.Item value={true} label='True/Yes' />
-				<Radio.Item value={false} label='False/No' />
+				<Radio.Item value='true' label='True/Yes' />
+				<Radio.Item value='false' label='False/No' />
 			</Group>
 		</Radio.Group>
 	)
@@ -57,10 +57,10 @@ const SuppData = ({ schema }: SupplementDataProps) => {
 					return <Select key={key} {...baseProps} data={options} />
 				}
 				case FieldType.number: {
-					return <NumberInput key={key} {...baseProps} type='number' />
+					return <NumberInput key={key} {...baseProps} />
 				}
 				case FieldType.currency: {
-					return <NumberInput key={key} {...baseProps} type='number' />
+					return <NumberInput key={key} {...baseProps} />
 				}
 				default: {
 					return null
@@ -74,7 +74,7 @@ const SuppData = ({ schema }: SupplementDataProps) => {
 		<Stack>
 			{schema.flatMap((schemaItem) => {
 				if (Array.isArray(schemaItem)) {
-					return <Group noWrap>{schemaItem.map(renderField)}</Group>
+					return <Group wrap='nowrap'>{schemaItem.map(renderField)}</Group>
 				} else {
 					return renderField(schemaItem)
 				}
@@ -98,17 +98,12 @@ const SuppLang = () => {
 	)
 }
 
-const GeoItem = forwardRef<HTMLDivElement, GeoItemProps>(({ flag, label, ...props }, ref) => {
-	return (
-		<div ref={ref} {...props}>
-			<Group>
-				{flag}
-				<Text>{label}</Text>
-			</Group>
-		</div>
-	)
-})
-GeoItem.displayName = 'GeoItem'
+const renderGeoOption = (flag: string | undefined, label: string) => (
+	<Group>
+		{flag}
+		<Text>{label}</Text>
+	</Group>
+)
 
 const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 	// const { control } = useFormContext<FormSchema>()
@@ -151,7 +146,10 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					searchable
 					searchValue={primarySearch ?? undefined}
 					onSearchChange={setPrimarySearch}
-					itemComponent={GeoItem}
+					renderOption={({ option }) => {
+						const item = primaryList.find(({ value }) => value === option.value)
+						return renderGeoOption(item?.flag, option.label)
+					}}
 					// control={control}
 					name='countryId'
 				/>
@@ -165,7 +163,7 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					searchable
 					searchValue={secondarySearch ?? undefined}
 					onSearchChange={setSecondarySearch}
-					itemComponent={GeoItem}
+					renderOption={({ option }) => renderGeoOption(undefined, option.label)}
 					// control={control}
 					name='govDistId'
 					// {...form.getInputProps('supplement.govDistId')}
@@ -180,7 +178,7 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					searchable
 					searchValue={tertiarySearch ?? undefined}
 					onSearchChange={setTertiarySearch}
-					itemComponent={GeoItem}
+					renderOption={({ option }) => renderGeoOption(undefined, option.label)}
 					// {...form.getInputProps('supplement.subDistId')}
 				/>
 			)}
@@ -205,8 +203,6 @@ interface GeoList {
 	flag?: string
 	districts?: ApiOutput['fieldOpt']['govDistsByCountry'][number]['govDist']
 }
-
-interface GeoItemProps extends ComponentPropsWithoutRef<'div'>, GeoList {}
 
 export const Supplement = {
 	Text: SuppText,

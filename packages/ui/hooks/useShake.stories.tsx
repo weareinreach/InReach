@@ -4,12 +4,12 @@ import { type Meta } from '@storybook/nextjs'
 import { useShake, type UseShakeProps } from './useShake'
 
 const DemoComponent = ({ variant }: UseShakeProps) => {
-	const { animateCSS, fireEvent, shakeRef } = useShake({ variant })
+	const { animateStyle, fireEvent, shakeRef } = useShake({ variant })
 
 	return (
 		<Center>
-			<Stack spacing={100} w={400} align='center'>
-				<Box h={300} w={300} style={{ backgroundColor: 'blue' }} className={animateCSS} ref={shakeRef} />
+			<Stack gap={100} w={400} align='center'>
+				<Box h={300} w={300} style={{ backgroundColor: 'blue', ...animateStyle }} ref={shakeRef} />
 				<Button onClick={fireEvent}>Animate!</Button>
 			</Stack>
 		</Center>

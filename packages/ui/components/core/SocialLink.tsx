@@ -1,9 +1,11 @@
-import { ActionIcon, createStyles, Group, Stack, Title, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Group, Stack, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 import { productEvent } from '@weareinreach/analytics/events'
 import { Icon } from '~ui/icon'
+
+import classes from './SocialLink.module.css'
 
 export const socialMediaIcons = {
 	facebook: 'carbon:logo-facebook',
@@ -19,18 +21,7 @@ type SocialMediaIcon = keyof typeof socialMediaIcons
 export const isSocialIcon = (icon: string): icon is SocialMediaIcon =>
 	Object.keys(socialMediaIcons).includes(icon)
 
-const useStyles = createStyles((theme) => ({
-	button: {
-		color: theme.other.colors.secondary.black,
-
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-		},
-	},
-}))
-
 export const SocialLink = ({ href, icon, title, itemName }: SocialLinkProps) => {
-	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const iconRender = socialMediaIcons[icon]
 	const { t } = useTranslation(['common'])
@@ -57,9 +48,9 @@ export const SocialLink = ({ href, icon, title, itemName }: SocialLinkProps) => 
 const SocialGroup = ({ links, header, itemName }: GroupProps) => {
 	const { t } = useTranslation(['common'])
 	return (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			{header && <Title order={3}>{t('social.group-header')}</Title>}
-			<Group spacing={12} noWrap>
+			<Group gap={12} wrap='nowrap'>
 				{links.map((link, i) => (
 					<SocialLink key={`${i}${link.title ?? link.icon}`} {...link} itemName={itemName} />
 				))}

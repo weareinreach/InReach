@@ -108,7 +108,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 				<Drawer.Overlay />
 				<Drawer.Content>
 					<Drawer.Header>
-						<Group noWrap position='apart' w='100%'>
+						<Group wrap='nowrap' justify='space-between' w='100%'>
 							<Breadcrumb option='close' onClick={handleClose} />
 							<Button
 								variant='primary'
@@ -122,7 +122,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 						</Group>
 					</Drawer.Header>
 					<Drawer.Body>
-						<Stack spacing={24} align='center'>
+						<Stack gap={24} align='center'>
 							<Title order={2}>Add new location</Title>
 
 							<TextInput label='Display name' required control={form.control} name='name' />
@@ -138,7 +138,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 					<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 						<Stack align='center'>
 							<Text>You have unsaved changes</Text>
-							<Group noWrap>
+							<Group wrap='nowrap'>
 								<Button
 									variant='primary-icon'
 									leftIcon={<Icon icon='carbon:save' />}

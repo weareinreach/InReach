@@ -1,21 +1,21 @@
 import {
-	Autocomplete,
 	Box,
-	createStyles,
+	Combobox,
+	type ComboboxItemGroup,
 	PasswordInput,
 	Popover,
 	Progress,
-	rem,
 	Select,
 	Stack,
 	Text,
 	TextInput,
+	useCombobox,
 	useMantineTheme,
 } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next/pages'
-import { type ComponentPropsWithRef, forwardRef, useEffect, useRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 
 import { allAttributes } from '@weareinreach/db/generated/allAttributes'
 import { attributesByCategory } from '@weareinreach/db/generated/attributesByCategory'
@@ -25,60 +25,24 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useSignUpFormContext } from './context'
+import classes from './fields.module.css'
 
-const useLocationStyles = createStyles((theme) => ({
-	autocompleteWrapper: {
-		padding: 0,
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-	},
-}))
-
-const useSelectItemStyles = createStyles((theme) => ({
-	singleLine: {
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-		alignItems: 'center',
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-		'&:last-child': {
-			borderBottom: 'none',
-		},
-	},
-	twoLines: {
-		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-	},
-}))
-
-const SelectItemSingleLine = forwardRef<HTMLDivElement, SingleItemSelectProps>(
-	({ label, ...others }, ref) => {
-		const variants = useCustomVariant()
-		const { classes } = useSelectItemStyles()
-		return (
-			<div className={classes.singleLine} ref={ref} {...others}>
-				<Text variant={variants.Text.utility2}>{label}</Text>
-			</div>
-		)
-	}
+const renderSingleLineOption = (variants: ReturnType<typeof useCustomVariant>, label: string) => (
+	<div className={classes.singleLine}>
+		<Text variant={variants.Text.utility2}>{label}</Text>
+	</div>
 )
-SelectItemSingleLine.displayName = 'SelectItemSingleLine'
 
-const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, description, ...others }, ref) => {
-	const variants = useCustomVariant()
-	const { classes } = useSelectItemStyles()
-	return (
-		<Stack ref={ref} spacing={4} {...others} className={classes.twoLines}>
-			<Text variant={variants.Text.utility1}>{label}</Text>
-			<Text variant={variants.Text.utility4darkGray}>{description}</Text>
-		</Stack>
-	)
-})
-SelectItemTwoLines.displayName = 'SelectItemTwoLines'
+const renderTwoLineOption = (
+	variants: ReturnType<typeof useCustomVariant>,
+	label: string,
+	description?: string
+) => (
+	<Stack gap={4} className={classes.twoLines}>
+		<Text variant={variants.Text.utility1}>{label}</Text>
+		{description && <Text variant={variants.Text.utility4darkGray}>{description}</Text>}
+	</Stack>
+)
 
 interface FormNameProps {
 	tContext: 'alias' | 'full'
@@ -127,7 +91,7 @@ export const FormPassword = () => {
 			<Text
 				variant={variants.Text.utility4}
 				color={meets ? theme.other.colors.primary.lightGray : theme.other.colors.tertiary.red}
-				sx={{ display: 'flex', alignItems: 'center' }}
+				className={classes.passwordText}
 				mt={8}
 			>
 				{meets ? (
@@ -193,27 +157,40 @@ export const FormPassword = () => {
 	)
 }
 
-interface ItemProps extends ComponentPropsWithRef<'div'> {
-	label: string
-	description: string
-}
-
 export const LanguageSelect = () => {
 	const { t } = useTranslation('common')
 	const form = useSignUpFormContext()
+	const variants = useCustomVariant()
 	// BUG: [IN-792] Search should also search by Native Name
 	const groupedLangs = languageList.map(({ common, ...lang }) => ({
 		...lang,
 		group: t('language', { context: common ? 'common' : 'all-other' }),
 	}))
+	// `Select`'s `data` items in v7 can only be `{value, label}` - the flat per-item `group` field
+	// above is no longer rendered as a group header, so it's regrouped into real `ComboboxItemGroup`s.
+	const langSelectData = (() => {
+		const groups = new Map<string, typeof groupedLangs>()
+		for (const item of groupedLangs) {
+			const list = groups.get(item.group) ?? []
+			list.push(item)
+			groups.set(item.group, list)
+		}
+		return [...groups.entries()].map(([group, items]) => ({
+			group,
+			items: items.map(({ value, label }) => ({ value, label })),
+		})) satisfies ComboboxItemGroup[]
+	})()
 
 	return (
 		<Select
 			label={t('language', { context: 'choose' })}
-			data={groupedLangs}
+			data={langSelectData}
+			renderOption={({ option }) => {
+				const lang = groupedLangs.find(({ value }) => value === option.value)
+				return renderTwoLineOption(variants, option.label, lang?.description)
+			}}
 			searchable
 			required
-			itemComponent={SelectItemTwoLines}
 			{...form.getInputProps('language')}
 		/>
 	)
@@ -222,7 +199,10 @@ export const LanguageSelect = () => {
 export const FormLocation = () => {
 	const { t, i18n } = useTranslation('common')
 	const form = useSignUpFormContext()
-	const { classes } = useLocationStyles()
+	const variants = useCustomVariant()
+	const locationCombobox = useCombobox({
+		onDropdownClose: () => locationCombobox.resetSelectedOption(),
+	})
 	const [locationSearch, setLocationSearch] = useState('')
 	const [search] = useDebouncedValue(form.values.searchLocation, 400)
 	const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
@@ -254,29 +234,54 @@ export const FormLocation = () => {
 			form.setValues({ location: { city: result.city, govDist: result.govDist, country: result.country } })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [geoByPlaceIdData])
+	const {
+		value: searchLocationValue,
+		onChange: searchLocationOnChange,
+		...searchLocationProps
+	} = form.getInputProps('searchLocation')
+
 	return (
-		<Autocomplete
-			itemComponent={SelectItemSingleLine}
-			classNames={{ itemsWrapper: classes.autocompleteWrapper }}
-			data={form.values.locationOptions}
-			label={t('current-location')}
-			required
-			onItemSubmit={(e) => {
-				setLocationSearch(e.placeId)
+		<Combobox
+			store={locationCombobox}
+			onOptionSubmit={(value) => {
+				const item = form.values.locationOptions.find((option) => option.value === value)
+				if (item) {
+					form.setFieldValue('searchLocation', item.value)
+					setLocationSearch(item.placeId)
+				}
+				locationCombobox.closeDropdown()
 			}}
-			{...form.getInputProps('searchLocation')}
-		/>
+		>
+			<Combobox.Target>
+				<TextInput
+					label={t('current-location')}
+					required
+					value={searchLocationValue}
+					{...searchLocationProps}
+					onChange={(event) => {
+						searchLocationOnChange(event)
+						locationCombobox.openDropdown()
+					}}
+					onFocus={() => locationCombobox.openDropdown()}
+					onBlur={() => locationCombobox.closeDropdown()}
+				/>
+			</Combobox.Target>
+			<Combobox.Dropdown>
+				<Combobox.Options className={classes.autocompleteWrapper}>
+					{form.values.locationOptions.map((option) => (
+						<Combobox.Option value={option.value} key={option.value}>
+							{renderSingleLineOption(variants, option.value)}
+						</Combobox.Option>
+					))}
+				</Combobox.Options>
+			</Combobox.Dropdown>
+		</Combobox>
 	)
 }
-type SingleItemSelectProps = {
-	value: string
-	label: string
-	placeId?: string
-}
-
 export const FormLawPractice = forwardRef<HTMLInputElement>((_, ref) => {
 	const { t } = useTranslation(['common', 'attribute'])
 	const form = useSignUpFormContext()
+	const variants = useCustomVariant()
 	let otherOption: string | undefined
 	const otherRef = useRef<HTMLInputElement>(null)
 	const options = attributesByCategory.find((item) => item.tag === 'law-practice-options')
@@ -318,7 +323,7 @@ export const FormLawPractice = forwardRef<HTMLInputElement>((_, ref) => {
 				ref={ref}
 				label={t('sign-up.select-law-practice')}
 				data={selectItems}
-				itemComponent={SelectItemSingleLine}
+				renderOption={({ option }) => renderSingleLineOption(variants, option.label)}
 				required
 				{...form.getInputProps('lawPractice')}
 			/>
@@ -339,6 +344,7 @@ FormLawPractice.displayName = 'FormLawPractice'
 export const FormServiceProvider = () => {
 	const { t } = useTranslation(['common', 'attribute'])
 	const form = useSignUpFormContext()
+	const variants = useCustomVariant()
 	const otherRef = useRef<HTMLInputElement>(null)
 	const legalRef = useRef<HTMLInputElement>(null)
 	const options = attributesByCategory.find((item) => item.tag === 'service-provider-options')
@@ -384,7 +390,7 @@ export const FormServiceProvider = () => {
 				<Select
 					label={t('sign-up.select-service-provider')}
 					data={selectItems}
-					itemComponent={SelectItemSingleLine}
+					renderOption={({ option }) => renderSingleLineOption(variants, option.label)}
 					required
 					{...form.getInputProps('servProvider')}
 				/>

@@ -78,13 +78,13 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 	}, [active, handleToggle, theme.other.colors.secondary.black, theme.other.colors.secondary.darkGray])
 
 	return (
-		<Group noWrap spacing={8}>
-			<Group noWrap spacing={0}>
+		<Group wrap='nowrap' gap={8}>
+			<Group wrap='nowrap' gap={0}>
 				{editIcon}
 				{activeToggleIcon}
 				<Modal opened={confirmModalOpen} onClose={confirmModalHandler.close} title='Delete Attribute'>
 					<Text>Are you sure you want to delete this attribute?</Text>
-					<Group noWrap>
+					<Group wrap='nowrap'>
 						<Button onClick={confirmModalHandler.close}>Cancel</Button>
 						<Button onClick={handleDelete}>Delete</Button>
 					</Group>

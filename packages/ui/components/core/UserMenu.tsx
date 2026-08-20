@@ -1,12 +1,4 @@
-import {
-	createStyles,
-	type DefaultProps,
-	Group,
-	Menu,
-	rem,
-	type Selectors,
-	UnstyledButton,
-} from '@mantine/core'
+import { Group, Menu, UnstyledButton } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
@@ -18,6 +10,9 @@ import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { cx } from '~ui/lib/cx'
+
+import classes from './UserMenu.module.css'
 
 const LoginModalLauncher = dynamic(
 	// @ts-expect-error Next Dynamic doesn't like polymorphic components
@@ -32,51 +27,10 @@ const SignupModalLauncher = dynamic(
 
 const UserAvatar = dynamic(() => import('./UserAvatar').then((mod) => mod.UserAvatar), { ssr: false })
 
-const useStyles = createStyles((theme) => ({
-	buttons: {
-		padding: `${rem(4)} ${rem(12)}`,
-		borderRadius: rem(8),
-	},
-	loadingItems: {
-		display: 'inline-block',
-	},
-	avatarPlaceholder: {
-		color: theme.other.colors.secondary.darkGray,
-	},
-	actionButton: {
-		fontWeight: theme.other.fontWeight.bold,
-	},
-	navText: {
-		...theme.other.utilityFonts.utility1,
-		color: `${theme.other.colors.secondary.black} !important`,
-		'&:hover': {
-			textDecoration: 'underline',
-		},
-	},
-	menuItem: {
-		...theme.other.utilityFonts.utility1,
-		color: `${theme.other.colors.secondary.black} !important`,
-		padding: rem(16),
-	},
-	menuTarget: {
-		'&:not(:disabled)': theme.fn.hover({
-			backgroundColor: theme.other.colors.primary.lightGray,
-		}),
-		'&:disabled': theme.fn.hover({ cursor: 'auto' }),
-		'&[data-expanded]': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-		},
-	},
-	logoutButton: {
-		padding: `${rem(14)} ${rem(12)}`,
-	},
-}))
-
-export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
+export const UserMenu = ({ className }: UserMenuProps) => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
 	const router = useRouter()
-	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 	const variant = useCustomVariant()
 
 	const isLoading = status === 'loading' || router.isFallback
@@ -195,8 +149,6 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		)
 	}, [
 		canAccessDataPortal,
-		classes,
-		cx,
 		handleEditModeEntry,
 		handleSignout,
 		isEditablePage,
@@ -208,12 +160,11 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	])
 
 	return (
-		<Group className={cx(className)} noWrap spacing={shouldShowMenu ? 28 : 40}>
+		<Group className={cx(className)} wrap='nowrap' gap={shouldShowMenu ? 28 : 40}>
 			<LangPicker />
 			{menuOrLoginButtons}
 		</Group>
 	)
 }
 
-type ComponentStyles = Selectors<typeof useStyles>
-type UserMenuProps = DefaultProps<ComponentStyles>
+type UserMenuProps = { className?: string }

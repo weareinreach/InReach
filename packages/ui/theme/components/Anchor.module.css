@@ -1,0 +1,171 @@
+/* Base styles, applied regardless of custom variant */
+.root {
+	padding: rem(10px) rem(8px);
+	border-radius: var(--mantine-spacing-sm);
+	text-decoration: underline;
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.root:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		text-decoration: none;
+	}
+}
+
+.inline,
+.inlineUtil1,
+.inlineUtil1DarkGray,
+.inlineUtil2DarkGray,
+.inlineInverted,
+.inlineInvertedUtil1,
+.inlineInvertedUtil2,
+.inheritStyle,
+.pagination {
+	padding: 0 !important;
+}
+
+.inline,
+.inheritStyle {
+	display: inline;
+}
+
+.inline {
+	font-weight: var(--ir-font-weight-regular) !important;
+	line-height: var(--ir-line-height) !important;
+}
+@media (hover: hover) {
+	.inline:hover {
+		background-color: transparent !important;
+	}
+}
+
+.inlineUtil1 {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.inlineUtil1:hover {
+		background-color: transparent !important;
+	}
+}
+
+.inlineUtil1DarkGray {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray) !important;
+}
+@media (hover: hover) {
+	.inlineUtil1DarkGray:hover {
+		background-color: transparent !important;
+	}
+}
+
+.inlineUtil2DarkGray {
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray) !important;
+}
+@media (hover: hover) {
+	.inlineUtil2DarkGray:hover {
+		background-color: transparent !important;
+	}
+}
+
+.inlineInverted {
+	font-weight: var(--ir-font-weight-regular) !important;
+	line-height: var(--ir-line-height) !important;
+	text-decoration: none !important;
+}
+@media (hover: hover) {
+	.inlineInverted:hover {
+		background-color: transparent !important;
+		text-decoration: underline !important;
+	}
+}
+
+.inlineInvertedUtil1 {
+	text-decoration: none !important;
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.inlineInvertedUtil1:hover {
+		background-color: transparent !important;
+		text-decoration: underline !important;
+	}
+}
+
+.inlineInvertedUtil2 {
+	text-decoration: none !important;
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.inlineInvertedUtil2:hover {
+		background-color: transparent !important;
+		text-decoration: underline !important;
+	}
+}
+
+.inheritStyle {
+	font-weight: inherit !important;
+	line-height: inherit !important;
+	color: inherit !important;
+	font-size: inherit !important;
+}
+@media (hover: hover) {
+	.inheritStyle:hover {
+		background-color: transparent !important;
+	}
+}
+
+.block {
+	display: block;
+}
+
+.card {
+	padding: 0 !important;
+	font-weight: inherit !important;
+	line-height: inherit !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	text-decoration: inherit !important;
+}
+
+.pagination {
+	text-decoration: none !important;
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.pagination[data-disabled] {
+	color: var(--ir-color-tertiary-cool-gray);
+}
+@media (hover: hover) {
+	.pagination:hover {
+		background-color: transparent !important;
+		text-decoration: none !important;
+		border-bottom: rem(2px) solid var(--ir-color-secondary-black);
+		border-radius: 0;
+	}
+	.pagination:hover[data-disabled] {
+		border-bottom: 0;
+		cursor: not-allowed;
+	}
+}
+
+.navMenu {
+	text-decoration: none !important;
+}

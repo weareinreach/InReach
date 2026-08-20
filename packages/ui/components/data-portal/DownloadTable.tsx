@@ -22,10 +22,10 @@ export const DownloadTable = () => {
 	if (!canViewDownloads) return null
 
 	return (
-		<Stack spacing='xl'>
+		<Stack gap='xl'>
 			<Title order={2}>{t('user-menu.csv-downloads')}</Title>
 
-			<Stack spacing='md'>
+			<Stack gap='md'>
 				<Title order={3}>Published/Unpublished Lists</Title>
 				<SimpleGrid cols={3}>
 					<CsvDownload
@@ -43,7 +43,7 @@ export const DownloadTable = () => {
 				</SimpleGrid>
 			</Stack>
 
-			<Stack spacing='md'>
+			<Stack gap='md'>
 				<Title order={3}>Review Lists</Title>
 				<SimpleGrid cols={3}>
 					<CsvDownload
@@ -55,7 +55,7 @@ export const DownloadTable = () => {
 				</SimpleGrid>
 			</Stack>
 
-			<Stack spacing='md'>
+			<Stack gap='md'>
 				<Title order={3}>Organization Counts</Title>
 				<SimpleGrid cols={3}>
 					<CsvDownload
@@ -85,7 +85,7 @@ export const DownloadTable = () => {
 				</SimpleGrid>
 			</Stack>
 
-			<Stack spacing='md'>
+			<Stack gap='md'>
 				<Title order={3}>Service Counts</Title>
 				<SimpleGrid cols={3}>
 					<CsvDownload

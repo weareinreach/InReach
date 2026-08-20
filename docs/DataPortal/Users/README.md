@@ -20,11 +20,14 @@ Visible to `dataPortalManager` and above.
 
 ## How It Works
 
-- **UI**: [`UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx)
+- **UI**: [`UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx),
+  built on the shared
+  [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
+  component.
 - **API**:
-  - `user.forUserTable` → `query.forUserTable.handler.ts` — fetches `User` rows
-    with their `permissions`, reduced to the single highest active Data Portal
-    tier per user.
+  - `user.forUserTable` → `query.forUserTable.handler.ts` — server-side search
+    (name/email) and sort, paginated, fetching `User` rows with their
+    `permissions`, reduced to the single highest active Data Portal tier per user.
   - `user.toggleDataPortalAccess` → `mutation.toggleDataPortalAccess.handler.ts` —
     an `adminProcedure` (not the normal permission-map system). Inside a
     transaction it deletes all of the target's existing Data-Portal
@@ -77,4 +80,4 @@ Visible to `dataPortalManager` and above.
 
 ---
 
-_Last verified against code: 2026-08-10._
+_Last verified against code: 2026-08-19._

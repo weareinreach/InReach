@@ -4,11 +4,11 @@ import { forwardRef, type ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
-import { useSharedStyles } from './styles'
+import { sharedBadgeClasses } from './styles'
 
 export const _Community = forwardRef<HTMLDivElement, BadgeCommunityProps>(
 	({ icon, hideTooltip, children, ...props }, ref) => {
-		const { classes } = useSharedStyles('community')
+		const classes = sharedBadgeClasses.community
 		const { t } = useTranslation('common')
 		const variants = useCustomVariant()
 

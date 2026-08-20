@@ -1,15 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
-import {
-	createStyles,
-	Divider,
-	Grid,
-	Group,
-	rem,
-	Skeleton,
-	Stack,
-	Text,
-	useMantineTheme,
-} from '@mantine/core'
+import { Divider, Grid, Group, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { getCookie } from 'cookies-next'
 import compare from 'just-compare'
@@ -34,6 +24,8 @@ import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
+
+import classes from './index.module.css'
 
 interface SearchResultV2Metadata {
 	relevanceScore?: number
@@ -97,52 +89,8 @@ const SearchResultSidebar = dynamic(
 
 const PageIndexSchema = z.coerce.number().default(1)
 
-const useStyles = createStyles((theme) => ({
-	searchControls: {
-		flexWrap: 'wrap',
-		flexDirection: 'column',
-		[theme.fn.largerThan('sm')]: {
-			flexWrap: 'nowrap',
-			flexDirection: 'row',
-		},
-	},
-	hideMobile: {
-		[theme.fn.smallerThan('sm')]: {
-			display: 'none',
-		},
-	},
-	noResultsStack: {
-		gap: rem(40),
-		[theme.fn.largerThan('sm')]: {
-			gap: rem(48),
-		},
-	},
-	banner: {
-		backgroundColor: theme.other.colors.secondary.cornflower,
-		...theme.other.utilityFonts.utility1,
-		color: theme.other.colors.secondary.white,
-		width: '100vw',
-		height: rem(52),
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		textAlign: 'center',
-		position: 'absolute',
-		[theme.fn.largerThan('sm')]: {
-			marginTop: rem(-40),
-		},
-		[theme.fn.largerThan('xl')]: {
-			marginTop: rem(-20),
-		},
-		[theme.fn.smallerThan('sm')]: {
-			height: rem(80),
-		},
-	},
-}))
-
 const NoResults = memo(
 	({ crisisData }: { crisisData: NonNullable<ApiOutput['organization']['getNatlCrisis']> }) => {
-		const { classes } = useStyles()
 		const { t } = useTranslation('common')
 		return (
 			<Stack className={classes.noResultsStack}>
@@ -193,7 +141,6 @@ const SearchResults = () => {
 	const skip = (PageIndexSchema.parse(router.query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const apiUtils = api.useUtils()
-	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
 	const [error, setError] = useState(false)
@@ -312,10 +259,10 @@ const SearchResults = () => {
 					}
 
 					items.push(
-						<Stack spacing={16} py={24} key={`tier-divider-${currentTier}`}>
+						<Stack gap={16} py={24} key={`tier-divider-${currentTier}`}>
 							<Divider
 								label={
-									<Text variant={variants.Text.utility2darkGray} align='center' weight={600}>
+									<Text variant={variants.Text.utility2darkGray} ta='center' fw={600}>
 										{labelMap[currentTier] || currentTier}
 									</Text>
 								}
@@ -409,21 +356,20 @@ const SearchResults = () => {
 				<LocationBasedAlertBanner lat={lat} lon={lon} type='primary' />
 			</RecommendedLinksModal>
 			<Grid.Col
-				xs={12}
-				sm={12}
+				span={{ base: 12, sm: 12 }}
 				pb={30}
 				{...(showAlertMessage ? { mt: { base: 80, xs: 80, sm: 20, md: 20, lg: 20, xl: 40 } } : {})}
 			>
-				<Group spacing={20} w='100%' className={classes.searchControls} align='flex-start'>
-					<Stack spacing={8} maw={{ md: '50%', base: '100%' }} w='100%'>
+				<Group gap={20} w='100%' className={classes.searchControls} align='flex-start'>
+					<Stack gap={8} maw={{ md: '50%', base: '100%' }} w='100%'>
 						<SearchBox
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 							initialValue={searchState.searchTerm}
 						/>
 					</Stack>
-					<Stack spacing={16} align='flex-end' w={{ base: '100%', md: '50%' }}>
-						<Group noWrap spacing={16} align='flex-end'>
+					<Stack gap={16} align='flex-end' w={{ base: '100%', md: '50%' }}>
+						<Group wrap='nowrap' gap={16} align='flex-end'>
 							<ServiceFilter
 								resultCount={resultCount}
 								isFetching={searchIsFetching}
@@ -454,7 +400,7 @@ const SearchResults = () => {
 					isAdvanced={isAdvanced}
 				/>
 			</Grid.Col>
-			<Grid.Col xs={12} sm={8} md={8}>
+			<Grid.Col span={{ base: 12, sm: 8, md: 8 }}>
 				{data?.resultCount === 0 && crisisResults ? (
 					<NoResults crisisData={crisisResults} />
 				) : (

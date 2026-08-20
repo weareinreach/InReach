@@ -1,0 +1,6 @@
+.overlay {
+	background-color: lighten(#28939c, 0.9);
+	border-radius: rem(16px);
+	margin: rem(-8px);
+	padding: rem(8px);
+}

@@ -1,0 +1,32 @@
+.label {
+	font-size: rem(16px);
+	padding-bottom: 0;
+}
+
+.description {
+	font-size: rem(14px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray);
+}
+.description:has(~ .mantine-InputWrapper-error) {
+	display: none;
+}
+.description:focus {
+	outline: none;
+}
+.description[data-success] {
+	font-size: rem(14px);
+	font-weight: 500;
+	line-height: 1.25;
+}
+
+.error {
+	font-size: rem(14px);
+	font-weight: 500;
+	line-height: 1.25;
+}
+
+.root {
+	width: 100%;
+}

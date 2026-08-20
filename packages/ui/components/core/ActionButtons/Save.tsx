@@ -9,11 +9,12 @@ import { type ApiInput } from '@weareinreach/api'
 import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { CreateNewList } from '~ui/modals'
 import { QuickPromotionModal } from '~ui/modals/QuickPromotion'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 const useNotifications = (listName: string) => {
 	const { t } = useTranslation('common')
@@ -100,7 +101,6 @@ const ListItem = ({ data, name, action, itemName }: ListMenuProps & { itemName: 
 export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 	({ itemId, itemName, menuItem, omitLabel, className, ...rest }, ref) => {
 		const [menuOpened, menuHandler] = useDisclosure(false)
-		const { classes, cx } = useStyles()
 		const { status: sessionStatus } = useSession()
 		const { t } = useTranslation('common')
 		const utils = api.useUtils()
@@ -149,13 +149,13 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 		const handleRefetchAvailableLists = useCallback(() => refetchAvailableLists(), [refetchAvailableLists])
 
 		const DisplayedInfo = (
-			<Group spacing={0} noWrap>
+			<Group gap={0} wrap='nowrap'>
 				<Icon icon={buttonIcon} color={iconColor} {...(menuItem ? {} : { height: 24, width: 24 })} />
 				{!omitLabel && (
 					<Text
 						fw={menuItem ? 500 : undefined}
 						color={iconColor}
-						className={cx({ [classes.text]: !menuItem })}
+						className={!menuItem ? classes.text : undefined}
 					>
 						{t(isSaved ? 'words.saved' : 'words.save', {
 							defaultValue: isSaved ? 'Saved' : 'Save',

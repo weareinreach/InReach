@@ -13,9 +13,10 @@ import {
 
 import { Button } from '~ui/components/core/Button'
 import { Icon, type IconifyIconHTMLElement } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 
 import { type ActionButtonElementProps } from './Group'
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 const getTargetId = (e: ReactElement<ActionButtonElementProps>) => {
 	const targetId = typeof e.props['data-targetid'] === 'string' && e.props['data-targetid']
@@ -27,7 +28,6 @@ const getTargetId = (e: ReactElement<ActionButtonElementProps>) => {
 
 export const OverflowMenu = forwardRef<HTMLButtonElement, ActionButtonMenuProps>(
 	({ children, className, visibilityMap, ...props }, ref) => {
-		const { classes, cx } = useStyles()
 		const theme = useMantineTheme()
 		const [anchorEl, setAnchorEl] = useState<
 			(EventTarget & IconifyIconHTMLElement) | (EventTarget & HTMLElement) | null

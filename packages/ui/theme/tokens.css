@@ -1,0 +1,37 @@
+/**
+ * CSS custom properties mirroring `theme.other` in `theme/common.tsx` (colors,
+ * font weights, the global line-height). `theme.other.*` is plain JS data with no
+ * auto-generated CSS variables (unlike `theme.spacing`/`theme.radius`/etc), so
+ * component CSS modules that need these values reference them here instead. Keep
+ * in sync with `theme/common.tsx` by hand - there is no shared source of truth.
+ */
+:root {
+	--ir-font-weight-regular: 400;
+	--ir-font-weight-semibold: 500;
+	--ir-font-weight-bold: 600;
+	--ir-line-height: 1.5;
+
+	--ir-color-primary-light-gray: #efefef;
+	--ir-color-primary-ally-green: #00d56c;
+
+	--ir-color-secondary-black: #21272c;
+	--ir-color-secondary-white: #ffffff;
+	--ir-color-secondary-dark-gray: #65676b;
+	--ir-color-secondary-teal: #28939c;
+	--ir-color-secondary-cornflower: #4792da;
+
+	--ir-color-tertiary-cool-gray: #d9d9d9;
+	--ir-color-tertiary-red: #c05c4a;
+	--ir-color-tertiary-pink: #d4a1ba;
+	--ir-color-tertiary-light-blue: #79add7;
+	--ir-color-tertiary-purple: #705890;
+	--ir-color-tertiary-dark-blue: #3c4e8f;
+	--ir-color-tertiary-green: #749c66;
+	--ir-color-tertiary-yellow: #f1dd7f;
+	--ir-color-tertiary-orange: #c77e54;
+	--ir-color-tertiary-brown: #5d4830;
+	--ir-color-tertiary-dark-brown: #322f2e;
+	--ir-color-tertiary-footer: #f7f7f7;
+
+	--ir-border-default: 1px solid var(--ir-color-tertiary-cool-gray);
+}

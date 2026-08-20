@@ -4,11 +4,11 @@ import { forwardRef } from 'react'
 
 import { Icon } from '~ui/icon'
 
-import { useSharedStyles } from './styles'
+import { sharedBadgeClasses } from './styles'
 
 export const _PrivatePractice = forwardRef<HTMLDivElement, BadgePrivatePracticeProps>(
 	({ hideTooltip, ...props }, ref) => {
-		const { classes } = useSharedStyles('privatePractice')
+		const classes = sharedBadgeClasses.privatePractice
 		const theme = useMantineTheme()
 		const { t } = useTranslation('common')
 

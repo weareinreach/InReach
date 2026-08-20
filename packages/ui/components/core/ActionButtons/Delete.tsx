@@ -6,12 +6,12 @@ import { forwardRef } from 'react'
 import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 export const Delete = forwardRef<HTMLButtonElement, DeleteProps>(
 	({ omitLabel, className, onClick, modalHandler, ...props }, ref) => {
-		const { classes, cx } = useStyles()
 		const theme = useMantineTheme()
 		const variant = useCustomVariant()
 		const { t } = useTranslation('common')
@@ -26,7 +26,7 @@ export const Delete = forwardRef<HTMLButtonElement, DeleteProps>(
 					className={cx(classes.button, className)}
 					{...props}
 				>
-					<Group spacing={0} noWrap>
+					<Group gap={0} wrap='nowrap'>
 						<Icon
 							icon='carbon:trash-can'
 							color={theme.other.colors.secondary.black}
@@ -40,7 +40,7 @@ export const Delete = forwardRef<HTMLButtonElement, DeleteProps>(
 				<Modal opened={confirmDialogOpen} onClose={confirmDialogHandler.close}>
 					<Stack align='center'>
 						<Text>{t('confirm-modal.delete-list')}</Text>
-						<Group noWrap>
+						<Group wrap='nowrap'>
 							<Button variant={variant.Button.primaryLgRed} onClick={onClick}>
 								{t('words.delete')}
 							</Button>

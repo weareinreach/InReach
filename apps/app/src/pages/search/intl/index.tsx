@@ -1,16 +1,5 @@
 // import { type GetServerSideProps } from 'next'
-import {
-	createStyles,
-	Divider,
-	Grid,
-	Group,
-	rem,
-	Skeleton,
-	Stack,
-	Text,
-	Title,
-	useMantineTheme,
-} from '@mantine/core'
+import { Divider, Grid, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
@@ -29,6 +18,8 @@ import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+import classes from './index.module.css'
+
 const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter), {
 	ssr: false,
 })
@@ -36,44 +27,11 @@ const ServiceFilter = dynamic(
 	() => import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter),
 	{ ssr: false }
 )
-const useStyles = createStyles((theme) => ({
-	searchControls: {
-		flexWrap: 'wrap',
-		flexDirection: 'column',
-		[theme.fn.largerThan('sm')]: {
-			flexWrap: 'nowrap',
-			flexDirection: 'row',
-		},
-	},
-	hideMobile: {
-		[theme.fn.smallerThan('sm')]: {
-			display: 'none',
-		},
-	},
-	parentCard: {
-		background: theme.other.colors.tertiary.yellow,
-	},
-	categoryBadge: {
-		background: theme.other.colors.secondary.white,
-	},
-	staySafeCard: {
-		border: `${rem(1)} solid ${theme.other.colors.secondary.white}`,
-		borderRadius: rem(16),
-	},
-	getHelpCard: {
-		border: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-		borderRadius: rem(16),
-	},
-	cardShadow: {
-		boxShadow: `${rem(0)} ${rem(4)} ${rem(20)} ${rem(0)} rgba(0, 0, 0, 0.1)`,
-	},
-}))
 
 const notBlank = (value?: string) => !!value && value.length > 0
 
 const OutsideServiceArea = () => {
 	const [loading, setLoading] = useState(false)
-	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
@@ -100,12 +58,12 @@ const OutsideServiceArea = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-			<Grid.Col xs={12} sm={12} pb={30}>
-				<Group spacing={20} w='100%' className={classes.searchControls}>
+			<Grid.Col span={{ base: 12, sm: 12 }} pb={30}>
+				<Group gap={20} w='100%' className={classes.searchControls}>
 					<Group maw={{ md: '50%', base: '100%' }} w='100%'>
 						<SearchBox type='location' loadingManager={{ setLoading, isLoading: loading }} />
 					</Group>
-					<Group noWrap w={{ base: '100%', md: '50%' }}>
+					<Group wrap='nowrap' w={{ base: '100%', md: '50%' }}>
 						<ServiceFilter resultCount={resultCount} isFetching={false} disabled />
 						{/* @ts-expect-error `component` prop not needed.. */}
 						<MoreFilter resultCount={resultCount} isFetching={false} disabled>
@@ -127,8 +85,8 @@ const OutsideServiceArea = () => {
 			<Grid.Col className={classes.hideMobile}>
 				<SearchResultSidebar resultCount={resultCount} loadingManager={{ setLoading, isLoading: loading }} />
 			</Grid.Col>
-			<Grid.Col xs={12} sm={8} md={8}>
-				<Stack spacing={48}>
+			<Grid.Col span={{ base: 12, sm: 8, md: 8 }}>
+				<Stack gap={48}>
 					<Title order={2}>
 						<Skeleton visible={loading}>{t('common:crisis-support.only-in-north-america')}</Skeleton>{' '}
 					</Title>

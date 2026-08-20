@@ -1,0 +1,87 @@
+/**
+ * `inlineUtil2`/`inlineBulletUtil2` were dropped - confirmed zero usage repo-wide.
+ *
+ * Note: Mantine v7's static selector class for ListItem's icon element is
+ * `.mantine-ListItem-itemIcon` (not `.mantine-List-itemIcon` as in v6 - ListItem
+ * is its own sub-component now).
+ */
+
+.inline {
+	display: inline-flex;
+	gap: rem(12px);
+	flex-wrap: wrap;
+}
+.inlineItem {
+	display: inline-block;
+	list-style: none;
+}
+.inlineItemIcon {
+	display: none;
+}
+
+.inlineBullet {
+	display: inline-flex;
+	column-gap: rem(8px);
+	row-gap: rem(12px);
+	flex-wrap: wrap;
+	align-items: center;
+}
+.inlineBulletItem:first-of-type .mantine-ListItem-itemIcon {
+	display: none;
+}
+.inlineBulletItemIcon {
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-right: rem(8px);
+}
+.inlineBulletItemWrapper {
+	align-items: center;
+}
+
+.textDarkGrayItem {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.inlineBulletUtil2DarkGray {
+	display: inline-flex;
+	column-gap: rem(8px);
+	row-gap: rem(16px);
+	flex-wrap: wrap;
+	align-items: center;
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.inlineBulletUtil2DarkGrayItem:first-of-type .mantine-ListItem-itemIcon {
+	display: none;
+}
+.inlineBulletUtil2DarkGrayItem {
+	color: var(--ir-color-secondary-dark-gray);
+}
+.inlineBulletUtil2DarkGrayItemIcon {
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-right: rem(8px);
+}
+.inlineBulletUtil2DarkGrayItemWrapper {
+	align-items: center;
+}
+
+.inlineUtil2DarkGray {
+	display: inline-flex;
+	gap: rem(16px);
+	flex-wrap: wrap;
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.inlineUtil2DarkGrayItem {
+	display: inline-block;
+	list-style: none;
+	color: var(--ir-color-secondary-dark-gray);
+}
+.inlineUtil2DarkGrayItemIcon {
+	display: none;
+}

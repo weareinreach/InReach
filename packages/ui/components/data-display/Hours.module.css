@@ -1,0 +1,12 @@
+.dow {
+	vertical-align: baseline;
+	padding-right: rem(4px);
+	border-top-style: none !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+.hours {
+	border-top-style: none !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}

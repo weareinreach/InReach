@@ -1,5 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { Text, TextInput, type TextInputProps } from '@mantine/core'
+import { type ComboboxItemGroup, Group, Text, TextInput, type TextInputProps } from '@mantine/core'
 import { AsYouType } from 'libphonenumber-js'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -16,9 +16,16 @@ import PhoneInput, { type Props as PhoneInputProps } from 'react-phone-number-in
 import { isCountryCode } from '~ui/hooks/usePhoneNumber'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { CountrySelectItem } from './CountrySelectItem'
 import { transformCountryList } from './lib'
-import { useCountrySelectStyles, usePhoneEntryStyles } from './styles'
+import classes from './styles.module.css'
+
+const countrySelectClasses = {
+	dropdown: classes.countrySelectDropdown,
+	root: classes.countrySelectRoot,
+	input: classes.countrySelectInput,
+	section: classes.countrySelectSection,
+}
+const phoneEntryClasses = { section: classes.phoneEntrySection }
 
 const DEFAULT_COUNTRY = 'US'
 
@@ -42,6 +49,22 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		return countryData
 	}, [countryData])
 	const validCountries = countryList.map(({ data }) => data.cca2)
+
+	// `Select`'s `data` items in v7 can only be `{value, label}` - the flat `countryList` above (kept
+	// for its `data`/`group` lookups) is regrouped into real `ComboboxItemGroup`s here instead of the
+	// old flat per-item `group` field, which v7 no longer renders as a group header.
+	const groupedCountryData = useMemo<ComboboxItemGroup[]>(() => {
+		const groups = new Map<string, typeof countryList>()
+		for (const item of countryList) {
+			const group = groups.get(item.group) ?? []
+			group.push(item)
+			groups.set(item.group, group)
+		}
+		return [...groups.entries()].map(([group, items]) => ({
+			group,
+			items: items.map(({ value, label }) => ({ value, label })),
+		}))
+	}, [countryList])
 
 	const {
 		name: peName,
@@ -74,9 +97,6 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	})
 
 	const [phoneNumber, selectedCountry] = useWatch({ name: [peName, csName], control })
-
-	const { classes: countrySelectClasses } = useCountrySelectStyles()
-	const { classes: phoneEntryClasses } = usePhoneEntryStyles()
 
 	const activeCountry = useMemo(() => {
 		const result = countryList?.find(({ value }) => value === selectedCountry)?.data.cca2
@@ -116,7 +136,8 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 				if (countryId) {
 					countryControl.field.onChange(countryId)
 					if (countrySelect.onChange && typeof countrySelect.onChange === 'function') {
-						countrySelect.onChange(countryId)
+						const foundCountry = countryList.find(({ value }) => value === countryId)
+						countrySelect.onChange(countryId, { value: countryId, label: foundCountry?.label ?? '' })
 					}
 				}
 			}
@@ -126,8 +147,16 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 
 	const countrySelection = (
 		<Select
-			data={countryList}
-			itemComponent={CountrySelectItem}
+			data={groupedCountryData}
+			renderOption={({ option }) => {
+				const country = countryList.find(({ value }) => value === option.value)
+				return (
+					<Group w='100%' wrap='nowrap'>
+						<Text>{option.label}</Text>
+						<Text>{country?.data.name ?? ''}</Text>
+					</Group>
+				)
+			}}
 			classNames={countrySelectClasses}
 			clearable
 			control={control}

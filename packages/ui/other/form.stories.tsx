@@ -46,7 +46,7 @@ const Display = () => {
 					</Stack>
 				</Switch.Group>
 			</Grid.Col>
-			<Grid.Col sm={6}>
+			<Grid.Col span={{ sm: 6 }}>
 				<Title order={2}>Textbox (Single line)</Title>
 
 				<Stack>
@@ -110,7 +110,7 @@ const Display = () => {
 				</Stack> */}
 			</Grid.Col>
 
-			<Grid.Col sm={6}>
+			<Grid.Col span={{ sm: 6 }}>
 				<Title order={2}>Textbox (Multi-line)</Title>
 				<Stack>
 					<Textarea

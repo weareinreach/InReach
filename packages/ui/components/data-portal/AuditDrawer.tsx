@@ -1,35 +1,10 @@
-import {
-	Button,
-	createStyles,
-	Drawer,
-	Group,
-	Loader,
-	Pagination,
-	rem,
-	Stack,
-	Table,
-	Text,
-	Title,
-} from '@mantine/core'
+import { Button, Drawer, Group, Loader, Pagination, rem, Stack, Table, Text, Title } from '@mantine/core'
 import { useMemo, useState } from 'react'
 
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
-const useStyles = createStyles(() => ({
-	drawerTitleWrapper: {
-		maxWidth: '100% !important',
-
-		[`& div.mantine-Group-root > div:first-of-type`]: {
-			maxWidth: '100% !important',
-		},
-	},
-	scrollableTable: {
-		marginTop: rem(24),
-		maxHeight: 'calc(100vh - 200px)',
-		overflow: 'auto',
-	},
-}))
+import classes from './AuditDrawer.module.css'
 
 export const AuditDrawer = ({
 	opened,
@@ -42,7 +17,6 @@ export const AuditDrawer = ({
 	recordId: string
 	name: string
 }) => {
-	const { classes } = useStyles()
 	const [page, setPage] = useState(1)
 	const pageSize = 20
 	const [showAdminDetails, setShowAdminDetails] = useState(false)
@@ -123,7 +97,7 @@ export const AuditDrawer = ({
 					<Text>{name}</Text>
 					<Text>{recordId}</Text>
 				</Stack>
-				<Group position='right' mb='md'>
+				<Group justify='flex-end' mb='md'>
 					<Button size='xs' color='green' onClick={toggleAdminDetails}>
 						{showAdminDetails ? 'Hide Admin Details' : 'Show Admin Details'}
 					</Button>

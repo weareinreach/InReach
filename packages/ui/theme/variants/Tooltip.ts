@@ -1,15 +1,15 @@
-// import { rem } from '@mantine/core'
+import { type CSSProperties } from 'react'
 
-import { type VariantObj } from '~ui/types/mantine'
+type VariantStyles = Record<string, Partial<Record<'tooltip', CSSProperties>>>
 
-export const Tooltip = {
-	utility1: (theme) => {
-		const { color, ...fontProps } = theme.other.utilityFonts.utility1
-		return {
+export const Tooltip = (theme: import('@mantine/core').MantineTheme): VariantStyles => {
+	const { color: _color, ...fontProps } = theme.other.utilityFonts.utility1
+	return {
+		utility1: {
 			tooltip: {
 				...fontProps,
 				lineBreak: 'loose',
 			},
-		}
-	},
-} satisfies VariantObj
+		},
+	}
+}

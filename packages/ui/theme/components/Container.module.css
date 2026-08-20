@@ -1,0 +1,19 @@
+.root {
+	margin: 0 auto;
+	padding: 0 rem(20px);
+}
+@media (min-width: $mantine-breakpoint-xs) {
+	.root {
+		padding: 0 rem(32px);
+	}
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.root {
+		padding: 0 rem(40px);
+	}
+}
+@media (min-width: $mantine-breakpoint-lg) {
+	.root {
+		padding: 0 rem(64px);
+	}
+}

@@ -59,7 +59,7 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 			[router, noClose, handleClose]
 		)
 		const modalTitle = (
-			<Group position='apart' align='center' noWrap>
+			<Group justify='space-between' align='center' wrap='nowrap'>
 				<Box maw='70%' style={{ overflow: 'hidden' }}>
 					<Breadcrumb {...titleProps} />
 				</Box>
@@ -69,8 +69,8 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={handleClose} fullScreen={isMobile}>
-					<Stack align='center' spacing={24}>
-						<Stack align='center' spacing={16}>
+					<Stack align='center' gap={24}>
+						<Stack align='center' gap={16}>
 							<Trans
 								i18nKey='quick-promo-heading'
 								components={{
@@ -88,7 +88,7 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 								}}
 							/>
 						</Stack>
-						<Stack align='center' spacing={16}>
+						<Stack align='center' gap={16}>
 							<Trans
 								i18nKey='quick-promo-body'
 								components={{

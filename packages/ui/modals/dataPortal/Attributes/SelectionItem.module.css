@@ -1,0 +1,12 @@
+.item {
+	align-items: center;
+	gap: var(--mantine-spacing-xs);
+	padding: var(--mantine-spacing-xs);
+	border-radius: var(--mantine-radius-sm);
+	cursor: pointer;
+}
+@media (hover: hover) {
+	.item:hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}

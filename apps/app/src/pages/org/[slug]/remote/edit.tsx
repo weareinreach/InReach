@@ -1,14 +1,4 @@
-import {
-	createStyles,
-	Divider,
-	Grid,
-	Group,
-	Skeleton,
-	Stack,
-	Tabs,
-	Title,
-	useMantineTheme,
-} from '@mantine/core'
+import { Divider, Grid, Group, Skeleton, Stack, Tabs, Title, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { type InferGetServerSidePropsType, type NextPage } from 'next'
 import Head from 'next/head'
@@ -28,34 +18,26 @@ import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesI
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-// eslint-disable-next-line i18next/no-literal-string
+import classes from './edit.module.css'
+
 const addNewServiceLabel = 'Add new service'
 
 const LoadingState = () => (
 	<>
-		<Grid.Col sm={8} order={1}>
+		<Grid.Col span={{ sm: 8 }} order={1}>
 			<Skeleton h={48} w='100%' radius={8} />
-			<Stack pt={24} align='flex-start' spacing={40}>
+			<Stack pt={24} align='flex-start' gap={40}>
 				<Skeleton h={260} w='100%' />
 				<Skeleton h={520} w='100%' />
 			</Stack>
 		</Grid.Col>
 		<Grid.Col order={2}>
-			<Stack spacing={40}>
+			<Stack gap={40}>
 				<Skeleton h={520} w='100%' />
 			</Stack>
 		</Grid.Col>
 	</>
 )
-
-const useStyles = createStyles((theme) => ({
-	tabsList: {
-		position: 'sticky',
-		top: 0,
-		zIndex: 10,
-		backgroundColor: theme.other.colors.secondary.white,
-	},
-}))
 
 const RemoteServicesEditPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
 	const { t } = useTranslation('common')
@@ -68,7 +50,6 @@ const RemoteServicesEditPage: NextPage<InferGetServerSidePropsType<typeof getSer
 	const { data: orgName, status: orgNameStatus } = api.organization.getNameFromSlug.useQuery(slug, {
 		enabled: router.isReady,
 	})
-	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
@@ -86,7 +67,8 @@ const RemoteServicesEditPage: NextPage<InferGetServerSidePropsType<typeof getSer
 		})
 	}, [router, slug])
 	const handleTabChange = useCallback(
-		(tab: string) => {
+		(tab: string | null) => {
+			if (!tab) return
 			setActiveTab(tab)
 			if (tab === 'services') {
 				servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -109,7 +91,7 @@ const RemoteServicesEditPage: NextPage<InferGetServerSidePropsType<typeof getSer
 					})}
 				</title>
 			</Head>
-			<Grid.Col xs={12} sm={8} order={1}>
+			<Grid.Col span={{ base: 12, sm: 8 }} order={1}>
 				<Breadcrumb
 					{...{
 						option: 'back',
@@ -118,21 +100,21 @@ const RemoteServicesEditPage: NextPage<InferGetServerSidePropsType<typeof getSer
 						onClick: handleBreadcrubClick,
 					}}
 				/>
-				<Stack pt={24} align='flex-start' spacing={40}>
+				<Stack pt={24} align='flex-start' gap={40}>
 					<Title order={2}>{t('common:remote-services')}</Title>
 					{isTablet && (
-						<Stack spacing={40} w='100%'>
+						<Stack gap={40} w='100%'>
 							<Divider />
 							<ContactSection role='org' parentId={org.id} edit />
 						</Stack>
 					)}
-					<Tabs w='100%' value={activeTab} onTabChange={handleTabChange}>
+					<Tabs w='100%' value={activeTab} onChange={handleTabChange}>
 						<Tabs.List className={classes.tabsList}>
 							<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 						</Tabs.List>
-						<Stack spacing={40} pt={40}>
-							<Stack spacing={20} ref={servicesRef}>
-								<Group position='apart'>
+						<Stack gap={40} pt={40}>
+							<Stack gap={20} ref={servicesRef}>
+								<Group justify='space-between'>
 									<Title order={3}>{t('services')}</Title>
 									<ServiceEditDrawer
 										createNew
@@ -151,7 +133,7 @@ const RemoteServicesEditPage: NextPage<InferGetServerSidePropsType<typeof getSer
 			</Grid.Col>
 			{!isTablet && (
 				<Grid.Col order={2}>
-					<Stack spacing={40}>
+					<Stack gap={40}>
 						<ContactSection role='org' parentId={org.id} edit />
 					</Stack>
 				</Grid.Col>

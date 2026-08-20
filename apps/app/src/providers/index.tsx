@@ -11,7 +11,7 @@ import { consentEvent } from '@weareinreach/analytics/events'
 import { EditModeProvider } from '@weareinreach/ui/providers/EditMode'
 import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
-import { appCache, appTheme } from '@weareinreach/ui/theme'
+import { appTheme } from '@weareinreach/ui/theme'
 import 'react-hook-consent/dist/styles/style.css'
 
 const fontWorkSans = Work_Sans({
@@ -51,7 +51,6 @@ export const Providers = ({ children, session }: ProviderProps) => {
 	}, [])
 
 	const mantineTheme = useMemo(() => ({ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }), [])
-	const mantineCache = useMemo(() => appCache, [])
 
 	const consentOptions: ConsentOptions = useMemo(
 		() => ({
@@ -107,7 +106,7 @@ export const Providers = ({ children, session }: ProviderProps) => {
 	)
 
 	return (
-		<MantineProvider withGlobalStyles withNormalizeCSS theme={mantineTheme} emotionCache={mantineCache}>
+		<MantineProvider theme={mantineTheme} defaultColorScheme='light'>
 			<ConsentProvider options={consentOptions}>
 				<SessionProvider session={session}>
 					<EditModeProvider>

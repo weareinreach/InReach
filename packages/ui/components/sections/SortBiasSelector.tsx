@@ -1,24 +1,12 @@
-import { createStyles, Select } from '@mantine/core'
+import { Select } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
 
 import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 
-const useStyles = createStyles((theme) => ({
-	root: {
-		minWidth: 180,
-	},
-	label: {
-		fontWeight: 700,
-		fontSize: theme.fontSizes.xs,
-		textTransform: 'uppercase',
-		color: theme.other.colors.secondary.darkGray,
-		marginBottom: 4,
-	},
-}))
+import classes from './SortBiasSelector.module.css'
 
 export const SortBiasSelector = () => {
-	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 	const { searchState, searchStateActions } = useSearchState()
 
@@ -36,7 +24,7 @@ export const SortBiasSelector = () => {
 				{ label: t('words.distance'), value: 'DISTANCE' },
 				{ label: t('words.best-match'), value: 'RELEVANCE' },
 			]}
-			icon={<Icon icon='carbon:sort-ascending' height={16} />}
+			leftSection={<Icon icon='carbon:sort-ascending' height={16} />}
 			size='sm'
 		/>
 	)

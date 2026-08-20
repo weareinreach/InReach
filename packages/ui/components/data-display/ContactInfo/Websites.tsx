@@ -15,7 +15,7 @@ import { Icon } from '~ui/icon'
 import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useCommonStyles } from './common.styles'
+import classes from './common.module.css'
 import { type WebsitesProps } from './types'
 
 const formatNs = nsFormatter(['common'])
@@ -113,7 +113,7 @@ const WebsitesDisplay = ({
 		: t('website', { count: content.length })
 
 	return (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>{headingContent}</Title>
 			{content}
 		</Stack>
@@ -128,7 +128,6 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 
-	const { classes } = useCommonStyles()
 	const { data } = api.orgWebsite.forContactInfoEdit.useQuery({ parentId })
 	const isLocation = isIdFor('orgLocation', parentId)
 	const { data: linkableWebsites } = api.orgWebsite.getLinkOptions.useQuery(
@@ -185,7 +184,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 				}
 				case !published: {
 					return (
-						<Group spacing={4} noWrap>
+						<Group gap={4} wrap='nowrap'>
 							<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
 							<Text variant={variants.Text.darkGray}>{desc}</Text>
 						</Group>
@@ -215,7 +214,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		<Menu keepMounted withinPortal>
 			<Menu.Target>
 				<Link variant={variants.Link.inlineInverted}>
-					<Group noWrap spacing={4}>
+					<Group wrap='nowrap' gap={4}>
 						<Icon icon='carbon:document-add' height={20} />
 						<Text variant={variants.Text.utility3}>Link or create new...</Text>
 					</Group>
@@ -227,9 +226,9 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 					const descTextVariant = getTextVariant('desc', published, deleted)
 					return (
 						<Menu.Item key={id} onClick={handleLinkLocation(id)}>
-							<Group noWrap>
+							<Group wrap='nowrap'>
 								<Icon icon='carbon:link' />
-								<Stack spacing={0}>
+								<Stack gap={0}>
 									<Text variant={urlTextVariant}>{url}</Text>
 									<Text variant={descTextVariant}>{description}</Text>
 								</Stack>
@@ -240,7 +239,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 				<Menu.Divider />
 				<Menu.Item key='new'>
 					<WebsiteDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-						<Group noWrap>
+						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
@@ -250,7 +249,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		</Menu>
 	) : (
 		<WebsiteDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-			<Group noWrap>
+			<Group wrap='nowrap'>
 				<Icon icon='carbon:add' />
 				<Text variant={variants.Text.utility3}>Create new</Text>
 			</Group>
@@ -258,9 +257,9 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	)
 
 	return (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>{t('website', { count: output?.length ?? 1 })}</Title>
-			<Stack spacing={12} className={classes.overlay}>
+			<Stack gap={12} className={classes.overlay}>
 				{output}
 				{addOrLink}
 			</Stack>

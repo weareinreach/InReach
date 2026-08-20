@@ -102,8 +102,8 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 
 	const bodyWorking = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={2}>{t('verify-account.verifying')}</Title>
 					<Text variant={variants.Text.utility1darkGray}>{t('words.please-wait')}</Text>
 				</Stack>
@@ -115,9 +115,9 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 
 	const bodySuccess = useMemo(
 		() => (
-			<Stack align='center' spacing={40}>
-				<Stack align='center' spacing={24}>
-					<Stack spacing={0} align='center'>
+			<Stack align='center' gap={40}>
+				<Stack align='center' gap={24}>
+					<Stack gap={0} align='center'>
 						<Title order={1}>📋</Title>
 						<Title order={2} ta='center'>
 							{t('survey.launch-title')}
@@ -173,8 +173,8 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 
 	const bodyError = useMemo(() => {
 		return (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>🫣</Title>
 					<Title order={2}>{t('errors.oh-no')}</Title>
 				</Stack>
@@ -195,8 +195,8 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 
 	const bodyCodeResent = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>📬</Title>
 					<Title order={2}>{t('confirm-account.code-requested')}</Title>
 				</Stack>
