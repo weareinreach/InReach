@@ -18,13 +18,24 @@ type RevolvingBoxProps = {
 type RandomArr = <T extends Array<unknown>>(arr: T) => T[number]
 
 // Purely decorative (picking which hero copy/pattern to show) - uses the Web Crypto API rather
-// than `Math.random()` regardless, since that's a cheap, universally-available upgrade.
-const randomFloat = () => crypto.getRandomValues(new Uint32Array(1))[0]! / 2 ** 32
+// than `Math.random()` regardless, since that's a cheap, universally-available upgrade. Uses
+// rejection sampling rather than `randomUint32 / 2**32` - dividing to get a float introduces bias
+// (some outputs become more likely than others), which the plain division approach does not avoid.
+const secureRandomInt = (maxExclusive: number): number => {
+	const arr = new Uint32Array(1)
+	const limit = 0x100000000 - (0x100000000 % maxExclusive)
+	let value: number
+	do {
+		crypto.getRandomValues(arr)
+		value = arr[0] as number
+	} while (value >= limit)
+	return value % maxExclusive
+}
 
-const randomArrMember: RandomArr = (arr) => arr[Math.floor(randomFloat() * arr.length)]
+const randomArrMember: RandomArr = (arr) => arr[secureRandomInt(arr.length)]
 const getRandomNumber = (min: number, max: number) => {
 	// Get the random number between min and max.
-	return Math.floor(randomFloat() * (max - min + 1)) + min
+	return min + secureRandomInt(max - min + 1)
 }
 
 const RevolvingBox = ({ role }: RevolvingBoxProps) => {

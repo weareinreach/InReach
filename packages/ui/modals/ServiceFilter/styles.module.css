@@ -33,7 +33,6 @@
 .count {
 	font-size: rem(16px);
 	font-weight: 500;
-	line-height: 1.25;
 	background: var(--ir-color-secondary-black);
 	border-radius: 100%;
 	color: var(--ir-color-secondary-white);
