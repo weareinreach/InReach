@@ -9,7 +9,7 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useMemo } from 'react'
@@ -31,7 +31,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 	const utils = api.useUtils()
 	const { isMobile } = useScreenSize()
 	const form = useForm<FormProps>({
-		validate: zodResolver(FormSchema),
+		validate: schemaResolver(FormSchema, { sync: true }),
 		validateInputOnBlur: true,
 		// Without this, `name` starts `undefined` and the TextInput below renders uncontrolled until
 		// the user types, tripping React's uncontrolled-to-controlled input warning.

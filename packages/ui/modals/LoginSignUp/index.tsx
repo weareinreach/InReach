@@ -12,7 +12,7 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
@@ -165,7 +165,7 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 	// 	}),
 	// })
 	const form = useSignUpForm({
-		validate: zodResolver(SignUpSchema),
+		validate: schemaResolver(SignUpSchema, { sync: true }),
 		initialValues: {
 			email: '',
 			name: '',
@@ -479,7 +479,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 			password: z.string().min(1, t('form-error-password-blank')),
 		})
 		const form = useForm<LoginFormProps>({
-			validate: zodResolver(LoginSchema),
+			validate: schemaResolver(LoginSchema, { sync: true }),
 			validateInputOnBlur: true,
 			// Without this, email/password start `undefined` and their inputs render uncontrolled
 			// until typed into, tripping React's uncontrolled-to-controlled input warning.

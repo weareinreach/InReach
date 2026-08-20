@@ -34,14 +34,14 @@ export const InternationalCard = ({
 					)}
 					<Title order={2}>{name}</Title>
 					{!!description.key && !!description.text && (
-						<Text color={theme.other.colors.secondary.darkGray}>
+						<Text c={theme.other.colors.secondary.darkGray}>
 							{t(description.key, { ns: id, defaultValue: description.text })}
 						</Text>
 					)}
 					{!!targetPop?.tsKey && !!targetPop.text && (
 						<Trans
 							i18nKey='common:crisis-support.who-this-serves'
-							components={{ Text: <Text color={theme.other.colors.secondary.darkGray}></Text> }}
+							components={{ Text: <Text c={theme.other.colors.secondary.darkGray}></Text> }}
 							t={t}
 							values={{ targetPop: t(`${id}:${targetPop.tsKey}`, { defaultValue: targetPop.text }) }}
 						/>
@@ -115,7 +115,7 @@ export const InternationalCard = ({
 								) : (
 									<Stack gap={0} key={`${i}-${access_type}`}>
 										{parseValue()}
-										<Text color={theme.other.colors.secondary.darkGray}>{getLabel(access_type)}</Text>
+										<Text c={theme.other.colors.secondary.darkGray}>{getLabel(access_type)}</Text>
 									</Stack>
 								)
 							})}

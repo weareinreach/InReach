@@ -256,7 +256,7 @@ const QuickLink = () => {
 								if (select) {
 									form.setFieldValue(
 										`data.${info.row.index}.attachedServices`,
-										form.values.data[info.row.index]?.services.map(({ id }) => id)
+										form.values.data[info.row.index]?.services.map(({ id }) => id) ?? []
 									)
 								} else {
 									form.setFieldValue(`data.${info.row.index}.attachedServices`, [])

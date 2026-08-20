@@ -57,7 +57,7 @@ export const Report = forwardRef<HTMLButtonElement, ReportProps>(
 						width={menuItem ? 16 : 24}
 					/>
 					{!omitLabel && (
-						<Text color={menuItem ? undefined : iconColor} className={!menuItem ? classes.text : undefined}>
+						<Text c={menuItem ? undefined : iconColor} className={!menuItem ? classes.text : undefined}>
 							{t('words.report')}
 						</Text>
 					)}

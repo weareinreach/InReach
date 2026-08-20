@@ -127,7 +127,7 @@ export const ReportSubmit = ({
 							{orgName || (!serviceId ? itemName : '') || t('words.unknown', { defaultValue: 'Unknown' })}
 						</strong>
 					</Text>
-					<Text size='xs' color='dimmed' style={{ fontStyle: 'italic' }}>
+					<Text size='xs' c='dimmed' style={{ fontStyle: 'italic' }}>
 						Organization ID: {orgId || (!serviceId ? itemId : '') || 'N/A'}
 					</Text>
 				</Stack>
@@ -137,7 +137,7 @@ export const ReportSubmit = ({
 							Service Name:{' '}
 							<strong>{serviceName || itemName || t('words.unknown', { defaultValue: 'Unknown' })}</strong>
 						</Text>
-						<Text size='xs' color='dimmed' style={{ fontStyle: 'italic' }}>
+						<Text size='xs' c='dimmed' style={{ fontStyle: 'italic' }}>
 							Service ID: {serviceId || itemId || 'N/A'}
 						</Text>
 					</Stack>
@@ -229,7 +229,7 @@ export const ReportSubmit = ({
 						required={isIncorrectInfo || isSomethingElse || isTranslation}
 					/>
 				)}
-				<Text size='xs' color='dimmed'>
+				<Text size='xs' c='dimmed'>
 					Sharing more information helps our team incorporate your suggestions or correct the issue.
 				</Text>
 

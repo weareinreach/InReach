@@ -7,7 +7,7 @@ import {
 	PasswordInput,
 	Text,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/react'
@@ -32,7 +32,7 @@ const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, 
 	const [opened, handler] = useDisclosure(false)
 	const form = useForm({
 		initialValues: { password: '' },
-		validate: zodResolver(schema),
+		validate: schemaResolver(schema, { sync: true }),
 	})
 	const { isMobile } = useScreenSize()
 

@@ -77,8 +77,13 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 					label={label}
 					value={[from ?? null, to ?? null]}
 					onChange={(next) => {
+						// v9 `DatePickerInput` always reports the new value as a date string (`YYYY-MM-DD`),
+						// even though `value` still accepts `Date` objects - convert back at this boundary
+						// so the rest of the filter pipeline can keep working with `Date` throughout.
 						const [nextFrom, nextTo] = next
-						onChange(nextFrom || nextTo ? [nextFrom ?? undefined, nextTo ?? undefined] : undefined)
+						const fromDate = nextFrom ? new Date(nextFrom) : undefined
+						const toDate = nextTo ? new Date(nextTo) : undefined
+						onChange(fromDate || toDate ? [fromDate, toDate] : undefined)
 					}}
 					clearable
 					size='xs'

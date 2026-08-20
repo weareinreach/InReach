@@ -10,7 +10,7 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { forwardRef } from 'react'
@@ -33,7 +33,7 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 			title: '',
 			text: '',
 		},
-		validate: zodResolver(schema),
+		validate: schemaResolver(schema, { sync: true }),
 	})
 
 	const { t } = useTranslation()
@@ -51,7 +51,7 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 						<Title ta='center' order={2}>
 							{t('alert-message')}
 						</Title>
-						<Text ta='center' color='black' className={classes.utility4Text}>
+						<Text ta='center' c='black' className={classes.utility4Text}>
 							{`${t('organization')}: ${orgName}`}
 						</Text>
 					</Stack>

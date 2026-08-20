@@ -1,5 +1,5 @@
 import { ActionIcon, Drawer, Group, rem, Stack, Table, Text, Textarea, Title, Tooltip } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useSession } from 'next-auth/react'
 import { useEffect, useMemo } from 'react'
 import { z } from 'zod'
@@ -48,7 +48,7 @@ export const InternalNotesDrawer = ({
 			organizationId: '',
 			note: '',
 		},
-		validate: zodResolver(noteSchema),
+		validate: schemaResolver(noteSchema, { sync: true }),
 	})
 
 	const {
@@ -152,7 +152,7 @@ export const InternalNotesDrawer = ({
 		notesContent = <Text ta='center'>Loading notes...</Text>
 	} else if (notesError) {
 		notesContent = (
-			<Text color='red' ta='center'>
+			<Text c='red' ta='center'>
 				Error loading notes.
 			</Text>
 		)
@@ -171,7 +171,7 @@ export const InternalNotesDrawer = ({
 											{note.user?.name || 'Unknown User'}
 										</Text>
 										<Group gap={8}>
-											<Text size='xs' color='dimmed'>
+											<Text size='xs' c='dimmed'>
 												{note.createdAt ? new Date(note.createdAt).toLocaleDateString() : ''}
 											</Text>
 											{note.reportId && (

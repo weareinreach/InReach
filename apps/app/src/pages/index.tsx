@@ -1,4 +1,4 @@
-import { Carousel, type Embla, useAnimationOffsetEffect } from '@mantine/carousel'
+import { Carousel } from '@mantine/carousel'
 import { Box, Card, Container, Grid, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { getCookie } from 'cookies-next'
 import Autoplay from 'embla-carousel-autoplay'
@@ -6,7 +6,7 @@ import { type GetStaticProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { type TFunction, Trans, useTranslation } from 'next-i18next/pages'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { donateEvent } from '@weareinreach/analytics/events'
 import { ms } from '@weareinreach/api/lib/milliseconds'
@@ -77,9 +77,7 @@ const Home: NextPageWithOptions = () => {
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
 	const { data: reviews } = api.review.getFeatured.useQuery(3, { staleTime: ms.minutes(2) })
-	const [embla, setEmbla] = useState<Embla | null>(null)
 	const autoplay = useRef(Autoplay({ delay: 5000 }))
-	useAnimationOffsetEffect(embla, 5000)
 
 	const launchAHpopup = getCookie('inr-ahpop')
 
@@ -208,7 +206,6 @@ const Home: NextPageWithOptions = () => {
 								<Carousel
 									withControls={false}
 									withIndicators
-									getEmblaApi={setEmbla}
 									plugins={[autoplay.current]}
 									onMouseEnter={autoplay.current.stop}
 									onMouseLeave={autoplay.current.reset}

@@ -30,7 +30,7 @@ export const NationalCard = ({
 					)}
 					<Title order={2}>{name}</Title>
 					{!!description?.key && !!description?.text && (
-						<Text color={theme.other.colors.secondary.darkGray}>
+						<Text c={theme.other.colors.secondary.darkGray}>
 							{t(description.key, { ns: id, defaultValue: description.text })}
 						</Text>
 					)}
@@ -94,7 +94,7 @@ export const NationalCard = ({
 								return (
 									<Stack gap={0} key={`${i}-${access_type}`}>
 										{parseValue()}
-										<Text color={theme.other.colors.secondary.darkGray}>
+										<Text c={theme.other.colors.secondary.darkGray}>
 											{t(key ?? '', { ns: id, defaultValue: text })}
 										</Text>
 									</Stack>

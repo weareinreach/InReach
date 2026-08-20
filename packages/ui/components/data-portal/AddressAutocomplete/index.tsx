@@ -1,5 +1,6 @@
 import {
 	Combobox,
+	type ComboboxItem,
 	type ComboboxItemGroup,
 	Group,
 	TextInput as MantineTextInput,
@@ -117,7 +118,7 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 	// `Select`'s `data` items in v7 can only be `{value, label}` - the flat `countryOptions` above
 	// (kept for its `flag`/`cca2`/`govDist` lookups) is regrouped into real `ComboboxItemGroup`s here
 	// instead of the old flat per-item `group` field, which v7 no longer renders as a group header.
-	const groupedCountryOptions = useMemo<ComboboxItemGroup[]>(() => {
+	const groupedCountryOptions = useMemo<ComboboxItemGroup<ComboboxItem>[]>(() => {
 		if (!countryOptions) {
 			return []
 		}

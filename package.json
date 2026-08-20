@@ -91,7 +91,6 @@
 		},
 		"patchedDependencies": {
 			"@crowdin/ota-client@1.0.0": "patches/@crowdin__ota-client@1.0.0.patch",
-			"@mantine/form@7.17.8": "patches/@mantine__form@7.17.8.patch",
 			"json-schema-to-zod@2.8.1": "patches/json-schema-to-zod@2.8.1.patch",
 			"social-links@1.15.1": "patches/social-links@1.15.1.patch"
 		}

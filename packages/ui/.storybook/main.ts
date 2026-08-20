@@ -147,13 +147,19 @@ const storybookConfig: StorybookConfig = {
 	// "local dev, real `.env` secrets available" from every other case (CI, Chromatic, a teammate's
 	// machine without a `.env`), where `@weareinreach/env`'s validation should just be skipped rather
 	// than crash the whole Storybook preview on a missing `NEXT_PUBLIC_GOOGLE_MAPS_API`.
-	env: isDev
-		? {
-				NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string,
-				STORYBOOK_PROJECT_ROOT: path.resolve(__dirname, '../'),
-			}
-		: {
-				SKIP_ENV_VALIDATION: 'true',
-			},
+	env: {
+		// Nothing in Storybook/webpack sets this automatically - `~ui/lib/trpcClient` branches on it
+		// to pick the React Query-based client (matching `.storybook/decorators/Trpc.tsx`'s Provider)
+		// instead of the Next.js App Router client, which has an incompatible shape.
+		STORYBOOK: 'true',
+		...(isDev
+			? {
+					NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string,
+					STORYBOOK_PROJECT_ROOT: path.resolve(__dirname, '../'),
+				}
+			: {
+					SKIP_ENV_VALIDATION: 'true',
+				}),
+	},
 }
 export default storybookConfig

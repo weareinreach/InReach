@@ -12,7 +12,7 @@ import {
 	Title,
 	useCombobox,
 } from '@mantine/core'
-import { zodResolver } from '@mantine/form'
+import { schemaResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
@@ -63,7 +63,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		},
 	})
 
-	const validate = useMemo(() => zodResolver(SuggestionSchema), [])
+	const validate = useMemo(() => schemaResolver(SuggestionSchema, { sync: true }), [])
 	const form = useForm({
 		validate,
 		validateInputOnBlur: true,
@@ -366,7 +366,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						/>
 
 						{isWebsiteMatch && (
-							<Text size='sm' color='red'>
+							<Text size='sm' c='red'>
 								This website is already associated with an existing organization in our system. If you believe
 								this is an error, please double check the URL you entered.
 							</Text>

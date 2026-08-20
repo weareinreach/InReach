@@ -1,4 +1,4 @@
-import { createFormContext, zodResolver } from '@mantine/form'
+import { createFormContext, schemaResolver } from '@mantine/form'
 import parsePhoneNumber from 'libphonenumber-js'
 import { z } from 'zod'
 
@@ -32,7 +32,7 @@ const PhoneEmailSchema = z
 	)
 
 export const formHookParams: Parameters<typeof useForm>[0] = {
-	validate: zodResolver(PhoneEmailSchema),
+	validate: schemaResolver(PhoneEmailSchema, { sync: true }),
 	validateInputOnBlur: true,
 	transformValues: ({ phoneNumber, ...data }) => ({
 		phoneNumber: phoneNumber ? parsePhoneNumber(phoneNumber)?.nationalNumber : undefined,

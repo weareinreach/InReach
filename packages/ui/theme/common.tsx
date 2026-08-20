@@ -37,7 +37,7 @@ import radioClasses from './components/Radio.module.css'
 import switchClasses from './components/Switch.module.css'
 import tabsClasses from './components/Tabs.module.css'
 import titleBaseClasses from './components/Title.module.css'
-import typographyClasses from './components/TypographyStylesProvider.module.css'
+import typographyClasses from './components/Typography.module.css'
 import { Anchor as anchorVariants } from './variants/Anchor'
 import { Card as cardVariants } from './variants/Card'
 import { List as listVariants } from './variants/List'
@@ -283,8 +283,9 @@ export const commonTheme = createTheme({
 		Grid: {
 			defaultProps: {
 				columns: 12,
-				// v7 replaced the separate `gutterXl` prop with a responsive value object
-				gutter: { base: rem(20), xl: rem(40) },
+				// v7 replaced the separate `gutterXl` prop with a responsive value object; v9 renamed
+				// `gutter` itself to `gap` for consistency with other layout components
+				gap: { base: rem(20), xl: rem(40) },
 				justify: 'center',
 				my: 0,
 			} satisfies Partial<GridProps>,
@@ -471,7 +472,7 @@ export const commonTheme = createTheme({
 				},
 			}),
 		},
-		TypographyStylesProvider: {
+		Typography: {
 			classNames: typographyClasses,
 		},
 	},

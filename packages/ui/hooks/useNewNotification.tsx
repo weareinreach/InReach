@@ -22,7 +22,7 @@ export const InstantFeedback = ({ displayText, link }: NotificationInnerProps) =
 
 	return (
 		<Group justify='space-between' gap='lg'>
-			<Text color={theme.other.colors.secondary.white} fw={theme.other.fontWeight.semibold}>
+			<Text c={theme.other.colors.secondary.white} fw={theme.other.fontWeight.semibold}>
 				{displayText}
 			</Text>
 			{link && (

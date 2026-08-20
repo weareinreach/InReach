@@ -115,7 +115,7 @@ export const OrgQuickView = ({ opened, onClose, match }: OrgQuickViewProps) => {
 							<Stack gap={8}>
 								<Title order={2}>{data.name}</Title>
 								{data.locations?.[0] && (
-									<Text color='dimmed' size='md' fw={500}>
+									<Text c='dimmed' size='md' fw={500}>
 										{data.locations[0].city}, {data.locations[0].govDist?.abbrev}
 									</Text>
 								)}

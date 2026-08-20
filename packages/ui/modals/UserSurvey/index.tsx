@@ -8,7 +8,7 @@ import {
 	Text,
 	Title,
 } from '@mantine/core'
-import { zodResolver } from '@mantine/form'
+import { schemaResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
@@ -66,7 +66,7 @@ const SurveyModalBody = forwardRef<HTMLButtonElement, SurveyModalBodyProps>((pro
 		.partial()
 
 	const form = useUserSurveyForm({
-		validate: zodResolver(UserSurveySchema),
+		validate: schemaResolver(UserSurveySchema, { sync: true }),
 		// Seeds every field so the TextInputs/NumberInput below start controlled - otherwise
 		// they render with value={undefined} until touched, tripping React's
 		// uncontrolled-to-controlled input warning (immigrationOther/ethnicityOther only render

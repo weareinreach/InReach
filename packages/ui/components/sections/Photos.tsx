@@ -1,4 +1,4 @@
-import { Carousel, type Embla, useAnimationOffsetEffect } from '@mantine/carousel'
+import { Carousel } from '@mantine/carousel'
 import { AspectRatio, Group, Modal, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import Image from 'next/image'
@@ -39,9 +39,6 @@ export const PhotosSection = ({ parentId }: PhotosSectionProps) => {
 	const [initialSlide, setInitialSlide] = useState<number | undefined>(undefined)
 	const { data: photos } = api.orgPhoto.getByParent.useQuery(parentId)
 	const TRANSITION_DURATION = 100
-	const [embla, setEmbla] = useState<Embla | null>(null)
-
-	useAnimationOffsetEffect(embla, TRANSITION_DURATION)
 
 	const photosArray = photos === undefined ? [] : Array.isArray(photos) ? photos : [photos]
 	const mainImages = isMobile ? 2 : 4
@@ -91,8 +88,7 @@ export const PhotosSection = ({ parentId }: PhotosSectionProps) => {
 					initialSlide={initialSlide}
 					classNames={{ indicator: classes.indicator }}
 					withIndicators
-					loop
-					getEmblaApi={setEmbla}
+					emblaOptions={{ loop: true }}
 					maw={isMobile ? 300 : 720}
 				>
 					{carouselImages}

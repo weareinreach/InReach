@@ -1,4 +1,5 @@
 import {
+	type ComboboxItem,
 	type ComboboxItemGroup,
 	Group,
 	Select,
@@ -107,7 +108,7 @@ export const PhoneNumberEntry = ({
 	// `Select`'s `data` items in v7 can only be `{value, label}` - the flat `countryList` above (kept
 	// for its `data`/`group` lookups) is regrouped into real `ComboboxItemGroup`s here instead of the
 	// old flat per-item `group` field, which v7 no longer renders as a group header.
-	const groupedCountryData = useMemo<ComboboxItemGroup[]>(() => {
+	const groupedCountryData = useMemo<ComboboxItemGroup<ComboboxItem>[]>(() => {
 		const groups = new Map<string, PhoneCountryItem[]>()
 		for (const item of countryList) {
 			const group = groups.get(item.group) ?? []

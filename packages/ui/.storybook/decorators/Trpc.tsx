@@ -23,17 +23,21 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 			})
 	)
 
-	const trpcClientOpts = {
-		links: [
-			loggerLink(),
-			httpLink({
-				url: '/trpc',
-				transformer,
-			}),
-		],
-	}
-
-	const [trpcClient, _setTRPCClient] = useState(storybookTRPC.createClient(trpcClientOpts))
+	// Lazy initializer, matching tRPC's documented pattern - calling `createClient` eagerly on every
+	// render (rather than only once, on mount) was producing a client whose internal untyped-client
+	// symbol the Provider couldn't read back out (`Cannot read properties of undefined (reading
+	// 'Symbol(trpc_untypedClient)')`), even though the freshly-created client looked valid in isolation.
+	const [trpcClient] = useState(() =>
+		storybookTRPC.createClient({
+			links: [
+				loggerLink(),
+				httpLink({
+					url: '/trpc',
+					transformer,
+				}),
+			],
+		})
+	)
 	const StoryComponent = Story as ComponentType
 
 	return (

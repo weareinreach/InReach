@@ -10,7 +10,7 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useMemo } from 'react'
@@ -29,7 +29,7 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 		email: z.string().email({ message: t('form-error-enter-valid-email') }),
 	})
 	const passwordResetForm = useForm<FormProps>({
-		validate: zodResolver(EmailSchema),
+		validate: schemaResolver(EmailSchema, { sync: true }),
 		validateInputOnBlur: true,
 		initialValues: {
 			email: '',

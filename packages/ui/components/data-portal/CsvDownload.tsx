@@ -113,7 +113,7 @@ export const CsvDownload: React.FC<CsvDownloadProps> = ({
 				</Button>
 			</Tooltip>
 			{currentError && (
-				<Text color='red' size='sm' mt={4}>
+				<Text c='red' size='sm' mt={4}>
 					{currentError}
 				</Text>
 			)}

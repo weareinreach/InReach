@@ -15,7 +15,7 @@ import {
 	Title,
 	useCombobox,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import filterObject from 'just-filter-object'
@@ -69,7 +69,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
 	const [isSaved, setIsSaved] = useState(false)
 	const form = useForm<FormSchema>({
-		validate: zodResolver(FormSchema),
+		validate: schemaResolver(FormSchema, { sync: true }),
 		initialValues: {
 			id: '',
 			data: { accessible: {}, addressVisibility: AddressVisibility.FULL },

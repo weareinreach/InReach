@@ -1,5 +1,12 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { type ComboboxItemGroup, Group, Text, TextInput, type TextInputProps } from '@mantine/core'
+import {
+	type ComboboxItem,
+	type ComboboxItemGroup,
+	Group,
+	Text,
+	TextInput,
+	type TextInputProps,
+} from '@mantine/core'
 import { AsYouType } from 'libphonenumber-js'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -53,7 +60,7 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	// `Select`'s `data` items in v7 can only be `{value, label}` - the flat `countryList` above (kept
 	// for its `data`/`group` lookups) is regrouped into real `ComboboxItemGroup`s here instead of the
 	// old flat per-item `group` field, which v7 no longer renders as a group header.
-	const groupedCountryData = useMemo<ComboboxItemGroup[]>(() => {
+	const groupedCountryData = useMemo<ComboboxItemGroup<ComboboxItem>[]>(() => {
 		const groups = new Map<string, typeof countryList>()
 		for (const item of countryList) {
 			const group = groups.get(item.group) ?? []
@@ -216,7 +223,7 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 					rightSection={countrySelection}
 					rightSectionWidth={56}
 				/>
-				<Text size='xs' color='dimmed'>
+				<Text size='xs' c='dimmed'>
 					This number couldn&apos;t be displayed in the normal format - showing the raw saved value. Re-enter
 					it to fix.
 				</Text>

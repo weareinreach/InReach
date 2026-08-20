@@ -1,6 +1,7 @@
 import {
 	Box,
 	Combobox,
+	type ComboboxItem,
 	type ComboboxItemGroup,
 	PasswordInput,
 	Popover,
@@ -178,7 +179,7 @@ export const LanguageSelect = () => {
 		return [...groups.entries()].map(([group, items]) => ({
 			group,
 			items: items.map(({ value, label }) => ({ value, label })),
-		})) satisfies ComboboxItemGroup[]
+		})) satisfies ComboboxItemGroup<ComboboxItem>[]
 	})()
 
 	return (

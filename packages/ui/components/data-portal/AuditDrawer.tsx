@@ -85,7 +85,7 @@ export const AuditDrawer = ({
 		mainContent = <Loader style={{ margin: 'auto', display: 'block' }} />
 	} else if (error) {
 		mainContent = (
-			<Text color='red' style={{ textAlign: 'center' }}>
+			<Text c='red' style={{ textAlign: 'center' }}>
 				Error loading audit trail data.
 			</Text>
 		)

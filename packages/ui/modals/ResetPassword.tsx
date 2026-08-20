@@ -11,7 +11,7 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
-import { useForm, type UseFormReturnType, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm, type UseFormReturnType } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
@@ -58,7 +58,7 @@ interface PasswordRequirementProps {
 	label: string
 }
 
-const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: FormProps) => FormProps> }) => {
+const FormPassword = ({ form }: { form: UseFormReturnType<FormProps> }) => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
 
@@ -147,7 +147,7 @@ const CredentialResetModalBody = forwardRef<HTMLButtonElement, CredentialResetMo
 	const DataSchema = z.object({ r: z.string(), code: z.string() })
 
 	const passwordResetForm = useForm<FormProps>({
-		validate: zodResolver(FormSchema),
+		validate: schemaResolver(FormSchema, { sync: true }),
 		validateInputOnBlur: true,
 		initialValues: {
 			data: '',
