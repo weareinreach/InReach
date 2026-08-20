@@ -188,7 +188,11 @@ const config = tseslint.config(
 		},
 	},
 	{
-		ignores: ['**/node_modules/**', '**/dist/**', '**/.next/**'],
+		// `eslint .` walks every file with no extension filter of its own - without this, a bare
+		// `.css`/`.module.css` file gets handed to `@typescript-eslint/parser` (via the type-aware
+		// `projectService` set above, which has no `files` restriction) and fails with "extension is
+		// non-standard", which in turn breaks the CI reporter's GitHub check-run upload entirely.
+		ignores: ['**/node_modules/**', '**/dist/**', '**/.next/**', '**/*.css'],
 	}
 )
 

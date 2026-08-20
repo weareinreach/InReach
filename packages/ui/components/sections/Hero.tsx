@@ -17,10 +17,14 @@ type RevolvingBoxProps = {
 }
 type RandomArr = <T extends Array<unknown>>(arr: T) => T[number]
 
-const randomArrMember: RandomArr = (arr) => arr[Math.floor(Math.random() * arr.length)]
+// Purely decorative (picking which hero copy/pattern to show) - uses the Web Crypto API rather
+// than `Math.random()` regardless, since that's a cheap, universally-available upgrade.
+const randomFloat = () => crypto.getRandomValues(new Uint32Array(1))[0]! / 2 ** 32
+
+const randomArrMember: RandomArr = (arr) => arr[Math.floor(randomFloat() * arr.length)]
 const getRandomNumber = (min: number, max: number) => {
 	// Get the random number between min and max.
-	return Math.floor(Math.random() * (max - min + 1)) + min
+	return Math.floor(randomFloat() * (max - min + 1)) + min
 }
 
 const RevolvingBox = ({ role }: RevolvingBoxProps) => {
