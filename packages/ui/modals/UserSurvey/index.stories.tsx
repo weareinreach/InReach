@@ -4,12 +4,12 @@ import { type Meta } from '@storybook/nextjs'
 import { Button } from '~ui/components/core/Button'
 import { user } from '~ui/mockData/user'
 
-import { UserSurveyModalLauncher } from '.'
+import { SurveyModalLauncher } from '.'
 import { getTRPCMock } from '../../lib/getTrpcMock'
 
 export default {
 	title: 'Modals/User Survey',
-	component: UserSurveyModalLauncher,
+	component: SurveyModalLauncher,
 
 	beforeEach({ msw }) {
 		msw.use(
@@ -33,9 +33,9 @@ export default {
 
 	render: (args) => (
 		<Center h='50vh'>
-			<UserSurveyModalLauncher {...args} />
+			<SurveyModalLauncher {...args} />
 		</Center>
 	),
-} satisfies Meta<typeof UserSurveyModalLauncher>
+} satisfies Meta<typeof SurveyModalLauncher>
 
 export const Modal = {}

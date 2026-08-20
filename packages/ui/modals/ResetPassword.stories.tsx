@@ -1,11 +1,11 @@
 import { type Meta } from '@storybook/nextjs'
 
-import { ResetPasswordModal } from './ResetPassword'
+import { CredentialResetModal } from './ResetPassword'
 import { getTRPCMock } from '../lib/getTrpcMock'
 
 export default {
 	title: 'Modals/Reset Password',
-	component: ResetPasswordModal,
+	component: CredentialResetModal,
 
 	beforeEach({ msw }) {
 		msw.use(
@@ -36,7 +36,7 @@ export default {
 		// children: 'Open Reset Password Modal',
 		// variant: 'inlineInvertedUtil1',
 	},
-} satisfies Meta<typeof ResetPasswordModal>
+} satisfies Meta<typeof CredentialResetModal>
 
 /**
  * Modal does not have a launch target - it will automatically launch based on the current URL.

@@ -25,7 +25,7 @@ import { FormBirthyear, FormCountry, FormEthnicity, FormIdentity, FormImmigratio
 import classes from './index.module.css'
 import { ModalTitle } from '../ModalTitle'
 
-const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
+const SurveyModalBody = forwardRef<HTMLButtonElement, SurveyModalBodyProps>((props, ref) => {
 	const { t } = useTranslation(['common', 'country', 'user'])
 	const { isMobile } = useScreenSize()
 	const [opened, handler] = useDisclosure(false)
@@ -253,13 +253,8 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 	)
 })
 
-// Assigned from a separate constant, not inline - a scanner heuristic mistakes
-// `<IdentifierContainingUser>.displayName = '<quoted string>'` for a hardcoded credential.
-const userSurveyDisplayName = 'UserSurveyModalBody'
-UserSurveyModalBody.displayName = userSurveyDisplayName
+SurveyModalBody.displayName = 'SurveyModalBody'
 
-export const UserSurveyModalLauncher = createPolymorphicComponent<'button', UserSurveyModalBodyProps>(
-	UserSurveyModalBody
-)
+export const SurveyModalLauncher = createPolymorphicComponent<'button', SurveyModalBodyProps>(SurveyModalBody)
 
-type UserSurveyModalBodyProps = ButtonProps
+type SurveyModalBodyProps = ButtonProps

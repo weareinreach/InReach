@@ -20,7 +20,7 @@ import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { cx } from '@weareinreach/ui/lib/cx'
 import { AccountVerifyModal } from '@weareinreach/ui/modals/AccountVerified'
 import { PrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
-import { ResetPasswordModal } from '@weareinreach/ui/modals/ResetPassword'
+import { CredentialResetModal } from '@weareinreach/ui/modals/ResetPassword'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -252,7 +252,7 @@ const Home: NextPageWithOptions = () => {
 				</Container>
 			</CallOut>
 			<AccountVerifyModal />
-			<ResetPasswordModal />
+			<CredentialResetModal />
 			<AntiHatePopup autoLaunch={!launchAHpopup} />
 		</>
 	)

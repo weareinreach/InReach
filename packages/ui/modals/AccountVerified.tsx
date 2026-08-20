@@ -23,7 +23,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from './ModalTitle'
 import { PrivacyStatementModal } from './PrivacyStatement'
-import { UserSurveyModalLauncher } from './UserSurvey'
+import { SurveyModalLauncher } from './UserSurvey'
 
 const isRecord = (data: unknown) => z.record(z.string(), z.any()).safeParse(data).success
 const UrlParams = z.object({ c: z.string(), code: z.string() }).refine((data) => {
@@ -147,9 +147,9 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 					<Button variant={variants.Button.secondaryLg} onClick={handler.close} radius='md'>
 						{t('survey.not-right-now')}
 					</Button>
-					<UserSurveyModalLauncher component={Button} variant={variants.Button.primaryLg}>
+					<SurveyModalLauncher component={Button} variant={variants.Button.primaryLg}>
 						{t('survey.start-survey')}
-					</UserSurveyModalLauncher>
+					</SurveyModalLauncher>
 				</Group>
 			</Stack>
 		),

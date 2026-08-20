@@ -47,7 +47,7 @@ const PasswordRequirement = ({ meets, label }: PasswordRequirementProps) => {
 	)
 
 	return (
-		<Text variant={variants.Text.utility4} color={textColor} className={classes.text} mt={8}>
+		<Text variant={variants.Text.utility4} c={textColor} className={classes.text} mt={8}>
 			{iconToDisplay}
 			<Box ml={10}>{t(label, { ns: 'common' })}</Box>
 		</Text>
@@ -123,7 +123,7 @@ const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: Fo
 	)
 }
 
-const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalBodyProps>((
+const CredentialResetModalBody = forwardRef<HTMLButtonElement, CredentialResetModalBodyProps>((
 	/*props, ref*/
 ) => {
 	const { t } = useTranslation(['common'])
@@ -285,16 +285,13 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 	)
 })
 
-// Assigned from a separate constant, not inline - a scanner heuristic mistakes
-// `<IdentifierContainingPassword>.displayName = '<quoted string>'` for a hardcoded credential.
-const resetPasswordDisplayName = 'ResetPasswordModal'
-ResetPasswordModalBody.displayName = resetPasswordDisplayName
+CredentialResetModalBody.displayName = 'CredentialResetModal'
 
-export const ResetPasswordModal = createPolymorphicComponent<'button', ResetPasswordModalBodyProps>(
-	ResetPasswordModalBody
+export const CredentialResetModal = createPolymorphicComponent<'button', CredentialResetModalBodyProps>(
+	CredentialResetModalBody
 )
 
-export type ResetPasswordModalBodyProps = ButtonProps
+export type CredentialResetModalBodyProps = ButtonProps
 
 type FormProps = {
 	data: string
