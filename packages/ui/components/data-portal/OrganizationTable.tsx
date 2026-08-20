@@ -161,7 +161,9 @@ export const OrganizationTable = () => {
 				size: 150,
 				filter: { type: 'date-range' },
 				cell: ({ value, depth }) => {
-					if (depth > 0) return null
+					if (depth > 0) {
+						return null
+					}
 					if (!value) {
 						return (
 							<Group gap={4} c={theme.other.colors.tertiary.red}>
@@ -180,7 +182,9 @@ export const OrganizationTable = () => {
 				size: 150,
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
-					if (!value) return null
+					if (!value) {
+						return null
+					}
 					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
@@ -191,7 +195,9 @@ export const OrganizationTable = () => {
 				size: 150,
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
-					if (!value) return null
+					if (!value) {
+						return null
+					}
 					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},

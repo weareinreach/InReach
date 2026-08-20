@@ -68,7 +68,9 @@ const RemoteServicesEditPage: NextPage<InferGetServerSidePropsType<typeof getSer
 	}, [router, slug])
 	const handleTabChange = useCallback(
 		(tab: string | null) => {
-			if (!tab) return
+			if (!tab) {
+				return
+			}
 			setActiveTab(tab)
 			if (tab === 'services') {
 				servicesRef.current?.scrollIntoView({ behavior: 'smooth' })

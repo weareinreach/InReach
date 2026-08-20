@@ -5,9 +5,15 @@ import { type TForReviewTableSchema } from './query.forReviewTable.schema'
 
 const buildWhere = (input: TForReviewTableSchema): Prisma.OrgReviewWhereInput => {
 	const where: Prisma.OrgReviewWhereInput = {}
-	if (input.visible !== undefined) where.visible = input.visible
-	if (input.deleted !== undefined) where.deleted = input.deleted
-	if (input.rating !== undefined) where.rating = input.rating
+	if (input.visible !== undefined) {
+		where.visible = input.visible
+	}
+	if (input.deleted !== undefined) {
+		where.deleted = input.deleted
+	}
+	if (input.rating !== undefined) {
+		where.rating = input.rating
+	}
 	if (input.search) {
 		where.OR = [
 			{ reviewText: { contains: input.search, mode: 'insensitive' } },

@@ -39,9 +39,13 @@ export const FormImmigration = () => {
 	const options = surveyOptions?.immigration
 	const moveToEnd = ['immigration-prefer-not-to-say', 'immigration-immigrant']
 	moveToEnd.forEach((tag) => {
-		if (!options?.length) return
+		if (!options?.length) {
+			return
+		}
 		const item = options.find(({ tsKey }) => tsKey === tag)
-		if (!item) return
+		if (!item) {
+			return
+		}
 		const idx = options.indexOf(item)
 		if (item && idx !== -1) {
 			options.splice(idx, 1)
@@ -94,7 +98,9 @@ export const FormCountry = () => {
 	const variants = useCustomVariant()
 
 	useEffect(() => {
-		if (!surveyOptionsData) return
+		if (!surveyOptionsData) {
+			return
+		}
 		setSelectOptions(
 			surveyOptionsData.countries.map(({ id, tsKey, tsNs }) => ({
 				value: id,
@@ -105,7 +111,9 @@ export const FormCountry = () => {
 	}, [surveyOptionsData])
 
 	const handleCountrySelect = (event: string | null) => {
-		if (event) form.setFieldValue('countryOriginId', event)
+		if (event) {
+			form.setFieldValue('countryOriginId', event)
+		}
 	}
 
 	return (
@@ -187,9 +195,13 @@ export const FormEthnicity = () => {
 	const options = surveyOptions?.ethnicity
 	const moveToEnd = ['eth-prefer-not-to-say', 'eth-other']
 	moveToEnd.forEach((tag) => {
-		if (!options?.length) return
+		if (!options?.length) {
+			return
+		}
 		const item = options.find(({ tsKey }) => tsKey === tag)
-		if (!item) return
+		if (!item) {
+			return
+		}
 		const idx = options.indexOf(item)
 		if (item && idx !== -1) {
 			options.splice(idx, 1)

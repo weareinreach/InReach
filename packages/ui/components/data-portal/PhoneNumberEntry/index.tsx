@@ -47,7 +47,9 @@ export const PhoneNumberEntry = ({
 	const { data: countriesData } = api.fieldOpt.countries.useQuery({ activeForOrgs: true })
 
 	useEffect(() => {
-		if (!countriesData) return
+		if (!countriesData) {
+			return
+		}
 		setCountryList(
 			countriesData
 				.map(({ id, flag, name, cca2 }) => ({
@@ -61,7 +63,9 @@ export const PhoneNumberEntry = ({
 						return -1
 					} else if (topCountries.includes(b.data.cca2) && !topCountries.includes(a.data.cca2)) {
 						return 1
-					} else return a.data.cca2.localeCompare(b.data.cca2)
+					} else {
+						return a.data.cca2.localeCompare(b.data.cca2)
+					}
 				})
 		)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,8 +74,11 @@ export const PhoneNumberEntry = ({
 	const phoneFormatter = new AsYouType(selectedCountry)
 	useEffect(() => {
 		const { data } = countryList.find(({ value }) => value === countrySelectProps.value) ?? {}
-		if (data?.cca2 && isCountryCode(data.cca2)) setSelectedCountry(data.cca2)
-		else if (data === undefined) setSelectedCountry(undefined)
+		if (data?.cca2 && isCountryCode(data.cca2)) {
+			setSelectedCountry(data.cca2)
+		} else if (data === undefined) {
+			setSelectedCountry(undefined)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [countrySelectProps.value])
 

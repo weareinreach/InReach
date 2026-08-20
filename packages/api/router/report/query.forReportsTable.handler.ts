@@ -5,11 +5,21 @@ import { type TForReportsTableSchema } from './query.forReportsTable.schema'
 
 const buildWhere = (input: TForReportsTableSchema): Prisma.ReportWhereInput => {
 	const where: Prisma.ReportWhereInput = {}
-	if (input.id) where.id = input.id
-	if (input.status) where.status = input.status
-	if (input.issueType?.length) where.issueType = { in: input.issueType }
-	if (input.organizationId) where.organizationId = input.organizationId
-	if (input.informed !== undefined) where.informed = input.informed
+	if (input.id) {
+		where.id = input.id
+	}
+	if (input.status) {
+		where.status = input.status
+	}
+	if (input.issueType?.length) {
+		where.issueType = { in: input.issueType }
+	}
+	if (input.organizationId) {
+		where.organizationId = input.organizationId
+	}
+	if (input.informed !== undefined) {
+		where.informed = input.informed
+	}
 	if (input.search) {
 		where.OR = [
 			{ orgNameSnapshot: { contains: input.search, mode: 'insensitive' } },

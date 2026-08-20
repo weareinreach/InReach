@@ -8,7 +8,9 @@ const DATA_PORTAL_ROLE_NAMES = ['root', 'dataPortalAdmin', 'dataPortalManager', 
 
 const buildWhere = (input: TForUserTableSchema): Prisma.UserWhereInput => {
 	const where: Prisma.UserWhereInput = {}
-	if (input.active !== undefined) where.active = input.active
+	if (input.active !== undefined) {
+		where.active = input.active
+	}
 	if (input.search) {
 		where.OR = [
 			{ name: { contains: input.search, mode: 'insensitive' } },

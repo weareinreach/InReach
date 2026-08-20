@@ -63,7 +63,9 @@ const OrgLocationPage: NextPage = () => {
 	}, [data, status, orgData, orgDataStatus, searchState.params])
 
 	const handleTabChange = useCallback((tab: string | null) => {
-		if (!tab) return
+		if (!tab) {
+			return
+		}
 		setActiveTab(tab)
 		switch (tab) {
 			case 'services': {

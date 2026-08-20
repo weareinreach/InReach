@@ -147,7 +147,9 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 									data={(dataCountry ?? []) as ComboboxData}
 									value={selected.country}
 									onChange={(value) => {
-										if (value) setVal.country(value)
+										if (value) {
+											setVal.country(value)
+										}
 									}}
 								/>
 								{selected.country && !!dataDistrict?.length && (
@@ -156,7 +158,9 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 										data={(dataDistrict ?? []) as ComboboxData}
 										value={selected.govDist}
 										onChange={(value) => {
-											if (value) setVal.govDist(value)
+											if (value) {
+												setVal.govDist(value)
+											}
 										}}
 									/>
 								)}
@@ -166,7 +170,9 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 										data={(dataSubDist ?? []) as ComboboxData}
 										value={selected.subDist}
 										onChange={(value) => {
-											if (value) setVal.subDist(value)
+											if (value) {
+												setVal.subDist(value)
+											}
 										}}
 									/>
 								)}

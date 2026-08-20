@@ -28,11 +28,21 @@ const ORG_SELECT = {
 
 const buildWhere = (input: TForOrganizationTableSchema): Prisma.OrganizationWhereInput => {
 	const where: Prisma.OrganizationWhereInput = {}
-	if (input.published !== undefined) where.published = input.published
-	if (input.deleted !== undefined) where.deleted = input.deleted
-	if (input.lastVerified) where.lastVerified = { gte: input.lastVerified.from, lte: input.lastVerified.to }
-	if (input.updatedAt) where.updatedAt = { gte: input.updatedAt.from, lte: input.updatedAt.to }
-	if (input.createdAt) where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
+	if (input.published !== undefined) {
+		where.published = input.published
+	}
+	if (input.deleted !== undefined) {
+		where.deleted = input.deleted
+	}
+	if (input.lastVerified) {
+		where.lastVerified = { gte: input.lastVerified.from, lte: input.lastVerified.to }
+	}
+	if (input.updatedAt) {
+		where.updatedAt = { gte: input.updatedAt.from, lte: input.updatedAt.to }
+	}
+	if (input.createdAt) {
+		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
+	}
 	return where
 }
 
@@ -98,14 +108,30 @@ const searchIds = async (
 			OR o.id ILIKE ${`%${input.search}%`}
 		)`,
 	]
-	if (input.published !== undefined) conditions.push(Prisma.sql`o.published = ${input.published}`)
-	if (input.deleted !== undefined) conditions.push(Prisma.sql`o.deleted = ${input.deleted}`)
-	if (input.lastVerified?.from) conditions.push(Prisma.sql`o."lastVerified" >= ${input.lastVerified.from}`)
-	if (input.lastVerified?.to) conditions.push(Prisma.sql`o."lastVerified" <= ${input.lastVerified.to}`)
-	if (input.updatedAt?.from) conditions.push(Prisma.sql`o."updatedAt" >= ${input.updatedAt.from}`)
-	if (input.updatedAt?.to) conditions.push(Prisma.sql`o."updatedAt" <= ${input.updatedAt.to}`)
-	if (input.createdAt?.from) conditions.push(Prisma.sql`o."createdAt" >= ${input.createdAt.from}`)
-	if (input.createdAt?.to) conditions.push(Prisma.sql`o."createdAt" <= ${input.createdAt.to}`)
+	if (input.published !== undefined) {
+		conditions.push(Prisma.sql`o.published = ${input.published}`)
+	}
+	if (input.deleted !== undefined) {
+		conditions.push(Prisma.sql`o.deleted = ${input.deleted}`)
+	}
+	if (input.lastVerified?.from) {
+		conditions.push(Prisma.sql`o."lastVerified" >= ${input.lastVerified.from}`)
+	}
+	if (input.lastVerified?.to) {
+		conditions.push(Prisma.sql`o."lastVerified" <= ${input.lastVerified.to}`)
+	}
+	if (input.updatedAt?.from) {
+		conditions.push(Prisma.sql`o."updatedAt" >= ${input.updatedAt.from}`)
+	}
+	if (input.updatedAt?.to) {
+		conditions.push(Prisma.sql`o."updatedAt" <= ${input.updatedAt.to}`)
+	}
+	if (input.createdAt?.from) {
+		conditions.push(Prisma.sql`o."createdAt" >= ${input.createdAt.from}`)
+	}
+	if (input.createdAt?.to) {
+		conditions.push(Prisma.sql`o."createdAt" <= ${input.createdAt.to}`)
+	}
 
 	// While actively searching, relevance wins over any user-selected column sort — a fuzzy match's rank is
 	// the point, not this org's alphabetical position.
@@ -128,7 +154,9 @@ const forOrganizationTable = async ({ input }: TRPCHandlerParams<TForOrganizatio
 
 	if (search) {
 		const { ids, total } = await searchIds({ ...input, search })
-		if (ids.length === 0) return { results: [], total }
+		if (ids.length === 0) {
+			return { results: [], total }
+		}
 
 		const rows = await prisma.organization.findMany({ where: { id: { in: ids } }, select: ORG_SELECT })
 		const byId = new Map(rows.map((row) => [row.id, row]))

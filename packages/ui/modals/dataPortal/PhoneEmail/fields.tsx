@@ -23,7 +23,9 @@ export const PhoneTypeSelect = () => {
 	const { data: phoneTypesData } = api.fieldOpt.phoneTypes.useQuery(undefined)
 
 	useEffect(() => {
-		if (!phoneTypesData) return
+		if (!phoneTypesData) {
+			return
+		}
 		setOptions(phoneTypesData.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [phoneTypesData])

@@ -118,7 +118,9 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 	// (kept for its `flag`/`cca2`/`govDist` lookups) is regrouped into real `ComboboxItemGroup`s here
 	// instead of the old flat per-item `group` field, which v7 no longer renders as a group header.
 	const groupedCountryOptions = useMemo<ComboboxItemGroup[]>(() => {
-		if (!countryOptions) return []
+		if (!countryOptions) {
+			return []
+		}
 		const groups = new Map<string, typeof countryOptions>()
 		for (const item of countryOptions) {
 			const list = groups.get(item.group) ?? []
@@ -147,7 +149,9 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 	)
 
 	const selectedCountryCca2 = useMemo(() => {
-		if (!selectedCountryId || !countryOptions) return undefined
+		if (!selectedCountryId || !countryOptions) {
+			return undefined
+		}
 		return countryOptions.find((c) => c.value === selectedCountryId)?.cca2
 	}, [countryOptions, selectedCountryId])
 
@@ -186,8 +190,12 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 			}
 
 			setFormValue(getFieldName('city'), result.city as FieldPathValue<T, Path<T>>)
-			if (country) setFormValue(getFieldName('countryId'), country.value as FieldPathValue<T, Path<T>>)
-			if (govDist) setFormValue(getFieldName('govDistId'), govDist.value as FieldPathValue<T, Path<T>>)
+			if (country) {
+				setFormValue(getFieldName('countryId'), country.value as FieldPathValue<T, Path<T>>)
+			}
+			if (govDist) {
+				setFormValue(getFieldName('govDistId'), govDist.value as FieldPathValue<T, Path<T>>)
+			}
 			setFormValue(getFieldName('latitude'), result.geometry.location.lat as FieldPathValue<T, Path<T>>)
 			setFormValue(getFieldName('longitude'), result.geometry.location.lng as FieldPathValue<T, Path<T>>)
 			setFormValue(

@@ -61,25 +61,43 @@ const AdminIndex: NextPage = () => {
 
 	// Sync activeTab with URL query and handle permission-based fallbacks
 	useEffect(() => {
-		if (!router.isReady) return
+		if (!router.isReady) {
+			return
+		}
 
 		const requestedTab = (tab as string) || activeTab || 'organizations'
 		let targetTab: string | null = requestedTab
 
 		// Verify accessibility
-		if (requestedTab === 'organizations' && !canAccessOrganizations) targetTab = null
-		if (requestedTab === 'reviews' && !canAccessReviews) targetTab = null
-		if (requestedTab === 'reports' && !canAccessReports) targetTab = null
-		if (requestedTab === 'users' && !canAccessUsers) targetTab = null
-		if (requestedTab === 'downloads' && !canAccessDownloads) targetTab = null
+		if (requestedTab === 'organizations' && !canAccessOrganizations) {
+			targetTab = null
+		}
+		if (requestedTab === 'reviews' && !canAccessReviews) {
+			targetTab = null
+		}
+		if (requestedTab === 'reports' && !canAccessReports) {
+			targetTab = null
+		}
+		if (requestedTab === 'users' && !canAccessUsers) {
+			targetTab = null
+		}
+		if (requestedTab === 'downloads' && !canAccessDownloads) {
+			targetTab = null
+		}
 
 		// Fallback logic if the requested tab isn't allowed
 		if (targetTab === null) {
-			if (canAccessOrganizations) targetTab = 'organizations'
-			else if (canAccessReviews) targetTab = 'reviews'
-			else if (canAccessReports) targetTab = 'reports'
-			else if (canAccessUsers) targetTab = 'users'
-			else if (canAccessDownloads) targetTab = 'downloads'
+			if (canAccessOrganizations) {
+				targetTab = 'organizations'
+			} else if (canAccessReviews) {
+				targetTab = 'reviews'
+			} else if (canAccessReports) {
+				targetTab = 'reports'
+			} else if (canAccessUsers) {
+				targetTab = 'users'
+			} else if (canAccessDownloads) {
+				targetTab = 'downloads'
+			}
 		}
 
 		if (targetTab !== activeTab) {
@@ -98,7 +116,9 @@ const AdminIndex: NextPage = () => {
 
 	const handleTabChange = useCallback(
 		(val: string | null) => {
-			if (!val) return
+			if (!val) {
+				return
+			}
 			setActiveTab(val)
 			router.replace({ query: { ...router.query, tab: val } }, undefined, { shallow: true })
 		},

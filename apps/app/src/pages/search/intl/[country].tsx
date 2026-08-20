@@ -70,7 +70,9 @@ const OutsideServiceArea = () => {
 		{ enabled: notBlank(router.query.country) }
 	)
 	useEffect(() => {
-		if (data) setLoading(false)
+		if (data) {
+			setLoading(false)
+		}
 	}, [data])
 	const { t } = useTranslation(['services', 'common', 'attribute'])
 	const countryTranslate = new Intl.DisplayNames(router.locale, { type: 'region' })

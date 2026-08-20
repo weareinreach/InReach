@@ -73,7 +73,9 @@ const OrganizationPage = ({
 	}, [data, status, router.isFallback, searchState.params])
 
 	const handleTabChange = useCallback((tab: string | null) => {
-		if (!tab) return
+		if (!tab) {
+			return
+		}
 		setActiveTab(tab)
 		switch (tab) {
 			case 'services': {

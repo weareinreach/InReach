@@ -180,7 +180,9 @@ export const UserTable = () => {
 				id: 'emailVerified',
 				header: 'Email Verified',
 				cell: ({ value }) => {
-					if (!value) return null
+					if (!value) {
+						return null
+					}
 					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},

@@ -4,6 +4,20 @@ import { type HttpHandler } from 'msw'
 import { type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
+// Matches by parsed hostname rather than raw substring, so e.g. `notexample.org.evil.com` isn't
+// mistaken for `example.org` the way a plain `.includes()` check would.
+const matchesDomain = (website: string, domain: string): boolean => {
+	if (!website) {
+		return false
+	}
+	try {
+		const { hostname } = new URL(website.includes('://') ? website : `https://${website}`)
+		return hostname === domain || hostname.endsWith(`.${domain}`)
+	} catch {
+		return false
+	}
+}
+
 const existingOrg = (input: string): ApiOutput['organization']['checkForExisting'] => {
 	const name = 'Existing Organization'
 	const regex = new RegExp(`.*${input}.*`, 'gi')
@@ -64,9 +78,15 @@ export const organization = {
 			}
 
 			const filtered = allResults.filter((org) => {
-				if (input.published !== undefined && org.published !== input.published) return false
-				if (input.deleted !== undefined && org.deleted !== input.deleted) return false
-				if (input.search && !org.name.toLowerCase().includes(input.search.toLowerCase())) return false
+				if (input.published !== undefined && org.published !== input.published) {
+					return false
+				}
+				if (input.deleted !== undefined && org.deleted !== input.deleted) {
+					return false
+				}
+				if (input.search && !org.name.toLowerCase().includes(input.search.toLowerCase())) {
+					return false
+				}
 				return true
 			})
 
@@ -75,11 +95,21 @@ export const organization = {
 				for (const { id, desc } of sorting) {
 					const av = a[id]
 					const bv = b[id]
-					if (av == null && bv == null) continue
-					if (av == null) return desc ? -1 : 1
-					if (bv == null) return desc ? 1 : -1
-					if (av < bv) return desc ? 1 : -1
-					if (av > bv) return desc ? -1 : 1
+					if (av == null && bv == null) {
+						continue
+					}
+					if (av == null) {
+						return desc ? -1 : 1
+					}
+					if (bv == null) {
+						return desc ? 1 : -1
+					}
+					if (av < bv) {
+						return desc ? 1 : -1
+					}
+					if (av > bv) {
+						return desc ? -1 : 1
+					}
 				}
 				return 0
 			})
@@ -124,8 +154,9 @@ export const organization = {
 			const matches: ApiOutput['organization']['getPotentialMatches'] = []
 			const name = input.name?.trim().toLowerCase() ?? ''
 			const website = input.website?.trim().toLowerCase() ?? ''
-			const isNearMissTypo = website.includes('existingorg2.org')
-			const isNearMissWrongTld = website.includes('existingorg.com') || website.includes('existingorg.net')
+			const isNearMissTypo = matchesDomain(website, 'existingorg2.org')
+			const isNearMissWrongTld =
+				matchesDomain(website, 'existingorg.com') || matchesDomain(website, 'existingorg.net')
 
 			if (name.includes('existing organization')) {
 				matches.push({
@@ -141,7 +172,7 @@ export const organization = {
 				})
 			}
 
-			if (website.includes('example.org')) {
+			if (matchesDomain(website, 'example.org')) {
 				matches.push({
 					id: 'orgn_MOCKEDSITEMATCH00001',
 					name: 'A Totally Different Org',

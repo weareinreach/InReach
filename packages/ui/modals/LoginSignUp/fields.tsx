@@ -214,7 +214,9 @@ export const FormLocation = () => {
 		}
 	)
 	useEffect(() => {
-		if (!autocompleteData) return
+		if (!autocompleteData) {
+			return
+		}
 		form.setValues({
 			locationOptions: autocompleteData.results.map((result) => ({
 				value: `${result.value}, ${result.subheading}`,
@@ -230,8 +232,9 @@ export const FormLocation = () => {
 	})
 	useEffect(() => {
 		const result = geoByPlaceIdData?.result
-		if (result && result.city && result.govDist && result.country)
+		if (result && result.city && result.govDist && result.country) {
 			form.setValues({ location: { city: result.city, govDist: result.govDist, country: result.country } })
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [geoByPlaceIdData])
 	const {
@@ -309,7 +312,9 @@ export const FormLawPractice = forwardRef<HTMLInputElement>((_, ref) => {
 
 	const selectedOther = form.values.lawPractice === otherOption
 
-	if (form.values.otherLawPractice && !selectedOther) form.setFieldValue('otherLawPractice', undefined)
+	if (form.values.otherLawPractice && !selectedOther) {
+		form.setFieldValue('otherLawPractice', undefined)
+	}
 
 	useEffect(() => {
 		if (selectedOther) {

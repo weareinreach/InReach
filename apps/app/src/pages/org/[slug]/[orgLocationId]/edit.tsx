@@ -112,7 +112,9 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	}, [data, status])
 
 	const tabHandler = useCallback((tab: string | null) => {
-		if (!tab) return
+		if (!tab) {
+			return
+		}
 		setActiveTab(tab)
 		switch (tab) {
 			case 'services': {

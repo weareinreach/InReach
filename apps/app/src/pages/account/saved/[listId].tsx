@@ -56,7 +56,9 @@ const SavedLists = () => {
 
 	const handleTabChange = useCallback(
 		(tab: string | null) => {
-			if (!tab) return
+			if (!tab) {
+				return
+			}
 			setActiveTab(tab)
 			if (listId) {
 				router.push(

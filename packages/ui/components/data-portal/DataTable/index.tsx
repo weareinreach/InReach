@@ -190,7 +190,9 @@ export const DataTable = <T,>({
 		let cumulative = 0
 		for (const col of leafColumns) {
 			const columnDef = columns.find((c) => c.id === col.id)
-			if (columnDef?.pin !== 'left') break
+			if (columnDef?.pin !== 'left') {
+				break
+			}
 			offsets.set(col.id, cumulative)
 			cumulative += columnDef.size ?? DEFAULT_PIN_WIDTH
 		}
@@ -198,7 +200,9 @@ export const DataTable = <T,>({
 	}, [leafColumns, columns])
 
 	const stickyStyle = (columnId: string) => {
-		if (!pinOffsets.has(columnId)) return undefined
+		if (!pinOffsets.has(columnId)) {
+			return undefined
+		}
 		return {
 			position: 'sticky' as const,
 			left: pinOffsets.get(columnId),

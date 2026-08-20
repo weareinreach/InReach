@@ -47,7 +47,9 @@ const OutsideServiceArea = () => {
 
 	const { data } = api.organization.getIntlCrisis.useQuery({ cca2: 'ZZ' }, { enabled: notBlank('ZZ') })
 	useEffect(() => {
-		if (data) setLoading(false)
+		if (data) {
+			setLoading(false)
+		}
 	}, [data])
 	const { t } = useTranslation(['services', 'common', 'attribute'])
 
