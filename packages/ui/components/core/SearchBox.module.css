@@ -34,11 +34,14 @@
 
 .rightIcon {
 	min-width: rem(102px);
-	/* Mantine auto-sizes the right-section slot to tightly wrap this group's own outer bounds
-	   (content + this margin), so there's never leftover space within the slot to push against -
-	   this margin *is* the entire gap between the "Clear ✕"/spinner and the input's true right
-	   edge (plus the section's own fixed padding, from the shared Input theme). Keep it small. */
-	margin-right: rem(4px);
+}
+/* The shared Input theme (`theme/components/Input.module.css`) sets a fixed 16px
+   `padding-right` on every right section app-wide - combined with `.rightIcon` having no margin
+   of its own, that 16px is now the *entire* gap between the "Clear ✕"/spinner and the input's
+   true right edge. Scoped here (rather than changing the shared file) since other inputs may
+   rely on the wider default. */
+.tightRightSection[data-position='right'] {
+	padding-right: rem(4px) !important;
 }
 @media (hover: hover) {
 	.rightIcon:hover {

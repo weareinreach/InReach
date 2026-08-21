@@ -317,6 +317,7 @@ export const SearchBox = ({
 								: cx(classes.autocompleteContainer, classes.emptyLocation),
 							rightIcon && classes.hasRightSection
 						),
+						section: rightIcon ? classes.tightRightSection : undefined,
 					}}
 					radius='xl'
 					disabled={isLoading}
