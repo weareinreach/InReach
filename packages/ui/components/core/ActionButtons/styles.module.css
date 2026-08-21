@@ -6,13 +6,19 @@
 	height: rem(48px);
 	padding: rem(12px);
 	gap: rem(8px);
-	background-color: var(--ir-color-secondary-white);
+	/* `!important` guards against `Button.tsx`'s own "no variant" fallback (`defaultRoot`, a
+	   black background) - every ActionButtons/*.tsx file applies this class to a bare
+	   `Button`/`Box component={Button}` with no `variant` prop, so without this the two classes'
+	   background-color declarations are equal-specificity and whichever the bundler happens to
+	   emit last wins - which can differ between Storybook's dev pipeline and a production build,
+	   rendering these buttons with unreadable same-color icon+text on a black background. */
+	background-color: var(--ir-color-secondary-white) !important;
 	border: 0;
 	border-radius: rem(8px);
 }
 @media (hover: hover) {
 	.button:not([data-disabled]):hover {
-		background-color: var(--ir-color-primary-light-gray);
+		background-color: var(--ir-color-primary-light-gray) !important;
 	}
 }
 
