@@ -26,50 +26,56 @@
  * padding, and a gray hover background - a `<button>`-like look for what's meant to be a plain
  * inline link). The attribute selector is a reliable fallback that doesn't depend on that
  * resolution succeeding.
+ *
+ * Each bare `[data-variant='name']` selector is wrapped in `:global(...)` - CSS Modules (Lightning
+ * CSS, used by Next.js/Turbopack's production build) requires every selector to be "pure" (contain
+ * at least one locally-scoped class/id) unless explicitly marked `:global`; an attribute selector
+ * with no local class fails that check and breaks the production build, even though Storybook's own
+ * dev pipeline didn't enforce it.
  */
 
 .inline,
-[data-variant='inline'],
+:global([data-variant='inline']),
 .inlineUtil1,
-[data-variant='inlineUtil1'],
+:global([data-variant='inlineUtil1']),
 .inlineUtil1DarkGray,
-[data-variant='inlineUtil1darkGray'],
+:global([data-variant='inlineUtil1darkGray']),
 .inlineUtil2DarkGray,
-[data-variant='inlineUtil2darkGray'],
+:global([data-variant='inlineUtil2darkGray']),
 .inlineInverted,
-[data-variant='inlineInverted'],
+:global([data-variant='inlineInverted']),
 .inlineInvertedUtil1,
-[data-variant='inlineInvertedUtil1'],
+:global([data-variant='inlineInvertedUtil1']),
 .inlineInvertedUtil2,
-[data-variant='inlineInvertedUtil2'],
+:global([data-variant='inlineInvertedUtil2']),
 .inheritStyle,
-[data-variant='inheritStyle'],
+:global([data-variant='inheritStyle']),
 .pagination,
-[data-variant='pagination'] {
+:global([data-variant='pagination']) {
 	padding: 0 !important;
 }
 
 .inline,
-[data-variant='inline'],
+:global([data-variant='inline']),
 .inheritStyle,
-[data-variant='inheritStyle'] {
+:global([data-variant='inheritStyle']) {
 	display: inline;
 }
 
 .inline,
-[data-variant='inline'] {
+:global([data-variant='inline']) {
 	font-weight: var(--ir-font-weight-regular) !important;
 	line-height: var(--ir-line-height) !important;
 }
 @media (hover: hover) {
 	.inline:hover,
-	[data-variant='inline']:hover {
+	:global([data-variant='inline']):hover {
 		background-color: transparent !important;
 	}
 }
 
 .inlineUtil1,
-[data-variant='inlineUtil1'] {
+:global([data-variant='inlineUtil1']) {
 	font-size: rem(16px);
 	font-weight: 500;
 	line-height: 1.25;
@@ -77,13 +83,13 @@
 }
 @media (hover: hover) {
 	.inlineUtil1:hover,
-	[data-variant='inlineUtil1']:hover {
+	:global([data-variant='inlineUtil1']):hover {
 		background-color: transparent !important;
 	}
 }
 
 .inlineUtil1DarkGray,
-[data-variant='inlineUtil1darkGray'] {
+:global([data-variant='inlineUtil1darkGray']) {
 	font-size: rem(16px);
 	font-weight: 500;
 	line-height: 1.25;
@@ -91,13 +97,13 @@
 }
 @media (hover: hover) {
 	.inlineUtil1DarkGray:hover,
-	[data-variant='inlineUtil1darkGray']:hover {
+	:global([data-variant='inlineUtil1darkGray']):hover {
 		background-color: transparent !important;
 	}
 }
 
 .inlineUtil2DarkGray,
-[data-variant='inlineUtil2darkGray'] {
+:global([data-variant='inlineUtil2darkGray']) {
 	font-size: rem(16px);
 	font-weight: 400;
 	line-height: 1.25;
@@ -105,27 +111,27 @@
 }
 @media (hover: hover) {
 	.inlineUtil2DarkGray:hover,
-	[data-variant='inlineUtil2darkGray']:hover {
+	:global([data-variant='inlineUtil2darkGray']):hover {
 		background-color: transparent !important;
 	}
 }
 
 .inlineInverted,
-[data-variant='inlineInverted'] {
+:global([data-variant='inlineInverted']) {
 	font-weight: var(--ir-font-weight-regular) !important;
 	line-height: var(--ir-line-height) !important;
 	text-decoration: none !important;
 }
 @media (hover: hover) {
 	.inlineInverted:hover,
-	[data-variant='inlineInverted']:hover {
+	:global([data-variant='inlineInverted']):hover {
 		background-color: transparent !important;
 		text-decoration: underline !important;
 	}
 }
 
 .inlineInvertedUtil1,
-[data-variant='inlineInvertedUtil1'] {
+:global([data-variant='inlineInvertedUtil1']) {
 	text-decoration: none !important;
 	font-size: rem(16px);
 	font-weight: 500;
@@ -134,14 +140,14 @@
 }
 @media (hover: hover) {
 	.inlineInvertedUtil1:hover,
-	[data-variant='inlineInvertedUtil1']:hover {
+	:global([data-variant='inlineInvertedUtil1']):hover {
 		background-color: transparent !important;
 		text-decoration: underline !important;
 	}
 }
 
 .inlineInvertedUtil2,
-[data-variant='inlineInvertedUtil2'] {
+:global([data-variant='inlineInvertedUtil2']) {
 	text-decoration: none !important;
 	font-size: rem(16px);
 	font-weight: 400;
@@ -150,14 +156,14 @@
 }
 @media (hover: hover) {
 	.inlineInvertedUtil2:hover,
-	[data-variant='inlineInvertedUtil2']:hover {
+	:global([data-variant='inlineInvertedUtil2']):hover {
 		background-color: transparent !important;
 		text-decoration: underline !important;
 	}
 }
 
 .inheritStyle,
-[data-variant='inheritStyle'] {
+:global([data-variant='inheritStyle']) {
 	font-weight: inherit !important;
 	line-height: inherit !important;
 	color: inherit !important;
@@ -165,18 +171,18 @@
 }
 @media (hover: hover) {
 	.inheritStyle:hover,
-	[data-variant='inheritStyle']:hover {
+	:global([data-variant='inheritStyle']):hover {
 		background-color: transparent !important;
 	}
 }
 
 .block,
-[data-variant='block'] {
+:global([data-variant='block']) {
 	display: block;
 }
 
 .card,
-[data-variant='card'] {
+:global([data-variant='card']) {
 	padding: 0 !important;
 	font-weight: inherit !important;
 	line-height: inherit !important;
@@ -186,7 +192,7 @@
 }
 
 .pagination,
-[data-variant='pagination'] {
+:global([data-variant='pagination']) {
 	text-decoration: none !important;
 	font-size: rem(16px);
 	font-weight: 500;
@@ -194,25 +200,25 @@
 	color: var(--ir-color-secondary-black);
 }
 .pagination[data-disabled],
-[data-variant='pagination'][data-disabled] {
+:global([data-variant='pagination'][data-disabled]) {
 	color: var(--ir-color-tertiary-cool-gray);
 }
 @media (hover: hover) {
 	.pagination:hover,
-	[data-variant='pagination']:hover {
+	:global([data-variant='pagination']):hover {
 		background-color: transparent !important;
 		text-decoration: none !important;
 		border-bottom: rem(2px) solid var(--ir-color-secondary-black);
 		border-radius: 0;
 	}
 	.pagination:hover[data-disabled],
-	[data-variant='pagination']:hover[data-disabled] {
+	:global([data-variant='pagination']:hover[data-disabled]) {
 		border-bottom: 0;
 		cursor: not-allowed;
 	}
 }
 
 .navMenu,
-[data-variant='navMenu'] {
+:global([data-variant='navMenu']) {
 	text-decoration: none !important;
 }
