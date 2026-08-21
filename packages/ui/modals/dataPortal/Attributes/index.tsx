@@ -12,7 +12,15 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { type TFunction, useTranslation } from 'next-i18next/pages'
-import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+	type ElementType,
+	forwardRef,
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react'
 import { FormProvider, type Resolver, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -278,7 +286,10 @@ const useAttributeData = (showInactiveAttribs: boolean, attachesTo: AttributeMod
 }
 
 const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
-	({ restrictCategories: _restrictCategories, attachesTo, parentRecord, ...props }, ref) => {
+	(
+		{ restrictCategories: _restrictCategories, attachesTo, parentRecord, component: Component, ...props },
+		ref
+	) => {
 		useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const showAddedNotification = useNewNotification({ icon: 'added', displayText: 'Added Attribute' })
@@ -388,7 +399,13 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						)}
 					</Stack>
 				</Modal>
-				<Box component='button' ref={ref} onClick={handler.open} {...props} />
+				{Component && typeof Component !== 'string' ? (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					<Component ref={ref} onClick={handler.open} {...(props as any)} />
+				) : (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					<Box component={(Component ?? 'button') as any} ref={ref} onClick={handler.open} {...props} />
+				)}
 			</>
 		)
 	}
@@ -400,6 +417,7 @@ export const AttributeModal = createPolymorphicComponent<'button', AttributeModa
 export interface AttributeModalProps extends ButtonProps {
 	restrictCategories?: string[]
 	attachesTo?: ApiOutput['fieldOpt']['attributesByCategory'][number]['canAttachTo']
+	component?: ElementType
 	parentRecord:
 		| { organizationId: string; serviceId?: never; locationId?: never }
 		| { serviceId: string; organizationId?: never; locationId?: never }

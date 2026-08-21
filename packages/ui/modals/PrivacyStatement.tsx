@@ -1,6 +1,5 @@
 import {
 	Box,
-	Button,
 	type ButtonProps,
 	createPolymorphicComponent,
 	Divider,
@@ -17,6 +16,7 @@ import { forwardRef, useEffect, useMemo, useState } from 'react'
 import Toggle from 'react-toggle'
 import 'react-toggle/style.css'
 
+import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
@@ -158,7 +158,7 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 						/>
 					</Group>
 					<Divider />
-					<Button onClick={closeSettings} fullWidth>
+					<Button variant={variants.Button.primaryLg} onClick={closeSettings} fullWidth>
 						{t('words.accept')}
 					</Button>
 				</Stack>

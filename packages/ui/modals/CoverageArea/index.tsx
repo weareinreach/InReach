@@ -11,7 +11,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { type TFunction, useTranslation } from 'next-i18next/pages'
-import { forwardRef, useCallback, useEffect } from 'react'
+import { type ElementType, forwardRef, useCallback, useEffect } from 'react'
 
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -32,7 +32,7 @@ const reduceDistType = (data: { tsNs: string; tsKey: string }[] | undefined, t: 
 }
 
 const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
-	({ serviceArea, onSuccessAction, ...props }, ref) => {
+	({ serviceArea, onSuccessAction, component: Component, ...props }, ref) => {
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
 		const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 		const [modalOpened, modalHandler] = useDisclosure(false)
@@ -183,7 +183,13 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 						</Button>
 					</Stack>
 				</Modal>
-				<Box ref={ref} component={'button'} onClick={modalHandler.open} {...props} />
+				{Component && typeof Component !== 'string' ? (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					<Component ref={ref} onClick={modalHandler.open} {...(props as any)} />
+				) : (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					<Box component={(Component ?? 'button') as any} ref={ref} onClick={modalHandler.open} {...props} />
+				)}
 			</>
 		)
 	}
@@ -196,6 +202,7 @@ export const CoverageArea = createPolymorphicComponent<'button', Props>(Coverage
 interface Props extends ButtonProps {
 	serviceArea: string | NewServiceArea
 	onSuccessAction?: () => void
+	component?: ElementType
 }
 
 type NewServiceArea = { organizationId: string } | { orgLocationId: string } | { orgServiceId: string }

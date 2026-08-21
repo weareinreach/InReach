@@ -34,6 +34,7 @@ import modalClasses from './components/Modal.module.css'
 import paperClasses from './components/Paper.module.css'
 import passwordInputClasses from './components/PasswordInput.module.css'
 import radioClasses from './components/Radio.module.css'
+import sliderClasses from './components/Slider.module.css'
 import switchClasses from './components/Switch.module.css'
 import tabsClasses from './components/Tabs.module.css'
 import titleBaseClasses from './components/Title.module.css'
@@ -133,6 +134,15 @@ export const commonTheme = createTheme({
 	cursorType: 'pointer',
 	fontFamily:
 		'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+	// v6 set a single uniform `lineHeight: 1.5` for all sizes; v7+ replaced that scalar with a
+	// per-size scale, defaulting to Mantine's own (differing) values if left unset.
+	lineHeights: {
+		xs: '1.5',
+		sm: '1.5',
+		md: '1.5',
+		lg: '1.5',
+		xl: '1.5',
+	},
 	fontSizes: {
 		xs: rem(12),
 		sm: rem(14),
@@ -212,17 +222,13 @@ export const commonTheme = createTheme({
 			styles: (theme: MantineTheme) => ({
 				root: {
 					letterSpacing: 'inherit',
-					border: `${rem(1)} solid`,
 					padding: `${theme.spacing.xxs} ${theme.spacing.sm}`,
 					textTransform: 'none',
 				},
-				inner: {
+				label: {
 					padding: 0,
 					fontWeight: theme.other.fontWeight.semibold,
 					color: theme.other.colors.secondary.black,
-				},
-				leftSection: {
-					margin: 0,
 				},
 			}),
 		},
@@ -381,10 +387,27 @@ export const commonTheme = createTheme({
 					thumbSize: 12,
 					label: null,
 				}) satisfies SliderProps,
+			classNames: sliderClasses,
 			styles: (theme: MantineTheme) => ({
+				// Mantine insets the root by `--slider-size` (the track/mark thickness) so marks and
+				// the thumb-at-rest don't get clipped. That inset should instead be based on the
+				// thumb's own radius (as Mantine 6 did with `thumbSize / 2`) - otherwise, since our
+				// `thumbSize` (12) is larger than the default `--slider-size` (8), the thumb sits shy
+				// of the true left/right edges instead of flush against them.
+				root: {
+					paddingInline: 'calc(var(--slider-thumb-size) / 2)',
+				},
 				bar: {
 					height: rem(2),
 					backgroundColor: theme.other.colors.secondary.black,
+					// The bar's width/offset (set by Mantine via the `--slider-bar-width` /
+					// `--slider-bar-offset` vars) are derived from `--slider-size`, for the same
+					// thumb-radius-should-drive-the-inset reason as `root` above. Re-derive them in
+					// terms of `--slider-thumb-size` so the bar's ends line up with the (now-flush)
+					// thumb and don't overshoot past the outermost mark dots.
+					width: 'calc(var(--slider-bar-width) + var(--slider-thumb-size) - 2 * var(--slider-size))',
+					insetInlineStart:
+						'calc(var(--slider-bar-offset) + var(--slider-size) - var(--slider-thumb-size) / 2)',
 				},
 				track: {
 					height: rem(2),
@@ -405,6 +428,8 @@ export const commonTheme = createTheme({
 		Switch: {
 			defaultProps: {
 				labelPosition: 'left',
+				// v9 default is `true`, rendering a colored thumb dot we don't want.
+				withThumbIndicator: false,
 			} satisfies SwitchProps,
 			classNames: switchClasses,
 		},
@@ -425,14 +450,25 @@ export const commonTheme = createTheme({
 			classNames: tabsClasses,
 		},
 		Text: {
-			defaultProps: (theme: MantineTheme) => ({
+			defaultProps: {
 				component: 'span',
-				fw: theme.other.fontWeight.regular,
-				c: theme.other.colors.secondary.black,
 				size: 'md',
-			}),
+			},
+			// `fw`/`c` used to live in `defaultProps` above, but Mantine resolves a `defaultProps`-
+			// supplied style prop (fw/c) into its inline style AFTER this `styles` callback's `root`
+			// output, so the variant's own font-weight/color here always lost to the plain "regular
+			// black" default regardless of which variant was requested - the actual bug behind
+			// several reported "text weight/color looks wrong" regressions. Folding the same default
+			// values into this callback's own object (spread first, so a variant's own values -
+			// spread after - still win) keeps both under one plain-JS-precedence mechanism instead of
+			// two competing Mantine ones. An explicit `fw`/`c` prop passed by a caller still wins over
+			// both, same as before.
 			styles: (theme: MantineTheme, props: TextProps) => ({
-				root: props.variant ? textVariants(theme)[props.variant]?.root : undefined,
+				root: {
+					fontWeight: theme.other.fontWeight.regular,
+					color: theme.other.colors.secondary.black,
+					...(props.variant ? textVariants(theme)[props.variant]?.root : undefined),
+				},
 			}),
 		},
 		Textarea: {

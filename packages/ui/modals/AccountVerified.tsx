@@ -1,14 +1,4 @@
-import {
-	Button,
-	type ButtonProps,
-	createPolymorphicComponent,
-	Group,
-	Loader,
-	Modal,
-	Stack,
-	Text,
-	Title,
-} from '@mantine/core'
+import { createPolymorphicComponent, Group, Loader, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
@@ -16,7 +6,7 @@ import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
-// import { Button } from '~ui/components/core/Button'
+import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'

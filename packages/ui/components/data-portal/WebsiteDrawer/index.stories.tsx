@@ -32,7 +32,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Drawer',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 		id: 'oweb_01H29ENF8JTJ3FNJ5BQXDH4PMA',
 	},
 } satisfies Meta<typeof WebsiteDrawer>

@@ -1460,6 +1460,9 @@ importers:
       '@types/node':
         specifier: 20.17.0
         version: 20.17.0
+      '@types/pngjs':
+        specifier: 6.0.5
+        version: 6.0.5
       '@types/probe-image-size':
         specifier: 7.2.5
         version: 7.2.5
@@ -1553,6 +1556,15 @@ importers:
       next-i18next:
         specifier: 16.0.10
         version: 16.0.10(@types/react@19.2.18)(i18next@26.3.6(typescript@5.6.3))(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@playwright/test@1.62.1)(@types/node@20.17.0)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-i18next@17.0.11(i18next@26.3.6(typescript@5.6.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.6.3))(react@19.2.8)
+      pixelmatch:
+        specifier: 7.2.0
+        version: 7.2.0
+      playwright:
+        specifier: 1.62.1
+        version: 1.62.1
+      pngjs:
+        specifier: 7.0.0
+        version: 7.0.0
       postcss-loader:
         specifier: 8.2.1
         version: 8.2.1(postcss@8.5.15)(typescript@5.6.3)(webpack@5.109.2(@swc/core@1.16.0(@swc/helpers@0.5.23))(esbuild@0.28.2)(postcss@8.5.15))
@@ -5667,6 +5679,9 @@ packages:
 
   '@types/pg@8.21.0':
     resolution: {integrity: sha512-AYdtudzabjLZgVgRZmAnU8bAnVUXzuJX2IYHeSIiIHm68olD+LgQYCGWdtcNYnP0uq9c4S4NibVG3Ni7VbKW7Q==}
+
+  '@types/pngjs@6.0.5':
+    resolution: {integrity: sha512-0k5eKfrA83JOZPppLtS2C7OUtyNAl2wKNxfyYl9Q5g9lPkgBl/9hNyAu6HuEH2J4XmIv2znEpkDd0SaZVxW6iQ==}
 
   '@types/probe-image-size@7.2.5':
     resolution: {integrity: sha512-9Bg6d/GNnjmhMMxadDstwrSlquuuLf0jQuPszbU6n3QUfybif3V/ryD3J2i9iaiC5JB/FU/8E41n88SM/UB+Tg==}
@@ -11553,6 +11568,10 @@ packages:
     resolution: {integrity: sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==}
     engines: {node: '>= 6'}
 
+  pixelmatch@7.2.0:
+    resolution: {integrity: sha512-xhcb4yHu9sM/G7foGzoLtXYcC0zHEaOXXjRKhGup0fw78Nf2Tkiapv4EQyMzrbcmQPsllAI7DbFY2UT7PlI9Pg==}
+    hasBin: true
+
   pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
@@ -11584,6 +11603,10 @@ packages:
   pluralize@8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
+
+  pngjs@7.0.0:
+    resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
+    engines: {node: '>=14.19.0'}
 
   point-in-polygon-hao@1.2.4:
     resolution: {integrity: sha512-x2pcvXeqhRHlNRdhLs/tgFapAbSSe86wa/eqmj1G6pWftbEs5aVRJhRGM6FYSUERKu0PjekJzMq0gsI2XyiclQ==}
@@ -18879,6 +18902,10 @@ snapshots:
       pg-protocol: 1.16.0
       pg-types: 2.2.0
 
+  '@types/pngjs@6.0.5':
+    dependencies:
+      '@types/node': 20.17.0
+
   '@types/probe-image-size@7.2.5':
     dependencies:
       '@types/needle': 3.3.0
@@ -26060,6 +26087,10 @@ snapshots:
 
   pirates@4.0.7: {}
 
+  pixelmatch@7.2.0:
+    dependencies:
+      pngjs: 7.0.0
+
   pkg-dir@4.2.0:
     dependencies:
       find-up: 4.1.0
@@ -26093,6 +26124,8 @@ snapshots:
       irregular-plurals: 2.0.0
 
   pluralize@8.0.0: {}
+
+  pngjs@7.0.0: {}
 
   point-in-polygon-hao@1.2.4:
     dependencies:

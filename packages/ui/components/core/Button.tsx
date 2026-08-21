@@ -43,9 +43,9 @@ const variantClassNames: Record<(typeof customVariants)[number], VariantClassNam
 		label: classes.accentLabel,
 		section: classes.accentSection,
 	},
-	'primary-icon': { root: classes.primaryIconRoot },
+	'primary-icon': { root: classes.primaryIconRoot, inner: classes.primaryIconInner },
 	'secondary-icon': { root: classes.secondaryIconRoot, inner: classes.secondaryIconInner },
-	'accent-icon': { root: classes.accentIconRoot },
+	'accent-icon': { root: classes.accentIconRoot, inner: classes.accentIconInner },
 	primarySm: {
 		root: classes.primarySmRoot,
 		inner: classes.primarySmInner,

@@ -166,6 +166,14 @@ const RevolvingBox = ({ role }: RevolvingBoxProps) => {
 				exitDuration={reduceMotion ? 0 : outTime}
 				timingFunction='ease-in'
 				keepMounted={true}
+				// `keepMountedMode='display-none'` is required here: the default `'activity'` mode
+				// wraps the exited subtree (including the nested Transition below) in React's
+				// `Activity` component, which suspends that subtree's effects while hidden. Since the
+				// nested Transition's own enter/exit state machine lives in a `useEffect`, it can miss
+				// the `mounted` flip while its ancestor Activity boundary is hidden, leaving the text
+				// stuck in its exited (invisible) state even after the background has faded back in.
+				// Plain `display: none` toggling has no such effect-suspension semantics.
+				keepMountedMode='display-none'
 				onEntered={() => setPreviousItem(item)}
 			>
 				{(outerStyle) => (
@@ -177,9 +185,13 @@ const RevolvingBox = ({ role }: RevolvingBoxProps) => {
 							timingFunction='ease-in-out'
 							exitDuration={reduceMotion ? 0 : outTime}
 							keepMounted={true}
+							keepMountedMode='display-none'
 						>
 							{(styles) => (
-								<Text style={{ ...styles, color: item.fg }} className={classes.text}>
+								// `c` (not `style.color`) is required here: the theme sets a default `c` on
+								// every Text, and Mantine resolves that after merging `style`, so a plain
+								// `style.color` override was always losing to the theme's black default.
+								<Text c={item.fg} style={styles} className={classes.text}>
 									{item.text}
 								</Text>
 							)}

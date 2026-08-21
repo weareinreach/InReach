@@ -21,7 +21,7 @@ export const _Verified = forwardRef<HTMLDivElement, BadgeVerifiedProps>(
 
 		const badge = (
 			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props}>
-				<Text>{t('badge.verified-information')}</Text>
+				<Text fw={theme.other.fontWeight.semibold}>{t('badge.verified-information')}</Text>
 			</Badge>
 		)
 		const dateDisplay = lastverified instanceof Date ? lastverified : new Date(lastverified)

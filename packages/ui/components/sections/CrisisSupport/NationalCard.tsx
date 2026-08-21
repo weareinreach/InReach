@@ -24,7 +24,7 @@ export const NationalCard = ({
 				<Stack gap={16}>
 					{community?.tsKey && (
 						// @ts-expect-error props are too complicated right now.
-						<Badge.Community icon={community.icon ?? ''} hideToolTip>
+						<Badge.Community icon={community.icon ?? ''} hideToolTip className={classes.categoryBadge}>
 							{t(community.tsKey, { ns: 'attribute' })}
 						</Badge.Community>
 					)}

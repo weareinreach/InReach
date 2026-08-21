@@ -398,6 +398,7 @@ export const FormServiceProvider = () => {
 					data={selectItems}
 					renderOption={({ option }) => renderSingleLineOption(variants, option.label)}
 					required
+					comboboxProps={{ zIndex: 501 }}
 					{...form.getInputProps('servProvider')}
 				/>
 				{isOther && (

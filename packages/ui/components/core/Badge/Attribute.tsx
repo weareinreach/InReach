@@ -16,7 +16,11 @@ export const _Attribute = forwardRef<HTMLDivElement, BadgeAttributeProps>(
 
 		const badge = (
 			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props}>
-				{typeof children === 'string' ? <Text>{children}</Text> : children}
+				{typeof children === 'string' ? (
+					<Text fw={theme.other.fontWeight.semibold}>{children}</Text>
+				) : (
+					children
+				)}
 			</Badge>
 		)
 

@@ -1,0 +1,13 @@
+/* Mantine's built-in rail background (`track`'s `::before`) insets itself by a full
+   `--slider-size` on each side, which is meant to let the rail hide behind the thumb.
+   That assumes the thumb's radius equals `--slider-size` (v6 used `thumbSize / 2` for this
+   exact purpose). Our theme sets a `thumbSize` distinct from the track thickness, so the
+   default formula overshoots past the outermost mark dots. Re-derive the inset from
+   `--slider-thumb-size` instead, matching the pre-migration (Mantine 6) behavior where marks,
+   track margins, and the rail were all sized off of `thumbSize / 2`.
+   `::before` can't be reached via inline `styles`, so this needs a real stylesheet rule -
+   it's unlayered (unlike Mantine's own `@layer mantine` styles), so it wins regardless of
+   selector order/specificity. */
+.track::before {
+	inset-inline: calc(var(--slider-thumb-size) / -2);
+}

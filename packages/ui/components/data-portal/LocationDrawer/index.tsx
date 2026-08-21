@@ -15,6 +15,8 @@ import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import classes from './index.module.css'
+
 const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = [
 	{ value: AddressVisibility.FULL, label: 'Show full address' },
 	{ value: AddressVisibility.PARTIAL, label: 'Show city & state/province' },
@@ -131,6 +133,8 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 								control={form.control}
 								name='addressVisibility'
 								data={addressVisibilityOptions}
+								withCheckIcon={false}
+								classNames={{ option: classes.option }}
 							/>
 							<WatchedAddressAutocomplete />
 						</Stack>

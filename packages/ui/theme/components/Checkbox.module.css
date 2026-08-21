@@ -14,8 +14,8 @@
 	color: var(--ir-color-secondary-black);
 	padding-left: var(--mantine-spacing-xs);
 }
-.label:disabled {
-	color: var(--ir-color-secondary-dark-gray);
+.root:has(.input:disabled) .label {
+	color: var(--mantine-color-gray-5);
 }
 
 .labelWrapper {
@@ -32,7 +32,10 @@
 	color: var(--ir-color-secondary-white);
 	border-color: var(--ir-color-secondary-black);
 }
-.input:checked[data-indeterminate] {
+/* Mantine's indeterminate state never sets `checked` alongside `data-indeterminate` -
+   matching on `:checked` too meant this rule never actually applied, letting Mantine's
+   own green default win. */
+.input[data-indeterminate] {
 	background-color: var(--ir-color-secondary-white);
 	color: var(--ir-color-secondary-black);
 	border-color: unset;
@@ -51,9 +54,11 @@
 	height: rem(10.5px);
 	margin: rem(6.75px) rem(5px);
 }
-/* Mantine sets `data-indeterminate` on the input; `.input` and `.inner` are siblings under `.root` */
+/* Mantine sets `data-indeterminate` on the input; `.input` and `.inner` are siblings under `.root`,
+   so `.icon`'s color has to be set here explicitly - it doesn't inherit from `.input` above. */
 .root:has(.input[data-indeterminate]) .icon {
 	width: rem(12px);
 	height: rem(3px);
 	margin: rem(10.5px) rem(6px);
+	color: var(--ir-color-secondary-black);
 }

@@ -90,7 +90,7 @@ export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
 
 	return (
 		<Wrapper
-			apiKey={process.env.NEXT_PUBLIC_Maps_API as string}
+			apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string}
 			render={mapRender}
 			libraries={['core', 'maps', 'marker']}
 			id='google-map'

@@ -15,82 +15,117 @@
 	}
 }
 
+/*
+ * Every variant below is duplicated as a `[data-variant='name']` attribute selector alongside its
+ * `.name` class selector. Mantine reliably sets `data-variant` as a DOM attribute regardless of
+ * rendering path, but our own theme-level `classNames` callback (which supplies the `.name` class)
+ * does not reliably receive `props.variant` when this Anchor is rendered through `Link` with no
+ * `href` (e.g. a modal launcher: `<GenericContentModal component={Link}>`, no `href` passed) -
+ * confirmed via inspecting rendered output, where `data-variant` was correctly present but the
+ * expected variant class was missing, leaving only `.root`'s defaults applied (always-on underline,
+ * padding, and a gray hover background - a `<button>`-like look for what's meant to be a plain
+ * inline link). The attribute selector is a reliable fallback that doesn't depend on that
+ * resolution succeeding.
+ */
+
 .inline,
+[data-variant='inline'],
 .inlineUtil1,
+[data-variant='inlineUtil1'],
 .inlineUtil1DarkGray,
+[data-variant='inlineUtil1darkGray'],
 .inlineUtil2DarkGray,
+[data-variant='inlineUtil2darkGray'],
 .inlineInverted,
+[data-variant='inlineInverted'],
 .inlineInvertedUtil1,
+[data-variant='inlineInvertedUtil1'],
 .inlineInvertedUtil2,
+[data-variant='inlineInvertedUtil2'],
 .inheritStyle,
-.pagination {
+[data-variant='inheritStyle'],
+.pagination,
+[data-variant='pagination'] {
 	padding: 0 !important;
 }
 
 .inline,
-.inheritStyle {
+[data-variant='inline'],
+.inheritStyle,
+[data-variant='inheritStyle'] {
 	display: inline;
 }
 
-.inline {
+.inline,
+[data-variant='inline'] {
 	font-weight: var(--ir-font-weight-regular) !important;
 	line-height: var(--ir-line-height) !important;
 }
 @media (hover: hover) {
-	.inline:hover {
+	.inline:hover,
+	[data-variant='inline']:hover {
 		background-color: transparent !important;
 	}
 }
 
-.inlineUtil1 {
+.inlineUtil1,
+[data-variant='inlineUtil1'] {
 	font-size: rem(16px);
 	font-weight: 500;
 	line-height: 1.25;
 	color: var(--ir-color-secondary-black);
 }
 @media (hover: hover) {
-	.inlineUtil1:hover {
+	.inlineUtil1:hover,
+	[data-variant='inlineUtil1']:hover {
 		background-color: transparent !important;
 	}
 }
 
-.inlineUtil1DarkGray {
+.inlineUtil1DarkGray,
+[data-variant='inlineUtil1darkGray'] {
 	font-size: rem(16px);
 	font-weight: 500;
 	line-height: 1.25;
 	color: var(--ir-color-secondary-dark-gray) !important;
 }
 @media (hover: hover) {
-	.inlineUtil1DarkGray:hover {
+	.inlineUtil1DarkGray:hover,
+	[data-variant='inlineUtil1darkGray']:hover {
 		background-color: transparent !important;
 	}
 }
 
-.inlineUtil2DarkGray {
+.inlineUtil2DarkGray,
+[data-variant='inlineUtil2darkGray'] {
 	font-size: rem(16px);
 	font-weight: 400;
 	line-height: 1.25;
 	color: var(--ir-color-secondary-dark-gray) !important;
 }
 @media (hover: hover) {
-	.inlineUtil2DarkGray:hover {
+	.inlineUtil2DarkGray:hover,
+	[data-variant='inlineUtil2darkGray']:hover {
 		background-color: transparent !important;
 	}
 }
 
-.inlineInverted {
+.inlineInverted,
+[data-variant='inlineInverted'] {
 	font-weight: var(--ir-font-weight-regular) !important;
 	line-height: var(--ir-line-height) !important;
 	text-decoration: none !important;
 }
 @media (hover: hover) {
-	.inlineInverted:hover {
+	.inlineInverted:hover,
+	[data-variant='inlineInverted']:hover {
 		background-color: transparent !important;
 		text-decoration: underline !important;
 	}
 }
 
-.inlineInvertedUtil1 {
+.inlineInvertedUtil1,
+[data-variant='inlineInvertedUtil1'] {
 	text-decoration: none !important;
 	font-size: rem(16px);
 	font-weight: 500;
@@ -98,13 +133,15 @@
 	color: var(--ir-color-secondary-black);
 }
 @media (hover: hover) {
-	.inlineInvertedUtil1:hover {
+	.inlineInvertedUtil1:hover,
+	[data-variant='inlineInvertedUtil1']:hover {
 		background-color: transparent !important;
 		text-decoration: underline !important;
 	}
 }
 
-.inlineInvertedUtil2 {
+.inlineInvertedUtil2,
+[data-variant='inlineInvertedUtil2'] {
 	text-decoration: none !important;
 	font-size: rem(16px);
 	font-weight: 400;
@@ -112,29 +149,34 @@
 	color: var(--ir-color-secondary-black);
 }
 @media (hover: hover) {
-	.inlineInvertedUtil2:hover {
+	.inlineInvertedUtil2:hover,
+	[data-variant='inlineInvertedUtil2']:hover {
 		background-color: transparent !important;
 		text-decoration: underline !important;
 	}
 }
 
-.inheritStyle {
+.inheritStyle,
+[data-variant='inheritStyle'] {
 	font-weight: inherit !important;
 	line-height: inherit !important;
 	color: inherit !important;
 	font-size: inherit !important;
 }
 @media (hover: hover) {
-	.inheritStyle:hover {
+	.inheritStyle:hover,
+	[data-variant='inheritStyle']:hover {
 		background-color: transparent !important;
 	}
 }
 
-.block {
+.block,
+[data-variant='block'] {
 	display: block;
 }
 
-.card {
+.card,
+[data-variant='card'] {
 	padding: 0 !important;
 	font-weight: inherit !important;
 	line-height: inherit !important;
@@ -143,29 +185,34 @@
 	text-decoration: inherit !important;
 }
 
-.pagination {
+.pagination,
+[data-variant='pagination'] {
 	text-decoration: none !important;
 	font-size: rem(16px);
 	font-weight: 500;
 	line-height: 1.25;
 	color: var(--ir-color-secondary-black);
 }
-.pagination[data-disabled] {
+.pagination[data-disabled],
+[data-variant='pagination'][data-disabled] {
 	color: var(--ir-color-tertiary-cool-gray);
 }
 @media (hover: hover) {
-	.pagination:hover {
+	.pagination:hover,
+	[data-variant='pagination']:hover {
 		background-color: transparent !important;
 		text-decoration: none !important;
 		border-bottom: rem(2px) solid var(--ir-color-secondary-black);
 		border-radius: 0;
 	}
-	.pagination:hover[data-disabled] {
+	.pagination:hover[data-disabled],
+	[data-variant='pagination']:hover[data-disabled] {
 		border-bottom: 0;
 		cursor: not-allowed;
 	}
 }
 
-.navMenu {
+.navMenu,
+[data-variant='navMenu'] {
 	text-decoration: none !important;
 }

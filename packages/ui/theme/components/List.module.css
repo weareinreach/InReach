@@ -1,9 +1,11 @@
 /**
  * `inlineUtil2`/`inlineBulletUtil2` were dropped - confirmed zero usage repo-wide.
  *
- * Note: Mantine v7's static selector class for ListItem's icon element is
- * `.mantine-ListItem-itemIcon` (not `.mantine-List-itemIcon` as in v6 - ListItem
- * is its own sub-component now).
+ * Note: despite ListItem being its own sub-component in v7+, Mantine's static selector
+ * class for its icon element is still `:global(.mantine-List-itemIcon)` (there is no separate
+ * `.mantine-ListItem-itemIcon`) - but it must be wrapped in `:global(...)` below, since
+ * CSS Modules otherwise hashes it like any other local class and it silently stops
+ * matching the real (unscoped) DOM class Mantine emits.
  */
 
 .inline {
@@ -26,7 +28,7 @@
 	flex-wrap: wrap;
 	align-items: center;
 }
-.inlineBulletItem:first-of-type .mantine-ListItem-itemIcon {
+.inlineBulletItem:first-of-type :global(.mantine-List-itemIcon) {
 	display: none;
 }
 .inlineBulletItemIcon {
@@ -53,7 +55,7 @@
 	line-height: 1.25;
 	color: var(--ir-color-secondary-black);
 }
-.inlineBulletUtil2DarkGrayItem:first-of-type .mantine-ListItem-itemIcon {
+.inlineBulletUtil2DarkGrayItem:first-of-type :global(.mantine-List-itemIcon) {
 	display: none;
 }
 .inlineBulletUtil2DarkGrayItem {

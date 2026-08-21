@@ -114,7 +114,12 @@ const TitleBar = ({
 }
 
 const SelectedItemCount = ({ selectedItemCount }: { selectedItemCount: number }) => {
-	return <Text className={classes.count}>{selectedItemCount}</Text>
+	const theme = useMantineTheme()
+	return (
+		<Text className={classes.count} c={theme.other.colors.secondary.white}>
+			{selectedItemCount}
+		</Text>
+	)
 }
 
 const DefaultLauncher = ({

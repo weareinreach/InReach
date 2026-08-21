@@ -18,7 +18,7 @@ export const _VerifiedReviewer = forwardRef<HTMLDivElement, BadgeVerifiedReviewe
 
 		const badge = (
 			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props}>
-				<Text>{t('badge.verified-reviewer')}</Text>
+				<Text fw={theme.other.fontWeight.semibold}>{t('badge.verified-reviewer')}</Text>
 			</Badge>
 		)
 

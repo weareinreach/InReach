@@ -18,7 +18,7 @@ export const _PrivatePractice = forwardRef<HTMLDivElement, BadgePrivatePracticeP
 
 		const badge = (
 			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props}>
-				<Text>{t('badge.privatePractice')}</Text>
+				<Text fw={theme.other.fontWeight.semibold}>{t('badge.privatePractice')}</Text>
 			</Badge>
 		)
 

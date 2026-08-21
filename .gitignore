@@ -10,6 +10,7 @@ node_modules
 !.yarn/versions
 .pnp.*
 storybook-static/
+visual-diff-output/
 
 
 # testing

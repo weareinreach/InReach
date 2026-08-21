@@ -9,7 +9,7 @@
 	line-height: 1.25;
 	color: var(--ir-color-secondary-dark-gray);
 }
-.description:has(~ .mantine-InputWrapper-error) {
+.description:has(~ :global(.mantine-InputWrapper-error)) {
 	display: none;
 }
 .description:focus {

@@ -166,6 +166,13 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 			}}
 			classNames={countrySelectClasses}
 			clearable
+			// Mantine 9's default `Select` renders the clear button *and* the dropdown chevron
+			// side-by-side once a value is set, needing ~2x the width the pre-migration single
+			// clear-icon layout (and this fixed-width `countrySelectRoot`) accounts for. That
+			// overflow pushed the clear button to spill left, in front of the country flag,
+			// making them appear swapped. `'clear'` restores the old one-icon-at-a-time
+			// behavior: the clear button when a value is set, the chevron otherwise.
+			clearSectionMode='clear'
 			control={control}
 			name={csName}
 			// rules={{

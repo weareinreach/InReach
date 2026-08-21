@@ -224,6 +224,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 											name='serviceId'
 											control={control}
 											data={socialMediaServices ?? []}
+											comboboxProps={{ zIndex: 10002 }}
 											renderOption={({ option }) => {
 												const service = socialMediaServices?.find(({ value }) => value === option.value)
 												return (

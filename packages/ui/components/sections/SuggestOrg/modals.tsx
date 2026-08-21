@@ -1,9 +1,10 @@
-import { Alert, Button, Checkbox, Divider, Group, Modal, Skeleton, Stack, Text, Title } from '@mantine/core'
+import { Alert, Checkbox, Divider, Group, Modal, Skeleton, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { type ReactNode, useCallback, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { Button } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'

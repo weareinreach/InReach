@@ -26,13 +26,21 @@ const MapWithMarkers = ({ locationIds, height, width }: GoogleMapProps) => {
 					lat: location.latitude ?? 0,
 					lng: location.longitude ?? 0,
 				})
-				mapMarker.add({
-					map,
-					id: location.id,
-					name: location.name ?? '',
-					lat: location.latitude ?? 0,
-					lng: location.longitude ?? 0,
-				})
+				try {
+					// Google's marker library can throw internally when the map failed to fully
+					// initialize (e.g. an API key without Advanced Markers/vector-map access, as in
+					// this Storybook environment) - matches the same try/catch guard already used
+					// around `mapMarker.add` in the production call site (LocationCard.tsx).
+					mapMarker.add({
+						map,
+						id: location.id,
+						name: location.name ?? '',
+						lat: location.latitude ?? 0,
+						lng: location.longitude ?? 0,
+					})
+				} catch (error) {
+					console.warn('Failed to add map marker', error)
+				}
 			}
 			return () => {
 				for (const location of data.locations) {

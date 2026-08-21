@@ -17,15 +17,22 @@
 	border-color: var(--ir-color-secondary-black);
 	border-width: rem(2px);
 }
-.input[data-with-icon] {
+/* was `.input[data-with-icon]` in v6 - v7 moved the equivalent attribute
+   (renamed `data-with-left-section`) onto the wrapper, not the input itself */
+.wrapper[data-with-left-section] .input {
 	border-radius: var(--mantine-radius-xl);
 	padding-left: rem(36px);
 }
-.input[data-invalid]::placeholder {
+/* was `.input[data-invalid]` in v6 - v7 renamed the attribute to `data-error` and, like
+   `data-with-left-section` above, moved it onto the wrapper rather than the input itself */
+.wrapper[data-error] .input {
+	border-color: var(--ir-color-tertiary-red);
+}
+.wrapper[data-error] .input::placeholder {
 	color: var(--ir-color-secondary-dark-gray);
 }
-.input[data-invalid]:focus,
-.input[data-invalid]:focus-within {
+.wrapper[data-error] .input:focus,
+.wrapper[data-error] .input:focus-within {
 	color: var(--ir-color-secondary-black);
 	border-color: var(--ir-color-tertiary-red);
 	border-width: rem(2px);

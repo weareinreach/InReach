@@ -26,7 +26,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Modal',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 	},
 } satisfies Meta<typeof PhoneEmailModal>
 type StoryDef = StoryObj<typeof PhoneEmailModal>

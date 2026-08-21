@@ -37,6 +37,7 @@ export const SocialLink = ({ href, icon, title, itemName }: SocialLinkProps) => 
 			target='_blank'
 			title={title ?? t(`social.${icon}`)}
 			size={32}
+			variant='subtle'
 			className={classes.button}
 			onClick={onClick}
 		>

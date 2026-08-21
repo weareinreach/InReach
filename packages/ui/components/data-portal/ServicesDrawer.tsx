@@ -67,7 +67,7 @@ const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((prop
 																<UnstyledButton key={id} w='100%'>
 																	<Group wrap='nowrap' justify='space-between'>
 																		<Stack gap={8}>
-																			<Text variant={variants.Text.utility1}>
+																			<Text variant={variants.Text.utility1} fw={500}>
 																				{
 																					t(name.tsKey ?? '', {
 																						ns: name.tsNs,

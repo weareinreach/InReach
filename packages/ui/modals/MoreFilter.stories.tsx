@@ -33,6 +33,10 @@ export default {
 		layout: 'fullscreen',
 	},
 
+	args: {
+		resultCount: 25,
+	},
+
 	// render: function Render(args) {
 	// 	const [filter, _setFilter] = useState<string[]>([])
 	// 	useEffect(() => {

@@ -43,7 +43,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		if (editable) {
 			return (
 				<Tooltip label='Edit'>
-					<ActionIcon onClick={handleEdit}>
+					<ActionIcon variant='subtle' onClick={handleEdit}>
 						<Icon icon='carbon:edit' color={theme.other.colors.secondary.black} />
 					</ActionIcon>
 				</Tooltip>
@@ -51,7 +51,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		}
 		return (
 			<Tooltip label='Not Editable'>
-				<ActionIcon disabled>
+				<ActionIcon variant='subtle' disabled>
 					<Icon icon='carbon:edit-off' />
 				</ActionIcon>
 			</Tooltip>
@@ -62,7 +62,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		if (active) {
 			return (
 				<Tooltip label='Deactivate'>
-					<ActionIcon onClick={handleToggle}>
+					<ActionIcon variant='subtle' onClick={handleToggle}>
 						<Icon icon='carbon:view' color={theme.other.colors.secondary.black} />
 					</ActionIcon>
 				</Tooltip>
@@ -70,7 +70,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		}
 		return (
 			<Tooltip label='Activate'>
-				<ActionIcon onClick={handleToggle}>
+				<ActionIcon variant='subtle' onClick={handleToggle}>
 					<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} />
 				</ActionIcon>
 			</Tooltip>
@@ -90,7 +90,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 					</Group>
 				</Modal>
 				<Tooltip label='Delete'>
-					<ActionIcon onClick={confirmModalHandler.open}>
+					<ActionIcon variant='subtle' onClick={confirmModalHandler.open}>
 						<Icon icon='carbon:trash-can' color={theme.other.colors.secondary.black} />
 					</ActionIcon>
 				</Tooltip>

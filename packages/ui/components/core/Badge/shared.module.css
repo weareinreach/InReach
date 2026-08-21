@@ -5,25 +5,18 @@
 .leaderSection * {
 	font-size: rem(12px);
 	border-radius: rem(32px);
-	height: rem(24px);
-	width: rem(24px);
 	margin: 0;
 	text-align: center;
-	padding-bottom: rem(4px);
 	color: var(--ir-color-secondary-black);
 }
 .nationalSection {
 	align-self: center;
-	line-height: 0;
 }
 .nationalSection * {
 	font-size: rem(12px);
 	border-radius: rem(32px);
-	height: rem(24px);
-	width: rem(24px);
 	margin: 0;
 	text-align: center;
-	padding-bottom: 0;
 	color: var(--ir-color-secondary-black);
 }
 .iconBadgeLabel * {
@@ -56,6 +49,8 @@
 .communityRoot {
 	background-color: var(--ir-color-secondary-white);
 	border-color: var(--ir-color-tertiary-cool-gray);
+	align-items: center;
+	align-content: center;
 }
 .communityLabel {
 	font-size: var(--mantine-font-size-sm);
@@ -101,8 +96,11 @@
 	height: rem(20px);
 	padding: 0;
 	line-height: inherit;
+	overflow: visible;
 	border-radius: 0;
 }
 .remoteSection {
 	height: rem(20px);
+	display: flex;
+	align-items: center;
 }

@@ -13,6 +13,9 @@
 	line-height: 1.25;
 	color: var(--ir-color-secondary-black);
 }
+.root:has(.radio:disabled) .label {
+	color: var(--mantine-color-gray-5);
+}
 
 .radio {
 	background-color: var(--ir-color-secondary-white);

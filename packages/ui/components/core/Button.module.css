@@ -62,6 +62,14 @@
 	left: calc(var(--mantine-spacing-md) * 2);
 }
 
+.primaryInner,
+.secondaryInner,
+.accentInner {
+	font-size: rem(16px);
+	font-weight: var(--ir-font-weight-semibold);
+	line-height: 1.25;
+}
+
 @media (hover: hover) {
 	.primaryRoot:not([data-disabled]):hover,
 	.accentRoot:not([data-disabled]):hover,
@@ -74,8 +82,16 @@
 	--button-hover-bg: darken(var(--ir-color-secondary-white), 0.4);
 	background-color: var(--ir-color-secondary-black);
 }
+.primaryRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
 .primaryInner {
 	color: var(--ir-color-secondary-white);
+}
+.primaryRoot[data-disabled] .primaryInner {
+	color: var(--ir-color-secondary-dark-gray);
 }
 
 .secondaryRoot {
@@ -84,16 +100,32 @@
 	border-color: var(--ir-color-tertiary-cool-gray);
 	background-color: var(--ir-color-secondary-white);
 }
+.secondaryRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
 .secondaryInner {
 	color: var(--ir-color-secondary-black);
+}
+.secondaryRoot[data-disabled] .secondaryInner {
+	color: var(--ir-color-secondary-dark-gray);
 }
 
 .accentRoot {
 	--button-hover-bg: darken(var(--ir-color-tertiary-red), 0.4);
 	background-color: var(--ir-color-tertiary-red);
 }
+.accentRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
 .accentInner {
 	color: var(--ir-color-secondary-white);
+}
+.accentRoot[data-disabled] .accentInner {
+	color: var(--ir-color-secondary-dark-gray);
 }
 
 @media (hover: hover) {
@@ -104,9 +136,29 @@
 	}
 }
 
+.primaryIconRoot,
+.secondaryIconRoot,
+.accentIconRoot {
+	padding-left: calc(var(--mantine-spacing-xl) * 2);
+	padding-right: calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
+}
+
 .primaryIconRoot {
 	--button-hover-bg: darken(var(--ir-color-secondary-white), 0.4);
 	border-radius: var(--mantine-radius-md);
+	background-color: var(--ir-color-secondary-black);
+}
+.primaryIconRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.primaryIconInner {
+	color: var(--ir-color-secondary-white);
+}
+.primaryIconRoot[data-disabled] .primaryIconInner {
+	color: var(--ir-color-secondary-dark-gray);
 }
 .primaryIconRoot[data-loading] {
 	pointer-events: none;
@@ -127,17 +179,32 @@
 	background-color: var(--ir-color-secondary-white);
 	border-radius: var(--mantine-radius-md);
 }
+.secondaryIconRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
 .secondaryIconInner {
 	color: var(--ir-color-secondary-black);
 }
-.secondaryIconInner:disabled,
-.secondaryIconInner[data-disabled] {
+.secondaryIconRoot[data-disabled] .secondaryIconInner {
 	color: var(--ir-color-secondary-dark-gray);
 }
 
 .accentIconRoot {
 	--button-hover-bg: darken(var(--ir-color-secondary-cornflower), 0.4);
 	background-color: var(--ir-color-secondary-cornflower);
+}
+.accentIconRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.accentIconInner {
+	color: var(--ir-color-secondary-white);
+}
+.accentIconRoot[data-disabled] .accentIconInner {
+	color: var(--ir-color-secondary-dark-gray);
 }
 
 /* Icon-less variants hide the left section entirely, matching the original v6 behavior */
@@ -170,8 +237,16 @@
 	--button-hover-bg: darken(var(--ir-color-secondary-white), 0.4);
 	background-color: var(--ir-color-secondary-black);
 }
+.primarySmRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
 .primarySmInner {
 	color: var(--ir-color-secondary-white);
+}
+.primarySmRoot[data-disabled] .primarySmInner {
+	color: var(--ir-color-secondary-dark-gray);
 }
 
 .secondarySmRoot {
@@ -180,17 +255,35 @@
 	border-color: var(--ir-color-tertiary-cool-gray);
 	background-color: var(--ir-color-secondary-white) !important;
 }
+.secondarySmRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray) !important;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.secondarySmRoot[data-disabled] .secondarySmInner {
+	color: var(--ir-color-secondary-dark-gray) !important;
+}
 .secondarySmInner {
 	color: var(--ir-color-secondary-black) !important;
 }
 
 .primaryLgRoot {
+	padding: calc(var(--mantine-spacing-sm) / 2) calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
 	border-radius: var(--mantine-radius-md);
 	--button-hover-bg: darken(var(--ir-color-secondary-white), 0.4);
 	background-color: var(--ir-color-secondary-black);
 }
+.primaryLgRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray) !important;
+	cursor: not-allowed;
+	pointer-events: none;
+}
 .primaryLgInner {
 	color: var(--ir-color-secondary-white);
+}
+.primaryLgRoot[data-disabled] .primaryLgInner {
+	color: var(--ir-color-secondary-dark-gray);
 }
 @media (hover: hover) {
 	.primaryLgRoot:not([data-disabled]):hover {
@@ -199,9 +292,19 @@
 }
 
 .primaryLgRedRoot {
+	padding: calc(var(--mantine-spacing-sm) / 2) calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
 	background-color: var(--ir-color-tertiary-red) !important;
 	border-radius: var(--mantine-radius-md);
 	--button-hover-bg: darken(var(--ir-color-tertiary-red), 0.4);
+}
+.primaryLgRedRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray) !important;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.primaryLgRedRoot[data-disabled] .primaryLgInner {
+	color: var(--ir-color-secondary-dark-gray);
 }
 @media (hover: hover) {
 	.primaryLgRedRoot:not([data-disabled]):hover {
@@ -212,6 +315,8 @@
 /* secondaryLg - the only surviving entry from the old theme/variants/Button.ts (used
    in 6 data-portal drawer "close and discard" buttons) */
 .secondaryLgRoot {
+	padding: calc(var(--mantine-spacing-sm) / 2) calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
 	border: var(--ir-border-default);
 	border-color: var(--ir-color-tertiary-cool-gray);
 	background-color: var(--ir-color-secondary-white) !important;
@@ -225,7 +330,6 @@
 .secondaryLgInner {
 	color: var(--ir-color-secondary-black) !important;
 }
-.secondaryLgInner:disabled,
-.secondaryLgInner[data-disabled] {
+.secondaryLgRoot[data-disabled] .secondaryLgInner {
 	color: var(--ir-color-secondary-dark-gray);
 }

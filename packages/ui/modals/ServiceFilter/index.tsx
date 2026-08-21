@@ -287,7 +287,11 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 		}
 		const selectedCount = services.filter((service) => selectedValues.includes(service)).length
 		if (selectedCount > 0) {
-			return <Text className={classes.count}>{selectedCount}</Text>
+			return (
+				<Text className={classes.count} c={theme.other.colors.secondary.white}>
+					{selectedCount}
+				</Text>
+			)
 		}
 		return null
 	}
@@ -333,8 +337,12 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 	})
 
 	const selectedCountIcon = useMemo(
-		() => <Text className={classes.count}>{selectedValues.length}</Text>,
-		[selectedValues.length]
+		() => (
+			<Text className={classes.count} c={theme.other.colors.secondary.white}>
+				{selectedValues.length}
+			</Text>
+		),
+		[selectedValues.length, theme.other.colors.secondary.white]
 	)
 	const serviceBarProps: ServiceBarProps = useMemo(
 		() => ({

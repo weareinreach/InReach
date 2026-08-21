@@ -62,14 +62,21 @@ const timezoneData = timezones.map((item, index) => {
 	}
 })
 
-const sortedTimezoneData = timezoneData.sort((a, b) => {
-	if (a.group === 'North America' && b.group === 'Other') {
-		return -1
-	} else if (a.group === 'Other' && b.group === 'North America') {
-		return 1
-	}
-	return 0
-})
+// v9's grouped `Select`/`Combobox` data shape is `{ group, items }[]`, not a flat list where each
+// item merely carries a `group` field (the v6 shape) - passing the old shape makes Mantine's own
+// parser try `item.items.map(...)` on every entry and crash with "Cannot read properties of
+// undefined (reading 'map')" as soon as the drawer mounts. Each item's own `group` field also has
+// to go, not just be wrapped - Mantine's parser treats the mere presence of a `group` key as "this
+// is itself a nested group", so leaving it in place recurses into the same crash one level down.
+const groupedTimezoneData = groupBy(timezoneData, ({ group }) => group)
+const sortedTimezoneData = (['North America', 'Other'] as const)
+	.filter((group) => groupedTimezoneData[group])
+	.map((group) => ({
+		group,
+		items: (groupedTimezoneData[group] as (typeof timezoneData)[number][]).map(
+			({ group: _group, ...item }) => item
+		),
+	}))
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)

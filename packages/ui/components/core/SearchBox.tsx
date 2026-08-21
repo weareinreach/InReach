@@ -8,6 +8,7 @@ import {
 	TextInput,
 	type TextInputProps,
 	useCombobox,
+	useMantineTheme,
 } from '@mantine/core'
 import { useForm, type UseFormReturnType } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
@@ -67,6 +68,7 @@ export const SearchBox = ({
 	setSearchValue,
 }: SearchBoxProps) => {
 	const variants = useCustomVariant()
+	const theme = useMantineTheme()
 	const { t } = useTranslation()
 	const router = useRouter()
 	const [locationSearch, setLocationSearch] = useState('')
@@ -248,6 +250,14 @@ export const SearchBox = ({
 		onDropdownClose: () => combobox.resetSelectedOption(),
 	})
 
+	// `Combobox.Dropdown` renders (and shows its bordered options container) purely based on the
+	// combobox's own open/closed state, unlike the old `Autocomplete` this replaced, which hid itself
+	// automatically whenever there was nothing to show. With nothing typed yet, `Combobox.Options`
+	// renders none of its three conditional children, leaving an empty bordered box whose
+	// `border-bottom` alone was visible as a stray line under the input. Only open on focus/change
+	// once there's actually something to display.
+	const hasDropdownContent = results.length > 0 || noResults || (isOrgSearch && !orgSearchLoading)
+
 	// Enter submits the top result without visually highlighting it while typing - matching the
 	// previous Autocomplete's behavior. `combobox.selectFirstOption()` would do this via Mantine's
 	// own keyboard-selection machinery, but it also paints the first option with the active/selected
@@ -309,7 +319,11 @@ export const SearchBox = ({
 						searchOnChange(event)
 						combobox.openDropdown()
 					}}
-					onFocus={() => combobox.openDropdown()}
+					onFocus={() => {
+						if (hasDropdownContent) {
+							combobox.openDropdown()
+						}
+					}}
 					onBlur={() => combobox.closeDropdown()}
 					onKeyDown={handleKeyDown}
 				/>
@@ -326,7 +340,11 @@ export const SearchBox = ({
 											<Loader />
 										</Center>
 									) : isOrgSearch ? (
-										<Text className={classes.unmatchedText} truncate>
+										<Text
+											c={theme.other.colors.secondary.darkGray}
+											className={classes.unmatchedText}
+											truncate
+										>
 											{matchText(itemLabel, form.values.search)}
 										</Text>
 									) : (
@@ -334,7 +352,11 @@ export const SearchBox = ({
 											<Text className={classes.locationResult} truncate>
 												{itemLabel}
 											</Text>
-											<Text className={classes.unmatchedText} truncate>
+											<Text
+												c={theme.other.colors.secondary.darkGray}
+												className={classes.unmatchedText}
+												truncate
+											>
 												{subheading}
 											</Text>
 										</>
@@ -349,7 +371,7 @@ export const SearchBox = ({
 						)}
 						{isOrgSearch && !orgSearchLoading && (
 							<Combobox.Option value={SUGGEST_VALUE} className={classes.itemComponent}>
-								<Text className={classes.unmatchedText}>
+								<Text c={theme.other.colors.secondary.darkGray} className={classes.unmatchedText}>
 									<Trans i18nKey='search.suggest-resource' />
 								</Text>
 							</Combobox.Option>

@@ -226,7 +226,7 @@ export const DataTable = <T,>({
 							placeholder={globalFilterPlaceholder}
 							value={globalFilter}
 							onChange={(event) => onGlobalFilterChange(event.currentTarget.value)}
-							leftSection={<Icon icon='carbon:search' />}
+							leftSection={<Icon icon='carbon:search' height={16} />}
 							w={280}
 						/>
 						{toolbarExtra}

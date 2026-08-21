@@ -72,9 +72,9 @@
 		background-color: transparent !important;
 	}
 }
-.inOverflowMenu.mantine-Group-root,
-.inOverflowMenu .mantine-Text-root,
-.inOverflowMenu .iconify-icon-root,
-.inOverflowMenu .mantine-Menu-item {
+.inOverflowMenu:global(.mantine-Group-root),
+.inOverflowMenu :global(.mantine-Text-root),
+.inOverflowMenu :global(.iconify-icon-root),
+.inOverflowMenu :global(.mantine-Menu-item) {
 	color: var(--ir-color-secondary-white);
 }

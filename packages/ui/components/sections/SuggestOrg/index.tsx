@@ -1,6 +1,5 @@
 import {
 	Alert,
-	Button,
 	Checkbox,
 	Combobox,
 	Divider,
@@ -30,6 +29,7 @@ import invariant from 'tiny-invariant'
 import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
+import { Button } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -402,7 +402,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 							<Combobox.Target>
 								<TextInput
 									label={t('form.org-address')}
-									leftSection={<Icon icon='carbon:search' className={classes.leftIcon} />}
+									leftSection={<Icon icon='carbon:search' height={16} className={classes.leftIcon} />}
 									placeholder={t('form.placeholder-address')}
 									disabled={!countrySelected}
 									autoComplete='off'

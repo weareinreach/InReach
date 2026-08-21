@@ -5,6 +5,7 @@ import {
 	Pagination as MantinePagination,
 	type PaginationProps as MantinePaginationProps,
 	Text,
+	useMantineTheme,
 } from '@mantine/core'
 import { usePagination } from '@mantine/hooks'
 import { useRouter } from 'next/router'
@@ -69,6 +70,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 	const { t } = useTranslation('common')
 	const router = useRouter()
 	const variants = useCustomVariant()
+	const theme = useMantineTheme()
 	const currentPage = typeof router.query.page === 'string' ? parseInt(router.query.page) : 1
 	const [page, setPage] = useState(currentPage)
 
@@ -106,6 +108,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 						variant={variants.Link.pagination}
 						className={classes.paginationItem}
 						onClick={paginationController.previous}
+						{...(activePage === 1 ? { c: theme.other.colors.tertiary.coolGray } : {})}
 					>
 						{t('words.prev')}
 					</Link>
@@ -115,6 +118,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 						variant={variants.Link.pagination}
 						className={classes.paginationItem}
 						onClick={paginationController.next}
+						{...(activePage === props.total ? { c: theme.other.colors.tertiary.coolGray } : {})}
 					>
 						{t('words.next')}
 					</Link>
