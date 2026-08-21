@@ -176,8 +176,8 @@ export const SearchBox = ({
 	const rightIcon = useMemo(() => {
 		if (isLoading || searchLoading) {
 			return (
-				<Group>
-					<Loader size={32} mr={40} />
+				<Group className={classes.rightIcon}>
+					<Loader size={32} />
 				</Group>
 			)
 		}
@@ -256,7 +256,12 @@ export const SearchBox = ({
 	// renders none of its three conditional children, leaving an empty bordered box whose
 	// `border-bottom` alone was visible as a stray line under the input. Only open on focus/change
 	// once there's actually something to display.
-	const hasDropdownContent = results.length > 0 || noResults || (isOrgSearch && !orgSearchLoading)
+	// `isOrgSearch && !orgSearchLoading` is also true before anything's been typed at all - the
+	// query is simply `enabled: false` (not "loading"), not merely finished loading - so without
+	// `notBlank(search)` this opened the dropdown (showing the "suggest an organization" prompt)
+	// on bare focus, before the user had entered any search term.
+	const hasDropdownContent =
+		results.length > 0 || noResults || (isOrgSearch && !orgSearchLoading && notBlank(search))
 
 	// Enter submits the top result without visually highlighting it while typing - matching the
 	// previous Autocomplete's behavior. `combobox.selectFirstOption()` would do this via Mantine's
@@ -306,9 +311,12 @@ export const SearchBox = ({
 			<Combobox.Target>
 				<TextInput
 					classNames={{
-						input: isOrgSearch
-							? classes.autocompleteContainer
-							: cx(classes.autocompleteContainer, classes.emptyLocation),
+						input: cx(
+							isOrgSearch
+								? classes.autocompleteContainer
+								: cx(classes.autocompleteContainer, classes.emptyLocation),
+							rightIcon && classes.hasRightSection
+						),
 					}}
 					radius='xl'
 					disabled={isLoading}
@@ -369,7 +377,7 @@ export const SearchBox = ({
 								<Text variant={variants.Text.utility1}>{t('search.no-results')}</Text>
 							</Combobox.Empty>
 						)}
-						{isOrgSearch && !orgSearchLoading && (
+						{isOrgSearch && !orgSearchLoading && notBlank(search) && (
 							<Combobox.Option value={SUGGEST_VALUE} className={classes.itemComponent}>
 								<Text c={theme.other.colors.secondary.darkGray} className={classes.unmatchedText}>
 									<Trans i18nKey='search.suggest-resource' />

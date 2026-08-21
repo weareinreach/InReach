@@ -2,6 +2,15 @@
 	width: 100%;
 	max-width: rem(636px);
 }
+.hasRightSection {
+	/* `theme/components/Input.module.css`'s shared `.input` rule hardcodes a flat
+	   `padding: 14px 16px`, which overrides Mantine's own dynamic right-section-width CSS
+	   variable (driven by the `rightSectionWidth` prop) - without this, typed text runs
+	   straight into the "Clear ✕"/loading-spinner section instead of stopping short of it.
+	   Slightly exceeds the section's own measured width (~122px) so a small gap is always
+	   visible between typed text and the section, rather than the two sitting flush together. */
+	padding-right: rem(132px) !important;
+}
 .autocompleteContainer:focus {
 	border-color: var(--ir-color-secondary-black);
 	background-color: var(--ir-color-secondary-white);
@@ -9,6 +18,13 @@
 
 .autocompleteWrapper {
 	padding: 0;
+}
+/* The dropdown opens as soon as a keystroke fires (`onChange` always calls
+   `combobox.openDropdown()`, independent of `hasDropdownContent`), but `results`/`noResults`/the
+   "suggest an organization" row all key off the *debounced* search value - for the ~400ms debounce
+   window, `Combobox.Options` genuinely has zero children. An unconditional border-bottom on this
+   wrapper rendered as a stray line under the input for that whole window, with nothing above it. */
+.autocompleteWrapper:not(:empty) {
 	border-bottom: rem(1px) solid var(--ir-color-tertiary-cool-gray);
 }
 
@@ -18,7 +34,11 @@
 
 .rightIcon {
 	min-width: rem(102px);
-	margin-right: rem(18px);
+	/* Mantine auto-sizes the right-section slot to tightly wrap this group's own outer bounds
+	   (content + this margin), so there's never leftover space within the slot to push against -
+	   this margin *is* the entire gap between the "Clear ✕"/spinner and the input's true right
+	   edge (plus the section's own fixed padding, from the shared Input theme). Keep it small. */
+	margin-right: rem(4px);
 }
 @media (hover: hover) {
 	.rightIcon:hover {
