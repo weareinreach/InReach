@@ -11,6 +11,7 @@ import {
 	Table,
 	Text,
 	TextInput,
+	useMantineTheme,
 } from '@mantine/core'
 import {
 	type ColumnDef,
@@ -116,6 +117,7 @@ export const DataTable = <T,>({
 	initialColumnVisibility,
 	getRowStyle,
 }: DataTableProps<T>) => {
+	const theme = useMantineTheme()
 	const [columnVisibility, setColumnVisibility] = useState(initialColumnVisibility ?? {})
 	const [expanded, setExpanded] = useState<ExpandedState>({})
 
@@ -368,6 +370,7 @@ export const DataTable = <T,>({
 																<Icon
 																	icon={row.getIsExpanded() ? 'carbon:chevron-down' : 'carbon:chevron-right'}
 																	height={14}
+																	color={theme.other.colors.primary.allyGreen}
 																/>
 															</ActionIcon>
 														)}

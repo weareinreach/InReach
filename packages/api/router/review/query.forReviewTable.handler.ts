@@ -14,6 +14,12 @@ const buildWhere = (input: TForReviewTableSchema): Prisma.OrgReviewWhereInput =>
 	if (input.rating !== undefined) {
 		where.rating = input.rating
 	}
+	if (input.createdAt) {
+		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
+	}
+	if (input.updatedAt) {
+		where.updatedAt = { gte: input.updatedAt.from, lte: input.updatedAt.to }
+	}
 	if (input.search) {
 		where.OR = [
 			{ reviewText: { contains: input.search, mode: 'insensitive' } },

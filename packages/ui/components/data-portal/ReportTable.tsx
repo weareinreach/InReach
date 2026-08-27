@@ -324,6 +324,8 @@ export const ReportTable = () => {
 	const statusFilter = columnFilters.find(({ id }) => id === 'status')?.value as ReportStatus | undefined
 	const issueTypeFilter = columnFilters.find(({ id }) => id === 'issueType')?.value as string[] | undefined
 	const informedFilter = columnFilters.find(({ id }) => id === 'informed')?.value as boolean | undefined
+	const dateFilter = (id: string) =>
+		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
 	const { data, isLoading, isError, isFetching } = api.report.forReportsTable.useQuery(
 		{
@@ -331,6 +333,12 @@ export const ReportTable = () => {
 			issueType: issueTypeFilter as ReportIssueType[] | undefined,
 			informed: informedFilter,
 			search: debouncedGlobalFilter || undefined,
+			createdAt: dateFilter('createdAt')
+				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
+				: undefined,
+			updatedAt: dateFilter('updatedAt')
+				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
+				: undefined,
 			sorting: sorting.map(({ id, desc }) => ({ id: id as 'createdAt' | 'updatedAt', desc })),
 			take: pagination.pageSize,
 			skip: pagination.pageIndex * pagination.pageSize,
@@ -355,6 +363,39 @@ export const ReportTable = () => {
 
 	const columns = useMemo<DataTableColumn<ReportRecord>[]>(
 		() => [
+			{
+				id: 'actions',
+				header: 'Actions',
+				pin: 'left',
+				size: 90,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				hideable: false,
+				accessorFn: () => undefined,
+				cell: ({ row }) => {
+					const editUrl: Route = { pathname: '/org/[slug]/edit', query: { slug: row.organization.slug } }
+					return (
+						<Group wrap='nowrap' gap={8}>
+							<Tooltip label='View Details'>
+								<ActionIcon
+									variant='subtle'
+									onClick={() => {
+										setSelectedReport(row)
+										openDetails()
+									}}
+								>
+									<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
+								</ActionIcon>
+							</Tooltip>
+							<Tooltip label='Edit Target'>
+								<ActionIcon variant='subtle' component={Link} href={editUrl} target='_blank'>
+									<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
+								</ActionIcon>
+							</Tooltip>
+						</Group>
+					)
+				},
+			},
 			{
 				id: 'orgNameSnapshot',
 				header: 'Organization Name',
@@ -449,6 +490,7 @@ export const ReportTable = () => {
 				id: 'createdAt',
 				header: 'Created At',
 				size: 150,
+				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
 					return (
@@ -462,44 +504,13 @@ export const ReportTable = () => {
 				id: 'updatedAt',
 				header: 'Updated At',
 				size: 150,
+				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
 					return (
 						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)}>
 							<span>{date.toRelativeCalendar()}</span>
 						</Tooltip>
-					)
-				},
-			},
-			{
-				id: 'actions',
-				header: 'Actions',
-				pin: 'left',
-				size: 90,
-				enableSorting: false,
-				enableGlobalFilter: false,
-				hideable: false,
-				accessorFn: () => undefined,
-				cell: ({ row }) => {
-					const editUrl: Route = { pathname: '/org/[slug]/edit', query: { slug: row.organization.slug } }
-					return (
-						<Group wrap='nowrap' gap={8}>
-							<Tooltip label='View Details'>
-								<ActionIcon
-									onClick={() => {
-										setSelectedReport(row)
-										openDetails()
-									}}
-								>
-									<Icon icon='carbon:search' />
-								</ActionIcon>
-							</Tooltip>
-							<Tooltip label='Edit Target'>
-								<ActionIcon component={Link} href={editUrl} target='_blank'>
-									<Icon icon='carbon:edit' />
-								</ActionIcon>
-							</Tooltip>
-						</Group>
 					)
 				},
 			},

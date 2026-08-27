@@ -45,7 +45,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 			return (
 				<Tooltip label='Edit'>
 					<ActionIcon variant='subtle' onClick={handleEdit}>
-						<Icon icon='carbon:edit' color={theme.other.colors.secondary.black} />
+						<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
 					</ActionIcon>
 				</Tooltip>
 			)
@@ -57,14 +57,14 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 				</ActionIcon>
 			</Tooltip>
 		)
-	}, [editable, handleEdit, theme.other.colors.secondary.black])
+	}, [editable, handleEdit, theme.other.colors.primary.allyGreen])
 
 	const activeToggleIcon = useMemo(() => {
 		if (active) {
 			return (
 				<Tooltip label='Deactivate'>
 					<ActionIcon variant='subtle' onClick={handleToggle}>
-						<Icon icon='carbon:view' color={theme.other.colors.secondary.black} />
+						<Icon icon='carbon:view' color={theme.other.colors.primary.allyGreen} />
 					</ActionIcon>
 				</Tooltip>
 			)
@@ -72,11 +72,11 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		return (
 			<Tooltip label='Activate'>
 				<ActionIcon variant='subtle' onClick={handleToggle}>
-					<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} />
+					<Icon icon='carbon:view-off' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 		)
-	}, [active, handleToggle, theme.other.colors.secondary.black, theme.other.colors.secondary.darkGray])
+	}, [active, handleToggle, theme.other.colors.primary.allyGreen])
 
 	return (
 		<Group wrap='nowrap' gap={8}>
@@ -92,7 +92,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 				</Modal>
 				<Tooltip label='Delete'>
 					<ActionIcon variant='subtle' onClick={confirmModalHandler.open}>
-						<Icon icon='carbon:trash-can' color={theme.other.colors.secondary.black} />
+						<Icon icon='carbon:trash-can' color={theme.other.colors.tertiary.red} />
 					</ActionIcon>
 				</Tooltip>
 			</Group>

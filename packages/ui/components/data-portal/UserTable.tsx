@@ -1,14 +1,24 @@
-import { Button, Group, Modal, NativeSelect, Select, Stack, Text } from '@mantine/core'
+import {
+	ActionIcon,
+	Group,
+	Modal,
+	Popover,
+	Select,
+	Stack,
+	Text,
+	Tooltip,
+	useMantineTheme,
+} from '@mantine/core'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
-import { type PaginationState, type SortingState } from '@tanstack/react-table'
+import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
 import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { Link } from '~ui/components/core/Link'
+import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -122,7 +132,8 @@ const DataPortalAccessSelect = ({
 	)
 }
 
-const PasswordResetModal = ({ email }: { email: string }) => {
+const PasswordResetAction = ({ email }: { email: string }) => {
+	const theme = useMantineTheme()
 	const [opened, handler] = useDisclosure(false)
 	const { t } = useTranslation('common')
 	const resetPw = api.user.forgotPassword.useMutation({
@@ -141,12 +152,53 @@ const PasswordResetModal = ({ email }: { email: string }) => {
 	return (
 		<>
 			<Modal opened={opened} onClose={handler.close} title='Reset Password'>
-				<p>Are you sure you want to reset this user's password?</p>
-				<Button onClick={createResetHandler(email)}>Yes</Button>
-				<Button onClick={handler.close}>No</Button>
+				<Text mb='md'>Are you sure you want to reset this user&apos;s password?</Text>
+				<Group wrap='nowrap'>
+					<Button onClick={createResetHandler(email)} loading={resetPw.isPending}>
+						Yes
+					</Button>
+					<Button variant='secondaryLg' onClick={handler.close}>
+						No
+					</Button>
+				</Group>
 			</Modal>
-			<Link onClick={handler.open}>Reset</Link>
+			<Tooltip label='Reset Password'>
+				<ActionIcon variant='subtle' onClick={handler.open}>
+					<Icon icon='carbon:password' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
 		</>
+	)
+}
+
+const ManageAccessAction = ({
+	activePermissionName,
+	userId,
+	loggedInUserPermissions,
+}: {
+	activePermissionName: string | undefined
+	userId: string
+	loggedInUserPermissions: CurrentUserPermissions | undefined
+}) => {
+	const theme = useMantineTheme()
+
+	return (
+		<Popover position='bottom-end' withArrow shadow='md'>
+			<Popover.Target>
+				<Tooltip label='Manage Data Portal Access'>
+					<ActionIcon variant='subtle'>
+						<Icon icon='carbon:user-role' color={theme.other.colors.primary.allyGreen} />
+					</ActionIcon>
+				</Tooltip>
+			</Popover.Target>
+			<Popover.Dropdown>
+				<DataPortalAccessSelect
+					activePermissionName={activePermissionName}
+					userId={userId}
+					loggedInUserPermissions={loggedInUserPermissions}
+				/>
+			</Popover.Dropdown>
+		</Popover>
 	)
 }
 
@@ -157,15 +209,28 @@ export const UserTable = () => {
 	const [globalFilter, setGlobalFilter] = useState('')
 	const [debouncedGlobalFilter] = useDebouncedValue(globalFilter, 300)
 	const [sorting, setSorting] = useState<SortingState>([{ id: 'name', desc: false }])
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
+
+	const permissionNamesFilter = columnFilters.find((f) => f.id === 'permissionName')?.value as
+		string[] | undefined
+	const dateFilter = (id: string) =>
+		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
 	const { data, isLoading, isFetching, isError } = api.user.forUserTable.useQuery(
 		{
 			search: debouncedGlobalFilter || undefined,
+			createdAt: dateFilter('createdAt')
+				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
+				: undefined,
+			updatedAt: dateFilter('updatedAt')
+				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
+				: undefined,
 			sorting: sorting.map(({ id, desc }) => ({
 				id: id as 'name' | 'email' | 'createdAt' | 'updatedAt' | 'active',
 				desc,
 			})),
+			permissionNames: permissionNamesFilter?.length ? permissionNamesFilter : undefined,
 			take: pagination.pageSize,
 			skip: pagination.pageIndex * pagination.pageSize,
 		},
@@ -174,6 +239,26 @@ export const UserTable = () => {
 
 	const columns = useMemo<DataTableColumn<UserDataRecord>[]>(
 		() => [
+			{
+				id: 'actions',
+				header: 'Actions',
+				pin: 'left',
+				size: 90,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				hideable: false,
+				accessorFn: () => undefined,
+				cell: ({ row }) => (
+					<Group wrap='nowrap' gap={8}>
+						<PasswordResetAction email={row.email} />
+						<ManageAccessAction
+							activePermissionName={row.permissionName}
+							userId={row.id}
+							loggedInUserPermissions={loggedInUserPermissions}
+						/>
+					</Group>
+				),
+			},
 			{ id: 'name', header: 'Name' },
 			{ id: 'email', header: 'Email' },
 			{
@@ -190,6 +275,7 @@ export const UserTable = () => {
 			{
 				id: 'updatedAt',
 				header: 'Last updated',
+				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
@@ -198,6 +284,7 @@ export const UserTable = () => {
 			{
 				id: 'createdAt',
 				header: 'Created At',
+				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
@@ -211,24 +298,12 @@ export const UserTable = () => {
 			{
 				id: 'permissionName',
 				header: 'Data Portal Access Level',
-				size: 280,
+				size: 200,
 				enableSorting: false,
-				enableGlobalFilter: false,
-				cell: ({ row }) => (
-					<DataPortalAccessSelect
-						activePermissionName={row.permissionName}
-						userId={row.id}
-						loggedInUserPermissions={loggedInUserPermissions}
-					/>
-				),
-			},
-			{
-				id: 'resetPassword',
-				header: 'Reset Password',
-				enableSorting: false,
-				enableGlobalFilter: false,
-				accessorFn: () => undefined,
-				cell: ({ row }) => <PasswordResetModal email={row.email} />,
+				filter: { type: 'multi-select', options: DATA_PORTAL_ACCESS_OPTIONS },
+				cell: ({ row }) =>
+					DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.value === (row.permissionName ?? 'none'))?.label ??
+					'None',
 			},
 		],
 		[loggedInUserPermissions]
@@ -244,23 +319,17 @@ export const UserTable = () => {
 				columns={columns}
 				sorting={sorting}
 				onSortingChange={setSorting}
+				columnFilters={columnFilters}
+				onColumnFiltersChange={setColumnFilters}
 				globalFilter={globalFilter}
 				onGlobalFilterChange={setGlobalFilter}
-				globalFilterPlaceholder='Enter Name'
+				globalFilterPlaceholder='Search Users'
 				pagination={pagination}
 				onPaginationChange={setPagination}
 				mode={{ serverSide: true, rowCount: data?.total ?? 0 }}
 				isLoading={isLoading}
 				isFetching={isFetching}
 				isError={isError}
-				toolbarExtra={
-					<Group wrap='nowrap' gap='xs'>
-						<NativeSelect rightSection={<Icon icon='carbon:chevron-down' />} data={['Data Entry Teams']} />
-						<Button variant='subtle' px='xs'>
-							<Icon icon='carbon:overflow-menu-horizontal' />
-						</Button>
-					</Group>
-				}
 			/>
 		</Stack>
 	)

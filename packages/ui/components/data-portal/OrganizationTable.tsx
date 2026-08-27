@@ -33,6 +33,7 @@ const RowAction = ({
 }) => {
 	const [auditOpen, setAuditOpen] = useState(false)
 	const [notesOpen, setNotesOpen] = useState(false)
+	const theme = useMantineTheme()
 
 	const getViewUrl = (): Route =>
 		isSubRow && parentSlug
@@ -46,13 +47,13 @@ const RowAction = ({
 	return (
 		<Group wrap='nowrap' gap={8}>
 			<Tooltip label='View'>
-				<ActionIcon component={Link} href={getViewUrl()} target='_blank'>
-					<Icon icon='carbon:search' />
+				<ActionIcon variant='subtle' component={Link} href={getViewUrl()} target='_blank'>
+					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 			<Tooltip label='Edit'>
-				<ActionIcon component={Link} href={getEditUrl()} target='_blank'>
-					<Icon icon='carbon:edit' />
+				<ActionIcon variant='subtle' component={Link} href={getEditUrl()} target='_blank'>
+					<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 			{/* Activity log / internal notes are org-scoped only - neither drawer has a location-level
@@ -60,13 +61,13 @@ const RowAction = ({
 			{!isSubRow && (
 				<>
 					<Tooltip label='View activity log'>
-						<ActionIcon onClick={() => setAuditOpen(true)}>
-							<Icon icon='carbon:time' />
+						<ActionIcon variant='subtle' onClick={() => setAuditOpen(true)}>
+							<Icon icon='carbon:time' color={theme.other.colors.primary.allyGreen} />
 						</ActionIcon>
 					</Tooltip>
 					<Tooltip label='View internal notes'>
-						<ActionIcon onClick={() => setNotesOpen(true)}>
-							<Icon icon='carbon:notebook' />
+						<ActionIcon variant='subtle' onClick={() => setNotesOpen(true)}>
+							<Icon icon='carbon:notebook' color={theme.other.colors.primary.allyGreen} />
 						</ActionIcon>
 					</Tooltip>
 					{auditOpen && (
@@ -139,6 +140,23 @@ export const OrganizationTable = () => {
 
 	const columns = useMemo<DataTableColumn<TableRow>[]>(
 		() => [
+			{
+				id: 'actions',
+				header: 'Actions',
+				pin: 'left',
+				size: 180,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				hideable: false,
+				accessorFn: () => undefined,
+				cell: ({ row, depth }) => (
+					<RowAction
+						row={row}
+						isSubRow={depth > 0}
+						parentSlug={depth > 0 ? undefined : (row as RowItem).slug}
+					/>
+				),
+			},
 			{
 				id: 'name',
 				header: 'Name',
@@ -215,23 +233,6 @@ export const OrganizationTable = () => {
 				hiddenByDefault: true,
 				enableSorting: false,
 				cell: ({ value }) => (value === undefined ? '' : String(value)),
-			},
-			{
-				id: 'actions',
-				header: 'Actions',
-				pin: 'left',
-				size: 180,
-				enableSorting: false,
-				enableGlobalFilter: false,
-				hideable: false,
-				accessorFn: () => undefined,
-				cell: ({ row, depth }) => (
-					<RowAction
-						row={row}
-						isSubRow={depth > 0}
-						parentSlug={depth > 0 ? undefined : (row as RowItem).slug}
-					/>
-				),
 			},
 		],
 		[variants, theme]

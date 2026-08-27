@@ -1,12 +1,11 @@
 // components/core/ActionButtons/CsvDownload.tsx
 
-import { Text, Tooltip } from '@mantine/core'
+import { ActionIcon, Tooltip, useMantineTheme } from '@mantine/core'
 import { type UseMutationResult } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
-import { Button } from '~ui/components/core/Button'
 import { useCsvDownload } from '~ui/hooks/useCsvDownload'
 import { Icon } from '~ui/icon'
 
@@ -44,6 +43,7 @@ export const CsvDownload: React.FC<CsvDownloadProps> = ({
 	useMutationHook,
 	permissionKey,
 }) => {
+	const theme = useMantineTheme()
 	const { data: session } = useSession()
 
 	let hasRequiredPermissions = true
@@ -97,26 +97,13 @@ export const CsvDownload: React.FC<CsvDownloadProps> = ({
 	}
 
 	return (
-		<>
-			<Tooltip label={`Download ${label} data`} withinPortal>
-				<Button
-					onClick={handleClick}
-					disabled={isLoading}
-					loading={isLoading}
-					leftIcon={<Icon icon='carbon:download' />}
-					variant='secondary-icon'
-					size='compact-xs'
-				>
-					<Text size='sm' style={{ whiteSpace: 'normal', textAlign: 'center' }}>
-						{label}
-					</Text>
-				</Button>
-			</Tooltip>
-			{currentError && (
-				<Text c='red' size='sm' mt={4}>
-					{currentError}
-				</Text>
-			)}
-		</>
+		<Tooltip label={currentError || `Download ${label} data`} withinPortal>
+			<ActionIcon variant='subtle' onClick={handleClick} loading={isLoading} disabled={isLoading}>
+				<Icon
+					icon='carbon:download'
+					color={currentError ? theme.other.colors.tertiary.red : theme.other.colors.primary.allyGreen}
+				/>
+			</ActionIcon>
+		</Tooltip>
 	)
 }

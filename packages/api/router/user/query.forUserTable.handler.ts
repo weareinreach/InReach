@@ -7,17 +7,46 @@ import { type TForUserTableSchema } from './query.forUserTable.schema'
 const DATA_PORTAL_ROLE_NAMES = ['root', 'dataPortalAdmin', 'dataPortalManager', 'dataPortalBasic']
 
 const buildWhere = (input: TForUserTableSchema): Prisma.UserWhereInput => {
-	const where: Prisma.UserWhereInput = {}
+	// Built as top-level `AND` conditions (each its own object) rather than assigning multiple keys
+	// directly on `where` - `search` and `permissionNames` each need their own `OR`, and a plain JS
+	// object can only hold one `OR` key, so a second assignment would silently clobber the first.
+	const and: Prisma.UserWhereInput[] = []
 	if (input.active !== undefined) {
-		where.active = input.active
+		and.push({ active: input.active })
+	}
+	if (input.createdAt) {
+		and.push({ createdAt: { gte: input.createdAt.from, lte: input.createdAt.to } })
+	}
+	if (input.updatedAt) {
+		and.push({ updatedAt: { gte: input.updatedAt.from, lte: input.updatedAt.to } })
 	}
 	if (input.search) {
-		where.OR = [
-			{ name: { contains: input.search, mode: 'insensitive' } },
-			{ email: { contains: input.search, mode: 'insensitive' } },
-		]
+		and.push({
+			OR: [
+				{ name: { contains: input.search, mode: 'insensitive' } },
+				{ email: { contains: input.search, mode: 'insensitive' } },
+			],
+		})
 	}
-	return where
+	if (input.permissionNames?.length) {
+		const wantsNone = input.permissionNames.includes('none')
+		const specificNames = input.permissionNames.filter((name) => name !== 'none')
+		const permissionOr: Prisma.UserWhereInput[] = []
+		if (wantsNone) {
+			permissionOr.push({
+				permissions: { none: { authorized: true, permission: { name: { in: DATA_PORTAL_ROLE_NAMES } } } },
+			})
+		}
+		if (specificNames.length) {
+			permissionOr.push({
+				permissions: { some: { authorized: true, permission: { name: { in: specificNames } } } },
+			})
+		}
+		if (permissionOr.length) {
+			and.push({ OR: permissionOr })
+		}
+	}
+	return and.length ? { AND: and } : {}
 }
 
 // Sortable columns are whitelisted by the Zod schema (ZSortableColumn) before they ever reach here.

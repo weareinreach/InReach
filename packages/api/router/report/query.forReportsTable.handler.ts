@@ -20,6 +20,12 @@ const buildWhere = (input: TForReportsTableSchema): Prisma.ReportWhereInput => {
 	if (input.informed !== undefined) {
 		where.informed = input.informed
 	}
+	if (input.createdAt) {
+		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
+	}
+	if (input.updatedAt) {
+		where.updatedAt = { gte: input.updatedAt.from, lte: input.updatedAt.to }
+	}
 	if (input.search) {
 		where.OR = [
 			{ orgNameSnapshot: { contains: input.search, mode: 'insensitive' } },

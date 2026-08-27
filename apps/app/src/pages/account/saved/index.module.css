@@ -2,3 +2,15 @@
 	border-radius: 6px;
 	width: fit-content;
 }
+
+/* `packages/ui/layouts/BodyGrid.tsx` wraps every page's content in `<Grid mb={400}>` (a fixed,
+   sitewide reserved gap before the footer) - on content-heavy pages that's dwarfed by the content
+   itself, but this page can be as short as a title, one button, and "no lists yet", making that
+   same 400px read as a large empty gap before the footer. Scoped here (via `:has()`, matching the
+   marker class below) rather than changed in BodyGrid itself, since that component is shared
+   sitewide and other pages may rely on the larger gap. `!important` is required because `mb` is a
+   Mantine style prop, resolved to an inline `margin-bottom` on the Grid root - a plain rule can't
+   otherwise win against that. */
+:global(.mantine-Grid-root):has(.gridMarker) {
+	margin-bottom: rem(40px) !important;
+}

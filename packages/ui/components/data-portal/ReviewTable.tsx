@@ -60,6 +60,8 @@ export const ReviewTable = () => {
 	const visibleFilter = columnFilters.find(({ id }) => id === 'visible')?.value as boolean | undefined
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 	const ratingFilter = columnFilters.find(({ id }) => id === 'rating')?.value as string | undefined
+	const dateFilter = (id: string) =>
+		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
 	const { data, isLoading, isError, isFetching } = api.review.forReviewTable.useQuery(
 		{
@@ -67,6 +69,12 @@ export const ReviewTable = () => {
 			deleted: deletedFilter,
 			rating: ratingFilter ? Number(ratingFilter) : undefined,
 			search: debouncedGlobalFilter || undefined,
+			createdAt: dateFilter('createdAt')
+				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
+				: undefined,
+			updatedAt: dateFilter('updatedAt')
+				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
+				: undefined,
 			sorting: sorting.map(({ id, desc }) => ({ id: id as 'createdAt' | 'updatedAt' | 'rating', desc })),
 			take: pagination.pageSize,
 			skip: pagination.pageIndex * pagination.pageSize,
@@ -76,6 +84,61 @@ export const ReviewTable = () => {
 
 	const columns = useMemo<DataTableColumn<ReviewRecord>[]>(
 		() => [
+			{
+				id: 'actions',
+				header: 'Actions',
+				pin: 'left',
+				size: 90,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				hideable: false,
+				accessorFn: () => undefined,
+				cell: ({ row }) => {
+					const org = row.organization
+					const location = row.orgLocation
+					const isDeleted = row.deleted
+
+					const getViewUrl = (): Route =>
+						location && org
+							? {
+									pathname: '/org/[slug]/[orgLocationId]',
+									query: { slug: org.slug, orgLocationId: location.id },
+								}
+							: { pathname: '/org/[slug]', query: { slug: org?.slug || '' } }
+
+					return (
+						<Group wrap='nowrap' gap={8}>
+							<Tooltip label='View Target'>
+								<ActionIcon variant='subtle' component={Link} href={getViewUrl()} target='_blank'>
+									<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
+								</ActionIcon>
+							</Tooltip>
+							{isManagerOrHigher && (
+								<Tooltip label={isDeleted ? 'Undelete Review' : 'Delete Review'}>
+									<ActionIcon
+										onClick={() => {
+											if (isDeleted) {
+												unDeleteMutation.mutate({ id: row.id })
+											} else {
+												deleteMutation.mutate({ id: row.id })
+											}
+										}}
+										variant='subtle'
+										size='sm'
+									>
+										<Icon
+											icon={isDeleted ? 'carbon:undo' : 'carbon:trash-can'}
+											color={
+												isDeleted ? theme.other.colors.primary.allyGreen : theme.other.colors.tertiary.red
+											}
+										/>
+									</ActionIcon>
+								</Tooltip>
+							)}
+						</Group>
+					)
+				},
+			},
 			{
 				id: 'userName',
 				header: 'User Name',
@@ -198,6 +261,7 @@ export const ReviewTable = () => {
 			{
 				id: 'createdAt',
 				header: 'Created At',
+				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
 					return (
@@ -208,53 +272,15 @@ export const ReviewTable = () => {
 				},
 			},
 			{
-				id: 'actions',
-				header: 'Actions',
-				pin: 'left',
-				size: 90,
-				enableSorting: false,
-				enableGlobalFilter: false,
-				hideable: false,
-				accessorFn: () => undefined,
-				cell: ({ row }) => {
-					const org = row.organization
-					const location = row.orgLocation
-					const isDeleted = row.deleted
-
-					const getViewUrl = (): Route =>
-						location && org
-							? {
-									pathname: '/org/[slug]/[orgLocationId]',
-									query: { slug: org.slug, orgLocationId: location.id },
-								}
-							: { pathname: '/org/[slug]', query: { slug: org?.slug || '' } }
-
+				id: 'updatedAt',
+				header: 'Updated At',
+				filter: { type: 'date-range' },
+				cell: ({ value }) => {
+					const date = DateTime.fromJSDate(value as Date)
 					return (
-						<Group wrap='nowrap' gap={8}>
-							<Tooltip label='View Target'>
-								<ActionIcon component={Link} href={getViewUrl()} target='_blank'>
-									<Icon icon='carbon:search' />
-								</ActionIcon>
-							</Tooltip>
-							{isManagerOrHigher && (
-								<Tooltip label={isDeleted ? 'Undelete Review' : 'Delete Review'}>
-									<ActionIcon
-										onClick={() => {
-											if (isDeleted) {
-												unDeleteMutation.mutate({ id: row.id })
-											} else {
-												deleteMutation.mutate({ id: row.id })
-											}
-										}}
-										color={isDeleted ? 'green' : 'red'}
-										variant='subtle'
-										size='sm'
-									>
-										<Icon icon={isDeleted ? 'carbon:undo' : 'carbon:trash-can'} />
-									</ActionIcon>
-								</Tooltip>
-							)}
-						</Group>
+						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)}>
+							<span>{date.toRelativeCalendar()}</span>
+						</Tooltip>
 					)
 				},
 			},

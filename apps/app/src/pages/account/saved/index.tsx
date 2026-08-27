@@ -67,7 +67,7 @@ const SavedLists = () => {
 	}
 
 	return (
-		<Grid.Col span={{ base: 12, sm: 12 }}>
+		<Grid.Col span={{ base: 12, sm: 12 }} className={classes.gridMarker}>
 			<Stack>
 				<Title order={1}> {t('words.saved', { defaultValue: 'Saved' })} </Title>
 				<Text size='lg'>{t('list.create-new-sub')}</Text>
