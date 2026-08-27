@@ -136,12 +136,12 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 			}
 		}, [formIsDirty, isSaved])
 		const handleClose = useCallback(() => {
-			if (formState.isDirty) {
+			if (formIsDirty) {
 				return modalHandler.open()
 			} else {
 				return drawerHandler.close()
 			}
-		}, [formState.isDirty, drawerHandler, modalHandler])
+		}, [formIsDirty, drawerHandler, modalHandler])
 
 		const handleUnlink = useCallback(() => {
 			if (hasLocationId) {
@@ -184,7 +184,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 										variant='primary-icon'
 										leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 										loading={emailUpdate.isPending}
-										disabled={!formState.isDirty}
+										disabled={!formIsDirty}
 										type='submit'
 									>
 										{isSaved ? 'Saved' : 'Save'}
@@ -213,6 +213,12 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 													leftIcon={<Icon icon='carbon:unlink' />}
 													onClick={handleUnlink}
 													disabled={createNew}
+													// Button's root has `overflow: hidden` (for its loading-state
+													// pseudo-element), which zeroes its flexbox automatic minimum
+													// size - without this, the surrounding `justify='space-between'`
+													// Group was free to shrink it below its label's width, silently
+													// clipping the text instead of holding its size.
+													style={{ flexShrink: 0 }}
 												>
 													Unlink from this location
 												</Button>

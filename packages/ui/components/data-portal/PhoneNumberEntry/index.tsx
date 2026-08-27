@@ -134,6 +134,11 @@ export const PhoneNumberEntry = ({
 			}}
 			classNames={countrySelectClasses}
 			clearable
+			// Mantine 9's default `Select` renders the clear button *and* the dropdown chevron
+			// side-by-side once a value is set - `'clear'` restores the old one-icon-at-a-time
+			// behavior (clear button when a value is set, chevron otherwise). Same fix as
+			// withHookForm.tsx's copy of this Select.
+			clearSectionMode='clear'
 			{...countrySelectProps}
 		/>
 	)
@@ -144,7 +149,10 @@ export const PhoneNumberEntry = ({
 			defaultCountry={DEFAULT_COUNTRY}
 			inputComponent={TextInput}
 			rightSection={countrySelection}
-			rightSectionWidth={56}
+			// Matches `.countrySelectRoot`'s own width (64px, `index.module.css`) plus a little
+			// breathing room, so this country-select widget doesn't itself overlap the phone
+			// number's own typed text. Same fix as withHookForm.tsx's copy of this field.
+			rightSectionWidth={72}
 			classNames={phoneEntryClasses}
 			value={parsePhoneNumber(String(phoneValue), DEFAULT_COUNTRY)?.number}
 			onChange={(e) => (onPhoneChange && typeof onPhoneChange === 'function' ? onPhoneChange(e) : undefined)}

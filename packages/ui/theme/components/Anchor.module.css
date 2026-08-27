@@ -168,6 +168,11 @@
 	line-height: inherit !important;
 	color: inherit !important;
 	font-size: inherit !important;
+	/* `.root`'s `text-decoration: underline` is otherwise unconditional - `inheritStyle` is meant
+	   to look like plain surrounding text (a Link used purely as a click target inside an
+	   already-styled parent), so it needs this explicitly rather than relying on every caller to
+	   remember a `td='none'` override. */
+	text-decoration: inherit !important;
 }
 @media (hover: hover) {
 	.inheritStyle:hover,

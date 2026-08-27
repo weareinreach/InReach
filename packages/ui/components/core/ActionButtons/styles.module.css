@@ -3,18 +3,22 @@
 	flex-direction: row;
 	align-items: center;
 	min-width: fit-content;
-	height: rem(48px);
-	padding: rem(12px);
 	gap: rem(8px);
-	/* `!important` guards against `Button.tsx`'s own "no variant" fallback (`defaultRoot`, a
-	   black background) - every ActionButtons/*.tsx file applies this class to a bare
-	   `Button`/`Box component={Button}` with no `variant` prop, so without this the two classes'
-	   background-color declarations are equal-specificity and whichever the bundler happens to
-	   emit last wins - which can differ between Storybook's dev pipeline and a production build,
-	   rendering these buttons with unreadable same-color icon+text on a black background. */
+	/* `!important` guards against `Button.tsx`'s own "no variant" fallback (`defaultRoot`, a large
+	   black pill meant for CTAs like navbar "Sign up") - every ActionButtons/*.tsx file applies
+	   this class to a bare `Button`/`Box component={Button}` with no `variant` prop, so without
+	   this the two classes' declarations are equal-specificity and whichever the bundler happens
+	   to emit last wins - which can differ between Storybook's dev pipeline and a production
+	   build (or even between dev-server navigations, since Next's on-demand compilation order
+	   depends on which pages/components have been visited already). `background-color` was
+	   already guarded this way; `height`/`padding`/`border-radius` need it too, or this button
+	   silently reverts to `defaultRoot`'s oversized pill shape (wide, fully-rounded) instead of
+	   this compact rectangle - the same failure mode, just for layout instead of color. */
+	height: rem(48px) !important;
+	padding: rem(12px) !important;
 	background-color: var(--ir-color-secondary-white) !important;
 	border: 0;
-	border-radius: rem(8px);
+	border-radius: rem(8px) !important;
 }
 @media (hover: hover) {
 	.button:not([data-disabled]):hover {

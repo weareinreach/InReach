@@ -59,6 +59,13 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			orgId,
 		},
 	})
+	// react-hook-form's `formState` is a Proxy that only reliably reflects the current value when
+	// read during render (e.g. destructured here, or accessed directly in JSX) - reading
+	// `form.formState.isDirty` inside a `useCallback` body instead (as `handleClose` below used to)
+	// can silently return a stale snapshot from whenever the callback was first created, since that
+	// read happens outside the render the Proxy tracks.
+	const { isDirty: formIsDirty, isValid: formIsValid } = form.formState
+
 	const createLocation = api.location.create.useMutation({
 		onSuccess: () => {
 			modalHandler.close()
@@ -86,12 +93,12 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	}, [form, modalHandler, drawerHandler])
 
 	const handleClose = useCallback(() => {
-		if (form.formState.isDirty) {
+		if (formIsDirty) {
 			return modalHandler.open()
 		} else {
 			return drawerHandler.close()
 		}
-	}, [drawerHandler, form.formState.isDirty, modalHandler])
+	}, [drawerHandler, formIsDirty, modalHandler])
 
 	useEffect(() => {
 		if (drawerOpened) {
@@ -117,7 +124,7 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={form.handleSubmit(handleSave)}
 								loading={createLocation.isPending}
-								disabled={!form.formState.isDirty || !form.formState.isValid}
+								disabled={!formIsDirty || !formIsValid}
 							>
 								Save
 							</Button>

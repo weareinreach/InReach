@@ -58,6 +58,10 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		const [pendingAutoAttach, setPendingAutoAttach] = useState(false)
 		const hasAutoAttachedRef = useRef(false)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this service. Please try again.',
+			icon: 'warning',
+		})
 		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
 		const apiUtils = api.useUtils()
@@ -155,6 +159,13 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 				}
 				form.reset(form.getValues())
 				setHasAttributeChanges(false)
+			},
+			// Without this, a failed save (network blip, a server-side validation rejection, an
+			// expired session, ...) left the UI silently stuck: `onSuccess` never runs, so the form
+			// never resets - Save stays enabled and the drawer/"Unsaved Changes" modal never closes -
+			// with no indication to the person editing that anything went wrong at all.
+			onError: () => {
+				notifySaveError()
 			},
 		})
 

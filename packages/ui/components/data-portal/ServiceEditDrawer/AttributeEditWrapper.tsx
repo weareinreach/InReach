@@ -1,8 +1,9 @@
-import { ActionIcon, Button, Group, Modal, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Group, Modal, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { type ReactNode, useCallback, useMemo } from 'react'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
+import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalText } from '~ui/modals/Service/ModalText'

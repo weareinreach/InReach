@@ -268,6 +268,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 								nothingFoundMessage='No options'
 								maxDropdownHeight={280}
 								data={sortedTimezoneData}
+								comboboxProps={{ zIndex: 10002 }}
 							/>
 							<Divider my='sm' />
 						</Stack>

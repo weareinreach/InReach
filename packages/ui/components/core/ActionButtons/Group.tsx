@@ -1,17 +1,38 @@
 import { Box } from '@mantine/core'
-import { Children, cloneElement, type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
+import {
+	Children,
+	type ReactElement,
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react'
 
 import classes from './Group.module.css'
 import { OverflowMenu } from './Menu'
+
+const MENU_WIDTH = 50
+const GAP = 8
+/** Fallback used only for the first paint, before a button has ever been measured. */
+const FALLBACK_BUTTON_WIDTH = 90
 
 export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [containerWidth, setContainerWidth] = useState(0)
 
-	// Approximate width of your buttons + gaps (adjust based on your actual button sizes)
-	// Review (~80px), Share (~80px), Save (~80px), Report (~80px) + 3 gaps (~24px) + Menu (~40px)
-	const BUTTON_WIDTH = 90
-	const MENU_WIDTH = 50
+	// Buttons vary in actual width (icon + "Review" vs icon + "Save"/"Saved", per-locale text
+	// length, etc.) - a single guessed width for all of them (the old `BUTTON_WIDTH = 90`
+	// constant) drifts from reality by a different amount per button, so the fit/no-fit decision
+	// was inconsistent (e.g. showing fewer buttons at a wider container than at a narrower one).
+	// Every button stays mounted regardless of computed visibility (`.inVisible` is
+	// `position: absolute` + `visibility: hidden`, not `display: none`), so its true rendered
+	// width is always measurable here - `widthsRef` accumulates those real measurements and
+	// `widthsVersion` re-triggers the fit calculation once they change.
+	const widthsRef = useRef<Record<string, number>>({})
+	const itemRefs = useRef<Record<string, HTMLElement | null>>({})
+	const [widthsVersion, setWidthsVersion] = useState(0)
 
 	useEffect(() => {
 		const container = containerRef.current
@@ -29,27 +50,49 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 		return () => observer.disconnect()
 	}, [])
 
+	useLayoutEffect(() => {
+		let changed = false
+		for (const [id, el] of Object.entries(itemRefs.current)) {
+			if (!el) continue
+			const width = el.getBoundingClientRect().width
+			if (width && widthsRef.current[id] !== width) {
+				widthsRef.current[id] = width
+				changed = true
+			}
+		}
+		if (changed) setWidthsVersion((version) => version + 1)
+	})
+
+	const setItemRef = useCallback(
+		(id: string) => (el: HTMLElement | null) => {
+			itemRefs.current[id] = el
+		},
+		[]
+	)
+
 	const visibilityMap = useMemo(() => {
-		const childrenArray = Children.toArray(children)
+		const childrenArray = Children.toArray(children) as ReactElement<ActionButtonElementProps>[]
 		const map: Record<string, boolean> = {}
 
-		// Logic: How many buttons fit in the current width?
-		// We reserve space for the overflow menu icon
+		// How many buttons fit in the current width? Reserve space for the overflow menu icon.
 		let availableSpace = containerWidth - MENU_WIDTH
 
 		childrenArray.forEach((child) => {
-			const id = (child as ReactElement<ActionButtonElementProps>).props['data-targetid']
+			const id = child.props['data-targetid']
 			if (id) {
-				if (availableSpace > BUTTON_WIDTH) {
+				const width = widthsRef.current[id] ?? FALLBACK_BUTTON_WIDTH
+				const needed = width + GAP
+				if (availableSpace >= needed) {
 					map[id] = true
-					availableSpace -= BUTTON_WIDTH
+					availableSpace -= needed
 				} else {
 					map[id] = false
 				}
 			}
 		})
 		return map
-	}, [children, containerWidth])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [children, containerWidth, widthsVersion])
 
 	return (
 		<Box ref={containerRef} className={classes.groupWrapper}>
@@ -60,13 +103,16 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 
 				const isVisible = visibilityMap[targetId] ?? true
 
-				return cloneElement(reactChild, {
-					className: [reactChild.props.className, isVisible ? classes.visible : classes.inVisible]
-						.filter(Boolean)
-						.join(' '),
-				})
+				return (
+					<Box
+						key={targetId}
+						ref={setItemRef(targetId)}
+						className={isVisible ? classes.visible : classes.inVisible}
+					>
+						{reactChild}
+					</Box>
+				)
 			})}
-
 			<OverflowMenu visibilityMap={visibilityMap} className={classes.overflowStyle as string}>
 				{children}
 			</OverflowMenu>

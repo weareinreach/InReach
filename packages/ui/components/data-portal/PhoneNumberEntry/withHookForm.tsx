@@ -121,6 +121,12 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	// saved. This checks the value once, the first time it loads in (not on every keystroke, so
 	// correcting it doesn't cause the input to flicker/swap mid-edit), and falls back to a plain
 	// text field showing the raw value if the masked input can't represent it.
+	//
+	// Note: this expects `phoneInput`'s value to already be E.164 (`+<countrycode><number>`) by
+	// the time it reaches here - callers are responsible for that (e.g. combining a bare national
+	// number with its own country field in the query's `select`), since correcting the format
+	// *here* via `field.onChange` would mark the field (and form) dirty for a load-time formatting
+	// fix the user never made, wrongly enabling Save / triggering an unsaved-changes prompt.
 	const [showRawFallback, setShowRawFallback] = useState(false)
 	const hasCheckedInitialValue = useRef(false)
 	useEffect(() => {
@@ -228,7 +234,10 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 					required={required}
 					rules={phoneValidationRules}
 					rightSection={countrySelection}
-					rightSectionWidth={56}
+					// Matches `.countrySelectRoot`'s own width (64px, `styles.module.css`) plus a little
+					// breathing room, so this country-select widget doesn't itself overlap the phone
+					// number's own typed text.
+					rightSectionWidth={72}
 				/>
 				<Text size='xs' c='dimmed'>
 					This number couldn&apos;t be displayed in the normal format - showing the raw saved value. Re-enter

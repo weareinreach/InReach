@@ -45,7 +45,11 @@ const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 						.
 					</Title>
 				),
-				Text: <Text component='p'>.</Text>,
+				Text: (
+					<Text component='p' pb={16}>
+						.
+					</Text>
+				),
 				LinkFree: (
 					<Link
 						href='https://inreach.kindful.com/?campaign=1274815'

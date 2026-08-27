@@ -2,7 +2,12 @@
 	font-size: rem(16px);
 	font-weight: 500;
 	border-radius: 100%;
-	color: var(--ir-color-secondary-white);
+	/* `!important` needed - this `<Text>` has no `variant`, and `theme.components.Text.styles`
+	   (packages/ui/theme/common.tsx) unconditionally sets an inline default `color` on any `Text`
+	   whose `variant` doesn't resolve to an override; inline style otherwise wins over this plain
+	   class rule, rendering the count in the default dark text color instead of white - invisible
+	   against the black/dark-gray circle background. */
+	color: var(--ir-color-secondary-white) !important;
 	width: rem(24px);
 	height: rem(24px);
 	text-align: center;

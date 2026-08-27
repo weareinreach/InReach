@@ -463,12 +463,26 @@ export const commonTheme = createTheme({
 			// spread after - still win) keeps both under one plain-JS-precedence mechanism instead of
 			// two competing Mantine ones. An explicit `fw`/`c` prop passed by a caller still wins over
 			// both, same as before.
+			//
+			// `Anchor` renders internally as `<Text __staticSelector='Anchor'>` (see Mantine's
+			// Anchor.tsx), and `Text`'s `useProps('Text', ...)` call resolves this `styles` config
+			// regardless of `__staticSelector` - `__staticSelector` only affects CSS class naming, not
+			// which `theme.components` entry supplies `styles`. Left unguarded, that means every Anchor
+			// gets this inline `fontWeight`/`color` too, unconditionally winning (inline style beats a
+			// non-`!important` class rule) over Anchor.module.css's own base/variant rules - the exact
+			// "Log out" nav button regression (font-weight 500 in CSS, 400 rendered). `Anchor` doesn't
+			// go through `textVariants` (its variants live in `anchorVariants`/Anchor.module.css
+			// instead), so bailing out entirely here for the `__staticSelector === 'Anchor'` case is
+			// correct, not just a narrower version of the same default.
 			styles: (theme: MantineTheme, props: TextProps) => ({
-				root: {
-					fontWeight: theme.other.fontWeight.regular,
-					color: theme.other.colors.secondary.black,
-					...(props.variant ? textVariants(theme)[props.variant]?.root : undefined),
-				},
+				root:
+					props.__staticSelector === 'Anchor'
+						? {}
+						: {
+								fontWeight: theme.other.fontWeight.regular,
+								color: theme.other.colors.secondary.black,
+								...(props.variant ? textVariants(theme)[props.variant]?.root : undefined),
+							},
 			}),
 		},
 		Textarea: {

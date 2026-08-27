@@ -351,6 +351,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 												...(phoneTypes ?? []),
 												{ value: null as unknown as string, label: 'Custom Text (enter below)' },
 											]}
+											comboboxProps={{ zIndex: 10002 }}
 										/>
 										{values.phoneTypeId === null && (
 											<TextInput label='Description' name='description' control={control} />
@@ -365,6 +366,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 													leftIcon={<Icon icon='carbon:unlink' />}
 													onClick={handleUnlink}
 													disabled={createNew}
+													// Button's root has `overflow: hidden` (for its loading-state
+													// pseudo-element), which zeroes its flexbox automatic minimum
+													// size - without this, the surrounding `justify='space-between'`
+													// Group was free to shrink it below its label's width, silently
+													// clipping the text instead of holding its size.
+													style={{ flexShrink: 0 }}
 												>
 													Unlink from this location
 												</Button>

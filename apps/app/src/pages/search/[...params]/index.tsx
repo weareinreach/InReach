@@ -267,6 +267,11 @@ const SearchResults = () => {
 									</Text>
 								}
 								labelPosition='center'
+								// Mantine's own `label` part is `white-space: nowrap` (built for a short heading
+								// like "OR"), which the `remote-national-description` sentence inherits and
+								// never wraps - normalize it here and cap the width so the label reads as a
+								// paragraph instead of one unbroken line running off the divider.
+								styles={{ label: { whiteSpace: 'normal', maxWidth: '70%' } }}
 							/>
 						</Stack>
 					)

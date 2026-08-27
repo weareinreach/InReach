@@ -75,7 +75,13 @@ export const SearchBox = ({
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
 	const { searchStateActions, searchState } = useSearchState()
-	const form = useForm<FormValues>({ initialValues: { search: searchState.searchTerm ?? initialValue } })
+	// `searchState.searchTerm` is the location search's persisted term (see its `location`-only
+	// usage in analytics on the results page) - it's shared app-wide via `SearchStateProvider`, so
+	// seeding the organization-name box from it too meant that box showed whatever location was
+	// last searched instead of starting empty.
+	const form = useForm<FormValues>({
+		initialValues: { search: (isOrgSearch ? initialValue : searchState.searchTerm) ?? initialValue },
+	})
 	const [search] = useDebouncedValue(form.values.search, 400)
 
 	// tRPC functions
@@ -218,7 +224,10 @@ export const SearchBox = ({
 					setLoading(false)
 					return
 				}
-				searchStateActions.setSearchTerm(item.value)
+				// Not `searchStateActions.setSearchTerm(item.value)` here - that field is the
+				// location search's persisted term (shared app-wide via `SearchStateProvider`), so
+				// writing an org name into it would leak into the location box/analytics on any
+				// later return to the results page.
 				searchBoxEvent.searchOrg(search, item.value)
 				router.push({
 					pathname: '/org/[slug]',

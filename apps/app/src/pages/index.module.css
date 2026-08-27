@@ -1,5 +1,10 @@
 .callout1text {
-	color: var(--ir-color-secondary-white);
+	/* `!important` needed because the plain `<Text>` in the "who we are" callout takes this class as
+	   its only styling (no `variant` prop) - `theme.components.Text.styles` in the theme (see
+	   packages/ui/theme/common.tsx) unconditionally sets an inline default color for any `Text`
+	   whose `variant` doesn't resolve to an override, and inline style otherwise wins over this
+	   plain class rule. */
+	color: var(--ir-color-secondary-white) !important;
 }
 
 .callout1font {
@@ -23,6 +28,12 @@
 }
 
 .reviewCard {
+	/* Without an explicit min-height, this card (and the carousel viewport wrapping it, via its own
+	   `h='100%'`) shrinks to whatever the shortest review's 2-line-clamped text needs - visibly
+	   shorter/cramped than the "Our values" cards above it, which reserve `min-height: rem(246px)`
+	   for the same reason. Match that same floor here so the testimonial carousel doesn't look
+	   squeezed regardless of how short a given review is. */
+	min-height: rem(260px);
 	border: none !important;
 }
 

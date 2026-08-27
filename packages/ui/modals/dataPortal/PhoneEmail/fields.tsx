@@ -26,12 +26,26 @@ export const PhoneTypeSelect = () => {
 		if (!phoneTypesData) {
 			return
 		}
-		setOptions(phoneTypesData.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })))
+		setOptions([
+			...phoneTypesData.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })),
+			// Matches PhoneDrawer's own phone-type Select (packages/ui/components/data-portal/PhoneDrawer)
+			// - without this, there's no way to pick a type outside the fetched list.
+			{ value: null as unknown as string, label: 'Custom Text (enter below)' },
+		])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [phoneTypesData])
 
 	//TODO: Alter dropdown component to match figma design
-	return <Select data={options} {...form.getInputProps('phoneTypeId')} />
+	return (
+		<Select
+			data={options}
+			{...form.getInputProps('phoneTypeId')}
+			// This modal can be opened from within a Drawer (e.g. adding a phone number to a service
+			// or location), whose own overlay/content otherwise sits above this Select's dropdown -
+			// same fix, same value, as PhoneDrawer's own phone-type Select.
+			comboboxProps={{ zIndex: 10002 }}
+		/>
+	)
 }
 
 // #endregion

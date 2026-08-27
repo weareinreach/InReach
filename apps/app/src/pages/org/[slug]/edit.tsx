@@ -158,9 +158,9 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			<Head>
 				<title>{t('page-title.edit-mode', { ns: 'common', title: data.name })}</title>
 			</Head>
-			<DataToolbar data={data} />
 			<FormProvider {...formMethods}>
 				<Grid.Col span={{ sm: 8 }} order={1}>
+					<DataToolbar data={data} />
 					<Stack pt={24} align='flex-start' gap={40}>
 						<ListingBasicInfo
 							data={{

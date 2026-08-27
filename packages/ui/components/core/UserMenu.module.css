@@ -38,3 +38,13 @@
 .logoutButton {
 	padding: rem(14px) rem(12px);
 }
+
+/* Mantine's Button root has `overflow: hidden` (for its loading-state pseudo-element), which per the
+   flexbox spec zeroes its automatic minimum size in the main axis - so inside the navbar's `nowrap`
+   flex row, this button was free to shrink below its label's content width once space got tight,
+   silently clipping the label text (e.g. "Sign up for free" -> "Sign up for fre") instead of holding
+   its size or wrapping. `flex-shrink: 0` restores the normal expectation that a button doesn't
+   shrink below what its own label needs. */
+.signupButton {
+	flex-shrink: 0;
+}

@@ -107,7 +107,7 @@ export const TimeRange = <T extends FieldValues>({
 							{...props}
 						/>
 					</Stack>
-					<ActionIcon disabled={disabled}>
+					<ActionIcon variant='subtle' disabled={disabled}>
 						<Icon
 							icon='carbon:trash-can'
 							onClick={deleteHandler}

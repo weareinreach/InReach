@@ -33,11 +33,18 @@ export default {
 		component: Button,
 		children: 'Open Drawer',
 		variant: 'primary',
-		id: 'oweb_01H29ENF8JTJ3FNJ5BQXDH4PMA',
 	},
 } satisfies Meta<typeof WebsiteDrawer>
 
 type StoryDef = StoryObj<typeof WebsiteDrawer>
 
-export const Default = {} satisfies StoryDef
-// export const WithoutData = {} satisfies StoryDef
+export const WithData = {
+	args: {
+		id: 'oweb_01H29ENF8JTJ3FNJ5BQXDH4PMA',
+	},
+} satisfies StoryDef
+export const WithoutData = {
+	args: {
+		createNew: true,
+	},
+} satisfies StoryDef
