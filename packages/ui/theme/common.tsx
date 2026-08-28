@@ -344,7 +344,12 @@ export const commonTheme = createTheme({
 		PaginationRoot: {
 			defaultProps: (theme: MantineTheme) => ({
 				siblings: 0,
-				color: theme.other.colors.secondary.white,
+				color: theme.other.colors.secondary.black,
+				// Without this, the active page control's text color (`--pagination-active-color`) is
+				// simply unset and falls back to Mantine's own default of white - invisible against a
+				// white `color`, but just as invisible against black without `autoContrast` explicitly
+				// computing a contrasting text color for whatever `color` above ends up being.
+				autoContrast: true,
 			}),
 		},
 		Paper: {

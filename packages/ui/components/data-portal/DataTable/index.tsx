@@ -17,6 +17,7 @@ import {
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
+	type ColumnSizingState,
 	type ExpandedState,
 	flexRender,
 	getCoreRowModel,
@@ -132,6 +133,7 @@ export const DataTable = <T,>({
 		return { ...defaults, ...initialColumnVisibility }
 	})
 	const [expanded, setExpanded] = useState<ExpandedState>({})
+	const [columnSizing, setColumnSizing] = useState<ColumnSizingState>({})
 
 	// Client mode does the filtering/sorting/pagination math itself, over the full `data` array; server
 	// mode trusts the caller to have already sent back exactly the right page.
@@ -164,6 +166,7 @@ export const DataTable = <T,>({
 										value: ctx.getValue(),
 										index: ctx.row.index,
 										depth: ctx.row.depth,
+										parentRow: ctx.row.getParentRow()?.original,
 									})
 								: String(ctx.getValue() ?? ''),
 						enableSorting: column.enableSorting ?? true,
@@ -178,11 +181,13 @@ export const DataTable = <T,>({
 	const table = useReactTable({
 		data: pageRows,
 		columns: tanstackColumns,
-		state: { sorting, columnFilters, globalFilter, pagination, columnVisibility, expanded },
+		state: { sorting, columnFilters, globalFilter, pagination, columnVisibility, expanded, columnSizing },
 		manualSorting: true,
 		manualFiltering: true,
 		manualPagination: true,
 		pageCount,
+		enableColumnResizing: true,
+		columnResizeMode: 'onChange',
 		getRowId: getRowId ? (row, index) => getRowId(row, index) : undefined,
 		getSubRows,
 		getCoreRowModel: getCoreRowModel(),
@@ -196,6 +201,7 @@ export const DataTable = <T,>({
 			onPaginationChange(typeof updater === 'function' ? updater(pagination) : updater),
 		onColumnVisibilityChange: setColumnVisibility,
 		onExpandedChange: setExpanded,
+		onColumnSizingChange: setColumnSizing,
 	})
 
 	const leafColumns = table.getVisibleLeafColumns()
@@ -208,10 +214,11 @@ export const DataTable = <T,>({
 				break
 			}
 			offsets.set(col.id, cumulative)
-			cumulative += columnDef.size ?? DEFAULT_PIN_WIDTH
+			cumulative += col.getSize() || DEFAULT_PIN_WIDTH
 		}
 		return offsets
-	}, [leafColumns, columns])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [leafColumns, columns, columnSizing])
 
 	const stickyStyle = (columnId: string) => {
 		if (!pinOffsets.has(columnId)) {
@@ -290,7 +297,7 @@ export const DataTable = <T,>({
 									return (
 										<Table.Th
 											key={header.id}
-											style={{ ...stickyStyle(header.column.id), width: columnDef?.size }}
+											style={{ ...stickyStyle(header.column.id), width: header.getSize() }}
 											className={classes.th}
 										>
 											<Group
@@ -350,6 +357,13 @@ export const DataTable = <T,>({
 													</Popover>
 												)}
 											</Group>
+											<div
+												onMouseDown={header.getResizeHandler()}
+												onTouchStart={header.getResizeHandler()}
+												onClick={(event) => event.stopPropagation()}
+												className={classes.resizer}
+												data-resizing={header.column.getIsResizing() || undefined}
+											/>
 										</Table.Th>
 									)
 								})}
@@ -374,7 +388,7 @@ export const DataTable = <T,>({
 									return (
 										<Table.Td
 											key={cell.id}
-											style={stickyStyle(cell.column.id)}
+											style={{ ...stickyStyle(cell.column.id), width: cell.column.getSize() }}
 											ta={columnDef?.align}
 											className={classes.td}
 										>

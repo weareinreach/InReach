@@ -1,5 +1,9 @@
 /* Overlays an "X" over an icon that has no dedicated off/excluded variant in the icon set (e.g.
-   `carbon:trash-can`), to indicate excluded/hidden-by-default items. */
+   `carbon:trash-can`), to indicate excluded/hidden-by-default items. `top/left: 50%` plus
+   `translate(-50%, -50%)` centers each line on the icon's exact center regardless of the icon's own
+   internal proportions, then rotation happens around that already-centered point - a percentage
+   `inset` box (the previous approach) only stays centered if the box itself is symmetric, which
+   doesn't reliably hold across different icon glyphs. */
 .slash {
 	position: relative;
 	display: inline-flex;
@@ -8,12 +12,15 @@
 .slash::after {
 	content: '';
 	position: absolute;
-	inset: 15% -5%;
-	border-top: rem(2px) solid currentcolor;
+	top: 50%;
+	left: 50%;
+	width: 75%;
+	height: rem(2px);
+	background-color: currentcolor;
 }
 .slash::before {
-	transform: rotate(45deg);
+	transform: translate(-50%, -50%) rotate(45deg);
 }
 .slash::after {
-	transform: rotate(-45deg);
+	transform: translate(-50%, -50%) rotate(-45deg);
 }

@@ -63,7 +63,14 @@
 	font-weight: var(--ir-font-weight-semibold);
 	font-size: var(--mantine-font-size-md);
 }
-.item > * {
+/*
+ * Descendant selector, not `.item > *` - the cloned action button's icon/label sit several levels
+ * deep (button > Button-inner > Button-label > Group > icon/text), not as direct children of the
+ * element `.item` is applied to, so a direct-child selector never reached them. Both the icon and
+ * the label text also carry their own inline `style="color: ..."` (the icon from its `color` prop,
+ * the label from `Button`'s own text styling), which only an `!important` class rule can override.
+ */
+.item * {
 	color: white !important;
 }
 .item[data-hovered] {
@@ -71,11 +78,19 @@
 	text-decoration: underline;
 }
 
+/*
+ * Each cloned action item is the exact same button used in the regular toolbar, whose own root
+ * class (`.button` above) guards its white background/height/padding with `!important` specifically
+ * so it can't be accidentally overridden - which means overriding it back here for the
+ * dark-menu-item look needs `!important` too, or `.button`'s rules win regardless of source order
+ * (a plain, non-`!important` `background-color: inherit` cannot beat an `!important` rule no matter
+ * which stylesheet loads later).
+ */
 .inOverflowMenu {
 	border: none !important;
-	padding: 0;
-	background-color: inherit;
-	height: unset;
+	padding: 0 !important;
+	background-color: transparent !important;
+	height: unset !important;
 }
 @media (hover: hover) {
 	.inOverflowMenu:hover {

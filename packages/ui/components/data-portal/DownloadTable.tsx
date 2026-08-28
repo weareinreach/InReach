@@ -171,9 +171,6 @@ export const DownloadTable = () => {
 
 	return (
 		<Stack>
-			<Text size='16px' fw={500}>
-				{t('user-menu.csv-downloads')}
-			</Text>
 			<TextInput
 				placeholder='Search Reports'
 				value={search}

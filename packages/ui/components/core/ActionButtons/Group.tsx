@@ -74,6 +74,20 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 		const childrenArray = Children.toArray(children) as ReactElement<ActionButtonElementProps>[]
 		const map: Record<string, boolean> = {}
 
+		// Before the ResizeObserver's first callback fires, `containerWidth` is still 0, which would
+		// make `availableSpace` negative and mark every single button (including Save/Report)
+		// invisible - a real, if brief, window where the whole toolbar is unclickable on first
+		// paint. Show everything until there's an actual measurement to compute against.
+		if (containerWidth === 0) {
+			childrenArray.forEach((child) => {
+				const id = child.props['data-targetid']
+				if (id) {
+					map[id] = true
+				}
+			})
+			return map
+		}
+
 		// How many buttons fit in the current width? Reserve space for the overflow menu icon.
 		let availableSpace = containerWidth - MENU_WIDTH
 

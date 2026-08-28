@@ -149,11 +149,11 @@ export const OrganizationTable = () => {
 				enableGlobalFilter: false,
 				hideable: false,
 				accessorFn: () => undefined,
-				cell: ({ row, depth }) => (
+				cell: ({ row, depth, parentRow }) => (
 					<RowAction
 						row={row}
 						isSubRow={depth > 0}
-						parentSlug={depth > 0 ? undefined : (row as RowItem).slug}
+						parentSlug={depth > 0 ? (parentRow as RowItem | undefined)?.slug : undefined}
 					/>
 				),
 			},

@@ -518,29 +518,21 @@ export const ReportTable = () => {
 			{
 				id: 'createdAt',
 				header: 'Created',
-				size: 150,
+				size: 160,
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
-					return (
-						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)}>
-							<span>{date.toRelativeCalendar()}</span>
-						</Tooltip>
-					)
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
 			},
 			{
 				id: 'updatedAt',
 				header: 'Updated',
-				size: 150,
+				size: 160,
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
-					return (
-						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)}>
-							<span>{date.toRelativeCalendar()}</span>
-						</Tooltip>
-					)
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
 			},
 		],

@@ -198,7 +198,7 @@ export const ReviewTable = () => {
 			{
 				id: 'reviewText',
 				header: 'Review Content',
-				size: 450,
+				size: 600,
 				cell: ({ value, row }) => {
 					const isHiddenOrDeleted = !row.visible || row.deleted
 					return (
@@ -255,6 +255,7 @@ export const ReviewTable = () => {
 			{
 				id: 'status',
 				header: 'Status',
+				size: 220,
 				enableSorting: false,
 				enableGlobalFilter: false,
 				accessorFn: () => undefined,
@@ -285,14 +286,11 @@ export const ReviewTable = () => {
 			{
 				id: 'createdAt',
 				header: 'Created',
+				size: 160,
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
-					return (
-						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)}>
-							<span>{date.toRelativeCalendar()}</span>
-						</Tooltip>
-					)
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
 			},
 		],

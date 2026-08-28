@@ -18,6 +18,8 @@ export interface DataTableCellContext<T> {
 	value: unknown
 	index: number
 	depth: number
+	/** For an expanded sub-row (via `getSubRows`), the top-level row it was expanded from. */
+	parentRow?: T
 }
 
 export interface DataTableColumn<T> {
