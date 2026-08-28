@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - dev # change this if your default branch is named differently
+      - main # so dev->main pre-flight PRs have a same-branch baseline to compare against
   workflow_dispatch:
 
 defaults:
@@ -92,6 +93,10 @@ jobs:
           workflow: nextjs_bundle_analysis.yml
           branch: ${{ github.event.pull_request.base.ref }}
           path: /home/runner/work/InReach/InReach/apps/app/.next/analyze/base
+          # No baseline artifact exists yet the first time this workflow runs against a given base
+          # branch (e.g. an infrequent dev->main pre-flight PR) - don't fail the whole check over it;
+          # the "Compare with base branch bundle" step below handles the resulting missing file.
+          if_no_artifact_found: warn
 
       # And here's the second place - this runs after we have both the current and
       # base branch bundle stats, and will compare them to determine what changed.
@@ -108,7 +113,19 @@ jobs:
       # entry in your package.json file.
       - name: Compare with base branch bundle
         if: success() && github.event.number
-        run: ls -laR /home/runner/work/InReach/InReach/apps/app/.next/analyze/base && pnpm exec compare
+        run: |
+          BASE_STATS=/home/runner/work/InReach/InReach/apps/app/.next/analyze/base/bundle/__bundle_analysis.json
+          if [ -f "$BASE_STATS" ]; then
+            ls -laR /home/runner/work/InReach/InReach/apps/app/.next/analyze/base
+            pnpm exec compare
+          else
+            # No baseline artifact for this base branch yet (e.g. the first run of this workflow
+            # against a given base, like an infrequent dev->main pre-flight PR) - `compare`'s script
+            # does a plain `require()` on this file and would crash the step outright if it's
+            # missing, so skip it and post an explanatory comment instead.
+            echo "No baseline bundle stats found for the base branch - skipping size comparison."
+            echo "_No baseline bundle stats are available yet for this base branch, so a size comparison could not be run for this PR. This will resolve itself once this workflow has completed successfully at least once against the base branch._" > /home/runner/work/InReach/InReach/apps/app/.next/analyze/__bundle_analysis_comment.txt
+          fi
 
       - name: Get Comment Body
         id: get-comment-body
