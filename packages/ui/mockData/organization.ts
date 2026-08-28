@@ -65,9 +65,9 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 			lastVerified: faker.helpers.maybe(() => lastVerified, { probability: 0.9 }) ?? null,
 			published: faker.datatype.boolean(0.9),
 			deleted: faker.datatype.boolean(0.05),
+			locations: generateFakeLocations(lastVerified),
 			updatedAt,
 			createdAt,
-			locations: generateFakeLocations(lastVerified),
 		})
 	}
 	return allResults
@@ -92,28 +92,41 @@ const filterFakeOrgs = (
 		return true
 	})
 
+const compareFakeOrgs = (
+	a: ForOrgTableRow,
+	b: ForOrgTableRow,
+	id: ForOrgTableSortKey,
+	desc: boolean
+): number => {
+	const av = a[id]
+	const bv = b[id]
+	if (av == null && bv == null) {
+		return 0
+	}
+	if (av == null) {
+		return desc ? -1 : 1
+	}
+	if (bv == null) {
+		return desc ? 1 : -1
+	}
+	if (av < bv) {
+		return desc ? 1 : -1
+	}
+	if (av > bv) {
+		return desc ? -1 : 1
+	}
+	return 0
+}
+
 const sortFakeOrgs = (
 	orgs: ForOrgTableRow[],
 	sorting: { id: ForOrgTableSortKey; desc: boolean }[]
 ): ForOrgTableRow[] =>
 	[...orgs].sort((a, b) => {
 		for (const { id, desc } of sorting) {
-			const av = a[id]
-			const bv = b[id]
-			if (av == null && bv == null) {
-				continue
-			}
-			if (av == null) {
-				return desc ? -1 : 1
-			}
-			if (bv == null) {
-				return desc ? 1 : -1
-			}
-			if (av < bv) {
-				return desc ? 1 : -1
-			}
-			if (av > bv) {
-				return desc ? -1 : 1
+			const result = compareFakeOrgs(a, b, id, desc)
+			if (result !== 0) {
+				return result
 			}
 		}
 		return 0

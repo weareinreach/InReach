@@ -1,5 +1,6 @@
 import { ActionIcon, Tooltip } from '@mantine/core'
 import { type ColumnFiltersState } from '@tanstack/react-table'
+import { useCallback } from 'react'
 
 import { Icon } from '~ui/icon'
 
@@ -37,14 +38,14 @@ export const TableToolbarToggle = ({
 	const current = columnFilters.find(({ id }) => id === columnId)?.value as boolean | undefined
 	const currentIndex = cycle.indexOf(current)
 
-	const toggle = () => {
+	const toggle = useCallback(() => {
 		const next = cycle[(currentIndex + 1) % cycle.length]
 		setColumnFilters((prev) =>
 			next === undefined
 				? prev.filter(({ id }) => id !== columnId)
 				: [...prev.filter(({ id }) => id !== columnId), { id: columnId, value: next }]
 		)
-	}
+	}, [cycle, currentIndex, columnId, setColumnFilters])
 
 	return (
 		<Tooltip label={label(current)}>

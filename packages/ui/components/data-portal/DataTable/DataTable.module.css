@@ -25,11 +25,14 @@
 /* Drag handle for column resizing - a slim invisible hit-target at the column's right edge that
    widens/highlights on hover so it's discoverable without permanently taking up header space. */
 .resizer {
+	appearance: none;
 	position: absolute;
 	top: 0;
 	right: 0;
 	height: 100%;
 	width: rem(6px);
+	border: 0;
+	padding: 0;
 	cursor: col-resize;
 	user-select: none;
 	touch-action: none;

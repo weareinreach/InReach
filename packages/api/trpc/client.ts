@@ -43,10 +43,10 @@ export const trpcConfig = {
 	},
 } satisfies WithTRPCConfig<AppRouter>
 
+const config = () => trpcConfig
+
 export const trpc = createTRPCNext<AppRouter>({
-	config() {
-		return trpcConfig
-	},
+	config,
 	transformer,
 	ssr: false,
 })

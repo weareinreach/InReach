@@ -19,7 +19,7 @@ const toSearchableString = (value: unknown): string => {
 	if (typeof value === 'object') {
 		return JSON.stringify(value)
 	}
-	return String(value)
+	return String(value as string | number | boolean)
 }
 
 export const applyGlobalFilter = <T>(rows: T[], search: string, columns: DataTableColumn<T>[]): T[] => {
@@ -36,9 +36,7 @@ export const applyGlobalFilter = <T>(rows: T[], search: string, columns: DataTab
 }
 
 const filterByText = <T>(rows: T[], column: DataTableColumn<T>, rawQuery: unknown): T[] => {
-	const query = String(rawQuery ?? '')
-		.trim()
-		.toLowerCase()
+	const query = toSearchableString(rawQuery).trim().toLowerCase()
 	if (!query) {
 		return rows
 	}

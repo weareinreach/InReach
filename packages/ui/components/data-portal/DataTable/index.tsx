@@ -59,6 +59,16 @@ const stopPropagation = (event: { stopPropagation: () => void }) => event.stopPr
  */
 const toggleColumnVisibility = (column: { toggleVisibility: () => void }) => () => column.toggleVisibility()
 
+const getSortIcon = (sortDirection: false | 'asc' | 'desc'): string => {
+	if (sortDirection === 'desc') {
+		return 'carbon:chevron-down'
+	}
+	if (sortDirection === 'asc') {
+		return 'carbon:chevron-up'
+	}
+	return 'carbon:chevron-sort'
+}
+
 export interface DataTableProps<T> {
 	data: T[]
 	columns: DataTableColumn<T>[]
@@ -224,7 +234,7 @@ export const DataTable = <T,>({
 	// Keyboard equivalent of dragging the resize handle - `getResizeHandler()` only wires up
 	// mouse/touch, so this is the sole way a keyboard user can resize a column.
 	const handleResizeKeyDown = useCallback(
-		(columnId: string, currentSize: number) => (event: KeyboardEvent<HTMLDivElement>) => {
+		(columnId: string, currentSize: number) => (event: KeyboardEvent<HTMLButtonElement>) => {
 			if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
 				return
 			}
@@ -355,12 +365,7 @@ export const DataTable = <T,>({
 									const columnDef = columns.find((c) => c.id === header.column.id)
 									const activeFilter = columnFilters.find((f) => f.id === header.column.id)
 									const sortDirection = header.column.getIsSorted()
-									const sortIcon =
-										sortDirection === 'desc'
-											? 'carbon:chevron-down'
-											: sortDirection === 'asc'
-												? 'carbon:chevron-up'
-												: 'carbon:chevron-sort'
+									const sortIcon = getSortIcon(sortDirection)
 									const resizeLabel =
 										typeof columnDef?.header === 'string' ? columnDef.header : header.column.id
 									return (
@@ -413,16 +418,13 @@ export const DataTable = <T,>({
 													</Popover>
 												)}
 											</Group>
-											<div
+											<button
+												type='button'
 												onMouseDown={header.getResizeHandler()}
 												onTouchStart={header.getResizeHandler()}
 												onClick={stopPropagation}
 												onKeyDown={handleResizeKeyDown(header.column.id, header.column.getSize())}
-												role='separator'
-												aria-orientation='vertical'
-												aria-label={`Resize ${resizeLabel} column`}
-												aria-valuenow={header.column.getSize()}
-												tabIndex={0}
+												aria-label={`Resize ${resizeLabel} column (${header.column.getSize()} pixels)`}
 												className={classes.resizer}
 												data-resizing={header.column.getIsResizing() || undefined}
 											/>

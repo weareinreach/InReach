@@ -228,6 +228,17 @@ const UserActionsCell = ({ row, loggedInUserPermissions }: UserActionsCellProps)
 	</Group>
 )
 
+/**
+ * Curried factory for the 'actions' column cell - `loggedInUserPermissions` isn't part of
+ * `DataTableCellContext`, so it's threaded through here rather than via an inline arrow in the columns
+ * array.
+ */
+const createUserActionsCell = (extra: { loggedInUserPermissions: CurrentUserPermissions | undefined }) => {
+	const Cell = (ctx: DataTableCellContext<UserDataRecord>) => <UserActionsCell {...ctx} {...extra} />
+	Cell.displayName = 'UserActionsCell'
+	return Cell
+}
+
 /** Cell renderer for the 'id' column. */
 const IdCell = ({ value }: DataTableCellContext<UserDataRecord>) => <Text size='xs'>{value as string}</Text>
 
@@ -292,7 +303,7 @@ export const UserTable = () => {
 				enableGlobalFilter: false,
 				hideable: false,
 				accessorFn: () => undefined,
-				cell: (ctx) => <UserActionsCell {...ctx} loggedInUserPermissions={loggedInUserPermissions} />,
+				cell: createUserActionsCell({ loggedInUserPermissions }),
 			},
 			{
 				id: 'id',

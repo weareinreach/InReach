@@ -330,6 +330,21 @@ const ReportActionsCell = ({ row, theme, onSelectReport, onOpenDetails }: Report
 	)
 }
 
+/**
+ * Curried factory for the 'actions' column cell - `theme`, `onSelectReport`, and `onOpenDetails` aren't part
+ * of `DataTableCellContext`, so they're threaded through here rather than via an inline arrow in the columns
+ * array.
+ */
+const createReportActionsCell = (extra: {
+	theme: MantineTheme
+	onSelectReport: (report: ReportRecord) => void
+	onOpenDetails: () => void
+}) => {
+	const Cell = (ctx: DataTableCellContext<ReportRecord>) => <ReportActionsCell {...ctx} {...extra} />
+	Cell.displayName = 'ReportActionsCell'
+	return Cell
+}
+
 /** Cell renderer for the 'id' column. */
 const IdCell = ({ value }: DataTableCellContext<ReportRecord>) => <Text size='xs'>{value as string}</Text>
 
@@ -372,6 +387,27 @@ const ServiceNameCell = ({ value, row, variants }: ReportNameCellProps) => {
 	)
 }
 
+/**
+ * Curried factory for the 'orgNameSnapshot' column cell - `variants` isn't part of `DataTableCellContext`, so
+ * it's threaded through here rather than via an inline arrow in the columns array.
+ */
+const createOrgNameCell = (extra: { variants: ReturnType<typeof useCustomVariant> }) => {
+	const Cell = (ctx: DataTableCellContext<ReportRecord>) => <OrgNameCell {...ctx} {...extra} />
+	Cell.displayName = 'OrgNameCell'
+	return Cell
+}
+
+/**
+ * Curried factory for the 'serviceNameSnapshot' column cell - `variants` isn't part of
+ * `DataTableCellContext`, so it's threaded through here rather than via an inline arrow in the columns
+ * array.
+ */
+const createServiceNameCell = (extra: { variants: ReturnType<typeof useCustomVariant> }) => {
+	const Cell = (ctx: DataTableCellContext<ReportRecord>) => <ServiceNameCell {...ctx} {...extra} />
+	Cell.displayName = 'ServiceNameCell'
+	return Cell
+}
+
 interface ReportStatusCellProps extends DataTableCellContext<ReportRecord> {
 	theme: MantineTheme
 }
@@ -403,6 +439,16 @@ const StatusCell = ({ value, row, theme }: ReportStatusCellProps) => {
 			{status.toLowerCase()}
 		</Text>
 	)
+}
+
+/**
+ * Curried factory for the 'status' column cell - `theme` isn't part of `DataTableCellContext`, so it's
+ * threaded through here rather than via an inline arrow in the columns array.
+ */
+const createStatusCell = (extra: { theme: MantineTheme }) => {
+	const Cell = (ctx: DataTableCellContext<ReportRecord>) => <StatusCell {...ctx} {...extra} />
+	Cell.displayName = 'StatusCell'
+	return Cell
 }
 
 /** Cell renderer for the 'informed' column. */
@@ -502,14 +548,11 @@ export const ReportTable = () => {
 				enableGlobalFilter: false,
 				hideable: false,
 				accessorFn: () => undefined,
-				cell: (ctx) => (
-					<ReportActionsCell
-						{...ctx}
-						theme={theme}
-						onSelectReport={setSelectedReport}
-						onOpenDetails={openDetails}
-					/>
-				),
+				cell: createReportActionsCell({
+					theme,
+					onSelectReport: setSelectedReport,
+					onOpenDetails: openDetails,
+				}),
 			},
 			{
 				id: 'id',
@@ -523,13 +566,13 @@ export const ReportTable = () => {
 				id: 'orgNameSnapshot',
 				header: 'Organization Name',
 				size: 180,
-				cell: (ctx) => <OrgNameCell {...ctx} variants={variants} />,
+				cell: createOrgNameCell({ variants }),
 			},
 			{
 				id: 'serviceNameSnapshot',
 				header: 'Service or Location Name',
 				size: 180,
-				cell: (ctx) => <ServiceNameCell {...ctx} variants={variants} />,
+				cell: createServiceNameCell({ variants }),
 			},
 			{
 				id: 'issueType',
@@ -549,7 +592,7 @@ export const ReportTable = () => {
 						{ value: ReportStatus.RESOLVED, label: 'Resolved' },
 					],
 				},
-				cell: (ctx) => <StatusCell {...ctx} theme={theme} />,
+				cell: createStatusCell({ theme }),
 			},
 			{
 				id: 'informed',

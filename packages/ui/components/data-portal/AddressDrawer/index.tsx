@@ -4,6 +4,7 @@ import {
 	Combobox,
 	type ComboboxItem,
 	type ComboboxLikeRenderOptionInput,
+	type ComboboxStore,
 	createPolymorphicComponent,
 	Divider,
 	Drawer,
@@ -17,7 +18,7 @@ import {
 	Title,
 	useCombobox,
 } from '@mantine/core'
-import { schemaResolver, useForm } from '@mantine/form'
+import { schemaResolver, useForm, type UseFormReturnType } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import filterObject from 'just-filter-object'
@@ -61,6 +62,94 @@ const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = 
 	{ value: AddressVisibility.PARTIAL, label: 'Show city & state/province' },
 	{ value: AddressVisibility.HIDDEN, label: 'Hide address' },
 ]
+
+interface AddressAutocompleteFieldProps {
+	fieldName: 'data.street1' | 'data.city'
+	fieldLabel: string
+	fieldRequired: boolean
+	form: UseFormReturnType<FormSchema>
+	results: ApiOutput['geo']['autocomplete']['results'] | undefined
+	handleAutocompleteSelection: (item: AutocompleteResult) => void
+	addressCombobox: ComboboxStore
+	setSearchTerm: (value: string) => void
+	countryNotSelected: boolean
+}
+
+/**
+ * A single street/city autocomplete field, backed by the shared `addressCombobox` store. Rendered
+ * conditionally (only one of street1/city ever shows an autocomplete field at a time, per
+ * `addressVisibility`) rather than conditionally _called_ as a plain function - as an actual component it's
+ * free to use hooks (`useCallback`) internally without running afoul of the rules of hooks.
+ */
+const AddressAutocompleteField = ({
+	fieldName,
+	fieldLabel,
+	fieldRequired,
+	form,
+	results,
+	handleAutocompleteSelection,
+	addressCombobox,
+	setSearchTerm,
+	countryNotSelected,
+}: AddressAutocompleteFieldProps) => {
+	const { value, onChange, ...fieldProps } = form.getInputProps(fieldName)
+
+	const handleOptionSubmit = useCallback(
+		(optionValue: string) => {
+			const item = (results ?? []).find((result) => result.value === optionValue)
+			if (item) {
+				handleAutocompleteSelection(item)
+				form.setFieldValue(fieldName, item.value)
+			}
+			addressCombobox.closeDropdown()
+		},
+		[results, handleAutocompleteSelection, form, fieldName, addressCombobox]
+	)
+
+	const handleChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			const val = event.currentTarget.value
+			onChange(val)
+			setSearchTerm(val)
+			addressCombobox.openDropdown()
+		},
+		[onChange, setSearchTerm, addressCombobox]
+	)
+
+	const handleFocus = useCallback(() => addressCombobox.openDropdown(), [addressCombobox])
+	const handleBlur = useCallback(() => addressCombobox.closeDropdown(), [addressCombobox])
+
+	return (
+		<Combobox store={addressCombobox} onOptionSubmit={handleOptionSubmit}>
+			<Combobox.Target>
+				<TextInput
+					label={fieldLabel}
+					required={fieldRequired}
+					disabled={countryNotSelected}
+					value={value ?? ''}
+					{...fieldProps}
+					onChange={handleChange}
+					onFocus={handleFocus}
+					onBlur={handleBlur}
+				/>
+			</Combobox.Target>
+			<Combobox.Dropdown>
+				<Combobox.Options>
+					{(results ?? []).map((item) => (
+						<Combobox.Option value={item.value} key={item.value}>
+							<Text className={classes.unmatchedText} truncate>
+								{matchText(item.value, value)}
+							</Text>
+							<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
+								{item.subheading}
+							</Text>
+						</Combobox.Option>
+					))}
+				</Combobox.Options>
+			</Combobox.Dropdown>
+		</Combobox>
+	)
+}
 
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
@@ -302,64 +391,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		onDropdownClose: () => addressCombobox.resetSelectedOption(),
 	})
 
-	const renderAddressAutocomplete = useCallback(
-		(fieldName: 'data.street1' | 'data.city', fieldLabel: string, fieldRequired: boolean) => {
-			const { value, onChange, ...fieldProps } = form.getInputProps(fieldName)
-
-			const handleOptionSubmit = (optionValue: string) => {
-				const item = (results ?? []).find((result) => result.value === optionValue)
-				if (item) {
-					handleAutocompleteSelection(item)
-					form.setFieldValue(fieldName, item.value)
-				}
-				addressCombobox.closeDropdown()
-			}
-
-			const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-				const val = event.currentTarget.value
-				onChange(val)
-				setSearchTerm(val)
-				addressCombobox.openDropdown()
-			}
-
-			const handleFocus = () => addressCombobox.openDropdown()
-			const handleBlur = () => addressCombobox.closeDropdown()
-
-			return (
-				<Combobox store={addressCombobox} onOptionSubmit={handleOptionSubmit}>
-					<Combobox.Target>
-						<TextInput
-							label={fieldLabel}
-							required={fieldRequired}
-							disabled={countryNotSelected}
-							value={value ?? ''}
-							{...fieldProps}
-							onChange={handleChange}
-							onFocus={handleFocus}
-							onBlur={handleBlur}
-						/>
-					</Combobox.Target>
-					<Combobox.Dropdown>
-						<Combobox.Options>
-							{(results ?? []).map((item) => (
-								<Combobox.Option value={item.value} key={item.value}>
-									<Text className={classes.unmatchedText} truncate>
-										{matchText(item.value, value)}
-									</Text>
-									<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
-										{item.subheading}
-									</Text>
-								</Combobox.Option>
-							))}
-						</Combobox.Options>
-					</Combobox.Dropdown>
-				</Combobox>
-			)
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[addressCombobox, results, handleAutocompleteSelection, countryNotSelected]
-	)
-
 	// #endregion
 	const addressFieldRequired = form.values.data.addressVisibility === AddressVisibility.FULL
 
@@ -373,7 +404,17 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 
 	const Street1Input =
 		form.values.data.addressVisibility === AddressVisibility.FULL ? (
-			renderAddressAutocomplete('data.street1', 'Address', addressFieldRequired)
+			<AddressAutocompleteField
+				fieldName='data.street1'
+				fieldLabel='Address'
+				fieldRequired={addressFieldRequired}
+				form={form}
+				results={results}
+				handleAutocompleteSelection={handleAutocompleteSelection}
+				addressCombobox={addressCombobox}
+				setSearchTerm={setSearchTerm}
+				countryNotSelected={countryNotSelected}
+			/>
 		) : (
 			<TextInput label='Address' disabled={countryNotSelected} {...form.getInputProps('data.street1')} />
 		)
@@ -382,7 +423,17 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		form.values.data.addressVisibility === AddressVisibility.FULL ? (
 			<TextInput label='City' required disabled={countryNotSelected} {...form.getInputProps('data.city')} />
 		) : (
-			renderAddressAutocomplete('data.city', 'City', true)
+			<AddressAutocompleteField
+				fieldName='data.city'
+				fieldLabel='City'
+				fieldRequired={true}
+				form={form}
+				results={results}
+				handleAutocompleteSelection={handleAutocompleteSelection}
+				addressCombobox={addressCombobox}
+				setSearchTerm={setSearchTerm}
+				countryNotSelected={countryNotSelected}
+			/>
 		)
 
 	return (

@@ -157,12 +157,7 @@ interface StoryDiff {
 // that randomness as mass element churn.
 const elementKey = (el: ElementSnapshot): string => el.tag
 
-const alignByLcs = (
-	base: ElementSnapshot[],
-	compare: ElementSnapshot[]
-): { baseIndex: number; compareIndex: number }[] => {
-	const baseKeys = base.map(elementKey)
-	const compareKeys = compare.map(elementKey)
+const buildLcsTable = (baseKeys: string[], compareKeys: string[]): number[][] => {
 	const n = baseKeys.length
 	const m = compareKeys.length
 	const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0))
@@ -176,29 +171,47 @@ const alignByLcs = (
 					: Math.max(prevRow[colIdx] as number, row[colIdx - 1] as number)
 		}
 	}
+	return dp
+}
+
+const backtrackLcsPairs = (
+	dp: number[][],
+	baseKeys: string[],
+	compareKeys: string[]
+): { baseIndex: number; compareIndex: number }[] => {
 	const pairs: { baseIndex: number; compareIndex: number }[] = []
-	let i = n
-	let j = m
+	let i = baseKeys.length
+	let j = compareKeys.length
 	while (i > 0 && j > 0) {
 		if (baseKeys[i - 1] === compareKeys[j - 1]) {
 			pairs.push({ baseIndex: i - 1, compareIndex: j - 1 })
 			i--
 			j--
+			continue
+		}
+		const up = (dp[i - 1] as number[])[j]
+		const left = (dp[i] as number[])[j - 1]
+		if (up === undefined || left === undefined) {
+			throw new Error('alignByLcs: DP table index out of bounds - this should never happen')
+		}
+		if (up >= left) {
+			i--
 		} else {
-			const up = (dp[i - 1] as number[])[j]
-			const left = (dp[i] as number[])[j - 1]
-			if (up === undefined || left === undefined) {
-				throw new Error('alignByLcs: DP table index out of bounds - this should never happen')
-			}
-			if (up >= left) {
-				i--
-			} else {
-				j--
-			}
+			j--
 		}
 	}
 	pairs.reverse()
 	return pairs
+}
+
+const alignByLcs = (
+	base: ElementSnapshot[],
+	compare: ElementSnapshot[]
+): { baseIndex: number; compareIndex: number }[] => {
+	const baseKeys = base.map(elementKey)
+	const compareKeys = compare.map(elementKey)
+	const dp = buildLcsTable(baseKeys, compareKeys)
+	return backtrackLcsPairs(dp, baseKeys, compareKeys)
 }
 
 const snapshotStory = async (

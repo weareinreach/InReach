@@ -26,33 +26,33 @@ export const getBaseUrl = () => {
 
 const isDev = process.env.NODE_ENV === 'development' && process.env.VERCEL !== '1'
 
+const config = () => ({
+	links: [
+		...(isDev
+			? [
+					loggerLink({
+						enabled: () => isDev,
+					}),
+				]
+			: []),
+		httpBatchStreamLink({
+			url: `${getBaseUrl()}/api/trpc`,
+			transformer,
+		}),
+	],
+	queryClientConfig: {
+		defaultOptions: {
+			queries: {
+				staleTime: 1000 * 60 * 10, // 10 Minutes
+				gcTime: 1000 * 60 * 60, // 1 Hour
+			},
+		},
+	},
+})
+
 export const nextTRPC = () =>
 	createTRPCNext<AppRouter>({
-		config() {
-			return {
-				links: [
-					...(isDev
-						? [
-								loggerLink({
-									enabled: () => isDev,
-								}),
-							]
-						: []),
-					httpBatchStreamLink({
-						url: `${getBaseUrl()}/api/trpc`,
-						transformer,
-					}),
-				],
-				queryClientConfig: {
-					defaultOptions: {
-						queries: {
-							staleTime: 1000 * 60 * 10, // 10 Minutes
-							gcTime: 1000 * 60 * 60, // 1 Hour
-						},
-					},
-				},
-			}
-		},
+		config,
 		transformer,
 		ssr: false,
 	})

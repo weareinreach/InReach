@@ -124,6 +124,16 @@ const NameCell = ({ value, row, depth, variants }: NameCellProps) => {
 	)
 }
 
+/**
+ * Curried factory for the 'name' column cell - `variants` isn't part of `DataTableCellContext`, so it's
+ * threaded through here rather than via an inline arrow in the columns array.
+ */
+const createNameCell = (extra: { variants: ReturnType<typeof useCustomVariant> }) => {
+	const Cell = (ctx: DataTableCellContext<TableRow>) => <NameCell {...ctx} {...extra} />
+	Cell.displayName = 'NameCell'
+	return Cell
+}
+
 /** Cell renderer for the 'id' column. */
 const IdCell = ({ row }: DataTableCellContext<TableRow>) => <Text size='xs'>{row.id}</Text>
 
@@ -146,6 +156,16 @@ const LastVerifiedCell = ({ value, depth, theme }: LastVerifiedCellProps) => {
 	}
 	const date = DateTime.fromJSDate(value as Date)
 	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
+/**
+ * Curried factory for the 'lastVerified' column cell - `theme` isn't part of `DataTableCellContext`, so it's
+ * threaded through here rather than via an inline arrow in the columns array.
+ */
+const createLastVerifiedCell = (extra: { theme: MantineTheme }) => {
+	const Cell = (ctx: DataTableCellContext<TableRow>) => <LastVerifiedCell {...ctx} {...extra} />
+	Cell.displayName = 'LastVerifiedCell'
+	return Cell
 }
 
 /** Cell renderer shared by the 'updatedAt' and 'createdAt' columns. */
@@ -262,7 +282,7 @@ export const OrganizationTable = () => {
 				header: 'Name',
 				pin: 'left',
 				size: 280,
-				cell: (ctx) => <NameCell {...ctx} variants={variants} />,
+				cell: createNameCell({ variants }),
 			},
 			{
 				id: 'id',
@@ -277,7 +297,7 @@ export const OrganizationTable = () => {
 				header: 'Verified',
 				size: 150,
 				filter: { type: 'date-range' },
-				cell: (ctx) => <LastVerifiedCell {...ctx} theme={theme} />,
+				cell: createLastVerifiedCell({ theme }),
 			},
 			{
 				id: 'updatedAt',

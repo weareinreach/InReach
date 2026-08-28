@@ -50,7 +50,8 @@ const DateRangeFilter = ({
 			// Only commit (and trigger the table's refetch) once both ends of the range are
 			// picked - clearing the whole thing out is fine to commit immediately too.
 			if ((fromDate && toDate) || (!fromDate && !toDate)) {
-				onChange(fromDate || toDate ? [fromDate ?? undefined, toDate ?? undefined] : undefined)
+				const hasValue = fromDate || toDate
+				onChange(hasValue ? [fromDate ?? undefined, toDate ?? undefined] : undefined)
 			}
 		},
 		[onChange]

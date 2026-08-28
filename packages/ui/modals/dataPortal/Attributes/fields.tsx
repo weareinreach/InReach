@@ -81,7 +81,7 @@ const SuppData = ({ schema }: SupplementDataProps) => {
 		<Stack>
 			{schema.flatMap((schemaItem) => {
 				if (Array.isArray(schemaItem)) {
-					return <Group wrap='nowrap'>{schemaItem.map(renderField)}</Group>
+					return <Group wrap='nowrap'>{schemaItem.map((formSchema) => renderField(formSchema))}</Group>
 				} else {
 					return renderField(schemaItem)
 				}

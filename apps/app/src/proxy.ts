@@ -21,11 +21,7 @@ export const proxy: NextProxy = async (req: NextRequest) => {
 		const activeCountries = (await get<string[]>('activeCountries')) ?? ['US', 'CA', 'MX']
 		const pathParts = req.nextUrl.pathname.split('/')
 		const searchedCountry = pathParts[2]
-		if (
-			searchedCountry &&
-			searchedCountry.length === 2 &&
-			!activeCountries?.includes(searchedCountry.toUpperCase())
-		) {
+		if (searchedCountry?.length === 2 && !activeCountries?.includes(searchedCountry.toUpperCase())) {
 			const url = req.nextUrl.clone()
 			url.searchParams.forEach((_v, k) => url.searchParams.delete(k))
 			url.pathname = `/search/intl/${searchedCountry.toUpperCase()}`

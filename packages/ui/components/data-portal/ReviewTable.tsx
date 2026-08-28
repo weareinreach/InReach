@@ -22,7 +22,7 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { DataTable, type DataTableColumn } from './DataTable'
+import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
 import { TableToolbarToggle } from './TableToolbarToggle'
 
 type ReviewRecord = ApiOutput['review']['forReviewTable']['results'][number]
@@ -45,6 +45,13 @@ interface ActionsCellProps {
 	isManagerOrHigher: boolean
 	onDelete: (vars: { id: string }) => void
 	onUndelete: (vars: { id: string }) => void
+}
+
+const createActionsCell = (extra: Omit<ActionsCellProps, 'row'>) => {
+	const ActionsCellWithExtras = ({ row }: DataTableCellContext<ReviewRecord>) => (
+		<ActionsCell row={row} {...extra} />
+	)
+	return ActionsCellWithExtras
 }
 
 const ActionsCell = ({ row, theme, isManagerOrHigher, onDelete, onUndelete }: ActionsCellProps) => {
@@ -116,6 +123,13 @@ interface ReviewTextCellProps {
 	variants: ReturnType<typeof useCustomVariant>
 }
 
+const createReviewTextCell = (variants: ReturnType<typeof useCustomVariant>) => {
+	const ReviewTextCellWithVariants = ({ row, value }: DataTableCellContext<ReviewRecord>) => (
+		<ReviewTextCell row={row} value={value} variants={variants} />
+	)
+	return ReviewTextCellWithVariants
+}
+
 const ReviewTextCell = ({ row, value, variants }: ReviewTextCellProps) => {
 	const isHiddenOrDeleted = !row.visible || row.deleted
 	return (
@@ -134,12 +148,41 @@ interface VisibleCellProps {
 	onToggle: (id: string, currentVisible: boolean) => void
 }
 
+const createVisibleCell = (onToggle: VisibleCellProps['onToggle']) => {
+	const VisibleCellWithToggle = ({ row }: DataTableCellContext<ReviewRecord>) => (
+		<VisibleCell row={row} onToggle={onToggle} />
+	)
+	return VisibleCellWithToggle
+}
+
 const VisibleCell = ({ row, onToggle }: VisibleCellProps) => {
 	const handleChange = useCallback(() => {
-		void onToggle(row.id, row.visible)
+		onToggle(row.id, row.visible)
 	}, [onToggle, row.id, row.visible])
 
 	return <Switch checked={row.visible} onChange={handleChange} size='sm' />
+}
+
+const OrganizationCell = ({ row }: { row: ReviewRecord }) => {
+	const org = row.organization
+	const location = row.orgLocation
+	const serviceName = row.orgService
+		? row.orgService.serviceName?.tsKey?.text || row.orgService.legacyName || 'Service'
+		: null
+	const detail = [
+		location ? `Location: ${location.name || 'Unnamed Location'}` : null,
+		serviceName ? `Service: ${serviceName}` : null,
+	]
+		.filter(Boolean)
+		.join(' · ')
+
+	return (
+		<Tooltip label={detail} disabled={!detail}>
+			<Text size='sm' fw={500} lineClamp={1}>
+				{org?.name || 'Unknown Organization'}
+			</Text>
+		</Tooltip>
+	)
 }
 
 const StatusCell = ({ row }: { row: ReviewRecord }) => {
@@ -172,20 +215,32 @@ const CreatedAtCell = ({ value }: { value: unknown }) => {
 }
 
 const getVisibleFilterLabel = (state: boolean | undefined) => {
-	if (state) return 'Show only hidden reviews'
-	if (state === undefined) return 'Show only visible reviews'
+	if (state) {
+		return 'Show only hidden reviews'
+	}
+	if (state === undefined) {
+		return 'Show only visible reviews'
+	}
 	return 'Show all reviews'
 }
 
 const getVisibleFilterIcon = (state: boolean | undefined) => {
-	if (state) return 'carbon:view-filled'
-	if (state === undefined) return 'carbon:view'
+	if (state) {
+		return 'carbon:view-filled'
+	}
+	if (state === undefined) {
+		return 'carbon:view'
+	}
 	return 'carbon:view-off-filled'
 }
 
 const getDeletedFilterLabel = (state: boolean | undefined) => {
-	if (state) return 'Show all reviews'
-	if (state === undefined) return 'Hide deleted reviews'
+	if (state) {
+		return 'Show all reviews'
+	}
+	if (state === undefined) {
+		return 'Hide deleted reviews'
+	}
 	return 'Show deleted reviews'
 }
 
@@ -268,15 +323,12 @@ export const ReviewTable = () => {
 				enableGlobalFilter: false,
 				hideable: false,
 				accessorFn: () => undefined,
-				cell: ({ row }) => (
-					<ActionsCell
-						row={row}
-						theme={theme}
-						isManagerOrHigher={isManagerOrHigher}
-						onDelete={deleteMutation.mutate}
-						onUndelete={unDeleteMutation.mutate}
-					/>
-				),
+				cell: createActionsCell({
+					theme,
+					isManagerOrHigher,
+					onDelete: deleteMutation.mutate,
+					onUndelete: unDeleteMutation.mutate,
+				}),
 			},
 			{
 				id: 'id',
@@ -284,21 +336,21 @@ export const ReviewTable = () => {
 				size: 220,
 				hiddenByDefault: true,
 				enableSorting: false,
-				cell: ({ row }) => <IdCell row={row} />,
+				cell: IdCell,
 			},
 			{
 				id: 'userName',
 				header: 'User Name',
 				size: 160,
 				accessorFn: (row) => row.user?.name || 'Anonymous',
-				cell: ({ value }) => <UserNameCell value={value} />,
+				cell: UserNameCell,
 			},
 			{
 				id: 'userEmail',
 				header: 'User Email',
 				size: 220,
 				accessorFn: (row) => row.user?.email || '',
-				cell: ({ value }) => <UserEmailCell value={value} />,
+				cell: UserEmailCell,
 			},
 			{
 				id: 'rating',
@@ -311,47 +363,27 @@ export const ReviewTable = () => {
 						label: `${n} star${n === 1 ? '' : 's'}`,
 					})),
 				},
-				cell: ({ value }) => <RatingCell value={value} />,
+				cell: RatingCell,
 			},
 			{
 				id: 'reviewText',
 				header: 'Review Content',
 				size: 600,
-				cell: ({ value, row }) => <ReviewTextCell row={row} value={value} variants={variants} />,
+				cell: createReviewTextCell(variants),
 			},
 			{
 				id: 'organization',
 				header: 'Organization',
 				size: 220,
 				accessorFn: (row) => row.organization?.name || 'Unknown',
-				cell: ({ row }) => {
-					const org = row.organization
-					const location = row.orgLocation
-					const serviceName = row.orgService
-						? row.orgService.serviceName?.tsKey?.text || row.orgService.legacyName || 'Service'
-						: null
-					const detail = [
-						location ? `Location: ${location.name || 'Unnamed Location'}` : null,
-						serviceName ? `Service: ${serviceName}` : null,
-					]
-						.filter(Boolean)
-						.join(' · ')
-
-					return (
-						<Tooltip label={detail} disabled={!detail}>
-							<Text size='sm' fw={500} lineClamp={1}>
-								{org?.name || 'Unknown Organization'}
-							</Text>
-						</Tooltip>
-					)
-				},
+				cell: OrganizationCell,
 			},
 			{
 				id: 'visible',
 				header: 'Visible?',
 				hiddenByDefault: true,
 				enableSorting: false,
-				cell: ({ row }) => <VisibleCell row={row} onToggle={handleToggleVisibility} />,
+				cell: createVisibleCell(handleToggleVisibility),
 			},
 			{
 				id: 'status',
@@ -360,14 +392,14 @@ export const ReviewTable = () => {
 				enableSorting: false,
 				enableGlobalFilter: false,
 				accessorFn: () => undefined,
-				cell: ({ row }) => <StatusCell row={row} />,
+				cell: StatusCell,
 			},
 			{
 				id: 'createdAt',
 				header: 'Created',
 				size: 160,
 				filter: { type: 'date-range' },
-				cell: ({ value }) => <CreatedAtCell value={value} />,
+				cell: CreatedAtCell,
 			},
 		],
 		// eslint-disable-next-line react-hooks/exhaustive-deps

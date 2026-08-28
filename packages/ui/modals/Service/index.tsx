@@ -97,7 +97,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 		const modalTitle = useMemo(
 			() => (
 				<ServiceModalTitle
-					{...{ handler, isMobile: isMobile ?? false, serviceId, slug, itemName, organizationId }}
+					{...{ isMobile: isMobile ?? false, handler, serviceId, slug, itemName, organizationId }}
 				/>
 			),
 			[handler, isMobile, serviceId, slug, itemName, organizationId]
