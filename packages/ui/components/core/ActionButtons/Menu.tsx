@@ -30,7 +30,19 @@ export const OverflowMenu = forwardRef<HTMLButtonElement, ActionButtonMenuProps>
 		}
 		const { inOverflowMenu: _inOverflowMenu, ...menuClassNames } = classes
 		return (
-			<Menu position='bottom-start' zIndex={200} classNames={menuClassNames} {...props}>
+			<Menu
+				position='bottom-start'
+				zIndex={200}
+				classNames={menuClassNames}
+				// Without this, Mantine closes (and unmounts) the dropdown the instant any item is
+				// clicked - before that item's own click handler can run. Several of these cloned
+				// items (Report, Save) open their own modal on a short delay after their click fires,
+				// so the dropdown closing first unmounts them mid-click and the modal never actually
+				// opens - "the button does nothing." The user dismisses this menu the normal way,
+				// same as the column-visibility menu elsewhere already does.
+				closeOnItemClick={false}
+				{...props}
+			>
 				<Menu.Target>
 					<Button ref={ref} className={cx(classes.button, className)}>
 						<Icon

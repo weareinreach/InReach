@@ -15,8 +15,6 @@
 .activityBlock {
 	display: flex;
 	gap: rem(16px);
-	padding-left: rem(20px);
-	padding-right: rem(20px);
 	flex-wrap: wrap;
 }
 

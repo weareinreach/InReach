@@ -140,7 +140,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 
 		const modalProps: ComponentPropsWithRef<typeof QuickPromotionModal> = menuItem
 			? { ref, component: Menu.Item, radius: 'md' }
-			: { ref, component: Button, className: classes.button, radius: 'md' }
+			: { ref, component: Button, className: cx(baseClassname, className), radius: 'md' }
 
 		const handleRemoveFromList = useCallback(
 			(listId: string) => () => removeItem.mutate({ id: listId, itemId }),
