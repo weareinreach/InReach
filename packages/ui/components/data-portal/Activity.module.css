@@ -1,12 +1,15 @@
+/* The actual date value - should read more prominently than its caption label below. */
 .textDate {
+	font-size: rem(14px);
+	font-weight: 500;
+	color: var(--ir-color-secondary-black);
+}
+
+/* Caption label (e.g. "Last verified") - subdued relative to the date value it describes. */
+.textStatus {
 	font-size: rem(12px);
 	font-weight: 400;
 	color: var(--ir-color-secondary-dark-gray);
-}
-
-.textStatus {
-	font-size: rem(16px);
-	font-weight: 500;
 }
 
 .activityBlock {

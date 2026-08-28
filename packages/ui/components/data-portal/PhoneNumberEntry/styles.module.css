@@ -31,3 +31,11 @@
 	margin: rem(2px) 0;
 	border-left: 1px solid var(--ir-color-primary-light-gray);
 }
+
+/* Mantine 9 defaults `withCheckIcon: true` on Select, showing a checkmark next to the
+   selected option. Design wants a green background highlight instead - no checkmark
+   (see `withCheckIcon={false}` on the country Select in withHookForm.tsx). Mantine marks
+   the selected Combobox option with `data-checked="true"`. */
+.countrySelectOption[data-checked='true'] {
+	background-color: var(--ir-color-primary-ally-green);
+}

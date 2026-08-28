@@ -79,7 +79,10 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 	}, [active, handleToggle, theme.other.colors.primary.allyGreen])
 
 	return (
-		<Group wrap='nowrap' gap={8}>
+		<Group wrap='nowrap' gap={8} justify='space-between'>
+			<div style={{ flex: 1, minWidth: 0 }}>
+				{typeof children === 'string' ? <ModalText>{children}</ModalText> : children}
+			</div>
 			<Group wrap='nowrap' gap={0}>
 				{editIcon}
 				{activeToggleIcon}
@@ -96,7 +99,6 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 					</ActionIcon>
 				</Tooltip>
 			</Group>
-			{typeof children === 'string' ? <ModalText>{children}</ModalText> : children}
 		</Group>
 	)
 }

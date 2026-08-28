@@ -11,6 +11,7 @@ import {
 	Table,
 	Text,
 	TextInput,
+	Tooltip,
 	useMantineTheme,
 } from '@mantine/core'
 import {
@@ -118,7 +119,18 @@ export const DataTable = <T,>({
 	getRowStyle,
 }: DataTableProps<T>) => {
 	const theme = useMantineTheme()
-	const [columnVisibility, setColumnVisibility] = useState(initialColumnVisibility ?? {})
+	// Lazy initializer - runs once on mount, matching `initialColumnVisibility`'s existing "initial
+	// value only" semantics. `columns[].hiddenByDefault` previously had no effect at all: nothing
+	// ever read it, so every column marked hidden-by-default rendered visible regardless.
+	const [columnVisibility, setColumnVisibility] = useState(() => {
+		const defaults: Record<string, boolean> = {}
+		for (const column of columns) {
+			if (column.hiddenByDefault) {
+				defaults[column.id] = false
+			}
+		}
+		return { ...defaults, ...initialColumnVisibility }
+	})
 	const [expanded, setExpanded] = useState<ExpandedState>({})
 
 	// Client mode does the filtering/sorting/pagination math itself, over the full `data` array; server
@@ -223,42 +235,44 @@ export const DataTable = <T,>({
 		<div>
 			{showToolbar && (
 				<Group justify='space-between' mb='sm' wrap='nowrap'>
+					<TextInput
+						placeholder={globalFilterPlaceholder}
+						value={globalFilter}
+						onChange={(event) => onGlobalFilterChange(event.currentTarget.value)}
+						leftSection={<Icon icon='carbon:search' height={16} />}
+						w={280}
+					/>
 					<Group wrap='nowrap' gap='xs'>
-						<TextInput
-							placeholder={globalFilterPlaceholder}
-							value={globalFilter}
-							onChange={(event) => onGlobalFilterChange(event.currentTarget.value)}
-							leftSection={<Icon icon='carbon:search' height={16} />}
-							w={280}
-						/>
 						{toolbarExtra}
+						<Menu closeOnItemClick={false} position='bottom-end'>
+							<Menu.Target>
+								<Tooltip label='Show/hide columns'>
+									<ActionIcon variant='subtle' aria-label='Show/hide columns'>
+										<Icon icon='carbon:column' />
+									</ActionIcon>
+								</Tooltip>
+							</Menu.Target>
+							<Menu.Dropdown>
+								{table
+									.getAllLeafColumns()
+									.filter((col) => columns.find((c) => c.id === col.id)?.hideable !== false)
+									.map((col) => {
+										const label = columns.find((c) => c.id === col.id)?.header
+										return (
+											<Menu.Item
+												key={col.id}
+												onClick={() => col.toggleVisibility()}
+												leftSection={
+													<Icon icon={col.getIsVisible() ? 'carbon:checkbox-checked' : 'carbon:checkbox'} />
+												}
+											>
+												{typeof label === 'string' ? label : col.id}
+											</Menu.Item>
+										)
+									})}
+							</Menu.Dropdown>
+						</Menu>
 					</Group>
-					<Menu closeOnItemClick={false} position='bottom-end'>
-						<Menu.Target>
-							<ActionIcon variant='subtle' aria-label='Show/hide columns'>
-								<Icon icon='carbon:column' />
-							</ActionIcon>
-						</Menu.Target>
-						<Menu.Dropdown>
-							{table
-								.getAllLeafColumns()
-								.filter((col) => columns.find((c) => c.id === col.id)?.hideable !== false)
-								.map((col) => {
-									const label = columns.find((c) => c.id === col.id)?.header
-									return (
-										<Menu.Item
-											key={col.id}
-											onClick={() => col.toggleVisibility()}
-											leftSection={
-												<Icon icon={col.getIsVisible() ? 'carbon:checkbox-checked' : 'carbon:checkbox'} />
-											}
-										>
-											{typeof label === 'string' ? label : col.id}
-										</Menu.Item>
-									)
-								})}
-						</Menu.Dropdown>
-					</Menu>
 				</Group>
 			)}
 
@@ -292,14 +306,21 @@ export const DataTable = <T,>({
 												>
 													{flexRender(header.column.columnDef.header, header.getContext())}
 												</Text>
-												{header.column.getCanSort() && header.column.getIsSorted() && (
+												{header.column.getCanSort() && (
 													<Icon
 														icon={
 															header.column.getIsSorted() === 'desc'
 																? 'carbon:chevron-down'
-																: 'carbon:chevron-up'
+																: header.column.getIsSorted() === 'asc'
+																	? 'carbon:chevron-up'
+																	: 'carbon:chevron-sort'
 														}
 														height={14}
+														color={
+															header.column.getIsSorted() ? undefined : theme.other.colors.secondary.darkGray
+														}
+														onClick={header.column.getToggleSortingHandler()}
+														className={classes.sortable}
 													/>
 												)}
 												{columnDef?.filter && (

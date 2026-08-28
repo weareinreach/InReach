@@ -120,7 +120,7 @@ const Home: NextPageWithOptions = () => {
 							TMFLink: (
 								<Link
 									external
-									variant={variants.Link.inheritStyle}
+									variant={variants.Link.inheritStyleUnderline}
 									href='https://transmascfutures.inreach.org'
 									target='_blank'
 								></Link>

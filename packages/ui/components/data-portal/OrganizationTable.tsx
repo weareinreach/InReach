@@ -174,6 +174,14 @@ export const OrganizationTable = () => {
 				},
 			},
 			{
+				id: 'id',
+				header: 'ID',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				cell: ({ row }) => <Text size='xs'>{row.id}</Text>,
+			},
+			{
 				id: 'lastVerified',
 				header: 'Verified',
 				size: 150,
@@ -280,6 +288,7 @@ export const OrganizationTable = () => {
 						cycle={[false, true, undefined]}
 						label={(state) => (state ? 'Show all' : state === undefined ? 'Hide deleted' : 'Show deleted')}
 						icon={() => 'carbon:trash-can'}
+						slash={(state) => state === false}
 					/>
 				</>
 			}

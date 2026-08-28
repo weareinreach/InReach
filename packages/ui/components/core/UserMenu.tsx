@@ -97,35 +97,22 @@ export const UserMenu = ({ className }: UserMenuProps) => {
 								<UserAvatar useLoggedIn />
 							</UnstyledButton>
 						</Menu.Target>
-						{/* Each item below pairs `variant={variant.Link.inheritStyle}` (font/color/line-height
-						    from the surrounding Menu.Item) with an explicit `td='none'`: the variant's own
-						    `text-decoration: inherit !important` is reliable for items with an `href`, but
-						    the couple of items below with none (`onClick`-only, e.g. "Log out") go through
-						    an extra polymorphic hop where the variant class has previously been observed not
-						    to attach (see the class-vs-attribute-selector note atop Anchor.module.css) -
-						    `td` is a Mantine style prop resolved straight to inline style, so it holds
-						    regardless of that. */}
+						{/* No `variant` is passed to these `Link`-as-`Menu.Item` elements on purpose - any
+						    Anchor variant class (e.g. `inheritStyle`) applies its font/line-height/color
+						    with `!important`, which would beat `classes.menuItem`'s own (non-`!important`)
+						    font declarations regardless of source order. Leaving `variant` unset means the
+						    Anchor's base `.root` class applies instead, which has no `!important` of its
+						    own, so `classes.menuItem` (itself `!important`, see UserMenu.module.css) wins
+						    reliably. */}
 						<Menu.Dropdown>
 							{canAccessDataPortal && (
 								<>
 									<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
-									<Menu.Item
-										component={Link}
-										href='/admin'
-										target='_self'
-										variant={variant.Link.inheritStyle}
-										td='none'
-									>
+									<Menu.Item component={Link} href='/admin' target='_self'>
 										{t('user-menu.data-portal')}
 									</Menu.Item>
 									{isEditablePage && (
-										<Menu.Item
-											component={Link}
-											onClick={handleEditModeEntry}
-											target='_self'
-											variant={variant.Link.inheritStyle}
-											td='none'
-										>
+										<Menu.Item component={Link} onClick={handleEditModeEntry} target='_self'>
 											{t('user-menu.edit-page')}
 										</Menu.Item>
 									)}
@@ -133,40 +120,16 @@ export const UserMenu = ({ className }: UserMenuProps) => {
 									<Menu.Label>{t('user-menu.user-options')}</Menu.Label>
 								</>
 							)}
-							<Menu.Item
-								component={Link}
-								href='/account/saved'
-								target='_self'
-								variant={variant.Link.inheritStyle}
-								td='none'
-							>
+							<Menu.Item component={Link} href='/account/saved' target='_self'>
 								{t('words.saved', { defaultValue: 'Saved' })}
 							</Menu.Item>
-							<Menu.Item
-								component={Link}
-								href='/account/reviews'
-								target='_self'
-								variant={variant.Link.inheritStyle}
-								td='none'
-							>
+							<Menu.Item component={Link} href='/account/reviews' target='_self'>
 								{t('words.reviews')}
 							</Menu.Item>
-							<Menu.Item
-								component={Link}
-								href='/account'
-								target='_self'
-								variant={variant.Link.inheritStyle}
-								td='none'
-							>
+							<Menu.Item component={Link} href='/account' target='_self'>
 								{t('words.settings')}
 							</Menu.Item>
-							<Menu.Item
-								component={Link}
-								external
-								onClick={handleSignout}
-								variant={variant.Link.inheritStyle}
-								td='none'
-							>
+							<Menu.Item component={Link} external onClick={handleSignout}>
 								{t('log-out')}
 							</Menu.Item>
 						</Menu.Dropdown>

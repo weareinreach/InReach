@@ -33,12 +33,31 @@ const buildWhere = (input: TForReviewTableSchema): Prisma.OrgReviewWhereInput =>
 }
 
 // Sortable columns are whitelisted by the Zod schema (ZSortableColumn) before they ever reach here.
+// `userName`/`userEmail`/`organization` aren't plain columns on `OrgReview` - they live on the
+// related `User`/`Organization` records, so they need a nested `orderBy` instead of the flat
+// `{ [id]: dir }` shape that works for the rest.
 const buildOrderBy = (
 	sorting: TForReviewTableSchema['sorting']
 ): Prisma.OrgReviewOrderByWithRelationInput[] => {
 	const orderBy: Prisma.OrgReviewOrderByWithRelationInput[] = (
 		sorting ?? [{ id: 'createdAt', desc: true }]
-	).map(({ id, desc }) => ({ [id]: desc ? 'desc' : 'asc' }))
+	).map(({ id, desc }) => {
+		const dir = desc ? 'desc' : 'asc'
+		switch (id) {
+			case 'userName': {
+				return { user: { name: dir } }
+			}
+			case 'userEmail': {
+				return { user: { email: dir } }
+			}
+			case 'organization': {
+				return { organization: { name: dir } }
+			}
+			default: {
+				return { [id]: dir }
+			}
+		}
+	})
 	// Stable tiebreaker so take/skip pagination can't skip or duplicate rows across pages.
 	orderBy.push({ id: 'asc' })
 	return orderBy

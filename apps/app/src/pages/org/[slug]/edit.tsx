@@ -217,8 +217,8 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 						</Stack>
 					</Stack>
 				</Grid.Col>
-				<Grid.Col order={2}>
-					<Stack gap={40}>
+				<Grid.Col span={{ base: 12, sm: 4 }} order={2}>
+					<Stack pt={24} gap={40}>
 						<ContactSection role='org' parentId={data.id} edit />
 					</Stack>
 				</Grid.Col>

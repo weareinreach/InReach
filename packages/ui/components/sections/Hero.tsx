@@ -263,7 +263,7 @@ export const Hero = () => {
 							Link: (
 								<PrivacyStatementModal
 									component={Link}
-									variant={variants.Link.inheritStyle}
+									variant={variants.Link.inheritStyleUnderline}
 								></PrivacyStatementModal>
 							),
 						}}

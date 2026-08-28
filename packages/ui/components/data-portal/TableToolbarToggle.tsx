@@ -3,6 +3,8 @@ import { type ColumnFiltersState } from '@tanstack/react-table'
 
 import { Icon } from '~ui/icon'
 
+import classes from './TableToolbarToggle.module.css'
+
 export interface TableToolbarToggleProps {
 	/** Column whose filter value this button cycles through. */
 	columnId: string
@@ -12,6 +14,11 @@ export interface TableToolbarToggleProps {
 	cycle: [boolean | undefined, boolean | undefined, boolean | undefined]
 	label: (state: boolean | undefined) => string
 	icon: (state: boolean | undefined) => string
+	/**
+	 * Overlays a diagonal line across the icon for the given state - for icons with no dedicated
+	 * "off"/"excluded" variant in the icon set (e.g. `carbon:trash-can` has no `trash-can-off`).
+	 */
+	slash?: (state: boolean | undefined) => boolean
 }
 
 /**
@@ -25,6 +32,7 @@ export const TableToolbarToggle = ({
 	cycle,
 	label,
 	icon,
+	slash,
 }: TableToolbarToggleProps) => {
 	const current = columnFilters.find(({ id }) => id === columnId)?.value as boolean | undefined
 	const currentIndex = cycle.indexOf(current)
@@ -41,7 +49,9 @@ export const TableToolbarToggle = ({
 	return (
 		<Tooltip label={label(current)}>
 			<ActionIcon onClick={toggle} variant='subtle'>
-				<Icon icon={icon(current)} height={20} />
+				<span className={slash?.(current) ? classes.slash : undefined}>
+					<Icon icon={icon(current)} height={20} />
+				</span>
 			</ActionIcon>
 		</Tooltip>
 	)

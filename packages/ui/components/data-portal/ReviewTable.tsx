@@ -75,7 +75,11 @@ export const ReviewTable = () => {
 			updatedAt: dateFilter('updatedAt')
 				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
 				: undefined,
-			sorting: sorting.map(({ id, desc }) => ({ id: id as 'createdAt' | 'updatedAt' | 'rating', desc })),
+			sorting: sorting.map(({ id, desc }) => ({
+				id: id as
+					'createdAt' | 'updatedAt' | 'rating' | 'reviewText' | 'userName' | 'userEmail' | 'organization',
+				desc,
+			})),
 			take: pagination.pageSize,
 			skip: pagination.pageIndex * pagination.pageSize,
 		},
@@ -138,6 +142,18 @@ export const ReviewTable = () => {
 						</Group>
 					)
 				},
+			},
+			{
+				id: 'id',
+				header: 'ID',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				cell: ({ row }) => (
+					<Text size='xs' ff='monospace'>
+						{row.id}
+					</Text>
+				),
 			},
 			{
 				id: 'userName',
@@ -220,6 +236,7 @@ export const ReviewTable = () => {
 				id: 'visible',
 				header: 'Visible?',
 				hiddenByDefault: true,
+				enableSorting: false,
 				cell: ({ row }) => (
 					<Switch
 						checked={row.visible}
@@ -260,7 +277,7 @@ export const ReviewTable = () => {
 			},
 			{
 				id: 'createdAt',
-				header: 'Created At',
+				header: 'Created',
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
@@ -273,7 +290,7 @@ export const ReviewTable = () => {
 			},
 			{
 				id: 'updatedAt',
-				header: 'Updated At',
+				header: 'Updated',
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
@@ -337,6 +354,7 @@ export const ReviewTable = () => {
 									: 'Show deleted reviews'
 						}
 						icon={() => 'carbon:trash-can'}
+						slash={(state) => state === false}
 					/>
 				</>
 			}

@@ -75,6 +75,7 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 				<DatePickerInput
 					type='range'
 					label={label}
+					placeholder='Pick date range'
 					value={[from ?? null, to ?? null]}
 					onChange={(next) => {
 						// v9 `DatePickerInput` always reports the new value as a date string (`YYYY-MM-DD`),

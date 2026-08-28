@@ -227,7 +227,7 @@ export const UserTable = () => {
 				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
 				: undefined,
 			sorting: sorting.map(({ id, desc }) => ({
-				id: id as 'name' | 'email' | 'createdAt' | 'updatedAt' | 'active',
+				id: id as 'name' | 'email' | 'emailVerified' | 'createdAt' | 'updatedAt' | 'active',
 				desc,
 			})),
 			permissionNames: permissionNamesFilter?.length ? permissionNamesFilter : undefined,
@@ -259,33 +259,23 @@ export const UserTable = () => {
 					</Group>
 				),
 			},
+			{
+				id: 'id',
+				header: 'ID',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				cell: ({ value }) => <Text size='xs'>{value as string}</Text>,
+			},
 			{ id: 'name', header: 'Name' },
 			{ id: 'email', header: 'Email' },
 			{
 				id: 'emailVerified',
-				header: 'Email Verified',
+				header: 'Verified',
 				cell: ({ value }) => {
 					if (!value) {
 						return null
 					}
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
-			},
-			{
-				id: 'updatedAt',
-				header: 'Last updated',
-				filter: { type: 'date-range' },
-				cell: ({ value }) => {
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
-			},
-			{
-				id: 'createdAt',
-				header: 'Created At',
-				filter: { type: 'date-range' },
-				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 				},
@@ -304,6 +294,24 @@ export const UserTable = () => {
 				cell: ({ row }) =>
 					DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.value === (row.permissionName ?? 'none'))?.label ??
 					'None',
+			},
+			{
+				id: 'updatedAt',
+				header: 'Updated',
+				filter: { type: 'date-range' },
+				cell: ({ value }) => {
+					const date = DateTime.fromJSDate(value as Date)
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+				},
+			},
+			{
+				id: 'createdAt',
+				header: 'Created',
+				filter: { type: 'date-range' },
+				cell: ({ value }) => {
+					const date = DateTime.fromJSDate(value as Date)
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+				},
 			},
 		],
 		[loggedInUserPermissions]

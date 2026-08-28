@@ -1,18 +1,8 @@
 import { Menu, type MenuProps, useMantineTheme } from '@mantine/core'
-import {
-	Children,
-	cloneElement,
-	forwardRef,
-	isValidElement,
-	type MouseEventHandler,
-	type ReactElement,
-	useCallback,
-	useMemo,
-	useState,
-} from 'react'
+import { Children, cloneElement, forwardRef, isValidElement, type ReactElement, useMemo } from 'react'
 
 import { Button } from '~ui/components/core/Button'
-import { Icon, type IconifyIconHTMLElement } from '~ui/icon'
+import { Icon } from '~ui/icon'
 import { cx } from '~ui/lib/cx'
 
 import { type ActionButtonElementProps } from './Group'
@@ -29,22 +19,6 @@ const getTargetId = (e: ReactElement<ActionButtonElementProps>) => {
 export const OverflowMenu = forwardRef<HTMLButtonElement, ActionButtonMenuProps>(
 	({ children, className, visibilityMap, ...props }, ref) => {
 		const theme = useMantineTheme()
-		const [anchorEl, setAnchorEl] = useState<
-			(EventTarget & IconifyIconHTMLElement) | (EventTarget & HTMLElement) | null
-		>(null)
-		const open = Boolean(anchorEl)
-
-		const handleClick: MouseEventHandler<IconifyIconHTMLElement> & MouseEventHandler<HTMLElement> =
-			useCallback(
-				(event) => {
-					setAnchorEl(event.currentTarget)
-				},
-				[setAnchorEl]
-			)
-
-		const handleClose = useCallback(() => {
-			setAnchorEl(null)
-		}, [setAnchorEl])
 
 		const shouldShowMenu = useMemo(
 			() => Object.values(visibilityMap).some((v) => v === false),
@@ -56,19 +30,7 @@ export const OverflowMenu = forwardRef<HTMLButtonElement, ActionButtonMenuProps>
 		}
 		const { inOverflowMenu: _inOverflowMenu, ...menuClassNames } = classes
 		return (
-			<Menu
-				position='bottom-start'
-				opened={open}
-				onClose={handleClose}
-				// onChange={menuHandler.toggle}
-				zIndex={200}
-				classNames={menuClassNames}
-				keepMounted
-				portalProps={{
-					target: anchorEl ?? undefined,
-				}}
-				{...props}
-			>
+			<Menu position='bottom-start' zIndex={200} classNames={menuClassNames} {...props}>
 				<Menu.Target>
 					<Button ref={ref} className={cx(classes.button, className)}>
 						<Icon
@@ -77,7 +39,6 @@ export const OverflowMenu = forwardRef<HTMLButtonElement, ActionButtonMenuProps>
 							className={classes.icon}
 							height={24}
 							width={24}
-							onClick={handleClick}
 						/>
 					</Button>
 				</Menu.Target>
@@ -89,11 +50,7 @@ export const OverflowMenu = forwardRef<HTMLButtonElement, ActionButtonMenuProps>
 								className: cx(child.props.className, classes.inOverflowMenu, classes.item),
 							})
 
-							return (
-								<Menu.Item component='div' onClick={handleClose}>
-									{clonedElement}
-								</Menu.Item>
-							)
+							return <Menu.Item component='div'>{clonedElement}</Menu.Item>
 						}
 
 						return null

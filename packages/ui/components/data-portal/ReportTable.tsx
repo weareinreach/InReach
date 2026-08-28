@@ -339,7 +339,17 @@ export const ReportTable = () => {
 			updatedAt: dateFilter('updatedAt')
 				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
 				: undefined,
-			sorting: sorting.map(({ id, desc }) => ({ id: id as 'createdAt' | 'updatedAt', desc })),
+			sorting: sorting.map(({ id, desc }) => ({
+				id: id as
+					| 'orgNameSnapshot'
+					| 'serviceNameSnapshot'
+					| 'issueType'
+					| 'status'
+					| 'informed'
+					| 'createdAt'
+					| 'updatedAt',
+				desc,
+			})),
 			take: pagination.pageSize,
 			skip: pagination.pageIndex * pagination.pageSize,
 		},
@@ -395,6 +405,14 @@ export const ReportTable = () => {
 						</Group>
 					)
 				},
+			},
+			{
+				id: 'id',
+				header: 'ID',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				cell: ({ value }) => <Text size='xs'>{value as string}</Text>,
 			},
 			{
 				id: 'orgNameSnapshot',
@@ -488,7 +506,7 @@ export const ReportTable = () => {
 			},
 			{
 				id: 'createdAt',
-				header: 'Created At',
+				header: 'Created',
 				size: 150,
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
@@ -502,7 +520,7 @@ export const ReportTable = () => {
 			},
 			{
 				id: 'updatedAt',
-				header: 'Updated At',
+				header: 'Updated',
 				size: 150,
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {

@@ -1,15 +1,14 @@
-import { Stack, Text } from '@mantine/core'
+import { Divider, Group, Stack, Text, TextInput, Title } from '@mantine/core'
+import { useDebouncedValue } from '@mantine/hooks'
 import { type UseMutationResult } from '@tanstack/react-query'
-import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
 import { useMemo, useState } from 'react'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
 import { CsvDownload } from '~ui/components/data-portal/CsvDownload'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-
-import { DataTable, type DataTableColumn } from './DataTable'
 
 interface DownloadRow {
 	id: string
@@ -22,10 +21,9 @@ interface DownloadRow {
 }
 
 // The reports themselves stay exactly as they were (same label/fileName/mutation hook/permission
-// per report) - only reshaped from one hardcoded `<CsvDownload>` per report into rows for the same
-// `DataTable` the other data-portal tabs already use, so this tab matches their look/feel
-// (toolbar, search, column filter, sorting) without needing the general "query and pull data"
-// engine that's explicitly a separate, later effort.
+// per report), grouped by `section` into a header + list rather than a generic sortable/filterable
+// table - there's no need for column sort/pagination over 14 fixed, hand-authored rows, and a flat
+// "Section" column made the grouping harder to scan than an actual section header would.
 const DOWNLOAD_ROWS: DownloadRow[] = [
 	{
 		id: 'all-published-orgs',
@@ -141,77 +139,74 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 	},
 ]
 
-const SECTION_OPTIONS = [...new Set(DOWNLOAD_ROWS.map((row) => row.section))].map((section) => ({
-	value: section,
-	label: section,
-}))
-
 export const DownloadTable = () => {
 	const { t } = useTranslation('common')
 	const { data: session } = useSession()
 
-	const [sorting, setSorting] = useState<SortingState>([{ id: 'section', desc: false }])
-	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-	const [globalFilter, setGlobalFilter] = useState('')
-	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
+	const [search, setSearch] = useState('')
+	const [debouncedSearch] = useDebouncedValue(search, 300)
 
 	const userPerms = session?.user?.permissions || []
 	const canViewDownloads = userPerms.some((p) =>
 		['root', 'sysadmin', 'system', 'dataPortalAdmin'].includes(p)
 	)
 
-	const columns = useMemo<DataTableColumn<DownloadRow>[]>(
-		() => [
-			{
-				id: 'actions',
-				header: 'Actions',
-				pin: 'left',
-				size: 70,
-				enableSorting: false,
-				enableGlobalFilter: false,
-				hideable: false,
-				accessorFn: () => undefined,
-				cell: ({ row }) => (
-					<CsvDownload
-						label={row.label}
-						fileName={row.fileName}
-						useMutationHook={row.useMutationHook}
-						permissionKey={row.permissionKey}
-					/>
-				),
-			},
-			{
-				id: 'section',
-				header: 'Section',
-				size: 220,
-				filter: { type: 'multi-select', options: SECTION_OPTIONS },
-			},
-			{ id: 'label', header: 'Report Name' },
-		],
-		[]
-	)
+	const sections = useMemo(() => {
+		const query = debouncedSearch.trim().toLowerCase()
+		const filtered = query
+			? DOWNLOAD_ROWS.filter(
+					(row) => row.label.toLowerCase().includes(query) || row.section.toLowerCase().includes(query)
+				)
+			: DOWNLOAD_ROWS
+		const bySection = new Map<string, DownloadRow[]>()
+		for (const row of filtered) {
+			const rows = bySection.get(row.section) ?? []
+			rows.push(row)
+			bySection.set(row.section, rows)
+		}
+		return [...bySection.entries()]
+	}, [debouncedSearch])
 
 	if (!canViewDownloads) return null
 
 	return (
 		<Stack>
-			<Text size='16px' fw={500} style={{ marginBottom: '-1rem' }}>
+			<Text size='16px' fw={500}>
 				{t('user-menu.csv-downloads')}
 			</Text>
-			<DataTable
-				data={DOWNLOAD_ROWS}
-				getRowId={(row) => row.id}
-				columns={columns}
-				sorting={sorting}
-				onSortingChange={setSorting}
-				columnFilters={columnFilters}
-				onColumnFiltersChange={setColumnFilters}
-				globalFilter={globalFilter}
-				onGlobalFilterChange={setGlobalFilter}
-				globalFilterPlaceholder='Search Reports'
-				pagination={pagination}
-				onPaginationChange={setPagination}
+			<TextInput
+				placeholder='Search Reports'
+				value={search}
+				onChange={(event) => setSearch(event.currentTarget.value)}
+				leftSection={<Icon icon='carbon:search' height={16} />}
+				w={280}
 			/>
+			{sections.length === 0 && (
+				<Text c='dimmed' ta='center' py='md'>
+					No results
+				</Text>
+			)}
+			{sections.map(([section, rows]) => (
+				<Stack key={section} gap='xs'>
+					<Title order={4}>{section}</Title>
+					<Stack gap={0}>
+						{rows.map((row, index) => (
+							<div key={row.id}>
+								{index > 0 && <Divider />}
+								<Group justify='space-between' wrap='nowrap' py='xs'>
+									<Text size='sm'>{row.label}</Text>
+									<CsvDownload
+										label={row.label}
+										fileName={row.fileName}
+										useMutationHook={row.useMutationHook}
+										permissionKey={row.permissionKey}
+									/>
+								</Group>
+							</div>
+						))}
+					</Stack>
+				</Stack>
+			))}
 		</Stack>
 	)
 }

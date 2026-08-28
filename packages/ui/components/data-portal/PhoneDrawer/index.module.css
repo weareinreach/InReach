@@ -2,3 +2,11 @@
 	border-radius: rem(32px) 0 0 0;
 	min-width: 40vw;
 }
+
+/* Mantine 9 defaults `withCheckIcon: true` on Select, showing a checkmark next to the
+   selected option. Design wants a green background highlight instead - no checkmark
+   (see `withCheckIcon={false}` on the "Type" Select below). Mantine marks the selected
+   Combobox option with `data-checked="true"`. */
+.option[data-checked='true'] {
+	background-color: var(--ir-color-primary-ally-green);
+}

@@ -7,7 +7,7 @@ const ZDateRange = z
 	})
 	.partial()
 
-export const ZSortableColumn = z.enum(['name', 'email', 'createdAt', 'updatedAt', 'active'])
+export const ZSortableColumn = z.enum(['name', 'email', 'emailVerified', 'createdAt', 'updatedAt', 'active'])
 
 const ZSortingState = z.array(
 	z.object({

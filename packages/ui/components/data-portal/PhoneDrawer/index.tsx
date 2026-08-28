@@ -338,7 +338,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 										<PhoneNumberEntry
 											label='Phone Number'
 											required
-											countrySelect={{ name: 'countryId' }}
+											countrySelect={{ name: 'countryId', comboboxProps: { zIndex: 10002 } }}
 											phoneInput={{ name: 'number' }}
 											control={control}
 										/>
@@ -352,11 +352,18 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 												{ value: null as unknown as string, label: 'Custom Text (enter below)' },
 											]}
 											comboboxProps={{ zIndex: 10002 }}
+											withCheckIcon={false}
+											classNames={{ option: classes.option }}
 										/>
 										{values.phoneTypeId === null && (
-											<TextInput label='Description' name='description' control={control} />
+											<TextInput
+												label='Description'
+												name='description'
+												control={control}
+												placeholder='Enter a custom description'
+											/>
 										)}
-										<Group wrap='nowrap' justify='space-between' w='100%'>
+										<Stack w='100%' gap={16}>
 											<Stack>
 												<Checkbox label='Published' name='published' control={control} />
 												<Checkbox label='Deleted' name='deleted' control={control} />
@@ -366,17 +373,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 													leftIcon={<Icon icon='carbon:unlink' />}
 													onClick={handleUnlink}
 													disabled={createNew}
-													// Button's root has `overflow: hidden` (for its loading-state
-													// pseudo-element), which zeroes its flexbox automatic minimum
-													// size - without this, the surrounding `justify='space-between'`
-													// Group was free to shrink it below its label's width, silently
-													// clipping the text instead of holding its size.
-													style={{ flexShrink: 0 }}
+													fullWidth
 												>
 													Unlink from this location
 												</Button>
 											)}
-										</Group>
+										</Stack>
 									</Stack>
 								</Stack>
 							</Drawer.Body>

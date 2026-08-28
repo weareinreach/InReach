@@ -9,7 +9,15 @@ const ZDateRange = z
 	})
 	.partial()
 
-export const ZSortableColumn = z.enum(['createdAt', 'updatedAt'])
+export const ZSortableColumn = z.enum([
+	'orgNameSnapshot',
+	'serviceNameSnapshot',
+	'issueType',
+	'status',
+	'informed',
+	'createdAt',
+	'updatedAt',
+])
 
 const ZSortingState = z.array(
 	z.object({

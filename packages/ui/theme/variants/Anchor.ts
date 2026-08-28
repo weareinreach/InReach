@@ -9,6 +9,7 @@ export const Anchor: Record<string, Partial<Record<'root', string>>> = {
 	inlineInvertedUtil1: { root: classes.inlineInvertedUtil1 },
 	inlineInvertedUtil2: { root: classes.inlineInvertedUtil2 },
 	inheritStyle: { root: classes.inheritStyle },
+	inheritStyleUnderline: { root: classes.inheritStyleUnderline },
 	block: { root: classes.block },
 	card: { root: classes.card },
 	pagination: { root: classes.pagination },

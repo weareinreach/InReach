@@ -24,6 +24,7 @@ export const variantNames = {
 		inlineInvertedUtil1: 'inlineInvertedUtil1',
 		inlineInvertedUtil2: 'inlineInvertedUtil2',
 		inheritStyle: 'inheritStyle',
+		inheritStyleUnderline: 'inheritStyleUnderline',
 		block: 'block',
 		inlineUtil1: 'inlineUtil1',
 		inlineUtil1darkGray: 'inlineUtil1darkGray',

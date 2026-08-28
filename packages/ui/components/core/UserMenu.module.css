@@ -15,12 +15,20 @@
 	}
 }
 
+/*
+ * Rendered on the same DOM node as our `Link`/`Anchor` wrapper (via `Menu.Item component={Link}`),
+ * so its properties compete with `Anchor.module.css`'s `.root` class on that element. `.root` sets
+ * its own font-size/weight/line-height/padding/text-decoration with no `!important`, so without
+ * `!important` here the two non-important rules would be resolved by CSS insertion order between
+ * two unrelated CSS module files - unreliable. `!important` makes this class win unconditionally.
+ */
 .menuItem {
-	font-size: rem(16px);
-	font-weight: 500;
-	line-height: 1.25;
+	font-size: rem(16px) !important;
+	font-weight: 500 !important;
+	line-height: 1.25 !important;
 	color: var(--ir-color-secondary-black) !important;
-	padding: rem(16px);
+	padding: rem(16px) !important;
+	text-decoration: none !important;
 }
 
 .menuTarget[data-expanded] {

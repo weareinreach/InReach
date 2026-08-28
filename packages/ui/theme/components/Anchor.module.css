@@ -50,6 +50,8 @@
 :global([data-variant='inlineInvertedUtil2']),
 .inheritStyle,
 :global([data-variant='inheritStyle']),
+.inheritStyleUnderline,
+:global([data-variant='inheritStyleUnderline']),
 .pagination,
 :global([data-variant='pagination']) {
 	padding: 0 !important;
@@ -58,7 +60,9 @@
 .inline,
 :global([data-variant='inline']),
 .inheritStyle,
-:global([data-variant='inheritStyle']) {
+:global([data-variant='inheritStyle']),
+.inheritStyleUnderline,
+:global([data-variant='inheritStyleUnderline']) {
 	display: inline;
 }
 
@@ -177,6 +181,25 @@
 @media (hover: hover) {
 	.inheritStyle:hover,
 	:global([data-variant='inheritStyle']):hover {
+		background-color: transparent !important;
+	}
+}
+
+/*
+ * Same as `inheritStyle` (inherits color/size/weight from surrounding text), but keeps an underline
+ * so the link is still visually identifiable as clickable inside a body-copy sentence.
+ */
+.inheritStyleUnderline,
+:global([data-variant='inheritStyleUnderline']) {
+	font-weight: inherit !important;
+	line-height: inherit !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	text-decoration: underline !important;
+}
+@media (hover: hover) {
+	.inheritStyleUnderline:hover,
+	:global([data-variant='inheritStyleUnderline']):hover {
 		background-color: transparent !important;
 	}
 }
