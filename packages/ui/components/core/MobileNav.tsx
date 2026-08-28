@@ -1,17 +1,23 @@
 import { Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 
+import { MobileLangPicker } from './MobileLangPicker'
 import classes from './MobileNav.module.css'
 
 export const MobileNav = ({ className }: { className?: string }) => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
 	const { searchState } = useSearchState()
+	// `Tabs` is controlled (rather than `defaultValue`) specifically so "language" can be excluded
+	// below - it opens a modal via `MobileLangPicker`'s own `onClick` rather than navigating
+	// anywhere, so it shouldn't ever become the visually "active" tab the way a real nav
+	// destination does.
+	const [activeTab, setActiveTab] = useState<TabName>('search')
 
 	const showSearch = Boolean(searchState.params?.length) && router.pathname !== '/search/[...params]'
 
@@ -19,6 +25,7 @@ export const MobileNav = ({ className }: { className?: string }) => {
 		(tab: string | null) => {
 			switch (tab) {
 				case 'search': {
+					setActiveTab('search')
 					const query = searchState.getRoute()
 					if (query && showSearch) {
 						router.push({
@@ -31,12 +38,15 @@ export const MobileNav = ({ className }: { className?: string }) => {
 					break
 				}
 				case 'saved':
+					setActiveTab('saved')
 					router.push('/account/saved')
 					break
 				case 'account':
+					setActiveTab('account')
 					router.push('/account')
 					break
 				case 'support':
+					setActiveTab('support')
 					router.push('/support')
 					break
 				default:
@@ -56,7 +66,7 @@ export const MobileNav = ({ className }: { className?: string }) => {
 				list: classes.list,
 				tabSection: classes.tabSection,
 			}}
-			defaultValue='search'
+			value={activeTab}
 			onChange={handleTabChange}
 		>
 			<Tabs.List justify='space-between'>
@@ -78,6 +88,11 @@ export const MobileNav = ({ className }: { className?: string }) => {
 				<Tabs.Tab value='support' leftSection={<Icon icon='carbon:help' height={20} />}>
 					{t('words.support', { defaultValue: 'Support' })}
 				</Tabs.Tab>
+				<MobileLangPicker>
+					<Tabs.Tab value='language' leftSection={<Icon icon='carbon:translate' height={20} />}>
+						{t('words.language', { defaultValue: 'Language' })}
+					</Tabs.Tab>
+				</MobileLangPicker>
 			</Tabs.List>
 		</Tabs>
 	)

@@ -1,17 +1,3 @@
-/* The actual date value - lighter/smaller than its caption label above. */
-.textDate {
-	font-size: rem(14px);
-	font-weight: 400;
-	color: var(--ir-color-secondary-dark-gray);
-}
-
-/* Caption label (e.g. "Last verified") - bolder/thicker than the date value it describes. */
-.textStatus {
-	font-size: rem(14px);
-	font-weight: 700;
-	color: var(--ir-color-secondary-black);
-}
-
 .activityBlock {
 	display: flex;
 	gap: rem(16px);

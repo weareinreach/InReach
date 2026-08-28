@@ -73,9 +73,21 @@
 .item * {
 	color: white !important;
 }
+/*
+ * Real mouse hover never sets `data-hovered` - that attribute only appears on Mantine's
+ * keyboard-navigated "active" item, not on `:hover`. Without the `:hover` rule below, a mouse
+ * hover fell straight through to Mantine's own default light-gray `Menu.Item` hover background,
+ * which needs `!important` to override for the same reason as `.button`/`.inOverflowMenu` above.
+ */
 .item[data-hovered] {
-	background-color: inherit;
-	text-decoration: underline;
+	background-color: transparent !important;
+	text-decoration: underline !important;
+}
+@media (hover: hover) {
+	.item:hover {
+		background-color: transparent !important;
+		text-decoration: underline !important;
+	}
 }
 
 /*
@@ -93,7 +105,15 @@
 	height: unset !important;
 }
 @media (hover: hover) {
-	.inOverflowMenu:hover {
+	/*
+	 * `.inOverflowMenu:hover` alone (specificity 0,2,0) loses to `.button:not([data-disabled]):hover`
+	 * above (specificity 0,3,0, from the `:not([data-disabled])` argument counting toward
+	 * specificity) even though both are `!important` and this one appears later in the file -
+	 * `!important` ties are broken by specificity before source order. Every cloned overflow item
+	 * carries both `.inOverflowMenu` and `.button`, so matching both classes here raises this rule
+	 * to the same specificity and lets source order (this comes after) decide correctly.
+	 */
+	.inOverflowMenu.button:hover {
 		background-color: transparent !important;
 	}
 }

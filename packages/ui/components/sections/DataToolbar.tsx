@@ -1,5 +1,3 @@
-import { Divider } from '@mantine/core'
-
 import { Action } from '~ui/components/data-portal/Action'
 import { Activity } from '~ui/components/data-portal/Activity'
 
@@ -21,19 +19,14 @@ export const DataToolbar = ({
 	const lastVerified = data.lastVerified ? data.lastVerified.toISOString() : null
 
 	return (
-		<>
-			<div className={classes.toolbar}>
-				{/* Pass the converted string values to the Activity component */}
-				<Activity
-					lastUpdated={data.lastUpdated}
-					lastVerified={lastVerified}
-					firstPublished={data.firstPublished}
-				/>
-				<Action data={data} />
-			</div>
-			<div>
-				<Divider my='lg' mb='md' />
-			</div>
-		</>
+		<div className={classes.toolbar}>
+			{/* Pass the converted string values to the Activity component */}
+			<Activity
+				lastUpdated={data.lastUpdated}
+				lastVerified={lastVerified}
+				firstPublished={data.firstPublished}
+			/>
+			<Action data={data} />
+		</div>
 	)
 }

@@ -9,7 +9,6 @@ import { type ReactNode, useEffect } from 'react'
 import { donateEvent } from '@weareinreach/analytics/events'
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
 import { Link } from '@weareinreach/ui/components/core/Link'
-import { MobileLangPicker } from '@weareinreach/ui/components/core/MobileLangPicker'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { Icon } from '@weareinreach/ui/icon'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -62,14 +61,6 @@ const SupportPage = () => {
 			>
 				<SupportItem tKey='donate.to-inreach' />
 			</Link>,
-		],
-		[
-			8,
-			<MobileLangPicker key={8}>
-				<Link href='/' {...linkVar}>
-					<SupportItem tKey='language_choose_mobile' />
-				</Link>
-			</MobileLangPicker>,
 		],
 		[
 			0,
