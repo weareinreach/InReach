@@ -5,10 +5,10 @@ import { forwardRef } from 'react'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 
-import { useSharedStyles } from './styles'
+import { sharedBadgeClasses } from './styles'
 
 export const _Remote = forwardRef<HTMLDivElement, BadgeRemoteProps>(({ hideTooltip, ...props }, ref) => {
-	const { classes } = useSharedStyles('remote')
+	const classes = sharedBadgeClasses.remote
 	const theme = useMantineTheme()
 	const { t } = useTranslation(['common'])
 	const variants = useCustomVariant()

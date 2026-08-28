@@ -1,7 +1,15 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { Text, TextInput, type TextInputProps } from '@mantine/core'
+import {
+	type ComboboxItem,
+	type ComboboxItemGroup,
+	type ComboboxLikeRenderOptionInput,
+	Group,
+	Text,
+	TextInput,
+	type TextInputProps,
+} from '@mantine/core'
 import { AsYouType } from 'libphonenumber-js'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
 	type Control,
 	type FieldValues,
@@ -16,9 +24,17 @@ import PhoneInput, { type Props as PhoneInputProps } from 'react-phone-number-in
 import { isCountryCode } from '~ui/hooks/usePhoneNumber'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { CountrySelectItem } from './CountrySelectItem'
 import { transformCountryList } from './lib'
-import { useCountrySelectStyles, usePhoneEntryStyles } from './styles'
+import classes from './styles.module.css'
+
+const countrySelectClasses = {
+	dropdown: classes.countrySelectDropdown,
+	root: classes.countrySelectRoot,
+	input: classes.countrySelectInput,
+	section: classes.countrySelectSection,
+	option: classes.countrySelectOption,
+}
+const phoneEntryClasses = { section: classes.phoneEntrySection }
 
 const DEFAULT_COUNTRY = 'US'
 
@@ -42,6 +58,22 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		return countryData
 	}, [countryData])
 	const validCountries = countryList.map(({ data }) => data.cca2)
+
+	// `Select`'s `data` items in v7 can only be `{value, label}` - the flat `countryList` above (kept
+	// for its `data`/`group` lookups) is regrouped into real `ComboboxItemGroup`s here instead of the
+	// old flat per-item `group` field, which v7 no longer renders as a group header.
+	const groupedCountryData = useMemo<ComboboxItemGroup<ComboboxItem>[]>(() => {
+		const groups = new Map<string, typeof countryList>()
+		for (const item of countryList) {
+			const group = groups.get(item.group) ?? []
+			group.push(item)
+			groups.set(item.group, group)
+		}
+		return [...groups.entries()].map(([group, items]) => ({
+			group,
+			items: items.map(({ value, label: itemLabel }) => ({ value, label: itemLabel })),
+		}))
+	}, [countryList])
 
 	const {
 		name: peName,
@@ -75,9 +107,6 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 
 	const [phoneNumber, selectedCountry] = useWatch({ name: [peName, csName], control })
 
-	const { classes: countrySelectClasses } = useCountrySelectStyles()
-	const { classes: phoneEntryClasses } = usePhoneEntryStyles()
-
 	const activeCountry = useMemo(() => {
 		const result = countryList?.find(({ value }) => value === selectedCountry)?.data.cca2
 		if (result && isCountryCode(result)) {
@@ -94,6 +123,12 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	// saved. This checks the value once, the first time it loads in (not on every keystroke, so
 	// correcting it doesn't cause the input to flicker/swap mid-edit), and falls back to a plain
 	// text field showing the raw value if the masked input can't represent it.
+	//
+	// Note: this expects `phoneInput`'s value to already be E.164 (`+<countrycode><number>`) by
+	// the time it reaches here - callers are responsible for that (e.g. combining a bare national
+	// number with its own country field in the query's `select`), since correcting the format
+	// *here* via `field.onChange` would mark the field (and form) dirty for a load-time formatting
+	// fix the user never made, wrongly enabling Save / triggering an unsaved-changes prompt.
 	const [showRawFallback, setShowRawFallback] = useState(false)
 	const hasCheckedInitialValue = useRef(false)
 	useEffect(() => {
@@ -116,7 +151,8 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 				if (countryId) {
 					countryControl.field.onChange(countryId)
 					if (countrySelect.onChange && typeof countrySelect.onChange === 'function') {
-						countrySelect.onChange(countryId)
+						const foundCountry = countryList.find(({ value }) => value === countryId)
+						countrySelect.onChange(countryId, { value: countryId, label: foundCountry?.label ?? '' })
 					}
 				}
 			}
@@ -124,12 +160,30 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [phoneNumber])
 
+	const renderCountryOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+			const country = countryList.find(({ value }) => value === option.value)
+			return (
+				<Group w='100%' wrap='nowrap'>
+					<Text>{option.label}</Text>
+					<Text>{country?.data.name ?? ''}</Text>
+				</Group>
+			)
+		},
+		[countryList]
+	)
+
 	const countrySelection = (
 		<Select
-			data={countryList}
-			itemComponent={CountrySelectItem}
+			data={groupedCountryData}
+			renderOption={renderCountryOption}
 			classNames={countrySelectClasses}
-			clearable
+			withCheckIcon={false}
+			// Not `clearable` - a phone number always needs a country, so there's no valid "cleared"
+			// state to support. This also keeps the right section showing only the dropdown chevron
+			// (never a clear "X"), which is what previously made this look non-interactive - Mantine
+			// 9's default `Select` renders the clear button *and* the chevron side-by-side once a
+			// value is set, which this fixed-width `countrySelectRoot` doesn't have room for.
 			control={control}
 			name={csName}
 			// rules={{
@@ -185,9 +239,12 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 					required={required}
 					rules={phoneValidationRules}
 					rightSection={countrySelection}
-					rightSectionWidth={56}
+					// Matches `.countrySelectRoot`'s own width (64px, `styles.module.css`) plus a little
+					// breathing room, so this country-select widget doesn't itself overlap the phone
+					// number's own typed text.
+					rightSectionWidth={72}
 				/>
-				<Text size='xs' color='dimmed'>
+				<Text size='xs' c='dimmed'>
 					This number couldn&apos;t be displayed in the normal format - showing the raw saved value. Re-enter
 					it to fix.
 				</Text>

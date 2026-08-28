@@ -1,0 +1,41 @@
+.count {
+	font-size: rem(16px);
+	font-weight: 500;
+	border-radius: 100%;
+	/* `!important` needed - this `<Text>` has no `variant`, and `theme.components.Text.styles`
+	   (packages/ui/theme/common.tsx) unconditionally sets an inline default `color` on any `Text`
+	   whose `variant` doesn't resolve to an override; inline style otherwise wins over this plain
+	   class rule, rendering the count in the default dark text color instead of white - invisible
+	   against the black/dark-gray circle background. */
+	color: var(--ir-color-secondary-white) !important;
+	width: rem(24px);
+	height: rem(24px);
+	text-align: center;
+	display: inline-block;
+	vertical-align: center;
+	line-height: 1.5;
+}
+.countBgDark {
+	background: var(--ir-color-secondary-dark-gray);
+}
+.countBgBlack {
+	background: var(--ir-color-secondary-black);
+}
+.countHidden {
+	opacity: 0;
+}
+.countVisible {
+	opacity: 1;
+}
+
+.button {
+	padding: rem(14px) rem(16px);
+	background-color: var(--ir-color-secondary-white);
+	border-radius: rem(8px);
+	border: var(--ir-color-tertiary-cool-gray) rem(1px) solid;
+	height: rem(48px);
+}
+
+.indicateDirty[data-isdirty='true'] {
+	background-color: lighten(#28939c, 0.6);
+}

@@ -1,0 +1,9 @@
+.hoverText[data-hovered] {
+	text-decoration: underline;
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+	.description {
+		display: none;
+	}
+}

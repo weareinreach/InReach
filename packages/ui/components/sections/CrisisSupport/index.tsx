@@ -1,40 +1,27 @@
-import { Card, createStyles, rem, Stack, Text, Title } from '@mantine/core'
+import { Card, Stack, Text, Title } from '@mantine/core'
 import { Trans, useTranslation } from 'next-i18next/pages'
 import { type ReactNode } from 'react'
 
 import { Badge } from '~ui/components/core/Badge'
 
+import classes from './index.module.css'
 import { InternationalCard } from './InternationalCard'
 import { NationalCard } from './NationalCard'
 
-const useStyles = createStyles((theme) => ({
-	parentCard: {
-		background: theme.other.colors.tertiary.yellow,
-	},
-	categoryBadge: {
-		background: theme.other.colors.secondary.white,
-	},
-	staySafeCard: {
-		border: `${rem(1)} solid ${theme.other.colors.secondary.white}`,
-		borderRadius: rem(16),
-	},
-}))
-
 export const CrisisSupport = ({ children, role }: ContainerProps) => {
-	const { classes } = useStyles()
 	const { t } = useTranslation(['services', 'common', 'attribute'])
 
 	const topContent =
 		role === 'international' ? (
 			<>
-				<Stack spacing={16}>
+				<Stack gap={16}>
 					<Badge.Service hideTooltip className={classes.categoryBadge}>
 						{t('international-support.CATEGORTYNAME')}
 					</Badge.Service>
 					<Title order={2}>{t('common:crisis-support.intl-we-recommend')}</Title>
 					<Text>{t('common:crisis-support.intl-these-verified')}</Text>
 				</Stack>
-				<Stack spacing={16} p={20} className={classes.staySafeCard}>
+				<Stack gap={16} p={20} className={classes.staySafeCard}>
 					<Trans
 						i18nKey='common:crisis-support.intl-stay-safe'
 						components={{ Title3: <Title order={3}></Title>, Text: <Text></Text> }}
@@ -43,7 +30,7 @@ export const CrisisSupport = ({ children, role }: ContainerProps) => {
 			</>
 		) : (
 			<>
-				<Stack spacing={16}>
+				<Stack gap={16}>
 					<Badge.Service hideTooltip className={classes.categoryBadge}>
 						{t('crisis-support.CATEGORYNAME')}
 					</Badge.Service>
@@ -55,7 +42,7 @@ export const CrisisSupport = ({ children, role }: ContainerProps) => {
 
 	return (
 		<Card className={classes.parentCard}>
-			<Stack spacing={32}>
+			<Stack gap={32}>
 				{topContent}
 				{children}
 			</Stack>

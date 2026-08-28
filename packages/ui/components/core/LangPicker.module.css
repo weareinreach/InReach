@@ -1,0 +1,43 @@
+.menuTargetBase {
+	padding: rem(4px) rem(12px);
+	border-radius: var(--mantine-spacing-sm);
+	height: rem(56px);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+@media (hover: hover) {
+	.menuTargetBase:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		cursor: pointer;
+	}
+}
+.menuTargetBase[data-expanded] {
+	background-color: var(--ir-color-primary-light-gray);
+}
+
+.menuTargetDefault {
+	border: none;
+	background-color: transparent;
+	width: auto;
+}
+
+.menuTargetForm {
+	border: rem(1px) solid var(--ir-color-tertiary-cool-gray);
+	background-color: var(--ir-color-secondary-white);
+	width: 100%;
+}
+
+.menuItem {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black) !important;
+	padding: rem(16px) rem(32px);
+}
+@media (hover: hover) {
+	.menuItem:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		cursor: pointer;
+	}
+}

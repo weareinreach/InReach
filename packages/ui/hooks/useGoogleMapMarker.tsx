@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
-import { appCache, appTheme } from '~ui/theme'
+import { appTheme } from '~ui/theme'
 
 const getHref: GetHref = ({ slug, locationId }) => {
 	if (slug && locationId) {
@@ -61,8 +61,8 @@ export const useGoogleMapMarker = () => {
 			const infoBoxContent = createRoot(infoBoxNode)
 
 			infoBoxContent.render(
-				<MantineProvider withGlobalStyles withNormalizeCSS theme={{ ...appTheme }} emotionCache={appCache}>
-					<Stack spacing={4}>
+				<MantineProvider theme={{ ...appTheme }} defaultColorScheme='light'>
+					<Stack gap={4}>
 						{slug ? (
 							<Link
 								variant={variant.Link.inlineUtil1}

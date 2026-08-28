@@ -1,0 +1,8 @@
+.button {
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.button:hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}

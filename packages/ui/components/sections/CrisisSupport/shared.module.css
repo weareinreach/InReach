@@ -1,0 +1,11 @@
+.getHelpCard {
+	border: rem(1px) solid var(--ir-color-tertiary-cool-gray);
+	border-radius: rem(16px);
+}
+.cardShadow {
+	box-shadow: 0 rem(4px) rem(20px) 0 rgba(0, 0, 0, 0.1);
+}
+.categoryBadge {
+	width: 100%;
+	justify-content: center;
+}

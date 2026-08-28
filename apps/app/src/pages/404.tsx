@@ -15,16 +15,16 @@ const NotFound = () => {
 			<Stack
 				m={{ base: `${rem(48)} ${rem(0)}`, xs: `${rem(80)} ${rem(0)}`, sm: `${rem(100)} ${rem(0)}` }}
 				align='center'
-				spacing={32}
+				gap={32}
 			>
-				<Stack spacing={0} align='center'>
+				<Stack gap={0} align='center'>
 					{/* eslint-disable-next-line i18next/no-literal-string */}
 					<Title order={1}>🏝️</Title>
 					<Title order={1}>{t('errors.404-title')}</Title>
 				</Stack>
 				<Text ta='center'>{t('errors.404-body')}</Text>
 				<Tabs defaultValue='location' w='100%' maw={636}>
-					<Tabs.List grow position='apart'>
+					<Tabs.List grow justify='space-between'>
 						<Tabs.Tab value='location'>{t('common:words.location')}</Tabs.Tab>
 						<Tabs.Tab value='name'>{t('common:words.organization')}</Tabs.Tab>
 					</Tabs.List>

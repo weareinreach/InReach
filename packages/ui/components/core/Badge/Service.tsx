@@ -4,11 +4,10 @@ import { forwardRef, type ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
-import { useStyles } from './Service.styles'
+import classes from './Service.module.css'
 
 export const _Service = forwardRef<HTMLDivElement, BadgeServiceProps>(
 	({ hideTooltip, children, ...props }, ref) => {
-		const { classes } = useStyles()
 		const variants = useCustomVariant()
 		const { t } = useTranslation('common')
 

@@ -1,22 +1,14 @@
-import { createStyles, rem } from '@mantine/core'
 import { useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { AuditDrawer } from '~ui/components/data-portal/AuditDrawer'
 import { InternalNotesDrawer } from '~ui/components/data-portal/InternalNotesDrawer'
 
-const useStyles = createStyles(() => ({
-	actionBlock: {
-		display: 'flex',
-		gap: rem(10),
-		paddingRight: rem(20),
-	},
-}))
+import classes from './Action.module.css'
 
 export const Action = ({ data }: { data: { id: string; name: string } }) => {
 	const [auditOpen, setAuditOpen] = useState(false)
 	const [internalOpen, setInternalOpen] = useState(false)
-	const { classes } = useStyles()
 
 	// Define the event handlers as separate functions
 	const onAuditOpen = () => {

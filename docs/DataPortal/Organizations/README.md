@@ -17,102 +17,83 @@ write actions, so the exposure is read-only org data, not a mutation risk.
 
 ## How It Works
 
-- **UI**: [`OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)
+- **UI**: [`OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx),
+  built on the shared
+  [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
+  component (a thin `@tanstack/react-table` + Mantine `Table` wrapper — see that
+  directory's own doc comments for its column/filter/pagination API).
 - **API**: `organization.forOrganizationTable` in
   [`packages/api/router/organization/index.ts`](../../../packages/api/router/organization/index.ts)
   → [`query.forOrganizationTable.handler.ts`](../../../packages/api/router/organization/query.forOrganizationTable.handler.ts)
 - **Data**: `Organization` model (`packages/db/prisma/schema.prisma`), joined to
   `OrgLocation`
 
-The handler runs a single `prisma.organization.findMany` with a nested `locations`
-select and `orderBy: [{ deleted: 'desc' }, { name: 'asc' }]` — **with no `take`/
-`skip`/cursor at all**. Every organization row, and every location under it, loads
-on every visit to this tab. The table component then does all filtering, sorting,
-and the global search box entirely client-side (`enablePagination: false`,
-`enableRowVirtualization: true` render the full dataset via virtualized rows rather
-than paging it). The query's input schema already supports `published`/`deleted`
-filters, but the component always calls the query with `undefined` — meaning the
-`findMany` runs with **no `WHERE` clause at all**, not just one that fails to use
-an index. Toggling "hide deleted" in the UI filters _after_ the full deleted-org
-set has already been fetched, not before.
+Filtering, sorting, and pagination all run server-side: the table's column filters
+(published/deleted toggles, `lastVerified`/`updatedAt`/`createdAt` date ranges) and
+global search box are sent as query input, and the handler builds a Prisma `where`/
+`orderBy`/`take`/`skip` from them rather than loading the full table. A non-empty
+search term instead runs a raw-SQL trigram-similarity + synonym-expansion lookup
+(the same approach as the public org search — see `searchIds` in the handler) so
+fuzzy/partial name matches still rank sensibly, then re-hydrates the full row shape
+via a normal `findMany` against the matched IDs.
 
-Two more client-side costs compound this: `enableFacetedValues: true` recomputes
-unique-value facets (for the name autocomplete and checkbox filters) across the
-entire loaded dataset on every data change, and the query's `select` option
-re-maps every row (`locations` → `subRows`) on every fetch. Both run over the same
-oversized, unpaginated array as everything else here.
-
-This is the direct cause of the tab's slow initial load, and is being tracked
-separately as a performance fix (move filtering/sorting/pagination server-side,
-cap the nested `locations` select, add an index matching the actual sort order).
+This replaced two previous versions of this tab (`OrganizationTable` / "V1", fully
+client-side and unpaginated, and `OrganizationTableV2`, the server-side rewrite kept
+alongside it for direct comparison) — V1 was retired and V2 was promoted to be the
+only `OrganizationTable` once the Mantine v7 migration required rebuilding this
+component's underlying table library regardless, removing the reason to keep both
+around.
 
 ## How to Use It
 
-- The table loads with deleted organizations hidden by default; toggle the
-  **deleted** column filter to include them.
-- Use the column header filters or the global search box to narrow by name, slug,
-  publish status, or dates — all of this runs against data already loaded in your
-  browser, so it doesn't reduce load time, only what's currently displayed.
+- The table loads with deleted organizations hidden by default; use the toolbar's
+  deleted/published toggle icons (cycling "unset → true → false") or the state
+  persists across pagination and re-sorting.
+- Use the column header filter icons or the global search box to narrow by name,
+  publish status, or dates — all of this is a real server-side query, so it also
+  reduces what's fetched, not just what's displayed.
 - Expand a row to see that organization's locations.
 - There is currently no way to see an accurate "date first published," an audit
-  trail, or internal notes from this table — those exist elsewhere in the app (see
-  Known Issues) but aren't surfaced here yet.
+  trail, or internal notes from the location sub-rows — those exist for the parent
+  organization row only (via the activity-log/internal-notes row actions).
 
 ## Known Issues / Gotchas
 
-- **No pagination** — the query fetches the entire org+location dataset on every
-  load; this is the tab's main performance problem.
-- **No `WHERE` clause at all** — the `published`/`deleted` filters the API schema
-  supports are never sent as query input, so `findMany` runs fully unfiltered.
-  This is stronger than "server-side filtering isn't wired up": it means
-  `@@index([published, deleted])` never gets a chance to help, because nothing is
-  ever filtered on those columns in the first place.
 - **No index matches the `orderBy`** — `Organization`'s actual indexes are
   `[name]`, `[attributeIds] Gin`, `[serviceIds] Gin`, `[published, deleted]`,
   `[slug]`, `[slug, published, deleted]`, and `[id, published desc, deleted]` —
-  none cover `[deleted, name]`, so the sort can't use an index once the table
-  grows.
-- **`enableFacetedValues: true`** (`OrganizationTable.tsx`) computes per-column
-  unique-value facets over the entire client-side dataset, on load and on every
-  data change — added CPU cost layered on top of the oversized payload, separate
-  from the virtualization/pagination problem.
-- **No stable `getRowId`** — it's commented out in the table config. Row identity
-  falls back to index-based defaults, which can churn expanded-row/selection
-  state on refetch and undercuts memoization; this compounds with virtualization,
-  which relies on stable row identity to avoid remounting visible rows.
+  none cover `[deleted, name]`, so the default sort can't use an index once the
+  table grows. Worth adding if query latency becomes noticeable in practice.
 - **No "publish date" column** — `Organization.published` is a plain boolean with
   no timestamp. A real "first published" date can be derived from the `AuditTrail`
   table (see the pattern in `query.forOrgPageEdits.handler.ts`, which finds the
   first `published: false → true` transition), but that derivation isn't wired
   into this table yet.
-- **Notes and audit trail exist but aren't surfaced here** — `InternalNote` records
-  and the full `AuditTrail`-backed activity log are already built and used on the
-  per-org edit page (via `Action.tsx`, `AuditDrawer.tsx`, `InternalNotesDrawer.tsx`),
-  but nothing wires them into this table's row actions. An admin has to open the
-  org's edit page to see either one.
 - **No workflow status for unpublished orgs** — only the `published`/`deleted`
   booleans exist; there's no field for "awaiting permission," "data entry in
   progress," etc.
-- **Row selection is half-built** — `enableMultiRowSelection`/`enableRowSelection`
-  are explicitly set to `false` with the intended-`true` version commented out
-  directly above them, and a column-pinning slot for the checkbox is still
-  reserved. No bulk-action toolbar exists on top of it yet.
-- **No search across services or locations** — search only covers columns
-  returned by this query (name, slug, dates, flags); it can't currently search by
-  service or location/address text.
+- **No row selection / bulk actions** — the previous client-side table had a
+  half-built, disabled row-selection column; it wasn't carried over since nothing
+  ever consumed it. Add it back to `DataTable` if a bulk-action toolbar is needed.
+- **No search across services or locations** — search only covers the organization
+  name; it can't currently search by service or location/address text.
+- **Column widths/order are fixed** — `DataTable` intentionally doesn't support
+  drag-to-resize or drag-to-reorder columns (see that component's own notes); the
+  column show/hide menu is the supported way to tailor the view.
 
 ## Related Files
 
-| Path                                                                                                                                                        | Purpose                                                                           |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [`packages/ui/components/data-portal/OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)                             | Table UI, client-side filter/sort/search config                                   |
-| [`packages/api/router/organization/index.ts`](../../../packages/api/router/organization/index.ts)                                                           | tRPC route registration                                                           |
-| [`packages/api/router/organization/query.forOrganizationTable.handler.ts`](../../../packages/api/router/organization/query.forOrganizationTable.handler.ts) | Prisma query                                                                      |
-| [`packages/api/router/organization/query.forOrganizationTable.schema.ts`](../../../packages/api/router/organization/query.forOrganizationTable.schema.ts)   | Input schema (`published`/`deleted`, currently unused by the client)              |
-| [`packages/api/router/organization/query.forOrgPageEdits.handler.ts`](../../../packages/api/router/organization/query.forOrgPageEdits.handler.ts)           | Existing pattern for deriving real publish/last-updated dates from `AuditTrail`   |
-| [`packages/ui/components/data-portal/Action.tsx`](../../../packages/ui/components/data-portal/Action.tsx)                                                   | Existing notes/audit-log row actions, currently only wired into the org edit page |
-| `packages/db/prisma/schema.prisma` (`Organization` model, `~L304-354`)                                                                                      | Schema + indexes                                                                  |
+| Path                                                                                                                                                        | Purpose                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`packages/ui/components/data-portal/OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)                             | Table UI, column definitions, toolbar toggles                                   |
+| [`packages/ui/components/data-portal/DataTable/`](../../../packages/ui/components/data-portal/DataTable/index.tsx)                                          | Shared table engine used by every Data Portal table                             |
+| [`packages/api/router/organization/index.ts`](../../../packages/api/router/organization/index.ts)                                                           | tRPC route registration                                                         |
+| [`packages/api/router/organization/query.forOrganizationTable.handler.ts`](../../../packages/api/router/organization/query.forOrganizationTable.handler.ts) | Prisma query, `where`/`orderBy` builders, fuzzy-search path                     |
+| [`packages/api/router/organization/query.forOrganizationTable.schema.ts`](../../../packages/api/router/organization/query.forOrganizationTable.schema.ts)   | Input schema (filters, sorting, `take`/`skip`)                                  |
+| [`packages/api/router/organization/query.forOrgPageEdits.handler.ts`](../../../packages/api/router/organization/query.forOrgPageEdits.handler.ts)           | Existing pattern for deriving real publish/last-updated dates from `AuditTrail` |
+| [`packages/ui/components/data-portal/Action.tsx`](../../../packages/ui/components/data-portal/Action.tsx)                                                   | Existing notes/audit-log row actions, also wired into the org edit page         |
+| `packages/db/prisma/schema.prisma` (`Organization` model, `~L304-354`)                                                                                      | Schema + indexes                                                                |
 
 ---
 
-_Last verified against code: 2026-08-10._
+_Last verified against code: 2026-08-19._

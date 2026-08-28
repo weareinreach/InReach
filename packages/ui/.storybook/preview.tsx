@@ -1,10 +1,17 @@
 // This import exists only to pull in msw-storybook-addon's `StoryContext.msw` type augmentation - the
 // empty named block is intentional (the module has no exports we need), and `import type` erases it
 // entirely at build time so webpack doesn't try to bundle this .d.mts-only subpath as real JS.
-// eslint-disable-next-line import/no-empty-named-blocks
+// eslint-disable-next-line import-x/no-empty-named-blocks
 import type {} from 'msw-storybook-addon/types'
 import { setupWorker } from 'msw/browser'
 import './wdyr'
+import '@mantine/core/styles.css'
+import '@mantine/carousel/styles.css'
+import '@mantine/dates/styles.css'
+import '@mantine/notifications/styles.css'
+import '@mantine/nprogress/styles.css'
+import '../theme/tokens.css'
+import '../theme/animations.css'
 import './font.css'
 import { type Preview } from '@storybook/nextjs'
 import { type WhyDidYouRenderOptions } from '@welldone-software/why-did-you-render'
@@ -114,22 +121,30 @@ const preview: Preview = {
 		mswLoader(async () => {
 			const worker = setupWorker()
 
-			await worker.start({
-				serviceWorker: {
-					options: {
-						type: 'module',
+			try {
+				await worker.start({
+					serviceWorker: {
+						options: {
+							type: 'module',
+						},
 					},
-				},
-				onUnhandledRequest: ({ method, url }) => {
-					if (url.startsWith('/trpc') || url.startsWith('/api')) {
-						console.error(`Unhandled ${method} request to ${url}.
+					onUnhandledRequest: ({ method, url }) => {
+						if (url.startsWith('/trpc') || url.startsWith('/api')) {
+							console.error(`Unhandled ${method} request to ${url}.
 
                         This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
                         If you wish to mock an error response, please refer to this guide: https://mswjs.io/docs/recipes/mocking-error-responses
                     `)
-					}
-				},
-			})
+						}
+					},
+				})
+			} catch (error) {
+				// Some hosts gate preview assets behind their own auth for private projects (Chromatic
+				// does this), which can make the Service Worker registration fetch itself get rejected
+				// (401) - that's an environment limitation no story can recover from. Degrade to
+				// unmocked passthrough requests rather than failing every story's initialization.
+				console.error('MSW failed to start - falling back to unmocked network requests.', error)
+			}
 
 			return worker
 		}),

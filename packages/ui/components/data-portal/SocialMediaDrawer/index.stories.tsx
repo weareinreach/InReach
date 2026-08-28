@@ -37,7 +37,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Drawer',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 		id: 'osmd_01GVH3VEVD93QH872SAPRYYCS2',
 	},
 } satisfies Meta<typeof SocialMediaDrawer>

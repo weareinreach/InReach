@@ -60,11 +60,11 @@ const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(
 				<PhoneEmailFormProvider form={form}>
 					<Stack>
 						<Title order={2}>Add new {role === 'email' ? 'email' : 'phone number'}</Title>
-						<Stack spacing={0}>
+						<Stack gap={0}>
 							{role === 'email' ? (
 								<>
 									<TextInput label='Email' {...form.getInputProps('emailAddress')} />
-									<Group noWrap>
+									<Group wrap='nowrap'>
 										<TextInput label='First name' {...form.getInputProps('firstName')} />
 										<TextInput label='Last name' {...form.getInputProps('lastName')} />
 									</Group>

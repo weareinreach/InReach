@@ -1,6 +1,6 @@
 /* eslint-disable node/no-process-env */
 // @ts-check
-/* eslint-disable import/no-unused-modules */
+
 // const { env } = require('@weareinreach/config')
 /** @type {import('next-i18next/pages').UserConfig} */
 const config = {

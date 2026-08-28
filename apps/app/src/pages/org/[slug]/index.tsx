@@ -1,4 +1,4 @@
-import { createStyles, Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
+import { Divider, Grid, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticProps, type InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
@@ -23,15 +23,9 @@ import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+import classes from './index.module.css'
+
 const formatNS = nsFormatter(['common', 'services', 'attribute', 'phone-type'])
-const useStyles = createStyles((theme) => ({
-	tabsList: {
-		position: 'sticky',
-		top: 0,
-		zIndex: 10,
-		backgroundColor: theme.other.colors.secondary.white,
-	},
-}))
 
 const OrganizationPage = ({
 	slug: passedSlug,
@@ -61,7 +55,6 @@ const OrganizationPage = ({
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
-	const { classes } = useStyles()
 	const servicesRef = useRef<HTMLDivElement>(null)
 	const photosRef = useRef<HTMLDivElement>(null)
 	const reviewsRef = useRef<HTMLDivElement>(null)
@@ -79,7 +72,10 @@ const OrganizationPage = ({
 		}
 	}, [data, status, router.isFallback, searchState.params])
 
-	const handleTabChange = useCallback((tab: string) => {
+	const handleTabChange = useCallback((tab: string | null) => {
+		if (!tab) {
+			return
+		}
 		setActiveTab(tab)
 		switch (tab) {
 			case 'services': {
@@ -131,13 +127,13 @@ const OrganizationPage = ({
 
 	const body =
 		locations?.length <= 1 ? (
-			<Tabs w='100%' value={activeTab} onTabChange={handleTabChange}>
+			<Tabs w='100%' value={activeTab} onChange={handleTabChange}>
 				<Tabs.List className={classes.tabsList}>
 					<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 					<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
 					<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 				</Tabs.List>
-				<Stack spacing={40} pt={40}>
+				<Stack gap={40} pt={40}>
 					<div ref={servicesRef}>
 						<ServicesInfoCard parentId={organizationId} />
 					</div>
@@ -150,12 +146,12 @@ const OrganizationPage = ({
 				</Stack>
 			</Tabs>
 		) : (
-			<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
+			<Tabs w='100%' value={activeTab} onChange={setActiveTab}>
 				<Tabs.List>
 					<Tabs.Tab value='locations'>{t('offices-and-locations')}</Tabs.Tab>
 					<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 				</Tabs.List>
-				<Stack pt={40} spacing={40}>
+				<Stack pt={40} gap={40}>
 					{locations.map((location) => (
 						<LocationCard key={location.id} locationId={location.id} />
 					))}
@@ -171,7 +167,7 @@ const OrganizationPage = ({
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: data.name })}</title>
 			</Head>
-			<Grid.Col xs={12} sm={8} order={1} pb={40}>
+			<Grid.Col span={{ base: 12, sm: 8 }} order={1} pb={40}>
 				<Toolbar
 					hideBreadcrumb={!searchState.params.length}
 					breadcrumbProps={{
@@ -181,7 +177,7 @@ const OrganizationPage = ({
 					organizationId={organizationId}
 					itemName={data.name}
 				/>
-				<Stack pt={24} align='flex-start' spacing={40}>
+				<Stack pt={24} align='flex-start' gap={40}>
 					<ListingBasicInfo
 						data={{
 							name: data.name,
@@ -195,7 +191,7 @@ const OrganizationPage = ({
 						}}
 					/>
 					{isTablet && (
-						<Stack spacing={40} w='100%'>
+						<Stack gap={40} w='100%'>
 							<Divider />
 							<ContactSection role='org' parentId={data.id} />
 							{sidebar}
@@ -206,7 +202,7 @@ const OrganizationPage = ({
 			</Grid.Col>
 			{!isTablet && (
 				<Grid.Col order={2}>
-					<Stack spacing={40}>
+					<Stack gap={40}>
 						<ContactSection role='org' parentId={data.id} />
 						{sidebar}
 					</Stack>

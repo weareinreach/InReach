@@ -1,0 +1,26 @@
+.checkIcon {
+	padding-left: rem(4px);
+	color: var(--ir-color-secondary-black);
+}
+.singleLine {
+	border-bottom: rem(1px) solid var(--ir-color-tertiary-cool-gray);
+	padding: var(--mantine-spacing-sm) var(--mantine-spacing-xl);
+	align-items: center;
+	display: flex;
+}
+@media (hover: hover) {
+	.singleLine:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		cursor: pointer;
+	}
+}
+.singleLine:last-child {
+	border-bottom: none;
+}
+
+.answerContainer {
+	height: 336px;
+}
+.scroll {
+	width: 100%;
+}

@@ -22,7 +22,6 @@ const getBaseUrl = () => {
 }
 
 export const trpcConfig = {
-	transformer,
 	links: [
 		loggerLink({
 			enabled: (opts) =>
@@ -31,22 +30,24 @@ export const trpcConfig = {
 		}),
 		httpBatchLink({
 			url: `${getBaseUrl()}/api/trpc`,
+			transformer,
 		}),
 	],
 	queryClientConfig: {
 		defaultOptions: {
 			queries: {
 				staleTime: 1000 * 60 * 10, // 10 Minutes
-				cacheTime: 1000 * 60 * 60, // 1 Hour
+				gcTime: 1000 * 60 * 60, // 1 Hour
 			},
 		},
 	},
 } satisfies WithTRPCConfig<AppRouter>
 
+const config = () => trpcConfig
+
 export const trpc = createTRPCNext<AppRouter>({
-	config() {
-		return trpcConfig
-	},
+	config,
+	transformer,
 	ssr: false,
 })
 /**

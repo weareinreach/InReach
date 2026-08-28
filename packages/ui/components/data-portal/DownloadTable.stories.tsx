@@ -13,8 +13,10 @@ export default {
 	},
 
 	parameters: {
+		// `adminAuthed`'s permissions ('canAdmin'/'canUser') don't satisfy this component's actual
+		// permission check (needs 'dataPortalAdmin'/'root'/etc) - it rendered nothing under that mock.
 		nextAuthMock: {
-			session: 'adminAuthed',
+			session: 'dataPortalAdminAuthed',
 		},
 	},
 } satisfies Meta<typeof DownloadTable>

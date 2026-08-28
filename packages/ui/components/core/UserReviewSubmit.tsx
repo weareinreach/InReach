@@ -1,5 +1,5 @@
 import { Paper, Rating, Stack, Textarea, useMantineTheme } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
 import { useEffect } from 'react'
@@ -51,7 +51,7 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 			// Without this, the Textarea below starts uncontrolled until typed into.
 			reviewText: '',
 		},
-		validate: zodResolver(ReviewSchema),
+		validate: schemaResolver(ReviewSchema, { sync: true }),
 	})
 
 	useEffect(() => {
@@ -69,7 +69,7 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 				submitReview.mutate(values)
 			})}
 		>
-			<Stack align='flex-start' spacing='xl'>
+			<Stack align='flex-start' gap='xl'>
 				<UserAvatar useLoggedIn={true} avatarSize={48} />
 				<Rating {...form.getInputProps('rating')} />
 				<Textarea

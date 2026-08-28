@@ -43,8 +43,6 @@ export default {
 	},
 } satisfies Meta<typeof ActionButtonsComponent>
 
-type StoryDef = StoryObj<typeof ActionButtonsComponent>
-
 export const Save = {
 	parameters: {
 		nextAuthMock: {
@@ -100,10 +98,9 @@ export const Print = {
 	render: (args) => <ActionButtonsComponent.Print {...args} />,
 } satisfies StoryObj<typeof ActionButtonsComponent.Print>
 export const Delete = {
-	args: {
-		iconKey: 'delete',
-	},
-} satisfies StoryDef
+	args: { onClick: () => {} },
+	render: (args) => <ActionButtonsComponent.Delete {...args} />,
+} satisfies StoryObj<typeof ActionButtonsComponent.Delete>
 export const Review = {
 	render: (args) => <ActionButtonsComponent.Review {...args} />,
 } satisfies StoryObj<typeof ActionButtonsComponent.Review>

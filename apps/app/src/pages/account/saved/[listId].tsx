@@ -19,9 +19,11 @@ import { Icon } from '@weareinreach/ui/icon'
 import { formatDate } from '~app/pages/account/saved'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const QuickPromotionModal = dynamic(() =>
-	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
+
+const QuickPromotionModal = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal),
+	{ ssr: false }
 )
 
 const SavedLists = () => {
@@ -53,7 +55,10 @@ const SavedLists = () => {
 	}, [queryResult, isLoading, router])
 
 	const handleTabChange = useCallback(
-		(tab: string) => {
+		(tab: string | null) => {
+			if (!tab) {
+				return
+			}
 			setActiveTab(tab)
 			if (listId) {
 				router.push(
@@ -141,14 +146,14 @@ const SavedLists = () => {
 
 	return (
 		<Container size='lg' px='md' py='lg' style={{ minWidth: '100%' }}>
-			<Stack spacing='lg' style={{ paddingTop: '3rem' }}>
-				<Group position='apart'>
-					<Group align='center' spacing={8} style={{ cursor: 'pointer' }} onClick={handleGoBack}>
+			<Stack gap='lg' style={{ paddingTop: '3rem' }}>
+				<Group justify='space-between'>
+					<Group align='center' gap={8} style={{ cursor: 'pointer' }} onClick={handleGoBack}>
 						<Icon icon='carbon:arrow-left' />
 						<Text>{t('list.back')}</Text>
 					</Group>
 
-					<Group spacing={16}>
+					<Group gap={16}>
 						<ActionButtons.Print />
 						<ActionButtons.Delete
 							onClick={handleDeleteList(queryResult?.id)}
@@ -167,7 +172,7 @@ const SavedLists = () => {
 					</Text>
 				</Stack>
 
-				<Tabs value={activeTab} onTabChange={handleTabChange}>
+				<Tabs value={activeTab} onChange={handleTabChange}>
 					<Tabs.List>
 						<Tabs.Tab value='organizations'>{t('words.organizations')}</Tabs.Tab>
 						<Tabs.Tab value='services'>{t('words.services')}</Tabs.Tab>

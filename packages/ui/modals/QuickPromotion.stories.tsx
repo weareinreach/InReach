@@ -11,7 +11,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Quick Promotion Modal',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 	},
 } satisfies Meta<typeof QuickPromotionModal>
 

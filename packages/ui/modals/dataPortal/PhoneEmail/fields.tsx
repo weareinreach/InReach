@@ -20,13 +20,32 @@ export const PhoneTypeSelect = () => {
 	const [options, setOptions] = useState<PhoneTypeSelectItem[]>([])
 	const { t } = useTranslation(['phone-type'])
 	const form = useFormContext()
-	api.fieldOpt.phoneTypes.useQuery(undefined, {
-		onSuccess: (data) =>
-			setOptions(data.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) }))),
-	})
+	const { data: phoneTypesData } = api.fieldOpt.phoneTypes.useQuery(undefined)
+
+	useEffect(() => {
+		if (!phoneTypesData) {
+			return
+		}
+		setOptions([
+			...phoneTypesData.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })),
+			// Matches PhoneDrawer's own phone-type Select (packages/ui/components/data-portal/PhoneDrawer)
+			// - without this, there's no way to pick a type outside the fetched list.
+			{ value: null as unknown as string, label: 'Custom Text (enter below)' },
+		])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [phoneTypesData])
 
 	//TODO: Alter dropdown component to match figma design
-	return <Select data={options} {...form.getInputProps('phoneTypeId')} />
+	return (
+		<Select
+			data={options}
+			{...form.getInputProps('phoneTypeId')}
+			// This modal can be opened from within a Drawer (e.g. adding a phone number to a service
+			// or location), whose own overlay/content otherwise sits above this Select's dropdown -
+			// same fix, same value, as PhoneDrawer's own phone-type Select.
+			comboboxProps={{ zIndex: 10002 }}
+		/>
+	)
 }
 
 // #endregion
@@ -91,7 +110,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 	return (
 		<Card withBorder>
 			<Stack>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text variant={variants.Text.utility1}>Primary</Text>
 					<Checkbox
 						label={`This is the primary ${
@@ -100,7 +119,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 						{...form.getInputProps('isPrimary', { type: 'checkbox' })}
 					/>
 				</Stack>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text variant={variants.Text.utility1}>Show on Organization</Text>
 					<Checkbox
 						label={`This ${
@@ -109,7 +128,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 						{...form.getInputProps('published', { type: 'checkbox' })}
 					/>
 				</Stack>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text variant={variants.Text.utility1}>Show on Locations</Text>
 					{locations && locations.length > 1 ? (
 						<MultiSelectPopover data={locations} label='Locations' {...form.getInputProps('orgLocationId')} />
@@ -117,7 +136,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 						<Text variant={variants.Text.utility4}>xx</Text>
 					)}
 				</Stack>
-				<Stack spacing={0}>
+				<Stack gap={0}>
 					<Text variant={variants.Text.utility1}>Show on Services</Text>
 					{services && services.length > 1 ? (
 						<MultiSelectPopover data={services} label='Services' {...form.getInputProps('orgServiceId')} />

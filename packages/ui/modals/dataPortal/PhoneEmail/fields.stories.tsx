@@ -1,5 +1,5 @@
 import { type Meta, type StoryFn, type StoryObj } from '@storybook/nextjs'
-import { Fragment } from 'react'
+import { type ComponentType, Fragment } from 'react'
 
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
 import { location } from '~ui/mockData/location'
@@ -11,9 +11,10 @@ import { PhoneEmailFlags, PhoneTypeSelect } from './fields'
 
 const FormContextDecorator = (Story: StoryFn) => {
 	const form = useForm(formHookParams)
+	const StoryComponent = Story as ComponentType
 	return (
 		<PhoneEmailFormProvider form={form}>
-			<Story />
+			<StoryComponent />
 		</PhoneEmailFormProvider>
 	)
 }

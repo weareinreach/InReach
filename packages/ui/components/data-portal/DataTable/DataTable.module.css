@@ -1,0 +1,48 @@
+.table {
+	--table-vertical-spacing: var(--mantine-spacing-xs);
+	/* Column resizing needs cell widths to actually obey the `width` style set from JS rather than
+	   auto-sizing to content/header text - the standard requirement for TanStack Table's resizing
+	   feature to have any visible effect. */
+	table-layout: fixed;
+}
+
+.th {
+	position: relative;
+	white-space: nowrap;
+	background-color: var(--mantine-color-body);
+}
+
+.td {
+	vertical-align: middle;
+	overflow: hidden;
+}
+
+.sortable {
+	cursor: pointer;
+	user-select: none;
+}
+
+/* Drag handle for column resizing - a slim invisible hit-target at the column's right edge that
+   widens/highlights on hover so it's discoverable without permanently taking up header space. */
+.resizer {
+	appearance: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: rem(6px);
+	border: 0;
+	padding: 0;
+	cursor: col-resize;
+	user-select: none;
+	touch-action: none;
+	background-color: transparent;
+}
+@media (hover: hover) {
+	.resizer:hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}
+.resizer[data-resizing] {
+	background-color: var(--ir-color-secondary-cornflower);
+}

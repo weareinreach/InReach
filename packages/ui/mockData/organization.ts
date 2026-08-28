@@ -4,6 +4,20 @@ import { type HttpHandler } from 'msw'
 import { type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
+// Matches by parsed hostname rather than raw substring, so e.g. `notexample.org.evil.com` isn't
+// mistaken for `example.org` the way a plain `.includes()` check would.
+const matchesDomain = (website: string, domain: string): boolean => {
+	if (!website) {
+		return false
+	}
+	try {
+		const { hostname } = new URL(website.includes('://') ? website : `https://${website}`)
+		return hostname === domain || hostname.endsWith(`.${domain}`)
+	} catch {
+		return false
+	}
+}
+
 const existingOrg = (input: string): ApiOutput['organization']['checkForExisting'] => {
 	const name = 'Existing Organization'
 	const regex = new RegExp(`.*${input}.*`, 'gi')
@@ -16,6 +30,108 @@ const existingOrg = (input: string): ApiOutput['organization']['checkForExisting
 	}
 	return null
 }
+type ForOrgTableRow = ApiOutput['organization']['forOrganizationTable']['results'][number]
+type ForOrgTableSortKey = 'name' | 'lastVerified' | 'updatedAt' | 'createdAt'
+
+const generateFakeLocations = (lastVerified: Date): ForOrgTableRow['locations'] => {
+	const totalLocations = faker.number.int({ min: 0, max: 7 })
+	const locations: ForOrgTableRow['locations'] = []
+	for (let locIdx = 0; locIdx < totalLocations; locIdx++) {
+		const updatedAt = faker.date.past({ refDate: lastVerified })
+		const createdAt = faker.date.past({ refDate: updatedAt })
+		locations.push({
+			id: `oloc_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
+			name: `${faker.location.street()} location`,
+			published: faker.datatype.boolean(0.9),
+			deleted: faker.datatype.boolean(0.05),
+			updatedAt,
+			createdAt,
+		})
+	}
+	return locations
+}
+
+const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
+	faker.seed(1024)
+	const allResults: ForOrgTableRow[] = []
+	for (let index = 0; index < totalRecords; index++) {
+		const lastVerified = faker.date.past()
+		const updatedAt = faker.date.past({ refDate: lastVerified })
+		const createdAt = faker.date.past({ refDate: updatedAt })
+		allResults.push({
+			id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
+			name: faker.company.name(),
+			slug: faker.lorem.slug(3),
+			lastVerified: faker.helpers.maybe(() => lastVerified, { probability: 0.9 }) ?? null,
+			published: faker.datatype.boolean(0.9),
+			deleted: faker.datatype.boolean(0.05),
+			locations: generateFakeLocations(lastVerified),
+			updatedAt,
+			createdAt,
+		})
+	}
+	return allResults
+}
+
+const filterFakeOrgs = (
+	orgs: ForOrgTableRow[],
+	published: boolean | undefined,
+	deleted: boolean | undefined,
+	search: string | undefined
+): ForOrgTableRow[] =>
+	orgs.filter((org) => {
+		if (published !== undefined && org.published !== published) {
+			return false
+		}
+		if (deleted !== undefined && org.deleted !== deleted) {
+			return false
+		}
+		if (search && !org.name.toLowerCase().includes(search.toLowerCase())) {
+			return false
+		}
+		return true
+	})
+
+const compareFakeOrgs = (
+	a: ForOrgTableRow,
+	b: ForOrgTableRow,
+	id: ForOrgTableSortKey,
+	desc: boolean
+): number => {
+	const av = a[id]
+	const bv = b[id]
+	if (av == null && bv == null) {
+		return 0
+	}
+	if (av == null) {
+		return desc ? -1 : 1
+	}
+	if (bv == null) {
+		return desc ? 1 : -1
+	}
+	if (av < bv) {
+		return desc ? 1 : -1
+	}
+	if (av > bv) {
+		return desc ? -1 : 1
+	}
+	return 0
+}
+
+const sortFakeOrgs = (
+	orgs: ForOrgTableRow[],
+	sorting: { id: ForOrgTableSortKey; desc: boolean }[]
+): ForOrgTableRow[] =>
+	[...orgs].sort((a, b) => {
+		for (const { id, desc } of sorting) {
+			const result = compareFakeOrgs(a, b, id, desc)
+			if (result !== 0) {
+				return result
+			}
+		}
+		return 0
+	})
+
 export const organization = {
 	getIdFromSlug: getTRPCMock({
 		path: ['organization', 'getIdFromSlug'],
@@ -23,46 +139,16 @@ export const organization = {
 	}),
 	forOrganizationTable: getTRPCMock({
 		path: ['organization', 'forOrganizationTable'],
-		response: () => {
-			const totalRecords = 1000
-			faker.seed(1024)
-			const data: ApiOutput['organization']['forOrganizationTable'] = []
+		response: (input) => {
+			const allResults = generateFakeOrgs(1000)
+			const filtered = filterFakeOrgs(allResults, input.published, input.deleted, input.search)
+			const sorting = input.sorting?.length ? input.sorting : [{ id: 'name' as const, desc: false }]
+			const sorted = sortFakeOrgs(filtered, sorting)
 
-			for (let index = 0; index < totalRecords; index++) {
-				const lastVerified = faker.date.past()
-				const updatedAt = faker.date.past({ refDate: lastVerified })
-				const createdAt = faker.date.past({ refDate: updatedAt })
-				const locations: NonNullable<ApiOutput['organization']['forOrganizationTable']>[number]['locations'] =
-					[]
-
-				const totalLocations = faker.number.int({ min: 0, max: 7 })
-
-				for (let locIdx = 0; locIdx < totalLocations; locIdx++) {
-					const updatedAt = faker.date.past({ refDate: lastVerified })
-					const createdAt = faker.date.past({ refDate: updatedAt })
-					locations.push({
-						id: `oloc_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
-						name: `${faker.location.street()} location`,
-						updatedAt,
-						createdAt,
-						published: faker.datatype.boolean(0.9),
-						deleted: faker.datatype.boolean(0.05),
-					})
-				}
-
-				data.push({
-					id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
-					name: faker.company.name(),
-					slug: faker.lorem.slug(3),
-					lastVerified: faker.helpers.maybe(() => lastVerified, { probability: 0.9 }) ?? null,
-					updatedAt,
-					createdAt,
-					published: faker.datatype.boolean(0.9),
-					deleted: faker.datatype.boolean(0.05),
-					locations,
-				})
-			}
-			return data
+			const skip = input.skip ?? 0
+			const take = input.take ?? 50
+			const results = sorted.slice(skip, skip + take)
+			return { results, total: filtered.length }
 		},
 	}),
 	suggestionOptions: getTRPCMock({
@@ -99,8 +185,9 @@ export const organization = {
 			const matches: ApiOutput['organization']['getPotentialMatches'] = []
 			const name = input.name?.trim().toLowerCase() ?? ''
 			const website = input.website?.trim().toLowerCase() ?? ''
-			const isNearMissTypo = website.includes('existingorg2.org')
-			const isNearMissWrongTld = website.includes('existingorg.com') || website.includes('existingorg.net')
+			const isNearMissTypo = matchesDomain(website, 'existingorg2.org')
+			const isNearMissWrongTld =
+				matchesDomain(website, 'existingorg.com') || matchesDomain(website, 'existingorg.net')
 
 			if (name.includes('existing organization')) {
 				matches.push({
@@ -116,7 +203,7 @@ export const organization = {
 				})
 			}
 
-			if (website.includes('example.org')) {
+			if (matchesDomain(website, 'example.org')) {
 				matches.push({
 					id: 'orgn_MOCKEDSITEMATCH00001',
 					name: 'A Totally Different Org',

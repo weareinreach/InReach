@@ -1,10 +1,8 @@
 import compact from 'just-compact'
 import { type NextWebVitalsMetric } from 'next/app'
 
+import { type ServiceCategoryToggleAction, type ServiceModalOpenedAction } from './types'
 import { event } from '../lib/event'
-
-// eslint-disable-next-line import/consistent-type-specifier-style
-import type { ServiceCategoryToggleAction, ServiceModalOpenedAction } from './types'
 
 export const serviceFilterEvent = {
 	select: (serviceId: string, service?: string, category?: string) =>

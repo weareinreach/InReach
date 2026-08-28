@@ -1,0 +1,125 @@
+.button {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	min-width: fit-content;
+	gap: rem(8px);
+	/* `!important` guards against `Button.tsx`'s own "no variant" fallback (`defaultRoot`, a large
+	   black pill meant for CTAs like navbar "Sign up") - every ActionButtons/*.tsx file applies
+	   this class to a bare `Button`/`Box component={Button}` with no `variant` prop, so without
+	   this the two classes' declarations are equal-specificity and whichever the bundler happens
+	   to emit last wins - which can differ between Storybook's dev pipeline and a production
+	   build (or even between dev-server navigations, since Next's on-demand compilation order
+	   depends on which pages/components have been visited already). `background-color` was
+	   already guarded this way; `height`/`padding`/`border-radius` need it too, or this button
+	   silently reverts to `defaultRoot`'s oversized pill shape (wide, fully-rounded) instead of
+	   this compact rectangle - the same failure mode, just for layout instead of color. */
+	height: rem(48px) !important;
+	padding: rem(12px) !important;
+	background-color: var(--ir-color-secondary-white) !important;
+	border: 0;
+	border-radius: rem(8px) !important;
+}
+@media (hover: hover) {
+	.button:not([data-disabled]):hover {
+		background-color: var(--ir-color-primary-light-gray) !important;
+	}
+}
+
+.buttonPressed {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	min-width: rem(48px);
+	height: rem(48px);
+	padding: rem(12px);
+	gap: rem(8px);
+	background-color: var(--ir-color-primary-light-gray);
+}
+@media (hover: hover) {
+	.buttonPressed:not([data-disabled]):hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}
+
+.icon {
+	color: var(--ir-color-secondary-black);
+}
+
+.text {
+	font-weight: var(--ir-font-weight-semibold);
+	margin-left: rem(8px);
+}
+
+.dropdown {
+	background: var(--ir-color-secondary-black);
+	border-radius: var(--mantine-radius-md);
+	padding-top: rem(2px);
+	padding-bottom: rem(2px);
+}
+
+.item {
+	color: white;
+	font-weight: var(--ir-font-weight-semibold);
+	font-size: var(--mantine-font-size-md);
+}
+/*
+ * Descendant selector, not `.item > *` - the cloned action button's icon/label sit several levels
+ * deep (button > Button-inner > Button-label > Group > icon/text), not as direct children of the
+ * element `.item` is applied to, so a direct-child selector never reached them. Both the icon and
+ * the label text also carry their own inline `style="color: ..."` (the icon from its `color` prop,
+ * the label from `Button`'s own text styling), which only an `!important` class rule can override.
+ */
+.item * {
+	color: white !important;
+}
+/*
+ * Real mouse hover never sets `data-hovered` - that attribute only appears on Mantine's
+ * keyboard-navigated "active" item, not on `:hover`. Without the `:hover` rule below, a mouse
+ * hover fell straight through to Mantine's own default light-gray `Menu.Item` hover background,
+ * which needs `!important` to override for the same reason as `.button`/`.inOverflowMenu` above.
+ */
+.item[data-hovered] {
+	background-color: transparent !important;
+	text-decoration: underline !important;
+}
+@media (hover: hover) {
+	.item:hover {
+		background-color: transparent !important;
+		text-decoration: underline !important;
+	}
+}
+
+/*
+ * Each cloned action item is the exact same button used in the regular toolbar, whose own root
+ * class (`.button` above) guards its white background/height/padding with `!important` specifically
+ * so it can't be accidentally overridden - which means overriding it back here for the
+ * dark-menu-item look needs `!important` too, or `.button`'s rules win regardless of source order
+ * (a plain, non-`!important` `background-color: inherit` cannot beat an `!important` rule no matter
+ * which stylesheet loads later).
+ */
+.inOverflowMenu {
+	border: none !important;
+	padding: 0 !important;
+	background-color: transparent !important;
+	height: unset !important;
+}
+@media (hover: hover) {
+	/*
+	 * `.inOverflowMenu:hover` alone (specificity 0,2,0) loses to `.button:not([data-disabled]):hover`
+	 * above (specificity 0,3,0, from the `:not([data-disabled])` argument counting toward
+	 * specificity) even though both are `!important` and this one appears later in the file -
+	 * `!important` ties are broken by specificity before source order. Every cloned overflow item
+	 * carries both `.inOverflowMenu` and `.button`, so matching both classes here raises this rule
+	 * to the same specificity and lets source order (this comes after) decide correctly.
+	 */
+	.inOverflowMenu.button:hover {
+		background-color: transparent !important;
+	}
+}
+.inOverflowMenu:global(.mantine-Group-root),
+.inOverflowMenu :global(.mantine-Text-root),
+.inOverflowMenu :global(.iconify-icon-root),
+.inOverflowMenu :global(.mantine-Menu-item) {
+	color: var(--ir-color-secondary-white);
+}

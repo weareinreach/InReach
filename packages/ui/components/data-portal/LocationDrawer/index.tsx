@@ -15,6 +15,8 @@ import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import classes from './index.module.css'
+
 const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = [
 	{ value: AddressVisibility.FULL, label: 'Show full address' },
 	{ value: AddressVisibility.PARTIAL, label: 'Show city & state/province' },
@@ -57,6 +59,13 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 			orgId,
 		},
 	})
+	// react-hook-form's `formState` is a Proxy that only reliably reflects the current value when
+	// read during render (e.g. destructured here, or accessed directly in JSX) - reading
+	// `form.formState.isDirty` inside a `useCallback` body instead (as `handleClose` below used to)
+	// can silently return a stale snapshot from whenever the callback was first created, since that
+	// read happens outside the render the Proxy tracks.
+	const { isDirty: formIsDirty, isValid: formIsValid } = form.formState
+
 	const createLocation = api.location.create.useMutation({
 		onSuccess: () => {
 			modalHandler.close()
@@ -84,12 +93,12 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 	}, [form, modalHandler, drawerHandler])
 
 	const handleClose = useCallback(() => {
-		if (form.formState.isDirty) {
+		if (formIsDirty) {
 			return modalHandler.open()
 		} else {
 			return drawerHandler.close()
 		}
-	}, [drawerHandler, form.formState.isDirty, modalHandler])
+	}, [drawerHandler, formIsDirty, modalHandler])
 
 	useEffect(() => {
 		if (drawerOpened) {
@@ -108,21 +117,21 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 				<Drawer.Overlay />
 				<Drawer.Content>
 					<Drawer.Header>
-						<Group noWrap position='apart' w='100%'>
+						<Group wrap='nowrap' justify='space-between' w='100%'>
 							<Breadcrumb option='close' onClick={handleClose} />
 							<Button
 								variant='primary'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={form.handleSubmit(handleSave)}
-								loading={createLocation.isLoading}
-								disabled={!form.formState.isDirty || !form.formState.isValid}
+								loading={createLocation.isPending}
+								disabled={!formIsDirty || !formIsValid}
 							>
 								Save
 							</Button>
 						</Group>
 					</Drawer.Header>
 					<Drawer.Body>
-						<Stack spacing={24} align='center'>
+						<Stack gap={24} align='center'>
 							<Title order={2}>Add new location</Title>
 
 							<TextInput label='Display name' required control={form.control} name='name' />
@@ -131,6 +140,8 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 								control={form.control}
 								name='addressVisibility'
 								data={addressVisibilityOptions}
+								withCheckIcon={false}
+								classNames={{ option: classes.option }}
 							/>
 							<WatchedAddressAutocomplete />
 						</Stack>
@@ -138,11 +149,11 @@ export const LocationDrawer = forwardRef<HTMLButtonElement, ButtonProps>((props,
 					<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 						<Stack align='center'>
 							<Text>You have unsaved changes</Text>
-							<Group noWrap>
+							<Group wrap='nowrap'>
 								<Button
 									variant='primary-icon'
 									leftIcon={<Icon icon='carbon:save' />}
-									loading={createLocation.isLoading} // This should be form.handleSubmit(handleSave)
+									loading={createLocation.isPending} // This should be form.handleSubmit(handleSave)
 									onClick={form.handleSubmit(handleSave)}
 								>
 									Save

@@ -1,17 +1,5 @@
-import {
-	ActionIcon,
-	createStyles,
-	Drawer,
-	Group,
-	rem,
-	Stack,
-	Table,
-	Text,
-	Textarea,
-	Title,
-	Tooltip,
-} from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { ActionIcon, Drawer, Group, rem, Stack, Table, Text, Textarea, Title, Tooltip } from '@mantine/core'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useSession } from 'next-auth/react'
 import { useEffect, useMemo } from 'react'
 import { z } from 'zod'
@@ -22,48 +10,12 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
+import classes from './InternalNotesDrawer.module.css'
+
 const noteSchema = z.object({
 	note: z.string().min(1, 'Note cannot be empty'),
 	organizationId: z.string(),
 })
-
-const useStyles = createStyles(() => ({
-	contentContainer: {
-		gap: rem(24),
-		padding: `${rem(40)} ${rem(64)} ${rem(40)} ${rem(64)}`,
-	},
-	commentsContainer: {
-		display: 'flex',
-		gap: rem(40),
-		width: '100%',
-		alignItems: 'flex-start',
-		paddingTop: rem(40),
-	},
-	commentsTable: {
-		flex: 3,
-		paddingRight: '20px',
-		minHeight: '200px',
-		gap: rem(24),
-		display: 'flex',
-		flexDirection: 'column',
-	},
-	commentsForm: {
-		flex: 1,
-		minWidth: '250px',
-		gap: rem(24),
-	},
-	drawerTitleWrapper: {
-		maxWidth: '100% !important',
-
-		[`& div.mantine-Group-root > div:first-of-type`]: {
-			maxWidth: '100% !important',
-		},
-	},
-	scrollableNotes: {
-		maxHeight: '400px',
-		overflow: 'auto',
-	},
-}))
 
 interface FormFields {
 	note: string
@@ -81,7 +33,6 @@ export const InternalNotesDrawer = ({
 	recordId: string
 	name: string
 }) => {
-	const { classes } = useStyles()
 	const apiUtils = api.useUtils()
 	const { data: session } = useSession()
 	const userId = session?.user?.id ?? null
@@ -97,7 +48,7 @@ export const InternalNotesDrawer = ({
 			organizationId: '',
 			note: '',
 		},
-		validate: zodResolver(noteSchema),
+		validate: schemaResolver(noteSchema, { sync: true }),
 	})
 
 	const {
@@ -113,7 +64,7 @@ export const InternalNotesDrawer = ({
 		}
 	)
 
-	const { mutate: createNote, isLoading: isCreatingNote } = api.internalNote.create.useMutation({
+	const { mutate: createNote, isPending: isCreatingNote } = api.internalNote.create.useMutation({
 		onSuccess: (newNote, variables) => {
 			if (!variables.organizationId) {
 				return
@@ -198,15 +149,15 @@ export const InternalNotesDrawer = ({
 	// Extracted conditional rendering logic into a separate variable
 	let notesContent
 	if (isNotesLoading) {
-		notesContent = <Text align='center'>Loading notes...</Text>
+		notesContent = <Text ta='center'>Loading notes...</Text>
 	} else if (notesError) {
 		notesContent = (
-			<Text color='red' align='center'>
+			<Text c='red' ta='center'>
 				Error loading notes.
 			</Text>
 		)
 	} else if (sortedNotes.length === 0) {
-		notesContent = <Text align='center'>No notes found for this organization.</Text>
+		notesContent = <Text ta='center'>No notes found for this organization.</Text>
 	} else {
 		notesContent = (
 			<div className={classes.scrollableNotes}>
@@ -216,11 +167,11 @@ export const InternalNotesDrawer = ({
 							<tr key={note.id}>
 								<td>
 									<div style={{ display: 'flex', flexDirection: 'column' }}>
-										<Text size='sm' weight={500}>
+										<Text size='sm' fw={500}>
 											{note.user?.name || 'Unknown User'}
 										</Text>
-										<Group spacing={8}>
-											<Text size='xs' color='dimmed'>
+										<Group gap={8}>
+											<Text size='xs' c='dimmed'>
 												{note.createdAt ? new Date(note.createdAt).toLocaleDateString() : ''}
 											</Text>
 											{note.reportId && (
@@ -281,7 +232,7 @@ export const InternalNotesDrawer = ({
 								handleSubmitNote(values)
 							})}
 						>
-							<Stack spacing='sm'>
+							<Stack gap='sm'>
 								<Textarea
 									label='Add a note'
 									placeholder='Enter your note here...'

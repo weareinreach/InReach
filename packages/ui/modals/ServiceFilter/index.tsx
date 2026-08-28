@@ -15,15 +15,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure, useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
-import {
-	type BaseSyntheticEvent,
-	type MouseEvent,
-	type ReactNode,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-} from 'react'
+import { type MouseEvent, type ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 
@@ -34,7 +26,7 @@ import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useAccordionStyles, useModalStyles, useStyles } from './styles'
+import classes from './styles.module.css'
 
 const accordionChevron = <Icon icon='carbon:chevron-right' height={24} width={24} />
 
@@ -44,13 +36,11 @@ const ServicesDisplay = <T extends boolean>({
 	disabled,
 	...props
 }: { modalTitle?: T; disabled?: boolean } & ServiceDisplayProps<T>) => {
-	const { classes } = useStyles()
-
 	return modalTitle ? (
 		<Title order={2} mb={0} {...(props as TitleProps)} />
 	) : (
 		<Text
-			className={classes.label}
+			className={classes.serviceLabel}
 			{...(disabled && { 'data-disabled': disabled })}
 			{...(props as TextProps)}
 		/>
@@ -72,20 +62,19 @@ const ServiceBar = ({
 	selectedCountIcon,
 	deselectAll,
 }: ServiceBarProps) => {
-	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 
 	return (
 		<Group
 			className={modalTitle ? undefined : classes.button}
-			position='apart'
-			noWrap
-			spacing={0}
+			justify='space-between'
+			wrap='nowrap'
+			gap={0}
 			{...(disabled ? { 'data-disabled': disabled } : {})}
 		>
 			{modalTitle ? (
 				<>
-					<Group spacing={8} noWrap>
+					<Group gap={8} wrap='nowrap'>
 						<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
 						{selectedItemCount > 0 ? selectedCountIcon : null}
 					</Group>
@@ -97,7 +86,7 @@ const ServiceBar = ({
 				</>
 			) : (
 				<>
-					<Group spacing={8} noWrap position='center' w='100%'>
+					<Group gap={8} wrap='nowrap' justify='center' w='100%'>
 						<Icon icon='carbon:building' />
 						<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
 					</Group>
@@ -124,9 +113,6 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 				})),
 			})),
 	})
-	const { classes } = useStyles()
-	const { classes: accordionClasses } = useAccordionStyles()
-	const { classes: modalClasses } = useModalStyles()
 	const { t } = useTranslation(['common', 'services'])
 	const [modalOpen, modalHandler] = useDisclosure(false)
 	const theme = useMantineTheme()
@@ -283,15 +269,14 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 	)
 
 	const handleToggleChild = useCallback(
-		(item: { value: string; label: string }, parentLabel: string) =>
-			(e: BaseSyntheticEvent<MouseEvent, HTMLInputElement, { checked: boolean }>) => {
-				const serviceId = item.value
-				const serviceItemName = t(item.label, { lng: 'en' })
-				const serviceCategory = t(parentLabel, { lng: 'en' })
-				e.target.checked
-					? serviceFilterEvent.select(serviceId, serviceItemName, serviceCategory)
-					: serviceFilterEvent.unselect(serviceId, serviceItemName, serviceCategory)
-			},
+		(item: { value: string; label: string }, parentLabel: string) => (e: MouseEvent<HTMLInputElement>) => {
+			const serviceId = item.value
+			const serviceItemName = t(item.label, { lng: 'en' })
+			const serviceCategory = t(parentLabel, { lng: 'en' })
+			e.currentTarget.checked
+				? serviceFilterEvent.select(serviceId, serviceItemName, serviceCategory)
+				: serviceFilterEvent.unselect(serviceId, serviceItemName, serviceCategory)
+		},
 		[t]
 	)
 
@@ -302,7 +287,11 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 		}
 		const selectedCount = services.filter((service) => selectedValues.includes(service)).length
 		if (selectedCount > 0) {
-			return <Text className={classes.count}>{selectedCount}</Text>
+			return (
+				<Text className={classes.count} c={theme.other.colors.secondary.white}>
+					{selectedCount}
+				</Text>
+			)
 		}
 		return null
 	}
@@ -314,7 +303,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 		return (
 			<Accordion.Item value={categoryId} key={categoryId}>
 				<Accordion.Control>
-					<Group noWrap position='apart'>
+					<Group wrap='nowrap' justify='space-between'>
 						{t(label)}
 						{categorySelectedCountIcon(categoryId)}
 					</Group>
@@ -325,7 +314,6 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 							checked={checked}
 							indeterminate={indeterminate}
 							label={t('all-service-category', { serviceCategory: `$t(${label})` })}
-							transitionDuration={0}
 							onChange={handleToggleParent({ categoryId, label, checked, indeterminate })}
 							className={classes.itemParent}
 						/>
@@ -349,8 +337,12 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 	})
 
 	const selectedCountIcon = useMemo(
-		() => <Text className={classes.count}>{selectedValues.length}</Text>,
-		[selectedValues.length, classes]
+		() => (
+			<Text className={classes.count} c={theme.other.colors.secondary.white}>
+				{selectedValues.length}
+			</Text>
+		),
+		[selectedValues.length, theme.other.colors.secondary.white]
 	)
 	const serviceBarProps: ServiceBarProps = useMemo(
 		() => ({
@@ -372,22 +364,26 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 				onClose={modalHandler.close}
 				title={modalTitle}
 				fullScreen={isMobile}
-				classNames={modalClasses}
-				scrollAreaComponent={Modal.NativeScrollArea}
+				classNames={{ body: classes.modalBody, title: classes.modalTitle }}
 			>
-				<Accordion chevron={accordionChevron} transitionDuration={0} classNames={accordionClasses}>
-					<ScrollArea.Autosize
-						placeholder={null}
-						classNames={{ viewport: accordionClasses.scrollArea }}
-						mah={scrollAreaMaxHeight}
-						onPointerEnterCapture={undefined}
-						onPointerLeaveCapture={undefined}
-					>
+				<Accordion
+					chevron={accordionChevron}
+					transitionDuration={0}
+					classNames={{
+						label: classes.accordionLabel,
+						content: classes.accordionContent,
+						item: classes.accordionItem,
+						chevron: classes.accordionChevron,
+						control: classes.accordionControl,
+						panel: classes.accordionPanel,
+					}}
+				>
+					<ScrollArea.Autosize classNames={{ viewport: classes.scrollArea }} mah={scrollAreaMaxHeight}>
 						{filterList}
 					</ScrollArea.Autosize>
 				</Accordion>
 
-				<Group className={modalClasses.footer} noWrap>
+				<Group className={classes.footer} wrap='nowrap'>
 					<Button
 						variant='secondary'
 						onClick={deselectAll}

@@ -1,0 +1,15 @@
+.group {
+	border-bottom: rem(1px) solid var(--ir-color-tertiary-cool-gray);
+	padding: rem(12px) 0;
+}
+@media (hover: hover) {
+	.group:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		cursor: pointer;
+	}
+}
+
+.icon {
+	min-height: rem(24px);
+	min-width: rem(24px);
+}

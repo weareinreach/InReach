@@ -9,7 +9,7 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useMemo } from 'react'
@@ -31,7 +31,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 	const utils = api.useUtils()
 	const { isMobile } = useScreenSize()
 	const form = useForm<FormProps>({
-		validate: zodResolver(FormSchema),
+		validate: schemaResolver(FormSchema, { sync: true }),
 		validateInputOnBlur: true,
 		// Without this, `name` starts `undefined` and the TextInput below renders uncontrolled until
 		// the user types, tripping React's uncontrolled-to-controlled input warning.
@@ -107,7 +107,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 			rollbackOptimisticList(context?.previousLists)
 		},
 	})
-	const isLoading = createListOnly.isLoading || createListAndSaveItem.isLoading
+	const isLoading = createListOnly.isPending || createListAndSaveItem.isPending
 
 	const createHandler = useCallback(() => {
 		const { organizationId, serviceId } = props
@@ -122,7 +122,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 
 	const modalTitle = useMemo(
 		() => (
-			<Group position='apart' align='center' noWrap>
+			<Group justify='space-between' align='center' wrap='nowrap'>
 				<Box maw='70%' style={{ overflow: 'hidden' }}>
 					<Breadcrumb option='close' onClick={handler.close} />
 				</Box>
@@ -134,7 +134,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 	return (
 		<>
 			<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
-				<Stack align='center' spacing={24}>
+				<Stack align='center' gap={24}>
 					<Title order={2}>{t('list.create-new')}</Title>
 					<Text variant={variants.Text.utility4darkGray}>{t('list.create-new-sub')}</Text>
 					<TextInput
@@ -148,7 +148,6 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 						onClick={createHandler}
 						variant='primary-icon'
 						fullWidth
-						loaderPosition='center'
 						loading={isLoading}
 						disabled={!form.isValid()}
 					>

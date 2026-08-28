@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { prisma, type Prisma, type PrismaClient } from '~db/client'
 
 import { isIdFor } from './idGen'

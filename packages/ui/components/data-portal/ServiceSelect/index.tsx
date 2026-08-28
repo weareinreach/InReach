@@ -1,6 +1,7 @@
-import { Box, type BoxProps, createStyles, Drawer, Group, rem, Stack, Title } from '@mantine/core'
+import { Box, type BoxProps, Drawer, Group, Stack, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
+import { type ReactNode } from 'react'
 import { type FieldValues, type UseControllerProps, useFormState } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 
@@ -8,24 +9,8 @@ import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-	checkboxLabel: theme.other.utilityFonts.utility2,
-	box: {
-		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
-		width: '100%',
-		padding: rem(8),
-		// margin: rem(-8),
-		borderRadius: rem(8),
-		'&[data-isdirty=true]': {
-			backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.6),
-		},
-		...theme.fn.hover({ cursor: 'pointer' }),
-	},
-}))
+import classes from './index.module.css'
+
 export const ServiceSelect = <T extends FieldValues>({
 	name,
 	control,
@@ -36,24 +21,23 @@ export const ServiceSelect = <T extends FieldValues>({
 }: ServiceSelectProps<T>) => {
 	const [opened, handler] = useDisclosure(false)
 	const { data } = api.component.ServiceSelect.useQuery()
-	const { classes } = useStyles()
 	const { t } = useTranslation('services')
 	const form = useFormState({ control, name })
 
 	const serviceGroups = data ? (
 		<Checkbox.Group {...{ name, control, defaultValue, rules, shouldUnregister }}>
-			<Stack spacing={16}>
+			<Stack gap={16}>
 				{data.map((category) => {
 					if (category.services.length === 0) {
 						return null
 					}
 					return (
-						<Stack spacing={8} key={category.tsKey}>
+						<Stack gap={8} key={category.tsKey}>
 							<Group>
 								<Title order={3}>{t(category.tsKey)}</Title>
 								{!category.active && <Icon icon='carbon:view-off' />}
 							</Group>
-							<Stack spacing={0}>
+							<Stack gap={0}>
 								{category.services.map((service) => (
 									<Checkbox.Item
 										pl={16}
@@ -90,12 +74,12 @@ export const ServiceSelect = <T extends FieldValues>({
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<Drawer.Header>
-						<Group noWrap position='apart' w='100%'>
+						<Group wrap='nowrap' justify='space-between' w='100%'>
 							<Breadcrumb option='close' onClick={handler.close} />
 						</Group>
 					</Drawer.Header>
 					<Drawer.Body>
-						<Stack align='center' pt={40} spacing={40}>
+						<Stack align='center' pt={40} gap={40}>
 							<Title order={2}>Select Service Tags</Title>
 							{serviceGroups}
 						</Stack>
@@ -107,4 +91,6 @@ export const ServiceSelect = <T extends FieldValues>({
 	)
 }
 
-export interface ServiceSelectProps<T extends FieldValues> extends UseControllerProps<T>, BoxProps {}
+export interface ServiceSelectProps<T extends FieldValues> extends UseControllerProps<T>, BoxProps {
+	children?: ReactNode
+}

@@ -15,7 +15,7 @@ export const ContactSection = ({ parentId, edit }: ContactSectionProps) => {
 	}
 
 	const body = (
-		<Stack spacing={isMobile ? 32 : 40}>
+		<Stack gap={isMobile ? 32 : 40}>
 			<Title order={2}>{t('contact')}</Title>
 			<ContactInfo parentId={parentId} gap={40} edit={edit} />
 		</Stack>

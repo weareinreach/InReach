@@ -1,0 +1,10 @@
+.activityBlock {
+	display: flex;
+	gap: rem(16px);
+	flex-wrap: wrap;
+}
+
+.textBlock {
+	display: flex;
+	flex-direction: column;
+}

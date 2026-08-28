@@ -59,8 +59,8 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	const noReviews = <Text variant={variants.Text.darkGray}>{t('no-reviews', { ns: 'common' })}</Text>
 
 	return (
-		<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
-			<Group position='apart' w='100%' align='center'>
+		<Stack gap={isMobile ? 32 : 40} align='flex-start'>
+			<Group justify='space-between' w='100%' align='center'>
 				<Title order={2}>{t('review', { count: 2 })}</Title>
 				<ActionButtons.Review>{t('add', { ns: 'common', item: '$t(review)' })}</ActionButtons.Review>
 			</Group>

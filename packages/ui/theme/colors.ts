@@ -1,4 +1,4 @@
-import { type DefaultMantineColor, type Tuple } from '@mantine/core'
+import { type DefaultMantineColor, type MantineColorsTuple } from '@mantine/core'
 
 /**
  * Color shades generated at: https://noeldelgado.github.io/shadowlord/
@@ -28,7 +28,7 @@ type CustomColors =
 	| 'secondaryAlt3'
 	| 'secondaryAlt4'
 
-type DefineColors = Record<string, Tuple<string, 10>>
+type DefineColors = Record<string, MantineColorsTuple>
 
 export const customColors = {
 	/** Primary - normal - `green` - `Index 5` */
@@ -291,4 +291,4 @@ export const customColors = {
 
 /** Merge custom color names with Mantine's presets */
 type ExtendedCustomColors = CustomColors | DefaultMantineColor
-export type CustomColorDefinitions = Record<ExtendedCustomColors, Tuple<string, 10>>
+export type CustomColorDefinitions = Record<ExtendedCustomColors, MantineColorsTuple>

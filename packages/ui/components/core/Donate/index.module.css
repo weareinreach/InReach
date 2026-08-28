@@ -1,0 +1,34 @@
+.bounce {
+	--ir-bounce-distance: rem(16px);
+	animation: ir-bounce 1.75s 5;
+}
+
+.shrink {
+	transition: all 0.5s ease-in-out;
+	padding: 0 !important;
+	border-radius: 100% !important;
+	width: rem(48px);
+}
+
+.modalBody {
+	padding: 0;
+	width: 100% !important;
+	height: auto !important;
+}
+@media (min-width: $mantine-breakpoint-xs) {
+	.modalBody {
+		padding: 0;
+	}
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.modalBody {
+		padding: 0;
+	}
+}
+.modalBody > iframe {
+	height: 70vh !important;
+	min-height: rem(500px);
+}
+.modalBody > iframe:nth-of-type(n + 2) {
+	display: none;
+}

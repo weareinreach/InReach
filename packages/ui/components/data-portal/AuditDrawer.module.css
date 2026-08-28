@@ -1,0 +1,12 @@
+.drawerTitleWrapper {
+	max-width: 100% !important;
+}
+.drawerTitleWrapper div:global(.mantine-Group-root) > div:first-of-type {
+	max-width: 100% !important;
+}
+
+.scrollableTable {
+	margin-top: rem(24px);
+	max-height: calc(100vh - 200px);
+	overflow: auto;
+}

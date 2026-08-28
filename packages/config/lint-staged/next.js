@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 
 const buildEslintCommand = (filenames) =>
-	`next lint --fix --file ${filenames.map((f) => path.relative(process.cwd(), f)).join(' --file ')}`
+	`eslint --cache --fix ${filenames.map((f) => path.relative(process.cwd(), f)).join(' ')}`
 
 const config = {
 	'*.{cjs,mjs,js,jsx,ts,tsx}': [buildEslintCommand, 'prettier --write'],

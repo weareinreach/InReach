@@ -9,7 +9,9 @@ import { z } from 'zod'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { LoginBody } from '@weareinreach/ui/modals/Login'
 
-const LoginBody = dynamic(() => import('@weareinreach/ui/modals/LoginSignUp').then((mod) => mod.LoginBody))
+const LoginBody = dynamic(() => import('@weareinreach/ui/modals/LoginSignUp').then((mod) => mod.LoginBody), {
+	ssr: false,
+})
 
 const RouteSchema = z.object({
 	pathname: z.string(),
@@ -30,9 +32,9 @@ const Unauthorized = () => {
 			<Stack
 				m={{ base: `${rem(48)} ${rem(0)}`, xs: `${rem(80)} ${rem(0)}`, sm: `${rem(100)} ${rem(0)}` }}
 				align='center'
-				spacing={32}
+				gap={32}
 			>
-				<Stack spacing={0} align='center'>
+				<Stack gap={0} align='center'>
 					<Title order={1}>🔐</Title>
 					<Title order={1}>{t('errors.401-title')}</Title>
 				</Stack>

@@ -46,7 +46,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Drawer',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 		serviceId: 'osvc_123456789000000',
 	},
 } satisfies Meta<typeof ServiceEditDrawer>

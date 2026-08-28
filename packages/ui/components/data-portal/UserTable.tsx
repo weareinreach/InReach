@@ -1,27 +1,33 @@
-import { Button, Group, Modal, NativeSelect, Select, Stack, Text } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { DateTime } from 'luxon'
 import {
-	MantineReactTable,
-	type MRT_ColumnDef,
-	MRT_GlobalFilterTextInput,
-	type MRT_Icons,
-	MRT_TablePagination,
-	useMantineReactTable,
-} from 'mantine-react-table'
+	ActionIcon,
+	Group,
+	Modal,
+	Popover,
+	Select,
+	Stack,
+	Text,
+	Tooltip,
+	useMantineTheme,
+} from '@mantine/core'
+import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { keepPreviousData } from '@tanstack/react-query'
+import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
+import { DateTime } from 'luxon'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { Link } from '~ui/components/core/Link'
+import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const customIcons: Partial<MRT_Icons> = {
-	IconSortAscending: () => <Icon icon={'carbon:chevron-up'} color='black' />,
-	IconSortDescending: () => <Icon icon={'carbon:chevron-down'} color='black' />,
-}
+import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+
+type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>['results'][number]
+
+/** Columns the server-side query can sort by. */
+type UserSortableColumnId = 'name' | 'email' | 'emailVerified' | 'createdAt' | 'updatedAt' | 'active'
 
 const DATA_PORTAL_ACCESS_OPTIONS = [
 	{ value: 'none', label: 'None' },
@@ -61,21 +67,8 @@ const DataPortalAccessSelect = ({
 	const apiUtils = api.useUtils()
 
 	const updateAccess = api.user.toggleDataPortalAccess.useMutation({
-		onSuccess: (data) => {
-			apiUtils.user.forUserTable.setData(undefined, (oldData) => {
-				if (!oldData) return oldData
-				return oldData.map((user) => {
-					if (user.id === userId) {
-						return {
-							...user,
-							canAccessDataPortal: data.canAccessDataPortal,
-							permissionId: data.permissionId,
-							permissionName: data.permissionName,
-						}
-					}
-					return user
-				})
-			})
+		onSuccess: () => {
+			apiUtils.user.forUserTable.invalidate()
 		},
 		onError: (error) => {
 			console.error('Error updating data portal access:', error)
@@ -140,12 +133,12 @@ const DataPortalAccessSelect = ({
 					},
 				},
 			}}
-			withinPortal={true}
 		/>
 	)
 }
 
-const PasswordResetModal = ({ email }: { email: string }) => {
+const PasswordResetAction = ({ email }: { email: string }) => {
+	const theme = useMantineTheme()
 	const [opened, handler] = useDisclosure(false)
 	const { t } = useTranslation('common')
 	const resetPw = api.user.forgotPassword.useMutation({
@@ -164,166 +157,219 @@ const PasswordResetModal = ({ email }: { email: string }) => {
 	return (
 		<>
 			<Modal opened={opened} onClose={handler.close} title='Reset Password'>
-				<p>Are you sure you want to reset this user's password?</p>
-				<Button onClick={createResetHandler(email)}>Yes</Button>
-				<Button onClick={handler.close}>No</Button>
+				<Text mb='md'>Are you sure you want to reset this user&apos;s password?</Text>
+				<Group wrap='nowrap'>
+					<Button onClick={createResetHandler(email)} loading={resetPw.isPending}>
+						Yes
+					</Button>
+					<Button variant='secondaryLg' onClick={handler.close}>
+						No
+					</Button>
+				</Group>
 			</Modal>
-			<Link onClick={handler.open}>Reset</Link>
+			<Tooltip label='Reset Password'>
+				<ActionIcon variant='subtle' onClick={handler.open}>
+					<Icon icon='carbon:password' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
 		</>
 	)
 }
 
+const ManageAccessAction = ({
+	activePermissionName,
+	userId,
+	loggedInUserPermissions,
+}: {
+	activePermissionName: string | undefined
+	userId: string
+	loggedInUserPermissions: CurrentUserPermissions | undefined
+}) => {
+	const theme = useMantineTheme()
+
+	return (
+		<Popover position='bottom-end' withArrow shadow='md'>
+			<Popover.Target>
+				<Tooltip label='Manage Data Portal Access'>
+					<ActionIcon variant='subtle'>
+						<Icon icon='carbon:user-role' color={theme.other.colors.primary.allyGreen} />
+					</ActionIcon>
+				</Tooltip>
+			</Popover.Target>
+			<Popover.Dropdown>
+				<DataPortalAccessSelect
+					activePermissionName={activePermissionName}
+					userId={userId}
+					loggedInUserPermissions={loggedInUserPermissions}
+				/>
+			</Popover.Dropdown>
+		</Popover>
+	)
+}
+
+// --- Column Cell Renderers ---
+// Defined at module scope (rather than nested inside `UserTable`) so React doesn't see a brand-new
+// component identity on every render; anything a renderer needs beyond `row`/`value` is passed in as a
+// prop instead of being read from closure.
+
+interface UserActionsCellProps extends DataTableCellContext<UserDataRecord> {
+	loggedInUserPermissions: CurrentUserPermissions | undefined
+}
+
+/** Cell renderer for the 'actions' column - password reset and data portal access management. */
+const UserActionsCell = ({ row, loggedInUserPermissions }: UserActionsCellProps) => (
+	<Group wrap='nowrap' gap={8}>
+		<PasswordResetAction email={row.email} />
+		<ManageAccessAction
+			activePermissionName={row.permissionName}
+			userId={row.id}
+			loggedInUserPermissions={loggedInUserPermissions}
+		/>
+	</Group>
+)
+
+/**
+ * Curried factory for the 'actions' column cell - `loggedInUserPermissions` isn't part of
+ * `DataTableCellContext`, so it's threaded through here rather than via an inline arrow in the columns
+ * array.
+ */
+const createUserActionsCell = (extra: { loggedInUserPermissions: CurrentUserPermissions | undefined }) => {
+	const Cell = (ctx: DataTableCellContext<UserDataRecord>) => <UserActionsCell {...ctx} {...extra} />
+	Cell.displayName = 'UserActionsCell'
+	return Cell
+}
+
+/** Cell renderer for the 'id' column. */
+const IdCell = ({ value }: DataTableCellContext<UserDataRecord>) => <Text size='xs'>{value as string}</Text>
+
+/** Cell renderer for the 'emailVerified' column. */
+const EmailVerifiedCell = ({ value }: DataTableCellContext<UserDataRecord>) => {
+	if (!value) {
+		return null
+	}
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
+/** Cell renderer shared by the 'updatedAt' and 'createdAt' columns. */
+const DateCell = ({ value }: DataTableCellContext<UserDataRecord>) => {
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
 export const UserTable = () => {
-	const { data: userData } = api.user.forUserTable.useQuery()
 	const { data: session } = useSession()
 	const loggedInUserPermissions = session?.user?.permissions as CurrentUserPermissions | undefined
 
-	const columns = useMemo<MRT_ColumnDef<UserDataRecord>[]>(
+	const [globalFilter, setGlobalFilter] = useState('')
+	const [debouncedGlobalFilter] = useDebouncedValue(globalFilter, 300)
+	const [sorting, setSorting] = useState<SortingState>([{ id: 'name', desc: false }])
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
+
+	const permissionNamesFilter = columnFilters.find((f) => f.id === 'permissionName')?.value as
+		string[] | undefined
+	const dateFilter = (id: string) =>
+		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
+
+	const { data, isLoading, isFetching, isError } = api.user.forUserTable.useQuery(
+		{
+			search: debouncedGlobalFilter || undefined,
+			createdAt: dateFilter('createdAt')
+				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
+				: undefined,
+			updatedAt: dateFilter('updatedAt')
+				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
+				: undefined,
+			sorting: sorting.map(({ id, desc }) => ({
+				id: id as UserSortableColumnId,
+				desc,
+			})),
+			permissionNames: permissionNamesFilter?.length ? permissionNamesFilter : undefined,
+			take: pagination.pageSize,
+			skip: pagination.pageIndex * pagination.pageSize,
+		},
+		{ placeholderData: keepPreviousData, refetchOnWindowFocus: false }
+	)
+
+	const columns = useMemo<DataTableColumn<UserDataRecord>[]>(
 		() => [
 			{
-				accessorKey: 'name',
-				header: 'Name',
+				id: 'actions',
+				header: 'Actions',
+				pin: 'left',
+				size: 90,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				hideable: false,
+				accessorFn: () => undefined,
+				cell: createUserActionsCell({ loggedInUserPermissions }),
 			},
 			{
-				accessorKey: 'email',
-				header: 'Email',
+				id: 'id',
+				header: 'ID',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				cell: IdCell,
+			},
+			{ id: 'name', header: 'Name' },
+			{ id: 'email', header: 'Email' },
+			{
+				id: 'emailVerified',
+				header: 'Verified',
+				cell: EmailVerifiedCell,
 			},
 			{
-				accessorKey: 'emailVerified',
-				header: 'Email Verified',
-				Cell: ({ cell }) => {
-					const cellValue = cell.getValue<Date | null>()
-					if (!cellValue) return null
-					const date = DateTime.fromJSDate(cellValue)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
-			},
-			{
-				accessorKey: 'updatedAt',
-				header: 'Last updated',
-				Cell: ({ cell }) => {
-					const cellValue = cell.getValue<Date>()
-					const date = DateTime.fromJSDate(cellValue)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
-			},
-			{
-				accessorKey: 'createdAt',
-				header: 'Created At',
-				Cell: ({ cell }) => {
-					const cellValue = cell.getValue<Date>()
-					const date = DateTime.fromJSDate(cellValue)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
-			},
-			{
-				accessorKey: 'active',
+				id: 'active',
 				header: 'Active',
-				Cell: ({ cell }) => {
-					return cell.getValue<boolean>() ? 'Yes' : 'No'
-				},
+				cell: ({ value }) => (value ? 'Yes' : 'No'),
 			},
 			{
-				accessorKey: 'permissionName',
+				id: 'permissionName',
 				header: 'Data Portal Access Level',
-				size: 280,
-				mantineTableBodyCellProps: {
-					align: 'left',
-					sx: {
-						display: 'flex',
-						alignItems: 'center',
-					},
-				},
-				Cell: ({ cell }) => {
-					const activePermissionName = cell.getValue<string | undefined>()
-
-					return (
-						<DataPortalAccessSelect
-							activePermissionName={activePermissionName}
-							userId={cell.row.original.id}
-							loggedInUserPermissions={loggedInUserPermissions}
-						/>
-					)
-				},
+				size: 200,
+				enableSorting: false,
+				filter: { type: 'multi-select', options: DATA_PORTAL_ACCESS_OPTIONS },
+				cell: ({ row }) =>
+					DATA_PORTAL_ACCESS_OPTIONS.find((opt) => opt.value === (row.permissionName ?? 'none'))?.label ??
+					'None',
 			},
 			{
-				header: 'Reset Password',
-				Cell: ({ cell }) => {
-					return <PasswordResetModal email={cell.row.original.email} />
-				},
+				id: 'updatedAt',
+				header: 'Updated',
+				filter: { type: 'date-range' },
+				cell: DateCell,
+			},
+			{
+				id: 'createdAt',
+				header: 'Created',
+				filter: { type: 'date-range' },
+				cell: DateCell,
 			},
 		],
 		[loggedInUserPermissions]
 	)
 
-	const table = useMantineReactTable({
-		columns,
-		data: userData ?? [],
-		icons: customIcons,
-		enableGlobalFilter: true,
-		enableFilterMatchHighlighting: false,
-		positionGlobalFilter: 'left',
-		enableRowSelection: true,
-		mantineSearchTextInputProps: {
-			placeholder: 'Enter Name',
-			sx: { minWidth: '734px', height: '48px' },
-		},
-		initialState: {
-			showGlobalFilter: true,
-		},
-		enableTopToolbar: false,
-		enableBottomToolbar: false,
-		enablePagination: true,
-		mantinePaginationProps: {
-			withEdges: false,
-			siblings: 0,
-			showRowsPerPage: false,
-		},
-		paginationDisplayMode: 'pages',
-		layoutMode: 'semantic',
-	})
-
 	return (
 		<Stack>
-			<Text size='16px' fw={500} style={{ marginBottom: '-1rem' }}>
-				Total: {userData?.length ?? 0}
-			</Text>
-			<Group noWrap={true} position='left' spacing={'16px'} style={{ marginBottom: '4px' }}>
-				<MRT_GlobalFilterTextInput table={table} />
-				<NativeSelect
-					rightSection={<Icon icon='carbon:chevron-down' />}
-					data={['Data Entry Teams']}
-					styles={{
-						root: { width: '208px', height: '48px' },
-						input: { paddingLeft: '16px', paddingRight: '16px', paddingTop: '12px', paddingBottom: '12px' },
-					}}
-				/>
-				<Button
-					styles={{
-						root: {
-							backgroundColor: 'inherit',
-							border: 'none',
-							width: '48px',
-							height: '48px',
-							padding: '12px',
-							marginTop: '10px',
-						},
-						label: { color: 'black' },
-					}}
-				>
-					<Icon icon='carbon:overflow-menu-horizontal' />
-				</Button>
-			</Group>
-			<Stack>
-				<MantineReactTable table={table} />
-				<MRT_TablePagination table={table} />
-			</Stack>
+			<DataTable
+				data={data?.results ?? []}
+				columns={columns}
+				sorting={sorting}
+				onSortingChange={setSorting}
+				columnFilters={columnFilters}
+				onColumnFiltersChange={setColumnFilters}
+				globalFilter={globalFilter}
+				onGlobalFilterChange={setGlobalFilter}
+				globalFilterPlaceholder='Search Users'
+				pagination={pagination}
+				onPaginationChange={setPagination}
+				mode={{ serverSide: true, rowCount: data?.total ?? 0 }}
+				isLoading={isLoading}
+				isFetching={isFetching}
+				isError={isError}
+			/>
 		</Stack>
 	)
-}
-
-type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>[number] & {
-	canAccessDataPortal: boolean
-	permissionId?: string
-	permissionName?: string
 }

@@ -1,0 +1,58 @@
+.tab {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: rem(12px) 0 rem(8px) 0;
+	gap: rem(12px);
+	width: rem(75px);
+	height: rem(70px);
+	color: var(--ir-color-secondary-dark-gray);
+	border-top: 0;
+}
+@media (hover: hover) {
+	.tab:hover {
+		background-color: transparent;
+	}
+}
+.tab[data-active] > :global(.mantine-Tabs-tabLabel) {
+	color: var(--ir-color-secondary-black);
+	border-top: 0;
+	font-weight: 600;
+}
+@media (hover: hover) {
+	.tab[data-active]:hover > :global(.mantine-Tabs-tabLabel) {
+		background-color: transparent;
+	}
+}
+.tab[data-active] > :global(.mantine-Tabs-tabSection) {
+	stroke: var(--ir-color-secondary-black);
+	stroke-width: rem(1px);
+}
+
+.tabLabel {
+	font-size: var(--mantine-font-size-sm);
+	font-weight: 400;
+}
+
+.list {
+	border-top: 0;
+	flex-wrap: nowrap;
+	height: rem(70px);
+	justify-content: space-around;
+}
+
+.tabSection:not(:only-child) {
+	margin: 0;
+}
+
+.root {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	z-index: 20;
+	background-color: var(--ir-color-secondary-white);
+	box-shadow: 0 rem(-8px) rem(16px) rgba(0, 0, 0, 0.05);
+}

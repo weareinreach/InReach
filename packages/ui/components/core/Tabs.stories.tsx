@@ -8,13 +8,13 @@ const Story = () => {
 	const router = useRouter()
 	const { t } = useTranslation()
 	const tabHandler = useCallback(
-		(value: string) => {
+		(value: string | null) => {
 			router.push({ pathname: '/', query: { tab: value ?? '' } })
 		},
 		[router]
 	)
 	return (
-		<MantineTabs defaultValue={router.query.activeTab as string} onTabChange={tabHandler}>
+		<MantineTabs defaultValue={router.query.activeTab as string} onChange={tabHandler}>
 			<MantineTabs.List>
 				<MantineTabs.Tab value='services'>{t('services')}</MantineTabs.Tab>
 				<MantineTabs.Tab value='photos'>{t('photos')}</MantineTabs.Tab>

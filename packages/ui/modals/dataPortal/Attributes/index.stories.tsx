@@ -24,7 +24,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Modal',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 		restrictCategories: undefined,
 		attachesTo: undefined,
 	},

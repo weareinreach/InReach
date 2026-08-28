@@ -31,7 +31,6 @@ const formSchema = z.object({
 })
 type FormSchema = z.infer<typeof formSchema>
 
-// eslint-disable-next-line i18next/no-literal-string
 const addRemoteServiceLabel = 'Add Remote Service'
 
 const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
@@ -159,10 +158,12 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			<Head>
 				<title>{t('page-title.edit-mode', { ns: 'common', title: data.name })}</title>
 			</Head>
-			<DataToolbar data={data} />
 			<FormProvider {...formMethods}>
-				<Grid.Col sm={8} order={1}>
-					<Stack pt={24} align='flex-start' spacing={40}>
+				<Grid.Col span={12} order={0}>
+					<DataToolbar data={data} />
+				</Grid.Col>
+				<Grid.Col span={{ sm: 8 }} order={1}>
+					<Stack pt={24} align='flex-start' gap={40}>
 						<ListingBasicInfo
 							data={{
 								id: data.id,
@@ -178,7 +179,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 							onBadgesChange={handleBadgesChange}
 						/>
 						<Group>
-							{/* eslint-disable-next-line i18next/no-literal-string */}
+							{}
 							<Tooltip
 								label='Use for a physical address where this org provides services in person.'
 								withArrow
@@ -191,7 +192,6 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 								</Box>
 							</Tooltip>
 							{!hasRemote && (
-								// eslint-disable-next-line i18next/no-literal-string
 								<Tooltip
 									label="Use for a service with no physical office — offered by phone, video, or online. If this service is also offered at one of the org's locations, add it from that location's page instead."
 									withArrow
@@ -211,7 +211,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 								</Tooltip>
 							)}
 						</Group>
-						<Stack spacing={40} w='100%'>
+						<Stack gap={40} w='100%'>
 							{locations.map((location) => (
 								<LocationCard key={location.id} locationId={location.id} edit />
 							))}
@@ -219,8 +219,8 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 						</Stack>
 					</Stack>
 				</Grid.Col>
-				<Grid.Col order={2}>
-					<Stack spacing={40}>
+				<Grid.Col span={{ base: 12, sm: 4 }} order={2}>
+					<Stack pt={24} gap={40}>
 						<ContactSection role='org' parentId={data.id} edit />
 					</Stack>
 				</Grid.Col>

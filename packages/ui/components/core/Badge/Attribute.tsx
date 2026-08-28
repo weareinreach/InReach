@@ -3,11 +3,11 @@ import { forwardRef, type ReactNode } from 'react'
 
 import { Icon, isValidIcon } from '~ui/icon'
 
-import { useSharedStyles } from './styles'
+import { sharedBadgeClasses } from './styles'
 
 export const _Attribute = forwardRef<HTMLDivElement, BadgeAttributeProps>(
 	({ icon, children, ...props }, ref) => {
-		const { classes } = useSharedStyles('attribute')
+		const classes = sharedBadgeClasses.attribute
 		const theme = useMantineTheme()
 
 		const leftSection = isValidIcon(icon) ? (
@@ -16,7 +16,11 @@ export const _Attribute = forwardRef<HTMLDivElement, BadgeAttributeProps>(
 
 		const badge = (
 			<Badge variant='outline' classNames={classes} ref={ref} leftSection={leftSection} {...props}>
-				{typeof children === 'string' ? <Text>{children}</Text> : children}
+				{typeof children === 'string' ? (
+					<Text fw={theme.other.fontWeight.semibold}>{children}</Text>
+				) : (
+					children
+				)}
 			</Badge>
 		)
 

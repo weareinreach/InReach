@@ -1,481 +1,376 @@
-import { ActionIcon, createStyles, Group, rem, Text, Tooltip, useMantineTheme } from '@mantine/core'
-// import { ReactTableDevtools } from '@tanstack/react-table-devtools'
+import { ActionIcon, Group, type MantineTheme, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import { useDebouncedValue } from '@mantine/hooks'
+import { keepPreviousData } from '@tanstack/react-query'
+import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
-import {
-	MantineReactTable,
-	type MRT_ColumnDef,
-	type MRT_ColumnFilterFnsState,
-	type MRT_ColumnFiltersState,
-	type MRT_Row,
-	MRT_ShowHideColumnsButton,
-	type MRT_SortingState,
-	type MRT_TableInstance,
-	MRT_ToggleFiltersButton,
-	type MRT_Virtualizer,
-	useMantineReactTable,
-} from 'mantine-react-table'
 import { type Route } from 'nextjs-routes'
-import { type Dispatch, type SetStateAction, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
+import { AuditDrawer } from '~ui/components/data-portal/AuditDrawer'
+import { InternalNotesDrawer } from '~ui/components/data-portal/InternalNotesDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
-	warning: {
-		color: theme.other.colors.tertiary.red,
-	},
-	warningDim: {
-		color: theme.fn.lighten(theme.other.colors.tertiary.red, 0.3),
-	},
-	bottomBar: {
-		paddingTop: rem(20),
-	},
-	devTool: {
-		'& *': {
-			backgroundColor: '#132337',
-		},
-	},
-}))
+import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+import { TableToolbarToggle } from './TableToolbarToggle'
 
-const getAlertBanner = ({
-	isError,
-	isFetching,
-	isLoading,
-}: Record<'isError' | 'isFetching' | 'isLoading', boolean>) => {
-	switch (true) {
-		case isError: {
-			return { color: 'red', children: 'Error fetching data' }
-		}
-		case isFetching:
-		case isLoading: {
-			return { color: 'green', children: 'Loading data' }
-		}
-		default: {
-			return { color: 'white', children: null, sx: { backgroundColor: 'transparent' } }
-		}
-	}
-}
+type RowItem = ApiOutput['organization']['forOrganizationTable']['results'][number]
+type LocationRow = RowItem['locations'][number]
+/** A rendered row is either a top-level org or one of its expanded location sub-rows. */
+type TableRow = RowItem | LocationRow
+/** Columns the server-side query can sort by. */
+type SortableColumnId = 'name' | 'lastVerified' | 'updatedAt' | 'createdAt'
 
-const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps) => {
+const RowAction = ({
+	row,
+	isSubRow,
+	parentSlug,
+}: {
+	row: TableRow
+	isSubRow: boolean
+	parentSlug?: string
+}) => {
+	const [auditOpen, setAuditOpen] = useState(false)
+	const [notesOpen, setNotesOpen] = useState(false)
 	const theme = useMantineTheme()
-	const toggle = (key: 'published' | 'deleted') => {
-		const current = columnFilters.find(({ id }) => key === id)
-		const options = key === 'published' ? [undefined, true, false] : [false, true, undefined]
-		const currentIdx = options.indexOf(current?.value as boolean | undefined)
-		const nextIdx = (currentIdx + 1) % options.length
-		setColumnFilters((prev) =>
-			options[nextIdx] === undefined
-				? prev.filter(({ id }) => id !== key)
-				: [...prev.filter(({ id }) => id !== key), { id: key, value: options[nextIdx] }]
-		)
-	}
-	const publishedState = columnFilters.find(({ id }) => id === 'published')?.value as boolean | undefined
-	const deletedState = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
+
+	const handleOpenAudit = useCallback(() => setAuditOpen(true), [])
+	const handleCloseAudit = useCallback(() => setAuditOpen(false), [])
+	const handleOpenNotes = useCallback(() => setNotesOpen(true), [])
+	const handleCloseNotes = useCallback(() => setNotesOpen(false), [])
+
+	const getViewUrl = (): Route =>
+		isSubRow && parentSlug
+			? { pathname: '/org/[slug]/[orgLocationId]', query: { slug: parentSlug, orgLocationId: row.id } }
+			: { pathname: '/org/[slug]', query: { slug: (row as RowItem).slug } }
+	const getEditUrl = (): Route =>
+		isSubRow && parentSlug
+			? { pathname: '/org/[slug]/[orgLocationId]/edit', query: { slug: parentSlug, orgLocationId: row.id } }
+			: { pathname: '/org/[slug]/edit', query: { slug: (row as RowItem).slug } }
 
 	return (
-		<Group>
-			<Tooltip
-				label={
-					publishedState
-						? 'Show only unpublished'
-						: publishedState === undefined
-							? 'Show only published'
-							: 'Show all'
-				}
-				withinPortal
-			>
-				<ActionIcon onClick={() => toggle('published')}>
-					<Icon
-						icon={
-							publishedState
-								? 'carbon:view-filled'
-								: publishedState === undefined
-									? 'carbon:view'
-									: 'carbon:view-off-filled'
-						}
-						style={{
-							color: publishedState === undefined ? theme.other.colors.secondary.darkGray : undefined,
-						}}
-						height={24}
-					/>
+		<Group wrap='nowrap' gap={8}>
+			<Tooltip label='View'>
+				<ActionIcon variant='subtle' component={Link} href={getViewUrl()} target='_blank'>
+					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
-			<Tooltip
-				label={deletedState ? 'Show all' : deletedState === undefined ? 'Hide deleted' : 'Show deleted'}
-				withinPortal
-			>
-				<ActionIcon onClick={() => toggle('deleted')}>
-					<Group noWrap ml={8}>
-						<Icon
-							icon='carbon:trash-can'
-							style={{
-								color: deletedState === undefined ? theme.other.colors.secondary.darkGray : undefined,
-							}}
-							height={24}
-						/>
-						<Icon
-							icon='carbon:close'
-							height={40}
-							style={{
-								position: 'relative',
-								right: rem(48),
-								marginRight: rem(-48),
-								opacity: deletedState === false ? 1 : 0,
-							}}
-						/>
-					</Group>
+			<Tooltip label='Edit'>
+				<ActionIcon variant='subtle' component={Link} href={getEditUrl()} target='_blank'>
+					<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
+			{/* Activity log / internal notes are org-scoped only - neither drawer has a location-level
+			equivalent today, so these two actions don't appear on location sub-rows. */}
+			{!isSubRow && (
+				<>
+					<Tooltip label='View activity log'>
+						<ActionIcon variant='subtle' onClick={handleOpenAudit}>
+							<Icon icon='carbon:time' color={theme.other.colors.primary.allyGreen} />
+						</ActionIcon>
+					</Tooltip>
+					<Tooltip label='View internal notes'>
+						<ActionIcon variant='subtle' onClick={handleOpenNotes}>
+							<Icon icon='carbon:notebook' color={theme.other.colors.primary.allyGreen} />
+						</ActionIcon>
+					</Tooltip>
+					{auditOpen && (
+						<AuditDrawer
+							opened={auditOpen}
+							onClose={handleCloseAudit}
+							recordId={row.id}
+							name={(row as RowItem).name}
+						/>
+					)}
+					{notesOpen && (
+						<InternalNotesDrawer
+							opened={notesOpen}
+							onClose={handleCloseNotes}
+							recordId={row.id}
+							name={(row as RowItem).name}
+						/>
+					)}
+				</>
+			)}
 		</Group>
 	)
 }
 
-const BottomBar = ({ table }: BottomBarProps) => {
-	const { classes } = useStyles()
-	const filteredRowCount = table.getFilteredRowModel().rows.length
-	const preFilteredRowCount = table.getPreFilteredRowModel().rows.length
+/** Cell renderer for the 'actions' column - view/edit/audit/notes actions for a row. */
+const ActionsCell = ({ row, depth, parentRow }: DataTableCellContext<TableRow>) => (
+	<RowAction
+		row={row}
+		isSubRow={depth > 0}
+		parentSlug={depth > 0 ? (parentRow as RowItem | undefined)?.slug : undefined}
+	/>
+)
 
-	if (preFilteredRowCount !== filteredRowCount) {
+interface NameCellProps extends DataTableCellContext<TableRow> {
+	variants: ReturnType<typeof useCustomVariant>
+}
+
+/** Cell renderer for the 'name' column - dims and flags unpublished orgs. */
+const NameCell = ({ value, row, depth, variants }: NameCellProps) => {
+	const isPublished = (row as RowItem).published
+	const textVariant = !isPublished ? variants.Text.utility4darkGray : variants.Text.utility4
+	return (
+		<Group gap={8} wrap='nowrap' pl={depth > 0 ? 0 : undefined}>
+			<Text variant={textVariant}>{value as string}</Text>
+			{!isPublished && <Icon icon='carbon:view-off' />}
+		</Group>
+	)
+}
+
+/**
+ * Curried factory for the 'name' column cell - `variants` isn't part of `DataTableCellContext`, so it's
+ * threaded through here rather than via an inline arrow in the columns array.
+ */
+const createNameCell = (extra: { variants: ReturnType<typeof useCustomVariant> }) => {
+	const Cell = (ctx: DataTableCellContext<TableRow>) => <NameCell {...ctx} {...extra} />
+	Cell.displayName = 'NameCell'
+	return Cell
+}
+
+/** Cell renderer for the 'id' column. */
+const IdCell = ({ row }: DataTableCellContext<TableRow>) => <Text size='xs'>{row.id}</Text>
+
+interface LastVerifiedCellProps extends DataTableCellContext<TableRow> {
+	theme: MantineTheme
+}
+
+/** Cell renderer for the 'lastVerified' column - warns when a top-level org has never been verified. */
+const LastVerifiedCell = ({ value, depth, theme }: LastVerifiedCellProps) => {
+	if (depth > 0) {
+		return null
+	}
+	if (!value) {
 		return (
-			<div className={classes.bottomBar}>
-				<Text variant='utility3'>
-					Showing {filteredRowCount} of {preFilteredRowCount} results
-				</Text>
-			</div>
+			<Group gap={4} c={theme.other.colors.tertiary.red}>
+				<Icon icon='carbon:warning-filled' />
+				<span>Never</span>
+			</Group>
 		)
 	}
-
-	return (
-		<div className={classes.bottomBar}>
-			<Text variant='utility3'>{preFilteredRowCount} results</Text>
-		</div>
-	)
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 }
 
-const RowAction = ({ row }: RowActionProps) => {
-	const getViewUrl = (): Route => {
-		const parent = row.getParentRow()
-		if (parent) {
-			return {
-				pathname: '/org/[slug]/[orgLocationId]',
-				query: { slug: parent.original.slug, orgLocationId: row.original.id },
-			}
-		} else {
-			return { pathname: '/org/[slug]', query: { slug: row.original.slug } }
-		}
-	}
-	const getEditUrl = (): Route => {
-		const parent = row.getParentRow()
-		if (parent) {
-			return {
-				pathname: '/org/[slug]/[orgLocationId]/edit',
-				query: { slug: parent.original.slug, orgLocationId: row.original.id },
-			}
-		} else {
-			return { pathname: '/org/[slug]/edit', query: { slug: row.original.slug } }
-		}
-	}
-	return (
-		<Group noWrap spacing={8}>
-			<Tooltip label='View' withinPortal>
-				<ActionIcon component={Link} href={getViewUrl()} target='_blank'>
-					<Icon icon='carbon:search' />
-				</ActionIcon>
-			</Tooltip>
-			<Tooltip label='Edit' withinPortal>
-				<ActionIcon component={Link} href={getEditUrl()} target='_blank'>
-					<Icon icon='carbon:edit' />
-				</ActionIcon>
-			</Tooltip>
-		</Group>
-	)
+/**
+ * Curried factory for the 'lastVerified' column cell - `theme` isn't part of `DataTableCellContext`, so it's
+ * threaded through here rather than via an inline arrow in the columns array.
+ */
+const createLastVerifiedCell = (extra: { theme: MantineTheme }) => {
+	const Cell = (ctx: DataTableCellContext<TableRow>) => <LastVerifiedCell {...ctx} {...extra} />
+	Cell.displayName = 'LastVerifiedCell'
+	return Cell
 }
 
+/** Cell renderer shared by the 'updatedAt' and 'createdAt' columns. */
+const DateCell = ({ value }: DataTableCellContext<TableRow>) => {
+	if (!value) {
+		return null
+	}
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
+const getOrgTableSubRows = (row: TableRow): TableRow[] | undefined =>
+	(row as RowItem).locations as TableRow[] | undefined
+
+const getOrgTableRowStyle = (row: TableRow) => ({
+	textDecoration: (row as RowItem).deleted ? 'line-through' : undefined,
+})
+
+const publishedFilterLabel = (state: boolean | undefined): string => {
+	if (state) {
+		return 'Show only unpublished'
+	}
+	if (state === undefined) {
+		return 'Show only published'
+	}
+	return 'Show all'
+}
+
+const publishedFilterIcon = (state: boolean | undefined): string => {
+	if (state) {
+		return 'carbon:view-filled'
+	}
+	if (state === undefined) {
+		return 'carbon:view'
+	}
+	return 'carbon:view-off-filled'
+}
+
+const deletedFilterLabel = (state: boolean | undefined): string => {
+	if (state) {
+		return 'Show all'
+	}
+	if (state === undefined) {
+		return 'Hide deleted'
+	}
+	return 'Show deleted'
+}
+
+const deletedFilterIcon = (): string => 'carbon:trash-can'
+
+const isDeletedFilterExcluded = (state: boolean | undefined): boolean => state === false
+
+/**
+ * The org directory's system-of-record table - publish status, verification date, deletion flag, and each
+ * org's locations. Filtering, sorting, and pagination all run server-side (`forOrganizationTable`).
+ */
 export const OrganizationTable = () => {
-	const { classes } = useStyles()
 	const variants = useCustomVariant()
-	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(undefined, {
-		select: (data) => data.map(({ locations, ...rest }) => ({ ...rest, subRows: locations })),
-		refetchOnWindowFocus: false,
-	})
+	const theme = useMantineTheme()
 
-	// #region Column Definitions
-	const columns = useMemo<MRT_ColumnDef<RestucturedDataItem>[]>(
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([{ id: 'deleted', value: false }])
+	const [globalFilter, setGlobalFilter] = useState('')
+	const [debouncedGlobalFilter] = useDebouncedValue(globalFilter, 300)
+	const [sorting, setSorting] = useState<SortingState>([{ id: 'name', desc: false }])
+	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
+
+	const publishedFilter = columnFilters.find(({ id }) => id === 'published')?.value as boolean | undefined
+	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
+	const dateFilter = (id: string) =>
+		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
+
+	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(
+		{
+			published: publishedFilter,
+			deleted: deletedFilter,
+			search: debouncedGlobalFilter || undefined,
+			lastVerified: dateFilter('lastVerified')
+				? { from: dateFilter('lastVerified')?.[0], to: dateFilter('lastVerified')?.[1] }
+				: undefined,
+			updatedAt: dateFilter('updatedAt')
+				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
+				: undefined,
+			createdAt: dateFilter('createdAt')
+				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
+				: undefined,
+			sorting: sorting.map(({ id, desc }) => ({
+				id: id as SortableColumnId,
+				desc,
+			})),
+			take: pagination.pageSize,
+			skip: pagination.pageIndex * pagination.pageSize,
+		},
+		{ placeholderData: keepPreviousData, refetchOnWindowFocus: false }
+	)
+
+	const results = data?.results ?? []
+	const total = data?.total ?? 0
+
+	const columns = useMemo<DataTableColumn<TableRow>[]>(
 		() => [
 			{
-				accessorKey: 'id',
-				header: 'ID',
-				enableColumnFilter: false,
+				id: 'actions',
+				header: 'Actions',
+				pin: 'left',
+				size: 180,
 				enableSorting: false,
-				size: 220,
+				enableGlobalFilter: false,
+				hideable: false,
+				accessorFn: () => undefined,
+				cell: ActionsCell,
 			},
 			{
-				accessorKey: 'name',
+				id: 'name',
 				header: 'Name',
-				columnFilterModeOptions: ['contains', 'fuzzy', 'startsWith', 'endsWith'],
-				filterVariant: 'autocomplete',
-				enableResizing: true,
-				minSize: 250,
-				enableColumnFilter: false,
-				Cell: ({ cell, row }) => {
-					const isSubRow = row.parentId !== undefined
-					const isPublished = row.original.published
-					const isExpanded = row.getIsExpanded()
-					const getTextVariant = () => {
-						switch (true) {
-							case !isPublished && isExpanded: {
-								return variants.Text.utility3darkGray
-							}
-							case !isPublished: {
-								return variants.Text.utility4darkGray
-							}
-							case isExpanded: {
-								return variants.Text.utility3
-							}
-							default: {
-								return variants.Text.utility4
-							}
-						}
-					}
-					const textVariant = getTextVariant()
-
-					return (
-						<Group spacing={8} pl={isSubRow ? 16 : 0}>
-							<Text variant={textVariant}>{cell.getValue<string>()}</Text>
-							{!isPublished && <Icon icon='carbon:view-off' />}
-						</Group>
-					)
-				},
+				pin: 'left',
+				size: 280,
+				cell: createNameCell({ variants }),
 			},
 			{
-				accessorKey: 'lastVerified',
+				id: 'id',
+				header: 'ID',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				cell: IdCell,
+			},
+			{
+				id: 'lastVerified',
 				header: 'Verified',
-				Cell: ({ cell, row }) => {
-					if (row.getParentRow()) return null
-					if (!cell.getValue<Date>())
-						return (
-							<Group spacing={4}>
-								<Icon
-									icon='carbon:warning-filled'
-									className={row.original.published ? classes.warning : classes.warningDim}
-								/>
-								<span className={row.original.published ? classes.warning : classes.warningDim}>Never</span>
-							</Group>
-						)
-					const date = DateTime.fromJSDate(cell.getValue<Date>())
-					return (
-						<Tooltip label={date.toLocaleString(DateTime.DATE_HUGE)} withinPortal>
-							<span>{date.toRelativeCalendar()}</span>
-						</Tooltip>
-					)
-				},
-				columnFilterModeOptions: ['betweenInclusive'],
-				filterVariant: 'date-range',
-				enableColumnFilterModes: false,
 				size: 150,
-				sortingFn: 'datetime',
+				filter: { type: 'date-range' },
+				cell: createLastVerifiedCell({ theme }),
 			},
 			{
-				accessorKey: 'updatedAt',
+				id: 'updatedAt',
 				header: 'Updated',
-				Cell: ({ cell }) => {
-					if (!cell.getValue<Date>()) return null
-					const date = DateTime.fromJSDate(cell.getValue<Date>())
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
-				columnFilterModeOptions: ['betweenInclusive'],
-				filterVariant: 'date-range',
-				enableColumnFilterModes: false,
 				size: 150,
+				filter: { type: 'date-range' },
+				cell: DateCell,
 			},
 			{
-				accessorKey: 'createdAt',
+				id: 'createdAt',
 				header: 'Created',
-				Cell: ({ cell }) => {
-					if (!cell.getValue<Date>()) return null
-					const date = DateTime.fromJSDate(cell.getValue<Date>())
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
-				columnFilterModeOptions: ['betweenInclusive'],
-				filterVariant: 'date-range',
-				enableColumnFilterModes: false,
 				size: 150,
+				filter: { type: 'date-range' },
+				cell: DateCell,
 			},
 			{
-				accessorKey: 'published',
+				id: 'published',
 				header: 'Published',
-				Cell: ({ cell }) => cell.getValue<boolean>().toString(),
-				columnFilterModeOptions: ['equals'],
-				filterVariant: 'checkbox',
-				enableColumnFilterModes: false,
-				mantineFilterCheckboxProps: { label: 'Published?' },
+				hiddenByDefault: true,
 				enableSorting: false,
-				enableColumnActions: false,
-				size: 110,
+				cell: ({ value }) => (value === undefined ? '' : String(value)),
 			},
 			{
-				accessorKey: 'deleted',
+				id: 'deleted',
 				header: 'Deleted',
-				Cell: ({ cell }) => cell.getValue<boolean>().toString(),
-				columnFilterModeOptions: ['equals'],
-				filterVariant: 'checkbox',
-				enableColumnFilterModes: false,
-				mantineFilterCheckboxProps: { label: 'Deleted?' },
+				hiddenByDefault: true,
 				enableSorting: false,
-				enableColumnActions: false,
-				size: 100,
+				cell: ({ value }) => (value === undefined ? '' : String(value)),
 			},
 		],
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
+		[variants, theme]
 	)
-	// #endregion
-
-	// #region State
-	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([
-		{ id: 'deleted', value: false },
-	])
-	const [columnFilterFns, setColumnFilterFns] = //filter modes
-		useState<MRT_ColumnFilterFnsState>(
-			Object.fromEntries(
-				columns.map(({ accessorKey, columnFilterModeOptions }) => [
-					accessorKey,
-					columnFilterModeOptions?.at(0) ?? 'equals',
-				])
-			)
-		)
-	const [globalFilter, setGlobalFilter] = useState('')
-	const [sorting, setSorting] = useState<MRT_SortingState>([
-		{ id: 'deleted', desc: false },
-		{ id: 'published', desc: true },
-		// { id: 'name', desc: false },
-	])
-	const rowVirtualizerInstanceRef = useRef<MRT_Virtualizer<HTMLDivElement, HTMLTableRowElement>>(null)
-	useEffect(() => {
-		try {
-			//scroll to the top of the table when the sorting changes
-			rowVirtualizerInstanceRef.current?.scrollToIndex(0)
-		} catch (e) {
-			console.error(e)
-		}
-	}, [sorting])
-	// #endregion
-
-	// #region Table Setup
-	const table = useMantineReactTable({
-		// #region Basic Props
-		columns,
-		data: data ?? [],
-		// #endregion
-		// #region Enable features / Table options
-
-		enableColumnResizing: true,
-		enableFacetedValues: true,
-		enablePinning: true,
-		enableRowActions: true,
-		enableRowNumbers: false,
-		enableExpanding: true,
-		// enableMultiRowSelection: true,
-		// enableRowSelection: (row) => !row.getParentRow(),
-		enableMultiRowSelection: false,
-		enableRowSelection: false,
-		enableHiding: true,
-		// getRowId: (originalRow) => originalRow.id,
-		positionGlobalFilter: 'left',
-		rowCount: data?.length ?? 0,
-		// #endregion
-		// #region Filtering/Sorting
-		columnFilterDisplayMode: 'popover',
-		enableColumnFilterModes: true,
-		enableGlobalFilterModes: true,
-		isMultiSortEvent: () => true,
-		maxLeafRowFilterDepth: 0,
-		// #endregion
-
-		// #region Virtualization
-		enablePagination: false,
-		enableRowVirtualization: true,
-		rowVirtualizerInstanceRef,
-		rowVirtualizerProps: { overscan: 10, estimateSize: () => 45 },
-		// #endregion
-
-		// #region State
-		initialState: {
-			columnPinning: { left: ['mrt-row-expand', 'mrt-row-select', 'mrt-row-actions', 'name'] },
-			columnVisibility: {
-				published: false,
-				deleted: false,
-				id: false,
-			},
-			showColumnFilters: false,
-			showGlobalFilter: true,
-		},
-		state: {
-			columnFilterFns,
-			columnFilters,
-			globalFilter,
-			isLoading,
-			showAlertBanner: isError || isFetching || isLoading,
-			showProgressBars: isFetching,
-			sorting,
-			density: 'xs',
-		},
-		// #endregion
-		// #region Mantine component props to be passed down
-		mantinePaperProps: { miw: '85%' },
-		mantineProgressProps: ({ isTopToolbar }) => ({ style: { display: isTopToolbar ? 'block' : 'none' } }),
-		mantineSelectCheckboxProps: ({ row }) => ({ style: { display: row.getCanSelect() ? 'block' : 'none' } }),
-		mantineTableContainerProps: { mah: '60vh' },
-		mantineTableBodyCellProps: ({ row }) => ({
-			sx: (theme) => ({
-				textDecoration: row.original.deleted ? 'line-through' : 'none',
-				color: row.original.published ? undefined : theme.other.colors.secondary.darkGray,
-			}),
-		}),
-		mantineToolbarAlertBannerProps: getAlertBanner({ isLoading, isFetching, isError }),
-		mantineTableProps: { striped: true },
-		// #endregion
-		// #region Override sections
-		renderToolbarInternalActions: ({ table }) => (
-			<Group spacing='xs'>
-				<ToolbarButtons columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
-				<MRT_ToggleFiltersButton table={table} />
-				<MRT_ShowHideColumnsButton table={table} />
-			</Group>
-		),
-		renderBottomToolbar: ({ table }) => <BottomBar table={table} />,
-		renderRowActions: ({ row }) => <RowAction row={row} />,
-		// #endregion
-		// #region Events
-		onColumnFilterFnsChange: setColumnFilterFns,
-		onColumnFiltersChange: setColumnFilters,
-		onGlobalFilterChange: setGlobalFilter,
-		onSortingChange: setSorting,
-		// #endregion
-	})
-	// #endregion
 
 	return (
-		<>
-			<MantineReactTable table={table} />
-			{/* <ReactTableDevtools table={table} panelProps={{ className: classes.devTool }} containerElement='div' /> */}
-		</>
+		<DataTable
+			data={results as TableRow[]}
+			columns={columns}
+			getSubRows={getOrgTableSubRows}
+			columnFilters={columnFilters}
+			onColumnFiltersChange={setColumnFilters}
+			sorting={sorting}
+			onSortingChange={setSorting}
+			globalFilter={globalFilter}
+			onGlobalFilterChange={setGlobalFilter}
+			globalFilterPlaceholder='Search Organizations'
+			pagination={pagination}
+			onPaginationChange={setPagination}
+			mode={{ serverSide: true, rowCount: total }}
+			isLoading={isLoading}
+			isFetching={isFetching}
+			isError={isError}
+			getRowStyle={getOrgTableRowStyle}
+			toolbarExtra={
+				<>
+					<TableToolbarToggle
+						columnId='published'
+						columnFilters={columnFilters}
+						setColumnFilters={setColumnFilters}
+						cycle={[undefined, true, false]}
+						label={publishedFilterLabel}
+						icon={publishedFilterIcon}
+					/>
+					<TableToolbarToggle
+						columnId='deleted'
+						columnFilters={columnFilters}
+						setColumnFilters={setColumnFilters}
+						cycle={[false, true, undefined]}
+						label={deletedFilterLabel}
+						icon={deletedFilterIcon}
+						slash={isDeletedFilterExcluded}
+					/>
+				</>
+			}
+		/>
 	)
-}
-
-interface ToolbarButtonsProps {
-	columnFilters: MRT_ColumnFiltersState
-	setColumnFilters: Dispatch<SetStateAction<MRT_ColumnFiltersState>>
-}
-interface BottomBarProps {
-	table: MRT_TableInstance<RestucturedDataItem>
-}
-interface RowActionProps {
-	row: MRT_Row<RestucturedDataItem>
-}
-type RestucturedDataItem = Omit<ApiOutput['organization']['forOrganizationTable'][number], 'locations'> & {
-	subRows: ApiOutput['organization']['forOrganizationTable'][number]['locations']
 }

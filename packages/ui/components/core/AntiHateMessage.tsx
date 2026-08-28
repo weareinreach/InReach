@@ -1,4 +1,4 @@
-import { Card, createStyles, Modal, rem, Stack, Text, Title } from '@mantine/core'
+import { Card, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { setCookie } from 'cookies-next'
 import { useTranslation } from 'next-i18next/pages'
@@ -6,19 +6,10 @@ import { useCallback } from 'react'
 
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
+import classes from './AntiHateMessage.module.css'
 import { Button } from './Button'
 
-const useMessageBodyStyles = createStyles((theme) => ({
-	text: {
-		color: theme.other.colors.secondary.darkGray,
-	},
-	card: {
-		padding: `${rem(20)} !important`,
-	},
-}))
-
 export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
-	const { classes } = useMessageBodyStyles()
 	const { t } = useTranslation()
 
 	const title = stacked ? (
@@ -36,12 +27,12 @@ export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
 	)
 
 	const content = stacked ? (
-		<Stack spacing={16} align='center'>
+		<Stack gap={16} align='center'>
 			{title}
 			{body}
 		</Stack>
 	) : (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			{title}
 			{body}
 		</Stack>
@@ -56,23 +47,11 @@ export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
 	)
 }
 
-const usePopupStyles = createStyles((theme) => ({
-	content: {
-		[theme.fn.smallerThan('xs')]: {
-			marginTop: 'auto',
-			marginBottom: 'auto',
-			height: rem(340),
-			borderRadius: `${rem(16)} !important`,
-		},
-	},
-}))
-
 export const AntiHatePopup = ({ autoLaunch }: { autoLaunch: boolean }) => {
 	const [opened, handler] = useDisclosure(autoLaunch)
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const { isMobile } = useScreenSize()
-	const { classes } = usePopupStyles()
 	const closeHandler = useCallback(() => {
 		setCookie('inr-ahpop', 'true', { maxAge: 60 * 60 * 24 * 30 })
 		handler.close()
@@ -86,9 +65,9 @@ export const AntiHatePopup = ({ autoLaunch }: { autoLaunch: boolean }) => {
 			closeOnEscape={false}
 			centered
 			fullScreen={isMobile}
-			classNames={classes}
+			classNames={{ content: classes.popupContent }}
 		>
-			<Stack spacing={24} align='center'>
+			<Stack gap={24} align='center'>
 				<AntiHateMessage noCard stacked />
 				<Button variant={variants.Button.primaryLg} onClick={closeHandler} fullWidth>
 					{t('words.accept')}

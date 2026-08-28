@@ -47,7 +47,7 @@ export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProp
 	const rightSection = useMemo(() => {
 		if (displayIcons) {
 			return (
-				<Group position='right' spacing={0} noWrap>
+				<Group justify='flex-end' gap={0} wrap='nowrap'>
 					{displayIcons}
 				</Group>
 			)
@@ -58,7 +58,7 @@ export const ModalTitle = <TIcons extends ToolbarIcons[]>(props: _ModalTitleProp
 		return null
 	}, [displayIcons, rightText, variants])
 	return (
-		<Group position='apart' align='center' noWrap>
+		<Group justify='space-between' align='center' wrap='nowrap'>
 			<Box maw='70%' style={{ overflow: 'hidden' }}>
 				<Breadcrumb {...breadcrumb} />
 			</Box>

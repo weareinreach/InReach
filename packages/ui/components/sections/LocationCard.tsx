@@ -242,11 +242,11 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 				variant={variants.Link.card}
 			>
 				<Card w='100%' variant={variants.Card.hoverCoolGray}>
-					<Stack spacing={32}>
-						<Stack spacing={12}>
+					<Stack gap={32}>
+						<Stack gap={12}>
 							<Title order={2}>{t('common:remote-services')}</Title>
 						</Stack>
-						<Stack spacing={12}>
+						<Stack gap={12}>
 							<Title order={3}>{t('services', { ns: 'common' })}</Title>
 							<Badge.Group>
 								{remoteServCategories.map((tsKey) => (
@@ -255,7 +255,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 							</Badge.Group>
 						</Stack>
 
-						<Group spacing={24}>
+						<Group gap={24}>
 							<Badge.Group>
 								<Badge.Attribute icon='carbon:globe'>
 									{t('additional.offers-remote-services', { ns: 'attribute' })}
@@ -311,8 +311,8 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 			variant={variants.Link.card}
 		>
 			<Card w='100%' variant={variants.Card.hoverCoolGray} ref={cardRef}>
-				<Stack spacing={32}>
-					<Stack spacing={12}>
+				<Stack gap={32}>
+					<Stack gap={12}>
 						<Group>
 							<Title order={2} variant={getTextVariant}>
 								{data.name}
@@ -328,7 +328,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 						)}
 					</Stack>
 					{hasServices && (
-						<Stack spacing={12}>
+						<Stack gap={12}>
 							<Title order={3}>{t('services', { ns: 'common' })}</Title>
 							<Badge.Group>
 								{data.services.map((tsKey) => (
@@ -337,7 +337,7 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 							</Badge.Group>
 						</Stack>
 					)}
-					<Group spacing={24}>
+					<Group gap={24}>
 						{hasAttributes && (
 							<Badge.Group>
 								{data.accessible !== undefined && (

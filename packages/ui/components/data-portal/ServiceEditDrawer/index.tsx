@@ -42,7 +42,7 @@ import { processAccessInstructions, processAttributes } from '~ui/modals/Service
 import { AttributeEditWrapper } from './AttributeEditWrapper'
 import { FormSchema, type TFormSchema } from './schemas'
 import { ServiceAreaItem } from './ServiceAreaItem'
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 import { InlineTextInput } from '../InlineTextInput'
 
 const isObject = (x: unknown): x is object => typeof x === 'object'
@@ -58,7 +58,10 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		const [pendingAutoAttach, setPendingAutoAttach] = useState(false)
 		const hasAutoAttachedRef = useRef(false)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
-		const { classes } = useStyles()
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this service. Please try again.',
+			icon: 'warning',
+		})
 		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
 		const apiUtils = api.useUtils()
@@ -156,6 +159,13 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 				}
 				form.reset(form.getValues())
 				setHasAttributeChanges(false)
+			},
+			// Without this, a failed save (network blip, a server-side validation rejection, an
+			// expired session, ...) left the UI silently stuck: `onSuccess` never runs, so the form
+			// never resets - Save stays enabled and the drawer/"Unsaved Changes" modal never closes -
+			// with no indication to the person editing that anything went wrong at all.
+			onError: () => {
+				notifySaveError()
 			},
 		})
 
@@ -273,7 +283,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					return null
 				}
 				return (
-					<Stack key={key} spacing={0}>
+					<Stack key={key} gap={0}>
 						<Title order={3}>{countryTranslation.of(country)}</Title>
 						<List className={classes.badgeGroup} listStyleType='none'>
 							{value}
@@ -337,7 +347,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 			data && !isNew ? (
 				<>
 					<Text variant={variants.Text.utility1}>Visibility Status</Text>
-					<Group noWrap>
+					<Group wrap='nowrap'>
 						<Checkbox name='published' control={form.control} label='Published' />
 						<Checkbox name='deleted' control={form.control} label='Deleted' />
 					</Group>
@@ -383,7 +393,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					<Section.Divider title={t('service.cost')}>
 						{attributes.cost.map(({ badgeProps, detailProps, ...wrapperProps }) => (
 							<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
-								<Stack align='start' spacing={0}>
+								<Stack align='start' gap={0}>
 									{badgeProps && <Badge.Attribute {...badgeProps} />}
 									{detailProps && <ModalText {...detailProps} />}
 								</Stack>
@@ -455,7 +465,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
 						<Drawer.Header>
-							<Group position='apart' w='100%'>
+							<Group justify='space-between' w='100%'>
 								<Breadcrumb option='close' onClick={handleClose} />
 								<Group>
 									<Tooltip label='Must save other changes first' disabled={!hasFormChanges} withArrow>
@@ -475,7 +485,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									<Button
 										variant={variants.Button.primaryLg}
 										leftIcon={<Icon icon='carbon:save' />}
-										loading={serviceUpsert.isLoading}
+										loading={serviceUpsert.isPending}
 										onClick={handleSave}
 										disabled={!hasFormChanges}
 									>
@@ -503,7 +513,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									data-isdirty={dirtyFields.description}
 									autosize
 								/>
-								<Stack spacing={10}>
+								<Stack gap={10}>
 									<Text variant={variants.Text.utility1}>Services</Text>
 									<ServiceSelect name='services' control={form.control} data-isdirty={dirtyFields.services}>
 										<Badge.Group>
@@ -531,11 +541,11 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 							<Stack align='center'>
 								<Text>You have unsaved changes</Text>
-								<Group noWrap>
+								<Group wrap='nowrap'>
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon='carbon:save' />}
-										loading={serviceUpsert.isLoading}
+										loading={serviceUpsert.isPending}
 										onClick={handleSave}
 										disabled={!hasFormChanges}
 									>

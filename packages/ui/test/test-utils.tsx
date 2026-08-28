@@ -8,12 +8,7 @@ import { storybookTheme } from '~ui/theme/storybook'
 import { testI18n } from './i18nTestInstance'
 
 const Providers = ({ children }: { children: ReactNode }) => (
-	<MantineProvider
-		theme={storybookTheme}
-		withCSSVariables={false}
-		withGlobalStyles={true}
-		withNormalizeCSS={false}
-	>
+	<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
 		<I18nextProvider i18n={testI18n}>{children}</I18nextProvider>
 	</MantineProvider>
 )

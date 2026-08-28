@@ -68,7 +68,7 @@ export default {
 					{
 						result: {
 							data: {
-								json: mockReviews,
+								json: { results: mockReviews, total: mockReviews.length },
 							},
 						},
 					},

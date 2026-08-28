@@ -32,7 +32,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Forgot Password Modal',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 	},
 } satisfies Meta<typeof ForgotPasswordModal>
 

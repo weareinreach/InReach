@@ -107,8 +107,8 @@ export const SearchDistance = () => {
 	)
 
 	return (
-		<Stack spacing={16}>
-			<Stack spacing={16} pb={16}>
+		<Stack gap={16}>
+			<Stack gap={16} pb={16}>
 				<Title order={3}>{t('words.distance')}</Title>
 
 				<Slider

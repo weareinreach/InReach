@@ -1,4 +1,4 @@
-import { createStyles, Grid, Group, Stack, Tabs, Title } from '@mantine/core'
+import { Grid, Group, Stack, Tabs, Title } from '@mantine/core'
 import { compareArrayVals } from 'crud-object-diff'
 import { type InferGetServerSidePropsType, type NextPage } from 'next'
 import Head from 'next/head'
@@ -29,14 +29,8 @@ import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocat
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const useStyles = createStyles((theme) => ({
-	tabsList: {
-		position: 'sticky',
-		top: 0,
-		zIndex: 10,
-		backgroundColor: theme.other.colors.secondary.white,
-	},
-}))
+import classes from './edit.module.css'
+
 const formSchema = z.object({
 	id: z.string(),
 	name: z.string().nullable().optional(),
@@ -80,8 +74,6 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 		values: defaultFormValues,
 	})
 
-	const { classes } = useStyles()
-
 	const servicesRef = useRef<HTMLDivElement>(null)
 	const photosRef = useRef<HTMLDivElement>(null)
 	const reviewsRef = useRef<HTMLDivElement>(null)
@@ -119,7 +111,10 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 		}
 	}, [data, status])
 
-	const tabHandler = useCallback((tab: string) => {
+	const tabHandler = useCallback((tab: string | null) => {
+		if (!tab) {
+			return
+		}
 		setActiveTab(tab)
 		switch (tab) {
 			case 'services': {
@@ -160,7 +155,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 				</title>
 			</Head>
 			<FormProvider {...formMethods}>
-				<Grid.Col xs={12} sm={8} order={1}>
+				<Grid.Col span={{ base: 12, sm: 8 }} order={1}>
 					<Toolbar
 						breadcrumbProps={{
 							option: 'back',
@@ -175,7 +170,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 						}}
 						organizationId={data.organization.id}
 					/>
-					<Stack pt={24} align='flex-start' spacing={40}>
+					<Stack pt={24} align='flex-start' gap={40}>
 						<ListingBasicInfo
 							data={{
 								slug,
@@ -190,17 +185,17 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 							edit
 							location
 						/>
-						<Tabs w='100%' value={activeTab} onTabChange={tabHandler}>
+						<Tabs w='100%' value={activeTab} onChange={tabHandler}>
 							<Tabs.List className={classes.tabsList}>
 								<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 								<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
 								<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 							</Tabs.List>
-							<Stack spacing={40} pt={40}>
-								<Stack spacing={20} ref={servicesRef}>
-									<Stack spacing={8}>
+							<Stack gap={40} pt={40}>
+								<Stack gap={20} ref={servicesRef}>
+									<Stack gap={8}>
 										<Title order={3}>{'Associate service(s) to this location'}</Title>
-										<Group noWrap position='apart'>
+										<Group wrap='nowrap' justify='space-between'>
 											<MultiSelectPopover
 												label='Services available'
 												data={orgServices}
@@ -214,7 +209,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 											</ServiceEditDrawer>
 										</Group>
 									</Stack>
-									<Stack spacing={8}>
+									<Stack gap={8}>
 										<Title order={3}>{'Associated services'}</Title>
 										<ServicesInfoCard parentId={data.id} />
 									</Stack>
@@ -230,7 +225,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 					</Stack>
 				</Grid.Col>
 				<Grid.Col order={2}>
-					<Stack spacing={40}>
+					<Stack gap={40}>
 						<ContactSection role='org' parentId={data.id} edit />
 						<VisitCard locationId={data.id} edit />
 					</Stack>

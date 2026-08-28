@@ -1,12 +1,11 @@
 import {
 	Anchor,
-	createStyles,
 	Divider,
 	Group,
 	Pagination as MantinePagination,
 	type PaginationProps as MantinePaginationProps,
-	rem,
 	Text,
+	useMantineTheme,
 } from '@mantine/core'
 import { usePagination } from '@mantine/hooks'
 import { useRouter } from 'next/router'
@@ -14,27 +13,16 @@ import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
+import { cx } from '~ui/lib/cx'
 
 import { Link } from './Link'
-
-const useStyles = createStyles((theme) => ({
-	paginationItem: {
-		height: rem(24),
-		minWidth: rem(12),
-		textAlign: 'center',
-	},
-	paginationActive: {
-		borderBottom: `${rem(2)} solid ${theme.other.colors.secondary.black}`,
-		borderRadius: 0,
-	},
-}))
+import classes from './Pagination.module.css'
 
 interface ItemsProps {
 	paginationController: ReturnType<typeof usePagination>
 }
 const Items = ({ paginationController }: ItemsProps) => {
 	const { range, active } = paginationController
-	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const clickHandler = useCallback(
 		(pageNum: number) => () => paginationController.setPage(pageNum),
@@ -42,7 +30,7 @@ const Items = ({ paginationController }: ItemsProps) => {
 	)
 
 	return (
-		<Group spacing={12}>
+		<Group gap={12}>
 			{range.map((item) => {
 				if (item === 'dots') {
 					return (
@@ -81,8 +69,8 @@ const Items = ({ paginationController }: ItemsProps) => {
 export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, ref) => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
-	const { classes } = useStyles()
 	const variants = useCustomVariant()
+	const theme = useMantineTheme()
 	const currentPage = typeof router.query.page === 'string' ? parseInt(router.query.page) : 1
 	const [page, setPage] = useState(currentPage)
 
@@ -112,7 +100,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 
 	return (
 		<MantinePagination.Root value={page} onChange={pageChangeHandler} defaultValue={currentPage} {...props}>
-			<Group ref={ref} spacing={24} position='apart'>
+			<Group ref={ref} gap={24} justify='space-between'>
 				<Items paginationController={paginationController} />
 				<Group>
 					<Link
@@ -120,6 +108,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 						variant={variants.Link.pagination}
 						className={classes.paginationItem}
 						onClick={paginationController.previous}
+						{...(activePage === 1 ? { c: theme.other.colors.tertiary.coolGray } : {})}
 					>
 						{t('words.prev')}
 					</Link>
@@ -129,6 +118,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 						variant={variants.Link.pagination}
 						className={classes.paginationItem}
 						onClick={paginationController.next}
+						{...(activePage === props.total ? { c: theme.other.colors.tertiary.coolGray } : {})}
 					>
 						{t('words.next')}
 					</Link>

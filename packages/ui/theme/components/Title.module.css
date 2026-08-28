@@ -1,0 +1,39 @@
+.root:is(h1) {
+	margin-top: 0;
+}
+.root:is(h2) {
+	margin-top: 0;
+}
+.root:is(h3) {
+	margin-top: 0;
+}
+.root:is(h4) {
+	margin-top: 0;
+}
+.root:is(h5) {
+	margin-top: 0;
+}
+.root:is(h6) {
+	margin-top: 0;
+}
+
+@media (max-width: em(755px)) {
+	.root:is(h1) {
+		font-size: rem(40px);
+	}
+	.root:is(h2) {
+		font-size: rem(24px);
+	}
+	.root:is(h3) {
+		font-size: rem(16px);
+	}
+	.root:is(h4) {
+		font-size: rem(16px);
+	}
+	.root:is(h5) {
+		font-size: rem(16px);
+	}
+	.root:is(h6) {
+		font-size: rem(16px);
+	}
+}

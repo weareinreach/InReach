@@ -1,0 +1,41 @@
+/* This trigger sits at the far right edge of the phone number field, so Mantine's default
+   left-anchored dropdown positioning would expand it off past the right edge of the screen.
+   Anchoring the right edge instead makes it expand leftward, back over the phone number field,
+   which is also what keeps it fully on screen. */
+.countrySelectDropdown {
+	width: max-content !important;
+	left: unset !important;
+	right: 0;
+}
+/* Wide enough for the flag *and* the clear/chevron section (38px, `.countrySelectSection` below)
+   without the two overlapping - at the old 48px total, the section's absolutely-positioned,
+   higher-z-index box covered ~80% of this root's width, silently intercepting clicks meant for
+   the flag/dropdown trigger underneath it. */
+.countrySelectRoot {
+	width: rem(64px);
+}
+.countrySelectInput {
+	border: none;
+	padding: 0;
+	/* Reserves the section's own width so the input's content/hit area stops short of it instead
+	   of sitting underneath it. */
+	padding-right: rem(38px);
+	height: 2rem;
+}
+.countrySelectSection {
+	padding-right: 0;
+}
+
+.phoneEntrySection {
+	padding: 0 rem(4px);
+	margin: rem(2px) 0;
+	border-left: 1px solid var(--ir-color-primary-light-gray);
+}
+
+/* Mantine 9 defaults `withCheckIcon: true` on Select, showing a checkmark next to the
+   selected option. Design wants a green background highlight instead - no checkmark
+   (see `withCheckIcon={false}` on the country Select in withHookForm.tsx). Mantine marks
+   the selected Combobox option with `data-checked="true"`. */
+.countrySelectOption[data-checked='true'] {
+	background-color: var(--ir-color-primary-ally-green);
+}

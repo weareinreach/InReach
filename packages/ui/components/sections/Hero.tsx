@@ -1,15 +1,4 @@
-import {
-	Box,
-	createStyles,
-	Group,
-	rem,
-	Stack,
-	Tabs,
-	Text,
-	Title,
-	Transition,
-	useMantineTheme,
-} from '@mantine/core'
+import { Box, Group, Stack, Tabs, Text, Title, Transition, useMantineTheme } from '@mantine/core'
 import { useReducedMotion } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
@@ -18,69 +7,35 @@ import { useEffect, useState } from 'react'
 import { Link } from '~ui/components/core/Link'
 import { SearchBox } from '~ui/components/core/SearchBox'
 import { useCustomVariant } from '~ui/hooks'
+import { cx } from '~ui/lib/cx'
 import { PrivacyStatementModal } from '~ui/modals/PrivacyStatement'
 
-const useBoxStyles = createStyles((theme) => ({
-	base: {
-		width: '100%',
-		height: '100%',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		borderRadius: rem(8),
-	},
-	wrapper: {
-		height: rem(40),
-		borderRadius: rem(8),
-	},
-	text: {
-		...theme.other.utilityFonts.utility1,
-		textAlign: 'center',
-		verticalAlign: 'center',
-	},
-	service: {
-		width: rem(200),
-	},
-	community: {
-		width: rem(250),
-	},
-}))
-
-const useHeroStyles = createStyles((theme) => ({
-	stack: {
-		margin: `${rem(48)} ${rem(0)}`,
-		[theme.fn.largerThan('xs')]: {
-			margin: `${rem(80)} ${rem(0)}`,
-		},
-		[theme.fn.largerThan('sm')]: {
-			margin: `${rem(100)} ${rem(0)}`,
-		},
-	},
-	subheading: {
-		fontSize: rem(16),
-		lineHeight: 1.5,
-		[theme.fn.largerThan('sm')]: {
-			fontSize: rem(24),
-			lineHeight: 1.25,
-		},
-	},
-	findText: {
-		...theme.other.utilityFonts.utility3,
-		[theme.fn.largerThan('sm')]: {
-			...theme.other.utilityFonts.utility2,
-		},
-	},
-}))
+import classes from './Hero.module.css'
 
 type RevolvingBoxProps = {
 	role: 'services' | 'community'
 }
 type RandomArr = <T extends Array<unknown>>(arr: T) => T[number]
 
-const randomArrMember: RandomArr = (arr) => arr[Math.floor(Math.random() * arr.length)]
+// Purely decorative (picking which hero copy/pattern to show) - uses the Web Crypto API rather
+// than `Math.random()` regardless, since that's a cheap, universally-available upgrade. Uses
+// rejection sampling rather than `randomUint32 / 2**32` - dividing to get a float introduces bias
+// (some outputs become more likely than others), which the plain division approach does not avoid.
+const secureRandomInt = (maxExclusive: number): number => {
+	const arr = new Uint32Array(1)
+	const limit = 0x100000000 - (0x100000000 % maxExclusive)
+	let value: number
+	do {
+		crypto.getRandomValues(arr)
+		value = arr[0] as number
+	} while (value >= limit)
+	return value % maxExclusive
+}
+
+const randomArrMember: RandomArr = (arr) => arr[secureRandomInt(arr.length)]
 const getRandomNumber = (min: number, max: number) => {
 	// Get the random number between min and max.
-	return Math.floor(Math.random() * (max - min + 1)) + min
+	return min + secureRandomInt(max - min + 1)
 }
 
 const RevolvingBox = ({ role }: RevolvingBoxProps) => {
@@ -184,7 +139,6 @@ const RevolvingBox = ({ role }: RevolvingBoxProps) => {
 	const [item, setItem] = useState(initialItem)
 
 	const [previousItem, setPreviousItem] = useState(initialItem)
-	const { classes, cx } = useBoxStyles()
 	const style = cx(classes.wrapper, role === 'community' ? classes.community : classes.service)
 
 	const [transition, setTransition] = useState(true)
@@ -212,6 +166,14 @@ const RevolvingBox = ({ role }: RevolvingBoxProps) => {
 				exitDuration={reduceMotion ? 0 : outTime}
 				timingFunction='ease-in'
 				keepMounted={true}
+				// `keepMountedMode='display-none'` is required here: the default `'activity'` mode
+				// wraps the exited subtree (including the nested Transition below) in React's
+				// `Activity` component, which suspends that subtree's effects while hidden. Since the
+				// nested Transition's own enter/exit state machine lives in a `useEffect`, it can miss
+				// the `mounted` flip while its ancestor Activity boundary is hidden, leaving the text
+				// stuck in its exited (invisible) state even after the background has faded back in.
+				// Plain `display: none` toggling has no such effect-suspension semantics.
+				keepMountedMode='display-none'
 				onEntered={() => setPreviousItem(item)}
 			>
 				{(outerStyle) => (
@@ -223,9 +185,13 @@ const RevolvingBox = ({ role }: RevolvingBoxProps) => {
 							timingFunction='ease-in-out'
 							exitDuration={reduceMotion ? 0 : outTime}
 							keepMounted={true}
+							keepMountedMode='display-none'
 						>
 							{(styles) => (
-								<Text style={{ ...styles, color: item.fg }} className={classes.text}>
+								// `c` (not `style.color`) is required here: the theme sets a default `c` on
+								// every Text, and Mantine resolves that after merging `style`, so a plain
+								// `style.color` override was always losing to the theme's black default.
+								<Text c={item.fg} style={styles} className={classes.text}>
 									{item.text}
 								</Text>
 							)}
@@ -239,22 +205,21 @@ const RevolvingBox = ({ role }: RevolvingBoxProps) => {
 
 export const Hero = () => {
 	const { t } = useTranslation(['landingPage', 'common'])
-	const { classes } = useHeroStyles()
 	const [isLoading, setLoading] = useState(false)
 	const variants = useCustomVariant()
 
 	return (
-		<Stack spacing={32} align='center' className={classes.stack}>
-			<Stack spacing={0} align='center'>
+		<Stack gap={32} align='center' className={classes.stack}>
+			<Stack gap={0} align='center'>
 				<Title order={1}>🌈</Title>
-				<Title order={1} align='center'>
+				<Title order={1} ta='center'>
 					{t('hero.heading')}
 				</Title>
 			</Stack>
-			<Text align='center' className={classes.subheading}>
+			<Text ta='center' className={classes.subheading}>
 				{t('hero.subheading')}
 			</Text>
-			<Group spacing={12} position='center'>
+			<Group gap={12} justify='center'>
 				<Trans
 					i18nKey='hero.find-resources'
 					ns='landingPage'
@@ -267,10 +232,10 @@ export const Hero = () => {
 					}}
 				/>
 			</Group>
-			<Stack spacing={0} align='center'>
+			<Stack gap={0} align='center'>
 				<Group maw={636} w='100%'>
 					<Tabs defaultValue='location' w='100%'>
-						<Tabs.List grow position='apart'>
+						<Tabs.List grow justify='space-between'>
 							<Tabs.Tab value='location'>{t('common:words.location')}</Tabs.Tab>
 							<Tabs.Tab value='name'>{t('common:words.organization')}</Tabs.Tab>
 						</Tabs.List>
@@ -298,7 +263,7 @@ export const Hero = () => {
 							Link: (
 								<PrivacyStatementModal
 									component={Link}
-									variant={variants.Link.inheritStyle}
+									variant={variants.Link.inheritStyleUnderline}
 								></PrivacyStatementModal>
 							),
 						}}

@@ -29,7 +29,6 @@ if (process.env.NODE_ENV !== 'production') {
 	global.crowdinOta = crowdinOta
 }
 declare global {
-	// eslint-disable-next-line no-var
 	var crowdinOta: { common: OtaClient; database: OtaClient } | undefined
 }
 const { crowdinDistTimestamp, fetchCrowdinDbKey, fetchCrowdinFile } = createCommonFns(crowdinOta)

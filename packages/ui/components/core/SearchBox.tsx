@@ -1,30 +1,27 @@
 import {
-	Autocomplete,
-	type AutocompleteProps,
-	Box,
 	Center,
-	createStyles,
+	Combobox,
 	Group,
 	Loader,
-	rem,
 	ScrollArea,
-	type ScrollAreaProps,
 	Text,
+	TextInput,
+	type TextInputProps,
+	useCombobox,
+	useMantineTheme,
 } from '@mantine/core'
-import { useForm, type UseFormReturnType } from '@mantine/form'
+import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import regexEscape from 'escape-string-regexp'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
 import {
-	createContext,
+	type ChangeEventHandler,
 	type Dispatch,
-	forwardRef,
 	type KeyboardEventHandler,
 	type ReactNode,
 	type SetStateAction,
 	useCallback,
-	useContext,
 	useEffect,
 	useMemo,
 	useState,
@@ -37,167 +34,30 @@ import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { trackSearchPerformance } from './search'
+import classes from './SearchBox.module.css'
 
 const DEFAULT_RADIUS = 200
 const DEFAULT_UNIT = 'mi'
-
-const SearchBoxContext = createContext<SearchBoxContextValues | null>(null)
-
-const useSearchBoxContext = () => {
-	const context = useContext(SearchBoxContext)
-	if (!context) {
-		throw new Error('useSearchBoxContext must be used within a SearchBoxProvider')
-	}
-	return context
-}
-interface SearchBoxContextValues {
-	isOrgSearch: boolean
-	orgSearchLoading: boolean
-	form: UseFormReturnType<FormValues>
-}
-
-const useStyles = createStyles((theme) => ({
-	autocompleteContainer: {
-		width: '100%',
-		paddingLeft: theme.spacing.md,
-		paddingRight: theme.spacing.md,
-		'&:focus': {
-			borderColor: theme.other.colors.secondary.black,
-			backgroundColor: theme.other.colors.secondary.white,
-		},
-		maxWidth: rem(636),
-	},
-	autocompleteWrapper: {
-		padding: 0,
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-	},
-	emptyLocation: {
-		backgroundColor: theme.other.colors.primary.lightGray,
-	},
-	rightIcon: {
-		minWidth: rem(102),
-		'&:hover': {
-			cursor: 'pointer',
-		},
-		marginRight: rem(18),
-	},
-	leftIcon: {
-		color: theme.other.colors.secondary.black,
-	},
-	itemComponent: {
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-		alignItems: 'center',
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-		'&:last-child': {
-			borderBottom: 'none',
-		},
-	},
-	unmatchedText: {
-		...theme.other.utilityFonts.utility2,
-		color: theme.other.colors.secondary.darkGray,
-	},
-	matchedText: {
-		color: theme.other.colors.secondary.black,
-	},
-	locationResult: {
-		...theme.other.utilityFonts.utility2,
-		display: 'block',
-	},
-	resultContainer: {
-		minWidth: 'fit-content',
-	},
-	pinToLeft: {
-		left: '0 !important',
-	},
-}))
+/** Sentinel option value for the "suggest a resource" row appended to org search results. */
+const SUGGEST_VALUE = '__suggest-resource__'
 
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
 const notBlank = (value?: string) => !!value && value.length > 0
 
-const SuggestItem = () => {
-	const { classes } = useStyles()
-	const { form } = useSearchBoxContext()
-	const router = useRouter()
-	const suggestClickHandler = useCallback(() => {
-		searchBoxEvent.suggestResource(form.values.search)
-		router.push('/suggest')
-	}, [form.values.search, router])
-
-	return (
-		<Box className={classes.itemComponent} onClick={suggestClickHandler}>
-			<Text className={classes.unmatchedText}>
-				<Trans i18nKey='search.suggest-resource' />
-			</Text>
-		</Box>
-	)
+const matchText = (result: string, textToMatch: string) => {
+	const matcher = new RegExp(`(${regexEscape(textToMatch)})`, 'ig')
+	return reactStringReplace(result, matcher, (match, i) => (
+		<span key={i} className={classes.matchedText}>
+			{match}
+		</span>
+	))
 }
-
-const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
-	({ label, fetching, placeId: _placeId, ...others }: AutocompleteItem, ref) => {
-		const { classes } = useStyles()
-		const { isOrgSearch, form } = useSearchBoxContext()
-		const matchText = useCallback(
-			(result: string, textToMatch: string) => {
-				const matcher = new RegExp(`(${regexEscape(textToMatch)})`, 'ig')
-				const replaced = reactStringReplace(result, matcher, (match, i) => (
-					<span key={i} className={classes.matchedText}>
-						{match}
-					</span>
-				))
-				return replaced
-			},
-			[classes]
-		)
-
-		if (fetching) {
-			return (
-				<div ref={ref} {...others} className={classes.itemComponent}>
-					<Center>
-						<Loader />
-					</Center>
-				</div>
-			)
-		}
-		return isOrgSearch ? (
-			<div ref={ref} {...others} className={classes.itemComponent}>
-				<Text className={classes.unmatchedText} truncate>
-					{matchText(label, form.values.search)}
-				</Text>
-			</div>
-		) : (
-			<div ref={ref} {...others} className={classes.itemComponent}>
-				<Text className={classes.locationResult} truncate>
-					{label}
-				</Text>
-				<Text className={classes.unmatchedText} truncate>
-					{others.subheading}
-				</Text>
-			</div>
-		)
-	}
-)
-AutoCompleteItem.displayName = 'AutoCompleteItem'
-
-// only used for Organization results - always displays suggestion item last.
-const ResultContainer = forwardRef<HTMLDivElement, ScrollAreaProps>(({ children, style, ...props }, ref) => {
-	const { orgSearchLoading } = useSearchBoxContext()
-	return (
-		<ScrollArea viewportRef={ref} style={{ width: '100%', ...style }} {...props}>
-			{children}
-			{!orgSearchLoading && <SuggestItem />}
-		</ScrollArea>
-	)
-})
-ResultContainer.displayName = 'ResultContainer'
 
 export const SearchBox = ({
 	type,
@@ -208,15 +68,21 @@ export const SearchBox = ({
 	placeholderTextKey,
 	setSearchValue,
 }: SearchBoxProps) => {
-	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
+	const theme = useMantineTheme()
 	const { t } = useTranslation()
 	const router = useRouter()
 	const [locationSearch, setLocationSearch] = useState('')
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
 	const { searchStateActions, searchState } = useSearchState()
-	const form = useForm<FormValues>({ initialValues: { search: searchState.searchTerm ?? initialValue } })
+	// `searchState.searchTerm` is the location search's persisted term (see its `location`-only
+	// usage in analytics on the results page) - it's shared app-wide via `SearchStateProvider`, so
+	// seeding the organization-name box from it too meant that box showed whatever location was
+	// last searched instead of starting empty.
+	const form = useForm<FormValues>({
+		initialValues: { search: (isOrgSearch ? initialValue : searchState.searchTerm) ?? initialValue },
+	})
 	const [search] = useDebouncedValue(form.values.search, 400)
 
 	// tRPC functions
@@ -317,14 +183,14 @@ export const SearchBox = ({
 	const rightIcon = useMemo(() => {
 		if (isLoading || searchLoading) {
 			return (
-				<Group>
-					<Loader size={32} mr={40} />
+				<Group className={classes.rightIcon}>
+					<Loader size={32} />
 				</Group>
 			)
 		}
 		if (form.values.search?.length > 0) {
 			return (
-				<Group spacing={4} noWrap className={classes.rightIcon} onClick={resetHandler}>
+				<Group gap={4} wrap='nowrap' className={classes.rightIcon} onClick={resetHandler}>
 					<Text>{t('clear')}</Text>
 					<Icon icon='carbon:close' />
 				</Group>
@@ -338,16 +204,16 @@ export const SearchBox = ({
 			? {
 					placeholder: `${t(placeholderTextKey ?? 'search.organization-placeholder')}`,
 					rightSection: rightIcon,
-					icon: <Icon icon='carbon:search' className={classes.leftIcon} />,
+					leftSection: <Icon icon='carbon:search' className={classes.leftIcon} />,
 					variant: 'default',
 				}
 			: {
 					placeholder: `${t(placeholderTextKey ?? 'search.location-placeholder')}`,
 					rightSection: rightIcon,
-					icon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
+					leftSection: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
 					variant: 'filled',
 				}
-	) satisfies Partial<AutocompleteProps>
+	) satisfies Partial<TextInputProps>
 
 	// org search: route to org page.
 	// location search: pass placeId to tRPC (geo.geoByPlaceId), which will redirect to search after coordinates are fetched
@@ -359,7 +225,10 @@ export const SearchBox = ({
 					setLoading(false)
 					return
 				}
-				searchStateActions.setSearchTerm(item.value)
+				// Not `searchStateActions.setSearchTerm(item.value)` here - that field is the
+				// location search's persisted term (shared app-wide via `SearchStateProvider`), so
+				// writing an org name into it would leak into the location box/analytics on any
+				// later return to the results page.
 				searchBoxEvent.searchOrg(search, item.value)
 				router.push({
 					pathname: '/org/[slug]',
@@ -387,6 +256,28 @@ export const SearchBox = ({
 		[isOrgSearch, router, search, searchState.services, searchStateActions, setLoading, setLocationSearch]
 	)
 
+	const combobox = useCombobox({
+		onDropdownClose: () => combobox.resetSelectedOption(),
+	})
+
+	// `Combobox.Dropdown` renders (and shows its bordered options container) purely based on the
+	// combobox's own open/closed state, unlike the old `Autocomplete` this replaced, which hid itself
+	// automatically whenever there was nothing to show. With nothing typed yet, `Combobox.Options`
+	// renders none of its three conditional children, leaving an empty bordered box whose
+	// `border-bottom` alone was visible as a stray line under the input. Only open on focus/change
+	// once there's actually something to display.
+	// `isOrgSearch && !orgSearchLoading` is also true before anything's been typed at all - the
+	// query is simply `enabled: false` (not "loading"), not merely finished loading - so without
+	// `notBlank(search)` this opened the dropdown (showing the "suggest an organization" prompt)
+	// on bare focus, before the user had entered any search term.
+	const hasResults = results.length > 0 || noResults
+	const orgSuggestionAvailable = isOrgSearch && !orgSearchLoading && notBlank(search)
+	const hasDropdownContent = hasResults || orgSuggestionAvailable
+
+	// Enter submits the top result without visually highlighting it while typing - matching the
+	// previous Autocomplete's behavior. `combobox.selectFirstOption()` would do this via Mantine's
+	// own keyboard-selection machinery, but it also paints the first option with the active/selected
+	// background on every keystroke, which this component never did before.
 	const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
 		(event) => {
 			if (event.key === 'Enter') {
@@ -398,41 +289,130 @@ export const SearchBox = ({
 		},
 		[results, selectionHandler]
 	)
-	const searchBoxContentValues = useMemo(
-		() => ({ isOrgSearch, form, orgSearchLoading }),
-		[isOrgSearch, form, orgSearchLoading]
+
+	const handleOptionSubmit = useCallback(
+		(value: string) => {
+			if (value === SUGGEST_VALUE) {
+				searchBoxEvent.suggestResource(form.values.search)
+				router.push('/suggest')
+				return
+			}
+			const item = results.find((result) => result.value === value)
+			if (item) {
+				selectionHandler(item)
+			}
+		},
+		[results, selectionHandler, form.values.search, router]
 	)
 
+	const { onChange: searchOnChange, ...searchFieldProps } = form.getInputProps('search')
+
+	const handleSearchInputChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+		(event) => {
+			searchOnChange(event)
+			combobox.openDropdown()
+		},
+		[searchOnChange, combobox]
+	)
+
+	const handleSearchInputFocus = useCallback(() => {
+		if (hasDropdownContent) {
+			combobox.openDropdown()
+		}
+	}, [hasDropdownContent, combobox])
+
+	const handleSearchInputBlur = useCallback(() => combobox.closeDropdown(), [combobox])
+
 	return (
-		<SearchBoxContext.Provider value={searchBoxContentValues}>
-			<Autocomplete
-				classNames={{
-					input: isOrgSearch
-						? classes.autocompleteContainer
-						: cx(classes.autocompleteContainer, classes.emptyLocation),
-					itemsWrapper: classes.autocompleteWrapper,
-					dropdown: pinToLeft ? cx(classes.resultContainer, classes.pinToLeft) : classes.resultContainer,
-				}}
-				itemComponent={AutoCompleteItem}
-				dropdownComponent={isOrgSearch ? ResultContainer : undefined}
-				data={results}
-				dropdownPosition='bottom'
-				radius='xl'
-				onItemSubmit={selectionHandler}
-				onKeyDown={handleKeyDown}
-				limit={20}
-				disabled={isLoading}
-				label={label}
-				withinPortal
-				nothingFound={
-					noResults ? <Text variant={variants.Text.utility1}>{t('search.no-results')}</Text> : null
-				}
-				defaultValue={initialValue}
-				filter={() => true}
-				{...fieldRole}
-				{...form.getInputProps('search')}
-			/>
-		</SearchBoxContext.Provider>
+		<Combobox
+			store={combobox}
+			withinPortal
+			position='bottom'
+			middlewares={{ flip: false, shift: true }}
+			onOptionSubmit={handleOptionSubmit}
+			classNames={{
+				options: classes.autocompleteWrapper,
+				dropdown: pinToLeft ? cx(classes.resultContainer, classes.pinToLeft) : classes.resultContainer,
+			}}
+		>
+			<Combobox.Target>
+				<TextInput
+					classNames={{
+						input: cx(
+							isOrgSearch
+								? classes.autocompleteContainer
+								: cx(classes.autocompleteContainer, classes.emptyLocation),
+							rightIcon && classes.hasRightSection
+						),
+						section: rightIcon ? classes.tightRightSection : undefined,
+					}}
+					radius='xl'
+					disabled={isLoading}
+					label={label}
+					{...fieldRole}
+					{...searchFieldProps}
+					onChange={handleSearchInputChange}
+					onFocus={handleSearchInputFocus}
+					onBlur={handleSearchInputBlur}
+					onKeyDown={handleKeyDown}
+				/>
+			</Combobox.Target>
+			<Combobox.Dropdown>
+				<ScrollArea.Autosize mah={280} type='scroll'>
+					<Combobox.Options>
+						{results.map((item) => {
+							const { label: itemLabel, fetching, subheading } = item
+							let optionContent: ReactNode
+							if (fetching) {
+								optionContent = (
+									<Center>
+										<Loader />
+									</Center>
+								)
+							} else if (isOrgSearch) {
+								optionContent = (
+									<Text c={theme.other.colors.secondary.darkGray} className={classes.unmatchedText} truncate>
+										{matchText(itemLabel, form.values.search)}
+									</Text>
+								)
+							} else {
+								optionContent = (
+									<>
+										<Text className={classes.locationResult} truncate>
+											{itemLabel}
+										</Text>
+										<Text
+											c={theme.other.colors.secondary.darkGray}
+											className={classes.unmatchedText}
+											truncate
+										>
+											{subheading}
+										</Text>
+									</>
+								)
+							}
+							return (
+								<Combobox.Option value={item.value} key={item.value} className={classes.itemComponent}>
+									{optionContent}
+								</Combobox.Option>
+							)
+						})}
+						{results.length === 0 && noResults && (
+							<Combobox.Empty>
+								<Text variant={variants.Text.utility1}>{t('search.no-results')}</Text>
+							</Combobox.Empty>
+						)}
+						{isOrgSearch && !orgSearchLoading && notBlank(search) && (
+							<Combobox.Option value={SUGGEST_VALUE} className={classes.itemComponent}>
+								<Text c={theme.other.colors.secondary.darkGray} className={classes.unmatchedText}>
+									<Trans i18nKey='search.suggest-resource' />
+								</Text>
+							</Combobox.Option>
+						)}
+					</Combobox.Options>
+				</ScrollArea.Autosize>
+			</Combobox.Dropdown>
+		</Combobox>
 	)
 }
 

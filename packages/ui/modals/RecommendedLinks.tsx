@@ -5,8 +5,10 @@ import { forwardRef } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
+import { cx } from '~ui/lib/cx'
 
 import { ModalTitle } from './ModalTitle'
+import classes from './RecommendedLinks.module.css'
 
 const RecommendedLinksModalBody = forwardRef<HTMLButtonElement, RecommendedLinksModalProps>((props, ref) => {
 	const { t } = useTranslation()
@@ -24,26 +26,22 @@ const RecommendedLinksModalBody = forwardRef<HTMLButtonElement, RecommendedLinks
 	return (
 		<>
 			<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile} zIndex={999999}>
-				<Stack align='center' spacing={16}>
-					<Text align='center' fz={40}>
+				<Stack align='center' gap={16}>
+					<Text ta='center' fz={40}>
 						{t('recommended-links.emoji')}
 					</Text>
-					<Title order={2} align='center'>
+					<Title order={2} ta='center'>
 						{t('recommended-links.title')}
 					</Title>
-					<Text align='center' variant={variants.Text.darkGray}>
+					<Text ta='center' variant={variants.Text.darkGray}>
 						{t('recommended-links.body')}
 					</Text>
-					<Stack spacing={16} style={{ maxWidth: '100%' }}>
+					<Stack gap={16} style={{ maxWidth: '100%' }}>
 						{buttons.map(([key, btn]) => (
 							<Button
 								key={key}
 								variant='secondary-icon'
-								sx={{
-									paddingLeft: isMobile ? '1rem' : undefined,
-									paddingRight: isMobile ? '1rem' : undefined,
-									textDecoration: 'none',
-								}}
+								className={cx(isMobile ? classes.buttonMobile : classes.button)}
 								onClick={getButtonClickHandler(btn.link)}
 							>
 								<Text ta='center' variant={variants.Text.utility1} fz={isMobile ? '.75rem' : undefined}>

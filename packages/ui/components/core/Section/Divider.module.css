@@ -1,0 +1,4 @@
+.sectionDivider {
+	background-color: var(--ir-color-primary-light-gray);
+	padding: rem(12px);
+}

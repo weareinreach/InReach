@@ -5,14 +5,14 @@ import { forwardRef, useMemo } from 'react'
 
 import { type ButtonProps } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 import { QuickPromotionModal } from '~ui/modals/QuickPromotion'
 import { ReviewModal } from '~ui/modals/Review'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 export const Review = forwardRef<HTMLButtonElement, ReviewProps>(
 	({ omitLabel, className, ...props }, ref) => {
-		const { classes, cx } = useStyles()
 		const theme = useMantineTheme()
 		const { t } = useTranslation('common')
 		const { status: sessionStatus } = useSession()
@@ -25,8 +25,13 @@ export const Review = forwardRef<HTMLButtonElement, ReviewProps>(
 		}, [sessionStatus])
 
 		return (
-			<Box component={BaseComponent} ref={ref} className={cx(classes.button, className)} {...props}>
-				<Group spacing={0} noWrap>
+			// `BaseComponent` is a union of two `createPolymorphicComponent` factories - TS can't
+			// unify their generic `component` signatures even though both wrap `Button` with a
+			// `ButtonProps`-compatible interface. Bypassed here rather than redesigning either modal's
+			// polymorphic typing.
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			<Box component={BaseComponent as any} ref={ref} className={cx(classes.button, className)} {...props}>
+				<Group gap={0} wrap='nowrap'>
 					<Icon
 						icon='carbon:star'
 						color={theme.other.colors.secondary.black}

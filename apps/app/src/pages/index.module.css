@@ -1,0 +1,88 @@
+.callout1text {
+	/* `!important` needed because the plain `<Text>` in the "who we are" callout takes this class as
+	   its only styling (no `variant` prop) - `theme.components.Text.styles` in the theme (see
+	   packages/ui/theme/common.tsx) unconditionally sets an inline default color for any `Text`
+	   whose `variant` doesn't resolve to an override, and inline style otherwise wins over this
+	   plain class rule. */
+	color: var(--ir-color-secondary-white) !important;
+}
+
+.callout1font {
+	font-size: rem(24px);
+	text-align: center;
+}
+
+.noHover {
+	background-color: transparent;
+}
+
+.card {
+	min-height: rem(246px);
+	border-radius: rem(8px);
+	width: 100%;
+}
+@media (min-width: $mantine-breakpoint-md) {
+	.card {
+		max-width: 45%;
+	}
+}
+
+.reviewCard {
+	/* Without an explicit min-height, this card (and the carousel viewport wrapping it, via its own
+	   `h='100%'`) shrinks to whatever the shortest review's 2-line-clamped text needs - visibly
+	   shorter/cramped than the "Our values" cards above it, which reserve `min-height: rem(246px)`
+	   for the same reason. Match that same floor here so the testimonial carousel doesn't look
+	   squeezed regardless of how short a given review is. */
+	min-height: rem(260px);
+	border: none !important;
+}
+
+.banner {
+	background-color: var(--ir-color-secondary-cornflower);
+	font-size: rem(16px);
+	font-weight: var(--ir-font-weight-semibold);
+	line-height: 1.25;
+	color: var(--ir-color-secondary-white);
+	width: 100%;
+	height: rem(52px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.banner {
+		margin-top: rem(-40px);
+	}
+}
+
+.indicators {
+	bottom: rem(-40px);
+	gap: rem(16px);
+	position: relative;
+	margin-bottom: rem(40px);
+}
+
+.indicator {
+	height: rem(12px);
+	width: rem(12px);
+	background-color: var(--ir-color-secondary-black);
+	opacity: 0.3;
+}
+.indicator[data-active] {
+	opacity: 0.8;
+}
+
+.viewport {
+	border-radius: rem(16px);
+	box-shadow: rem(0px) rem(8px) rem(24px) rgba(0, 0, 0, 0.1);
+}
+
+.container {
+	max-width: rem(350px);
+}
+@media (min-width: $mantine-breakpoint-xs) {
+	.container {
+		max-width: unset;
+	}
+}

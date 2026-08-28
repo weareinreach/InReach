@@ -1,0 +1,5 @@
+.actionBlock {
+	display: flex;
+	flex-wrap: wrap;
+	gap: rem(10px);
+}

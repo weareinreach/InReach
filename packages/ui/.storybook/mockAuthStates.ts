@@ -37,6 +37,26 @@ const states = {
 			status: 'authenticated',
 		},
 	},
+	// `adminAuthed`'s permission strings ('canAdmin'/'canUser') don't match any real permission the
+	// app checks for - data-portal tables/actions gate on the actual permission names
+	// ('dataPortalAdmin', 'root', etc, see e.g. packages/ui/components/data-portal/DownloadTable.tsx
+	// and CsvDownload.tsx), so no existing state here could ever render their admin-only content.
+	dataPortalAdminAuthed: {
+		title: 'data portal admin session',
+		session: {
+			data: {
+				user: {
+					id: 'user_01HHCVWRJPDATAPORTALADMIN01',
+					permissions: ['dataPortalAdmin'],
+					roles: ['admin', 'user'],
+					name: 'Data Portal Administrator',
+					email: 'placeholder.dataportaladmin@gmail.com',
+				},
+				expires,
+			},
+			status: 'authenticated',
+		},
+	},
 	userPic: {
 		title: 'user w/ pic',
 		session: {

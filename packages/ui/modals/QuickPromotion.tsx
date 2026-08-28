@@ -3,7 +3,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next/pages'
-import { forwardRef, type MouseEventHandler, useCallback, useEffect, useMemo } from 'react'
+import { type ElementType, forwardRef, type MouseEventHandler, useCallback, useEffect, useMemo } from 'react'
 
 import { Breadcrumb, type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
 import { Button, type ButtonProps } from '~ui/components/core/Button'
@@ -13,7 +13,7 @@ import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { LoginModalLauncher, SignupModalLauncher } from './LoginSignUp'
 
 const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModalProps>(
-	({ autoLaunch, noClose, onClose, ...props }, ref) => {
+	({ autoLaunch, noClose, onClose, component: Component, ...props }, ref) => {
 		const { t } = useTranslation(['common'])
 		const variants = useCustomVariant()
 		const { data: session, status } = useSession()
@@ -59,7 +59,7 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 			[router, noClose, handleClose]
 		)
 		const modalTitle = (
-			<Group position='apart' align='center' noWrap>
+			<Group justify='space-between' align='center' wrap='nowrap'>
 				<Box maw='70%' style={{ overflow: 'hidden' }}>
 					<Breadcrumb {...titleProps} />
 				</Box>
@@ -69,8 +69,8 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={handleClose} fullScreen={isMobile}>
-					<Stack align='center' spacing={24}>
-						<Stack align='center' spacing={16}>
+					<Stack align='center' gap={24}>
+						<Stack align='center' gap={16}>
 							<Trans
 								i18nKey='quick-promo-heading'
 								components={{
@@ -88,12 +88,12 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 								}}
 							/>
 						</Stack>
-						<Stack align='center' spacing={16}>
+						<Stack align='center' gap={16}>
 							<Trans
 								i18nKey='quick-promo-body'
 								components={{
 									textUtility1: (
-										<Text ta='center' variant={variants.Text.utility1}>
+										<Text ta='center' variant={variants.Text.utility1} fw={500}>
 											.
 										</Text>
 									),
@@ -106,7 +106,19 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
 					</Stack>
 				</Modal>
-				{!autoLaunch && <Box component={Button} ref={ref} onClick={handleOpen} {...props} />}
+				{!autoLaunch &&
+					(Component && typeof Component !== 'string' ? (
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						<Component ref={ref} onClick={handleOpen} {...(props as any)} />
+					) : (
+						<Box
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							component={(Component ?? Button) as any}
+							ref={ref}
+							onClick={handleOpen}
+							{...props}
+						/>
+					))}
 			</>
 		)
 	}
@@ -118,6 +130,7 @@ export const QuickPromotionModal = createPolymorphicComponent<typeof Button, Qui
 )
 
 export interface QuickPromotionModalProps extends ButtonProps {
+	component?: ElementType
 	/** Automatically launch if no session? */
 	autoLaunch?: boolean
 	noClose?: boolean

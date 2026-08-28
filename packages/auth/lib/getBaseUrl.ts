@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 export const getBaseUrl = () => {
 	if (typeof window !== 'undefined') return '' // browser should use relative url

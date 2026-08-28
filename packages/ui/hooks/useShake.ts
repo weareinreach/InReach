@@ -1,19 +1,13 @@
-import { createStyles } from '@mantine/core'
 import { useEventListener, useTimeout } from '@mantine/hooks'
-import { useState } from 'react'
+import { type CSSProperties, useState } from 'react'
 
 import { shake } from '~ui/theme/animation'
 
-const useStyles = createStyles((theme, { variant }: UseShakeProps) => ({
-	animate: {
-		animation: `${shake[variant]} 0.1s ease-in-out 0s 2`,
-	},
-}))
-
 export const useShake = ({ variant }: UseShakeProps) => {
-	const { classes } = useStyles({ variant })
 	const [active, setActive] = useState(false)
-	const animateCSS = active ? classes.animate : undefined
+	const animateStyle: CSSProperties | undefined = active
+		? { animation: `${shake[variant]} 0.1s ease-in-out 0s 2` }
+		: undefined
 	const { start, clear } = useTimeout(() => setActive(false), 2000)
 	const ref = useEventListener('animationend', () => {
 		setActive(false)
@@ -25,7 +19,7 @@ export const useShake = ({ variant }: UseShakeProps) => {
 		start()
 	}
 
-	return { shakeRef: ref, animateCSS, fireEvent }
+	return { shakeRef: ref, animateStyle, fireEvent }
 }
 
 export interface UseShakeProps {
