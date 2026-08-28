@@ -1,28 +1,11 @@
-// import { rem } from '@mantine/core'
+import { type CSSProperties } from 'react'
 
-import { type VariantObj } from '~ui/types/mantine'
+type VariantStyles = Record<string, Partial<Record<'root', CSSProperties>>>
 
-export const Title = {
-	darkGray: (theme) => ({
-		root: {
-			color: `${theme.other.colors.secondary.darkGray} !important`,
-		},
-	}),
-	darkGrayStrikethru: (theme) => ({
-		root: {
-			color: theme.other.colors.secondary.darkGray,
-			textDecoration: 'line-through',
-		},
-	}),
-	coolGray: (theme) => ({
-		root: {
-			color: theme.other.colors.tertiary.coolGray,
-		},
-	}),
-	coolGrayStrikethru: (theme) => ({
-		root: {
-			textDecoration: 'line-through',
-			color: theme.other.colors.tertiary.coolGray,
-		},
-	}),
-} satisfies VariantObj
+/** `coolGray`/`coolGrayStrikethru` were dropped - confirmed zero usage repo-wide. */
+export const Title = (theme: import('@mantine/core').MantineTheme): VariantStyles => ({
+	darkGray: { root: { color: `${theme.other.colors.secondary.darkGray} !important` } },
+	darkGrayStrikethru: {
+		root: { color: theme.other.colors.secondary.darkGray, textDecoration: 'line-through' },
+	},
+})

@@ -1,4 +1,3 @@
-'use client'
 import { MantineProvider } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import { Work_Sans } from 'next/font/google'
@@ -12,7 +11,7 @@ import { consentEvent } from '@weareinreach/analytics/events'
 import { EditModeProvider } from '@weareinreach/ui/providers/EditMode'
 import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
-import { appCache, appTheme } from '@weareinreach/ui/theme'
+import { appTheme } from '@weareinreach/ui/theme'
 import 'react-hook-consent/dist/styles/style.css'
 
 const fontWorkSans = Work_Sans({
@@ -33,11 +32,11 @@ const fontWorkSans = Work_Sans({
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PrivacyStatementModal = dynamic<any>(() =>
-	import('@weareinreach/ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
-)
+const PrivacyStatementModal = dynamic<any>(() => import('@weareinreach/ui/modals/PrivacyStatement'), {
+	ssr: false,
+})
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Link = dynamic<any>(() => import('@weareinreach/ui/components/core/Link').then((mod) => mod.Link))
+const Link = dynamic<any>(() => import('@weareinreach/ui/components/core/Link'), { ssr: false })
 
 export const Providers = ({ children, session }: ProviderProps) => {
 	const { t } = useTranslation('common')
@@ -52,7 +51,6 @@ export const Providers = ({ children, session }: ProviderProps) => {
 	}, [])
 
 	const mantineTheme = useMemo(() => ({ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }), [])
-	const mantineCache = useMemo(() => appCache, [])
 
 	const consentOptions: ConsentOptions = useMemo(
 		() => ({
@@ -108,7 +106,7 @@ export const Providers = ({ children, session }: ProviderProps) => {
 	)
 
 	return (
-		<MantineProvider withGlobalStyles withNormalizeCSS theme={mantineTheme} emotionCache={mantineCache}>
+		<MantineProvider theme={mantineTheme} defaultColorScheme='light'>
 			<ConsentProvider options={consentOptions}>
 				<SessionProvider session={session}>
 					<EditModeProvider>

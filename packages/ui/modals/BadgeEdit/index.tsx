@@ -14,7 +14,7 @@ import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 import { ModalTitle } from '../ModalTitle'
 
 const FormSchema = z.object({
@@ -25,7 +25,6 @@ type FormData = z.infer<typeof FormSchema>
 
 const _BadgeEditModal = forwardRef<HTMLButtonElement, Props>(
 	({ orgId, badgeType, onSaved, ...props }, ref) => {
-		const { classes } = useStyles()
 		const { t } = useTranslation()
 		const [opened, handler] = useDisclosure(false)
 		const { data: initialData } = api.organization.forBadgeEditModal.useQuery(
@@ -96,12 +95,12 @@ const _BadgeEditModal = forwardRef<HTMLButtonElement, Props>(
 					opened={opened}
 					onClose={handler.close}
 				>
-					<Stack spacing={20} align='center'>
+					<Stack gap={20} align='center'>
 						<Title
 							order={2}
 						>{`Edit ${badgeType === 'organization-leadership' ? 'Organization Leadership' : 'Community Focus'} Badges`}</Title>
 						<Chip.Group multiple control={form.control} name='badges'>
-							<Stack spacing={12}>
+							<Stack gap={12}>
 								{badgeOptions &&
 									badgeOptions.map(({ id, tsKey, tsNs, icon }) => (
 										<Chip.Item key={id} value={id}>
@@ -117,7 +116,7 @@ const _BadgeEditModal = forwardRef<HTMLButtonElement, Props>(
 							onClick={handleSubmit}
 							disabled={!form.formState.isDirty}
 							leftIcon={<Icon icon={updateAttributes.isSuccess ? 'carbon:checkmark' : 'carbon:save'} />}
-							loading={updateAttributes.isLoading}
+							loading={updateAttributes.isPending}
 						>
 							{t('save-changes')}
 						</Button>

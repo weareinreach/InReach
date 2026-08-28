@@ -10,7 +10,7 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useMemo } from 'react'
@@ -29,7 +29,7 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 		email: z.string().email({ message: t('form-error-enter-valid-email') }),
 	})
 	const passwordResetForm = useForm<FormProps>({
-		validate: zodResolver(EmailSchema),
+		validate: schemaResolver(EmailSchema, { sync: true }),
 		validateInputOnBlur: true,
 		initialValues: {
 			email: '',
@@ -40,7 +40,7 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const pwResetHandler = api.user.forgotPassword.useMutation({ onSuccess: () => {} })
-	const { animateCSS, fireEvent } = useShake({ variant: 1 })
+	const { animateStyle, fireEvent } = useShake({ variant: 1 })
 	const [opened, handler] = useDisclosure(false)
 	const { isMobile } = useScreenSize()
 	const modalTitle = useMemo(
@@ -73,14 +73,14 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 	return (
 		<>
 			<Modal
-				className={animateCSS}
+				style={animateStyle}
 				title={modalTitle}
 				opened={opened}
 				onClose={handler.close}
 				zIndex={550}
 				fullScreen={isMobile}
 			>
-				<Stack align='center' spacing={24}>
+				<Stack align='center' gap={24}>
 					<Title order={2}>{t('reset-password')}</Title>
 					<Text variant={variants.Text.utility4darkGray}>{t('reset-password-message')}</Text>
 					<TextInput
@@ -94,8 +94,7 @@ const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModa
 						onClick={closeOrMutateHandler}
 						variant='primary-icon'
 						fullWidth
-						loaderPosition='center'
-						loading={pwResetHandler.isLoading}
+						loading={pwResetHandler.isPending}
 						// disabled={!passwordResetForm.isValid()}
 					>
 						{t(pwResetHandler.isSuccess ? 'words.close' : 'send-email')}

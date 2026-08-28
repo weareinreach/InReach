@@ -1,0 +1,71 @@
+.utility1 {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.utility2 {
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.utility3 {
+	font-size: rem(14px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.utility4 {
+	font-size: rem(14px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.h1 {
+	font-size: rem(40px);
+	line-height: 1.25;
+	font-weight: 500;
+}
+.h2 {
+	font-size: rem(24px);
+	line-height: 1.25;
+	font-weight: 500;
+}
+.h3 {
+	font-size: rem(16px);
+	line-height: 1.25;
+	font-weight: 600;
+}
+.h4 {
+	font-size: rem(16px);
+	line-height: 1.25;
+	font-weight: 600;
+}
+.h5 {
+	font-size: rem(16px);
+	line-height: 1.25;
+	font-weight: 600;
+}
+.h6 {
+	font-size: rem(16px);
+	line-height: 1.25;
+	font-weight: 600;
+}
+
+.input {
+	border: rem(1px) dashed var(--ir-color-secondary-teal);
+	background-color: lighten(#28939c, 0.9);
+	padding: rem(6px) rem(8px) !important;
+	height: unset;
+	min-height: unset;
+}
+.input:focus,
+.input:focus-within {
+	border-color: var(--ir-color-secondary-black);
+	border-width: rem(1px);
+	background-color: var(--ir-color-secondary-white);
+}
+.input[data-isdirty='true'] {
+	background-color: lighten(#28939c, 0.6);
+}

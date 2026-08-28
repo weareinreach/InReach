@@ -4,8 +4,9 @@ import { type CSSProperties, useCallback } from 'react'
 import { type FieldValues, useController, type UseControllerProps, useWatch } from 'react-hook-form'
 
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 export const MultiSelectPopover = <T extends FieldValues>({
 	name,
@@ -37,9 +38,19 @@ export const MultiSelectPopover = <T extends FieldValues>({
 	const selected = selectedItems?.length ?? 0
 
 	const [opened, menuHandler] = useDisclosure()
-	const { classes, cx } = useStyles({ selectedCount: selected, dimmed: Boolean(labelClassName) })
+	const dimmed = Boolean(labelClassName)
 
-	const selectedCountIcon = <Text className={classes.count}>{selected}</Text>
+	const selectedCountIcon = (
+		<Text
+			className={cx(
+				classes.count,
+				dimmed ? classes.countBgDark : classes.countBgBlack,
+				selected < 1 ? classes.countHidden : classes.countVisible
+			)}
+		>
+			{selected}
+		</Text>
+	)
 
 	const handleCheckboxGroupChange: (e: string[]) => void = useCallback(
 		(e) => {
@@ -55,13 +66,13 @@ export const MultiSelectPopover = <T extends FieldValues>({
 			<Popover.Target>
 				<UnstyledButton
 					onClick={menuHandler.toggle}
-					className={cx({ [classes.button]: true, [classes.indicateDirty]: indicateWhenDirty })}
+					className={cx(classes.button, indicateWhenDirty ? classes.indicateDirty : undefined)}
 					style={style}
 					w={fullWidth ? '100%' : undefined}
 					data-isdirty={fieldState.isDirty}
 				>
-					<Group noWrap position='apart' spacing={16}>
-						<Group noWrap spacing={8}>
+					<Group wrap='nowrap' justify='space-between' gap={16}>
+						<Group wrap='nowrap' gap={8}>
 							{selectedCountIcon}
 							<Text style={{ display: 'inline-block' }} className={labelClassName}>
 								{label}
@@ -72,12 +83,7 @@ export const MultiSelectPopover = <T extends FieldValues>({
 				</UnstyledButton>
 			</Popover.Target>
 			<Popover.Dropdown>
-				<ScrollArea.Autosize
-					mah={250}
-					placeholder={null}
-					onPointerEnterCapture={undefined}
-					onPointerLeaveCapture={undefined}
-				>
+				<ScrollArea.Autosize mah={250}>
 					<Checkbox.Group
 						error={fieldState.error?.message}
 						value={value}

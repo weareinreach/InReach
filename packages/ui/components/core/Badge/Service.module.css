@@ -1,0 +1,12 @@
+.root {
+	background-color: var(--ir-color-primary-light-gray);
+	border-color: var(--ir-color-secondary-white);
+}
+.label {
+	font-size: var(--mantine-font-size-sm);
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.label {
+		font-size: var(--mantine-font-size-md);
+	}
+}

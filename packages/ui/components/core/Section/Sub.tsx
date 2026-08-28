@@ -3,7 +3,7 @@ import { type ReactNode } from 'react'
 
 export const _Sub = ({ title, children, ...props }: SubsectionProps) => {
 	return (
-		<Stack spacing={12} {...props}>
+		<Stack gap={12} {...props}>
 			{title && <Title order={3}>{title}</Title>}
 			{children}
 		</Stack>

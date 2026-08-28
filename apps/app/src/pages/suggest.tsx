@@ -8,9 +8,10 @@ import { trpcServerClient } from '@weareinreach/api/trpc'
 import { SuggestOrg } from '@weareinreach/ui/components/sections/SuggestOrg'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const QuickPromotionModal = dynamic(() =>
-	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
+const QuickPromotionModal = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal),
+	{ ssr: false }
 )
 
 const SuggestResource = () => {
@@ -20,7 +21,7 @@ const SuggestResource = () => {
 
 	return (
 		<>
-			<Grid.Col sm={8}>
+			<Grid.Col span={{ sm: 8 }}>
 				<SuggestOrg
 					authPromptState={{ overlay, setOverlay, hasAuth: Boolean(session && status === 'authenticated') }}
 				/>

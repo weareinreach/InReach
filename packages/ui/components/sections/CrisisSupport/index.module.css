@@ -1,0 +1,11 @@
+.parentCard {
+	background: var(--ir-color-tertiary-yellow);
+}
+.categoryBadge {
+	background: var(--ir-color-secondary-white);
+	width: 100%;
+}
+.staySafeCard {
+	border: rem(1px) solid var(--ir-color-secondary-white);
+	border-radius: rem(16px);
+}

@@ -1,11 +1,9 @@
 import { NavigationProgress, nprogress } from '@mantine/nprogress'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next/pages'
 import { useEffect } from 'react'
 
 export const PageLoadProgress = () => {
 	const router = useRouter()
-	const { t } = useTranslation('common')
 
 	useEffect(() => {
 		const handleStart = (url: string) => url !== router.asPath && nprogress.start()
@@ -23,5 +21,5 @@ export const PageLoadProgress = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router.asPath])
 
-	return <NavigationProgress autoReset={true} progressLabel={t('loading-page') as string} size={8} />
+	return <NavigationProgress size={8} />
 }

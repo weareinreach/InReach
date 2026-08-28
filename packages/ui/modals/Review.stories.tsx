@@ -46,7 +46,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Review Modal',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 	},
 } satisfies Meta<typeof ReviewModal>
 

@@ -9,19 +9,16 @@ import { type ReactNode, useEffect } from 'react'
 import { donateEvent } from '@weareinreach/analytics/events'
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
 import { Link } from '@weareinreach/ui/components/core/Link'
-import { MobileLangPicker } from '@weareinreach/ui/components/core/MobileLangPicker'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { Icon } from '@weareinreach/ui/icon'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
-const GenericContentModal = dynamic(() =>
-	import('@weareinreach/ui/modals/GenericContent').then((mod) => mod.GenericContentModal)
-)
+const GenericContentModal = dynamic(() => import('@weareinreach/ui/modals/GenericContent'), { ssr: false })
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
-const PrivacyStatementModal = dynamic(() =>
-	import('@weareinreach/ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
-)
+const PrivacyStatementModal = dynamic(() => import('@weareinreach/ui/modals/PrivacyStatement'), {
+	ssr: false,
+})
 
 const SupportItem = ({ tKey }: SupportItemProps) => {
 	const { t } = useTranslation('common')
@@ -64,14 +61,6 @@ const SupportPage = () => {
 			>
 				<SupportItem tKey='donate.to-inreach' />
 			</Link>,
-		],
-		[
-			8,
-			<MobileLangPicker key={8}>
-				<Link href='/' {...linkVar}>
-					<SupportItem tKey='language_choose_mobile' />
-				</Link>
-			</MobileLangPicker>,
 		],
 		[
 			0,
@@ -118,10 +107,10 @@ const SupportPage = () => {
 	]
 
 	return (
-		<Grid.Col xs={12} sm={12}>
-			<Stack align='flex-start' spacing={32} w='100%'>
+		<Grid.Col span={{ base: 12, sm: 12 }}>
+			<Stack align='flex-start' gap={32} w='100%'>
 				<Title order={2}>{t('words.support')}</Title>
-				<Stack w='100%' spacing={0}>
+				<Stack w='100%' gap={0}>
 					{support.map(([key, item]) => (
 						<div key={key} style={{ width: '100%' }}>
 							{item}

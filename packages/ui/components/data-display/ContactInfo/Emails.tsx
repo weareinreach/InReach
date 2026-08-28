@@ -17,7 +17,7 @@ import { Icon } from '~ui/icon'
 import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useCommonStyles } from './common.styles'
+import classes from './common.module.css'
 import { type EmailsProps } from './types'
 
 const formatNs = nsFormatter(['common', 'user-title'])
@@ -103,7 +103,7 @@ const EmailsDisplay = ({
 
 			const item = isEditMode ? (
 				<AttributeEditWrapper key={id} active={email.active ?? false} id={id}>
-					<Stack spacing={4} key={id}>
+					<Stack gap={4} key={id}>
 						<Link external href={href} variant={linkVariant} onClick={handleTrackClick(address)}>
 							{address}
 						</Link>
@@ -111,7 +111,7 @@ const EmailsDisplay = ({
 					</Stack>
 				</AttributeEditWrapper>
 			) : (
-				<Stack spacing={4} key={id}>
+				<Stack gap={4} key={id}>
 					<Link external href={href} variant={linkVariant} onClick={handleTrackClick(address)}>
 						{address}
 					</Link>
@@ -141,7 +141,7 @@ const EmailsDisplay = ({
 	const headingContent = shouldShowDirectHeading ? t('direct.email') : t('words.email')
 
 	return (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>{headingContent}</Title>
 			{content}
 		</Stack>
@@ -155,7 +155,6 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	const { t } = useTranslation(formatNs(orgId))
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
-	const { classes } = useCommonStyles()
 	const { data } = api.orgEmail.forContactInfoEdit.useQuery({ parentId })
 	const isLocation = isIdFor('orgLocation', parentId)
 	const { data: linkableEmails } = api.orgEmail.getLinkOptions.useQuery(
@@ -240,7 +239,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 				case deleted: {
 					return {
 						email: (
-							<Group spacing={4} noWrap>
+							<Group gap={4} wrap='nowrap'>
 								<Text variant={variants.Text.darkGrayStrikethru}>{address}</Text>
 							</Group>
 						),
@@ -250,7 +249,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 				case !published: {
 					return {
 						email: (
-							<Group spacing={4} noWrap>
+							<Group gap={4} wrap='nowrap'>
 								<Icon icon='carbon:view-off' color={theme.other.colors.secondary.darkGray} height={24} />
 								<Text variant={variants.Text.darkGray}>{address}</Text>
 							</Group>
@@ -268,7 +267,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		}
 
 		const item = (
-			<Stack spacing={4} key={id}>
+			<Stack gap={4} key={id}>
 				<EmailDrawer id={id} external component={Link} variant={variants.Link.inlineInverted}>
 					{renderItem().email}
 				</EmailDrawer>
@@ -282,7 +281,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		<Menu keepMounted withinPortal>
 			<Menu.Target>
 				<Link variant={variants.Link.inlineInverted}>
-					<Group noWrap spacing={4}>
+					<Group wrap='nowrap' gap={4}>
 						<Icon icon='carbon:document-add' height={20} />
 						<Text variant={variants.Text.utility3}>Link or create new...</Text>
 					</Group>
@@ -298,9 +297,9 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 							key={id}
 							onClick={handleLinkToLocation({ orgLocationId: parentId, orgEmailId: id, action: 'link' })}
 						>
-							<Group noWrap>
+							<Group wrap='nowrap'>
 								<Icon icon='carbon:link' />
-								<Stack spacing={0}>
+								<Stack gap={0}>
 									<Text variant={emailTextVariant}>{email}</Text>
 									{(Boolean(firstName) || Boolean(lastName)) && (
 										<Text variant={descTextVariant}>{compact([firstName, lastName]).join(' ')}</Text>
@@ -314,7 +313,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 				<Menu.Divider />
 				<Menu.Item key='new'>
 					<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-						<Group noWrap>
+						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
@@ -324,7 +323,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		</Menu>
 	) : (
 		<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-			<Group noWrap>
+			<Group wrap='nowrap'>
 				<Icon icon='carbon:add' />
 				<Text variant={variants.Text.utility3}>Create new</Text>
 			</Group>
@@ -332,11 +331,11 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	)
 
 	return (
-		<Stack spacing={12}>
+		<Stack gap={12}>
 			<Title order={3}>{t('words.email')}</Title>
-			<Stack spacing={12} className={classes.overlay}>
+			<Stack gap={12} className={classes.overlay}>
 				{output}
-				<Stack spacing={4}>{addOrLink}</Stack>
+				<Stack gap={4}>{addOrLink}</Stack>
 			</Stack>
 		</Stack>
 	)

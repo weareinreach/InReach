@@ -1,0 +1,252 @@
+/* Base styles, applied regardless of custom variant */
+.root {
+	padding: rem(10px) rem(8px);
+	border-radius: var(--mantine-spacing-sm);
+	text-decoration: underline;
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.root:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		text-decoration: none;
+	}
+}
+
+/*
+ * Every variant below is duplicated as a `[data-variant='name']` attribute selector alongside its
+ * `.name` class selector. Mantine reliably sets `data-variant` as a DOM attribute regardless of
+ * rendering path, but our own theme-level `classNames` callback (which supplies the `.name` class)
+ * does not reliably receive `props.variant` when this Anchor is rendered through `Link` with no
+ * `href` (e.g. a modal launcher: `<GenericContentModal component={Link}>`, no `href` passed) -
+ * confirmed via inspecting rendered output, where `data-variant` was correctly present but the
+ * expected variant class was missing, leaving only `.root`'s defaults applied (always-on underline,
+ * padding, and a gray hover background - a `<button>`-like look for what's meant to be a plain
+ * inline link). The attribute selector is a reliable fallback that doesn't depend on that
+ * resolution succeeding.
+ *
+ * Each bare `[data-variant='name']` selector is wrapped in `:global(...)` - CSS Modules (Lightning
+ * CSS, used by Next.js/Turbopack's production build) requires every selector to be "pure" (contain
+ * at least one locally-scoped class/id) unless explicitly marked `:global`; an attribute selector
+ * with no local class fails that check and breaks the production build, even though Storybook's own
+ * dev pipeline didn't enforce it.
+ */
+
+.inline,
+:global([data-variant='inline']),
+.inlineUtil1,
+:global([data-variant='inlineUtil1']),
+.inlineUtil1DarkGray,
+:global([data-variant='inlineUtil1darkGray']),
+.inlineUtil2DarkGray,
+:global([data-variant='inlineUtil2darkGray']),
+.inlineInverted,
+:global([data-variant='inlineInverted']),
+.inlineInvertedUtil1,
+:global([data-variant='inlineInvertedUtil1']),
+.inlineInvertedUtil2,
+:global([data-variant='inlineInvertedUtil2']),
+.inheritStyle,
+:global([data-variant='inheritStyle']),
+.inheritStyleUnderline,
+:global([data-variant='inheritStyleUnderline']),
+.pagination,
+:global([data-variant='pagination']) {
+	padding: 0 !important;
+}
+
+.inline,
+:global([data-variant='inline']),
+.inheritStyle,
+:global([data-variant='inheritStyle']),
+.inheritStyleUnderline,
+:global([data-variant='inheritStyleUnderline']) {
+	display: inline;
+}
+
+.inline,
+:global([data-variant='inline']) {
+	font-weight: var(--ir-font-weight-regular) !important;
+	line-height: var(--ir-line-height) !important;
+}
+@media (hover: hover) {
+	.inline:hover,
+	:global([data-variant='inline']):hover {
+		background-color: transparent !important;
+	}
+}
+
+.inlineUtil1,
+:global([data-variant='inlineUtil1']) {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.inlineUtil1:hover,
+	:global([data-variant='inlineUtil1']):hover {
+		background-color: transparent !important;
+	}
+}
+
+.inlineUtil1DarkGray,
+:global([data-variant='inlineUtil1darkGray']) {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray) !important;
+}
+@media (hover: hover) {
+	.inlineUtil1DarkGray:hover,
+	:global([data-variant='inlineUtil1darkGray']):hover {
+		background-color: transparent !important;
+	}
+}
+
+.inlineUtil2DarkGray,
+:global([data-variant='inlineUtil2darkGray']) {
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray) !important;
+}
+@media (hover: hover) {
+	.inlineUtil2DarkGray:hover,
+	:global([data-variant='inlineUtil2darkGray']):hover {
+		background-color: transparent !important;
+	}
+}
+
+.inlineInverted,
+:global([data-variant='inlineInverted']) {
+	font-weight: var(--ir-font-weight-regular) !important;
+	line-height: var(--ir-line-height) !important;
+	text-decoration: none !important;
+}
+@media (hover: hover) {
+	.inlineInverted:hover,
+	:global([data-variant='inlineInverted']):hover {
+		background-color: transparent !important;
+		text-decoration: underline !important;
+	}
+}
+
+.inlineInvertedUtil1,
+:global([data-variant='inlineInvertedUtil1']) {
+	text-decoration: none !important;
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.inlineInvertedUtil1:hover,
+	:global([data-variant='inlineInvertedUtil1']):hover {
+		background-color: transparent !important;
+		text-decoration: underline !important;
+	}
+}
+
+.inlineInvertedUtil2,
+:global([data-variant='inlineInvertedUtil2']) {
+	text-decoration: none !important;
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.inlineInvertedUtil2:hover,
+	:global([data-variant='inlineInvertedUtil2']):hover {
+		background-color: transparent !important;
+		text-decoration: underline !important;
+	}
+}
+
+.inheritStyle,
+:global([data-variant='inheritStyle']) {
+	font-weight: inherit !important;
+	line-height: inherit !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	/* `.root`'s `text-decoration: underline` is otherwise unconditional - `inheritStyle` is meant
+	   to look like plain surrounding text (a Link used purely as a click target inside an
+	   already-styled parent), so it needs this explicitly rather than relying on every caller to
+	   remember a `td='none'` override. */
+	text-decoration: inherit !important;
+}
+@media (hover: hover) {
+	.inheritStyle:hover,
+	:global([data-variant='inheritStyle']):hover {
+		background-color: transparent !important;
+	}
+}
+
+/*
+ * Same as `inheritStyle` (inherits color/size/weight from surrounding text), but keeps an underline
+ * so the link is still visually identifiable as clickable inside a body-copy sentence.
+ */
+.inheritStyleUnderline,
+:global([data-variant='inheritStyleUnderline']) {
+	font-weight: inherit !important;
+	line-height: inherit !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	text-decoration: underline !important;
+}
+@media (hover: hover) {
+	.inheritStyleUnderline:hover,
+	:global([data-variant='inheritStyleUnderline']):hover {
+		background-color: transparent !important;
+	}
+}
+
+.block,
+:global([data-variant='block']) {
+	display: block;
+}
+
+.card,
+:global([data-variant='card']) {
+	padding: 0 !important;
+	font-weight: inherit !important;
+	line-height: inherit !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	text-decoration: inherit !important;
+}
+
+.pagination,
+:global([data-variant='pagination']) {
+	text-decoration: none !important;
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.pagination[data-disabled],
+:global([data-variant='pagination'][data-disabled]) {
+	color: var(--ir-color-tertiary-cool-gray);
+}
+@media (hover: hover) {
+	.pagination:hover,
+	:global([data-variant='pagination']):hover {
+		background-color: transparent !important;
+		text-decoration: none !important;
+		border-bottom: rem(2px) solid var(--ir-color-secondary-black);
+		border-radius: 0;
+	}
+	.pagination:hover[data-disabled],
+	:global([data-variant='pagination']:hover[data-disabled]) {
+		border-bottom: 0;
+		cursor: not-allowed;
+	}
+}
+
+.navMenu,
+:global([data-variant='navMenu']) {
+	text-decoration: none !important;
+}

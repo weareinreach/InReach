@@ -1,0 +1,66 @@
+.input {
+	border-color: var(--ir-color-tertiary-cool-gray);
+	border-radius: rem(8px);
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+	padding: rem(14px) rem(16px);
+	margin: rem(10px) 0;
+	height: rem(48px);
+}
+.input::placeholder {
+	color: var(--ir-color-secondary-dark-gray);
+}
+.input:focus,
+.input:focus-within {
+	border-color: var(--ir-color-secondary-black);
+	border-width: rem(2px);
+}
+/* was `.input[data-with-icon]` in v6 - v7 moved the equivalent attribute
+   (renamed `data-with-left-section`) onto the wrapper, not the input itself */
+.wrapper[data-with-left-section] .input {
+	border-radius: var(--mantine-radius-xl);
+	padding-left: rem(36px);
+}
+/* was `.input[data-invalid]` in v6 - v7 renamed the attribute to `data-error` and, like
+   `data-with-left-section` above, moved it onto the wrapper rather than the input itself */
+.wrapper[data-error] .input {
+	border-color: var(--ir-color-tertiary-red);
+}
+.wrapper[data-error] .input::placeholder {
+	color: var(--ir-color-secondary-dark-gray);
+}
+.wrapper[data-error] .input:focus,
+.wrapper[data-error] .input:focus-within {
+	color: var(--ir-color-secondary-black);
+	border-color: var(--ir-color-tertiary-red);
+	border-width: rem(2px);
+}
+.input[data-disabled],
+.input:disabled {
+	background-color: var(--ir-color-primary-light-gray);
+	color: var(--ir-color-secondary-dark-gray);
+	opacity: 1;
+}
+.input[data-disabled]::placeholder,
+.input:disabled::placeholder {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+/* was the `icon` stylesName in v6 - v7 collapses left/right into `section` */
+.section {
+	color: var(--ir-color-secondary-black);
+	width: fit-content;
+}
+.section[data-position='left'] {
+	margin-left: var(--mantine-spacing-md);
+}
+.section[data-position='right'] {
+	padding-right: var(--mantine-spacing-md);
+	margin-right: 0;
+}
+
+.wrapper {
+	margin: 0;
+}

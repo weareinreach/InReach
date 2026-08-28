@@ -4,9 +4,10 @@ import { forwardRef } from 'react'
 
 import { type ButtonProps } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 import { ReportModal } from '~ui/modals/Report'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 export const Report = forwardRef<HTMLButtonElement, ReportProps>(
 	(
@@ -25,7 +26,6 @@ export const Report = forwardRef<HTMLButtonElement, ReportProps>(
 		},
 		ref
 	) => {
-		const { classes, cx } = useStyles()
 		const theme = useMantineTheme()
 		const { t } = useTranslation('common')
 
@@ -39,7 +39,7 @@ export const Report = forwardRef<HTMLButtonElement, ReportProps>(
 			<BaseComponent
 				component={menuItem ? Menu.Item : undefined}
 				ref={ref}
-				className={cx({ [classes.button]: !menuItem }, className)}
+				className={cx(!menuItem ? classes.button : undefined, className)}
 				itemId={itemId}
 				itemName={itemName}
 				orgId={orgId}
@@ -48,7 +48,7 @@ export const Report = forwardRef<HTMLButtonElement, ReportProps>(
 				serviceName={serviceName}
 				{...props}
 			>
-				<Group spacing={0} noWrap>
+				<Group gap={0} wrap='nowrap'>
 					<Icon
 						icon='carbon:document'
 						color={iconColor}
@@ -57,7 +57,7 @@ export const Report = forwardRef<HTMLButtonElement, ReportProps>(
 						width={menuItem ? 16 : 24}
 					/>
 					{!omitLabel && (
-						<Text color={menuItem ? undefined : iconColor} className={cx({ [classes.text]: !menuItem })}>
+						<Text c={menuItem ? undefined : iconColor} className={!menuItem ? classes.text : undefined}>
 							{t('words.report')}
 						</Text>
 					)}

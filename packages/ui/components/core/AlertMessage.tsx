@@ -1,37 +1,10 @@
-import { createStyles, Paper, Text, useMantineTheme } from '@mantine/core'
+import { Paper, Text, useMantineTheme } from '@mantine/core'
 import { Trans } from 'next-i18next/pages'
 import { type LiteralUnion } from 'type-fest'
 
 import { Icon, type IconList } from '~ui/icon'
 
-const useStyles = createStyles((theme) => ({
-	messageContainer: {
-		display: 'flex',
-		alignItems: 'flex-start',
-		backgroundColor: theme.other.colors.primary.lightGray,
-		flexDirection: 'column',
-		padding: theme.spacing.sm,
-		gap: theme.spacing.xs,
-		[theme.fn.largerThan('sm')]: {
-			flexDirection: 'row',
-			padding: theme.spacing.md,
-			gap: 'unset',
-		},
-	},
-	iconContainer: {
-		[theme.fn.largerThan('sm')]: {
-			minWidth: 'fit-content',
-			// marginTop: 2,
-			marginRight: theme.spacing.xs,
-		},
-	},
-	textContainer: {
-		fontSize: theme.fontSizes.sm,
-		[theme.fn.largerThan('sm')]: {
-			fontSize: theme.fontSizes.md,
-		},
-	},
-}))
+import classes from './AlertMessage.module.css'
 
 type MapKeys = LiteralUnion<
 	'information' | 'warning' | 'carbon:information-filled' | 'carbon:warning-filled',
@@ -47,7 +20,6 @@ const iconMap = new Map<MapKeys, IconList>([
 
 /** Used to display an alert message on an organization/location/service. */
 export const AlertMessage = ({ textKey, ns, iconKey = 'information', defaultText }: Props) => {
-	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const iconDef = iconKey ?? 'information'
 	const iconRender = iconMap.get(iconDef) ?? 'carbon:information-filled'

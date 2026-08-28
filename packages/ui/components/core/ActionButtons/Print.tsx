@@ -4,11 +4,11 @@ import { forwardRef } from 'react'
 
 import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 export const Print = forwardRef<HTMLButtonElement, PrintProps>(({ omitLabel, className, ...props }, ref) => {
-	const { classes, cx } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
 
@@ -16,7 +16,7 @@ export const Print = forwardRef<HTMLButtonElement, PrintProps>(({ omitLabel, cla
 
 	return (
 		<Box component={Button} ref={ref} onClick={onClick} className={cx(classes.button, className)} {...props}>
-			<Group spacing={0} noWrap>
+			<Group gap={0} wrap='nowrap'>
 				<Icon
 					icon='carbon:printer'
 					color={theme.other.colors.secondary.black}

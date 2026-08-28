@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Tooltip } from '@mantine/core'
+import { ActionIcon, Group, Tooltip, useMantineTheme } from '@mantine/core'
 import { type ReactNode, useCallback } from 'react'
 
 import { Icon } from '~ui/icon'
@@ -11,6 +11,7 @@ export const ServiceAreaItem = ({
 	govDistId,
 	children,
 }: ServiceAreaItemProps) => {
+	const theme = useMantineTheme()
 	const apiUtils = api.useUtils()
 	const removeServiceArea = api.serviceArea.delFromArea.useMutation({
 		onSuccess: () => apiUtils.service.forServiceEditDrawer.invalidate(serviceId),
@@ -27,10 +28,10 @@ export const ServiceAreaItem = ({
 	}
 
 	return (
-		<Group noWrap spacing={0}>
+		<Group wrap='nowrap' gap={0}>
 			<Tooltip label='Delete'>
-				<ActionIcon onClick={actionHandler}>
-					<Icon icon='carbon:trash-can' />
+				<ActionIcon variant='subtle' onClick={actionHandler}>
+					<Icon icon='carbon:trash-can' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 			{children}

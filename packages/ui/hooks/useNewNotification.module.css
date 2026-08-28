@@ -1,0 +1,6 @@
+.notificationBg {
+	background-color: var(--ir-color-secondary-black);
+}
+.iconBg {
+	background: var(--ir-color-secondary-black) !important;
+}

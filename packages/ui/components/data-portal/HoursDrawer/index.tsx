@@ -13,10 +13,12 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+
 // import { DateTime, Interval } from 'luxon'
 import { compareObjectVals } from 'crud-object-diff'
 import groupBy from 'just-group-by'
 import { forwardRef, useEffect, useState } from 'react'
+import * as ReactHookForm from 'react-hook-form'
 import { useFieldArray, useForm } from 'react-hook-form'
 import timezones from 'timezones-list'
 
@@ -30,7 +32,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { defaultInterval, updateClosed, updateOpen24, updateTz } from './fieldArray'
 import { type DayIndex, dayIndicies, FormSchema, type ZFormSchema } from './schema'
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 const tzGroup = new Set([
 	'Pacific/Honolulu',
@@ -60,14 +62,21 @@ const timezoneData = timezones.map((item, index) => {
 	}
 })
 
-const sortedTimezoneData = timezoneData.sort((a, b) => {
-	if (a.group === 'North America' && b.group === 'Other') {
-		return -1
-	} else if (a.group === 'Other' && b.group === 'North America') {
-		return 1
-	}
-	return 0
-})
+// v9's grouped `Select`/`Combobox` data shape is `{ group, items }[]`, not a flat list where each
+// item merely carries a `group` field (the v6 shape) - passing the old shape makes Mantine's own
+// parser try `item.items.map(...)` on every entry and crash with "Cannot read properties of
+// undefined (reading 'map')" as soon as the drawer mounts. Each item's own `group` field also has
+// to go, not just be wrapped - Mantine's parser treats the mere presence of a `group` key as "this
+// is itself a nested group", so leaving it in place recurses into the same crash one level down.
+const groupedTimezoneData = groupBy(timezoneData, ({ group }) => group)
+const sortedTimezoneData = (['North America', 'Other'] as const)
+	.filter((group) => groupedTimezoneData[group])
+	.map((group) => ({
+		group,
+		items: (groupedTimezoneData[group] as (typeof timezoneData)[number][]).map(
+			({ group: _group, ...item }) => item
+		),
+	}))
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
@@ -129,7 +138,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		}
 	}, [form.formState.isDirty, isSaved])
 
-	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
 	const handleUpdate = () => {
@@ -153,7 +161,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		const shouldDisable = isClosed || isOpen24Hours
 		return (
 			<Stack>
-				<Group position='apart'>
+				<Group justify='space-between'>
 					<Title order={3}>{days[dayIndex] ?? ''}</Title>
 					<Checkbox
 						label='Open 24 Hours'
@@ -210,7 +218,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 					}
 					disabled={shouldDisable}
 				>
-					<Group noWrap spacing={8}>
+					<Group wrap='nowrap' gap={8}>
 						<Icon icon='carbon:add' className={classes.addNewText} height={24} />
 						<Text variant={variants.Text.utility2} className={classes.addNewText}>
 							Add time range
@@ -234,7 +242,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<Drawer.Header>
-						<Group noWrap position='apart' w='100%'>
+						<Group wrap='nowrap' justify='space-between' w='100%'>
 							<Breadcrumb option='close' onClick={handler.close} />
 							<Button
 								variant='primary-icon'
@@ -246,7 +254,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						</Group>
 					</Drawer.Header>
 					<Drawer.Body className={classes.drawerBody}>
-						<Stack spacing={24} align='center'>
+						<Stack gap={24} align='center'>
 							<Title order={2}>Hours</Title>
 							<Select
 								onChange={(newValue) => {
@@ -257,9 +265,10 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 								label='Select a timezone for this location'
 								placeholder='Search for timezone'
 								searchable
-								nothingFound='No options'
+								nothingFoundMessage='No options'
 								maxDropdownHeight={280}
 								data={sortedTimezoneData}
+								comboboxProps={{ zIndex: 10002 }}
 							/>
 							<Divider my='sm' />
 						</Stack>
@@ -279,7 +288,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 })
 _HoursDrawer.displayName = 'HoursDrawer'
 _HoursDrawer.whyDidYouRender = {
-	trackExtraHooks: [[require('react-hook-form'), 'useFieldArray']],
+	trackExtraHooks: [[ReactHookForm, 'useFieldArray']],
 }
 export const HoursDrawer = createPolymorphicComponent<'button', HoursDrawerProps>(_HoursDrawer)
 

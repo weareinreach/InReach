@@ -1,0 +1,18 @@
+.text {
+	color: var(--ir-color-secondary-black);
+	text-decoration: underline;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+@media (min-width: $mantine-breakpoint-sm) {
+	.modalSize {
+		min-width: 45rem !important;
+	}
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+	.indicator {
+		width: 0.5rem;
+	}
+}

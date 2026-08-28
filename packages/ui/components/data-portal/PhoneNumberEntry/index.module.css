@@ -1,0 +1,30 @@
+/* Diverged from styles.module.css (the withHookForm.tsx variant) - this dropdown is intentionally
+   left-anchored (fit-content, no right:0 override), not right-anchored - do not merge these. */
+.countrySelectDropdown {
+	width: fit-content !important;
+	left: unset !important;
+}
+/* Wide enough for the flag *and* the clear/chevron section (38px, `.countrySelectSection` below)
+   without the two overlapping - at the old 48px total, the section's absolutely-positioned,
+   higher-z-index box covered ~80% of this root's width, silently intercepting clicks meant for
+   the flag/dropdown trigger underneath it. Same fix as styles.module.css's copy of this rule. */
+.countrySelectRoot {
+	width: rem(64px);
+}
+.countrySelectInput {
+	border: none;
+	padding: 0;
+	/* Reserves the section's own width so the input's content/hit area stops short of it instead
+	   of sitting underneath it. */
+	padding-right: rem(38px);
+	height: 2rem;
+}
+.countrySelectSection {
+	padding-right: 0;
+}
+
+.phoneEntrySection {
+	padding: 0 rem(4px);
+	margin: rem(2px) 0;
+	border-left: 1px solid var(--ir-color-primary-light-gray);
+}

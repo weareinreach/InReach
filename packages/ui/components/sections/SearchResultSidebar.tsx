@@ -80,7 +80,7 @@ const SortableFocusSwitch = ({
 	}
 
 	return (
-		<Group ref={setNodeRef} style={style} noWrap spacing={8}>
+		<Group ref={setNodeRef} style={style} wrap='nowrap' gap={8}>
 			{isSelected && !disabled && (
 				<Icon icon='carbon:draggable' {...attributes} {...listeners} style={{ cursor: 'grab' }} />
 			)}
@@ -193,7 +193,7 @@ export const SearchResultSidebar = ({
 	}
 
 	return (
-		<Stack spacing={32} maw={300} align={onlySort ? 'center' : 'flex-start'}>
+		<Stack gap={32} maw={300} align={onlySort ? 'center' : 'flex-start'}>
 			{!onlySort && (
 				<Skeleton visible={typeof resultCount !== 'number'}>
 					<Text variant={variants.Text.utility1}>{t('count.result', { count: resultCount })}</Text>
@@ -207,7 +207,7 @@ export const SearchResultSidebar = ({
 				onChange={handleActiveFocusesChange}
 			>
 				{isOptionsLoading ? (
-					<Stack spacing={10} mt={10}>
+					<Stack gap={10} mt={10}>
 						{Array.from({ length: 6 }).map((_, i) => (
 							<Skeleton key={i} h={32} />
 						))}
@@ -215,7 +215,7 @@ export const SearchResultSidebar = ({
 				) : (
 					<DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
 						<SortableContext items={focusOrder} strategy={verticalListSortingStrategy}>
-							<Stack spacing={10} mt={10}>
+							<Stack gap={10} mt={10}>
 								{focusOrder.map((id) => {
 									const item = sidebarFocuses.find((f) => f.id === id)
 									if (!item) return null
@@ -235,7 +235,7 @@ export const SearchResultSidebar = ({
 				)}
 				{!isAdvanced && (
 					<Overlay blur={0} color={theme.other.colors.secondary.white}>
-						<Stack spacing={0} align='center' justify='center' h='100%'>
+						<Stack gap={0} align='center' justify='center' h='100%'>
 							<Title order={2}>🚧</Title>
 							<Title order={2}>{t('words.coming-soon')}</Title>
 						</Stack>

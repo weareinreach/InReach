@@ -1,4 +1,4 @@
-import { createStyles, Group, rem, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
+import { Group, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
 import { type MouseEvent, type MouseEventHandler, useCallback, useMemo } from 'react'
@@ -7,36 +7,12 @@ import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 
-const useStyles = createStyles((theme) => ({
-	root: {
-		height: rem(40),
-		maxWidth: '100%',
-		padding: `${rem(10)} ${rem(8)}`,
-		color: theme.other.colors.secondary.black,
-		backgroundColor: theme.other.colors.secondary.white,
-		borderRadius: rem(8),
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			textDecoration: 'none !important',
-		},
-		...theme.fn.hover({
-			backgroundColor: `${theme.other.colors.primary.lightGray} !important`,
-			textDecoration: 'none !important',
-		}),
-	},
-	icon: {
-		width: rem(24),
-		height: rem(24),
-		// marginRight: theme.spacing.xs,
-	},
-	buttonText: {},
-}))
+import classes from './Breadcrumb.module.css'
 
 const isString = (val: unknown): val is string => typeof val === 'string'
 
 export const Breadcrumb = (props: BreadcrumbProps) => {
 	const { option, backTo, backToText, onClick, children } = props
-	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
 	const router = useRouter()
@@ -119,7 +95,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 
 	return (
 		<UnstyledButton className={classes.root} onClick={handleClick}>
-			<Group spacing={8} noWrap>
+			<Group gap={8} wrap='nowrap'>
 				<Icon
 					icon={iconRender}
 					height={24}

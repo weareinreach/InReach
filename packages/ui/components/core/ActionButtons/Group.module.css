@@ -1,0 +1,27 @@
+.groupWrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	overflow: hidden;
+	flex-wrap: nowrap;
+	width: 100%;
+	gap: rem(8px);
+}
+
+.visible {
+	display: flex;
+	flex-shrink: 0;
+}
+
+/* "Soft hide" so the Save menu dropdown doesn't lose its anchor */
+.inVisible {
+	position: absolute;
+	visibility: hidden;
+	pointer-events: none;
+	z-index: -1;
+}
+
+.overflowStyle {
+	flex-shrink: 0;
+}

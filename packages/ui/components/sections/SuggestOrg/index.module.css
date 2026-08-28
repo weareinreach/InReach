@@ -1,0 +1,17 @@
+.autocompleteWrapper {
+	padding: 0;
+	border-bottom: rem(1px) solid var(--ir-color-tertiary-cool-gray);
+}
+.leftIcon {
+	color: var(--ir-color-secondary-black);
+}
+
+.twoLines {
+	padding: var(--mantine-spacing-sm) var(--mantine-spacing-xl);
+}
+@media (hover: hover) {
+	.twoLines:hover {
+		background-color: var(--ir-color-primary-light-gray);
+		cursor: pointer;
+	}
+}

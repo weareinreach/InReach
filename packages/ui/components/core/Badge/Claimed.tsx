@@ -7,11 +7,11 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { ClaimOrgModal } from '~ui/modals'
 
-import { useSharedStyles } from './styles'
+import { sharedBadgeClasses } from './styles'
 
 export const _Claimed = forwardRef<HTMLDivElement, BadgeClaimedProps>(
 	({ hideTooltip, isClaimed, ...props }, ref) => {
-		const { classes } = useSharedStyles(isClaimed ? 'claimed' : 'unclaimed')
+		const classes = isClaimed ? sharedBadgeClasses.claimed : sharedBadgeClasses.unclaimed
 		const theme = useMantineTheme()
 		const { t } = useTranslation('common')
 		const variants = useCustomVariant()
@@ -41,7 +41,12 @@ export const _Claimed = forwardRef<HTMLDivElement, BadgeClaimedProps>(
 		} as const
 
 		return (
-			<ClaimOrgModal {...claimOrgModalPropsTemp}>
+			// `ClaimOrgModal` is polymorphic but statically typed against `ButtonProps` - passing
+			// `component={Badge}` makes its generic resolution try to unify Badge's and Button's
+			// `classNames`/`styles` function-form types against each other, which can never
+			// succeed structurally. Bypassed here rather than redesigning the shared modal's typing.
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			<ClaimOrgModal {...(claimOrgModalPropsTemp as any)}>
 				<Link external onClick={() => setModalOpen(true)} variant={variants.Link.inheritStyle}>
 					{t('words.coming-soon')}
 				</Link>

@@ -145,9 +145,9 @@ type GenerateFreeTextParams<T extends GenerateFreeTextType> = {
 	type: T
 	text: string
 	freeTextId?: string | null
-	// eslint-disable-next-line @typescript-eslint/ban-types
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 } & (T extends 'locationAlert' ? {} : { orgId: string }) &
-	// eslint-disable-next-line @typescript-eslint/ban-types
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 	(T extends 'orgDesc' ? {} : { itemId: string })
 
 type GenerateFreeTextType =

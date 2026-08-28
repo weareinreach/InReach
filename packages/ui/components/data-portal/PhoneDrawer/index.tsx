@@ -2,12 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	createPolymorphicComponent,
-	createStyles,
 	Drawer,
 	Group,
 	LoadingOverlay,
 	Modal,
-	rem,
 	Stack,
 	Text,
 	Title,
@@ -33,12 +31,7 @@ import { isCountryCode } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles(() => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-}))
+import classes from './index.module.css'
 
 const FormSchema = z.object({
 	id: z.string(),
@@ -75,10 +68,21 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				enabled: drawerOpened && !!orgId,
 				// `ext`/`description` come back `null` when unset - fed straight into `values` below,
 				// that would hand a controlled TextInput a `null` value and trip React's
-				// uncontrolled-to-controlled warning. `phoneTypeId` is deliberately left alone: `null`
-				// is a real sentinel value there (selects the "Custom Text" option).
+				// uncontrolled-to-controlled warning. `phoneTypeId` gets the same treatment for a
+				// different reason: Mantine's `Select` treats a controlled value of `null` as "nothing
+				// selected" (it blanks the closed input) regardless of whether `null` also appears as a
+				// real option's `value` in `data` - so `null` can't work as the "Custom Text" sentinel.
+				// `''` is used instead throughout the form; it's converted back to `null` at submission
+				// time, below, to match what the API actually expects.
 				select: (data) =>
-					data ? { ...data, ext: data.ext ?? '', description: data.description ?? '' } : data,
+					data
+						? {
+								...data,
+								ext: data.ext ?? '',
+								description: data.description ?? '',
+								phoneTypeId: data.phoneTypeId ?? '',
+							}
+						: data,
 			}
 		)
 		// No `initialData` here - combined with the client's 10-minute default `staleTime`, an
@@ -101,7 +105,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			return lookup
 		}, [countryList])
 
-		const { classes } = useStyles()
 		// Built dynamically (rather than a module-level constant) because validating the phone
 		// number requires resolving the selected countryId to an ISO country code first, and that
 		// lookup table only exists once the countries query above has loaded. react-hook-form's
@@ -148,6 +151,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				number: '',
 				countryId: '',
 				ext: '',
+				phoneTypeId: '',
 				description: '',
 				published: true,
 				deleted: false,
@@ -238,7 +242,11 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 					{ id: phoneId, orgId: orgId ?? '' },
 					{ refetchType: 'none' }
 				)
-				reset(data)
+				// The mutation returns the raw DB row, where an uncategorized/custom phone's
+				// `phoneTypeId` is a genuine `null` - re-coerced to `''` here for the same reason as
+				// the `select` on the query above (Mantine's `Select` can't use `null` as a real
+				// option's selected value).
+				reset(data ? { ...data, phoneTypeId: data.phoneTypeId ?? '' } : data)
 			},
 			onSuccess: () => {
 				setIsSaved(true)
@@ -293,7 +301,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			() =>
 				handleSubmit(
 					(data) => {
-						siteUpdate.mutate({ orgId: orgId ?? '', operation: createNew ? 'create' : 'update', ...data })
+						siteUpdate.mutate({
+							orgId: orgId ?? '',
+							operation: createNew ? 'create' : 'update',
+							...data,
+							phoneTypeId: data.phoneTypeId || null,
+						})
 					},
 					(error) => console.error(error)
 				),
@@ -303,7 +316,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		const handleModalSave = useCallback(() => {
 			const valuesToSubmit = getValues()
 			siteUpdate.mutate(
-				{ ...valuesToSubmit, orgId: orgId ?? '', operation: createNew ? 'create' : 'update' },
+				{
+					...valuesToSubmit,
+					orgId: orgId ?? '',
+					operation: createNew ? 'create' : 'update',
+					phoneTypeId: valuesToSubmit.phoneTypeId || null,
+				},
 				{
 					onSuccess: () => {
 						modalHandler.close()
@@ -325,12 +343,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 					<Drawer.Content className={classes.drawerContent}>
 						<form onSubmit={handleSaveButton()}>
 							<Drawer.Header>
-								<Group noWrap position='apart' w='100%'>
+								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
-										loading={siteUpdate.isLoading}
+										loading={siteUpdate.isPending}
 										disabled={!formIsDirty}
 										type='submit'
 									>
@@ -340,13 +358,13 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 							</Drawer.Header>
 							<Drawer.Body>
 								<LoadingOverlay visible={isFetching && !createNew} />
-								<Stack spacing={24} align='center'>
+								<Stack gap={24} align='center'>
 									<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Phone`}</Title>
-									<Stack spacing={24} align='flex-start' w='100%'>
+									<Stack gap={24} align='flex-start' w='100%'>
 										<PhoneNumberEntry
 											label='Phone Number'
 											required
-											countrySelect={{ name: 'countryId' }}
+											countrySelect={{ name: 'countryId', comboboxProps: { zIndex: 10002 } }}
 											phoneInput={{ name: 'number' }}
 											control={control}
 										/>
@@ -355,15 +373,20 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 											label='Type'
 											control={control}
 											name='phoneTypeId'
-											data={[
-												...(phoneTypes ?? []),
-												{ value: null as unknown as string, label: 'Custom Text (enter below)' },
-											]}
+											data={[...(phoneTypes ?? []), { value: '', label: 'Custom Text (enter below)' }]}
+											comboboxProps={{ zIndex: 10002 }}
+											withCheckIcon={false}
+											classNames={{ option: classes.option }}
 										/>
-										{values.phoneTypeId === null && (
-											<TextInput label='Description' name='description' control={control} />
+										{values.phoneTypeId === '' && (
+											<TextInput
+												label='Description'
+												name='description'
+												control={control}
+												placeholder='Enter a custom description'
+											/>
 										)}
-										<Group noWrap position='apart' w='100%'>
+										<Stack w='100%' gap={16}>
 											<Stack>
 												<Checkbox label='Published' name='published' control={control} />
 												<Checkbox label='Deleted' name='deleted' control={control} />
@@ -373,22 +396,23 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 													leftIcon={<Icon icon='carbon:unlink' />}
 													onClick={handleUnlink}
 													disabled={createNew}
+													fullWidth
 												>
 													Unlink from this location
 												</Button>
 											)}
-										</Group>
+										</Stack>
 									</Stack>
 								</Stack>
 							</Drawer.Body>
 							<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 								<Stack align='center'>
 									<Text>You have unsaved changes</Text>
-									<Group noWrap>
+									<Group wrap='nowrap'>
 										<Button
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
-											loading={siteUpdate.isLoading}
+											loading={siteUpdate.isPending}
 											onClick={handleModalSave}
 										>
 											Save

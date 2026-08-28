@@ -1,0 +1,13 @@
+.showMore {
+	padding-top: var(--mantine-spacing-sm);
+}
+@media (hover: hover) {
+	.showMore:hover {
+		cursor: pointer;
+	}
+}
+
+.reviewText {
+	padding-top: rem(24px);
+	padding-bottom: rem(16px);
+}

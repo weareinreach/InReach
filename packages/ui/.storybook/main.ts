@@ -1,7 +1,6 @@
 // This file has been automatically migrated to valid ESM format by Storybook.
 /* eslint-disable node/no-process-env */
 import { type StorybookConfig } from '@storybook/nextjs'
-import isChromatic from 'chromatic/isChromatic'
 import dotenv from 'dotenv'
 import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import { mergeAndConcat } from 'merge-anything'
@@ -17,7 +16,6 @@ const require = createRequire(import.meta.url)
 
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isDev = process.env.NODE_ENV === 'development'
 
 const getAbsolutePath = (value: string) => {
@@ -55,7 +53,7 @@ const storybookConfig: StorybookConfig = {
 		// eslint-disable-next-line storybook/no-uninstalled-addons
 		'@tomfreudenberg/next-auth-mock/storybook',
 		// This addon's package.json doesn't have a `./package.json` export, which getAbsolutePath needs.
-		// eslint-disable-next-line storybook/no-uninstalled-addons
+
 		'msw-storybook-addon',
 		getAbsolutePath('@storybook/addon-mcp'),
 	],
@@ -142,13 +140,26 @@ const storybookConfig: StorybookConfig = {
 		return mergedConfig
 	},
 	docs: {},
-	env: isChromatic()
-		? {
-				SKIP_ENV_VALIDATION: 'true',
-			}
-		: {
-				NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string,
-				STORYBOOK_PROJECT_ROOT: path.resolve(__dirname, '../'),
-			},
+	// `isChromatic()` only reflects whether *this Node process* was launched by the `chromatic` CLI -
+	// it says nothing about whether the resulting browser bundle can see real secrets, and the
+	// Chromatic GitHub Action (chromaui/action) invokes the build script directly rather than via
+	// that CLI, so it was always evaluating false there anyway. `NODE_ENV` reliably distinguishes
+	// "local dev, real `.env` secrets available" from every other case (CI, Chromatic, a teammate's
+	// machine without a `.env`), where `@weareinreach/env`'s validation should just be skipped rather
+	// than crash the whole Storybook preview on a missing `NEXT_PUBLIC_GOOGLE_MAPS_API`.
+	env: {
+		// Nothing in Storybook/webpack sets this automatically - `~ui/lib/trpcClient` branches on it
+		// to pick the React Query-based client (matching `.storybook/decorators/Trpc.tsx`'s Provider)
+		// instead of the Next.js App Router client, which has an incompatible shape.
+		STORYBOOK: 'true',
+		...(isDev
+			? {
+					NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string,
+					STORYBOOK_PROJECT_ROOT: path.resolve(__dirname, '../'),
+				}
+			: {
+					SKIP_ENV_VALIDATION: 'true',
+				}),
+	},
 }
 export default storybookConfig

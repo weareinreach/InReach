@@ -1,10 +1,9 @@
 import { Text } from '@mantine/core'
 import { type ReactNode } from 'react'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 export const ModalText = ({ children }: ModalTextprops) => {
-	const { classes } = useStyles()
 	return (
 		<Text component='p' className={classes.blackText}>
 			{children}

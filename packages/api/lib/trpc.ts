@@ -25,7 +25,7 @@ export const permissionedProcedure = (procedure: PermissionedProcedure) =>
 
 /** Handler Cache */
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 const HANDLER_CACHE: Record<string, Function> = {}
 
 /**
@@ -45,7 +45,7 @@ const HANDLER_CACHE: Record<string, Function> = {}
  */
 export const importHandler = async <
 	T extends {
-		// eslint-disable-next-line @typescript-eslint/ban-types
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 		default: Function
 	},
 >(

@@ -1,5 +1,6 @@
 /* eslint-disable node/no-process-env */
 import { Command } from 'commander'
+import { generateTranslationKeys } from 'lib/generators'
 import {
 	Listr,
 	type ListrContext,
@@ -8,8 +9,6 @@ import {
 	type ListrTask,
 	type ListrTaskWrapper,
 } from 'listr2'
-
-import { generateTranslationKeys } from 'lib/generators'
 
 const program = new Command()
 

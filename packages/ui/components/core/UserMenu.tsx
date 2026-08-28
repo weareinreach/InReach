@@ -1,12 +1,4 @@
-import {
-	createStyles,
-	type DefaultProps,
-	Group,
-	Menu,
-	rem,
-	type Selectors,
-	UnstyledButton,
-} from '@mantine/core'
+import { Group, Menu, UnstyledButton } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
@@ -18,63 +10,27 @@ import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { cx } from '~ui/lib/cx'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const LoginModalLauncher = dynamic(() =>
-	import('~ui/modals/LoginSignUp').then((mod) => mod.LoginModalLauncher)
+import classes from './UserMenu.module.css'
+
+const LoginModalLauncher = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('~ui/modals/LoginSignUp').then((mod) => mod.LoginModalLauncher),
+	{ ssr: false }
 )
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const SignupModalLauncher = dynamic(() =>
-	import('~ui/modals/LoginSignUp').then((mod) => mod.SignupModalLauncher)
+const SignupModalLauncher = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('~ui/modals/LoginSignUp').then((mod) => mod.SignupModalLauncher),
+	{ ssr: false }
 )
 
-const UserAvatar = dynamic(() => import('./UserAvatar').then((mod) => mod.UserAvatar))
+const UserAvatar = dynamic(() => import('./UserAvatar').then((mod) => mod.UserAvatar), { ssr: false })
 
-const useStyles = createStyles((theme) => ({
-	buttons: {
-		padding: `${rem(4)} ${rem(12)}`,
-		borderRadius: rem(8),
-	},
-	loadingItems: {
-		display: 'inline-block',
-	},
-	avatarPlaceholder: {
-		color: theme.other.colors.secondary.darkGray,
-	},
-	actionButton: {
-		fontWeight: theme.other.fontWeight.bold,
-	},
-	navText: {
-		...theme.other.utilityFonts.utility1,
-		color: `${theme.other.colors.secondary.black} !important`,
-		'&:hover': {
-			textDecoration: 'underline',
-		},
-	},
-	menuItem: {
-		...theme.other.utilityFonts.utility1,
-		color: `${theme.other.colors.secondary.black} !important`,
-		padding: rem(16),
-	},
-	menuTarget: {
-		'&:not(:disabled)': theme.fn.hover({
-			backgroundColor: theme.other.colors.primary.lightGray,
-		}),
-		'&:disabled': theme.fn.hover({ cursor: 'auto' }),
-		'&[data-expanded]': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-		},
-	},
-	logoutButton: {
-		padding: `${rem(14)} ${rem(12)}`,
-	},
-}))
-
-export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
+export const UserMenu = ({ className }: UserMenuProps) => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
 	const router = useRouter()
-	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 	const variant = useCustomVariant()
 
 	const isLoading = status === 'loading' || router.isFallback
@@ -141,6 +97,13 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 								<UserAvatar useLoggedIn />
 							</UnstyledButton>
 						</Menu.Target>
+						{/* No `variant` is passed to these `Link`-as-`Menu.Item` elements on purpose - any
+						    Anchor variant class (e.g. `inheritStyle`) applies its font/line-height/color
+						    with `!important`, which would beat `classes.menuItem`'s own (non-`!important`)
+						    font declarations regardless of source order. Leaving `variant` unset means the
+						    Anchor's base `.root` class applies instead, which has no `!important` of its
+						    own, so `classes.menuItem` (itself `!important`, see UserMenu.module.css) wins
+						    reliably. */}
 						<Menu.Dropdown>
 							{canAccessDataPortal && (
 								<>
@@ -188,13 +151,13 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 				<LoginModalLauncher component={UnstyledButton} className={classes.navText}>
 					{t('log-in')}
 				</LoginModalLauncher>
-				<SignupModalLauncher component={Button}>{t('sign-up-free')}</SignupModalLauncher>
+				<SignupModalLauncher component={Button} className={classes.signupButton}>
+					{t('sign-up-free')}
+				</SignupModalLauncher>
 			</>
 		)
 	}, [
 		canAccessDataPortal,
-		classes,
-		cx,
 		handleEditModeEntry,
 		handleSignout,
 		isEditablePage,
@@ -206,12 +169,11 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	])
 
 	return (
-		<Group className={cx(className)} noWrap spacing={shouldShowMenu ? 28 : 40}>
+		<Group className={cx(className)} wrap='nowrap' gap={shouldShowMenu ? 28 : 40}>
 			<LangPicker />
 			{menuOrLoginButtons}
 		</Group>
 	)
 }
 
-type ComponentStyles = Selectors<typeof useStyles>
-type UserMenuProps = DefaultProps<ComponentStyles>
+type UserMenuProps = { className?: string }

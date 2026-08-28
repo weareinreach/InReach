@@ -1,0 +1,15 @@
+/*
+ * `align-items: flex-start` (not `center`) plus `flex-wrap` - on the narrower left column of the org
+ * edit page, `.activityBlock` below can wrap into a 3-row stack far taller than the action buttons.
+ * Centering against that would leave the buttons floating oddly mid-height; wrapping lets the button
+ * row drop below the dates entirely once there isn't room for both side by side, instead of
+ * overflowing past the container edge.
+ */
+.toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	gap: rem(16px);
+	width: 100%;
+}

@@ -1,6 +1,6 @@
-import { Anchor, type AnchorProps, type Variants } from '@mantine/core'
+import { Anchor, type AnchorProps } from '@mantine/core'
 import NextLink, { type LinkProps as NextLinkProps } from 'next/link'
-import { forwardRef } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 
 const externalPrefixes = ['http', 'tel:', 'mailto:', 'sms:'] as const
 
@@ -32,7 +32,14 @@ export type ExternalLink = `${(typeof externalPrefixes)[number]}${string}`
 export interface LinkProps extends Omit<NextLinkProps, 'href' | 'color'>, AnchorProps {
 	href?: InternalLink | ExternalLink
 	external?: boolean
-	variant?: Variants<'inline' | 'inlineInverted'>
+	variant?: 'inline' | 'inlineInverted' | (string & {})
 	target?: string
 	rel?: string
+	children?: ReactNode
 }
+
+// Turbopack has a confirmed history of hydration mismatches specifically for `next/dynamic(() =>
+// import(...).then((mod) => mod.NamedExport))` (vercel/next.js#70795) - a default export sidesteps
+// the named-export resolution path entirely, letting `dynamic(() => import('./Link'))` be used
+// directly with no `.then()`.
+export default Link

@@ -3,7 +3,10 @@ import {
 	Box,
 	type ButtonProps,
 	Checkbox,
+	type ComboboxItem,
+	type ComboboxLikeRenderOptionInput,
 	createPolymorphicComponent,
+	Group,
 	Select as MantineSelect,
 	Modal,
 	Skeleton,
@@ -11,7 +14,15 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { type TFunction, useTranslation } from 'next-i18next/pages'
-import { forwardRef, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+	type ElementType,
+	forwardRef,
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react'
 import { FormProvider, type Resolver, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -24,12 +35,20 @@ import { generateId } from '@weareinreach/db/lib/idGen'
 import { type FieldAttributes } from '@weareinreach/db/zod_util/attributeSupplement'
 import { Button } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { Supplement } from './fields'
 import { formSchema, type FormSchema } from './schema'
-import { SelectionItem } from './SelectionItem'
+import classes from './SelectionItem.module.css'
+
+const renderAttributeOption = (label: string, active: boolean) => (
+	<Group className={classes.item}>
+		{label}
+		{!active && <Icon icon='carbon:view-off' />}
+	</Group>
+)
 
 const supplementDefaults = {
 	boolean: false,
@@ -164,8 +183,14 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 				return newObj
 			}
 
-			// @ts-expect-error to make work
-			form.reset({ ...form.formState.defaultValues, ...cleanNulls(supplement) })
+			const cleanedSupplement = cleanNulls(supplement) as Record<string, unknown>
+			// `Radio.Item` (used by `Supplement.Boolean`) only matches its value against a string -
+			// a raw DB boolean needs stringifying here so the correct option pre-selects on load.
+			if (typeof cleanedSupplement.boolean === 'boolean') {
+				cleanedSupplement.boolean = cleanedSupplement.boolean ? 'true' : 'false'
+			}
+
+			form.reset({ ...form.formState.defaultValues, ...cleanedSupplement })
 		}
 	}, [selectedAttr, form])
 
@@ -263,7 +288,10 @@ const useAttributeData = (showInactiveAttribs: boolean, attachesTo: AttributeMod
 }
 
 const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
-	({ restrictCategories: _restrictCategories, attachesTo, parentRecord, ...props }, ref) => {
+	(
+		{ restrictCategories: _restrictCategories, attachesTo, parentRecord, component: Component, ...props },
+		ref
+	) => {
 		useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const showAddedNotification = useNewNotification({ icon: 'added', displayText: 'Added Attribute' })
@@ -321,6 +349,15 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 
 		const toggleShowInactiveAttribs = useCallback(() => setShowInactiveAttribs((prev) => !prev), [])
 
+		const handleAttributeRenderOption = useCallback(
+			({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+				// @ts-expect-error - The 'active' property is missing from the source type.
+				const active = attributesByCategory?.find(({ value }) => value === option.value)?.active
+				return renderAttributeOption(option.label, active)
+			},
+			[attributesByCategory]
+		)
+
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={handler.close}>
@@ -331,7 +368,6 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 									data={attributeCategories ?? []}
 									label='Select Category'
 									onChange={handleCategorySelect}
-									withinPortal
 									searchable
 									clearable
 								/>
@@ -342,13 +378,11 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 										? []
 										: (attributesByCategory ?? [])
 												.filter(({ categoryName }) => categoryName === attrCat)
-												// @ts-expect-error - The 'active' property is missing, but we are passing it to a component that expects it.
-												.map(({ label, value, active }) => ({ label, value, active }))
+												.map(({ label, value }) => ({ label, value }))
 								}
 								label='Select Attribute'
 								disabled={!attrCat || !attributesByCategory?.length}
-								withinPortal
-								itemComponent={SelectionItem}
+								renderOption={handleAttributeRenderOption}
 								searchable={(attributesByCategory?.length ?? 0) > 10}
 								clearable
 								inputContainer={inputContainerWithSkeleton}
@@ -367,12 +401,18 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								parentRecord={parentRecord}
 								selectedAttr={selectedAttr}
 								onSave={saveAttributes.mutate}
-								isLoading={saveAttributes.isLoading}
+								isLoading={saveAttributes.isPending}
 							/>
 						)}
 					</Stack>
 				</Modal>
-				<Box component='button' ref={ref} onClick={handler.open} {...props} />
+				{Component && typeof Component !== 'string' ? (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					<Component ref={ref} onClick={handler.open} {...(props as any)} />
+				) : (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					<Box component={(Component ?? 'button') as any} ref={ref} onClick={handler.open} {...props} />
+				)}
 			</>
 		)
 	}
@@ -384,6 +424,7 @@ export const AttributeModal = createPolymorphicComponent<'button', AttributeModa
 export interface AttributeModalProps extends ButtonProps {
 	restrictCategories?: string[]
 	attachesTo?: ApiOutput['fieldOpt']['attributesByCategory'][number]['canAttachTo']
+	component?: ElementType
 	parentRecord:
 		| { organizationId: string; serviceId?: never; locationId?: never }
 		| { serviceId: string; organizationId?: never; locationId?: never }

@@ -1,7 +1,4 @@
-import {
-	/*httpBatchLink,*/ unstable_httpBatchStreamLink as httpBatchStreamLink,
-	loggerLink,
-} from '@trpc/client'
+import { /*httpBatchLink,*/ httpBatchStreamLink, loggerLink } from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 
@@ -26,33 +23,35 @@ const getBaseUrl = () => {
 
 // eslint-disable-next-line node/no-process-env
 const isDev = process.env.NODE_ENV === 'development' && process.env.VERCEL !== '1'
-export const api = createTRPCNext<AppRouter>({
-	config() {
-		return {
-			transformer,
-			links: [
-				...(isDev
-					? [
-							loggerLink({
-								enabled: () => isDev,
-							}),
-						]
-					: []),
 
-				httpBatchStreamLink({
-					url: `${getBaseUrl()}/api/trpc`,
-				}),
-			],
-			queryClientConfig: {
-				defaultOptions: {
-					queries: {
-						staleTime: 1000 * 60 * 10, // 10 Minutes
-						cacheTime: 1000 * 60 * 60, // 1 Hour
-					},
-				},
+const config = () => ({
+	links: [
+		...(isDev
+			? [
+					loggerLink({
+						enabled: () => isDev,
+					}),
+				]
+			: []),
+
+		httpBatchStreamLink({
+			url: `${getBaseUrl()}/api/trpc`,
+			transformer,
+		}),
+	],
+	queryClientConfig: {
+		defaultOptions: {
+			queries: {
+				staleTime: 1000 * 60 * 10, // 10 Minutes
+				gcTime: 1000 * 60 * 60, // 1 Hour
 			},
-		}
+		},
 	},
+})
+
+export const api = createTRPCNext<AppRouter>({
+	config,
+	transformer,
 	ssr: false,
 })
 

@@ -1,4 +1,4 @@
-import { Card, createStyles, rem, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Card, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -6,15 +6,7 @@ import { Badge } from '~ui/components/core/Badge'
 import { AccessInfo } from '~ui/components/data-display/AccessInfo'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
-const useStyles = createStyles((theme) => ({
-	getHelpCard: {
-		border: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-		borderRadius: rem(16),
-	},
-	cardShadow: {
-		boxShadow: `${rem(0)} ${rem(4)} ${rem(20)} ${rem(0)} rgba(0, 0, 0, 0.1)`,
-	},
-}))
+import classes from './shared.module.css'
 
 export const NationalCard = ({
 	data,
@@ -23,28 +15,27 @@ export const NationalCard = ({
 }) => {
 	const { accessInstructions, description, id, name, community } = data
 	const theme = useMantineTheme()
-	const { classes } = useStyles()
 	const variant = useCustomVariant()
 	const { t, ready } = useTranslation(['common', 'attribute', id])
 
 	return (
 		<Skeleton visible={!ready} radius={16}>
 			<Card className={classes.cardShadow}>
-				<Stack spacing={16}>
+				<Stack gap={16}>
 					{community?.tsKey && (
 						// @ts-expect-error props are too complicated right now.
-						<Badge.Community icon={community.icon ?? ''} hideToolTip>
+						<Badge.Community icon={community.icon ?? ''} hideToolTip className={classes.categoryBadge}>
 							{t(community.tsKey, { ns: 'attribute' })}
 						</Badge.Community>
 					)}
 					<Title order={2}>{name}</Title>
 					{!!description?.key && !!description?.text && (
-						<Text color={theme.other.colors.secondary.darkGray}>
+						<Text c={theme.other.colors.secondary.darkGray}>
 							{t(description.key, { ns: id, defaultValue: description.text })}
 						</Text>
 					)}
 					{!!accessInstructions?.length && (
-						<Stack spacing={12} p={16} className={classes.getHelpCard}>
+						<Stack gap={12} p={16} className={classes.getHelpCard}>
 							<Title order={3}>{t('common:service.get-help')}</Title>
 							{accessInstructions.map(({ access_type, access_value, sms_body, key, text }, i) => {
 								if (!access_value) return null
@@ -101,9 +92,9 @@ export const NationalCard = ({
 								}
 
 								return (
-									<Stack spacing={0} key={`${i}-${access_type}`}>
+									<Stack gap={0} key={`${i}-${access_type}`}>
 										{parseValue()}
-										<Text color={theme.other.colors.secondary.darkGray}>
+										<Text c={theme.other.colors.secondary.darkGray}>
 											{t(key ?? '', { ns: id, defaultValue: text })}
 										</Text>
 									</Stack>

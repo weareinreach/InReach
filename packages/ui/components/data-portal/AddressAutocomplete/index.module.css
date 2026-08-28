@@ -1,0 +1,16 @@
+.matchedText {
+	color: var(--ir-color-secondary-black);
+}
+.unmatchedText {
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray);
+	display: block;
+}
+.secondLine {
+	font-size: rem(14px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-dark-gray);
+}

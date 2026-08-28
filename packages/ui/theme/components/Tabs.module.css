@@ -1,0 +1,25 @@
+.tab {
+	padding: rem(16px) rem(24px);
+}
+.tab[data-active] {
+	border-color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.tab[data-active]:hover {
+		border-color: var(--ir-color-secondary-black);
+	}
+	.tab:hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}
+
+.tabLabel {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+
+.panel {
+	margin: rem(40px) 0;
+}

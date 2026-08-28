@@ -1,0 +1,58 @@
+.desktopNav {
+	min-height: rem(64px);
+	box-shadow: var(--mantine-shadow-xs);
+	margin-bottom: rem(40px);
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 150;
+	background-color: var(--ir-color-secondary-white);
+}
+@media (max-width: $mantine-breakpoint-sm) {
+	.desktopNav {
+		display: none;
+	}
+}
+
+.mobileNav {
+	/* v6's theme.fn.largerThan('sm') hid this above the `sm` breakpoint */
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.mobileNav {
+		display: none;
+	}
+}
+
+.editBar {
+	background: linear-gradient(
+		180deg,
+		var(--ir-color-secondary-white) 0%,
+		lighten(var(--ir-color-tertiary-red), 0.75) 10%
+	);
+	padding: rem(8px) rem(128px) rem(8px) rem(64px);
+	margin: 0 rem(-64px);
+}
+
+.editBarButtonText {
+	font-size: rem(14px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+	padding: rem(4px) rem(8px);
+	border-radius: rem(8px);
+}
+@media (hover: hover) {
+	.editBarButtonText:hover {
+		background-color: var(--ir-color-secondary-white);
+	}
+}
+.editBarButtonText:disabled {
+	color: var(--ir-color-secondary-dark-gray);
+	cursor: not-allowed;
+}
+@media (hover: hover) {
+	.editBarButtonText:disabled:hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}

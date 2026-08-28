@@ -1,0 +1,7 @@
+.root {
+	padding: rem(20px);
+	border-radius: rem(16px);
+}
+.root[data-with-border] {
+	border: rem(1px) solid var(--ir-color-tertiary-cool-gray);
+}

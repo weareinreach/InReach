@@ -1,0 +1,89 @@
+/**
+ * `inlineUtil2`/`inlineBulletUtil2` were dropped - confirmed zero usage repo-wide.
+ *
+ * Note: despite ListItem being its own sub-component in v7+, Mantine's static selector
+ * class for its icon element is still `:global(.mantine-List-itemIcon)` (there is no separate
+ * `.mantine-ListItem-itemIcon`) - but it must be wrapped in `:global(...)` below, since
+ * CSS Modules otherwise hashes it like any other local class and it silently stops
+ * matching the real (unscoped) DOM class Mantine emits.
+ */
+
+.inline {
+	display: inline-flex;
+	gap: rem(12px);
+	flex-wrap: wrap;
+}
+.inlineItem {
+	display: inline-block;
+	list-style: none;
+}
+.inlineItemIcon {
+	display: none;
+}
+
+.inlineBullet {
+	display: inline-flex;
+	column-gap: rem(8px);
+	row-gap: rem(12px);
+	flex-wrap: wrap;
+	align-items: center;
+}
+.inlineBulletItem:first-of-type :global(.mantine-List-itemIcon) {
+	display: none;
+}
+.inlineBulletItemIcon {
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-right: rem(8px);
+}
+.inlineBulletItemWrapper {
+	align-items: center;
+}
+
+.textDarkGrayItem {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.inlineBulletUtil2DarkGray {
+	display: inline-flex;
+	column-gap: rem(8px);
+	row-gap: rem(16px);
+	flex-wrap: wrap;
+	align-items: center;
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.inlineBulletUtil2DarkGrayItem:first-of-type :global(.mantine-List-itemIcon) {
+	display: none;
+}
+.inlineBulletUtil2DarkGrayItem {
+	color: var(--ir-color-secondary-dark-gray);
+}
+.inlineBulletUtil2DarkGrayItemIcon {
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-right: rem(8px);
+}
+.inlineBulletUtil2DarkGrayItemWrapper {
+	align-items: center;
+}
+
+.inlineUtil2DarkGray {
+	display: inline-flex;
+	gap: rem(16px);
+	flex-wrap: wrap;
+	font-size: rem(16px);
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.inlineUtil2DarkGrayItem {
+	display: inline-block;
+	list-style: none;
+	color: var(--ir-color-secondary-dark-gray);
+}
+.inlineUtil2DarkGrayItemIcon {
+	display: none;
+}

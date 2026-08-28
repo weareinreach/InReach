@@ -35,7 +35,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { type ApiInput, type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
@@ -49,9 +49,10 @@ import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { QuickPromotionModal } from '@weareinreach/ui/modals'
 
-// @ts-expect-error Next Dynamic doesn't like polymorphic components
-const QuickPromotionModal = dynamic(() =>
-	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
+const QuickPromotionModal = dynamic(
+	// @ts-expect-error Next Dynamic doesn't like polymorphic components
+	() => import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal),
+	{ ssr: false }
 )
 
 const RESULTS_PER_PAGE = 20
@@ -127,6 +128,11 @@ const QuickLink = () => {
 			setOverlay(false)
 		}
 	}, [session, sessionStatus])
+	const handleTabChange = useCallback(
+		(value: string | null) => router.push(value as unknown as Route),
+		[router]
+	)
+
 	const handlePageChange = (page?: 'prev' | 'next' | number, loseChanges = false) => {
 		if (!page) return
 		setPageAction(page)
@@ -208,7 +214,7 @@ const QuickLink = () => {
 						cell: (info) => {
 							const slug = info.row.original.slug
 							return (
-								<Group noWrap spacing={8}>
+								<Group wrap='nowrap' gap={8}>
 									<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
 									{slug !== undefined && (
 										<Link
@@ -236,7 +242,7 @@ const QuickLink = () => {
 							const country = form.values.data[info.row.index]?.country.cca2
 							const formattedPhone = parsePhoneNumber(info.getValue() ?? '', country)?.formatNational()
 							return (
-								<Group noWrap spacing={8}>
+								<Group wrap='nowrap' gap={8}>
 									<Text variant={variants.Text.utility4}>{formattedPhone}</Text>
 									{formattedPhone !== undefined && (
 										<Link
@@ -379,7 +385,7 @@ const QuickLink = () => {
 	})
 	return (
 		<>
-			<Tabs value={router.pathname} onTabChange={(value) => router.push(value as unknown as Route)}>
+			<Tabs value={router.pathname} onChange={handleTabChange}>
 				<Tabs.List>
 					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
 					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>
@@ -422,7 +428,7 @@ const QuickLink = () => {
 									{row.getVisibleCells().map((cell) => {
 										return cell.getIsGrouped() ? (
 											<td key={cell.id} colSpan={8}>
-												<Group noWrap>
+												<Group wrap='nowrap'>
 													<ActionIcon onClick={row.getToggleExpandedHandler()}>
 														{row.getIsExpanded() ? (
 															<Icon icon='carbon:chevron-down' />
@@ -443,7 +449,7 @@ const QuickLink = () => {
 							))}
 						</tbody>
 					</Table>
-					<Group noWrap position='apart' mt={40}>
+					<Group wrap='nowrap' justify='space-between' mt={40}>
 						<Pagination
 							onChange={handlePageChange}
 							onNextPage={() => handlePageChange('next')} // table.nextPage()}
@@ -456,7 +462,7 @@ const QuickLink = () => {
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={handleMutation}
-								loading={updatePhones.isLoading}
+								loading={updatePhones.isPending}
 								disabled={!form.isDirty()}
 							>
 								Save
@@ -471,7 +477,7 @@ const QuickLink = () => {
 									variant='primary-icon'
 									leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 									onClick={handleMutation}
-									loading={updatePhones.isLoading}
+									loading={updatePhones.isPending}
 								>
 									Save
 								</Button>

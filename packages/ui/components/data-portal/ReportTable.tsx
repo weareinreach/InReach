@@ -2,9 +2,9 @@ import {
 	ActionIcon,
 	Badge,
 	Checkbox,
-	createStyles,
 	Divider,
 	Group,
+	type MantineTheme,
 	Modal,
 	rem,
 	Select,
@@ -12,47 +12,50 @@ import {
 	Text,
 	Textarea,
 	Tooltip,
+	useMantineTheme,
 } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { keepPreviousData } from '@tanstack/react-query'
+import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
-import {
-	MantineReactTable,
-	type MRT_ColumnDef,
-	type MRT_ColumnFilterFnsState,
-	type MRT_ColumnFiltersState,
-	MRT_ShowHideColumnsButton,
-	type MRT_SortingState,
-	type MRT_TableInstance,
-	MRT_ToggleFiltersButton,
-	type MRT_Virtualizer,
-	useMantineReactTable,
-} from 'mantine-react-table'
 import { useRouter } from 'next/router'
 import { type Route } from 'nextjs-routes'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { ReportStatus } from '@weareinreach/db/enums'
+import { ReportIssueType, ReportStatus } from '@weareinreach/db/enums'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-type ReportRecord = ApiOutput['report']['forReportsTable'][number]
+import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
 
-const useStyles = createStyles((theme) => ({
-	warning: { color: theme.other.colors.tertiary.red },
-	bottomBar: { paddingTop: rem(20) },
-	notesList: {
-		maxHeight: rem(200),
-		overflowY: 'auto',
-		padding: theme.spacing.xs,
-		backgroundColor: theme.colors.gray[0],
-		borderRadius: theme.radius.sm,
-		border: `${rem(1)} solid ${theme.colors.gray[3]}`,
-	},
+type ReportRecord = ApiOutput['report']['forReportsTable']['results'][number]
+
+/** Columns the server-side query can sort by. */
+type ReportSortableColumnId =
+	'orgNameSnapshot' | 'serviceNameSnapshot' | 'issueType' | 'status' | 'informed' | 'createdAt' | 'updatedAt'
+
+const ISSUE_TYPE_OPTIONS = Object.values(ReportIssueType).map((value) => ({
+	value,
+	label: value.replaceAll('-', ' '),
 }))
+
+const getUserNoteStyle = (theme: MantineTheme) => ({
+	backgroundColor: theme.colors.gray[0],
+	borderRadius: theme.radius.sm,
+	whiteSpace: 'pre-wrap' as const,
+})
+
+const getInternalHistoryStyle = (theme: MantineTheme) => ({
+	maxHeight: rem(200),
+	overflowY: 'auto' as const,
+	backgroundColor: theme.colors.gray[0],
+	borderRadius: theme.radius.sm,
+	border: `${rem(1)} solid ${theme.colors.gray[3]}`,
+})
 
 // --- Helper Components ---
 
@@ -65,7 +68,6 @@ const ReportDetailsModal = ({
 	opened: boolean
 	onClose: () => void
 }) => {
-	const { classes } = useStyles()
 	const [status, setStatus] = useState<ReportStatus>(report.status as ReportStatus)
 	const [informed, setInformed] = useState<boolean>(report.informed)
 	const [newNote, setNewNote] = useState<string>('')
@@ -117,19 +119,19 @@ const ReportDetailsModal = ({
 
 	return (
 		<Modal opened={opened} onClose={onClose} title='Report Details' size='lg'>
-			<Stack spacing='md'>
+			<Stack gap='md'>
 				{/* Header: Organization and Service Info */}
-				<Stack align='flex-start' spacing='xs'>
-					<Group spacing='xs' align='center'>
-						<Stack spacing={0}>
+				<Stack align='flex-start' gap='xs'>
+					<Group gap='xs' align='center'>
+						<Stack gap={0}>
 							<Text size='sm'>
 								Organization Name: <strong>{report.orgNameSnapshot || 'Unknown'}</strong>
 							</Text>
-							<Text size='xs' color='dimmed' italic>
+							<Text size='xs' c='dimmed' fs='italic'>
 								Organization ID: {report.organizationId}
 							</Text>
 						</Stack>
-						<Tooltip label='Edit Organization' withinPortal>
+						<Tooltip label='Edit Organization'>
 							<ActionIcon
 								component={Link}
 								href={{
@@ -145,11 +147,11 @@ const ReportDetailsModal = ({
 						</Tooltip>
 					</Group>
 					{report.serviceId && (
-						<Stack spacing={0}>
+						<Stack gap={0}>
 							<Text size='sm'>
 								Service Name: <strong>{report.serviceNameSnapshot || 'Unknown'}</strong>
 							</Text>
-							<Text size='xs' color='dimmed' italic>
+							<Text size='xs' c='dimmed' fs='italic'>
 								Service ID: {report.serviceId}
 							</Text>
 						</Stack>
@@ -160,30 +162,30 @@ const ReportDetailsModal = ({
 
 				{/* Metadata Section */}
 				<Group grow align='flex-start'>
-					<Stack spacing={4}>
-						<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+					<Stack gap={4}>
+						<Text size='xs' c='dimmed' tt='uppercase' fw={700}>
 							Reporter
 						</Text>
-						<Stack spacing={0}>
+						<Stack gap={0}>
 							<Text size='sm'>{report.userName || 'Anonymous'}</Text>
-							<Text size='xs' color='dimmed'>
+							<Text size='xs' c='dimmed'>
 								{report.userEmail}
 							</Text>
 						</Stack>
 					</Stack>
-					<Stack spacing={4}>
-						<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+					<Stack gap={4}>
+						<Text size='xs' c='dimmed' tt='uppercase' fw={700}>
 							Issue Type
 						</Text>
-						<Stack spacing={0}>
-							<Text size='sm' sx={{ textTransform: 'capitalize' }}>
-								{report.issueType.replace(/-/g, ' ')}
+						<Stack gap={0}>
+							<Text size='sm' tt='capitalize'>
+								{report.issueType.replaceAll('-', ' ')}
 							</Text>
 						</Stack>
 					</Stack>
 					{languageName && (
-						<Stack spacing={4}>
-							<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+						<Stack gap={4}>
+							<Text size='xs' c='dimmed' tt='uppercase' fw={700}>
 								Language
 							</Text>
 							<Text size='sm'>{languageName}</Text>
@@ -214,69 +216,51 @@ const ReportDetailsModal = ({
 
 				{/* Reported Content Section */}
 				{report.incorrectFields && report.incorrectFields.length > 0 && (
-					<Stack spacing={4}>
-						<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+					<Stack gap={4}>
+						<Text size='xs' c='dimmed' tt='uppercase' fw={700}>
 							Fields Identified as Incorrect
 						</Text>
-						<Group spacing='xs'>
+						<Group gap='xs'>
 							{report.incorrectFields.map((field) => (
-								<Badge
-									key={field}
-									variant='outline'
-									size='sm'
-									color='gray'
-									sx={{ textTransform: 'capitalize' }}
-								>
-									{field.replace(/-/g, ' ')}
+								<Badge key={field} variant='outline' size='sm' color='gray' tt='capitalize'>
+									{field.replaceAll('-', ' ')}
 								</Badge>
 							))}
 						</Group>
 					</Stack>
 				)}
 
-				<Stack spacing={4}>
-					<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+				<Stack gap={4}>
+					<Text size='xs' c='dimmed' tt='uppercase' fw={700}>
 						User Note
 					</Text>
-					<Text
-						size='sm'
-						p='xs'
-						sx={(theme) => ({
-							backgroundColor: theme.colors.gray[0],
-							borderRadius: theme.radius.sm,
-							whiteSpace: 'pre-wrap',
-						})}
-					>
+					<Text size='sm' p='xs' style={getUserNoteStyle}>
 						{report.userNote || 'No note provided.'}
 					</Text>
 				</Stack>
 
 				{/* Internal Notes History */}
 				{report.internalNotes && report.internalNotes.length > 0 && (
-					<Stack spacing={4}>
-						<Text size='xs' color='dimmed' transform='uppercase' weight={700}>
+					<Stack gap={4}>
+						<Text size='xs' c='dimmed' tt='uppercase' fw={700}>
 							Internal History
 						</Text>
-						<div className={classes.notesList}>
-							<Stack spacing='xs'>
-								{report.internalNotes.map((note) => (
-									<div key={note.id}>
-										<Group spacing={4} align='center'>
-											<Text size='xs' weight={700}>
-												{note.user?.name || 'System'}
-											</Text>
-											<Text size='xs' color='dimmed'>
-												•{' '}
-												{DateTime.fromJSDate(new Date(note.createdAt)).toLocaleString(
-													DateTime.DATETIME_SHORT
-												)}
-											</Text>
-										</Group>
-										<Text size='sm'>{note.text}</Text>
-									</div>
-								))}
-							</Stack>
-						</div>
+						<Stack gap='xs' p='xs' style={getInternalHistoryStyle}>
+							{report.internalNotes.map((note) => (
+								<div key={note.id}>
+									<Group gap={4} align='center'>
+										<Text size='xs' fw={700}>
+											{note.user?.name || 'System'}
+										</Text>
+										<Text size='xs' c='dimmed'>
+											•{' '}
+											{DateTime.fromJSDate(new Date(note.createdAt)).toLocaleString(DateTime.DATETIME_SHORT)}
+										</Text>
+									</Group>
+									<Text size='sm'>{note.text}</Text>
+								</div>
+							))}
+						</Stack>
 					</Stack>
 				)}
 
@@ -295,11 +279,11 @@ const ReportDetailsModal = ({
 					minRows={3}
 				/>
 
-				<Group position='right' mt='md'>
+				<Group justify='flex-end' mt='md'>
 					<Button
 						variant='primary'
 						onClick={() => updateMutation.mutate({ id: report.id, status, informed, internalNotes: newNote })}
-						loading={updateMutation.isLoading}
+						loading={updateMutation.isPending}
 						disabled={!canSave}
 					>
 						Save Changes
@@ -310,26 +294,182 @@ const ReportDetailsModal = ({
 	)
 }
 
-const BottomBar = ({ table }: { table: MRT_TableInstance<ReportRecord> }) => {
-	const { classes } = useStyles()
-	const filteredRowCount = table.getFilteredRowModel().rows.length
-	const preFilteredRowCount = table.getPreFilteredRowModel().rows.length
+// --- Column Cell Renderers ---
+// Defined at module scope (rather than nested inside `ReportTable`) so React doesn't see a brand-new
+// component identity on every render; anything a renderer needs beyond `row`/`value` is passed in as a
+// prop instead of being read from closure.
+
+interface ReportActionsCellProps extends DataTableCellContext<ReportRecord> {
+	theme: MantineTheme
+	onSelectReport: (report: ReportRecord) => void
+	onOpenDetails: () => void
+}
+
+/** Cell renderer for the 'actions' column - opens the report details modal or the target org's edit page. */
+const ReportActionsCell = ({ row, theme, onSelectReport, onOpenDetails }: ReportActionsCellProps) => {
+	const editUrl: Route = { pathname: '/org/[slug]/edit', query: { slug: row.organization.slug } }
+	return (
+		<Group wrap='nowrap' gap={8}>
+			<Tooltip label='View Details'>
+				<ActionIcon
+					variant='subtle'
+					onClick={() => {
+						onSelectReport(row)
+						onOpenDetails()
+					}}
+				>
+					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+			<Tooltip label='Edit Target'>
+				<ActionIcon variant='subtle' component={Link} href={editUrl} target='_blank'>
+					<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+		</Group>
+	)
+}
+
+/**
+ * Curried factory for the 'actions' column cell - `theme`, `onSelectReport`, and `onOpenDetails` aren't part
+ * of `DataTableCellContext`, so they're threaded through here rather than via an inline arrow in the columns
+ * array.
+ */
+const createReportActionsCell = (extra: {
+	theme: MantineTheme
+	onSelectReport: (report: ReportRecord) => void
+	onOpenDetails: () => void
+}) => {
+	const Cell = (ctx: DataTableCellContext<ReportRecord>) => <ReportActionsCell {...ctx} {...extra} />
+	Cell.displayName = 'ReportActionsCell'
+	return Cell
+}
+
+/** Cell renderer for the 'id' column. */
+const IdCell = ({ value }: DataTableCellContext<ReportRecord>) => <Text size='xs'>{value as string}</Text>
+
+interface ReportNameCellProps extends DataTableCellContext<ReportRecord> {
+	variants: ReturnType<typeof useCustomVariant>
+}
+
+/** Cell renderer for the 'orgNameSnapshot' column - dims once the report is resolved. */
+const OrgNameCell = ({ value, row, variants }: ReportNameCellProps) => {
+	const isResolved = row.status === ReportStatus.RESOLVED
+	const name = (value as string) || 'Unknown'
+	return (
+		<Tooltip label={name}>
+			<Text
+				fw={500}
+				size='sm'
+				lineClamp={1}
+				variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}
+			>
+				{name}
+			</Text>
+		</Tooltip>
+	)
+}
+
+/** Cell renderer for the 'serviceNameSnapshot' column - dims once the report is resolved. */
+const ServiceNameCell = ({ value, row, variants }: ReportNameCellProps) => {
+	const isResolved = row.status === ReportStatus.RESOLVED
+	const name = (value as string) || '-'
+	return (
+		<Tooltip label={name}>
+			<Text
+				size='sm'
+				lineClamp={1}
+				variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}
+			>
+				{name}
+			</Text>
+		</Tooltip>
+	)
+}
+
+/**
+ * Curried factory for the 'orgNameSnapshot' column cell - `variants` isn't part of `DataTableCellContext`, so
+ * it's threaded through here rather than via an inline arrow in the columns array.
+ */
+const createOrgNameCell = (extra: { variants: ReturnType<typeof useCustomVariant> }) => {
+	const Cell = (ctx: DataTableCellContext<ReportRecord>) => <OrgNameCell {...ctx} {...extra} />
+	Cell.displayName = 'OrgNameCell'
+	return Cell
+}
+
+/**
+ * Curried factory for the 'serviceNameSnapshot' column cell - `variants` isn't part of
+ * `DataTableCellContext`, so it's threaded through here rather than via an inline arrow in the columns
+ * array.
+ */
+const createServiceNameCell = (extra: { variants: ReturnType<typeof useCustomVariant> }) => {
+	const Cell = (ctx: DataTableCellContext<ReportRecord>) => <ServiceNameCell {...ctx} {...extra} />
+	Cell.displayName = 'ServiceNameCell'
+	return Cell
+}
+
+interface ReportStatusCellProps extends DataTableCellContext<ReportRecord> {
+	theme: MantineTheme
+}
+
+/** Cell renderer for the 'status' column - colors by status and how stale the last update is. */
+const StatusCell = ({ value, row, theme }: ReportStatusCellProps) => {
+	const status = value as ReportStatus
+	const updatedAt = DateTime.fromJSDate(new Date(row.updatedAt))
+	const diff = DateTime.now().diff(updatedAt, ['days'])
+
+	let color = theme.colors.gray[7]
+	let weight = 500
+
+	if (status === ReportStatus.PENDING) {
+		weight = 700
+		if (diff.days >= 3) color = theme.colors.red[7]
+		else if (diff.days >= 1) color = theme.colors.orange[8]
+		else color = theme.black
+	} else if (status === ReportStatus.ACKNOWLEDGED) {
+		color = theme.colors.blue[7]
+		if (diff.days >= 7) color = theme.colors.orange[7]
+	} else if (status === ReportStatus.RESOLVED) {
+		color = theme.colors.gray[5]
+		weight = 400
+	}
 
 	return (
-		<div className={classes.bottomBar}>
-			<Text variant='utility3'>
-				{preFilteredRowCount !== filteredRowCount
-					? `Showing ${filteredRowCount} of ${preFilteredRowCount} results`
-					: `${preFilteredRowCount} results`}
-			</Text>
-		</div>
+		<Text size='sm' fw={weight} c={color} tt='capitalize'>
+			{status.toLowerCase()}
+		</Text>
 	)
+}
+
+/**
+ * Curried factory for the 'status' column cell - `theme` isn't part of `DataTableCellContext`, so it's
+ * threaded through here rather than via an inline arrow in the columns array.
+ */
+const createStatusCell = (extra: { theme: MantineTheme }) => {
+	const Cell = (ctx: DataTableCellContext<ReportRecord>) => <StatusCell {...ctx} {...extra} />
+	Cell.displayName = 'StatusCell'
+	return Cell
+}
+
+/** Cell renderer for the 'informed' column. */
+const InformedCell = ({ value }: DataTableCellContext<ReportRecord>) => (
+	<Icon
+		icon={value ? 'carbon:checkmark-filled' : 'carbon:checkmark-outline'}
+		color={value ? 'green' : 'gray'}
+		height={18}
+	/>
+)
+
+/** Cell renderer shared by the 'createdAt' and 'updatedAt' columns. */
+const DateCell = ({ value }: DataTableCellContext<ReportRecord>) => {
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 }
 
 // --- Main Table Component ---
 
 export const ReportTable = () => {
-	const { theme } = useStyles()
+	const theme = useMantineTheme()
 	const variants = useCustomVariant()
 	const router = useRouter()
 	const { reportId } = router.query
@@ -348,261 +488,157 @@ export const ReportTable = () => {
 		}
 	}, [closeDetails, router])
 
-	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([])
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 	const [globalFilter, setGlobalFilter] = useState('')
-	const [sorting, setSorting] = useState<MRT_SortingState>([{ id: 'createdAt', desc: true }])
-	const [columnFilterFns, setColumnFilterFns] = useState<MRT_ColumnFilterFnsState>({})
+	const [debouncedGlobalFilter] = useDebouncedValue(globalFilter, 300)
+	const [sorting, setSorting] = useState<SortingState>([{ id: 'createdAt', desc: true }])
+	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
 
-	const rowVirtualizerInstanceRef = useRef<MRT_Virtualizer<HTMLDivElement, HTMLTableRowElement>>(null)
-
-	useEffect(() => {
-		try {
-			rowVirtualizerInstanceRef.current?.scrollToIndex(0)
-		} catch (e) {
-			console.error(e)
-		}
-	}, [sorting])
+	const statusFilter = columnFilters.find(({ id }) => id === 'status')?.value as ReportStatus | undefined
+	const issueTypeFilter = columnFilters.find(({ id }) => id === 'issueType')?.value as string[] | undefined
+	const informedFilter = columnFilters.find(({ id }) => id === 'informed')?.value as boolean | undefined
+	const dateFilter = (id: string) =>
+		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
 	const { data, isLoading, isError, isFetching } = api.report.forReportsTable.useQuery(
-		router.isReady && reportId ? { id: reportId as string } : undefined,
 		{
-			enabled: router.isReady,
-			refetchOnWindowFocus: false,
-		}
+			status: statusFilter,
+			issueType: issueTypeFilter as ReportIssueType[] | undefined,
+			informed: informedFilter,
+			search: debouncedGlobalFilter || undefined,
+			createdAt: dateFilter('createdAt')
+				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
+				: undefined,
+			updatedAt: dateFilter('updatedAt')
+				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
+				: undefined,
+			sorting: sorting.map(({ id, desc }) => ({
+				id: id as ReportSortableColumnId,
+				desc,
+			})),
+			take: pagination.pageSize,
+			skip: pagination.pageIndex * pagination.pageSize,
+		},
+		{ placeholderData: keepPreviousData, refetchOnWindowFocus: false }
+	)
+
+	// Deep-linking (`?reportId=`) opens a specific report's details regardless of the current page/filters -
+	// a separate, independent lookup rather than trying to find it within whatever page happens to be loaded.
+	const { data: linkedReportData } = api.report.forReportsTable.useQuery(
+		{ id: typeof reportId === 'string' ? reportId : '', take: 1, skip: 0 },
+		{ enabled: router.isReady && typeof reportId === 'string', refetchOnWindowFocus: false }
 	)
 
 	useEffect(() => {
-		if (router.isReady && reportId && data?.length) {
-			const report = data.find((r) => r.id === reportId)
-			// Only trigger if a matching report is found and the details aren't already visible
-			if (report && !detailsOpened && selectedReport?.id !== report.id) {
-				setSelectedReport(report)
-				openDetails()
-			}
+		const linkedReport = linkedReportData?.results[0]
+		if (linkedReport && !detailsOpened && selectedReport?.id !== linkedReport.id) {
+			setSelectedReport(linkedReport)
+			openDetails()
 		}
-	}, [router.isReady, reportId, data, openDetails, detailsOpened, selectedReport?.id])
+	}, [linkedReportData, openDetails, detailsOpened, selectedReport?.id])
 
-	const columns = useMemo<MRT_ColumnDef<ReportRecord>[]>(
+	const columns = useMemo<DataTableColumn<ReportRecord>[]>(
 		() => [
 			{
-				accessorKey: 'id',
-				header: 'ID',
-				enableColumnFilter: false,
+				id: 'actions',
+				header: 'Actions',
+				pin: 'left',
 				size: 90,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				hideable: false,
+				accessorFn: () => undefined,
+				cell: createReportActionsCell({
+					theme,
+					onSelectReport: setSelectedReport,
+					onOpenDetails: openDetails,
+				}),
 			},
 			{
-				accessorKey: 'orgNameSnapshot',
+				id: 'id',
+				header: 'ID',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				cell: IdCell,
+			},
+			{
+				id: 'orgNameSnapshot',
 				header: 'Organization Name',
-				size: 200,
-				Cell: ({ cell, row }) => {
-					const isResolved = row.original.status === ReportStatus.RESOLVED
-					return (
-						<Text
-							weight={500}
-							size='sm'
-							variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}
-						>
-							{cell.getValue<string>() || 'Unknown'}
-						</Text>
-					)
-				},
+				size: 180,
+				cell: createOrgNameCell({ variants }),
 			},
 			{
-				accessorKey: 'serviceNameSnapshot',
+				id: 'serviceNameSnapshot',
 				header: 'Service or Location Name',
-				size: 200,
-				Cell: ({ cell, row }) => {
-					const isResolved = row.original.status === ReportStatus.RESOLVED
-					return (
-						<Text size='sm' variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}>
-							{cell.getValue<string>() || '-'}
-						</Text>
-					)
-				},
+				size: 180,
+				cell: createServiceNameCell({ variants }),
 			},
 			{
-				accessorKey: 'issueType',
+				id: 'issueType',
 				header: 'Issue Type',
 				size: 150,
-				filterVariant: 'multi-select',
+				filter: { type: 'multi-select', options: ISSUE_TYPE_OPTIONS },
 			},
 			{
-				accessorKey: 'status',
+				id: 'status',
 				header: 'Status',
 				size: 150,
-				Cell: ({ cell, row }) => {
-					const status = cell.getValue<ReportStatus>()
-					const updatedAt = DateTime.fromJSDate(new Date(row.original.updatedAt))
-					const diff = DateTime.now().diff(updatedAt, ['days'])
-
-					let color = theme.colors.gray[7]
-					let weight: number = 500
-
-					if (status === ReportStatus.PENDING) {
-						weight = 700
-						if (diff.days >= 3) color = theme.colors.red[7]
-						else if (diff.days >= 1) color = theme.colors.orange[8]
-						else color = theme.black
-					} else if (status === ReportStatus.ACKNOWLEDGED) {
-						color = theme.colors.blue[7]
-						if (diff.days >= 7) color = theme.colors.orange[7]
-					} else if (status === ReportStatus.RESOLVED) {
-						color = theme.colors.gray[5]
-						weight = 400
-					}
-
-					return (
-						<Text size='sm' weight={weight} color={color} sx={{ textTransform: 'capitalize' }}>
-							{status.toLowerCase()}
-						</Text>
-					)
+				filter: {
+					type: 'select',
+					options: [
+						{ value: ReportStatus.PENDING, label: 'Pending' },
+						{ value: ReportStatus.ACKNOWLEDGED, label: 'Acknowledged' },
+						{ value: ReportStatus.RESOLVED, label: 'Resolved' },
+					],
 				},
-				filterVariant: 'select',
+				cell: createStatusCell({ theme }),
 			},
 			{
-				accessorKey: 'informed',
+				id: 'informed',
 				header: 'Informed',
 				size: 100,
-				Cell: ({ cell }) => (
-					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<Icon
-							icon={cell.getValue<boolean>() ? 'carbon:checkmark-filled' : 'carbon:checkmark-outline'}
-							color={cell.getValue<boolean>() ? 'green' : 'gray'}
-							size={18}
-						/>
-					</div>
-				),
-				filterVariant: 'checkbox',
+				align: 'center',
+				filter: { type: 'checkbox', trueLabel: 'Informed', falseLabel: 'Not informed' },
+				cell: InformedCell,
 			},
 			{
-				accessorKey: 'createdAt',
-				header: 'Created At',
-				size: 150,
-				Cell: ({ cell }) => {
-					const date = DateTime.fromJSDate(cell.getValue<Date>())
-					return (
-						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)} withinPortal>
-							<span>{date.toRelativeCalendar()}</span>
-						</Tooltip>
-					)
-				},
-				sortingFn: 'datetime',
+				id: 'createdAt',
+				header: 'Created',
+				size: 160,
+				filter: { type: 'date-range' },
+				cell: DateCell,
 			},
 			{
-				accessorKey: 'updatedAt',
-				header: 'Updated At',
-				size: 150,
-				Cell: ({ cell }) => {
-					const date = DateTime.fromJSDate(cell.getValue<Date>())
-					return (
-						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)} withinPortal>
-							<span>{date.toRelativeCalendar()}</span>
-						</Tooltip>
-					)
-				},
-				sortingFn: 'datetime',
+				id: 'updatedAt',
+				header: 'Updated',
+				size: 160,
+				filter: { type: 'date-range' },
+				cell: DateCell,
 			},
 		],
-		[variants, theme]
+		[variants, theme, openDetails]
 	)
-
-	const table = useMantineReactTable({
-		columns,
-		data: data ?? [],
-		enableColumnResizing: true,
-		enableFacetedValues: true,
-		enablePinning: true,
-		enableRowActions: true,
-		enableRowVirtualization: true,
-		enablePagination: false,
-		enableGlobalFilterModes: true,
-		positionGlobalFilter: 'left',
-		columnFilterDisplayMode: 'popover',
-
-		initialState: {
-			columnPinning: { left: ['mrt-row-actions'] },
-			columnVisibility: { id: false },
-			showGlobalFilter: true,
-		},
-
-		state: {
-			columnFilters,
-			columnFilterFns,
-			globalFilter,
-			sorting,
-			isLoading,
-			showAlertBanner: isError || isFetching || isLoading,
-			showProgressBars: isFetching,
-			density: 'xs',
-		},
-
-		mantinePaperProps: { miw: '85%' },
-		mantineTableContainerProps: { mah: '60vh' },
-		mantineTableProps: { striped: true },
-		mantineTableBodyCellProps: ({ row }) => ({
-			sx: (theme) => ({
-				color:
-					row.original.status === ReportStatus.RESOLVED ? theme.other.colors.secondary.darkGray : undefined,
-			}),
-		}),
-
-		mantineSearchTextInputProps: {
-			placeholder: 'Search Reports',
-			icon: null,
-			sx: {
-				width: rem(300),
-				'& .mantine-ActionIcon-root': {
-					backgroundColor: theme.colors.green[6],
-					color: theme.white,
-					borderRadius: theme.radius.sm,
-					'&:hover': { backgroundColor: theme.colors.green[7] },
-				},
-			},
-		},
-
-		renderToolbarInternalActions: ({ table }) => (
-			<Group spacing='xs'>
-				<MRT_ToggleFiltersButton table={table} />
-				<MRT_ShowHideColumnsButton table={table} />
-			</Group>
-		),
-		renderBottomToolbar: ({ table }) => <BottomBar table={table} />,
-		renderRowActions: ({ row }) => {
-			const editUrl: Route = {
-				pathname: '/org/[slug]/edit',
-				query: { slug: row.original.organization.slug },
-			}
-
-			return (
-				<Group noWrap spacing={8}>
-					<Tooltip label='View Details' withinPortal>
-						<ActionIcon
-							onClick={() => {
-								setSelectedReport(row.original)
-								openDetails()
-							}}
-						>
-							<Icon icon='carbon:search' />
-						</ActionIcon>
-					</Tooltip>
-					<Tooltip label='Edit Target' withinPortal>
-						<ActionIcon component={Link} href={editUrl} target='_blank'>
-							<Icon icon='carbon:edit' />
-						</ActionIcon>
-					</Tooltip>
-				</Group>
-			)
-		},
-
-		onColumnFiltersChange: setColumnFilters,
-		onColumnFilterFnsChange: setColumnFilterFns,
-		onGlobalFilterChange: setGlobalFilter,
-		onSortingChange: setSorting,
-	})
 
 	return (
 		<>
-			<MantineReactTable table={table} />
+			<DataTable
+				data={data?.results ?? []}
+				columns={columns}
+				columnFilters={columnFilters}
+				onColumnFiltersChange={setColumnFilters}
+				sorting={sorting}
+				onSortingChange={setSorting}
+				globalFilter={globalFilter}
+				onGlobalFilterChange={setGlobalFilter}
+				globalFilterPlaceholder='Search Reports'
+				pagination={pagination}
+				onPaginationChange={setPagination}
+				mode={{ serverSide: true, rowCount: data?.total ?? 0 }}
+				isLoading={isLoading}
+				isFetching={isFetching}
+				isError={isError}
+			/>
 			{selectedReport && (
 				<ReportDetailsModal report={selectedReport} opened={detailsOpened} onClose={handleCloseDetails} />
 			)}

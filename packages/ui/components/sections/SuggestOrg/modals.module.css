@@ -1,0 +1,13 @@
+.count {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.5;
+	background: var(--ir-color-secondary-black);
+	border-radius: 100%;
+	color: var(--ir-color-secondary-white);
+	width: rem(24px);
+	height: rem(24px);
+	text-align: center;
+	display: inline-block;
+	vertical-align: center;
+}

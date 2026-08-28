@@ -1,0 +1,335 @@
+/**
+ * Custom Button variants. `primarySm`/`secondarySm`/`primaryLg`/`primaryLgRed`/
+ * `secondaryLg` were formerly a separate theme-level variant system
+ * (theme/variants/Button.ts) - consolidated here since this file's own
+ * `customVariants` mechanism already intercepts any variant name matching one of
+ * its own before it would ever reach that theme-level system, and having both
+ * live side by side is confusing. Only `accentLg` and that old system's own
+ * `accent` (shadowed by this file's `accent` regardless) were confirmed dead via
+ * `Button\.<name>` property-access grep - the rest are genuinely used.
+ *
+ * Note: in the pre-migration version, the hover effect on `primary`/`accent`/
+ * `primaryIcon` was a no-op due to a misplaced object key that Mantine's classNames
+ * API silently ignored. Implemented correctly (and consistently with the other
+ * variants, which did work) here - this only affects :hover, which Chromatic's
+ * default snapshots don't capture.
+ */
+
+/**
+ * A bare `<Button>` with no `variant` prop used to inherit this app's global Button default
+ * (was a theme-level `styles`/`defaultProps` override applied unconditionally: black background,
+ * white utility1 text, xl padding/height/radius, light-gray/dark-gray disabled state) - restored
+ * here explicitly since it doesn't survive as a Mantine default once the theme itself no longer
+ * sets `theme.components.Button`.
+ */
+.defaultRoot {
+	padding: calc(var(--mantine-spacing-sm) / 2) calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
+	border-radius: var(--mantine-radius-xl);
+	background-color: var(--ir-color-secondary-black);
+}
+@media (hover: hover) {
+	.defaultRoot:not([data-disabled]):hover {
+		background-color: lighten(var(--ir-color-secondary-black), 0.4);
+	}
+}
+.defaultRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.defaultInner {
+	font-size: rem(16px);
+	font-weight: var(--ir-font-weight-semibold);
+	line-height: 1.25;
+	color: var(--ir-color-secondary-white);
+}
+.defaultRoot[data-disabled] .defaultInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.primaryRoot,
+.secondaryRoot,
+.accentRoot {
+	padding-left: calc(var(--mantine-spacing-md) * 2);
+	padding-right: calc(var(--mantine-spacing-md) * 2);
+	height: calc(var(--mantine-spacing-lg) * 2);
+}
+
+.primaryLabel,
+.secondaryLabel,
+.accentLabel {
+	left: calc(var(--mantine-spacing-md) * 2);
+}
+
+.primaryInner,
+.secondaryInner,
+.accentInner {
+	font-size: rem(16px);
+	font-weight: var(--ir-font-weight-semibold);
+	line-height: 1.25;
+}
+
+@media (hover: hover) {
+	.primaryRoot:not([data-disabled]):hover,
+	.accentRoot:not([data-disabled]):hover,
+	.secondaryRoot:not([data-disabled]):hover {
+		background-color: var(--button-hover-bg);
+	}
+}
+
+.primaryRoot {
+	--button-hover-bg: darken(var(--ir-color-secondary-white), 0.4);
+	background-color: var(--ir-color-secondary-black);
+}
+.primaryRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.primaryInner {
+	color: var(--ir-color-secondary-white);
+}
+.primaryRoot[data-disabled] .primaryInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.secondaryRoot {
+	--button-hover-bg: var(--ir-color-primary-light-gray);
+	border: var(--ir-border-default);
+	border-color: var(--ir-color-tertiary-cool-gray);
+	background-color: var(--ir-color-secondary-white);
+}
+.secondaryRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.secondaryInner {
+	color: var(--ir-color-secondary-black);
+}
+.secondaryRoot[data-disabled] .secondaryInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.accentRoot {
+	--button-hover-bg: darken(var(--ir-color-tertiary-red), 0.4);
+	background-color: var(--ir-color-tertiary-red);
+}
+.accentRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.accentInner {
+	color: var(--ir-color-secondary-white);
+}
+.accentRoot[data-disabled] .accentInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+@media (hover: hover) {
+	.primaryIconRoot:not([data-disabled]):hover,
+	.secondaryIconRoot:not([data-disabled]):hover,
+	.accentIconRoot:not([data-disabled]):hover {
+		background-color: var(--button-hover-bg);
+	}
+}
+
+.primaryIconRoot,
+.secondaryIconRoot,
+.accentIconRoot {
+	padding-left: calc(var(--mantine-spacing-xl) * 2);
+	padding-right: calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
+}
+
+.primaryIconRoot {
+	--button-hover-bg: darken(var(--ir-color-secondary-white), 0.4);
+	border-radius: var(--mantine-radius-md);
+	background-color: var(--ir-color-secondary-black);
+}
+.primaryIconRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.primaryIconInner {
+	color: var(--ir-color-secondary-white);
+}
+.primaryIconRoot[data-disabled] .primaryIconInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+.primaryIconRoot[data-loading] {
+	pointer-events: none;
+}
+.primaryIconRoot[data-loading]::before {
+	content: '';
+	position: absolute;
+	inset: rem(-1px);
+	background-color: rgb(255 255 255 / 50%);
+	border-radius: var(--mantine-radius-md);
+	cursor: not-allowed;
+}
+
+.secondaryIconRoot {
+	--button-hover-bg: var(--ir-color-primary-light-gray);
+	border: var(--ir-border-default);
+	border-color: var(--ir-color-tertiary-cool-gray);
+	background-color: var(--ir-color-secondary-white);
+	border-radius: var(--mantine-radius-md);
+}
+.secondaryIconRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.secondaryIconInner {
+	color: var(--ir-color-secondary-black);
+}
+.secondaryIconRoot[data-disabled] .secondaryIconInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.accentIconRoot {
+	--button-hover-bg: darken(var(--ir-color-secondary-cornflower), 0.4);
+	background-color: var(--ir-color-secondary-cornflower);
+}
+.accentIconRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.accentIconInner {
+	color: var(--ir-color-secondary-white);
+}
+.accentIconRoot[data-disabled] .accentIconInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+/* Icon-less variants hide the left section entirely, matching the original v6 behavior */
+.primarySection,
+.secondarySection,
+.accentSection,
+.primarySmSection,
+.secondarySmSection {
+	display: none;
+}
+
+.primarySmRoot,
+.secondarySmRoot {
+	padding-left: calc(var(--mantine-spacing-md) * 2);
+	padding-right: calc(var(--mantine-spacing-md) * 2);
+	height: calc(var(--mantine-spacing-lg) * 2);
+}
+.primarySmLabel,
+.secondarySmLabel {
+	left: calc(var(--mantine-spacing-md) * 2);
+}
+@media (hover: hover) {
+	.primarySmRoot:not([data-disabled]):hover,
+	.secondarySmRoot:not([data-disabled]):hover {
+		background-color: var(--button-hover-bg);
+	}
+}
+
+.primarySmRoot {
+	--button-hover-bg: darken(var(--ir-color-secondary-white), 0.4);
+	background-color: var(--ir-color-secondary-black);
+}
+.primarySmRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray);
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.primarySmInner {
+	color: var(--ir-color-secondary-white);
+}
+.primarySmRoot[data-disabled] .primarySmInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+
+.secondarySmRoot {
+	--button-hover-bg: var(--ir-color-primary-light-gray);
+	border: var(--ir-border-default);
+	border-color: var(--ir-color-tertiary-cool-gray);
+	background-color: var(--ir-color-secondary-white) !important;
+}
+.secondarySmRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray) !important;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.secondarySmRoot[data-disabled] .secondarySmInner {
+	color: var(--ir-color-secondary-dark-gray) !important;
+}
+.secondarySmInner {
+	color: var(--ir-color-secondary-black) !important;
+}
+
+.primaryLgRoot {
+	padding: calc(var(--mantine-spacing-sm) / 2) calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
+	border-radius: var(--mantine-radius-md);
+	--button-hover-bg: darken(var(--ir-color-secondary-white), 0.4);
+	background-color: var(--ir-color-secondary-black);
+}
+.primaryLgRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray) !important;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.primaryLgInner {
+	color: var(--ir-color-secondary-white);
+}
+.primaryLgRoot[data-disabled] .primaryLgInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+@media (hover: hover) {
+	.primaryLgRoot:not([data-disabled]):hover {
+		background-color: var(--button-hover-bg);
+	}
+}
+
+.primaryLgRedRoot {
+	padding: calc(var(--mantine-spacing-sm) / 2) calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
+	background-color: var(--ir-color-tertiary-red) !important;
+	border-radius: var(--mantine-radius-md);
+	--button-hover-bg: darken(var(--ir-color-tertiary-red), 0.4);
+}
+.primaryLgRedRoot[data-disabled] {
+	background-color: var(--ir-color-primary-light-gray) !important;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+.primaryLgRedRoot[data-disabled] .primaryLgInner {
+	color: var(--ir-color-secondary-dark-gray);
+}
+@media (hover: hover) {
+	.primaryLgRedRoot:not([data-disabled]):hover {
+		background-color: var(--button-hover-bg);
+	}
+}
+
+/* secondaryLg - the only surviving entry from the old theme/variants/Button.ts (used
+   in 6 data-portal drawer "close and discard" buttons) */
+.secondaryLgRoot {
+	padding: calc(var(--mantine-spacing-sm) / 2) calc(var(--mantine-spacing-xl) * 2);
+	height: calc(var(--mantine-spacing-xl) * 2);
+	border: var(--ir-border-default);
+	border-color: var(--ir-color-tertiary-cool-gray);
+	background-color: var(--ir-color-secondary-white) !important;
+	border-radius: var(--mantine-radius-md);
+}
+@media (hover: hover) {
+	.secondaryLgRoot:not([data-disabled]):hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+}
+.secondaryLgInner {
+	color: var(--ir-color-secondary-black) !important;
+}
+.secondaryLgRoot[data-disabled] .secondaryLgInner {
+	color: var(--ir-color-secondary-dark-gray);
+}

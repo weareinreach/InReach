@@ -1,49 +1,20 @@
-import {
-	Box,
-	createPolymorphicComponent,
-	createStyles,
-	rem,
-	TextInput,
-	type TextInputProps,
-} from '@mantine/core'
+import { Box, createPolymorphicComponent, TextInput, type TextInputProps } from '@mantine/core'
 import { forwardRef } from 'react'
 
-const useStyles = createStyles((theme) => ({
-	...theme.other.utilityFonts,
-	...theme.other.headings,
-}))
-const useBaseStyles = createStyles((theme) => ({
-	input: {
-		// borderWidth: rem(1),
-		border: `${rem(1)} dashed ${theme.other.colors.secondary.teal}`,
-		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
-		padding: `${rem(6)} ${rem(8)} !important`,
-		height: 'unset',
-		minHeight: 'unset',
-		'&:focus, &:focus-within': {
-			borderColor: theme.other.colors.secondary.black,
-			borderWidth: rem(1),
-			backgroundColor: theme.other.colors.secondary.white,
-		},
-		'&[data-isdirty=true]': {
-			backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.6),
-		},
-	},
-}))
+import { cx } from '~ui/lib/cx'
+
+import classes from './InlineTextInput.module.css'
 
 const useFontSize = ({ fontSize, classNames }: InlineEditProps) => {
-	const { classes } = useStyles()
-	const { classes: baseClasses, cx } = useBaseStyles()
-	if (fontSize !== undefined && typeof fontSize !== 'string') {
-		fontSize = fontSize.toString()
-		// throw new Error('`fontSize` must be a string')
-	}
 	const fontClass = fontSize ? classes[fontSize] : undefined
+	// `classNames` can be the theme-callback form here, but this component is only ever given a
+	// plain object - narrow past the function form rather than supporting it.
+	const inputClassNames = typeof classNames === 'function' ? undefined : classNames
 	return {
-		...classNames,
+		...inputClassNames,
 		input: fontSize
-			? cx(classNames?.input, fontClass, baseClasses.input)
-			: cx(classNames?.input, baseClasses.input),
+			? cx(inputClassNames?.input, fontClass, classes.input)
+			: cx(inputClassNames?.input, classes.input),
 	}
 }
 
@@ -57,8 +28,7 @@ const _InlineTextInput = forwardRef<HTMLInputElement, InlineEditProps>(
 _InlineTextInput.displayName = 'InlineEdit'
 export const InlineTextInput = createPolymorphicComponent<'input', InlineEditProps>(_InlineTextInput)
 
-type FontStyles = ReturnType<typeof useStyles>['classes']
-type FontSizes = keyof FontStyles
+type FontSizes = 'utility1' | 'utility2' | 'utility3' | 'utility4' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
 interface InlineEditProps extends TextInputProps {
 	fontSize?: FontSizes

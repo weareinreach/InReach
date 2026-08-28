@@ -2,6 +2,7 @@ import {
 	Box,
 	type ButtonProps,
 	Checkbox,
+	createPolymorphicComponent,
 	Divider,
 	Modal,
 	PasswordInput,
@@ -11,14 +12,13 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next/pages'
 import { type Route } from 'nextjs-routes'
-import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { type LiteralUnion } from 'type-fest'
 import { z } from 'zod'
 
@@ -93,7 +93,9 @@ const RichTranslate = ({ stateSetter, handler, ...props }: RichTranslateProps) =
 					<Button
 						variant='secondary-icon'
 						onClick={
-							stateSetter ? (e) => stateSetter(e.currentTarget.getAttribute('data-option')) : undefined
+							stateSetter
+								? (e: MouseEvent<HTMLButtonElement>) => stateSetter(e.currentTarget.dataset.option ?? null)
+								: undefined
 						}
 					>
 						.
@@ -162,7 +164,7 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 	// 	}),
 	// })
 	const form = useSignUpForm({
-		validate: zodResolver(SignUpSchema),
+		validate: schemaResolver(SignUpSchema, { sync: true }),
 		initialValues: {
 			email: '',
 			name: '',
@@ -204,15 +206,15 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 		<RichTranslate i18nKey='sign-up.modal-body-temp' stateSetter={userTypeChange} handler={handler} />
 	)
 
-	const submitHandler = () => {
+	const submitHandler = useCallback(() => {
 		if (form.isValid()) {
 			signUpAction.mutate(form.values)
 		}
-	}
+	}, [form, signUpAction])
 
 	const signUpButton = (
 		<>
-			<Button disabled={!form.isValid()} onClick={submitHandler} loading={signUpAction.isLoading}>
+			<Button disabled={!form.isValid()} onClick={submitHandler} loading={signUpAction.isPending}>
 				{t('words.sign-up')}
 			</Button>
 			<Text variant={variants.Text.utility4darkGray}>
@@ -430,14 +432,13 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 		<>
 			<Modal
 				title={modalTitle}
-				scrollAreaComponent={Modal.NativeScrollArea}
 				opened={opened}
 				onClose={() => handler.close()}
 				fullScreen={isMobile}
 				zIndex={500}
 			>
 				<SignUpFormProvider form={form}>
-					<Stack spacing={24} align='center'>
+					<Stack gap={24} align='center'>
 						{modalBody()}
 					</Stack>
 				</SignUpFormProvider>
@@ -477,7 +478,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 			password: z.string().min(1, t('form-error-password-blank')),
 		})
 		const form = useForm<LoginFormProps>({
-			validate: zodResolver(LoginSchema),
+			validate: schemaResolver(LoginSchema, { sync: true }),
 			validateInputOnBlur: true,
 			// Without this, email/password start `undefined` and their inputs render uncontrolled
 			// until typed into, tripping React's uncontrolled-to-controlled input warning.
@@ -508,7 +509,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 			}
 		}
 		return (
-			<Stack align='center' spacing={24} ref={ref}>
+			<Stack align='center' gap={24} ref={ref}>
 				{hideTitle ? null : <Title order={2}>{t('log-in')}</Title>}
 				<TextInput
 					label={t('words.email')}
@@ -556,7 +557,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 						}}
 					/>
 				</Text>
-				<Stack spacing={0} align='center'>
+				<Stack gap={0} align='center'>
 					<ForgotPasswordModal component={Link}>{t('forgot-password')}</ForgotPasswordModal>
 					<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
 				</Stack>
@@ -568,7 +569,7 @@ LoginBody.displayName = 'LoginBody'
 
 export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(false)
-	const { animateCSS, fireEvent } = useShake({ variant: 1 })
+	const { animateStyle, fireEvent } = useShake({ variant: 1 })
 	const { isMobile } = useScreenSize()
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 	return (
@@ -577,7 +578,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 				title={modalTitle}
 				opened={opened}
 				onClose={() => handler.close()}
-				className={animateCSS}
+				style={animateStyle}
 				fullScreen={isMobile}
 			>
 				<LoginBody modalHandler={handler} activateShake={fireEvent} />

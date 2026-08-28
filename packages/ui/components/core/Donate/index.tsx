@@ -1,4 +1,4 @@
-import { Affix, createStyles, Modal, Popover, rem, Text, useMantineTheme } from '@mantine/core'
+import { Affix, Modal, Popover, rem, Text, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useTimeout } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
@@ -10,37 +10,9 @@ import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useScreenSize } from '~ui/hooks/useScreenSize'
-import { bounce } from '~ui/theme/animation'
+import { cx } from '~ui/lib/cx'
 
-const useStyles = createStyles((theme) => ({
-	bounce: {
-		animation: `${bounce(16)} 1.75s 5`,
-	},
-	shrink: {
-		transition: 'all 0.5s ease-in-out',
-		padding: '0 !important',
-		borderRadius: '100% !important',
-		width: rem(48),
-	},
-	modalBody: {
-		padding: rem(0),
-		width: '100% !important',
-		height: 'auto !important',
-		[theme.fn.largerThan('xs')]: {
-			padding: `${rem(0)} ${rem(0)}`,
-		},
-		[theme.fn.largerThan('sm')]: {
-			padding: `${rem(0)} ${rem(0)}`,
-		},
-		'& > iframe': {
-			height: '70vh !important',
-			minHeight: rem(500),
-		},
-		'& > iframe:nth-of-type(n+2)': {
-			display: 'none',
-		},
-	},
-}))
+import classes from './index.module.css'
 
 export const DonateModal = () => {
 	const [opened, handler] = useDisclosure(false)
@@ -49,7 +21,6 @@ export const DonateModal = () => {
 	const router = useRouter()
 	const variant = useCustomVariant()
 	const theme = useMantineTheme()
-	const { classes, cx } = useStyles() // classes used for button styles
 	const { isMobile } = useScreenSize()
 	const donateEmoji = '💝'
 	const [showEmoji, setShowEmoji] = useState(false)
@@ -123,11 +94,8 @@ export const DonateModal = () => {
 						<Affix position={buttonPosition}>
 							<Button
 								className={cx(
-									// 'kindful-donate-btn',
-									{ [classes.bounce]: !showEmoji },
-									{
-										[classes.shrink]: showEmoji,
-									}
+									!showEmoji ? classes.bounce : undefined,
+									showEmoji ? classes.shrink : undefined
 								)}
 								variant={variant.Button.primarySm}
 								bg={theme.other.colors.primary.allyGreen}

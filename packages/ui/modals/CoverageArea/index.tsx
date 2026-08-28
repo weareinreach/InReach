@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	type ButtonProps,
+	type ComboboxData,
 	createPolymorphicComponent,
 	Modal,
 	Select,
@@ -10,12 +11,12 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { type TFunction, useTranslation } from 'next-i18next/pages'
-import { forwardRef, useCallback, useEffect } from 'react'
+import { type ElementType, forwardRef, useCallback, useEffect } from 'react'
 
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useServiceAreaSelections } from './hooks'
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 import { ModalTitle } from '../ModalTitle'
 
 const reduceDistType = (data: { tsNs: string; tsKey: string }[] | undefined, t: TFunction) => {
@@ -31,8 +32,7 @@ const reduceDistType = (data: { tsNs: string; tsKey: string }[] | undefined, t: 
 }
 
 const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
-	({ serviceArea, onSuccessAction, ...props }, ref) => {
-		const { classes } = useStyles()
+	({ serviceArea, onSuccessAction, component: Component, ...props }, ref) => {
 		const { t, i18n } = useTranslation(['common', 'gov-dist'])
 		const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 		const [modalOpened, modalHandler] = useDisclosure(false)
@@ -50,7 +50,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 			{ activeForOrgs: true },
 			{
 				select: (data) =>
-					data.map(({ id, cca2 }) => ({ value: id, label: countryTranslation.of(cca2), cca2 })) ?? [],
+					data.map(({ id, cca2 }) => ({ value: id, label: countryTranslation.of(cca2) ?? cca2, cca2 })) ?? [],
 			}
 		)
 		const { data: dataDistrict } = api.fieldOpt.govDists.useQuery(
@@ -125,6 +125,33 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 			}
 		}, [addServiceArea, selected, serviceArea])
 
+		const handleCountryChange = useCallback(
+			(value: string | null) => {
+				if (value) {
+					setVal.country(value)
+				}
+			},
+			[setVal]
+		)
+
+		const handleGovDistChange = useCallback(
+			(value: string | null) => {
+				if (value) {
+					setVal.govDist(value)
+				}
+			},
+			[setVal]
+		)
+
+		const handleSubDistChange = useCallback(
+			(value: string | null) => {
+				if (value) {
+					setVal.subDist(value)
+				}
+			},
+			[setVal]
+		)
+
 		return (
 			<>
 				<Modal
@@ -132,7 +159,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 					onClose={modalHandler.close}
 					opened={modalOpened}
 				>
-					<Stack spacing={24} className={classes.ModalContent} align='center'>
+					<Stack gap={24} className={classes.ModalContent} align='center'>
 						<Stack align='center'>
 							<Title order={2}>
 								{t('add', {
@@ -140,31 +167,28 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 								})}
 							</Title>
 						</Stack>
-						<Stack spacing={16}>
+						<Stack gap={16}>
 							<Stack className={classes.selectSectionWrapper}>
 								<Select
 									placeholder={placeHolders.first}
-									data={dataCountry ?? []}
+									data={(dataCountry ?? []) as ComboboxData}
 									value={selected.country}
-									onChange={setVal.country}
-									withinPortal
+									onChange={handleCountryChange}
 								/>
 								{selected.country && !!dataDistrict?.length && (
 									<Select
 										placeholder={placeHolders.second}
-										data={dataDistrict ?? []}
+										data={(dataDistrict ?? []) as ComboboxData}
 										value={selected.govDist}
-										onChange={setVal.govDist}
-										withinPortal
+										onChange={handleGovDistChange}
 									/>
 								)}
 								{selected.govDist && !!dataSubDist?.length && (
 									<Select
 										placeholder={placeHolders.third}
-										data={dataSubDist ?? []}
+										data={(dataSubDist ?? []) as ComboboxData}
 										value={selected.subDist}
-										onChange={setVal.subDist}
-										withinPortal
+										onChange={handleSubDistChange}
 									/>
 								)}
 							</Stack>
@@ -174,7 +198,13 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 						</Button>
 					</Stack>
 				</Modal>
-				<Box ref={ref} component={'button'} onClick={modalHandler.open} {...props} />
+				{Component && typeof Component !== 'string' ? (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					<Component ref={ref} onClick={modalHandler.open} {...(props as any)} />
+				) : (
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					<Box component={(Component ?? 'button') as any} ref={ref} onClick={modalHandler.open} {...props} />
+				)}
 			</>
 		)
 	}
@@ -187,6 +217,7 @@ export const CoverageArea = createPolymorphicComponent<'button', Props>(Coverage
 interface Props extends ButtonProps {
 	serviceArea: string | NewServiceArea
 	onSuccessAction?: () => void
+	component?: ElementType
 }
 
 type NewServiceArea = { organizationId: string } | { orgLocationId: string } | { orgServiceId: string }

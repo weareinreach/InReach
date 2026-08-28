@@ -22,7 +22,7 @@ export default {
 	},
 	decorators: [StorybookGrid],
 	render: (args) => (
-		<Grid.Col sm={8}>
+		<Grid.Col span={{ sm: 8 }}>
 			<UserReview {...args} />
 		</Grid.Col>
 	),

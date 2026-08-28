@@ -1,4 +1,4 @@
-import { createStyles, Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
+import { Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { useCallback, useMemo } from 'react'
@@ -9,32 +9,15 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { ActionButtons } from '../ActionButtons'
 import { Badge } from '../Badge'
 import { Link } from '../Link'
-
-const useStyles = createStyles((theme) => ({
-	cardBody: {
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-		},
-	},
-	hoverText: {
-		'&[data-hovered]': {
-			textDecoration: 'underline',
-		},
-	},
-	description: {
-		[theme.fn.smallerThan('xs')]: {
-			display: 'none',
-		},
-	},
-}))
+import classes from './shared.module.css'
 
 export const SavedResultLoading = () => {
 	const variants = useCustomVariant()
 	return (
 		<>
-			<Stack spacing={16} w='100%'>
-				<Stack spacing={12}>
-					<Group position='apart'>
+			<Stack gap={16} w='100%'>
+				<Stack gap={12}>
+					<Group justify='space-between'>
 						<Skeleton variant={variants.Skeleton.h2} w='80%' />
 						<ActionButtons.Loading />
 					</Group>
@@ -46,7 +29,7 @@ export const SavedResultLoading = () => {
 						<Skeleton variant={variants.Skeleton.text} w='60%' />
 					</Stack>
 				</Stack>
-				<Group spacing={16}>
+				<Group gap={16}>
 					<Skeleton h={32} w='100%' />
 					<Skeleton h={32} w='100%' />
 					<Skeleton h={32} w='100%' />
@@ -61,7 +44,6 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 	const { description, slug } = savedItem
 	const { t, ready: i18nReady, i18n } = useTranslation(['common', savedItem.id])
 	const variants = useCustomVariant()
-	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
 
 	const leaderBadgeGroup = useMemo(
@@ -118,9 +100,9 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 
 	return (
 		<>
-			<Stack spacing={16} ref={hoverRef}>
-				<Stack spacing={0}>
-					<Group align='center' position='apart' noWrap>
+			<Stack gap={16} ref={hoverRef}>
+				<Stack gap={0}>
+					<Group align='center' justify='space-between' wrap='nowrap'>
 						<Title
 							order={2}
 							className={classes.hoverText}
@@ -144,7 +126,7 @@ const SavedResultData = ({ result: savedItem }: SavedResultHasData) => {
 						variant={variants.Link.inheritStyle}
 						td='none'
 					>
-						<Stack spacing={12}>
+						<Stack gap={12}>
 							{listOfCities && <Text variant={variants.Text.utility2darkGray}>{listOfCities}</Text>}
 							<Text>
 								{description &&

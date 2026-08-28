@@ -1,14 +1,4 @@
-import {
-	Button,
-	type ButtonProps,
-	createPolymorphicComponent,
-	Group,
-	Loader,
-	Modal,
-	Stack,
-	Text,
-	Title,
-} from '@mantine/core'
+import { createPolymorphicComponent, Group, Loader, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
@@ -16,14 +6,14 @@ import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
-// import { Button } from '~ui/components/core/Button'
+import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from './ModalTitle'
 import { PrivacyStatementModal } from './PrivacyStatement'
-import { UserSurveyModalLauncher } from './UserSurvey'
+import { SurveyModalLauncher } from './UserSurvey'
 
 const isRecord = (data: unknown) => z.record(z.string(), z.any()).safeParse(data).success
 const UrlParams = z.object({ c: z.string(), code: z.string() }).refine((data) => {
@@ -84,11 +74,11 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 		[parsedData.success, parsedData?.data]
 	)
 	const readyToVerify = useMemo(() => {
-		if (success || error || verifyAccount.isLoading) {
+		if (success || error || verifyAccount.isPending) {
 			return false
 		}
 		return opened && dataToVerify !== null
-	}, [success, error, verifyAccount.isLoading, opened, dataToVerify])
+	}, [success, error, verifyAccount.isPending, opened, dataToVerify])
 	useEffect(() => {
 		if (readyToVerify && dataToVerify !== null) {
 			verifyAccount.mutate(dataToVerify)
@@ -102,8 +92,8 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 
 	const bodyWorking = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={2}>{t('verify-account.verifying')}</Title>
 					<Text variant={variants.Text.utility1darkGray}>{t('words.please-wait')}</Text>
 				</Stack>
@@ -115,9 +105,9 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 
 	const bodySuccess = useMemo(
 		() => (
-			<Stack align='center' spacing={40}>
-				<Stack align='center' spacing={24}>
-					<Stack spacing={0} align='center'>
+			<Stack align='center' gap={40}>
+				<Stack align='center' gap={24}>
+					<Stack gap={0} align='center'>
 						<Title order={1}>📋</Title>
 						<Title order={2} ta='center'>
 							{t('survey.launch-title')}
@@ -147,9 +137,9 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 					<Button variant={variants.Button.secondaryLg} onClick={handler.close} radius='md'>
 						{t('survey.not-right-now')}
 					</Button>
-					<UserSurveyModalLauncher component={Button} variant={variants.Button.primaryLg}>
+					<SurveyModalLauncher component={Button} variant={variants.Button.primaryLg}>
 						{t('survey.start-survey')}
-					</UserSurveyModalLauncher>
+					</SurveyModalLauncher>
 				</Group>
 			</Stack>
 		),
@@ -173,8 +163,8 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 
 	const bodyError = useMemo(() => {
 		return (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>🫣</Title>
 					<Title order={2}>{t('errors.oh-no')}</Title>
 				</Stack>
@@ -195,8 +185,8 @@ const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalB
 
 	const bodyCodeResent = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>📬</Title>
 					<Title order={2}>{t('confirm-account.code-requested')}</Title>
 				</Stack>

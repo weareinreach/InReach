@@ -27,7 +27,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Delete Account Modal',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 	},
 } satisfies Meta<typeof DeleteModal>
 

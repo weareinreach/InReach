@@ -1,0 +1,9 @@
+.paginationItem {
+	height: rem(24px);
+	min-width: rem(12px);
+	text-align: center;
+}
+.paginationActive {
+	border-bottom: rem(2px) solid var(--ir-color-secondary-black);
+	border-radius: 0;
+}

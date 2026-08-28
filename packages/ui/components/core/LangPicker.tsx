@@ -1,13 +1,4 @@
-import {
-	createStyles,
-	Flex,
-	Menu,
-	rem,
-	Select,
-	Text,
-	UnstyledButton,
-	type UnstyledButtonProps,
-} from '@mantine/core'
+import { Flex, Menu, Select, Text, UnstyledButton, type UnstyledButtonProps } from '@mantine/core'
 import { hasCookie, setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
@@ -16,42 +7,24 @@ import { forwardRef, useCallback, useEffect, useMemo } from 'react'
 import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 
-const useStyles = createStyles((theme, { variant }: { variant: 'default' | 'form' }) => ({
-	menuTarget: {
-		padding: `${rem(4)} ${rem(12)}`,
-		borderRadius: theme.spacing.sm,
-		height: rem(56),
-		border: variant === 'form' ? `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}` : 'none',
-		backgroundColor: variant === 'form' ? theme.white : 'transparent',
-		width: variant === 'form' ? '100%' : 'auto',
-		display: 'flex',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			cursor: 'pointer',
-		},
-		'&[data-expanded]': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-		},
-	},
-	menuItem: {
-		...theme.other.utilityFonts.utility1,
-		color: `${theme.other.colors.secondary.black} !important`,
-		padding: `${rem(16)} ${rem(32)}`,
-		...theme.fn.hover({ backgroundColor: theme.other.colors.primary.lightGray, cursor: 'pointer' }),
-	},
-}))
+import classes from './LangPicker.module.css'
 
 const MenuTarget = forwardRef<
 	HTMLButtonElement,
 	UnstyledButtonProps & { activeLang: string | undefined; variant: 'default' | 'form' }
 >(({ activeLang, variant, ...props }, ref) => {
-	const { classes } = useStyles({ variant })
 	const variants = useCustomVariant()
 	return (
-		<UnstyledButton ref={ref} {...props} className={classes.menuTarget}>
+		<UnstyledButton
+			ref={ref}
+			{...props}
+			className={cx(
+				classes.menuTargetBase,
+				variant === 'form' ? classes.menuTargetForm : classes.menuTargetDefault
+			)}
+		>
 			<Flex align='center' gap='xs' style={{ flex: variant === 'form' ? 1 : 'initial' }}>
 				<Icon icon='carbon:translate' width={20} height={20} />
 				<Text variant={variants.Text.utility1}>{activeLang}</Text>
@@ -71,7 +44,6 @@ type LangPickerProps = {
 }
 
 export const LangPicker = ({ value, label, onChange, variant = 'default' }: LangPickerProps) => {
-	const { classes } = useStyles({ variant })
 	const { i18n, t } = useTranslation()
 	const router = useRouter()
 

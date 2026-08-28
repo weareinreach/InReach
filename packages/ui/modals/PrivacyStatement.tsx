@@ -1,6 +1,5 @@
 import {
 	Box,
-	Button,
 	type ButtonProps,
 	createPolymorphicComponent,
 	Divider,
@@ -17,6 +16,7 @@ import { forwardRef, useEffect, useMemo, useState } from 'react'
 import Toggle from 'react-toggle'
 import 'react-toggle/style.css'
 
+import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
@@ -66,7 +66,7 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 			title2: <Title order={2}>.</Title>,
 			textDarkGray: <Text variant={variants.Text.darkGray}>.</Text>,
 			textDarkGrayCentered: (
-				<Text align='center' variant={variants.Text.darkGray}>
+				<Text ta='center' variant={variants.Text.darkGray}>
 					.
 				</Text>
 			),
@@ -127,9 +127,9 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 	return (
 		<>
 			<Modal title={modalTitle} opened={opened} onClose={closeModal} fullScreen={isMobile} zIndex={999999}>
-				<Stack align='center' spacing={16}>
+				<Stack align='center' gap={16}>
 					<Trans i18nKey='privacy-statement-head' tOptions={tOptions} components={components} />
-					<Stack spacing={16}>
+					<Stack gap={16}>
 						<Trans i18nKey='privacy-statement-body' tOptions={tOptions} components={components} />
 					</Stack>
 					<Trans i18nKey='privacy-statement-foot' tOptions={tOptions} components={components} />
@@ -143,22 +143,22 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 				centered
 				zIndex={9999999}
 			>
-				<Stack spacing='md'>
+				<Stack gap='md'>
 					<Divider />
-					<Group position='apart'>
-						<Text weight={500}>{t('cookie-consent.item-basic')}</Text>
+					<Group justify='space-between'>
+						<Text fw={500}>{t('cookie-consent.item-basic')}</Text>
 						{/* Native react-toggle without custom icons picks up existing CSS */}
 						<Toggle checked={true} disabled={true} />
 					</Group>
-					<Group position='apart'>
-						<Text weight={500}>{t('cookie-consent.item-ga4')}</Text>
+					<Group justify='space-between'>
+						<Text fw={500}>{t('cookie-consent.item-ga4')}</Text>
 						<Toggle
 							checked={ga4Enabled}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) => toggleGa4(e.target.checked)}
 						/>
 					</Group>
 					<Divider />
-					<Button onClick={closeSettings} fullWidth>
+					<Button variant={variants.Button.primaryLg} onClick={closeSettings} fullWidth>
 						{t('words.accept')}
 					</Button>
 				</Stack>
@@ -176,3 +176,9 @@ export const PrivacyStatementModal = createPolymorphicComponent<'button', Privac
 export type PrivacyModalProps = Omit<ButtonProps, 'variant'> & {
 	variant?: ButtonProps['variant'] | (string & NonNullable<unknown>)
 }
+
+// Turbopack has a confirmed history of hydration mismatches specifically for `next/dynamic(() =>
+// import(...).then((mod) => mod.NamedExport))` (vercel/next.js#70795) - a default export sidesteps
+// the named-export resolution path entirely, letting `dynamic(() => import('./PrivacyStatement'))`
+// be used directly with no `.then()`.
+export default PrivacyStatementModal

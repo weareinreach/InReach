@@ -16,6 +16,10 @@ test('home page loads with no console or page errors', async ({ page }) => {
 	const response = await page.goto('/')
 	expect(response?.status()).toBeLessThan(400)
 
+	// First-visit modal marks the rest of the page aria-hidden until dismissed, which hides the
+	// header from role-based queries below even though it's already rendered underneath.
+	await page.getByRole('dialog').getByRole('button', { name: 'Accept' }).click()
+
 	// Confirms the app shell actually mounted and rendered real content, not a blank/crashed page.
 	await expect(page.getByRole('link', { name: 'InReach logo' }).first()).toBeVisible()
 

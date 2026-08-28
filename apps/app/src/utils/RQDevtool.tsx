@@ -17,7 +17,7 @@ export const ConditionalReactQueryDevtool = () => {
 	}
 
 	if (isLocalDev || (isVercelDev && isLoggedIn)) {
-		return <ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
+		return <ReactQueryDevtools initialIsOpen={false} />
 	}
 	return null
 }

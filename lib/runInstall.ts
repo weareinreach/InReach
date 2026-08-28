@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unused-modules */
 import boxen from 'boxen'
 
 const message = boxen("There have been changes to package dependencies!\n\nRun 'pnpm install' to update.", {

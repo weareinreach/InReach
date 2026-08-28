@@ -1,14 +1,5 @@
-// import { rem } from '@mantine/core'
+import classes from '../components/Card.module.css'
 
-import { type VariantObj } from '~ui/types/mantine'
-
-export const Card = {
-	hoverCoolGray: (theme) => ({
-		root: {
-			'&:hover': {
-				backgroundColor: theme.other.colors.primary.lightGray,
-				cursor: 'pointer',
-			},
-		},
-	}),
-} satisfies VariantObj
+export const Card: Record<string, Partial<Record<'root', string>>> = {
+	hoverCoolGray: { root: classes.hoverCoolGray },
+}

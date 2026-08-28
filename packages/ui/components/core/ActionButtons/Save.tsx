@@ -9,11 +9,12 @@ import { type ApiInput } from '@weareinreach/api'
 import { Button, type ButtonProps } from '~ui/components/core/Button'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { CreateNewList } from '~ui/modals'
 import { QuickPromotionModal } from '~ui/modals/QuickPromotion'
 
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 
 const useNotifications = (listName: string) => {
 	const { t } = useTranslation('common')
@@ -37,6 +38,37 @@ const useNotifications = (listName: string) => {
 		}),
 	}
 }
+
+const SaveButtonLabel = ({
+	menuItem,
+	omitLabel,
+	isSaved,
+	iconColor,
+	buttonIcon,
+	t,
+}: {
+	menuItem?: boolean
+	omitLabel?: boolean
+	isSaved: boolean
+	iconColor: string
+	buttonIcon: string
+	t: (key: string, options?: Record<string, unknown>) => string
+}) => (
+	<Group gap={0} wrap='nowrap'>
+		<Icon icon={buttonIcon} color={iconColor} {...(menuItem ? {} : { height: 24, width: 24 })} />
+		{!omitLabel && (
+			<Text
+				fw={menuItem ? 500 : undefined}
+				color={iconColor}
+				className={!menuItem ? classes.text : undefined}
+			>
+				{t(isSaved ? 'words.saved' : 'words.save', {
+					defaultValue: isSaved ? 'Saved' : 'Save',
+				})}
+			</Text>
+		)}
+	</Group>
+)
 
 /**
  * Returns a Menu Item with the new of an existing list. When clicked it saves the current organization or
@@ -100,7 +132,6 @@ const ListItem = ({ data, name, action, itemName }: ListMenuProps & { itemName: 
 export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 	({ itemId, itemName, menuItem, omitLabel, className, ...rest }, ref) => {
 		const [menuOpened, menuHandler] = useDisclosure(false)
-		const { classes, cx } = useStyles()
 		const { status: sessionStatus } = useSession()
 		const { t } = useTranslation('common')
 		const utils = api.useUtils()
@@ -140,7 +171,7 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 
 		const modalProps: ComponentPropsWithRef<typeof QuickPromotionModal> = menuItem
 			? { ref, component: Menu.Item, radius: 'md' }
-			: { ref, component: Button, className: classes.button, radius: 'md' }
+			: { ref, component: Button, className: cx(baseClassname, className), radius: 'md' }
 
 		const handleRemoveFromList = useCallback(
 			(listId: string) => () => removeItem.mutate({ id: listId, itemId }),
@@ -149,20 +180,14 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 		const handleRefetchAvailableLists = useCallback(() => refetchAvailableLists(), [refetchAvailableLists])
 
 		const DisplayedInfo = (
-			<Group spacing={0} noWrap>
-				<Icon icon={buttonIcon} color={iconColor} {...(menuItem ? {} : { height: 24, width: 24 })} />
-				{!omitLabel && (
-					<Text
-						fw={menuItem ? 500 : undefined}
-						color={iconColor}
-						className={cx({ [classes.text]: !menuItem })}
-					>
-						{t(isSaved ? 'words.saved' : 'words.save', {
-							defaultValue: isSaved ? 'Saved' : 'Save',
-						})}
-					</Text>
-				)}
-			</Group>
+			<SaveButtonLabel
+				menuItem={menuItem}
+				omitLabel={omitLabel}
+				isSaved={isSaved}
+				iconColor={iconColor}
+				buttonIcon={buttonIcon}
+				t={t}
+			/>
 		)
 
 		if (!isLoggedIn) {

@@ -2,14 +2,12 @@ import {
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
-	createStyles,
 	Group,
 	Modal,
 	PasswordInput,
-	rem,
 	Text,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/react'
@@ -21,31 +19,8 @@ import { Button } from '~ui/components/core/Button'
 import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import classes from './DeleteModal.module.css'
 import { ModalTitle } from './ModalTitle'
-
-const useStyles = createStyles((theme) => ({
-	container: {
-		flexDirection: 'column',
-	},
-	heading: {
-		textAlign: 'center',
-		...theme.other.utilityFonts.utility1,
-		fontSize: rem(24),
-	},
-	subHeading: {
-		textAlign: 'center',
-		...theme.other.utilityFonts.utility2,
-		color: theme.other.colors.secondary.darkGray,
-	},
-	input: {
-		width: '100%',
-		textAlign: 'left',
-		...theme.other.utilityFonts.utility1,
-	},
-	button: {
-		width: '100%',
-	},
-}))
 
 const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, ref) => {
 	const router = useRouter()
@@ -54,11 +29,10 @@ const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, 
 	const schema = z.object({
 		password: z.string().min(1, { message: t('form-error-password-blank') }),
 	})
-	const { classes } = useStyles()
 	const [opened, handler] = useDisclosure(false)
 	const form = useForm({
 		initialValues: { password: '' },
-		validate: zodResolver(schema),
+		validate: schemaResolver(schema, { sync: true }),
 	})
 	const { isMobile } = useScreenSize()
 

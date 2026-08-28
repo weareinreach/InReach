@@ -2,12 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	createPolymorphicComponent,
-	createStyles,
 	Drawer,
 	Group,
 	LoadingOverlay,
 	Modal,
-	rem,
 	Stack,
 	Text,
 	Title,
@@ -27,6 +25,8 @@ import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import classes from './index.module.css'
+
 const FormSchema = z.object({
 	id: z.string(),
 	orgId: z.string(),
@@ -44,12 +44,6 @@ const FormSchema = z.object({
 	linkLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
-const useStyles = createStyles(() => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-}))
 export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
@@ -72,7 +66,6 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 				select: (data) => (data ? { ...data, orgId: orgId ?? '' } : data),
 			}
 		)
-		const { classes } = useStyles()
 		const apiUtils = api.useUtils()
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 
@@ -143,12 +136,12 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 			}
 		}, [formIsDirty, isSaved])
 		const handleClose = useCallback(() => {
-			if (formState.isDirty) {
+			if (formIsDirty) {
 				return modalHandler.open()
 			} else {
 				return drawerHandler.close()
 			}
-		}, [formState.isDirty, drawerHandler, modalHandler])
+		}, [formIsDirty, drawerHandler, modalHandler])
 
 		const handleUnlink = useCallback(() => {
 			if (hasLocationId) {
@@ -185,13 +178,13 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 							)}
 						>
 							<Drawer.Header>
-								<Group noWrap position='apart' w='100%'>
+								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
 									<Button
 										variant='primary-icon'
 										leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
-										loading={emailUpdate.isLoading}
-										disabled={!formState.isDirty}
+										loading={emailUpdate.isPending}
+										disabled={!formIsDirty}
 										type='submit'
 									>
 										{isSaved ? 'Saved' : 'Save'}
@@ -200,17 +193,17 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 							</Drawer.Header>
 							<Drawer.Body>
 								<LoadingOverlay visible={isFetching && !createNew} />
-								<Stack spacing={24} align='center'>
+								<Stack gap={24} align='center'>
 									<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Email`}</Title>
-									<Stack spacing={24} align='flex-start' w='100%'>
+									<Stack gap={24} align='flex-start' w='100%'>
 										<TextInput label='Email' required name='email' control={control} />
-										<Group noWrap>
+										<Group wrap='nowrap'>
 											<TextInput label='First name' name='firstName' control={control} />
 											<TextInput label='Last name' name='lastName' control={control} />
 										</Group>
 
 										<TextInput label='Description' name='description' control={control} />
-										<Group noWrap position='apart' w='100%'>
+										<Group wrap='nowrap' justify='space-between' w='100%'>
 											<Stack>
 												<Checkbox label='Published' name='published' control={control} />
 												<Checkbox label='Deleted' name='deleted' control={control} />
@@ -220,6 +213,12 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 													leftIcon={<Icon icon='carbon:unlink' />}
 													onClick={handleUnlink}
 													disabled={createNew}
+													// Button's root has `overflow: hidden` (for its loading-state
+													// pseudo-element), which zeroes its flexbox automatic minimum
+													// size - without this, the surrounding `justify='space-between'`
+													// Group was free to shrink it below its label's width, silently
+													// clipping the text instead of holding its size.
+													style={{ flexShrink: 0 }}
 												>
 													Unlink from this location
 												</Button>
@@ -231,11 +230,11 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 							<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 								<Stack align='center'>
 									<Text>You have unsaved changes</Text>
-									<Group noWrap>
+									<Group wrap='nowrap'>
 										<Button
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
-											loading={emailUpdate.isLoading}
+											loading={emailUpdate.isPending}
 											onClick={handleSaveFromModal}
 										>
 											Save

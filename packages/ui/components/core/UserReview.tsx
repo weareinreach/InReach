@@ -1,4 +1,4 @@
-import { createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Group, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { useEffect, useRef, useState } from 'react'
@@ -8,19 +8,8 @@ import { useScreenSize } from '~ui/hooks/useScreenSize'
 
 import { Badge } from './Badge'
 import { UserAvatar } from './UserAvatar'
+import classes from './UserReview.module.css'
 
-const useStyles = createStyles((theme) => ({
-	showMore: {
-		paddingTop: theme.spacing.sm,
-		'&:hover': {
-			cursor: 'pointer',
-		},
-	},
-	reviewText: {
-		paddingTop: rem(24),
-		paddingBottom: rem(16),
-	},
-}))
 const isTextTruncated = (event: HTMLParagraphElement | null) => {
 	if (event) {
 		return event.offsetHeight < event.scrollHeight || event.offsetWidth < event.scrollWidth
@@ -35,7 +24,6 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 	const reviewTextRef = useRef<HTMLParagraphElement | null>(null)
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
-	const { classes } = useStyles()
 	const { isMobile } = useScreenSize()
 	const viewportSize = useViewportSize()
 	const { t, ready } = useTranslation()
@@ -57,15 +45,15 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 
 	if (initialLoad || forceLoading || !ready) {
 		return (
-			<Stack spacing='xl' w='100%'>
+			<Stack gap='xl' w='100%'>
 				<UserAvatar loading={true} />
-				<Stack className={classes.reviewText} spacing={8}>
+				<Stack className={classes.reviewText} gap={8}>
 					<Skeleton variant={variants.Skeleton.text} width='100%' />
 					<Skeleton variant={variants.Skeleton.text} width='100%' />
 					<Skeleton variant={variants.Skeleton.text} width={100} mt={4} />
 				</Stack>
 				{verifiedUser ? (
-					<Group spacing={8}>
+					<Group gap={8}>
 						<Skeleton height={20} circle />
 						<Skeleton variant={variants.Skeleton.utilitySm} width={200} />
 					</Group>
@@ -75,15 +63,15 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 	}
 
 	return (
-		<Stack spacing={0} align='flex-start'>
+		<Stack gap={0} align='flex-start'>
 			<UserAvatar user={user} subheading={reviewDate} />
-			<Stack className={classes.reviewText} spacing={0}>
+			<Stack className={classes.reviewText} gap={0}>
 				<Text ref={reviewTextRef} lineClamp={lineClamp} component='p' m={0}>{`"${reviewText}"`}</Text>
 				{showMoreLink ? (
 					<Text
 						td='underline'
 						className={classes.showMore}
-						weight={theme.other.fontWeight.semibold}
+						fw={theme.other.fontWeight.semibold}
 						onClick={showMoreHandler.toggle}
 					>
 						{showMoreText}

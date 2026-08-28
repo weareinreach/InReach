@@ -1,0 +1,9 @@
+.utility4Text {
+	font-size: rem(14px);
+	font-weight: 400;
+	line-height: 1.25;
+}
+
+.requiredAsterisk {
+	color: var(--ir-color-secondary-black);
+}

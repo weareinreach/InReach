@@ -11,7 +11,7 @@ const ReviewModalBody = forwardRef<HTMLButtonElement, ReviewModalProps>((props, 
 	const [opened, handler] = useDisclosure(false)
 	const { isMobile } = useScreenSize()
 	const modalTitle = (
-		<Group position='apart' align='center' noWrap>
+		<Group justify='space-between' align='center' wrap='nowrap'>
 			<Box maw='70%' style={{ overflow: 'hidden' }}>
 				<Breadcrumb onClick={handler.close} option='close' />
 			</Box>

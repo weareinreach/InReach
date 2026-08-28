@@ -1,0 +1,58 @@
+.buttons {
+	padding: rem(4px) rem(12px);
+	border-radius: rem(8px);
+}
+
+.navText {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black) !important;
+}
+@media (hover: hover) {
+	.navText:hover {
+		text-decoration: underline;
+	}
+}
+
+/*
+ * Rendered on the same DOM node as our `Link`/`Anchor` wrapper (via `Menu.Item component={Link}`),
+ * so its properties compete with `Anchor.module.css`'s `.root` class on that element. `.root` sets
+ * its own font-size/weight/line-height/padding/text-decoration with no `!important`, so without
+ * `!important` here the two non-important rules would be resolved by CSS insertion order between
+ * two unrelated CSS module files - unreliable. `!important` makes this class win unconditionally.
+ */
+.menuItem {
+	font-size: rem(16px) !important;
+	font-weight: 500 !important;
+	line-height: 1.25 !important;
+	color: var(--ir-color-secondary-black) !important;
+	padding: rem(16px) !important;
+	text-decoration: none !important;
+}
+
+.menuTarget[data-expanded] {
+	background-color: var(--ir-color-primary-light-gray);
+}
+@media (hover: hover) {
+	.menuTarget:not(:disabled):hover {
+		background-color: var(--ir-color-primary-light-gray);
+	}
+	.menuTarget:disabled:hover {
+		cursor: auto;
+	}
+}
+
+.logoutButton {
+	padding: rem(14px) rem(12px);
+}
+
+/* Mantine's Button root has `overflow: hidden` (for its loading-state pseudo-element), which per the
+   flexbox spec zeroes its automatic minimum size in the main axis - so inside the navbar's `nowrap`
+   flex row, this button was free to shrink below its label's content width once space got tight,
+   silently clipping the label text (e.g. "Sign up for free" -> "Sign up for fre") instead of holding
+   its size or wrapping. `flex-shrink: 0` restores the normal expectation that a button doesn't
+   shrink below what its own label needs. */
+.signupButton {
+	flex-shrink: 0;
+}

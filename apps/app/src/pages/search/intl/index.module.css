@@ -1,0 +1,19 @@
+.searchControls {
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.searchControls {
+		flex-wrap: nowrap;
+		flex-direction: row;
+	}
+}
+
+.hideMobile {
+	display: none;
+}
+@media (min-width: $mantine-breakpoint-sm) {
+	.hideMobile {
+		display: block;
+	}
+}

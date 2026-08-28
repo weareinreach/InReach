@@ -1,8 +1,10 @@
 import {
-	Autocomplete,
-	type AutocompleteItem,
 	Box,
 	type ButtonProps,
+	Combobox,
+	type ComboboxItem,
+	type ComboboxLikeRenderOptionInput,
+	type ComboboxStore,
 	createPolymorphicComponent,
 	Divider,
 	Drawer,
@@ -14,13 +16,15 @@ import {
 	Text,
 	TextInput,
 	Title,
+	useCombobox,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm, type UseFormReturnType } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
 import filterObject from 'just-filter-object'
 import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
+import reactStringReplace from 'react-string-replace'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { AddressVisibility } from '@weareinreach/db/enums'
@@ -31,21 +35,121 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
+import { cx } from '~ui/lib/cx'
 import { createWktFromLatLng } from '~ui/lib/geotools'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { AutoCompleteItem } from './AutocompleteItem'
-import { FormContext } from './context'
-import { CountryItem } from './CountryItem'
 import { AddressVisibilitySchema, FormSchema, schemaTransform } from './schema'
-import { useStyles } from './styles'
+import classes from './styles.module.css'
 import { MultiSelectPopover } from '../MultiSelectPopover'
+
+type AutocompleteResult = ApiOutput['geo']['autocomplete']['results'][number]
+
+const matchText = (result: string, textToMatch: string | undefined | null) => {
+	if (!textToMatch) {
+		return result
+	}
+	const matcher = new RegExp(`(${textToMatch})`, 'ig')
+	return reactStringReplace(result, matcher, (match, i) => (
+		<span key={i} className={classes.matchedText}>
+			{match}
+		</span>
+	))
+}
 
 const addressVisibilityOptions: { value: AddressVisibility; label: string }[] = [
 	{ value: AddressVisibility.FULL, label: 'Show full address' },
 	{ value: AddressVisibility.PARTIAL, label: 'Show city & state/province' },
 	{ value: AddressVisibility.HIDDEN, label: 'Hide address' },
 ]
+
+interface AddressAutocompleteFieldProps {
+	fieldName: 'data.street1' | 'data.city'
+	fieldLabel: string
+	fieldRequired: boolean
+	form: UseFormReturnType<FormSchema>
+	results: ApiOutput['geo']['autocomplete']['results'] | undefined
+	handleAutocompleteSelection: (item: AutocompleteResult) => void
+	addressCombobox: ComboboxStore
+	setSearchTerm: (value: string) => void
+	countryNotSelected: boolean
+}
+
+/**
+ * A single street/city autocomplete field, backed by the shared `addressCombobox` store. Rendered
+ * conditionally (only one of street1/city ever shows an autocomplete field at a time, per
+ * `addressVisibility`) rather than conditionally _called_ as a plain function - as an actual component it's
+ * free to use hooks (`useCallback`) internally without running afoul of the rules of hooks.
+ */
+const AddressAutocompleteField = ({
+	fieldName,
+	fieldLabel,
+	fieldRequired,
+	form,
+	results,
+	handleAutocompleteSelection,
+	addressCombobox,
+	setSearchTerm,
+	countryNotSelected,
+}: AddressAutocompleteFieldProps) => {
+	const { value, onChange, ...fieldProps } = form.getInputProps(fieldName)
+
+	const handleOptionSubmit = useCallback(
+		(optionValue: string) => {
+			const item = (results ?? []).find((result) => result.value === optionValue)
+			if (item) {
+				handleAutocompleteSelection(item)
+				form.setFieldValue(fieldName, item.value)
+			}
+			addressCombobox.closeDropdown()
+		},
+		[results, handleAutocompleteSelection, form, fieldName, addressCombobox]
+	)
+
+	const handleChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			const val = event.currentTarget.value
+			onChange(val)
+			setSearchTerm(val)
+			addressCombobox.openDropdown()
+		},
+		[onChange, setSearchTerm, addressCombobox]
+	)
+
+	const handleFocus = useCallback(() => addressCombobox.openDropdown(), [addressCombobox])
+	const handleBlur = useCallback(() => addressCombobox.closeDropdown(), [addressCombobox])
+
+	return (
+		<Combobox store={addressCombobox} onOptionSubmit={handleOptionSubmit}>
+			<Combobox.Target>
+				<TextInput
+					label={fieldLabel}
+					required={fieldRequired}
+					disabled={countryNotSelected}
+					value={value ?? ''}
+					{...fieldProps}
+					onChange={handleChange}
+					onFocus={handleFocus}
+					onBlur={handleBlur}
+				/>
+			</Combobox.Target>
+			<Combobox.Dropdown>
+				<Combobox.Options>
+					{(results ?? []).map((item) => (
+						<Combobox.Option value={item.value} key={item.value}>
+							<Text className={classes.unmatchedText} truncate>
+								{matchText(item.value, value)}
+							</Text>
+							<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
+								{item.subheading}
+							</Text>
+						</Combobox.Option>
+					))}
+				</Combobox.Options>
+			</Combobox.Dropdown>
+		</Combobox>
+	)
+}
 
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
@@ -56,7 +160,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
 	const [isSaved, setIsSaved] = useState(false)
 	const form = useForm<FormSchema>({
-		validate: zodResolver(FormSchema),
+		validate: schemaResolver(FormSchema, { sync: true }),
 		initialValues: {
 			id: '',
 			data: { accessible: {}, addressVisibility: AddressVisibility.FULL },
@@ -66,7 +170,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const { id: organizationId } = useOrgInfo()
 	const { t, i18n } = useTranslation(['attribute', 'gov-dist'])
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
-	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const apiUtils = api.useUtils()
 
@@ -271,7 +374,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	// #region Dropdown item components/handling
 
 	const handleAutocompleteSelection = useCallback(
-		(item: AutocompleteItem) => {
+		(item: AutocompleteResult) => {
 			if (!item.placeId) {
 				return
 			}
@@ -280,37 +383,37 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		[setGooglePlaceId]
 	)
 
-	const handleStreet1AutocompleteChange = useCallback(
-		(val: string) => {
-			setSearchTerm(val)
-			form.getInputProps('data.street1').onChange(val)
-		},
-		[setSearchTerm, form]
-	)
-	const handleCityAutocompleteChange = useCallback(
-		(val: string) => {
-			setSearchTerm(val)
-			form.getInputProps('data.city').onChange(val)
-		},
-		[setSearchTerm, form]
-	)
+	const countryNotSelected = !form.values.data.countryId || form.values.data.countryId === ''
+
+	// Only one of Street1Input/CityInput ever renders an autocomplete field at a time (they're
+	// mutually exclusive on `addressVisibility`), so a single Combobox store covers both.
+	const addressCombobox = useCombobox({
+		onDropdownClose: () => addressCombobox.resetSelectedOption(),
+	})
 
 	// #endregion
 	const addressFieldRequired = form.values.data.addressVisibility === AddressVisibility.FULL
-	const countryNotSelected = !form.values.data.countryId || form.values.data.countryId === ''
+
+	const renderCountryOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+			const country = countryOptions?.find(({ value }) => value === option.value)
+			return <Text>{`${country?.flag ?? ''} ${option.label}`}</Text>
+		},
+		[countryOptions]
+	)
 
 	const Street1Input =
 		form.values.data.addressVisibility === AddressVisibility.FULL ? (
-			<Autocomplete
-				itemComponent={AutoCompleteItem}
-				data={results ?? []}
-				label='Address'
-				withinPortal
-				required={addressFieldRequired}
-				disabled={countryNotSelected}
-				onItemSubmit={handleAutocompleteSelection}
-				{...form.getInputProps('data.street1')}
-				onChange={handleStreet1AutocompleteChange}
+			<AddressAutocompleteField
+				fieldName='data.street1'
+				fieldLabel='Address'
+				fieldRequired={addressFieldRequired}
+				form={form}
+				results={results}
+				handleAutocompleteSelection={handleAutocompleteSelection}
+				addressCombobox={addressCombobox}
+				setSearchTerm={setSearchTerm}
+				countryNotSelected={countryNotSelected}
 			/>
 		) : (
 			<TextInput label='Address' disabled={countryNotSelected} {...form.getInputProps('data.street1')} />
@@ -320,32 +423,32 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		form.values.data.addressVisibility === AddressVisibility.FULL ? (
 			<TextInput label='City' required disabled={countryNotSelected} {...form.getInputProps('data.city')} />
 		) : (
-			<Autocomplete
-				label='City'
-				required
-				withinPortal
-				itemComponent={AutoCompleteItem}
-				data={results ?? []}
-				onItemSubmit={handleAutocompleteSelection}
-				disabled={countryNotSelected}
-				{...form.getInputProps('data.city')}
-				onChange={handleCityAutocompleteChange}
+			<AddressAutocompleteField
+				fieldName='data.city'
+				fieldLabel='City'
+				fieldRequired={true}
+				form={form}
+				results={results}
+				handleAutocompleteSelection={handleAutocompleteSelection}
+				addressCombobox={addressCombobox}
+				setSearchTerm={setSearchTerm}
+				countryNotSelected={countryNotSelected}
 			/>
 		)
 
 	return (
-		<FormContext.Provider value={form}>
+		<>
 			<Drawer.Root onClose={handler.close} opened={opened} position='right'>
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<Drawer.Header>
-						<Group noWrap position='apart' w='100%'>
+						<Group wrap='nowrap' justify='space-between' w='100%'>
 							<Breadcrumb option='close' onClick={handler.close} />
 							<Button
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={handleUpdate}
-								loading={updateLocation.isLoading}
+								loading={updateLocation.isPending}
 								disabled={!form.isDirty()}
 							>
 								Save
@@ -353,25 +456,23 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 						</Group>
 					</Drawer.Header>
 					<Drawer.Body className={classes.drawerBody}>
-						<Stack spacing={24} align='center'>
+						<Stack gap={24} align='center'>
 							<Title order={2}>Edit Location</Title>
 							<TextInput label='Name' required {...form.getInputProps('data.name')} />
 							<Stack w='100%'>
-								<Stack spacing={0} w='100%'>
+								<Stack gap={0} w='100%'>
 									<Select
 										label='Address visibility'
 										data={addressVisibilityOptions}
-										defaultValue={AddressVisibility.FULL}
 										{...form.getInputProps('data.addressVisibility')}
 									/>
 								</Stack>
-								<Stack spacing={0}>
+								<Stack gap={0}>
 									<Select
 										label='Country'
 										data={countryOptions ?? []}
-										itemComponent={CountryItem}
+										renderOption={renderCountryOption}
 										required
-										withinPortal
 										searchable
 										styles={{ dropdown: { width: 'fit-content !important' } }}
 										{...form.getInputProps('data.countryId')}
@@ -379,15 +480,14 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 									{Street1Input}
 									<TextInput disabled={countryNotSelected} {...form.getInputProps('data.street2')} />
 								</Stack>
-								<Group noWrap>{CityInput}</Group>
-								<Group noWrap>
+								<Group wrap='nowrap'>{CityInput}</Group>
+								<Group wrap='nowrap'>
 									<Select
 										label='State'
 										data={govDistOptions}
 										required={Boolean(govDistOptions.length)}
 										disabled={!govDistOptions.length || countryNotSelected}
 										searchable
-										withinPortal
 										styles={{ dropdown: { width: 'fit-content !important' } }}
 										{...form.getInputProps('data.govDistId')}
 									/>
@@ -398,8 +498,8 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 										{...form.getInputProps('data.postCode')}
 									/>
 								</Group>
-								<Stack spacing={0}>
-									<Group noWrap>
+								<Stack gap={0}>
+									<Group wrap='nowrap'>
 										<TextInput
 											required
 											label='Latitude'
@@ -415,7 +515,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 									</Group>
 									{isExternal(gMapCheckDistance) && (
 										<Link external href={gMapCheckDistance}>
-											<Group noWrap spacing={8}>
+											<Group wrap='nowrap' gap={8}>
 												<Icon icon='carbon:launch' />
 												<Text variant={variants.Text.utility3}>Check distance to address on Google Map</Text>
 											</Group>
@@ -428,7 +528,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 									size='xs'
 									{...form.getInputProps('data.accessible.boolean')}
 								>
-									<Group noWrap>
+									<Group wrap='nowrap'>
 										<Radio value='true' label='Accessible' classNames={{ label: classes.radioLabel }} />
 										<Radio value='false' label='Not accessible' classNames={{ label: classes.radioLabel }} />
 										<Radio value='null' label='No info' classNames={{ label: classes.radioLabel }} />
@@ -456,7 +556,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			<Stack>
 				<Box component='button' onClick={handler.open} ref={ref} {...props} />
 			</Stack>
-		</FormContext.Provider>
+		</>
 	)
 })
 _AddressDrawer.displayName = 'AddressDrawer'

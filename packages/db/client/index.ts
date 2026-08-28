@@ -1,9 +1,9 @@
 /* eslint-disable node/no-process-env */
 import { PrismaPg } from '@prisma/adapter-pg'
 import { type Prisma, PrismaClient } from '@prisma/client'
+
 import { isLocalDev, isVercelDev } from '@weareinreach/env'
 import { createLoggerInstance } from '@weareinreach/util/logger'
-
 import { idGeneratorExtension } from '~db/client/extensions/idGenerator'
 import { jsonExtension } from '~db/client/extensions/json'
 
@@ -23,7 +23,6 @@ const getErrorFormat = (): Prisma.PrismaClientOptions['errorFormat'] => {
 }
 
 declare global {
-	// eslint-disable-next-line no-var -- allow global `var` declarations
 	var prisma: PrismaClient<typeof clientOptions> | undefined
 }
 

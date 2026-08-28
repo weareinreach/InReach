@@ -2,7 +2,6 @@ import {
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
-	createStyles,
 	Modal,
 	PasswordInput,
 	Popover,
@@ -12,7 +11,7 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
-import { useForm, type UseFormReturnType, zodResolver } from '@mantine/form'
+import { schemaResolver, useForm, type UseFormReturnType } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
@@ -27,19 +26,12 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { LoginModalLauncher } from './LoginSignUp'
 import { ModalTitle } from './ModalTitle'
-
-const usePasswordRequirementStyles = createStyles(() => ({
-	text: {
-		display: 'flex',
-		alignItems: 'center',
-	},
-}))
+import classes from './ResetPassword.module.css'
 
 const PasswordRequirement = ({ meets, label }: PasswordRequirementProps) => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
-	const { classes } = usePasswordRequirementStyles()
 	const textColor = useMemo(
 		() => (meets ? theme.other.colors.primary.lightGray : theme.other.colors.tertiary.red),
 		[meets, theme]
@@ -55,7 +47,7 @@ const PasswordRequirement = ({ meets, label }: PasswordRequirementProps) => {
 	)
 
 	return (
-		<Text variant={variants.Text.utility4} color={textColor} className={classes.text} mt={8}>
+		<Text variant={variants.Text.utility4} c={textColor} className={classes.text} mt={8}>
 			{iconToDisplay}
 			<Box ml={10}>{t(label, { ns: 'common' })}</Box>
 		</Text>
@@ -66,7 +58,7 @@ interface PasswordRequirementProps {
 	label: string
 }
 
-const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: FormProps) => FormProps> }) => {
+const FormPassword = ({ form }: { form: UseFormReturnType<FormProps> }) => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
 
@@ -131,7 +123,7 @@ const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: Fo
 	)
 }
 
-const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalBodyProps>((
+const CredentialResetModalBody = forwardRef<HTMLButtonElement, CredentialResetModalBodyProps>((
 	/*props, ref*/
 ) => {
 	const { t } = useTranslation(['common'])
@@ -155,7 +147,7 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 	const DataSchema = z.object({ r: z.string(), code: z.string() })
 
 	const passwordResetForm = useForm<FormProps>({
-		validate: zodResolver(FormSchema),
+		validate: schemaResolver(FormSchema, { sync: true }),
 		validateInputOnBlur: true,
 		initialValues: {
 			data: '',
@@ -207,8 +199,8 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 
 	const bodyReset = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>🔐</Title>
 					<Title order={2}>{t('reset-password')}</Title>
 				</Stack>
@@ -223,8 +215,7 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 					onClick={handlePwResetSubmit}
 					variant='primary-icon'
 					fullWidth
-					loaderPosition='center'
-					loading={pwResetHandler.isLoading}
+					loading={pwResetHandler.isPending}
 					disabled={!passwordResetForm.isValid()}
 				>
 					{t('save')}
@@ -236,8 +227,8 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 
 	const bodySuccess = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>✅</Title>
 					<Title order={2}>{t('password-saved')}</Title>
 				</Stack>
@@ -258,8 +249,8 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 	)
 	const bodyError = useMemo(
 		() => (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
+			<Stack align='center' gap={24}>
+				<Stack gap={0} align='center'>
 					<Title order={1}>🫣</Title>
 					<Title order={2}>{t('errors.oh-no')}</Title>
 				</Stack>
@@ -294,13 +285,13 @@ const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalB
 	)
 })
 
-ResetPasswordModalBody.displayName = 'ResetPasswordModal'
+CredentialResetModalBody.displayName = 'CredentialResetModal'
 
-export const ResetPasswordModal = createPolymorphicComponent<'button', ResetPasswordModalBodyProps>(
-	ResetPasswordModalBody
+export const CredentialResetModal = createPolymorphicComponent<'button', CredentialResetModalBodyProps>(
+	CredentialResetModalBody
 )
 
-export type ResetPasswordModalBodyProps = ButtonProps
+export type CredentialResetModalBodyProps = ButtonProps
 
 type FormProps = {
 	data: string

@@ -1,0 +1,28 @@
+.container {
+	width: auto;
+	position: relative;
+	height: rem(24px);
+	margin: rem(8px) 0;
+	padding: auto;
+}
+.containerNoMargin {
+	width: auto;
+	position: relative;
+	height: rem(24px);
+	padding: auto;
+}
+
+.text {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+
+.iconDimmed {
+	color: var(--ir-color-tertiary-cool-gray);
+}
+
+.textDimmed {
+	color: var(--ir-color-secondary-dark-gray);
+}

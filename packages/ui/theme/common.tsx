@@ -1,51 +1,54 @@
 import {
-	type ActionIconProps,
+	type AnchorProps,
 	type AvatarProps,
 	type BadgeProps,
-	type BadgeStylesNames,
-	type BadgeStylesParams,
-	type ButtonProps,
 	type CardProps,
-	type CheckboxStylesNames,
-	type CheckboxStylesParams,
-	type ColProps,
-	type CSSObject,
-	type DrawerStylesNames,
+	createTheme,
 	em,
 	type GridProps,
-	type InputStylesNames,
-	type InputStylesParams,
 	type InputWrapperProps,
-	type InputWrapperStylesNames,
-	type MantineThemeOverride,
-	type ModalProps,
-	type ModalStylesNames,
-	type RadioStylesNames,
-	type RadioStylesParams,
+	type ListProps,
+	type MantineColorScheme,
+	type MantineTheme,
 	rem,
 	type SkeletonProps,
-	type SkeletonStylesParams,
 	type SliderProps,
-	type SliderStylesNames,
-	type StackProps,
-	type Styles,
 	type SwitchProps,
-	type SwitchStylesNames,
-	type SwitchStylesParams,
-	type TabsStylesNames,
-	type TabsStylesParams,
 	type TextareaProps,
-	type TitleStylesParams,
-	type TypographyStylesProviderProps,
+	type TextProps,
+	type TitleProps,
+	type TooltipProps,
 } from '@mantine/core'
-import { keys } from '@mantine/utils'
 import React from 'react'
 
 import { Icon } from '~ui/icon'
 
-import { shake } from './animation'
 import { customColors } from './colors'
-import { variants } from './variants'
+import anchorBaseClasses from './components/Anchor.module.css'
+import cardBaseClasses from './components/Card.module.css'
+import checkboxClasses from './components/Checkbox.module.css'
+import containerClasses from './components/Container.module.css'
+import inputClasses from './components/Input.module.css'
+import inputWrapperClasses from './components/InputWrapper.module.css'
+import modalClasses from './components/Modal.module.css'
+import paperClasses from './components/Paper.module.css'
+import passwordInputClasses from './components/PasswordInput.module.css'
+import radioClasses from './components/Radio.module.css'
+import sliderClasses from './components/Slider.module.css'
+import switchClasses from './components/Switch.module.css'
+import tabsClasses from './components/Tabs.module.css'
+import titleBaseClasses from './components/Title.module.css'
+import typographyClasses from './components/Typography.module.css'
+import { Anchor as anchorVariants } from './variants/Anchor'
+import { Card as cardVariants } from './variants/Card'
+import { List as listVariants } from './variants/List'
+import { Skeleton as skeletonVariants } from './variants/Skeleton'
+import { Text as textVariants } from './variants/Text'
+import { Title as titleVariants } from './variants/Title'
+import { Tooltip as tooltipVariants } from './variants/Tooltip'
+
+/** Joins CSS module class names, skipping falsy values. */
+const cx = (...classNames: Array<string | undefined>) => classNames.filter(Boolean).join(' ')
 
 const colors = {
 	primary: {
@@ -120,23 +123,26 @@ const themeCustomObj = {
 	border: {
 		default: '1px solid #d9d9d9',
 	},
-	animations: {
-		shake,
-	},
 	colors,
-} as const //satisfies MantineThemeOther
+} as const
 
-export const commonTheme = {
-	colorScheme: 'light',
+export const commonTheme = createTheme({
 	colors: { ...customColors },
 	black: colors.secondary.black,
 	primaryColor: 'inReachPrimaryRegular',
 	primaryShade: 5,
 	cursorType: 'pointer',
-	loader: 'dots',
-	lineHeight: 1.5,
 	fontFamily:
 		'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+	// v6 set a single uniform `lineHeight: 1.5` for all sizes; v7+ replaced that scalar with a
+	// per-size scale, defaulting to Mantine's own (differing) values if left unset.
+	lineHeights: {
+		xs: '1.5',
+		sm: '1.5',
+		md: '1.5',
+		lg: '1.5',
+		xl: '1.5',
+	},
 	fontSizes: {
 		xs: rem(12),
 		sm: rem(14),
@@ -145,21 +151,20 @@ export const commonTheme = {
 		xl: rem(20),
 	},
 	headings: {
-		fontWeight: 500,
-		sizes: themeCustomObj.headings,
-		// {
-		// 	h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
-		// 	h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
-		// 	h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-		// 	h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-		// 	h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-		// 	h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-		// },
+		// v7 requires fontWeight as a string (was a number in v6)
+		fontWeight: '500',
+		sizes: {
+			h1: { fontSize: rem(40), lineHeight: '1.25', fontWeight: '500' },
+			h2: { fontSize: rem(24), lineHeight: '1.25', fontWeight: '500' },
+			h3: { fontSize: rem(16), lineHeight: '1.25', fontWeight: '600' },
+			h4: { fontSize: rem(16), lineHeight: '1.25', fontWeight: '600' },
+			h5: { fontSize: rem(16), lineHeight: '1.25', fontWeight: '600' },
+			h6: { fontSize: rem(16), lineHeight: '1.25', fontWeight: '600' },
+		},
 	},
 
 	shadows: {
 		xs: `0 ${rem(1)} ${rem(20)} rgba(0, 0, 0, 0.1)`,
-		// xs: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1)',
 		sm: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 0.625rem 0.9375rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.4375rem 0.4375rem -0.3125rem',
 		md: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.25rem 1.5625rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.625rem 0.625rem -0.3125rem',
 		lg: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.75rem 1.4375rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 0.75rem 0.75rem -0.4375rem',
@@ -193,27 +198,15 @@ export const commonTheme = {
 	other: themeCustomObj,
 	components: {
 		ActionIcon: {
-			defaultProps: (theme) =>
-				({
-					color: theme.other.colors.secondary.cornflower,
-					radius: 'xl',
-				}) satisfies ActionIconProps,
+			defaultProps: (theme: MantineTheme) => ({
+				color: theme.other.colors.secondary.cornflower,
+				radius: 'xl',
+			}),
 		},
 		Anchor: {
-			styles: (theme) => ({
-				root: {
-					// color: `${theme.other.colors.secondary.black} !important`,
-					padding: `${rem(10)} ${rem(8)}`,
-					borderRadius: theme.spacing.sm,
-					textDecoration: 'underline',
-					...theme.other.utilityFonts.utility1,
-					...theme.fn.hover({
-						backgroundColor: theme.other.colors.primary.lightGray,
-						textDecoration: 'none',
-					}),
-				},
+			classNames: (_theme: MantineTheme, props: AnchorProps) => ({
+				root: cx(anchorBaseClasses.root, props.variant ? anchorVariants[props.variant]?.root : undefined),
 			}),
-			variants: variants.Anchor,
 		},
 		Avatar: {
 			defaultProps: {
@@ -226,135 +219,41 @@ export const commonTheme = {
 				radius: 'xl',
 				size: 'xl',
 			} satisfies BadgeProps,
-			styles: (theme) =>
-				({
-					root: {
-						letterSpacing: 'inherit',
-						border: `${rem(1)} solid`,
-						padding: `${theme.spacing.xxs} ${theme.spacing.sm}`,
-						textTransform: 'none',
-						// margin: rem(8),
-						// marginBottom: rem(8),
-					},
-					inner: {
-						padding: 0,
-						fontWeight: theme.other.fontWeight.semibold,
-						color: theme.other.colors.secondary.black,
-					},
-					leftSection: {
-						margin: 0,
-					},
-				}) satisfies Styles<BadgeStylesNames, BadgeStylesParams>,
-			variants: variants.Badge,
-		},
-		Button: {
-			defaultProps: {
-				radius: 'xl',
-			} satisfies ButtonProps,
-			styles: (theme) => ({
+			styles: (theme: MantineTheme) => ({
 				root: {
-					padding: `calc(${theme.spacing.sm} / 2)`,
-					paddingLeft: `calc(${theme.spacing.xl} * 2)`,
-					paddingRight: `calc(${theme.spacing.xl} * 2)`,
-					height: `calc(${theme.spacing.xl} * 2)`,
-					backgroundColor: theme.other.colors.secondary.black,
-					'&:not([data-disabled])': theme.fn.hover({
-						background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
-					}),
-					'&:disabled, &[data-disabled]': {
-						backgroundColor: theme.other.colors.primary.lightGray,
-						cursor: 'not-allowed',
-						pointerEvents: 'none',
-						'& *': {
-							color: theme.other.colors.secondary.darkGray,
-						},
-
-						'&:active': {
-							transform: 'none',
-						},
-					},
+					letterSpacing: 'inherit',
+					padding: `${theme.spacing.xxs} ${theme.spacing.sm}`,
+					textTransform: 'none',
 				},
-				inner: {
-					...theme.other.utilityFonts.utility1,
-					color: theme.other.colors.secondary.white,
-					'&:disabled, &[data-disabled]': {
-						color: theme.other.colors.secondary.darkGray,
-					},
-				},
-				leftIcon: {
-					svg: {
-						height: theme.spacing.xl,
-						width: theme.spacing.xl,
-					},
+				label: {
+					padding: 0,
+					fontWeight: theme.other.fontWeight.semibold,
+					color: theme.other.colors.secondary.black,
 				},
 			}),
-			variants: variants.Button,
+		},
+		Button: {
+			// Button.tsx (~ui/components/core/Button) owns all its own styling/variants
+			// via a dedicated CSS module - this is just the app-wide default.
+			defaultProps: {
+				radius: 'xl',
+			},
 		},
 		Card: {
 			defaultProps: {
 				withBorder: true,
 				radius: 'lg',
 				padding: rem(20),
-			} satisfies Partial<CardProps>,
-			styles: (theme) => ({
-				root: {
-					[theme.fn.largerThan('sm')]: {
-						padding: rem(24),
-					},
-				},
+			},
+			classNames: (_theme: MantineTheme, props: CardProps) => ({
+				root: cx(cardBaseClasses.root, props.variant ? cardVariants[props.variant]?.root : undefined),
 			}),
-			variants: variants.Card,
 		},
-
 		Checkbox: {
-			styles: (theme, params: CheckboxStylesParams) =>
-				({
-					root: {
-						padding: `${rem(8)} 0 ${rem(8)} ${rem(4)}`,
-						...theme.fn.hover({
-							backgroundColor: theme.other.colors.primary.lightGray,
-						}),
-					},
-					label: {
-						...theme.other.utilityFonts.utility2,
-						paddingLeft: theme.spacing.xs,
-						'&:disabled': {
-							color: theme.other.colors.secondary.darkGray,
-						},
-					},
-					labelWrapper: {
-						justifyContent: 'center',
-					},
-					input: {
-						borderColor: theme.other.colors.tertiary.coolGray,
-						height: theme.spacing.xl,
-						width: theme.spacing.xl,
-						'&:checked': {
-							backgroundColor: params.indeterminate
-								? theme.other.colors.secondary.white
-								: theme.other.colors.secondary.black,
-							color: params.indeterminate
-								? theme.other.colors.secondary.black
-								: theme.other.colors.secondary.white,
-							borderColor: params.indeterminate ? undefined : theme.other.colors.secondary.black,
-						},
-						'&:disabled': {
-							backgroundColor: theme.other.colors.primary.lightGray,
-						},
-					},
-					inner: {
-						height: rem(24),
-						width: rem(24),
-					},
-					icon: {
-						width: params.indeterminate ? rem(12) : rem(14),
-						height: params.indeterminate ? rem(3) : rem(10.5),
-						margin: params.indeterminate ? `${rem(10.5)} ${rem(6)}` : `${rem(6.75)} ${rem(5)}`,
-					},
-				}) satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>,
+			classNames: checkboxClasses,
 		},
 		CloseButton: {
-			defaultProps: (theme) => ({
+			defaultProps: (theme: MantineTheme) => ({
 				children: (
 					<Icon icon='carbon:close' height={24} width={24} color={theme.other.colors.secondary.black} />
 				),
@@ -364,278 +263,106 @@ export const commonTheme = {
 			defaultProps: {
 				maw: em(1440),
 			},
-			styles: (theme) => ({
-				root: {
-					margin: '0 auto',
-					padding: `${rem(0)} ${rem(20)}`,
-					[theme.fn.largerThan('xs')]: {
-						padding: `${rem(0)} ${rem(32)}`,
-					},
-					[theme.fn.largerThan('sm')]: {
-						padding: `${rem(0)} ${rem(40)}`,
-						// marginBottom: 'unset',
-					},
-					[theme.fn.largerThan('lg')]: {
-						padding: `${rem(0)} ${rem(64)}`,
-					},
-				},
-			}),
+			classNames: containerClasses,
 		},
 		Divider: {
-			defaultProps: (theme) => ({
+			defaultProps: (theme: MantineTheme) => ({
 				size: rem(1),
 				color: theme.other.colors.tertiary.coolGray,
 			}),
-			variants: variants.Divider,
 		},
 		Drawer: {
-			styles: (theme) =>
-				({
-					content: {
-						borderRadius: `${rem(32)} ${rem(32)} ${rem(0)} ${rem(0)}`,
-						padding: `${rem(0)} ${rem(0)}`,
-					},
-					header: {
-						borderBottom: `${rem(1)} solid ${theme.other.colors.primary.lightGray}`,
-						padding: `${rem(16)} ${rem(31)} ${rem(16)} ${rem(36)}`,
-					},
-					body: {
-						padding: `${rem(0)} ${rem(36)} ${rem(16)} ${rem(36)}`,
-					},
-				}) satisfies Styles<DrawerStylesNames>,
+			styles: (theme: MantineTheme) => ({
+				content: {
+					borderRadius: `${rem(32)} ${rem(32)} ${rem(0)} ${rem(0)}`,
+					padding: `${rem(0)} ${rem(0)}`,
+				},
+				header: {
+					borderBottom: `${rem(1)} solid ${theme.other.colors.primary.lightGray}`,
+					padding: `${rem(16)} ${rem(31)} ${rem(16)} ${rem(36)}`,
+				},
+				body: {
+					padding: `${rem(0)} ${rem(36)} ${rem(16)} ${rem(36)}`,
+				},
+			}),
 		},
 		Grid: {
 			defaultProps: {
 				columns: 12,
-				gutter: rem(20),
-				gutterXl: rem(40),
+				// v7 replaced the separate `gutterXl` prop with a responsive value object; v9 renamed
+				// `gutter` itself to `gap` for consistency with other layout components
+				gap: { base: rem(20), xl: rem(40) },
 				justify: 'center',
 				my: 0,
-				// align: 'flex-start',
 			} satisfies Partial<GridProps>,
 		},
 		GridCol: {
 			defaultProps: {
-				xs: 6,
-				sm: 4,
-			} satisfies ColProps,
+				span: { base: 6, sm: 4 },
+			},
 		},
 		Input: {
-			styles: (theme) =>
-				({
-					input: {
-						borderColor: theme.other.colors.tertiary.coolGray,
-						borderRadius: rem(8),
-						...theme.other.utilityFonts.utility2,
-						padding: `${rem(14)} ${rem(16)}`,
-						margin: `${rem(10)} 0`,
-						height: rem(48),
-						'&::placeholder': {
-							color: theme.other.colors.secondary.darkGray,
-						},
-						'&:focus, &:focus-within': {
-							borderColor: theme.other.colors.secondary.black,
-							borderWidth: rem(2),
-						},
-						'&[data-with-icon]': {
-							borderRadius: theme.radius.xl,
-							paddingLeft: rem(36),
-						},
-						'&[data-invalid]': {
-							'&::placeholder': {
-								color: theme.other.colors.secondary.darkGray,
-							},
-							'&:focus, &:focus-within': {
-								color: theme.other.colors.secondary.black,
-								borderColor: theme.other.colors.tertiary.red,
-								borderWidth: rem(2),
-							},
-						},
-						'&[data-disabled],:disabled': {
-							backgroundColor: theme.other.colors.primary.lightGray,
-							color: theme.other.colors.secondary.darkGray,
-							opacity: 1,
-							'&::placeholder': {
-								color: theme.other.colors.secondary.darkGray,
-							},
-						},
-					},
-					icon: {
-						color: theme.other.colors.secondary.black,
-						marginLeft: theme.spacing.md,
-						width: 'fit-content',
-					},
-					rightSection: {
-						paddingRight: theme.spacing.md,
-					},
-					wrapper: {
-						margin: 0,
-					},
-				}) satisfies Styles<InputStylesNames, InputStylesParams>,
-			variants: variants.Input,
+			classNames: inputClasses,
 		},
 		InputWrapper: {
 			defaultProps: {
 				inputWrapperOrder: ['label', 'input', 'description', 'error'],
 			} satisfies Partial<InputWrapperProps>,
-			styles: (theme) =>
-				({
-					label: {
-						fontSize: rem(16),
-						paddingBottom: 0,
-					},
-					description: {
-						['&:has(~ .mantine-InputWrapper-error)']: {
-							display: 'none',
-						},
-						...theme.other.utilityFonts.utility4,
-						color: `${theme.other.colors.secondary.darkGray}`,
-						'&:focus': {
-							outline: 'none',
-						},
-						'&[data-success]': {
-							...theme.other.utilityFonts.utility3,
-						},
-					},
-					error: {
-						...theme.other.utilityFonts.utility3,
-					},
-					root: {
-						width: '100%',
-					},
-				}) satisfies Styles<InputWrapperStylesNames>,
+			classNames: inputWrapperClasses,
 		},
 		List: {
-			variants: variants.List,
+			classNames: (_theme: MantineTheme, props: ListProps) => {
+				const variant = props.variant ? listVariants[props.variant] : undefined
+				return {
+					root: variant?.root,
+					item: variant?.item,
+					itemIcon: variant?.itemIcon,
+					itemWrapper: variant?.itemWrapper,
+				}
+			},
 		},
 		Loader: {
-			defaultProps: (theme) => ({
+			defaultProps: (theme: MantineTheme) => ({
+				// Replaces the removed top-level `theme.loader` setting
+				type: 'dots',
 				color: theme.other.colors.secondary.darkGray,
 			}),
 		},
 		LoadingOverlay: {
-			defaultProps: () => ({
-				overlayBlur: 2,
+			defaultProps: {
 				radius: 'sm',
-			}),
+			},
 		},
 		Modal: {
-			defaultProps: (theme) => {
-				return {
-					radius: theme.radius.xl,
-					// centered: true,
-					size: 'auto',
-					withCloseButton: false,
-				} satisfies Partial<ModalProps>
-			},
-			styles: (theme) =>
-				({
-					content: {
-						padding: '0px !important',
-						maxWidth: rem(600),
-						minWidth: '90vw',
-						[theme.fn.largerThan('sm')]: {
-							minWidth: em(600),
-						},
-					},
-					header: {
-						margin: 0,
-						padding: `${rem(32)} ${rem(20)} ${rem(16)} ${rem(12)}`,
-						borderBottom: rem(1),
-						borderBottomStyle: 'solid',
-						borderColor: theme.other.colors.primary.lightGray,
-						[theme.fn.largerThan('xs')]: {
-							padding: `${rem(16)} ${rem(32)} ${rem(16)} ${rem(24)}`,
-						},
-						maxHeight: rem(80),
-					},
-					body: {
-						padding: rem(20),
-						'&:not(:only-child)': {
-							paddingTop: rem(20),
-						},
-						[theme.fn.largerThan('xs')]: {
-							padding: `${rem(20)} ${rem(32)}`,
-							'&:not(:only-child)': {
-								paddingTop: rem(20),
-							},
-						},
-						[theme.fn.largerThan('sm')]: {
-							padding: `${rem(40)} ${rem(32)}`,
-							'&:not(:only-child)': {
-								paddingTop: rem(40),
-							},
-						},
-					},
-					title: {
-						margin: 0,
-						width: '100%',
-						padding: 0,
-					},
-				}) satisfies Styles<ModalStylesNames>,
+			defaultProps: (theme: MantineTheme) => ({
+				radius: theme.radius.xl,
+				size: 'auto',
+				withCloseButton: false,
+			}),
+			classNames: modalClasses,
 		},
 		PaginationRoot: {
-			defaultProps: (theme) => ({
+			defaultProps: (theme: MantineTheme) => ({
 				siblings: 0,
-				color: theme.other.colors.secondary.white,
+				color: theme.other.colors.secondary.black,
+				// Without this, the active page control's text color (`--pagination-active-color`) is
+				// simply unset and falls back to Mantine's own default of white - invisible against a
+				// white `color`, but just as invisible against black without `autoContrast` explicitly
+				// computing a contrasting text color for whatever `color` above ends up being.
+				autoContrast: true,
 			}),
 		},
 		Paper: {
-			styles: (theme) => ({
-				root: {
-					padding: rem(20),
-					borderRadius: rem(16),
-					'&[data-with-border]': {
-						border: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-					},
-				},
-			}),
+			classNames: paperClasses,
 		},
 		PasswordInput: {
-			styles: (theme) => ({
-				innerInput: {
-					height: 'unset',
-					...theme.other.utilityFonts.utility2,
-					'&::placeholder': {
-						color: theme.other.colors.secondary.darkGray,
-					},
-				},
-				input: {
-					'&::placeholder': {
-						color: theme.other.colors.secondary.darkGray,
-					},
-				},
-			}),
+			classNames: passwordInputClasses,
 		},
 		Radio: {
-			styles: (theme) =>
-				({
-					root: {
-						padding: `${rem(10)} ${rem(0)} ${rem(10)} ${rem(4)}`,
-						...theme.fn.hover({
-							backgroundColor: theme.other.colors.primary.lightGray,
-						}),
-					},
-					label: {
-						...theme.other.utilityFonts.utility2,
-					},
-					radio: {
-						backgroundColor: theme.other.colors.secondary.white,
-						borderColor: theme.other.colors.secondary.black,
-						color: theme.other.colors.secondary.black,
-						borderWidth: rem(2),
-						'&:checked': {
-							background: theme.other.colors.secondary.black,
-							borderColor: theme.other.colors.secondary.black,
-						},
-						'&:disabled': {
-							backgroundColor: theme.other.colors.primary.lightGray,
-						},
-					},
-				}) satisfies Styles<RadioStylesNames, RadioStylesParams>,
+			classNames: radioClasses,
 		},
 		Rating: {
-			defaultProps: (theme) => ({
+			defaultProps: (theme: MantineTheme) => ({
 				emptySymbol: (
 					<Icon icon='carbon:star-filled' color={theme.other.colors.tertiary.coolGray} height={24} />
 				),
@@ -647,104 +374,69 @@ export const commonTheme = {
 				},
 			}),
 		},
-		Select: {
-			variants: variants.Input,
-		},
 		Skeleton: {
-			defaultProps: () =>
-				({
-					radius: 'xl',
-				}) satisfies SkeletonProps,
-			styles: (_theme, { circle }: SkeletonStylesParams) =>
-				({
-					root: {
-						minWidth: circle ? undefined : rem(100),
-					},
-				}) satisfies Styles<'root', SkeletonStylesParams>,
-
-			variants: variants.Skeleton,
+			defaultProps: {
+				radius: 'xl',
+			} satisfies SkeletonProps,
+			styles: (_theme: MantineTheme, props: SkeletonProps) => ({
+				root: {
+					minWidth: props.circle ? undefined : rem(100),
+					...(props.variant ? skeletonVariants[props.variant]?.root : undefined),
+				},
+			}),
 		},
 		Slider: {
-			defaultProps: (theme) =>
+			defaultProps: (theme: MantineTheme) =>
 				({
 					color: theme.other.colors.secondary.black,
 					thumbSize: 12,
 					label: null,
 				}) satisfies SliderProps,
-			styles: (theme) =>
-				({
-					bar: {
-						height: rem(2),
-						backgroundColor: theme.other.colors.secondary.black,
-					},
-					track: {
-						height: rem(2),
-					},
-					thumb: {
-						backgroundColor: theme.other.colors.secondary.black,
-						borderColor: `${theme.other.colors.secondary.black} !important`,
-					},
-					mark: {
-						backgroundColor: 'inherit',
-						border: 'none',
-					},
-					markLabel: {
-						color: theme.other.colors.secondary.black,
-					},
-				}) satisfies Styles<SliderStylesNames>,
+			classNames: sliderClasses,
+			styles: (theme: MantineTheme) => ({
+				// Mantine insets the root by `--slider-size` (the track/mark thickness) so marks and
+				// the thumb-at-rest don't get clipped. That inset should instead be based on the
+				// thumb's own radius (as Mantine 6 did with `thumbSize / 2`) - otherwise, since our
+				// `thumbSize` (12) is larger than the default `--slider-size` (8), the thumb sits shy
+				// of the true left/right edges instead of flush against them.
+				root: {
+					paddingInline: 'calc(var(--slider-thumb-size) / 2)',
+				},
+				bar: {
+					height: rem(2),
+					backgroundColor: theme.other.colors.secondary.black,
+					// The bar's width/offset (set by Mantine via the `--slider-bar-width` /
+					// `--slider-bar-offset` vars) are derived from `--slider-size`, for the same
+					// thumb-radius-should-drive-the-inset reason as `root` above. Re-derive them in
+					// terms of `--slider-thumb-size` so the bar's ends line up with the (now-flush)
+					// thumb and don't overshoot past the outermost mark dots.
+					width: 'calc(var(--slider-bar-width) + var(--slider-thumb-size) - 2 * var(--slider-size))',
+					insetInlineStart:
+						'calc(var(--slider-bar-offset) + var(--slider-size) - var(--slider-thumb-size) / 2)',
+				},
+				track: {
+					height: rem(2),
+				},
+				thumb: {
+					backgroundColor: theme.other.colors.secondary.black,
+					borderColor: `${theme.other.colors.secondary.black} !important`,
+				},
+				mark: {
+					backgroundColor: 'inherit',
+					border: 'none',
+				},
+				markLabel: {
+					color: theme.other.colors.secondary.black,
+				},
+			}),
 		},
 		Switch: {
 			defaultProps: {
 				labelPosition: 'left',
+				// v9 default is `true`, rendering a colored thumb dot we don't want.
+				withThumbIndicator: false,
 			} satisfies SwitchProps,
-			styles: (theme) =>
-				({
-					root: {
-						padding: `${rem(12)} ${rem(4)}`,
-						...theme.fn.hover({
-							backgroundColor: theme.other.colors.primary.lightGray,
-						}),
-					},
-					body: {
-						justifyContent: 'space-between',
-					},
-					label: {
-						...theme.other.utilityFonts.utility2,
-						'input:disabled + &': {
-							color: theme.other.colors.secondary.darkGray,
-							borderColor: theme.other.colors.secondary.darkGray,
-						},
-					},
-					track: {
-						height: rem(16),
-						width: rem(48),
-						backgroundColor: theme.other.colors.tertiary.coolGray,
-						overflow: 'inherit',
-						'input:checked + &': {
-							backgroundColor: theme.other.colors.tertiary.coolGray,
-							borderColor: theme.other.colors.tertiary.coolGray,
-						},
-					},
-					thumb: {
-						left: 0,
-						height: rem(24),
-						width: rem(24),
-						borderWidth: rem(0.5),
-						borderColor: theme.fn.darken(theme.other.colors.secondary.white, 0.04),
-						boxShadow: `${rem(0)} ${rem(3)} ${rem(8)}  rgba(0, 0, 0, 0.15), ${rem(0)} ${rem(3)} ${rem(
-							1
-						)} rgba(0, 0, 0, 0.06)`,
-						'input:checked + * > &': {
-							backgroundColor: theme.other.colors.secondary.black,
-							borderColor: theme.fn.darken(theme.other.colors.secondary.black, 0.04),
-							left: `calc(100% - ${rem(16)})`,
-						},
-						'input:disabled + * > &': {
-							backgroundColor: theme.other.colors.primary.lightGray,
-							borderColor: theme.other.colors.primary.lightGray,
-						},
-					},
-				}) satisfies Styles<SwitchStylesNames, SwitchStylesParams>,
+			classNames: switchClasses,
 		},
 		SwitchGroup: {
 			styles: () => ({
@@ -752,44 +444,51 @@ export const commonTheme = {
 					paddingBottom: rem(16),
 				},
 			}),
-			// defaultProps: {
-			// 	orientation: 'vertical',
-			// } satisfies Partial<SwitchGroupProps>,
 		},
 		Stack: {
 			defaultProps: {
-				spacing: 'md',
-			} satisfies StackProps,
+				// v7 renamed `spacing` to `gap`
+				gap: 'md',
+			},
 		},
 		Tabs: {
-			styles: (theme) =>
-				({
-					tab: {
-						padding: `${rem(16)} ${rem(24)}`,
-						'&[data-active]': {
-							borderColor: theme.other.colors.secondary.black,
-						},
-						'&[data-active]:hover': {
-							borderColor: theme.other.colors.secondary.black,
-						},
-						...theme.fn.hover({ backgroundColor: theme.other.colors.primary.lightGray }),
-					},
-					tabLabel: {
-						...theme.other.utilityFonts.utility1,
-					},
-					panel: {
-						margin: `${rem(40)} 0`,
-					},
-				}) satisfies Styles<TabsStylesNames, TabsStylesParams>,
+			classNames: tabsClasses,
 		},
 		Text: {
-			defaultProps: (theme) => ({
+			defaultProps: {
 				component: 'span',
-				weight: theme.other.fontWeight.regular,
-				color: theme.other.colors.secondary.black,
 				size: 'md',
+			},
+			// `fw`/`c` used to live in `defaultProps` above, but Mantine resolves a `defaultProps`-
+			// supplied style prop (fw/c) into its inline style AFTER this `styles` callback's `root`
+			// output, so the variant's own font-weight/color here always lost to the plain "regular
+			// black" default regardless of which variant was requested - the actual bug behind
+			// several reported "text weight/color looks wrong" regressions. Folding the same default
+			// values into this callback's own object (spread first, so a variant's own values -
+			// spread after - still win) keeps both under one plain-JS-precedence mechanism instead of
+			// two competing Mantine ones. An explicit `fw`/`c` prop passed by a caller still wins over
+			// both, same as before.
+			//
+			// `Anchor` renders internally as `<Text __staticSelector='Anchor'>` (see Mantine's
+			// Anchor.tsx), and `Text`'s `useProps('Text', ...)` call resolves this `styles` config
+			// regardless of `__staticSelector` - `__staticSelector` only affects CSS class naming, not
+			// which `theme.components` entry supplies `styles`. Left unguarded, that means every Anchor
+			// gets this inline `fontWeight`/`color` too, unconditionally winning (inline style beats a
+			// non-`!important` class rule) over Anchor.module.css's own base/variant rules - the exact
+			// "Log out" nav button regression (font-weight 500 in CSS, 400 rendered). `Anchor` doesn't
+			// go through `textVariants` (its variants live in `anchorVariants`/Anchor.module.css
+			// instead), so bailing out entirely here for the `__staticSelector === 'Anchor'` case is
+			// correct, not just a narrower version of the same default.
+			styles: (theme: MantineTheme, props: TextProps) => ({
+				root:
+					props.__staticSelector === 'Anchor'
+						? {}
+						: {
+								fontWeight: theme.other.fontWeight.regular,
+								color: theme.other.colors.secondary.black,
+								...(props.variant ? textVariants(theme)[props.variant]?.root : undefined),
+							},
 			}),
-			variants: variants.Text,
 		},
 		Textarea: {
 			defaultProps: {} satisfies TextareaProps,
@@ -801,103 +500,43 @@ export const commonTheme = {
 			}),
 		},
 		TextInput: {
-			styles: (theme) => ({
+			styles: (theme: MantineTheme) => ({
 				input: {
 					height: rem(48),
 				},
-				withIcon: {
-					borderRadius: theme.radius.xl,
-					paddingLeft: rem(36),
-				},
-				rightSection: {
+				section: {
 					paddingRight: theme.spacing.md,
 				},
 			}),
-			variants: variants.Input,
 		},
 		Title: {
-			styles: (theme) =>
-				({
-					root: {
-						'&:is(h1)': {
-							marginTop: 0,
-							[theme.fn.smallerThan(755)]: {
-								fontSize: theme.headings.sizes.h1.fontSize,
-							},
-						},
-						'&:is(h2)': {
-							marginTop: 0,
-							[theme.fn.smallerThan(755)]: {
-								fontSize: theme.headings.sizes.h2.fontSize,
-							},
-						},
-						'&:is(h3)': {
-							marginTop: 0,
-							[theme.fn.smallerThan(755)]: {
-								fontSize: theme.headings.sizes.h3.fontSize,
-							},
-						},
-						'&:is(h4)': {
-							marginTop: 0,
-							[theme.fn.smallerThan(755)]: {
-								fontSize: theme.headings.sizes.h4.fontSize,
-							},
-						},
-						'&:is(h5)': {
-							marginTop: 0,
-							[theme.fn.smallerThan(755)]: {
-								fontSize: theme.headings.sizes.h5.fontSize,
-							},
-						},
-						'&:is(h6)': {
-							marginTop: 0,
-							[theme.fn.smallerThan(755)]: {
-								fontSize: theme.headings.sizes.h6.fontSize,
-							},
-						},
-					},
-				}) satisfies Styles<'root', TitleStylesParams>,
-			variants: variants.Title,
+			classNames: titleBaseClasses,
+			styles: (theme: MantineTheme, props: TitleProps) => ({
+				root: props.variant ? titleVariants(theme)[props.variant]?.root : undefined,
+			}),
 		},
 		Tooltip: {
 			defaultProps: {
 				offset: 10,
 				position: 'top-start',
 			},
-			styles: (theme) => ({
+			styles: (theme: MantineTheme, props: TooltipProps) => ({
 				tooltip: {
 					boxShadow: theme.shadows.xs,
+					...(props.variant ? tooltipVariants(theme)[props.variant]?.tooltip : undefined),
 				},
 			}),
-			variants: variants.Tooltip,
 		},
-		TypographyStylesProvider: {
-			styles: (theme) => {
-				const headings = keys(theme.headings.sizes).reduce((acc: Record<string, CSSObject>, h) => {
-					acc[`& ${h}`] = {
-						marginBottom: 0,
-						[`@media (max-width: ${em(755)})`]: {
-							fontSize: theme.headings.sizes[h].fontSize,
-						},
-					}
-
-					return acc
-				}, {})
-
-				return {
-					root: {
-						...headings,
-						'& p': {
-							marginBottom: 0,
-							[`@media (max-width: ${em(755)})`]: {
-								fontSize: theme.fontSizes.md,
-							},
-						},
-					},
-				} satisfies Styles<'root', TypographyStylesProviderProps>
-			},
+		Typography: {
+			classNames: typographyClasses,
 		},
 	},
-} satisfies MantineThemeOverride
+	// `createTheme()`'s return type is `MantineThemeOverride` (a PartialDeep<MantineTheme>),
+	// making every property optional even though this call always sets them - asserting the
+	// full MantineTheme shape here means direct `commonTheme.other.*` access elsewhere doesn't
+	// need `!`/optional-chaining at every call site.
+}) as MantineTheme
+
+export const defaultColorScheme: MantineColorScheme = 'light'
 
 export type ThemeCustomObject = typeof themeCustomObj

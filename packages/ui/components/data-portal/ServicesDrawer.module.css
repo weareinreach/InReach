@@ -1,0 +1,19 @@
+.drawerContent {
+	border-radius: rem(32px) 0 0 0;
+	min-width: 40vw;
+}
+.drawerBody {
+	padding: rem(40px) rem(32px);
+}
+.drawerBody:not(:only-child) {
+	padding-top: rem(40px);
+}
+.addNewButton {
+	width: 100%;
+	border: rem(1px) dashed var(--ir-color-secondary-teal);
+	border-radius: rem(8px);
+	padding: rem(12px);
+}
+.addNewText {
+	color: var(--ir-color-secondary-teal);
+}

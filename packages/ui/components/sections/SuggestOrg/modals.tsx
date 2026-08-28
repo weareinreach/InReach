@@ -1,43 +1,18 @@
-import {
-	Alert,
-	Button,
-	Checkbox,
-	createStyles,
-	Divider,
-	Group,
-	Modal,
-	rem,
-	Skeleton,
-	Stack,
-	Text,
-	Title,
-} from '@mantine/core'
+import { Alert, Checkbox, Divider, Group, Modal, Skeleton, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
 import { type ReactNode, useCallback, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { Button } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { useFormContext } from './context'
+import classes from './modals.module.css'
 
-const useStyles = createStyles((theme) => ({
-	count: {
-		...theme.other.utilityFonts.utility1,
-		background: theme.other.colors.secondary.black,
-		borderRadius: '100%',
-		color: theme.other.colors.secondary.white,
-		width: rem(24),
-		height: rem(24),
-		textAlign: 'center',
-		display: 'inline-block',
-		verticalAlign: 'center',
-		lineHeight: 1.5,
-	},
-}))
 interface ModalProps {
 	disabled: boolean
 }
@@ -46,7 +21,6 @@ interface ServiceModalProps extends ModalProps {
 }
 
 export const ServiceTypes = ({ disabled, serviceTypes }: ServiceModalProps) => {
-	const { classes } = useStyles()
 	const form = useFormContext()
 	const variants = useCustomVariant()
 	const [modalOpen, modalHandler] = useDisclosure(false)
@@ -69,17 +43,16 @@ export const ServiceTypes = ({ disabled, serviceTypes }: ServiceModalProps) => {
 				opened={modalOpen}
 				onClose={modalHandler.close}
 				title={<ModalTitle breadcrumb={{ option: 'close', onClick: modalHandler.close }} />}
-				scrollAreaComponent={Modal.NativeScrollArea}
 			>
-				<Stack spacing={24}>
-					<Stack spacing={16}>
+				<Stack gap={24}>
+					<Stack gap={16}>
 						<Title order={2}>{t('modal.service-types-title')}</Title>
 						<Text variant={variants.Text.darkGray}>{t('modal.service-types-sub')}</Text>
 					</Stack>
-					<Stack spacing={0}>
+					<Stack gap={0}>
 						<Checkbox.Group {...form.getInputProps('serviceCategories')}>{options}</Checkbox.Group>
 					</Stack>
-					<Stack spacing={20}>
+					<Stack gap={20}>
 						<Divider mt={16} />
 						<Button variant={variants.Button.primaryLg} onClick={modalHandler.close}>
 							{t('form.btn-save-changes')}
@@ -87,7 +60,7 @@ export const ServiceTypes = ({ disabled, serviceTypes }: ServiceModalProps) => {
 					</Stack>
 				</Stack>
 			</Modal>
-			<Stack spacing={16}>
+			<Stack gap={16}>
 				<Text variant={variants.Text.utility1}>{t('form.service-types')}</Text>
 				<Button
 					variant={variants.Button.secondarySm}
@@ -95,7 +68,7 @@ export const ServiceTypes = ({ disabled, serviceTypes }: ServiceModalProps) => {
 					onClick={modalHandler.open}
 					w='fit-content'
 				>
-					<Group noWrap>
+					<Group wrap='nowrap'>
 						{t('form.btn-service')}
 						{selectedCountIcon}
 					</Group>
@@ -128,10 +101,9 @@ export const OrgQuickView = ({ opened, onClose, match }: OrgQuickViewProps) => {
 			opened={opened}
 			onClose={onClose}
 			title={<ModalTitle breadcrumb={{ option: 'close', onClick: onClose }} />}
-			scrollAreaComponent={Modal.NativeScrollArea}
 			size='lg'
 		>
-			<Stack spacing={32}>
+			<Stack gap={32}>
 				{match?.deleted && (
 					<Alert color='orange' icon={<Icon icon='carbon:warning' />} title={t('modal.archived-alert-title')}>
 						<Text size='sm'>{t('modal.archived-alert-body')}</Text>
@@ -140,11 +112,11 @@ export const OrgQuickView = ({ opened, onClose, match }: OrgQuickViewProps) => {
 
 				<Skeleton visible={isLoading}>
 					{data && (
-						<Stack spacing={24}>
-							<Stack spacing={8}>
+						<Stack gap={24}>
+							<Stack gap={8}>
 								<Title order={2}>{data.name}</Title>
 								{data.locations?.[0] && (
-									<Text color='dimmed' size='md' weight={500}>
+									<Text c='dimmed' size='md' fw={500}>
 										{data.locations[0].city}, {data.locations[0].govDist?.abbrev}
 									</Text>
 								)}
@@ -163,7 +135,6 @@ interface CommunitiesModalProps extends ModalProps {
 }
 
 export const Communities = ({ disabled, communities }: CommunitiesModalProps) => {
-	const { classes } = useStyles()
 	const form = useFormContext()
 	const variants = useCustomVariant()
 	const [modalOpen, modalHandler] = useDisclosure(false)
@@ -230,7 +201,7 @@ export const Communities = ({ disabled, communities }: CommunitiesModalProps) =>
 	)
 	const handleCategoryToggle = useCallback((id: string) => () => toggleCategory(id), [toggleCategory])
 
-	const wrapInStack = useCallback((children: ReactNode) => <Stack spacing={4}>{children}</Stack>, [])
+	const wrapInStack = useCallback((children: ReactNode) => <Stack gap={4}>{children}</Stack>, [])
 
 	const options = useMemo(
 		() =>
@@ -282,15 +253,14 @@ export const Communities = ({ disabled, communities }: CommunitiesModalProps) =>
 				opened={modalOpen}
 				onClose={modalHandler.close}
 				title={<ModalTitle breadcrumb={{ option: 'close', onClick: modalHandler.close }} />}
-				scrollAreaComponent={Modal.NativeScrollArea}
 			>
-				<Stack spacing={24}>
-					<Stack spacing={16}>
+				<Stack gap={24}>
+					<Stack gap={16}>
 						<Title order={2}>{t('modal.community-title')}</Title>
 						<Text variant={variants.Text.darkGray}>{t('modal.community-sub')}</Text>
 					</Stack>
-					<Stack spacing={4}>{options}</Stack>
-					<Stack spacing={20}>
+					<Stack gap={4}>{options}</Stack>
+					<Stack gap={20}>
 						<Divider mt={16} />
 						<Button variant={variants.Button.primaryLg} onClick={modalHandler.close}>
 							{t('form.btn-save-changes')}
@@ -298,7 +268,7 @@ export const Communities = ({ disabled, communities }: CommunitiesModalProps) =>
 					</Stack>
 				</Stack>
 			</Modal>
-			<Stack spacing={16}>
+			<Stack gap={16}>
 				<Text variant={variants.Text.utility1}>{t('form.community-focus')}</Text>
 				<Button
 					variant={variants.Button.secondarySm}
@@ -306,7 +276,7 @@ export const Communities = ({ disabled, communities }: CommunitiesModalProps) =>
 					onClick={modalHandler.open}
 					w='fit-content'
 				>
-					<Group noWrap>
+					<Group wrap='nowrap'>
 						{t('form.btn-community')}
 						{selectedCountIcon}
 					</Group>

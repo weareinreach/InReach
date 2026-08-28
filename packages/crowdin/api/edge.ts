@@ -1,7 +1,6 @@
 /* eslint-disable node/no-process-env */
-/* eslint-disable no-var */
-import Crowdin from '@crowdin/crowdin-api-client'
 
+import Crowdin from '@crowdin/crowdin-api-client'
 import { createCommonFns } from 'common/apiFns'
 
 export const crowdinEdge =

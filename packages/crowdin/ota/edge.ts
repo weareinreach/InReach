@@ -25,7 +25,6 @@ if (process.env.NODE_ENV !== 'production') {
 	global.crowdinEdgeOta = crowdinEdgeOta
 }
 declare global {
-	// eslint-disable-next-line no-var
 	var crowdinEdgeOta: { common: OtaClient; database: OtaClient } | undefined
 }
 

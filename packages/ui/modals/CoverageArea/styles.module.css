@@ -1,0 +1,22 @@
+/* borderedBox/locationBadge/noHoverHighlight were dropped - confirmed unused by this file's only consumer */
+.ModalContent > * {
+	width: 100%;
+}
+
+.selectSectionWrapper :global(.mantine-Select-input),
+.selectSectionWrapper :global(.mantine-Select-input::-webkit-input-placeholder) {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+	margin: 0;
+}
+.selectSectionWrapper * {
+	font-size: rem(16px);
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--ir-color-secondary-black);
+}
+.selectSectionWrapper :global(.mantine-Select-section) {
+	justify-content: end;
+}

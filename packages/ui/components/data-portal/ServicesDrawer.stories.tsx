@@ -32,7 +32,7 @@ export default {
 	args: {
 		component: Button,
 		children: 'Open Drawer',
-		variant: 'inlineInvertedUtil1',
+		variant: 'primary',
 	},
 } satisfies Meta<typeof ServicesDrawer>
 

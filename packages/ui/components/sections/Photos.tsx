@@ -1,31 +1,15 @@
-import { Carousel, type Embla, useAnimationOffsetEffect } from '@mantine/carousel'
-import { AspectRatio, createStyles, Group, Modal, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Carousel } from '@mantine/carousel'
+import { AspectRatio, Group, Modal, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next/pages'
 import { useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
+import { cx } from '~ui/lib/cx'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
-	text: {
-		color: theme.other.colors.secondary.black,
-		textDecoration: 'underline',
-		fontWeight: 600,
-		cursor: 'pointer',
-	},
-	modalSize: {
-		[theme.fn.largerThan('sm')]: {
-			minWidth: '45rem !important',
-		},
-	},
-	indicator: {
-		[theme.fn.smallerThan('sm')]: {
-			width: '0.5rem',
-		},
-	},
-}))
+import classes from './Photos.module.css'
 
 /**
  * Returns the photo sections component.
@@ -48,7 +32,6 @@ const useStyles = createStyles((theme) => ({
  */
 export const PhotosSection = ({ parentId }: PhotosSectionProps) => {
 	const { t } = useTranslation('common')
-	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
@@ -56,9 +39,6 @@ export const PhotosSection = ({ parentId }: PhotosSectionProps) => {
 	const [initialSlide, setInitialSlide] = useState<number | undefined>(undefined)
 	const { data: photos } = api.orgPhoto.getByParent.useQuery(parentId)
 	const TRANSITION_DURATION = 100
-	const [embla, setEmbla] = useState<Embla | null>(null)
-
-	useAnimationOffsetEffect(embla, TRANSITION_DURATION)
 
 	const photosArray = photos === undefined ? [] : Array.isArray(photos) ? photos : [photos]
 	const mainImages = isMobile ? 2 : 4
@@ -73,7 +53,7 @@ export const PhotosSection = ({ parentId }: PhotosSectionProps) => {
 	))
 
 	const displayPhotos = (
-		<Group noWrap>
+		<Group wrap='nowrap'>
 			{mainDisplay.map(({ src }, i) => (
 				<AspectRatio key={src} miw={160} ratio={1}>
 					<Image
@@ -108,21 +88,20 @@ export const PhotosSection = ({ parentId }: PhotosSectionProps) => {
 					initialSlide={initialSlide}
 					classNames={{ indicator: classes.indicator }}
 					withIndicators
-					loop
-					getEmblaApi={setEmbla}
+					emblaOptions={{ loop: true }}
 					maw={isMobile ? 300 : 720}
 				>
 					{carouselImages}
 				</Carousel>
 			</Modal>
-			<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
+			<Stack gap={isMobile ? 32 : 40} align='flex-start'>
 				<Group h={48}>
 					<Title order={2}>{t('photo_other')}</Title>
 				</Group>
 				{photosArray.length > 0 && displayPhotos}
 				<Text
 					variant={variants.Text.darkGray}
-					className={cx({ [classes.text]: photosArray.length > 0 })}
+					className={cx(photosArray.length > 0 ? classes.text : undefined)}
 					onClick={() => {
 						photosArray.length > 0 && open()
 					}}

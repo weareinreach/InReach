@@ -15,6 +15,7 @@
 	"include": [
 		"./**/*.ts",
 		"./**/*.tsx",
+		"./**/*.cjs",
 		".storybook/**/*",
 		"../../@types/**/*.ts",
 		"../../apps/app/src/types/nextjs-routes.d.ts",
