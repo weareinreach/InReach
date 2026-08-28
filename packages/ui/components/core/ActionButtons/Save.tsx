@@ -239,7 +239,9 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 						</Menu.Item>
 					) : (
 						<>
-							<CreateNewList component={Menu.Item}>{t('list.create-new')}</CreateNewList>
+							<CreateNewList component={Menu.Item} itemId={itemId}>
+								{t('list.create-new')}
+							</CreateNewList>
 							{availableLists?.map(({ id, name }) => (
 								<ListItem key={id} data={{ id, itemId }} action='save' name={name} itemName={itemName} />
 							))}
