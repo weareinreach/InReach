@@ -1,4 +1,4 @@
-import { getAuditedClient } from '@weareinreach/db'
+import { getAuditedClient, isIdFor } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateAndSaveItemSchema } from './mutation.createAndSaveItem.schema'
@@ -8,11 +8,15 @@ const createAndSaveItem = async ({
 	input,
 }: TRPCHandlerParams<TCreateAndSaveItemSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
+	const { name, itemId } = input
 
 	const result = await prisma.userSavedList.create({
 		data: {
-			...input,
+			name,
 			ownedById: ctx.session.user.id,
+			...(isIdFor('organization', itemId)
+				? { organizations: { create: { organizationId: itemId } } }
+				: { services: { create: { serviceId: itemId } } }),
 		},
 		select: {
 			services: { select: { serviceId: true } },
