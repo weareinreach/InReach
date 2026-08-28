@@ -417,30 +417,41 @@ export const ReportTable = () => {
 			{
 				id: 'orgNameSnapshot',
 				header: 'Organization Name',
-				size: 200,
+				size: 180,
 				cell: ({ value, row }) => {
 					const isResolved = row.status === ReportStatus.RESOLVED
+					const name = (value as string) || 'Unknown'
 					return (
-						<Text
-							fw={500}
-							size='sm'
-							variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}
-						>
-							{(value as string) || 'Unknown'}
-						</Text>
+						<Tooltip label={name}>
+							<Text
+								fw={500}
+								size='sm'
+								lineClamp={1}
+								variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}
+							>
+								{name}
+							</Text>
+						</Tooltip>
 					)
 				},
 			},
 			{
 				id: 'serviceNameSnapshot',
 				header: 'Service or Location Name',
-				size: 200,
+				size: 180,
 				cell: ({ value, row }) => {
 					const isResolved = row.status === ReportStatus.RESOLVED
+					const name = (value as string) || '-'
 					return (
-						<Text size='sm' variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}>
-							{(value as string) || '-'}
-						</Text>
+						<Tooltip label={name}>
+							<Text
+								size='sm'
+								lineClamp={1}
+								variant={isResolved ? variants.Text.utility4darkGray : variants.Text.utility4}
+							>
+								{name}
+							</Text>
+						</Tooltip>
 					)
 				},
 			},

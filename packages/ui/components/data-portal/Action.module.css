@@ -1,5 +1,6 @@
 .actionBlock {
 	display: flex;
+	flex-wrap: wrap;
 	gap: rem(10px);
 	padding-right: rem(20px);
 }

@@ -68,10 +68,21 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				enabled: drawerOpened && !!orgId,
 				// `ext`/`description` come back `null` when unset - fed straight into `values` below,
 				// that would hand a controlled TextInput a `null` value and trip React's
-				// uncontrolled-to-controlled warning. `phoneTypeId` is deliberately left alone: `null`
-				// is a real sentinel value there (selects the "Custom Text" option).
+				// uncontrolled-to-controlled warning. `phoneTypeId` gets the same treatment for a
+				// different reason: Mantine's `Select` treats a controlled value of `null` as "nothing
+				// selected" (it blanks the closed input) regardless of whether `null` also appears as a
+				// real option's `value` in `data` - so `null` can't work as the "Custom Text" sentinel.
+				// `''` is used instead throughout the form; it's converted back to `null` at submission
+				// time, below, to match what the API actually expects.
 				select: (data) =>
-					data ? { ...data, ext: data.ext ?? '', description: data.description ?? '' } : data,
+					data
+						? {
+								...data,
+								ext: data.ext ?? '',
+								description: data.description ?? '',
+								phoneTypeId: data.phoneTypeId ?? '',
+							}
+						: data,
 			}
 		)
 		// No `initialData` here - combined with the client's 10-minute default `staleTime`, an
@@ -140,6 +151,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				number: '',
 				countryId: '',
 				ext: '',
+				phoneTypeId: '',
 				description: '',
 				published: true,
 				deleted: false,
@@ -230,7 +242,11 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 					{ id: phoneId, orgId: orgId ?? '' },
 					{ refetchType: 'none' }
 				)
-				reset(data)
+				// The mutation returns the raw DB row, where an uncategorized/custom phone's
+				// `phoneTypeId` is a genuine `null` - re-coerced to `''` here for the same reason as
+				// the `select` on the query above (Mantine's `Select` can't use `null` as a real
+				// option's selected value).
+				reset(data ? { ...data, phoneTypeId: data.phoneTypeId ?? '' } : data)
 			},
 			onSuccess: () => {
 				setIsSaved(true)
@@ -285,7 +301,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			() =>
 				handleSubmit(
 					(data) => {
-						siteUpdate.mutate({ orgId: orgId ?? '', operation: createNew ? 'create' : 'update', ...data })
+						siteUpdate.mutate({
+							orgId: orgId ?? '',
+							operation: createNew ? 'create' : 'update',
+							...data,
+							phoneTypeId: data.phoneTypeId || null,
+						})
 					},
 					(error) => console.error(error)
 				),
@@ -295,7 +316,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		const handleModalSave = useCallback(() => {
 			const valuesToSubmit = getValues()
 			siteUpdate.mutate(
-				{ ...valuesToSubmit, orgId: orgId ?? '', operation: createNew ? 'create' : 'update' },
+				{
+					...valuesToSubmit,
+					orgId: orgId ?? '',
+					operation: createNew ? 'create' : 'update',
+					phoneTypeId: valuesToSubmit.phoneTypeId || null,
+				},
 				{
 					onSuccess: () => {
 						modalHandler.close()
@@ -347,15 +373,12 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 											label='Type'
 											control={control}
 											name='phoneTypeId'
-											data={[
-												...(phoneTypes ?? []),
-												{ value: null as unknown as string, label: 'Custom Text (enter below)' },
-											]}
+											data={[...(phoneTypes ?? []), { value: '', label: 'Custom Text (enter below)' }]}
 											comboboxProps={{ zIndex: 10002 }}
 											withCheckIcon={false}
 											classNames={{ option: classes.option }}
 										/>
-										{values.phoneTypeId === null && (
+										{values.phoneTypeId === '' && (
 											<TextInput
 												label='Description'
 												name='description'

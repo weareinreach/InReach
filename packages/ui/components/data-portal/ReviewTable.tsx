@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Group, Stack, Switch, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Badge, Group, Switch, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
@@ -72,12 +72,8 @@ export const ReviewTable = () => {
 			createdAt: dateFilter('createdAt')
 				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
 				: undefined,
-			updatedAt: dateFilter('updatedAt')
-				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
-				: undefined,
 			sorting: sorting.map(({ id, desc }) => ({
-				id: id as
-					'createdAt' | 'updatedAt' | 'rating' | 'reviewText' | 'userName' | 'userEmail' | 'organization',
+				id: id as 'createdAt' | 'rating' | 'reviewText' | 'userName' | 'userEmail' | 'organization',
 				desc,
 			})),
 			take: pagination.pageSize,
@@ -158,9 +154,10 @@ export const ReviewTable = () => {
 			{
 				id: 'userName',
 				header: 'User Name',
+				size: 160,
 				accessorFn: (row) => row.user?.name || 'Anonymous',
 				cell: ({ value }) => (
-					<Text size='sm' fw={500}>
+					<Text size='sm' fw={500} style={{ whiteSpace: 'nowrap' }}>
 						{value as string}
 					</Text>
 				),
@@ -168,12 +165,18 @@ export const ReviewTable = () => {
 			{
 				id: 'userEmail',
 				header: 'User Email',
+				size: 220,
 				accessorFn: (row) => row.user?.email || '',
-				cell: ({ value }) => <Text size='sm'>{value as string}</Text>,
+				cell: ({ value }) => (
+					<Text size='sm' style={{ whiteSpace: 'nowrap' }}>
+						{value as string}
+					</Text>
+				),
 			},
 			{
 				id: 'rating',
 				header: 'Rating',
+				size: 120,
 				filter: {
 					type: 'select',
 					options: [1, 2, 3, 4, 5].map((n) => ({
@@ -195,13 +198,13 @@ export const ReviewTable = () => {
 			{
 				id: 'reviewText',
 				header: 'Review Content',
-				size: 300,
+				size: 450,
 				cell: ({ value, row }) => {
 					const isHiddenOrDeleted = !row.visible || row.deleted
 					return (
 						<Text
 							size='sm'
-							style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
+							lineClamp={2}
 							variant={isHiddenOrDeleted ? variants.Text.utility4darkGray : variants.Text.utility4}
 						>
 							{(value as string) || 'No review text provided.'}
@@ -212,7 +215,7 @@ export const ReviewTable = () => {
 			{
 				id: 'organization',
 				header: 'Organization',
-				size: 200,
+				size: 220,
 				accessorFn: (row) => row.organization?.name || 'Unknown',
 				cell: ({ row }) => {
 					const org = row.organization
@@ -220,15 +223,19 @@ export const ReviewTable = () => {
 					const serviceName = row.orgService
 						? row.orgService.serviceName?.tsKey?.text || row.orgService.legacyName || 'Service'
 						: null
+					const detail = [
+						location ? `Location: ${location.name || 'Unnamed Location'}` : null,
+						serviceName ? `Service: ${serviceName}` : null,
+					]
+						.filter(Boolean)
+						.join(' · ')
 
 					return (
-						<Stack gap='xs'>
-							<Text size='sm' fw={500}>
+						<Tooltip label={detail} disabled={!detail}>
+							<Text size='sm' fw={500} lineClamp={1}>
 								{org?.name || 'Unknown Organization'}
 							</Text>
-							{location && <Text size='xs'>Location: {location.name || 'Unnamed Location'}</Text>}
-							{serviceName && <Text size='xs'>Service: {serviceName}</Text>}
-						</Stack>
+						</Tooltip>
 					)
 				},
 			},
@@ -278,19 +285,6 @@ export const ReviewTable = () => {
 			{
 				id: 'createdAt',
 				header: 'Created',
-				filter: { type: 'date-range' },
-				cell: ({ value }) => {
-					const date = DateTime.fromJSDate(value as Date)
-					return (
-						<Tooltip label={date.toLocaleString(DateTime.DATETIME_SHORT)}>
-							<span>{date.toRelativeCalendar()}</span>
-						</Tooltip>
-					)
-				},
-			},
-			{
-				id: 'updatedAt',
-				header: 'Updated',
 				filter: { type: 'date-range' },
 				cell: ({ value }) => {
 					const date = DateTime.fromJSDate(value as Date)

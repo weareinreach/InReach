@@ -1,13 +1,19 @@
-/* Overlays a diagonal "off"/"excluded" line across an icon that has no dedicated slashed variant
-   in the icon set (e.g. `carbon:trash-can`). */
+/* Overlays an "X" over an icon that has no dedicated off/excluded variant in the icon set (e.g.
+   `carbon:trash-can`), to indicate excluded/hidden-by-default items. */
 .slash {
 	position: relative;
 	display: inline-flex;
 }
+.slash::before,
 .slash::after {
 	content: '';
 	position: absolute;
-	inset: 10% -10%;
+	inset: 15% -5%;
 	border-top: rem(2px) solid currentcolor;
+}
+.slash::before {
+	transform: rotate(45deg);
+}
+.slash::after {
 	transform: rotate(-45deg);
 }

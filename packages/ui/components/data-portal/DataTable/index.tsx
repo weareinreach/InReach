@@ -418,15 +418,21 @@ export const DataTable = <T,>({
 									rowCount
 								)} of ${rowCount}`}
 					</Text>
-					<Group gap='sm'>
-						<Select
-							value={String(pagination.pageSize)}
-							onChange={(value) => value && onPaginationChange({ pageIndex: 0, pageSize: Number(value) })}
-							data={pageSizeOptions.map((size) => ({ value: String(size), label: `${size} / page` }))}
-							size='xs'
-							w={110}
-							allowDeselect={false}
-						/>
+					<Group gap='xl' wrap='nowrap'>
+						<Group gap={8} wrap='nowrap'>
+							<Text size='sm' c='dimmed'>
+								Rows per page
+							</Text>
+							<Select
+								aria-label='Rows per page'
+								value={String(pagination.pageSize)}
+								onChange={(value) => value && onPaginationChange({ pageIndex: 0, pageSize: Number(value) })}
+								data={pageSizeOptions.map((size) => ({ value: String(size), label: String(size) }))}
+								size='xs'
+								w={70}
+								allowDeselect={false}
+							/>
+						</Group>
 						<Pagination
 							value={pagination.pageIndex + 1}
 							onChange={(page) => onPaginationChange({ ...pagination, pageIndex: page - 1 })}

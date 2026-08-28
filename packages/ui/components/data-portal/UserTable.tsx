@@ -319,9 +319,6 @@ export const UserTable = () => {
 
 	return (
 		<Stack>
-			<Text size='16px' fw={500} style={{ marginBottom: '-1rem' }}>
-				Total: {data?.total ?? 0}
-			</Text>
 			<DataTable
 				data={data?.results ?? []}
 				columns={columns}
