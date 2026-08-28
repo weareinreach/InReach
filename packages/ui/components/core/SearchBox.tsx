@@ -10,12 +10,13 @@ import {
 	useCombobox,
 	useMantineTheme,
 } from '@mantine/core'
-import { useForm, type UseFormReturnType } from '@mantine/form'
+import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import regexEscape from 'escape-string-regexp'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next/pages'
 import {
+	type ChangeEventHandler,
 	type Dispatch,
 	type KeyboardEventHandler,
 	type ReactNode,
@@ -269,8 +270,9 @@ export const SearchBox = ({
 	// query is simply `enabled: false` (not "loading"), not merely finished loading - so without
 	// `notBlank(search)` this opened the dropdown (showing the "suggest an organization" prompt)
 	// on bare focus, before the user had entered any search term.
-	const hasDropdownContent =
-		results.length > 0 || noResults || (isOrgSearch && !orgSearchLoading && notBlank(search))
+	const hasResults = results.length > 0 || noResults
+	const orgSuggestionAvailable = isOrgSearch && !orgSearchLoading && notBlank(search)
+	const hasDropdownContent = hasResults || orgSuggestionAvailable
 
 	// Enter submits the top result without visually highlighting it while typing - matching the
 	// previous Autocomplete's behavior. `combobox.selectFirstOption()` would do this via Mantine's
@@ -305,6 +307,22 @@ export const SearchBox = ({
 
 	const { onChange: searchOnChange, ...searchFieldProps } = form.getInputProps('search')
 
+	const handleSearchInputChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+		(event) => {
+			searchOnChange(event)
+			combobox.openDropdown()
+		},
+		[searchOnChange, combobox]
+	)
+
+	const handleSearchInputFocus = useCallback(() => {
+		if (hasDropdownContent) {
+			combobox.openDropdown()
+		}
+	}, [hasDropdownContent, combobox])
+
+	const handleSearchInputBlur = useCallback(() => combobox.closeDropdown(), [combobox])
+
 	return (
 		<Combobox
 			store={combobox}
@@ -333,16 +351,9 @@ export const SearchBox = ({
 					label={label}
 					{...fieldRole}
 					{...searchFieldProps}
-					onChange={(event) => {
-						searchOnChange(event)
-						combobox.openDropdown()
-					}}
-					onFocus={() => {
-						if (hasDropdownContent) {
-							combobox.openDropdown()
-						}
-					}}
-					onBlur={() => combobox.closeDropdown()}
+					onChange={handleSearchInputChange}
+					onFocus={handleSearchInputFocus}
+					onBlur={handleSearchInputBlur}
 					onKeyDown={handleKeyDown}
 				/>
 			</Combobox.Target>
@@ -351,34 +362,38 @@ export const SearchBox = ({
 					<Combobox.Options>
 						{results.map((item) => {
 							const { label: itemLabel, fetching, subheading } = item
-							return (
-								<Combobox.Option value={item.value} key={item.value} className={classes.itemComponent}>
-									{fetching ? (
-										<Center>
-											<Loader />
-										</Center>
-									) : isOrgSearch ? (
+							let optionContent: ReactNode
+							if (fetching) {
+								optionContent = (
+									<Center>
+										<Loader />
+									</Center>
+								)
+							} else if (isOrgSearch) {
+								optionContent = (
+									<Text c={theme.other.colors.secondary.darkGray} className={classes.unmatchedText} truncate>
+										{matchText(itemLabel, form.values.search)}
+									</Text>
+								)
+							} else {
+								optionContent = (
+									<>
+										<Text className={classes.locationResult} truncate>
+											{itemLabel}
+										</Text>
 										<Text
 											c={theme.other.colors.secondary.darkGray}
 											className={classes.unmatchedText}
 											truncate
 										>
-											{matchText(itemLabel, form.values.search)}
+											{subheading}
 										</Text>
-									) : (
-										<>
-											<Text className={classes.locationResult} truncate>
-												{itemLabel}
-											</Text>
-											<Text
-												c={theme.other.colors.secondary.darkGray}
-												className={classes.unmatchedText}
-												truncate
-											>
-												{subheading}
-											</Text>
-										</>
-									)}
+									</>
+								)
+							}
+							return (
+								<Combobox.Option value={item.value} key={item.value} className={classes.itemComponent}>
+									{optionContent}
 								</Combobox.Option>
 							)
 						})}

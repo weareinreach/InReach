@@ -3,6 +3,7 @@ import {
 	Combobox,
 	type ComboboxItem,
 	type ComboboxItemGroup,
+	type ComboboxLikeRenderOptionInput,
 	PasswordInput,
 	Popover,
 	Progress,
@@ -16,7 +17,7 @@ import {
 import { useDebouncedValue } from '@mantine/hooks'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next/pages'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import { type ChangeEvent, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
 import { allAttributes } from '@weareinreach/db/generated/allAttributes'
 import { attributesByCategory } from '@weareinreach/db/generated/attributesByCategory'
@@ -182,14 +183,19 @@ export const LanguageSelect = () => {
 		})) satisfies ComboboxItemGroup<ComboboxItem>[]
 	})()
 
+	const handleLanguageRenderOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+			const lang = groupedLangs.find(({ value }) => value === option.value)
+			return renderTwoLineOption(variants, option.label, lang?.description)
+		},
+		[groupedLangs, variants]
+	)
+
 	return (
 		<Select
 			label={t('language', { context: 'choose' })}
 			data={langSelectData}
-			renderOption={({ option }) => {
-				const lang = groupedLangs.find(({ value }) => value === option.value)
-				return renderTwoLineOption(variants, option.label, lang?.description)
-			}}
+			renderOption={handleLanguageRenderOption}
 			searchable
 			required
 			{...form.getInputProps('language')}
@@ -233,7 +239,7 @@ export const FormLocation = () => {
 	})
 	useEffect(() => {
 		const result = geoByPlaceIdData?.result
-		if (result && result.city && result.govDist && result.country) {
+		if (result?.city && result?.govDist && result?.country) {
 			form.setValues({ location: { city: result.city, govDist: result.govDist, country: result.country } })
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -244,30 +250,41 @@ export const FormLocation = () => {
 		...searchLocationProps
 	} = form.getInputProps('searchLocation')
 
+	const handleLocationOptionSubmit = useCallback(
+		(value: string) => {
+			const item = form.values.locationOptions.find((option) => option.value === value)
+			if (item) {
+				form.setFieldValue('searchLocation', item.value)
+				setLocationSearch(item.placeId)
+			}
+			locationCombobox.closeDropdown()
+		},
+		[form, locationCombobox]
+	)
+
+	const handleSearchLocationChange = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => {
+			searchLocationOnChange(event)
+			locationCombobox.openDropdown()
+		},
+		[searchLocationOnChange, locationCombobox]
+	)
+
+	const handleSearchLocationFocus = useCallback(() => locationCombobox.openDropdown(), [locationCombobox])
+
+	const handleSearchLocationBlur = useCallback(() => locationCombobox.closeDropdown(), [locationCombobox])
+
 	return (
-		<Combobox
-			store={locationCombobox}
-			onOptionSubmit={(value) => {
-				const item = form.values.locationOptions.find((option) => option.value === value)
-				if (item) {
-					form.setFieldValue('searchLocation', item.value)
-					setLocationSearch(item.placeId)
-				}
-				locationCombobox.closeDropdown()
-			}}
-		>
+		<Combobox store={locationCombobox} onOptionSubmit={handleLocationOptionSubmit}>
 			<Combobox.Target>
 				<TextInput
 					label={t('current-location')}
 					required
 					value={searchLocationValue}
 					{...searchLocationProps}
-					onChange={(event) => {
-						searchLocationOnChange(event)
-						locationCombobox.openDropdown()
-					}}
-					onFocus={() => locationCombobox.openDropdown()}
-					onBlur={() => locationCombobox.closeDropdown()}
+					onChange={handleSearchLocationChange}
+					onFocus={handleSearchLocationFocus}
+					onBlur={handleSearchLocationBlur}
 				/>
 			</Combobox.Target>
 			<Combobox.Dropdown>
@@ -323,13 +340,19 @@ export const FormLawPractice = forwardRef<HTMLInputElement>((_, ref) => {
 		}
 	}, [selectedOther])
 
+	const handleLawPracticeRenderOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) =>
+			renderSingleLineOption(variants, option.label),
+		[variants]
+	)
+
 	return (
 		<>
 			<Select
 				ref={ref}
 				label={t('sign-up.select-law-practice')}
 				data={selectItems}
-				renderOption={({ option }) => renderSingleLineOption(variants, option.label)}
+				renderOption={handleLawPracticeRenderOption}
 				required
 				{...form.getInputProps('lawPractice')}
 			/>
@@ -390,13 +413,19 @@ export const FormServiceProvider = () => {
 		}
 	}, [isOther, isLegal])
 
+	const handleServiceProviderRenderOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) =>
+			renderSingleLineOption(variants, option.label),
+		[variants]
+	)
+
 	return (
 		<>
 			<Stack>
 				<Select
 					label={t('sign-up.select-service-provider')}
 					data={selectItems}
-					renderOption={({ option }) => renderSingleLineOption(variants, option.label)}
+					renderOption={handleServiceProviderRenderOption}
 					required
 					comboboxProps={{ zIndex: 501 }}
 					{...form.getInputProps('servProvider')}

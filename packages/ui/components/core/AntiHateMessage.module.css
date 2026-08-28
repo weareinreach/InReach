@@ -5,8 +5,6 @@
 	padding: rem(20px) !important;
 }
 
-.popupContent {
-}
 @media (max-width: $mantine-breakpoint-xs) {
 	.popupContent {
 		margin-top: auto;

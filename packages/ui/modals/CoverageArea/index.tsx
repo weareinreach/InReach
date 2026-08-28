@@ -125,6 +125,33 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 			}
 		}, [addServiceArea, selected, serviceArea])
 
+		const handleCountryChange = useCallback(
+			(value: string | null) => {
+				if (value) {
+					setVal.country(value)
+				}
+			},
+			[setVal]
+		)
+
+		const handleGovDistChange = useCallback(
+			(value: string | null) => {
+				if (value) {
+					setVal.govDist(value)
+				}
+			},
+			[setVal]
+		)
+
+		const handleSubDistChange = useCallback(
+			(value: string | null) => {
+				if (value) {
+					setVal.subDist(value)
+				}
+			},
+			[setVal]
+		)
+
 		return (
 			<>
 				<Modal
@@ -146,22 +173,14 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 									placeholder={placeHolders.first}
 									data={(dataCountry ?? []) as ComboboxData}
 									value={selected.country}
-									onChange={(value) => {
-										if (value) {
-											setVal.country(value)
-										}
-									}}
+									onChange={handleCountryChange}
 								/>
 								{selected.country && !!dataDistrict?.length && (
 									<Select
 										placeholder={placeHolders.second}
 										data={(dataDistrict ?? []) as ComboboxData}
 										value={selected.govDist}
-										onChange={(value) => {
-											if (value) {
-												setVal.govDist(value)
-											}
-										}}
+										onChange={handleGovDistChange}
 									/>
 								)}
 								{selected.govDist && !!dataSubDist?.length && (
@@ -169,11 +188,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(
 										placeholder={placeHolders.third}
 										data={(dataSubDist ?? []) as ComboboxData}
 										value={selected.subDist}
-										onChange={(value) => {
-											if (value) {
-												setVal.subDist(value)
-											}
-										}}
+										onChange={handleSubDistChange}
 									/>
 								)}
 							</Stack>

@@ -1,6 +1,6 @@
 import { Checkbox, MultiSelect, Select, Stack, TextInput } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
-import { useState } from 'react'
+import { type ChangeEvent, useCallback, useState } from 'react'
 
 import { type DataTableFilter, type DataTableFilterValue } from './types'
 
@@ -38,6 +38,24 @@ const DateRangeFilter = ({
 		committedTo ?? null,
 	])
 
+	const handleRangeChange = useCallback(
+		(next: [string | null, string | null]) => {
+			// v9 `DatePickerInput` always reports the new value as a date string (`YYYY-MM-DD`),
+			// even though `value` still accepts `Date` objects - convert back at this boundary so
+			// the rest of the filter pipeline can keep working with `Date` throughout.
+			const [nextFrom, nextTo] = next
+			const fromDate = nextFrom ? new Date(nextFrom) : null
+			const toDate = nextTo ? new Date(nextTo) : null
+			setPending([fromDate, toDate])
+			// Only commit (and trigger the table's refetch) once both ends of the range are
+			// picked - clearing the whole thing out is fine to commit immediately too.
+			if ((fromDate && toDate) || (!fromDate && !toDate)) {
+				onChange(fromDate || toDate ? [fromDate ?? undefined, toDate ?? undefined] : undefined)
+			}
+		},
+		[onChange]
+	)
+
 	return (
 		<DatePickerInput
 			type='range'
@@ -57,20 +75,7 @@ const DateRangeFilter = ({
 			// Popover.Dropdown, so its own outside-click detection no longer misfires on this.
 			popoverProps={{ withinPortal: false }}
 			value={pending}
-			onChange={(next) => {
-				// v9 `DatePickerInput` always reports the new value as a date string (`YYYY-MM-DD`),
-				// even though `value` still accepts `Date` objects - convert back at this boundary so
-				// the rest of the filter pipeline can keep working with `Date` throughout.
-				const [nextFrom, nextTo] = next
-				const fromDate = nextFrom ? new Date(nextFrom) : null
-				const toDate = nextTo ? new Date(nextTo) : null
-				setPending([fromDate, toDate])
-				// Only commit (and trigger the table's refetch) once both ends of the range are
-				// picked - clearing the whole thing out is fine to commit immediately too.
-				if ((fromDate && toDate) || (!fromDate && !toDate)) {
-					onChange(fromDate || toDate ? [fromDate ?? undefined, toDate ?? undefined] : undefined)
-				}
-			}}
+			onChange={handleRangeChange}
 			clearable
 			size='xs'
 		/>
@@ -79,6 +84,24 @@ const DateRangeFilter = ({
 
 /** Renders the appropriate filter input for a column's declared `filter.type`, inside a `Popover.Dropdown`. */
 export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFilterControlProps) => {
+	const handleTextChange = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => onChange(event.currentTarget.value || undefined),
+		[onChange]
+	)
+	const handleTrueCheckboxChange = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => onChange(event.currentTarget.checked ? true : undefined),
+		[onChange]
+	)
+	const handleFalseCheckboxChange = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => onChange(event.currentTarget.checked ? false : undefined),
+		[onChange]
+	)
+	const handleSelectChange = useCallback((next: string | null) => onChange(next ?? undefined), [onChange])
+	const handleMultiSelectChange = useCallback(
+		(next: string[]) => onChange(next.length ? next : undefined),
+		[onChange]
+	)
+
 	switch (filter.type) {
 		case 'text': {
 			return (
@@ -86,7 +109,7 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 					label={label}
 					placeholder={`Filter by ${label.toLowerCase()}`}
 					value={typeof value === 'string' ? value : ''}
-					onChange={(event) => onChange(event.currentTarget.value || undefined)}
+					onChange={handleTextChange}
 					size='xs'
 				/>
 			)
@@ -98,13 +121,13 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 					<Checkbox
 						label={trueLabel}
 						checked={value === true}
-						onChange={(event) => onChange(event.currentTarget.checked ? true : undefined)}
+						onChange={handleTrueCheckboxChange}
 						size='xs'
 					/>
 					<Checkbox
 						label={falseLabel}
 						checked={value === false}
-						onChange={(event) => onChange(event.currentTarget.checked ? false : undefined)}
+						onChange={handleFalseCheckboxChange}
 						size='xs'
 					/>
 				</Stack>
@@ -116,7 +139,7 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 					label={label}
 					data={filter.options}
 					value={typeof value === 'string' ? value : null}
-					onChange={(next) => onChange(next ?? undefined)}
+					onChange={handleSelectChange}
 					clearable
 					size='xs'
 				/>
@@ -128,7 +151,7 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 					label={label}
 					data={filter.options}
 					value={Array.isArray(value) ? (value as string[]) : []}
-					onChange={(next) => onChange(next.length ? next : undefined)}
+					onChange={handleMultiSelectChange}
 					clearable
 					size='xs'
 				/>

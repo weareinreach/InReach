@@ -2,8 +2,6 @@
 	text-decoration: underline;
 }
 
-.description {
-}
 @media (max-width: $mantine-breakpoint-xs) {
 	.description {
 		display: none;

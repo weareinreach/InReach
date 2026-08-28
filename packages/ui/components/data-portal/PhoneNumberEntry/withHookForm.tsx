@@ -2,13 +2,14 @@ import { ErrorMessage } from '@hookform/error-message'
 import {
 	type ComboboxItem,
 	type ComboboxItemGroup,
+	type ComboboxLikeRenderOptionInput,
 	Group,
 	Text,
 	TextInput,
 	type TextInputProps,
 } from '@mantine/core'
 import { AsYouType } from 'libphonenumber-js'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
 	type Control,
 	type FieldValues,
@@ -70,7 +71,7 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		}
 		return [...groups.entries()].map(([group, items]) => ({
 			group,
-			items: items.map(({ value, label }) => ({ value, label })),
+			items: items.map(({ value, label: itemLabel }) => ({ value, label: itemLabel })),
 		}))
 	}, [countryList])
 
@@ -159,18 +160,23 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [phoneNumber])
 
+	const renderCountryOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+			const country = countryList.find(({ value }) => value === option.value)
+			return (
+				<Group w='100%' wrap='nowrap'>
+					<Text>{option.label}</Text>
+					<Text>{country?.data.name ?? ''}</Text>
+				</Group>
+			)
+		},
+		[countryList]
+	)
+
 	const countrySelection = (
 		<Select
 			data={groupedCountryData}
-			renderOption={({ option }) => {
-				const country = countryList.find(({ value }) => value === option.value)
-				return (
-					<Group w='100%' wrap='nowrap'>
-						<Text>{option.label}</Text>
-						<Text>{country?.data.name ?? ''}</Text>
-					</Group>
-				)
-			}}
+			renderOption={renderCountryOption}
 			classNames={countrySelectClasses}
 			withCheckIcon={false}
 			// Not `clearable` - a phone number always needs a country, so there's no valid "cleared"

@@ -3,6 +3,8 @@ import {
 	Box,
 	type ButtonProps,
 	Checkbox,
+	type ComboboxItem,
+	type ComboboxLikeRenderOptionInput,
 	createPolymorphicComponent,
 	Group,
 	Select as MantineSelect,
@@ -347,6 +349,15 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 
 		const toggleShowInactiveAttribs = useCallback(() => setShowInactiveAttribs((prev) => !prev), [])
 
+		const handleAttributeRenderOption = useCallback(
+			({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+				// @ts-expect-error - The 'active' property is missing from the source type.
+				const active = attributesByCategory?.find(({ value }) => value === option.value)?.active
+				return renderAttributeOption(option.label, active)
+			},
+			[attributesByCategory]
+		)
+
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={handler.close}>
@@ -371,11 +382,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								}
 								label='Select Attribute'
 								disabled={!attrCat || !attributesByCategory?.length}
-								renderOption={({ option }) => {
-									// @ts-expect-error - The 'active' property is missing from the source type.
-									const active = attributesByCategory?.find(({ value }) => value === option.value)?.active
-									return renderAttributeOption(option.label, active)
-								}}
+								renderOption={handleAttributeRenderOption}
 								searchable={(attributesByCategory?.length ?? 0) > 10}
 								clearable
 								inputContainer={inputContainerWithSkeleton}

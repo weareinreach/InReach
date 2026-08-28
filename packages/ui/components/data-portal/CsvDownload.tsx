@@ -3,7 +3,7 @@
 import { ActionIcon, Tooltip, useMantineTheme } from '@mantine/core'
 import { type UseMutationResult } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
 import { useCsvDownload } from '~ui/hooks/useCsvDownload'
@@ -87,11 +87,11 @@ export const CsvDownload: React.FC<CsvDownloadProps> = ({
 	const isLoading = isMutationLoading || isDownloadProcessing
 	const currentError = mutationError ? mutationError.message : downloadError
 
-	const handleClick = () => {
+	const handleClick = useCallback(() => {
 		if (!isLoading) {
 			fetchDataAndDownload()
 		}
-	}
+	}, [isLoading, fetchDataAndDownload])
 	if (!hasPermission) {
 		return null
 	}

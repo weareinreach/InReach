@@ -39,6 +39,37 @@ const useNotifications = (listName: string) => {
 	}
 }
 
+const SaveButtonLabel = ({
+	menuItem,
+	omitLabel,
+	isSaved,
+	iconColor,
+	buttonIcon,
+	t,
+}: {
+	menuItem?: boolean
+	omitLabel?: boolean
+	isSaved: boolean
+	iconColor: string
+	buttonIcon: string
+	t: (key: string, options?: Record<string, unknown>) => string
+}) => (
+	<Group gap={0} wrap='nowrap'>
+		<Icon icon={buttonIcon} color={iconColor} {...(menuItem ? {} : { height: 24, width: 24 })} />
+		{!omitLabel && (
+			<Text
+				fw={menuItem ? 500 : undefined}
+				color={iconColor}
+				className={!menuItem ? classes.text : undefined}
+			>
+				{t(isSaved ? 'words.saved' : 'words.save', {
+					defaultValue: isSaved ? 'Saved' : 'Save',
+				})}
+			</Text>
+		)}
+	</Group>
+)
+
 /**
  * Returns a Menu Item with the new of an existing list. When clicked it saves the current organization or
  * service to the list.
@@ -149,20 +180,14 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 		const handleRefetchAvailableLists = useCallback(() => refetchAvailableLists(), [refetchAvailableLists])
 
 		const DisplayedInfo = (
-			<Group gap={0} wrap='nowrap'>
-				<Icon icon={buttonIcon} color={iconColor} {...(menuItem ? {} : { height: 24, width: 24 })} />
-				{!omitLabel && (
-					<Text
-						fw={menuItem ? 500 : undefined}
-						color={iconColor}
-						className={!menuItem ? classes.text : undefined}
-					>
-						{t(isSaved ? 'words.saved' : 'words.save', {
-							defaultValue: isSaved ? 'Saved' : 'Save',
-						})}
-					</Text>
-				)}
-			</Group>
+			<SaveButtonLabel
+				menuItem={menuItem}
+				omitLabel={omitLabel}
+				isSaved={isSaved}
+				iconColor={iconColor}
+				buttonIcon={buttonIcon}
+				t={t}
+			/>
 		)
 
 		if (!isLoggedIn) {

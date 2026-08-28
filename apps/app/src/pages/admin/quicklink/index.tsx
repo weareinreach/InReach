@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
@@ -33,9 +33,14 @@ const QuickLinkIndex = () => {
 		}
 	}, [session, sessionStatus])
 
+	const handleTabChange = useCallback(
+		(value: string | null) => router.push(value as unknown as Route),
+		[router]
+	)
+
 	return (
 		<>
-			<Tabs value={router.pathname} onChange={(value) => router.push(value as unknown as Route)}>
+			<Tabs value={router.pathname} onChange={handleTabChange}>
 				<Tabs.List>
 					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
 					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>

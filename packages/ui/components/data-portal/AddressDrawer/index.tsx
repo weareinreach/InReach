@@ -2,6 +2,8 @@ import {
 	Box,
 	type ButtonProps,
 	Combobox,
+	type ComboboxItem,
+	type ComboboxLikeRenderOptionInput,
 	createPolymorphicComponent,
 	Divider,
 	Drawer,
@@ -303,18 +305,28 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const renderAddressAutocomplete = useCallback(
 		(fieldName: 'data.street1' | 'data.city', fieldLabel: string, fieldRequired: boolean) => {
 			const { value, onChange, ...fieldProps } = form.getInputProps(fieldName)
+
+			const handleOptionSubmit = (optionValue: string) => {
+				const item = (results ?? []).find((result) => result.value === optionValue)
+				if (item) {
+					handleAutocompleteSelection(item)
+					form.setFieldValue(fieldName, item.value)
+				}
+				addressCombobox.closeDropdown()
+			}
+
+			const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+				const val = event.currentTarget.value
+				onChange(val)
+				setSearchTerm(val)
+				addressCombobox.openDropdown()
+			}
+
+			const handleFocus = () => addressCombobox.openDropdown()
+			const handleBlur = () => addressCombobox.closeDropdown()
+
 			return (
-				<Combobox
-					store={addressCombobox}
-					onOptionSubmit={(optionValue) => {
-						const item = (results ?? []).find((result) => result.value === optionValue)
-						if (item) {
-							handleAutocompleteSelection(item)
-							form.setFieldValue(fieldName, item.value)
-						}
-						addressCombobox.closeDropdown()
-					}}
-				>
+				<Combobox store={addressCombobox} onOptionSubmit={handleOptionSubmit}>
 					<Combobox.Target>
 						<TextInput
 							label={fieldLabel}
@@ -322,14 +334,9 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 							disabled={countryNotSelected}
 							value={value ?? ''}
 							{...fieldProps}
-							onChange={(event) => {
-								const val = event.currentTarget.value
-								onChange(val)
-								setSearchTerm(val)
-								addressCombobox.openDropdown()
-							}}
-							onFocus={() => addressCombobox.openDropdown()}
-							onBlur={() => addressCombobox.closeDropdown()}
+							onChange={handleChange}
+							onFocus={handleFocus}
+							onBlur={handleBlur}
 						/>
 					</Combobox.Target>
 					<Combobox.Dropdown>
@@ -355,6 +362,14 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 
 	// #endregion
 	const addressFieldRequired = form.values.data.addressVisibility === AddressVisibility.FULL
+
+	const renderCountryOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+			const country = countryOptions?.find(({ value }) => value === option.value)
+			return <Text>{`${country?.flag ?? ''} ${option.label}`}</Text>
+		},
+		[countryOptions]
+	)
 
 	const Street1Input =
 		form.values.data.addressVisibility === AddressVisibility.FULL ? (
@@ -405,10 +420,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 									<Select
 										label='Country'
 										data={countryOptions ?? []}
-										renderOption={({ option }) => {
-											const country = countryOptions?.find(({ value }) => value === option.value)
-											return <Text>{`${country?.flag ?? ''} ${option.label}`}</Text>
-										}}
+										renderOption={renderCountryOption}
 										required
 										searchable
 										styles={{ dropdown: { width: 'fit-content !important' } }}

@@ -23,13 +23,13 @@ export const sharedStoryIds = (
 	const compareById = new Map(compareStories.map((s) => [s.id, s]))
 	const compareIds = new Set(compareById.keys())
 
-	let sharedIds = [...compareIds].filter((id) => baseIds.has(id)).sort()
+	let sharedIds = [...compareIds].filter((id) => baseIds.has(id)).sort((a, b) => a.localeCompare(b))
 	if (filter) {
 		const needle = filter.toLowerCase()
 		sharedIds = sharedIds.filter((id) => compareById.get(id)?.title.toLowerCase().includes(needle))
 	}
-	const onlyInCompare = [...compareIds].filter((id) => !baseIds.has(id)).sort()
-	const onlyInBase = [...baseIds].filter((id) => !compareIds.has(id)).sort()
+	const onlyInCompare = [...compareIds].filter((id) => !baseIds.has(id)).sort((a, b) => a.localeCompare(b))
+	const onlyInBase = [...baseIds].filter((id) => !compareIds.has(id)).sort((a, b) => a.localeCompare(b))
 
 	return { sharedIds, onlyInCompare, onlyInBase, compareById }
 }

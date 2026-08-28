@@ -97,7 +97,12 @@ const searchIds = async (
 ): Promise<{ ids: string[]; total: number }> => {
 	const expandedTerms = await expandSearchTerm(input.search)
 	const expandedTermsSql = expandedTerms.length
-		? Prisma.sql`ARRAY[${Prisma.join(expandedTerms.map((t) => `%${t.replace(/[^a-zA-Z0-9 ]/g, '')}%`))}]`
+		? Prisma.sql`ARRAY[${Prisma.join(
+				expandedTerms.map((t) => {
+					const escaped = t.replace(/[^a-zA-Z0-9 ]/g, '')
+					return `%${escaped}%`
+				})
+			)}]`
 		: Prisma.sql`ARRAY[]::text[]`
 
 	const conditions: Prisma.Sql[] = [
@@ -153,23 +158,23 @@ const forOrganizationTable = async ({ input }: TRPCHandlerParams<TForOrganizatio
 	const search = input.search?.trim()
 
 	if (search) {
-		const { ids, total } = await searchIds({ ...input, search })
+		const { ids, total: searchTotal } = await searchIds({ ...input, search })
 		if (ids.length === 0) {
-			return { results: [], total }
+			return { results: [], total: searchTotal }
 		}
 
 		const rows = await prisma.organization.findMany({ where: { id: { in: ids } }, select: ORG_SELECT })
 		const byId = new Map(rows.map((row) => [row.id, row]))
-		const results = compact(ids.map((id) => byId.get(id)))
+		const searchResults = compact(ids.map((id) => byId.get(id)))
 
-		return { results, total }
+		return { results: searchResults, total: searchTotal }
 	}
 
 	const where = buildWhere(input)
 	const orderBy = buildOrderBy(input.sorting)
 
 	const [results, total] = await Promise.all([
-		prisma.organization.findMany({ where, select: ORG_SELECT, orderBy, take: input.take, skip: input.skip }),
+		prisma.organization.findMany({ where, orderBy, select: ORG_SELECT, take: input.take, skip: input.skip }),
 		prisma.organization.count({ where }),
 	])
 

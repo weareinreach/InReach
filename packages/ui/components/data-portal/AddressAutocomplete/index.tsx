@@ -2,6 +2,7 @@ import {
 	Combobox,
 	type ComboboxItem,
 	type ComboboxItemGroup,
+	type ComboboxLikeRenderOptionInput,
 	Group,
 	TextInput as MantineTextInput,
 	Stack,
@@ -296,18 +297,47 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 
 	const street1Value = (street1Controller.field.value ?? '') as string
 
+	const handleStreet1OptionSubmit = useCallback(
+		(value: string) => {
+			const item = autoCompleteSearch?.results.find((result) => result.value === value)
+			if (item) {
+				handleAutocompleteSelection(item)
+				street1Controller.field.onChange(item.value)
+			}
+			street1Combobox.closeDropdown()
+		},
+		[autoCompleteSearch, handleAutocompleteSelection, street1Controller, street1Combobox]
+	)
+
+	const handleStreet1Change = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			const value = event.currentTarget.value
+			street1Controller.field.onChange(value)
+			setSearchTerm(value)
+			street1Combobox.openDropdown()
+		},
+		[street1Controller, street1Combobox]
+	)
+
+	const handleStreet1Focus = useCallback(() => {
+		street1Combobox.openDropdown()
+	}, [street1Combobox])
+
+	const handleStreet1Blur = useCallback(() => {
+		street1Controller.field.onBlur()
+		street1Combobox.closeDropdown()
+	}, [street1Controller, street1Combobox])
+
+	const renderCountryOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+			const country = countryOptions?.find(({ value }) => value === option.value)
+			return <Text>{`${country?.flag ?? ''} ${option.label}`}</Text>
+		},
+		[countryOptions]
+	)
+
 	const Street1Input = (
-		<Combobox
-			store={street1Combobox}
-			onOptionSubmit={(value) => {
-				const item = autoCompleteSearch?.results.find((result) => result.value === value)
-				if (item) {
-					handleAutocompleteSelection(item)
-					street1Controller.field.onChange(item.value)
-				}
-				street1Combobox.closeDropdown()
-			}}
-		>
+		<Combobox store={street1Combobox} onOptionSubmit={handleStreet1OptionSubmit}>
 			<Combobox.Target>
 				<MantineTextInput
 					label='Address'
@@ -315,17 +345,9 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 					disabled={disableFieldUntilCountry}
 					error={street1Controller.fieldState.error?.message}
 					value={street1Value}
-					onChange={(event) => {
-						const value = event.currentTarget.value
-						street1Controller.field.onChange(value)
-						setSearchTerm(value)
-						street1Combobox.openDropdown()
-					}}
-					onFocus={() => street1Combobox.openDropdown()}
-					onBlur={() => {
-						street1Controller.field.onBlur()
-						street1Combobox.closeDropdown()
-					}}
+					onChange={handleStreet1Change}
+					onFocus={handleStreet1Focus}
+					onBlur={handleStreet1Blur}
 				/>
 			</Combobox.Target>
 			<Combobox.Dropdown>
@@ -361,10 +383,7 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 				<Select
 					label='Country'
 					data={groupedCountryOptions}
-					renderOption={({ option }) => {
-						const country = countryOptions?.find(({ value }) => value === option.value)
-						return <Text>{`${country?.flag ?? ''} ${option.label}`}</Text>
-					}}
+					renderOption={renderCountryOption}
 					required
 					searchable
 					styles={{ dropdown: { width: 'fit-content !important' } }}

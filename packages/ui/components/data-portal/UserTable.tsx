@@ -22,7 +22,12 @@ import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { DataTable, type DataTableColumn } from './DataTable'
+import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+
+type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>['results'][number]
+
+/** Columns the server-side query can sort by. */
+type UserSortableColumnId = 'name' | 'email' | 'emailVerified' | 'createdAt' | 'updatedAt' | 'active'
 
 const DATA_PORTAL_ACCESS_OPTIONS = [
 	{ value: 'none', label: 'None' },
@@ -202,6 +207,45 @@ const ManageAccessAction = ({
 	)
 }
 
+// --- Column Cell Renderers ---
+// Defined at module scope (rather than nested inside `UserTable`) so React doesn't see a brand-new
+// component identity on every render; anything a renderer needs beyond `row`/`value` is passed in as a
+// prop instead of being read from closure.
+
+interface UserActionsCellProps extends DataTableCellContext<UserDataRecord> {
+	loggedInUserPermissions: CurrentUserPermissions | undefined
+}
+
+/** Cell renderer for the 'actions' column - password reset and data portal access management. */
+const UserActionsCell = ({ row, loggedInUserPermissions }: UserActionsCellProps) => (
+	<Group wrap='nowrap' gap={8}>
+		<PasswordResetAction email={row.email} />
+		<ManageAccessAction
+			activePermissionName={row.permissionName}
+			userId={row.id}
+			loggedInUserPermissions={loggedInUserPermissions}
+		/>
+	</Group>
+)
+
+/** Cell renderer for the 'id' column. */
+const IdCell = ({ value }: DataTableCellContext<UserDataRecord>) => <Text size='xs'>{value as string}</Text>
+
+/** Cell renderer for the 'emailVerified' column. */
+const EmailVerifiedCell = ({ value }: DataTableCellContext<UserDataRecord>) => {
+	if (!value) {
+		return null
+	}
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
+/** Cell renderer shared by the 'updatedAt' and 'createdAt' columns. */
+const DateCell = ({ value }: DataTableCellContext<UserDataRecord>) => {
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
 export const UserTable = () => {
 	const { data: session } = useSession()
 	const loggedInUserPermissions = session?.user?.permissions as CurrentUserPermissions | undefined
@@ -227,7 +271,7 @@ export const UserTable = () => {
 				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
 				: undefined,
 			sorting: sorting.map(({ id, desc }) => ({
-				id: id as 'name' | 'email' | 'emailVerified' | 'createdAt' | 'updatedAt' | 'active',
+				id: id as UserSortableColumnId,
 				desc,
 			})),
 			permissionNames: permissionNamesFilter?.length ? permissionNamesFilter : undefined,
@@ -248,16 +292,7 @@ export const UserTable = () => {
 				enableGlobalFilter: false,
 				hideable: false,
 				accessorFn: () => undefined,
-				cell: ({ row }) => (
-					<Group wrap='nowrap' gap={8}>
-						<PasswordResetAction email={row.email} />
-						<ManageAccessAction
-							activePermissionName={row.permissionName}
-							userId={row.id}
-							loggedInUserPermissions={loggedInUserPermissions}
-						/>
-					</Group>
-				),
+				cell: (ctx) => <UserActionsCell {...ctx} loggedInUserPermissions={loggedInUserPermissions} />,
 			},
 			{
 				id: 'id',
@@ -265,20 +300,14 @@ export const UserTable = () => {
 				size: 220,
 				hiddenByDefault: true,
 				enableSorting: false,
-				cell: ({ value }) => <Text size='xs'>{value as string}</Text>,
+				cell: IdCell,
 			},
 			{ id: 'name', header: 'Name' },
 			{ id: 'email', header: 'Email' },
 			{
 				id: 'emailVerified',
 				header: 'Verified',
-				cell: ({ value }) => {
-					if (!value) {
-						return null
-					}
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
+				cell: EmailVerifiedCell,
 			},
 			{
 				id: 'active',
@@ -299,19 +328,13 @@ export const UserTable = () => {
 				id: 'updatedAt',
 				header: 'Updated',
 				filter: { type: 'date-range' },
-				cell: ({ value }) => {
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
+				cell: DateCell,
 			},
 			{
 				id: 'createdAt',
 				header: 'Created',
 				filter: { type: 'date-range' },
-				cell: ({ value }) => {
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
+				cell: DateCell,
 			},
 		],
 		[loggedInUserPermissions]
@@ -339,5 +362,3 @@ export const UserTable = () => {
 		</Stack>
 	)
 }
-
-type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>['results'][number]

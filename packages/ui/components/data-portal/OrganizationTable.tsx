@@ -1,10 +1,10 @@
-import { ActionIcon, Group, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Group, type MantineTheme, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
 import { type Route } from 'nextjs-routes'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
@@ -14,13 +14,15 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { DataTable, type DataTableColumn } from './DataTable'
+import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
 import { TableToolbarToggle } from './TableToolbarToggle'
 
 type RowItem = ApiOutput['organization']['forOrganizationTable']['results'][number]
 type LocationRow = RowItem['locations'][number]
 /** A rendered row is either a top-level org or one of its expanded location sub-rows. */
 type TableRow = RowItem | LocationRow
+/** Columns the server-side query can sort by. */
+type SortableColumnId = 'name' | 'lastVerified' | 'updatedAt' | 'createdAt'
 
 const RowAction = ({
 	row,
@@ -34,6 +36,11 @@ const RowAction = ({
 	const [auditOpen, setAuditOpen] = useState(false)
 	const [notesOpen, setNotesOpen] = useState(false)
 	const theme = useMantineTheme()
+
+	const handleOpenAudit = useCallback(() => setAuditOpen(true), [])
+	const handleCloseAudit = useCallback(() => setAuditOpen(false), [])
+	const handleOpenNotes = useCallback(() => setNotesOpen(true), [])
+	const handleCloseNotes = useCallback(() => setNotesOpen(false), [])
 
 	const getViewUrl = (): Route =>
 		isSubRow && parentSlug
@@ -61,19 +68,19 @@ const RowAction = ({
 			{!isSubRow && (
 				<>
 					<Tooltip label='View activity log'>
-						<ActionIcon variant='subtle' onClick={() => setAuditOpen(true)}>
+						<ActionIcon variant='subtle' onClick={handleOpenAudit}>
 							<Icon icon='carbon:time' color={theme.other.colors.primary.allyGreen} />
 						</ActionIcon>
 					</Tooltip>
 					<Tooltip label='View internal notes'>
-						<ActionIcon variant='subtle' onClick={() => setNotesOpen(true)}>
+						<ActionIcon variant='subtle' onClick={handleOpenNotes}>
 							<Icon icon='carbon:notebook' color={theme.other.colors.primary.allyGreen} />
 						</ActionIcon>
 					</Tooltip>
 					{auditOpen && (
 						<AuditDrawer
 							opened={auditOpen}
-							onClose={() => setAuditOpen(false)}
+							onClose={handleCloseAudit}
 							recordId={row.id}
 							name={(row as RowItem).name}
 						/>
@@ -81,7 +88,7 @@ const RowAction = ({
 					{notesOpen && (
 						<InternalNotesDrawer
 							opened={notesOpen}
-							onClose={() => setNotesOpen(false)}
+							onClose={handleCloseNotes}
 							recordId={row.id}
 							name={(row as RowItem).name}
 						/>
@@ -91,6 +98,105 @@ const RowAction = ({
 		</Group>
 	)
 }
+
+/** Cell renderer for the 'actions' column - view/edit/audit/notes actions for a row. */
+const ActionsCell = ({ row, depth, parentRow }: DataTableCellContext<TableRow>) => (
+	<RowAction
+		row={row}
+		isSubRow={depth > 0}
+		parentSlug={depth > 0 ? (parentRow as RowItem | undefined)?.slug : undefined}
+	/>
+)
+
+interface NameCellProps extends DataTableCellContext<TableRow> {
+	variants: ReturnType<typeof useCustomVariant>
+}
+
+/** Cell renderer for the 'name' column - dims and flags unpublished orgs. */
+const NameCell = ({ value, row, depth, variants }: NameCellProps) => {
+	const isPublished = (row as RowItem).published
+	const textVariant = !isPublished ? variants.Text.utility4darkGray : variants.Text.utility4
+	return (
+		<Group gap={8} wrap='nowrap' pl={depth > 0 ? 0 : undefined}>
+			<Text variant={textVariant}>{value as string}</Text>
+			{!isPublished && <Icon icon='carbon:view-off' />}
+		</Group>
+	)
+}
+
+/** Cell renderer for the 'id' column. */
+const IdCell = ({ row }: DataTableCellContext<TableRow>) => <Text size='xs'>{row.id}</Text>
+
+interface LastVerifiedCellProps extends DataTableCellContext<TableRow> {
+	theme: MantineTheme
+}
+
+/** Cell renderer for the 'lastVerified' column - warns when a top-level org has never been verified. */
+const LastVerifiedCell = ({ value, depth, theme }: LastVerifiedCellProps) => {
+	if (depth > 0) {
+		return null
+	}
+	if (!value) {
+		return (
+			<Group gap={4} c={theme.other.colors.tertiary.red}>
+				<Icon icon='carbon:warning-filled' />
+				<span>Never</span>
+			</Group>
+		)
+	}
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
+/** Cell renderer shared by the 'updatedAt' and 'createdAt' columns. */
+const DateCell = ({ value }: DataTableCellContext<TableRow>) => {
+	if (!value) {
+		return null
+	}
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
+const getOrgTableSubRows = (row: TableRow): TableRow[] | undefined =>
+	(row as RowItem).locations as TableRow[] | undefined
+
+const getOrgTableRowStyle = (row: TableRow) => ({
+	textDecoration: (row as RowItem).deleted ? 'line-through' : undefined,
+})
+
+const publishedFilterLabel = (state: boolean | undefined): string => {
+	if (state) {
+		return 'Show only unpublished'
+	}
+	if (state === undefined) {
+		return 'Show only published'
+	}
+	return 'Show all'
+}
+
+const publishedFilterIcon = (state: boolean | undefined): string => {
+	if (state) {
+		return 'carbon:view-filled'
+	}
+	if (state === undefined) {
+		return 'carbon:view'
+	}
+	return 'carbon:view-off-filled'
+}
+
+const deletedFilterLabel = (state: boolean | undefined): string => {
+	if (state) {
+		return 'Show all'
+	}
+	if (state === undefined) {
+		return 'Hide deleted'
+	}
+	return 'Show deleted'
+}
+
+const deletedFilterIcon = (): string => 'carbon:trash-can'
+
+const isDeletedFilterExcluded = (state: boolean | undefined): boolean => state === false
 
 /**
  * The org directory's system-of-record table - publish status, verification date, deletion flag, and each
@@ -126,7 +232,7 @@ export const OrganizationTable = () => {
 				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
 				: undefined,
 			sorting: sorting.map(({ id, desc }) => ({
-				id: id as 'name' | 'lastVerified' | 'updatedAt' | 'createdAt',
+				id: id as SortableColumnId,
 				desc,
 			})),
 			take: pagination.pageSize,
@@ -149,29 +255,14 @@ export const OrganizationTable = () => {
 				enableGlobalFilter: false,
 				hideable: false,
 				accessorFn: () => undefined,
-				cell: ({ row, depth, parentRow }) => (
-					<RowAction
-						row={row}
-						isSubRow={depth > 0}
-						parentSlug={depth > 0 ? (parentRow as RowItem | undefined)?.slug : undefined}
-					/>
-				),
+				cell: ActionsCell,
 			},
 			{
 				id: 'name',
 				header: 'Name',
 				pin: 'left',
 				size: 280,
-				cell: ({ value, row, depth }) => {
-					const isPublished = (row as RowItem).published
-					const textVariant = !isPublished ? variants.Text.utility4darkGray : variants.Text.utility4
-					return (
-						<Group gap={8} wrap='nowrap' pl={depth > 0 ? 0 : undefined}>
-							<Text variant={textVariant}>{value as string}</Text>
-							{!isPublished && <Icon icon='carbon:view-off' />}
-						</Group>
-					)
-				},
+				cell: (ctx) => <NameCell {...ctx} variants={variants} />,
 			},
 			{
 				id: 'id',
@@ -179,54 +270,28 @@ export const OrganizationTable = () => {
 				size: 220,
 				hiddenByDefault: true,
 				enableSorting: false,
-				cell: ({ row }) => <Text size='xs'>{row.id}</Text>,
+				cell: IdCell,
 			},
 			{
 				id: 'lastVerified',
 				header: 'Verified',
 				size: 150,
 				filter: { type: 'date-range' },
-				cell: ({ value, depth }) => {
-					if (depth > 0) {
-						return null
-					}
-					if (!value) {
-						return (
-							<Group gap={4} c={theme.other.colors.tertiary.red}>
-								<Icon icon='carbon:warning-filled' />
-								<span>Never</span>
-							</Group>
-						)
-					}
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
+				cell: (ctx) => <LastVerifiedCell {...ctx} theme={theme} />,
 			},
 			{
 				id: 'updatedAt',
 				header: 'Updated',
 				size: 150,
 				filter: { type: 'date-range' },
-				cell: ({ value }) => {
-					if (!value) {
-						return null
-					}
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
+				cell: DateCell,
 			},
 			{
 				id: 'createdAt',
 				header: 'Created',
 				size: 150,
 				filter: { type: 'date-range' },
-				cell: ({ value }) => {
-					if (!value) {
-						return null
-					}
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
+				cell: DateCell,
 			},
 			{
 				id: 'published',
@@ -250,7 +315,7 @@ export const OrganizationTable = () => {
 		<DataTable
 			data={results as TableRow[]}
 			columns={columns}
-			getSubRows={(row) => (row as RowItem).locations as TableRow[] | undefined}
+			getSubRows={getOrgTableSubRows}
 			columnFilters={columnFilters}
 			onColumnFiltersChange={setColumnFilters}
 			sorting={sorting}
@@ -264,9 +329,7 @@ export const OrganizationTable = () => {
 			isLoading={isLoading}
 			isFetching={isFetching}
 			isError={isError}
-			getRowStyle={(row) => ({
-				textDecoration: (row as RowItem).deleted ? 'line-through' : undefined,
-			})}
+			getRowStyle={getOrgTableRowStyle}
 			toolbarExtra={
 				<>
 					<TableToolbarToggle
@@ -274,21 +337,17 @@ export const OrganizationTable = () => {
 						columnFilters={columnFilters}
 						setColumnFilters={setColumnFilters}
 						cycle={[undefined, true, false]}
-						label={(state) =>
-							state ? 'Show only unpublished' : state === undefined ? 'Show only published' : 'Show all'
-						}
-						icon={(state) =>
-							state ? 'carbon:view-filled' : state === undefined ? 'carbon:view' : 'carbon:view-off-filled'
-						}
+						label={publishedFilterLabel}
+						icon={publishedFilterIcon}
 					/>
 					<TableToolbarToggle
 						columnId='deleted'
 						columnFilters={columnFilters}
 						setColumnFilters={setColumnFilters}
 						cycle={[false, true, undefined]}
-						label={(state) => (state ? 'Show all' : state === undefined ? 'Hide deleted' : 'Show deleted')}
-						icon={() => 'carbon:trash-can'}
-						slash={(state) => state === false}
+						label={deletedFilterLabel}
+						icon={deletedFilterIcon}
+						slash={isDeletedFilterExcluded}
 					/>
 				</>
 			}

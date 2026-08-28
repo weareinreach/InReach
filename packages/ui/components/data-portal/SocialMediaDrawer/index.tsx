@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
+	type ComboboxItem,
+	type ComboboxLikeRenderOptionInput,
 	createPolymorphicComponent,
 	Drawer,
 	Group,
@@ -186,6 +188,18 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 			drawerHandler.close()
 		}, [drawerHandler, modalHandler, reset])
 
+		const renderServiceOption = useCallback(
+			({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+				const service = socialMediaServices?.find(({ value }) => value === option.value)
+				return (
+					<Group wrap='nowrap' gap={12}>
+						{service?.icon} {option.label}
+					</Group>
+				)
+			},
+			[socialMediaServices]
+		)
+
 		return (
 			<>
 				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
@@ -225,14 +239,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 											control={control}
 											data={socialMediaServices ?? []}
 											comboboxProps={{ zIndex: 10002 }}
-											renderOption={({ option }) => {
-												const service = socialMediaServices?.find(({ value }) => value === option.value)
-												return (
-													<Group wrap='nowrap' gap={12}>
-														{service?.icon} {option.label}
-													</Group>
-												)
-											}}
+											renderOption={renderServiceOption}
 										/>
 										<TextInput label='Website URL' required name='url' control={control} />
 										<TextInput label='Username/handle' required name='username' control={control} />

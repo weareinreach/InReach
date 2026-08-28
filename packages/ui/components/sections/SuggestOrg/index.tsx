@@ -16,6 +16,7 @@ import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
 import {
+	type ChangeEventHandler,
 	type Dispatch,
 	type FocusEventHandler,
 	type SetStateAction,
@@ -271,6 +272,63 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		modalHandler.close()
 	}, [modalHandler])
 
+	const handleOrgNameOptionSubmit = useCallback(
+		(value: string) => {
+			const item = orgAutocompleteOptions.find((option) => option.value === value)
+			if (item) {
+				setOrgNameInput(item.label)
+				form.setFieldValue('orgName', item.label)
+				handleInspectMatch(item.match)
+			}
+			orgNameCombobox.closeDropdown()
+		},
+		[orgAutocompleteOptions, form, orgNameCombobox, setOrgNameInput]
+	)
+
+	const handleOrgNameInputChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+		(event) => {
+			const val = event.currentTarget.value
+			setOrgNameInput(val)
+			form.setFieldValue('orgName', val)
+			orgNameCombobox.openDropdown()
+		},
+		[form, orgNameCombobox, setOrgNameInput]
+	)
+
+	const handleOrgNameInputFocus = useCallback(() => orgNameCombobox.openDropdown(), [orgNameCombobox])
+
+	const handleOrgNameInputBlur: FocusEventHandler<HTMLInputElement> = useCallback(
+		(event) => {
+			form.getInputProps('orgName').onBlur(event)
+			orgNameCombobox.closeDropdown()
+		},
+		[form, orgNameCombobox]
+	)
+
+	const handleAddressOptionSubmit = useCallback(
+		(value: string) => {
+			const item = addressAutocompleteOptions.find((option) => option.value === value)
+			if (item) {
+				setSearchLocation(item.value)
+				setPlaceId(item.placeId)
+			}
+			addressCombobox.closeDropdown()
+		},
+		[addressAutocompleteOptions, addressCombobox, setSearchLocation, setPlaceId]
+	)
+
+	const handleAddressInputChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+		(event) => {
+			setSearchLocation(event.currentTarget.value)
+			addressCombobox.openDropdown()
+		},
+		[addressCombobox, setSearchLocation]
+	)
+
+	const handleAddressInputFocus = useCallback(() => addressCombobox.openDropdown(), [addressCombobox])
+
+	const handleAddressInputBlur = useCallback(() => addressCombobox.closeDropdown(), [addressCombobox])
+
 	if (!mounted || loading) {
 		return null
 	}
@@ -306,18 +364,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						>
 							<Stack gap={0}>{countrySelections}</Stack>
 						</Radio.Group>
-						<Combobox
-							store={orgNameCombobox}
-							onOptionSubmit={(value) => {
-								const item = orgAutocompleteOptions.find((option) => option.value === value)
-								if (item) {
-									setOrgNameInput(item.label)
-									form.setFieldValue('orgName', item.label)
-									handleInspectMatch(item.match)
-								}
-								orgNameCombobox.closeDropdown()
-							}}
-						>
+						<Combobox store={orgNameCombobox} onOptionSubmit={handleOrgNameOptionSubmit}>
 							<Combobox.Target>
 								<TextInput
 									label={t('form.org-name')}
@@ -326,17 +373,9 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 									disabled={!countrySelected}
 									error={form.getInputProps('orgName').error}
 									value={orgNameInput}
-									onChange={(event) => {
-										const val = event.currentTarget.value
-										setOrgNameInput(val)
-										form.setFieldValue('orgName', val)
-										orgNameCombobox.openDropdown()
-									}}
-									onFocus={() => orgNameCombobox.openDropdown()}
-									onBlur={(event) => {
-										form.getInputProps('orgName').onBlur(event)
-										orgNameCombobox.closeDropdown()
-									}}
+									onChange={handleOrgNameInputChange}
+									onFocus={handleOrgNameInputFocus}
+									onBlur={handleOrgNameInputBlur}
 								/>
 							</Combobox.Target>
 							<Combobox.Dropdown>
@@ -388,17 +427,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 					<Divider />
 					<Stack gap={40}>
 						<Title order={2}>{t('body.additional-info')}</Title>
-						<Combobox
-							store={addressCombobox}
-							onOptionSubmit={(value) => {
-								const item = addressAutocompleteOptions.find((option) => option.value === value)
-								if (item) {
-									setSearchLocation(item.value)
-									setPlaceId(item.placeId)
-								}
-								addressCombobox.closeDropdown()
-							}}
-						>
+						<Combobox store={addressCombobox} onOptionSubmit={handleAddressOptionSubmit}>
 							<Combobox.Target>
 								<TextInput
 									label={t('form.org-address')}
@@ -407,12 +436,9 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 									disabled={!countrySelected}
 									autoComplete='off'
 									value={searchLocation}
-									onChange={(event) => {
-										setSearchLocation(event.currentTarget.value)
-										addressCombobox.openDropdown()
-									}}
-									onFocus={() => addressCombobox.openDropdown()}
-									onBlur={() => addressCombobox.closeDropdown()}
+									onChange={handleAddressInputChange}
+									onFocus={handleAddressInputFocus}
+									onBlur={handleAddressInputBlur}
 								/>
 							</Combobox.Target>
 							<Combobox.Dropdown>

@@ -5,16 +5,12 @@
 	cursor: pointer;
 }
 
-.modalSize {
-}
 @media (min-width: $mantine-breakpoint-sm) {
 	.modalSize {
 		min-width: 45rem !important;
 	}
 }
 
-.indicator {
-}
 @media (max-width: $mantine-breakpoint-sm) {
 	.indicator {
 		width: 0.5rem;

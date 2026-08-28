@@ -24,6 +24,8 @@ const customVariants = [
 
 type VariantClassNames = Partial<Record<'root' | 'inner' | 'label' | 'section', string>>
 
+const defaultBaseClasses: VariantClassNames = { root: classes.defaultRoot, inner: classes.defaultInner }
+
 const variantClassNames: Record<(typeof customVariants)[number], VariantClassNames> = {
 	primary: {
 		root: classes.primaryRoot,
@@ -71,11 +73,12 @@ export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'b
 		// override that applied unconditionally - that global default didn't survive the move to
 		// per-variant CSS Modules, so it's restored here explicitly rather than falling through to
 		// Mantine's own bare default (a green `filled` button, since `theme.primaryColor` is green).
-		const baseClasses = isCustom
-			? variantClassNames[props.variant as (typeof customVariants)[number]]
-			: props.variant === undefined
-				? { root: classes.defaultRoot, inner: classes.defaultInner }
-				: {}
+		let baseClasses: VariantClassNames = {}
+		if (isCustom) {
+			baseClasses = variantClassNames[props.variant as (typeof customVariants)[number]]
+		} else if (props.variant === undefined) {
+			baseClasses = defaultBaseClasses
+		}
 
 		const { children, variant, classNames, leftIcon, ...others } = props as MantineButtonProps & ButtonProps
 

@@ -1,6 +1,19 @@
-import { Checkbox, NumberInput, Radio, rem, ScrollArea, Select, Text, TextInput, Title } from '@mantine/core'
+import {
+	Checkbox,
+	type ComboboxItem,
+	type ComboboxLikeRenderOptionInput,
+	NumberInput,
+	type OptionsFilter,
+	Radio,
+	rem,
+	ScrollArea,
+	Select,
+	Text,
+	TextInput,
+	Title,
+} from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -9,6 +22,12 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useUserSurveyFormContext } from './context'
 import classes from './fields.module.css'
+
+/** Filters the country `Select`'s options by the current search text - needs nothing from component state. */
+const filterCountryOptions: OptionsFilter = ({ options, search }) => {
+	const query = search.toLowerCase().trim()
+	return options.filter((option) => 'label' in option && option.label.toLowerCase().includes(query))
+}
 
 export const TitleSubtitle = (t1: string, t2: string) => {
 	const variants = useCustomVariant()
@@ -116,22 +135,25 @@ export const FormCountry = () => {
 		}
 	}
 
+	const handleCountryRenderOption = useCallback(
+		({ option, checked }: ComboboxLikeRenderOptionInput<ComboboxItem>) => (
+			<div className={checked ? cx(classes.singleLine, classes.selected) : classes.singleLine}>
+				<Text variant={variants.Text.utility2} size='sm'>
+					{option.label}
+				</Text>
+				{checked && <Icon icon='carbon:checkmark-filled' height={rem(20)} className={classes.checkIcon} />}
+			</div>
+		),
+		[variants]
+	)
+
 	return (
 		<>
 			{TitleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 				<Select
 					placeholder={t('survey.question-2-placeholder') as string}
-					renderOption={({ option, checked }) => (
-						<div className={checked ? cx(classes.singleLine, classes.selected) : classes.singleLine}>
-							<Text variant={variants.Text.utility2} size='sm'>
-								{option.label}
-							</Text>
-							{checked && (
-								<Icon icon='carbon:checkmark-filled' height={rem(20)} className={classes.checkIcon} />
-							)}
-						</div>
-					)}
+					renderOption={handleCountryRenderOption}
 					leftSection={<Icon icon='carbon:search' />}
 					data={selectOptions}
 					searchable
@@ -142,10 +164,7 @@ export const FormCountry = () => {
 						option: { borderBottom: '1px solid #EAEAEA' },
 						section: { display: 'none' },
 					}}
-					filter={({ options, search }) => {
-						const query = search.toLowerCase().trim()
-						return options.filter((option) => 'label' in option && option.label.toLowerCase().includes(query))
-					}}
+					filter={filterCountryOptions}
 					onChange={handleCountrySelect}
 				/>
 			</ScrollArea>

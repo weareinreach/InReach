@@ -35,7 +35,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { type ApiInput, type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
@@ -128,6 +128,11 @@ const QuickLink = () => {
 			setOverlay(false)
 		}
 	}, [session, sessionStatus])
+	const handleTabChange = useCallback(
+		(value: string | null) => router.push(value as unknown as Route),
+		[router]
+	)
+
 	const handlePageChange = (page?: 'prev' | 'next' | number, loseChanges = false) => {
 		if (!page) return
 		setPageAction(page)
@@ -380,7 +385,7 @@ const QuickLink = () => {
 	})
 	return (
 		<>
-			<Tabs value={router.pathname} onChange={(value) => router.push(value as unknown as Route)}>
+			<Tabs value={router.pathname} onChange={handleTabChange}>
 				<Tabs.List>
 					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
 					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>

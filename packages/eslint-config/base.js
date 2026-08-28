@@ -9,7 +9,7 @@ const turboPlugin = require('eslint-plugin-turbo')
 const globals = require('globals')
 const tseslint = require('typescript-eslint')
 
-const path = require('path')
+const path = require('node:path')
 
 const tsconfigGlobs = [
 	path.join(__dirname, '../*/tsconfig.json'),
@@ -48,7 +48,7 @@ const config = tseslint.config(
 			node: { version: '>=24.0.0' },
 			'import-x/cache': { lifetime: 60 },
 			'import-x/extensions': ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.mts', '.tsx'],
-			'import-x/internal-regex': '^(?:(?:@weareinreach\\/)|(?:~\\w*\\/)).*',
+			'import-x/internal-regex': String.raw`^(?:(?:@weareinreach\/)|(?:~\w*\/)).*`,
 			'import-x/resolver-next': [
 				createTypeScriptImportResolver({ alwaysTryTypes: true, project: tsconfigGlobs }),
 			],

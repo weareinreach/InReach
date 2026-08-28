@@ -36,12 +36,16 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 
 	useEffect(() => {
 		const container = containerRef.current
-		if (!container) return
+		if (!container) {
+			return
+		}
 
 		const observer = new ResizeObserver((entries) => {
 			// Standard guard clause for the first entry
 			const entry = entries[0]
-			if (!entry) return
+			if (!entry) {
+				return
+			}
 
 			setContainerWidth(entry.contentRect.width)
 		})
@@ -53,14 +57,18 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 	useLayoutEffect(() => {
 		let changed = false
 		for (const [id, el] of Object.entries(itemRefs.current)) {
-			if (!el) continue
+			if (!el) {
+				continue
+			}
 			const width = el.getBoundingClientRect().width
 			if (width && widthsRef.current[id] !== width) {
 				widthsRef.current[id] = width
 				changed = true
 			}
 		}
-		if (changed) setWidthsVersion((version) => version + 1)
+		if (changed) {
+			setWidthsVersion((version) => version + 1)
+		}
 	})
 
 	const setItemRef = useCallback(

@@ -17,8 +17,8 @@ import pixelmatch from 'pixelmatch'
 import { chromium, type Page } from 'playwright'
 import { PNG } from 'pngjs'
 
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
-import { join } from 'path'
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
 
 import { fetchStories, sharedStoryIds } from './lib/storybook-index'
 
@@ -91,7 +91,9 @@ const main = async () => {
 	const args = parseArgs()
 	console.log(`Baseline:  ${args.baseUrl}`)
 	console.log(`Compare:   ${args.compareUrl}`)
-	if (args.filter) console.log(`Filter:    "${args.filter}"`)
+	if (args.filter) {
+		console.log(`Filter:    "${args.filter}"`)
+	}
 	console.log()
 
 	const [baseStories, compareStories] = await Promise.all([
@@ -122,7 +124,8 @@ const main = async () => {
 		const pageBase = await context.newPage()
 		const pageCompare = await context.newPage()
 		while (cursor < sharedIds.length) {
-			const id = sharedIds[cursor++] as string
+			const id = sharedIds[cursor] as string
+			cursor++
 			const [bufBase, bufCompare] = await Promise.all([
 				screenshotStory(pageBase, args.baseUrl, id),
 				screenshotStory(pageCompare, args.compareUrl, id),
@@ -133,7 +136,7 @@ const main = async () => {
 			}
 			const { diffPercent, diffPng } = diffPngs(bufBase, bufCompare)
 			const story = compareById.get(id)
-			results.push({ id, title: story?.title ?? id, name: story?.name ?? id, diffPercent })
+			results.push({ id, diffPercent, title: story?.title ?? id, name: story?.name ?? id })
 			if (diffPercent >= args.saveThreshold) {
 				writeFileSync(join(args.outDir, `${id}.base.png`), bufBase)
 				writeFileSync(join(args.outDir, `${id}.compare.png`), bufCompare)

@@ -13,7 +13,7 @@ WHERE proname IN (
   'organization_touch_enable',
   'organization_touch_disable'
 )
-ORDER BY proname;
+ORDER BY proname ASC;
 
 -- 3. Confirm the trigger is attached to all 25 tables (should return exactly 25 rows)
 SELECT tgrelid::regclass::text AS table_name

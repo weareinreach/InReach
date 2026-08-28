@@ -14,8 +14,6 @@
 	}
 }
 
-.iconContainer {
-}
 @media (min-width: $mantine-breakpoint-sm) {
 	.iconContainer {
 		min-width: fit-content;

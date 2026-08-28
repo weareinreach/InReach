@@ -1,4 +1,11 @@
-import { Group, Select as MantineSelect, Stack, Text } from '@mantine/core'
+import {
+	type ComboboxItem,
+	type ComboboxLikeRenderOptionInput,
+	Group,
+	Select as MantineSelect,
+	Stack,
+	Text,
+} from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
 import { useCallback, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -105,6 +112,10 @@ const renderGeoOption = (flag: string | undefined, label: string) => (
 	</Group>
 )
 
+/** Shared `renderOption` for geo `Select`s that never show a flag (secondary/tertiary district pickers). */
+const renderGeoOptionWithoutFlag = ({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) =>
+	renderGeoOption(undefined, option.label)
+
 const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 	// const { control } = useFormContext<FormSchema>()
 	const { t } = useTranslation(['country', 'gov-dist'])
@@ -135,6 +146,14 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 	})
 	const primaryList = countryOnly ? countryList : distByCountryList
 
+	const handlePrimaryRenderOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+			const item = primaryList?.find(({ value }) => value === option.value)
+			return renderGeoOption(item?.flag, option.label)
+		},
+		[primaryList]
+	)
+
 	if (!primaryList && !countries.isSuccess) {
 		return <>Loading...</>
 	}
@@ -146,10 +165,7 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					searchable
 					searchValue={primarySearch ?? undefined}
 					onSearchChange={setPrimarySearch}
-					renderOption={({ option }) => {
-						const item = primaryList.find(({ value }) => value === option.value)
-						return renderGeoOption(item?.flag, option.label)
-					}}
+					renderOption={handlePrimaryRenderOption}
 					// control={control}
 					name='countryId'
 				/>
@@ -163,7 +179,7 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					searchable
 					searchValue={secondarySearch ?? undefined}
 					onSearchChange={setSecondarySearch}
-					renderOption={({ option }) => renderGeoOption(undefined, option.label)}
+					renderOption={renderGeoOptionWithoutFlag}
 					// control={control}
 					name='govDistId'
 					// {...form.getInputProps('supplement.govDistId')}
@@ -178,7 +194,7 @@ const SuppGeo = ({ countryOnly }: SuppGeoProps) => {
 					searchable
 					searchValue={tertiarySearch ?? undefined}
 					onSearchChange={setTertiarySearch}
-					renderOption={({ option }) => renderGeoOption(undefined, option.label)}
+					renderOption={renderGeoOptionWithoutFlag}
 					// {...form.getInputProps('supplement.subDistId')}
 				/>
 			)}

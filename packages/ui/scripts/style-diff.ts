@@ -14,7 +14,7 @@
 //   pnpm style-diff [--base http://localhost:6007] [--compare http://localhost:6006]
 //                    [--filter "Design System"]
 
-import { chromium, type Page } from 'playwright'
+import { type Browser, chromium, type Page } from 'playwright'
 
 import { fetchStories, sharedStoryIds } from './lib/storybook-index'
 
@@ -82,7 +82,9 @@ interface ElementSnapshot {
 // Runs inside the browser page - must be a plain, serializable function (no outer closures).
 const extractSnapshot = (properties: string[]): ElementSnapshot[] => {
 	const root = document.getElementById('storybook-root')
-	if (!root) return []
+	if (!root) {
+		return []
+	}
 	// Mantine 9 injects <style> tags directly inside the render root (Mantine 6 injected them into
 	// <head> via Emotion instead) - exclude non-visual tags so they don't shift element alignment.
 	const NON_VISUAL_TAGS = new Set(['style', 'script', 'link'])
@@ -113,7 +115,9 @@ const normalizeLengthValue = (value: string): string =>
 		.split(' ')
 		.map((token) => {
 			const match = /^(-?\d+(?:\.\d+)?)px$/.exec(token)
-			if (!match?.[1]) return token
+			if (!match?.[1]) {
+				return token
+			}
 			return `${Math.round(Number(match[1]))}px`
 		})
 		.join(' ')
@@ -162,14 +166,14 @@ const alignByLcs = (
 	const n = baseKeys.length
 	const m = compareKeys.length
 	const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0))
-	for (let i = 1; i <= n; i++) {
-		for (let j = 1; j <= m; j++) {
-			const row = dp[i] as number[]
-			const prevRow = dp[i - 1] as number[]
-			row[j] =
-				baseKeys[i - 1] === compareKeys[j - 1]
-					? (prevRow[j - 1] as number) + 1
-					: Math.max(prevRow[j] as number, row[j - 1] as number)
+	for (let rowIdx = 1; rowIdx <= n; rowIdx++) {
+		for (let colIdx = 1; colIdx <= m; colIdx++) {
+			const row = dp[rowIdx] as number[]
+			const prevRow = dp[rowIdx - 1] as number[]
+			row[colIdx] =
+				baseKeys[rowIdx - 1] === compareKeys[colIdx - 1]
+					? (prevRow[colIdx - 1] as number) + 1
+					: Math.max(prevRow[colIdx] as number, row[colIdx - 1] as number)
 		}
 	}
 	const pairs: { baseIndex: number; compareIndex: number }[] = []
@@ -180,10 +184,17 @@ const alignByLcs = (
 			pairs.push({ baseIndex: i - 1, compareIndex: j - 1 })
 			i--
 			j--
-		} else if ((dp[i - 1] as number[])[j]! >= (dp[i] as number[])[j - 1]!) {
-			i--
 		} else {
-			j--
+			const up = (dp[i - 1] as number[])[j]
+			const left = (dp[i] as number[])[j - 1]
+			if (up === undefined || left === undefined) {
+				throw new Error('alignByLcs: DP table index out of bounds - this should never happen')
+			}
+			if (up >= left) {
+				i--
+			} else {
+				j--
+			}
 		}
 	}
 	pairs.reverse()
@@ -256,30 +267,22 @@ const compareSnapshots = (
 	}
 }
 
-const main = async () => {
-	const args = parseArgs()
+const printRunHeader = (args: Args): void => {
 	console.log(`Baseline:  ${args.baseUrl}`)
 	console.log(`Compare:   ${args.compareUrl}`)
-	if (args.filter) console.log(`Filter:    "${args.filter}"`)
+	if (args.filter) {
+		console.log(`Filter:    "${args.filter}"`)
+	}
 	console.log()
+}
 
-	const [baseStories, compareStories] = await Promise.all([
-		fetchStories(args.baseUrl),
-		fetchStories(args.compareUrl),
-	])
-	const { sharedIds, onlyInCompare, onlyInBase, compareById } = sharedStoryIds(
-		baseStories,
-		compareStories,
-		args.filter
-	)
-
-	console.log(
-		`${sharedIds.length} shared stories to compare, ${onlyInCompare.length} new, ${onlyInBase.length} removed\n`
-	)
-
-	const browser = await chromium.launch()
+const collectStoryDiffs = async (
+	browser: Browser,
+	sharedIds: string[],
+	args: Args,
+	compareById: Map<string, { title: string; name: string }>
+): Promise<StoryDiff[]> => {
 	const results: StoryDiff[] = []
-
 	let cursor = 0
 	let done = 0
 	const worker = async () => {
@@ -287,7 +290,8 @@ const main = async () => {
 		const pageBase = await context.newPage()
 		const pageCompare = await context.newPage()
 		while (cursor < sharedIds.length) {
-			const id = sharedIds[cursor++] as string
+			const id = sharedIds[cursor] as string
+			cursor++
 			const [base, compare] = await Promise.all([
 				snapshotStory(pageBase, args.baseUrl, id),
 				snapshotStory(pageCompare, args.compareUrl, id),
@@ -305,6 +309,70 @@ const main = async () => {
 	}
 
 	await Promise.all(Array.from({ length: Math.max(1, args.concurrency) }, () => worker()))
+	return results
+}
+
+const printStructureDivergence = (r: StoryDiff): void => {
+	console.log(
+		`  ! DOM structure diverges: ${r.baseCount} elements (baseline) vs ${r.compareCount} elements (compare)`
+	)
+	for (const el of r.removed) {
+		const textSuffix = el.text ? ` "${el.text}"` : ''
+		console.log(`    - removed (baseline only): <${el.tag}>${textSuffix}`)
+	}
+	for (const el of r.added) {
+		const textSuffix = el.text ? ` "${el.text}"` : ''
+		console.log(`    + added (compare only): <${el.tag}>${textSuffix}`)
+	}
+}
+
+const printStoryDiff = (r: StoryDiff): void => {
+	if (r.changes.length === 0 && !r.structureDiverges) {
+		return
+	}
+	console.log(`${r.title} › ${r.name}  (${r.id})`)
+	if (r.structureDiverges) {
+		printStructureDivergence(r)
+	}
+	for (const c of r.changes) {
+		const textSuffix = c.text ? ` "${c.text}"` : ''
+		console.log(`  <${c.tag}>${textSuffix} [#${c.index}]  ${c.property}:`)
+		console.log(`      ${c.before}  ->  ${c.after}`)
+	}
+	console.log()
+}
+
+const printSkippedStories = (onlyInCompare: string[], onlyInBase: string[]): void => {
+	if (onlyInCompare.length) {
+		console.log(`New stories (not in baseline, skipped):`)
+		onlyInCompare.forEach((id) => console.log(`  + ${id}`))
+	}
+	if (onlyInBase.length) {
+		console.log(`Removed stories (in baseline, not in current, skipped):`)
+		onlyInBase.forEach((id) => console.log(`  - ${id}`))
+	}
+}
+
+const main = async () => {
+	const args = parseArgs()
+	printRunHeader(args)
+
+	const [baseStories, compareStories] = await Promise.all([
+		fetchStories(args.baseUrl),
+		fetchStories(args.compareUrl),
+	])
+	const { sharedIds, onlyInCompare, onlyInBase, compareById } = sharedStoryIds(
+		baseStories,
+		compareStories,
+		args.filter
+	)
+
+	console.log(
+		`${sharedIds.length} shared stories to compare, ${onlyInCompare.length} new, ${onlyInBase.length} removed\n`
+	)
+
+	const browser = await chromium.launch()
+	const results = await collectStoryDiffs(browser, sharedIds, args, compareById)
 	await browser.close()
 
 	results.sort((a, b) => b.changes.length - a.changes.length)
@@ -314,34 +382,10 @@ const main = async () => {
 	console.log(`${changed.length} / ${results.length} stories have at least one computed-style difference\n`)
 
 	for (const r of results) {
-		if (r.changes.length === 0 && !r.structureDiverges) continue
-		console.log(`${r.title} › ${r.name}  (${r.id})`)
-		if (r.structureDiverges) {
-			console.log(
-				`  ! DOM structure diverges: ${r.baseCount} elements (baseline) vs ${r.compareCount} elements (compare)`
-			)
-			for (const el of r.removed) {
-				console.log(`    - removed (baseline only): <${el.tag}>${el.text ? ` "${el.text}"` : ''}`)
-			}
-			for (const el of r.added) {
-				console.log(`    + added (compare only): <${el.tag}>${el.text ? ` "${el.text}"` : ''}`)
-			}
-		}
-		for (const c of r.changes) {
-			console.log(`  <${c.tag}>${c.text ? ` "${c.text}"` : ''} [#${c.index}]  ${c.property}:`)
-			console.log(`      ${c.before}  ->  ${c.after}`)
-		}
-		console.log()
+		printStoryDiff(r)
 	}
 
-	if (onlyInCompare.length) {
-		console.log(`New stories (not in baseline, skipped):`)
-		onlyInCompare.forEach((id) => console.log(`  + ${id}`))
-	}
-	if (onlyInBase.length) {
-		console.log(`Removed stories (in baseline, not in current, skipped):`)
-		onlyInBase.forEach((id) => console.log(`  - ${id}`))
-	}
+	printSkippedStories(onlyInCompare, onlyInBase)
 
 	process.exitCode = changed.length > 0 ? 1 : 0
 }

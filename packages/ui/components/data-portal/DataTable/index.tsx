@@ -26,7 +26,7 @@ import {
 	type SortingState,
 	useReactTable,
 } from '@tanstack/react-table'
-import { type CSSProperties, type ReactNode, useMemo, useState } from 'react'
+import { type CSSProperties, type KeyboardEvent, type ReactNode, useCallback, useMemo, useState } from 'react'
 
 import { Icon } from '~ui/icon'
 
@@ -35,7 +35,7 @@ import classes from './DataTable.module.css'
 import { type DataTableColumn, type DataTableDataMode, type DataTableFilterValue } from './types'
 import { applyColumnFilters, applyGlobalFilter, applySorting, getColumnValue } from './utils'
 
-export type { DataTableColumn, DataTableFilter } from './types'
+export type { DataTableCellContext, DataTableColumn, DataTableFilter } from './types'
 export type {
 	ColumnFiltersState as DataTableColumnFiltersState,
 	PaginationState as DataTablePaginationState,
@@ -44,6 +44,20 @@ export type {
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [25, 50, 100]
 const DEFAULT_PIN_WIDTH = 120
+/** How many pixels a keyboard-driven resize (arrow keys on the resize handle) moves per keypress. */
+const KEYBOARD_RESIZE_STEP = 10
+const MIN_COLUMN_WIDTH = 40
+
+/** No closure needed - a plain module-scope helper instead of an inline arrow in the JSX prop. */
+const stopPropagation = (event: { stopPropagation: () => void }) => event.stopPropagation()
+
+/**
+ * Curried so `onClick={toggleColumnVisibility(col)}` calls `col.toggleVisibility()` with no arguments -
+ * `toggleVisibility` takes an optional `boolean`, so passing it directly as the click handler
+ * (`onClick={col.toggleVisibility}`) would call it with the click `MouseEvent` as that argument, which is
+ * truthy and would always force visibility on instead of toggling it.
+ */
+const toggleColumnVisibility = (column: { toggleVisibility: () => void }) => () => column.toggleVisibility()
 
 export interface DataTableProps<T> {
 	data: T[]
@@ -178,6 +192,52 @@ export const DataTable = <T,>({
 
 	const pageCount = Math.max(1, Math.ceil(rowCount / pagination.pageSize))
 
+	// Extracted (rather than inlined in the JSX below) so the filter-recomputation logic isn't
+	// nested 5 levels deep (component > header row map > header map > Popover > onChange).
+	const handleColumnFilterChange = useCallback(
+		(columnId: string) => (value: DataTableFilterValue | undefined) => {
+			const rest = columnFilters.filter((f) => f.id !== columnId)
+			onColumnFiltersChange(value === undefined ? rest : [...rest, { id: columnId, value }])
+		},
+		[columnFilters, onColumnFiltersChange]
+	)
+
+	const handleGlobalFilterChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => onGlobalFilterChange(event.currentTarget.value),
+		[onGlobalFilterChange]
+	)
+
+	const handlePageSizeChange = useCallback(
+		(value: string | null) => {
+			if (value) {
+				onPaginationChange({ pageIndex: 0, pageSize: Number(value) })
+			}
+		},
+		[onPaginationChange]
+	)
+
+	const handlePageChange = useCallback(
+		(page: number) => onPaginationChange({ ...pagination, pageIndex: page - 1 }),
+		[onPaginationChange, pagination]
+	)
+
+	// Keyboard equivalent of dragging the resize handle - `getResizeHandler()` only wires up
+	// mouse/touch, so this is the sole way a keyboard user can resize a column.
+	const handleResizeKeyDown = useCallback(
+		(columnId: string, currentSize: number) => (event: KeyboardEvent<HTMLDivElement>) => {
+			if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+				return
+			}
+			event.preventDefault()
+			const delta = event.key === 'ArrowLeft' ? -KEYBOARD_RESIZE_STEP : KEYBOARD_RESIZE_STEP
+			setColumnSizing((prev) => ({
+				...prev,
+				[columnId]: Math.max(MIN_COLUMN_WIDTH, currentSize + delta),
+			}))
+		},
+		[]
+	)
+
 	const table = useReactTable({
 		data: pageRows,
 		columns: tanstackColumns,
@@ -185,11 +245,9 @@ export const DataTable = <T,>({
 		manualSorting: true,
 		manualFiltering: true,
 		manualPagination: true,
-		pageCount,
 		enableColumnResizing: true,
 		columnResizeMode: 'onChange',
 		getRowId: getRowId ? (row, index) => getRowId(row, index) : undefined,
-		getSubRows,
 		getCoreRowModel: getCoreRowModel(),
 		getExpandedRowModel: getSubRows ? getExpandedRowModel() : undefined,
 		onSortingChange: (updater) => onSortingChange(typeof updater === 'function' ? updater(sorting) : updater),
@@ -202,6 +260,8 @@ export const DataTable = <T,>({
 		onColumnVisibilityChange: setColumnVisibility,
 		onExpandedChange: setExpanded,
 		onColumnSizingChange: setColumnSizing,
+		pageCount,
+		getSubRows,
 	})
 
 	const leafColumns = table.getVisibleLeafColumns()
@@ -245,7 +305,7 @@ export const DataTable = <T,>({
 					<TextInput
 						placeholder={globalFilterPlaceholder}
 						value={globalFilter}
-						onChange={(event) => onGlobalFilterChange(event.currentTarget.value)}
+						onChange={handleGlobalFilterChange}
 						leftSection={<Icon icon='carbon:search' height={16} />}
 						w={280}
 					/>
@@ -268,7 +328,7 @@ export const DataTable = <T,>({
 										return (
 											<Menu.Item
 												key={col.id}
-												onClick={() => col.toggleVisibility()}
+												onClick={toggleColumnVisibility(col)}
 												leftSection={
 													<Icon icon={col.getIsVisible() ? 'carbon:checkbox-checked' : 'carbon:checkbox'} />
 												}
@@ -294,6 +354,15 @@ export const DataTable = <T,>({
 								{headerGroup.headers.map((header) => {
 									const columnDef = columns.find((c) => c.id === header.column.id)
 									const activeFilter = columnFilters.find((f) => f.id === header.column.id)
+									const sortDirection = header.column.getIsSorted()
+									const sortIcon =
+										sortDirection === 'desc'
+											? 'carbon:chevron-down'
+											: sortDirection === 'asc'
+												? 'carbon:chevron-up'
+												: 'carbon:chevron-sort'
+									const resizeLabel =
+										typeof columnDef?.header === 'string' ? columnDef.header : header.column.id
 									return (
 										<Table.Th
 											key={header.id}
@@ -315,17 +384,9 @@ export const DataTable = <T,>({
 												</Text>
 												{header.column.getCanSort() && (
 													<Icon
-														icon={
-															header.column.getIsSorted() === 'desc'
-																? 'carbon:chevron-down'
-																: header.column.getIsSorted() === 'asc'
-																	? 'carbon:chevron-up'
-																	: 'carbon:chevron-sort'
-														}
+														icon={sortIcon}
 														height={14}
-														color={
-															header.column.getIsSorted() ? undefined : theme.other.colors.secondary.darkGray
-														}
+														color={sortDirection ? undefined : theme.other.colors.secondary.darkGray}
 														onClick={header.column.getToggleSortingHandler()}
 														className={classes.sortable}
 													/>
@@ -346,12 +407,7 @@ export const DataTable = <T,>({
 																label={typeof columnDef.header === 'string' ? columnDef.header : columnDef.id}
 																filter={columnDef.filter}
 																value={activeFilter?.value as DataTableFilterValue | undefined}
-																onChange={(value) => {
-																	const rest = columnFilters.filter((f) => f.id !== columnDef.id)
-																	onColumnFiltersChange(
-																		value === undefined ? rest : [...rest, { id: columnDef.id, value }]
-																	)
-																}}
+																onChange={handleColumnFilterChange(columnDef.id)}
 															/>
 														</Popover.Dropdown>
 													</Popover>
@@ -360,7 +416,13 @@ export const DataTable = <T,>({
 											<div
 												onMouseDown={header.getResizeHandler()}
 												onTouchStart={header.getResizeHandler()}
-												onClick={(event) => event.stopPropagation()}
+												onClick={stopPropagation}
+												onKeyDown={handleResizeKeyDown(header.column.id, header.column.getSize())}
+												role='separator'
+												aria-orientation='vertical'
+												aria-label={`Resize ${resizeLabel} column`}
+												aria-valuenow={header.column.getSize()}
+												tabIndex={0}
 												className={classes.resizer}
 												data-resizing={header.column.getIsResizing() || undefined}
 											/>
@@ -440,7 +502,7 @@ export const DataTable = <T,>({
 							<Select
 								aria-label='Rows per page'
 								value={String(pagination.pageSize)}
-								onChange={(value) => value && onPaginationChange({ pageIndex: 0, pageSize: Number(value) })}
+								onChange={handlePageSizeChange}
 								data={pageSizeOptions.map((size) => ({ value: String(size), label: String(size) }))}
 								size='xs'
 								w={70}
@@ -449,7 +511,7 @@ export const DataTable = <T,>({
 						</Group>
 						<Pagination
 							value={pagination.pageIndex + 1}
-							onChange={(page) => onPaginationChange({ ...pagination, pageIndex: page - 1 })}
+							onChange={handlePageChange}
 							total={pageCount}
 							size='sm'
 						/>

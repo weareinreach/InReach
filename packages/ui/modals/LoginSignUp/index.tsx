@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next/pages'
 import { type Route } from 'nextjs-routes'
-import { forwardRef, type MouseEvent, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { type LiteralUnion } from 'type-fest'
 import { z } from 'zod'
 
@@ -94,8 +94,7 @@ const RichTranslate = ({ stateSetter, handler, ...props }: RichTranslateProps) =
 						variant='secondary-icon'
 						onClick={
 							stateSetter
-								? (e: MouseEvent<HTMLButtonElement>) =>
-										stateSetter(e.currentTarget.getAttribute('data-option'))
+								? (e: MouseEvent<HTMLButtonElement>) => stateSetter(e.currentTarget.dataset.option ?? null)
 								: undefined
 						}
 					>
@@ -207,11 +206,11 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 		<RichTranslate i18nKey='sign-up.modal-body-temp' stateSetter={userTypeChange} handler={handler} />
 	)
 
-	const submitHandler = () => {
+	const submitHandler = useCallback(() => {
 		if (form.isValid()) {
 			signUpAction.mutate(form.values)
 		}
-	}
+	}, [form, signUpAction])
 
 	const signUpButton = (
 		<>

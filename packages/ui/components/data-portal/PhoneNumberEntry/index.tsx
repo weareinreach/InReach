@@ -1,6 +1,7 @@
 import {
 	type ComboboxItem,
 	type ComboboxItemGroup,
+	type ComboboxLikeRenderOptionInput,
 	Group,
 	Select,
 	type SelectProps,
@@ -9,7 +10,7 @@ import {
 	type TextInputProps,
 } from '@mantine/core'
 import { AsYouType, type CountryCode } from 'libphonenumber-js'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import PhoneInput, { parsePhoneNumber, type Props as PhoneInputProps } from 'react-phone-number-input/input'
 import { type SetOptional } from 'type-fest'
 
@@ -121,17 +122,22 @@ export const PhoneNumberEntry = ({
 		}))
 	}, [countryList])
 
+	const renderCountryOption = useCallback(
+		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
+			const country = countryList.find(({ value }) => value === option.value)
+			return (
+				<Group w='100%'>
+					<Text>{`${option.label} ${country?.data.name ?? ''}`}</Text>
+				</Group>
+			)
+		},
+		[countryList]
+	)
+
 	const countrySelection = (
 		<Select
 			data={groupedCountryData}
-			renderOption={({ option }) => {
-				const country = countryList.find(({ value }) => value === option.value)
-				return (
-					<Group w='100%'>
-						<Text>{`${option.label} ${country?.data.name ?? ''}`}</Text>
-					</Group>
-				)
-			}}
+			renderOption={renderCountryOption}
 			classNames={countrySelectClasses}
 			clearable
 			// Mantine 9's default `Select` renders the clear button *and* the dropdown chevron

@@ -1,11 +1,20 @@
-import { ActionIcon, Badge, Group, Switch, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import {
+	ActionIcon,
+	Badge,
+	Group,
+	type MantineTheme,
+	Switch,
+	Text,
+	Tooltip,
+	useMantineTheme,
+} from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
 import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
@@ -17,6 +26,172 @@ import { DataTable, type DataTableColumn } from './DataTable'
 import { TableToolbarToggle } from './TableToolbarToggle'
 
 type ReviewRecord = ApiOutput['review']['forReviewTable']['results'][number]
+type ReviewSortColumn = 'createdAt' | 'rating' | 'reviewText' | 'userName' | 'userEmail' | 'organization'
+
+const getReviewTargetUrl = (row: ReviewRecord): Route => {
+	const org = row.organization
+	const location = row.orgLocation
+	return location && org
+		? {
+				pathname: '/org/[slug]/[orgLocationId]',
+				query: { slug: org.slug, orgLocationId: location.id },
+			}
+		: { pathname: '/org/[slug]', query: { slug: org?.slug || '' } }
+}
+
+interface ActionsCellProps {
+	row: ReviewRecord
+	theme: MantineTheme
+	isManagerOrHigher: boolean
+	onDelete: (vars: { id: string }) => void
+	onUndelete: (vars: { id: string }) => void
+}
+
+const ActionsCell = ({ row, theme, isManagerOrHigher, onDelete, onUndelete }: ActionsCellProps) => {
+	const isDeleted = row.deleted
+
+	return (
+		<Group wrap='nowrap' gap={8}>
+			<Tooltip label='View Target'>
+				<ActionIcon variant='subtle' component={Link} href={getReviewTargetUrl(row)} target='_blank'>
+					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+			{isManagerOrHigher && (
+				<Tooltip label={isDeleted ? 'Undelete Review' : 'Delete Review'}>
+					<ActionIcon
+						onClick={() => {
+							if (isDeleted) {
+								onUndelete({ id: row.id })
+							} else {
+								onDelete({ id: row.id })
+							}
+						}}
+						variant='subtle'
+						size='sm'
+					>
+						<Icon
+							icon={isDeleted ? 'carbon:undo' : 'carbon:trash-can'}
+							color={isDeleted ? theme.other.colors.primary.allyGreen : theme.other.colors.tertiary.red}
+						/>
+					</ActionIcon>
+				</Tooltip>
+			)}
+		</Group>
+	)
+}
+
+const IdCell = ({ row }: { row: ReviewRecord }) => (
+	<Text size='xs' ff='monospace'>
+		{row.id}
+	</Text>
+)
+
+const UserNameCell = ({ value }: { value: unknown }) => (
+	<Text size='sm' fw={500} style={{ whiteSpace: 'nowrap' }}>
+		{value as string}
+	</Text>
+)
+
+const UserEmailCell = ({ value }: { value: unknown }) => (
+	<Text size='sm' style={{ whiteSpace: 'nowrap' }}>
+		{value as string}
+	</Text>
+)
+
+const RatingCell = ({ value }: { value: unknown }) => {
+	const rating = value as number | null
+	return rating ? (
+		<Text size='sm' fw={500}>
+			⭐ {rating}/5
+		</Text>
+	) : (
+		<Text size='sm'>No Rating</Text>
+	)
+}
+
+interface ReviewTextCellProps {
+	row: ReviewRecord
+	value: unknown
+	variants: ReturnType<typeof useCustomVariant>
+}
+
+const ReviewTextCell = ({ row, value, variants }: ReviewTextCellProps) => {
+	const isHiddenOrDeleted = !row.visible || row.deleted
+	return (
+		<Text
+			size='sm'
+			lineClamp={2}
+			variant={isHiddenOrDeleted ? variants.Text.utility4darkGray : variants.Text.utility4}
+		>
+			{(value as string) || 'No review text provided.'}
+		</Text>
+	)
+}
+
+interface VisibleCellProps {
+	row: ReviewRecord
+	onToggle: (id: string, currentVisible: boolean) => void
+}
+
+const VisibleCell = ({ row, onToggle }: VisibleCellProps) => {
+	const handleChange = useCallback(() => {
+		void onToggle(row.id, row.visible)
+	}, [onToggle, row.id, row.visible])
+
+	return <Switch checked={row.visible} onChange={handleChange} size='sm' />
+}
+
+const StatusCell = ({ row }: { row: ReviewRecord }) => {
+	const isHidden = !row.visible
+	const isDeleted = row.deleted
+	return (
+		<Group gap={4}>
+			{isHidden && (
+				<Badge color='yellow' variant='filled'>
+					Hidden
+				</Badge>
+			)}
+			{isDeleted && (
+				<Badge color='red' variant='filled'>
+					Deleted
+				</Badge>
+			)}
+			{!isHidden && !isDeleted && (
+				<Badge color='green' variant='outline'>
+					Active
+				</Badge>
+			)}
+		</Group>
+	)
+}
+
+const CreatedAtCell = ({ value }: { value: unknown }) => {
+	const date = DateTime.fromJSDate(value as Date)
+	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+}
+
+const getVisibleFilterLabel = (state: boolean | undefined) => {
+	if (state) return 'Show only hidden reviews'
+	if (state === undefined) return 'Show only visible reviews'
+	return 'Show all reviews'
+}
+
+const getVisibleFilterIcon = (state: boolean | undefined) => {
+	if (state) return 'carbon:view-filled'
+	if (state === undefined) return 'carbon:view'
+	return 'carbon:view-off-filled'
+}
+
+const getDeletedFilterLabel = (state: boolean | undefined) => {
+	if (state) return 'Show all reviews'
+	if (state === undefined) return 'Hide deleted reviews'
+	return 'Show deleted reviews'
+}
+
+const getDeletedFilterIcon = () => 'carbon:trash-can'
+
+const isDeletedFilterSlashed = (state: boolean | undefined) => state === false
 
 export const ReviewTable = () => {
 	const variants = useCustomVariant()
@@ -73,7 +248,7 @@ export const ReviewTable = () => {
 				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
 				: undefined,
 			sorting: sorting.map(({ id, desc }) => ({
-				id: id as 'createdAt' | 'rating' | 'reviewText' | 'userName' | 'userEmail' | 'organization',
+				id: id as ReviewSortColumn,
 				desc,
 			})),
 			take: pagination.pageSize,
@@ -93,51 +268,15 @@ export const ReviewTable = () => {
 				enableGlobalFilter: false,
 				hideable: false,
 				accessorFn: () => undefined,
-				cell: ({ row }) => {
-					const org = row.organization
-					const location = row.orgLocation
-					const isDeleted = row.deleted
-
-					const getViewUrl = (): Route =>
-						location && org
-							? {
-									pathname: '/org/[slug]/[orgLocationId]',
-									query: { slug: org.slug, orgLocationId: location.id },
-								}
-							: { pathname: '/org/[slug]', query: { slug: org?.slug || '' } }
-
-					return (
-						<Group wrap='nowrap' gap={8}>
-							<Tooltip label='View Target'>
-								<ActionIcon variant='subtle' component={Link} href={getViewUrl()} target='_blank'>
-									<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
-								</ActionIcon>
-							</Tooltip>
-							{isManagerOrHigher && (
-								<Tooltip label={isDeleted ? 'Undelete Review' : 'Delete Review'}>
-									<ActionIcon
-										onClick={() => {
-											if (isDeleted) {
-												unDeleteMutation.mutate({ id: row.id })
-											} else {
-												deleteMutation.mutate({ id: row.id })
-											}
-										}}
-										variant='subtle'
-										size='sm'
-									>
-										<Icon
-											icon={isDeleted ? 'carbon:undo' : 'carbon:trash-can'}
-											color={
-												isDeleted ? theme.other.colors.primary.allyGreen : theme.other.colors.tertiary.red
-											}
-										/>
-									</ActionIcon>
-								</Tooltip>
-							)}
-						</Group>
-					)
-				},
+				cell: ({ row }) => (
+					<ActionsCell
+						row={row}
+						theme={theme}
+						isManagerOrHigher={isManagerOrHigher}
+						onDelete={deleteMutation.mutate}
+						onUndelete={unDeleteMutation.mutate}
+					/>
+				),
 			},
 			{
 				id: 'id',
@@ -145,33 +284,21 @@ export const ReviewTable = () => {
 				size: 220,
 				hiddenByDefault: true,
 				enableSorting: false,
-				cell: ({ row }) => (
-					<Text size='xs' ff='monospace'>
-						{row.id}
-					</Text>
-				),
+				cell: ({ row }) => <IdCell row={row} />,
 			},
 			{
 				id: 'userName',
 				header: 'User Name',
 				size: 160,
 				accessorFn: (row) => row.user?.name || 'Anonymous',
-				cell: ({ value }) => (
-					<Text size='sm' fw={500} style={{ whiteSpace: 'nowrap' }}>
-						{value as string}
-					</Text>
-				),
+				cell: ({ value }) => <UserNameCell value={value} />,
 			},
 			{
 				id: 'userEmail',
 				header: 'User Email',
 				size: 220,
 				accessorFn: (row) => row.user?.email || '',
-				cell: ({ value }) => (
-					<Text size='sm' style={{ whiteSpace: 'nowrap' }}>
-						{value as string}
-					</Text>
-				),
+				cell: ({ value }) => <UserEmailCell value={value} />,
 			},
 			{
 				id: 'rating',
@@ -184,33 +311,13 @@ export const ReviewTable = () => {
 						label: `${n} star${n === 1 ? '' : 's'}`,
 					})),
 				},
-				cell: ({ value }) => {
-					const rating = value as number | null
-					return rating ? (
-						<Text size='sm' fw={500}>
-							⭐ {rating}/5
-						</Text>
-					) : (
-						<Text size='sm'>No Rating</Text>
-					)
-				},
+				cell: ({ value }) => <RatingCell value={value} />,
 			},
 			{
 				id: 'reviewText',
 				header: 'Review Content',
 				size: 600,
-				cell: ({ value, row }) => {
-					const isHiddenOrDeleted = !row.visible || row.deleted
-					return (
-						<Text
-							size='sm'
-							lineClamp={2}
-							variant={isHiddenOrDeleted ? variants.Text.utility4darkGray : variants.Text.utility4}
-						>
-							{(value as string) || 'No review text provided.'}
-						</Text>
-					)
-				},
+				cell: ({ value, row }) => <ReviewTextCell row={row} value={value} variants={variants} />,
 			},
 			{
 				id: 'organization',
@@ -244,13 +351,7 @@ export const ReviewTable = () => {
 				header: 'Visible?',
 				hiddenByDefault: true,
 				enableSorting: false,
-				cell: ({ row }) => (
-					<Switch
-						checked={row.visible}
-						onChange={() => void handleToggleVisibility(row.id, row.visible)}
-						size='sm'
-					/>
-				),
+				cell: ({ row }) => <VisibleCell row={row} onToggle={handleToggleVisibility} />,
 			},
 			{
 				id: 'status',
@@ -259,39 +360,14 @@ export const ReviewTable = () => {
 				enableSorting: false,
 				enableGlobalFilter: false,
 				accessorFn: () => undefined,
-				cell: ({ row }) => {
-					const isHidden = !row.visible
-					const isDeleted = row.deleted
-					return (
-						<Group gap={4}>
-							{isHidden && (
-								<Badge color='yellow' variant='filled'>
-									Hidden
-								</Badge>
-							)}
-							{isDeleted && (
-								<Badge color='red' variant='filled'>
-									Deleted
-								</Badge>
-							)}
-							{!isHidden && !isDeleted && (
-								<Badge color='green' variant='outline'>
-									Active
-								</Badge>
-							)}
-						</Group>
-					)
-				},
+				cell: ({ row }) => <StatusCell row={row} />,
 			},
 			{
 				id: 'createdAt',
 				header: 'Created',
 				size: 160,
 				filter: { type: 'date-range' },
-				cell: ({ value }) => {
-					const date = DateTime.fromJSDate(value as Date)
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
-				},
+				cell: ({ value }) => <CreatedAtCell value={value} />,
 			},
 		],
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -322,31 +398,17 @@ export const ReviewTable = () => {
 						columnFilters={columnFilters}
 						setColumnFilters={setColumnFilters}
 						cycle={[undefined, true, false]}
-						label={(state) =>
-							state
-								? 'Show only hidden reviews'
-								: state === undefined
-									? 'Show only visible reviews'
-									: 'Show all reviews'
-						}
-						icon={(state) =>
-							state ? 'carbon:view-filled' : state === undefined ? 'carbon:view' : 'carbon:view-off-filled'
-						}
+						label={getVisibleFilterLabel}
+						icon={getVisibleFilterIcon}
 					/>
 					<TableToolbarToggle
 						columnId='deleted'
 						columnFilters={columnFilters}
 						setColumnFilters={setColumnFilters}
 						cycle={[false, true, undefined]}
-						label={(state) =>
-							state
-								? 'Show all reviews'
-								: state === undefined
-									? 'Hide deleted reviews'
-									: 'Show deleted reviews'
-						}
-						icon={() => 'carbon:trash-can'}
-						slash={(state) => state === false}
+						label={getDeletedFilterLabel}
+						icon={getDeletedFilterIcon}
+						slash={isDeletedFilterSlashed}
 					/>
 				</>
 			}

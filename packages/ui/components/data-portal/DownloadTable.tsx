@@ -2,8 +2,7 @@ import { Divider, Group, Stack, Text, TextInput, Title } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { type UseMutationResult } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next/pages'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
 import { CsvDownload } from '~ui/components/data-portal/CsvDownload'
@@ -140,7 +139,6 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 ]
 
 export const DownloadTable = () => {
-	const { t } = useTranslation('common')
 	const { data: session } = useSession()
 
 	const [search, setSearch] = useState('')
@@ -167,6 +165,11 @@ export const DownloadTable = () => {
 		return [...bySection.entries()]
 	}, [debouncedSearch])
 
+	const handleSearchChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.currentTarget.value),
+		[]
+	)
+
 	if (!canViewDownloads) return null
 
 	return (
@@ -174,7 +177,7 @@ export const DownloadTable = () => {
 			<TextInput
 				placeholder='Search Reports'
 				value={search}
-				onChange={(event) => setSearch(event.currentTarget.value)}
+				onChange={handleSearchChange}
 				leftSection={<Icon icon='carbon:search' height={16} />}
 				w={280}
 			/>
