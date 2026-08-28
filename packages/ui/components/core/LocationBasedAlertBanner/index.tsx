@@ -44,7 +44,7 @@ export const LocationBasedAlertBanner = ({ lat, lon, type, onClick }: LocationBa
 								ns={alertProps.ns}
 								defaults={alertProps.defaultText}
 								components={{
-									Link: <Link external variant={variants.Link.inheritStyle} target='_blank' />,
+									Link: <Link external variant={variants.Link.inheritStyleUnderline} target='_blank' />,
 								}}
 							/>
 						</Text>
