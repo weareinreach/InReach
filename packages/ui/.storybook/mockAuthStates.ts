@@ -57,6 +57,26 @@ const states = {
 			status: 'authenticated',
 		},
 	},
+	// A literal `root` permission - the only string `isRoot` in packages/api/lib/middleware/permissions.ts
+	// (and the client-side mirror in DataPortalPageShell.tsx) actually accepts, alongside 'sysadmin'/
+	// 'system'. `dataPortalAdminAuthed` above deliberately can't stand in for this - Admin and root are
+	// different tiers, and root-only UI (e.g. the Data Portal's System section) needs its own state.
+	rootAuthed: {
+		title: 'root session',
+		session: {
+			data: {
+				user: {
+					id: 'user_01HHCVWRJPROOT00000000000001',
+					permissions: ['root'],
+					roles: ['root'],
+					name: 'Root User',
+					email: 'placeholder.root@inreach.org',
+				},
+				expires,
+			},
+			status: 'authenticated',
+		},
+	},
 	userPic: {
 		title: 'user w/ pic',
 		session: {

@@ -1,14 +1,17 @@
-# Users Tab
+# Manage Users
 
 ## Overview
 
 Manages staff (`User`) accounts' Data Portal permission tier and lets an admin
 trigger a password-reset email. This is about _staff_ access to the Data Portal
-itself, not end-user/consumer accounts.
+itself, not end-user/consumer accounts. Lives at `/data-portal/manage-users`
+(previously the "Users" tab at `/admin` — renamed to match the 2026 redesign's
+naming; see [`docs/DataPortal/2026-Redesign/UI_elements.md`](../2026-Redesign/UI_elements.md)).
 
 ## Access
 
-Visible to `dataPortalManager` and above.
+Gated at `dataPortalManager` and above in this page's own `getServerSideProps`
+(`apps/app/src/pages/data-portal/manage-users.tsx`).
 
 - **Viewing the list** requires `dataPortalManager`+ (`user.viewAllUsers` maps to
   `dataPortalManager` in `packages/api/lib/permissions.ts`).
@@ -23,7 +26,8 @@ Visible to `dataPortalManager` and above.
 - **UI**: [`UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx),
   built on the shared
   [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
-  component.
+  component, rendered from
+  [`apps/app/src/pages/data-portal/manage-users.tsx`](../../../apps/app/src/pages/data-portal/manage-users.tsx).
 - **API**:
   - `user.forUserTable` → `query.forUserTable.handler.ts` — server-side search
     (name/email) and sort, paginated, fetching `User` rows with their
@@ -47,8 +51,6 @@ Visible to `dataPortalManager` and above.
   disabled entirely for a target who already outranks you.
 - **Reset** on a row sends that user a password-reset email via Cognito — it does
   not set or reveal a password directly.
-- The "Data Entry Teams" selector and the row overflow-menu button in the toolbar
-  are visual placeholders only — they have no handlers wired up yet.
 
 ## Known Issues / Gotchas
 
@@ -59,17 +61,28 @@ Visible to `dataPortalManager` and above.
   Manager attempting a change gets a server-side rejection after the fact instead
   of the option being disabled up front.
 - **Password reset has no server-side permission gate.** `forgotPassword` is a
-  `publicProcedure` — it's protected only by this tab not being shown to
+  `publicProcedure` — it's protected only by this page not being reachable by
   unauthorized sessions, not by the API itself. Blast radius is limited (it only
   emails the account owner a reset link), but it's worth tightening given
-  everything else in this tab is otherwise carefully tiered.
+  everything else here is otherwise carefully tiered.
 - No account deactivation/delete control is exposed here — only the Data Portal
   tier and password reset.
+- No Teams concept exists anywhere in this table or the underlying schema — a
+  "Data Entry Teams" filter and a row overflow-menu were noted here in an earlier
+  version of this doc as unwired placeholders, but neither exists in the current
+  `UserTable.tsx` at all (confirmed via `git log` — most likely removed during the
+  Mantine v7 migration). The 2026 redesign's Manage Teams concept
+  (`docs/DataPortal/2026-Redesign/UI_elements.md`) is a ground-up build, not a
+  resurfacing of anything that currently exists.
+- **No shared page chrome yet** — this page currently renders standalone, not yet
+  inside the new redesign's header bar/side-nav/page-heading shell — that's a
+  later phase.
 
 ## Related Files
 
 | Path                                                                                                            | Purpose                                              |
 | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| [`apps/app/src/pages/data-portal/manage-users.tsx`](../../../apps/app/src/pages/data-portal/manage-users.tsx)   | Page: permission gate, renders `UserTable`           |
 | [`packages/ui/components/data-portal/UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx) | Table UI, access-tier dropdown, reset-password modal |
 | `packages/api/router/user/query.forUserTable.handler.ts`                                                        | List query                                           |
 | `packages/api/router/user/mutation.toggleDataPortalAccess.handler.ts`                                           | Access-tier change (Admin/Root only)                 |
@@ -80,4 +93,4 @@ Visible to `dataPortalManager` and above.
 
 ---
 
-_Last verified against code: 2026-08-19._
+_Last verified against code: 2026-08-30._

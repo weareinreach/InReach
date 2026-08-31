@@ -1,4 +1,4 @@
-import { ActionIcon, Group, type MantineTheme, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Group, type MantineTheme, Stack, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
@@ -15,6 +15,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+import { ResultCount } from './ResultCount'
 import { TableToolbarToggle } from './TableToolbarToggle'
 
 type RowItem = ApiOutput['organization']['forOrganizationTable']['results'][number]
@@ -332,45 +333,48 @@ export const OrganizationTable = () => {
 	)
 
 	return (
-		<DataTable
-			data={results as TableRow[]}
-			columns={columns}
-			getSubRows={getOrgTableSubRows}
-			columnFilters={columnFilters}
-			onColumnFiltersChange={setColumnFilters}
-			sorting={sorting}
-			onSortingChange={setSorting}
-			globalFilter={globalFilter}
-			onGlobalFilterChange={setGlobalFilter}
-			globalFilterPlaceholder='Search Organizations'
-			pagination={pagination}
-			onPaginationChange={setPagination}
-			mode={{ serverSide: true, rowCount: total }}
-			isLoading={isLoading}
-			isFetching={isFetching}
-			isError={isError}
-			getRowStyle={getOrgTableRowStyle}
-			toolbarExtra={
-				<>
-					<TableToolbarToggle
-						columnId='published'
-						columnFilters={columnFilters}
-						setColumnFilters={setColumnFilters}
-						cycle={[undefined, true, false]}
-						label={publishedFilterLabel}
-						icon={publishedFilterIcon}
-					/>
-					<TableToolbarToggle
-						columnId='deleted'
-						columnFilters={columnFilters}
-						setColumnFilters={setColumnFilters}
-						cycle={[false, true, undefined]}
-						label={deletedFilterLabel}
-						icon={deletedFilterIcon}
-						slash={isDeletedFilterExcluded}
-					/>
-				</>
-			}
-		/>
+		<Stack gap='sm'>
+			<ResultCount count={total} />
+			<DataTable
+				data={results as TableRow[]}
+				columns={columns}
+				getSubRows={getOrgTableSubRows}
+				columnFilters={columnFilters}
+				onColumnFiltersChange={setColumnFilters}
+				sorting={sorting}
+				onSortingChange={setSorting}
+				globalFilter={globalFilter}
+				onGlobalFilterChange={setGlobalFilter}
+				globalFilterPlaceholder='Search Organizations'
+				pagination={pagination}
+				onPaginationChange={setPagination}
+				mode={{ serverSide: true, rowCount: total }}
+				isLoading={isLoading}
+				isFetching={isFetching}
+				isError={isError}
+				getRowStyle={getOrgTableRowStyle}
+				toolbarExtra={
+					<>
+						<TableToolbarToggle
+							columnId='published'
+							columnFilters={columnFilters}
+							setColumnFilters={setColumnFilters}
+							cycle={[undefined, true, false]}
+							label={publishedFilterLabel}
+							icon={publishedFilterIcon}
+						/>
+						<TableToolbarToggle
+							columnId='deleted'
+							columnFilters={columnFilters}
+							setColumnFilters={setColumnFilters}
+							cycle={[false, true, undefined]}
+							label={deletedFilterLabel}
+							icon={deletedFilterIcon}
+							slash={isDeletedFilterExcluded}
+						/>
+					</>
+				}
+			/>
+		</Stack>
 	)
 }

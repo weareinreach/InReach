@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
+import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { Icon } from '@weareinreach/ui/icon'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { QuickPromotionModal } from '@weareinreach/ui/modals'
@@ -19,6 +20,11 @@ const QuickPromotionModal = dynamic(
 	() => import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal),
 	{ ssr: false }
 )
+
+const systemSideNav = {
+	heading: 'System',
+	items: [{ label: 'Quicklink', href: { pathname: '/data-portal/quicklink' as const }, active: true }],
+}
 
 const QuickLinkIndex = () => {
 	const router = useRouter()
@@ -39,12 +45,12 @@ const QuickLinkIndex = () => {
 	)
 
 	return (
-		<>
+		<DataPortalPageShell activeSection='system' sideNav={systemSideNav}>
 			<Tabs value={router.pathname} onChange={handleTabChange}>
 				<Tabs.List>
-					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
-					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>
-					<Tabs.Tab value='/admin/quicklink/services'>Location Services</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/phone'>Phone Numbers</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/email'>Email Addresses</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/services'>Location Services</Tabs.Tab>
 				</Tabs.List>
 			</Tabs>
 			<Stack h='40vh'>
@@ -58,7 +64,7 @@ const QuickLinkIndex = () => {
 					<QuickPromotionModal component='button' autoLaunch noClose />
 				</Overlay>
 			)}
-		</>
+		</DataPortalPageShell>
 	)
 }
 QuickLinkIndex.omitGrid = true

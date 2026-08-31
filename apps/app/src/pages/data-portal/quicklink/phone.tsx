@@ -41,8 +41,10 @@ import { type ApiInput, type ApiOutput, trpcServerClient } from '@weareinreach/a
 import { checkServerPermissions } from '@weareinreach/auth'
 import { Button } from '@weareinreach/ui/components/core/Button'
 import { Link } from '@weareinreach/ui/components/core/Link'
+import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover'
 import { useCustomVariant } from '@weareinreach/ui/hooks'
+import { parsePhoneNumber } from '@weareinreach/ui/hooks/usePhoneNumber'
 import { Icon } from '@weareinreach/ui/icon'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -54,18 +56,14 @@ const QuickPromotionModal = dynamic(
 	{ ssr: false }
 )
 
+const systemSideNav = {
+	heading: 'System',
+	items: [{ label: 'Quicklink', href: { pathname: '/data-portal/quicklink' as const }, active: true }],
+}
+
 const RESULTS_PER_PAGE = 20
 
 const columnHelper = createColumnHelper<FormData['data'][number]>()
-
-/**
- * Computes the "attached services" ids for the "select/deselect all" column - selecting attaches every
- * service id available to that row, deselecting clears the list. Pulled out to module scope (rather than
- * nested inside the cell renderer's `handleUpdate`) to keep that renderer's function nesting within
- * SonarCloud's depth limit.
- */
-const buildAllServicesSelection = (services: { id: string }[] | undefined, select: boolean): string[] =>
-	select ? (services?.map(({ id }) => id) ?? []) : []
 
 const QuickLink = () => {
 	const form = useForm<FormData>()
@@ -79,14 +77,14 @@ const QuickLink = () => {
 	const router = useRouter()
 	const apiUtils = api.useUtils()
 	const variants = useCustomVariant()
-	const updateServices = api.quicklink.updateServiceLocationData.useMutation({
+	const updatePhones = api.quicklink.updatePhoneData.useMutation({
 		onSuccess: () => {
 			setIsSaved(true)
-			apiUtils.quicklink.getServiceLocationData.invalidate()
+			apiUtils.quicklink.getPhoneData.invalidate()
 		},
 	})
 
-	const { data, isLoading } = api.quicklink.getServiceLocationData.useQuery(
+	const { data, isLoading, isSuccess } = api.quicklink.getPhoneData.useQuery(
 		{
 			limit: RESULTS_PER_PAGE,
 			skip: RESULTS_PER_PAGE * page,
@@ -106,13 +104,13 @@ const QuickLink = () => {
 	}, [data, isLoading, page])
 	useEffect(() => {
 		if (page + 1 <= totalPages) {
-			apiUtils.quicklink.getServiceLocationData.prefetch({
+			apiUtils.quicklink.getPhoneData.prefetch({
 				limit: RESULTS_PER_PAGE,
 				skip: RESULTS_PER_PAGE * (page + 1),
 			})
 		}
 		if (page - 1 >= 0) {
-			apiUtils.quicklink.getServiceLocationData.prefetch({
+			apiUtils.quicklink.getPhoneData.prefetch({
 				limit: RESULTS_PER_PAGE,
 				skip: RESULTS_PER_PAGE * (page - 1),
 			})
@@ -122,7 +120,7 @@ const QuickLink = () => {
 
 	useEffect(() => {
 		if (!overlay) {
-			apiUtils.quicklink.getServiceLocationData.prefetch(
+			apiUtils.quicklink.getPhoneData.prefetch(
 				{ limit: RESULTS_PER_PAGE, skip: RESULTS_PER_PAGE * (page + 1) },
 				{}
 			)
@@ -164,25 +162,42 @@ const QuickLink = () => {
 	}
 
 	const handleMutation = () => {
-		const updated: ApiInput['quicklink']['updateServiceLocationData'][number][] = compact(
+		const updated: ApiInput['quicklink']['updatePhoneData'][number][] = compact(
 			form.values.data.map((record, i) => {
 				if (form.isDirty(`data.${i}`)) {
-					const { attachedServices, orgId, locationId, published } = record
+					const {
+						attachedLocations,
+						attachedServices,
+						locationOnly,
+						serviceOnly,
+						orgId,
+						phoneId,
+						published,
+					} = record
 					const originalRecord = data?.results.find(
-						(original) => orgId === original.orgId && locationId === original.locationId
+						(original) => orgId === original.orgId && phoneId === original.phoneId
 					)
 					if (!originalRecord) return
 
 					return {
-						id: locationId,
+						id: phoneId,
 						to: {
+							locationOnly,
+							serviceOnly,
 							published,
+							locations: {
+								add: attachedLocations.filter((loc) => !originalRecord.attachedLocations.includes(loc)),
+								del: originalRecord.attachedLocations.filter((loc) => !attachedLocations.includes(loc)),
+							},
 							services: {
 								add: attachedServices.filter((svc) => !originalRecord.attachedServices.includes(svc)),
 								del: originalRecord.attachedServices.filter((svc) => !attachedServices.includes(svc)),
 							},
 						},
 						from: {
+							locationOnly: originalRecord.locationOnly,
+							serviceOnly: originalRecord.serviceOnly,
+							locations: originalRecord.attachedLocations,
 							services: originalRecord.attachedServices,
 							published: originalRecord.published,
 						},
@@ -192,7 +207,7 @@ const QuickLink = () => {
 			})
 		)
 		if (updated.length) {
-			updateServices.mutate(updated)
+			updatePhones.mutate(updated)
 		}
 	}
 
@@ -200,7 +215,6 @@ const QuickLink = () => {
 		() => {
 			if (data?.results.length) {
 				return [
-					columnHelper.accessor('slug', {}),
 					columnHelper.accessor('name', {
 						header: 'Organization',
 						cell: (info) => {
@@ -228,15 +242,87 @@ const QuickLink = () => {
 						minSize: 10,
 						maxSize: 80,
 					}),
-					columnHelper.accessor('locationName', {
-						header: 'Location',
+					columnHelper.accessor('number', {
+						header: 'Phone Number',
 						cell: (info) => {
+							const country = form.values.data[info.row.index]?.country.cca2
+							const formattedPhone = parsePhoneNumber(info.getValue() ?? '', country)?.formatNational()
 							return (
 								<Group wrap='nowrap' gap={8}>
-									<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
+									<Text variant={variants.Text.utility4}>{formattedPhone}</Text>
+									{formattedPhone !== undefined && (
+										<Link
+											external
+											href={`https://www.google.com/search?q=${encodeURI(formattedPhone)}`}
+											variant={variants.Link.inheritStyle}
+										>
+											<Icon icon='carbon:search' />
+										</Link>
+									)}
 								</Group>
 							)
 						},
+					}),
+					columnHelper.accessor('description', {
+						header: 'Phone Description',
+						cell: (info) => info.renderValue(),
+					}),
+					columnHelper.accessor('locationOnly', {
+						header: () => <div style={{ textAlign: 'center' }}>Location only?</div>,
+						cell: (info) => {
+							return info.row.getIsGrouped() ? null : (
+								<Center>
+									<Checkbox
+										key={info.cell.id}
+										checked={
+											form.getInputProps(`data.${info.row.index}.locationOnly`, { type: 'checkbox' }).checked
+										}
+										onChange={(e) =>
+											form.setFieldValue(`data.${info.row.index}.locationOnly`, e.target.checked)
+										}
+									/>
+								</Center>
+							)
+						},
+						size: 48,
+					}),
+					columnHelper.accessor('serviceOnly', {
+						header: () => <div style={{ textAlign: 'center' }}>Service only?</div>,
+						cell: (info) =>
+							info.row.getIsGrouped() ? null : (
+								<Center>
+									<Checkbox
+										key={info.cell.id}
+										checked={
+											form.getInputProps(`data.${info.row.index}.serviceOnly`, { type: 'checkbox' }).checked
+										}
+										onChange={(e) =>
+											form.setFieldValue(`data.${info.row.index}.serviceOnly`, e.target.checked)
+										}
+									/>
+								</Center>
+							),
+						size: 48,
+					}),
+					columnHelper.accessor('attachedLocations', {
+						header: () => <div style={{ textAlign: 'center' }}>Locations</div>,
+						cell: (info) =>
+							info.row.getIsGrouped() ? null : (
+								<Center>
+									<MultiSelectPopover
+										key={info.cell.id}
+										data={
+											form.values.data[info.row.index]?.locations.map(({ id, name }) => ({
+												value: id,
+												label: name ?? `MISSING DESCRIPTION - ${id}`,
+											})) ?? []
+										}
+										label='Locations'
+										{...form.getInputProps(`data.${info.row.index}.attachedLocations`, { withFocus: false })}
+									/>
+								</Center>
+							),
+						size: 150,
 					}),
 					columnHelper.accessor('attachedServices', {
 						header: () => <div style={{ textAlign: 'center' }}>Services</div>,
@@ -257,24 +343,6 @@ const QuickLink = () => {
 								</Center>
 							),
 						size: 150,
-					}),
-					columnHelper.display({
-						id: 'allServices',
-						header: () => <div style={{ textAlign: 'center' }}>Attach All Services</div>,
-						cell: (info) => {
-							const isChecked = form.values.data[info.row.index]?.services.every(({ id }) =>
-								form.values.data[info.row.index]?.attachedServices.includes(id)
-							)
-
-							const handleUpdate = (select: boolean) => {
-								form.setFieldValue(
-									`data.${info.row.index}.attachedServices`,
-									buildAllServicesSelection(form.values.data[info.row.index]?.services, select)
-								)
-							}
-
-							return <Checkbox checked={isChecked} onChange={(e) => handleUpdate(e.target.checked)} />
-						},
 					}),
 					columnHelper.accessor('published', {
 						header: () => <div style={{ textAlign: 'center' }}>Published?</div>,
@@ -309,9 +377,7 @@ const QuickLink = () => {
 		initialState: {
 			expanded,
 			grouping: ['name'],
-			columnVisibility: { slug: false },
 		},
-		enableHiding: true,
 		enableGrouping: true,
 		enableExpanding: true,
 		autoResetExpanded: false,
@@ -324,12 +390,12 @@ const QuickLink = () => {
 		manualPagination: true,
 	})
 	return (
-		<>
+		<DataPortalPageShell activeSection='system' sideNav={systemSideNav}>
 			<Tabs value={router.pathname} onChange={handleTabChange}>
 				<Tabs.List>
-					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
-					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>
-					<Tabs.Tab value='/admin/quicklink/services'>Location Services</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/phone'>Phone Numbers</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/email'>Email Addresses</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/services'>Location Services</Tabs.Tab>
 				</Tabs.List>
 			</Tabs>
 			{isLoading ? (
@@ -343,7 +409,7 @@ const QuickLink = () => {
 						<QuickPromotionModal component='button' autoLaunch noClose />
 					</Overlay>
 				</>
-			) : !isLoading && !form.values.data?.length ? (
+			) : isSuccess && !form.values.data?.length ? (
 				<Center h='75vh'>
 					<Text variant={variants.Text.utility1}>No pending links.</Text>
 				</Center>
@@ -402,7 +468,7 @@ const QuickLink = () => {
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={handleMutation}
-								loading={updateServices.isPending}
+								loading={updatePhones.isPending}
 								disabled={!form.isDirty()}
 							>
 								Save
@@ -417,7 +483,7 @@ const QuickLink = () => {
 									variant='primary-icon'
 									leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 									onClick={handleMutation}
-									loading={updateServices.isPending}
+									loading={updatePhones.isPending}
 								>
 									Save
 								</Button>
@@ -436,14 +502,14 @@ const QuickLink = () => {
 					</Modal>
 				</>
 			)}
-		</>
+		</DataPortalPageShell>
 	)
 }
 
 QuickLink.omitGrid = true
 
 interface FormData {
-	data: ApiOutput['quicklink']['getServiceLocationData']['results']
+	data: ApiOutput['quicklink']['getPhoneData']['results']
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale, req, res }) => {
@@ -463,7 +529,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, req, res 
 	}
 	const ssg = await trpcServerClient({ session })
 	if (session) {
-		await ssg.quicklink.getServiceLocationData.prefetch({ limit: 20, skip: 0 })
+		await ssg.quicklink.getPhoneData.prefetch({ limit: 20, skip: 0 })
 	}
 
 	return {

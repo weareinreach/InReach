@@ -31,6 +31,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+import { ResultCount } from './ResultCount'
 
 type ReportRecord = ApiOutput['report']['forReportsTable']['results'][number]
 
@@ -318,7 +319,7 @@ const ReportActionsCell = ({ row, theme, onSelectReport, onOpenDetails }: Report
 						onOpenDetails()
 					}}
 				>
-					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
+					<Icon icon='carbon:task-edit' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 			<Tooltip label='Edit Target'>
@@ -621,7 +622,8 @@ export const ReportTable = () => {
 	)
 
 	return (
-		<>
+		<Stack gap='sm'>
+			<ResultCount count={data?.total ?? 0} />
 			<DataTable
 				data={data?.results ?? []}
 				columns={columns}
@@ -642,6 +644,6 @@ export const ReportTable = () => {
 			{selectedReport && (
 				<ReportDetailsModal report={selectedReport} opened={detailsOpened} onClose={handleCloseDetails} />
 			)}
-		</>
+		</Stack>
 	)
 }
