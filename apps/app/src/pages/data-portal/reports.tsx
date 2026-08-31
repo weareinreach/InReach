@@ -3,9 +3,8 @@
 import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next/pages'
-import { type Route, route } from 'nextjs-routes'
 
-import { checkPermissions, getServerSession } from '@weareinreach/auth'
+import { checkServerPermissions } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
 import { ReportTable } from '@weareinreach/ui/components/data-portal/ReportTable'
@@ -43,32 +42,21 @@ DataPortalReports.omitGrid = true
 
 export default DataPortalReports
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const session = await getServerSession(ctx)
-	if (!session) {
-		const callbackRoute: Route = { pathname: '/data-portal/reports' }
-		const callbackUrl = Buffer.from(JSON.stringify(callbackRoute)).toString('base64url')
-		return {
-			redirect: {
-				destination: route({ pathname: '/401', query: { callbackUrl } }),
-				permanent: false,
-			},
-		}
-	}
-	// NOTE: tab-visibility is intentionally left at Basic+ here, matching current /admin behavior exactly.
-	// The underlying `report.forReportsTable`/`report.update` procedures still require dataPortalManager+,
-	// so a Basic-tier user reaching this page hits the same authorization error they do today - this is a
-	// known, pre-existing mismatch (see docs/DataPortal/Reports/README.md), not something this relocation
-	// fixes. The approved fix is deferred to Phase B (see docs/DataPortal/2026-Redesign/UI_elements.md).
-	const hasPermissions = checkPermissions({
-		session,
+// NOTE: tab-visibility is intentionally left at Basic+ here, matching current /admin behavior exactly.
+// The underlying `report.forReportsTable`/`report.update` procedures still require dataPortalManager+,
+// so a Basic-tier user reaching this page hits the same authorization error they do today - this is a
+// known, pre-existing mismatch (see docs/DataPortal/Reports/README.md), not something this relocation
+// fixes. The approved fix is deferred to Phase B (see docs/DataPortal/2026-Redesign/UI_elements.md).
+export const getServerSideProps: GetServerSideProps = async ({ locale, req, res }) => {
+	const session = await checkServerPermissions({
+		ctx: { req, res },
 		permissions: ['dataPortalBasic', 'dataPortalManager', 'dataPortalAdmin', 'root'],
 		has: 'some',
 	})
-	if (!hasPermissions) {
+	if (!session) {
 		return {
 			redirect: {
-				destination: '/403',
+				destination: '/',
 				permanent: false,
 			},
 		}
@@ -76,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	return {
 		props: {
 			session,
-			...(await getServerSideTranslations(ctx.locale, ['common'])),
+			...(await getServerSideTranslations(locale, ['common'])),
 		},
 	}
 }

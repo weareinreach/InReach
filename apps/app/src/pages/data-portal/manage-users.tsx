@@ -3,9 +3,8 @@
 import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next/pages'
-import { type Route, route } from 'nextjs-routes'
 
-import { checkPermissions, getServerSession } from '@weareinreach/auth'
+import { checkServerPermissions } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
 import { UserTable } from '@weareinreach/ui/components/data-portal/UserTable'
@@ -44,27 +43,16 @@ DataPortalManageUsers.omitGrid = true
 
 export default DataPortalManageUsers
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const session = await getServerSession(ctx)
-	if (!session) {
-		const callbackRoute: Route = { pathname: '/data-portal/manage-users' }
-		const callbackUrl = Buffer.from(JSON.stringify(callbackRoute)).toString('base64url')
-		return {
-			redirect: {
-				destination: route({ pathname: '/401', query: { callbackUrl } }),
-				permanent: false,
-			},
-		}
-	}
-	const hasPermissions = checkPermissions({
-		session,
+export const getServerSideProps: GetServerSideProps = async ({ locale, req, res }) => {
+	const session = await checkServerPermissions({
+		ctx: { req, res },
 		permissions: ['dataPortalManager', 'dataPortalAdmin', 'root'],
 		has: 'some',
 	})
-	if (!hasPermissions) {
+	if (!session) {
 		return {
 			redirect: {
-				destination: '/403',
+				destination: '/',
 				permanent: false,
 			},
 		}
@@ -72,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	return {
 		props: {
 			session,
-			...(await getServerSideTranslations(ctx.locale, ['common'])),
+			...(await getServerSideTranslations(locale, ['common'])),
 		},
 	}
 }

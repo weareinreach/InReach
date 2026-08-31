@@ -3,9 +3,8 @@
 import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next/pages'
-import { type Route, route } from 'nextjs-routes'
 
-import { checkPermissions, getServerSession } from '@weareinreach/auth'
+import { checkServerPermissions } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { DownloadTable } from '@weareinreach/ui/components/data-portal/DownloadTable'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
@@ -43,31 +42,20 @@ DataPortalDownloads.omitGrid = true
 
 export default DataPortalDownloads
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const session = await getServerSession(ctx)
-	if (!session) {
-		const callbackRoute: Route = { pathname: '/data-portal/downloads' }
-		const callbackUrl = Buffer.from(JSON.stringify(callbackRoute)).toString('base64url')
-		return {
-			redirect: {
-				destination: route({ pathname: '/401', query: { callbackUrl } }),
-				permanent: false,
-			},
-		}
-	}
-	// Corrected to Manager+ here (the old /admin tab required Admin+ in the UI while the underlying
-	// csvDownload procedures have only ever required dataPortalManager+) - approved as part of this
-	// relocation since it's a frontend-only gate change, not new backend functionality. See
-	// docs/DataPortal/2026-Redesign/UI_elements.md.
-	const hasPermissions = checkPermissions({
-		session,
+// Corrected to Manager+ here (the old /admin tab required Admin+ in the UI while the underlying
+// csvDownload procedures have only ever required dataPortalManager+) - approved as part of this
+// relocation since it's a frontend-only gate change, not new backend functionality. See
+// docs/DataPortal/2026-Redesign/UI_elements.md.
+export const getServerSideProps: GetServerSideProps = async ({ locale, req, res }) => {
+	const session = await checkServerPermissions({
+		ctx: { req, res },
 		permissions: ['dataPortalManager', 'dataPortalAdmin', 'root'],
 		has: 'some',
 	})
-	if (!hasPermissions) {
+	if (!session) {
 		return {
 			redirect: {
-				destination: '/403',
+				destination: '/',
 				permanent: false,
 			},
 		}
@@ -75,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	return {
 		props: {
 			session,
-			...(await getServerSideTranslations(ctx.locale, ['common'])),
+			...(await getServerSideTranslations(locale, ['common'])),
 		},
 	}
 }
