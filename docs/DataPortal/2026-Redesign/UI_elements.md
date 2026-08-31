@@ -75,8 +75,14 @@ Pieces already built and working, which the template below extends rather than r
 - **Toolbar extension slot** — `OrganizationTable` already passes a `toolbarExtra` node into `DataTable` for its published/deleted icon toggles. The mechanism for adding table-specific controls into a shared toolbar already exists; it just isn't used for labeled dropdown filters yet (see below).
 - **Pagination footer** — already built: "Showing X–Y of Z" + a rows-per-page selector + a Mantine `Pagination` control.
 - **Reusable drawers** — `AuditDrawer`, `InternalNotesDrawer`, `LocationDrawer`, `ServiceEditDrawer`, `AddressDrawer` establish an existing "open a drawer, list/edit related records" pattern usable by future template pieces (e.g. a Team roster).
+- **`DataPortalHeaderBar`, `SideNav`, `PageHeading`, `ResultCount`** (`packages/ui/components/data-portal/`) — the four shared chrome pieces from item 1, 2, 3, and 7 below, built and Storybook-validated in isolation as of Phase A step 2. Not yet wired into any live `/data-portal/*` page — that's a later step.
 
-What's **not** part of the shared template anywhere in code today: a Data-Portal-specific header/nav bar, a per-tab page-title+action row, a result-count line, a side navigation component, a saved-views capability, bulk row-selection, or a dedicated leading status-icon column convention. Everything in the next section is net-new.
+What's **not** part of the shared template _wired into any live page_ today: the four chrome pieces built
+in isolation as of Phase A step 2 (`DataPortalHeaderBar`, `SideNav`, `PageHeading`, `ResultCount` — see
+"Suggested Build Order" below) exist and are Storybook-validated, but aren't yet consumed by any actual
+`/data-portal/*` page. Still fully unbuilt: a saved-views capability, bulk row-selection, and a dedicated
+leading status-icon column convention. Everything in the next section reflects the target design; items
+already built are noted inline.
 
 ## Needed changes to the template
 
@@ -130,7 +136,12 @@ What's **not** part of the shared template anywhere in code today: a Data-Portal
 **Phase A — prove the shell and routing:**
 
 1. ✅ **Done (2026-08-30)**: Renamed `/admin` to `/data-portal` and stood up the flat route structure described above — one standalone page per former tab under `apps/app/src/pages/data-portal/`, hard cutover (old `/admin` tree deleted), Quicklink relocated with its nested routing intact, and the Downloads permission mismatch corrected to Manager+ at every layer (page gate, `DownloadTable`'s `canViewDownloads`, and every row's `permissionKey`) since it was a frontend-only fix. Reports' mismatch was deliberately left as-is (see Reports' own doc) since fixing it needs a backend change, excluded from this step.
-2. Build the shared chrome in isolation first — gray header bar, Side Nav, page heading row, result-count line — validated via Storybook before wiring to any live page.
+2. ✅ **Done (2026-08-31)**: Built the shared chrome in isolation — `DataPortalHeaderBar`, `SideNav`,
+   `PageHeading`, `ResultCount`, all under `packages/ui/components/data-portal/`, each with Storybook
+   stories covering every state called for in this doc (System grayed out for non-root vs. enabled for
+   root; Admin's Manage Teams/Properties Manager disabled-but-visible; Tasks fully disabled; a
+   title-only vs. title+action `PageHeading`). Validated via a full `storybook build` (zero errors) plus
+   `tsc`/`eslint` clean on all four components and stories. Not wired to any live page yet — that's step 3.
 3. Wire the navigation skeleton: Organizations and Admin as top-level sections with their Side Nav items, Tasks as the permanently-disabled link, Manage Teams and Properties Manager as disabled placeholders.
 4. Drop each existing table into the new shell exactly as it works today, no functional changes — Reviews, Downloads, Reports, Manage Users (keeping its current Actions column), Organizations, and Quicklink (under the new System section, internal tab bar untouched). This is the point at which routing and shell issues surface, independent of any table-feature work.
 
