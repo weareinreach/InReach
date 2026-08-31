@@ -1,19 +1,23 @@
-# Organizations Tab
+# Organizations
 
 ## Overview
 
-The default tab on the Data Portal (`/admin`). It's the org directory's
-system-of-record table — publish status, verification date, deletion flag, and each
-org's locations — used by staff to find and audit organization records without
-opening each one individually.
+The default landing page of the Data Portal (`/data-portal/organizations` —
+`/data-portal` redirects here; previously the default tab at `/admin`). It's the
+org directory's system-of-record table — publish status, verification date,
+deletion flag, and each org's locations — used by staff to find and audit
+organization records without opening each one individually.
 
 ## Access
 
-Visible to `dataPortalBasic` and above. The underlying `forOrganizationTable`
-procedure is a `publicProcedure` at the tRPC layer (no server-side permission
-check) — it's effectively access-controlled only by the tab being hidden client-side
-from unauthenticated/unauthorized sessions. It doesn't currently accept any
-write actions, so the exposure is read-only org data, not a mutation risk.
+Gated at `dataPortalBasic` and above in this page's own `getServerSideProps`
+(`apps/app/src/pages/data-portal/organizations.tsx` — previously this check lived
+in the shared `apps/app/src/pages/admin/index.tsx`). The underlying
+`forOrganizationTable` procedure is a `publicProcedure` at the tRPC layer (no
+server-side permission check) — it's effectively access-controlled only by the
+page itself redirecting unauthenticated/unauthorized sessions. It doesn't
+currently accept any write actions, so the exposure is read-only org data, not a
+mutation risk.
 
 ## How It Works
 
@@ -21,7 +25,8 @@ write actions, so the exposure is read-only org data, not a mutation risk.
   built on the shared
   [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
   component (a thin `@tanstack/react-table` + Mantine `Table` wrapper — see that
-  directory's own doc comments for its column/filter/pagination API).
+  directory's own doc comments for its column/filter/pagination API), rendered
+  from [`apps/app/src/pages/data-portal/organizations.tsx`](../../../apps/app/src/pages/data-portal/organizations.tsx).
 - **API**: `organization.forOrganizationTable` in
   [`packages/api/router/organization/index.ts`](../../../packages/api/router/organization/index.ts)
   → [`query.forOrganizationTable.handler.ts`](../../../packages/api/router/organization/query.forOrganizationTable.handler.ts)
@@ -80,11 +85,16 @@ around.
 - **Column widths/order are fixed** — `DataTable` intentionally doesn't support
   drag-to-resize or drag-to-reorder columns (see that component's own notes); the
   column show/hide menu is the supported way to tailor the view.
+- **No shared page chrome yet** — this page currently renders standalone (a
+  generic "Welcome, {name}" heading), not yet inside the new redesign's header
+  bar/side-nav/page-heading shell — that's a later phase. See
+  [`docs/DataPortal/2026-Redesign/UI_elements.md`](../2026-Redesign/UI_elements.md).
 
 ## Related Files
 
 | Path                                                                                                                                                        | Purpose                                                                         |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`apps/app/src/pages/data-portal/organizations.tsx`](../../../apps/app/src/pages/data-portal/organizations.tsx)                                             | Page: permission gate, renders `OrganizationTable`                              |
 | [`packages/ui/components/data-portal/OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)                             | Table UI, column definitions, toolbar toggles                                   |
 | [`packages/ui/components/data-portal/DataTable/`](../../../packages/ui/components/data-portal/DataTable/index.tsx)                                          | Shared table engine used by every Data Portal table                             |
 | [`packages/api/router/organization/index.ts`](../../../packages/api/router/organization/index.ts)                                                           | tRPC route registration                                                         |
@@ -96,4 +106,4 @@ around.
 
 ---
 
-_Last verified against code: 2026-08-19._
+_Last verified against code: 2026-08-30._

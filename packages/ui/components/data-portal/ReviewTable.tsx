@@ -1,20 +1,11 @@
-import {
-	ActionIcon,
-	Badge,
-	Group,
-	type MantineTheme,
-	Switch,
-	Text,
-	Tooltip,
-	useMantineTheme,
-} from '@mantine/core'
+import { ActionIcon, Badge, Group, type MantineTheme, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
 import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Link } from '~ui/components/core/Link'
@@ -43,6 +34,7 @@ interface ActionsCellProps {
 	row: ReviewRecord
 	theme: MantineTheme
 	isManagerOrHigher: boolean
+	onToggleVisibility: (id: string, currentVisible: boolean) => void
 	onDelete: (vars: { id: string }) => void
 	onUndelete: (vars: { id: string }) => void
 }
@@ -54,14 +46,30 @@ const createActionsCell = (extra: Omit<ActionsCellProps, 'row'>) => {
 	return ActionsCellWithExtras
 }
 
-const ActionsCell = ({ row, theme, isManagerOrHigher, onDelete, onUndelete }: ActionsCellProps) => {
+const ActionsCell = ({
+	row,
+	theme,
+	isManagerOrHigher,
+	onToggleVisibility,
+	onDelete,
+	onUndelete,
+}: ActionsCellProps) => {
 	const isDeleted = row.deleted
+	const isVisible = row.visible
 
 	return (
 		<Group wrap='nowrap' gap={8}>
 			<Tooltip label='View Target'>
 				<ActionIcon variant='subtle' component={Link} href={getReviewTargetUrl(row)} target='_blank'>
 					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+			<Tooltip label={isVisible ? 'Hide Review' : 'Unhide Review'}>
+				<ActionIcon onClick={() => onToggleVisibility(row.id, isVisible)} variant='subtle' size='sm'>
+					<Icon
+						icon={isVisible ? 'carbon:view-off' : 'carbon:view'}
+						color={theme.other.colors.primary.allyGreen}
+					/>
 				</ActionIcon>
 			</Tooltip>
 			{isManagerOrHigher && (
@@ -141,26 +149,6 @@ const ReviewTextCell = ({ row, value, variants }: ReviewTextCellProps) => {
 			{(value as string) || 'No review text provided.'}
 		</Text>
 	)
-}
-
-interface VisibleCellProps {
-	row: ReviewRecord
-	onToggle: (id: string, currentVisible: boolean) => void
-}
-
-const createVisibleCell = (onToggle: VisibleCellProps['onToggle']) => {
-	const VisibleCellWithToggle = ({ row }: DataTableCellContext<ReviewRecord>) => (
-		<VisibleCell row={row} onToggle={onToggle} />
-	)
-	return VisibleCellWithToggle
-}
-
-const VisibleCell = ({ row, onToggle }: VisibleCellProps) => {
-	const handleChange = useCallback(() => {
-		onToggle(row.id, row.visible)
-	}, [onToggle, row.id, row.visible])
-
-	return <Switch checked={row.visible} onChange={handleChange} size='sm' />
 }
 
 const OrganizationCell = ({ row }: { row: ReviewRecord }) => {
@@ -326,6 +314,7 @@ export const ReviewTable = () => {
 				cell: createActionsCell({
 					theme,
 					isManagerOrHigher,
+					onToggleVisibility: handleToggleVisibility,
 					onDelete: deleteMutation.mutate,
 					onUndelete: unDeleteMutation.mutate,
 				}),
@@ -377,13 +366,6 @@ export const ReviewTable = () => {
 				size: 220,
 				accessorFn: (row) => row.organization?.name || 'Unknown',
 				cell: OrganizationCell,
-			},
-			{
-				id: 'visible',
-				header: 'Visible?',
-				hiddenByDefault: true,
-				enableSorting: false,
-				cell: createVisibleCell(handleToggleVisibility),
 			},
 			{
 				id: 'status',

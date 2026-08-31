@@ -179,8 +179,8 @@ export const InternalNotesDrawer = ({
 													<ActionIcon
 														component={Link}
 														href={{
-															pathname: '/admin',
-															query: { tab: 'reports', reportId: note.reportId },
+															pathname: '/data-portal/reports',
+															query: { reportId: note.reportId },
 														}}
 														target='_blank'
 														size='xs'

@@ -51,6 +51,12 @@ this specific pass. Everything above and below should be read through it.
   leading status-indicator column, bulk-select, Saved Views) with the grayed-out-when-unbacked rule
   applying as each one lands. This keeps routing/shell risk separate from table-feature risk instead of
   debugging both at once. See "Suggested Build Order" below for the concrete sequence.
+- **Two approved exceptions to "no functional changes" landed during Phase A**: the Downloads permission
+  fix (see "Section & Side-Nav Structure for This Pass") and moving Reviews' hide/unhide control from a
+  `Switch` in a `hiddenByDefault` "Visible?" column into an eye/eye-off icon in the Actions column,
+  matching the Actions-column pattern already used elsewhere (view/edit/audit/notes on Organizations,
+  view/delete on Reviews itself). Both were small, self-contained, discovered/decided while doing the
+  routing move rather than planned up front — noted here rather than silently expanding Phase A's scope.
 
 ## The Data Portal Table Template — what already exists in code
 
@@ -114,7 +120,7 @@ What's **not** part of the shared template anywhere in code today: a Data-Portal
 
 **Phase A — prove the shell and routing:**
 
-1. Rename `/admin` to `/data-portal` and stand up the flat route structure described above.
+1. ✅ **Done (2026-08-30)**: Renamed `/admin` to `/data-portal` and stood up the flat route structure described above — one standalone page per former tab under `apps/app/src/pages/data-portal/`, hard cutover (old `/admin` tree deleted), Quicklink relocated with its nested routing intact, and the Downloads permission mismatch corrected to Manager+ at every layer (page gate, `DownloadTable`'s `canViewDownloads`, and every row's `permissionKey`) since it was a frontend-only fix. Reports' mismatch was deliberately left as-is (see Reports' own doc) since fixing it needs a backend change, excluded from this step.
 2. Build the shared chrome in isolation first — gray header bar, Side Nav, page heading row, result-count line — validated via Storybook before wiring to any live page.
 3. Wire the navigation skeleton: Organizations and Admin as top-level sections with their Side Nav items, Tasks as the permanently-disabled link, Manage Teams and Properties Manager as disabled placeholders.
 4. Drop each existing table into the new shell exactly as it works today, no functional changes — Reviews, Downloads, Reports, Manage Users (keeping its current Actions column), Organizations, and Quicklink (under the new System section, internal tab bar untouched). This is the point at which routing and shell issues surface, independent of any table-feature work.
@@ -148,7 +154,7 @@ to match.
 | [`packages/ui/components/data-portal/OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)                                                                                       | Current closest-to-template implementation; toolbar-extension pattern to build on                                                                |
 | [`packages/ui/components/data-portal/UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx)                                                                                                       | Second consumer of the template; currently lacks bulk-select and the toolbar dropdown pattern entirely                                           |
 | [`packages/ui/components/sections/Navbar.tsx`](../../../packages/ui/components/sections/Navbar.tsx)                                                                                                                   | The consumer-facing header — stays in place above the new Data-Portal gray bar for this pass; a separate component, not an extension of this one |
-| [`apps/app/src/pages/admin/index.tsx`](../../../apps/app/src/pages/admin/index.tsx)                                                                                                                                   | Current `/admin` shell — flat tab bar, no side-nav, no per-tab title                                                                             |
+| [`apps/app/src/pages/data-portal/`](../../../apps/app/src/pages/data-portal/)                                                                                                                                         | Current shell — one standalone page per former tab, no side-nav or per-tab title yet (Phase A step 1 complete; see "Suggested Build Order")      |
 | [`packages/ui/components/data-portal/AuditDrawer.tsx`](../../../packages/ui/components/data-portal/AuditDrawer.tsx), [`InternalNotesDrawer.tsx`](../../../packages/ui/components/data-portal/InternalNotesDrawer.tsx) | Existing drawer pattern to extend for future template pieces (e.g. a Team roster)                                                                |
 | `packages/api/router/report/index.ts`                                                                                                                                                                                 | Reports router — `forReportsTable` and `update` currently both require `dataPortalManager`; the view-side needs splitting to Basic+              |
 | `packages/api/router/review/index.ts`                                                                                                                                                                                 | Reviews router — hide/unhide vs. delete/undelete tiering, already correct                                                                        |

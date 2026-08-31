@@ -404,9 +404,9 @@ const QuickLink = () => {
 		<>
 			<Tabs value={router.pathname} onChange={handleTabChange}>
 				<Tabs.List>
-					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
-					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>
-					<Tabs.Tab value='/admin/quicklink/services'>Location Services</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/phone'>Phone Numbers</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/email'>Email Addresses</Tabs.Tab>
+					<Tabs.Tab value='/data-portal/quicklink/services'>Location Services</Tabs.Tab>
 				</Tabs.List>
 			</Tabs>
 			{isLoading ? (

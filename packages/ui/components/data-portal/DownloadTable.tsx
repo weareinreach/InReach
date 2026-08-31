@@ -30,7 +30,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'All Published Organizations',
 		fileName: 'all_published_organizations',
 		useMutationHook: () => api.csvDownload.getAllPublishedForCSV.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'all-unpublished-orgs',
@@ -38,7 +38,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'All Unpublished Organizations',
 		fileName: 'all_unpublished_organizations',
 		useMutationHook: () => api.csvDownload.getAllUnpublishedForCSV.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'all-orgs-with-reviews',
@@ -46,7 +46,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'All Orgs with Reviews (Published and Unpublished)',
 		fileName: 'all_orgs_with_reviews',
 		useMutationHook: () => api.csvDownload.getOrgsWithReviews.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'org-services-california',
@@ -54,7 +54,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Organizations & Services in California',
 		fileName: 'count_of_org_services_in_california',
 		useMutationHook: () => api.csvDownload.getPublishedOrgServicesCalifornia.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'org-count-by-country-attribute',
@@ -62,7 +62,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Organizations By Country & Attribute',
 		fileName: 'count_of_org_by_country_attribute',
 		useMutationHook: () => api.csvDownload.getOrgCountByCountryAttribute.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'org-count-by-country',
@@ -70,7 +70,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Organizations By Country',
 		fileName: 'count_of_org_by_country',
 		useMutationHook: () => api.csvDownload.getOrgCountByCountry.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'org-count-by-country-state',
@@ -78,7 +78,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Organizations By Country & State',
 		fileName: 'count_of_org_by_country_state',
 		useMutationHook: () => api.csvDownload.getOrgCountByState.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'services-by-category-california',
@@ -86,7 +86,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Services By Category in California',
 		fileName: 'count_of_services_by_category_in_california',
 		useMutationHook: () => api.csvDownload.getServicesCountByCategoryCalifornia.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'services-by-category-country',
@@ -94,7 +94,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Services By Category & Country',
 		fileName: 'count_of_services_by_category_country',
 		useMutationHook: () => api.csvDownload.getServicesCountByCategoryCountry.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'services-by-category-state-country',
@@ -102,7 +102,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Services By Category, State, & Country',
 		fileName: 'count_of_services_by_category_state_country',
 		useMutationHook: () => api.csvDownload.getServicesCountByCategoryStateCountry.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'services-by-country-state-zip',
@@ -110,7 +110,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Services By Country & State & Postal Code',
 		fileName: 'count_of_services_by_category_zipcode_state_country',
 		useMutationHook: () => api.csvDownload.getServicesCountByCountryStatePostalCode.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'services-by-attribute-country',
@@ -118,7 +118,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Services By Attribute & Country',
 		fileName: 'count_of_services_by_attribute_country',
 		useMutationHook: () => api.csvDownload.getServicesCountByCountryAttribute.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'services-by-country',
@@ -126,7 +126,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Services By Country',
 		fileName: 'count_of_services_by_country',
 		useMutationHook: () => api.csvDownload.getServiceCountByCountry.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 	{
 		id: 'services-by-country-state',
@@ -134,7 +134,7 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 		label: 'Published Services By Country & State',
 		fileName: 'count_of_services_by_country_state',
 		useMutationHook: () => api.csvDownload.getServicesCountByCountryState.useMutation(),
-		permissionKey: 'dataPortalAdmin',
+		permissionKey: 'dataPortalManager',
 	},
 ]
 
@@ -146,7 +146,7 @@ export const DownloadTable = () => {
 
 	const userPerms = session?.user?.permissions || []
 	const canViewDownloads = userPerms.some((p) =>
-		['root', 'sysadmin', 'system', 'dataPortalAdmin'].includes(p)
+		['root', 'sysadmin', 'system', 'dataPortalAdmin', 'dataPortalManager'].includes(p)
 	)
 
 	const sections = useMemo(() => {
