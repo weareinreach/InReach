@@ -43,6 +43,14 @@ this specific pass. Everything above and below should be read through it.
   existing Navbar rather than replacing it: consumer Navbar → new gray bar → page heading → content →
   consumer Footer. Fully removing the consumer chrome from Data Portal pages remains the eventual target;
   it's deferred for this pass, not abandoned.
+- **Two-phase rollout within this pass.** Phase A: move the routing/URL structure and the shared chrome
+  (gray bar, Side Nav, page heading, result-count line) into place, with each existing table (Organizations,
+  Reviews, Reports, Downloads, Manage Users) dropped into the new shell exactly as it works today — no
+  column/toolbar changes; Manage Users keeps its current Actions column as-is. Phase B, only once Phase A
+  is proven working end to end, layers in the new table-level elements (quick-filter dropdowns, the
+  leading status-indicator column, bulk-select, Saved Views) with the grayed-out-when-unbacked rule
+  applying as each one lands. This keeps routing/shell risk separate from table-feature risk instead of
+  debugging both at once. See "Suggested Build Order" below for the concrete sequence.
 
 ## The Data Portal Table Template — what already exists in code
 
@@ -57,7 +65,7 @@ What's **not** part of the shared template anywhere in code today: a Data-Portal
 
 ## Needed changes to the template
 
-1. **Data-Portal header bar.** A new, dedicated persistent bar for the Data Portal specifically, showing the top-level sections (Organizations / Tasks / Admin) with the active one indicated. It carries no user-identity display of its own — the existing avatar/dropdown in the consumer `Navbar` above it (see "Implementation Constraints for This Pass") already covers that, and repeating it here would just be visual clutter.
+1. **Data-Portal header bar.** A new, dedicated persistent bar for the Data Portal specifically, showing the top-level sections (Tasks / Organizations / Admin / System), in that order, with the active one indicated. It carries no user-identity display of its own — the existing avatar/dropdown in the consumer `Navbar` above it (see "Implementation Constraints for This Pass") already covers that, and repeating it here would just be visual clutter.
 
 2. **Page heading row.** Title text on the left; an optional primary action button on the right, same row. Shared shape, per-page content: "Add new organization" on Organizations, "Add new team" on Manage Teams, "Add task" on the Task views — moved here from the bottom of the Task views' Side Nav for consistency with the other two, and to keep Side Nav a pure navigation element.
 
@@ -82,6 +90,10 @@ What's **not** part of the shared template anywhere in code today: a Data-Portal
 
 ## Section & Side-Nav Structure for This Pass
 
+**Routing.** The Data Portal moves from `/admin` to a new `/data-portal` route root — `/admin` is also the name of one of the top-level nav sections (Tasks / Organizations / Admin / System), so keeping the route root as `/admin` would produce a confusing `/admin/admin/manage-users`-style collision. The nav order is Tasks, Organizations, Admin, System, but the default landing destination on `/data-portal` stays **Organizations**, matching current behavior — Tasks has no destination page at all in this pass (see "Tasks" below), so it can't be the default view even though it's listed first. URLs stay flat, one level deep, regardless of Side Nav grouping: `/data-portal/organizations`, `/data-portal/reviews`, `/data-portal/reports`, `/data-portal/downloads`, `/data-portal/manage-users`, `/data-portal/manage-teams`, `/data-portal/properties-manager`, `/data-portal/tasks`. Side Nav grouping (which items appear together under which section heading) is a UI concern only — it doesn't need to be reflected in URL nesting, and keeping URLs flat means a future change to that grouping doesn't require a redirect. **Quicklink is the one exception**: it keeps its existing nested routing structure as-is (`/admin/quicklink/{index,phone,email,services}` becomes `/data-portal/quicklink/{index,phone,email,services}`), since its three sub-pages are tightly coupled to Quicklink specifically and aren't at risk of being regrouped elsewhere the way Reviews/Reports/Downloads might be — there's no future-redirect risk to protect against by flattening them.
+
+**Tasks** — a single top-level nav link, disabled/unclickable in this pass. No Task data model exists, so no destination page is built for it this round — it exists in the header bar only as a placeholder for future work.
+
 **Organizations** — the top-level section contains the Organizations table itself, plus a side-nav with Reviews, Reports, and Downloads. All four are real, existing, and clickable in this pass:
 
 - **Reviews** — Basic+ can open the table and hide/unhide entries; Manager+ required for delete/undelete. Matches the intended tiering in code today — no permission change needed, just relocating the tab.
@@ -94,9 +106,25 @@ What's **not** part of the shared template anywhere in code today: a Data-Portal
 - **Manage teams** — disabled. No `Team` model or schema exists at all.
 - **Properties manager** — disabled. No equivalent exists anywhere in the codebase, and its scope is still undetermined (see Open Questions).
 
-**Tasks** — a single top-level nav link, disabled/unclickable in this pass. No Task data model exists, so no destination page is built for it this round — it exists in the header bar only as a placeholder for future work.
+**System** — a 4th top-level nav section, grayed out for anyone who isn't `root` (no exception carved out from the general permission rule below — root-only sections follow the same visible-but-disabled treatment as everything else). Its side-nav has a single item, **Quicklink**, which drops in the existing Quicklink tool completely unchanged, including its own internal tab bar (Phone Numbers / Email Addresses / Location Services) — no conversion to the new Side Nav pattern for those three, just a relocation of the entry point and route root (see "Routing" above).
 
 **General side-nav permission rule**: within a clickable item, whether a given action is enabled is governed purely by the plain `dataPortalBasic` / `dataPortalManager` / `dataPortalAdmin` ladder — no bespoke, per-action permission strings gate visibility or click-ability.
+
+## Suggested Build Order
+
+**Phase A — prove the shell and routing:**
+
+1. Rename `/admin` to `/data-portal` and stand up the flat route structure described above.
+2. Build the shared chrome in isolation first — gray header bar, Side Nav, page heading row, result-count line — validated via Storybook before wiring to any live page.
+3. Wire the navigation skeleton: Organizations and Admin as top-level sections with their Side Nav items, Tasks as the permanently-disabled link, Manage Teams and Properties Manager as disabled placeholders.
+4. Drop each existing table into the new shell exactly as it works today, no functional changes — Reviews, Downloads, Reports, Manage Users (keeping its current Actions column), Organizations, and Quicklink (under the new System section, internal tab bar untouched). This is the point at which routing and shell issues surface, independent of any table-feature work.
+
+**Phase B — layer in the new table-level elements, only once Phase A is proven working end to end:**
+
+5. Extend `DataTable` with the net-new capabilities — toolbar quick-filter dropdowns, the leading status-indicator column, bulk-select + contextual "…" menu, and the (mostly-disabled) Saved Views shell — as additive/opt-in props so tables not yet touched are unaffected.
+6. Apply the approved Reports permission split.
+7. Roll the new elements out per table, applying the grayed-out-when-unbacked rule as each one lands.
+8. Regression pass across all permission tiers, then update the five per-tab reference docs (`Organizations/README.md`, `Users/README.md`, `Reviews/README.md`, `Reports/README.md`, `Downloads/README.md`) with their new reality and bumped "Last verified" dates.
 
 ## Open Questions
 
