@@ -1,32 +1,43 @@
 // apps/app/src/pages/data-portal/manage-users.tsx
 
-import { Stack, Title } from '@mantine/core'
-import { type GetServerSideProps, type NextPage } from 'next'
+import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
 import { type Route, route } from 'nextjs-routes'
 
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
+import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { UserTable } from '@weareinreach/ui/components/data-portal/UserTable'
+import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const DataPortalManageUsers: NextPage = () => {
+const adminSideNav = {
+	heading: 'Admin',
+	items: [
+		{ label: 'Manage users', href: { pathname: '/data-portal/manage-users' as const }, active: true },
+		// No `Team` model or schema exists at all - disabled, not hidden, per Implementation Constraints.
+		{ label: 'Manage teams', disabled: true },
+		// No equivalent exists anywhere in the codebase; scope still undetermined - see Open Questions.
+		{ label: 'Properties manager', disabled: true },
+	],
+}
+
+const DataPortalManageUsers: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
-	const { data: session } = useSession()
 
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { title: t('admin.tab-manage-users') })}</title>
 			</Head>
-			<Stack gap={40} miw='80vw'>
-				<Title order={2}>{t('welcome-name', { name: session?.user?.name })}</Title>
+			<DataPortalPageShell activeSection='admin' sideNav={adminSideNav}>
 				<UserTable />
-			</Stack>
+			</DataPortalPageShell>
 		</>
 	)
 }
+// See organizations.tsx for why every Data Portal page sets this.
+DataPortalManageUsers.omitGrid = true
 
 export default DataPortalManageUsers
 

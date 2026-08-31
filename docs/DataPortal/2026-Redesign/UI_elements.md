@@ -75,14 +75,13 @@ Pieces already built and working, which the template below extends rather than r
 - **Toolbar extension slot** — `OrganizationTable` already passes a `toolbarExtra` node into `DataTable` for its published/deleted icon toggles. The mechanism for adding table-specific controls into a shared toolbar already exists; it just isn't used for labeled dropdown filters yet (see below).
 - **Pagination footer** — already built: "Showing X–Y of Z" + a rows-per-page selector + a Mantine `Pagination` control.
 - **Reusable drawers** — `AuditDrawer`, `InternalNotesDrawer`, `LocationDrawer`, `ServiceEditDrawer`, `AddressDrawer` establish an existing "open a drawer, list/edit related records" pattern usable by future template pieces (e.g. a Team roster).
-- **`DataPortalHeaderBar`, `SideNav`, `PageHeading`, `ResultCount`** (`packages/ui/components/data-portal/`) — the four shared chrome pieces from item 1, 2, 3, and 7 below, built and Storybook-validated in isolation as of Phase A step 2. Not yet wired into any live `/data-portal/*` page — that's a later step.
+- **`DataPortalHeaderBar`, `SideNav`, `PageHeading`, `ResultCount`, `DataPortalPageShell`** (`packages/ui/components/data-portal/`) — the four shared chrome pieces from item 1, 2, 3, and 7 below, plus the `DataPortalPageShell` wrapper that composes the header bar and Side Nav together. As of Phase A step 3, the shell (header bar + Side Nav) is wired into every live `/data-portal/*` page, including all four Quicklink pages. `PageHeading` and `ResultCount` are still built and Storybook-validated but not yet consumed by any page — that's step 4.
 
-What's **not** part of the shared template _wired into any live page_ today: the four chrome pieces built
-in isolation as of Phase A step 2 (`DataPortalHeaderBar`, `SideNav`, `PageHeading`, `ResultCount` — see
-"Suggested Build Order" below) exist and are Storybook-validated, but aren't yet consumed by any actual
-`/data-portal/*` page. Still fully unbuilt: a saved-views capability, bulk row-selection, and a dedicated
-leading status-icon column convention. Everything in the next section reflects the target design; items
-already built are noted inline.
+What's **not** part of the shared template today: `PageHeading` (per-page title + action button) and
+`ResultCount` aren't wired into any live page yet — that's step 4, alongside the "drop tables in" work
+itself. Still fully unbuilt: a saved-views capability, bulk row-selection, and a dedicated leading
+status-icon column convention. Everything in the next section reflects the target design; items already
+built are noted inline.
 
 ## Needed changes to the template
 
@@ -142,7 +141,29 @@ already built are noted inline.
    root; Admin's Manage Teams/Properties Manager disabled-but-visible; Tasks fully disabled; a
    title-only vs. title+action `PageHeading`). Validated via a full `storybook build` (zero errors) plus
    `tsc`/`eslint` clean on all four components and stories. Not wired to any live page yet — that's step 3.
-3. Wire the navigation skeleton: Organizations and Admin as top-level sections with their Side Nav items, Tasks as the permanently-disabled link, Manage Teams and Properties Manager as disabled placeholders.
+3. ✅ **Done (2026-08-31)**: Wired the navigation skeleton onto every live page via a new
+   `DataPortalPageShell` (header bar + Side Nav + content slot, `packages/ui/components/data-portal/`).
+   Organizations, Reviews, Reports, and Downloads now render inside the Organizations section's Side Nav;
+   Manage Users renders inside the Admin section's Side Nav alongside Manage Teams and Properties Manager
+   as disabled-but-visible items; the four Quicklink pages render inside the System section's Side Nav
+   (their own internal Phone/Email/Services tab bar untouched). Tasks has no page to wire — it only
+   appears as the permanently-disabled header-bar link, as designed. `systemEnabled` (whether System
+   renders clickable) is computed once inside the shell from the session's permissions, mirroring `isRoot`
+   — added a `rootAuthed` Storybook auth-mock preset (`.storybook/mockAuthStates.ts`) since none of the
+   existing presets used the literal `root` string, following the precedent already set by
+   `dataPortalAdminAuthed`. Per-page titles/action buttons (`PageHeading`) and per-table `ResultCount` are
+   deliberately not wired yet — that's step 4, alongside the "drop tables in" work itself. Validated via
+   `tsc`/`eslint` clean across every changed page and a full `storybook build`.
+   - **Follow-up fix, same step**: the initial wiring left the five non-Quicklink pages without
+     `omitGrid = true`, so they were still wrapped in `BodyGrid` (`my={40}` margin + a centered/padded
+     container) while Quicklink's four pages already had it set. This produced exactly the symptoms you'd
+     expect from that mismatch — a visible gap between the consumer `Navbar` and the new gray bar, an
+     inconsistent page width between the two page groups, and `DataTable`'s `Table.ScrollContainer` not
+     getting a properly bounded parent to scroll within. Fixed by giving all five pages the same
+     `NextPageWithOptions` + `.omitGrid = true` pattern Quicklink and `pages/index.tsx` already use, so
+     every Data Portal page now skips `BodyGrid` consistently. This was a bug in step 3's own
+     implementation, not something step 4 (page titles + result counts + dropping tables in) would have
+     touched — confirmed and fixed before moving on rather than deferred.
 4. Drop each existing table into the new shell exactly as it works today, no functional changes — Reviews, Downloads, Reports, Manage Users (keeping its current Actions column), Organizations, and Quicklink (under the new System section, internal tab bar untouched). This is the point at which routing and shell issues surface, independent of any table-feature work.
 
 **Phase B — layer in the new table-level elements, only once Phase A is proven working end to end:**

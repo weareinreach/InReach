@@ -1,32 +1,42 @@
 // apps/app/src/pages/data-portal/downloads.tsx
 
-import { Stack, Title } from '@mantine/core'
-import { type GetServerSideProps, type NextPage } from 'next'
+import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
 import { type Route, route } from 'nextjs-routes'
 
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
+import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { DownloadTable } from '@weareinreach/ui/components/data-portal/DownloadTable'
+import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const DataPortalDownloads: NextPage = () => {
+const organizationsSideNav = {
+	heading: 'Organizations',
+	items: [
+		{ label: 'Organizations', href: { pathname: '/data-portal/organizations' as const } },
+		{ label: 'Reviews', href: { pathname: '/data-portal/reviews' as const } },
+		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const } },
+		{ label: 'Downloads', href: { pathname: '/data-portal/downloads' as const }, active: true },
+	],
+}
+
+const DataPortalDownloads: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
-	const { data: session } = useSession()
 
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { title: t('admin.tab-downloads') })}</title>
 			</Head>
-			<Stack gap={40} miw='80vw'>
-				<Title order={2}>{t('welcome-name', { name: session?.user?.name })}</Title>
+			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
 				<DownloadTable />
-			</Stack>
+			</DataPortalPageShell>
 		</>
 	)
 }
+// See organizations.tsx for why every Data Portal page sets this.
+DataPortalDownloads.omitGrid = true
 
 export default DataPortalDownloads
 

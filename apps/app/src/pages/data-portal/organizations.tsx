@@ -1,32 +1,44 @@
 // apps/app/src/pages/data-portal/organizations.tsx
 
-import { Stack, Title } from '@mantine/core'
-import { type GetServerSideProps, type NextPage } from 'next'
+import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
 import { type Route, route } from 'nextjs-routes'
 
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
+import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
+import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const DataPortalOrganizations: NextPage = () => {
+const organizationsSideNav = {
+	heading: 'Organizations',
+	items: [
+		{ label: 'Organizations', href: { pathname: '/data-portal/organizations' as const }, active: true },
+		{ label: 'Reviews', href: { pathname: '/data-portal/reviews' as const } },
+		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const } },
+		{ label: 'Downloads', href: { pathname: '/data-portal/downloads' as const } },
+	],
+}
+
+const DataPortalOrganizations: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
-	const { data: session } = useSession()
 
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { title: t('admin.tab-organizations') })}</title>
 			</Head>
-			<Stack gap={40} miw='80vw'>
-				<Title order={2}>{t('welcome-name', { name: session?.user?.name })}</Title>
+			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
 				<OrganizationTable />
-			</Stack>
+			</DataPortalPageShell>
 		</>
 	)
 }
+// Skips BodyGrid's `my={40}` margin + centered-container width, matching Quicklink's existing pattern -
+// otherwise this page ends up narrower and offset from every other Data Portal page. See
+// docs/DataPortal/2026-Redesign/UI_elements.md, "Implementation Constraints for This Pass."
+DataPortalOrganizations.omitGrid = true
 
 export default DataPortalOrganizations
 

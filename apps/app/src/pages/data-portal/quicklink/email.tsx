@@ -42,6 +42,7 @@ import { type ApiInput, type ApiOutput, trpcServerClient } from '@weareinreach/a
 import { checkServerPermissions } from '@weareinreach/auth'
 import { Button } from '@weareinreach/ui/components/core/Button'
 import { Link } from '@weareinreach/ui/components/core/Link'
+import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { Icon } from '@weareinreach/ui/icon'
@@ -53,6 +54,11 @@ const QuickPromotionModal = dynamic(
 	() => import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal),
 	{ ssr: false }
 )
+
+const systemSideNav = {
+	heading: 'System',
+	items: [{ label: 'Quicklink', href: { pathname: '/data-portal/quicklink' as const }, active: true }],
+}
 
 const RESULTS_PER_PAGE = 20
 
@@ -401,7 +407,7 @@ const QuickLink = () => {
 		manualPagination: true,
 	})
 	return (
-		<>
+		<DataPortalPageShell activeSection='system' sideNav={systemSideNav}>
 			<Tabs value={router.pathname} onChange={handleTabChange}>
 				<Tabs.List>
 					<Tabs.Tab value='/data-portal/quicklink/phone'>Phone Numbers</Tabs.Tab>
@@ -512,7 +518,7 @@ const QuickLink = () => {
 					</Modal>
 				</>
 			)}
-		</>
+		</DataPortalPageShell>
 	)
 }
 
