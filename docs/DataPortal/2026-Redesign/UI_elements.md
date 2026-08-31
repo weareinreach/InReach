@@ -164,7 +164,26 @@ built are noted inline.
      every Data Portal page now skips `BodyGrid` consistently. This was a bug in step 3's own
      implementation, not something step 4 (page titles + result counts + dropping tables in) would have
      touched — confirmed and fixed before moving on rather than deferred.
-4. Drop each existing table into the new shell exactly as it works today, no functional changes — Reviews, Downloads, Reports, Manage Users (keeping its current Actions column), Organizations, and Quicklink (under the new System section, internal tab bar untouched). This is the point at which routing and shell issues surface, independent of any table-feature work.
+4. 🔶 **Partially done (2026-08-31)**: tables were already dropped into the shell as part of step 3
+   (routing and table content were wired together, not as a separate pass — see step 3's note). What
+   remained specific to step 4 — `PageHeading` and `ResultCount` — is now wired:
+   - `PageHeading` (title only, no action button yet) added to all five non-Quicklink pages, reusing each
+     page's existing translation key so the `<title>` tag and the on-page heading always match.
+   - `ResultCount` added _inside_ `OrganizationTable`, `ReviewTable`, `ReportTable`, and `UserTable`
+     (reading each table's own `data.total`, not lifted to page level — avoids prop-drilling since the
+     table already owns the query). Deliberately **not** added to `DownloadTable`, which is a fixed
+     button catalog with no real "total" concept, not a paginated dataset.
+   - **Organizations' action button ("Add an organization") is deliberately deferred**, not built. Reusing
+     `SuggestOrg`'s form was considered, but it currently submits to `organization.createNewSuggestion`
+     (creates a pending `Suggestion` for later review), not a live org — incompatible with a
+     "Create an Org and Continue editing" button that needs to land on that org's real edit page
+     immediately. The intended fix is wiring the reused form to `organization.createNewQuick` instead (the
+     existing, working, previously-uncalled direct-creation mutation from earlier in this project), but
+     that requires resolving a real input-shape gap first: `createNewQuick` needs a `slug` (not collected
+     by `SuggestOrg`) and a `sourceId` (need to confirm which `Source` value fits a staff-created org).
+     Task/Manage-Teams-style dual-CTA branching ("...and create a task") is explicitly out of scope
+     regardless, per earlier discussion — only the "continue editing" path is wanted.
+     Validated via `tsc`/`eslint` (both packages) and a full `storybook build`, all clean.
 
 **Phase B — layer in the new table-level elements, only once Phase A is proven working end to end:**
 
@@ -178,6 +197,10 @@ built are noted inline.
 - Rename/delete actions for a saved (non-default) view are assumed to exist but haven't been designed.
 - Figma's Admin side-nav includes a "Properties manager" link with no equivalent anywhere in the current
   codebase (confirmed via full-repo search) — its scope and purpose are undetermined.
+- Organizations' "Add an organization" action button is blocked on two small decisions: what `slug` to
+  generate from the org name (and how to handle collisions), and which `Source` value represents "created
+  by staff via the Data Portal" for `organization.createNewQuick`'s required `sourceId`. Needs resolving
+  before that button can be built — see "Suggested Build Order" step 4.
 
 ## Reference
 

@@ -23,6 +23,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+import { ResultCount } from './ResultCount'
 
 type UserDataRecord = NonNullable<ApiOutput['user']['forUserTable']>['results'][number]
 
@@ -353,6 +354,7 @@ export const UserTable = () => {
 
 	return (
 		<Stack>
+			<ResultCount count={data?.total ?? 0} />
 			<DataTable
 				data={data?.results ?? []}
 				columns={columns}

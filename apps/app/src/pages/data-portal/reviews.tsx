@@ -7,6 +7,7 @@ import { type Route, route } from 'nextjs-routes'
 
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
+import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
 import { ReviewTable } from '@weareinreach/ui/components/data-portal/ReviewTable'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -23,13 +24,15 @@ const organizationsSideNav = {
 
 const DataPortalReviews: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
+	const title = t('admin.tab-reviews', 'Reviews')
 
 	return (
 		<>
 			<Head>
-				<title>{t('page-title.base', { title: t('admin.tab-reviews', 'Reviews') })}</title>
+				<title>{t('page-title.base', { title })}</title>
 			</Head>
 			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
+				<PageHeading title={title} />
 				<ReviewTable />
 			</DataPortalPageShell>
 		</>

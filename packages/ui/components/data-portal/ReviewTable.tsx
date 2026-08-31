@@ -1,4 +1,13 @@
-import { ActionIcon, Badge, Group, type MantineTheme, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import {
+	ActionIcon,
+	Badge,
+	Group,
+	type MantineTheme,
+	Stack,
+	Text,
+	Tooltip,
+	useMantineTheme,
+} from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
@@ -14,6 +23,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+import { ResultCount } from './ResultCount'
 import { TableToolbarToggle } from './TableToolbarToggle'
 
 type ReviewRecord = ApiOutput['review']['forReviewTable']['results'][number]
@@ -389,43 +399,46 @@ export const ReviewTable = () => {
 	)
 
 	return (
-		<DataTable
-			data={data?.results ?? []}
-			columns={columns}
-			columnFilters={columnFilters}
-			onColumnFiltersChange={setColumnFilters}
-			sorting={sorting}
-			onSortingChange={setSorting}
-			globalFilter={globalFilter}
-			onGlobalFilterChange={setGlobalFilter}
-			globalFilterPlaceholder='Search Reviews'
-			pagination={pagination}
-			onPaginationChange={setPagination}
-			mode={{ serverSide: true, rowCount: data?.total ?? 0 }}
-			isLoading={isLoading}
-			isFetching={isFetching}
-			isError={isError}
-			toolbarExtra={
-				<>
-					<TableToolbarToggle
-						columnId='visible'
-						columnFilters={columnFilters}
-						setColumnFilters={setColumnFilters}
-						cycle={[undefined, true, false]}
-						label={getVisibleFilterLabel}
-						icon={getVisibleFilterIcon}
-					/>
-					<TableToolbarToggle
-						columnId='deleted'
-						columnFilters={columnFilters}
-						setColumnFilters={setColumnFilters}
-						cycle={[false, true, undefined]}
-						label={getDeletedFilterLabel}
-						icon={getDeletedFilterIcon}
-						slash={isDeletedFilterSlashed}
-					/>
-				</>
-			}
-		/>
+		<Stack gap='sm'>
+			<ResultCount count={data?.total ?? 0} />
+			<DataTable
+				data={data?.results ?? []}
+				columns={columns}
+				columnFilters={columnFilters}
+				onColumnFiltersChange={setColumnFilters}
+				sorting={sorting}
+				onSortingChange={setSorting}
+				globalFilter={globalFilter}
+				onGlobalFilterChange={setGlobalFilter}
+				globalFilterPlaceholder='Search Reviews'
+				pagination={pagination}
+				onPaginationChange={setPagination}
+				mode={{ serverSide: true, rowCount: data?.total ?? 0 }}
+				isLoading={isLoading}
+				isFetching={isFetching}
+				isError={isError}
+				toolbarExtra={
+					<>
+						<TableToolbarToggle
+							columnId='visible'
+							columnFilters={columnFilters}
+							setColumnFilters={setColumnFilters}
+							cycle={[undefined, true, false]}
+							label={getVisibleFilterLabel}
+							icon={getVisibleFilterIcon}
+						/>
+						<TableToolbarToggle
+							columnId='deleted'
+							columnFilters={columnFilters}
+							setColumnFilters={setColumnFilters}
+							cycle={[false, true, undefined]}
+							label={getDeletedFilterLabel}
+							icon={getDeletedFilterIcon}
+							slash={isDeletedFilterSlashed}
+						/>
+					</>
+				}
+			/>
+		</Stack>
 	)
 }

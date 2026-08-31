@@ -1,4 +1,4 @@
-import { Box, Group } from '@mantine/core'
+import { Box, Group, Stack } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 import { type ReactNode } from 'react'
 
@@ -35,7 +35,7 @@ export const DataPortalPageShell = ({ activeSection, sideNav, children }: DataPo
 			<Group align='flex-start' wrap='nowrap' gap={0} p='xl'>
 				<SideNav heading={sideNav.heading} items={sideNav.items} />
 				<Box style={{ flex: 1, minWidth: 0 }} pl='xl'>
-					{children}
+					<Stack gap='lg'>{children}</Stack>
 				</Box>
 			</Group>
 		</Box>

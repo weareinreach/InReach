@@ -8,6 +8,7 @@ import { type Route, route } from 'nextjs-routes'
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
 import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
+import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -23,13 +24,18 @@ const organizationsSideNav = {
 
 const DataPortalOrganizations: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
+	const title = t('admin.tab-organizations')
 
 	return (
 		<>
 			<Head>
-				<title>{t('page-title.base', { title: t('admin.tab-organizations') })}</title>
+				<title>{t('page-title.base', { title })}</title>
 			</Head>
 			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
+				{/* No action button yet - "Add an organization" needs the createNewQuick adapter work
+				    resolved first (slug generation, source selection). See docs/DataPortal/2026-Redesign/
+				    UI_elements.md, "Suggested Build Order" step 4. */}
+				<PageHeading title={title} />
 				<OrganizationTable />
 			</DataPortalPageShell>
 		</>

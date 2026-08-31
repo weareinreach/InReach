@@ -7,6 +7,7 @@ import { type Route, route } from 'nextjs-routes'
 
 import { checkPermissions, getServerSession } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
+import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
 import { UserTable } from '@weareinreach/ui/components/data-portal/UserTable'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -24,13 +25,15 @@ const adminSideNav = {
 
 const DataPortalManageUsers: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
+	const title = t('admin.tab-manage-users')
 
 	return (
 		<>
 			<Head>
-				<title>{t('page-title.base', { title: t('admin.tab-manage-users') })}</title>
+				<title>{t('page-title.base', { title })}</title>
 			</Head>
 			<DataPortalPageShell activeSection='admin' sideNav={adminSideNav}>
+				<PageHeading title={title} />
 				<UserTable />
 			</DataPortalPageShell>
 		</>
