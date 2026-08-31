@@ -306,7 +306,7 @@ export const ReviewTable = () => {
 				id: 'actions',
 				header: 'Actions',
 				pin: 'left',
-				size: 90,
+				size: 135,
 				enableSorting: false,
 				enableGlobalFilter: false,
 				hideable: false,

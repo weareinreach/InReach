@@ -51,12 +51,21 @@ this specific pass. Everything above and below should be read through it.
   leading status-indicator column, bulk-select, Saved Views) with the grayed-out-when-unbacked rule
   applying as each one lands. This keeps routing/shell risk separate from table-feature risk instead of
   debugging both at once. See "Suggested Build Order" below for the concrete sequence.
-- **Two approved exceptions to "no functional changes" landed during Phase A**: the Downloads permission
-  fix (see "Section & Side-Nav Structure for This Pass") and moving Reviews' hide/unhide control from a
-  `Switch` in a `hiddenByDefault` "Visible?" column into an eye/eye-off icon in the Actions column,
-  matching the Actions-column pattern already used elsewhere (view/edit/audit/notes on Organizations,
-  view/delete on Reviews itself). Both were small, self-contained, discovered/decided while doing the
-  routing move rather than planned up front — noted here rather than silently expanding Phase A's scope.
+- **Three approved exceptions to "no functional changes" landed during Phase A**, each small,
+  self-contained, and discovered/decided while doing the routing move rather than planned up front —
+  noted here rather than silently expanding Phase A's scope:
+  1. The Downloads permission fix (see "Section & Side-Nav Structure for This Pass").
+  2. Reviews' hide/unhide control moved from a `Switch` in a `hiddenByDefault` "Visible?" column into an
+     eye/eye-off icon in the Actions column, matching the Actions-column pattern used elsewhere
+     (view/edit/audit/notes on Organizations, view/delete on Reviews itself); the now-redundant "Visible?"
+     column was removed outright (verified safe — `DataTable`'s server-side mode uses `manualFiltering:
+true`, so the toolbar's visible/hidden filter toggle reads `columnFilters` state directly and never
+     required a matching column to exist).
+  3. Reports' two Actions-column icons were swapped from a semantically-backwards pairing
+     (`carbon:search` for the report's own triage modal, `carbon:edit` for the unrelated org-edit jump) to
+     `carbon:task-edit` for the report's own action and `carbon:edit` kept as-is for the org-edit jump —
+     `carbon:edit` is reserved for "edit an org/service" throughout the Data Portal, so the report action
+     needed a different icon rather than swapping which target got the pencil.
 
 ## The Data Portal Table Template — what already exists in code
 

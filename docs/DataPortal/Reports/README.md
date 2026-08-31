@@ -49,11 +49,19 @@ relocation pass excluded — see
 - The **status** column is color/weight-coded by how long a report has sat since
   its last update — older pending reports are visually flagged so they don't get
   missed.
-- Click **View Details** to open a report: set its **Status**
-  (Pending/Acknowledged/Resolved), toggle **User Informed**, and add an internal
-  note. **Resolving a report requires a non-empty note** — you can't mark
-  something Resolved with no explanation.
-- **Edit Target** opens the reported organization's edit page in a new tab.
+- The Actions column has two distinct icons for two distinct targets: a
+  **task-edit** icon (`carbon:task-edit`) opens _this report's_ own triage modal
+  — set its **Status** (Pending/Acknowledged/Resolved), toggle **User
+  Informed**, and add an internal note. **Resolving a report requires a
+  non-empty note** — you can't mark something Resolved with no explanation.
+  A separate pencil icon ("Edit Target," `carbon:edit`) opens the _reported
+  organization's_ own edit page in a new tab — a different record entirely.
+  (Previously both used the same icon vocabulary as "view a live record"
+  elsewhere in the Data Portal — `carbon:search` for the report action,
+  `carbon:edit` for the org jump — which read backwards, since the report
+  action is this row's primary mutation surface, not a passive view. The pencil
+  stays reserved for "edit an org/service" everywhere else in the Data Portal;
+  `task-edit` was chosen specifically to avoid colliding with that meaning.)
 - A report can be deep-linked directly via `?reportId=<id>` in the URL (e.g.
   `/data-portal/reports?reportId=<id>`), which auto-opens its details modal on
   load — via an independent lookup, not by searching whatever page of the table

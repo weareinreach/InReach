@@ -318,7 +318,7 @@ const ReportActionsCell = ({ row, theme, onSelectReport, onOpenDetails }: Report
 						onOpenDetails()
 					}}
 				>
-					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
+					<Icon icon='carbon:task-edit' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 			<Tooltip label='Edit Target'>
