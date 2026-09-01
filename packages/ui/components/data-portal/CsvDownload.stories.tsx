@@ -21,7 +21,7 @@ const getAllPublishedForCSV = getTRPCMock({
 			createdAt: new Date(2024, 0, 1),
 			updatedAt: new Date(2024, 0, 1),
 			lastVerified: new Date(2024, 0, 1),
-			published: true,
+			status: 'Published',
 			deleted: false,
 			countryCode: 'US',
 		},

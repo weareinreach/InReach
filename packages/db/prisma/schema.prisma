@@ -317,6 +317,10 @@ model Organization {
   /// suggestion/data-portal. Distinguishes a genuine public suggestion from a staff/intern/volunteer
   /// submission made through the same public form.
   creatorHadDpAccess Boolean?
+  /// Why this org is currently unpublished - null when published, or for orgs predating this field.
+  /// Set once, cleared automatically when re-published. See
+  /// docs/DataPortal/2026-Redesign/unpublished-status.md.
+  unpublishedReason  OrgUnpublishedReason?
   createdAt          DateTime                 @default(now())
   updatedAt          DateTime                 @updatedAt
   crisisResource     Boolean?
@@ -351,6 +355,7 @@ model Organization {
   @@index([attributeIds], type: Gin)
   @@index([serviceIds], type: Gin)
   @@index([published, deleted])
+  @@index([published, unpublishedReason])
   @@index([slug])
   @@index([slug, published, deleted])
   @@index([id, published(sort: Desc), deleted])
@@ -2216,6 +2221,16 @@ enum ReportStatus {
   PENDING
   ACKNOWLEDGED
   RESOLVED
+}
+
+/// First-pass values, pending final sign-off - see docs/DataPortal/2026-Redesign/unpublished-status.md.
+/// INACTIVE/UNAFFIRMING are terminal classifications, not workflow steps.
+enum OrgUnpublishedReason {
+  NEW
+  IN_PROGRESS
+  WAITING
+  INACTIVE
+  UNAFFIRMING
 }
 
 enum LocationAlertLevel {

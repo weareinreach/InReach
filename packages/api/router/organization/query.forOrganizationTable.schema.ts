@@ -22,8 +22,16 @@ const ZSortingState = z.array(
 // public." Omitted entirely = no filter ("All").
 export const ZCreateMethod = z.enum(['public', 'internal'])
 
+// Supersedes a plain `published` boolean filter - 'published' means `published: true`, every other
+// value means `published: false` AND that specific `unpublishedReason`. One filter answers "what's this
+// org's status," not two (see docs/DataPortal/2026-Redesign/unpublished-status.md). Omitted/empty = "All".
+export const ZStatusFilter = z.enum(['published', 'new', 'in-progress', 'waiting', 'inactive', 'unaffirming'])
+export type TStatusFilter = z.infer<typeof ZStatusFilter>
+
 export const ZForOrganizationTableSchema = z.object({
-	published: z.boolean().optional(),
+	// Multi-select - selecting several is a union (OR), same convention as `createMethod`/ReportTable's
+	// `issueType`.
+	status: z.array(ZStatusFilter).optional(),
 	deleted: z.boolean().optional(),
 	createMethod: ZCreateMethod.optional(),
 	search: z.string().optional(),

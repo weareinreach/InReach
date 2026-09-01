@@ -12,7 +12,7 @@ const EditModeBar = async ({ input }: TRPCHandlerParams<TEditModeBarSchema>) => 
 			case !!slug: {
 				const result = await prisma.organization.findUniqueOrThrow({
 					where: { slug },
-					select: { published: true, deleted: true, lastVerified: true },
+					select: { published: true, deleted: true, lastVerified: true, unpublishedReason: true },
 				})
 				return result
 			}
