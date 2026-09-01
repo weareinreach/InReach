@@ -2,7 +2,19 @@ import { faker } from '@faker-js/faker'
 import { type HttpHandler } from 'msw'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { OrgUnpublishedReason } from '@weareinreach/db/enums'
 import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
+
+type StatusFilterValue = 'published' | 'new' | 'in-progress' | 'waiting' | 'inactive' | 'unaffirming'
+
+// Matches STATUS_FILTER_TO_REASON in query.forOrganizationTable.handler.ts.
+const STATUS_FILTER_TO_REASON: Record<Exclude<StatusFilterValue, 'published'>, OrgUnpublishedReason> = {
+	new: OrgUnpublishedReason.NEW,
+	'in-progress': OrgUnpublishedReason.IN_PROGRESS,
+	waiting: OrgUnpublishedReason.WAITING,
+	inactive: OrgUnpublishedReason.INACTIVE,
+	unaffirming: OrgUnpublishedReason.UNAFFIRMING,
+}
 
 // Matches by parsed hostname rather than raw substring, so e.g. `notexample.org.evil.com` isn't
 // mistaken for `example.org` the way a plain `.includes()` check would.
@@ -76,12 +88,19 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 				: source.source === 'suggestion'
 					? faker.datatype.boolean(0.4)
 					: null
+		const published = faker.datatype.boolean(0.9)
+		// Null when published (matches the real handler clearing it on publish) - otherwise a realistic
+		// mix of the five reason values.
+		const unpublishedReason = published
+			? null
+			: faker.helpers.arrayElement(Object.values(OrgUnpublishedReason))
 		allResults.push({
 			id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
 			name: faker.company.name(),
 			slug: faker.lorem.slug(3),
 			lastVerified: faker.helpers.maybe(() => lastVerified, { probability: 0.9 }) ?? null,
-			published: faker.datatype.boolean(0.9),
+			published,
+			unpublishedReason,
 			deleted: faker.datatype.boolean(0.05),
 			locations: generateFakeLocations(lastVerified),
 			source,
@@ -107,15 +126,24 @@ const matchesCreateMethod = (org: ForOrgTableRow, createMethod: 'public' | 'inte
 	}
 }
 
+// Matches statusWhere in query.forOrganizationTable.handler.ts.
+const matchesStatus = (org: ForOrgTableRow, status: StatusFilterValue): boolean => {
+	if (status === 'published') {
+		return org.published
+	}
+	return !org.published && org.unpublishedReason === STATUS_FILTER_TO_REASON[status]
+}
+
 const filterFakeOrgs = (
 	orgs: ForOrgTableRow[],
-	published: boolean | undefined,
+	status: StatusFilterValue[] | undefined,
 	deleted: boolean | undefined,
 	search: string | undefined,
 	createMethod: 'public' | 'internal' | undefined
 ): ForOrgTableRow[] =>
 	orgs.filter((org) => {
-		if (published !== undefined && org.published !== published) {
+		// Multi-select - matching any one of the chosen values is enough (union/OR), same as the real handler.
+		if (status && status.length > 0 && !status.some((s) => matchesStatus(org, s))) {
 			return false
 		}
 		if (deleted !== undefined && org.deleted !== deleted) {
@@ -181,7 +209,7 @@ export const organization = {
 			const allResults = generateFakeOrgs(1000)
 			const filtered = filterFakeOrgs(
 				allResults,
-				input.published,
+				input.status,
 				input.deleted,
 				input.search,
 				input.createMethod

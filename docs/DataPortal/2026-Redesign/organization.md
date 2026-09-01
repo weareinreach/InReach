@@ -8,9 +8,8 @@ Working list of desired features for the Organization table, suggesting an org, 
 | -------------------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Add org (single)                                               | Small                          | `createNewQuick` mutation and `generateSlug` query already exist; only needs one new Source seed row + a modal reusing existing Suggest-org form components. No schema change.                                                                                                                                                                                                                          |
 | Show suggested orgs (minimal filter) — **Done**                | Small                          | Shipped as the "Create Method" toolbar dropdown (Public / Internal / All). Needed more than raw `source`: a new `creatorHadDpAccess` snapshot column, since `source === 'suggestion'` alone can't tell a genuine public submission from staff/volunteers using the same public form. See [`docs/Database/organization_creator_had_dp_access.md`](../../Database/organization_creator_had_dp_access.md). |
-| Unpublished status — Option A (reuse `InternalNote`)           | Small                          | Plumbing (`internalNote.create`/`getAllForRecord`) already exists and is already wired to orgs. No migration, but "current status" is inferred from note text rather than a real column — see Unpublished status section for trade-offs.                                                                                                                                                                |
 | Suggested Organizations queue (full field spec)                | Medium                         | Needs pulling structured fields out of `Suggestion.data` JSON, joining suggester email via `User`, surfacing "processed" — real new query/UI work beyond a simple filter.                                                                                                                                                                                                                               |
-| Unpublished status — Option B (new column)                     | Medium                         | Smallest realistic migration (one nullable column) + required-dropdown UI + table filtering wiring. Value list still pending sign-off.                                                                                                                                                                                                                                                                  |
+| Unpublished status (new column, design finalized)              | Medium                         | Smallest realistic migration (one nullable required-dropdown column) + table filtering/reporting wiring. Value list still pending sign-off from Abby Davies; backfill treatment for existing unpublished orgs also undecided. See [`unpublished-status.md`](./unpublished-status.md).                                                                                                                   |
 | Duplicate a service (clone)                                    | Medium                         | Similar shape to existing create flows, but `OrgService` fans out to multiple related records — complexity depends on how much of that fan-out needs copying.                                                                                                                                                                                                                                           |
 | Bulk add                                                       | Folded into "Add org (single)" | "Save & New" (loop the single-create form) covers the realistic case with no new infrastructure. A true spreadsheet/paste-grid or CSV import would be Big, and is deferred unless a real large-batch scenario shows up.                                                                                                                                                                                 |
 | Suggest-org: submit-with-a-note despite a match                | Medium                         | Real behavior change to public-facing code — replaces a hard block with a new path, plus a decision on where the note lands.                                                                                                                                                                                                                                                                            |
@@ -78,41 +77,7 @@ Verified all three icon names exist in this repo's Carbon icon set (`@iconify-js
 
 ## Unpublished status
 
-Replace/augment the plain `published` boolean with a status field capturing _why_ something is unpublished, not just that it is. Details from the data manager:
-
-**Purpose (two, overlapping):**
-
-1. Workflow tracking — visibility into what orgs are being worked on and how far along an intern/volunteer is.
-2. A durable record for orgs that are unpublished because they _can't_ be verified (failed vetting, inactive, unaffirming). Today these get soft-deleted just to clear them out of the active workflow view — but once hard-delete exists, that approach loses the record entirely, both for institutional memory and to keep the org from being suggested again (the duplicate-check depends on the org's rows still existing in the DB — see Suggest an org section above).
-
-**Scope:** Organizations only (not services/locations).
-
-**Field shape:** Single-select dropdown, required. Not multi-select — an org has exactly one status at a time.
-
-**Default:** Newly-suggested orgs get "New" automatically.
-
-**Who can set it:** Anyone with basic Data Portal permissions (i.e., anyone who can already edit/publish orgs) — no extra permission gate.
-
-**Status values (first pass — data manager wants to run this by Abby Davies before finalizing):**
-
-- New — default for newly-suggested orgs
-- In progress — intern/volunteer actively working the entry
-- Waiting to hear back — blocked pending a response from the org
-- Inactive — terminal
-- Unaffirming — terminal
-
-Note: Inactive/Unaffirming are end states, not workflow steps — "resolving" them isn't the goal, marking them _is_ the resolution. So this is deliberately not a ticket-status-style vocabulary (open/in review/done), since two of the five values represent a final, permanent classification rather than a step in a process.
-
-**Change history:** No bespoke history feature needed — the existing generic audit trail plus the future org-assignment/workflow feature should cover it.
-
-**Backfill for existing unpublished orgs:** Leave empty rather than spend time retroactively classifying the backlog — likely add a placeholder value like "Undetermined" or a dated tag (e.g. "Pre-[date]") to distinguish pre-feature orgs from anything left unset going forward, rather than leaving them ambiguous.
-
-**Implementation approach — two options, not yet decided:**
-
-- **Option A — reuse the existing `InternalNote` model (no migration).** `InternalNote` already has a nullable `organizationId` FK, and the query/mutation plumbing (`internalNote.getAllForRecord`, `internalNote.create`) is already built and already wired up for orgs via `InternalNotesDrawer.tsx`. The status dropdown would just create a note with a canonical text value; "current status" = the most recent matching note. Cheap to build. Trade-offs: `InternalNote` is an append-only log also used for genuine freeform staff commentary, so "current status" has to be inferred by filtering/sorting text rather than read off a column — no DB-level guarantee it's ever set (in tension with "required"), risk of a real freeform note accidentally string-matching a status label, and filtering the Organizations table by status means a join + text match instead of a simple indexed column check.
-- **Option B — one new nullable column on `Organization`** (e.g. an enum), the smallest realistic migration. Actually enforceable as required, actually indexable/filterable the same way `published`/`deleted` already are, no ambiguity with freeform notes. Costs one migration.
-
-Given the data manager's stated use case (assigning orgs to interns _based on_ status — a filtering/querying workload), Option B's structured column pays for itself quickly; Option A is the faster path if the near-term goal is just letting staff record why an org's unpublished without heavy filtering on it yet.
+Replace/augment the plain `published` boolean with a status field capturing _why_ something is unpublished, not just that it is. **Design finalized (implementation not yet started)** — full spec, decisions, and open questions moved to [`unpublished-status.md`](./unpublished-status.md).
 
 ## Previously discussed, not yet built
 

@@ -2,7 +2,7 @@ import { TRPCError } from '@trpc/server'
 
 import { addSingleKeyFromNestedFreetextCreate, buildContextUrl } from '@weareinreach/crowdin/api'
 import { generateId, generateNestedFreeText, generateUniqueSlug, getAuditedClient } from '@weareinreach/db'
-import { type SourceType } from '@weareinreach/db/enums'
+import { OrgUnpublishedReason, type SourceType } from '@weareinreach/db/enums'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateNewSuggestionSchema } from '../mutation.createNewSuggestion.schema'
@@ -147,6 +147,10 @@ export const createOrgSuggestion = async ({
 						},
 					},
 					creatorHadDpAccess,
+					// New orgs always start unpublished (both callers of this shared function - the public
+					// suggestion form and the Data Portal's Add Org modal - create with published: false),
+					// so both get the same starting workflow state.
+					unpublishedReason: OrgUnpublishedReason.NEW,
 					...(descriptionCreate && { description: descriptionCreate }),
 				},
 			})

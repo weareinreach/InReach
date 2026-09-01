@@ -1,7 +1,11 @@
 import {
 	ActionIcon,
+	type ComboboxRenderPillInput,
 	Group,
 	type MantineTheme,
+	Menu,
+	MultiSelect,
+	Pill,
 	Select,
 	Stack,
 	Text,
@@ -16,7 +20,9 @@ import { type Route } from 'nextjs-routes'
 import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { type OrgUnpublishedReason } from '@weareinreach/db/enums'
 import { Link } from '~ui/components/core/Link'
+import { REASON_LABELS, UnpublishReasonPopover } from '~ui/components/core/UnpublishReasonPopover'
 import { AuditDrawer } from '~ui/components/data-portal/AuditDrawer'
 import { InternalNotesDrawer } from '~ui/components/data-portal/InternalNotesDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -33,6 +39,31 @@ type LocationRow = RowItem['locations'][number]
 type TableRow = RowItem | LocationRow
 /** Columns the server-side query can sort by. */
 type SortableColumnId = 'name' | 'lastVerified' | 'updatedAt' | 'createdAt'
+
+/**
+ * Row action that both unpublishes-with-a-reason and re-triages the reason on an already-unpublished org -
+ * deliberately one-directional (see docs/DataPortal/2026-Redesign/unpublished-status.md): it can never
+ * re-publish. Publishing has a real public consequence (the org becomes searchable again), so that stays on
+ * the org's own edit page where the content was just reviewed, not a one-click table action.
+ */
+const SetStatusPopover = ({ row }: { row: RowItem }) => {
+	const theme = useMantineTheme()
+	const apiUtils = api.useUtils()
+
+	return (
+		<UnpublishReasonPopover
+			slug={row.slug}
+			currentReason={row.unpublishedReason as OrgUnpublishedReason | null}
+			onSuccess={() => apiUtils.organization.forOrganizationTable.invalidate()}
+		>
+			<Tooltip label='Set status'>
+				<ActionIcon variant='subtle'>
+					<Icon icon='carbon:tag' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+		</UnpublishReasonPopover>
+	)
+}
 
 const RowAction = ({
 	row,
@@ -73,20 +104,34 @@ const RowAction = ({
 					<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
-			{/* Activity log / internal notes are org-scoped only - neither drawer has a location-level
-			equivalent today, so these two actions don't appear on location sub-rows. */}
+			{/* Set Status / activity log / internal notes are org-scoped only - none of the three have a
+			location-level equivalent today, so they don't appear on location sub-rows. */}
 			{!isSubRow && (
 				<>
-					<Tooltip label='View activity log'>
-						<ActionIcon variant='subtle' onClick={handleOpenAudit}>
-							<Icon icon='carbon:time' color={theme.other.colors.primary.allyGreen} />
-						</ActionIcon>
-					</Tooltip>
-					<Tooltip label='View internal notes'>
-						<ActionIcon variant='subtle' onClick={handleOpenNotes}>
-							<Icon icon='carbon:notebook' color={theme.other.colors.primary.allyGreen} />
-						</ActionIcon>
-					</Tooltip>
+					<SetStatusPopover row={row as RowItem} />
+					{/* Audit Log and Internal Notes are used far less often than View/Edit/Set Status, so they're
+					consolidated behind a single overflow trigger rather than staying always-visible icons.
+					Default `closeOnItemClick` behavior (true) is correct here - unlike `ActionButtons/Menu.tsx`'s
+					`OverflowMenu` (which needs `false` because ITS items open their own modal after a delay,
+					risking the menu unmounting them first), `auditOpen`/`notesOpen` live on this component, not
+					inside the Menu, so closing the menu immediately doesn't affect whether the Drawer renders. */}
+					<Menu position='bottom-end' shadow='md'>
+						<Menu.Target>
+							<Tooltip label='More actions'>
+								<ActionIcon variant='subtle'>
+									<Icon icon='carbon:overflow-menu-vertical' color={theme.other.colors.primary.allyGreen} />
+								</ActionIcon>
+							</Tooltip>
+						</Menu.Target>
+						<Menu.Dropdown>
+							<Menu.Item leftSection={<Icon icon='carbon:time' />} onClick={handleOpenAudit}>
+								View activity log
+							</Menu.Item>
+							<Menu.Item leftSection={<Icon icon='carbon:notebook' />} onClick={handleOpenNotes}>
+								View internal notes
+							</Menu.Item>
+						</Menu.Dropdown>
+					</Menu>
 					{auditOpen && (
 						<AuditDrawer
 							opened={auditOpen}
@@ -208,6 +253,47 @@ const deletedFilterIcon = (): string => 'carbon:trash-can'
 
 const isDeletedFilterExcluded = (state: boolean | undefined): boolean => state === false
 
+// Options for the toolbar's Status dropdown - supersedes the old Publish Status (All/Published/
+// Unpublished) filter. Values must match ZStatusFilter in query.forOrganizationTable.schema.ts exactly
+// (lowercase, hyphenated) - deliberately NOT built from REASON_OPTIONS, which uses the raw
+// OrgUnpublishedReason enum keys ('NEW', 'IN_PROGRESS', ...) for the popover's own mutation input. Those
+// are two different vocabularies that happen to share labels; conflating them sends the wrong value.
+// "All" is a real, exclusive option here (not a placeholder) - selecting it clears any other selection,
+// and selecting a real status while "All" is active drops "All." Never sent to the backend as a filter
+// value itself - it just means the columnFilters entry for 'status' is empty/absent.
+const STATUS_FILTER_OPTIONS = [
+	{ value: 'all', label: 'All' },
+	{ value: 'published', label: 'Published' },
+	{ value: 'new', label: 'New' },
+	{ value: 'in-progress', label: 'In progress' },
+	{ value: 'waiting', label: 'Waiting to hear back' },
+	{ value: 'inactive', label: 'Inactive' },
+	{ value: 'unaffirming', label: 'Unaffirming' },
+]
+
+/**
+ * Custom pill renderer for the Status MultiSelect. `Pill`'s own remove button is a plain `CloseButton` with
+ * no size override, so it inherits the app-wide theme default - a hardcoded 24px icon (`theme/common.tsx`'s
+ * `CloseButton.defaultProps`, sized for contexts like Modal/Drawer close buttons) that's wildly oversized for
+ * a small inline pill. Overriding `removeButtonProps.icon` (and explicitly nulling `children`, since the
+ * theme default sets `children` specifically, not `icon`) replaces it with a properly small one instead of
+ * trying to fight it via CSS.
+ */
+const renderStatusPill = ({ option, onRemove }: ComboboxRenderPillInput) => (
+	<Pill
+		size='xs'
+		withRemoveButton
+		onRemove={onRemove}
+		removeButtonProps={{
+			icon: <Icon icon='carbon:close' width={10} height={10} />,
+			children: null,
+			style: { minWidth: 16, width: 16, height: 16 },
+		}}
+	>
+		{option.label}
+	</Pill>
+)
+
 // Options for the toolbar's Create Method dropdown - see createMethodWhere in
 // query.forOrganizationTable.handler.ts for how each category maps to source/creatorHadDpAccess.
 // 'internal' unions suggested-with-access and data-portal-added - both mean "not the public."
@@ -242,6 +328,22 @@ const COMPACT_SELECT_STYLES = {
 	label: { fontSize: 'var(--mantine-font-size-xs)' },
 }
 
+// Same idea as COMPACT_SELECT_STYLES, but for the Status MultiSelect specifically. The app-wide theme
+// hardcodes a real `height: 48px` CSS rule on every input (theme/components/Input.module.css) - omitting
+// an explicit `height` override here (as a first pass did) leaves that rule in charge, since `minHeight`
+// alone never wins against an already-larger fixed `height` from another source. `height: 'auto'`
+// explicitly hands control back to the content, so the box matches the plain Select at rest and actually
+// grows to show every wrapped pill instead of clipping at a fixed height.
+const COMPACT_MULTISELECT_STYLES = {
+	input: { height: 'auto', minHeight: 30, fontSize: 'var(--mantine-font-size-xs)', padding: '2px 8px' },
+	label: { fontSize: 'var(--mantine-font-size-xs)' },
+	// `Pill` defaults its own `size` to 'sm' regardless of the MultiSelect's `size='xs'` - it doesn't
+	// inherit automatically. The remove ("X") button's icon is sized in `em` units relative to the
+	// pill's own font-size, so without this it renders noticeably larger than xs-sized content
+	// elsewhere (e.g. the selected-option checkmark in the dropdown, which does scale with size).
+	pill: { fontSize: 'var(--mantine-font-size-xs)' },
+}
+
 /**
  * The org directory's system-of-record table - publish status, verification date, deletion flag, and each
  * org's locations. Filtering, sorting, and pagination all run server-side (`forOrganizationTable`).
@@ -256,7 +358,10 @@ export const OrganizationTable = () => {
 	const [sorting, setSorting] = useState<SortingState>([{ id: 'name', desc: false }])
 	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
 
-	const publishedFilter = columnFilters.find(({ id }) => id === 'published')?.value as boolean | undefined
+	// Matches ZStatusFilter in query.forOrganizationTable.schema.ts - multi-select, so several chosen
+	// values union (OR); this only filters which orgs show up, never sets more than one status on an org.
+	const statusFilter = columnFilters.find(({ id }) => id === 'status')?.value as
+		('published' | 'new' | 'in-progress' | 'waiting' | 'inactive' | 'unaffirming')[] | undefined
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 	const createMethodFilter = columnFilters.find(({ id }) => id === 'createMethod')?.value as
 		'public' | 'internal' | undefined
@@ -265,7 +370,7 @@ export const OrganizationTable = () => {
 
 	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(
 		{
-			published: publishedFilter,
+			status: statusFilter,
 			deleted: deletedFilter,
 			createMethod: createMethodFilter,
 			search: debouncedGlobalFilter || undefined,
@@ -312,6 +417,19 @@ export const OrganizationTable = () => {
 				cell: createNameCell({ variants }),
 			},
 			{
+				// Derived, not stored - reads published/unpublishedReason straight off the row. Supersedes the
+				// old hidden 'published' column entirely; see the toolbar's Status filter below.
+				id: 'status',
+				header: 'Status',
+				size: 160,
+				enableSorting: false,
+				cell: ({ row }) => {
+					const org = row as RowItem
+					if (org.published) return 'Published'
+					return org.unpublishedReason ? REASON_LABELS[org.unpublishedReason] : ''
+				},
+			},
+			{
 				id: 'id',
 				header: 'ID',
 				size: 220,
@@ -339,20 +457,6 @@ export const OrganizationTable = () => {
 				size: 150,
 				filter: { type: 'date-range' },
 				cell: DateCell,
-			},
-			{
-				id: 'published',
-				header: 'Published',
-				hiddenByDefault: true,
-				enableSorting: false,
-				cell: ({ value }) => (value === undefined ? '' : String(value)),
-			},
-			{
-				id: 'deleted',
-				header: 'Deleted',
-				hiddenByDefault: true,
-				enableSorting: false,
-				cell: ({ value }) => (value === undefined ? '' : String(value)),
 			},
 			{
 				// Display-only - the actual filter is a standalone toolbar dropdown (see toolbarExtra
@@ -401,26 +505,32 @@ export const OrganizationTable = () => {
 				getRowStyle={getOrgTableRowStyle}
 				toolbarExtra={
 					<>
-						<Select
+						<MultiSelect
 							size='xs'
-							label='Publish Status'
-							styles={COMPACT_SELECT_STYLES}
-							data={[
-								{ value: 'all', label: 'All' },
-								{ value: 'published', label: 'Published' },
-								{ value: 'unpublished', label: 'Unpublished' },
-							]}
-							value={publishedFilter === undefined ? 'all' : publishedFilter ? 'published' : 'unpublished'}
+							label='Status'
+							styles={COMPACT_MULTISELECT_STYLES}
+							data={STATUS_FILTER_OPTIONS}
+							value={statusFilter?.length ? statusFilter : ['all']}
 							onChange={(next) => {
 								setColumnFilters((prev) => {
-									const withoutPublished = prev.filter(({ id }) => id !== 'published')
-									if (next === 'published') return [...withoutPublished, { id: 'published', value: true }]
-									if (next === 'unpublished') return [...withoutPublished, { id: 'published', value: false }]
-									return withoutPublished
+									const withoutStatus = prev.filter(({ id }) => id !== 'status')
+									const wasShowingAll = !statusFilter?.length
+									// "All" is exclusive: picking it while real statuses were selected clears them;
+									// picking a real status while "All" was showing drops "All."
+									const resolved =
+										next.includes('all') && next.length > 1
+											? wasShowingAll
+												? next.filter((v) => v !== 'all')
+												: ['all']
+											: next
+									const realValues = resolved.filter((v) => v !== 'all')
+									return realValues.length > 0
+										? [...withoutStatus, { id: 'status', value: realValues }]
+										: withoutStatus
 								})
 							}}
-							allowDeselect={false}
-							w={110}
+							renderPill={renderStatusPill}
+							w={190}
 						/>
 						<Select
 							size='xs'

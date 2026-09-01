@@ -1,9 +1,10 @@
 import compact from 'just-compact'
 
 import { Prisma, prisma } from '@weareinreach/db'
+import { OrgUnpublishedReason } from '@weareinreach/db/enums'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TForOrganizationTableSchema } from './query.forOrganizationTable.schema'
+import { type TForOrganizationTableSchema, type TStatusFilter } from './query.forOrganizationTable.schema'
 
 // 'public' = suggested AND the submitter had no Data Portal access. 'internal' unions the other two real
 // origins (suggested by someone WITH access, or added directly via the Data Portal) - both mean "not
@@ -23,6 +24,33 @@ const createMethodWhere = (
 			}
 		default:
 			return undefined
+	}
+}
+
+// Maps the hyphenated filter/UI value to the actual Prisma enum member.
+const STATUS_FILTER_TO_REASON: Record<Exclude<TStatusFilter, 'published'>, OrgUnpublishedReason> = {
+	new: OrgUnpublishedReason.NEW,
+	'in-progress': OrgUnpublishedReason.IN_PROGRESS,
+	waiting: OrgUnpublishedReason.WAITING,
+	inactive: OrgUnpublishedReason.INACTIVE,
+	unaffirming: OrgUnpublishedReason.UNAFFIRMING,
+}
+
+// Supersedes a plain `published` boolean filter - 'published' means `published: true`; every other
+// value means `published: false` AND that specific `unpublishedReason`. Multi-select: several chosen
+// values union (OR) - this filters which orgs show up, it never sets more than one status on an org.
+const statusWhere = (
+	status: TForOrganizationTableSchema['status']
+): Prisma.OrganizationWhereInput | undefined => {
+	if (!status || status.length === 0) {
+		return undefined
+	}
+	return {
+		OR: status.map((s) =>
+			s === 'published'
+				? { published: true }
+				: { published: false, unpublishedReason: STATUS_FILTER_TO_REASON[s] }
+		),
 	}
 }
 
@@ -47,12 +75,14 @@ const ORG_SELECT = {
 	locations: { select: LOCATIONS_SELECT },
 	source: { select: { source: true } },
 	creatorHadDpAccess: true,
+	unpublishedReason: true,
 } satisfies Prisma.OrganizationSelect
 
 const buildWhere = (input: TForOrganizationTableSchema): Prisma.OrganizationWhereInput => {
 	const where: Prisma.OrganizationWhereInput = {}
-	if (input.published !== undefined) {
-		where.published = input.published
+	const statusClause = statusWhere(input.status)
+	if (statusClause) {
+		Object.assign(where, statusClause)
 	}
 	if (input.deleted !== undefined) {
 		where.deleted = input.deleted
@@ -112,6 +142,20 @@ const createMethodSqlCondition = (
 	}
 }
 
+// SQL equivalent of statusWhere, for the raw-SQL search path below - `o` (the Organization row) is
+// already in scope by the time this is used. Same multi-select union as statusWhere.
+const statusSqlCondition = (status: TForOrganizationTableSchema['status']): Prisma.Sql | undefined => {
+	if (!status || status.length === 0) {
+		return undefined
+	}
+	const clauses = status.map((s) =>
+		s === 'published'
+			? Prisma.sql`o.published = true`
+			: Prisma.sql`(o.published = false AND o."unpublishedReason" = ${STATUS_FILTER_TO_REASON[s]}::"OrgUnpublishedReason")`
+	)
+	return Prisma.sql`(${Prisma.join(clauses, ' OR ')})`
+}
+
 /**
  * Same synonym-cluster expansion as query.searchName.handler.ts / query.getPotentialMatches.handler.ts: pull
  * any SearchSynonym cluster containing a word from the search term, so e.g. a configured synonym for "trans"
@@ -155,8 +199,9 @@ const searchIds = async (
 			OR o.id ILIKE ${`%${input.search}%`}
 		)`,
 	]
-	if (input.published !== undefined) {
-		conditions.push(Prisma.sql`o.published = ${input.published}`)
+	const statusCondition = statusSqlCondition(input.status)
+	if (statusCondition) {
+		conditions.push(statusCondition)
 	}
 	if (input.deleted !== undefined) {
 		conditions.push(Prisma.sql`o.deleted = ${input.deleted}`)
