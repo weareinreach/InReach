@@ -58,6 +58,24 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 		const lastVerified = faker.date.past()
 		const updatedAt = faker.date.past({ refDate: lastVerified })
 		const createdAt = faker.date.past({ refDate: updatedAt })
+		// Organization.source is a required relation (never null) - most fixtures get a realistic
+		// non-suggestion source, some get 'suggestion'/'data-portal' to demo the new filter/column.
+		const source = faker.helpers.arrayElement([
+			{ source: 'migration' },
+			{ source: 'migration' },
+			{ source: 'migration' },
+			{ source: 'spreadsheet upload' },
+			{ source: 'suggestion' },
+			{ source: 'data-portal' },
+		])
+		// Snapshotted at creation time in real usage - data-portal orgs are always staff (permission-gated
+		// at the mutation itself), suggestion orgs are a realistic mix, everything else is null (n/a).
+		const creatorHadDpAccess =
+			source.source === 'data-portal'
+				? true
+				: source.source === 'suggestion'
+					? faker.datatype.boolean(0.4)
+					: null
 		allResults.push({
 			id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
 			name: faker.company.name(),
@@ -66,6 +84,8 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 			published: faker.datatype.boolean(0.9),
 			deleted: faker.datatype.boolean(0.05),
 			locations: generateFakeLocations(lastVerified),
+			source,
+			creatorHadDpAccess,
 			updatedAt,
 			createdAt,
 		})
@@ -73,11 +93,26 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 	return allResults
 }
 
+// Same categories/semantics as createMethodWhere in query.forOrganizationTable.handler.ts. 'internal'
+// unions suggested-with-access and data-portal-added - both mean "not the public."
+const matchesCreateMethod = (org: ForOrgTableRow, createMethod: 'public' | 'internal'): boolean => {
+	switch (createMethod) {
+		case 'public':
+			return org.source?.source === 'suggestion' && org.creatorHadDpAccess === false
+		case 'internal':
+			return (
+				(org.source?.source === 'suggestion' && org.creatorHadDpAccess === true) ||
+				org.source?.source === 'data-portal'
+			)
+	}
+}
+
 const filterFakeOrgs = (
 	orgs: ForOrgTableRow[],
 	published: boolean | undefined,
 	deleted: boolean | undefined,
-	search: string | undefined
+	search: string | undefined,
+	createMethod: 'public' | 'internal' | undefined
 ): ForOrgTableRow[] =>
 	orgs.filter((org) => {
 		if (published !== undefined && org.published !== published) {
@@ -87,6 +122,9 @@ const filterFakeOrgs = (
 			return false
 		}
 		if (search && !org.name.toLowerCase().includes(search.toLowerCase())) {
+			return false
+		}
+		if (createMethod && !matchesCreateMethod(org, createMethod)) {
 			return false
 		}
 		return true
@@ -141,7 +179,13 @@ export const organization = {
 		path: ['organization', 'forOrganizationTable'],
 		response: (input) => {
 			const allResults = generateFakeOrgs(1000)
-			const filtered = filterFakeOrgs(allResults, input.published, input.deleted, input.search)
+			const filtered = filterFakeOrgs(
+				allResults,
+				input.published,
+				input.deleted,
+				input.search,
+				input.createMethod
+			)
 			const sorting = input.sorting?.length ? input.sorting : [{ id: 'name' as const, desc: false }]
 			const sorted = sortFakeOrgs(filtered, sorting)
 

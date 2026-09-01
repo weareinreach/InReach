@@ -5,6 +5,27 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForOrganizationTableSchema } from './query.forOrganizationTable.schema'
 
+// 'public' = suggested AND the submitter had no Data Portal access. 'internal' unions the other two real
+// origins (suggested by someone WITH access, or added directly via the Data Portal) - both mean "not
+// actually the public," regardless of which of the two forms was used.
+const createMethodWhere = (
+	createMethod: TForOrganizationTableSchema['createMethod']
+): Prisma.OrganizationWhereInput | undefined => {
+	switch (createMethod) {
+		case 'public':
+			return { source: { source: 'suggestion' }, creatorHadDpAccess: false }
+		case 'internal':
+			return {
+				OR: [
+					{ source: { source: 'suggestion' }, creatorHadDpAccess: true },
+					{ source: { source: 'data-portal' } },
+				],
+			}
+		default:
+			return undefined
+	}
+}
+
 const LOCATIONS_SELECT = {
 	id: true,
 	name: true,
@@ -24,6 +45,8 @@ const ORG_SELECT = {
 	published: true,
 	deleted: true,
 	locations: { select: LOCATIONS_SELECT },
+	source: { select: { source: true } },
+	creatorHadDpAccess: true,
 } satisfies Prisma.OrganizationSelect
 
 const buildWhere = (input: TForOrganizationTableSchema): Prisma.OrganizationWhereInput => {
@@ -33,6 +56,10 @@ const buildWhere = (input: TForOrganizationTableSchema): Prisma.OrganizationWher
 	}
 	if (input.deleted !== undefined) {
 		where.deleted = input.deleted
+	}
+	const createMethodClause = createMethodWhere(input.createMethod)
+	if (createMethodClause) {
+		Object.assign(where, createMethodClause)
 	}
 	if (input.lastVerified) {
 		where.lastVerified = { gte: input.lastVerified.from, lte: input.lastVerified.to }
@@ -68,6 +95,21 @@ const normalize = (fragment: Prisma.Sql) =>
 interface SearchRow {
 	id: string
 	total: bigint
+}
+
+// SQL equivalent of createMethodWhere, for the raw-SQL search path below - `src` (the joined Source row)
+// and `o."creatorHadDpAccess"` are both already in scope by the time this is used.
+const createMethodSqlCondition = (
+	createMethod: TForOrganizationTableSchema['createMethod']
+): Prisma.Sql | undefined => {
+	switch (createMethod) {
+		case 'public':
+			return Prisma.sql`(src.source = 'suggestion' AND o."creatorHadDpAccess" = false)`
+		case 'internal':
+			return Prisma.sql`((src.source = 'suggestion' AND o."creatorHadDpAccess" = true) OR src.source = 'data-portal')`
+		default:
+			return undefined
+	}
 }
 
 /**
@@ -137,6 +179,10 @@ const searchIds = async (
 	if (input.createdAt?.to) {
 		conditions.push(Prisma.sql`o."createdAt" <= ${input.createdAt.to}`)
 	}
+	const createMethodCondition = createMethodSqlCondition(input.createMethod)
+	if (createMethodCondition) {
+		conditions.push(createMethodCondition)
+	}
 
 	// While actively searching, relevance wins over any user-selected column sort — a fuzzy match's rank is
 	// the point, not this org's alphabetical position.
@@ -146,6 +192,7 @@ const searchIds = async (
 			count(*) OVER() as total,
 			similarity(${normalize(Prisma.sql`o.name`)}, ${normalize(Prisma.sql`${input.search}::text`)}) as score
 		FROM "Organization" o
+		LEFT JOIN "Source" src ON src.id = o."sourceId"
 		WHERE ${Prisma.join(conditions, ' AND ')}
 		ORDER BY score DESC, o.name ASC, o.id ASC
 		LIMIT ${input.take}

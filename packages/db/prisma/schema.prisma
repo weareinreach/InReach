@@ -312,6 +312,11 @@ model Organization {
   published          Boolean                  @default(false)
   lastVerified       DateTime?
   sourceId           String
+  /// Snapshotted at creation time (not recomputed later) - did the creator hold any Data Portal
+  /// permission when they submitted this? Null for orgs predating this field or not created via
+  /// suggestion/data-portal. Distinguishes a genuine public suggestion from a staff/intern/volunteer
+  /// submission made through the same public form.
+  creatorHadDpAccess Boolean?
   createdAt          DateTime                 @default(now())
   updatedAt          DateTime                 @updatedAt
   crisisResource     Boolean?

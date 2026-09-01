@@ -1,4 +1,13 @@
-import { ActionIcon, Group, type MantineTheme, Stack, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import {
+	ActionIcon,
+	Group,
+	type MantineTheme,
+	Select,
+	Stack,
+	Text,
+	Tooltip,
+	useMantineTheme,
+} from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
@@ -185,26 +194,6 @@ const getOrgTableRowStyle = (row: TableRow) => ({
 	textDecoration: (row as RowItem).deleted ? 'line-through' : undefined,
 })
 
-const publishedFilterLabel = (state: boolean | undefined): string => {
-	if (state) {
-		return 'Show only unpublished'
-	}
-	if (state === undefined) {
-		return 'Show only published'
-	}
-	return 'Show all'
-}
-
-const publishedFilterIcon = (state: boolean | undefined): string => {
-	if (state) {
-		return 'carbon:view-filled'
-	}
-	if (state === undefined) {
-		return 'carbon:view'
-	}
-	return 'carbon:view-off-filled'
-}
-
 const deletedFilterLabel = (state: boolean | undefined): string => {
 	if (state) {
 		return 'Show all'
@@ -218,6 +207,39 @@ const deletedFilterLabel = (state: boolean | undefined): string => {
 const deletedFilterIcon = (): string => 'carbon:trash-can'
 
 const isDeletedFilterExcluded = (state: boolean | undefined): boolean => state === false
+
+// Options for the toolbar's Create Method dropdown - see createMethodWhere in
+// query.forOrganizationTable.handler.ts for how each category maps to source/creatorHadDpAccess.
+// 'internal' unions suggested-with-access and data-portal-added - both mean "not the public."
+const CREATE_METHOD_OPTIONS = [
+	{ value: 'all', label: 'All' },
+	{ value: 'public', label: 'Public' },
+	{ value: 'internal', label: 'Internal' },
+]
+
+const CREATE_METHOD_HELP_TEXT =
+	'All: every organization. Public: submitted through the public suggestion form by someone without ' +
+	'Data Portal access. Internal: submitted by staff/volunteers with Data Portal access, or added ' +
+	'directly through the Data Portal.'
+
+const CreateMethodLabel = () => (
+	<Group gap={4} wrap='nowrap'>
+		<span>Create Method</span>
+		<Tooltip label={CREATE_METHOD_HELP_TEXT} multiline w={260}>
+			<Icon icon='carbon:information' width={14} height={14} style={{ cursor: 'help' }} />
+		</Tooltip>
+	</Group>
+)
+
+// The app-wide Input/InputWrapper theme defaults hardcode a 48px height / 16px input font and a 16px
+// label font on every field regardless of `size` (see theme/components/Input.module.css and
+// InputWrapper.module.css) - fine for real form fields, but it defeats `size='xs'` on these two compact
+// toolbar filters. Override just the input and label slots here rather than touching the global default,
+// which other inputs rely on.
+const COMPACT_SELECT_STYLES = {
+	input: { height: 30, minHeight: 30, fontSize: 'var(--mantine-font-size-xs)', padding: '0 8px' },
+	label: { fontSize: 'var(--mantine-font-size-xs)' },
+}
 
 /**
  * The org directory's system-of-record table - publish status, verification date, deletion flag, and each
@@ -235,6 +257,8 @@ export const OrganizationTable = () => {
 
 	const publishedFilter = columnFilters.find(({ id }) => id === 'published')?.value as boolean | undefined
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
+	const createMethodFilter = columnFilters.find(({ id }) => id === 'createMethod')?.value as
+		'public' | 'internal' | undefined
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
@@ -242,6 +266,7 @@ export const OrganizationTable = () => {
 		{
 			published: publishedFilter,
 			deleted: deletedFilter,
+			createMethod: createMethodFilter,
 			search: debouncedGlobalFilter || undefined,
 			lastVerified: dateFilter('lastVerified')
 				? { from: dateFilter('lastVerified')?.[0], to: dateFilter('lastVerified')?.[1] }
@@ -328,6 +353,26 @@ export const OrganizationTable = () => {
 				enableSorting: false,
 				cell: ({ value }) => (value === undefined ? '' : String(value)),
 			},
+			{
+				// Display-only - the actual filter is a standalone toolbar dropdown (see toolbarExtra
+				// below), not this column's own header filter, since hiddenByDefault columns don't render
+				// a header at all (so a column-scoped filter icon would be just as hidden as the column).
+				id: 'createMethod',
+				header: 'Create Method',
+				hiddenByDefault: true,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				// Matches the toolbar filter's own two categories - same source/creatorHadDpAccess logic as
+				// createMethodWhere in query.forOrganizationTable.handler.ts.
+				cell: ({ row }) => {
+					const org = row as RowItem
+					if (org.source?.source === 'data-portal') return 'Internal'
+					if (org.source?.source === 'suggestion') {
+						return org.creatorHadDpAccess ? 'Internal' : 'Public'
+					}
+					return ''
+				},
+			},
 		],
 		[variants, theme]
 	)
@@ -355,13 +400,43 @@ export const OrganizationTable = () => {
 				getRowStyle={getOrgTableRowStyle}
 				toolbarExtra={
 					<>
-						<TableToolbarToggle
-							columnId='published'
-							columnFilters={columnFilters}
-							setColumnFilters={setColumnFilters}
-							cycle={[undefined, true, false]}
-							label={publishedFilterLabel}
-							icon={publishedFilterIcon}
+						<Select
+							size='xs'
+							label='Publish Status'
+							styles={COMPACT_SELECT_STYLES}
+							data={[
+								{ value: 'all', label: 'All' },
+								{ value: 'published', label: 'Published' },
+								{ value: 'unpublished', label: 'Unpublished' },
+							]}
+							value={publishedFilter === undefined ? 'all' : publishedFilter ? 'published' : 'unpublished'}
+							onChange={(next) => {
+								setColumnFilters((prev) => {
+									const withoutPublished = prev.filter(({ id }) => id !== 'published')
+									if (next === 'published') return [...withoutPublished, { id: 'published', value: true }]
+									if (next === 'unpublished') return [...withoutPublished, { id: 'published', value: false }]
+									return withoutPublished
+								})
+							}}
+							allowDeselect={false}
+							w={110}
+						/>
+						<Select
+							size='xs'
+							label={<CreateMethodLabel />}
+							styles={COMPACT_SELECT_STYLES}
+							data={CREATE_METHOD_OPTIONS}
+							value={createMethodFilter ?? 'all'}
+							onChange={(next) => {
+								setColumnFilters((prev) => {
+									const withoutCreateMethod = prev.filter(({ id }) => id !== 'createMethod')
+									return next === 'public' || next === 'internal'
+										? [...withoutCreateMethod, { id: 'createMethod', value: next }]
+										: withoutCreateMethod
+								})
+							}}
+							allowDeselect={false}
+							w={110}
 						/>
 						<TableToolbarToggle
 							columnId='deleted'
