@@ -68,6 +68,12 @@ const EditModeBar = () => {
 		displayText: `Published status has been set to: ${!data?.published}`,
 		icon: 'success',
 	})
+	// Distinct from publishedNotification - this fires when only the unpublished reason changes (the org
+	// stays unpublished throughout), so "Published status has been set to..." would be actively wrong here.
+	const statusUpdatedNotification = useNewNotification({
+		displayText: 'Unpublished reason has been updated.',
+		icon: 'success',
+	})
 	const publish = api.component.EditModeBarPublish.useMutation({
 		onSuccess: () => {
 			apiUtils.location.invalidate()
@@ -195,6 +201,29 @@ const EditModeBar = () => {
 							{t(data?.published ? 'words.unpublish' : 'words.publish')}
 						</Group>
 					</UnstyledButton>
+				)}
+				{/* Re-triaging an already-unpublished org's reason shouldn't require cycling through
+				Publish -> Unpublish first (which would briefly, actually publish it, and log a misleading "set
+				to Published" note). Same popover as Unpublish above, but never touches `published`. */}
+				{apiQuery.slug && data?.published === false && (
+					<UnpublishReasonPopover
+						slug={apiQuery.slug}
+						currentReason={
+							(data as { unpublishedReason?: OrgUnpublishedReason | null } | undefined)?.unpublishedReason
+						}
+						onSuccess={() => {
+							apiUtils.organization.invalidate()
+							apiUtils.component.EditModeBar.invalidate()
+							statusUpdatedNotification()
+						}}
+					>
+						<UnstyledButton disabled={isRemoteServicesRoute} className={classes.editBarButtonText}>
+							<Group wrap='nowrap' gap={8}>
+								<Icon icon='carbon:tag' height={20} />
+								{t('words.set-status')}
+							</Group>
+						</UnstyledButton>
+					</UnpublishReasonPopover>
 				)}
 				<UnstyledButton
 					disabled={isRemoteServicesRoute}
