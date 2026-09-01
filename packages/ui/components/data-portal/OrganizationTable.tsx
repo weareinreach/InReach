@@ -1,9 +1,11 @@
 import {
 	ActionIcon,
+	type ComboboxRenderPillInput,
 	Group,
 	type MantineTheme,
 	Menu,
 	MultiSelect,
+	Pill,
 	Select,
 	Stack,
 	Text,
@@ -269,6 +271,29 @@ const STATUS_FILTER_OPTIONS = [
 	{ value: 'unaffirming', label: 'Unaffirming' },
 ]
 
+/**
+ * Custom pill renderer for the Status MultiSelect. `Pill`'s own remove button is a plain `CloseButton` with
+ * no size override, so it inherits the app-wide theme default - a hardcoded 24px icon (`theme/common.tsx`'s
+ * `CloseButton.defaultProps`, sized for contexts like Modal/Drawer close buttons) that's wildly oversized for
+ * a small inline pill. Overriding `removeButtonProps.icon` (and explicitly nulling `children`, since the
+ * theme default sets `children` specifically, not `icon`) replaces it with a properly small one instead of
+ * trying to fight it via CSS.
+ */
+const renderStatusPill = ({ option, onRemove }: ComboboxRenderPillInput) => (
+	<Pill
+		size='xs'
+		withRemoveButton
+		onRemove={onRemove}
+		removeButtonProps={{
+			icon: <Icon icon='carbon:close' width={10} height={10} />,
+			children: null,
+			style: { minWidth: 16, width: 16, height: 16 },
+		}}
+	>
+		{option.label}
+	</Pill>
+)
+
 // Options for the toolbar's Create Method dropdown - see createMethodWhere in
 // query.forOrganizationTable.handler.ts for how each category maps to source/creatorHadDpAccess.
 // 'internal' unions suggested-with-access and data-portal-added - both mean "not the public."
@@ -504,6 +529,7 @@ export const OrganizationTable = () => {
 										: withoutStatus
 								})
 							}}
+							renderPill={renderStatusPill}
 							w={190}
 						/>
 						<Select
