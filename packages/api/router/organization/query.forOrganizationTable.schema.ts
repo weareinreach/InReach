@@ -16,9 +16,16 @@ const ZSortingState = z.array(
 	})
 )
 
+// Doesn't map to one literal DB column. 'public' = source.source === 'suggestion' AND
+// creatorHadDpAccess === false. 'internal' is a union of the other two real origins: suggested by
+// someone with Data Portal access, OR added directly via the Data Portal - both mean "not actually the
+// public." Omitted entirely = no filter ("All").
+export const ZCreateMethod = z.enum(['public', 'internal'])
+
 export const ZForOrganizationTableSchema = z.object({
 	published: z.boolean().optional(),
 	deleted: z.boolean().optional(),
+	createMethod: ZCreateMethod.optional(),
 	search: z.string().optional(),
 	lastVerified: ZDateRange.optional(),
 	updatedAt: ZDateRange.optional(),

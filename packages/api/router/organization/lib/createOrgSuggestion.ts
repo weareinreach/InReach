@@ -17,6 +17,41 @@ const normalizeToDomain = (url: string) =>
 		.replace(/^www\./, '')
 		.split(/[/?#]/)[0] ?? ''
 
+const DATA_PORTAL_PERMISSIONS = [
+	'dataPortalBasic',
+	'dataPortalManager',
+	'dataPortalAdmin',
+	'root',
+	'sysadmin',
+	'system',
+]
+
+// Mirrors packages/auth/lib/genUserSession.ts's exact permission derivation (both the role-derived path
+// and the direct-grant path, no authorized/active filtering) - that's what actually gates real Data
+// Portal login access, so it's the correct definition of "did this person have access" for snapshotting
+// at creation time. Not imported directly from packages/auth since that function is keyed by email and
+// builds a full NextAuth session object; this only needs a boolean for a known userId.
+const hasDataPortalAccess = async (
+	prisma: ReturnType<typeof getAuditedClient>,
+	userId: string
+): Promise<boolean> => {
+	const user = await prisma.user.findUnique({
+		where: { id: userId },
+		select: {
+			roles: {
+				select: { role: { select: { permissions: { select: { permission: { select: { name: true } } } } } } },
+			},
+			permissions: { select: { permission: { select: { name: true } } } },
+		},
+	})
+	if (!user) return false
+	const permissionNames = new Set([
+		...user.roles.flatMap(({ role }) => role.permissions.map(({ permission }) => permission.name)),
+		...user.permissions.map(({ permission }) => permission.name),
+	])
+	return DATA_PORTAL_PERMISSIONS.some((p) => permissionNames.has(p))
+}
+
 interface CreateOrgSuggestionParams extends TRPCHandlerParams<TCreateNewSuggestionSchema, 'protected'> {
 	/** The `Source.source` value to tag the created org with (e.g. 'suggestion', 'data-portal'). */
 	sourceValue: string
@@ -73,6 +108,12 @@ export const createOrgSuggestion = async ({
 		? undefined
 		: await generateUniqueSlug({ name: orgName, id: organizationId })
 
+	// Snapshotted once, at creation time, not recomputed on later reads - a submitter's access can change
+	// after the fact (interns/volunteers rotate in and out), and "did they have access when they actually
+	// submitted this" is the correct question for distinguishing a real public suggestion from staff/an
+	// intern using the public form because the Data Portal's own Add Org modal didn't exist yet.
+	const creatorHadDpAccess = existingOrgId ? undefined : await hasDataPortalAccess(prisma, ctx.actorId)
+
 	// Crowdin sync (a network call to a third party) must happen outside the DB transaction below - Prisma
 	// interactive transactions have a ~5s timeout, and holding one open across an external API call risks
 	// "Transaction already closed" once Crowdin is slow to respond. Same constraint createNewQuick's
@@ -105,6 +146,7 @@ export const createOrgSuggestion = async ({
 							create: { source: sourceValue, type: sourceType },
 						},
 					},
+					creatorHadDpAccess,
 					...(descriptionCreate && { description: descriptionCreate }),
 				},
 			})
