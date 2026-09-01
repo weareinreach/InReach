@@ -14,6 +14,7 @@ const locations = {
 
 const organizations = {
 	createNewOrgQuick: 'createOrg',
+	createOrgFromDataPortal: 'createOrg',
 	attachOrgAttributes: ['editTeamOrg', 'editAnyOrg', 'editSingleOrg'],
 	dataPortalManager: 'dataPortalManager',
 } satisfies PermissionDefs

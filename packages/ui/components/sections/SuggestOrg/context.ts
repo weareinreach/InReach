@@ -16,6 +16,8 @@ export interface SuggestionForm {
 	}
 	serviceCategories?: string[]
 	communityFocus?: string[]
+	/** `variant: 'dataPortal'` only - not part of the public suggestion schema, not sent by the public form. */
+	description?: string
 
 	//supportive data
 	// communityParent?: string[]

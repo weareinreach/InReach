@@ -161,12 +161,29 @@ export const organization = {
 	createNewSuggestion: getTRPCMock({
 		path: ['organization', 'createNewSuggestion'],
 		type: 'mutation',
-		response: { id: 'sugg_LKSDJFIOW156AWER15' },
+		response: { id: 'sugg_LKSDJFIOW156AWER15', slug: 'mock-suggested-org' },
 	}),
 	// Always rejects, to demo the "duplicate website" error the form shows when the server-side check fires
 	// (e.g. a race condition, or the client-side domain check was bypassed).
 	createNewSuggestionConflict: getTRPCMock({
 		path: ['organization', 'createNewSuggestion'],
+		type: 'mutation',
+		error: {
+			code: 'CONFLICT',
+			message: 'This website is already associated with an existing organization in our system.',
+		},
+	}),
+	// Same shape as createNewSuggestion - the Data Portal's Add Org modal (SuggestOrg variant="dataPortal")
+	// calls this instead, tagging the created org with a different Source.
+	createOrgFromDataPortal: getTRPCMock({
+		path: ['organization', 'createOrgFromDataPortal'],
+		type: 'mutation',
+		response: { id: 'orgn_MOCKEDDATAPORTAL001', slug: 'mock-data-portal-org' },
+	}),
+	// Data Portal equivalent of createNewSuggestionConflict - demos the submit-error alert's "open in a new
+	// tab to edit instead" link, which only renders in dataPortal mode.
+	createOrgFromDataPortalConflict: getTRPCMock({
+		path: ['organization', 'createOrgFromDataPortal'],
 		type: 'mutation',
 		error: {
 			code: 'CONFLICT',
@@ -319,4 +336,5 @@ export const organization = {
 } satisfies MockHandlerObject<'organization'> & {
 	searchDistanceLongTitle: HttpHandler
 	createNewSuggestionConflict: HttpHandler
+	createOrgFromDataPortalConflict: HttpHandler
 }
