@@ -218,8 +218,9 @@ const CREATE_METHOD_OPTIONS = [
 ]
 
 const CREATE_METHOD_HELP_TEXT =
-	'All: every organization. Public: submitted through the public suggestion form by someone without ' +
-	'Data Portal access. Internal: submitted by staff/volunteers with Data Portal access, or added ' +
+	'All: every organization.' +
+	'Public: submitted through the public suggestion form by someone without Data Portal access.' +
+	'Internal: submitted by staff/volunteers with Data Portal access, or added ' +
 	'directly through the Data Portal.'
 
 const CreateMethodLabel = () => (

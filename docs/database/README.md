@@ -5,17 +5,22 @@ This folder contains documentation for the database schema, models, relationship
 ## Contents
 
 ### 1. Data Models Overview
+
 - **`data-models.md`**  
   Provides an overview of all database models, their fields, and relationships. Includes ER diagrams and explanations of how the main entities relate to each other.
 
 ### 2. Business Logic Documentation
+
 - **`organization_claimed.md`**  
   Explains how the `isClaimed` status for organizations is computed. Includes details on which tables and fields are used (`OrganizationPermission`, `UserToOrganization`) and the business rules involved.
+- **`organization_creator_had_dp_access.md`**  
+  Explains how `Organization.creatorHadDpAccess` is computed (a Data Portal permission snapshot taken at org-creation time) and how it powers the Organizations table's "Create Method" filter, including the historical backfill and its documented gaps.
 
 ### 3. Schema References
+
 - **Other model-specific docs** (optional)  
   For example:
-  - `user_permissions.md` – Documentation for user roles, permissions, and their relationships to the database.  
+  - `user_permissions.md` – Documentation for user roles, permissions, and their relationships to the database.
   - `locations.md` – Documentation of location-related tables, including `OrgLocation` and address handling.
 
 ## How to Use
