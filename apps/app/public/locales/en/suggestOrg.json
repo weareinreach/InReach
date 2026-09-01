@@ -11,7 +11,7 @@
 		"btn-community": "Add LGBTQ+ community focus(es)",
 		"btn-save-changes": "Save changes",
 		"btn-service": "Add service type(s)",
-		"btn-submit": "Submit new organization",
+		"btn-submit": "Submit for review",
 		"community-focus": "Does this organization provide service(s) focused on specific LGBTQ+ communities?",
 		"error-exists-active": "<Link>{{org}}</Link> is already listed on InReach. Please only use this form to suggest new organizations.",
 		"error-exists-dismiss": "<Dismiss>Click here if this is a different organization.</Dismiss>",

@@ -203,6 +203,15 @@ export const orgRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	createOrgFromDataPortal: permissionedProcedure('createOrgFromDataPortal')
+		.input(schema.ZCreateOrgFromDataPortalSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('createOrgFromDataPortal'),
+				() => import('./mutation.createOrgFromDataPortal.handler')
+			)
+			return handler(opts)
+		}),
 	attachAttribute: permissionedProcedure('attachOrgAttributes')
 		.input(schema.ZAttachAttributeSchema)
 		.mutation(async (opts) => {

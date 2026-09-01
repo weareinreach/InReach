@@ -2,6 +2,7 @@
 export * from './mutation.attachAttribute.schema'
 export * from './mutation.createNewQuick.schema'
 export * from './mutation.createNewSuggestion.schema'
+export * from './mutation.createOrgFromDataPortal.schema'
 export * from './mutation.updateAttributesBasic.schema'
 export * from './mutation.updateBasic.schema'
 export * from './query.checkForExisting.schema'

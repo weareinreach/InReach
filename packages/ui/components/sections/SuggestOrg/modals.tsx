@@ -34,7 +34,14 @@ export const ServiceTypes = ({ disabled, serviceTypes }: ServiceModalProps) => {
 	)
 	const selectedCountIcon = useMemo(() => {
 		const selectedServices = form.values.serviceCategories?.length ?? 0
-		return selectedServices > 0 ? <Text className={classes.count}>{selectedServices}</Text> : null
+		// `c='white'` is required, not decorative - a plain Text otherwise gets an inline black text
+		// color forced on by the theme's Text defaults (see packages/ui/theme/common.tsx), which wins
+		// over classes.count's CSS color regardless of specificity since it's an inline style.
+		return selectedServices > 0 ? (
+			<Text className={classes.count} c='white'>
+				{selectedServices}
+			</Text>
+		) : null
 	}, [classes.count, form.values.serviceCategories?.length])
 
 	return (
@@ -143,7 +150,12 @@ export const Communities = ({ disabled, communities }: CommunitiesModalProps) =>
 	const unique = (ids: string[]) => [...new Set(ids)]
 	const selectedCountIcon = useMemo(() => {
 		const selectedItems = form.values.communityFocus?.length ?? 0
-		return selectedItems > 0 ? <Text className={classes.count}>{selectedItems}</Text> : null
+		// See the ServiceTypes badge above for why `c='white'` is required here, not decorative.
+		return selectedItems > 0 ? (
+			<Text className={classes.count} c='white'>
+				{selectedItems}
+			</Text>
+		) : null
 	}, [classes.count, form.values.communityFocus?.length])
 
 	const hasChildren = useCallback(

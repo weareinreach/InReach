@@ -170,7 +170,11 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 			}))
 		: []
 
-	const merged = [...nameResults, ...extraOrgs].slice(0, 5)
+	// No cap here beyond nameResults' own `LIMIT 5` (already applied in its SQL query above) - a website
+	// exact match must never be silently dropped just because 5 unrelated name-similarity suggestions
+	// filled the list first. `extraOrgs` is essentially always 0-1 items in practice (an exact-website
+	// duplicate is one specific org), so this doesn't risk an unbounded list.
+	const merged = [...nameResults, ...extraOrgs]
 
 	// Near-miss website check: only against orgs whose NAME already matched (a strong prior), and only
 	// those that aren't already an exact website match. Two independent signals catch two different typo
