@@ -8,13 +8,20 @@ This document describes the CSV reports available in the Data Admin Dashboard, i
 
 **File Name:** `all_published_organizations.csv`
 **Purpose:** A master list of all organizations currently visible on the platform.
-**Logic:** Selects all columns from the `Organization` table where `published` is `true` and `deleted` is `false`. It is used for full-system data audits.
+**Logic:** Reads from the `organizations_csv_export_view` database view, filtered to
+`published = TRUE AND deleted = FALSE` (`query.getAllPublishedForCSV.handler.ts`). It is used for
+full-system data audits.
 
 ### All Unpublished Organizations
 
 **File Name:** `all_unpublished_organizations.csv`
 **Purpose:** A master list of all organizations that are not yet published.
-**Logic:** Selects records where `published` is `false`. This helps the data team identify the backlog of organizations pending review or verification.
+**Logic:** Same view, filtered to `published = FALSE AND deleted = FALSE`
+(`query.getAllUnpublishedForCSV.handler.ts`). Both reports include a computed **`status`** column
+(added by migration `20260901121500_add_status_to_csv_view`) — "Published" or the row's
+`unpublishedReason` label (New/In progress/Waiting to hear back/Inactive/Unaffirming/Unresponsive) —
+which replaced a raw `published` boolean column, matching the same Status system documented in
+[`../README.md`](../README.md#how-to-use-it).
 
 ## 2. Review Lists
 

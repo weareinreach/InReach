@@ -21,16 +21,16 @@ page-visibility/server-permission mismatch, not intentional partial access, and
 it was **deliberately not fixed as part of the `/admin` → `/data-portal`
 relocation** (fixing it requires a backend permission change, which that
 relocation pass excluded — see
-[`docs/DataPortal/2026-Redesign/UI_elements.md`](../2026-Redesign/UI_elements.md),
+[`docs/DataPortal/2026-Redesign/UI_elements.md`](../../2026-Redesign/UI_elements.md),
 "Implementation Constraints for This Pass"). See Known Issues.
 
 ## How It Works
 
-- **UI**: [`ReportTable.tsx`](../../../packages/ui/components/data-portal/ReportTable.tsx),
+- **UI**: [`ReportTable.tsx`](../../../../packages/ui/components/data-portal/ReportTable.tsx),
   built on the shared
-  [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
+  [`DataTable`](../../../../packages/ui/components/data-portal/DataTable/index.tsx)
   component, rendered from
-  [`apps/app/src/pages/data-portal/reports.tsx`](../../../apps/app/src/pages/data-portal/reports.tsx).
+  [`apps/app/src/pages/data-portal/reports.tsx`](../../../../apps/app/src/pages/data-portal/reports.tsx).
 - **API**:
   - `report.forReportsTable` → `query.forReportsTable.handler.ts` — filters,
     sorts, and paginates `Report` rows server-side (status/issue-type/informed
@@ -88,8 +88,8 @@ relocation pass excluded — see
 
 | Path                                                                                                                    | Purpose                                      |
 | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [`apps/app/src/pages/data-portal/reports.tsx`](../../../apps/app/src/pages/data-portal/reports.tsx)                     | Page: permission gate, renders `ReportTable` |
-| [`packages/ui/components/data-portal/ReportTable.tsx`](../../../packages/ui/components/data-portal/ReportTable.tsx)     | Table UI + details modal                     |
+| [`apps/app/src/pages/data-portal/reports.tsx`](../../../../apps/app/src/pages/data-portal/reports.tsx)                  | Page: permission gate, renders `ReportTable` |
+| [`packages/ui/components/data-portal/ReportTable.tsx`](../../../../packages/ui/components/data-portal/ReportTable.tsx)  | Table UI + details modal                     |
 | `packages/api/router/report/query.forReportsTable.handler.ts`                                                           | List query                                   |
 | `packages/api/router/report/mutation.update.handler.ts`                                                                 | Status/note update mutation                  |
 | `packages/api/router/report/index.ts`                                                                                   | tRPC route registration, permission level    |

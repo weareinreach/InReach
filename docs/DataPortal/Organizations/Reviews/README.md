@@ -19,13 +19,13 @@ Gated at `dataPortalBasic` and above in this page's own `getServerSideProps`
 
 ## How It Works
 
-- **UI**: [`ReviewTable.tsx`](../../../packages/ui/components/data-portal/ReviewTable.tsx),
+- **UI**: [`ReviewTable.tsx`](../../../../packages/ui/components/data-portal/ReviewTable.tsx),
   built on the shared
-  [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
+  [`DataTable`](../../../../packages/ui/components/data-portal/DataTable/index.tsx)
   component, rendered from
-  [`apps/app/src/pages/data-portal/reviews.tsx`](../../../apps/app/src/pages/data-portal/reviews.tsx).
+  [`apps/app/src/pages/data-portal/reviews.tsx`](../../../../apps/app/src/pages/data-portal/reviews.tsx).
 - **API**: `review.forReviewTable` in
-  [`packages/api/router/review/index.ts`](../../../packages/api/router/review/index.ts)
+  [`packages/api/router/review/index.ts`](../../../../packages/api/router/review/index.ts)
   → `query.forReviewTable.handler.ts`
 - **Data**: `OrgReview`, joined to the reviewing `User`, `Organization`, and the
   reviewed `OrgService`.
@@ -68,19 +68,19 @@ have deliberate null-safety fallbacks (e.g. falling back to a service's
   inside the new redesign's header bar/side-nav/page-heading shell (in the target
   design this page becomes a side-nav item under Organizations) — that's a later
   phase. See
-  [`docs/DataPortal/2026-Redesign/UI_elements.md`](../2026-Redesign/UI_elements.md).
+  [`docs/DataPortal/2026-Redesign/UI_elements.md`](../../2026-Redesign/UI_elements.md).
 
 ## Related Files
 
-| Path                                                                                                                | Purpose                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| [`apps/app/src/pages/data-portal/reviews.tsx`](../../../apps/app/src/pages/data-portal/reviews.tsx)                 | Page: permission gate, renders `ReviewTable`                                                                                      |
-| [`packages/ui/components/data-portal/ReviewTable.tsx`](../../../packages/ui/components/data-portal/ReviewTable.tsx) | Table UI                                                                                                                          |
-| `packages/api/router/review/query.forReviewTable.handler.ts`                                                        | Prisma query                                                                                                                      |
-| `packages/api/router/review/index.ts`                                                                               | tRPC route registration, permission mapping                                                                                       |
-| `packages/api/lib/permissions.ts`                                                                                   | `viewAllReviews: 'dataPortalBasic'` mapping                                                                                       |
-| `packages/api/lib/middleware/permissions.ts`                                                                        | Manager-only gate for delete/undelete                                                                                             |
-| `packages/ui/components/data-portal/ReviewTable.stories.tsx`                                                        | Storybook file for this table, with MSW mocks for the queries/mutations above — the fastest way to iterate on the UI in isolation |
+| Path                                                                                                                   | Purpose                                                                                                                           |
+| ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [`apps/app/src/pages/data-portal/reviews.tsx`](../../../../apps/app/src/pages/data-portal/reviews.tsx)                 | Page: permission gate, renders `ReviewTable`                                                                                      |
+| [`packages/ui/components/data-portal/ReviewTable.tsx`](../../../../packages/ui/components/data-portal/ReviewTable.tsx) | Table UI                                                                                                                          |
+| `packages/api/router/review/query.forReviewTable.handler.ts`                                                           | Prisma query                                                                                                                      |
+| `packages/api/router/review/index.ts`                                                                                  | tRPC route registration, permission mapping                                                                                       |
+| `packages/api/lib/permissions.ts`                                                                                      | `viewAllReviews: 'dataPortalBasic'` mapping                                                                                       |
+| `packages/api/lib/middleware/permissions.ts`                                                                           | Manager-only gate for delete/undelete                                                                                             |
+| `packages/ui/components/data-portal/ReviewTable.stories.tsx`                                                           | Storybook file for this table, with MSW mocks for the queries/mutations above — the fastest way to iterate on the UI in isolation |
 
 ---
 
