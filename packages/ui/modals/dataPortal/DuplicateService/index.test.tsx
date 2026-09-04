@@ -16,6 +16,19 @@ vi.mock('next/router', () => ({
 	}),
 }))
 
+// ModalTitle transitively imports ActionButtons, which (via QuickPromotion/LoginSignUp/
+// ForgotPassword/PrivacyStatement - all of which import ModalTitle back) forms a real circular
+// import already present in this codebase's modals directory, unrelated to this feature. In CI
+// (where `pnpm install --ignore-scripts` skips `prisma generate`, so no generated Prisma client
+// exists), resolving that cycle makes Vitest's SSR module loader eagerly try to load the real
+// `@prisma/client` and crash with "Cannot find module '.prisma/client/default'" - reproduced
+// locally by running this suite against a fresh `pnpm install --ignore-scripts` in an isolated
+// worktree, matching CI exactly. Stubbing ModalTitle here sidesteps that whole chain; nothing in
+// this file asserts on the close-breadcrumb button ModalTitle renders.
+vi.mock('~ui/modals/ModalTitle', () => ({
+	ModalTitle: () => null,
+}))
+
 vi.mock('~ui/lib/trpcClient', () => ({
 	trpc: {
 		service: {
@@ -32,6 +45,10 @@ const useDuplicateMutationMock = vi.mocked(trpc.service.duplicate.useMutation)
 const useUtilsMock = vi.mocked(trpc.useUtils)
 
 const SOURCE_SERVICE_ID = 'osvc_SOURCE00000000000000000'
+const TWO_LOCATIONS = [
+	{ id: 'oloc_1', name: 'Downtown' },
+	{ id: 'oloc_2', name: 'Uptown' },
+]
 
 const mockWizardData = (
 	overrides: Partial<{ name: string; locations: { id: string; name: string }[] }> = {}
@@ -122,12 +139,7 @@ describe('DuplicateServiceModal', () => {
 	})
 
 	it('shows a location picker, defaulted to all checked, when the source has more than 1 location', async () => {
-		mockWizardData({
-			locations: [
-				{ id: 'oloc_1', name: 'Downtown' },
-				{ id: 'oloc_2', name: 'Uptown' },
-			],
-		})
+		mockWizardData({ locations: TWO_LOCATIONS })
 		useDuplicateMutationMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
 
 		await openWizard()
@@ -138,12 +150,7 @@ describe('DuplicateServiceModal', () => {
 	})
 
 	it('"Uncheck all" next to "What to copy" clears all 5 category checkboxes without touching locations', async () => {
-		mockWizardData({
-			locations: [
-				{ id: 'oloc_1', name: 'Downtown' },
-				{ id: 'oloc_2', name: 'Uptown' },
-			],
-		})
+		mockWizardData({ locations: TWO_LOCATIONS })
 		useDuplicateMutationMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
 
 		const user = await openWizard()
@@ -160,12 +167,7 @@ describe('DuplicateServiceModal', () => {
 	})
 
 	it('"Uncheck all" next to "Link the duplicate to" clears the location picker without touching categories', async () => {
-		mockWizardData({
-			locations: [
-				{ id: 'oloc_1', name: 'Downtown' },
-				{ id: 'oloc_2', name: 'Uptown' },
-			],
-		})
+		mockWizardData({ locations: TWO_LOCATIONS })
 		useDuplicateMutationMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
 
 		const user = await openWizard()
@@ -178,12 +180,7 @@ describe('DuplicateServiceModal', () => {
 	})
 
 	it('confirms with the typed name, no description, chosen categories, and unchecked-off locations', async () => {
-		mockWizardData({
-			locations: [
-				{ id: 'oloc_1', name: 'Downtown' },
-				{ id: 'oloc_2', name: 'Uptown' },
-			],
-		})
+		mockWizardData({ locations: TWO_LOCATIONS })
 		const mutate = vi.fn()
 		useDuplicateMutationMock.mockReturnValue({ mutate, isPending: false } as never)
 
