@@ -2,19 +2,12 @@ import { faker } from '@faker-js/faker'
 import { type HttpHandler } from 'msw'
 
 import { type ApiOutput } from '@weareinreach/api'
+import {
+	STATUS_FILTER_TO_REASON,
+	type TStatusFilter,
+} from '@weareinreach/api/router/organization/query.forOrganizationTable.schema'
 import { OrgUnpublishedReason } from '@weareinreach/db/enums'
 import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
-
-type StatusFilterValue = 'published' | 'new' | 'in-progress' | 'waiting' | 'inactive' | 'unaffirming'
-
-// Matches STATUS_FILTER_TO_REASON in query.forOrganizationTable.handler.ts.
-const STATUS_FILTER_TO_REASON: Record<Exclude<StatusFilterValue, 'published'>, OrgUnpublishedReason> = {
-	new: OrgUnpublishedReason.NEW,
-	'in-progress': OrgUnpublishedReason.IN_PROGRESS,
-	waiting: OrgUnpublishedReason.WAITING,
-	inactive: OrgUnpublishedReason.INACTIVE,
-	unaffirming: OrgUnpublishedReason.UNAFFIRMING,
-}
 
 // Matches by parsed hostname rather than raw substring, so e.g. `notexample.org.evil.com` isn't
 // mistaken for `example.org` the way a plain `.includes()` check would.
@@ -90,7 +83,7 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 					: null
 		const published = faker.datatype.boolean(0.9)
 		// Null when published (matches the real handler clearing it on publish) - otherwise a realistic
-		// mix of the five reason values.
+		// mix of the reason values.
 		const unpublishedReason = published
 			? null
 			: faker.helpers.arrayElement(Object.values(OrgUnpublishedReason))
@@ -127,7 +120,7 @@ const matchesCreateMethod = (org: ForOrgTableRow, createMethod: 'public' | 'inte
 }
 
 // Matches statusWhere in query.forOrganizationTable.handler.ts.
-const matchesStatus = (org: ForOrgTableRow, status: StatusFilterValue): boolean => {
+const matchesStatus = (org: ForOrgTableRow, status: TStatusFilter): boolean => {
 	if (status === 'published') {
 		return org.published
 	}
@@ -136,7 +129,7 @@ const matchesStatus = (org: ForOrgTableRow, status: StatusFilterValue): boolean 
 
 const filterFakeOrgs = (
 	orgs: ForOrgTableRow[],
-	status: StatusFilterValue[] | undefined,
+	status: TStatusFilter[] | undefined,
 	deleted: boolean | undefined,
 	search: string | undefined,
 	createMethod: 'public' | 'internal' | undefined

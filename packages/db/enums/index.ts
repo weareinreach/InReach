@@ -50,6 +50,7 @@ export enum OrgUnpublishedReason {
 	WAITING = 'WAITING',
 	INACTIVE = 'INACTIVE',
 	UNAFFIRMING = 'UNAFFIRMING',
+	UNRESPONSIVE = 'UNRESPONSIVE',
 }
 
 export enum LocationAlertLevel {
