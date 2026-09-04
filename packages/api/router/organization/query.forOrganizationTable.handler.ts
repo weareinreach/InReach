@@ -1,10 +1,12 @@
 import compact from 'just-compact'
 
 import { Prisma, prisma } from '@weareinreach/db'
-import { OrgUnpublishedReason } from '@weareinreach/db/enums'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TForOrganizationTableSchema, type TStatusFilter } from './query.forOrganizationTable.schema'
+import {
+	STATUS_FILTER_TO_REASON,
+	type TForOrganizationTableSchema,
+} from './query.forOrganizationTable.schema'
 
 // 'public' = suggested AND the submitter had no Data Portal access. 'internal' unions the other two real
 // origins (suggested by someone WITH access, or added directly via the Data Portal) - both mean "not
@@ -25,15 +27,6 @@ const createMethodWhere = (
 		default:
 			return undefined
 	}
-}
-
-// Maps the hyphenated filter/UI value to the actual Prisma enum member.
-const STATUS_FILTER_TO_REASON: Record<Exclude<TStatusFilter, 'published'>, OrgUnpublishedReason> = {
-	new: OrgUnpublishedReason.NEW,
-	'in-progress': OrgUnpublishedReason.IN_PROGRESS,
-	waiting: OrgUnpublishedReason.WAITING,
-	inactive: OrgUnpublishedReason.INACTIVE,
-	unaffirming: OrgUnpublishedReason.UNAFFIRMING,
 }
 
 // Supersedes a plain `published` boolean filter - 'published' means `published: true`; every other

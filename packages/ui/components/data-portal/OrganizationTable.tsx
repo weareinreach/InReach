@@ -20,9 +20,14 @@ import { type Route } from 'nextjs-routes'
 import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
+import {
+	STATUS_FILTER_TO_REASON,
+	type TStatusFilter,
+} from '@weareinreach/api/router/organization/query.forOrganizationTable.schema'
 import { type OrgUnpublishedReason } from '@weareinreach/db/enums'
+import { ORG_UNPUBLISHED_REASON_LABELS } from '@weareinreach/db/enums/labels'
 import { Link } from '~ui/components/core/Link'
-import { REASON_LABELS, UnpublishReasonPopover } from '~ui/components/core/UnpublishReasonPopover'
+import { UnpublishReasonPopover } from '~ui/components/core/UnpublishReasonPopover'
 import { AuditDrawer } from '~ui/components/data-portal/AuditDrawer'
 import { InternalNotesDrawer } from '~ui/components/data-portal/InternalNotesDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -254,21 +259,21 @@ const deletedFilterIcon = (): string => 'carbon:trash-can'
 const isDeletedFilterExcluded = (state: boolean | undefined): boolean => state === false
 
 // Options for the toolbar's Status dropdown - supersedes the old Publish Status (All/Published/
-// Unpublished) filter. Values must match ZStatusFilter in query.forOrganizationTable.schema.ts exactly
-// (lowercase, hyphenated) - deliberately NOT built from REASON_OPTIONS, which uses the raw
-// OrgUnpublishedReason enum keys ('NEW', 'IN_PROGRESS', ...) for the popover's own mutation input. Those
-// are two different vocabularies that happen to share labels; conflating them sends the wrong value.
-// "All" is a real, exclusive option here (not a placeholder) - selecting it clears any other selection,
-// and selecting a real status while "All" is active drops "All." Never sent to the backend as a filter
-// value itself - it just means the columnFilters entry for 'status' is empty/absent.
+// Unpublished) filter. The reason rows are derived from STATUS_FILTER_TO_REASON (the same hyphenated
+// wire-format -> enum map the real handler and mock data use) so a new reason only needs adding there
+// and to ORG_UNPUBLISHED_REASON_LABELS, not a third time here. Deliberately NOT built from REASON_OPTIONS,
+// which uses the raw OrgUnpublishedReason enum keys ('NEW', 'IN_PROGRESS', ...) for the popover's own
+// mutation input - two different vocabularies that happen to share labels; conflating them sends the
+// wrong value. "All" is a real, exclusive option here (not a placeholder) - selecting it clears any other
+// selection, and selecting a real status while "All" is active drops "All." Never sent to the backend as
+// a filter value itself - it just means the columnFilters entry for 'status' is empty/absent.
 const STATUS_FILTER_OPTIONS = [
 	{ value: 'all', label: 'All' },
 	{ value: 'published', label: 'Published' },
-	{ value: 'new', label: 'New' },
-	{ value: 'in-progress', label: 'In progress' },
-	{ value: 'waiting', label: 'Waiting to hear back' },
-	{ value: 'inactive', label: 'Inactive' },
-	{ value: 'unaffirming', label: 'Unaffirming' },
+	...Object.entries(STATUS_FILTER_TO_REASON).map(([value, reason]) => ({
+		value,
+		label: ORG_UNPUBLISHED_REASON_LABELS[reason],
+	})),
 ]
 
 /**
@@ -360,8 +365,7 @@ export const OrganizationTable = () => {
 
 	// Matches ZStatusFilter in query.forOrganizationTable.schema.ts - multi-select, so several chosen
 	// values union (OR); this only filters which orgs show up, never sets more than one status on an org.
-	const statusFilter = columnFilters.find(({ id }) => id === 'status')?.value as
-		('published' | 'new' | 'in-progress' | 'waiting' | 'inactive' | 'unaffirming')[] | undefined
+	const statusFilter = columnFilters.find(({ id }) => id === 'status')?.value as TStatusFilter[] | undefined
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 	const createMethodFilter = columnFilters.find(({ id }) => id === 'createMethod')?.value as
 		'public' | 'internal' | undefined
@@ -426,7 +430,7 @@ export const OrganizationTable = () => {
 				cell: ({ row }) => {
 					const org = row as RowItem
 					if (org.published) return 'Published'
-					return org.unpublishedReason ? REASON_LABELS[org.unpublishedReason] : ''
+					return org.unpublishedReason ? ORG_UNPUBLISHED_REASON_LABELS[org.unpublishedReason] : ''
 				},
 			},
 			{

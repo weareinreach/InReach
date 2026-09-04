@@ -2223,14 +2223,13 @@ enum ReportStatus {
   RESOLVED
 }
 
-/// First-pass values, pending final sign-off - see docs/DataPortal/2026-Redesign/unpublished-status.md.
-/// INACTIVE/UNAFFIRMING are terminal classifications, not workflow steps.
 enum OrgUnpublishedReason {
   NEW
   IN_PROGRESS
   WAITING
   INACTIVE
   UNAFFIRMING
+  UNRESPONSIVE
 }
 
 enum LocationAlertLevel {

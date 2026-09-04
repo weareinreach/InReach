@@ -1,21 +1,14 @@
 import { Button, Group, Popover, type PopoverProps, Select, Stack, Text, Textarea } from '@mantine/core'
 import { cloneElement, type MouseEvent, type ReactElement, useCallback, useState } from 'react'
 
-import { OrgUnpublishedReason } from '@weareinreach/db/enums'
+import { type OrgUnpublishedReason } from '@weareinreach/db/enums'
+import { ORG_UNPUBLISHED_REASON_LABELS } from '@weareinreach/db/enums/labels'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-// First-pass values, pending final sign-off from Abby Davies - see
-// docs/DataPortal/2026-Redesign/unpublished-status.md. Exported so the Organizations table's Status
-// column/filter can render the same labels without a second copy of this map.
-export const REASON_LABELS: Record<OrgUnpublishedReason, string> = {
-	[OrgUnpublishedReason.NEW]: 'New',
-	[OrgUnpublishedReason.IN_PROGRESS]: 'In progress',
-	[OrgUnpublishedReason.WAITING]: 'Waiting to hear back',
-	[OrgUnpublishedReason.INACTIVE]: 'Inactive',
-	[OrgUnpublishedReason.UNAFFIRMING]: 'Unaffirming',
-}
-
-export const REASON_OPTIONS = Object.entries(REASON_LABELS).map(([value, label]) => ({ value, label }))
+export const REASON_OPTIONS = Object.entries(ORG_UNPUBLISHED_REASON_LABELS).map(([value, label]) => ({
+	value,
+	label,
+}))
 
 interface UnpublishReasonPopoverProps {
 	slug: string

@@ -1,17 +1,9 @@
 import { getAuditedClient } from '@weareinreach/db'
-import { OrgUnpublishedReason } from '@weareinreach/db/enums'
+import { ORG_UNPUBLISHED_REASON_LABELS } from '@weareinreach/db/enums/labels'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TEditModeBarPublishSchema } from './mutation.EditModeBarPublish.schema'
-
-const REASON_LABELS: Record<OrgUnpublishedReason, string> = {
-	[OrgUnpublishedReason.NEW]: 'New',
-	[OrgUnpublishedReason.IN_PROGRESS]: 'In progress',
-	[OrgUnpublishedReason.WAITING]: 'Waiting to hear back',
-	[OrgUnpublishedReason.INACTIVE]: 'Inactive',
-	[OrgUnpublishedReason.UNAFFIRMING]: 'Unaffirming',
-}
 
 const EditModeBarPublish = async ({
 	ctx,
@@ -40,7 +32,7 @@ const EditModeBarPublish = async ({
 					// actually read, not just a raw AuditTrail diff.
 					const fallbackText = published
 						? 'Status updated to Published'
-						: `Status updated to ${unpublishedReason ? REASON_LABELS[unpublishedReason] : 'Unpublished'}`
+						: `Status updated to ${unpublishedReason ? ORG_UNPUBLISHED_REASON_LABELS[unpublishedReason] : 'Unpublished'}`
 					await tx.internalNote.create({
 						data: {
 							text: note?.trim() || fallbackText,
