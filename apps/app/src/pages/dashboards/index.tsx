@@ -12,7 +12,7 @@ import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 // First entry in what's meant to grow into several dashboards (some gated, some eventually public) - see
-// docs/DataPortal/2026-Redesign/unpublished-status.md. Deliberately top-level (`/dashboards`, not nested
+// docs/Dashboards/README.md. Deliberately top-level (`/dashboards`, not nested
 // under `/data-portal/`), since a future public dashboard would read oddly under an internal-tool prefix.
 const DASHBOARDS = [
 	{

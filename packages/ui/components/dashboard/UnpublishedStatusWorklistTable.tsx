@@ -131,7 +131,7 @@ export interface UnpublishedStatusWorklistTableProps {
 /**
  * The Unpublished Status dashboard's drill-down list - deliberately mirrors OrganizationTable.tsx's own
  * conventions (server-side pagination/sorting, same DataTable wrapper, same Set Status action) rather than
- * being a bespoke report view. See docs/DataPortal/2026-Redesign/unpublished-status.md.
+ * being a bespoke report view. See docs/Dashboards/UnpublishedStatus/README.md.
  */
 export const UnpublishedStatusWorklistTable = ({ tier }: UnpublishedStatusWorklistTableProps) => {
 	const [sorting, setSorting] = useState<SortingState>([{ id: 'updatedAt', desc: false }])

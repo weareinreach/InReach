@@ -2,12 +2,15 @@
 
 > **Status: Implemented (v1).** The mutation, wizard, and schema change described below are real,
 > shipped code — every path in this doc is now a real file, not a proposal. The UI-only test cases
-> (#11, #13, plus a few more added along the way) are real, passing automated tests
-> (`packages/ui/modals/dataPortal/DuplicateService/index.test.tsx`). The backend cases (everything
-> else in the table) still aren't — `packages/api` has no test runner at all yet, so those remain a
-> manual QA checklist until that infrastructure exists. Two implementation decisions were made that
-> weren't explicitly settled in the original design discussion — both are called out inline below
-> and in [Known Issues / Gotchas](#known-issues--gotchas).
+> (#11, #13, #15, #16, plus a few more added along the way) are real, passing automated tests
+> (`packages/ui/modals/dataPortal/DuplicateService/index.test.tsx`, 11 tests as of this writing).
+> The backend cases (everything else in the table) still aren't — `packages/api` has no test runner
+> at all yet, so those remain a manual QA checklist until that infrastructure exists. Two
+> implementation decisions were made that weren't explicitly settled in the original design
+> discussion — both are called out inline below and in
+> [Known Issues / Gotchas](#known-issues--gotchas). Note that `ServicesInfo.tsx` (the list-row
+> trigger) has no test file at all, independent of this feature — its behavior is verified visually
+> only (see Known Issues).
 
 ## Overview
 
@@ -41,10 +44,19 @@ call the mutation."
 
 ## How It Works
 
-- **UI (trigger, list row)**: `packages/ui/components/sections/ServicesInfo.tsx` — a `carbon:copy`
-  `ActionIcon` sits beside (not nested inside) each service row's existing `ServiceEditDrawer`
-  trigger, both wrapped in a `Group`. A button can't nest inside the row's own link/trigger, so the
-  row was restructured from one single click target into two siblings.
+- **UI (trigger, list row)**: `packages/ui/components/sections/ServicesInfo.tsx` — every service
+  row gets its own `carbon:copy` icon (an unstyled `UnstyledButton`, not a themed `ActionIcon` —
+  `ActionIcon` has a theme-level `defaultProps.color` override that fights any attempt to make it
+  plain black-on-transparent), absolutely positioned inside a `position: relative` wrapper around
+  the row, offset to sit immediately left of that row's own chevron (`right: 32`, vertically
+  centered via `top: 50%` + `transform: translateY(-50%)`). This is deliberately the same
+  positioning for every row, including the first one in a category group — an earlier version gave
+  the first row's icon special treatment (sharing the category-badges row instead of its own row)
+  for visual alignment, but that broke down once a group could realistically hold more than one
+  service (e.g. duplicating a service without changing its tags puts the copy in the same group as
+  the original), producing inconsistent icon placement across rows. A button can't nest inside the
+  row's own link/trigger, so each row is a sibling pair (the `ServiceEditDrawer` link, plus the
+  absolutely-positioned icon `Box`), not one nested structure.
 - **UI (trigger, drawer)**: `packages/ui/components/data-portal/ServiceEditDrawer/index.tsx` — the
   drawer's header was split into two stacked rows: the top row now holds the existing "✕ Close"
   breadcrumb plus a new `carbon:copy` `ActionIcon`, opposite corners; the second row keeps the
@@ -61,11 +73,23 @@ call the mutation."
   a `Stack` body opening with a `Title order={2}`. Built with plain React `useState` rather than
   react-hook-form — the form is small enough (one text field, five checkboxes, an optional location
   list) that pulling in a form library wasn't worth it. One panel, not a multi-step flow:
-  - Name field, pre-filled `Copy of <source name>` (with a leading `Copy of ` on the _source_ name
-    stripped first via `suggestName()`, so duplicating an existing copy doesn't compound into
-    `Copy of Copy of X`), editable, required — the confirm button stays disabled while blank.
+  - Name field — **required, but never pre-filled as an actual value.** `Copy of <source name>`
+    (with a leading `Copy of ` on the _source_ name stripped first via `suggestName()`, so
+    duplicating an existing copy doesn't compound into `Copy of Copy of X`) shows only as
+    placeholder text; the field itself starts blank. The confirm button stays disabled until the
+    person actually types something themselves — accepting the suggestion verbatim is fine, but
+    they have to type it, not just tab past a pre-filled value. The "Name is required" error only
+    appears once the field has been touched and left blank (tracked via a small `nameTouched`
+    state), not immediately on open.
+  - Description field — optional, always starts blank, **never pre-filled from the source's
+    description** even though everything else in the checklist copies by default. Whatever the
+    person types (if anything) becomes the new service's description; leaving it blank means the
+    duplicate has no description at all, same as it would for a brand-new service.
   - A checklist of categories to copy, all pre-checked by default: Attributes, Hours, Contact info,
-    Coverage area, Service tags. Unchecking any subset — including all of them — is valid. Each
+    Coverage area, Service tags. Unchecking any subset — including all of them — is valid. An
+    "Uncheck all" text link sits to the right of the "What to copy" label (plain underlined text,
+    matching the public search page's "Filter by services" modal styling) and clears all 5 at once;
+    it only touches this checklist, not the location picker below it. Each
     checkbox has a tooltip spelling out what it actually includes — worth having, since "Attributes"
     alone bundles together seven visually-distinct drawer sections that all happen to live in the
     same underlying table (`AttributeSupplement`), differing only in which attribute each row
@@ -78,7 +102,8 @@ call the mutation."
   - A location section, rendered only if the source service has more than one active
     `OrgLocationService` link — pick all/some/none via checkboxes, defaulting to all checked. If
     the source has zero links (remote) or exactly one, the wizard resolves this automatically with
-    no UI: `locationIds` is sent as `[]` or the single link respectively.
+    no UI: `locationIds` is sent as `[]` or the single link respectively. When this section is
+    shown, it gets its own "Uncheck all" link too, independent of the categories one above it.
   - One confirm button (`loading`-bound to the mutation's `isPending`, matching the exact
     double-submit guard `ServiceEditDrawer`'s own Save button already uses). No DB write happens
     until this is clicked — closing the wizard before confirming leaves zero trace.
@@ -98,6 +123,7 @@ call the mutation."
   ```
   sourceServiceId: prefixedId('orgService')
   name:            z.string().min(1)
+  description:     z.string().optional()
   copyOptions: z.object({
     attributes:   z.boolean(),
     hours:        z.boolean(),
@@ -139,11 +165,13 @@ call the mutation."
   - A fresh `FreeText`/`TranslationKey` row for the (possibly edited) name — never reuses the
     source's `serviceNameId` (it's `@unique` on `OrgService`). Created with `crowdinId: null`
     deliberately (see the Crowdin-timing note below).
-  - **Not copied: description.** The original design's category list (Attributes, Hours, Contact
-    info, Coverage area, Service tags) never mentioned description, and there was no wizard field
-    for it either. Rather than silently expand scope, the implementation leaves the duplicate's
-    description blank — flagged here as a real gap worth a product decision, not an oversight. See
-    [Known Issues / Gotchas](#known-issues--gotchas).
+  - A fresh `FreeText`/`TranslationKey` row for the description, but **only if the person typed
+    one in the wizard** — `description` is an optional string on the mutation input
+    (`z.string().optional()`), and the `create` call only includes a `description` field at all
+    when it's present (`...(description && { description: generateNestedFreeText(...) })`). The
+    source's own description is never read by the handler at all — this isn't "copy then let staff
+    clear it," there's no copy step to begin with. Same `crowdinId: null` deferred-registration
+    treatment as the name, for the same reason (see the Crowdin-timing note below).
   - `crisisSupportOnly` is copied directly from the source (a simple scalar passthrough, not
     gated by any checklist category). `published` and `deleted` are always `false` on the new
     row, regardless of the source's state.
@@ -194,6 +222,20 @@ Things a reader would not expect from skimming one file:
   creation and normal editing too, not just duplication. A pre-existing service that predates this
   rule and has no name at all is handled by falling back to `{ text: '' }` when seeding form
   values, which is still blocked from saving until a real name is entered.
+- **The drawer's "Coverage Area" district names depend on the host page having pre-loaded the
+  `gov-dist` i18next namespace server-side — this bit the duplicate flow specifically, once.** The
+  district name isn't a stored string; `ServiceEditDrawer` resolves it via `t(govDist.tsKey, { ns:
+'gov-dist' })` against a shared, global GovDist table row, keyed by the same `govDistId` for a
+  duplicate as for its source. `org/[slug]/edit.tsx` and `org/[slug]/[orgLocationId]/edit.tsx` both
+  include `'gov-dist'` in their `getServerSideTranslations` call; `org/[slug]/remote/edit.tsx` did
+  not, until this was found and fixed. On that page, the duplicate's edit drawer force-opens
+  synchronously right after the mutation resolves (via the `ref.click()` effect, not a real page
+  navigation), so `t()` ran before the `gov-dist` namespace had ever been fetched client-side and
+  fell back to printing the raw key (e.g. `us-new-jersey` instead of `New Jersey`) — the source
+  service's name happened to already render correctly only because something else on the page had
+  already requested that key earlier in the session, not because the page actually had it loaded.
+  If a fourth page ever renders `ServiceEditDrawer`, it needs `'gov-dist'` in its own
+  `getServerSideTranslations` call too, independent of this feature.
 - **`duplicatedFromId` tracks only the immediate parent, not the original ancestor.** Duplicating a
   duplicate points the new row at the duplicate it came from, not back through the whole chain.
   No lineage-walking was built or is needed.
@@ -247,25 +289,29 @@ touches nothing else in the schema.
 1. From a service's row in the location (or remote services) edit page, click the copy icon in the
    top-right corner of that service's card — or, from inside an already-open service's edit
    drawer, click the same copy icon in the drawer's top-right corner.
-2. A panel opens with the new service's name pre-filled as `Copy of <original name>`. Edit it if
-   you want something else — it can't be left blank.
-3. Below the name, uncheck any category you don't want copied (Attributes, Hours, Contact info,
+2. A panel opens showing `Copy of <original name>` as a suggestion in the name field, but the field
+   itself starts empty — type a name (that suggestion works fine if typed as-is) to continue;
+   nothing you can click will proceed until a name is entered. Optionally add a description too —
+   it's never carried over from the original, so it starts blank regardless.
+3. Below that, uncheck any category you don't want copied (Attributes, Hours, Contact info,
    Coverage area, Service tags) — everything is checked by default.
 4. If the original service is linked to more than one location, choose which of those locations
    the new service should also be linked to (or none). If it's linked to exactly one location, or
    none (a remote service), the new service automatically matches that — there's nothing to choose.
 5. Click "Create duplicate." The new service is created immediately, unpublished, and its edit
    drawer opens with everything you selected already filled in — review, adjust anything that
-   should differ from the original (including the description, which is never copied — see
-   [Known Issues](#known-issues--gotchas)), and publish it when it's ready.
+   should differ from the original — the description field is always blank at this point, since
+   it's never copied from the source (see below) — and publish it when it's ready.
 
 ## Known Issues / Gotchas
 
-- **Description is never copied**, unlike every other category. This wasn't an explicit decision —
-  it's a gap the original design left, resolved conservatively during implementation by leaving it
-  out entirely rather than guessing. If duplicated services routinely need the same description
-  copied over too, this is a small, contained addition: fetch `source.description.tsKey.text` and
-  generate a fresh `FreeText`/`TranslationKey` for it exactly the way the name already does.
+- **Description is never copied from the source, by design — the wizard's Description field is for
+  typing a fresh one, not editing a copy.** Unlike every category in the checklist, there is no
+  "copy the source's description" behavior at all: the handler never reads the source's
+  description, so there's nothing to opt in or out of. If this ever needs to change to an actual
+  copy-then-edit behavior instead, that's a small, contained addition (fetch
+  `source.description.tsKey.text` and use it to pre-fill the field) — but that would be a real
+  behavior change, not a bug fix.
 - **Category granularity is per-block, not per-item.** Unchecking "Attributes" skips all of them
   (languages, wheelchair access, cost, eligibility, etc. together) — there's no way to copy some
   attributes but not others in this first version.
@@ -278,6 +324,20 @@ touches nothing else in the schema.
   service list and using the existing `Deleted` toggle. No dedicated "undo" was designed.
 - **No automated test coverage exists for this feature** — see [Test Cases](#test-cases). The
   backend infrastructure to run most of these doesn't exist in this repo yet.
+- **`ServicesInfo.tsx` (the list-row copy icon and its positioning) has no test file at all** —
+  this predates the duplicate feature (the component itself has never had a test file), so the
+  icon's presence, positioning, and the "one icon per row, consistently placed" behavior are only
+  verified visually (Storybook's `EditMode` story, checked by hand/via a one-off Playwright script
+  each time it changed) — not by anything that runs in CI. A regression here wouldn't be caught
+  automatically.
+- **Nothing warns when a duplicate is confirmed with everything left as-is (or with only the name
+  changed) — creating a near-exact copy of the source is fully allowed, by design.** This came up
+  when a user duplicated a service without changing its category tags and ended up with two
+  services grouped under the same badges. That's treated as intentional, not a bug — restricting it
+  would work against the feature's actual purpose (fast creation of a mostly-identical service). A
+  possible future addition, not built: a non-blocking warning at confirm time if the resulting
+  categories/attributes/hours/etc. are unchanged from the source, as a data-quality nudge rather
+  than a hard block.
 
 ## Test Cases
 
@@ -332,6 +392,8 @@ locations).
 | 12  | Client submits a `locationIds` entry belonging to a different organization than the source service (e.g. a tampered/buggy request, not reachable through the normal wizard UI) | —                                                    | Handler rejects before any writes                                                                                                                                                                                                                                 | Backend (new suite)                                                                        |
 | 13  | User double-clicks the wizard's confirm button, or clicks it again before the first request resolves                                                                           | All categories checked                               | Second click is a no-op — the button is disabled (via `loading={isPending}`) for the duration of the first request                                                                                                                                                | UI (`packages/ui` Vitest+RTL) — implemented, passing                                       |
 | 14  | Duplicating a source service that is already `deleted: true`                                                                                                                   | Any                                                  | Proceeds exactly like duplicating a non-deleted one — no special block                                                                                                                                                                                            | Backend (new suite)                                                                        |
+| 15  | Source has >1 location, some categories unchecked, some locations unchecked                                                                                                    | Click "Uncheck all" next to "What to copy"           | All 5 category checkboxes clear; the location picker's checked state is untouched                                                                                                                                                                                 | UI (`packages/ui` Vitest+RTL) — implemented, passing                                       |
+| 16  | Source has >1 location                                                                                                                                                         | Click "Uncheck all" next to "Link the duplicate to"  | All location checkboxes clear; the category checklist's checked state is untouched                                                                                                                                                                                | UI (`packages/ui` Vitest+RTL) — implemented, passing                                       |
 
 ## Related Files
 
@@ -376,5 +438,8 @@ locations).
 
 ---
 
-_Last verified against code: 2026-09-04. Implemented same-day. Update this doc's Related Files and
-Known Issues if the description-copying gap or the test-infrastructure gap get addressed later._
+_Last verified against code: 2026-09-04. Implemented same-day; the "Uncheck all" links, the
+consistent-per-row icon positioning, and the `gov-dist` namespace fix on the remote-services edit
+page were added the same day, in follow-up rounds. Update this doc's Related Files and Known Issues
+if the description-copying gap, the near-duplicate warning, or the test-infrastructure gaps
+(backend, or `ServicesInfo.tsx`) get addressed later._

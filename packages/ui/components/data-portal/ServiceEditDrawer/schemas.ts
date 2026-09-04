@@ -11,6 +11,15 @@ const FreetextObject = z
 	})
 	.nullish()
 
+// A service always needs a name - unlike description, this one can't be left blank. Kept as its own
+// object (rather than tightening the shared FreetextObject) since description should stay optional.
+const RequiredFreetextObject = z.object({
+	text: z.string().trim().min(1, 'Name is required'),
+	key: z.string().nullish(),
+	ns: z.string().nullish(),
+	crowdinId: z.number().nullish(),
+})
+
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()])
 type Literal = z.infer<typeof literalSchema>
 type Json = Literal | { [key: string]: Json } | Json[]
@@ -19,7 +28,7 @@ const JsonSchema: z.ZodType<Json> = z.lazy(() =>
 )
 
 export const FormSchema = z.object({
-	name: FreetextObject,
+	name: RequiredFreetextObject,
 	description: FreetextObject,
 	services: prefixedId('serviceTag').array(),
 	published: z.boolean().optional().default(true),

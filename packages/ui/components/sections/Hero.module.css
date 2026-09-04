@@ -46,7 +46,7 @@
 @media (min-width: $mantine-breakpoint-sm) {
 	.subheading {
 		font-size: rem(24px);
-		line-height: 1.25;
+		line-height: 1.5;
 	}
 }
 

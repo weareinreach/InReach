@@ -26,7 +26,7 @@ export const ZCreateMethod = z.enum(['public', 'internal'])
 
 // Supersedes a plain `published` boolean filter - 'published' means `published: true`, every other
 // value means `published: false` AND that specific `unpublishedReason`. One filter answers "what's this
-// org's status," not two (see docs/DataPortal/2026-Redesign/unpublished-status.md). Omitted/empty = "All".
+// org's status," not two (see docs/DataPortal/Organizations/README.md). Omitted/empty = "All".
 export const ZStatusFilter = z.enum([
 	'published',
 	'new',
