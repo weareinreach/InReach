@@ -145,6 +145,22 @@ order:
 1. **A slimmed-down widget page/UI** — defeatured relative to the main app, linking
    out to `app.inreach.org` for full detail. Must render sanely at arbitrary,
    partner-controlled iframe widths since InReach won't control the host page layout.
+   - _Responsive behavior in an iframe:_ an iframe is its own browsing context, so the
+     app's existing CSS breakpoints will trigger off the iframe's own rendered box
+     size, not the visitor's actual device or window. A narrow embed gets the mobile
+     layout even on a large monitor — "mobile layout" effectively means "narrow
+     container" in this context, which is a real reuse win for the existing responsive
+     system, but with two gaps to plan for:
+     - **Height doesn't behave the same way.** A normal page grows and the browser
+       scrolls; an iframe has whatever height the host page gives it and won't
+       auto-grow with content. Needs a resize-communication approach (e.g., the widget
+       page posts its content height to the parent window so it can resize the iframe
+       element) — separate work from the breakpoints themselves.
+     - **Partner-chosen widths can be narrower than any phone viewport the app was
+       designed for** (e.g., a 250–280px sidebar box). Needs a check on whether the
+       smallest existing breakpoint still holds up that narrow, or whether the widget
+       needs its own additional breakpoint plus a documented minimum recommended embed
+       width for partners.
 2. **Server-side enforcement of visibility/suppression logic — the prerequisite item.**
    Some of this (e.g., location visibility) currently appears to be enforced partly
    client-side, meaning the raw field may already reach the browser and only the UI
