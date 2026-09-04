@@ -165,7 +165,7 @@ const EditModeBar = () => {
 					</UnstyledButton>
 				)}
 				{/* Unpublishing an Organization requires a reason (see
-				docs/DataPortal/2026-Redesign/unpublished-status.md), so that direction opens the same
+				docs/DataPortal/Organizations/README.md), so that direction opens the same
 				popover the Organizations table uses instead of firing instantly. Publishing - and
 				either direction for OrgLocation/OrgService, which don't have this field - stays exactly
 				the instant toggle it's always been. */}

@@ -16,7 +16,7 @@ interface OrganizationCsvExportRow {
 	updatedAt: Date
 	lastVerified?: Date
 	// The view's computed "status" ("Published" or the unpublishedReason label) replaces the raw
-	// `published` boolean here - see docs/DataPortal/2026-Redesign/unpublished-status.md.
+	// `published` boolean here - see docs/DataPortal/Organizations/Downloads/summary.md.
 	status: string | null
 	deleted: boolean
 	countryCode?: string

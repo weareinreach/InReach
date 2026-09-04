@@ -20,6 +20,8 @@ export default {
 			service.getNames,
 			service.forServiceEditDrawer,
 			service.getOptions,
+			service.forDuplicateWizard,
+			service.duplicate,
 			component.ServiceSelect,
 			orgHours.forHoursDisplay,
 			serviceArea.addToArea,

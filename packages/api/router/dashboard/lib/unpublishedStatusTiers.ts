@@ -5,7 +5,7 @@ import { Prisma } from '@prisma/client'
  * them - context for a human reviewer's judgment, not an inferred answer. Mirrors
  * docs/Database/SQLScripts/report-unpublished-status-backfill-tiers.sql exactly; kept in sync manually since
  * that script is meant to be run standalone (outside the app) for ad hoc review. See
- * docs/DataPortal/2026-Redesign/unpublished-status.md for why this can't be a real automated backfill.
+ * docs/Dashboards/UnpublishedStatus/README.md for why this can't be a real automated backfill.
  *
  * The 30-day "still legitimately new" window is a judgment call, not a measured value - change it here and in
  * the SQL script together if it needs adjusting.

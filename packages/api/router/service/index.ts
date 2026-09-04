@@ -78,6 +78,15 @@ export const serviceRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	forDuplicateWizard: permissionedProcedure('updateOrgService')
+		.input(schema.ZForDuplicateWizardSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('forDuplicateWizard'),
+				() => import('./query.forDuplicateWizard.handler')
+			)
+			return handler(opts)
+		}),
 	getOptions: permissionedProcedure('updateOrgService').query(async () => {
 		const handler = await importHandler(namespaced('getOptions'), () => import('./query.getOptions.handler'))
 		return handler()
@@ -172,6 +181,15 @@ export const serviceRouter = defineRouter({
 		.input(schema.ZUpsertSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(namespaced('upsert'), () => import('./mutation.upsert.handler'))
+			return handler(opts)
+		}),
+	duplicate: permissionedProcedure('updateOrgService')
+		.input(schema.ZDuplicateSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('duplicate'),
+				() => import('./mutation.duplicate.handler')
+			)
 			return handler(opts)
 		}),
 	// #endregion

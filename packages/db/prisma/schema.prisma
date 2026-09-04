@@ -638,6 +638,7 @@ model OrgService {
   updatedAt         DateTime              @updatedAt
   serviceNameId     String?               @unique
   crisisSupportOnly Boolean?
+  duplicatedFromId  String?
   attributes        AttributeSupplement[]
   internalNotes     InternalNote[]
   hours             OrgHours[]
@@ -653,10 +654,13 @@ model OrgService {
   reports           Report[]              @relation("ServiceReports")
   userLists         SavedService[]
   serviceAreas      ServiceArea?
+  duplicatedFrom    OrgService?           @relation("ServiceDuplicatedFrom", fields: [duplicatedFromId], references: [id], onDelete: SetNull)
+  duplicates        OrgService[]          @relation("ServiceDuplicatedFrom")
 
   @@index([organizationId])
   @@index([organizationId, published(sort: Desc), deleted])
   @@index([id, published(sort: Desc), deleted])
+  @@index([duplicatedFromId])
 }
 
 model ServiceArea {

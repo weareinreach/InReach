@@ -50,11 +50,6 @@
 	justify-content: center;
 	text-align: center;
 }
-@media (min-width: $mantine-breakpoint-sm) {
-	.banner {
-		margin-top: rem(-40px);
-	}
-}
 
 .indicators {
 	bottom: rem(-40px);

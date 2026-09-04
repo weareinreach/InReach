@@ -6,7 +6,7 @@ Manages staff (`User`) accounts' Data Portal permission tier and lets an admin
 trigger a password-reset email. This is about _staff_ access to the Data Portal
 itself, not end-user/consumer accounts. Lives at `/data-portal/manage-users`
 (previously the "Users" tab at `/admin` — renamed to match the 2026 redesign's
-naming; see [`docs/DataPortal/2026-Redesign/UI_elements.md`](../2026-Redesign/UI_elements.md)).
+naming; see [`docs/DataPortal/2026-Redesign/UI_elements.md`](../../2026-Redesign/UI_elements.md)).
 
 ## Access
 
@@ -23,11 +23,11 @@ Gated at `dataPortalManager` and above in this page's own `getServerSideProps`
 
 ## How It Works
 
-- **UI**: [`UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx),
+- **UI**: [`UserTable.tsx`](../../../../packages/ui/components/data-portal/UserTable.tsx),
   built on the shared
-  [`DataTable`](../../../packages/ui/components/data-portal/DataTable/index.tsx)
+  [`DataTable`](../../../../packages/ui/components/data-portal/DataTable/index.tsx)
   component, rendered from
-  [`apps/app/src/pages/data-portal/manage-users.tsx`](../../../apps/app/src/pages/data-portal/manage-users.tsx).
+  [`apps/app/src/pages/data-portal/manage-users.tsx`](../../../../apps/app/src/pages/data-portal/manage-users.tsx).
 - **API**:
   - `user.forUserTable` → `query.forUserTable.handler.ts` — server-side search
     (name/email) and sort, paginated, fetching `User` rows with their
@@ -80,16 +80,16 @@ Gated at `dataPortalManager` and above in this page's own `getServerSideProps`
 
 ## Related Files
 
-| Path                                                                                                            | Purpose                                              |
-| --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| [`apps/app/src/pages/data-portal/manage-users.tsx`](../../../apps/app/src/pages/data-portal/manage-users.tsx)   | Page: permission gate, renders `UserTable`           |
-| [`packages/ui/components/data-portal/UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx) | Table UI, access-tier dropdown, reset-password modal |
-| `packages/api/router/user/query.forUserTable.handler.ts`                                                        | List query                                           |
-| `packages/api/router/user/mutation.toggleDataPortalAccess.handler.ts`                                           | Access-tier change (Admin/Root only)                 |
-| `packages/api/router/user/mutation.forgotPassword.handler.ts`                                                   | Cognito password-reset trigger                       |
-| `packages/api/router/user/index.ts`                                                                             | tRPC route registration, permission levels           |
-| `packages/api/lib/middleware/permissions.ts`                                                                    | `adminProcedure`/`isAdmin` gate                      |
-| `packages/db/prisma/schema.prisma` (`User` `~L65`, `Permission` `~L129`, `UserPermission` `~L1397-1407`)        | Schema                                               |
+| Path                                                                                                               | Purpose                                              |
+| ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| [`apps/app/src/pages/data-portal/manage-users.tsx`](../../../../apps/app/src/pages/data-portal/manage-users.tsx)   | Page: permission gate, renders `UserTable`           |
+| [`packages/ui/components/data-portal/UserTable.tsx`](../../../../packages/ui/components/data-portal/UserTable.tsx) | Table UI, access-tier dropdown, reset-password modal |
+| `packages/api/router/user/query.forUserTable.handler.ts`                                                           | List query                                           |
+| `packages/api/router/user/mutation.toggleDataPortalAccess.handler.ts`                                              | Access-tier change (Admin/Root only)                 |
+| `packages/api/router/user/mutation.forgotPassword.handler.ts`                                                      | Cognito password-reset trigger                       |
+| `packages/api/router/user/index.ts`                                                                                | tRPC route registration, permission levels           |
+| `packages/api/lib/middleware/permissions.ts`                                                                       | `adminProcedure`/`isAdmin` gate                      |
+| `packages/db/prisma/schema.prisma` (`User` `~L65`, `Permission` `~L129`, `UserPermission` `~L1397-1407`)           | Schema                                               |
 
 ---
 

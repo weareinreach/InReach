@@ -31,18 +31,18 @@ Admin+, `DownloadTable`'s `canViewDownloads` also required Admin+, and every row
 only ever required `dataPortalManager`+. All three layers were corrected to
 Manager+ as part of the `/admin` → `/data-portal` relocation, since it's a
 frontend-only threshold change (no backend/schema change involved) — see
-[`docs/DataPortal/2026-Redesign/UI_elements.md`](../2026-Redesign/UI_elements.md).
+[`docs/DataPortal/2026-Redesign/UI_elements.md`](../../2026-Redesign/UI_elements.md).
 
 ## How It Works
 
-- **UI**: [`DownloadTable.tsx`](../../../packages/ui/components/data-portal/DownloadTable.tsx)
+- **UI**: [`DownloadTable.tsx`](../../../../packages/ui/components/data-portal/DownloadTable.tsx)
   renders four groups of buttons (Published/Unpublished Lists, Review Lists,
   Organization Counts, Service Counts), each button a
-  [`CsvDownload.tsx`](../../../packages/ui/components/data-portal/CsvDownload.tsx)
+  [`CsvDownload.tsx`](../../../../packages/ui/components/data-portal/CsvDownload.tsx)
   instance, rendered from
-  [`apps/app/src/pages/data-portal/downloads.tsx`](../../../apps/app/src/pages/data-portal/downloads.tsx).
+  [`apps/app/src/pages/data-portal/downloads.tsx`](../../../../apps/app/src/pages/data-portal/downloads.tsx).
 - **API**: eleven procedures in
-  [`packages/api/router/csvDownload/index.ts`](../../../packages/api/router/csvDownload/index.ts),
+  [`packages/api/router/csvDownload/index.ts`](../../../../packages/api/router/csvDownload/index.ts),
   all `permissionedProcedure('dataPortalManager')` and deliberately defined as
   `.mutation()` rather than `.query()` — so a report only runs when its button is
   clicked, not on page mount.
@@ -81,16 +81,16 @@ file storage, and nothing is generated until you click.
 
 ## Related Files
 
-| Path                                                                                                                    | Purpose                                                          |
-| ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| [`apps/app/src/pages/data-portal/downloads.tsx`](../../../apps/app/src/pages/data-portal/downloads.tsx)                 | Page: permission gate, renders `DownloadTable`                   |
-| [`packages/ui/components/data-portal/DownloadTable.tsx`](../../../packages/ui/components/data-portal/DownloadTable.tsx) | Button grid UI, `canViewDownloads` gate, per-row `permissionKey` |
-| [`packages/ui/components/data-portal/CsvDownload.tsx`](../../../packages/ui/components/data-portal/CsvDownload.tsx)     | Per-report download button, hierarchy-aware permission check     |
-| `packages/ui/hooks/useCsvDownload.ts`                                                                                   | Client-side CSV conversion                                       |
-| `packages/api/router/csvDownload/index.ts`                                                                              | All 11 report procedures, permission level                       |
-| `packages/db/prisma/schema.prisma` (`view` blocks, `~L2020-2170`)                                                       | View definitions Prisma can't model directly                     |
-| [`summary.md`](./summary.md)                                                                                            | Per-report SQL, columns, and sample output                       |
+| Path                                                                                                                       | Purpose                                                          |
+| -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`apps/app/src/pages/data-portal/downloads.tsx`](../../../../apps/app/src/pages/data-portal/downloads.tsx)                 | Page: permission gate, renders `DownloadTable`                   |
+| [`packages/ui/components/data-portal/DownloadTable.tsx`](../../../../packages/ui/components/data-portal/DownloadTable.tsx) | Button grid UI, `canViewDownloads` gate, per-row `permissionKey` |
+| [`packages/ui/components/data-portal/CsvDownload.tsx`](../../../../packages/ui/components/data-portal/CsvDownload.tsx)     | Per-report download button, hierarchy-aware permission check     |
+| `packages/ui/hooks/useCsvDownload.ts`                                                                                      | Client-side CSV conversion                                       |
+| `packages/api/router/csvDownload/index.ts`                                                                                 | All 11 report procedures, permission level                       |
+| `packages/db/prisma/schema.prisma` (`view` blocks, `~L2020-2170`)                                                          | View definitions Prisma can't model directly                     |
+| [`summary.md`](./summary.md)                                                                                               | Per-report SQL, columns, and sample output                       |
 
 ---
 
-_Last verified against code: 2026-08-30._
+_Last verified against code: 2026-09-04._

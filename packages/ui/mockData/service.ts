@@ -56,4 +56,19 @@ export const service = {
 			return data
 		},
 	}),
+	forDuplicateWizard: getTRPCMock({
+		path: ['service', 'forDuplicateWizard'],
+		response: {
+			name: 'Legal Aid Clinic',
+			locations: [
+				{ id: 'oloc_MOCKEDLOCATION0001', name: 'Downtown' },
+				{ id: 'oloc_MOCKEDLOCATION0002', name: 'Uptown' },
+			],
+		},
+	}),
+	duplicate: getTRPCMock({
+		path: ['service', 'duplicate'],
+		type: 'mutation',
+		response: { id: 'osvc_MOCKEDDUPLICATE00001' },
+	}),
 } satisfies MockHandlerObject<'service'>

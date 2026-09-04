@@ -47,9 +47,9 @@ type SortableColumnId = 'name' | 'lastVerified' | 'updatedAt' | 'createdAt'
 
 /**
  * Row action that both unpublishes-with-a-reason and re-triages the reason on an already-unpublished org -
- * deliberately one-directional (see docs/DataPortal/2026-Redesign/unpublished-status.md): it can never
- * re-publish. Publishing has a real public consequence (the org becomes searchable again), so that stays on
- * the org's own edit page where the content was just reviewed, not a one-click table action.
+ * deliberately one-directional (see docs/DataPortal/Organizations/README.md): it can never re-publish.
+ * Publishing has a real public consequence (the org becomes searchable again), so that stays on the org's own
+ * edit page where the content was just reviewed, not a one-click table action.
  */
 const SetStatusPopover = ({ row }: { row: RowItem }) => {
 	const theme = useMantineTheme()

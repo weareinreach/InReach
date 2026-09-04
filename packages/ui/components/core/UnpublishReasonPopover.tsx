@@ -24,8 +24,7 @@ interface UnpublishReasonPopoverProps {
  * Organization the same way: pick a reason (required, so picking one IS the unpublish action), plus an
  * optional note. Deliberately one-directional - it never re-publishes. Publishing has a real public
  * consequence (the org becomes searchable again), so that stays a plain instant action on whichever surface
- * already handles it, not something this shared popover offers. See
- * docs/DataPortal/2026-Redesign/unpublished-status.md.
+ * already handles it, not something this shared popover offers. See docs/DataPortal/Organizations/README.md.
  */
 export const UnpublishReasonPopover = ({
 	slug,

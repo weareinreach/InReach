@@ -6,10 +6,11 @@ A root-only, cross-organization data-integrity tool for fixing phone/email/
 service-location attachment problems across the entire database at once — not
 scoped to any single organization. Used occasionally for bulk cleanup, not as part
 of any regular staff workflow. Lives at `/data-portal/quicklink/*` (previously
-`/admin/quicklink/*`) — see
-[`docs/DataPortal/2026-Redesign/UI_elements.md`](../2026-Redesign/UI_elements.md)
-for why this sits outside the Organizations/Admin/Tasks section structure the
-2026 redesign otherwise uses.
+`/admin/quicklink/*`) — the sole side-nav item under the header bar's `System`
+section (see [`../README.md`](../README.md)), dropped in unchanged including its
+own internal tab bar (Phone Numbers / Email Addresses / Location Services); see
+[`docs/DataPortal/2026-Redesign/UI_elements.md`](../../2026-Redesign/UI_elements.md)
+for the section-structure design this follows.
 
 ## Access
 
@@ -21,13 +22,13 @@ tool at all, regardless of how it's linked from navigation.
 ## How It Works
 
 - **UI**: four pages under
-  [`apps/app/src/pages/data-portal/quicklink/`](../../../apps/app/src/pages/data-portal/quicklink/) —
+  [`apps/app/src/pages/data-portal/quicklink/`](../../../../apps/app/src/pages/data-portal/quicklink/) —
   `index.tsx` (landing page, just a tab strip + prompt to pick one), and
   `phone.tsx` / `email.tsx` / `services.tsx`, each a near-identical grouped,
   paginated, editable table (grouped by organization) built directly on
   `@tanstack/react-table` — **not** the shared `DataTable` component the other
   Data Portal pages use.
-- **API**: [`packages/api/router/quicklink/`](../../../packages/api/router/quicklink/) —
+- **API**: [`packages/api/router/quicklink/`](../../../../packages/api/router/quicklink/) —
   `getPhoneData`/`getEmailData`/`getServiceLocationData` queries, and
   `updatePhoneData`/`updateEmailData`/`updateServiceLocationData` mutations, all
   `permissionedProcedure('dataPortalManager')` at the tRPC layer even though every
@@ -73,14 +74,14 @@ the corresponding mutation.
 
 | Path                                                                                                                                                        | Purpose                                   |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| [`apps/app/src/pages/data-portal/quicklink/index.tsx`](../../../apps/app/src/pages/data-portal/quicklink/index.tsx)                                         | Landing page / tab strip                  |
-| [`apps/app/src/pages/data-portal/quicklink/phone.tsx`](../../../apps/app/src/pages/data-portal/quicklink/phone.tsx)                                         | Phone Numbers editor                      |
-| [`apps/app/src/pages/data-portal/quicklink/email.tsx`](../../../apps/app/src/pages/data-portal/quicklink/email.tsx)                                         | Email Addresses editor                    |
-| [`apps/app/src/pages/data-portal/quicklink/services.tsx`](../../../apps/app/src/pages/data-portal/quicklink/services.tsx)                                   | Location Services editor                  |
+| [`apps/app/src/pages/data-portal/quicklink/index.tsx`](../../../../apps/app/src/pages/data-portal/quicklink/index.tsx)                                      | Landing page / tab strip                  |
+| [`apps/app/src/pages/data-portal/quicklink/phone.tsx`](../../../../apps/app/src/pages/data-portal/quicklink/phone.tsx)                                      | Phone Numbers editor                      |
+| [`apps/app/src/pages/data-portal/quicklink/email.tsx`](../../../../apps/app/src/pages/data-portal/quicklink/email.tsx)                                      | Email Addresses editor                    |
+| [`apps/app/src/pages/data-portal/quicklink/services.tsx`](../../../../apps/app/src/pages/data-portal/quicklink/services.tsx)                                | Location Services editor                  |
 | `packages/api/router/quicklink/index.ts`                                                                                                                    | tRPC route registration, permission level |
 | `packages/api/router/quicklink/query.getPhoneData.handler.ts`, `query.getEmailData.handler.ts`, `query.getServiceLocationData.handler.ts`                   | List queries, one per sub-page            |
 | `packages/api/router/quicklink/mutation.updatePhoneData.handler.ts`, `mutation.updateEmailData.handler.ts`, `mutation.updateServiceLocationData.handler.ts` | Diff-based batch update mutations         |
 
 ---
 
-_Last verified against code: 2026-08-30._
+_Last verified against code: 2026-09-04._

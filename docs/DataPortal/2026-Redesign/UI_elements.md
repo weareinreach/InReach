@@ -173,34 +173,22 @@ built are noted inline.
      (reading each table's own `data.total`, not lifted to page level — avoids prop-drilling since the
      table already owns the query). Deliberately **not** added to `DownloadTable`, which is a fixed
      button catalog with no real "total" concept, not a paginated dataset.
-   - **Organizations' action button ("Add an organization") is deliberately deferred**, not built. Reusing
-     `SuggestOrg`'s form was considered, but it currently submits to `organization.createNewSuggestion`
-     (creates a pending `Suggestion` for later review), not a live org — incompatible with a
-     "Create an Org and Continue editing" button that needs to land on that org's real edit page
-     immediately. The intended fix is wiring the reused form to `organization.createNewQuick` instead (the
-     existing, working, previously-uncalled direct-creation mutation from earlier in this project), but
-     that requires resolving a real input-shape gap first: `createNewQuick` needs a `slug` (not collected
-     by `SuggestOrg`) and a `sourceId` (need to confirm which `Source` value fits a staff-created org).
-     Task/Manage-Teams-style dual-CTA branching ("...and create a task") is explicitly out of scope
-     regardless, per earlier discussion — only the "continue editing" path is wanted.
-     Validated via `tsc`/`eslint` (both packages) and a full `storybook build`, all clean.
+   - **Organizations' action button ("Add an organization") has since been built**, as `AddOrgModal` —
+     see [`Organizations/README.md`](../Organizations/README.md#how-to-use-it) for current-state detail.
+     The other four pages stay title-only, no action button, per this step's original scope.
 
 **Phase B — layer in the new table-level elements, only once Phase A is proven working end to end:**
 
 5. Extend `DataTable` with the net-new capabilities — toolbar quick-filter dropdowns, the leading status-indicator column, bulk-select + contextual "…" menu, and the (mostly-disabled) Saved Views shell — as additive/opt-in props so tables not yet touched are unaffected.
 6. Apply the approved Reports permission split.
 7. Roll the new elements out per table, applying the grayed-out-when-unbacked rule as each one lands.
-8. Regression pass across all permission tiers, then update the five per-tab reference docs (`Organizations/README.md`, `Users/README.md`, `Reviews/README.md`, `Reports/README.md`, `Downloads/README.md`) with their new reality and bumped "Last verified" dates.
+8. Regression pass across all permission tiers, then update the five per-tab reference docs (`Organizations/README.md`, `Admin/ManageUsers/README.md`, `Organizations/Reviews/README.md`, `Organizations/Reports/README.md`, `Organizations/Downloads/README.md`) with their new reality and bumped "Last verified" dates.
 
 ## Open Questions
 
 - Rename/delete actions for a saved (non-default) view are assumed to exist but haven't been designed.
 - Figma's Admin side-nav includes a "Properties manager" link with no equivalent anywhere in the current
   codebase (confirmed via full-repo search) — its scope and purpose are undetermined.
-- Organizations' "Add an organization" action button is blocked on two small decisions: what `slug` to
-  generate from the org name (and how to handle collisions), and which `Source` value represents "created
-  by staff via the Data Portal" for `organization.createNewQuick`'s required `sourceId`. Needs resolving
-  before that button can be built — see "Suggested Build Order" step 4.
 
 ## Reference
 
@@ -212,15 +200,15 @@ to match.
 
 ## Related Files
 
-| Path                                                                                                                                                                                                                  | Purpose                                                                                                                                          |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [`packages/ui/components/data-portal/DataTable/`](../../../packages/ui/components/data-portal/DataTable/index.tsx)                                                                                                    | Shared table engine — where most of the template additions above would live                                                                      |
-| [`packages/ui/components/data-portal/OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)                                                                                       | Current closest-to-template implementation; toolbar-extension pattern to build on                                                                |
-| [`packages/ui/components/data-portal/UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx)                                                                                                       | Second consumer of the template; currently lacks bulk-select and the toolbar dropdown pattern entirely                                           |
-| [`packages/ui/components/sections/Navbar.tsx`](../../../packages/ui/components/sections/Navbar.tsx)                                                                                                                   | The consumer-facing header — stays in place above the new Data-Portal gray bar for this pass; a separate component, not an extension of this one |
-| [`apps/app/src/pages/data-portal/`](../../../apps/app/src/pages/data-portal/)                                                                                                                                         | Current shell — one standalone page per former tab, no side-nav or per-tab title yet (Phase A step 1 complete; see "Suggested Build Order")      |
-| [`packages/ui/components/data-portal/AuditDrawer.tsx`](../../../packages/ui/components/data-portal/AuditDrawer.tsx), [`InternalNotesDrawer.tsx`](../../../packages/ui/components/data-portal/InternalNotesDrawer.tsx) | Existing drawer pattern to extend for future template pieces (e.g. a Team roster)                                                                |
-| `packages/api/router/report/index.ts`                                                                                                                                                                                 | Reports router — `forReportsTable` and `update` currently both require `dataPortalManager`; the view-side needs splitting to Basic+              |
-| `packages/api/router/review/index.ts`                                                                                                                                                                                 | Reviews router — hide/unhide vs. delete/undelete tiering, already correct                                                                        |
-| `packages/api/router/csvDownload/index.ts`                                                                                                                                                                            | Downloads router — already correctly Manager+ server-side; only the `/admin` tab gate needs correcting to match                                  |
-| [`docs/DataPortal/Reports/README.md`](../Reports/README.md), [`Reviews/README.md`](../Reviews/README.md), [`Downloads/README.md`](../Downloads/README.md)                                                             | Current-state reference docs for these three tabs                                                                                                |
+| Path                                                                                                                                                                                                                  | Purpose                                                                                                                                                                                           |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`packages/ui/components/data-portal/DataTable/`](../../../packages/ui/components/data-portal/DataTable/index.tsx)                                                                                                    | Shared table engine — where most of the template additions above would live                                                                                                                       |
+| [`packages/ui/components/data-portal/OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)                                                                                       | Current closest-to-template implementation; toolbar-extension pattern to build on                                                                                                                 |
+| [`packages/ui/components/data-portal/UserTable.tsx`](../../../packages/ui/components/data-portal/UserTable.tsx)                                                                                                       | Second consumer of the template; currently lacks bulk-select and the toolbar dropdown pattern entirely                                                                                            |
+| [`packages/ui/components/sections/Navbar.tsx`](../../../packages/ui/components/sections/Navbar.tsx)                                                                                                                   | The consumer-facing header — stays in place above the new Data-Portal gray bar for this pass; a separate component, not an extension of this one                                                  |
+| [`apps/app/src/pages/data-portal/`](../../../apps/app/src/pages/data-portal/)                                                                                                                                         | Current shell — `DataPortalPageShell`, `PageHeading`, and `ResultCount` all wired into every live page as of Phase A step 4; only Organizations has a `PageHeading` action button (`AddOrgModal`) |
+| [`packages/ui/components/data-portal/AuditDrawer.tsx`](../../../packages/ui/components/data-portal/AuditDrawer.tsx), [`InternalNotesDrawer.tsx`](../../../packages/ui/components/data-portal/InternalNotesDrawer.tsx) | Existing drawer pattern to extend for future template pieces (e.g. a Team roster)                                                                                                                 |
+| `packages/api/router/report/index.ts`                                                                                                                                                                                 | Reports router — `forReportsTable` and `update` currently both require `dataPortalManager`; the view-side needs splitting to Basic+                                                               |
+| `packages/api/router/review/index.ts`                                                                                                                                                                                 | Reviews router — hide/unhide vs. delete/undelete tiering, already correct                                                                                                                         |
+| `packages/api/router/csvDownload/index.ts`                                                                                                                                                                            | Downloads router — already correctly Manager+ server-side; only the `/admin` tab gate needs correcting to match                                                                                   |
+| [`docs/DataPortal/Organizations/Reports/README.md`](../Organizations/Reports/README.md), [`Reviews/README.md`](../Organizations/Reviews/README.md), [`Downloads/README.md`](../Organizations/Downloads/README.md)     | Current-state reference docs for these three side-nav items, now nested under `Organizations/` to match the shipped section structure                                                             |
