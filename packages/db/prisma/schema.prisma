@@ -312,6 +312,15 @@ model Organization {
   published          Boolean                  @default(false)
   lastVerified       DateTime?
   sourceId           String
+  /// Snapshotted at creation time (not recomputed later) - did the creator hold any Data Portal
+  /// permission when they submitted this? Null for orgs predating this field or not created via
+  /// suggestion/data-portal. Distinguishes a genuine public suggestion from a staff/intern/volunteer
+  /// submission made through the same public form.
+  creatorHadDpAccess Boolean?
+  /// Why this org is currently unpublished - null when published, or for orgs predating this field.
+  /// Set once, cleared automatically when re-published. See
+  /// docs/DataPortal/2026-Redesign/unpublished-status.md.
+  unpublishedReason  OrgUnpublishedReason?
   createdAt          DateTime                 @default(now())
   updatedAt          DateTime                 @updatedAt
   crisisResource     Boolean?
@@ -346,6 +355,7 @@ model Organization {
   @@index([attributeIds], type: Gin)
   @@index([serviceIds], type: Gin)
   @@index([published, deleted])
+  @@index([published, unpublishedReason])
   @@index([slug])
   @@index([slug, published, deleted])
   @@index([id, published(sort: Desc), deleted])
@@ -628,6 +638,11 @@ model OrgService {
   updatedAt         DateTime              @updatedAt
   serviceNameId     String?               @unique
   crisisSupportOnly Boolean?
+  duplicatedFromId  String?
+  /// Materialized for Content Search (GIN indexing) - kept in sync by trg_sync_org_attribute_ids
+  attributeIds      String[]              @default([])
+  /// Materialized for Content Search (GIN indexing) - kept in sync by trg_sync_org_service_ids
+  tagIds            String[]              @default([])
   attributes        AttributeSupplement[]
   internalNotes     InternalNote[]
   hours             OrgHours[]
@@ -643,10 +658,15 @@ model OrgService {
   reports           Report[]              @relation("ServiceReports")
   userLists         SavedService[]
   serviceAreas      ServiceArea?
+  duplicatedFrom    OrgService?           @relation("ServiceDuplicatedFrom", fields: [duplicatedFromId], references: [id], onDelete: SetNull)
+  duplicates        OrgService[]          @relation("ServiceDuplicatedFrom")
 
   @@index([organizationId])
   @@index([organizationId, published(sort: Desc), deleted])
   @@index([id, published(sort: Desc), deleted])
+  @@index([duplicatedFromId])
+  @@index([attributeIds], type: Gin)
+  @@index([tagIds], type: Gin)
 }
 
 model ServiceArea {
@@ -2211,6 +2231,15 @@ enum ReportStatus {
   PENDING
   ACKNOWLEDGED
   RESOLVED
+}
+
+enum OrgUnpublishedReason {
+  NEW
+  IN_PROGRESS
+  WAITING
+  INACTIVE
+  UNAFFIRMING
+  UNRESPONSIVE
 }
 
 enum LocationAlertLevel {

@@ -3,7 +3,49 @@ import compact from 'just-compact'
 import { Prisma, prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TForOrganizationTableSchema } from './query.forOrganizationTable.schema'
+import {
+	STATUS_FILTER_TO_REASON,
+	type TForOrganizationTableSchema,
+} from './query.forOrganizationTable.schema'
+
+// 'public' = suggested AND the submitter had no Data Portal access. 'internal' unions the other two real
+// origins (suggested by someone WITH access, or added directly via the Data Portal) - both mean "not
+// actually the public," regardless of which of the two forms was used.
+const createMethodWhere = (
+	createMethod: TForOrganizationTableSchema['createMethod']
+): Prisma.OrganizationWhereInput | undefined => {
+	switch (createMethod) {
+		case 'public':
+			return { source: { source: 'suggestion' }, creatorHadDpAccess: false }
+		case 'internal':
+			return {
+				OR: [
+					{ source: { source: 'suggestion' }, creatorHadDpAccess: true },
+					{ source: { source: 'data-portal' } },
+				],
+			}
+		default:
+			return undefined
+	}
+}
+
+// Supersedes a plain `published` boolean filter - 'published' means `published: true`; every other
+// value means `published: false` AND that specific `unpublishedReason`. Multi-select: several chosen
+// values union (OR) - this filters which orgs show up, it never sets more than one status on an org.
+const statusWhere = (
+	status: TForOrganizationTableSchema['status']
+): Prisma.OrganizationWhereInput | undefined => {
+	if (!status || status.length === 0) {
+		return undefined
+	}
+	return {
+		OR: status.map((s) =>
+			s === 'published'
+				? { published: true }
+				: { published: false, unpublishedReason: STATUS_FILTER_TO_REASON[s] }
+		),
+	}
+}
 
 const LOCATIONS_SELECT = {
 	id: true,
@@ -24,15 +66,23 @@ const ORG_SELECT = {
 	published: true,
 	deleted: true,
 	locations: { select: LOCATIONS_SELECT },
+	source: { select: { source: true } },
+	creatorHadDpAccess: true,
+	unpublishedReason: true,
 } satisfies Prisma.OrganizationSelect
 
 const buildWhere = (input: TForOrganizationTableSchema): Prisma.OrganizationWhereInput => {
 	const where: Prisma.OrganizationWhereInput = {}
-	if (input.published !== undefined) {
-		where.published = input.published
+	const statusClause = statusWhere(input.status)
+	if (statusClause) {
+		Object.assign(where, statusClause)
 	}
 	if (input.deleted !== undefined) {
 		where.deleted = input.deleted
+	}
+	const createMethodClause = createMethodWhere(input.createMethod)
+	if (createMethodClause) {
+		Object.assign(where, createMethodClause)
 	}
 	if (input.lastVerified) {
 		where.lastVerified = { gte: input.lastVerified.from, lte: input.lastVerified.to }
@@ -68,6 +118,35 @@ const normalize = (fragment: Prisma.Sql) =>
 interface SearchRow {
 	id: string
 	total: bigint
+}
+
+// SQL equivalent of createMethodWhere, for the raw-SQL search path below - `src` (the joined Source row)
+// and `o."creatorHadDpAccess"` are both already in scope by the time this is used.
+const createMethodSqlCondition = (
+	createMethod: TForOrganizationTableSchema['createMethod']
+): Prisma.Sql | undefined => {
+	switch (createMethod) {
+		case 'public':
+			return Prisma.sql`(src.source = 'suggestion' AND o."creatorHadDpAccess" = false)`
+		case 'internal':
+			return Prisma.sql`((src.source = 'suggestion' AND o."creatorHadDpAccess" = true) OR src.source = 'data-portal')`
+		default:
+			return undefined
+	}
+}
+
+// SQL equivalent of statusWhere, for the raw-SQL search path below - `o` (the Organization row) is
+// already in scope by the time this is used. Same multi-select union as statusWhere.
+const statusSqlCondition = (status: TForOrganizationTableSchema['status']): Prisma.Sql | undefined => {
+	if (!status || status.length === 0) {
+		return undefined
+	}
+	const clauses = status.map((s) =>
+		s === 'published'
+			? Prisma.sql`o.published = true`
+			: Prisma.sql`(o.published = false AND o."unpublishedReason" = ${STATUS_FILTER_TO_REASON[s]}::"OrgUnpublishedReason")`
+	)
+	return Prisma.sql`(${Prisma.join(clauses, ' OR ')})`
 }
 
 /**
@@ -113,8 +192,9 @@ const searchIds = async (
 			OR o.id ILIKE ${`%${input.search}%`}
 		)`,
 	]
-	if (input.published !== undefined) {
-		conditions.push(Prisma.sql`o.published = ${input.published}`)
+	const statusCondition = statusSqlCondition(input.status)
+	if (statusCondition) {
+		conditions.push(statusCondition)
 	}
 	if (input.deleted !== undefined) {
 		conditions.push(Prisma.sql`o.deleted = ${input.deleted}`)
@@ -137,6 +217,10 @@ const searchIds = async (
 	if (input.createdAt?.to) {
 		conditions.push(Prisma.sql`o."createdAt" <= ${input.createdAt.to}`)
 	}
+	const createMethodCondition = createMethodSqlCondition(input.createMethod)
+	if (createMethodCondition) {
+		conditions.push(createMethodCondition)
+	}
 
 	// While actively searching, relevance wins over any user-selected column sort — a fuzzy match's rank is
 	// the point, not this org's alphabetical position.
@@ -146,6 +230,7 @@ const searchIds = async (
 			count(*) OVER() as total,
 			similarity(${normalize(Prisma.sql`o.name`)}, ${normalize(Prisma.sql`${input.search}::text`)}) as score
 		FROM "Organization" o
+		LEFT JOIN "Source" src ON src.id = o."sourceId"
 		WHERE ${Prisma.join(conditions, ' AND ')}
 		ORDER BY score DESC, o.name ASC, o.id ASC
 		LIMIT ${input.take}

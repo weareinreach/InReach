@@ -20,15 +20,24 @@ declare module "nextjs-routes" {
     | StaticRoute<"/account/reviews">
     | StaticRoute<"/account/saved">
     | DynamicRoute<"/account/saved/[listId]", { "listId": string }>
-    | StaticRoute<"/admin">
-    | StaticRoute<"/admin/quicklink">
-    | StaticRoute<"/admin/quicklink/email">
-    | StaticRoute<"/admin/quicklink/phone">
-    | StaticRoute<"/admin/quicklink/services">
     | DynamicRoute<"/api/auth/[...nextauth]", { "nextauth": string[] }>
     | StaticRoute<"/api/i18n/load">
     | StaticRoute<"/api/i18n/webhook">
     | DynamicRoute<"/api/trpc/[trpc]", { "trpc": string }>
+    | StaticRoute<"/dashboards">
+    | StaticRoute<"/dashboards/unpublished-status">
+    | StaticRoute<"/dashboards/unpublished-status/list">
+    | StaticRoute<"/data-portal">
+    | StaticRoute<"/data-portal/bulk-search-replace">
+    | StaticRoute<"/data-portal/downloads">
+    | StaticRoute<"/data-portal/manage-users">
+    | StaticRoute<"/data-portal/organizations">
+    | StaticRoute<"/data-portal/quicklink">
+    | StaticRoute<"/data-portal/quicklink/email">
+    | StaticRoute<"/data-portal/quicklink/phone">
+    | StaticRoute<"/data-portal/quicklink/services">
+    | StaticRoute<"/data-portal/reports">
+    | StaticRoute<"/data-portal/reviews">
     | DynamicRoute<"/org/[slug]", { "slug": string }>
     | DynamicRoute<"/org/[slug]/[orgLocationId]", { "slug": string; "orgLocationId": string }>
     | DynamicRoute<"/org/[slug]/[orgLocationId]/edit", { "slug": string; "orgLocationId": string }>

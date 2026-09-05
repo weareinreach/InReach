@@ -108,7 +108,7 @@ export const UserMenu = ({ className }: UserMenuProps) => {
 							{canAccessDataPortal && (
 								<>
 									<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
-									<Menu.Item component={Link} href='/admin' target='_self'>
+									<Menu.Item component={Link} href='/data-portal' target='_self'>
 										{t('user-menu.data-portal')}
 									</Menu.Item>
 									{isEditablePage && (

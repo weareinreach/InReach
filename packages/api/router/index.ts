@@ -4,8 +4,10 @@ import { pageRouter } from '~api/router/page'
 import { attributeRouter } from './attribute'
 import { auditTrailRouter } from './auditTrail'
 import { authRouter } from './auth'
+import { bulkSearchReplaceRouter } from './bulkSearchReplace'
 import { componentRouter } from './component'
 import { csvDownloadRouter } from './csvDownload'
+import { dashboardRouter } from './dashboard'
 import { fieldOptRouter } from './fieldOpt'
 import { geoRouter } from './geo'
 import { internalNoteRouter } from './internalNote'
@@ -31,8 +33,10 @@ export const appRouter = defineRouter({
 	attribute: attributeRouter,
 	auditTrail: auditTrailRouter,
 	auth: authRouter,
+	bulkSearchReplace: bulkSearchReplaceRouter,
 	component: componentRouter,
 	csvDownload: csvDownloadRouter,
+	dashboard: dashboardRouter,
 	fieldOpt: fieldOptRouter,
 	geo: geoRouter,
 	internalNote: internalNoteRouter,

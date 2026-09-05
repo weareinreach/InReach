@@ -15,7 +15,9 @@ interface OrganizationCsvExportRow {
 	createdAt: Date
 	updatedAt: Date
 	lastVerified?: Date
-	published: boolean
+	// The view's computed "status" ("Published" or the unpublishedReason label) replaces the raw
+	// `published` boolean here - see docs/DataPortal/Organizations/Downloads/summary.md.
+	status: string | null
 	deleted: boolean
 	countryCode?: string
 	// Add any other columns present in your view here
@@ -34,7 +36,7 @@ const getAllUnpublishedForCSV = async ({ input }: TRPCHandlerParams<TGetAllUnpub
           "createdAt",
           "updatedAt",
           "lastVerified",
-          published,
+          status,
           deleted,
           "countryCode"
       FROM

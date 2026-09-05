@@ -11,6 +11,7 @@ import {
 	Text,
 	Title,
 	Tooltip,
+	UnstyledButton,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { compareArrayVals } from 'crud-object-diff'
@@ -36,6 +37,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { CoverageArea } from '~ui/modals/CoverageArea'
 import { AttributeModal } from '~ui/modals/dataPortal/Attributes'
+import { DuplicateServiceModal } from '~ui/modals/dataPortal/DuplicateService'
 import { ModalText } from '~ui/modals/Service/ModalText'
 import { processAccessInstructions, processAttributes } from '~ui/modals/Service/processor'
 
@@ -48,7 +50,7 @@ import { InlineTextInput } from '../InlineTextInput'
 const isObject = (x: unknown): x is object => typeof x === 'object'
 
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
-	({ serviceId: passedServiceId, createNew, autoAttachAttributeTag, ...props }, ref) => {
+	({ serviceId: passedServiceId, createNew, autoAttachAttributeTag, autoOpen, ...props }, ref) => {
 		const { id: organizationId } = useOrgInfo()
 		const router = useRouter()
 		const serviceId = useMemo(() => passedServiceId ?? generateId('orgService'), [passedServiceId])
@@ -56,7 +58,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const [hasAttributeChanges, setHasAttributeChanges] = useState(false)
 		const [pendingAutoAttach, setPendingAutoAttach] = useState(false)
+		const [duplicatedServiceId, setDuplicatedServiceId] = useState<string | null>(null)
 		const hasAutoAttachedRef = useRef(false)
+		const autoOpenDuplicateRef = useRef<HTMLButtonElement>(null)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 		const notifySaveError = useNewNotification({
 			displayText: 'Something went wrong saving this service. Please try again.',
@@ -97,7 +101,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		)
 		const form = useForm<TFormSchema>({
 			resolver: zodResolver(FormSchema) as Resolver<TFormSchema>,
-			values: data ? { ...data, organizationId: organizationId ?? '' } : undefined,
+			// A pre-existing service can predate the name-required rule and have no name set at all -
+			// `data.name` reflects that as `undefined`, but the form's `name` field can no longer be:
+			// fall back to an empty (still-invalid, still blocked-from-saving) value instead of `undefined`.
+			values: data
+				? { ...data, name: data.name ?? { text: '' }, organizationId: organizationId ?? '' }
+				: undefined,
 		})
 
 		useEffect(() => {
@@ -117,6 +126,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 		const { data: allServices } = api.service.getOptions.useQuery(undefined, { refetchOnWindowFocus: false })
 
 		const activeServices = form.watch('services') ?? []
+		const nameIsBlank = !form.watch('name.text')?.trim()
 
 		const { data: geoMap } = api.fieldOpt.countryGovDistMap.useQuery(undefined, {
 			refetchOnWindowFocus: false,
@@ -181,17 +191,44 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 			}
 		}, [pendingAutoAttach, autoAttachAttributeId, attachAttribute, serviceId])
 
+		// Once a duplicate is created, open its own edit drawer automatically via a hidden trigger -
+		// this renders a second ServiceEditDrawer instance (referencing the exported, self-contained
+		// component below, not a circular import), same shell every other "open a drawer for a real
+		// id" call site already uses.
+		useEffect(() => {
+			if (duplicatedServiceId) {
+				autoOpenDuplicateRef.current?.click()
+			}
+		}, [duplicatedServiceId])
+
+		// Deep-link support: a caller (e.g. Bulk Search & Replace's "full edit" action) can render this
+		// exact, already-in-the-list drawer instance with `autoOpen` set, instead of needing the
+		// hidden-second-instance trick above - that trick exists only for a service with no rendered
+		// drawer yet (a brand-new duplicate); a real, existing service always already has one. Mount-only
+		// by design: `autoOpen` is meant to fire once when this instance first appears, not re-fire on
+		// every re-render if the prop value happens to be recomputed as the same `true`.
+		useEffect(() => {
+			if (autoOpen) {
+				drawerHandler.open()
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [])
+
 		const hasFormChanges = form.formState.isDirty || hasAttributeChanges
 
 		// The handleSave function is reverted to its correct form
 		const handleSave = useCallback(() => {
 			const { name, description, ...baseValues } = form.getValues()
+			if (!name?.text?.trim()) {
+				form.setError('name.text', { type: 'required', message: 'Name is required' })
+				return
+			}
 			const serviceChanges = compareArrayVals<string>([data?.services ?? [], baseValues.services])
 
 			serviceUpsert.mutate({
 				...baseValues,
 				services: serviceChanges,
-				name: name?.text,
+				name: name.text,
 				description: description?.text,
 				attachToLocation,
 			})
@@ -465,9 +502,30 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
 						<Drawer.Header>
-							<Group justify='space-between' w='100%'>
-								<Breadcrumb option='close' onClick={handleClose} />
-								<Group>
+							<Stack gap={8} w='100%'>
+								<Group justify='space-between' w='100%'>
+									<Breadcrumb option='close' onClick={handleClose} />
+									<Tooltip
+										label={
+											hasFormChanges || (!data && isNew)
+												? 'Must save other changes first'
+												: 'Duplicate this service'
+										}
+										withArrow
+									>
+										<Box style={{ display: 'inline-block' }}>
+											<DuplicateServiceModal
+												sourceServiceId={serviceId}
+												onSuccess={setDuplicatedServiceId}
+												component={UnstyledButton}
+												disabled={hasFormChanges || (!data && isNew)}
+											>
+												<Icon icon='carbon:copy' height={20} color='black' />
+											</DuplicateServiceModal>
+										</Box>
+									</Tooltip>
+								</Group>
+								<Group justify='flex-end' w='100%'>
 									<Tooltip label='Must save other changes first' disabled={!hasFormChanges} withArrow>
 										<Box style={{ display: 'inline-block' }}>
 											<AttributeModal
@@ -487,12 +545,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 										leftIcon={<Icon icon='carbon:save' />}
 										loading={serviceUpsert.isPending}
 										onClick={handleSave}
-										disabled={!hasFormChanges}
+										disabled={!hasFormChanges || nameIsBlank}
 									>
 										Save
 									</Button>
 								</Group>
-							</Group>
+							</Stack>
 						</Drawer.Header>
 						<Drawer.Body className={classes.drawerBody}>
 							<Stack>
@@ -500,6 +558,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									component={TextInput<TFormSchema>}
 									label='Service Name'
 									name='name.text'
+									required
 									control={form.control}
 									fontSize='h2'
 									data-isdirty={dirtyFields.name}
@@ -559,6 +618,13 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 						</Modal>
 					</Drawer.Content>
 				</Drawer.Root>
+				{duplicatedServiceId && (
+					<ServiceEditDrawer
+						serviceId={duplicatedServiceId}
+						ref={autoOpenDuplicateRef}
+						style={{ display: 'none' }}
+					/>
+				)}
 				<Stack>
 					<Box component='button' onClick={drawerHandler.open} ref={ref} {...props} />
 				</Stack>
@@ -574,11 +640,14 @@ interface ServiceEditDrawerProps extends ButtonProps {
 	serviceId: string
 	createNew?: never
 	autoAttachAttributeTag?: never
+	/** Opens the drawer once, on mount - for deep-linking straight to a specific service's edit drawer. */
+	autoOpen?: boolean
 }
 interface ServiceNewDrawerProps extends ButtonProps {
 	createNew: true
 	serviceId?: never
 	/** Attribute tag to attach automatically once the new service is first saved. */
 	autoAttachAttributeTag?: string
+	autoOpen?: boolean
 }
 type ServiceDrawerProps = ServiceEditDrawerProps | ServiceNewDrawerProps

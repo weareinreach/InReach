@@ -2,6 +2,7 @@ import {
 	ActionIcon,
 	Alert,
 	Box,
+	Checkbox,
 	Group,
 	Menu,
 	Pagination,
@@ -23,6 +24,8 @@ import {
 	getCoreRowModel,
 	getExpandedRowModel,
 	type PaginationState,
+	type Row,
+	type RowSelectionState,
 	type SortingState,
 	useReactTable,
 } from '@tanstack/react-table'
@@ -76,6 +79,14 @@ export interface DataTableProps<T> {
 	getRowId?: (row: T, index: number) => string
 	/** Enables row expansion (e.g. an organization's locations nested under it). */
 	getSubRows?: (row: T) => T[] | undefined
+	/**
+	 * Optional-controlled, same idiom as `columnFilters` below - omit both to keep the previous fully-internal
+	 * (uncontrolled) expand/collapse behavior every existing consumer already has. Pass both when a caller
+	 * needs to seed/derive expansion itself (e.g. expand every row with a match once search results resolve,
+	 * which can't be done with a mount-time-only initializer since data arrives async).
+	 */
+	expanded?: ExpandedState
+	onExpandedChange?: (expanded: ExpandedState) => void
 
 	sorting: SortingState
 	onSortingChange: (sorting: SortingState) => void
@@ -91,6 +102,18 @@ export interface DataTableProps<T> {
 	pagination: PaginationState
 	onPaginationChange: (pagination: PaginationState) => void
 	pageSizeOptions?: number[]
+
+	/**
+	 * Adding these three turns on a leading checkbox column (per-row cell + header "select all") - omit all
+	 * three to keep every existing table exactly as it renders today. `enableRowSelection` is a per-row
+	 * eligibility predicate (e.g. "only rows with a replaceable match"), not a table-wide on/off switch. Parent
+	 * rows never cascade selection to their sub-rows (`enableSubRowSelection` is always `false` internally) - a
+	 * table with expandable sub-rows needs the parent and each child selectable independently, never implied by
+	 * the other.
+	 */
+	rowSelection?: RowSelectionState
+	onRowSelectionChange?: (selection: RowSelectionState) => void
+	enableRowSelection?: boolean | ((row: T) => boolean)
 
 	/** Defaults to client mode: `data` is the full dataset and DataTable filters/sorts/paginates it itself. */
 	mode?: DataTableDataMode
@@ -118,6 +141,8 @@ export const DataTable = <T,>({
 	columns,
 	getRowId,
 	getSubRows,
+	expanded: expandedProp,
+	onExpandedChange: onExpandedChangeProp,
 	sorting,
 	onSortingChange,
 	columnFilters = [],
@@ -128,6 +153,9 @@ export const DataTable = <T,>({
 	pagination,
 	onPaginationChange,
 	pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS,
+	rowSelection = {},
+	onRowSelectionChange,
+	enableRowSelection = false,
 	mode = { serverSide: false },
 	isLoading,
 	isFetching,
@@ -156,8 +184,23 @@ export const DataTable = <T,>({
 		}
 		return { ...defaults, ...initialColumnVisibility }
 	})
-	const [expanded, setExpanded] = useState<ExpandedState>({})
+	const [internalExpanded, setInternalExpanded] = useState<ExpandedState>({})
+	// Optional-controlled: omitting both expanded/onExpandedChange keeps every existing consumer's
+	// previous fully-internal behavior; passing both lets a caller seed/derive expansion itself.
+	const expanded = expandedProp ?? internalExpanded
+	const handleExpandedChange = useCallback(
+		(updater: ExpandedState | ((old: ExpandedState) => ExpandedState)) => {
+			const next = typeof updater === 'function' ? updater(expanded) : updater
+			if (onExpandedChangeProp) {
+				onExpandedChangeProp(next)
+			} else {
+				setInternalExpanded(next)
+			}
+		},
+		[expanded, onExpandedChangeProp]
+	)
 	const [columnSizing, setColumnSizing] = useState<ColumnSizingState>({})
+	const showSelectionColumn = Boolean(onRowSelectionChange)
 
 	// Client mode does the filtering/sorting/pagination math itself, over the full `data` array; server
 	// mode trusts the caller to have already sent back exactly the right page.
@@ -251,12 +294,28 @@ export const DataTable = <T,>({
 	const table = useReactTable({
 		data: pageRows,
 		columns: tanstackColumns,
-		state: { sorting, columnFilters, globalFilter, pagination, columnVisibility, expanded, columnSizing },
+		state: {
+			sorting,
+			columnFilters,
+			globalFilter,
+			pagination,
+			columnVisibility,
+			expanded,
+			columnSizing,
+			rowSelection,
+		},
 		manualSorting: true,
 		manualFiltering: true,
 		manualPagination: true,
 		enableColumnResizing: true,
 		columnResizeMode: 'onChange',
+		enableRowSelection:
+			typeof enableRowSelection === 'function'
+				? (row: Row<T>) => enableRowSelection(row.original)
+				: enableRowSelection,
+		// Org rows and their expanded sub-rows must be selectable independently - a parent's checkbox
+		// must never imply or cascade to its children.
+		enableSubRowSelection: false,
 		getRowId: getRowId ? (row, index) => getRowId(row, index) : undefined,
 		getCoreRowModel: getCoreRowModel(),
 		getExpandedRowModel: getSubRows ? getExpandedRowModel() : undefined,
@@ -268,8 +327,10 @@ export const DataTable = <T,>({
 		onPaginationChange: (updater) =>
 			onPaginationChange(typeof updater === 'function' ? updater(pagination) : updater),
 		onColumnVisibilityChange: setColumnVisibility,
-		onExpandedChange: setExpanded,
+		onExpandedChange: handleExpandedChange,
 		onColumnSizingChange: setColumnSizing,
+		onRowSelectionChange: (updater) =>
+			onRowSelectionChange?.(typeof updater === 'function' ? updater(rowSelection) : updater),
 		pageCount,
 		getSubRows,
 	})
@@ -357,10 +418,39 @@ export const DataTable = <T,>({
 			<Progress value={100} size={2} striped animated style={{ opacity: isFetching || isLoading ? 1 : 0 }} />
 
 			<Table.ScrollContainer minWidth={minWidth} maxHeight={maxHeight}>
-				<Table striped={striped} highlightOnHover stickyHeader className={classes.table}>
+				<Table
+					striped={striped}
+					highlightOnHover
+					stickyHeader
+					layout='fixed'
+					// Mantine's own Table.css hardcodes `width: 100%` on the <table> element (not driven by a
+					// CSS var, unlike `table-layout` above - can't be overridden by a `layout`-style prop).
+					// Under `table-layout: fixed`, a table forced to 100% width whose columns' declared
+					// widths sum to LESS than that treats those widths as ratios and scales them up
+					// proportionally to fill the remaining space - declared/resized pixel values are never
+					// actually honored as absolute values. Confirmed empirically (a standalone Playwright
+					// repro against Mantine's real CSS): the same column set rendered at the declared
+					// widths only once `width: auto` overrode the 100% default, letting the table's own
+					// width follow its columns' sum instead of stretching to fill the container - which is
+					// also what lets `Table.ScrollContainer`'s horizontal scroll engage once that sum
+					// exceeds the available width, instead of silently absorbing it via rescaled columns.
+					style={{ width: 'auto' }}
+					className={classes.table}
+				>
 					<Table.Thead>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<Table.Tr key={headerGroup.id}>
+								{showSelectionColumn && (
+									<Table.Th style={{ width: 32 }} className={classes.th}>
+										<Checkbox
+											size='sm'
+											checked={table.getIsAllRowsSelected()}
+											indeterminate={table.getIsSomeRowsSelected()}
+											onChange={table.getToggleAllRowsSelectedHandler()}
+											aria-label='Select all rows'
+										/>
+									</Table.Th>
+								)}
 								{headerGroup.headers.map((header) => {
 									const columnDef = columns.find((c) => c.id === header.column.id)
 									const activeFilter = columnFilters.find((f) => f.id === header.column.id)
@@ -437,7 +527,7 @@ export const DataTable = <T,>({
 					<Table.Tbody>
 						{table.getRowModel().rows.length === 0 && (
 							<Table.Tr>
-								<Table.Td colSpan={leafColumns.length}>
+								<Table.Td colSpan={leafColumns.length + (showSelectionColumn ? 1 : 0)}>
 									<Text c='dimmed' ta='center' py='md'>
 										{emptyMessage}
 									</Text>
@@ -446,6 +536,17 @@ export const DataTable = <T,>({
 						)}
 						{table.getRowModel().rows.map((row) => (
 							<Table.Tr key={row.id} style={getRowStyle?.(row.original)}>
+								{showSelectionColumn && (
+									<Table.Td className={classes.td}>
+										<Checkbox
+											size='sm'
+											checked={row.getIsSelected()}
+											disabled={!row.getCanSelect()}
+											onChange={row.getToggleSelectedHandler()}
+											aria-label={row.getIsSelected() ? 'Deselect row' : 'Select row'}
+										/>
+									</Table.Td>
+								)}
 								{row.getVisibleCells().map((cell, cellIndex) => {
 									const columnDef = columns.find((c) => c.id === cell.column.id)
 									const isFirstCell = cellIndex === 0

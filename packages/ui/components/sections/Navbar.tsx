@@ -5,10 +5,12 @@ import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 import { navbarEvent } from '@weareinreach/analytics/events'
+import { type OrgUnpublishedReason } from '@weareinreach/db/enums'
 import InReachLogo from '~ui/assets/inreach.svg'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { MobileNav } from '~ui/components/core/MobileNav'
+import { UnpublishReasonPopover } from '~ui/components/core/UnpublishReasonPopover'
 import { UserMenu } from '~ui/components/core/UserMenu'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useEditMode } from '~ui/hooks/useEditMode'
@@ -64,6 +66,12 @@ const EditModeBar = () => {
 	})
 	const publishedNotification = useNewNotification({
 		displayText: `Published status has been set to: ${!data?.published}`,
+		icon: 'success',
+	})
+	// Distinct from publishedNotification - this fires when only the unpublished reason changes (the org
+	// stays unpublished throughout), so "Published status has been set to..." would be actively wrong here.
+	const statusUpdatedNotification = useNewNotification({
+		displayText: 'Unpublished reason has been updated.',
 		icon: 'success',
 	})
 	const publish = api.component.EditModeBarPublish.useMutation({
@@ -156,16 +164,67 @@ const EditModeBar = () => {
 						</Group>
 					</UnstyledButton>
 				)}
-				<UnstyledButton
-					disabled={isRemoteServicesRoute}
-					className={classes.editBarButtonText}
-					onClick={handlePublishToggle}
-				>
-					<Group wrap='nowrap' gap={8}>
-						<Icon icon={data?.published ? 'carbon:view-off' : 'carbon:view-filled'} height={20} />
-						{t(data?.published ? 'words.unpublish' : 'words.publish')}
-					</Group>
-				</UnstyledButton>
+				{/* Unpublishing an Organization requires a reason (see
+				docs/DataPortal/Organizations/README.md), so that direction opens the same
+				popover the Organizations table uses instead of firing instantly. Publishing - and
+				either direction for OrgLocation/OrgService, which don't have this field - stays exactly
+				the instant toggle it's always been. */}
+				{apiQuery.slug && data?.published ? (
+					<UnpublishReasonPopover
+						slug={apiQuery.slug}
+						currentReason={
+							(data as { unpublishedReason?: OrgUnpublishedReason | null } | undefined)?.unpublishedReason
+						}
+						onSuccess={() => {
+							apiUtils.location.invalidate()
+							apiUtils.organization.invalidate()
+							apiUtils.component.EditModeBar.invalidate()
+							revalidatePage({ path: router.asPath.replace('/edit', '') })
+							publishedNotification()
+						}}
+					>
+						<UnstyledButton disabled={isRemoteServicesRoute} className={classes.editBarButtonText}>
+							<Group wrap='nowrap' gap={8}>
+								<Icon icon='carbon:view-off' height={20} />
+								{t('words.unpublish')}
+							</Group>
+						</UnstyledButton>
+					</UnpublishReasonPopover>
+				) : (
+					<UnstyledButton
+						disabled={isRemoteServicesRoute}
+						className={classes.editBarButtonText}
+						onClick={handlePublishToggle}
+					>
+						<Group wrap='nowrap' gap={8}>
+							<Icon icon={data?.published ? 'carbon:view-off' : 'carbon:view-filled'} height={20} />
+							{t(data?.published ? 'words.unpublish' : 'words.publish')}
+						</Group>
+					</UnstyledButton>
+				)}
+				{/* Re-triaging an already-unpublished org's reason shouldn't require cycling through
+				Publish -> Unpublish first (which would briefly, actually publish it, and log a misleading "set
+				to Published" note). Same popover as Unpublish above, but never touches `published`. */}
+				{apiQuery.slug && data?.published === false && (
+					<UnpublishReasonPopover
+						slug={apiQuery.slug}
+						currentReason={
+							(data as { unpublishedReason?: OrgUnpublishedReason | null } | undefined)?.unpublishedReason
+						}
+						onSuccess={() => {
+							apiUtils.organization.invalidate()
+							apiUtils.component.EditModeBar.invalidate()
+							statusUpdatedNotification()
+						}}
+					>
+						<UnstyledButton disabled={isRemoteServicesRoute} className={classes.editBarButtonText}>
+							<Group wrap='nowrap' gap={8}>
+								<Icon icon='carbon:tag' height={20} />
+								{t('words.set-status')}
+							</Group>
+						</UnstyledButton>
+					</UnpublishReasonPopover>
+				)}
 				<UnstyledButton
 					disabled={isRemoteServicesRoute}
 					className={classes.editBarButtonText}

@@ -8,6 +8,7 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
+		"tab-manage-users": "Manage users",
 		"tab-downloads": "Downloads",
 		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
@@ -494,6 +495,7 @@
 		"search": "Search",
 		"service-hours": "Service hours",
 		"services": "Services",
+		"set-status": "Set status",
 		"settings": "Settings",
 		"share": "Share",
 		"sign-up": "Sign up",

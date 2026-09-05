@@ -78,6 +78,15 @@ export const serviceRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	forDuplicateWizard: permissionedProcedure('updateOrgService')
+		.input(schema.ZForDuplicateWizardSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('forDuplicateWizard'),
+				() => import('./query.forDuplicateWizard.handler')
+			)
+			return handler(opts)
+		}),
 	getOptions: permissionedProcedure('updateOrgService').query(async () => {
 		const handler = await importHandler(namespaced('getOptions'), () => import('./query.getOptions.handler'))
 		return handler()
@@ -132,6 +141,44 @@ export const serviceRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	// Bulk actions for Content Search & Bulk Edit - each its own dataPortalManager-gated procedure,
+	// never reusing the lower-gated single-record procedures above even where the write is similar.
+	bulkAttachTags: permissionedProcedure('dataPortalManager')
+		.input(schema.ZBulkAttachTagsSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('bulkAttachTags'),
+				() => import('./mutation.bulkAttachTags.handler')
+			)
+			return handler(opts)
+		}),
+	bulkDetachTags: permissionedProcedure('dataPortalManager')
+		.input(schema.ZBulkDetachTagsSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('bulkDetachTags'),
+				() => import('./mutation.bulkDetachTags.handler')
+			)
+			return handler(opts)
+		}),
+	bulkAttachAttribute: permissionedProcedure('dataPortalManager')
+		.input(schema.ZBulkAttachAttributeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('bulkAttachAttribute'),
+				() => import('./mutation.bulkAttachAttribute.handler')
+			)
+			return handler(opts)
+		}),
+	bulkDetachAttribute: permissionedProcedure('dataPortalManager')
+		.input(schema.ZBulkDetachAttributeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('bulkDetachAttribute'),
+				() => import('./mutation.bulkDetachAttribute.handler')
+			)
+			return handler(opts)
+		}),
 	createServiceArea: permissionedProcedure('createServiceArea')
 		.input(schema.ZCreateServiceAreaSchema)
 		.mutation(async (opts) => {
@@ -172,6 +219,15 @@ export const serviceRouter = defineRouter({
 		.input(schema.ZUpsertSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(namespaced('upsert'), () => import('./mutation.upsert.handler'))
+			return handler(opts)
+		}),
+	duplicate: permissionedProcedure('updateOrgService')
+		.input(schema.ZDuplicateSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('duplicate'),
+				() => import('./mutation.duplicate.handler')
+			)
 			return handler(opts)
 		}),
 	// #endregion

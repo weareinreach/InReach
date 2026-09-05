@@ -172,7 +172,15 @@ export const getServerSideProps: GetServerSideProps<
 	const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
 
 	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', 'user', orgId]),
+		getServerSideTranslations(locale, [
+			'common',
+			'services',
+			'attribute',
+			'phone-type',
+			'user',
+			'gov-dist',
+			orgId,
+		]),
 		ssg.organization.getNameFromSlug.prefetch(slug),
 	])
 

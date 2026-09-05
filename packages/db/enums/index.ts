@@ -44,6 +44,15 @@ export enum ReportStatus {
 	RESOLVED = 'RESOLVED',
 }
 
+export enum OrgUnpublishedReason {
+	NEW = 'NEW',
+	IN_PROGRESS = 'IN_PROGRESS',
+	WAITING = 'WAITING',
+	INACTIVE = 'INACTIVE',
+	UNAFFIRMING = 'UNAFFIRMING',
+	UNRESPONSIVE = 'UNRESPONSIVE',
+}
+
 export enum LocationAlertLevel {
 	INFO_PRIMARY = 'INFO_PRIMARY',
 	WARN_PRIMARY = 'WARN_PRIMARY',

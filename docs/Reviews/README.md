@@ -7,7 +7,7 @@ shown across search results and listing pages, review submission, and the full r
 on an org/location page. This doc currently covers the **rating display** in depth (the
 piece that has an actual test — `packages/ui/components/core/Rating.test.tsx`); review
 submission and the full review list are noted below but not yet documented in the same
-depth. Not to be confused with [`docs/DataPortal/Reviews/`](../DataPortal/Reviews/README.md),
+depth. Not to be confused with [`docs/DataPortal/Organizations/Reviews/`](../DataPortal/Organizations/Reviews/README.md),
 which covers the **staff moderation queue** (hide/delete a review) — a different, admin-only
 feature built on the same `OrgReview` data.
 
@@ -44,16 +44,16 @@ feature built on the same `OrgReview` data.
 
 ## Related Files
 
-| Path                                                          | Purpose                                               |
-| ------------------------------------------------------------- | ----------------------------------------------------- |
-| `packages/ui/components/core/Rating.tsx`                      | Rating badge component                                |
-| `packages/ui/components/core/Rating.test.tsx`                 | Unit test - zero/singular/plural/loading states       |
-| `packages/api/router/review/query.getAverage.handler.ts`      | Polymorphic average+count query                       |
-| `packages/api/router/review/query.getAverage.schema.ts`       | Input schema (org/location/service ID)                |
-| `apps/app/public/locales/en/common.json`                      | `review-count_*` pluralization keys                   |
-| `packages/ui/components/sections/Reviews.tsx`                 | Full review list (not yet documented in depth)        |
-| `packages/ui/components/core/UserReviewSubmit.tsx`            | Review submission flow (not yet documented in depth)  |
-| [`docs/DataPortal/Reviews/`](../DataPortal/Reviews/README.md) | Sibling doc: staff moderation queue for the same data |
+| Path                                                                                      | Purpose                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `packages/ui/components/core/Rating.tsx`                                                  | Rating badge component                                |
+| `packages/ui/components/core/Rating.test.tsx`                                             | Unit test - zero/singular/plural/loading states       |
+| `packages/api/router/review/query.getAverage.handler.ts`                                  | Polymorphic average+count query                       |
+| `packages/api/router/review/query.getAverage.schema.ts`                                   | Input schema (org/location/service ID)                |
+| `apps/app/public/locales/en/common.json`                                                  | `review-count_*` pluralization keys                   |
+| `packages/ui/components/sections/Reviews.tsx`                                             | Full review list (not yet documented in depth)        |
+| `packages/ui/components/core/UserReviewSubmit.tsx`                                        | Review submission flow (not yet documented in depth)  |
+| [`docs/DataPortal/Organizations/Reviews/`](../DataPortal/Organizations/Reviews/README.md) | Sibling doc: staff moderation queue for the same data |
 
 ---
 

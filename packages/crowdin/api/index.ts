@@ -25,6 +25,7 @@ export const {
 	updateSingleKey,
 	addMultipleKeys,
 	upsertSingleKey,
+	removeSingleKey,
 } = createCommonFns(crowdinApi)
 
 export const addSingleKeyFromNestedFreetextCreate = async (

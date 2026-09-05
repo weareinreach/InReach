@@ -1,7 +1,17 @@
-import { Card, Group, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
+import {
+	Box,
+	Card,
+	Group,
+	Skeleton,
+	Stack,
+	Text,
+	Tooltip,
+	UnstyledButton,
+	useMantineTheme,
+} from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { transformer } from '@weareinreach/util/transformer'
 import { Link } from '~ui/components/core'
@@ -12,6 +22,7 @@ import { useEditMode } from '~ui/hooks/useEditMode'
 import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { DuplicateServiceModal } from '~ui/modals/dataPortal/DuplicateService'
 import { ServiceModal } from '~ui/modals/Service'
 
 import classes from './ServicesInfo.module.css'
@@ -26,6 +37,11 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { isEditMode } = useEditMode()
 	const { slug } = router.isReady ? router.query : { slug: '' }
+	// Deep-link support (e.g. Bulk Search & Replace's "full edit" action) - `serviceId` isn't a route
+	// param nextjs-routes knows about for any page this component renders on, just a plain query string
+	// key, hence the cast rather than widening the `useRouter` generic above (which only models real
+	// dynamic path segments, never arbitrary extra query params).
+	const autoOpenServiceId = (router.query as { serviceId?: string }).serviceId
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	// Array length must stay constant across renders - react-i18next's useTranslation passes
 	// this array in as a useMemo dependency list. Substitute an already-loaded namespace
@@ -37,6 +53,14 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
 	const apiUtils = api.useUtils()
+	const [duplicatedServiceId, setDuplicatedServiceId] = useState<string | null>(null)
+	const autoOpenDuplicateRef = useRef<HTMLButtonElement>(null)
+
+	useEffect(() => {
+		if (duplicatedServiceId) {
+			autoOpenDuplicateRef.current?.click()
+		}
+	}, [duplicatedServiceId])
 
 	const preloadService = useCallback(
 		(serviceId: string) => () => apiUtils.service.forServiceModal.prefetch(serviceId),
@@ -55,19 +79,19 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 		[variants]
 	)
 
+	const badges = Array.isArray(category) ? (
+		<Badge.Group>
+			{category.map((tsKey) => (
+				<Badge.Service key={`(${category.join('-')}).${tsKey}`}>{t(tsKey, { ns: 'services' })}</Badge.Service>
+			))}
+		</Badge.Group>
+	) : (
+		<Badge.Service>{t(category, { ns: 'services' })}</Badge.Service>
+	)
+
 	return (
 		<Stack gap={8}>
-			{Array.isArray(category) ? (
-				<Badge.Group>
-					{category.map((tsKey) => (
-						<Badge.Service key={`(${category.join('-')}).${tsKey}`}>
-							{t(tsKey, { ns: 'services' })}
-						</Badge.Service>
-					))}
-				</Badge.Group>
-			) : (
-				<Badge.Service>{t(category, { ns: 'services' })}</Badge.Service>
-			)}
+			{badges}
 			<Stack gap={0}>
 				{services.map((service) => {
 					const serviceName = t(service.tsKey, { ns: orgId?.id, defaultValue: service.defaultText })
@@ -94,16 +118,40 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 					)
 
 					return isEditMode ? (
-						<ServiceEditDrawer
-							key={service.id}
-							serviceId={service.id}
-							variant={variants.Link.inlineInverted}
-							component={Link}
-						>
-							<Group wrap='nowrap' justify='space-between' className={classes.group}>
-								{children}
-							</Group>
-						</ServiceEditDrawer>
+						<Box key={service.id} style={{ position: 'relative' }}>
+							<ServiceEditDrawer
+								serviceId={service.id}
+								autoOpen={service.id === autoOpenServiceId}
+								variant={variants.Link.inlineInverted}
+								component={Link}
+							>
+								<Group wrap='nowrap' justify='space-between' className={classes.group}>
+									{children}
+								</Group>
+							</ServiceEditDrawer>
+							{/* Every row gets its own icon, positioned the same way regardless of the row's index -
+							    offset left of the chevron (which sits flush at the row's right edge, since
+							    `classes.group` has no horizontal padding) so the two icons never overlap. */}
+							<Tooltip label='Duplicate this service' withArrow>
+								<Box
+									style={{
+										display: 'inline-block',
+										position: 'absolute',
+										top: '50%',
+										right: 32,
+										transform: 'translateY(-50%)',
+									}}
+								>
+									<DuplicateServiceModal
+										sourceServiceId={service.id}
+										onSuccess={setDuplicatedServiceId}
+										component={UnstyledButton}
+									>
+										<Icon icon='carbon:copy' height={20} color='black' />
+									</DuplicateServiceModal>
+								</Box>
+							</Tooltip>
+						</Box>
 					) : (
 						<ServiceModal
 							key={service.id}
@@ -121,6 +169,13 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 					)
 				})}
 			</Stack>
+			{duplicatedServiceId && (
+				<ServiceEditDrawer
+					serviceId={duplicatedServiceId}
+					ref={autoOpenDuplicateRef}
+					style={{ display: 'none' }}
+				/>
+			)}
 		</Stack>
 	)
 }

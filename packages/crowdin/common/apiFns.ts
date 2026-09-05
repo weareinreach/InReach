@@ -158,6 +158,15 @@ export const createCommonFns = (client: CrowdinApi) => {
 		return await addSingleKey(params)
 	}
 
+	/**
+	 * Compensating rollback for a partially-succeeded batch of `addSingleKey`/`addMultipleKeys` calls - e.g.
+	 * registering N attributes' free text before a duplicate-service transaction, where a later key fails and
+	 * the earlier ones need to be un-registered rather than left orphaned in Crowdin.
+	 */
+	const removeSingleKey: RemoveSingleKey = async ({ crowdinId, isDatabaseString }) => {
+		await client.sourceStringsApi.deleteString(getProjectId(isDatabaseString), crowdinId)
+	}
+
 	return {
 		getStringIdByKey,
 		addMultipleKeys,
@@ -165,6 +174,7 @@ export const createCommonFns = (client: CrowdinApi) => {
 		updateMultipleKeys,
 		updateSingleKey,
 		upsertSingleKey,
+		removeSingleKey,
 	}
 }
 
@@ -240,4 +250,8 @@ interface UpsertFileString {
 	key: string
 	/** A link back to the live app (e.g. https://app.inreach.org/org/<slug>) shown in Crowdin's context panel. */
 	context?: string
+}
+
+interface RemoveSingleKey {
+	(params: { crowdinId: number; isDatabaseString?: boolean }): Promise<void>
 }
