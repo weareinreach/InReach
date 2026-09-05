@@ -18,6 +18,7 @@ export const Organizations: Story = {
 			{ label: 'Reviews', href: { pathname: '/data-portal/reviews' } },
 			{ label: 'Reports', href: { pathname: '/data-portal/reports' } },
 			{ label: 'Downloads', href: { pathname: '/data-portal/downloads' } },
+			{ label: 'Bulk Search & Replace', href: { pathname: '/data-portal/bulk-search-replace' } },
 		],
 	},
 }
