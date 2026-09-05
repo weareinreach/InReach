@@ -10,7 +10,7 @@
 		"./**/*.tsx",
 		".storybook/**/*",
 		"../../@types/**/*.ts",
-		"../../apps/app/nextjs-routes.d.ts"
+		"../../apps/app/src/types/nextjs-routes.d.ts"
 	],
 	"exclude": ["**/node_modules", "**/storybook-static/"]
 }
