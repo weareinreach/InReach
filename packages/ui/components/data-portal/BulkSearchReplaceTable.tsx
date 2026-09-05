@@ -750,18 +750,19 @@ export const BulkSearchReplaceTable = () => {
 			id: 'name',
 			header: 'Name',
 			pin: 'left',
-			// Wide enough for the Org/Service badge plus a real name without clipping to a few letters -
-			// tanstack's own 150px default was too narrow once the badge shared the cell with the text.
 			size: 260,
+			// Stacked, not side-by-side - the "Organization"/"Service" label and the actual name were
+			// sharing one nowrap line, squeezing the name down to a handful of visible characters
+			// regardless of the column's own width. Each gets its own full-width line instead.
 			cell: ({ row, depth }) => (
-				<Group gap={6} wrap='nowrap'>
-					<Badge size='xs' variant='light' color={depth === 0 ? 'green' : 'gray'}>
-						{depth === 0 ? 'Org' : 'Service'}
-					</Badge>
+				<Stack gap={2}>
+					<Text size='xs' fw={700} c='dimmed' tt='uppercase'>
+						{depth === 0 ? 'Organization' : 'Service'}
+					</Text>
 					<Text size='sm' fw={depth === 0 ? 600 : 400}>
 						{row.name}
 					</Text>
-				</Group>
+				</Stack>
 			),
 		},
 		{

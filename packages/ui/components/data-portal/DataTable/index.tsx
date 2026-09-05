@@ -418,7 +418,25 @@ export const DataTable = <T,>({
 			<Progress value={100} size={2} striped animated style={{ opacity: isFetching || isLoading ? 1 : 0 }} />
 
 			<Table.ScrollContainer minWidth={minWidth} maxHeight={maxHeight}>
-				<Table striped={striped} highlightOnHover stickyHeader layout='fixed' className={classes.table}>
+				<Table
+					striped={striped}
+					highlightOnHover
+					stickyHeader
+					layout='fixed'
+					// Mantine's own Table.css hardcodes `width: 100%` on the <table> element (not driven by a
+					// CSS var, unlike `table-layout` above - can't be overridden by a `layout`-style prop).
+					// Under `table-layout: fixed`, a table forced to 100% width whose columns' declared
+					// widths sum to LESS than that treats those widths as ratios and scales them up
+					// proportionally to fill the remaining space - declared/resized pixel values are never
+					// actually honored as absolute values. Confirmed empirically (a standalone Playwright
+					// repro against Mantine's real CSS): the same column set rendered at the declared
+					// widths only once `width: auto` overrode the 100% default, letting the table's own
+					// width follow its columns' sum instead of stretching to fill the container - which is
+					// also what lets `Table.ScrollContainer`'s horizontal scroll engage once that sum
+					// exceeds the available width, instead of silently absorbing it via rescaled columns.
+					style={{ width: 'auto' }}
+					className={classes.table}
+				>
 					<Table.Thead>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<Table.Tr key={headerGroup.id}>
