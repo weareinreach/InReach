@@ -141,6 +141,44 @@ export const serviceRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	// Bulk actions for Content Search & Bulk Edit - each its own dataPortalManager-gated procedure,
+	// never reusing the lower-gated single-record procedures above even where the write is similar.
+	bulkAttachTags: permissionedProcedure('dataPortalManager')
+		.input(schema.ZBulkAttachTagsSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('bulkAttachTags'),
+				() => import('./mutation.bulkAttachTags.handler')
+			)
+			return handler(opts)
+		}),
+	bulkDetachTags: permissionedProcedure('dataPortalManager')
+		.input(schema.ZBulkDetachTagsSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('bulkDetachTags'),
+				() => import('./mutation.bulkDetachTags.handler')
+			)
+			return handler(opts)
+		}),
+	bulkAttachAttribute: permissionedProcedure('dataPortalManager')
+		.input(schema.ZBulkAttachAttributeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('bulkAttachAttribute'),
+				() => import('./mutation.bulkAttachAttribute.handler')
+			)
+			return handler(opts)
+		}),
+	bulkDetachAttribute: permissionedProcedure('dataPortalManager')
+		.input(schema.ZBulkDetachAttributeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('bulkDetachAttribute'),
+				() => import('./mutation.bulkDetachAttribute.handler')
+			)
+			return handler(opts)
+		}),
 	createServiceArea: permissionedProcedure('createServiceArea')
 		.input(schema.ZCreateServiceAreaSchema)
 		.mutation(async (opts) => {

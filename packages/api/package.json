@@ -11,6 +11,8 @@
 		"format": "prettier --write --cache --cache-strategy metadata --ignore-unknown .",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
 	},
@@ -70,7 +72,8 @@
 		"next": "16.3.1",
 		"prettier": "3.9.6",
 		"type-fest": "4.26.1",
-		"typescript": "5.6.3"
+		"typescript": "5.6.3",
+		"vitest": "4.1.10"
 	},
 	"peerDependencies": {
 		"i18next": "23.16.3",

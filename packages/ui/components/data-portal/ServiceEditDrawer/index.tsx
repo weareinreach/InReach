@@ -50,7 +50,7 @@ import { InlineTextInput } from '../InlineTextInput'
 const isObject = (x: unknown): x is object => typeof x === 'object'
 
 const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
-	({ serviceId: passedServiceId, createNew, autoAttachAttributeTag, ...props }, ref) => {
+	({ serviceId: passedServiceId, createNew, autoAttachAttributeTag, autoOpen, ...props }, ref) => {
 		const { id: organizationId } = useOrgInfo()
 		const router = useRouter()
 		const serviceId = useMemo(() => passedServiceId ?? generateId('orgService'), [passedServiceId])
@@ -200,6 +200,19 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 				autoOpenDuplicateRef.current?.click()
 			}
 		}, [duplicatedServiceId])
+
+		// Deep-link support: a caller (e.g. Bulk Search & Replace's "full edit" action) can render this
+		// exact, already-in-the-list drawer instance with `autoOpen` set, instead of needing the
+		// hidden-second-instance trick above - that trick exists only for a service with no rendered
+		// drawer yet (a brand-new duplicate); a real, existing service always already has one. Mount-only
+		// by design: `autoOpen` is meant to fire once when this instance first appears, not re-fire on
+		// every re-render if the prop value happens to be recomputed as the same `true`.
+		useEffect(() => {
+			if (autoOpen) {
+				drawerHandler.open()
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [])
 
 		const hasFormChanges = form.formState.isDirty || hasAttributeChanges
 
@@ -627,11 +640,14 @@ interface ServiceEditDrawerProps extends ButtonProps {
 	serviceId: string
 	createNew?: never
 	autoAttachAttributeTag?: never
+	/** Opens the drawer once, on mount - for deep-linking straight to a specific service's edit drawer. */
+	autoOpen?: boolean
 }
 interface ServiceNewDrawerProps extends ButtonProps {
 	createNew: true
 	serviceId?: never
 	/** Attribute tag to attach automatically once the new service is first saved. */
 	autoAttachAttributeTag?: string
+	autoOpen?: boolean
 }
 type ServiceDrawerProps = ServiceEditDrawerProps | ServiceNewDrawerProps

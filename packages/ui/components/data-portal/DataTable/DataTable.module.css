@@ -1,9 +1,13 @@
 .table {
 	--table-vertical-spacing: var(--mantine-spacing-xs);
-	/* Column resizing needs cell widths to actually obey the `width` style set from JS rather than
-	   auto-sizing to content/header text - the standard requirement for TanStack Table's resizing
-	   feature to have any visible effect. */
-	table-layout: fixed;
+	/* Column resizing/explicit `size` values need cell widths to actually obey the `width` style set
+	   from JS rather than auto-sizing to content - the standard requirement for TanStack Table's
+	   resizing feature to have any visible effect. A plain `table-layout: fixed` rule here doesn't
+	   reliably win: Mantine's own Table.css sets `table-layout: var(--table-layout, auto)` on its own
+	   class applied to the same <table>, an equal-specificity rule whose cascade order (and therefore
+	   which one wins) depends on stylesheet injection order, not something to depend on. The actual
+	   fix is the `layout='fixed'` prop passed to <Table> in index.tsx, which sets that CSS variable
+	   inline - inline styles always win regardless of stylesheet order. */
 }
 
 .th {

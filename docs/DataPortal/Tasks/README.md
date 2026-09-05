@@ -20,17 +20,19 @@ with a `title='Not available yet'` tooltip, the same treatment `System` gets for
 
 ## Known Issues / Gotchas
 
-- **No page exists.** This folder exists so the docs tree mirrors the real section structure
-  (`Tasks`/`Organizations`/`Admin`/`System`) ahead of there being anything to document — see
-  [`docs/DataPortal/2026-Redesign/organization.md`](../2026-Redesign/organization.md)'s "Teams & Tasks"
-  backlog entry (explicitly out of scope for now) for what this section is expected to eventually cover.
+- **No page exists yet.** The nav label renders disabled ahead of there being a real destination —
+  see [`vetting.md`](./vetting.md) for the first feature designed to live here (a `Vetting` side-nav
+  item), and [`docs/DataPortal/2026-Redesign/organization.md`](../2026-Redesign/organization.md)'s
+  "Teams & Tasks" backlog entry (explicitly deferred) for the rest of what this section is expected
+  to eventually cover.
 
 ## Related Files
 
-| Path                                                                                                                                | Purpose                                            |
-| ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| [`packages/ui/components/data-portal/DataPortalHeaderBar.tsx`](../../../packages/ui/components/data-portal/DataPortalHeaderBar.tsx) | Defines the disabled `tasks` section               |
-| [`docs/DataPortal/2026-Redesign/organization.md`](../2026-Redesign/organization.md)                                                 | "Teams & Tasks" backlog entry, explicitly deferred |
+| Path                                                                                                                                | Purpose                                                      |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| [`packages/ui/components/data-portal/DataPortalHeaderBar.tsx`](../../../packages/ui/components/data-portal/DataPortalHeaderBar.tsx) | Defines the disabled `tasks` section                         |
+| [`vetting.md`](./vetting.md)                                                                                                        | Vetting pipeline design — first feature planned for this tab |
+| [`docs/DataPortal/2026-Redesign/organization.md`](../2026-Redesign/organization.md)                                                 | "Teams & Tasks" backlog entry, explicitly deferred           |
 
 ---
 
