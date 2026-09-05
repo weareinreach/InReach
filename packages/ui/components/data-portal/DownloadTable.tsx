@@ -1,13 +1,15 @@
-import { Divider, Group, Stack, Text, TextInput, Title } from '@mantine/core'
+import { Text } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { type UseMutationResult } from '@tanstack/react-query'
+import { type ExpandedState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { useSession } from 'next-auth/react'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
 import { CsvDownload } from '~ui/components/data-portal/CsvDownload'
-import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+
+import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
 
 interface DownloadRow {
 	id: string
@@ -19,10 +21,23 @@ interface DownloadRow {
 	permissionKey?: Permission | Permission[]
 }
 
-// The reports themselves stay exactly as they were (same label/fileName/mutation hook/permission
-// per report), grouped by `section` into a header + list rather than a generic sortable/filterable
-// table - there's no need for column sort/pagination over 14 fixed, hand-authored rows, and a flat
-// "Section" column made the grouping harder to scan than an actual section header would.
+/**
+ * A synthetic parent row, one per `section` - lets the shared `DataTable`'s sub-row expansion (the same
+ * mechanism `OrganizationTable` uses for an org's locations) group reports the way the old hand-rolled
+ * section headers did, while actually rendering through the standard Actions/Name column layout.
+ */
+interface DownloadSection {
+	id: string
+	label: string
+	children: DownloadRow[]
+}
+
+type DownloadTableRow = DownloadSection | DownloadRow
+
+const isSectionRow = (row: DownloadTableRow): row is DownloadSection => 'children' in row
+
+// The reports themselves stay exactly as they were (same label/fileName/mutation hook/permission per
+// report) - there's no need for column sort/pagination over 14 fixed, hand-authored rows.
 const DOWNLOAD_ROWS: DownloadRow[] = [
 	{
 		id: 'all-published-orgs',
@@ -138,18 +153,49 @@ const DOWNLOAD_ROWS: DownloadRow[] = [
 	},
 ]
 
+const getDownloadTableSubRows = (row: DownloadTableRow): DownloadTableRow[] | undefined =>
+	isSectionRow(row) ? row.children : undefined
+
+/**
+ * Cell renderer for the 'actions' column - a section (parent) row has no download of its own, only its
+ * children do.
+ */
+const ActionsCell = ({ row }: DataTableCellContext<DownloadTableRow>) => {
+	if (isSectionRow(row)) {
+		return null
+	}
+	return (
+		<CsvDownload
+			label={row.label}
+			fileName={row.fileName}
+			useMutationHook={row.useMutationHook}
+			permissionKey={row.permissionKey}
+		/>
+	)
+}
+
+/** Cell renderer for the 'name' column - bolds the section header, plain text for each report. */
+const NameCell = ({ row }: DataTableCellContext<DownloadTableRow>) =>
+	isSectionRow(row) ? <Text fw={600}>{row.label}</Text> : <Text size='sm'>{row.label}</Text>
+
+const EMPTY_SORTING: SortingState = []
+const noopSortingChange = () => undefined
+const PAGINATION: PaginationState = { pageIndex: 0, pageSize: DOWNLOAD_ROWS.length }
+const noopPaginationChange = () => undefined
+
 export const DownloadTable = () => {
 	const { data: session } = useSession()
 
 	const [search, setSearch] = useState('')
 	const [debouncedSearch] = useDebouncedValue(search, 300)
+	const [expanded, setExpanded] = useState<ExpandedState>(true)
 
 	const userPerms = session?.user?.permissions || []
 	const canViewDownloads = userPerms.some((p) =>
 		['root', 'sysadmin', 'system', 'dataPortalAdmin', 'dataPortalManager'].includes(p)
 	)
 
-	const sections = useMemo(() => {
+	const sections = useMemo<DownloadTableRow[]>(() => {
 		const query = debouncedSearch.trim().toLowerCase()
 		const filtered = query
 			? DOWNLOAD_ROWS.filter(
@@ -162,51 +208,58 @@ export const DownloadTable = () => {
 			rows.push(row)
 			bySection.set(row.section, rows)
 		}
-		return [...bySection.entries()]
+		return [...bySection.entries()].map(([section, rows]) => ({
+			id: `section-${section}`,
+			label: section,
+			children: rows,
+		}))
 	}, [debouncedSearch])
 
-	const handleSearchChange = useCallback(
-		(event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.currentTarget.value),
+	const columns = useMemo<DataTableColumn<DownloadTableRow>[]>(
+		() => [
+			{
+				id: 'actions',
+				header: 'Actions',
+				pin: 'left',
+				size: 80,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				hideable: false,
+				accessorFn: () => undefined,
+				cell: ActionsCell,
+			},
+			{
+				id: 'name',
+				header: 'Name',
+				pin: 'left',
+				size: 600,
+				enableSorting: false,
+				accessorFn: (row) => row.label,
+				cell: NameCell,
+			},
+		],
 		[]
 	)
 
 	if (!canViewDownloads) return null
 
 	return (
-		<Stack>
-			<TextInput
-				placeholder='Search Reports'
-				value={search}
-				onChange={handleSearchChange}
-				leftSection={<Icon icon='carbon:search' height={16} />}
-				w={280}
-			/>
-			{sections.length === 0 && (
-				<Text c='dimmed' ta='center' py='md'>
-					No results
-				</Text>
-			)}
-			{sections.map(([section, rows]) => (
-				<Stack key={section} gap='xs'>
-					<Title order={4}>{section}</Title>
-					<Stack gap={0}>
-						{rows.map((row, index) => (
-							<div key={row.id}>
-								{index > 0 && <Divider />}
-								<Group justify='space-between' wrap='nowrap' py='xs'>
-									<Text size='sm'>{row.label}</Text>
-									<CsvDownload
-										label={row.label}
-										fileName={row.fileName}
-										useMutationHook={row.useMutationHook}
-										permissionKey={row.permissionKey}
-									/>
-								</Group>
-							</div>
-						))}
-					</Stack>
-				</Stack>
-			))}
-		</Stack>
+		<DataTable
+			data={sections}
+			columns={columns}
+			getSubRows={getDownloadTableSubRows}
+			expanded={expanded}
+			onExpandedChange={setExpanded}
+			sorting={EMPTY_SORTING}
+			onSortingChange={noopSortingChange}
+			globalFilter={search}
+			onGlobalFilterChange={setSearch}
+			globalFilterPlaceholder='Search Reports'
+			pagination={PAGINATION}
+			onPaginationChange={noopPaginationChange}
+			mode={{ serverSide: true, rowCount: sections.length }}
+			showFooter={false}
+			emptyMessage='No results'
+		/>
 	)
 }
