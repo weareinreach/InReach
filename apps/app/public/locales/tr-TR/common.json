@@ -12,6 +12,7 @@
 		"tab-organizations": "Kuruluşlar",
 		"tab-reports": "Raporlar",
 		"tab-users": "Kullanıcılar",
+		"tab-manage-users": "Kullanıcıları yönet",
 		"tab-downloads": "İndirilenler",
 		"no-access-message": "Yönetici panosunun herhangi bir bölümüne erişme izniniz yok."
 	},
@@ -517,6 +518,7 @@
 		"search": "Arama",
 		"service-hours": "Hizmet Saatleri",
 		"services": "HİZMETLER",
+		"set-status": "Durumu ayarla",
 		"settings": "Ayarlar",
 		"share": "Paylaş",
 		"sign-up": "Üye ol",

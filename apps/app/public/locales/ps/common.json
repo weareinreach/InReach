@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
+		"tab-manage-users": "Manage users",
 		"tab-downloads": "Downloads",
 		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
@@ -517,6 +518,7 @@
 		"search": "لټون",
 		"service-hours": "د خدمت ساعتونه",
 		"services": "Services",
+		"set-status": "Set status",
 		"settings": "امستنې",
 		"share": "شریکول",
 		"sign-up": "نوم لیکنه",
