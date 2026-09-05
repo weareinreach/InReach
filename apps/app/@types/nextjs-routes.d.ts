@@ -28,6 +28,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/dashboards/unpublished-status">
     | StaticRoute<"/dashboards/unpublished-status/list">
     | StaticRoute<"/data-portal">
+    | StaticRoute<"/data-portal/bulk-search-replace">
     | StaticRoute<"/data-portal/downloads">
     | StaticRoute<"/data-portal/manage-users">
     | StaticRoute<"/data-portal/organizations">

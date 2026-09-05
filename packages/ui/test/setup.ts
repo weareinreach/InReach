@@ -30,3 +30,12 @@ Object.defineProperty(window, 'matchMedia', {
 		dispatchEvent: vi.fn(),
 	})),
 })
+
+// jsdom doesn't implement ResizeObserver - Mantine's ScrollArea (used internally by Select, Modal,
+// and other overlay-bearing components) calls it on mount.
+class MockResizeObserver {
+	observe = vi.fn()
+	unobserve = vi.fn()
+	disconnect = vi.fn()
+}
+Object.defineProperty(window, 'ResizeObserver', { writable: true, value: MockResizeObserver })

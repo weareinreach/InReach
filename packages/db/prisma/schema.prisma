@@ -639,6 +639,10 @@ model OrgService {
   serviceNameId     String?               @unique
   crisisSupportOnly Boolean?
   duplicatedFromId  String?
+  /// Materialized for Content Search (GIN indexing) - kept in sync by trg_sync_org_attribute_ids
+  attributeIds      String[]              @default([])
+  /// Materialized for Content Search (GIN indexing) - kept in sync by trg_sync_org_service_ids
+  tagIds            String[]              @default([])
   attributes        AttributeSupplement[]
   internalNotes     InternalNote[]
   hours             OrgHours[]
@@ -661,6 +665,8 @@ model OrgService {
   @@index([organizationId, published(sort: Desc), deleted])
   @@index([id, published(sort: Desc), deleted])
   @@index([duplicatedFromId])
+  @@index([attributeIds], type: Gin)
+  @@index([tagIds], type: Gin)
 }
 
 model ServiceArea {

@@ -141,12 +141,12 @@ file, not one source of truth.
 - **Column widths/order are fixed** — `DataTable` intentionally doesn't support
   drag-to-resize or drag-to-reorder columns (see that component's own notes); the
   column show/hide menu is the supported way to tailor the view.
-- **Proposed: cross-org/service content search + bulk-adjacent editing** — see
-  [`content-search-bulk-edit.md`](./content-search-bulk-edit.md) for a design
-  discussion (not yet implemented) that would add a new side-nav item here for
-  searching org/service names, descriptions, and attributes by keyword, and
-  editing matches inline. Directly addresses the "no search across services or
-  locations" gap above.
+- **Shipped: Bulk Search & Replace** — see
+  [`bulk-search-replace.md`](./bulk-search-replace.md). A new side-nav item,
+  separate from this table, for searching org/service names, descriptions,
+  attributes, and tags by keyword, then editing matches inline, find-and-replacing
+  across a reviewed selection, or bulk-adding/removing a service attribute or tag.
+  Directly addresses the "no search across services or locations" gap above.
 
 ## Related Files
 
@@ -160,7 +160,7 @@ file, not one source of truth.
 | [`packages/ui/components/sections/Navbar.tsx`](../../../packages/ui/components/sections/Navbar.tsx)                                                                   | `EditModeBar` — the org edit page's Publish/Unpublish toggle, the second surface for setting a status (see "How to Use It") |
 | [`packages/api/router/component/mutation.EditModeBarPublish.schema.ts`](../../../packages/api/router/component/mutation.EditModeBarPublish.schema.ts) / `.handler.ts` | Backend shared by both status-setting surfaces                                                                              |
 | [`packages/ui/components/core/UnpublishReasonPopover.tsx`](../../../packages/ui/components/core/UnpublishReasonPopover.tsx)                                           | The reason-picker popover shared by both surfaces                                                                           |
-| [`content-search-bulk-edit.md`](./content-search-bulk-edit.md)                                                                                                        | Proposed sibling feature: cross-org/service content search + inline bulk editing                                            |
+| [`bulk-search-replace.md`](./bulk-search-replace.md)                                                                                                                  | Implemented sibling feature: cross-org/service content search, inline edit, find & replace, and bulk attribute/tag editing  |
 | [`duplicate-service.md`](./duplicate-service.md)                                                                                                                      | Implemented sibling feature: clone an existing service, reached from a service's edit drawer (not this table directly)      |
 | [`packages/db/enums/labels.ts`](../../../packages/db/enums/labels.ts)                                                                                                 | `ORG_UNPUBLISHED_REASON_LABELS` — human labels for each `OrgUnpublishedReason` value                                        |
 | [`docs/Dashboards/UnpublishedStatus/README.md`](../../Dashboards/UnpublishedStatus/README.md)                                                                         | Manual backfill triage worklist for pre-existing unpublished orgs with no reason set                                        |

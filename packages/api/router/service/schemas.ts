@@ -1,6 +1,10 @@
 // codegen:start {preset: barrel, include: ./*.schema.ts}
 export * from './mutation.attachServiceAttribute.schema'
 export * from './mutation.attachServiceTags.schema'
+export * from './mutation.bulkAttachAttribute.schema'
+export * from './mutation.bulkAttachTags.schema'
+export * from './mutation.bulkDetachAttribute.schema'
+export * from './mutation.bulkDetachTags.schema'
 export * from './mutation.create.schema'
 export * from './mutation.createAccessInstructions.schema'
 export * from './mutation.createServiceArea.schema'

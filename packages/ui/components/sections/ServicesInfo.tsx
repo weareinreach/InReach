@@ -37,6 +37,11 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { isEditMode } = useEditMode()
 	const { slug } = router.isReady ? router.query : { slug: '' }
+	// Deep-link support (e.g. Bulk Search & Replace's "full edit" action) - `serviceId` isn't a route
+	// param nextjs-routes knows about for any page this component renders on, just a plain query string
+	// key, hence the cast rather than widening the `useRouter` generic above (which only models real
+	// dynamic path segments, never arbitrary extra query params).
+	const autoOpenServiceId = (router.query as { serviceId?: string }).serviceId
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
 	// Array length must stay constant across renders - react-i18next's useTranslation passes
 	// this array in as a useMemo dependency list. Substitute an already-loaded namespace
@@ -116,6 +121,7 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 						<Box key={service.id} style={{ position: 'relative' }}>
 							<ServiceEditDrawer
 								serviceId={service.id}
+								autoOpen={service.id === autoOpenServiceId}
 								variant={variants.Link.inlineInverted}
 								component={Link}
 							>

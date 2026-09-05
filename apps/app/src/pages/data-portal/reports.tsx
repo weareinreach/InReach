@@ -18,6 +18,7 @@ const organizationsSideNav = {
 		{ label: 'Reviews', href: { pathname: '/data-portal/reviews' as const } },
 		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const }, active: true },
 		{ label: 'Downloads', href: { pathname: '/data-portal/downloads' as const } },
+		{ label: 'Bulk Search & Replace', href: { pathname: '/data-portal/bulk-search-replace' as const } },
 	],
 }
 
