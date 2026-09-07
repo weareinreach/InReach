@@ -419,7 +419,10 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 							<ContactInfo passedData={getHelp} direct order={['phone', 'email', 'website']} />
 						)}
 						{publicTransit?.map(
-							(publicTransitProps) => publicTransitProps && <AttributeEditWrapper {...publicTransitProps} />
+							(publicTransitProps) =>
+								publicTransitProps && (
+									<AttributeEditWrapper parentRecord={{ serviceId }} {...publicTransitProps} />
+								)
 						)}
 						{Boolean(Object.values(data?.hours ?? {}).length) && (
 							<Hours parentId={serviceId} label='service' data={data.hours} />
@@ -428,14 +431,14 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					<Section.Divider title={t('service.clients-served')}>
 						<Section.Sub title={t('service.community-focus')}>
 							{attributes.clientsServed.srvfocus.map(({ childProps, ...wrapperProps }) => (
-								<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+								<AttributeEditWrapper key={wrapperProps.id} parentRecord={{ serviceId }} {...wrapperProps}>
 									<Badge.Community {...childProps} />
 								</AttributeEditWrapper>
 							))}
 						</Section.Sub>
 						<Section.Sub title={t('service.target-population')}>
 							{attributes.clientsServed.targetPop.map(({ childProps, ...wrapperProps }) => (
-								<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+								<AttributeEditWrapper key={wrapperProps.id} parentRecord={{ serviceId }} {...wrapperProps}>
 									<ModalText {...childProps} />
 								</AttributeEditWrapper>
 							))}
@@ -443,7 +446,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					</Section.Divider>
 					<Section.Divider title={t('service.cost')}>
 						{attributes.cost.map(({ badgeProps, detailProps, ...wrapperProps }) => (
-							<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+							<AttributeEditWrapper key={wrapperProps.id} parentRecord={{ serviceId }} {...wrapperProps}>
 								<Stack align='start' gap={0}>
 									{badgeProps && <Badge.Attribute {...badgeProps} />}
 									{detailProps && <ModalText {...detailProps} />}
@@ -458,6 +461,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									key={attributes.eligibility.age.id}
 									id={attributes.eligibility.age.id}
 									active={attributes.eligibility.age.active}
+									parentRecord={{ serviceId }}
 									editable
 								>
 									<ModalText>{attributes.eligibility.age.children}</ModalText>
@@ -466,7 +470,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 						</Section.Sub>
 						<Section.Sub title={t('service.requirements')}>
 							{attributes.eligibility.requirements.map(({ childProps, ...wrapperProps }) => (
-								<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+								<AttributeEditWrapper key={wrapperProps.id} parentRecord={{ serviceId }} {...wrapperProps}>
 									{childProps.children}
 								</AttributeEditWrapper>
 							))}
@@ -475,7 +479,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 					<Section.Divider title={t('service.languages')}>
 						<Section.Sub title={t('service.languages')}>
 							{attributes.lang.map(({ childProps, ...wrapperProps }) => (
-								<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+								<AttributeEditWrapper key={wrapperProps.id} parentRecord={{ serviceId }} {...wrapperProps}>
 									<ModalText {...childProps} />
 								</AttributeEditWrapper>
 							))}
@@ -487,7 +491,11 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 								{attributes.miscWithIcons.map(
 									({ badgeProps, ...wrapperProps }) =>
 										badgeProps && (
-											<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+											<AttributeEditWrapper
+												key={wrapperProps.id}
+												parentRecord={{ serviceId }}
+												{...wrapperProps}
+											>
 												<Badge.Attribute {...badgeProps} />
 											</AttributeEditWrapper>
 										)
@@ -498,7 +506,11 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 							{attributes.misc.map(
 								({ detailProps, ...wrapperProps }) =>
 									detailProps && (
-										<AttributeEditWrapper key={wrapperProps.id} {...wrapperProps}>
+										<AttributeEditWrapper
+											key={wrapperProps.id}
+											parentRecord={{ serviceId }}
+											{...wrapperProps}
+										>
 											{detailProps.children}
 										</AttributeEditWrapper>
 									)

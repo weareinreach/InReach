@@ -130,11 +130,36 @@ type SelectableAttribute = {
 	label: string
 }
 
-interface AttributeFormProps {
+/**
+ * The subset of an attribute's definition `AttributeForm` actually needs to render the right inputs -
+ * satisfied structurally by both `SelectableAttribute` (the create-flow picker) and the edit-flow's
+ * `component.AttributeEditWrapperDetail` query result.
+ */
+export type AttributeDefinition = Pick<
+	SelectableAttribute,
+	| 'attributeId'
+	| 'attributeKey'
+	| 'dataSchemaName'
+	| 'formSchema'
+	| 'requireBoolean'
+	| 'requireData'
+	| 'requireGeo'
+	| 'requireLanguage'
+	| 'requireText'
+>
+
+export interface AttributeFormProps {
 	parentRecord: AttributeModalProps['parentRecord']
-	selectedAttr: SelectableAttribute
+	selectedAttr: AttributeDefinition
 	onSave: (data: FormSchema) => void
 	isLoading: boolean
+	/**
+	 * When editing an existing attribute, its current `AttributeSupplement.id` - used instead of generating a
+	 * fresh one.
+	 */
+	existingId?: string
+	/** Pre-fills the form with an existing attribute's current value (edit mode only). */
+	initialValues?: Partial<FormSchema>
 }
 
 // `Supplement.Data` renders one input per field in the attribute's `formSchema`, addressed as
@@ -148,7 +173,14 @@ const getDefaultData = (schema?: FieldAttributes[] | FieldAttributes[][] | null)
 	return Object.fromEntries(schema.flat().map(({ name }) => [name, '']))
 }
 
-const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: AttributeFormProps) => {
+export const AttributeForm = ({
+	parentRecord,
+	selectedAttr,
+	onSave,
+	isLoading,
+	existingId,
+	initialValues,
+}: AttributeFormProps) => {
 	const { t } = useTranslation(['attribute', 'common'])
 
 	const dynamicSchema = useMemo(
@@ -160,7 +192,7 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 		resolver: zodResolver(dynamicSchema) as Resolver<FormSchema>,
 		mode: 'all',
 		defaultValues: {
-			id: generateId('attributeSupplement'),
+			id: existingId ?? generateId('attributeSupplement'),
 			...parentRecord,
 			attributeId: selectedAttr.attributeId,
 			// `SuppText` binds a TextInput to top-level `text` - same uncontrolled-input trap as `data`.
@@ -170,32 +202,29 @@ const AttributeForm = ({ parentRecord, selectedAttr, onSave, isLoading }: Attrib
 	})
 
 	useEffect(() => {
-		// @ts-expect-error to make work
-		const supplement = selectedAttr.attributeSupplement?.[0]
-		if (supplement) {
-			const cleanNulls = (obj: unknown): unknown => {
-				if (obj === null) return undefined
-				if (typeof obj !== 'object') return obj
-				if (Array.isArray(obj)) return obj.map(cleanNulls)
-				const newObj: Record<string, unknown> = {}
-				for (const key in obj as Record<string, unknown>)
-					newObj[key] = cleanNulls((obj as Record<string, unknown>)[key])
-				return newObj
-			}
-
-			const cleanedSupplement = cleanNulls(supplement) as Record<string, unknown>
-			// `Radio.Item` (used by `Supplement.Boolean`) only matches its value against a string -
-			// a raw DB boolean needs stringifying here so the correct option pre-selects on load.
-			if (typeof cleanedSupplement.boolean === 'boolean') {
-				cleanedSupplement.boolean = cleanedSupplement.boolean ? 'true' : 'false'
-			}
-
-			form.reset({ ...form.formState.defaultValues, ...cleanedSupplement })
+		if (!initialValues) return
+		const cleanNulls = (obj: unknown): unknown => {
+			if (obj === null) return undefined
+			if (typeof obj !== 'object') return obj
+			if (Array.isArray(obj)) return obj.map(cleanNulls)
+			const newObj: Record<string, unknown> = {}
+			for (const key in obj as Record<string, unknown>)
+				newObj[key] = cleanNulls((obj as Record<string, unknown>)[key])
+			return newObj
 		}
-	}, [selectedAttr, form])
+
+		const cleaned = cleanNulls(initialValues) as Record<string, unknown>
+		// `Radio.Item` (used by `Supplement.Boolean`) only matches its value against a string -
+		// a raw DB boolean needs stringifying here so the correct option pre-selects on load.
+		if (typeof cleaned.boolean === 'boolean') {
+			cleaned.boolean = cleaned.boolean ? 'true' : 'false'
+		}
+
+		form.reset({ ...form.formState.defaultValues, ...cleaned })
+	}, [initialValues, form])
 
 	const supplements = useMemo(() => {
-		const needsSupplementalData = (item: SelectableAttribute) => {
+		const needsSupplementalData = (item: AttributeDefinition) => {
 			const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
 			const check = [requireBoolean, requireGeo, requireData, requireLanguage, requireText]
 			return check.some(Boolean)
