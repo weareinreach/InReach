@@ -26,6 +26,7 @@ import { generateId } from '@weareinreach/db/lib/idGen'
 import { Badge } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { FieldHelp } from '~ui/components/core/FieldHelp'
 import { Section } from '~ui/components/core/Section'
 import { ContactInfo, hasContactInfo } from '~ui/components/data-display/ContactInfo'
 import { Hours } from '~ui/components/data-display/Hours'
@@ -385,10 +386,23 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 				<>
 					<Text variant={variants.Text.utility1}>Visibility Status</Text>
 					<Group wrap='nowrap'>
-						<Checkbox name='published' control={form.control} label='Published' />
-						<Checkbox name='deleted' control={form.control} label='Deleted' />
+						<Checkbox
+							name='published'
+							control={form.control}
+							label='Published'
+							description="Unchecking this temporarily removes the entry from the public site and search. Use this when something's still being sorted out and you expect it to come back — re-verifying, waiting to hear back, or a temporary inactive period."
+						/>
+						<Checkbox
+							name='deleted'
+							control={form.control}
+							label='Deleted'
+							description="Checking this removes the entry from the public site until deliberately restored. Use this when the entry shouldn't be active at all — a duplicate, permanently discontinued, or rejected during review — not for a temporary pause."
+						/>
 					</Group>
-					<Text variant={variants.Text.utility1}>Coverage Area</Text>
+					<Group gap={4} wrap='nowrap'>
+						<Text variant={variants.Text.utility1}>Coverage Area</Text>
+						<FieldHelp help="Optional — only use for services that exclusively serve people in specific areas, not ones open to anyone who shows up. Select every state/county covered; double-check before applying 'National,' since not every remote service actually serves the whole country." />
+					</Group>
 					<Stack className={classes.dottedCard}>
 						{serviceAreas}
 						<CoverageArea
@@ -526,7 +540,16 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									</Tooltip>
 								</Group>
 								<Group justify='flex-end' w='100%'>
-									<Tooltip label='Must save other changes first' disabled={!hasFormChanges} withArrow>
+									<Tooltip
+										label={
+											hasFormChanges
+												? 'Must save other changes first'
+												: "Appears as a visible tag on this service's public listing, and lets visitors filter search results by it. Only add attributes that are accurate and currently true. Note: editing an existing attribute doesn't currently save correctly — delete it and add a fresh one instead."
+										}
+										multiline={!hasFormChanges}
+										w={hasFormChanges ? undefined : 260}
+										withArrow
+									>
 										<Box style={{ display: 'inline-block' }}>
 											<AttributeModal
 												component={Button}
@@ -557,6 +580,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 								<InlineTextInput
 									component={TextInput<TFormSchema>}
 									label='Service Name'
+									description="Used to search for and identify this service. Lead with a verb describing what a user gets — e.g. 'Get free condoms,' not 'Condom distribution program.' Conveying what it does for someone matters more than matching the org's own program name."
 									name='name.text'
 									required
 									control={form.control}
@@ -567,13 +591,17 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 									fontSize='utility4'
 									component={Textarea<TFormSchema>}
 									label='Description'
+									description="Shown on the service's public detail page — tells visitors what this service does. You can reuse the org's own language, adjusted from 'we' to 'they.'"
 									name='description.text'
 									control={form.control}
 									data-isdirty={dirtyFields.description}
 									autosize
 								/>
 								<Stack gap={10}>
-									<Text variant={variants.Text.utility1}>Services</Text>
+									<Group gap={4} wrap='nowrap'>
+										<Text variant={variants.Text.utility1}>Services</Text>
+										<FieldHelp help="Categorizes the service for browsing and search. Some tags show a crossed-out icon because they're not visible to users yet — still apply them when they fit, so the data's ready once that tag goes live." />
+									</Group>
 									<ServiceSelect name='services' control={form.control} data-isdirty={dirtyFields.services}>
 										<Badge.Group>
 											{activeServices.length ? (

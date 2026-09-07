@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next/pages'
 
 import { AddressVisibility } from '@weareinreach/db/enums'
 import { Badge } from '~ui/components/core/Badge'
+import { FieldHelp } from '~ui/components/core/FieldHelp'
 import { Link } from '~ui/components/core/Link'
 import { AddressDrawer } from '~ui/components/data-portal/AddressDrawer'
 import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
@@ -100,11 +101,14 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 
 	const address = formattedAddress && (
 		<Stack gap={12}>
-			<Title order={3}>
-				{t(hasMapData ? 'words.address' : 'words.location', {
-					context: data.remote ? 'physical' : undefined,
-				})}
-			</Title>
+			<Group gap={4} wrap='nowrap'>
+				<Title order={3}>
+					{t(hasMapData ? 'words.address' : 'words.location', {
+						context: data.remote ? 'physical' : undefined,
+					})}
+				</Title>
+				<FieldHelp help="This is the street address for this location, not the location itself — a location can exist with no public address at all. The location's own name/nickname is set separately, at the top of the page." />
+			</Group>
 			<Group>
 				{data.addressVisibility === AddressVisibility.HIDDEN && addressHiddenIcon}
 				<AddressDrawer

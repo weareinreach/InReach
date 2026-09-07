@@ -1,9 +1,8 @@
 # Field Descriptions (Help Text) for Org / Location / Service Forms
 
-> **Status: Proposed — not yet implemented.** This doc is the output of a scoping discussion, not a
-> shipped feature. It fixes the _content_ (exact copy, per field, grounded in how each field is
-> actually used/displayed) and flags the implementation decisions still open. No code has been
-> written against this doc yet.
+> **Status: Implemented.** All field copy below has shipped in code — see
+> [Implementation](#implementation) for what was actually built and how the two open decisions
+> below were resolved.
 
 ## Overview
 
@@ -40,28 +39,41 @@ address hidden, which badges imply another), that policy is quoted directly rath
 - Codebase trace performed during this discussion (components, models, and query handlers cited inline
   below), covering how each field's value is actually consumed on public-facing pages.
 
-## Open implementation decisions
+## Implementation
 
-These were deliberately left open by this doc — a follow-up implementation pass should decide them,
-not infer a default:
+Both decisions this doc originally left open were resolved as follows:
 
-1. **Visual pattern.** Two options exist in the codebase already, neither currently used for form
-   fields:
-   - Mantine's native `description` prop on `TextInput`/`Select`/etc. — always-visible caption under
-     the field. Already themed and dormant (`packages/ui/theme/components/InputWrapper.module.css:6-19`
-     defines a `.description` class that nothing currently triggers).
-   - Icon + hover tooltip — established precedent at
-     `packages/ui/components/data-portal/OrganizationTable.tsx:305-323` (`CreateMethodLabel`, a
-     `carbon:information` icon next to a label, wrapped in a `Tooltip`).
-     These read very differently (always-on caption vs. on-demand hover) and it's worth deciding
-     deliberately rather than defaulting.
-2. **Reusable checkbox copy vs. per-instance copy.** The Published/Deleted copy below is written once
-   and intended to be reused verbatim everywhere that checkbox pair appears (Service, Website, Phone,
-   Email, Social Media), rather than five separately-maintained near-duplicates. Confirm this is the
-   intended maintenance model before wiring it up in five separate files.
-3. **Organization-level Publish/Unpublish/Delete/Restore** live as buttons in the Navbar edit-mode bar
-   (`packages/ui/components/sections/Navbar.tsx:167-237`), not checkboxes — the copy below is worded for
-   a button-hover tooltip, distinct from the checkbox-caption copy used elsewhere.
+1. **Visual pattern — split by control type, not a single global choice.**
+   - Real labeled inputs (`TextInput`/`Textarea`/`Select`/`Radio.Group`/`Checkbox`) use Mantine's
+     native `description` prop directly — this activates the dormant
+     `InputWrapper.module.css` styling mentioned below, with no new component needed.
+   - Controls with no native label/description slot (badges, buttons, cards, section headings that
+     are plain `Text`, not a real input) use a new shared component,
+     `packages/ui/components/core/FieldHelp.tsx` — an info icon + hover `Tooltip`, generalizing the
+     one-off `CreateMethodLabel` pattern in `OrganizationTable.tsx` into something reusable. Usage:
+     `<FieldHelp help='...' />`, optionally with a `label` node placed before the icon.
+2. **Reusable checkbox copy**: confirmed — the Published/Deleted copy is the same literal string in
+   all five files (`ServiceEditDrawer`, `WebsiteDrawer`, `EmailDrawer`, `PhoneDrawer`,
+   `SocialMediaDrawer`), passed as each `Checkbox`'s own `description` prop rather than deduplicated
+   into a shared constant (five small, independent files; not worth an import for two strings).
+3. **Organization-level Publish/Unpublish/Delete/Restore** (`Navbar.tsx`) are wrapped in a plain
+   Mantine `Tooltip`, worded for a button-hover rather than a checkbox caption, as planned.
+
+Where each entry from [Field copy](#field-copy) actually landed:
+
+| Field                                                  | File                                                               | Mechanism                                                                                                           |
+| ------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| Org name / description                                 | `ListingBasicInfo.tsx`                                             | `description` prop on the `InlineTextInput`                                                                         |
+| Leader badges / Community badges                       | `ListingBasicInfo.tsx`                                             | `FieldHelp` next to the badge-edit trigger                                                                          |
+| Org Publish/Unpublish/Delete/Restore                   | `Navbar.tsx`                                                       | `Tooltip` wrapping each button                                                                                      |
+| Location (address field, under Visit)                  | `VisitCard.tsx`                                                    | `FieldHelp` next to the "Address"/"Location" title                                                                  |
+| Address visibility, Wheelchair accessibility, Latitude | `AddressDrawer/index.tsx`                                          | `description` prop                                                                                                  |
+| Services Available Remotely card                       | `LocationCard.tsx`                                                 | `FieldHelp` next to the card title, edit-mode only                                                                  |
+| Service Name / Description                             | `ServiceEditDrawer/index.tsx`                                      | `description` prop on the `InlineTextInput`                                                                         |
+| Service tags, Coverage Area                            | `ServiceEditDrawer/index.tsx`                                      | `FieldHelp` next to the section's `Text` label                                                                      |
+| Service Published/Deleted                              | `ServiceEditDrawer/index.tsx`                                      | `description` prop on each `Checkbox`                                                                               |
+| Additional attributes ("Add Attribute")                | `ServiceEditDrawer/index.tsx`                                      | Extended the existing conditional `Tooltip` to show help text when there are no unsaved changes, instead of nothing |
+| Website/Phone/Email/Social Media Published/Deleted     | `WebsiteDrawer`, `PhoneDrawer`, `EmailDrawer`, `SocialMediaDrawer` | `description` prop on each `Checkbox`                                                                               |
 
 ## Field copy
 
@@ -126,23 +138,26 @@ attribute and create a new one]` (from the Data Portal Instructions guide) is a 
 
 ## Related files
 
-| Path                                                                                                                                          | Purpose                                                                                                  |
-| --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `packages/ui/components/sections/ListingBasicInfo.tsx`                                                                                        | Org name/description, Leader/Community badge display + edit toggle                                       |
-| `packages/ui/modals/BadgeEdit/index.tsx`                                                                                                      | Leadership/Community-Focus badge assignment modal                                                        |
-| `packages/ui/components/sections/Navbar.tsx`                                                                                                  | Organization Publish/Unpublish/Delete/Restore edit-mode bar                                              |
-| `packages/ui/components/core/UnpublishReasonPopover.tsx`                                                                                      | Org-only unpublish-reason flow                                                                           |
-| `packages/ui/components/data-portal/AddressDrawer/index.tsx`                                                                                  | Address visibility, wheelchair accessibility, latitude/longitude                                         |
-| `packages/ui/components/sections/LocationCard.tsx`                                                                                            | Public location card, remote-services card                                                               |
-| `packages/ui/components/data-portal/ServiceEditDrawer/index.tsx`                                                                              | Service name/description/tags, Published/Deleted, Coverage Area, Attributes                              |
-| `packages/ui/modals/dataPortal/Attributes/index.tsx`                                                                                          | Attribute assignment modal (`AttributeModal`)                                                            |
-| `packages/ui/components/data-portal/WebsiteDrawer/index.tsx`, `EmailDrawer/index.tsx`, `PhoneDrawer/index.tsx`, `SocialMediaDrawer/index.tsx` | Contact-method drawers sharing the Published/Deleted checkbox pattern                                    |
-| `packages/ui/theme/components/InputWrapper.module.css`                                                                                        | Dormant `description` prop styling (see [Open implementation decisions](#open-implementation-decisions)) |
-| `packages/ui/components/data-portal/OrganizationTable.tsx`                                                                                    | Existing icon+tooltip precedent (`CreateMethodLabel`)                                                    |
-| `packages/db/prisma/schema.prisma`                                                                                                            | `OrgUnpublishedReason` enum + doc comment (Organization only)                                            |
-| `docs/DataPortal/2026-Redesign/organization.md`                                                                                               | Broader Organization-table backlog this doc's scope sits alongside                                       |
+| Path                                                                                                                                          | Purpose                                                                                    |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `packages/ui/components/sections/ListingBasicInfo.tsx`                                                                                        | Org name/description, Leader/Community badge display + edit toggle                         |
+| `packages/ui/modals/BadgeEdit/index.tsx`                                                                                                      | Leadership/Community-Focus badge assignment modal                                          |
+| `packages/ui/components/sections/Navbar.tsx`                                                                                                  | Organization Publish/Unpublish/Delete/Restore edit-mode bar                                |
+| `packages/ui/components/core/UnpublishReasonPopover.tsx`                                                                                      | Org-only unpublish-reason flow                                                             |
+| `packages/ui/components/data-portal/AddressDrawer/index.tsx`                                                                                  | Address visibility, wheelchair accessibility, latitude/longitude                           |
+| `packages/ui/components/sections/LocationCard.tsx`                                                                                            | Public location card, remote-services card                                                 |
+| `packages/ui/components/data-portal/ServiceEditDrawer/index.tsx`                                                                              | Service name/description/tags, Published/Deleted, Coverage Area, Attributes                |
+| `packages/ui/modals/dataPortal/Attributes/index.tsx`                                                                                          | Attribute assignment modal (`AttributeModal`)                                              |
+| `packages/ui/components/data-portal/WebsiteDrawer/index.tsx`, `EmailDrawer/index.tsx`, `PhoneDrawer/index.tsx`, `SocialMediaDrawer/index.tsx` | Contact-method drawers sharing the Published/Deleted checkbox pattern                      |
+| `packages/ui/components/sections/VisitCard.tsx`                                                                                               | Location-vs-Address distinction tooltip, on the address-edit trigger                       |
+| `packages/ui/components/core/FieldHelp.tsx`                                                                                                   | New shared icon+tooltip component (see [Implementation](#implementation))                  |
+| `packages/ui/theme/components/InputWrapper.module.css`                                                                                        | `description` prop styling, now in active use                                              |
+| `packages/ui/components/data-portal/OrganizationTable.tsx`                                                                                    | Original one-off icon+tooltip precedent (`CreateMethodLabel`) that `FieldHelp` generalizes |
+| `packages/db/prisma/schema.prisma`                                                                                                            | `OrgUnpublishedReason` enum + doc comment (Organization only)                              |
+| `docs/DataPortal/2026-Redesign/organization.md`                                                                                               | Broader Organization-table backlog this doc's scope sits alongside                         |
 
 ---
 
-_This doc reflects a scoping discussion only. Update its status once an implementation PR lands, and
-resolve the open decisions above before writing code against it._
+_Last verified against code: 2026-09-07. Implemented same-day as this doc's scoping discussion. Update
+this doc's Related Files and Known Ambiguities if the description-copying bug, the Location/Service
+unpublish-vs-delete distinction, or the location-level "Services available" field get addressed later._

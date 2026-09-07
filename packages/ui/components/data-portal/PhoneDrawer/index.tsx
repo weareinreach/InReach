@@ -388,8 +388,18 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 										)}
 										<Stack w='100%' gap={16}>
 											<Stack>
-												<Checkbox label='Published' name='published' control={control} />
-												<Checkbox label='Deleted' name='deleted' control={control} />
+												<Checkbox
+													label='Published'
+													description="Unchecking this temporarily removes the entry from the public site and search. Use this when something's still being sorted out and you expect it to come back — re-verifying, waiting to hear back, or a temporary inactive period."
+													name='published'
+													control={control}
+												/>
+												<Checkbox
+													label='Deleted'
+													description="Checking this removes the entry from the public site until deliberately restored. Use this when the entry shouldn't be active at all — a duplicate, permanently discontinued, or rejected during review — not for a temporary pause."
+													name='deleted'
+													control={control}
+												/>
 											</Stack>
 											{hasLocationId !== null && (
 												<Button

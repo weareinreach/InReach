@@ -463,6 +463,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								<Stack gap={0} w='100%'>
 									<Select
 										label='Address visibility'
+										description="Controls how much of this location's address the public can see. Hide to city/state (or fully hide, for remote-only orgs) when: the org has a trans or LGBTQ+ youth-focused badge, any of its services carry an abortion or trans-services tag, the org doesn't publish its own address (e.g. most DV shelters), or the org has specifically asked to keep it private."
 										data={addressVisibilityOptions}
 										{...form.getInputProps('data.addressVisibility')}
 									/>
@@ -503,6 +504,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 										<TextInput
 											required
 											label='Latitude'
+											description='Auto-filled when you select an address from the suggestions — usually correct as-is. Use the map-distance check link below to verify it before saving, especially for rural addresses, new buildings, or PO boxes where the auto-match can be off. This position drives both the map pin and how far away this location shows up in search.'
 											disabled={countryNotSelected}
 											{...form.getInputProps('data.latitude')}
 										/>
@@ -525,6 +527,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 								<Divider />
 								<Radio.Group
 									label='Is this location wheelchair accessible?'
+									description="Shown on the location's public page. If you don't know, select 'No info' rather than guessing — contact the org directly to confirm rather than assume."
 									size='xs'
 									{...form.getInputProps('data.accessible.boolean')}
 								>
