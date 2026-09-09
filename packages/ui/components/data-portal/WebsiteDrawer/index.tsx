@@ -56,7 +56,6 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			handleSubmit,
 			formState,
 			reset,
-			getValues,
 			setValue: setFormValue,
 		} = useForm<TUpsertSchema>({
 			// zod's `.preprocess()` on `orgLocationId` makes @hookform/resolvers' structural
@@ -84,13 +83,70 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 		const apiUtils = api.useUtils()
 
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this website. Please try again.',
+			icon: 'warning',
+		})
 
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 
+		// A tRPC query response can be served from an intermediate cache under
+		// `stale-while-revalidate`, so `invalidate()`'s own refetch for an *update* isn't reliable -
+		// it can come back with the pre-save row even though the write already succeeded (confirmed
+		// live: the refetch returned the old url moments after the mutation's own response returned
+		// the new one). Patching the list with what was actually submitted, mirroring PhoneDrawer's
+		// identical `patchContactListCaches`, sidesteps that: the visible list always reflects the
+		// save immediately, and a real refetch still corrects anything this patch can't infer (e.g.
+		// the description's translation key) whenever it eventually lands.
+		const patchContactListCaches = useCallback(
+			(submitted: TUpsertSchema) => {
+				const parentIds = [organizationId, hasLocationId].filter((value): value is string => Boolean(value))
+				for (const parentId of parentIds) {
+					apiUtils.orgWebsite.forContactInfoEdit.setData({ parentId }, (old) => {
+						if (!old) {
+							return old
+						}
+						return old.map((item) =>
+							item.id === submitted.id
+								? {
+										...item,
+										url: submitted.url ?? item.url,
+										published: submitted.published ?? item.published,
+										deleted: submitted.deleted ?? item.deleted,
+										description:
+											submitted.description === undefined
+												? item.description
+												: submitted.description === null
+													? null
+													: { key: item.description?.key ?? '', defaultText: submitted.description },
+									}
+								: item
+						)
+					})
+				}
+			},
+			[apiUtils, organizationId, hasLocationId]
+		)
+
 		const siteUpdate = api.orgWebsite.upsert.useMutation({
-			onSettled: () => {
-				apiUtils.orgWebsite.forContactInfoEdit.invalidate()
+			onSettled: (_data, error, variables) => {
+				// A failed save must not reach `patchContactListCaches` below - it writes `variables`
+				// (what was *submitted*) straight into the cache, so patching on an error would make
+				// the list show a change that was never actually persisted.
+				if (error) {
+					return
+				}
+				if (variables.operation === 'create') {
+					// A brand-new website has no existing entry in the cached list for the patch above
+					// to match against, so a real invalidate is the only way it appears at all - safe
+					// here specifically because there's no existing cached data for this id that a
+					// slower, earlier response could race against and stomp.
+					apiUtils.orgWebsite.forContactInfoEdit.invalidate()
+				} else {
+					patchContactListCaches(variables as TUpsertSchema)
+					apiUtils.orgWebsite.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' })
+				}
 				apiUtils.orgWebsite.forContactInfo.invalidate()
 				// This drawer's own detail query is keyed by this specific website id - without
 				// marking it stale too, reopening this same website later would show the
@@ -102,13 +158,20 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 				// reaching the list.
 				apiUtils.orgWebsite.forEditDrawer.invalidate({ id: websiteId }, { refetchType: 'none' })
 			},
-			onSuccess: () => {
+			onSuccess: (_data, variables) => {
 				setIsSaved(true)
 				notifySave()
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
-				reset({ id: generateId('orgWebsite') })
+				// Resets to what was actually just submitted, not a throwaway blank id - resetting to
+				// an unrelated fresh id discarded the just-saved values from the form's own display
+				// (e.g. reopening this exact drawer instance's Unsaved-Changes state) even though the
+				// database write itself was correct.
+				// Same `unknown`-widening quirk as the resolver cast above - `variables` is structurally
+				// `TUpsertSchema`, just not inferred as such through the mutation's own generic.
+				reset(variables as TUpsertSchema)
 			},
+			onError: notifySaveError,
 		})
 
 		const unlinkFromLocation = api.orgWebsite.locationLink.useMutation({
@@ -149,10 +212,17 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			[unlinkFromLocation, websiteId, hasLocationId]
 		)
 
-		const handleSaveFromModal = useCallback(() => {
-			const valuesToSubmit = getValues()
-			siteUpdate.mutate({ id: websiteId, ...valuesToSubmit })
-		}, [getValues, siteUpdate, websiteId])
+		// Single submit path for both the drawer's own Save button and the "Unsaved Changes" modal's
+		// Save button - previously the modal called `siteUpdate.mutate` from a raw `getValues()`,
+		// bypassing zod validation entirely (only the primary Save button validated via `handleSubmit`).
+		const submitWebsite = useMemo(
+			() =>
+				handleSubmit(
+					(data) => siteUpdate.mutate({ id: websiteId, ...data }),
+					(error) => console.error(error)
+				),
+			[handleSubmit, siteUpdate, websiteId]
+		)
 
 		const handleCloseAndDiscard = useCallback(() => {
 			reset()
@@ -162,17 +232,25 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 
 		return (
 			<>
-				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
+				<Drawer.Root
+					onClose={handleClose}
+					opened={drawerOpened}
+					position='right'
+					zIndex={10001}
+					keepMounted
+					// A `createNew` instance is used as the "Create new" trigger in a location's Contact
+					// menu (see e.g. Emails.tsx) and sits nested inside a Menu.Item for its whole
+					// lifetime. Once saved and this closes, the same record also starts appearing in the
+					// main linked-items list below, mounting a second WebsiteDrawer with the same id at
+					// the same moment - the resulting re-render storm reliably desyncs Mantine's close
+					// transition, leaving this Drawer stuck fully visible even though `opened` has already
+					// gone false. Skipping the transition removes the window for that: the closed state
+					// applies immediately instead of after an animation that never gets to finish.
+					transitionProps={createNew ? { duration: 0 } : undefined}
+				>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
-						<form
-							onSubmit={handleSubmit(
-								(data) => {
-									siteUpdate.mutate({ id: websiteId, ...data })
-								},
-								(error) => console.error(error)
-							)}
-						>
+						<form onSubmit={submitWebsite}>
 							<Drawer.Header>
 								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
@@ -236,7 +314,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={siteUpdate.isPending}
-											onClick={handleSaveFromModal}
+											onClick={submitWebsite}
 										>
 											Save
 										</Button>

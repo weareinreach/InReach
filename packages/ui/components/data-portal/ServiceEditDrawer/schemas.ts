@@ -33,6 +33,10 @@ export const FormSchema = z.object({
 	services: prefixedId('serviceTag').array(),
 	published: z.boolean().optional().default(true),
 	deleted: z.boolean().optional().default(false),
-	organizationId: prefixedId('organization'),
+	// Not rendered as a field and not a real column on OrgService's edit-drawer query - only ever
+	// populated from the `useOrgInfo` hook, not form-tracked state. `.optional()` so validation never
+	// blocks a submit on it; `handleSave` in index.tsx always overrides it with a fresh value from the
+	// hook regardless of what's here (see its comment for why).
+	organizationId: prefixedId('organization').optional(),
 })
 export type TFormSchema = z.infer<typeof FormSchema>

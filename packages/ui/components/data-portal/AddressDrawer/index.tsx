@@ -174,6 +174,10 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const apiUtils = api.useUtils()
 
 	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+	const notifySaveError = useNewNotification({
+		displayText: 'Something went wrong saving this address. Please try again.',
+		icon: 'warning',
+	})
 
 	// #region Get country/gov dist selection items
 	const { data: countryOptions, isSuccess: countryOptionsLoaded } =
@@ -269,6 +273,11 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			setIsSaved(true)
 			notifySave()
 			setTimeout(() => handler.close(), 500)
+		},
+		// Without this, a failed save left the UI silently stuck: nothing here ran, so the drawer
+		// stayed open with no indication anything went wrong.
+		onError: () => {
+			notifySaveError()
 		},
 	})
 	const handleUpdate = useCallback(() => {

@@ -26,6 +26,7 @@ import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { isCountryCode } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
@@ -140,7 +141,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			handleSubmit,
 			formState,
 			reset,
-			getValues,
 			watch,
 			setValue: setFormValue,
 		} = useForm<FormSchema>({
@@ -214,8 +214,19 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			[apiUtils, orgId, hasLocationId, countryCca2ById]
 		)
 
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this phone number. Please try again.',
+			icon: 'warning',
+		})
 		const siteUpdate = api.orgPhone.upsert.useMutation({
-			onSettled: (data, _error, variables) => {
+			onSettled: (data, error, variables) => {
+				// A failed save must not reach `patchContactListCaches` below - it writes `variables`
+				// (what was *submitted*) straight into the cache, so patching on an error would make
+				// the list show a change that was never actually persisted, with nothing to correct it
+				// until some other refetch happens to come along.
+				if (error) {
+					return
+				}
 				if (variables.operation === 'create') {
 					// A brand-new phone has no existing entry in the cached list for the patch below to
 					// match against - `patchContactListCaches` only updates an item it can find by id, so
@@ -253,6 +264,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				modalHandler.close()
 				drawerHandler.close()
 			},
+			onError: notifySaveError,
 		})
 		const unlinkFromLocation = api.orgPhone.locationLink.useMutation({
 			onSuccess: () => {
@@ -297,7 +309,10 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			})
 		}, [hasLocationId, phoneId, unlinkFromLocation])
 
-		const handleSaveButton = useCallback(
+		// Single submit path for both the drawer's own Save button and the "Unsaved Changes" modal's
+		// Save button - previously the modal called `siteUpdate.mutate` from a raw `getValues()`,
+		// bypassing zod validation entirely (only the primary Save button validated via `handleSubmit`).
+		const submitPhone = useMemo(
 			() =>
 				handleSubmit(
 					(data) => {
@@ -312,24 +327,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				),
 			[createNew, handleSubmit, orgId, siteUpdate]
 		)
-
-		const handleModalSave = useCallback(() => {
-			const valuesToSubmit = getValues()
-			siteUpdate.mutate(
-				{
-					...valuesToSubmit,
-					orgId: orgId ?? '',
-					operation: createNew ? 'create' : 'update',
-					phoneTypeId: valuesToSubmit.phoneTypeId || null,
-				},
-				{
-					onSuccess: () => {
-						modalHandler.close()
-						drawerHandler.close()
-					},
-				}
-			)
-		}, [createNew, drawerHandler, getValues, modalHandler, orgId, siteUpdate])
 		const handleCloseNoSave = useCallback(() => {
 			reset()
 			modalHandler.close()
@@ -338,10 +335,25 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 
 		return (
 			<>
-				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
+				<Drawer.Root
+					onClose={handleClose}
+					opened={drawerOpened}
+					position='right'
+					zIndex={10001}
+					keepMounted
+					// A `createNew` instance is used as the "Create new" trigger in a location's Contact
+					// menu (see e.g. Emails.tsx) and sits nested inside a Menu.Item for its whole
+					// lifetime. Once saved and this closes, the same record also starts appearing in the
+					// main linked-items list below, mounting a second PhoneDrawer with the same id at the
+					// same moment - the resulting re-render storm reliably desyncs Mantine's close
+					// transition, leaving this Drawer stuck fully visible even though `opened` has already
+					// gone false. Skipping the transition removes the window for that: the closed state
+					// applies immediately instead of after an animation that never gets to finish.
+					transitionProps={createNew ? { duration: 0 } : undefined}
+				>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
-						<form onSubmit={handleSaveButton()}>
+						<form onSubmit={submitPhone}>
 							<Drawer.Header>
 								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
@@ -423,7 +435,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={siteUpdate.isPending}
-											onClick={handleModalSave}
+											onClick={submitPhone}
 										>
 											Save
 										</Button>

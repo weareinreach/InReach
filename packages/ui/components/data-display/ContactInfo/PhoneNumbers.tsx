@@ -240,7 +240,13 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	})
 
 	const addOrLink = isLocation ? (
-		<Menu keepMounted withinPortal>
+		// The default close-on-click would close this Menu in the same synchronous click that opens
+		// the nested "Create new" PhoneDrawer below, which stops that drawer's form from ever
+		// registering as dirty - Save then stays permanently disabled with no error shown. Closing this
+		// Menu at any later point while that drawer is still mounted reproduces the same corruption
+		// (Mantine's `keepMounted` doesn't stop it remounting on close), so this item is never closed
+		// programmatically - the Menu is left to close only via the user's own next outside click.
+		<Menu keepMounted withinPortal closeOnItemClick={false}>
 			<Menu.Target>
 				<Link variant={variants.Link.inlineInverted}>
 					<Group wrap='nowrap' gap={4}>
@@ -254,7 +260,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 					const phoneTextVariant = getTextVariant('value', published, deleted)
 					const descTextVariant = getTextVariant('desc', published, deleted)
 					return (
-						<Menu.Item key={id} onClick={linkToLocationHandler(parentId, id)}>
+						<Menu.Item key={id} closeMenuOnClick onClick={linkToLocationHandler(parentId, id)}>
 							<Group wrap='nowrap'>
 								<Icon icon='carbon:link' />
 								<Stack gap={0}>

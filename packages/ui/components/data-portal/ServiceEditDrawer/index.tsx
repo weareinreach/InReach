@@ -105,16 +105,9 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 			// A pre-existing service can predate the name-required rule and have no name set at all -
 			// `data.name` reflects that as `undefined`, but the form's `name` field can no longer be:
 			// fall back to an empty (still-invalid, still blocked-from-saving) value instead of `undefined`.
-			values: data
-				? { ...data, name: data.name ?? { text: '' }, organizationId: organizationId ?? '' }
-				: undefined,
+			values: data ? { ...data, name: data.name ?? { text: '' } } : undefined,
+			defaultValues: { organizationId: organizationId ?? '' },
 		})
-
-		useEffect(() => {
-			if (organizationId && organizationId !== form.getValues().organizationId) {
-				form.setValue('organizationId', organizationId)
-			}
-		}, [form, organizationId])
 
 		const dirtyFields = {
 			name: isObject(form.formState.dirtyFields.name) ? form.formState.dirtyFields.name.text : false,
@@ -228,12 +221,19 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceDrawerProps>(
 
 			serviceUpsert.mutate({
 				...baseValues,
+				// `organizationId` isn't rendered as a field, isn't returned by this drawer's own query
+				// (`service.forServiceEditDrawer` doesn't select it), and can't be trusted from
+				// form-tracked state - it's only ever populated from `useOrgInfo`. Reading it fresh here
+				// instead of from `baseValues` avoids submitting a stale/missing value if this drawer is
+				// reopened for a second edit shortly after a previous save (the same bug previously found
+				// and fixed in EmailDrawer - see its `submitEmail` comment).
+				organizationId: organizationId ?? '',
 				services: serviceChanges,
 				name: name.text,
 				description: description?.text,
 				attachToLocation,
 			})
-		}, [attachToLocation, data?.services, form, serviceUpsert])
+		}, [attachToLocation, data?.services, form, organizationId, serviceUpsert])
 
 		const handleCloseAndDiscard = useCallback(() => {
 			form.reset()

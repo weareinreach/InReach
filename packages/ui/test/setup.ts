@@ -39,3 +39,10 @@ class MockResizeObserver {
 	disconnect = vi.fn()
 }
 Object.defineProperty(window, 'ResizeObserver', { writable: true, value: MockResizeObserver })
+
+// jsdom doesn't implement document.fonts - Mantine's Textarea `autosize` option listens for
+// "loadingdone" on it to re-measure once web fonts finish loading.
+Object.defineProperty(document, 'fonts', {
+	writable: true,
+	value: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
+})
