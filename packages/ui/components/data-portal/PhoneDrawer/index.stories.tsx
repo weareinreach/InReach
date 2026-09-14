@@ -1,6 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/nextjs'
 
-import { Button } from '~ui/components/core/Button'
 import { fieldOpt } from '~ui/mockData/fieldOpt'
 import { organization } from '~ui/mockData/organization'
 import { orgPhone } from '~ui/mockData/orgPhone'
@@ -31,9 +30,8 @@ export default {
 	},
 
 	args: {
-		component: Button,
-		children: 'Open Drawer',
-		variant: 'primary',
+		opened: true,
+		onClose: () => console.log('Drawer closed'),
 		id: 'oweb_01H29ENF8JTJ3FNJ5BQXDH4PMA',
 	},
 } satisfies Meta<typeof PhoneDrawer>

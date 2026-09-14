@@ -98,8 +98,7 @@ describe('PhoneDrawer', () => {
 		})
 
 		const user = userEvent.setup()
-		render(<PhoneDrawer id={PHONE_ID}>Edit phone</PhoneDrawer>)
-		await user.click(screen.getByRole('button', { name: 'Edit phone' }))
+		render(<PhoneDrawer opened id={PHONE_ID} onClose={vi.fn()} />)
 		await waitFor(() => screen.getByRole('checkbox', { name: 'Deleted' }))
 		await user.click(screen.getByRole('checkbox', { name: 'Deleted' }))
 		await user.click(screen.getByRole('button', { name: 'Save' }))

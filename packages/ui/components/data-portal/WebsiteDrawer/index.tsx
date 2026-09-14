@@ -51,6 +51,25 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 				// }),
 			}
 		)
+		// Recomputed fresh on every render (not memoized), this was a new object reference each time
+		// regardless of whether `websiteData` itself had changed - react-query's own structural
+		// sharing only protects a query's *raw* data, not a transform layered on top of it outside a
+		// `select`. RHF's `values` sync treats any new reference as a real external update and
+		// reapplies it, so an unrelated re-render (e.g. from unchecking Published) could momentarily
+		// reassert the still-`true` value from `websiteData`, flashing the checkbox back on before it
+		// settled - memoizing keeps the reference stable unless the underlying data actually changed.
+		const values = useMemo(
+			() =>
+				websiteData && organizationId
+					? {
+							...websiteData,
+							operation: createNew ? ('create' as const) : ('update' as const),
+							orgLocationId: hasLocationId,
+							organizationId: websiteData.organizationId ?? organizationId,
+						}
+					: undefined,
+			[websiteData, organizationId, createNew, hasLocationId]
+		)
 		const {
 			control,
 			handleSubmit,
@@ -62,15 +81,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			// inference of the resolver's raw input type widen to `unknown`; the schema's actual
 			// parsed output is `TUpsertSchema`, confirmed via z.infer.
 			resolver: zodResolver(ZUpsertSchema) as Resolver<TUpsertSchema>,
-			values:
-				websiteData && organizationId
-					? {
-							...websiteData,
-							operation: createNew ? 'create' : 'update',
-							orgLocationId: hasLocationId,
-							organizationId: websiteData.organizationId ?? organizationId,
-						}
-					: undefined,
+			values,
 			defaultValues: {
 				operation: 'create',
 				orgLocationId: hasLocationId ?? '',
@@ -224,6 +235,21 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			[handleSubmit, siteUpdate, websiteId]
 		)
 
+		// `type='url'`'s native browser validation rejects a missing scheme (e.g. "www.example.org")
+		// before this form ever gets a chance to run - there's no submit-time fix for that, since the
+		// browser blocks native form submission on an invalid `type='url'` value before React's
+		// `onSubmit` fires at all. Fixing it on blur instead - before the user ever reaches Save -
+		// means the native check always sees an already-schemed value.
+		const handleUrlBlur = useCallback(
+			(event: React.FocusEvent<HTMLInputElement>) => {
+				const { value } = event.target
+				if (value && !/^https?:\/\//i.test(value)) {
+					setFormValue('url', `https://${value}`, { shouldValidate: true, shouldDirty: true })
+				}
+			},
+			[setFormValue]
+		)
+
 		const handleCloseAndDiscard = useCallback(() => {
 			reset()
 			modalHandler.close()
@@ -270,7 +296,16 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 								<Stack gap={24} align='center'>
 									<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Website`}</Title>
 									<Stack gap={24} align='flex-start' w='100%'>
-										<TextInput label='Website URL' required name='url' type='url' control={control} />
+										{/* `onBlur` - see `handleUrlBlur`'s comment - runs before `type='url'`'s native
+										    validation ever sees the value. */}
+										<TextInput
+											label='Website URL'
+											required
+											name='url'
+											type='url'
+											control={control}
+											onBlur={handleUrlBlur}
+										/>
 										{/* <TextInput label='Description' name='description' control={control} /> */}
 										<Group wrap='nowrap' justify='space-between' w='100%'>
 											<Stack>
