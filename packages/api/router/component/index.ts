@@ -75,4 +75,13 @@ export const componentRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	AttributeEditWrapperDetail: permissionedProcedure('updateOrgService')
+		.input(schema.ZAttributeEditWrapperDetailSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('AttributeEditWrapperDetail'),
+				() => import('./query.AttributeEditWrapperDetail.handler')
+			)
+			return handler(opts)
+		}),
 })

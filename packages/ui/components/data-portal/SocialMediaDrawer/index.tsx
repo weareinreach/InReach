@@ -57,6 +57,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 	({ id, createNew, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 		const { id: organizationId } = useOrgInfo()
+		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 		const socialId = useMemo(() => (createNew ? generateId('orgSocialMedia') : id), [createNew, id])
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
@@ -92,9 +93,63 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this social media link. Please try again.',
+			icon: 'warning',
+		})
+		// A tRPC query response can be served from an intermediate cache under
+		// `stale-while-revalidate`, so `invalidate()`'s own refetch for an *update* isn't reliable -
+		// it can come back with the pre-save row even though the write already succeeded. Patching
+		// the list with what was actually submitted (mirroring PhoneDrawer's identical
+		// `patchContactListCaches`) sidesteps that: the visible list always reflects the save
+		// immediately, and a real refetch still corrects anything this patch can't infer whenever it
+		// eventually lands.
+		const patchContactListCaches = useCallback(
+			(submitted: FormSchema) => {
+				const parentIds = [organizationId, hasLocationId].filter((value): value is string => Boolean(value))
+				for (const parentId of parentIds) {
+					apiUtils.orgSocialMedia.forContactInfoEdits.setData({ parentId }, (old) => {
+						if (!old) {
+							return old
+						}
+						return old.map((item) =>
+							item.id === submitted.id
+								? {
+										...item,
+										url: submitted.url ?? item.url,
+										username: submitted.username ?? item.username,
+										published: submitted.published ?? item.published,
+										deleted: submitted.deleted ?? item.deleted,
+										orgLocationOnly: submitted.orgLocationOnly ?? item.orgLocationOnly,
+										service: submitted.service?.name ?? item.service,
+										serviceIcon: submitted.service?.logoIcon ?? item.serviceIcon,
+									}
+								: item
+						)
+					})
+				}
+			},
+			[apiUtils, organizationId, hasLocationId]
+		)
+
 		const databaseUpdate = api.orgSocialMedia.upsert.useMutation({
-			onSettled: () => {
-				apiUtils.orgSocialMedia.forContactInfoEdits.invalidate()
+			onSettled: (_data, error, variables) => {
+				// A failed save must not reach `patchContactListCaches`/`reset()` below - it writes
+				// `variables` (what was *submitted*) straight into the cache and form, so patching on
+				// an error would make the list and form show a change that was never actually persisted.
+				if (error) {
+					return
+				}
+				if (variables.operation === 'create') {
+					// A brand-new record has no existing entry in the cached list for the patch above to
+					// match against, so a real invalidate is the only way it appears at all - safe here
+					// specifically because there's no existing cached data for this id that a slower,
+					// earlier response could race against and stomp.
+					apiUtils.orgSocialMedia.forContactInfoEdits.invalidate()
+				} else {
+					patchContactListCaches(variables as FormSchema)
+					apiUtils.orgSocialMedia.forContactInfoEdits.invalidate(undefined, { refetchType: 'none' })
+				}
 				apiUtils.orgSocialMedia.forContactInfo.invalidate()
 				// This drawer's own detail query is keyed by this specific social media id -
 				// without marking it stale too, reopening this same record later would show the
@@ -105,17 +160,19 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 				// forContactInfoEdits refetch above in a way that ends up blocking that one from
 				// reaching the list.
 				apiUtils.orgSocialMedia.forEditDrawer.invalidate({ id: socialId }, { refetchType: 'none' })
-				reset()
 			},
-			onSuccess: () => {
+			onSuccess: (_data, variables) => {
 				setIsSaved(true)
 				notifySave()
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
-				reset({ id: generateId('orgSocialMedia') })
+				// Resets to what was actually just submitted, not a throwaway blank id - resetting to
+				// an unrelated fresh id discarded the just-saved values from the form's own display
+				// even though the database write itself was correct.
+				reset(variables as FormSchema)
 			},
+			onError: notifySaveError,
 		})
-		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 		const unlinkFromLocation = api.orgSocialMedia.locationLink.useMutation({
 			onSuccess: () => {
 				apiUtils.orgSocialMedia.forContactInfoEdits.invalidate()
@@ -178,9 +235,17 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 			[unlinkFromLocation, socialId, hasLocationId]
 		)
 
-		const handleModalSubmit = useCallback(() => {
-			databaseUpdate.mutate({ operation: createNew ? 'create' : 'update', ...getValues() })
-		}, [createNew, databaseUpdate, getValues])
+		// Single submit path for both the drawer's own Save button and the "Unsaved Changes" modal's
+		// Save button - previously the modal called `databaseUpdate.mutate` from a raw `getValues()`,
+		// bypassing zod validation entirely (only the primary Save button validated via `handleSubmit`).
+		const submitSocialMedia = useMemo(
+			() =>
+				handleSubmit(
+					(formData) => databaseUpdate.mutate({ operation: createNew ? 'create' : 'update', ...formData }),
+					(error) => console.error(error)
+				),
+			[createNew, databaseUpdate, handleSubmit]
+		)
 
 		const handleModalDismiss = useCallback(() => {
 			reset()
@@ -202,17 +267,25 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 
 		return (
 			<>
-				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
+				<Drawer.Root
+					onClose={handleClose}
+					opened={drawerOpened}
+					position='right'
+					zIndex={10001}
+					keepMounted
+					// A `createNew` instance is used as the "Create new" trigger in a location's Contact
+					// menu (see e.g. Emails.tsx) and sits nested inside a Menu.Item for its whole
+					// lifetime. Once saved and this closes, the same record also starts appearing in the
+					// main linked-items list below, mounting a second SocialMediaDrawer with the same id
+					// at the same moment - the resulting re-render storm reliably desyncs Mantine's close
+					// transition, leaving this Drawer stuck fully visible even though `opened` has already
+					// gone false. Skipping the transition removes the window for that: the closed state
+					// applies immediately instead of after an animation that never gets to finish.
+					transitionProps={createNew ? { duration: 0 } : undefined}
+				>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
-						<form
-							onSubmit={handleSubmit(
-								(formData) => {
-									databaseUpdate.mutate({ operation: createNew ? 'create' : 'update', ...formData })
-								},
-								(error) => console.error(error)
-							)}
-						>
+						<form onSubmit={submitSocialMedia}>
 							<Drawer.Header>
 								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
@@ -245,8 +318,18 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 										<TextInput label='Username/handle' required name='username' control={control} />
 										<Group wrap='nowrap' justify='space-between' w='100%'>
 											<Stack>
-												<Checkbox label='Published' name='published' control={control} />
-												<Checkbox label='Deleted' name='deleted' control={control} />
+												<Checkbox
+													label='Published'
+													description="Unchecking this temporarily removes the entry from the public site and search. Use this when something's still being sorted out and you expect it to come back — re-verifying, waiting to hear back, or a temporary inactive period."
+													name='published'
+													control={control}
+												/>
+												<Checkbox
+													label='Deleted'
+													description="Checking this removes the entry from the public site until deliberately restored. Use this when the entry shouldn't be active at all — a duplicate, permanently discontinued, or rejected during review — not for a temporary pause."
+													name='deleted'
+													control={control}
+												/>
 											</Stack>
 											{hasLocationId !== null && (
 												<Button
@@ -275,7 +358,7 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={databaseUpdate.isPending}
-											onClick={handleModalSubmit}
+											onClick={submitSocialMedia}
 										>
 											Save
 										</Button>

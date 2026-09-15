@@ -29,7 +29,11 @@ import classes from './index.module.css'
 
 const FormSchema = z.object({
 	id: z.string(),
-	orgId: z.string(),
+	// Not a real user-facing field (nothing in this form renders it) and not reliably trustworthy
+	// from form-tracked state (only ever populated from the `useOrgInfo` hook, not a real column on
+	// OrgEmail) - `.optional()` so validation never blocks a submit on it. `submitEmail` below always
+	// overrides it with a fresh value from the hook regardless of what's here.
+	orgId: z.string().optional(),
 	firstName: z.string().nullish(),
 	lastName: z.string().nullish(),
 	primary: z.boolean().optional(),
@@ -68,37 +72,86 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 		)
 		const apiUtils = api.useUtils()
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this email. Please try again.',
+			icon: 'warning',
+		})
 
-		const {
-			control,
-			handleSubmit,
-			formState,
-			reset,
-			getValues,
-			setValue: setFormValue,
-		} = useForm<FormSchema>({
+		const { control, handleSubmit, formState, reset } = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema) as Resolver<FormSchema>,
 			values: initialData ?? undefined,
 			defaultValues: {
 				id: emailId,
+				orgId: '',
 				published: true,
 				deleted: false,
 				linkLocationId: hasLocationId,
 			},
 		})
-		useEffect(() => {
-			const formValues = getValues()
-			if (!formValues.orgId && orgId) {
-				setFormValue('orgId', orgId)
-			}
-		}, [getValues, orgId, setFormValue])
 
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 
+		// A tRPC query response can be served from an intermediate cache under
+		// `stale-while-revalidate`, so `invalidate()`'s own refetch for an *update* isn't reliable -
+		// it can come back with the pre-save row even though the write already succeeded. Patching
+		// the list with what was actually submitted (mirroring PhoneDrawer's identical
+		// `patchContactListCaches`) sidesteps that: the visible list always reflects the save
+		// immediately, and a real refetch still corrects anything this patch can't infer (e.g. the
+		// title's translation key) whenever it eventually lands.
+		const patchContactListCaches = useCallback(
+			(submitted: FormSchema) => {
+				const parentIds = [orgId, hasLocationId].filter((value): value is string => Boolean(value))
+				for (const parentId of parentIds) {
+					apiUtils.orgEmail.forContactInfoEdit.setData({ parentId }, (old) => {
+						if (!old) {
+							return old
+						}
+						return old.map((item) =>
+							item.id === submitted.id
+								? {
+										...item,
+										email: submitted.email ?? item.email,
+										firstName: submitted.firstName ?? item.firstName,
+										lastName: submitted.lastName ?? item.lastName,
+										primary: submitted.primary ?? item.primary,
+										locationOnly: submitted.locationOnly ?? item.locationOnly,
+										serviceOnly: submitted.serviceOnly ?? item.serviceOnly,
+										published: submitted.published ?? item.published,
+										deleted: submitted.deleted ?? item.deleted,
+										description:
+											submitted.description === undefined
+												? item.description
+												: submitted.description === null
+													? null
+													: { key: item.description?.key ?? '', defaultText: submitted.description },
+									}
+								: item
+						)
+					})
+				}
+			},
+			[apiUtils, orgId, hasLocationId]
+		)
+
 		const emailUpdate = api.orgEmail.update.useMutation({
-			onSettled: () => {
-				apiUtils.orgEmail.forContactInfoEdit.invalidate()
+			onSettled: (_data, error, variables) => {
+				// A failed save must not reach `patchContactListCaches` below - it writes `variables`
+				// (what was *submitted*) straight into the cache, so patching on an error would make
+				// the list show a change that was never actually persisted.
+				if (error) {
+					return
+				}
+				if (createNew) {
+					// A brand-new email has no existing entry in the cached list for the patch above
+					// to match against, so a real invalidate is the only way it appears at all - safe
+					// here specifically because there's no existing cached data for this id that a
+					// slower, earlier response could race against and stomp.
+					apiUtils.orgEmail.forContactInfoEdit.invalidate()
+				} else {
+					patchContactListCaches(variables as FormSchema)
+					apiUtils.orgEmail.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' })
+				}
 				apiUtils.orgEmail.forContactInfo.invalidate()
 				// This drawer's own detail query is keyed by this specific email id - without
 				// marking it stale too, reopening this same email later would show the pre-save
@@ -116,20 +169,13 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
 			},
+			onError: notifySaveError,
 		})
 		const unlinkFromLocation = api.orgEmail.locationLink.useMutation({
 			onSuccess: () => {
 				apiUtils.orgEmail.forContactInfoEdit.invalidate()
 			},
 		})
-		// useEffect(() => {
-		// 	if (createNew && orgId) {
-		// 		setFormValue('published', true)
-		// 		setFormValue('orgId', orgId)
-		// 		setFormValue('id', emailId)
-		// 		hasLocationId && setFormValue('linkLocationId', hasLocationId)
-		// 	}
-		// }, [createNew, hasLocationId, setFormValue, orgId, emailId])
 		useEffect(() => {
 			if (isSaved && formIsDirty) {
 				setIsSaved(false)
@@ -153,10 +199,22 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 			}
 		}, [emailId, hasLocationId, unlinkFromLocation])
 
-		const handleSaveFromModal = useCallback(() => {
-			const valuesToSubmit = getValues()
-			emailUpdate.mutate(valuesToSubmit)
-		}, [emailUpdate, getValues])
+		// Single submit path for both the drawer's own Save button and the "Unsaved Changes" modal's
+		// Save button - previously each called `emailUpdate.mutate` separately (the modal via a raw
+		// `getValues()`, bypassing zod validation entirely), which is how the `orgId` override ended up
+		// applied in only one of the two places. `orgId` isn't rendered as a field and can't be trusted
+		// from form-tracked state (it's only ever populated from this hook, not a real column on
+		// OrgEmail) - reading it fresh here, in the one place both paths funnel through, avoids
+		// submitting a stale/missing value if this drawer is reopened for a second edit shortly after a
+		// previous save.
+		const submitEmail = useMemo(
+			() =>
+				handleSubmit(
+					(data) => emailUpdate.mutate({ ...data, orgId: orgId ?? '' }),
+					(error) => console.error(error)
+				),
+			[handleSubmit, emailUpdate, orgId]
+		)
 
 		const handleCloseAndDiscard = useCallback(() => {
 			reset()
@@ -166,17 +224,25 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 
 		return (
 			<>
-				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
+				<Drawer.Root
+					onClose={handleClose}
+					opened={drawerOpened}
+					position='right'
+					zIndex={10001}
+					keepMounted
+					// A `createNew` instance (used as the "Create new" trigger in a location's Contact
+					// menu - see e.g. Emails.tsx) sits nested inside a Menu.Item for its whole lifetime.
+					// Once saved and this closes, the same record also starts appearing in the main
+					// linked-items list below, mounting a second EmailDrawer with the same id at the same
+					// moment - the resulting re-render storm reliably desyncs Mantine's close transition,
+					// leaving this Drawer stuck fully visible even though `opened` has already gone false.
+					// Skipping the transition removes the window for that: the closed state applies
+					// immediately instead of after a 200ms animation that never gets to finish.
+					transitionProps={createNew ? { duration: 0 } : undefined}
+				>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
-						<form
-							onSubmit={handleSubmit(
-								(data) => {
-									emailUpdate.mutate(data)
-								},
-								(error) => console.error(error)
-							)}
-						>
+						<form onSubmit={submitEmail}>
 							<Drawer.Header>
 								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
@@ -205,8 +271,18 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 										<TextInput label='Description' name='description' control={control} />
 										<Group wrap='nowrap' justify='space-between' w='100%'>
 											<Stack>
-												<Checkbox label='Published' name='published' control={control} />
-												<Checkbox label='Deleted' name='deleted' control={control} />
+												<Checkbox
+													label='Published'
+													description="Unchecking this temporarily removes the entry from the public site and search. Use this when something's still being sorted out and you expect it to come back — re-verifying, waiting to hear back, or a temporary inactive period."
+													name='published'
+													control={control}
+												/>
+												<Checkbox
+													label='Deleted'
+													description="Checking this removes the entry from the public site until deliberately restored. Use this when the entry shouldn't be active at all — a duplicate, permanently discontinued, or rejected during review — not for a temporary pause."
+													name='deleted'
+													control={control}
+												/>
 											</Stack>
 											{hasLocationId !== null && (
 												<Button
@@ -235,7 +311,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={emailUpdate.isPending}
-											onClick={handleSaveFromModal}
+											onClick={submitEmail}
 										>
 											Save
 										</Button>

@@ -1,4 +1,4 @@
-import { Container, Flex, Group, UnstyledButton, useMantineTheme } from '@mantine/core'
+import { Container, Flex, Group, Tooltip, UnstyledButton, useMantineTheme } from '@mantine/core'
 import Image from 'next/image'
 import { type NextRouter, useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
@@ -183,24 +183,38 @@ const EditModeBar = () => {
 							publishedNotification()
 						}}
 					>
-						<UnstyledButton disabled={isRemoteServicesRoute} className={classes.editBarButtonText}>
-							<Group wrap='nowrap' gap={8}>
-								<Icon icon='carbon:view-off' height={20} />
-								{t('words.unpublish')}
-							</Group>
-						</UnstyledButton>
+						<Tooltip
+							label="Unpublishing takes the organization's page offline immediately — visitors get a 404 and it drops out of search — until it's published again."
+							multiline
+							w={260}
+							withArrow
+						>
+							<UnstyledButton disabled={isRemoteServicesRoute} className={classes.editBarButtonText}>
+								<Group wrap='nowrap' gap={8}>
+									<Icon icon='carbon:view-off' height={20} />
+									{t('words.unpublish')}
+								</Group>
+							</UnstyledButton>
+						</Tooltip>
 					</UnpublishReasonPopover>
 				) : (
-					<UnstyledButton
-						disabled={isRemoteServicesRoute}
-						className={classes.editBarButtonText}
-						onClick={handlePublishToggle}
+					<Tooltip
+						label="Publishing makes the organization's page live and searchable again immediately."
+						multiline
+						w={260}
+						withArrow
 					>
-						<Group wrap='nowrap' gap={8}>
-							<Icon icon={data?.published ? 'carbon:view-off' : 'carbon:view-filled'} height={20} />
-							{t(data?.published ? 'words.unpublish' : 'words.publish')}
-						</Group>
-					</UnstyledButton>
+						<UnstyledButton
+							disabled={isRemoteServicesRoute}
+							className={classes.editBarButtonText}
+							onClick={handlePublishToggle}
+						>
+							<Group wrap='nowrap' gap={8}>
+								<Icon icon={data?.published ? 'carbon:view-off' : 'carbon:view-filled'} height={20} />
+								{t(data?.published ? 'words.unpublish' : 'words.publish')}
+							</Group>
+						</UnstyledButton>
+					</Tooltip>
 				)}
 				{/* Re-triaging an already-unpublished org's reason shouldn't require cycling through
 				Publish -> Unpublish first (which would briefly, actually publish it, and log a misleading "set
@@ -225,16 +239,27 @@ const EditModeBar = () => {
 						</UnstyledButton>
 					</UnpublishReasonPopover>
 				)}
-				<UnstyledButton
-					disabled={isRemoteServicesRoute}
-					className={classes.editBarButtonText}
-					onClick={handleDeleteToggle}
+				<Tooltip
+					label={
+						data?.deleted
+							? 'Restoring brings the organization back to how it was before deletion — it still needs to be published to be publicly visible.'
+							: "Deleting removes the organization from the public site entirely, same effect as unpublishing, until it's restored."
+					}
+					multiline
+					w={260}
+					withArrow
 				>
-					<Group wrap='nowrap' gap={8}>
-						<Icon icon={data?.deleted ? 'fluent-mdl2:remove-from-trash' : 'carbon:trash-can'} height={20} />
-						{t(data?.deleted ? 'words.restore' : 'words.delete')}
-					</Group>
-				</UnstyledButton>
+					<UnstyledButton
+						disabled={isRemoteServicesRoute}
+						className={classes.editBarButtonText}
+						onClick={handleDeleteToggle}
+					>
+						<Group wrap='nowrap' gap={8}>
+							<Icon icon={data?.deleted ? 'fluent-mdl2:remove-from-trash' : 'carbon:trash-can'} height={20} />
+							{t(data?.deleted ? 'words.restore' : 'words.delete')}
+						</Group>
+					</UnstyledButton>
+				</Tooltip>
 			</Group>
 		</Group>
 	)

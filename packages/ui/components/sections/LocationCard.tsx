@@ -12,6 +12,7 @@ import { type SetNonNullable } from 'type-fest'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Badge } from '~ui/components/core/Badge'
+import { FieldHelp } from '~ui/components/core/FieldHelp'
 import { Link } from '~ui/components/core/Link'
 import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant } from '~ui/hooks'
@@ -244,7 +245,12 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 				<Card w='100%' variant={variants.Card.hoverCoolGray}>
 					<Stack gap={32}>
 						<Stack gap={12}>
-							<Title order={2}>{t('common:remote-services')}</Title>
+							<Group gap={4} wrap='nowrap'>
+								<Title order={2}>{t('common:remote-services')}</Title>
+								{edit && (
+									<FieldHelp help='Click this card to view or add more remotely-offered services. This card is the only way to manage remote services once at least one remote service already exists.' />
+								)}
+							</Group>
 						</Stack>
 						<Stack gap={12}>
 							<Title order={3}>{t('services', { ns: 'common' })}</Title>

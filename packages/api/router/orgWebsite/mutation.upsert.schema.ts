@@ -2,10 +2,18 @@ import { z } from 'zod'
 
 import { emptyStringToNull, prefixedId } from '~api/schemas/idPrefix'
 
+// Users overwhelmingly type URLs without a scheme (e.g. "www.example.org") - rather than reject
+// that, treat it as shorthand for https:// and fill it in before validating.
+const addSchemeIfMissing = (value: unknown) =>
+	typeof value === 'string' && value !== '' && !/^https?:\/\//i.test(value) ? `https://${value}` : value
+
 const base = z
 	.object({
 		id: prefixedId('orgWebsite'),
-		url: z.string().url('Invalid URL. Must start with either "https://" or "http://"'),
+		url: z.preprocess(
+			addSchemeIfMissing,
+			z.string().url('Invalid URL. Must start with either "https://" or "http://"')
+		),
 		description: z.string().nullable(),
 		isPrimary: z.boolean(),
 		published: z.boolean(),

@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Modal, Text, Tooltip, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Group, Modal, Skeleton, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { type ReactNode, useCallback, useMemo } from 'react'
 
@@ -6,11 +6,20 @@ import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { AttributeForm, type AttributeModalProps } from '~ui/modals/dataPortal/Attributes'
+import { type FormSchema } from '~ui/modals/dataPortal/Attributes/schema'
 import { ModalText } from '~ui/modals/Service/ModalText'
 
-export const AttributeEditWrapper = ({ active, id, children, editable }: AttributeEditWrapperProps) => {
+export const AttributeEditWrapper = ({
+	active,
+	id,
+	children,
+	editable,
+	parentRecord,
+}: AttributeEditWrapperProps) => {
 	const theme = useMantineTheme()
 	const [confirmModalOpen, confirmModalHandler] = useDisclosure(false)
+	const [editModalOpen, editModalHandler] = useDisclosure(false)
 	const apiUtils = api.useUtils()
 	const toggleOrDeleteAttribute = api.component.AttributeEditWrapper.useMutation({
 		// `id` can belong to a phone/email/website row (when this wrapper is used from
@@ -29,6 +38,14 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 			return apiUtils.service.forServiceEditDrawer.invalidate()
 		},
 	})
+	const updateAttribute = api.component.AttributeEditWrapper.useMutation({
+		onSuccess: () => {
+			editModalHandler.close()
+			return apiUtils.service.forServiceEditDrawer.invalidate()
+		},
+	})
+	const { data: attributeDetail, isLoading: isDetailLoading } =
+		api.component.AttributeEditWrapperDetail.useQuery({ id }, { enabled: editModalOpen })
 	const handleToggle = useCallback(
 		() => toggleOrDeleteAttribute.mutate({ id, action: 'toggleActive' }),
 		[id, toggleOrDeleteAttribute]
@@ -37,14 +54,26 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		() => toggleOrDeleteAttribute.mutate({ id, action: 'delete' }),
 		[id, toggleOrDeleteAttribute]
 	)
-	const handleEdit = useCallback(() => {
-		alert('To be implemented later')
-	}, [])
+	const handleSaveEdit = useCallback(
+		(formData: FormSchema) => {
+			updateAttribute.mutate({
+				id,
+				action: 'update',
+				boolean: formData.boolean,
+				data: formData.data,
+				text: formData.text,
+				countryId: formData.countryId,
+				govDistId: formData.govDistId,
+				languageId: formData.languageId,
+			})
+		},
+		[id, updateAttribute]
+	)
 	const editIcon = useMemo(() => {
 		if (editable) {
 			return (
 				<Tooltip label='Edit'>
-					<ActionIcon variant='subtle' onClick={handleEdit}>
+					<ActionIcon variant='subtle' onClick={editModalHandler.open}>
 						<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
 					</ActionIcon>
 				</Tooltip>
@@ -57,7 +86,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 				</ActionIcon>
 			</Tooltip>
 		)
-	}, [editable, handleEdit, theme.other.colors.primary.allyGreen])
+	}, [editable, editModalHandler.open, theme.other.colors.primary.allyGreen])
 
 	const activeToggleIcon = useMemo(() => {
 		if (active) {
@@ -86,6 +115,30 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 			<Group wrap='nowrap' gap={0}>
 				{editIcon}
 				{activeToggleIcon}
+				{editable && parentRecord && (
+					<Modal opened={editModalOpen} onClose={editModalHandler.close} title='Edit Attribute'>
+						<Skeleton visible={isDetailLoading}>
+							{attributeDetail && (
+								<AttributeForm
+									key={id}
+									parentRecord={parentRecord}
+									selectedAttr={attributeDetail}
+									existingId={id}
+									initialValues={{
+										text: attributeDetail.text ?? undefined,
+										boolean: attributeDetail.boolean ?? undefined,
+										data: attributeDetail.data as FormSchema['data'],
+										countryId: attributeDetail.countryId ?? undefined,
+										govDistId: attributeDetail.govDistId ?? undefined,
+										languageId: attributeDetail.languageId ?? undefined,
+									}}
+									onSave={handleSaveEdit}
+									isLoading={updateAttribute.isPending}
+								/>
+							)}
+						</Skeleton>
+					</Modal>
+				)}
 				<Modal opened={confirmModalOpen} onClose={confirmModalHandler.close} title='Delete Attribute'>
 					<Text>Are you sure you want to delete this attribute?</Text>
 					<Group wrap='nowrap'>
@@ -108,4 +161,9 @@ export interface AttributeEditWrapperProps {
 	children: ReactNode
 	active: boolean
 	editable?: boolean
+	/**
+	 * Required for the edit flow to work - the create/edit modal's parent-scoping shape. Only
+	 * `ServiceEditDrawer` (the one caller with `editable` ever true) passes this.
+	 */
+	parentRecord?: AttributeModalProps['parentRecord']
 }

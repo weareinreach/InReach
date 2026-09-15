@@ -1,9 +1,9 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
-import { type ReactElement, useCallback } from 'react'
+import { type ReactElement, useCallback, useState } from 'react'
 
 import { productEvent } from '@weareinreach/analytics/events'
-import { isIdFor } from '@weareinreach/db/lib/idGen'
+import { generateId, isIdFor } from '@weareinreach/db/lib/idGen'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { PhoneDrawer } from '~ui/components/data-portal/PhoneDrawer'
 import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
@@ -139,8 +139,59 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		}
 	)
 	const linkToLocation = api.orgPhone.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate({ parentId }),
+		onSuccess: async (_data, variables) => {
+			// Same story as PhoneDrawer's own cache-patching (see its `patchContactListCaches`):
+			// invalidating this list and letting it refetch is racy against the API's caching layer
+			// and can silently keep showing the pre-link list with no indication anything happened.
+			// Fetching the newly-linked phone's own record and inserting it into the list cache
+			// directly sidesteps that. `phoneType` isn't available from that query, so it's left
+			// `null` here - a real refetch (still triggered below, just not blocking this one) fills
+			// it in on next natural load if it was actually set.
+			const linked = await apiUtils.orgPhone.forEditDrawer.fetch({
+				id: variables.orgPhoneId,
+				orgId: orgId?.id ?? '',
+			})
+			if (linked) {
+				apiUtils.orgPhone.forContactInfoEdit.setData({ parentId }, (old) => {
+					if (!old || old.some((item) => item.id === linked.id)) {
+						return old
+					}
+					const next = [
+						...old,
+						{
+							id: linked.id,
+							number: linked.number,
+							ext: linked.ext,
+							country: linked.country,
+							primary: linked.primary,
+							description: linked.description ? { key: '', defaultText: linked.description } : null,
+							phoneType: null,
+							locationOnly: linked.locationOnly,
+							published: linked.published,
+							deleted: linked.deleted,
+						},
+					]
+					return next.toSorted(
+						(a, b) => Number(b.published) - Number(a.published) || Number(a.deleted) - Number(b.deleted)
+					)
+				})
+			}
+			apiUtils.orgPhone.forContactInfoEdit.invalidate({ parentId }, { refetchType: 'none' })
+		},
 	})
+	// A single shared drawer instance for this whole section, rather than one PhoneDrawer per row
+	// plus another nested inside the "Create new" Menu item - that composition (a Drawer mounted
+	// for the entirety of a Menu.Item's life) desynced Mantine's Menu/Drawer interaction badly
+	// enough to both strand drawers open after save and swallow focus from every field inside a
+	// create-new session. Rows and the "Create new" trigger now just set which phone (if any) this
+	// one drawer should show.
+	const [editingPhone, setEditingPhone] = useState<{ id: string; createNew: boolean } | null>(null)
+	const handleEditExisting = useCallback((id: string) => () => setEditingPhone({ id, createNew: false }), [])
+	const handleCreateNew = useCallback(
+		() => setEditingPhone({ id: generateId('orgPhone'), createNew: true }),
+		[]
+	)
+	const handleDrawerClose = useCallback(() => setEditingPhone(null), [])
 	const getTextVariant = useCallback(
 		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {
 			const isValue = kind === 'value'
@@ -230,9 +281,9 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 
 		const item = (
 			<Stack gap={4} key={phone.id}>
-				<PhoneDrawer id={phone.id} component={Link} variant={variants.Link.inlineInverted}>
+				<Link variant={variants.Link.inlineInverted} onClick={handleEditExisting(phone.id)}>
 					{itemDisplay.number}
-				</PhoneDrawer>
+				</Link>
 				{itemDisplay.desc}
 			</Stack>
 		)
@@ -267,23 +318,21 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 					)
 				})}
 				<Menu.Divider />
-				<Menu.Item key='new'>
-					<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
-						<Group wrap='nowrap'>
-							<Icon icon='carbon:add-alt' />
-							<Text variant={variants.Text.utility3}>Create new</Text>
-						</Group>
-					</PhoneDrawer>
+				<Menu.Item key='new' onClick={handleCreateNew}>
+					<Group wrap='nowrap'>
+						<Icon icon='carbon:add-alt' />
+						<Text variant={variants.Text.utility3}>Create new</Text>
+					</Group>
 				</Menu.Item>
 			</Menu.Dropdown>
 		</Menu>
 	) : (
-		<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+		<Link variant={variants.Link.inlineInverted} onClick={handleCreateNew}>
 			<Group wrap='nowrap'>
 				<Icon icon='carbon:add' />
 				<Text variant={variants.Text.utility3}>Create new</Text>
 			</Group>
-		</PhoneDrawer>
+		</Link>
 	)
 
 	return (
@@ -293,6 +342,12 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 				{output}
 				<Stack gap={4}>{addOrLink}</Stack>
 			</Stack>
+			<PhoneDrawer
+				opened={editingPhone !== null}
+				onClose={handleDrawerClose}
+				id={editingPhone?.id}
+				createNew={editingPhone?.createNew}
+			/>
 		</Stack>
 	)
 }

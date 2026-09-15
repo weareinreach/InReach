@@ -9,7 +9,7 @@ import {
 	type TextInputProps,
 } from '@mantine/core'
 import { AsYouType } from 'libphonenumber-js'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
 	type Control,
 	type FieldValues,
@@ -120,26 +120,32 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	// The masked phone input below can only display values it can actually parse. Some existing
 	// records (bad legacy data, or a malformed number that was saved before validation caught it)
 	// don't parse at all, which made the field render blank with no indication anything was even
-	// saved. This checks the value once, the first time it loads in (not on every keystroke, so
-	// correcting it doesn't cause the input to flicker/swap mid-edit), and falls back to a plain
-	// text field showing the raw value if the masked input can't represent it.
+	// saved. This checks the *loaded* value - not on every keystroke, so correcting it doesn't
+	// cause the input to flicker/swap mid-edit - and falls back to a plain text field showing the
+	// raw value if the masked input can't represent it.
+	//
+	// Gating on `!isDirty` (rather than a "have we checked yet" ref) is what makes "loaded" mean
+	// loaded: a brand-new, still-empty number field is *not dirty* either, so the moment the user
+	// types its first character - an inherently unparseable single digit - it becomes dirty and
+	// this is skipped, instead of misreading that keystroke as bad saved data and permanently
+	// swapping out the input the user is actively typing into (which also stole focus, since that
+	// swap unmounts the real DOM node being typed in). Re-checking (rather than checking once)
+	// also means switching to a different record in the same shared drawer instance re-evaluates
+	// against its own value instead of being stuck with whatever the first record decided.
 	//
 	// Note: this expects `phoneInput`'s value to already be E.164 (`+<countrycode><number>`) by
 	// the time it reaches here - callers are responsible for that (e.g. combining a bare national
 	// number with its own country field in the query's `select`), since correcting the format
 	// *here* via `field.onChange` would mark the field (and form) dirty for a load-time formatting
 	// fix the user never made, wrongly enabling Save / triggering an unsaved-changes prompt.
+	const { isDirty: phoneNumberIsDirty } = phoneNumbControl.fieldState
 	const [showRawFallback, setShowRawFallback] = useState(false)
-	const hasCheckedInitialValue = useRef(false)
-	useEffect(() => {
-		if (hasCheckedInitialValue.current || !phoneNumber) {
-			return
+	if (!phoneNumberIsDirty) {
+		const computedShowRawFallback = Boolean(phoneNumber) && !parsePhoneNumber(phoneNumber, activeCountry)
+		if (computedShowRawFallback !== showRawFallback) {
+			setShowRawFallback(computedShowRawFallback)
 		}
-		hasCheckedInitialValue.current = true
-		if (!parsePhoneNumber(phoneNumber, activeCountry)) {
-			setShowRawFallback(true)
-		}
-	}, [phoneNumber, activeCountry])
+	}
 
 	useEffect(() => {
 		if (phoneNumber) {

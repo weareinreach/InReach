@@ -8,6 +8,7 @@ import { Textarea, TextInput } from 'react-hook-form-mantine'
 import { type ApiOutput } from '@weareinreach/api'
 import { AddressVisibility } from '@weareinreach/db/enums'
 import { Badge } from '~ui/components/core/Badge'
+import { FieldHelp } from '~ui/components/core/FieldHelp'
 import { Rating } from '~ui/components/core/Rating'
 import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -173,6 +174,7 @@ export const ListingBasicEdit = ({ data, location, onBadgesChange }: ListingBasi
 					name='name' // This now gets its value from the form context
 					fontSize='h2'
 					data-isdirty={formState.dirtyFields['name']}
+					description='Used to search for this organization on the public site — enter it exactly as the org presents itself (capitalization, acronyms).'
 				/>
 				<Group wrap='nowrap' gap={8}>
 					{!location && (
@@ -185,6 +187,7 @@ export const ListingBasicEdit = ({ data, location, onBadgesChange }: ListingBasi
 							>
 								<Badge.Group withSeparator>{leaderBadges()}</Badge.Group>
 							</BadgeEdit>
+							<FieldHelp help="Appears as a badge below the organization's name on its public page, alongside any Verified/Claimed badges. Select only leadership types that genuinely apply based on the vetting process — note some badges imply another: Black-led orgs should also get BIPOC-led, and Trans-led orgs should also get LGBTQ+-led." />
 							<Divider
 								w={4}
 								size={4}
@@ -202,15 +205,19 @@ export const ListingBasicEdit = ({ data, location, onBadgesChange }: ListingBasi
 							name='description' // This now gets its value from the form context
 							autosize
 							data-isdirty={formState.dirtyFields['description']}
+							description="Shown on the org's public page — tells visitors about the communities the org serves and what it does. Combine who the org is with what it does, and include an LGBTQ+ affirming statement if the org isn't explicitly LGBTQ+."
 						/>
-						<BadgeEdit
-							orgId={orgIdFromData}
-							badgeType='service-focus'
-							component='a'
-							onSaved={(newAttributes) => onBadgesChange?.('service-focus', newAttributes)}
-						>
-							<Badge.Group>{focusedCommBadges}</Badge.Group>
-						</BadgeEdit>
+						<Group wrap='nowrap' gap={8}>
+							<BadgeEdit
+								orgId={orgIdFromData}
+								badgeType='service-focus'
+								component='a'
+								onSaved={(newAttributes) => onBadgesChange?.('service-focus', newAttributes)}
+							>
+								<Badge.Group>{focusedCommBadges}</Badge.Group>
+							</BadgeEdit>
+							<FieldHelp help="Displayed as badges on the organization's page, just under the description. Tells visitors which communities the org focuses on serving — select all that genuinely apply based on the vetting process. (Sometimes labeled 'Service Focus Badges.')" />
+						</Group>
 					</>
 				)}
 			</Stack>

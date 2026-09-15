@@ -278,7 +278,13 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	})
 
 	const addOrLink = isLocation ? (
-		<Menu keepMounted withinPortal>
+		// The default close-on-click would close this Menu in the same synchronous click that opens
+		// the nested "Create new" EmailDrawer below, which stops that drawer's form from ever
+		// registering as dirty - Save then stays permanently disabled with no error shown. Closing this
+		// Menu at any later point while that drawer is still mounted reproduces the same corruption
+		// (Mantine's `keepMounted` doesn't stop it remounting on close), so this item is never closed
+		// programmatically - the Menu is left to close only via the user's own next outside click.
+		<Menu keepMounted withinPortal closeOnItemClick={false}>
 			<Menu.Target>
 				<Link variant={variants.Link.inlineInverted}>
 					<Group wrap='nowrap' gap={4}>
@@ -295,6 +301,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 					return (
 						<Menu.Item
 							key={id}
+							closeMenuOnClick
 							onClick={handleLinkToLocation({ orgLocationId: parentId, orgEmailId: id, action: 'link' })}
 						>
 							<Group wrap='nowrap'>

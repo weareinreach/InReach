@@ -51,27 +51,37 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 				// }),
 			}
 		)
+		// Recomputed fresh on every render (not memoized), this was a new object reference each time
+		// regardless of whether `websiteData` itself had changed - react-query's own structural
+		// sharing only protects a query's *raw* data, not a transform layered on top of it outside a
+		// `select`. RHF's `values` sync treats any new reference as a real external update and
+		// reapplies it, so an unrelated re-render (e.g. from unchecking Published) could momentarily
+		// reassert the still-`true` value from `websiteData`, flashing the checkbox back on before it
+		// settled - memoizing keeps the reference stable unless the underlying data actually changed.
+		const values = useMemo(
+			() =>
+				websiteData && organizationId
+					? {
+							...websiteData,
+							operation: createNew ? ('create' as const) : ('update' as const),
+							orgLocationId: hasLocationId,
+							organizationId: websiteData.organizationId ?? organizationId,
+						}
+					: undefined,
+			[websiteData, organizationId, createNew, hasLocationId]
+		)
 		const {
 			control,
 			handleSubmit,
 			formState,
 			reset,
-			getValues,
 			setValue: setFormValue,
 		} = useForm<TUpsertSchema>({
 			// zod's `.preprocess()` on `orgLocationId` makes @hookform/resolvers' structural
 			// inference of the resolver's raw input type widen to `unknown`; the schema's actual
 			// parsed output is `TUpsertSchema`, confirmed via z.infer.
 			resolver: zodResolver(ZUpsertSchema) as Resolver<TUpsertSchema>,
-			values:
-				websiteData && organizationId
-					? {
-							...websiteData,
-							operation: createNew ? 'create' : 'update',
-							orgLocationId: hasLocationId,
-							organizationId: websiteData.organizationId ?? organizationId,
-						}
-					: undefined,
+			values,
 			defaultValues: {
 				operation: 'create',
 				orgLocationId: hasLocationId ?? '',
@@ -84,13 +94,70 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 		const apiUtils = api.useUtils()
 
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this website. Please try again.',
+			icon: 'warning',
+		})
 
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 
+		// A tRPC query response can be served from an intermediate cache under
+		// `stale-while-revalidate`, so `invalidate()`'s own refetch for an *update* isn't reliable -
+		// it can come back with the pre-save row even though the write already succeeded (confirmed
+		// live: the refetch returned the old url moments after the mutation's own response returned
+		// the new one). Patching the list with what was actually submitted, mirroring PhoneDrawer's
+		// identical `patchContactListCaches`, sidesteps that: the visible list always reflects the
+		// save immediately, and a real refetch still corrects anything this patch can't infer (e.g.
+		// the description's translation key) whenever it eventually lands.
+		const patchContactListCaches = useCallback(
+			(submitted: TUpsertSchema) => {
+				const parentIds = [organizationId, hasLocationId].filter((value): value is string => Boolean(value))
+				for (const parentId of parentIds) {
+					apiUtils.orgWebsite.forContactInfoEdit.setData({ parentId }, (old) => {
+						if (!old) {
+							return old
+						}
+						return old.map((item) =>
+							item.id === submitted.id
+								? {
+										...item,
+										url: submitted.url ?? item.url,
+										published: submitted.published ?? item.published,
+										deleted: submitted.deleted ?? item.deleted,
+										description:
+											submitted.description === undefined
+												? item.description
+												: submitted.description === null
+													? null
+													: { key: item.description?.key ?? '', defaultText: submitted.description },
+									}
+								: item
+						)
+					})
+				}
+			},
+			[apiUtils, organizationId, hasLocationId]
+		)
+
 		const siteUpdate = api.orgWebsite.upsert.useMutation({
-			onSettled: () => {
-				apiUtils.orgWebsite.forContactInfoEdit.invalidate()
+			onSettled: (_data, error, variables) => {
+				// A failed save must not reach `patchContactListCaches` below - it writes `variables`
+				// (what was *submitted*) straight into the cache, so patching on an error would make
+				// the list show a change that was never actually persisted.
+				if (error) {
+					return
+				}
+				if (variables.operation === 'create') {
+					// A brand-new website has no existing entry in the cached list for the patch above
+					// to match against, so a real invalidate is the only way it appears at all - safe
+					// here specifically because there's no existing cached data for this id that a
+					// slower, earlier response could race against and stomp.
+					apiUtils.orgWebsite.forContactInfoEdit.invalidate()
+				} else {
+					patchContactListCaches(variables as TUpsertSchema)
+					apiUtils.orgWebsite.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' })
+				}
 				apiUtils.orgWebsite.forContactInfo.invalidate()
 				// This drawer's own detail query is keyed by this specific website id - without
 				// marking it stale too, reopening this same website later would show the
@@ -102,13 +169,20 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 				// reaching the list.
 				apiUtils.orgWebsite.forEditDrawer.invalidate({ id: websiteId }, { refetchType: 'none' })
 			},
-			onSuccess: () => {
+			onSuccess: (_data, variables) => {
 				setIsSaved(true)
 				notifySave()
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
-				reset({ id: generateId('orgWebsite') })
+				// Resets to what was actually just submitted, not a throwaway blank id - resetting to
+				// an unrelated fresh id discarded the just-saved values from the form's own display
+				// (e.g. reopening this exact drawer instance's Unsaved-Changes state) even though the
+				// database write itself was correct.
+				// Same `unknown`-widening quirk as the resolver cast above - `variables` is structurally
+				// `TUpsertSchema`, just not inferred as such through the mutation's own generic.
+				reset(variables as TUpsertSchema)
 			},
+			onError: notifySaveError,
 		})
 
 		const unlinkFromLocation = api.orgWebsite.locationLink.useMutation({
@@ -149,10 +223,32 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 			[unlinkFromLocation, websiteId, hasLocationId]
 		)
 
-		const handleSaveFromModal = useCallback(() => {
-			const valuesToSubmit = getValues()
-			siteUpdate.mutate({ id: websiteId, ...valuesToSubmit })
-		}, [getValues, siteUpdate, websiteId])
+		// Single submit path for both the drawer's own Save button and the "Unsaved Changes" modal's
+		// Save button - previously the modal called `siteUpdate.mutate` from a raw `getValues()`,
+		// bypassing zod validation entirely (only the primary Save button validated via `handleSubmit`).
+		const submitWebsite = useMemo(
+			() =>
+				handleSubmit(
+					(data) => siteUpdate.mutate({ id: websiteId, ...data }),
+					(error) => console.error(error)
+				),
+			[handleSubmit, siteUpdate, websiteId]
+		)
+
+		// `type='url'`'s native browser validation rejects a missing scheme (e.g. "www.example.org")
+		// before this form ever gets a chance to run - there's no submit-time fix for that, since the
+		// browser blocks native form submission on an invalid `type='url'` value before React's
+		// `onSubmit` fires at all. Fixing it on blur instead - before the user ever reaches Save -
+		// means the native check always sees an already-schemed value.
+		const handleUrlBlur = useCallback(
+			(event: React.FocusEvent<HTMLInputElement>) => {
+				const { value } = event.target
+				if (value && !/^https?:\/\//i.test(value)) {
+					setFormValue('url', `https://${value}`, { shouldValidate: true, shouldDirty: true })
+				}
+			},
+			[setFormValue]
+		)
 
 		const handleCloseAndDiscard = useCallback(() => {
 			reset()
@@ -162,17 +258,25 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 
 		return (
 			<>
-				<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right' zIndex={10001} keepMounted>
+				<Drawer.Root
+					onClose={handleClose}
+					opened={drawerOpened}
+					position='right'
+					zIndex={10001}
+					keepMounted
+					// A `createNew` instance is used as the "Create new" trigger in a location's Contact
+					// menu (see e.g. Emails.tsx) and sits nested inside a Menu.Item for its whole
+					// lifetime. Once saved and this closes, the same record also starts appearing in the
+					// main linked-items list below, mounting a second WebsiteDrawer with the same id at
+					// the same moment - the resulting re-render storm reliably desyncs Mantine's close
+					// transition, leaving this Drawer stuck fully visible even though `opened` has already
+					// gone false. Skipping the transition removes the window for that: the closed state
+					// applies immediately instead of after an animation that never gets to finish.
+					transitionProps={createNew ? { duration: 0 } : undefined}
+				>
 					<Drawer.Overlay />
 					<Drawer.Content className={classes.drawerContent}>
-						<form
-							onSubmit={handleSubmit(
-								(data) => {
-									siteUpdate.mutate({ id: websiteId, ...data })
-								},
-								(error) => console.error(error)
-							)}
-						>
+						<form onSubmit={submitWebsite}>
 							<Drawer.Header>
 								<Group wrap='nowrap' justify='space-between' w='100%'>
 									<Breadcrumb option='close' onClick={handleClose} />
@@ -192,12 +296,31 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 								<Stack gap={24} align='center'>
 									<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Website`}</Title>
 									<Stack gap={24} align='flex-start' w='100%'>
-										<TextInput label='Website URL' required name='url' type='url' control={control} />
+										{/* `onBlur` - see `handleUrlBlur`'s comment - runs before `type='url'`'s native
+										    validation ever sees the value. */}
+										<TextInput
+											label='Website URL'
+											required
+											name='url'
+											type='url'
+											control={control}
+											onBlur={handleUrlBlur}
+										/>
 										{/* <TextInput label='Description' name='description' control={control} /> */}
 										<Group wrap='nowrap' justify='space-between' w='100%'>
 											<Stack>
-												<Checkbox label='Published' name='published' control={control} />
-												<Checkbox label='Deleted' name='deleted' control={control} />
+												<Checkbox
+													label='Published'
+													description="Unchecking this temporarily removes the entry from the public site and search. Use this when something's still being sorted out and you expect it to come back — re-verifying, waiting to hear back, or a temporary inactive period."
+													name='published'
+													control={control}
+												/>
+												<Checkbox
+													label='Deleted'
+													description="Checking this removes the entry from the public site until deliberately restored. Use this when the entry shouldn't be active at all — a duplicate, permanently discontinued, or rejected during review — not for a temporary pause."
+													name='deleted'
+													control={control}
+												/>
 											</Stack>
 											{hasLocationId !== null && (
 												<Button
@@ -226,7 +349,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 											variant='primary-icon'
 											leftIcon={<Icon icon='carbon:save' />}
 											loading={siteUpdate.isPending}
-											onClick={handleSaveFromModal}
+											onClick={submitWebsite}
 										>
 											Save
 										</Button>
