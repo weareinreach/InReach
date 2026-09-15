@@ -466,6 +466,7 @@ export const SuggestOrg = ({ authPromptState, variant = 'public', onDataPortalSa
 									onChange={handleOrgNameInputChange}
 									onFocus={handleOrgNameInputFocus}
 									onBlur={handleOrgNameInputBlur}
+									spellCheck
 								/>
 							</Combobox.Target>
 							<Combobox.Dropdown>

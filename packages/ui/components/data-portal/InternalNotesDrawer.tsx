@@ -239,6 +239,7 @@ export const InternalNotesDrawer = ({
 									{...form.getInputProps('note')}
 									minRows={3}
 									disabled={isCreatingNote}
+									spellCheck
 								/>
 								<Button variant='secondary' type='submit' loading={isCreatingNote}>
 									Add Note

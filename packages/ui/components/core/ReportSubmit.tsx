@@ -227,6 +227,7 @@ export const ReportSubmit = ({
 						w='100%'
 						mt='md'
 						required={isIncorrectInfo || isSomethingElse || isTranslation}
+						spellCheck
 					/>
 				)}
 				<Text size='xs' c='dimmed'>

@@ -411,8 +411,11 @@ describe('BulkSearchReplaceTable', () => {
 		await user.click(screen.getByRole('button', { name: 'Search' }))
 
 		// Status isn't one of the five default-visible columns - reveal it via the column menu first.
+		// Mantine's Menu positions its dropdown via floating-ui, which resolves the item into the DOM
+		// a tick or two after the click rather than synchronously - the default 1000ms findBy timeout
+		// has been seen to lose that race under CI's slower/contended runners, so it's widened here.
 		await user.click(screen.getByRole('button', { name: 'Show/hide columns' }))
-		await user.click(await screen.findByRole('menuitem', { name: 'Status' }))
+		await user.click(await screen.findByRole('menuitem', { name: 'Status' }, { timeout: 5000 }))
 
 		const table = within(screen.getByRole('table'))
 		expect(table.getByText('New')).toBeInTheDocument()
