@@ -19,10 +19,10 @@ const useFontSize = ({ fontSize, classNames }: InlineEditProps) => {
 }
 
 const _InlineTextInput = forwardRef<HTMLInputElement, InlineEditProps>(
-	({ fontSize, classNames: _classNames, ...rest }, ref) => {
+	({ fontSize, classNames: _classNames, spellCheck = true, ...rest }, ref) => {
 		const variant = useFontSize({ fontSize, ...rest })
 
-		return <Box component={TextInput} classNames={variant} ref={ref} {...rest} />
+		return <Box component={TextInput} classNames={variant} spellCheck={spellCheck} ref={ref} {...rest} />
 	}
 )
 _InlineTextInput.displayName = 'InlineEdit'
