@@ -3,6 +3,7 @@ import { cloneElement, type MouseEvent, type ReactElement, useCallback, useState
 
 import { type OrgUnpublishedReason } from '@weareinreach/db/enums'
 import { ORG_UNPUBLISHED_REASON_LABELS } from '@weareinreach/db/enums/labels'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 export const REASON_OPTIONS = Object.entries(ORG_UNPUBLISHED_REASON_LABELS).map(([value, label]) => ({
@@ -41,8 +42,18 @@ export const UnpublishReasonPopover = ({
 		(currentReason as OrgUnpublishedReason | null) ?? undefined
 	)
 
+	const updateFailedNotification = useNewNotification({
+		displayText: 'Failed to update status. Please try again.',
+		icon: 'warning',
+	})
 	const updateStatus = api.component.EditModeBarPublish.useMutation({
-		onSuccess: () => onSuccess?.(),
+		// Only close/report success once the write has actually gone through - closing unconditionally
+		// right after calling mutate() made a failed save look identical to a successful one.
+		onSuccess: () => {
+			setOpened(false)
+			onSuccess?.()
+		},
+		onError: () => updateFailedNotification(),
 	})
 
 	const handleReasonChange = useCallback((value: string | null) => {
@@ -57,7 +68,6 @@ export const UnpublishReasonPopover = ({
 			return
 		}
 		updateStatus.mutate({ slug, published: false, unpublishedReason: reason, note: note.trim() || undefined })
-		setOpened(false)
 	}, [updateStatus, slug, reason, note])
 
 	// Popover.Target only wires up its own click-to-open handler when the Popover is uncontrolled -
@@ -102,7 +112,13 @@ export const UnpublishReasonPopover = ({
 						<Text size='xs' c='dimmed'>
 							Blank = no note added
 						</Text>
-						<Button size='xs' variant='subtle' disabled={!reason} onClick={handleSaveNote}>
+						<Button
+							size='xs'
+							variant='subtle'
+							disabled={!reason}
+							loading={updateStatus.isPending}
+							onClick={handleSaveNote}
+						>
 							Done
 						</Button>
 					</Group>

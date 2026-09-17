@@ -17,6 +17,9 @@ const organizations = {
 	createOrgFromDataPortal: 'createOrg',
 	attachOrgAttributes: ['editTeamOrg', 'editAnyOrg', 'editSingleOrg'],
 	dataPortalManager: 'dataPortalManager',
+	// Matches the Organizations page's own gate (dataPortalBasic/Manager/Admin/root, any tier) - same
+	// pattern as viewAllReviews/viewAllUsers for their own tables.
+	viewAllOrganizations: 'dataPortalBasic',
 } satisfies PermissionDefs
 
 const orgEmails = {

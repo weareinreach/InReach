@@ -216,6 +216,16 @@ export const organization = {
 			return { results, total: filtered.length }
 		},
 	}),
+	// Demos the Organizations table's error banner for a session lacking Data Portal access -
+	// `forOrganizationTable` is gated behind `viewAllOrganizations` (dataPortalBasic+) server-side; this
+	// is what a rejected request looks like from the client's point of view.
+	forOrganizationTableUnauthorized: getTRPCMock({
+		path: ['organization', 'forOrganizationTable'],
+		error: {
+			code: 'UNAUTHORIZED',
+			message: 'You do not have permission to view this data.',
+		},
+	}),
 	suggestionOptions: getTRPCMock({
 		path: ['organization', 'suggestionOptions'],
 		response: async () => {
@@ -402,4 +412,5 @@ export const organization = {
 	searchDistanceLongTitle: HttpHandler
 	createNewSuggestionConflict: HttpHandler
 	createOrgFromDataPortalConflict: HttpHandler
+	forOrganizationTableUnauthorized: HttpHandler
 }

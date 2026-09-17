@@ -62,7 +62,7 @@ const SetStatusPopover = ({ row }: { row: RowItem }) => {
 			onSuccess={() => apiUtils.organization.forOrganizationTable.invalidate()}
 		>
 			<Tooltip label='Set status'>
-				<ActionIcon variant='subtle'>
+				<ActionIcon variant='subtle' aria-label='Set status'>
 					<Icon icon='carbon:tag' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
@@ -100,12 +100,12 @@ const RowAction = ({
 	return (
 		<Group wrap='nowrap' gap={8}>
 			<Tooltip label='View'>
-				<ActionIcon variant='subtle' component={Link} href={getViewUrl()} target='_blank'>
+				<ActionIcon variant='subtle' component={Link} href={getViewUrl()} target='_blank' aria-label='View'>
 					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 			<Tooltip label='Edit'>
-				<ActionIcon variant='subtle' component={Link} href={getEditUrl()} target='_blank'>
+				<ActionIcon variant='subtle' component={Link} href={getEditUrl()} target='_blank' aria-label='Edit'>
 					<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
@@ -123,7 +123,7 @@ const RowAction = ({
 					<Menu position='bottom-end' shadow='md'>
 						<Menu.Target>
 							<Tooltip label='More actions'>
-								<ActionIcon variant='subtle'>
+								<ActionIcon variant='subtle' aria-label='More actions'>
 									<Icon icon='carbon:overflow-menu-vertical' color={theme.other.colors.primary.allyGreen} />
 								</ActionIcon>
 							</Tooltip>
