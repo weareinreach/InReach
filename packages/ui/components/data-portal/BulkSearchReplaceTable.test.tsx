@@ -422,7 +422,10 @@ describe('BulkSearchReplaceTable', () => {
 		expect(table.getByText('Unpublished')).toBeInTheDocument()
 		const orgRow = screen.getByText('Riverside Community Health Center').closest('tr')
 		expect(orgRow).toHaveStyle({ textDecoration: 'line-through' })
-	})
+	}, // The inner `findByRole` wait above already has its own 5000ms budget for a slow CI runner - the
+	// outer test's default (also 5000ms) left zero headroom for the rest of the test, so a fully-used
+	// inner wait could exceed the outer one before ever reaching this test's own assertions.
+	15000)
 
 	it('defaults to hiding deleted organizations, and the Service Tags/Attributes filters feed the search query', async () => {
 		const user = userEvent.setup()

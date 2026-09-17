@@ -9,6 +9,17 @@ import { OrganizationTable } from './OrganizationTable'
 // call never renders anything to assert on in the DOM - assert the call itself instead.
 vi.mock('@mantine/notifications', () => ({ showNotification: vi.fn() }))
 
+// `RowAction` imports `AuditDrawer`/`InternalNotesDrawer` (rendered only once `auditOpen`/`notesOpen` is
+// true, neither of which any test here flips) - but the plain `import` alone is enough to pull in
+// `ModalTitle` -> Breadcrumb, which forms a circular import through the modals directory that crashes
+// Vitest's SSR module loader when the generated Prisma client isn't present, as in CI (see
+// InternalNotesDrawer.test.tsx, which hits the identical chain and needs the identical stub).
+vi.mock('next/router', () => ({
+	useRouter: () => ({ pathname: '', query: {}, push: vi.fn() }),
+}))
+vi.mock('~ui/modals/ModalTitle', () => ({ ModalTitle: () => null }))
+vi.mock('next-auth/react', () => ({ useSession: vi.fn() }))
+
 vi.mock('~ui/lib/trpcClient', () => ({
 	trpc: {
 		organization: {
