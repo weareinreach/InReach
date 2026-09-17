@@ -59,7 +59,12 @@ const SetStatusPopover = ({ row }: { row: RowItem }) => {
 		<UnpublishReasonPopover
 			slug={row.slug}
 			currentReason={row.unpublishedReason as OrgUnpublishedReason | null}
-			onSuccess={() => apiUtils.organization.forOrganizationTable.invalidate()}
+			onSuccess={() => {
+				apiUtils.organization.forOrganizationTable.invalidate()
+				// The mutation always writes a new InternalNote (typed or auto-generated fallback text) -
+				// without this, a previously-opened notes drawer for this org keeps showing its stale cache.
+				apiUtils.internalNote.getAllForRecord.invalidate()
+			}}
 		>
 			<Tooltip label='Set status'>
 				<ActionIcon variant='subtle' aria-label='Set status'>

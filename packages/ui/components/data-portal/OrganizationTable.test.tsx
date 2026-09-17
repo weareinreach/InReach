@@ -50,6 +50,7 @@ const renderTable = (row: typeof ORG_ROW, invalidate = vi.fn()) => {
 	} as never)
 	useUtilsMock.mockReturnValue({
 		organization: { forOrganizationTable: { invalidate } },
+		internalNote: { getAllForRecord: { invalidate: vi.fn() } },
 	} as never)
 	// `UnpublishReasonPopover` always calls this hook regardless of whether a given test exercises it -
 	// give it a harmless default so tests that don't care about the mutation itself don't crash on render.

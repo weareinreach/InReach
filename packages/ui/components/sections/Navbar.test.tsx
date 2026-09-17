@@ -89,6 +89,7 @@ const setup = (initial: FakeRecord) => {
 		location: { invalidate: vi.fn() },
 		organization: { invalidate: vi.fn() },
 		component: { EditModeBar: { invalidate: vi.fn() } },
+		internalNote: { getAllForRecord: { invalidate: vi.fn() } },
 	} as never)
 	useRevalidateMock.mockReturnValue({ mutate: vi.fn() } as never)
 	useReverifyMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
