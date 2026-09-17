@@ -64,3 +64,37 @@ describe('The specific fallthrough bug this test file guards against', () => {
 		expect(checkPermissions(attachServiceTagsMeta, makeCtx(['dataPortalBasic']))).toBe(true)
 	})
 })
+
+/**
+ * Regression coverage for the Organizations data-portal table (`organization.forOrganizationTable`), which
+ * used to be a `publicProcedure` - reachable with no session at all, and its response cacheable by the CDN
+ * (only permissioned/staff/admin procedures call `markSkipCache`), which is also why staff saw stale data
+ * after editing an org's status until a hard refresh. Gated behind `viewAllOrganizations` now, deliberately
+ * mapped to `dataPortalBasic` (not `dataPortalManager`, like `viewAllUsers` is) - the Organizations page
+ * itself already lets Basic-tier staff in, so the procedure-level gate has to match that same tier or it
+ * would lock out staff who could load the page but not its data.
+ */
+describe('Organizations table permission gating (viewAllOrganizations)', () => {
+	const meta: Meta = { hasPerm: 'dataPortalBasic' }
+
+	it('rejects a session with no Data Portal role at all', () => {
+		expect(checkPermissions(meta, makeCtx([]))).toBe(false)
+	})
+
+	it('accepts a dataPortalBasic session - this must NOT require Manager tier', () => {
+		expect(checkPermissions(meta, makeCtx(['dataPortalBasic']))).toBe(true)
+	})
+
+	it('accepts dataPortalManager and dataPortalAdmin (higher tiers than required)', () => {
+		expect(checkPermissions(meta, makeCtx(['dataPortalManager']))).toBe(true)
+		expect(checkPermissions(meta, makeCtx(['dataPortalAdmin']))).toBe(true)
+	})
+
+	it('accepts a valid root session', () => {
+		expect(
+			checkPermissions(meta, {
+				session: { user: { permissions: ['root'], email: 'staff@inreach.org' } },
+			} as unknown as Context)
+		).toBe(true)
+	})
+})

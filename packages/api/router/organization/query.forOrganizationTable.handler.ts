@@ -239,7 +239,9 @@ const searchIds = async (
 	return { ids: rows.map((row) => row.id), total: Number(rows[0]?.total ?? 0) }
 }
 
-const forOrganizationTable = async ({ input }: TRPCHandlerParams<TForOrganizationTableSchema>) => {
+const forOrganizationTable = async ({
+	input,
+}: TRPCHandlerParams<TForOrganizationTableSchema, 'protected'>) => {
 	const search = input.search?.trim()
 
 	if (search) {
