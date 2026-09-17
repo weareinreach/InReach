@@ -45,22 +45,12 @@ export const UnpublishReasonPopover = ({
 		onSuccess: () => onSuccess?.(),
 	})
 
-	const handleReasonChange = useCallback(
-		(value: string | null) => {
-			if (!value) {
-				return
-			}
-			const nextReason = value as OrgUnpublishedReason
-			setReason(nextReason)
-			updateStatus.mutate({
-				slug,
-				published: false,
-				unpublishedReason: nextReason,
-				note: note.trim() || undefined,
-			})
-		},
-		[updateStatus, slug, note]
-	)
+	const handleReasonChange = useCallback((value: string | null) => {
+		if (!value) {
+			return
+		}
+		setReason(value as OrgUnpublishedReason)
+	}, [])
 
 	const handleSaveNote = useCallback(() => {
 		if (!reason) {
