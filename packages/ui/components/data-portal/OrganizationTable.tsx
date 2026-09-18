@@ -354,11 +354,23 @@ const COMPACT_MULTISELECT_STYLES = {
 	pill: { fontSize: 'var(--mantine-font-size-xs)' },
 }
 
+export interface OrganizationTableProps {
+	/**
+	 * Restricts this same table to orgs needing the location-phone display-fix cleanup pass (see
+	 * `needsLocationPhoneCleanup` in query.forOrganizationTable.schema.ts) - the "Location Phone Cleanup"
+	 * data-portal page renders the table this way instead of duplicating its columns/sorting/pagination into a
+	 * separate component. All the usual filters (status, search, etc.) still work on top of this restriction.
+	 * Temporary: safe to delete this prop, along with the schema/handler field it maps to, once that page's
+	 * review is done.
+	 */
+	locationPhoneCleanupOnly?: boolean
+}
+
 /**
  * The org directory's system-of-record table - publish status, verification date, deletion flag, and each
  * org's locations. Filtering, sorting, and pagination all run server-side (`forOrganizationTable`).
  */
-export const OrganizationTable = () => {
+export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTableProps = {}) => {
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 
@@ -396,6 +408,7 @@ export const OrganizationTable = () => {
 				id: id as SortableColumnId,
 				desc,
 			})),
+			needsLocationPhoneCleanup: locationPhoneCleanupOnly || undefined,
 			take: pagination.pageSize,
 			skip: pagination.pageIndex * pagination.pageSize,
 		},

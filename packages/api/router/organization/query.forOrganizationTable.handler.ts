@@ -71,7 +71,10 @@ const ORG_SELECT = {
 	unpublishedReason: true,
 } satisfies Prisma.OrganizationSelect
 
-const buildWhere = (input: TForOrganizationTableSchema): Prisma.OrganizationWhereInput => {
+const buildWhere = (
+	input: TForOrganizationTableSchema,
+	cleanupIds: string[] | undefined
+): Prisma.OrganizationWhereInput => {
 	const where: Prisma.OrganizationWhereInput = {}
 	const statusClause = statusWhere(input.status)
 	if (statusClause) {
@@ -93,7 +96,39 @@ const buildWhere = (input: TForOrganizationTableSchema): Prisma.OrganizationWher
 	if (input.createdAt) {
 		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
 	}
+	if (cleanupIds) {
+		where.id = { in: cleanupIds }
+	}
 	return where
+}
+
+/**
+ * Org ids needing the location-phone display-fix cleanup pass: more than one published, non-deleted location,
+ * with at least one phone also linked to one of those locations. Before
+ * orgPhone/query.forContactInfo.handler.ts's fix, a location-linked number always also showed on the org's
+ * own main page; now it only does for a single-location org. Staff use this to find any number on a
+ * multi-location org they actually want to keep visible on the main page too, and re-add it there as a
+ * separate, plain org-level entry (see the "Location Phone Cleanup" data-portal page). Computed as raw SQL
+ * since Prisma's relation filters can express "has at least one" but not "has more than one" without a
+ * `_count` aggregate, which isn't usable inside a `where` on a `findMany`.
+ */
+const locationPhoneCleanupIds = async (): Promise<string[]> => {
+	const rows = await prisma.$queryRaw<{ id: string }[]>`
+		SELECT o.id
+		FROM "Organization" o
+		WHERE (
+			SELECT count(*) FROM "OrgLocation" l
+			WHERE l."orgId" = o.id AND l.published = true AND l.deleted = false
+		) > 1
+		AND EXISTS (
+			SELECT 1
+			FROM "OrganizationPhone" op
+			JOIN "OrgLocationPhone" olp ON olp."phoneId" = op."phoneId"
+			JOIN "OrgLocation" ol ON ol.id = olp."orgLocationId"
+			WHERE op."organizationId" = o.id AND ol.published = true AND ol.deleted = false
+		)
+	`
+	return rows.map((row) => row.id)
 }
 
 // Sortable columns are whitelisted by the Zod schema (ZSortableColumn) before they ever reach here.
@@ -172,7 +207,8 @@ const expandSearchTerm = async (searchTerm: string): Promise<string[]> => {
  * `findMany`.
  */
 const searchIds = async (
-	input: TForOrganizationTableSchema & { search: string }
+	input: TForOrganizationTableSchema & { search: string },
+	cleanupIds: string[] | undefined
 ): Promise<{ ids: string[]; total: number }> => {
 	const expandedTerms = await expandSearchTerm(input.search)
 	const expandedTermsSql = expandedTerms.length
@@ -221,6 +257,9 @@ const searchIds = async (
 	if (createMethodCondition) {
 		conditions.push(createMethodCondition)
 	}
+	if (cleanupIds) {
+		conditions.push(Prisma.sql`o.id = ANY(${cleanupIds})`)
+	}
 
 	// While actively searching, relevance wins over any user-selected column sort — a fuzzy match's rank is
 	// the point, not this org's alphabetical position.
@@ -244,8 +283,13 @@ const forOrganizationTable = async ({
 }: TRPCHandlerParams<TForOrganizationTableSchema, 'protected'>) => {
 	const search = input.search?.trim()
 
+	const cleanupIds = input.needsLocationPhoneCleanup ? await locationPhoneCleanupIds() : undefined
+	if (cleanupIds && cleanupIds.length === 0) {
+		return { results: [], total: 0 }
+	}
+
 	if (search) {
-		const { ids, total: searchTotal } = await searchIds({ ...input, search })
+		const { ids, total: searchTotal } = await searchIds({ ...input, search }, cleanupIds)
 		if (ids.length === 0) {
 			return { results: [], total: searchTotal }
 		}
@@ -257,7 +301,7 @@ const forOrganizationTable = async ({
 		return { results: searchResults, total: searchTotal }
 	}
 
-	const where = buildWhere(input)
+	const where = buildWhere(input, cleanupIds)
 	const orderBy = buildOrderBy(input.sorting)
 
 	const [results, total] = await Promise.all([

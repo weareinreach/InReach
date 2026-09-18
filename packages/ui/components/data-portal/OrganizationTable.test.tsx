@@ -131,3 +131,33 @@ describe('OrganizationTable - "Set status" row action', () => {
 		expect(await screen.findByPlaceholderText('Choose a reason')).toHaveValue('Inactive')
 	})
 })
+
+describe('OrganizationTable - locationPhoneCleanupOnly', () => {
+	beforeEach(() => vi.clearAllMocks())
+
+	const setup = (locationPhoneCleanupOnly?: boolean) => {
+		useForOrgTableMock.mockReturnValue({
+			data: { results: [], total: 0 },
+			isLoading: false,
+			isError: false,
+			isFetching: false,
+		} as never)
+		useUtilsMock.mockReturnValue({
+			organization: { forOrganizationTable: { invalidate: vi.fn() } },
+			internalNote: { getAllForRecord: { invalidate: vi.fn() } },
+		} as never)
+		render(<OrganizationTable locationPhoneCleanupOnly={locationPhoneCleanupOnly} />)
+	}
+
+	it('passes needsLocationPhoneCleanup: true through to the query when the prop is set', () => {
+		setup(true)
+		const [input] = useForOrgTableMock.mock.calls[0] as [{ needsLocationPhoneCleanup?: boolean }]
+		expect(input.needsLocationPhoneCleanup).toBe(true)
+	})
+
+	it('omits needsLocationPhoneCleanup (rather than sending false) when the prop is not set, so the default org table is unaffected', () => {
+		setup()
+		const [input] = useForOrgTableMock.mock.calls[0] as [{ needsLocationPhoneCleanup?: boolean }]
+		expect(input.needsLocationPhoneCleanup).toBeUndefined()
+	})
+})
