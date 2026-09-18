@@ -115,8 +115,9 @@ describe('PhoneNumbersEdit - link to location menu', () => {
 
 	/**
 	 * The "Create new" item no longer renders a PhoneDrawer nested inside itself (see PhoneNumbers.tsx for why)
-	 * - it click-triggers a real PhoneDrawer rendered as a sibling of the Menu instead. This confirms that
-	 * indirection still actually opens the drawer.
+	 *
+	 * - It click-triggers a real PhoneDrawer rendered as a sibling of the Menu instead. This confirms that
+	 *   indirection still actually opens the drawer.
 	 */
 	it('clicking "Create new" in the location menu still opens the create-phone drawer', async () => {
 		setup({ isLocation: true })
