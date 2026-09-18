@@ -21,7 +21,7 @@ import { TextInput as FormTextInput, Select, type SelectProps } from 'react-hook
 import { isValidPhoneNumber, parsePhoneNumber } from 'react-phone-number-input'
 import PhoneInput, { type Props as PhoneInputProps } from 'react-phone-number-input/react-hook-form-input'
 
-import { isCountryCode } from '~ui/hooks/usePhoneNumber'
+import { isCountryCode, isNanpTollFreeNumber } from '~ui/hooks/usePhoneNumber'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { transformCountryList } from './lib'
@@ -156,7 +156,14 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		if (phoneNumber) {
 			phoneFormatter.input(phoneNumber)
 			const phoneCountry = phoneFormatter.getNumber()?.country
-			// Comparing `phoneCountry` (a cca2 code, e.g. "US") against `activeCountry` (also a cca2
+			// NANP toll-free numbers (800, 888, etc.) aren't owned by any one country, so
+			// `phoneCountry` above is either an arbitrary guess among NANP members or empty for these -
+			// it can't be trusted to auto-select a country. Fall back to whatever's already selected
+			// (or the default country, if nothing is yet) instead of guessing wrong or leaving it blank.
+			const resolvedCountry = isNanpTollFreeNumber(phoneNumber)
+				? (activeCountry ?? DEFAULT_COUNTRY)
+				: phoneCountry
+			// Comparing `resolvedCountry` (a cca2 code, e.g. "US") against `activeCountry` (also a cca2
 			// code) - NOT against `selectedCountry`, which is the country's *id* (e.g. "country_us" or
 			// a real database id). Comparing a cca2 code to an id can never be equal, so that version of
 			// this guard always re-ran unconditionally; harmless when the effect only fired once per
@@ -164,8 +171,8 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 			// countries fetch gets a second chance to auto-detect once it arrives), an always-true guard
 			// plus a `countryList` reference that isn't guaranteed stable across renders turned this into
 			// runaway re-firing of `field.onChange` on every render - an infinite render loop.
-			if ((!phoneCountry && !activeCountry) || phoneCountry !== activeCountry) {
-				const countryId = countryList.find(({ data }) => data.cca2 === phoneCountry)?.value
+			if ((!resolvedCountry && !activeCountry) || resolvedCountry !== activeCountry) {
+				const countryId = countryList.find(({ data }) => data.cca2 === resolvedCountry)?.value
 
 				// Also skip when `countryId` already matches `selectedCountry` - the id comparison here
 				// (not the cca2 one above) is what actually makes this converge instead of calling
@@ -251,7 +258,12 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 				return isValidPhoneNumber(number, activeCountry) || `Not a valid phone number for ${activeCountry}`
 			},
 			invalidCountry: (number?: string) => {
-				if (number) {
+				// NANP toll-free numbers (800, 888, etc.) aren't owned by any one country -
+				// `parsePhoneNumber` below would either guess an arbitrary NANP member or find nothing,
+				// neither of which says anything real about whether the org's selected country is
+				// wrong. Skip this check for them and let `validPhoneNumber` above (which validates
+				// against the actually-selected `activeCountry`) be the source of truth instead.
+				if (number && !isNanpTollFreeNumber(number)) {
 					const parsed = parsePhoneNumber(number)
 					if (parsed?.country) {
 						return validCountries.includes(parsed.country) || `Country not enabled: ${parsed.country}`

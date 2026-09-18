@@ -1,6 +1,6 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
-import { type ReactElement, useCallback } from 'react'
+import { type ReactElement, useCallback, useRef } from 'react'
 
 import { productEvent } from '@weareinreach/analytics/events'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
@@ -126,6 +126,9 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
+	// Triggers the real "Create new" PhoneDrawer, which is rendered as a sibling of the Menu below
+	// (not nested inside a Menu.Item) - see the comment at that PhoneDrawer for why.
+	const createNewTriggerRef = useRef<HTMLButtonElement>(null)
 	const slug = useSlug()
 	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
@@ -240,43 +243,59 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	})
 
 	const addOrLink = isLocation ? (
-		<Menu keepMounted withinPortal>
-			<Menu.Target>
-				<Link variant={variants.Link.inlineInverted}>
-					<Group wrap='nowrap' gap={4}>
-						<Icon icon='carbon:document-add' height={20} />
-						<Text variant={variants.Text.utility3}>Link or create new...</Text>
-					</Group>
-				</Link>
-			</Menu.Target>
-			<Menu.Dropdown>
-				{linkablePhones?.map(({ id, deleted, description, number, phoneType, published }) => {
-					const phoneTextVariant = getTextVariant('value', published, deleted)
-					const descTextVariant = getTextVariant('desc', published, deleted)
-					return (
-						<Menu.Item key={id} onClick={linkToLocationHandler(parentId, id)}>
-							<Group wrap='nowrap'>
-								<Icon icon='carbon:link' />
-								<Stack gap={0}>
-									<Text variant={phoneTextVariant}>{number}</Text>
-									{Boolean(phoneType) && <Text variant={descTextVariant}>{phoneType}</Text>}
-									<Text variant={descTextVariant}>{description}</Text>
-								</Stack>
-							</Group>
-						</Menu.Item>
-					)
-				})}
-				<Menu.Divider />
-				<Menu.Item key='new'>
-					<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+		<>
+			<Menu keepMounted withinPortal>
+				<Menu.Target>
+					<Link variant={variants.Link.inlineInverted}>
+						<Group wrap='nowrap' gap={4}>
+							<Icon icon='carbon:document-add' height={20} />
+							<Text variant={variants.Text.utility3}>Link or create new...</Text>
+						</Group>
+					</Link>
+				</Menu.Target>
+				<Menu.Dropdown>
+					{linkablePhones?.map(({ id, deleted, description, number, phoneType, published }) => {
+						const phoneTextVariant = getTextVariant('value', published, deleted)
+						const descTextVariant = getTextVariant('desc', published, deleted)
+						return (
+							<Menu.Item key={id} onClick={linkToLocationHandler(parentId, id)}>
+								<Group wrap='nowrap'>
+									<Icon icon='carbon:link' />
+									<Stack gap={0}>
+										<Text variant={phoneTextVariant}>{number}</Text>
+										{Boolean(phoneType) && <Text variant={descTextVariant}>{phoneType}</Text>}
+										<Text variant={descTextVariant}>{description}</Text>
+									</Stack>
+								</Group>
+							</Menu.Item>
+						)
+					})}
+					<Menu.Divider />
+					{/* Deliberately just a plain click-through, not a PhoneDrawer nested inside this item.
+					    Nesting the drawer's form here once put its masked phone-number input inside two
+					    layers of portal (Menu's, then Drawer's) - a structure the drawer's masked-input
+					    library turned out not to tolerate: typing a second character crashed it outright
+					    (a null DOM reference inside `input-format`, the library `react-phone-number-input`
+					    uses internally for cursor placement - its own source admits this mechanism is
+					    unreliable with a custom `inputComponent`, which this app always uses). The real
+					    "Create new" PhoneDrawer now lives outside the Menu entirely (see below, visually
+					    hidden) and this item just clicks its trigger by ref, so the drawer's whole subtree
+					    never lives inside the menu's component tree at all. */}
+					<Menu.Item key='new' onClick={() => createNewTriggerRef.current?.click()}>
 						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
-					</PhoneDrawer>
-				</Menu.Item>
-			</Menu.Dropdown>
-		</Menu>
+					</Menu.Item>
+				</Menu.Dropdown>
+			</Menu>
+			{/* `aria-hidden` and no visible-text-duplicating label: this is a functional trigger only,
+			    clicked programmatically by the Menu.Item above, never meant to be discovered by
+			    assistive tech, focus order, or a query for the visible "Create new" text. */}
+			<PhoneDrawer ref={createNewTriggerRef} createNew style={{ display: 'none' }} aria-hidden tabIndex={-1}>
+				(hidden create-new trigger)
+			</PhoneDrawer>
+		</>
 	) : (
 		<PhoneDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
 			<Group wrap='nowrap'>
