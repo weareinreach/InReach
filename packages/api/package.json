@@ -12,6 +12,9 @@
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
 		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:report": "vitest run --reporter=html",
+		"test:report:view": "vitest run --reporter=html; npx serve html",
 		"test:watch": "vitest",
 		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
@@ -62,6 +65,8 @@
 		"@types/luxon": "3.7.4",
 		"@types/node": "20.17.0",
 		"@types/terraformer__wkt": "2.0.3",
+		"@vitest/coverage-v8": "4.1.10",
+		"@vitest/ui": "4.1.10",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"dotenv-cli": "7.4.2",

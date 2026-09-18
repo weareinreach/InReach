@@ -30,6 +30,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/data-portal">
     | StaticRoute<"/data-portal/bulk-search-replace">
     | StaticRoute<"/data-portal/downloads">
+    | StaticRoute<"/data-portal/location-phone-cleanup">
     | StaticRoute<"/data-portal/manage-users">
     | StaticRoute<"/data-portal/organizations">
     | StaticRoute<"/data-portal/quicklink">

@@ -1,4 +1,4 @@
-// apps/app/src/pages/data-portal/reports.tsx
+// apps/app/src/pages/data-portal/location-phone-cleanup.tsx
 
 import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
@@ -6,27 +6,36 @@ import { useTranslation } from 'next-i18next/pages'
 
 import { checkServerPermissions } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
+import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
-import { ReportTable } from '@weareinreach/ui/components/data-portal/ReportTable'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+// TEMPORARY: this whole page (and its sidebar entry in the other Organizations-section pages) exists
+// only to help staff review orgs affected by the location-phone display fix (see
+// orgPhone/query.forContactInfo.handler.ts and OrganizationTable's `locationPhoneCleanupOnly` prop) -
+// a multi-location org's main page no longer automatically shows a number that's also linked to one of
+// its locations. Safe to delete this page, the sidebar entries pointing to it, and the
+// `locationPhoneCleanupOnly`/`needsLocationPhoneCleanup` plumbing behind it once that review is done.
 const organizationsSideNav = {
 	heading: 'Organizations',
 	items: [
 		{ label: 'Organizations', href: { pathname: '/data-portal/organizations' as const } },
 		{ label: 'Reviews', href: { pathname: '/data-portal/reviews' as const } },
-		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const }, active: true },
+		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const } },
 		{ label: 'Downloads', href: { pathname: '/data-portal/downloads' as const } },
 		{ label: 'Bulk Search & Replace', href: { pathname: '/data-portal/bulk-search-replace' as const } },
-		// TEMPORARY - see location-phone-cleanup.tsx; remove this entry once that review is done.
-		{ label: 'Location Phone Cleanup', href: { pathname: '/data-portal/location-phone-cleanup' as const } },
+		{
+			label: 'Location Phone Cleanup',
+			href: { pathname: '/data-portal/location-phone-cleanup' as const },
+			active: true,
+		},
 	],
 }
 
-const DataPortalReports: NextPageWithOptions = () => {
+const DataPortalLocationPhoneCleanup: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
-	const title = t('admin.tab-reports')
+	const title = t('admin.tab-location-phone-cleanup', 'Location Phone Cleanup')
 
 	return (
 		<>
@@ -35,25 +44,21 @@ const DataPortalReports: NextPageWithOptions = () => {
 			</Head>
 			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
 				<PageHeading title={title} />
-				<ReportTable />
+				<OrganizationTable locationPhoneCleanupOnly />
 			</DataPortalPageShell>
 		</>
 	)
 }
 // See organizations.tsx for why every Data Portal page sets this.
-DataPortalReports.omitGrid = true
+DataPortalLocationPhoneCleanup.omitGrid = true
 
-export default DataPortalReports
+export default DataPortalLocationPhoneCleanup
 
-// NOTE: tab-visibility is intentionally left at Basic+ here, matching current /admin behavior exactly.
-// The underlying `report.forReportsTable`/`report.update` procedures still require dataPortalManager+,
-// so a Basic-tier user reaching this page hits the same authorization error they do today - this is a
-// known, pre-existing mismatch (see docs/DataPortal/Reports/README.md), not something this relocation
-// fixes. The approved fix is deferred to Phase B (see docs/DataPortal/2026-Redesign/UI_elements.md).
 export const getServerSideProps: GetServerSideProps = async ({ locale, req, res }) => {
+	// Manager and up only - this is a staff cleanup tool, not something every Data Portal user needs.
 	const session = await checkServerPermissions({
 		ctx: { req, res },
-		permissions: ['dataPortalBasic', 'dataPortalManager', 'dataPortalAdmin', 'root'],
+		permissions: ['dataPortalManager', 'dataPortalAdmin', 'root'],
 		has: 'some',
 	})
 	if (!session) {

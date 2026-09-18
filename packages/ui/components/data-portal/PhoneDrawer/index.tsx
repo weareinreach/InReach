@@ -45,27 +45,39 @@ const FormSchema = z.object({
 	description: z.string().nullable(),
 	locationOnly: z.boolean().optional(),
 	serviceOnly: z.boolean().optional(),
-	linkLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 	({ id, createNew = false, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit'>()
 		const { t } = useTranslation(['phone-type'])
+		const [drawerOpened, drawerHandler] = useDisclosure(false)
+		const [modalOpened, modalHandler] = useDisclosure(false)
+		// `drawerOpened` is a dependency so a "Create new" trigger gets a fresh id on every open, not
+		// just once at mount - the trigger stays mounted (only this Drawer's open state toggles) once
+		// the phone list already has an entry, so without this a second create would reuse the first
+		// one's id and collide with it as a duplicate primary key. Edit mode (an `id` prop is passed)
+		// is unaffected - it always returns that same `id` regardless of this dependency.
 		const phoneId = useMemo(() => {
 			if (createNew || !id) {
 				return generateId('orgPhone')
 			}
 			return id
-		}, [createNew, id])
+			// drawerOpened isn't read above - it's a deliberate recompute trigger, not a real dependency.
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [createNew, id, drawerOpened])
 		const { id: orgId } = useOrgInfo()
 		const apiUtils = api.useUtils()
-		const [drawerOpened, drawerHandler] = useDisclosure(false)
-		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { data: initialData, isFetching } = api.orgPhone.forEditDrawer.useQuery(
 			{ id: phoneId, orgId: orgId ?? '' },
 			{
-				enabled: drawerOpened && !!orgId,
+				// Never fires for a brand-new phone: `phoneId` here is only a client-generated id that
+				// doesn't exist server-side yet, so this would resolve to `null` and cache that `null`
+				// under the very id the create mutation goes on to reuse server-side. Left enabled, that
+				// stale-cached `null` is what a later edit-drawer opened for the same (now real) phone
+				// would see first - an empty form until something else happens to refetch it, which is
+				// exactly the "just-created phone edits blank" bug this guards against.
+				enabled: drawerOpened && !!orgId && !createNew,
 				// `ext`/`description` come back `null` when unset - fed straight into `values` below,
 				// that would hand a controlled TextInput a `null` value and trip React's
 				// uncontrolled-to-controlled warning. `phoneTypeId` gets the same treatment for a
@@ -114,7 +126,11 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			() =>
 				zodResolver(
 					FormSchema.superRefine((data, ctx) => {
+						// A blank number previously passed validation silently (this check just returned),
+						// which combined with the mutation having no onError handler meant a save with
+						// nothing filled in would fail server-side with no visible feedback at all.
 						if (!data.number) {
+							ctx.addIssue({ code: 'custom', path: ['number'], message: 'Phone number is required' })
 							return
 						}
 						const rawCca2 = countryCca2ById.get(data.countryId)
@@ -135,17 +151,17 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				) as Resolver<FormSchema>,
 			[countryCca2ById, countryNameById]
 		)
-		const {
-			control,
-			handleSubmit,
-			formState,
-			reset,
-			getValues,
-			watch,
-			setValue: setFormValue,
-		} = useForm<FormSchema>({
+		const { control, handleSubmit, formState, reset, watch } = useForm<FormSchema>({
 			resolver: formResolver,
 			values: initialData ?? undefined,
+			// Without this, any background refetch of `forEditDrawer` that resolves while the drawer
+			// is open - e.g. the one triggered by reopening it after an earlier save in the same
+			// session, invalidated-but-not-yet-refetched until then - hands `values` a new object and
+			// react-hook-form treats that as "sync the form to this," silently discarding whatever the
+			// user had just changed and hadn't saved yet. `keepDirtyValues` makes that sync per-field:
+			// untouched fields still pick up fresh server data, but a field the user has actually
+			// edited keeps their edit instead of being overwritten out from under them.
+			resetOptions: { keepDirtyValues: true },
 			defaultValues: {
 				id: phoneId,
 				number: '',
@@ -161,17 +177,16 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 
-		// Invalidating forContactInfoEdit and letting it refetch has turned out to be racy in
-		// practice: two GET requests for the same query can land out of order, and if the stale
-		// one (fetched before this save committed) resolves after the fresh one, it silently wins
-		// and the list shows old data even though the save succeeded. Patching the cache directly
-		// with what we just saved sidesteps that race entirely instead of depending on which
-		// response happens to arrive last. This only patches the org-level list plus the
-		// location-level list if this phone belongs to one - phoneType and the description's
-		// translation key are left as whatever's already cached (only the description text is
-		// updated) since those aren't available in the form's submitted values; a real refetch
-		// (still triggered, just without forcing this immediate race-prone one) corrects that on
-		// next natural load if either was actually changed.
+		// Never relies on re-reading the list from the database after a save - confirmed live (not
+		// just theorized) that this API's underlying database can take longer than even two full,
+		// cache-free page reloads to reflect a just-committed write, so a forced refetch right after
+		// save can come back *without* the row just created or updated, silently reverting whatever
+		// this function just did. Every field needed to show the row correctly is already sitting in
+		// the submitted form values or this component's own already-loaded lookups (`countryCca2ById`,
+		// `phoneTypes`), so there's no reason to ask the database again at all for the user's own
+		// immediate feedback - a real (background, non-forcing) invalidate still runs afterward to
+		// naturally correct anything this couldn't reconstruct (e.g. a custom phone type's exact
+		// translation key) whenever the list is next freshly loaded.
 		const patchContactListCaches = useCallback(
 			(submitted: TUpsertSchema) => {
 				// `update`'s zod branch technically allows every field but `id` to be omitted (only
@@ -179,65 +194,125 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				// submits all of them - falling back to the existing cached value covers that gap
 				// defensively rather than assuming the type's full possibility space away.
 				const cca2 = submitted.countryId ? countryCca2ById.get(submitted.countryId) : undefined
+				const matchedType = phoneTypes?.find(({ value }) => value === submitted.phoneTypeId)
 				const parentIds = [orgId, hasLocationId].filter((value): value is string => Boolean(value))
 				for (const parentId of parentIds) {
 					apiUtils.orgPhone.forContactInfoEdit.setData({ parentId }, (old) => {
 						if (!old) {
 							return old
 						}
-						const next = old.map((item) =>
-							item.id === submitted.id
-								? {
-										...item,
-										number: submitted.number ?? item.number,
-										ext: submitted.ext ?? item.ext,
-										primary: submitted.primary ?? item.primary,
-										locationOnly: submitted.locationOnly ?? item.locationOnly,
-										published: submitted.published ?? item.published,
-										deleted: submitted.deleted ?? item.deleted,
-										country: cca2 ?? item.country,
-										description:
-											submitted.description === undefined
-												? item.description
-												: submitted.description === null
-													? null
-													: { key: item.description?.key ?? '', defaultText: submitted.description },
-									}
-								: item
-						)
+						const existingIndex = old.findIndex((item) => item.id === submitted.id)
+						const next =
+							existingIndex === -1
+								? [
+										...old,
+										{
+											id: submitted.id ?? phoneId,
+											number: submitted.number ?? '',
+											ext: submitted.ext ?? null,
+											primary: submitted.primary ?? false,
+											locationOnly: submitted.locationOnly ?? false,
+											published: submitted.published ?? true,
+											deleted: submitted.deleted ?? false,
+											// Falls back to '' only if `countryCca2ById` genuinely hasn't loaded a match
+											// yet, which shouldn't happen for a real create (countryId is required) -
+											// the list's own `country` field is always a plain string, never optional.
+											country: cca2 ?? '',
+											// No exact `{key, defaultText}` translation pair is available client-side
+											// for a phone type (this drawer only has the already-translated label,
+											// not its raw i18n key) - using the label for both makes `t(key, {ns,
+											// defaultValue})`'s fallback resolve to the same visible text either way,
+											// until a real refetch fills in the precise key.
+											phoneType: matchedType
+												? { key: matchedType.label, defaultText: matchedType.label }
+												: null,
+											description: submitted.description
+												? { key: '', defaultText: submitted.description }
+												: null,
+										},
+									]
+								: old.map((item, index) =>
+										index === existingIndex
+											? {
+													...item,
+													number: submitted.number ?? item.number,
+													ext: submitted.ext ?? item.ext,
+													primary: submitted.primary ?? item.primary,
+													locationOnly: submitted.locationOnly ?? item.locationOnly,
+													published: submitted.published ?? item.published,
+													deleted: submitted.deleted ?? item.deleted,
+													country: cca2 ?? item.country,
+													description:
+														submitted.description === undefined
+															? item.description
+															: submitted.description === null
+																? null
+																: { key: item.description?.key ?? '', defaultText: submitted.description },
+												}
+											: item
+									)
 						return next.toSorted(
 							(a, b) => Number(b.published) - Number(a.published) || Number(a.deleted) - Number(b.deleted)
 						)
 					})
 				}
 			},
-			[apiUtils, orgId, hasLocationId, countryCca2ById]
+			[apiUtils, orgId, hasLocationId, countryCca2ById, phoneTypes, phoneId]
 		)
 
+		// Same reasoning as `patchContactListCaches` above, applied to this drawer's *own* detail
+		// query instead of the list: reopening this exact phone right after saving it - whether that
+		// save was the initial create or any later edit - must not depend on a fresh read from the
+		// same database that's already been shown to lag behind its own writes. Seeding this cache
+		// directly from what was just submitted means the very next open (even immediately after
+		// create, for a phone id that query has never successfully fetched before) shows the correct
+		// values with no network request needed at all, instead of racing a real fetch against
+		// however long this database takes to catch up.
+		const seedEditDrawerCache = useCallback(
+			(submitted: TUpsertSchema) => {
+				const cca2 = submitted.countryId ? countryCca2ById.get(submitted.countryId) : undefined
+				apiUtils.orgPhone.forEditDrawer.setData({ id: phoneId, orgId: orgId ?? '' }, (old) => ({
+					id: phoneId,
+					primary: submitted.primary ?? old?.primary ?? false,
+					published: submitted.published ?? old?.published ?? true,
+					deleted: submitted.deleted ?? old?.deleted ?? false,
+					countryId: submitted.countryId ?? old?.countryId ?? '',
+					phoneTypeId:
+						submitted.phoneTypeId === undefined ? (old?.phoneTypeId ?? null) : submitted.phoneTypeId,
+					locationOnly: submitted.locationOnly ?? old?.locationOnly ?? false,
+					serviceOnly: submitted.serviceOnly ?? old?.serviceOnly ?? false,
+					number: submitted.number ?? old?.number ?? '',
+					ext: submitted.ext ?? old?.ext ?? null,
+					description:
+						submitted.description === undefined ? (old?.description ?? null) : submitted.description,
+					orgId: orgId ?? '',
+					country: cca2 ?? old?.country ?? '',
+				}))
+			},
+			[apiUtils, orgId, phoneId, countryCca2ById]
+		)
+
+		// `orgPhone.upsert`'s `create` operation only ever connects the new phone to `organization` -
+		// there's no location field on that schema at all, so creating this from a location's "Create
+		// new" trigger needs a second, separate mutation to actually attach it to `orgLocationPhone`.
+		// Without this, the new phone was only ever visible under the organization's own phone list,
+		// never the location's, even though `hasLocationId`/`linkLocationId` looked like they already
+		// captured that intent. Declared before `siteUpdate` below since its `onSuccess` calls this.
+		const linkToLocation = api.orgPhone.locationLink.useMutation({
+			onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' }),
+		})
 		const siteUpdate = api.orgPhone.upsert.useMutation({
 			onSettled: (data, _error, variables) => {
-				if (variables.operation === 'create') {
-					// A brand-new phone has no existing entry in the cached list for the patch below to
-					// match against - `patchContactListCaches` only updates an item it can find by id, so
-					// for a create it would silently do nothing and the new phone just wouldn't appear
-					// until something else happened to refetch the list. Doing a real (not
-					// `refetchType: 'none'`) invalidate here is safe specifically for creates: there's no
-					// existing cached data for this id that a slower, earlier response could race against
-					// and stomp - unlike the update path below.
-					apiUtils.orgPhone.forContactInfoEdit.invalidate()
-				} else {
-					patchContactListCaches(variables)
-					apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' })
-				}
-				apiUtils.orgPhone.forContactInfo.invalidate()
-				// This drawer's own detail query is keyed by this specific phone id - without
-				// marking it stale too, reopening this same phone later would show the pre-save
-				// data, making a second edit silently start from a stale checkbox state instead
-				// of what was just saved. `refetchType: 'none'` marks it stale for next time
-				// without forcing an immediate refetch here - nothing is displaying this query
-				// while the drawer is closed, and forcing one batches it alongside the
-				// forContactInfoEdit refetch above in a way that ends up blocking that one from
-				// reaching the list.
+				patchContactListCaches(variables)
+				seedEditDrawerCache(variables)
+				// `refetchType: 'none'` everywhere below, always - a forced immediate refetch reads
+				// from the same database the patches above are specifically working around, and could
+				// silently overwrite what was just written with a still-lagging response that's
+				// missing it. These still mark everything stale so the next natural mount/load picks
+				// up the fully correct server data (exact phone-type translation key, etc.) once the
+				// database has caught up.
+				apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' })
+				apiUtils.orgPhone.forContactInfo.invalidate(undefined, { refetchType: 'none' })
 				apiUtils.orgPhone.forEditDrawer.invalidate(
 					{ id: phoneId, orgId: orgId ?? '' },
 					{ refetchType: 'none' }
@@ -246,10 +321,16 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				// `phoneTypeId` is a genuine `null` - re-coerced to `''` here for the same reason as
 				// the `select` on the query above (Mantine's `Select` can't use `null` as a real
 				// option's selected value).
-				reset(data ? { ...data, phoneTypeId: data.phoneTypeId ?? '' } : data)
+				// `keepDirtyValues: false` overrides the form-level default (set below, to stop a
+				// background refetch from clobbering an in-progress edit) - this reset is different:
+				// it's applying what the user just successfully saved, so it should always win outright.
+				reset(data ? { ...data, phoneTypeId: data.phoneTypeId ?? '' } : data, { keepDirtyValues: false })
 			},
 			onSuccess: () => {
 				setIsSaved(true)
+				if (createNew && hasLocationId !== null) {
+					linkToLocation.mutate({ orgPhoneId: phoneId, orgLocationId: hasLocationId, action: 'link' })
+				}
 				modalHandler.close()
 				drawerHandler.close()
 			},
@@ -260,14 +341,33 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				apiUtils.orgPhone.forContactInfoEdit.invalidate()
 			},
 		})
+		// Runs on every open of a "Create new" trigger (not just at mount) - resets the form back to
+		// blank defaults with the freshly-generated phoneId above. Without this, reopening the same
+		// still-mounted trigger after a successful create would keep showing the phone that was just
+		// created: onSettled's reset(data) (below) populates the form with that phone's values, and
+		// react-hook-form's `values` sync only overrides state when there's real data to sync to, not
+		// when the next open's query comes back empty for a brand-new id.
 		useEffect(() => {
-			if (createNew) {
-				setFormValue('published', true)
-				if (hasLocationId !== null) {
-					setFormValue('linkLocationId', hasLocationId)
-				}
+			if (createNew && drawerOpened) {
+				// `keepDirtyValues: false` overrides the form-level default (set below) - this has to
+				// fully clear the form even if a field was left dirty from whatever phone was open
+				// before, since the whole point here is a guaranteed blank slate, not preserving
+				// leftover edits.
+				reset(
+					{
+						id: phoneId,
+						number: '',
+						countryId: '',
+						ext: '',
+						phoneTypeId: '',
+						description: '',
+						published: true,
+						deleted: false,
+					},
+					{ keepDirtyValues: false }
+				)
 			}
-		}, [createNew, hasLocationId, setFormValue])
+		}, [createNew, drawerOpened, phoneId, hasLocationId, reset])
 		useEffect(() => {
 			if (isSaved && formIsDirty) {
 				setIsSaved(false)
@@ -297,41 +397,33 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			})
 		}, [hasLocationId, phoneId, unlinkFromLocation])
 
+		// Shared by both save paths so the modal's Save button validates identically to the header's -
+		// previously handleModalSave submitted via getValues() directly, skipping handleSubmit (and
+		// therefore the zod resolver's phone-number-format check) entirely.
+		const submitPhone = useCallback(
+			(data: FormSchema) => {
+				siteUpdate.mutate({
+					orgId: orgId ?? '',
+					operation: createNew ? 'create' : 'update',
+					...data,
+					phoneTypeId: data.phoneTypeId || null,
+				})
+			},
+			[createNew, orgId, siteUpdate]
+		)
+
 		const handleSaveButton = useCallback(
-			() =>
-				handleSubmit(
-					(data) => {
-						siteUpdate.mutate({
-							orgId: orgId ?? '',
-							operation: createNew ? 'create' : 'update',
-							...data,
-							phoneTypeId: data.phoneTypeId || null,
-						})
-					},
-					(error) => console.error(error)
-				),
-			[createNew, handleSubmit, orgId, siteUpdate]
+			() => handleSubmit(submitPhone, (error) => console.error(error)),
+			[handleSubmit, submitPhone]
 		)
 
 		const handleModalSave = useCallback(() => {
-			const valuesToSubmit = getValues()
-			siteUpdate.mutate(
-				{
-					...valuesToSubmit,
-					orgId: orgId ?? '',
-					operation: createNew ? 'create' : 'update',
-					phoneTypeId: valuesToSubmit.phoneTypeId || null,
-				},
-				{
-					onSuccess: () => {
-						modalHandler.close()
-						drawerHandler.close()
-					},
-				}
-			)
-		}, [createNew, drawerHandler, getValues, modalHandler, orgId, siteUpdate])
+			void handleSubmit(submitPhone, (error) => console.error(error))()
+		}, [handleSubmit, submitPhone])
 		const handleCloseNoSave = useCallback(() => {
-			reset()
+			// `keepDirtyValues: false`: "discard" has to actually discard every edit, not just the ones
+			// the form-level default (set below) would otherwise leave untouched.
+			reset(undefined, { keepDirtyValues: false })
 			modalHandler.close()
 			drawerHandler.close()
 		}, [drawerHandler, modalHandler, reset])
@@ -362,10 +454,25 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 									<Title order={2}>{`${createNew ? 'Add New' : 'Edit'} Phone`}</Title>
 									<Stack gap={24} align='flex-start' w='100%'>
 										<PhoneNumberEntry
+											// Forces a remount once the detail query's data actually arrives (and again if it
+											// changes, e.g. after a save). PhoneNumberEntry's own `useController`/`useWatch`
+											// subscriptions to this form's `number`/`countryId` fields don't reliably react to
+											// a value applied via `reset()` *after* they've already mounted and subscribed -
+											// this masked field then stays blank even though the form's own top-level
+											// `watch()` correctly sees the new value (verified directly: react-hook-form
+											// 7.85.0 here does update the field internally, it just doesn't notify this
+											// specific child subscription). Mounting fresh instead of updating in place
+											// sidesteps that gap entirely, since the value is already correct at mount time.
+											key={`${phoneId}:${initialData?.number ?? ''}:${initialData?.countryId ?? ''}`}
 											label='Phone Number'
 											required
 											countrySelect={{ name: 'countryId', comboboxProps: { zIndex: 10002 } }}
 											phoneInput={{ name: 'number' }}
+											// Drawer's own focus trap grabs the first focusable element as soon as it opens -
+											// `data-autofocus` is Mantine's own escape hatch for that (checked by
+											// `useFocusTrap` before it falls back to "first tabbable"), so this wins without
+											// racing the trap the way a plain `setFocus` effect would.
+											autoFocusNumber={createNew}
 											control={control}
 										/>
 										<TextInput label='Extension' name='ext' control={control} />

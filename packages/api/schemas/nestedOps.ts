@@ -51,6 +51,20 @@ export const createOne = <T extends Record<string, any> | string, K extends stri
 	}
 }
 
+/** Individual create record - throws if data is missing, instead of silently omitting the key */
+export const createOneRequired = <T extends Record<string, any> | string, K extends string = 'id'>(
+	data: T,
+	key: K = 'id' as K
+): { create: T extends string ? { [Key in K]: T } : T } => {
+	invariant(data)
+	if (isString(data)) {
+		return { create: { [key]: data } as T extends string ? { [Key in K]: T } : T }
+	}
+	return {
+		create: data as T extends string ? { [Key in K]: T } : T,
+	}
+}
+
 export const connectOne = <T extends Record<string, any> | string, K extends string = 'id'>(
 	data: T | null | undefined,
 	key?: K
