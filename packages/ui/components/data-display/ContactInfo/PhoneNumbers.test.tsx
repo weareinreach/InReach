@@ -140,31 +140,29 @@ describe('PhoneNumbersEdit - list appearance by published/deleted', () => {
 		locationOnly: false,
 	}
 
-	it('shows the eye-off icon for an unpublished, non-deleted phone', () => {
-		const { container } = setup({ phones: [{ ...basePhone, published: false, deleted: false }] })
-		expect(screen.getByText('(202) 555-0100')).toBeInTheDocument()
-		expect(container.querySelector('[icon="carbon:view-off"]')).toBeInTheDocument()
-	})
-
-	it('does not show the eye-off icon for a deleted phone (it gets strikethrough styling instead)', () => {
-		const { container } = setup({ phones: [{ ...basePhone, published: true, deleted: true }] })
-		expect(screen.getByText('(202) 555-0100')).toBeInTheDocument()
-		expect(container.querySelector('[icon="carbon:view-off"]')).not.toBeInTheDocument()
-	})
-
-	it('does not show the eye-off icon for a normal published, non-deleted phone', () => {
-		const { container } = setup({ phones: [{ ...basePhone, published: true, deleted: false }] })
-		expect(screen.getByText('(202) 555-0100')).toBeInTheDocument()
-		expect(container.querySelector('[icon="carbon:view-off"]')).not.toBeInTheDocument()
-	})
-
 	/**
 	 * `deleted` takes precedence over `published` in PhoneNumbers.tsx's renderItem switch - a phone that is
-	 * both deleted and unpublished gets strikethrough styling, not the eye-off icon.
+	 * both deleted and unpublished gets strikethrough styling, not the eye-off icon. The eye-off icon only ever
+	 * shows for the one case where a phone is unpublished but NOT deleted.
 	 */
-	it('a phone that is both deleted and unpublished renders as deleted (strikethrough), not eye-off', () => {
-		const { container } = setup({ phones: [{ ...basePhone, published: false, deleted: true }] })
+	it.each([
+		{ label: 'unpublished, non-deleted', published: false, deleted: false, expectEyeOff: true },
+		{ label: 'deleted (gets strikethrough instead)', published: true, deleted: true, expectEyeOff: false },
+		{ label: 'normal published, non-deleted', published: true, deleted: false, expectEyeOff: false },
+		{
+			label: 'both deleted and unpublished (deleted wins)',
+			published: false,
+			deleted: true,
+			expectEyeOff: false,
+		},
+	])('shows the eye-off icon only when $label', ({ published, deleted, expectEyeOff }) => {
+		const { container } = setup({ phones: [{ ...basePhone, published, deleted }] })
 		expect(screen.getByText('(202) 555-0100')).toBeInTheDocument()
-		expect(container.querySelector('[icon="carbon:view-off"]')).not.toBeInTheDocument()
+		const eyeOffIcon = container.querySelector('[icon="carbon:view-off"]')
+		if (expectEyeOff) {
+			expect(eyeOffIcon).toBeInTheDocument()
+		} else {
+			expect(eyeOffIcon).not.toBeInTheDocument()
+		}
 	})
 })

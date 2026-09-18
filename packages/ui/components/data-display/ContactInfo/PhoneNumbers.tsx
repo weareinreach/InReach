@@ -181,6 +181,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 			linkToLocation.mutate({ orgLocationId, orgPhoneId, action: 'link' }),
 		[linkToLocation]
 	)
+	const handleCreateNewClick = useCallback(() => createNewTriggerRef.current?.click(), [])
 	const output = data?.map((phone) => {
 		const { country, ext, number, phoneType, primary: _primary, description } = phone
 		const parsedPhone = parsePhoneNumber(number, country)
@@ -281,7 +282,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 					    "Create new" PhoneDrawer now lives outside the Menu entirely (see below, visually
 					    hidden) and this item just clicks its trigger by ref, so the drawer's whole subtree
 					    never lives inside the menu's component tree at all. */}
-					<Menu.Item key='new' onClick={() => createNewTriggerRef.current?.click()}>
+					<Menu.Item key='new' onClick={handleCreateNewClick}>
 						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>

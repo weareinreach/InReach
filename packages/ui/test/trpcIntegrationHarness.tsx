@@ -268,8 +268,9 @@ export const createFakeOrgPhoneBackend = () => {
 		})
 	}
 
+	// `input.slug` is part of the real procedure's input shape but isn't needed to filter this fake
+	// backend's in-memory data - only `locationId` is used below.
 	const getLinkOptions = (input: { slug: string; locationId: string }) => {
-		void input.slug
 		return [...phones.values()]
 			.filter((row) => orgLinks.get(row.id) === ORG.id)
 			.filter((row) => !locationLinks.has(`${input.locationId}:${row.id}`))
@@ -368,6 +369,8 @@ const parseGetInput = (request: Request) => {
 // all settle in the order they were fired. Jittered per-request delay, opt-in via NETWORK_JITTER_MS,
 // approximates that without needing every test to pay for it.
 const NETWORK_JITTER_MS = Number(process.env.HARNESS_NETWORK_JITTER_MS ?? 0)
+// NOSONAR (typescript:S2245) - simulates network delay in a test-only fake backend, not a
+// security-sensitive context that needs cryptographic randomness.
 const jitter = () => (NETWORK_JITTER_MS > 0 ? Math.random() * NETWORK_JITTER_MS : 0)
 
 const respond = async (request: Request, run: (input: unknown) => unknown) => {

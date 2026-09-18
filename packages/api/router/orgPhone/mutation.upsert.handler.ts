@@ -96,37 +96,40 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 		}
 
 		const result = await prisma.$transaction(async (tx) => {
-			const txnResult = isCreate
-				? await tx.orgPhone.create({
-						data: {
-							id,
-							...data,
-							description: description?.prisma,
-							// Both throw (via invariant) rather than silently omitting the relation if the
-							// required id is missing - operation:'create' must always create, never fall
-							// through to the update branch below just because a required field is absent,
-							// and a phone must always belong to an organization, never end up orphaned.
-							// The non-null assertions below reflect what the zod schema already guarantees
-							// for `operation: 'create'` (both `countryId`/`orgId` are required there) - `input`
-							// was destructured into loose variables above `isCreateData`'s check, so TS sees
-							// `string | undefined` here regardless of `isCreate`; `connectOneRequired`'s/
-							// `createOneRequired`'s own `invariant` calls are the real runtime backstop if
-							// that guarantee is ever violated.
-							country: connectOneRequired(countryId!, 'id'),
-							phoneType: connectOne(phoneTypeId, 'id'),
-							organization: createOneRequired(orgId!, 'organizationId'),
-						},
-					})
-				: await tx.orgPhone.update({
-						where: { id },
-						data: {
-							...data,
-							country: connectOne(countryId, 'id'),
-							phoneType: connectOrDisconnectId(phoneTypeId),
-							description: description?.prisma,
-						},
-					})
-			return txnResult
+			// operation:'create' must always create, never fall through to the update branch below just
+			// because a required field is absent, and a phone must always belong to an organization, never
+			// end up orphaned - so these are checked (and thrown on) up front rather than leaving it to
+			// connectOneRequired's/createOneRequired's own invariants deep inside the `data` object below.
+			// `input` was destructured into loose variables above `isCreateData`'s check, so TS still sees
+			// `string | undefined` for both regardless of `isCreate` - these guards are what let it narrow
+			// `countryId`/`orgId` to `string` below without a forbidden non-null assertion.
+			if (isCreate) {
+				if (!countryId) {
+					throw new Error('countryId is required to create a phone')
+				}
+				if (!orgId) {
+					throw new Error('orgId is required to create a phone')
+				}
+				return await tx.orgPhone.create({
+					data: {
+						id,
+						...data,
+						description: description?.prisma,
+						country: connectOneRequired(countryId, 'id'),
+						phoneType: connectOne(phoneTypeId, 'id'),
+						organization: createOneRequired(orgId, 'organizationId'),
+					},
+				})
+			}
+			return await tx.orgPhone.update({
+				where: { id },
+				data: {
+					...data,
+					country: connectOne(countryId, 'id'),
+					phoneType: connectOrDisconnectId(phoneTypeId),
+					description: description?.prisma,
+				},
+			})
 		})
 		return result
 	} catch (error) {

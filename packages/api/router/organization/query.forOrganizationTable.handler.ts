@@ -284,7 +284,7 @@ const forOrganizationTable = async ({
 	const search = input.search?.trim()
 
 	const cleanupIds = input.needsLocationPhoneCleanup ? await locationPhoneCleanupIds() : undefined
-	if (cleanupIds && cleanupIds.length === 0) {
+	if (cleanupIds?.length === 0) {
 		return { results: [], total: 0 }
 	}
 
