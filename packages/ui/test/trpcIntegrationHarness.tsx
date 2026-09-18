@@ -369,9 +369,9 @@ const parseGetInput = (request: Request) => {
 // all settle in the order they were fired. Jittered per-request delay, opt-in via NETWORK_JITTER_MS,
 // approximates that without needing every test to pay for it.
 const NETWORK_JITTER_MS = Number(process.env.HARNESS_NETWORK_JITTER_MS ?? 0)
-// NOSONAR (typescript:S2245) - simulates network delay in a test-only fake backend, not a
-// security-sensitive context that needs cryptographic randomness.
-const jitter = () => (NETWORK_JITTER_MS > 0 ? Math.random() * NETWORK_JITTER_MS : 0)
+// Simulates network delay in a test-only fake backend, not a security-sensitive context that needs
+// cryptographic randomness.
+const jitter = () => (NETWORK_JITTER_MS > 0 ? Math.random() * NETWORK_JITTER_MS : 0) // NOSONAR
 
 const respond = async (request: Request, run: (input: unknown) => unknown) => {
 	try {
