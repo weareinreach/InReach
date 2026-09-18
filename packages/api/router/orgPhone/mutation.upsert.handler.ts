@@ -7,7 +7,12 @@ import {
 	Prisma,
 } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
-import { connectOne, connectOneRequired, createOne } from '~api/schemas/nestedOps'
+import {
+	connectOne,
+	connectOneRequired,
+	connectOrDisconnectId,
+	createOneRequired,
+} from '~api/schemas/nestedOps'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type Create, type TUpsertSchema } from './mutation.upsert.schema'
@@ -91,27 +96,30 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 		}
 
 		const result = await prisma.$transaction(async (tx) => {
-			const txnResult =
-				isCreate && countryId
-					? await tx.orgPhone.create({
-							data: {
-								id,
-								...data,
-								description: description?.prisma,
-								country: connectOneRequired(countryId, 'id'),
-								phoneType: connectOne(phoneTypeId, 'id'),
-								organization: createOne(orgId, 'organizationId'),
-							},
-						})
-					: await tx.orgPhone.update({
-							where: { id },
-							data: {
-								...data,
-								country: connectOne(countryId, 'id'),
-								phoneType: connectOne(phoneTypeId, 'id'),
-								description: description?.prisma,
-							},
-						})
+			const txnResult = isCreate
+				? await tx.orgPhone.create({
+						data: {
+							id,
+							...data,
+							description: description?.prisma,
+							// Both throw (via invariant) rather than silently omitting the relation if the
+							// required id is missing - operation:'create' must always create, never fall
+							// through to the update branch below just because a required field is absent,
+							// and a phone must always belong to an organization, never end up orphaned.
+							country: connectOneRequired(countryId, 'id'),
+							phoneType: connectOne(phoneTypeId, 'id'),
+							organization: createOneRequired(orgId, 'organizationId'),
+						},
+					})
+				: await tx.orgPhone.update({
+						where: { id },
+						data: {
+							...data,
+							country: connectOne(countryId, 'id'),
+							phoneType: connectOrDisconnectId(phoneTypeId),
+							description: description?.prisma,
+						},
+					})
 			return txnResult
 		})
 		return result

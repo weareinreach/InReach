@@ -15,8 +15,13 @@ visual-diff-output/
 
 # testing
 coverage
+packages/*/html/
 test/cypress/videos
 test/cypress/screenshots
+test-results.html
+coverage-results.html
+phone-test-results.html
+phone-test-plan.html
 
 # next.js
 .next/

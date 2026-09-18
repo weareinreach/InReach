@@ -23,7 +23,7 @@ const create = z
 	.object({
 		operation: z.literal('create'),
 	})
-	.merge(base.required({ number: true, countryId: true }))
+	.merge(base.required({ number: true, countryId: true, orgId: true }))
 const update = z
 	.object({
 		operation: z.literal('update'),

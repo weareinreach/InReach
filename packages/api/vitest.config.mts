@@ -10,5 +10,10 @@ export default defineConfig({
 		environment: 'node',
 		setupFiles: ['./test/setup.ts'],
 		globals: false,
+		coverage: {
+			provider: 'v8',
+			reporter: ['text', 'html', 'json-summary'],
+			all: false,
+		},
 	},
 })
