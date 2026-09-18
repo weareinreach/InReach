@@ -588,16 +588,6 @@ describe('PhoneDrawer - sequential create (duplicate-id suspicion)', () => {
 })
 
 describe('PhoneDrawer - create success side effects', () => {
-	const fillAndSaveNewPhone = async (upsertMutate: ReturnType<typeof vi.fn>) => {
-		const numberInput = screen.getByRole('textbox', { name: /phone number/i })
-		fireEvent.change(numberInput, { target: { value: '+12025550179' } })
-		await waitFor(() => {
-			expect((screen.getAllByRole('combobox')[0] as HTMLInputElement).value).toBe('🇺🇸')
-		})
-		await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
-		await waitFor(() => expect(upsertMutate).toHaveBeenCalledTimes(1))
-	}
-
 	/**
 	 * Live-confirmed bug this replaces an outdated test for: a real (forced) refetch right after create asks
 	 * the same database the write just went to, and that read is not guaranteed to reflect the write yet -
@@ -611,7 +601,13 @@ describe('PhoneDrawer - create success side effects', () => {
 	it('a successful create writes the new phone into the cached list directly, without waiting on a server re-read', async () => {
 		const { upsertMutate } = setup({ createNew: true, initialData: null })
 		await openDrawer()
-		await fillAndSaveNewPhone(upsertMutate)
+		const numberInput = screen.getByRole('textbox', { name: /phone number/i })
+		fireEvent.change(numberInput, { target: { value: '+12025550179' } })
+		await waitFor(() => {
+			expect((screen.getAllByRole('combobox')[0] as HTMLInputElement).value).toBe('🇺🇸')
+		})
+		await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
+		await waitFor(() => expect(upsertMutate).toHaveBeenCalledTimes(1))
 
 		const submitted = upsertMutate.mock.calls[0]![0] as { id: string; number: string }
 		const options = upsertMutationMock.mock.calls.at(-1)?.[0] as {
@@ -648,7 +644,13 @@ describe('PhoneDrawer - create success side effects', () => {
 	it('reopening the same "Create new" trigger after a successful create shows a blank form, not the previous phone\'s data', async () => {
 		const { upsertMutate } = setup({ createNew: true, initialData: null })
 		await openDrawer()
-		await fillAndSaveNewPhone(upsertMutate)
+		const numberInput = screen.getByRole('textbox', { name: /phone number/i })
+		fireEvent.change(numberInput, { target: { value: '+12025550179' } })
+		await waitFor(() => {
+			expect((screen.getAllByRole('combobox')[0] as HTMLInputElement).value).toBe('🇺🇸')
+		})
+		await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
+		await waitFor(() => expect(upsertMutate).toHaveBeenCalledTimes(1))
 
 		const options = upsertMutationMock.mock.calls.at(-1)?.[0] as {
 			onSuccess?: () => void
@@ -662,6 +664,94 @@ describe('PhoneDrawer - create success side effects', () => {
 		await openDrawer()
 		expect(screen.queryByDisplayValue('(202) 555-0179')).not.toBeInTheDocument()
 		expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('')
+	})
+})
+
+describe('PhoneDrawer - creating a new phone from a location context links it to that location', () => {
+	/**
+	 * `orgPhone.upsert`'s `create` operation only ever connects the new phone to `organization` - there's no
+	 * location field on that mutation's schema at all. Before this fix, a phone created from a location's
+	 * "Create new" trigger was silently org-only: it appeared under the organization's own phone list but never
+	 * the location's, even though the drawer had the location's id available the whole time (`hasLocationId`,
+	 * from the route). The fix fires a second, separate `locationLink` mutation with `action: 'link'` right
+	 * after a successful create, using the same id just created.
+	 */
+	it('fires locationLink with action: link using the same id just created, when created from a location context', async () => {
+		const { upsertMutate, locationLinkMutate } = setup({
+			createNew: true,
+			initialData: null,
+			orgLocationId: 'orgLocation_test',
+		})
+		await openDrawer()
+		const numberInput = screen.getByRole('textbox', { name: /phone number/i })
+		fireEvent.change(numberInput, { target: { value: '+12025550179' } })
+		await waitFor(() => {
+			expect((screen.getAllByRole('combobox')[0] as HTMLInputElement).value).toBe('🇺🇸')
+		})
+		await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
+		await waitFor(() => expect(upsertMutate).toHaveBeenCalledTimes(1))
+
+		const submitted = upsertMutate.mock.calls[0]![0] as { id: string }
+		const options = upsertMutationMock.mock.calls.at(-1)?.[0] as {
+			onSuccess?: () => void
+			onSettled?: (data: unknown, error: null, variables: unknown) => void
+		}
+		act(() => {
+			options.onSettled?.(submitted, null, submitted)
+			options.onSuccess?.()
+		})
+
+		expect(locationLinkMutate).toHaveBeenCalledWith({
+			orgPhoneId: submitted.id,
+			orgLocationId: 'orgLocation_test',
+			action: 'link',
+		})
+	})
+
+	it('does not fire locationLink when creating a phone outside a location context (plain org create)', async () => {
+		const { upsertMutate, locationLinkMutate } = setup({ createNew: true, initialData: null })
+		await openDrawer()
+		const numberInput = screen.getByRole('textbox', { name: /phone number/i })
+		fireEvent.change(numberInput, { target: { value: '+12025550179' } })
+		await waitFor(() => {
+			expect((screen.getAllByRole('combobox')[0] as HTMLInputElement).value).toBe('🇺🇸')
+		})
+		await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
+		await waitFor(() => expect(upsertMutate).toHaveBeenCalledTimes(1))
+
+		const submitted = upsertMutate.mock.calls[0]![0]
+		const options = upsertMutationMock.mock.calls.at(-1)?.[0] as {
+			onSuccess?: () => void
+			onSettled?: (data: unknown, error: null, variables: unknown) => void
+		}
+		act(() => {
+			options.onSettled?.(submitted, null, submitted)
+			options.onSuccess?.()
+		})
+
+		expect(locationLinkMutate).not.toHaveBeenCalled()
+	})
+
+	it('does not re-link on an ordinary edit of an already-linked phone (only fires for a fresh create)', async () => {
+		const { upsertMutate, locationLinkMutate } = setup({ orgLocationId: 'orgLocation_test' })
+		await openDrawer()
+
+		const numberInput = screen.getByRole('textbox', { name: /phone number/i })
+		fireEvent.change(numberInput, { target: { value: '+12025550199' } })
+		await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
+		await waitFor(() => expect(upsertMutate).toHaveBeenCalledTimes(1))
+
+		const submitted = upsertMutate.mock.calls[0]![0]
+		const options = upsertMutationMock.mock.calls.at(-1)?.[0] as {
+			onSuccess?: () => void
+			onSettled?: (data: unknown, error: null, variables: unknown) => void
+		}
+		act(() => {
+			options.onSettled?.(submitted, null, submitted)
+			options.onSuccess?.()
+		})
+
+		expect(locationLinkMutate).not.toHaveBeenCalled()
 	})
 })
 

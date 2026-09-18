@@ -45,7 +45,6 @@ const FormSchema = z.object({
 	description: z.string().nullable(),
 	locationOnly: z.boolean().optional(),
 	serviceOnly: z.boolean().optional(),
-	linkLocationId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
@@ -293,6 +292,15 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			[apiUtils, orgId, phoneId, countryCca2ById]
 		)
 
+		// `orgPhone.upsert`'s `create` operation only ever connects the new phone to `organization` -
+		// there's no location field on that schema at all, so creating this from a location's "Create
+		// new" trigger needs a second, separate mutation to actually attach it to `orgLocationPhone`.
+		// Without this, the new phone was only ever visible under the organization's own phone list,
+		// never the location's, even though `hasLocationId`/`linkLocationId` looked like they already
+		// captured that intent. Declared before `siteUpdate` below since its `onSuccess` calls this.
+		const linkToLocation = api.orgPhone.locationLink.useMutation({
+			onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' }),
+		})
 		const siteUpdate = api.orgPhone.upsert.useMutation({
 			onSettled: (data, _error, variables) => {
 				patchContactListCaches(variables)
@@ -320,6 +328,9 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			},
 			onSuccess: () => {
 				setIsSaved(true)
+				if (createNew && hasLocationId !== null) {
+					linkToLocation.mutate({ orgPhoneId: phoneId, orgLocationId: hasLocationId, action: 'link' })
+				}
 				modalHandler.close()
 				drawerHandler.close()
 			},
@@ -352,7 +363,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 						description: '',
 						published: true,
 						deleted: false,
-						...(hasLocationId !== null ? { linkLocationId: hasLocationId } : {}),
 					},
 					{ keepDirtyValues: false }
 				)
