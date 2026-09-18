@@ -106,9 +106,15 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 							// required id is missing - operation:'create' must always create, never fall
 							// through to the update branch below just because a required field is absent,
 							// and a phone must always belong to an organization, never end up orphaned.
-							country: connectOneRequired(countryId, 'id'),
+							// The non-null assertions below reflect what the zod schema already guarantees
+							// for `operation: 'create'` (both `countryId`/`orgId` are required there) - `input`
+							// was destructured into loose variables above `isCreateData`'s check, so TS sees
+							// `string | undefined` here regardless of `isCreate`; `connectOneRequired`'s/
+							// `createOneRequired`'s own `invariant` calls are the real runtime backstop if
+							// that guarantee is ever violated.
+							country: connectOneRequired(countryId!, 'id'),
 							phoneType: connectOne(phoneTypeId, 'id'),
-							organization: createOneRequired(orgId, 'organizationId'),
+							organization: createOneRequired(orgId!, 'organizationId'),
 						},
 					})
 				: await tx.orgPhone.update({
