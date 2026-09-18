@@ -63,5 +63,11 @@ export const ZForOrganizationTableSchema = z.object({
 	sorting: ZSortingState.optional(),
 	take: z.number().int().min(1).max(200).default(50),
 	skip: z.number().int().min(0).default(0),
+	// Temporary cleanup-report filter: restricts to orgs with more than one published location where
+	// at least one phone is also linked to a (published) location - see OrganizationTable's
+	// `locationPhoneCleanupOnly` prop and query.forOrganizationTable.handler.ts's
+	// `locationPhoneCleanupIds`. Safe to delete this field, along with those, once the review driven by
+	// the /data-portal/location-phone-cleanup page is done.
+	needsLocationPhoneCleanup: z.boolean().optional(),
 })
 export type TForOrganizationTableSchema = z.infer<typeof ZForOrganizationTableSchema>

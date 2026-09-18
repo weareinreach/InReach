@@ -1,5 +1,6 @@
 import { buildContextUrl, syncDatabaseStringIfChanged } from '@weareinreach/crowdin/api'
 import { generateNestedFreeTextUpsert, getAuditedClient } from '@weareinreach/db'
+import { connectOrDisconnectId } from '~api/schemas/nestedOps'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateSchema } from './mutation.update.schema'
@@ -43,7 +44,7 @@ const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protecte
 				...rest,
 				...(textData ? { description: textData } : description === null && { description: { delete: true } }),
 				...(countryId && { country: { connect: { id: countryId } } }),
-				...(phoneTypeId && { phoneType: { connect: { id: phoneTypeId } } }),
+				phoneType: connectOrDisconnectId(phoneTypeId),
 			},
 		})
 		return updatedRecord

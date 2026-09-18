@@ -179,6 +179,10 @@ const EditModeBar = () => {
 							apiUtils.location.invalidate()
 							apiUtils.organization.invalidate()
 							apiUtils.component.EditModeBar.invalidate()
+							// The mutation always writes a new InternalNote (typed or auto-generated fallback
+							// text) - without this, a previously-opened notes drawer for this org keeps
+							// showing its stale cache.
+							apiUtils.internalNote.getAllForRecord.invalidate()
 							revalidatePage({ path: router.asPath.replace('/edit', '') })
 							publishedNotification()
 						}}
@@ -214,6 +218,10 @@ const EditModeBar = () => {
 						onSuccess={() => {
 							apiUtils.organization.invalidate()
 							apiUtils.component.EditModeBar.invalidate()
+							// The mutation always writes a new InternalNote (typed or auto-generated fallback
+							// text) - without this, a previously-opened notes drawer for this org keeps
+							// showing its stale cache.
+							apiUtils.internalNote.getAllForRecord.invalidate()
 							statusUpdatedNotification()
 						}}
 					>

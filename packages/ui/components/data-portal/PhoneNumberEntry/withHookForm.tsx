@@ -21,7 +21,7 @@ import { TextInput as FormTextInput, Select, type SelectProps } from 'react-hook
 import { isValidPhoneNumber, parsePhoneNumber } from 'react-phone-number-input'
 import PhoneInput, { type Props as PhoneInputProps } from 'react-phone-number-input/react-hook-form-input'
 
-import { isCountryCode } from '~ui/hooks/usePhoneNumber'
+import { isCountryCode, isNanpTollFreeNumber } from '~ui/hooks/usePhoneNumber'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { transformCountryList } from './lib'
@@ -44,6 +44,7 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	control,
 	label = 'Phone Number',
 	required,
+	autoFocusNumber,
 }: PhoneNumberEntryProps<T>) => {
 	const { data: countryData } = api.fieldOpt.countries.useQuery(
 		{ activeForOrgs: true },
@@ -136,19 +137,47 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 			return
 		}
 		hasCheckedInitialValue.current = true
+		// A not-yet-dirty field can only hold a value here because it came from loaded data - once the
+		// user has typed anything, the field is dirty and this must not run. Without this check, a
+		// brand-new phone's very first keystroke (always unparseable on its own - a single digit is
+		// never a complete number) would satisfy the "unparseable" condition just as much as genuine
+		// broken legacy data would, flipping to the raw-fallback text input and swapping out the masked
+		// one entirely - a real element-type change, which unmounts the input and loses focus/cursor
+		// position, exactly the bug this guard exists to prevent.
+		if (phoneNumbControl.fieldState.isDirty) {
+			return
+		}
 		if (!parsePhoneNumber(phoneNumber, activeCountry)) {
 			setShowRawFallback(true)
 		}
-	}, [phoneNumber, activeCountry])
+	}, [phoneNumber, activeCountry, phoneNumbControl.fieldState.isDirty])
 
 	useEffect(() => {
 		if (phoneNumber) {
 			phoneFormatter.input(phoneNumber)
 			const phoneCountry = phoneFormatter.getNumber()?.country
-			if ((!phoneCountry && !selectedCountry) || phoneCountry !== selectedCountry) {
-				const countryId = countryList.find(({ data }) => data.cca2 === phoneCountry)?.value
+			// NANP toll-free numbers (800, 888, etc.) aren't owned by any one country, so
+			// `phoneCountry` above is either an arbitrary guess among NANP members or empty for these -
+			// it can't be trusted to auto-select a country. Fall back to whatever's already selected
+			// (or the default country, if nothing is yet) instead of guessing wrong or leaving it blank.
+			const resolvedCountry = isNanpTollFreeNumber(phoneNumber)
+				? (activeCountry ?? DEFAULT_COUNTRY)
+				: phoneCountry
+			// Comparing `resolvedCountry` (a cca2 code, e.g. "US") against `activeCountry` (also a cca2
+			// code) - NOT against `selectedCountry`, which is the country's *id* (e.g. "country_us" or
+			// a real database id). Comparing a cca2 code to an id can never be equal, so that version of
+			// this guard always re-ran unconditionally; harmless when the effect only fired once per
+			// `phoneNumber` change, but once `countryList` was added as a dependency below (so a slow
+			// countries fetch gets a second chance to auto-detect once it arrives), an always-true guard
+			// plus a `countryList` reference that isn't guaranteed stable across renders turned this into
+			// runaway re-firing of `field.onChange` on every render - an infinite render loop.
+			if ((!resolvedCountry && !activeCountry) || resolvedCountry !== activeCountry) {
+				const countryId = countryList.find(({ data }) => data.cca2 === resolvedCountry)?.value
 
-				if (countryId) {
+				// Also skip when `countryId` already matches `selectedCountry` - the id comparison here
+				// (not the cca2 one above) is what actually makes this converge instead of calling
+				// `onChange` again every time the effect re-runs for an unrelated reason.
+				if (countryId && countryId !== selectedCountry) {
 					countryControl.field.onChange(countryId)
 					if (countrySelect.onChange && typeof countrySelect.onChange === 'function') {
 						const foundCountry = countryList.find(({ value }) => value === countryId)
@@ -157,8 +186,19 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 				}
 			}
 		}
+		// `countryList` deliberately included (not just `phoneNumber`): if the user finishes entering
+		// a number before `fieldOpt.countries` has resolved, `countryList` is still `[]` and the match
+		// above silently fails - without this dependency, the effect would never get a second chance to
+		// run once the list actually loads, permanently leaving the country unselected (which also
+		// left the masked input's own country context ambiguous, observed to sometimes render the
+		// value in international "+1 202 555 0100" form instead of national "(202) 555-0100").
+		// `countryControl.field`/`countrySelect`/`phoneFormatter` deliberately excluded - all three are
+		// new object references on every render (useController's return value, the caller's own prop
+		// object, and `new AsYouType(...)` above), so depending on them would make this run every
+		// render regardless of whether anything meaningful changed. The `countryId !== selectedCountry`
+		// check above is what actually stops this from looping, not the dependency array.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [phoneNumber])
+	}, [phoneNumber, countryList, activeCountry, selectedCountry])
 
 	const renderCountryOption = useCallback(
 		({ option }: ComboboxLikeRenderOptionInput<ComboboxItem>) => {
@@ -218,7 +258,12 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 				return isValidPhoneNumber(number, activeCountry) || `Not a valid phone number for ${activeCountry}`
 			},
 			invalidCountry: (number?: string) => {
-				if (number) {
+				// NANP toll-free numbers (800, 888, etc.) aren't owned by any one country -
+				// `parsePhoneNumber` below would either guess an arbitrary NANP member or find nothing,
+				// neither of which says anything real about whether the org's selected country is
+				// wrong. Skip this check for them and let `validPhoneNumber` above (which validates
+				// against the actually-selected `activeCountry`) be the source of truth instead.
+				if (number && !isNanpTollFreeNumber(number)) {
 					const parsed = parsePhoneNumber(number)
 					if (parsed?.country) {
 						return validCountries.includes(parsed.country) || `Country not enabled: ${parsed.country}`
@@ -268,6 +313,10 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 			required={required}
 			error={errors}
 			rules={phoneValidationRules}
+			// Mantine's Drawer/Modal focus trap looks for this attribute before falling back to
+			// "first tabbable element" - setting it here (rather than via a `setFocus` effect in the
+			// parent) wins outright instead of racing the trap's own auto-focus on open.
+			data-autofocus={autoFocusNumber || undefined}
 			{...propsPhoneInput}
 		/>
 	)
@@ -281,4 +330,6 @@ export interface PhoneNumberEntryProps<T extends FieldValues> {
 	control: Control<T>
 	label?: string
 	required?: boolean
+	/** Puts the cursor in the phone number field as soon as it mounts (e.g. opening a "create new" drawer). */
+	autoFocusNumber?: boolean
 }

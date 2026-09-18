@@ -39,3 +39,8 @@ class MockResizeObserver {
 	disconnect = vi.fn()
 }
 Object.defineProperty(window, 'ResizeObserver', { writable: true, value: MockResizeObserver })
+
+// jsdom doesn't implement scrollIntoView - Mantine's Combobox (used by Select and friends) calls it on
+// the active option after selection, on a timer that can fire after a test has already finished and
+// torn down its render, surfacing as an unhandled exception rather than a normal assertion failure.
+Object.defineProperty(window.Element.prototype, 'scrollIntoView', { writable: true, value: vi.fn() })

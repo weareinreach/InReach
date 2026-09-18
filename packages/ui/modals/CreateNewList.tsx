@@ -145,6 +145,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 							placeholder={t('list.new-list-placeholder')}
 							required
 							{...form.getInputProps('name')}
+							spellCheck
 						/>
 						<Text variant={variants.Text.utility4darkGray}>{t('list.create-new-sub2')}</Text>
 						<Button

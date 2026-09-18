@@ -59,10 +59,15 @@ const SetStatusPopover = ({ row }: { row: RowItem }) => {
 		<UnpublishReasonPopover
 			slug={row.slug}
 			currentReason={row.unpublishedReason as OrgUnpublishedReason | null}
-			onSuccess={() => apiUtils.organization.forOrganizationTable.invalidate()}
+			onSuccess={() => {
+				apiUtils.organization.forOrganizationTable.invalidate()
+				// The mutation always writes a new InternalNote (typed or auto-generated fallback text) -
+				// without this, a previously-opened notes drawer for this org keeps showing its stale cache.
+				apiUtils.internalNote.getAllForRecord.invalidate()
+			}}
 		>
 			<Tooltip label='Set status'>
-				<ActionIcon variant='subtle'>
+				<ActionIcon variant='subtle' aria-label='Set status'>
 					<Icon icon='carbon:tag' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
@@ -100,12 +105,12 @@ const RowAction = ({
 	return (
 		<Group wrap='nowrap' gap={8}>
 			<Tooltip label='View'>
-				<ActionIcon variant='subtle' component={Link} href={getViewUrl()} target='_blank'>
+				<ActionIcon variant='subtle' component={Link} href={getViewUrl()} target='_blank' aria-label='View'>
 					<Icon icon='carbon:search' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 			<Tooltip label='Edit'>
-				<ActionIcon variant='subtle' component={Link} href={getEditUrl()} target='_blank'>
+				<ActionIcon variant='subtle' component={Link} href={getEditUrl()} target='_blank' aria-label='Edit'>
 					<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
@@ -123,7 +128,7 @@ const RowAction = ({
 					<Menu position='bottom-end' shadow='md'>
 						<Menu.Target>
 							<Tooltip label='More actions'>
-								<ActionIcon variant='subtle'>
+								<ActionIcon variant='subtle' aria-label='More actions'>
 									<Icon icon='carbon:overflow-menu-vertical' color={theme.other.colors.primary.allyGreen} />
 								</ActionIcon>
 							</Tooltip>
@@ -349,11 +354,23 @@ const COMPACT_MULTISELECT_STYLES = {
 	pill: { fontSize: 'var(--mantine-font-size-xs)' },
 }
 
+export interface OrganizationTableProps {
+	/**
+	 * Restricts this same table to orgs needing the location-phone display-fix cleanup pass (see
+	 * `needsLocationPhoneCleanup` in query.forOrganizationTable.schema.ts) - the "Location Phone Cleanup"
+	 * data-portal page renders the table this way instead of duplicating its columns/sorting/pagination into a
+	 * separate component. All the usual filters (status, search, etc.) still work on top of this restriction.
+	 * Temporary: safe to delete this prop, along with the schema/handler field it maps to, once that page's
+	 * review is done.
+	 */
+	locationPhoneCleanupOnly?: boolean
+}
+
 /**
  * The org directory's system-of-record table - publish status, verification date, deletion flag, and each
  * org's locations. Filtering, sorting, and pagination all run server-side (`forOrganizationTable`).
  */
-export const OrganizationTable = () => {
+export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTableProps = {}) => {
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 
@@ -391,6 +408,7 @@ export const OrganizationTable = () => {
 				id: id as SortableColumnId,
 				desc,
 			})),
+			needsLocationPhoneCleanup: locationPhoneCleanupOnly || undefined,
 			take: pagination.pageSize,
 			skip: pagination.pageIndex * pagination.pageSize,
 		},

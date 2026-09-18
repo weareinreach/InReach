@@ -26,6 +26,8 @@ const organizationsSideNav = {
 			href: { pathname: '/data-portal/bulk-search-replace' as const },
 			active: true,
 		},
+		// TEMPORARY - see location-phone-cleanup.tsx; remove this entry once that review is done.
+		{ label: 'Location Phone Cleanup', href: { pathname: '/data-portal/location-phone-cleanup' as const } },
 	],
 }
 

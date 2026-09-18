@@ -21,3 +21,12 @@ export default {
 type StoryDef = StoryObj<typeof OrganizationTable>
 
 export const Default = {} satisfies StoryDef
+
+// Demos the table's error banner for a session without Data Portal access - `forOrganizationTable` is
+// gated behind `viewAllOrganizations` (dataPortalBasic+) server-side, so a stale/expired/permission-less
+// session sees this instead of table rows.
+export const Unauthorized = {
+	beforeEach({ msw }) {
+		msw.use(organization.forOrganizationTableUnauthorized)
+	},
+} satisfies StoryDef

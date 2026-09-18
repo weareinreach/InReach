@@ -77,6 +77,7 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 					placeholder={t('enter-review') satisfies string}
 					description={t('review-note')}
 					{...form.getInputProps('reviewText')}
+					spellCheck
 				/>
 				<Button variant={isBody ? 'primary' : 'primary-icon'} fullWidth={!isBody} type='submit'>
 					{t('submit-review')}

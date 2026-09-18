@@ -385,6 +385,9 @@ describe('BulkSearchReplaceTable', () => {
 		expect(table.getByText('Food pantry')).toBeInTheDocument()
 	})
 
+	// The inner `findByRole` wait below has its own 15000ms budget for a slow CI runner - the outer
+	// test timeout must stay comfortably above that or a fully-used inner wait could exceed it before
+	// ever reaching this test's own assertions.
 	it('renders Status per row type (once shown via the column menu, since it is hidden by default) and strikes through a deleted row', async () => {
 		const user = userEvent.setup()
 		const fixture = {
@@ -411,15 +414,19 @@ describe('BulkSearchReplaceTable', () => {
 		await user.click(screen.getByRole('button', { name: 'Search' }))
 
 		// Status isn't one of the five default-visible columns - reveal it via the column menu first.
+		// Mantine's Menu positions its dropdown via floating-ui, which resolves the item into the DOM
+		// a tick or two after the click rather than synchronously - this has been seen to take longer
+		// than 5000ms under CI's slower/contended runners (worse as the suite grows and more test files
+		// run concurrently), so it's widened well past that observed failure point here.
 		await user.click(screen.getByRole('button', { name: 'Show/hide columns' }))
-		await user.click(await screen.findByRole('menuitem', { name: 'Status' }))
+		await user.click(await screen.findByRole('menuitem', { name: 'Status' }, { timeout: 15000 }))
 
 		const table = within(screen.getByRole('table'))
 		expect(table.getByText('New')).toBeInTheDocument()
 		expect(table.getByText('Unpublished')).toBeInTheDocument()
 		const orgRow = screen.getByText('Riverside Community Health Center').closest('tr')
 		expect(orgRow).toHaveStyle({ textDecoration: 'line-through' })
-	})
+	}, 20000)
 
 	it('defaults to hiding deleted organizations, and the Service Tags/Attributes filters feed the search query', async () => {
 		const user = userEvent.setup()
