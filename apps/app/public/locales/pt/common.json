@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizações",
 		"tab-reports": "relatórios",
 		"tab-users": "Utilizadores",
+		"tab-manage-users": "Gerenciar usuários",
 		"tab-downloads": "Downloads",
 		"no-access-message": "Você não tem permissão para acessar nenhuma seção do Painel de Administração."
 	},
@@ -517,6 +518,7 @@
 		"search": "Procurar",
 		"service-hours": "Horário de atendimento",
 		"services": "Serviços",
+		"set-status": "Definir status",
 		"settings": "Configurações",
 		"share": "Compartilhar",
 		"sign-up": "Cadastre-se",

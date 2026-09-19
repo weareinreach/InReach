@@ -12,6 +12,7 @@
 		"tab-organizations": "Organisations",
 		"tab-reports": "Rapports",
 		"tab-users": "Utilisateurs",
+		"tab-manage-users": "Gérer les utilisateurs",
 		"tab-downloads": "Téléchargements",
 		"no-access-message": "Vous n'avez pas la permission d'accéder à toutes les sections du tableau de bord de l'administration."
 	},
@@ -517,6 +518,7 @@
 		"search": "Chercher",
 		"service-hours": "Heures de service",
 		"services": "Services",
+		"set-status": "Définir le statut",
 		"settings": "Réglages",
 		"share": "Partager",
 		"sign-up": "S'inscrire",

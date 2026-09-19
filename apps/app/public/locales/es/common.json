@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizaciones",
 		"tab-reports": "Informes",
 		"tab-users": "Usuaries",
+		"tab-manage-users": "Administrar usuarios",
 		"tab-downloads": "Descargas",
 		"no-access-message": "No tienes permiso para acceder a ninguna sección del panel de administración."
 	},
@@ -517,6 +518,7 @@
 		"search": "Buscar",
 		"service-hours": "Horas de servicio",
 		"services": "Servicios",
+		"set-status": "Establecer estado",
 		"settings": "Ajustes",
 		"share": "Compartir",
 		"sign-up": "Regístrate",

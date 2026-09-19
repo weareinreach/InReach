@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
+		"tab-manage-users": "Manage users",
 		"tab-downloads": "Downloads",
 		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
@@ -517,6 +518,7 @@
 		"search": "सर्च",
 		"service-hours": "सेवा घंटे",
 		"services": "Services",
+		"set-status": "Set status",
 		"settings": "सेटिंग्स",
 		"share": "शेयर करें",
 		"sign-up": "साइन अप करें",
