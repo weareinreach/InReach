@@ -12,6 +12,7 @@
 		"tab-organizations": "المنظمات",
 		"tab-reports": "التقارير",
 		"tab-users": "المستخدمون",
+		"tab-manage-users": "إدارة المستخدمين",
 		"tab-downloads": "التنزيلات",
 		"no-access-message": "ليس لديك الصلاحية للوصول إلى أي أقسام من لوحة التحكم للمشرف."
 	},
@@ -521,6 +522,7 @@
 		"search": "البحث",
 		"service-hours": "ساعات الخدمة",
 		"services": "الخدمات",
+		"set-status": "تعيين الحالة",
 		"settings": "الإعدادات",
 		"share": "مشاركة",
 		"sign-up": "تسجيل الدخول",

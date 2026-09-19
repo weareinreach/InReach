@@ -12,6 +12,7 @@
 		"tab-organizations": "단체",
 		"tab-reports": "보고서",
 		"tab-users": "사용자",
+		"tab-manage-users": "사용자 관리",
 		"tab-downloads": "다운로드",
 		"no-access-message": "관리자 대시보드의 어떤 섹션에도 액세스할 권한이 없습니다."
 	},
@@ -516,6 +517,7 @@
 		"search": "검색",
 		"service-hours": "영업시간",
 		"services": "서비스",
+		"set-status": "상태 설정",
 		"settings": "설정",
 		"share": "공유하기",
 		"sign-up": "가입하기",

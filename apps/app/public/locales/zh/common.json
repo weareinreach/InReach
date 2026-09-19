@@ -12,6 +12,7 @@
 		"tab-organizations": "组织",
 		"tab-reports": "报告",
 		"tab-users": "用户",
+		"tab-manage-users": "管理用户",
 		"tab-downloads": "下载",
 		"no-access-message": "您没有权限访问管理员面板的任何部分。"
 	},
@@ -516,6 +517,7 @@
 		"search": "搜寻",
 		"service-hours": "服务时间",
 		"services": "服务",
+		"set-status": "设置状态",
 		"settings": "设置",
 		"share": "分享",
 		"sign-up": "注册",

@@ -12,6 +12,7 @@
 		"tab-organizations": "Organisationen",
 		"tab-reports": "Berichte",
 		"tab-users": "Benutzer",
+		"tab-manage-users": "Benutzer verwalten",
 		"tab-downloads": "Downloads",
 		"no-access-message": "Sie haben keine Berechtigung auf alle Bereiche des Admin-Dashboards zuzugreifen."
 	},
@@ -517,6 +518,7 @@
 		"search": "Suchen",
 		"service-hours": "Service-Stunden",
 		"services": "Dienste",
+		"set-status": "Status festlegen",
 		"settings": "Einstellungen",
 		"share": "Teilen",
 		"sign-up": "Registrieren",
