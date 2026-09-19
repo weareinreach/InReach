@@ -1,3 +1,5 @@
+import { TRPCError } from '@trpc/server'
+
 import { checkPermissions } from '@weareinreach/auth'
 import { prisma } from '@weareinreach/db'
 import { readSlugCache, writeSlugCache } from '~api/cache/slugToOrgId'
@@ -21,14 +23,27 @@ const getIdFromSlug = async ({ ctx, input }: TRPCHandlerParams<TGetIdFromSlugSch
 				permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
 				has: 'some',
 			})
-		const orgId = await prisma.organization.findUniqueOrThrow({
+		const org = await prisma.organization.findUnique({
 			where: { slug, ...(canSeeUnpublished ? {} : isPublic) },
 			select: { id: true, published: true, deleted: true },
 		})
-		if (orgId.published && !orgId.deleted) {
-			await writeSlugCache(slug, orgId.id)
+		if (org) {
+			if (org.published && !org.deleted) {
+				await writeSlugCache(slug, org.id)
+			}
+			return { id: org.id }
 		}
-		return { id: orgId.id }
+		// Renaming an org regenerates its slug (mutation.updateBasic.handler.ts) and records the old
+		// one here - without this fallback, any bookmarked/cached link using the old slug hard-crashes
+		// with a raw "record not found" instead of resolving to the org's current slug (confirmed live).
+		const redirect = await prisma.slugRedirect.findUnique({
+			where: { from: slug },
+			select: { orgId: true, to: true },
+		})
+		if (redirect) {
+			return { id: redirect.orgId, redirectedTo: redirect.to }
+		}
+		throw new TRPCError({ code: 'NOT_FOUND', message: `No organization found for slug "${slug}"` })
 	} catch (err) {
 		return handleError(err)
 	}

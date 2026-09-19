@@ -77,11 +77,26 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		onSuccess: (data, variables) => {
 			// After a successful optimistic update, reset the form with the new values.
 			// This synchronizes react-hook-form's state and correctly sets `isDirty` to false.
-			formMethods.reset({
-				id: variables.id,
-				name: variables.name,
-				description: variables.description,
-			})
+			// `keepDirtyValues: false` overrides the form-level default (set above, to stop a background
+			// refetch from clobbering an in-progress edit) - this reset is different: it's applying what
+			// the user just successfully saved, so it should always win outright.
+			formMethods.reset(
+				{
+					id: variables.id,
+					name: variables.name,
+					description: variables.description,
+				},
+				{ keepDirtyValues: false }
+			)
+			// Renaming an org regenerates its `slug` server-side (mutation.updateBasic.handler.ts) - the
+			// URL/route param this whole page is keyed on (`pageSlug`) doesn't know that happened, so
+			// without this the page keeps querying `forOrgPageEdits` by a slug that no longer exists,
+			// which throws `findUniqueOrThrow`'s "No record was found" the moment anything refetches it
+			// (confirmed live - this is what silently broke Save after a rename). Moving to the real,
+			// current slug keeps every subsequent query correctly keyed.
+			if (data.slug !== pageSlug) {
+				router.replace({ pathname: '/org/[slug]/edit', query: { slug: data.slug } })
+			}
 		},
 		// If the mutation fails, use the context returned from onMutate to roll back
 		onError: (err, newData, context) => {
@@ -89,10 +104,17 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 				apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, context.previousData)
 			}
 		},
-		// Always refetch after the mutation is settled (either on error or success)
-		onSettled: () => {
-			apiUtils.organization.forOrgPageEdits.invalidate()
+		onSettled: (data) => {
+			// `refetchType: 'none'` - a forced immediate refetch here would still be keyed on the stale
+			// `pageSlug` closed over by this callback (the router.replace above hasn't re-rendered this
+			// component yet), so it would hit the exact same now-nonexistent-slug error `invalidate()`
+			// alone used to cause on every rename. This still marks it stale so the next natural load
+			// (now under the corrected slug/route) picks up fresh data.
+			apiUtils.organization.forOrgPageEdits.invalidate(undefined, { refetchType: 'none' })
 			revalidatePage({ path: router.asPath.replace('/edit', '') })
+			if (data && data.slug !== pageSlug) {
+				revalidatePage({ path: `/org/${data.slug}` })
+			}
 		},
 	})
 
@@ -114,12 +136,27 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 	}
 
 	const formMethods = useForm<FormSchema>({
-		// Use defaultValues for initialization. We will populate the form via useEffect.
-		defaultValues: {
-			id: data?.id,
-			name: data?.name ?? '',
-			description: data?.description?.tsKey?.text ?? '',
-		},
+		// `defaultValues` (a plain object) is captured exactly once, on this component instance's very
+		// first render - if `data` hasn't loaded yet at that instant (a real race, not guaranteed to
+		// lose), `id` locks in as `undefined` forever and is never resynced, since nothing here ever
+		// called `reset()`/`setValue()` once `data` actually arrived (the comment above previously
+		// claimed "we will populate the form via useEffect", but that effect never existed). Since `id`
+		// is required by `organization.updateBasic`'s schema, every save silently failed input
+		// validation - confirmed directly, not just theorized. `values` (unlike `defaultValues`)
+		// reactively resyncs the form whenever `data`'s reference changes, fixing this the same way
+		// PhoneDrawer/WebsiteDrawer/etc. already correctly do elsewhere in this codebase.
+		values: data
+			? {
+					id: data.id,
+					name: data.name ?? '',
+					description: data.description?.tsKey?.text ?? '',
+				}
+			: undefined,
+		// Without this, a background refetch of `forOrgPageEdits` that resolves while the user is
+		// mid-edit (e.g. window refocus) would silently overwrite their in-progress, unsaved changes via
+		// the `values` sync above. The explicit `reset()` call in `onSuccess` below overrides this with
+		// `keepDirtyValues: false`, since applying what was just successfully saved should win outright.
+		resetOptions: { keepDirtyValues: true },
 	})
 
 	const { unsaved, saveEvent, isEditMode } = useEditMode()
@@ -127,12 +164,21 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		const values = formMethods.getValues()
 		updateBasic.mutate(values)
 	})
+	// `formState` is a Proxy that only starts tracking a given property (like `isDirty`) once it's
+	// read during render - reading it inside a `useEffect` callback, as the previous version of this
+	// code did, never registers that subscription, so the effect's own `[formMethods.formState, ...]`
+	// dependency (a stable object reference that Proxy wrapper never itself changes) never actually
+	// changes and the effect only ever runs once, at mount, with whatever `isDirty` happened to be
+	// then (always `false`). That permanently disabled the Navbar's "Save Changes" button - `unsaved.state`
+	// never became `true` no matter what the user typed. Destructuring `isDirty` here, during render,
+	// registers the subscription correctly, and using the resulting boolean (not the wrapping object)
+	// as the effect's dependency is what actually lets the effect re-run when it changes.
+	const { isDirty } = formMethods.formState
 	useEffect(() => {
-		const { isDirty } = formMethods.formState
 		if (unsaved.state !== isDirty) {
 			unsaved.set(isDirty)
 		}
-	}, [formMethods.formState, unsaved])
+	}, [isDirty, unsaved])
 
 	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
@@ -256,7 +302,20 @@ export const getServerSideProps: GetServerSideProps<{ organizationId: string }, 
 	}
 
 	const ssg = await trpcServerClient({ session })
-	const { id: organizationId } = await ssg.organization.getIdFromSlug.fetch({ slug })
+	const { id: organizationId, redirectedTo } = await ssg.organization.getIdFromSlug.fetch({ slug })
+	// Renaming an org regenerates its slug - a bookmarked/cached link using the old one used to
+	// hard-crash here with a raw Prisma "record not found" instead of resolving (confirmed live).
+	// `getIdFromSlug` now resolves it via the recorded redirect; following through to the org's
+	// current URL here keeps every query below (which all key off `slug`) correctly scoped, instead
+	// of continuing to load the page under a slug that no longer matches anything.
+	if (redirectedTo) {
+		return {
+			redirect: {
+				destination: `/org/${redirectedTo}/edit`,
+				permanent: false,
+			},
+		}
+	}
 
 	const [i18n] = await Promise.all([
 		getServerSideTranslations(
