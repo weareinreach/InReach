@@ -6,10 +6,13 @@ import {
 	getAuditedClient,
 	type Prisma,
 } from '@weareinreach/db'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateBasicSchema } from './mutation.updateBasic.schema'
+
+const logger = createLoggerInstance('organization.updateBasic')
 
 // Helper function to generate a simple, non-unique slug for comparison
 const simpleSlugify = (name: string) =>
@@ -71,15 +74,25 @@ const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasicSchema,
 				type: 'orgDesc',
 				text: input.description,
 			})
-			const crowdinId = await syncDatabaseStringIfChanged({
-				key: existing.description?.tsKey.key ?? upsertDescription.upsert.create.tsKey.create.key,
-				newText: upsertDescription.upsert.create.tsKey.create.text,
-				previousText: existing.description?.tsKey.text,
-				previousCrowdinId: existing.description?.tsKey.crowdinId,
-				context: buildContextUrl(orgSlug),
-			})
-			if (crowdinId) {
-				upsertDescription.upsert.create.tsKey.create.crowdinId = crowdinId
+			// Crowdin (a third-party translation service) being unreachable or misconfigured - e.g. no
+			// CROWDIN_TOKEN set, the case in local dev - must never block saving the user's own data.
+			// This used to be unguarded and inside the same try/catch as the actual database write below,
+			// so a Crowdin failure aborted the whole mutation before `prisma.organization.update()` ever
+			// ran: the description (and often the name too, since both are always submitted together)
+			// silently never persisted, with no visible error - confirmed live, not just theorized.
+			try {
+				const crowdinId = await syncDatabaseStringIfChanged({
+					key: existing.description?.tsKey.key ?? upsertDescription.upsert.create.tsKey.create.key,
+					newText: upsertDescription.upsert.create.tsKey.create.text,
+					previousText: existing.description?.tsKey.text,
+					previousCrowdinId: existing.description?.tsKey.crowdinId,
+					context: buildContextUrl(orgSlug),
+				})
+				if (crowdinId) {
+					upsertDescription.upsert.create.tsKey.create.crowdinId = crowdinId
+				}
+			} catch (crowdinError) {
+				logger.error(crowdinError)
 			}
 			data.description = upsertDescription
 		}
