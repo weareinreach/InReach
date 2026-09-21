@@ -22,6 +22,8 @@
 		"lint:fix": "eslint --cache --fix .",
 		"start": "next start",
 		"test:e2e": "playwright test",
+		"test:e2e:crud": "playwright test tests/crud",
+		"test:e2e:search": "playwright test tests/search",
 		"test:e2e:ui": "playwright test --ui",
 		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
