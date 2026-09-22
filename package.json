@@ -41,6 +41,8 @@
 		"test:e2e:crud": "turbo run test:e2e:crud --filter=@weareinreach/app",
 		"test:e2e:search": "turbo run test:e2e:search --filter=@weareinreach/app",
 		"test:e2e:ui": "turbo run test:e2e:ui --filter=@weareinreach/app",
+		"test:e2e:visual": "turbo run test:e2e:visual --filter=@weareinreach/app",
+		"test:e2e:visual:update": "turbo run test:e2e:visual:update --filter=@weareinreach/app",
 		"test:report": "turbo run test:report",
 		"test:report:view": "turbo run test:report:view",
 		"test:reports": "pnpm test:dashboard",

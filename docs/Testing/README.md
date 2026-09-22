@@ -35,7 +35,10 @@ data-portal-specific ones - see `lib/testDashboard.ts` for exactly how each row 
 
 - **General** - UI components that are neither search- nor data-portal-specific (`Rating`,
   `ReportSubmit`, `UserReviewSubmit`, `SuggestOrg`, `CreateNewList`)
-- **View / Search** - currently Playwright e2e only; no component-level tests exist yet for
+- **View / Search** - two rows: Playwright behavioral (`tests/search/home.spec.ts`) and
+  Playwright visual regression (`tests/search/visual.spec.ts`, page-level screenshots - see
+  How It Works), split apart so a visual-only failure doesn't get lumped in with a behavioral
+  one under a single pass/fail status. No component-level Vitest tests exist yet for
   `SearchBox`/`SearchResultCard`/etc. (see the search inventory doc)
 - **Edit / Data-Portal** - three rows: `packages/ui`'s data-portal-specific components,
   `packages/api`'s entire suite (all of it - not "some"), and the `tests/crud` Playwright suite
@@ -71,20 +74,20 @@ again:**
 
 ### Command line (scripting, CI, or if you just prefer it)
 
-Four separate testing tools live in this repo, checking four different things - not the same
-thing four times:
+Five separate testing tools live in this repo, checking five different things - not the same
+thing five times:
 
-| Tool                                | Checks                                              | Run                                             | Results                                                                                                                           |
-| ----------------------------------- | --------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Vitest - `packages/ui`              | UI components behave correctly in isolation         | `pnpm test`                                     | terminal, or `pnpm test:report` for HTML (below)                                                                                  |
-| Vitest - `packages/api`             | Backend handlers/permission checks behave correctly | `pnpm test` (same command runs both)            | terminal, or `pnpm test:report` for HTML                                                                                          |
-| Playwright - `apps/app`             | The whole app works in a real browser, end to end   | `pnpm test:e2e`                                 | `apps/app/playwright-report/index.html`                                                                                           |
-| Storybook/Chromatic - `packages/ui` | A component's visual appearance hasn't regressed    | `pnpm dev` (in `packages/ui`) to browse locally | Chromatic's hosted dashboard - **no local report file for this one**, that's inherent to how it works (see the CI Chromatic step) |
+| Tool                                | Checks                                                                                                                                                            | Run                                             | Results                                                                                                                           |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Vitest - `packages/ui`              | UI components behave correctly in isolation                                                                                                                       | `pnpm test`                                     | terminal, or `pnpm test:report` for HTML (below)                                                                                  |
+| Vitest - `packages/api`             | Backend handlers/permission checks behave correctly                                                                                                               | `pnpm test` (same command runs both)            | terminal, or `pnpm test:report` for HTML                                                                                          |
+| Playwright - `apps/app`             | The whole app works in a real browser, end to end                                                                                                                 | `pnpm test:e2e`                                 | `apps/app/playwright-report/index.html`                                                                                           |
+| Storybook/Chromatic - `packages/ui` | A component's visual appearance hasn't regressed                                                                                                                  | `pnpm dev` (in `packages/ui`) to browse locally | Chromatic's hosted dashboard - **no local report file for this one**, that's inherent to how it works (see the CI Chromatic step) |
+| Playwright screenshots - `apps/app` | Full-page layout/composition regressions, on real assembled pages, that Chromatic structurally can't catch (it only renders components in isolation from a story) | `pnpm test:e2e:visual`                          | `apps/app/playwright-report/index.html`, same as other Playwright tests - a failure shows a pixel diff                            |
 
-All commands below run from anywhere in the repo (root-level `pnpm` scripts via `turbo.json`
-
-- see [How It Works](#how-it-works) for the equivalent per-package commands and the
-  `--filter` gotcha behind them).
+All commands below run from anywhere in the repo (root-level `pnpm` scripts via `turbo.json` -
+see [How It Works](#how-it-works) for the equivalent per-package commands and the `--filter`
+gotcha behind them).
 
 **Run the tests:**
 
@@ -176,14 +179,45 @@ browser session isn't part of this setup):
 - **jsdom gaps**: `packages/ui/test/setup.ts` polyfills `window.matchMedia`, which Mantine's
   responsive hooks (e.g. `Tooltip`'s `useMediaQuery`) call internally and jsdom doesn't
   implement. Add further polyfills here if a new test hits a similar jsdom gap.
+  - **Mantine `Combobox.Dropdown` never visually opens in jsdom.** Its open/closed state
+    depends on layout/position measurement jsdom doesn't perform, so calling
+    `combobox.openDropdown()` still leaves the dropdown's container at `style="display: none"`
+    - the option elements exist in the DOM (with real `role="option"`), but
+      `getByRole('option')`/`findByRole('option')` correctly treat them as accessibility-hidden
+      and won't find them. `getByText`/`findByText` don't apply that same filter, so they still
+      work - but the more robust fix, when the interaction supports it, is to drive selection via
+      the keyboard (`userEvent.keyboard('{Enter}')`, submitting `results[0]`) instead of a click
+      on a rendered option. See `SearchBox.test.tsx` cases 2.6/3.4 for the pattern - 3.4
+      originally tried `findByRole('option')` and failed exactly this way before being rewritten.
 - **End-to-end tests**: `apps/app/playwright.config.ts` + `apps/app/tests/**/*.spec.ts`, split
   into `tests/search/` (public search/view, no auth) and `tests/crud/` (authenticated
   data-entry/edit, currently empty - see the Plan below) per the read/write split. Run
   everything with `pnpm test:e2e` (or `pnpm test:e2e:ui` for Playwright's UI mode), or just
   one suite with `pnpm test:e2e:search` / `pnpm test:e2e:crud`. Chromium only for now - add
-  firefox/webkit later if a real cross-browser bug ever shows up, not preemptively. Still just
-  the one spec (`tests/search/home.spec.ts`) - no CRUD/edit e2e coverage and no authenticated
-  session fixture exist yet; both are the near-term plan below.
+  firefox/webkit later if a real cross-browser bug ever shows up, not preemptively. Two specs
+  exist in `tests/search/` today (`home.spec.ts`, `visual.spec.ts` - see below) - no CRUD/edit
+  e2e coverage and no authenticated session fixture exist yet; both are the near-term plan
+  below.
+- **Page-level visual regression**: `apps/app/tests/search/visual.spec.ts`, run via
+  `pnpm test:e2e:visual`. Uses Playwright's built-in `toHaveScreenshot()` against real,
+  assembled pages - this is the layer that catches a full-page layout/composition bug Chromatic
+  structurally can't (Chromatic only ever renders one component in isolation from a Storybook
+  story). Currently covers two pages (home, search results) per the agreed starting scope -
+  expand page-by-page as real untested-page regressions actually surface, not as a big upfront
+  push, same growth pattern as the rest of this suite. Two things worth knowing:
+  - **Dynamic regions are masked, not relied on to be deterministic.** The homepage's
+    testimonial carousel auto-advances (`embla-carousel-autoplay`, 5s interval) and the search
+    results list is live DB-backed content - both are masked via `data-testid` hooks
+    (`home-testimonials-carousel`, `search-results-list`) added to the app for exactly this
+    purpose, rather than the test trying to pin a specific slide/dataset. `toHaveScreenshot`'s
+    `maxDiffPixelRatio: 0.02` (set globally in `playwright.config.ts`) additionally absorbs
+    normal font-antialiasing noise between runs.
+  - **Baselines are machine/OS-sensitive.** Font rendering differs across platforms, so a
+    baseline generated on one machine can produce false-positive diffs on another - these are
+    only reliably comparable when generated and checked in the _same_ environment (a real
+    constraint if this ever runs in CI on a different OS/image than a contributor's laptop; see
+    Known Issues). To regenerate baselines after an intentional design change:
+    `pnpm test:e2e:visual:update`.
 - **Local dev server reuse**: the Playwright config reuses an already-running `pnpm dev`
   server if one exists (common - you're usually already running one) instead of failing on
   a port conflict; it only starts a fresh one (via the `webServer` block) when nothing's
@@ -261,9 +295,10 @@ This app also has two structurally different frontends, and the e2e suite should
 around that split rather than by page/route:
 
 - **`tests/search/`** - public search & view flows. No auth required, can run against shared/
-  seeded data, safe to run fully parallel. Contains `home.spec.ts` today; add new
-  search-surface specs here as inventory cases (see above) get built out. Run in isolation
-  with `pnpm test:e2e:search`.
+  seeded data, safe to run fully parallel. Contains `home.spec.ts` (behavioral) and
+  `visual.spec.ts` (page-level screenshot regression) today; add new search-surface specs here
+  as inventory cases (see above) get built out. Run in isolation with `pnpm test:e2e:search`
+  (both specs), or just `pnpm test:e2e:visual` for the screenshot suite alone.
 - **`tests/crud/`** - authenticated data-entry/edit flows, organized further by entity (org,
   location, etc. - matching where the recent real bugs have actually been: title/description
   save, phone number CRUD). Currently empty - blocked on the auth fixture below. Each test
@@ -325,6 +360,12 @@ bugs" pattern rather than a big up-front push:
 - **ESLint flat-config work is deferred**, separately from this doc's scope, until the
   Next 15/16 bump (see the library-update tracking) - not related to the test setup itself,
   but worth knowing the two are being sequenced together intentionally.
+- **Visual regression baselines are not CI-portable as-is.** They were generated on a
+  contributor's machine (darwin) - the filename itself encodes this
+  (`home-chromium-darwin.png`). If/when Playwright e2e gets wired into CI (see above) on a
+  different OS/image, these baselines will false-positive on font-rendering differences alone
+  and need regenerating in that environment. Pinning a consistent Docker image for screenshot
+  generation (matching whatever CI would use) is the real fix, not yet done.
 
 ## Related Files
 
@@ -347,6 +388,8 @@ bugs" pattern rather than a big up-front push:
 | `docs/Testing/site-chrome-test-inventory.md`                                      | Expectation-based test-case inventory for navbar, footer, anti-hate modal, cookie consent   |
 | `apps/app/playwright.config.ts`                                                   | Playwright config (baseURL, dev-server reuse)                                               |
 | `apps/app/tests/search/home.spec.ts`                                              | Reference example e2e smoke test (search/view surface)                                      |
+| `apps/app/tests/search/visual.spec.ts`                                            | Page-level visual regression (home, search results) - `pnpm test:e2e:visual`                |
+| `apps/app/tests/search/visual.spec.ts-snapshots/`                                 | Committed baseline screenshots - machine/OS-sensitive, see Known Issues                     |
 | `.github/workflows/test.yml`                                                      | CI job running the Vitest suite on every PR                                                 |
 
 ---

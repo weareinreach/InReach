@@ -29,6 +29,15 @@ export default {
 
 		layoutWrapper: 'centeredFullscreen',
 		rqDevtools: true,
+
+		// xs (500, phone) / sm-md (768/1024, tablet - packages/ui/.storybook/viewports.ts'
+		// ipad/ipad12p widths) / desktop. See docs/Testing/search-test-inventory.md §12, case
+		// 12.3 - no search story snapshotted at anything but Storybook's own default viewport
+		// before this. Note: the `render` wrapper below hardcodes `minWidth: '600px'`, so the 500
+		// snapshot won't show genuine phone-width reflow for this component specifically - keep
+		// this parameter anyway so a future fix to that wrapper is protected without further
+		// story changes.
+		chromatic: { viewports: [500, 768, 1024, 1440] },
 	},
 
 	render: (args) => (

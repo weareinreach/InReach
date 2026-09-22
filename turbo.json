@@ -87,6 +87,12 @@
 		"test:e2e:search": {
 			"cache": false
 		},
+		"test:e2e:visual": {
+			"cache": false
+		},
+		"test:e2e:visual:update": {
+			"cache": false
+		},
 		"test:report": {
 			"cache": false
 		},

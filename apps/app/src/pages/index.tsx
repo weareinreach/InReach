@@ -208,6 +208,7 @@ const Home: NextPageWithOptions = () => {
 									}}
 								/>
 								<Carousel
+									data-testid='home-testimonials-carousel'
 									withControls={false}
 									withIndicators
 									plugins={[autoplay.current]}

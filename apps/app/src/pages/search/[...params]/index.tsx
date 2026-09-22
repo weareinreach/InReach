@@ -405,7 +405,7 @@ const SearchResults = () => {
 					isAdvanced={isAdvanced}
 				/>
 			</Grid.Col>
-			<Grid.Col span={{ base: 12, sm: 8, md: 8 }}>
+			<Grid.Col span={{ base: 12, sm: 8, md: 8 }} data-testid='search-results-list'>
 				{data?.resultCount === 0 && crisisResults ? (
 					<NoResults crisisData={crisisResults} />
 				) : (
