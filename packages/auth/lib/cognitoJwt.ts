@@ -10,7 +10,7 @@ const verifier = (tokenUse: 'access' | 'id') =>
 		tokenUse,
 	})
 
-const AccessTokenSchema = z
+export const AccessTokenSchema = z
 	.object({
 		sub: z.guid(),
 		iss: z.string(),
@@ -25,7 +25,7 @@ const AccessTokenSchema = z
 	})
 	.passthrough()
 
-const IdTokenSchema = z
+export const IdTokenSchema = z
 	.object({
 		sub: z.guid(),
 		email_verified: z.boolean(),
