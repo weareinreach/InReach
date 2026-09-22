@@ -42,7 +42,7 @@ const ROWS: Row[] = [
 	{
 		id: 'search-components',
 		label:
-			'Search UI components (packages/ui - SearchBox, SearchResultCard, Save, Pagination, ServiceFilter, MoreFilter, SearchResultSidebar, SortResults)',
+			'Search UI components (packages/ui - SearchBox, SearchResultCard, Save, Pagination, LocationBasedAlertBanner, ServiceFilter, MoreFilter, SearchResultSidebar, SortResults)',
 		section: 'View / Search',
 		cwd: 'packages/ui',
 		cmd: 'pnpm',
@@ -66,6 +66,8 @@ const ROWS: Row[] = [
 			'tests/search/sort-drawer.spec.ts',
 			'tests/search/pagination.spec.ts',
 			'tests/search/responsive.spec.ts',
+			'tests/search/intl-fallback.spec.ts',
+			'tests/search/location-alert-banner.spec.ts',
 		],
 		env: { PLAYWRIGHT_HTML_REPORT: 'reports/search/results' },
 		results: 'apps/app/reports/search/results',
