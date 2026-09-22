@@ -2,6 +2,7 @@
 export * from './changePassword'
 export * from './cognitoClient'
 export * from './cognitoJwt'
+export * from './cognitoJwt.test'
 export * from './confirmAccount'
 export * from './constants'
 export * from './createUser'
