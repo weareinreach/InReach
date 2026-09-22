@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { render, screen } from '~ui/test/test-utils'
+import { render, screen, waitFor } from '~ui/test/test-utils'
 
 import { Navbar } from './Navbar'
 
@@ -16,7 +16,13 @@ vi.mock('~ui/components/core/MobileNav', () => ({ MobileNav: () => null }))
 
 vi.mock('~ui/hooks/useEditMode', () => ({ useEditMode: vi.fn() }))
 
-const mockRouter = {
+const mockRouter: {
+	pathname: string
+	query: Record<string, string>
+	asPath: string
+	isFallback: boolean
+	replace: ReturnType<typeof vi.fn>
+} = {
 	pathname: '/org/[slug]/edit',
 	query: { slug: 'test-org' },
 	asPath: '/org/test-org/edit',
@@ -78,11 +84,11 @@ const wireFakeBackend = (record: FakeRecord) => {
 	})
 }
 
-const setup = (initial: FakeRecord) => {
+const setup = (initial: FakeRecord, unsaved = false) => {
 	const record = { ...initial }
 	useEditModeMock.mockReturnValue({
 		isEditMode: true,
-		unsaved: { state: false },
+		unsaved: { state: unsaved },
 		saveEvent: { save: vi.fn() },
 	} as never)
 	useUtilsMock.mockReturnValue({
@@ -205,5 +211,106 @@ describe('EditModeBar (Navbar in edit mode)', () => {
 		// same instance reused - its local `reason` state must come from the now-null `currentReason`
 		// prop, not whatever was left over from the first Unpublish earlier in this same test.
 		expect(reasonSelect).toHaveValue('')
+	})
+
+	// docs/Testing/site-chrome-test-inventory.md §3f - cases beyond the pre-existing
+	// publish/unpublish/set-status coverage above.
+	it('3f.1: shows Exit/Save changes/Publish/Delete and Reverify (slug present, no orgLocationId)', () => {
+		setup({ published: true, unpublishedReason: null, deleted: false })
+
+		expect(screen.getByText('Exit edit mode')).toBeInTheDocument()
+		expect(screen.getByText('Save changes')).toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Unpublish' })).toBeInTheDocument()
+		expect(screen.getByText('Delete')).toBeInTheDocument()
+		expect(screen.getByText('Reverify')).toBeInTheDocument()
+	})
+
+	it('3f.1b: no Reverify when orgLocationId is present', () => {
+		mockRouter.query = { slug: 'test-org', orgLocationId: 'loc-1' }
+		mockRouter.pathname = '/org/[slug]/[orgLocationId]/edit'
+		try {
+			setup({ published: true, unpublishedReason: null, deleted: false })
+			expect(screen.queryByText('Reverify')).not.toBeInTheDocument()
+		} finally {
+			mockRouter.query = { slug: 'test-org' }
+			mockRouter.pathname = '/org/[slug]/edit'
+		}
+	})
+
+	it('3f.2: "Save changes" is disabled when there are no unsaved changes', () => {
+		setup({ published: true, unpublishedReason: null, deleted: false }, false)
+
+		expect(screen.getByText('Save changes').closest('button')).toBeDisabled()
+	})
+
+	it('3f.3: "Save changes" is enabled with unsaved changes', () => {
+		setup({ published: true, unpublishedReason: null, deleted: false }, true)
+		expect(screen.getByText('Save changes').closest('button')).not.toBeDisabled()
+	})
+
+	it('3f.3b: ...except on the remote/edit route, where it stays disabled regardless', () => {
+		mockRouter.pathname = '/org/[slug]/remote/edit'
+		try {
+			setup({ published: true, unpublishedReason: null, deleted: false }, true)
+			expect(screen.getByText('Save changes').closest('button')).toBeDisabled()
+		} finally {
+			mockRouter.pathname = '/org/[slug]/edit'
+		}
+	})
+
+	it('3f.6: "Done" stays disabled in the reason popover until a reason is selected', async () => {
+		const user = userEvent.setup()
+		setup({ published: true, unpublishedReason: null, deleted: false })
+
+		await user.click(screen.getByRole('button', { name: 'Unpublish' }))
+		await screen.findByPlaceholderText('Choose a reason')
+
+		expect(screen.getByRole('button', { name: 'Done', hidden: true })).toBeDisabled()
+	})
+
+	it('3f.8: clicking "Exit edit mode" replaces to the non-edit pathname', async () => {
+		const user = userEvent.setup()
+		setup({ published: true, unpublishedReason: null, deleted: false })
+
+		await user.click(screen.getByText('Exit edit mode'))
+
+		expect(mockRouter.replace).toHaveBeenCalledWith({
+			pathname: '/org/[slug]',
+			query: mockRouter.query,
+		})
+	})
+
+	it('3f.7: "Done" shows a loading state during the mutation and the popover closes only on success', async () => {
+		const user = userEvent.setup()
+		setup({ published: false, unpublishedReason: 'NEW', deleted: false })
+
+		await user.click(screen.getByRole('button', { name: 'Set status' }))
+		await user.click(await screen.findByPlaceholderText('Choose a reason'))
+		await new Promise((resolve) => setTimeout(resolve, 50))
+		await user.click(screen.getByRole('option', { name: 'Inactive', hidden: true }))
+
+		// Overridden after `setup()`, not before - `setup()`'s own `wireFakeBackend` call would
+		// otherwise immediately clobber this with its synchronous-success mock. Bypassing it here
+		// is specifically to observe the gap *before* success, which a same-tick mock can't show -
+		// captures `opts.onSuccess` itself (same as `wireFakeBackend` does) so success can be fired
+		// on demand instead of automatically.
+		let fireSuccess: (() => void) | undefined
+		usePublishMock.mockImplementation((opts) => {
+			const mutation: { mutate: () => void; isPending: boolean } = {
+				mutate: () => {
+					fireSuccess = () => (opts?.onSuccess as (() => void) | undefined)?.()
+				},
+				isPending: true,
+			}
+			return mutation as never
+		})
+		await user.click(screen.getByRole('button', { name: 'Done', hidden: true }))
+
+		// Still open and showing a loading state - the mutation hasn't resolved yet.
+		expect(screen.getByPlaceholderText('Choose a reason')).toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Done', hidden: true })).toHaveAttribute('data-loading', 'true')
+
+		fireSuccess?.()
+		await waitFor(() => expect(screen.queryByPlaceholderText('Choose a reason')).not.toBeInTheDocument())
 	})
 })
