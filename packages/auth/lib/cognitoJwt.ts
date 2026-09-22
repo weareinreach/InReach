@@ -12,7 +12,7 @@ const verifier = (tokenUse: 'access' | 'id') =>
 
 const AccessTokenSchema = z
 	.object({
-		sub: z.string().uuid(),
+		sub: z.guid(),
 		iss: z.string(),
 		client_id: z.string(),
 		token_use: z.literal('access'),
@@ -27,7 +27,7 @@ const AccessTokenSchema = z
 
 const IdTokenSchema = z
 	.object({
-		sub: z.string().uuid(),
+		sub: z.guid(),
 		email_verified: z.boolean(),
 		iss: z.string(),
 		'custom:id': z.string(),
