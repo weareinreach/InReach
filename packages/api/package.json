@@ -69,6 +69,7 @@
 		"@vitest/ui": "4.1.10",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
+		"dotenv": "16.4.5",
 		"dotenv-cli": "7.4.2",
 		"eslint": "9.39.5",
 		"i18next": "23.16.3",
