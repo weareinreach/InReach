@@ -11,6 +11,9 @@ import { fileURLToPath } from 'node:url'
  * vs "data-portal" subsets) use `--outputFile.html`/ `--coverage.reportsDirectory` (Vitest) or
  * `PLAYWRIGHT_HTML_REPORT` (Playwright) to give each row its own isolated report directory, so running one
  * row never clobbers another's results.
+ *
+ * Each route below lives in its own small `RouteHandler` function (see `ROUTES`) rather than one large
+ * branching handler, to stay under the linter's cognitive-complexity limit.
  */
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
