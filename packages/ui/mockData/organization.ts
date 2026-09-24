@@ -116,6 +116,14 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 			suggestions,
 			updatedAt,
 			createdAt,
+			// This mock server has no fake Attribute/ServiceTag catalog to draw realistic ids from (unlike the
+			// real handler, which resolves these from actual relations) - empty is a safe default since
+			// nothing here demos the new Community/Leader Badge/Service Tags/Service Attributes/Remote Options
+			// table columns yet.
+			attributeIds: [],
+			serviceIds: [],
+			serviceAttributeIds: [],
+			remoteOptions: [],
 		})
 	}
 	return allResults

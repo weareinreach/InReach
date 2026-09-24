@@ -182,6 +182,17 @@ export const orgRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	// Staff-only filter-options list (Community/Leader Badge quick filters on the org table) - distinct from
+	// forBadgeEditModal, which returns one org's already-assigned badges, not the full option tree.
+	badgeOptions: permissionedProcedure('viewAllOrganizations')
+		.input(schema.ZBadgeOptionsSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('badgeOptions'),
+				() => import('./query.badgeOptions.handler')
+			)
+			return handler(opts)
+		}),
 
 	// #endregion
 

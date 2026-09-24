@@ -6,7 +6,94 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import {
 	STATUS_FILTER_TO_REASON,
 	type TForOrganizationTableSchema,
+	type TRemoteOption,
 } from './query.forOrganizationTable.schema'
+
+type MatchMode = TForOrganizationTableSchema['communityMatchMode']
+
+/**
+ * Org ids whose `attributeIds` (materialized, GIN-indexed) match the given attribute ids - 'any' (default)
+ * means at least one; 'all' means every one simultaneously. Shared by Community Focus and Leader Badge, which
+ * are both just Organization-level Attribute ids under a different AttributeCategory (see
+ * organization.badgeOptions) - kept as two independent calls rather than one merged filter so picking a value
+ * from each narrows together instead of being treated as the same facet.
+ */
+const orgIdsByAttributes = async (attributeIds: string[], matchMode: MatchMode): Promise<string[]> => {
+	const rows = await prisma.organization.findMany({
+		where: { attributeIds: matchMode === 'all' ? { hasEvery: attributeIds } : { hasSome: attributeIds } },
+		select: { id: true },
+	})
+	return rows.map((row) => row.id)
+}
+
+// See ZRemoteOption's comment - a service's only link to a location is the OrgLocationService join table,
+// which can have zero rows.
+const REMOTE_SERVICE_WHERE: Record<
+	NonNullable<TForOrganizationTableSchema['remoteOptions']>[number],
+	Prisma.OrgServiceWhereInput
+> = {
+	'remote-no-location': { locations: { none: {} } },
+	'remote-with-location': {
+		locations: { some: {} },
+		attributes: { some: { attribute: { tag: 'offers-remote-services' } } },
+	},
+	'in-person-only': {
+		locations: { some: {} },
+		attributes: { none: { attribute: { tag: 'offers-remote-services' } } },
+	},
+}
+
+/**
+ * Service Tags, Service Attributes, and Remote Options all describe facets of a _service_, not the org
+ * directly - each active facet becomes its own condition inside one `services.some(...)`, so the SAME service
+ * must satisfy all of them together (e.g. "Remote Options: no location" + "Service Tags: Mental Health" only
+ * matches an org whose remote service is itself tagged Mental Health, not an org that merely has some remote
+ * service and some unrelated Mental Health service elsewhere). Returns `undefined` when no service-level
+ * facet is active, so the caller can skip the query entirely.
+ *
+ * `OrgService.services` (confusingly named - it's the service's own tags, via `OrgServiceTag`, not a services
+ * list) and `OrgService.attributes` (via `AttributeSupplement`) are matched by relation id
+ * (`tagId`/`attributeId`) rather than the materialized `Organization.serviceIds`/`attributeIds` arrays, since
+ * those are flattened across every service on the org and would lose exactly the per-service grouping this
+ * needs.
+ */
+const buildServiceGroupWhere = (
+	input: TForOrganizationTableSchema
+): Prisma.OrganizationWhereInput | undefined => {
+	const serviceAnd: Prisma.OrgServiceWhereInput[] = []
+	if (input.serviceTagIds?.length) {
+		if (input.serviceTagMatchMode === 'all') {
+			serviceAnd.push(...input.serviceTagIds.map((tagId) => ({ services: { some: { tagId } } })))
+		} else {
+			serviceAnd.push({ services: { some: { tagId: { in: input.serviceTagIds } } } })
+		}
+	}
+	if (input.serviceAttributeIds?.length) {
+		if (input.serviceAttributeMatchMode === 'all') {
+			serviceAnd.push(
+				...input.serviceAttributeIds.map((attributeId) => ({ attributes: { some: { attributeId } } }))
+			)
+		} else {
+			serviceAnd.push({ attributes: { some: { attributeId: { in: input.serviceAttributeIds } } } })
+		}
+	}
+	if (input.remoteOptions?.length) {
+		serviceAnd.push({ OR: input.remoteOptions.map((option) => REMOTE_SERVICE_WHERE[option]) })
+	}
+	if (!serviceAnd.length) {
+		return undefined
+	}
+	return { services: { some: { deleted: false, AND: serviceAnd } } }
+}
+
+const serviceGroupOrgIds = async (input: TForOrganizationTableSchema): Promise<string[] | undefined> => {
+	const where = buildServiceGroupWhere(input)
+	if (!where) {
+		return undefined
+	}
+	const rows = await prisma.organization.findMany({ where, select: { id: true } })
+	return rows.map((row) => row.id)
+}
 
 // 'public' = suggested AND the submitter had no Data Portal access. 'internal' unions the other two real
 // origins (suggested by someone WITH access, or added directly via the Data Portal) - both mean "not
@@ -77,7 +164,53 @@ const ORG_SELECT = {
 		take: 1,
 		select: { suggestedBy: { select: { id: true, name: true, email: true } } },
 	},
+	// Materialized org-level ids, for the Community/Leader Badge/Service Tags table columns - the client
+	// already has id->name lookups for these from the toolbar's own quick filters (badgeOptions,
+	// component.ServiceSelect), so no join is needed here.
+	attributeIds: true,
+	serviceIds: true,
+	// Service Attributes and Remote Options both describe individual services, not the org directly - this
+	// raw per-service data only exists to be collapsed into flat per-org summaries by withServiceSummaries
+	// below, and never reaches the client as-is. Matches REMOTE_SERVICE_WHERE's own criteria exactly (a
+	// service's remote status depends on both its location count and the 'offers-remote-services' attribute).
+	services: {
+		where: { deleted: false },
+		select: {
+			attributeIds: true,
+			_count: { select: { locations: true } },
+			attributes: { where: { attribute: { tag: 'offers-remote-services' } }, select: { id: true } },
+		},
+	},
 } satisfies Prisma.OrganizationSelect
+
+type ServiceSummaryRow = {
+	attributeIds: string[]
+	_count: { locations: number }
+	attributes: { id: string }[]
+}
+
+const remoteOptionForService = (service: ServiceSummaryRow): TRemoteOption => {
+	if (service._count.locations === 0) {
+		return 'remote-no-location'
+	}
+	return service.attributes.length > 0 ? 'remote-with-location' : 'in-person-only'
+}
+
+/**
+ * Collapses each org's raw per-service rows (only fetched for this) into the flat, deduplicated arrays the
+ * Service Attributes and Remote Options table columns actually render - service-level detail the client has
+ * no other use for and shouldn't need to re-derive itself.
+ */
+const withServiceSummaries = <T extends { services: ServiceSummaryRow[] }>(
+	row: T
+): Omit<T, 'services'> & { serviceAttributeIds: string[]; remoteOptions: TRemoteOption[] } => {
+	const { services, ...rest } = row
+	return {
+		...rest,
+		serviceAttributeIds: [...new Set(services.flatMap((service) => service.attributeIds))],
+		remoteOptions: [...new Set(services.map(remoteOptionForService))],
+	}
+}
 
 /**
  * Org ids whose earliest `Suggestion` record was submitted by any of these users. `createOrgSuggestion`
@@ -324,14 +457,22 @@ const forOrganizationTable = async ({
 }: TRPCHandlerParams<TForOrganizationTableSchema, 'protected'>) => {
 	const search = input.search?.trim()
 
-	const [cleanupIds, createdByOrgIds] = await Promise.all([
+	const [cleanupIds, createdByOrgIds, communityOrgIds, leaderOrgIds, serviceIds] = await Promise.all([
 		input.needsLocationPhoneCleanup ? locationPhoneCleanupIds() : undefined,
 		input.createdByUserIds?.length ? creatorOrgIds(input.createdByUserIds) : undefined,
+		input.communityAttributeIds?.length
+			? orgIdsByAttributes(input.communityAttributeIds, input.communityMatchMode)
+			: undefined,
+		input.leaderAttributeIds?.length
+			? orgIdsByAttributes(input.leaderAttributeIds, input.leaderMatchMode)
+			: undefined,
+		serviceGroupOrgIds(input),
 	])
-	if (cleanupIds?.length === 0 || createdByOrgIds?.length === 0) {
+	const computedIdFilters = [cleanupIds, createdByOrgIds, communityOrgIds, leaderOrgIds, serviceIds]
+	if (computedIdFilters.some((ids) => ids?.length === 0)) {
 		return { results: [], total: 0 }
 	}
-	const idFilters = [cleanupIds, createdByOrgIds].filter((ids): ids is string[] => ids !== undefined)
+	const idFilters = computedIdFilters.filter((ids): ids is string[] => ids !== undefined)
 
 	if (search) {
 		const { ids, total: searchTotal } = await searchIds({ ...input, search }, idFilters)
@@ -341,7 +482,7 @@ const forOrganizationTable = async ({
 
 		const rows = await prisma.organization.findMany({ where: { id: { in: ids } }, select: ORG_SELECT })
 		const byId = new Map(rows.map((row) => [row.id, row]))
-		const searchResults = compact(ids.map((id) => byId.get(id)))
+		const searchResults = compact(ids.map((id) => byId.get(id))).map(withServiceSummaries)
 
 		return { results: searchResults, total: searchTotal }
 	}
@@ -354,7 +495,7 @@ const forOrganizationTable = async ({
 		prisma.organization.count({ where }),
 	])
 
-	return { results, total }
+	return { results: results.map(withServiceSummaries), total }
 }
 
 export default forOrganizationTable
