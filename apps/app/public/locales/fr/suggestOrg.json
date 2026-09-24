@@ -11,7 +11,7 @@
 		"btn-community": "Ajouter le(s) axe(s) communautaire(s) LGBTQ+",
 		"btn-save-changes": "Enregistrer les modifications",
 		"btn-service": "Ajouter un ou plusieurs types de service",
-		"btn-submit": "Soumettre une nouvelle organisation",
+		"btn-submit": "Soumettre pour révision",
 		"community-focus": "Cette organisation offre-t-elle des services axés sur des communautés LGBTQ+ spécifiques?",
 		"error-exists-active": "<Link>{{org}}</Link> est déjà répertorié sur InReach. Veuillez utiliser ce formulaire uniquement pour suggérer de nouvelles organisations.",
 		"error-exists-dismiss": "<Dismiss>Cliquez ici si c'est une organisation différente.</Dismiss>",
@@ -22,7 +22,7 @@
 		"org-website": "Site Web de l'organisation",
 		"placeholder-address": "Entrez l'adresse...",
 		"placeholder-name": "Entrer le nom de l'organisation...",
-		"placeholder-website": "Entrez l'URL...",
+		"placeholder-website": "Entrez l'URL, incluant http:// ou https://...",
 		"service-types": "Quels types de service(s) cette organisation offre-t-elle?"
 	},
 	"modal": {

@@ -12,6 +12,7 @@
 		"tab-organizations": "المنظمات",
 		"tab-reports": "التقارير",
 		"tab-users": "المستخدمون",
+		"tab-manage-users": "إدارة المستخدمين",
 		"tab-downloads": "التنزيلات",
 		"no-access-message": "ليس لديك الصلاحية للوصول إلى أي أقسام من لوحة التحكم للمشرف."
 	},
@@ -463,6 +464,7 @@
 	"user-menu": {
 		"admin-options": "خيارات المدير",
 		"csv-downloads": "تنزيلات CSV",
+		"dashboards": "لوحة التحكم",
 		"data-portal": "الصفحة الرئيسية لبوابة البيانات",
 		"edit-page": "تحرير هذه الصفحة",
 		"user-options": "خيارات المستخدم",
@@ -521,6 +523,7 @@
 		"search": "البحث",
 		"service-hours": "ساعات الخدمة",
 		"services": "الخدمات",
+		"set-status": "تعيين الحالة",
 		"settings": "الإعدادات",
 		"share": "مشاركة",
 		"sign-up": "تسجيل الدخول",

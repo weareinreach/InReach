@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizacje",
 		"tab-reports": "Raporty",
 		"tab-users": "Użytkownicy",
+		"tab-manage-users": "Zarządzaj użytkownikami",
 		"tab-downloads": "Pobrania",
 		"no-access-message": "Nie masz uprawnień dostępu do żadnych sekcji panelu administracyjnego."
 	},
@@ -461,6 +462,7 @@
 	"user-menu": {
 		"admin-options": "Opcje administratora",
 		"csv-downloads": "Pliki CSV",
+		"dashboards": "Panele",
 		"data-portal": "Strona główna portalu danych",
 		"edit-page": "Edytuj tę stronę",
 		"user-options": "Opcje użytkownika",
@@ -519,6 +521,7 @@
 		"search": "Szukaj",
 		"service-hours": "Godziny pracy",
 		"services": "Usługi",
+		"set-status": "Ustaw status",
 		"settings": "Ustawienia",
 		"share": "Udostępnij",
 		"sign-up": "Zarejestruj się",

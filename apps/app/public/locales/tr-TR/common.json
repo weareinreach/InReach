@@ -12,6 +12,7 @@
 		"tab-organizations": "Kuruluşlar",
 		"tab-reports": "Raporlar",
 		"tab-users": "Kullanıcılar",
+		"tab-manage-users": "Kullanıcıları yönet",
 		"tab-downloads": "İndirilenler",
 		"no-access-message": "Yönetici panosunun herhangi bir bölümüne erişme izniniz yok."
 	},
@@ -459,6 +460,7 @@
 	"user-menu": {
 		"admin-options": "Yönetici Seçenekleri",
 		"csv-downloads": "CSV İndirmeleri",
+		"dashboards": "Gösterge panoları",
 		"data-portal": "Veri Portalı Ana Sayfası",
 		"edit-page": "Bu sayfayı düzenle",
 		"user-options": "Kullanıcı Seçenekleri",
@@ -517,6 +519,7 @@
 		"search": "Arama",
 		"service-hours": "Hizmet Saatleri",
 		"services": "HİZMETLER",
+		"set-status": "Durumu ayarla",
 		"settings": "Ayarlar",
 		"share": "Paylaş",
 		"sign-up": "Üye ol",
