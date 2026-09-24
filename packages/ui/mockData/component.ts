@@ -6,7 +6,20 @@ export const component = {
 		path: ['component', 'ServiceSelect'],
 		response: async () => {
 			const { default: data } = await import('./json/component.ServiceSelect.json')
-			return data
+			// The fixture predates the `category`/`name` fields query.ServiceSelect.handler.ts now also
+			// selects (added for the data-portal's untranslated Service Tags quick filter) - derive
+			// reasonable stand-ins from each row's `tsKey` (formatted `<category-slug>.<item-slug>`)
+			// rather than regenerating the fixture.
+			return data.map(({ tsKey, services, ...category }) => ({
+				...category,
+				tsKey,
+				category: tsKey.split('.')[0] ?? tsKey,
+				services: services.map(({ tsKey: serviceTsKey, ...service }) => ({
+					...service,
+					tsKey: serviceTsKey,
+					name: serviceTsKey.split('.')[1] ?? serviceTsKey,
+				})),
+			}))
 		},
 	}),
 	LocationBasedAlertBanner: getTRPCMock({

@@ -22,6 +22,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { type ApiOutput } from '@weareinreach/api'
 import {
 	STATUS_FILTER_TO_REASON,
+	type TRemoteOption,
 	type TStatusFilter,
 } from '@weareinreach/api/router/organization/query.forOrganizationTable.schema'
 import { type OrgUnpublishedReason } from '@weareinreach/db/enums'
@@ -34,9 +35,30 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import { AddFilterMenu } from './AddFilterMenu'
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+import {
+	DELETED_FILTER_HELP,
+	DELETED_FILTER_OPTIONS,
+	deletedFilterToValue,
+	deletedValueToFilter,
+} from './deletedFilter'
+import { FilterChip } from './FilterChip'
+import { FilterLabel, helpLines } from './FilterHelp'
+import {
+	COMPACT_MULTISELECT_STYLES,
+	GroupedMultiSelect,
+	type GroupedMultiSelectGroup,
+	MULTISELECT_CASCADE_HELP,
+	MULTISELECT_MATCH_HELP,
+} from './GroupedMultiSelect'
 import { ResultCount } from './ResultCount'
-import { TableToolbarToggle } from './TableToolbarToggle'
+import {
+	SERVICE_ATTRIBUTE_FILTER_HELP,
+	SERVICE_TAG_FILTER_HELP,
+	toServiceAttributeGroups,
+	toServiceTagGroups,
+} from './serviceFilterGroups'
 
 type RowItem = ApiOutput['organization']['forOrganizationTable']['results'][number]
 type LocationRow = RowItem['locations'][number]
@@ -242,6 +264,65 @@ const DateCell = ({ value }: DataTableCellContext<TableRow>) => {
 	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 }
 
+/**
+ * Cell renderer for the 'createdBy' column - reads the org's earliest Suggestion's submitter (see
+ * `creatorOrgIds` in query.forOrganizationTable.handler.ts). Null for orgs predating that flow, or for a
+ * location sub-row (creator is an org-level concept only).
+ */
+const CreatedByCell = ({ row, depth }: DataTableCellContext<TableRow>) => {
+	if (depth > 0) {
+		return null
+	}
+	const creator = (row as RowItem).suggestions?.[0]?.suggestedBy
+	if (!creator) {
+		return (
+			<Text size='sm' c='dimmed'>
+				Unknown
+			</Text>
+		)
+	}
+	return <Text size='sm'>{creator.name || creator.email}</Text>
+}
+
+/**
+ * Curried factory for a column that renders one of an org's own id arrays (Community/Leader Badge's shared
+ * `attributeIds`, Service Tags' `serviceIds`, Service Attributes'/Remote Options' server-computed summary
+ * fields - see ORG_SELECT/withServiceSummaries in query.forOrganizationTable.handler.ts) as a row of pills,
+ * resolving each id through `labelById` and silently dropping any id that map doesn't cover (e.g. an id
+ * belonging to a different category than this particular column). Org-level only, same as CreatedByCell - a
+ * location sub-row has no community/service data of its own.
+ */
+const createPillListCell = ({
+	getIds,
+	labelById,
+}: {
+	getIds: (row: RowItem) => string[]
+	labelById: Map<string, string>
+}) => {
+	const Cell = ({ row, depth }: DataTableCellContext<TableRow>) => {
+		if (depth > 0) {
+			return null
+		}
+		const labels = getIds(row as RowItem)
+			.map((id) => labelById.get(id))
+			.filter((label): label is string => Boolean(label))
+		if (!labels.length) {
+			return null
+		}
+		return (
+			<Group gap={4} wrap='wrap'>
+				{labels.map((label) => (
+					<Pill key={label} size='xs'>
+						{label}
+					</Pill>
+				))}
+			</Group>
+		)
+	}
+	Cell.displayName = 'PillListCell'
+	return Cell
+}
+
 const getOrgTableSubRows = (row: TableRow): TableRow[] | undefined =>
 	(row as RowItem).locations as TableRow[] | undefined
 
@@ -249,31 +330,77 @@ const getOrgTableRowStyle = (row: TableRow) => ({
 	textDecoration: (row as RowItem).deleted ? 'line-through' : undefined,
 })
 
-const deletedFilterLabel = (state: boolean | undefined): string => {
-	if (state) {
-		return 'Show all'
-	}
-	if (state === undefined) {
-		return 'Hide deleted'
-	}
-	return 'Show deleted'
+/**
+ * Replaces (or removes, if `next` is empty) one `columnFilters` entry by id - factored out of
+ * `setArrayFilter` purely to keep that curried updater from nesting a function 5 levels deep.
+ */
+const withArrayFilterSet = (prev: ColumnFiltersState, id: string, next: string[]): ColumnFiltersState => {
+	const rest = prev.filter((f) => f.id !== id)
+	return next.length ? [...rest, { id, value: next }] : rest
 }
 
-const deletedFilterIcon = (): string => 'carbon:trash-can'
+/**
+ * Resolves selected ids back to display labels for the "applied filters" summary. A group's own id is never
+ * itself a selected value (see `GroupedMultiSelectGroup.cascadable`) except in the childless case, where the
+ * group's single item id already equals it - so this only ever needs to check items.
+ */
+const labelsForSelection = (groups: GroupedMultiSelectGroup[], selected: string[]): string[] => {
+	const labels: string[] = []
+	for (const group of groups) {
+		for (const item of group.items) {
+			if (selected.includes(item.id)) {
+				labels.push(item.label)
+			}
+		}
+	}
+	return labels
+}
 
-const isDeletedFilterExcluded = (state: boolean | undefined): boolean => state === false
+// Matches ZRemoteOption in query.forOrganizationTable.schema.ts. A single unnamed group (empty label) -
+// GroupedMultiSelect skips rendering a header for it, since there's no real category here, just three
+// flat, mutually exclusive-per-service options.
+const REMOTE_OPTION_GROUPS: GroupedMultiSelectGroup[] = [
+	{
+		id: 'remote-options',
+		label: '',
+		items: [
+			{ id: 'remote-no-location', label: 'Remote (no location)' },
+			{ id: 'remote-with-location', label: 'Remote (available at a location)' },
+			{ id: 'in-person-only', label: 'In-person only' },
+		],
+	},
+]
 
-// Options for the toolbar's Status dropdown - supersedes the old Publish Status (All/Published/
-// Unpublished) filter. The reason rows are derived from STATUS_FILTER_TO_REASON (the same hyphenated
-// wire-format -> enum map the real handler and mock data use) so a new reason only needs adding there
-// and to ORG_UNPUBLISHED_REASON_LABELS, not a third time here. Deliberately NOT built from REASON_OPTIONS,
-// which uses the raw OrgUnpublishedReason enum keys ('NEW', 'IN_PROGRESS', ...) for the popover's own
-// mutation input - two different vocabularies that happen to share labels; conflating them sends the
-// wrong value. "All" is a real, exclusive option here (not a placeholder) - selecting it clears any other
-// selection, and selecting a real status while "All" is active drops "All." Never sent to the backend as
-// a filter value itself - it just means the columnFilters entry for 'status' is empty/absent.
+// For the Remote Options table column's pill cell - reuses the same id/label pairs as the filter above
+// rather than a second hand-written copy.
+const REMOTE_OPTION_LABEL_BY_ID = new Map(
+	REMOTE_OPTION_GROUPS.flatMap((group) => group.items.map((item) => [item.id, item.label] as const))
+)
+
+// Every filter except Status/Create Method is added/removed as needed via the toolbar's "+ Filter" menu
+// (see the `activeFacets` state) rather than sitting permanently in the toolbar.
+type AddableFacetId =
+	'deleted' | 'community' | 'leaderBadge' | 'serviceTags' | 'serviceAttributes' | 'remoteOptions'
+
+const ADDABLE_FACETS: { id: AddableFacetId; label: string }[] = [
+	{ id: 'deleted', label: 'Deleted' },
+	{ id: 'community', label: 'Community' },
+	{ id: 'leaderBadge', label: 'Leader Badge' },
+	{ id: 'serviceTags', label: 'Service Tags' },
+	{ id: 'serviceAttributes', label: 'Service Attributes' },
+	{ id: 'remoteOptions', label: 'Remote Options' },
+]
+
+// Options for the Status filter - shared by the toolbar MultiSelect below and the Status column's own
+// header filter, both of which read/write the same `columnFilters` 'status' entry. The reason rows are
+// derived from STATUS_FILTER_TO_REASON (the same hyphenated wire-format -> enum map the real handler and
+// mock data use) so a new reason only needs adding there and to ORG_UNPUBLISHED_REASON_LABELS, not a third
+// time here. Deliberately NOT built from REASON_OPTIONS, which uses the raw OrgUnpublishedReason enum keys
+// ('NEW', 'IN_PROGRESS', ...) for the popover's own mutation input - two different vocabularies that happen
+// to share labels; conflating them sends the wrong value. No "All" entry - picking zero statuses already
+// means "show all," same convention every other filter in the app uses; the toolbar widget shows "All" as
+// a placeholder (see its `placeholder` prop below) rather than a real, selectable value.
 const STATUS_FILTER_OPTIONS = [
-	{ value: 'all', label: 'All' },
 	{ value: 'published', label: 'Published' },
 	...Object.entries(STATUS_FILTER_TO_REASON).map(([value, reason]) => ({
 		value,
@@ -304,29 +431,49 @@ const renderStatusPill = ({ option, onRemove }: ComboboxRenderPillInput) => (
 	</Pill>
 )
 
-// Options for the toolbar's Create Method dropdown - see createMethodWhere in
-// query.forOrganizationTable.handler.ts for how each category maps to source/creatorHadDpAccess.
-// 'internal' unions suggested-with-access and data-portal-added - both mean "not the public."
+// Options for the Create Method filter - shared by the toolbar Select below and the Create Method
+// column's own header filter, both of which read/write the same `columnFilters` 'createMethod' entry. See
+// createMethodWhere in query.forOrganizationTable.handler.ts for how each category maps to
+// source/creatorHadDpAccess. 'internal' unions suggested-with-access and data-portal-added - both mean "not
+// actually the public." No "All" entry - both widgets are `clearable`, which is the plain-filter
+// equivalent; the toolbar widget shows "All" as a placeholder (see its `placeholder` prop below) rather
+// than a real, selectable value.
 const CREATE_METHOD_OPTIONS = [
-	{ value: 'all', label: 'All' },
 	{ value: 'public', label: 'Public' },
 	{ value: 'internal', label: 'Internal' },
 ]
 
-const CREATE_METHOD_HELP_TEXT =
-	'All: every organization.' +
-	'Public: submitted through the public suggestion form by someone without Data Portal access.' +
-	'Internal: submitted by staff/volunteers with Data Portal access, or added ' +
-	'directly through the Data Portal.'
+const CREATE_METHOD_HELP = [
+	'All: every organization.',
+	'Public: submitted through the public suggestion form by someone without Data Portal access.',
+	'Internal: submitted by staff/volunteers with Data Portal access, or added directly through the Data Portal.',
+]
 
-const CreateMethodLabel = () => (
-	<Group gap={4} wrap='nowrap'>
-		<span>Create Method</span>
-		<Tooltip label={CREATE_METHOD_HELP_TEXT} multiline w={260}>
-			<Icon icon='carbon:information' width={14} height={14} style={{ cursor: 'help' }} />
-		</Tooltip>
-	</Group>
-)
+// Matches STATUS_FILTER_OPTIONS - "Published" is the only status that isn't an unpublished reason.
+const STATUS_HELP = [
+	'Published: currently live and publicly visible.',
+	'New / In Progress / Inactive / Unresponsive: unpublished, for that specific reason.',
+]
+
+// Matches ZRemoteOption's own comment in query.forOrganizationTable.schema.ts.
+const REMOTE_OPTIONS_HELP = [
+	'Remote (no location): a service with no physical location at all.',
+	'Remote (available at a location): tied to a location, but also offers remote access.',
+	'In-person only: tied to a location, with no remote option.',
+]
+
+// Leads with what the filter actually represents, not just the shared OR/cascade mechanics (which say
+// nothing about what a "Community" or "Leader Badge" attribute even is).
+const COMMUNITY_FILTER_HELP = [
+	'Community Focus attributes - the population(s) this organization specifically serves (e.g. a specific ethnic, religious, or identity community).',
+	MULTISELECT_MATCH_HELP,
+	MULTISELECT_CASCADE_HELP,
+]
+const LEADER_BADGE_FILTER_HELP = [
+	'Organization Leadership attributes - who leads or founded this organization (e.g. led by members of the community it serves).',
+	MULTISELECT_MATCH_HELP,
+	MULTISELECT_CASCADE_HELP,
+]
 
 // The app-wide Input/InputWrapper theme defaults hardcode a 48px height / 16px input font and a 16px
 // label font on every field regardless of `size` (see theme/components/Input.module.css and
@@ -336,22 +483,6 @@ const CreateMethodLabel = () => (
 const COMPACT_SELECT_STYLES = {
 	input: { height: 30, minHeight: 30, fontSize: 'var(--mantine-font-size-xs)', padding: '0 8px' },
 	label: { fontSize: 'var(--mantine-font-size-xs)' },
-}
-
-// Same idea as COMPACT_SELECT_STYLES, but for the Status MultiSelect specifically. The app-wide theme
-// hardcodes a real `height: 48px` CSS rule on every input (theme/components/Input.module.css) - omitting
-// an explicit `height` override here (as a first pass did) leaves that rule in charge, since `minHeight`
-// alone never wins against an already-larger fixed `height` from another source. `height: 'auto'`
-// explicitly hands control back to the content, so the box matches the plain Select at rest and actually
-// grows to show every wrapped pill instead of clipping at a fixed height.
-const COMPACT_MULTISELECT_STYLES = {
-	input: { height: 'auto', minHeight: 30, fontSize: 'var(--mantine-font-size-xs)', padding: '2px 8px' },
-	label: { fontSize: 'var(--mantine-font-size-xs)' },
-	// `Pill` defaults its own `size` to 'sm' regardless of the MultiSelect's `size='xs'` - it doesn't
-	// inherit automatically. The remove ("X") button's icon is sized in `em` units relative to the
-	// pill's own font-size, so without this it renders noticeably larger than xs-sized content
-	// elsewhere (e.g. the selected-option checkmark in the dropdown, which does scale with size).
-	pill: { fontSize: 'var(--mantine-font-size-xs)' },
 }
 
 export interface OrganizationTableProps {
@@ -379,6 +510,25 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 	const [debouncedGlobalFilter] = useDebouncedValue(globalFilter, 300)
 	const [sorting, setSorting] = useState<SortingState>([{ id: 'name', desc: false }])
 	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
+	// Status and Create Method are always shown; every other filter (including Deleted) is added/removed as
+	// needed via the toolbar's "+ Filter" menu, genuinely opt-in - none start active. Hiding deleted orgs by
+	// default is still a real, separate behavior (see `columnFilters`' own initial value above); it just
+	// isn't a visible widget until someone deliberately wants to change it.
+	const [activeFacets, setActiveFacets] = useState<AddableFacetId[]>([])
+	// Controlled column visibility (see DataTable's own `columnVisibility` prop) - every facet below except
+	// Deleted has a matching table column (same id), hidden by default and only shown once that facet is
+	// actually in use, so the table doesn't open with five empty pill columns nobody asked for. Must list
+	// every column elsewhere marked `hiddenByDefault: true` (currently 'id' and 'createMethod' too), not
+	// just these five - passing a controlled value here replaces DataTable's own default entirely.
+	const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>({
+		id: false,
+		createMethod: false,
+		community: false,
+		leaderBadge: false,
+		serviceTags: false,
+		serviceAttributes: false,
+		remoteOptions: false,
+	})
 
 	// Matches ZStatusFilter in query.forOrganizationTable.schema.ts - multi-select, so several chosen
 	// values union (OR); this only filters which orgs show up, never sets more than one status on an org.
@@ -386,14 +536,215 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 	const createMethodFilter = columnFilters.find(({ id }) => id === 'createMethod')?.value as
 		'public' | 'internal' | undefined
+	const createdByFilter = columnFilters.find(({ id }) => id === 'createdBy')?.value as
+		{ id: string; label: string }[] | undefined
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
+
+	// Shared get/set helpers for the five metadata quick filters below (Community, Leader Badge, Service
+	// Tags, Service Attributes, Remote Options) - all just a `string[]` stored directly under their own
+	// columnFilters key, the same toolbar-quick-filter pattern Status/Create Method already use. Multiple
+	// selected values always match with OR ("any") semantics now - the toolbar used to expose an "all"
+	// (AND) toggle too, but it was removed as confusing. The API's own optional `*MatchMode` params
+	// (still 'any' by default when omitted) are untouched, in case this comes back.
+	const getArrayFilter = (id: string): string[] =>
+		(columnFilters.find((f) => f.id === id)?.value as string[] | undefined) ?? []
+	const setArrayFilter = (id: string) => (next: string[]) => {
+		setColumnFilters((prev) => withArrayFilterSet(prev, id, next))
+	}
+
+	const addFacet = (id: AddableFacetId) => {
+		setActiveFacets((prev) => [...prev, id])
+		// 'deleted' has no matching column (see the columnVisibility comment above) - nothing to reveal.
+		if (id !== 'deleted') {
+			setColumnVisibility((prev) => ({ ...prev, [id]: true }))
+		}
+	}
+	// Removing a facet both hides its widget and clears whatever value it held - otherwise re-adding it
+	// later would resurface a stale filter the person never meant to keep applying. Also re-hides its
+	// column, so a filter that's no longer active doesn't leave a pill column behind with nothing driving it.
+	const removeFacet = (id: AddableFacetId) => {
+		setActiveFacets((prev) => prev.filter((f) => f !== id))
+		if (id !== 'deleted') {
+			setColumnVisibility((prev) => ({ ...prev, [id]: false }))
+		}
+		switch (id) {
+			case 'deleted': {
+				setColumnFilters((prev) => prev.filter((f) => f.id !== 'deleted'))
+				break
+			}
+			case 'community': {
+				setArrayFilter('communityAttributeIds')([])
+				break
+			}
+			case 'leaderBadge': {
+				setArrayFilter('leaderAttributeIds')([])
+				break
+			}
+			case 'serviceTags': {
+				setArrayFilter('serviceTagIds')([])
+				break
+			}
+			case 'serviceAttributes': {
+				setArrayFilter('serviceAttributeIds')([])
+				break
+			}
+			case 'remoteOptions': {
+				setArrayFilter('remoteOptions')([])
+				break
+			}
+		}
+	}
+	// Curried so `onRemove={removeFacetHandler('deleted')}` doesn't need an inline arrow in the JSX prop -
+	// same idiom as `setArrayFilter` above.
+	const removeFacetHandler = (id: AddableFacetId) => () => removeFacet(id)
+
+	const communityFilter = getArrayFilter('communityAttributeIds')
+	const leaderFilter = getArrayFilter('leaderAttributeIds')
+	const serviceTagFilter = getArrayFilter('serviceTagIds')
+	const serviceAttributeFilter = getArrayFilter('serviceAttributeIds')
+	const remoteOptionsFilter = getArrayFilter('remoteOptions')
+
+	const { data: communityOptions, isLoading: communityLoading } = api.organization.badgeOptions.useQuery({
+		badgeType: 'service-focus',
+	})
+	const { data: leaderOptions, isLoading: leaderLoading } = api.organization.badgeOptions.useQuery({
+		badgeType: 'organization-leadership',
+	})
+	const { data: serviceTagCategories, isLoading: serviceTagsLoading } = api.component.ServiceSelect.useQuery()
+	const { data: serviceAttributeRows, isLoading: serviceAttributesLoading } =
+		api.fieldOpt.attributesForFilter.useQuery({ canAttachTo: ['SERVICE'] })
+
+	// Same parent -> child shape for both (see organization.badgeOptions) - only the category tag differs.
+	// Plain `name` fields throughout this file rather than translated labels - the data portal is
+	// staff-only and doesn't localize. A top-level attribute with no children is itself a real, directly
+	// selectable value (matches the org-edit Community Focus picker's own plain-checkbox treatment for
+	// childless items) - rendered as a flat, ungrouped option rather than a one-item group with a
+	// redundant repeated label. One WITH children is `cascadable`: its own id is never selectable, only
+	// its children are, via the synthetic "All X" row GroupedMultiSelect adds for cascadable groups.
+	const toBadgeGroups = useCallback(
+		(options: typeof communityOptions): GroupedMultiSelectGroup[] =>
+			(options ?? []).map((attribute) =>
+				attribute.children.length === 0
+					? { id: attribute.id, label: '', items: [{ id: attribute.id, label: attribute.name }] }
+					: {
+							id: attribute.id,
+							label: attribute.name,
+							items: attribute.children.map((child) => ({ id: child.id, label: child.name })),
+							cascadable: true,
+						}
+			),
+		[]
+	)
+	const communityGroups = useMemo(() => toBadgeGroups(communityOptions), [toBadgeGroups, communityOptions])
+	const leaderGroups = useMemo(() => toBadgeGroups(leaderOptions), [toBadgeGroups, leaderOptions])
+
+	// id -> name, for the Community/Leader Badge table columns' pill cells - both read the org's own shared
+	// `attributeIds` field (see createPillListCell), so each column's map only needs to cover its own
+	// category's ids to naturally exclude the other's.
+	const idsToLabelMap = useCallback((options: typeof communityOptions): Map<string, string> => {
+		const map = new Map<string, string>()
+		for (const attribute of options ?? []) {
+			map.set(attribute.id, attribute.name)
+			for (const child of attribute.children) {
+				map.set(child.id, child.name)
+			}
+		}
+		return map
+	}, [])
+	const communityLabelById = useMemo(() => idsToLabelMap(communityOptions), [idsToLabelMap, communityOptions])
+	const leaderLabelById = useMemo(() => idsToLabelMap(leaderOptions), [idsToLabelMap, leaderOptions])
+
+	const serviceTagGroups = useMemo(() => toServiceTagGroups(serviceTagCategories), [serviceTagCategories])
+	const serviceAttributeGroups = useMemo(
+		() => toServiceAttributeGroups(serviceAttributeRows),
+		[serviceAttributeRows]
+	)
+
+	// id -> name, for the Service Tags/Service Attributes table columns' pill cells.
+	const serviceTagLabelById = useMemo(() => {
+		const map = new Map<string, string>()
+		for (const category of serviceTagCategories ?? []) {
+			for (const tag of category.services) {
+				map.set(tag.id, tag.name)
+			}
+		}
+		return map
+	}, [serviceTagCategories])
+	const serviceAttributeLabelById = useMemo(() => {
+		const map = new Map<string, string>()
+		for (const row of serviceAttributeRows ?? []) {
+			map.set(row.attributeId, row.attributeName)
+		}
+		return map
+	}, [serviceAttributeRows])
+
+	// The Community/Leader Badge/Service Tags/Service Attributes/Remote Options quick filters are toolbar
+	// widgets with no `filter` of their own on any column - DataTable's own "applied filters" summary can
+	// only build an entry from a `columns[]` definition's `filter`, so these need to hand their own
+	// label/value text in directly. Each does have its own (hidden-by-default) display column, just with no
+	// filter UI attached to it - the toolbar widget above is that column's only filter control.
+	const toolbarFilterSummary = useMemo(() => {
+		const entries: { id: string; label: string; valueLabel: string }[] = []
+		if (communityFilter.length) {
+			entries.push({
+				id: 'communityAttributeIds',
+				label: 'Community',
+				valueLabel: labelsForSelection(communityGroups, communityFilter).join(', '),
+			})
+		}
+		if (leaderFilter.length) {
+			entries.push({
+				id: 'leaderAttributeIds',
+				label: 'Leader Badge',
+				valueLabel: labelsForSelection(leaderGroups, leaderFilter).join(', '),
+			})
+		}
+		if (serviceTagFilter.length) {
+			entries.push({
+				id: 'serviceTagIds',
+				label: 'Service Tags',
+				valueLabel: labelsForSelection(serviceTagGroups, serviceTagFilter).join(', '),
+			})
+		}
+		if (serviceAttributeFilter.length) {
+			entries.push({
+				id: 'serviceAttributeIds',
+				label: 'Service Attributes',
+				valueLabel: labelsForSelection(serviceAttributeGroups, serviceAttributeFilter).join(', '),
+			})
+		}
+		if (remoteOptionsFilter.length) {
+			entries.push({
+				id: 'remoteOptions',
+				label: 'Remote Options',
+				valueLabel: labelsForSelection(REMOTE_OPTION_GROUPS, remoteOptionsFilter).join(', '),
+			})
+		}
+		return entries
+	}, [
+		communityFilter,
+		communityGroups,
+		leaderFilter,
+		leaderGroups,
+		serviceTagFilter,
+		serviceTagGroups,
+		serviceAttributeFilter,
+		serviceAttributeGroups,
+		remoteOptionsFilter,
+	])
 
 	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(
 		{
 			status: statusFilter,
 			deleted: deletedFilter,
 			createMethod: createMethodFilter,
+			createdByUserIds: createdByFilter?.map((person) => person.id),
+			communityAttributeIds: communityFilter.length ? communityFilter : undefined,
+			leaderAttributeIds: leaderFilter.length ? leaderFilter : undefined,
+			serviceTagIds: serviceTagFilter.length ? serviceTagFilter : undefined,
+			serviceAttributeIds: serviceAttributeFilter.length ? serviceAttributeFilter : undefined,
+			remoteOptions: remoteOptionsFilter.length ? (remoteOptionsFilter as TRemoteOption[]) : undefined,
 			search: debouncedGlobalFilter || undefined,
 			lastVerified: dateFilter('lastVerified')
 				? { from: dateFilter('lastVerified')?.[0], to: dateFilter('lastVerified')?.[1] }
@@ -440,11 +791,14 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 			},
 			{
 				// Derived, not stored - reads published/unpublishedReason straight off the row. Supersedes the
-				// old hidden 'published' column entirely; see the toolbar's Status filter below.
+				// old hidden 'published' column entirely. Also filterable directly from this column's own
+				// header icon, not just the toolbar's Status dropdown below - both write the same
+				// `columnFilters` entry, so either one stays in sync with the other.
 				id: 'status',
 				header: 'Status',
 				size: 160,
 				enableSorting: false,
+				filter: { type: 'multi-select', options: STATUS_FILTER_OPTIONS },
 				cell: ({ row }) => {
 					const org = row as RowItem
 					if (org.published) return 'Published'
@@ -481,14 +835,27 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 				cell: DateCell,
 			},
 			{
-				// Display-only - the actual filter is a standalone toolbar dropdown (see toolbarExtra
-				// below), not this column's own header filter, since hiddenByDefault columns don't render
-				// a header at all (so a column-scoped filter icon would be just as hidden as the column).
+				id: 'createdBy',
+				header: 'Created By',
+				size: 200,
+				enableSorting: false,
+				accessorFn: (row) => {
+					const creator = (row as RowItem).suggestions?.[0]?.suggestedBy
+					return creator?.name || creator?.email || ''
+				},
+				filter: { type: 'user-search' },
+				cell: CreatedByCell,
+			},
+			{
+				// Hidden by default (see the Show/Hide Columns menu) since the toolbar dropdown already
+				// covers this at a glance for most people - but once shown, this column's own header filter
+				// icon works too, writing the same `columnFilters` entry as the toolbar control below.
 				id: 'createMethod',
 				header: 'Create Method',
 				hiddenByDefault: true,
 				enableSorting: false,
 				enableGlobalFilter: false,
+				filter: { type: 'select', options: CREATE_METHOD_OPTIONS },
 				// Matches the toolbar filter's own two categories - same source/creatorHadDpAccess logic as
 				// createMethodWhere in query.forOrganizationTable.handler.ts.
 				cell: ({ row }) => {
@@ -500,9 +867,87 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 					return ''
 				},
 			},
+			{
+				id: 'community',
+				header: 'Community',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				accessorFn: () => undefined,
+				cell: createPillListCell({ getIds: (row) => row.attributeIds, labelById: communityLabelById }),
+			},
+			{
+				id: 'leaderBadge',
+				header: 'Leader Badge',
+				size: 180,
+				hiddenByDefault: true,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				accessorFn: () => undefined,
+				cell: createPillListCell({ getIds: (row) => row.attributeIds, labelById: leaderLabelById }),
+			},
+			{
+				id: 'serviceTags',
+				header: 'Service Tags',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				accessorFn: () => undefined,
+				cell: createPillListCell({ getIds: (row) => row.serviceIds, labelById: serviceTagLabelById }),
+			},
+			{
+				id: 'serviceAttributes',
+				header: 'Service Attributes',
+				size: 220,
+				hiddenByDefault: true,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				accessorFn: () => undefined,
+				cell: createPillListCell({
+					getIds: (row) => row.serviceAttributeIds,
+					labelById: serviceAttributeLabelById,
+				}),
+			},
+			{
+				id: 'remoteOptions',
+				header: 'Remote Options',
+				size: 200,
+				hiddenByDefault: true,
+				enableSorting: false,
+				enableGlobalFilter: false,
+				accessorFn: () => undefined,
+				cell: createPillListCell({
+					getIds: (row) => row.remoteOptions,
+					labelById: REMOTE_OPTION_LABEL_BY_ID,
+				}),
+			},
 		],
-		[variants, theme]
+		[variants, theme, communityLabelById, leaderLabelById, serviceTagLabelById, serviceAttributeLabelById]
 	)
+
+	// Hoisted out of their own toolbar JSX props (rather than left as inline arrows) purely to satisfy
+	// static analysis - see the memory note on this same lesson generally.
+	const handleStatusChange = (next: string[]) => {
+		setColumnFilters((prev) => {
+			const rest = prev.filter(({ id }) => id !== 'status')
+			return next.length ? [...rest, { id: 'status', value: next }] : rest
+		})
+	}
+	const handleCreateMethodChange = (next: string | null) => {
+		setColumnFilters((prev) => {
+			const rest = prev.filter(({ id }) => id !== 'createMethod')
+			return next === 'public' || next === 'internal' ? [...rest, { id: 'createMethod', value: next }] : rest
+		})
+	}
+	const handleDeletedChange = (next: string | null) => {
+		setColumnFilters((prev) => {
+			const rest = prev.filter(({ id }) => id !== 'deleted')
+			const filterValue = deletedValueToFilter(next)
+			return filterValue === undefined ? rest : [...rest, { id: 'deleted', value: filterValue }]
+		})
+	}
 
 	return (
 		<Stack gap='sm'>
@@ -525,62 +970,144 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 				isFetching={isFetching}
 				isError={isError}
 				getRowStyle={getOrgTableRowStyle}
+				columnVisibility={columnVisibility}
+				onColumnVisibilityChange={setColumnVisibility}
+				toolbarFilterSummary={toolbarFilterSummary}
 				toolbarExtra={
-					<>
-						<MultiSelect
-							size='xs'
-							label='Status'
-							styles={COMPACT_MULTISELECT_STYLES}
-							data={STATUS_FILTER_OPTIONS}
-							value={statusFilter?.length ? statusFilter : ['all']}
-							onChange={(next) => {
-								setColumnFilters((prev) => {
-									const withoutStatus = prev.filter(({ id }) => id !== 'status')
-									const wasShowingAll = !statusFilter?.length
-									// "All" is exclusive: picking it while real statuses were selected clears them;
-									// picking a real status while "All" was showing drops "All."
-									const resolved =
-										next.includes('all') && next.length > 1
-											? wasShowingAll
-												? next.filter((v) => v !== 'all')
-												: ['all']
-											: next
-									const realValues = resolved.filter((v) => v !== 'all')
-									return realValues.length > 0
-										? [...withoutStatus, { id: 'status', value: realValues }]
-										: withoutStatus
-								})
-							}}
-							renderPill={renderStatusPill}
-							w={190}
-						/>
-						<Select
-							size='xs'
-							label={<CreateMethodLabel />}
-							styles={COMPACT_SELECT_STYLES}
-							data={CREATE_METHOD_OPTIONS}
-							value={createMethodFilter ?? 'all'}
-							onChange={(next) => {
-								setColumnFilters((prev) => {
-									const withoutCreateMethod = prev.filter(({ id }) => id !== 'createMethod')
-									return next === 'public' || next === 'internal'
-										? [...withoutCreateMethod, { id: 'createMethod', value: next }]
-										: withoutCreateMethod
-								})
-							}}
-							allowDeselect={false}
-							w={110}
-						/>
-						<TableToolbarToggle
-							columnId='deleted'
-							columnFilters={columnFilters}
-							setColumnFilters={setColumnFilters}
-							cycle={[false, true, undefined]}
-							label={deletedFilterLabel}
-							icon={deletedFilterIcon}
-							slash={isDeletedFilterExcluded}
-						/>
-					</>
+					<Stack gap='xs' w='100%'>
+						<Group gap='xs' wrap='nowrap' justify='flex-end'>
+							<MultiSelect
+								size='xs'
+								label={<FilterLabel label='Status' help={helpLines(STATUS_HELP)} />}
+								placeholder='All'
+								styles={COMPACT_MULTISELECT_STYLES}
+								data={STATUS_FILTER_OPTIONS}
+								value={statusFilter ?? []}
+								onChange={handleStatusChange}
+								renderPill={renderStatusPill}
+								clearable
+								w={190}
+							/>
+							<Select
+								size='xs'
+								label={<FilterLabel label='Create Method' help={helpLines(CREATE_METHOD_HELP)} />}
+								placeholder='All'
+								styles={COMPACT_SELECT_STYLES}
+								data={CREATE_METHOD_OPTIONS}
+								value={createMethodFilter ?? null}
+								onChange={handleCreateMethodChange}
+								clearable
+								w={110}
+							/>
+						</Group>
+						{/* Deleted and the metadata quick filters are all added/removed via "+ Filter" - a second
+						row, right-aligned, keeps them visually distinct from the always-on Status/Create Method
+						row above instead of blending into one long left-to-right line. */}
+						<Group gap='xs' wrap='wrap' justify='flex-end'>
+							{activeFacets.includes('deleted') && (
+								<FilterChip
+									label='Deleted'
+									summary={
+										DELETED_FILTER_OPTIONS.find((o) => o.value === deletedFilterToValue(deletedFilter))?.label
+									}
+									onRemove={removeFacetHandler('deleted')}
+									help={helpLines(DELETED_FILTER_HELP)}
+								>
+									<Select
+										size='xs'
+										styles={COMPACT_SELECT_STYLES}
+										data={DELETED_FILTER_OPTIONS}
+										value={deletedFilterToValue(deletedFilter)}
+										onChange={handleDeletedChange}
+										allowDeselect={false}
+										w={150}
+									/>
+								</FilterChip>
+							)}
+							{activeFacets.includes('community') && (
+								<FilterChip
+									label='Community'
+									summary={communityFilter.length ? `${communityFilter.length} selected` : undefined}
+									onRemove={removeFacetHandler('community')}
+									help={helpLines(COMMUNITY_FILTER_HELP)}
+								>
+									<GroupedMultiSelect
+										label='Community'
+										groups={communityGroups}
+										isLoading={communityLoading}
+										value={communityFilter}
+										onChange={setArrayFilter('communityAttributeIds')}
+									/>
+								</FilterChip>
+							)}
+							{activeFacets.includes('leaderBadge') && (
+								<FilterChip
+									label='Leader Badge'
+									summary={leaderFilter.length ? `${leaderFilter.length} selected` : undefined}
+									onRemove={removeFacetHandler('leaderBadge')}
+									help={helpLines(LEADER_BADGE_FILTER_HELP)}
+								>
+									<GroupedMultiSelect
+										label='Leader Badge'
+										groups={leaderGroups}
+										isLoading={leaderLoading}
+										value={leaderFilter}
+										onChange={setArrayFilter('leaderAttributeIds')}
+									/>
+								</FilterChip>
+							)}
+							{activeFacets.includes('serviceTags') && (
+								<FilterChip
+									label='Service Tags'
+									summary={serviceTagFilter.length ? `${serviceTagFilter.length} selected` : undefined}
+									onRemove={removeFacetHandler('serviceTags')}
+									help={helpLines(SERVICE_TAG_FILTER_HELP)}
+								>
+									<GroupedMultiSelect
+										label='Service Tags'
+										groups={serviceTagGroups}
+										isLoading={serviceTagsLoading}
+										value={serviceTagFilter}
+										onChange={setArrayFilter('serviceTagIds')}
+									/>
+								</FilterChip>
+							)}
+							{activeFacets.includes('serviceAttributes') && (
+								<FilterChip
+									label='Service Attributes'
+									summary={
+										serviceAttributeFilter.length ? `${serviceAttributeFilter.length} selected` : undefined
+									}
+									onRemove={removeFacetHandler('serviceAttributes')}
+									help={helpLines(SERVICE_ATTRIBUTE_FILTER_HELP)}
+								>
+									<GroupedMultiSelect
+										label='Service Attributes'
+										groups={serviceAttributeGroups}
+										isLoading={serviceAttributesLoading}
+										value={serviceAttributeFilter}
+										onChange={setArrayFilter('serviceAttributeIds')}
+									/>
+								</FilterChip>
+							)}
+							{activeFacets.includes('remoteOptions') && (
+								<FilterChip
+									label='Remote Options'
+									summary={remoteOptionsFilter.length ? `${remoteOptionsFilter.length} selected` : undefined}
+									onRemove={removeFacetHandler('remoteOptions')}
+									help={helpLines(REMOTE_OPTIONS_HELP)}
+								>
+									<GroupedMultiSelect
+										label='Remote Options'
+										groups={REMOTE_OPTION_GROUPS}
+										value={remoteOptionsFilter}
+										onChange={setArrayFilter('remoteOptions')}
+									/>
+								</FilterChip>
+							)}
+							<AddFilterMenu facets={ADDABLE_FACETS} activeFacets={activeFacets} onAdd={addFacet} />
+						</Group>
+					</Stack>
 				}
 			/>
 		</Stack>

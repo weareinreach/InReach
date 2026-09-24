@@ -9,10 +9,12 @@ import {
 	Popover,
 	Progress,
 	Select,
+	Stack,
 	Table,
 	Text,
 	TextInput,
 	Tooltip,
+	UnstyledButton,
 	useMantineTheme,
 } from '@mantine/core'
 import {
@@ -28,6 +30,7 @@ import {
 	type RowSelectionState,
 	type SortingState,
 	useReactTable,
+	type VisibilityState,
 } from '@tanstack/react-table'
 import { type CSSProperties, type KeyboardEvent, type ReactNode, useCallback, useMemo, useState } from 'react'
 
@@ -36,7 +39,13 @@ import { Icon } from '~ui/icon'
 import { ColumnFilterControl } from './ColumnFilterControl'
 import classes from './DataTable.module.css'
 import { type DataTableColumn, type DataTableDataMode, type DataTableFilterValue } from './types'
-import { applyColumnFilters, applyGlobalFilter, applySorting, getColumnValue } from './utils'
+import {
+	applyColumnFilters,
+	applyGlobalFilter,
+	applySorting,
+	describeFilterValue,
+	getColumnValue,
+} from './utils'
 
 export type { DataTableCellContext, DataTableColumn, DataTableFilter } from './types'
 export type {
@@ -125,13 +134,32 @@ export interface DataTableProps<T> {
 	emptyMessage?: string
 
 	toolbarExtra?: ReactNode
+	/**
+	 * Extra entries for the "applied filters" summary above the table, for a `toolbarExtra` control that
+	 * doesn't correspond to any real column (e.g. Organization's Community/Service Tags quick filters) - the
+	 * summary can only auto-derive an entry from a `columnFilters` value when it can look up a matching
+	 * `columns[]` definition for its label/option list, which these toolbar-only filters don't have.
+	 */
+	toolbarFilterSummary?: { id: string; label: string; valueLabel: string }[]
 	showToolbar?: boolean
 	showFooter?: boolean
 
 	striped?: boolean
 	maxHeight?: string | number
 	minWidth?: string | number
+	/**
+	 * Seeds the internal (uncontrolled) visibility state's initial value - ignored once `columnVisibility` is
+	 * passed instead (see it below for when a caller needs to react to or drive visibility itself).
+	 */
 	initialColumnVisibility?: Record<string, boolean>
+	/**
+	 * Optional-controlled, same idiom as `expanded` above - omit both to keep every existing consumer's
+	 * previous fully-internal visibility state (seeded from `columns[].hiddenByDefault`/
+	 * `initialColumnVisibility`). Pass both when a caller needs to force a column visible itself (e.g.
+	 * Organization's toolbar quick filters, which show their own column only once that filter is in use).
+	 */
+	columnVisibility?: Record<string, boolean>
+	onColumnVisibilityChange?: (visibility: Record<string, boolean>) => void
 	/** Applied to every cell's containing `<Table.Tr>` - e.g. dimming or striking through a deleted row. */
 	getRowStyle?: (row: T) => CSSProperties | undefined
 }
@@ -163,19 +191,22 @@ export const DataTable = <T,>({
 	errorMessage = 'Error loading data',
 	emptyMessage = 'No results',
 	toolbarExtra,
+	toolbarFilterSummary = [],
 	showToolbar = true,
 	showFooter = true,
 	striped = true,
 	maxHeight = '65vh',
 	minWidth = 900,
 	initialColumnVisibility,
+	columnVisibility: columnVisibilityProp,
+	onColumnVisibilityChange: onColumnVisibilityChangeProp,
 	getRowStyle,
 }: DataTableProps<T>) => {
 	const theme = useMantineTheme()
 	// Lazy initializer - runs once on mount, matching `initialColumnVisibility`'s existing "initial
 	// value only" semantics. `columns[].hiddenByDefault` previously had no effect at all: nothing
 	// ever read it, so every column marked hidden-by-default rendered visible regardless.
-	const [columnVisibility, setColumnVisibility] = useState(() => {
+	const [internalColumnVisibility, setInternalColumnVisibility] = useState<VisibilityState>(() => {
 		const defaults: Record<string, boolean> = {}
 		for (const column of columns) {
 			if (column.hiddenByDefault) {
@@ -184,6 +215,20 @@ export const DataTable = <T,>({
 		}
 		return { ...defaults, ...initialColumnVisibility }
 	})
+	// Optional-controlled, same idiom as `expanded` below - omitting both keeps every existing consumer's
+	// previous fully-internal behavior.
+	const columnVisibility = columnVisibilityProp ?? internalColumnVisibility
+	const handleColumnVisibilityChange = useCallback(
+		(updater: VisibilityState | ((old: VisibilityState) => VisibilityState)) => {
+			const next = typeof updater === 'function' ? updater(columnVisibility) : updater
+			if (onColumnVisibilityChangeProp) {
+				onColumnVisibilityChangeProp(next)
+			} else {
+				setInternalColumnVisibility(next)
+			}
+		},
+		[columnVisibility, onColumnVisibilityChangeProp]
+	)
 	const [internalExpanded, setInternalExpanded] = useState<ExpandedState>({})
 	// Optional-controlled: omitting both expanded/onExpandedChange keeps every existing consumer's
 	// previous fully-internal behavior; passing both lets a caller seed/derive expansion itself.
@@ -201,6 +246,28 @@ export const DataTable = <T,>({
 	)
 	const [columnSizing, setColumnSizing] = useState<ColumnSizingState>({})
 	const showSelectionColumn = Boolean(onRowSelectionChange)
+
+	// Drives the "applied filters" summary above the table - one entry per active columnFilters entry that
+	// still resolves to a real, filterable column and a non-empty value (a stale entry for a column that's
+	// since been removed, or one a toolbar toggle just cleared back to `undefined`, is silently skipped
+	// rather than showing a blank/broken chip).
+	const filterSummary = useMemo(() => {
+		const columnSummary = columnFilters
+			.map((activeFilter) => {
+				const column = columns.find((col) => col.id === activeFilter.id)
+				if (!column?.filter) {
+					return null
+				}
+				const valueLabel = describeFilterValue(column.filter, activeFilter.value as DataTableFilterValue)
+				if (!valueLabel) {
+					return null
+				}
+				const label = typeof column.header === 'string' ? column.header : column.id
+				return { id: activeFilter.id, label, valueLabel }
+			})
+			.filter((entry): entry is { id: string; label: string; valueLabel: string } => entry !== null)
+		return [...columnSummary, ...toolbarFilterSummary]
+	}, [columnFilters, columns, toolbarFilterSummary])
 
 	// Client mode does the filtering/sorting/pagination math itself, over the full `data` array; server
 	// mode trusts the caller to have already sent back exactly the right page.
@@ -254,6 +321,8 @@ export const DataTable = <T,>({
 		},
 		[columnFilters, onColumnFiltersChange]
 	)
+
+	const handleClearAllFilters = useCallback(() => onColumnFiltersChange([]), [onColumnFiltersChange])
 
 	const handleGlobalFilterChange = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => onGlobalFilterChange(event.currentTarget.value),
@@ -326,7 +395,7 @@ export const DataTable = <T,>({
 			onGlobalFilterChange(typeof updater === 'function' ? updater(globalFilter) : updater),
 		onPaginationChange: (updater) =>
 			onPaginationChange(typeof updater === 'function' ? updater(pagination) : updater),
-		onColumnVisibilityChange: setColumnVisibility,
+		onColumnVisibilityChange: handleColumnVisibilityChange,
 		onExpandedChange: handleExpandedChange,
 		onColumnSizingChange: setColumnSizing,
 		onRowSelectionChange: (updater) =>
@@ -363,6 +432,16 @@ export const DataTable = <T,>({
 		}
 	}
 
+	// A plain `width` is only a hint once enough columns are shown that their declared widths exceed the
+	// scroll container - some browsers then let a cell's own unbreakable content (a long, un-clipped `nowrap`
+	// header label, an un-truncated id string) win out and render wider than that declared width. A pinned
+	// column's sticky `left` offset (`pinOffsets` above) is computed from the SAME declared width via
+	// `getSize()`, so any such mismatch opens a real, persistent gap between two pinned columns that the
+	// scrolled-under, non-sticky column behind it shows through - the exact "stray text between Actions and
+	// Name" bug this was written for. Repeating the width as `minWidth`/`maxWidth` forces it, removing the
+	// browser's discretion instead of trying to out-guess which content will trigger it.
+	const fixedColumnWidth = (px: number) => ({ width: px, minWidth: px, maxWidth: px })
+
 	const alertBanner = isError ? (
 		<Alert color='red' mb='sm'>
 			{errorMessage}
@@ -372,16 +451,15 @@ export const DataTable = <T,>({
 	return (
 		<div>
 			{showToolbar && (
-				<Group justify='space-between' mb='sm' wrap='nowrap'>
-					<TextInput
-						placeholder={globalFilterPlaceholder}
-						value={globalFilter}
-						onChange={handleGlobalFilterChange}
-						leftSection={<Icon icon='carbon:search' height={16} />}
-						w={280}
-					/>
-					<Group wrap='nowrap' gap='xs'>
-						{toolbarExtra}
+				<Stack gap='xs' mb='sm'>
+					<Group justify='space-between' wrap='nowrap'>
+						<TextInput
+							placeholder={globalFilterPlaceholder}
+							value={globalFilter}
+							onChange={handleGlobalFilterChange}
+							leftSection={<Icon icon='carbon:search' height={16} />}
+							w={280}
+						/>
 						<Menu closeOnItemClick={false} position='bottom-end'>
 							<Menu.Target>
 								<Tooltip label='Show/hide columns'>
@@ -411,11 +489,48 @@ export const DataTable = <T,>({
 							</Menu.Dropdown>
 						</Menu>
 					</Group>
-				</Group>
+					{/* A separate, wrappable row for filter controls - the search box/column-visibility menu
+					above stay pinned to one line, but a table with many quick filters (e.g. Organizations)
+					would otherwise force everything onto one crowded, overflowing line. */}
+					{toolbarExtra && (
+						<Group wrap='wrap' gap='xs' align='flex-end'>
+							{toolbarExtra}
+						</Group>
+					)}
+				</Stack>
 			)}
 
 			{alertBanner}
 			<Progress value={100} size={2} striped animated style={{ opacity: isFetching || isLoading ? 1 : 0 }} />
+
+			{filterSummary.length > 0 && (
+				<Group justify='flex-end' mb={4}>
+					<Tooltip label='Clear all filters'>
+						<UnstyledButton
+							onClick={handleClearAllFilters}
+							aria-label='Clear all filters'
+							// Matches the SideNav's selected-item background exactly - both just read the theme's
+							// primary-color "light" variant, which is what Mantine's own NavLink uses internally
+							// for its active state (see NavLink's CSS: `--nl-bg: var(--mantine-primary-color-light)`).
+							style={{
+								display: 'flex',
+								alignItems: 'center',
+								gap: 6,
+								backgroundColor: 'var(--mantine-primary-color-light)',
+								color: 'var(--mantine-primary-color-light-color)',
+								borderRadius: 'var(--mantine-radius-sm)',
+								padding: '4px 10px',
+							}}
+						>
+							<Text size='xs' fw={500} c='inherit'>
+								Filtered by:{' '}
+								{filterSummary.map(({ label, valueLabel }) => `${label}: ${valueLabel}`).join('; ')}
+							</Text>
+							<Icon icon='carbon:close' height={12} />
+						</UnstyledButton>
+					</Tooltip>
+				</Group>
+			)}
 
 			<Table.ScrollContainer minWidth={minWidth} maxHeight={maxHeight}>
 				<Table
@@ -461,7 +576,7 @@ export const DataTable = <T,>({
 									return (
 										<Table.Th
 											key={header.id}
-											style={{ ...stickyStyle(header.column.id), width: header.getSize() }}
+											style={{ ...stickyStyle(header.column.id), ...fixedColumnWidth(header.getSize()) }}
 											className={classes.th}
 										>
 											<Group
@@ -493,8 +608,26 @@ export const DataTable = <T,>({
 																variant={activeFilter ? 'light' : 'subtle'}
 																size='sm'
 																aria-label={`Filter ${columnDef.id}`}
+																// Every ActionIcon in the app defaults to the same pale blue (see the
+																// theme's ActionIcon.defaultProps) - fine normally, but it means an
+																// "active" filter icon only differs from an inactive one by a faint
+																// background tint of that same color, easy to miss. Overriding just the
+																// active state to the app's green "something is filtered" accent (same
+																// one the Filtered-by summary and sidenav selection use) makes it
+																// actually read as on at a glance.
+																style={
+																	activeFilter
+																		? { backgroundColor: 'var(--mantine-primary-color-light)' }
+																		: undefined
+																}
 															>
-																<Icon icon='carbon:filter' height={14} />
+																<Icon
+																	icon='carbon:filter'
+																	height={14}
+																	color={
+																		activeFilter ? 'var(--mantine-primary-color-light-color)' : undefined
+																	}
+																/>
 															</ActionIcon>
 														</Popover.Target>
 														<Popover.Dropdown>
@@ -553,7 +686,7 @@ export const DataTable = <T,>({
 									return (
 										<Table.Td
 											key={cell.id}
-											style={{ ...stickyStyle(cell.column.id), width: cell.column.getSize() }}
+											style={{ ...stickyStyle(cell.column.id), ...fixedColumnWidth(cell.column.getSize()) }}
 											ta={columnDef?.align}
 											className={classes.td}
 										>
