@@ -87,6 +87,21 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 		const unpublishedReason = published
 			? null
 			: faker.helpers.arrayElement(Object.values(OrgUnpublishedReason))
+		// Mirrors the real ORG_SELECT: only orgs actually created via createOrgSuggestion (suggestion or
+		// data-portal source) have a creator at all - everything else (migration, spreadsheet upload)
+		// predates that flow and has no Suggestion row.
+		const suggestions =
+			source.source === 'suggestion' || source.source === 'data-portal'
+				? [
+						{
+							suggestedBy: {
+								id: `user_${faker.string.alphanumeric({ length: 20, casing: 'lower' })}`,
+								name: faker.person.fullName(),
+								email: faker.internet.email(),
+							},
+						},
+					]
+				: []
 		allResults.push({
 			id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
 			name: faker.company.name(),
@@ -98,6 +113,7 @@ const generateFakeOrgs = (totalRecords: number): ForOrgTableRow[] => {
 			locations: generateFakeLocations(lastVerified),
 			source,
 			creatorHadDpAccess,
+			suggestions,
 			updatedAt,
 			createdAt,
 		})
@@ -132,7 +148,8 @@ const filterFakeOrgs = (
 	status: TStatusFilter[] | undefined,
 	deleted: boolean | undefined,
 	search: string | undefined,
-	createMethod: 'public' | 'internal' | undefined
+	createMethod: 'public' | 'internal' | undefined,
+	createdByUserId: string | undefined
 ): ForOrgTableRow[] =>
 	orgs.filter((org) => {
 		// Multi-select - matching any one of the chosen values is enough (union/OR), same as the real handler.
@@ -146,6 +163,9 @@ const filterFakeOrgs = (
 			return false
 		}
 		if (createMethod && !matchesCreateMethod(org, createMethod)) {
+			return false
+		}
+		if (createdByUserId && org.suggestions[0]?.suggestedBy?.id !== createdByUserId) {
 			return false
 		}
 		return true
@@ -205,7 +225,8 @@ export const organization = {
 				input.status,
 				input.deleted,
 				input.search,
-				input.createMethod
+				input.createMethod,
+				input.createdByUserId
 			)
 			const sorting = input.sorting?.length ? input.sorting : [{ id: 'name' as const, desc: false }]
 			const sorted = sortFakeOrgs(filtered, sorting)

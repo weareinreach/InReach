@@ -29,6 +29,8 @@ export const ZForReviewTableSchema = z.object({
 	deleted: z.boolean().optional(),
 	rating: z.coerce.number().int().min(1).max(5).optional(),
 	search: z.string().optional(),
+	/** Filters to reviews left by this exact user - the "Created By" type-ahead filter. */
+	createdByUserId: z.string().optional(),
 	createdAt: ZDateRange.optional(),
 	updatedAt: ZDateRange.optional(),
 	sorting: ZSortingState.optional(),

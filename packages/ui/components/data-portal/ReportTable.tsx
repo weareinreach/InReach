@@ -467,6 +467,17 @@ const DateCell = ({ value }: DataTableCellContext<ReportRecord>) => {
 	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 }
 
+/** Cell renderer for the 'reportedBy' column - falls back through the anonymous-reporter snapshot fields. */
+const ReportedByCell = ({ row }: DataTableCellContext<ReportRecord>) => {
+	const name = row.reportedBy?.name || row.userName || 'Anonymous'
+	return (
+		<Text size='sm' style={{ whiteSpace: 'nowrap' }}>
+			{name}
+			{row.userEmail ? ` (${row.userEmail})` : ''}
+		</Text>
+	)
+}
+
 // --- Main Table Component ---
 
 export const ReportTable = () => {
@@ -498,6 +509,8 @@ export const ReportTable = () => {
 	const statusFilter = columnFilters.find(({ id }) => id === 'status')?.value as ReportStatus | undefined
 	const issueTypeFilter = columnFilters.find(({ id }) => id === 'issueType')?.value as string[] | undefined
 	const informedFilter = columnFilters.find(({ id }) => id === 'informed')?.value as boolean | undefined
+	const createdByFilter = columnFilters.find(({ id }) => id === 'reportedBy')?.value as
+		{ id: string; label: string } | undefined
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
@@ -506,6 +519,7 @@ export const ReportTable = () => {
 			status: statusFilter,
 			issueType: issueTypeFilter as ReportIssueType[] | undefined,
 			informed: informedFilter,
+			createdByUserId: createdByFilter?.id,
 			search: debouncedGlobalFilter || undefined,
 			createdAt: dateFilter('createdAt')
 				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
@@ -574,6 +588,15 @@ export const ReportTable = () => {
 				header: 'Service or Location Name',
 				size: 180,
 				cell: createServiceNameCell({ variants }),
+			},
+			{
+				id: 'reportedBy',
+				header: 'Reported By',
+				size: 200,
+				enableSorting: false,
+				accessorFn: (row) => row.reportedBy?.name || row.userName || '',
+				filter: { type: 'user-search' },
+				cell: ReportedByCell,
 			},
 			{
 				id: 'issueType',

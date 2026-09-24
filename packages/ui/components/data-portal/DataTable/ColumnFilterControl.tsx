@@ -1,6 +1,10 @@
 import { Checkbox, MultiSelect, Select, Stack, TextInput } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
-import { type ChangeEvent, useCallback, useState } from 'react'
+import { useDebouncedValue } from '@mantine/hooks'
+import { keepPreviousData } from '@tanstack/react-query'
+import { type ChangeEvent, useCallback, useMemo, useState } from 'react'
+
+import { trpc as api } from '~ui/lib/trpcClient'
 
 import { type DataTableFilter, type DataTableFilterValue } from './types'
 
@@ -83,6 +87,89 @@ const DateRangeFilter = ({
 	)
 }
 
+/**
+ * Type-ahead against `user.searchTypeahead` - type a name or email, pick a match. The committed value keeps
+ * both the user's id (what actually filters) and a display label (so the selected user still shows once the
+ * dropdown's own result list, which depends on the current search text, no longer contains them).
+ */
+const UserSearchFilter = ({
+	label,
+	value,
+	onChange,
+}: {
+	label: string
+	value: DataTableFilterValue | undefined
+	onChange: (value: DataTableFilterValue | undefined) => void
+}) => {
+	const selected =
+		value && typeof value === 'object' && !Array.isArray(value)
+			? (value as { id: string; label: string })
+			: undefined
+	const [search, setSearch] = useState(selected?.label ?? '')
+	const [debouncedSearch] = useDebouncedValue(search, 300)
+	const trimmedSearch = debouncedSearch.trim()
+
+	const { data } = api.user.searchTypeahead.useQuery(
+		{ search: trimmedSearch },
+		{
+			enabled: trimmedSearch.length >= 2 && trimmedSearch !== selected?.label,
+			placeholderData: keepPreviousData,
+		}
+	)
+
+	const options = useMemo(() => {
+		const matches = (data ?? []).map((user) => ({
+			value: user.id,
+			label: user.name ? `${user.name} (${user.email})` : user.email,
+		}))
+		// Keeps the currently-selected user selectable/visible even once their name/email no longer
+		// matches whatever's since been typed into the search box.
+		if (selected && !matches.some((option) => option.value === selected.id)) {
+			matches.unshift({ value: selected.id, label: selected.label })
+		}
+		return matches
+	}, [data, selected])
+
+	const handleChange = useCallback(
+		(nextId: string | null) => {
+			if (!nextId) {
+				onChange(undefined)
+				setSearch('')
+				return
+			}
+			const match = options.find((option) => option.value === nextId)
+			if (match) {
+				onChange({ id: match.value, label: match.label })
+				setSearch(match.label)
+			}
+		},
+		[onChange, options]
+	)
+
+	return (
+		<Select
+			label={label}
+			placeholder='Search by name or email'
+			data={options}
+			value={selected?.id ?? null}
+			searchable
+			searchValue={search}
+			onSearchChange={setSearch}
+			onChange={handleChange}
+			clearable
+			size='xs'
+			nothingFoundMessage={trimmedSearch.length < 2 ? 'Type at least 2 characters' : 'No users found'}
+			// Same fix as DateRangeFilter above, same reason: this Select's own dropdown is itself nested
+			// inside the *outer* filter Popover. By default it portals to document.body, landing outside
+			// that outer Popover's DOM subtree - so clicking an option registered as an "outside click" on
+			// the outer Popover and could close the whole filter UI before the click's own selection
+			// handler finished running, intermittently dropping the click depending on timing. Rendering
+			// inline (no portal) keeps it a real descendant of the outer Popover.Dropdown.
+			comboboxProps={{ withinPortal: false }}
+		/>
+	)
+}
+
 /** Renders the appropriate filter input for a column's declared `filter.type`, inside a `Popover.Dropdown`. */
 export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFilterControlProps) => {
 	const handleTextChange = useCallback(
@@ -160,6 +247,9 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 		}
 		case 'date-range': {
 			return <DateRangeFilter label={label} value={value} onChange={onChange} />
+		}
+		case 'user-search': {
+			return <UserSearchFilter label={label} value={value} onChange={onChange} />
 		}
 		default: {
 			return null

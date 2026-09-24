@@ -101,6 +101,15 @@ export const userRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	searchTypeahead: permissionedProcedure('viewAllUsers')
+		.input(schema.ZSearchTypeaheadSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('searchTypeahead'),
+				() => import('./query.searchTypeahead.handler')
+			)
+			return handler(opts)
+		}),
 	resendCode: publicProcedure.input(schema.ZResendCodeSchema).mutation(async (opts) => {
 		const handler = await importHandler(
 			namespaced('resendCode'),

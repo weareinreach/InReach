@@ -69,11 +69,44 @@ const ORG_SELECT = {
 	source: { select: { source: true } },
 	creatorHadDpAccess: true,
 	unpublishedReason: true,
+	// The org's earliest Suggestion is the one that created it - see creatorOrgIds's comment. A later
+	// Suggestion always targets an already-existing org, so this never picks up an unrelated edit
+	// suggestion instead of the actual creator.
+	suggestions: {
+		orderBy: { createdAt: 'asc' },
+		take: 1,
+		select: { suggestedBy: { select: { id: true, name: true, email: true } } },
+	},
 } satisfies Prisma.OrganizationSelect
+
+/**
+ * Org ids whose earliest `Suggestion` record was submitted by this user. `createOrgSuggestion` (shared by
+ * both the public "Suggest an Organization" form and the Data Portal's "Add an Organization" modal) always
+ * writes exactly one `Suggestion` row in the same transaction as a brand-new `Organization` row; any later
+ * Suggestion for that same org can only come from someone suggesting an edit to an org that already exists
+ * (it requires `existingOrgId`, see createOrgSuggestion.ts). So the oldest Suggestion per org is always its
+ * creation record, regardless of how many edit-suggestions came after it. Orgs predating this flow (or
+ * inserted outside it, e.g. a seed/import script) have no Suggestion at all and won't match any user.
+ */
+const creatorOrgIds = async (userId: string): Promise<string[]> => {
+	const rows = await prisma.$queryRaw<{ id: string }[]>`
+		SELECT o.id
+		FROM "Organization" o
+		WHERE EXISTS (
+			SELECT 1 FROM "Suggestion" s
+			WHERE s."organizationId" = o.id
+			AND s."suggestedById" = ${userId}
+			AND s."createdAt" = (
+				SELECT MIN(s2."createdAt") FROM "Suggestion" s2 WHERE s2."organizationId" = o.id
+			)
+		)
+	`
+	return rows.map((row) => row.id)
+}
 
 const buildWhere = (
 	input: TForOrganizationTableSchema,
-	cleanupIds: string[] | undefined
+	idFilters: string[][]
 ): Prisma.OrganizationWhereInput => {
 	const where: Prisma.OrganizationWhereInput = {}
 	const statusClause = statusWhere(input.status)
@@ -96,8 +129,11 @@ const buildWhere = (
 	if (input.createdAt) {
 		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
 	}
-	if (cleanupIds) {
-		where.id = { in: cleanupIds }
+	// Each id list (location-phone cleanup, created-by) becomes its own `AND` clause rather than
+	// intersecting them by hand - Prisma implicitly ANDs every entry, and the two filters are independent
+	// enough that they'll rarely both be active at once anyway.
+	if (idFilters.length) {
+		where.AND = idFilters.map((ids) => ({ id: { in: ids } }))
 	}
 	return where
 }
@@ -208,7 +244,7 @@ const expandSearchTerm = async (searchTerm: string): Promise<string[]> => {
  */
 const searchIds = async (
 	input: TForOrganizationTableSchema & { search: string },
-	cleanupIds: string[] | undefined
+	idFilters: string[][]
 ): Promise<{ ids: string[]; total: number }> => {
 	const expandedTerms = await expandSearchTerm(input.search)
 	const expandedTermsSql = expandedTerms.length
@@ -257,8 +293,8 @@ const searchIds = async (
 	if (createMethodCondition) {
 		conditions.push(createMethodCondition)
 	}
-	if (cleanupIds) {
-		conditions.push(Prisma.sql`o.id = ANY(${cleanupIds})`)
+	for (const ids of idFilters) {
+		conditions.push(Prisma.sql`o.id = ANY(${ids})`)
 	}
 
 	// While actively searching, relevance wins over any user-selected column sort — a fuzzy match's rank is
@@ -283,13 +319,17 @@ const forOrganizationTable = async ({
 }: TRPCHandlerParams<TForOrganizationTableSchema, 'protected'>) => {
 	const search = input.search?.trim()
 
-	const cleanupIds = input.needsLocationPhoneCleanup ? await locationPhoneCleanupIds() : undefined
-	if (cleanupIds?.length === 0) {
+	const [cleanupIds, createdByOrgIds] = await Promise.all([
+		input.needsLocationPhoneCleanup ? locationPhoneCleanupIds() : undefined,
+		input.createdByUserId ? creatorOrgIds(input.createdByUserId) : undefined,
+	])
+	if (cleanupIds?.length === 0 || createdByOrgIds?.length === 0) {
 		return { results: [], total: 0 }
 	}
+	const idFilters = [cleanupIds, createdByOrgIds].filter((ids): ids is string[] => ids !== undefined)
 
 	if (search) {
-		const { ids, total: searchTotal } = await searchIds({ ...input, search }, cleanupIds)
+		const { ids, total: searchTotal } = await searchIds({ ...input, search }, idFilters)
 		if (ids.length === 0) {
 			return { results: [], total: searchTotal }
 		}
@@ -301,7 +341,7 @@ const forOrganizationTable = async ({
 		return { results: searchResults, total: searchTotal }
 	}
 
-	const where = buildWhere(input, cleanupIds)
+	const where = buildWhere(input, idFilters)
 	const orderBy = buildOrderBy(input.sorting)
 
 	const [results, total] = await Promise.all([

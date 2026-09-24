@@ -57,6 +57,12 @@ export const ZForOrganizationTableSchema = z.object({
 	deleted: z.boolean().optional(),
 	createMethod: ZCreateMethod.optional(),
 	search: z.string().optional(),
+	/**
+	 * Filters to orgs whose creator (see `creatorOrgIds` in query.forOrganizationTable.handler.ts) is this
+	 * exact user - the "Created By" type-ahead filter. Orgs with no `Suggestion` record at all (legacy data
+	 * predating that flow) won't match any user.
+	 */
+	createdByUserId: z.string().optional(),
 	lastVerified: ZDateRange.optional(),
 	updatedAt: ZDateRange.optional(),
 	createdAt: ZDateRange.optional(),

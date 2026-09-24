@@ -6,12 +6,18 @@ export type DataTableFilter =
 	| { type: 'select'; options: { value: string; label: string }[] }
 	| { type: 'multi-select'; options: { value: string; label: string }[] }
 	| { type: 'date-range' }
+	/**
+	 * Async type-ahead against `user.searchTypeahead` - value is the selected user's id, kept alongside a
+	 * display label since the id alone can't be turned back into a name/email without a lookup.
+	 */
+	| { type: 'user-search' }
 
 /**
  * Shape actually stored per active filter - kept as `unknown` to match `@tanstack/react-table`'s own
  * `ColumnFiltersState`; each `ColumnFilterControl` branch owns interpreting its own value's real shape.
  */
-export type DataTableFilterValue = string | boolean | string[] | [Date | undefined, Date | undefined]
+export type DataTableFilterValue =
+	string | boolean | string[] | [Date | undefined, Date | undefined] | { id: string; label: string }
 
 export interface DataTableCellContext<T> {
 	row: T

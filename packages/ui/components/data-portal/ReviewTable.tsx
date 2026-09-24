@@ -288,6 +288,8 @@ export const ReviewTable = () => {
 	const visibleFilter = columnFilters.find(({ id }) => id === 'visible')?.value as boolean | undefined
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 	const ratingFilter = columnFilters.find(({ id }) => id === 'rating')?.value as string | undefined
+	const createdByFilter = columnFilters.find(({ id }) => id === 'userEmail')?.value as
+		{ id: string; label: string } | undefined
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
@@ -296,6 +298,7 @@ export const ReviewTable = () => {
 			visible: visibleFilter,
 			deleted: deletedFilter,
 			rating: ratingFilter ? Number(ratingFilter) : undefined,
+			createdByUserId: createdByFilter?.id,
 			search: debouncedGlobalFilter || undefined,
 			createdAt: dateFilter('createdAt')
 				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
@@ -349,6 +352,7 @@ export const ReviewTable = () => {
 				header: 'User Email',
 				size: 220,
 				accessorFn: (row) => row.user?.email || '',
+				filter: { type: 'user-search' },
 				cell: UserEmailCell,
 			},
 			{

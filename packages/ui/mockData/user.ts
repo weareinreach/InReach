@@ -25,4 +25,21 @@ export const user = {
 			return { results, total: results.length }
 		},
 	}),
+	// Backs the "Created By" type-ahead filter on the Organization/Review/Report data-portal tables -
+	// reuses the same fixture dataset as forUserTable rather than maintaining a second one.
+	searchTypeahead: getTRPCMock({
+		path: ['user', 'searchTypeahead'],
+		response: async (input) => {
+			const data = (await import('./json/user.forUserTable.json')).default
+			const search = input.search.trim().toLowerCase()
+			return data
+				.filter(
+					(user) =>
+						search.length >= 2 &&
+						(user.name?.toLowerCase().includes(search) || user.email.toLowerCase().includes(search))
+				)
+				.slice(0, 10)
+				.map((user) => ({ id: user.id, name: user.name, email: user.email }))
+		},
+	}),
 } satisfies MockHandlerObject<'user'>

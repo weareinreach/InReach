@@ -78,6 +78,18 @@ export default {
 						},
 					},
 				])
+			}),
+			// Backs the "Created By" type-ahead filter on the Reported By column.
+			http.get('*/trpc/user.searchTypeahead*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: [{ id: 'u1', name: 'Test User', email: 'user@example.com' }],
+							},
+						},
+					},
+				])
 			})
 		)
 	},

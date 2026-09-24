@@ -242,6 +242,26 @@ const DateCell = ({ value }: DataTableCellContext<TableRow>) => {
 	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 }
 
+/**
+ * Cell renderer for the 'createdBy' column - reads the org's earliest Suggestion's submitter (see
+ * `creatorOrgIds` in query.forOrganizationTable.handler.ts). Null for orgs predating that flow, or for a
+ * location sub-row (creator is an org-level concept only).
+ */
+const CreatedByCell = ({ row, depth }: DataTableCellContext<TableRow>) => {
+	if (depth > 0) {
+		return null
+	}
+	const creator = (row as RowItem).suggestions?.[0]?.suggestedBy
+	if (!creator) {
+		return (
+			<Text size='sm' c='dimmed'>
+				Unknown
+			</Text>
+		)
+	}
+	return <Text size='sm'>{creator.name || creator.email}</Text>
+}
+
 const getOrgTableSubRows = (row: TableRow): TableRow[] | undefined =>
 	(row as RowItem).locations as TableRow[] | undefined
 
@@ -386,6 +406,8 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 	const createMethodFilter = columnFilters.find(({ id }) => id === 'createMethod')?.value as
 		'public' | 'internal' | undefined
+	const createdByFilter = columnFilters.find(({ id }) => id === 'createdBy')?.value as
+		{ id: string; label: string } | undefined
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
@@ -394,6 +416,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 			status: statusFilter,
 			deleted: deletedFilter,
 			createMethod: createMethodFilter,
+			createdByUserId: createdByFilter?.id,
 			search: debouncedGlobalFilter || undefined,
 			lastVerified: dateFilter('lastVerified')
 				? { from: dateFilter('lastVerified')?.[0], to: dateFilter('lastVerified')?.[1] }
@@ -479,6 +502,18 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 				size: 150,
 				filter: { type: 'date-range' },
 				cell: DateCell,
+			},
+			{
+				id: 'createdBy',
+				header: 'Created By',
+				size: 200,
+				enableSorting: false,
+				accessorFn: (row) => {
+					const creator = (row as RowItem).suggestions?.[0]?.suggestedBy
+					return creator?.name || creator?.email || ''
+				},
+				filter: { type: 'user-search' },
+				cell: CreatedByCell,
 			},
 			{
 				// Display-only - the actual filter is a standalone toolbar dropdown (see toolbarExtra

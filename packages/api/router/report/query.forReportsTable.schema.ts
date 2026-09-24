@@ -32,6 +32,12 @@ export const ZForReportsTableSchema = z.object({
 	issueType: z.array(z.nativeEnum(ReportIssueType)).optional(),
 	organizationId: z.string().optional(),
 	informed: z.boolean().optional(),
+	/**
+	 * Filters to reports submitted by this exact user account - the "Created By" type-ahead filter. Only
+	 * matches reports from a signed-in reporter; anonymous reports (`userEmail`/`userName` only) aren't tied to
+	 * a user id and won't match.
+	 */
+	createdByUserId: z.string().optional(),
 	search: z.string().optional(),
 	createdAt: ZDateRange.optional(),
 	updatedAt: ZDateRange.optional(),

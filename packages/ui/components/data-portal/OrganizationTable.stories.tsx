@@ -1,6 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/nextjs'
 
 import { organization } from '~ui/mockData/organization'
+import { user } from '~ui/mockData/user'
 
 import { OrganizationTable } from './OrganizationTable'
 
@@ -9,7 +10,7 @@ export default {
 	component: OrganizationTable,
 
 	beforeEach({ msw }) {
-		msw.use(organization.forOrganizationTable)
+		msw.use(organization.forOrganizationTable, user.searchTypeahead)
 	},
 
 	parameters: {

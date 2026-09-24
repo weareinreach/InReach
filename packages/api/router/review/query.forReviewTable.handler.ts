@@ -14,6 +14,9 @@ const buildWhere = (input: TForReviewTableSchema): Prisma.OrgReviewWhereInput =>
 	if (input.rating !== undefined) {
 		where.rating = input.rating
 	}
+	if (input.createdByUserId) {
+		where.userId = input.createdByUserId
+	}
 	if (input.createdAt) {
 		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
 	}

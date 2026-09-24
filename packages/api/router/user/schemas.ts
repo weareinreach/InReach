@@ -9,4 +9,5 @@ export * from './mutation.resetPassword.schema'
 export * from './mutation.submitSurvey.schema'
 export * from './mutation.toggleDataPortalAccess.schema'
 export * from './query.forUserTable.schema'
+export * from './query.searchTypeahead.schema'
 // codegen:end

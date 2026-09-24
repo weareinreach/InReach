@@ -20,6 +20,9 @@ const buildWhere = (input: TForReportsTableSchema): Prisma.ReportWhereInput => {
 	if (input.informed !== undefined) {
 		where.informed = input.informed
 	}
+	if (input.createdByUserId) {
+		where.reportedById = input.createdByUserId
+	}
 	if (input.createdAt) {
 		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
 	}
