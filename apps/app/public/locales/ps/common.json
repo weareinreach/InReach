@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
+		"tab-manage-users": "Manage users",
 		"tab-downloads": "Downloads",
 		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
@@ -459,6 +460,7 @@
 	"user-menu": {
 		"admin-options": "د ادارې اختیارونه",
 		"csv-downloads": "CSV Downloads",
+		"dashboards": "Dashboards",
 		"data-portal": "د معلوماتو پورټل کور",
 		"edit-page": "دا پاڼه سم کړئ",
 		"user-options": "د کاروونکي اختیارونه",
@@ -517,6 +519,7 @@
 		"search": "لټون",
 		"service-hours": "د خدمت ساعتونه",
 		"services": "Services",
+		"set-status": "Set status",
 		"settings": "امستنې",
 		"share": "شریکول",
 		"sign-up": "نوم لیکنه",
