@@ -13,6 +13,7 @@
 .th {
 	position: relative;
 	white-space: nowrap;
+	overflow: hidden;
 	background-color: var(--mantine-color-body);
 }
 

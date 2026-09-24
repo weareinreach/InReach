@@ -117,6 +117,18 @@ export default {
 						},
 					},
 				])
+			}),
+			// Backs the "Created By" type-ahead filter on the User Email column.
+			http.get('*/trpc/user.searchTypeahead*', () => {
+				return HttpResponse.json([
+					{
+						result: {
+							data: {
+								json: mockReviews.map(({ user }) => user),
+							},
+						},
+					},
+				])
 			})
 		)
 	},

@@ -24,9 +24,19 @@ vi.mock('~ui/lib/trpcClient', () => ({
 	trpc: {
 		organization: {
 			forOrganizationTable: { useQuery: vi.fn() },
+			// Backs the Community/Leader Badge toolbar quick filters - called unconditionally on every
+			// render (unlike the Created-By type-ahead, which only queries once its popover is opened), so
+			// every test needs a stub even if it never touches these filters.
+			badgeOptions: { useQuery: vi.fn() },
 		},
 		component: {
 			EditModeBarPublish: { useMutation: vi.fn() },
+			// Backs the Service Tags toolbar quick filter - same "called unconditionally" reasoning.
+			ServiceSelect: { useQuery: vi.fn() },
+		},
+		// Backs the Service Attributes toolbar quick filter - same "called unconditionally" reasoning.
+		fieldOpt: {
+			attributesForFilter: { useQuery: vi.fn() },
 		},
 		useUtils: vi.fn(),
 	},
@@ -35,6 +45,9 @@ vi.mock('~ui/lib/trpcClient', () => ({
 const { trpc } = await import('~ui/lib/trpcClient')
 const useForOrgTableMock = vi.mocked(trpc.organization.forOrganizationTable.useQuery)
 const useUpdateStatusMock = vi.mocked(trpc.component.EditModeBarPublish.useMutation)
+const useBadgeOptionsMock = vi.mocked(trpc.organization.badgeOptions.useQuery)
+const useServiceSelectMock = vi.mocked(trpc.component.ServiceSelect.useQuery)
+const useAttributesForFilterMock = vi.mocked(trpc.fieldOpt.attributesForFilter.useQuery)
 const useUtilsMock = vi.mocked(trpc.useUtils)
 
 const ORG_ROW = {
@@ -50,6 +63,12 @@ const ORG_ROW = {
 	source: null,
 	creatorHadDpAccess: false,
 	unpublishedReason: null as string | null,
+	// Populated by ORG_SELECT/withServiceSummaries in the real handler - the Community/Leader Badge/Service
+	// Tags/Service Attributes/Remote Options table columns read these directly (see createPillListCell).
+	attributeIds: [] as string[],
+	serviceIds: [] as string[],
+	serviceAttributeIds: [] as string[],
+	remoteOptions: [] as string[],
 }
 
 const renderTable = (row: typeof ORG_ROW, invalidate = vi.fn()) => {
@@ -68,6 +87,12 @@ const renderTable = (row: typeof ORG_ROW, invalidate = vi.fn()) => {
 	if (!useUpdateStatusMock.getMockImplementation()) {
 		useUpdateStatusMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
 	}
+	// The Community/Leader Badge/Service Tags/Service Attributes toolbar quick filters all query their
+	// options unconditionally on every render (unlike the Created-By type-ahead, which only queries once
+	// its own popover opens) - harmless empty defaults so tests that don't touch these filters don't crash.
+	useBadgeOptionsMock.mockReturnValue({ data: [], isLoading: false } as never)
+	useServiceSelectMock.mockReturnValue({ data: [], isLoading: false } as never)
+	useAttributesForFilterMock.mockReturnValue({ data: [], isLoading: false } as never)
 	render(<OrganizationTable />)
 	return { invalidate }
 }
@@ -132,6 +157,50 @@ describe('OrganizationTable - "Set status" row action', () => {
 	})
 })
 
+describe('OrganizationTable - "+ Filter" menu', () => {
+	beforeEach(() => vi.clearAllMocks())
+
+	it('adding Community from the "+ Filter" menu does not crash even when an attribute nests under more than one parent', async () => {
+		const user = userEvent.setup()
+		useBadgeOptionsMock.mockImplementation(((input: { badgeType: string }) => {
+			const communityData =
+				input.badgeType === 'service-focus'
+					? [
+							{
+								id: 'attr_parent1',
+								name: 'Trans Health',
+								children: [
+									{ id: 'attr_shared', name: 'Hormone Therapy' },
+									{ id: 'attr_child2', name: 'Gender-affirming Surgery' },
+								],
+							},
+							{
+								id: 'attr_parent2',
+								name: 'Youth Services',
+								// `AttributeNesting` allows a child under more than one parent - this is
+								// exactly the shape that crashed Mantine's MultiSelect ("Duplicate options are
+								// not supported") before the dedup fix in GroupedMultiSelect.
+								children: [{ id: 'attr_shared', name: 'Hormone Therapy' }],
+							},
+						]
+					: []
+			return { data: communityData, isLoading: false }
+		}) as never)
+		renderTable({ ...ORG_ROW })
+
+		await user.click(screen.getByRole('button', { name: 'Add filter' }))
+		// Mantine's Menu positions its dropdown via floating-ui, which resolves the item into the DOM a
+		// tick or two after the click rather than synchronously - same documented CI-timing issue as
+		// BulkSearchReplaceTable.test.tsx's "Show/hide columns" menu (this has been seen to take longer
+		// than the default 1000ms `findBy` wait under CI's slower/contended runners).
+		await user.click(await screen.findByRole('menuitem', { name: 'Community' }, { timeout: 15000 }))
+
+		// Disambiguates from the table's own (now auto-shown) "Community" column header - this checks that
+		// the toolbar widget itself rendered, not just that the word "Community" appears somewhere.
+		expect(await screen.findByRole('button', { name: 'Remove Community filter' })).toBeInTheDocument()
+	}, 20000)
+})
+
 describe('OrganizationTable - locationPhoneCleanupOnly', () => {
 	beforeEach(() => vi.clearAllMocks())
 
@@ -146,6 +215,9 @@ describe('OrganizationTable - locationPhoneCleanupOnly', () => {
 			organization: { forOrganizationTable: { invalidate: vi.fn() } },
 			internalNote: { getAllForRecord: { invalidate: vi.fn() } },
 		} as never)
+		useBadgeOptionsMock.mockReturnValue({ data: [], isLoading: false } as never)
+		useServiceSelectMock.mockReturnValue({ data: [], isLoading: false } as never)
+		useAttributesForFilterMock.mockReturnValue({ data: [], isLoading: false } as never)
 		render(<OrganizationTable locationPhoneCleanupOnly={locationPhoneCleanupOnly} />)
 	}
 
