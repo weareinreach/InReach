@@ -14,13 +14,13 @@ export const user = {
 		response: async () => {
 			const data = (await import('./json/user.forUserTable.json')).default
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const results: NonNullable<ApiOutput['user']['forUserTable']>['results'] = data.map((user: any) => ({
-				...user,
-				createdAt: new Date(user.createdAt),
-				updatedAt: new Date(user.updatedAt),
-				emailVerified: user.emailVerified ? new Date(user.emailVerified) : null,
-				name: user.name === null ? null : String(user.name),
-				canAccessDataPortal: user.canAccessDataPortal,
+			const results: NonNullable<ApiOutput['user']['forUserTable']>['results'] = data.map((entry: any) => ({
+				...entry,
+				createdAt: new Date(entry.createdAt),
+				updatedAt: new Date(entry.updatedAt),
+				emailVerified: entry.emailVerified ? new Date(entry.emailVerified) : null,
+				name: entry.name === null ? null : String(entry.name),
+				canAccessDataPortal: entry.canAccessDataPortal,
 			}))
 			return { results, total: results.length }
 		},
@@ -34,12 +34,12 @@ export const user = {
 			const search = input.search.trim().toLowerCase()
 			return data
 				.filter(
-					(user) =>
+					(entry) =>
 						search.length >= 2 &&
-						(user.name?.toLowerCase().includes(search) || user.email.toLowerCase().includes(search))
+						(entry.name?.toLowerCase().includes(search) || entry.email.toLowerCase().includes(search))
 				)
 				.slice(0, 10)
-				.map((user) => ({ id: user.id, name: user.name, email: user.email }))
+				.map((entry) => ({ id: entry.id, name: entry.name, email: entry.email }))
 		},
 	}),
 } satisfies MockHandlerObject<'user'>

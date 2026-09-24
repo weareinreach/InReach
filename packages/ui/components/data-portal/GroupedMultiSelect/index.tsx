@@ -89,6 +89,76 @@ const groupIdFromAllRow = (id: string) => id.slice(ALL_ROW_PREFIX.length)
  */
 type OptionRole = 'all' | 'child' | 'flat'
 
+type FlatDataItem = { value: string; label: string }
+type GroupDataItem = { group: string; items: FlatDataItem[] }
+
+// Mantine requires every option's `value` to be unique across the *entire* flat data array, not just
+// within its own group - but an attribute/tag can legitimately belong to more than one category
+// (Community/Leader Badge attributes can nest under multiple parents; Service Tags and Service Attributes
+// can both attach to multiple categories). Without deduplication, a shared item crashes the whole
+// MultiSelect ("Duplicate options are not supported"). It stays visible under whichever group it's
+// encountered in first; later repeats are just omitted from the dropdown - the cascade/match-mode logic
+// still treats it as belonging to every group it actually has, since that reads from the original `groups`
+// prop, not this deduplicated list.
+const dedupeItems = (items: GroupedMultiSelectOption[], seenIds: Set<string>): GroupedMultiSelectOption[] =>
+	items.filter((item) => {
+		if (seenIds.has(item.id)) {
+			return false
+		}
+		seenIds.add(item.id)
+		return true
+	})
+
+const toFlatItems = (items: GroupedMultiSelectOption[]): FlatDataItem[] =>
+	items.map((item) => ({ value: item.id, label: item.label }))
+
+/**
+ * A `cascadable` group's flat data entries - never a native Mantine `{group, items}` wrapper, since the "All
+ * X" row already names the group (see `GroupedMultiSelectGroup.cascadable`'s own comment).
+ */
+const cascadableGroupData = (
+	group: GroupedMultiSelectGroup,
+	seenIds: Set<string>,
+	roles: Map<string, OptionRole>
+): FlatDataItem[] => {
+	const items = dedupeItems(group.items, seenIds)
+	if (group.items.length <= 1) {
+		// A single-item cascadable group has no "All X" row to act as its header, so there's nothing left
+		// to indent the lone item under - show it plain, same as a childless item.
+		for (const item of items) {
+			roles.set(item.id, 'flat')
+		}
+		return toFlatItems(items)
+	}
+	const allId = allRowId(group.id)
+	roles.set(allId, 'all')
+	for (const item of items) {
+		roles.set(item.id, 'child')
+	}
+	return [{ value: allId, label: `All ${group.label}` }, ...toFlatItems(items)]
+}
+
+/**
+ * A plain (non-`cascadable`) group's data entries - a flat item list when it has no real category label (e.g.
+ * Remote Options), otherwise Mantine's own native `{group, items}` grouping.
+ */
+const plainGroupData = (
+	group: GroupedMultiSelectGroup,
+	seenIds: Set<string>,
+	roles: Map<string, OptionRole>
+): (FlatDataItem | GroupDataItem)[] => {
+	const items = dedupeItems(group.items, seenIds)
+	if (!items.length) {
+		return []
+	}
+	const role: OptionRole = group.label ? 'child' : 'flat'
+	for (const item of items) {
+		roles.set(item.id, role)
+	}
+	const flatItems = toFlatItems(items)
+	return group.label ? [{ group: group.label, items: flatItems }] : flatItems
+}
+
 /**
  * A standard, compact `MultiSelect` - checkbox-free rows, same styling as Status/Create Method - with one
  * addition: a group marked `cascadable` gets a synthetic "All {group}" row that selects/deselects every item
@@ -107,64 +177,16 @@ export const GroupedMultiSelect = ({
 	width = 220,
 }: GroupedMultiSelectProps) => {
 	const { data, optionRoles } = useMemo(() => {
-		// Mantine requires every option's `value` to be unique across the *entire* flat data array, not
-		// just within its own group - but an attribute/tag can legitimately belong to more than one
-		// category (Community/Leader Badge attributes can nest under multiple parents; Service Tags and
-		// Service Attributes can both attach to multiple categories). Without deduplication, a shared item
-		// crashes the whole MultiSelect ("Duplicate options are not supported"). It stays visible under
-		// whichever group it's encountered in first; later repeats are just omitted from the dropdown - the
-		// cascade/match-mode logic below still treats it as belonging to every group it actually has, since
-		// that reads from the original `groups` prop, not this deduplicated list.
 		const seenIds = new Set<string>()
 		const roles = new Map<string, OptionRole>()
 		// `MultiSelectProps['data']` itself is a readonly array type - build up a plain mutable one and only
 		// hand it off as that type once finished, rather than fighting `.push()` against readonly the whole way.
-		const result: (
-			{ value: string; label: string } | { group: string; items: { value: string; label: string }[] }
-		)[] = []
+		const result: (FlatDataItem | GroupDataItem)[] = []
 		for (const group of groups ?? []) {
-			if (group.cascadable) {
-				if (group.items.length > 1) {
-					const id = allRowId(group.id)
-					roles.set(id, 'all')
-					result.push({ value: id, label: `All ${group.label}` })
-					for (const item of group.items) {
-						if (seenIds.has(item.id)) continue
-						seenIds.add(item.id)
-						roles.set(item.id, 'child')
-						result.push({ value: item.id, label: item.label })
-					}
-				} else {
-					// A single-item cascadable group has no "All X" row to act as its header, so there's
-					// nothing left to indent the lone item under - show it plain, same as a childless item.
-					for (const item of group.items) {
-						if (seenIds.has(item.id)) continue
-						seenIds.add(item.id)
-						roles.set(item.id, 'flat')
-						result.push({ value: item.id, label: item.label })
-					}
-				}
-				continue
-			}
-			const items = group.items.filter((item) => {
-				if (seenIds.has(item.id)) return false
-				seenIds.add(item.id)
-				return true
-			})
-			if (!items.length) {
-				continue
-			}
-			if (!group.label) {
-				for (const item of items) {
-					roles.set(item.id, 'flat')
-				}
-				result.push(...items.map((item) => ({ value: item.id, label: item.label })))
-				continue
-			}
-			for (const item of items) {
-				roles.set(item.id, 'child')
-			}
-			result.push({ group: group.label, items: items.map((item) => ({ value: item.id, label: item.label })) })
+			const groupData = group.cascadable
+				? cascadableGroupData(group, seenIds, roles)
+				: plainGroupData(group, seenIds, roles)
+			result.push(...groupData)
 		}
 		return { data: result, optionRoles: roles }
 	}, [groups])

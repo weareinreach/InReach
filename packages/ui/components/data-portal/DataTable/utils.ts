@@ -157,6 +157,62 @@ const compareValues = <T>(a: T, b: T, id: string, desc: boolean, columns: DataTa
 
 const formatFilterDate = (date: Date) => DateTime.fromJSDate(date).toLocaleString(DateTime.DATE_SHORT)
 
+const describeTextFilter = (value: DataTableFilterValue): string | null =>
+	typeof value === 'string' && value ? value : null
+
+const describeCheckboxFilter = (
+	filter: Extract<DataTableFilter, { type: 'checkbox' }>,
+	value: DataTableFilterValue
+): string | null => {
+	if (typeof value !== 'boolean') {
+		return null
+	}
+	return value ? (filter.trueLabel ?? 'Yes') : (filter.falseLabel ?? 'No')
+}
+
+const describeSelectFilter = (
+	filter: Extract<DataTableFilter, { type: 'select' }>,
+	value: DataTableFilterValue
+): string | null => {
+	if (typeof value !== 'string') {
+		return null
+	}
+	return filter.options.find((option) => option.value === value)?.label ?? value
+}
+
+const describeMultiSelectFilter = (
+	filter: Extract<DataTableFilter, { type: 'multi-select' }>,
+	value: DataTableFilterValue
+): string | null => {
+	if (!Array.isArray(value) || !value.length) {
+		return null
+	}
+	return (value as string[])
+		.map((v) => filter.options.find((option) => option.value === v)?.label ?? v)
+		.join(', ')
+}
+
+const describeDateRangeFilter = (value: DataTableFilterValue): string | null => {
+	if (!Array.isArray(value)) {
+		return null
+	}
+	const [from, to] = value as [Date | undefined, Date | undefined]
+	if (!from && !to) {
+		return null
+	}
+	if (from && to) {
+		return `${formatFilterDate(from)} – ${formatFilterDate(to)}`
+	}
+	return from ? `after ${formatFilterDate(from)}` : `before ${formatFilterDate(to as Date)}`
+}
+
+const describeUserSearchFilter = (value: DataTableFilterValue): string | null => {
+	if (!Array.isArray(value) || !value.length) {
+		return null
+	}
+	return (value as { id: string; label: string }[]).map((person) => person.label).join(', ')
+}
+
 /**
  * Turns one active column filter's raw value into a short, human-readable string for the "applied filters"
  * summary above the table - e.g. a `multi-select` value is a list of raw option values, not the labels a
@@ -172,46 +228,22 @@ export const describeFilterValue = (
 	}
 	switch (filter.type) {
 		case 'text': {
-			return typeof value === 'string' && value ? value : null
+			return describeTextFilter(value)
 		}
 		case 'checkbox': {
-			if (typeof value !== 'boolean') {
-				return null
-			}
-			return value ? (filter.trueLabel ?? 'Yes') : (filter.falseLabel ?? 'No')
+			return describeCheckboxFilter(filter, value)
 		}
 		case 'select': {
-			if (typeof value !== 'string') {
-				return null
-			}
-			return filter.options.find((option) => option.value === value)?.label ?? value
+			return describeSelectFilter(filter, value)
 		}
 		case 'multi-select': {
-			if (!Array.isArray(value) || !value.length) {
-				return null
-			}
-			return (value as string[])
-				.map((v) => filter.options.find((option) => option.value === v)?.label ?? v)
-				.join(', ')
+			return describeMultiSelectFilter(filter, value)
 		}
 		case 'date-range': {
-			if (!Array.isArray(value)) {
-				return null
-			}
-			const [from, to] = value as [Date | undefined, Date | undefined]
-			if (!from && !to) {
-				return null
-			}
-			if (from && to) {
-				return `${formatFilterDate(from)} – ${formatFilterDate(to)}`
-			}
-			return from ? `after ${formatFilterDate(from)}` : `before ${formatFilterDate(to as Date)}`
+			return describeDateRangeFilter(value)
 		}
 		case 'user-search': {
-			if (!Array.isArray(value) || !value.length) {
-				return null
-			}
-			return (value as { id: string; label: string }[]).map((person) => person.label).join(', ')
+			return describeUserSearchFilter(value)
 		}
 		default: {
 			return null

@@ -10,12 +10,20 @@ export const DELETED_FILTER_OPTIONS = [
 	{ value: 'all', label: 'Show all' },
 ]
 
-export const deletedFilterToValue = (state: boolean | undefined): string =>
-	state === undefined ? 'all' : state ? 'show' : 'hide'
+export const deletedFilterToValue = (state: boolean | undefined): string => {
+	if (state === undefined) {
+		return 'all'
+	}
+	return state ? 'show' : 'hide'
+}
 
 export const deletedValueToFilter = (value: string | null): boolean | undefined => {
-	if (value === 'show') return true
-	if (value === 'hide') return false
+	if (value === 'show') {
+		return true
+	}
+	if (value === 'hide') {
+		return false
+	}
 	return undefined
 }
 

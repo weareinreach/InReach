@@ -575,16 +575,16 @@ export const BulkSearchReplaceTable = () => {
 		setJustAddedFacet(id)
 	}
 	// Removing a facet both hides its widget and clears whatever value it held - otherwise re-adding it
-	// later would resurface a stale filter the person never meant to keep applying.
+	// later would resurface a stale filter the person never meant to keep applying. `AddableFacetId` has
+	// only ever had the one member ('deleted') since Service Tags/Attributes became permanent, so there's
+	// nothing left to branch on here.
 	const removeFacet = (id: AddableFacetId) => {
 		setActiveFacets((prev) => prev.filter((f) => f !== id))
-		switch (id) {
-			case 'deleted': {
-				setColumnFilters((prev) => prev.filter((f) => f.id !== 'deleted'))
-				break
-			}
-		}
+		setColumnFilters((prev) => prev.filter((f) => f.id !== 'deleted'))
 	}
+	// Curried so `onRemove={removeFacetHandler('deleted')}` doesn't need an inline arrow in the JSX prop -
+	// same idiom as OrganizationTable.tsx.
+	const removeFacetHandler = (id: AddableFacetId) => () => removeFacet(id)
 
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 	const serviceTagIdsFilter = columnFilters.find(({ id }) => id === 'serviceTagIds')?.value as
@@ -835,6 +835,28 @@ export const BulkSearchReplaceTable = () => {
 		},
 	]
 
+	// Hoisted out of their own toolbar JSX props (rather than left as inline arrows) purely to satisfy
+	// static analysis - see OrganizationTable.tsx's identical comment on this same lesson.
+	const handleServiceTagIdsChange = (next: string[]) => {
+		setColumnFilters((prev) => {
+			const without = prev.filter(({ id }) => id !== 'serviceTagIds')
+			return next.length > 0 ? [...without, { id: 'serviceTagIds', value: next }] : without
+		})
+	}
+	const handleServiceAttributeIdsChange = (next: string[]) => {
+		setColumnFilters((prev) => {
+			const without = prev.filter(({ id }) => id !== 'serviceAttributeIds')
+			return next.length > 0 ? [...without, { id: 'serviceAttributeIds', value: next }] : without
+		})
+	}
+	const handleDeletedChange = (next: string | null) => {
+		setColumnFilters((prev) => {
+			const rest = prev.filter(({ id }) => id !== 'deleted')
+			const filterValue = deletedValueToFilter(next)
+			return filterValue === undefined ? rest : [...rest, { id: 'deleted', value: filterValue }]
+		})
+	}
+
 	return (
 		<Stack gap='md'>
 			<Fieldset legend='Search'>
@@ -944,12 +966,7 @@ export const BulkSearchReplaceTable = () => {
 										groups={serviceTagGroups}
 										isLoading={serviceTagsLoading}
 										value={serviceTagIdsFilter ?? []}
-										onChange={(next) => {
-											setColumnFilters((prev) => {
-												const without = prev.filter(({ id }) => id !== 'serviceTagIds')
-												return next.length > 0 ? [...without, { id: 'serviceTagIds', value: next }] : without
-											})
-										}}
+										onChange={handleServiceTagIdsChange}
 									/>
 									<GroupedMultiSelect
 										label='Service Attributes'
@@ -962,14 +979,7 @@ export const BulkSearchReplaceTable = () => {
 										groups={serviceAttributeGroups}
 										isLoading={serviceAttributesLoading}
 										value={serviceAttributeIdsFilter ?? []}
-										onChange={(next) => {
-											setColumnFilters((prev) => {
-												const without = prev.filter(({ id }) => id !== 'serviceAttributeIds')
-												return next.length > 0
-													? [...without, { id: 'serviceAttributeIds', value: next }]
-													: without
-											})
-										}}
+										onChange={handleServiceAttributeIdsChange}
 									/>
 								</Group>
 								{/* Deleted is the only filter still added/removed via "+ Filter" - a second row, right-
@@ -982,7 +992,7 @@ export const BulkSearchReplaceTable = () => {
 												DELETED_FILTER_OPTIONS.find((o) => o.value === deletedFilterToValue(deletedFilter))
 													?.label
 											}
-											onRemove={() => removeFacet('deleted')}
+											onRemove={removeFacetHandler('deleted')}
 											defaultOpened={justAddedFacet === 'deleted'}
 											help={helpLines(DELETED_FILTER_HELP)}
 										>
@@ -990,15 +1000,7 @@ export const BulkSearchReplaceTable = () => {
 												size='xs'
 												data={DELETED_FILTER_OPTIONS}
 												value={deletedFilterToValue(deletedFilter)}
-												onChange={(next) => {
-													setColumnFilters((prev) => {
-														const rest = prev.filter(({ id }) => id !== 'deleted')
-														const filterValue = deletedValueToFilter(next)
-														return filterValue === undefined
-															? rest
-															: [...rest, { id: 'deleted', value: filterValue }]
-													})
-												}}
+												onChange={handleDeletedChange}
 												allowDeselect={false}
 												w={150}
 											/>

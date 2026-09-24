@@ -1,4 +1,5 @@
 import { ActionIcon, Menu, Tooltip } from '@mantine/core'
+import { useCallback } from 'react'
 
 import { Icon } from '~ui/icon'
 
@@ -11,6 +12,20 @@ export interface AddFilterMenuProps<TFacetId extends string> {
 	facets: AddFilterMenuFacet<TFacetId>[]
 	activeFacets: TFacetId[]
 	onAdd: (id: TFacetId) => void
+}
+
+interface AddFilterMenuItemProps<TFacetId extends string> {
+	facet: AddFilterMenuFacet<TFacetId>
+	onAdd: (id: TFacetId) => void
+}
+
+/**
+ * One "+ Filter" menu row - its own component (rather than an inline arrow closing over `facet.id` in the
+ * `.map()` below) purely so the click handler isn't an inline function literal in a JSX prop.
+ */
+const AddFilterMenuItem = <TFacetId extends string>({ facet, onAdd }: AddFilterMenuItemProps<TFacetId>) => {
+	const handleClick = useCallback(() => onAdd(facet.id), [facet.id, onAdd])
+	return <Menu.Item onClick={handleClick}>{facet.label}</Menu.Item>
 }
 
 /**
@@ -35,9 +50,7 @@ export const AddFilterMenu = <TFacetId extends string>({
 			{facets
 				.filter((facet) => !activeFacets.includes(facet.id))
 				.map((facet) => (
-					<Menu.Item key={facet.id} onClick={() => onAdd(facet.id)}>
-						{facet.label}
-					</Menu.Item>
+					<AddFilterMenuItem key={facet.id} facet={facet} onAdd={onAdd} />
 				))}
 			{facets.every((facet) => activeFacets.includes(facet.id)) && (
 				<Menu.Item disabled>All filters added</Menu.Item>

@@ -6,15 +6,17 @@ import { Icon } from '~ui/icon'
 /**
  * Renders a tooltip's content as one line per item instead of one run-on paragraph - Mantine's `multiline`
  * Tooltip only wraps text at its own `w`, it doesn't insert a break between logically separate items on its
- * own (see the Create Method tooltip this was split out of fixing).
+ * own (see the Create Method tooltip this was split out of fixing). Takes plain strings (every call site
+ * passes one of the `*_HELP` constants) rather than arbitrary `ReactNode`, so each line's own text can double
+ * as a stable React key instead of an array index.
  */
-export const helpLines = (lines: ReactNode[]): ReactNode => (
+export const helpLines = (lines: string[]): ReactNode => (
 	<Stack gap={2}>
-		{lines.map((line, index) => (
+		{lines.map((line) => (
 			// `Text` defaults to the theme's own body text color regardless of context - without
 			// overriding it back to `inherit`, it renders as dark text on the Tooltip's own dark
 			// background instead of the light color Tooltip normally gives its (plain-string) content.
-			<Text key={index} size='xs' c='inherit'>
+			<Text key={line} size='xs' c='inherit'>
 				{line}
 			</Text>
 		))}

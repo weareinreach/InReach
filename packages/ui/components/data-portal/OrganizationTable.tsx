@@ -331,6 +331,15 @@ const getOrgTableRowStyle = (row: TableRow) => ({
 })
 
 /**
+ * Replaces (or removes, if `next` is empty) one `columnFilters` entry by id - factored out of
+ * `setArrayFilter` purely to keep that curried updater from nesting a function 5 levels deep.
+ */
+const withArrayFilterSet = (prev: ColumnFiltersState, id: string, next: string[]): ColumnFiltersState => {
+	const rest = prev.filter((f) => f.id !== id)
+	return next.length ? [...rest, { id, value: next }] : rest
+}
+
+/**
  * Resolves selected ids back to display labels for the "applied filters" summary. A group's own id is never
  * itself a selected value (see `GroupedMultiSelectGroup.cascadable`) except in the childless case, where the
  * group's single item id already equals it - so this only ever needs to check items.
@@ -541,10 +550,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 	const getArrayFilter = (id: string): string[] =>
 		(columnFilters.find((f) => f.id === id)?.value as string[] | undefined) ?? []
 	const setArrayFilter = (id: string) => (next: string[]) => {
-		setColumnFilters((prev) => {
-			const rest = prev.filter((f) => f.id !== id)
-			return next.length ? [...rest, { id, value: next }] : rest
-		})
+		setColumnFilters((prev) => withArrayFilterSet(prev, id, next))
 	}
 
 	const addFacet = (id: AddableFacetId) => {
@@ -589,6 +595,9 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 			}
 		}
 	}
+	// Curried so `onRemove={removeFacetHandler('deleted')}` doesn't need an inline arrow in the JSX prop -
+	// same idiom as `setArrayFilter` above.
+	const removeFacetHandler = (id: AddableFacetId) => () => removeFacet(id)
 
 	const communityFilter = getArrayFilter('communityAttributeIds')
 	const leaderFilter = getArrayFilter('leaderAttributeIds')
@@ -918,6 +927,28 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 		[variants, theme, communityLabelById, leaderLabelById, serviceTagLabelById, serviceAttributeLabelById]
 	)
 
+	// Hoisted out of their own toolbar JSX props (rather than left as inline arrows) purely to satisfy
+	// static analysis - see the memory note on this same lesson generally.
+	const handleStatusChange = (next: string[]) => {
+		setColumnFilters((prev) => {
+			const rest = prev.filter(({ id }) => id !== 'status')
+			return next.length ? [...rest, { id: 'status', value: next }] : rest
+		})
+	}
+	const handleCreateMethodChange = (next: string | null) => {
+		setColumnFilters((prev) => {
+			const rest = prev.filter(({ id }) => id !== 'createMethod')
+			return next === 'public' || next === 'internal' ? [...rest, { id: 'createMethod', value: next }] : rest
+		})
+	}
+	const handleDeletedChange = (next: string | null) => {
+		setColumnFilters((prev) => {
+			const rest = prev.filter(({ id }) => id !== 'deleted')
+			const filterValue = deletedValueToFilter(next)
+			return filterValue === undefined ? rest : [...rest, { id: 'deleted', value: filterValue }]
+		})
+	}
+
 	return (
 		<Stack gap='sm'>
 			<ResultCount count={total} />
@@ -952,12 +983,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 								styles={COMPACT_MULTISELECT_STYLES}
 								data={STATUS_FILTER_OPTIONS}
 								value={statusFilter ?? []}
-								onChange={(next) => {
-									setColumnFilters((prev) => {
-										const rest = prev.filter(({ id }) => id !== 'status')
-										return next.length ? [...rest, { id: 'status', value: next }] : rest
-									})
-								}}
+								onChange={handleStatusChange}
 								renderPill={renderStatusPill}
 								clearable
 								w={190}
@@ -969,14 +995,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 								styles={COMPACT_SELECT_STYLES}
 								data={CREATE_METHOD_OPTIONS}
 								value={createMethodFilter ?? null}
-								onChange={(next) => {
-									setColumnFilters((prev) => {
-										const rest = prev.filter(({ id }) => id !== 'createMethod')
-										return next === 'public' || next === 'internal'
-											? [...rest, { id: 'createMethod', value: next }]
-											: rest
-									})
-								}}
+								onChange={handleCreateMethodChange}
 								clearable
 								w={110}
 							/>
@@ -991,7 +1010,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 									summary={
 										DELETED_FILTER_OPTIONS.find((o) => o.value === deletedFilterToValue(deletedFilter))?.label
 									}
-									onRemove={() => removeFacet('deleted')}
+									onRemove={removeFacetHandler('deleted')}
 									help={helpLines(DELETED_FILTER_HELP)}
 								>
 									<Select
@@ -999,15 +1018,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 										styles={COMPACT_SELECT_STYLES}
 										data={DELETED_FILTER_OPTIONS}
 										value={deletedFilterToValue(deletedFilter)}
-										onChange={(next) => {
-											setColumnFilters((prev) => {
-												const rest = prev.filter(({ id }) => id !== 'deleted')
-												const filterValue = deletedValueToFilter(next)
-												return filterValue === undefined
-													? rest
-													: [...rest, { id: 'deleted', value: filterValue }]
-											})
-										}}
+										onChange={handleDeletedChange}
 										allowDeselect={false}
 										w={150}
 									/>
@@ -1017,7 +1028,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 								<FilterChip
 									label='Community'
 									summary={communityFilter.length ? `${communityFilter.length} selected` : undefined}
-									onRemove={() => removeFacet('community')}
+									onRemove={removeFacetHandler('community')}
 									help={helpLines(COMMUNITY_FILTER_HELP)}
 								>
 									<GroupedMultiSelect
@@ -1033,7 +1044,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 								<FilterChip
 									label='Leader Badge'
 									summary={leaderFilter.length ? `${leaderFilter.length} selected` : undefined}
-									onRemove={() => removeFacet('leaderBadge')}
+									onRemove={removeFacetHandler('leaderBadge')}
 									help={helpLines(LEADER_BADGE_FILTER_HELP)}
 								>
 									<GroupedMultiSelect
@@ -1049,7 +1060,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 								<FilterChip
 									label='Service Tags'
 									summary={serviceTagFilter.length ? `${serviceTagFilter.length} selected` : undefined}
-									onRemove={() => removeFacet('serviceTags')}
+									onRemove={removeFacetHandler('serviceTags')}
 									help={helpLines(SERVICE_TAG_FILTER_HELP)}
 								>
 									<GroupedMultiSelect
@@ -1067,7 +1078,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 									summary={
 										serviceAttributeFilter.length ? `${serviceAttributeFilter.length} selected` : undefined
 									}
-									onRemove={() => removeFacet('serviceAttributes')}
+									onRemove={removeFacetHandler('serviceAttributes')}
 									help={helpLines(SERVICE_ATTRIBUTE_FILTER_HELP)}
 								>
 									<GroupedMultiSelect
@@ -1083,7 +1094,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 								<FilterChip
 									label='Remote Options'
 									summary={remoteOptionsFilter.length ? `${remoteOptionsFilter.length} selected` : undefined}
-									onRemove={() => removeFacet('remoteOptions')}
+									onRemove={removeFacetHandler('remoteOptions')}
 									help={helpLines(REMOTE_OPTIONS_HELP)}
 								>
 									<GroupedMultiSelect
