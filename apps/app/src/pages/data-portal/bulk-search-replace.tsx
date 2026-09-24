@@ -7,54 +7,10 @@ import { useTranslation } from 'next-i18next/pages'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { BulkSearchReplaceTable } from '@weareinreach/ui/components/data-portal/BulkSearchReplaceTable'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
+import { organizationsSideNav } from '@weareinreach/ui/components/data-portal/organizationsSideNav'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
-import {
-	BULK_SEARCH_REPLACE_NAV_HELP,
-	DOWNLOADS_NAV_HELP,
-	LOCATION_PHONE_CLEANUP_HELP,
-	MANAGER_AND_ABOVE_PERMISSIONS,
-	ORGANIZATIONS_NAV_HELP,
-	REPORTS_NAV_HELP,
-	REVIEWS_NAV_HELP,
-} from '@weareinreach/ui/components/data-portal/SideNav'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
-
-// Duplicated verbatim in organizations.tsx/reviews.tsx/reports.tsx/downloads.tsx - no shared source of
-// truth exists for this array today (see docs/DataPortal/Organizations/README.md's Known Issues); adding
-// this page means touching all five, not just this one.
-const organizationsSideNav = {
-	heading: 'Organizations',
-	items: [
-		{
-			label: 'Organizations',
-			href: { pathname: '/data-portal/organizations' as const },
-			help: ORGANIZATIONS_NAV_HELP,
-		},
-		{ label: 'Reviews', href: { pathname: '/data-portal/reviews' as const }, help: REVIEWS_NAV_HELP },
-		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const }, help: REPORTS_NAV_HELP },
-		{
-			label: 'Downloads',
-			href: { pathname: '/data-portal/downloads' as const },
-			help: DOWNLOADS_NAV_HELP,
-			permissions: MANAGER_AND_ABOVE_PERMISSIONS,
-		},
-		{
-			label: 'Bulk Search & Replace',
-			href: { pathname: '/data-portal/bulk-search-replace' as const },
-			active: true,
-			help: BULK_SEARCH_REPLACE_NAV_HELP,
-			permissions: MANAGER_AND_ABOVE_PERMISSIONS,
-		},
-		// TEMPORARY - see location-phone-cleanup.tsx; remove this entry once that review is done.
-		{
-			label: 'Location Phone Cleanup',
-			href: { pathname: '/data-portal/location-phone-cleanup' as const },
-			help: LOCATION_PHONE_CLEANUP_HELP,
-			permissions: MANAGER_AND_ABOVE_PERMISSIONS,
-		},
-	],
-}
 
 const DataPortalBulkSearchReplace: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
@@ -64,7 +20,10 @@ const DataPortalBulkSearchReplace: NextPageWithOptions = () => {
 			<Head>
 				<title>{t('page-title.base', { title: 'Bulk Search & Replace' })}</title>
 			</Head>
-			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
+			<DataPortalPageShell
+				activeSection='organizations'
+				sideNav={organizationsSideNav('Bulk Search & Replace')}
+			>
 				<PageHeading title='Bulk Search & Replace' />
 				<BulkSearchReplaceTable />
 			</DataPortalPageShell>

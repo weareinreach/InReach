@@ -7,52 +7,11 @@ import { useTranslation } from 'next-i18next/pages'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { AddOrgModal } from '@weareinreach/ui/components/data-portal/AddOrgModal'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
+import { organizationsSideNav } from '@weareinreach/ui/components/data-portal/organizationsSideNav'
 import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
-import {
-	BULK_SEARCH_REPLACE_NAV_HELP,
-	DOWNLOADS_NAV_HELP,
-	LOCATION_PHONE_CLEANUP_HELP,
-	MANAGER_AND_ABOVE_PERMISSIONS,
-	ORGANIZATIONS_NAV_HELP,
-	REPORTS_NAV_HELP,
-	REVIEWS_NAV_HELP,
-} from '@weareinreach/ui/components/data-portal/SideNav'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
-
-const organizationsSideNav = {
-	heading: 'Organizations',
-	items: [
-		{
-			label: 'Organizations',
-			href: { pathname: '/data-portal/organizations' as const },
-			active: true,
-			help: ORGANIZATIONS_NAV_HELP,
-		},
-		{ label: 'Reviews', href: { pathname: '/data-portal/reviews' as const }, help: REVIEWS_NAV_HELP },
-		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const }, help: REPORTS_NAV_HELP },
-		{
-			label: 'Downloads',
-			href: { pathname: '/data-portal/downloads' as const },
-			help: DOWNLOADS_NAV_HELP,
-			permissions: MANAGER_AND_ABOVE_PERMISSIONS,
-		},
-		{
-			label: 'Bulk Search & Replace',
-			href: { pathname: '/data-portal/bulk-search-replace' as const },
-			help: BULK_SEARCH_REPLACE_NAV_HELP,
-			permissions: MANAGER_AND_ABOVE_PERMISSIONS,
-		},
-		// TEMPORARY - see location-phone-cleanup.tsx; remove this entry once that review is done.
-		{
-			label: 'Location Phone Cleanup',
-			href: { pathname: '/data-portal/location-phone-cleanup' as const },
-			help: LOCATION_PHONE_CLEANUP_HELP,
-			permissions: MANAGER_AND_ABOVE_PERMISSIONS,
-		},
-	],
-}
 
 const DataPortalOrganizations: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
@@ -63,7 +22,7 @@ const DataPortalOrganizations: NextPageWithOptions = () => {
 			<Head>
 				<title>{t('page-title.base', { title })}</title>
 			</Head>
-			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
+			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav('Organizations')}>
 				{/* eslint-disable-next-line i18next/no-literal-string -- Data Portal is internal-only, no i18n needed */}
 				<PageHeading title={title} action={<AddOrgModal>Add an organization</AddOrgModal>} />
 				<OrganizationTable />

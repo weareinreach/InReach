@@ -427,16 +427,17 @@ describe('BulkSearchReplaceTable', () => {
 		// Mantine's Menu positions its dropdown via floating-ui, which resolves the item into the DOM
 		// a tick or two after the click rather than synchronously - this has been seen to take longer
 		// than 5000ms under CI's slower/contended runners (worse as the suite grows and more test files
-		// run concurrently), so it's widened well past that observed failure point here.
+		// run concurrently - it hit 15625ms and timed out against the previous 15000ms budget once this
+		// suite grew further), so it's widened well past that observed failure point here.
 		await user.click(screen.getByRole('button', { name: 'Show/hide columns' }))
-		await user.click(await screen.findByRole('menuitem', { name: 'Status' }, { timeout: 15000 }))
+		await user.click(await screen.findByRole('menuitem', { name: 'Status' }, { timeout: 25000 }))
 
 		const table = within(screen.getByRole('table'))
 		expect(table.getByText('New')).toBeInTheDocument()
 		expect(table.getByText('Unpublished')).toBeInTheDocument()
 		const orgRow = screen.getByText('Riverside Community Health Center').closest('tr')
 		expect(orgRow).toHaveStyle({ textDecoration: 'line-through' })
-	}, 20000)
+	}, 30000)
 
 	it('defaults to hiding deleted organizations', async () => {
 		const user = userEvent.setup()

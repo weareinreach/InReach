@@ -5,7 +5,6 @@ import {
 	Checkbox,
 	Fieldset,
 	Group,
-	Menu,
 	Modal,
 	Popover,
 	Select,
@@ -40,6 +39,7 @@ import { Link } from '~ui/components/core/Link'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import { AddFilterMenu } from './AddFilterMenu'
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
 import {
 	DELETED_FILTER_HELP,
@@ -1004,25 +1004,7 @@ export const BulkSearchReplaceTable = () => {
 											/>
 										</FilterChip>
 									)}
-									<Menu closeOnItemClick position='bottom-start'>
-										<Menu.Target>
-											<Tooltip label='Add filter'>
-												<ActionIcon variant='subtle' aria-label='Add filter'>
-													<Icon icon='carbon:add' />
-												</ActionIcon>
-											</Tooltip>
-										</Menu.Target>
-										<Menu.Dropdown>
-											{ADDABLE_FACETS.filter((facet) => !activeFacets.includes(facet.id)).map((facet) => (
-												<Menu.Item key={facet.id} onClick={() => addFacet(facet.id)}>
-													{facet.label}
-												</Menu.Item>
-											))}
-											{ADDABLE_FACETS.every((facet) => activeFacets.includes(facet.id)) && (
-												<Menu.Item disabled>All filters added</Menu.Item>
-											)}
-										</Menu.Dropdown>
-									</Menu>
+									<AddFilterMenu facets={ADDABLE_FACETS} activeFacets={activeFacets} onAdd={addFacet} />
 								</Group>
 							</Stack>
 						}

@@ -189,12 +189,16 @@ describe('OrganizationTable - "+ Filter" menu', () => {
 		renderTable({ ...ORG_ROW })
 
 		await user.click(screen.getByRole('button', { name: 'Add filter' }))
-		await user.click(await screen.findByRole('menuitem', { name: 'Community' }))
+		// Mantine's Menu positions its dropdown via floating-ui, which resolves the item into the DOM a
+		// tick or two after the click rather than synchronously - same documented CI-timing issue as
+		// BulkSearchReplaceTable.test.tsx's "Show/hide columns" menu (this has been seen to take longer
+		// than the default 1000ms `findBy` wait under CI's slower/contended runners).
+		await user.click(await screen.findByRole('menuitem', { name: 'Community' }, { timeout: 15000 }))
 
 		// Disambiguates from the table's own (now auto-shown) "Community" column header - this checks that
 		// the toolbar widget itself rendered, not just that the word "Community" appears somewhere.
 		expect(await screen.findByRole('button', { name: 'Remove Community filter' })).toBeInTheDocument()
-	})
+	}, 20000)
 })
 
 describe('OrganizationTable - locationPhoneCleanupOnly', () => {
