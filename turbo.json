@@ -72,6 +72,42 @@
 			"dependsOn": ["^build:icons", "^db:generate", "//#lint:pkg"]
 		},
 		"sb:build": {},
+		"test": {
+			"cache": false
+		},
+		"test:coverage": {
+			"cache": false
+		},
+		"test:e2e": {
+			"cache": false
+		},
+		"test:e2e:crud": {
+			"cache": false
+		},
+		"test:e2e:search": {
+			"cache": false
+		},
+		"test:e2e:visual": {
+			"cache": false
+		},
+		"test:e2e:visual:update": {
+			"cache": false
+		},
+		"test:report": {
+			"cache": false
+		},
+		"test:e2e:ui": {
+			"cache": false,
+			"persistent": true
+		},
+		"test:report:view": {
+			"cache": false,
+			"persistent": true
+		},
+		"test:watch": {
+			"cache": false,
+			"persistent": true
+		},
 		"type-check": {
 			"cache": false
 		}

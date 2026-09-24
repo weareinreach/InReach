@@ -24,6 +24,12 @@ export default {
 		},
 		// layout: 'fullscreen',
 		// layoutWrapper: 'centeredHalf',
+
+		// See docs/Testing/search-test-inventory.md §12, case 12.3. The `render` wrapper below
+		// hardcodes a fixed 300px width, so this component's own layout won't visibly reflow
+		// across these - kept for consistency with the other three search stories this case
+		// covers, and in case that fixed width is ever removed.
+		chromatic: { viewports: [500, 768, 1024, 1440] },
 	},
 	render: () => (
 		<div style={{ width: '300px' }}>

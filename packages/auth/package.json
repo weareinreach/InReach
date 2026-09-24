@@ -54,6 +54,11 @@
 		"format": "prettier --write --cache --cache-strategy metadata --ignore-unknown .",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:report": "vitest run --reporter=html --coverage",
+		"test:report:view": "vitest run --reporter=html --coverage; npx serve html",
+		"test:watch": "vitest",
 		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
 	},
@@ -73,6 +78,8 @@
 		"@types/node": "20.17.0",
 		"@types/react": "19.2.18",
 		"@types/react-dom": "19.2.4",
+		"@vitest/coverage-v8": "4.1.10",
+		"@vitest/ui": "4.1.10",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "9.39.5",
@@ -80,7 +87,8 @@
 		"next-auth": "4.24.15",
 		"react": "19.2.8",
 		"react-dom": "19.2.8",
-		"typescript": "5.6.3"
+		"typescript": "5.6.3",
+		"vitest": "4.1.10"
 	},
 	"peerDependencies": {
 		"next": "16.3.1",
