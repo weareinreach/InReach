@@ -1,8 +1,7 @@
-// codegen:start {preset: barrel, include: ./*.ts}
+// codegen:start {preset: barrel, include: ./*.ts, exclude: ./*.test.ts}
 export * from './changePassword'
 export * from './cognitoClient'
 export * from './cognitoJwt'
-export * from './cognitoJwt.test'
 export * from './confirmAccount'
 export * from './constants'
 export * from './createUser'

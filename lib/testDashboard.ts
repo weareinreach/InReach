@@ -1,5 +1,5 @@
 import { type ChildProcess, spawn } from 'child_process'
-import { createReadStream, existsSync, statSync } from 'fs'
+import { createReadStream, existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import http from 'http'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -26,7 +26,170 @@ type Row = {
 	env?: Record<string, string>
 	results: string
 	coverage: string | null
+	/**
+	 * True source-coverage rows (not scoped to a doc's test cases) - after the run, parse
+	 * <coverage>/coverage-summary.json for an overall % and a list of files with zero coverage, so "no test
+	 * imports this file at all" is visible instead of silently absent from any report.
+	 */
+	parseCoverage?: boolean
 }
+
+type DocStatus = {
+	file: string
+	label: string
+	summary: string
+}
+
+// Snapshot, not live-synced - update this (and KNOWN_ISSUES below) when a doc's own Status column
+// changes materially. Each doc is the actual source of truth per-case; this is just the "don't have to
+// ask" summary layer on top.
+const DOCS: DocStatus[] = [
+	{
+		file: 'search-test-inventory.md',
+		label: 'Public search UI (Vitest + Playwright)',
+		summary: '100% — all 15 sections worked through',
+	},
+	{
+		file: 'site-chrome-test-inventory.md',
+		label: 'Site-wide chrome — modals, navbar, footer',
+		summary: '100% — §3d/§3e partially blocked, no Playwright auth fixture exists yet',
+	},
+	{
+		file: 'search-api-test-inventory.md',
+		label: 'Backend/tRPC layer behind both of the above',
+		summary:
+			'100% — a handful of cases (§1.5, §1.7, §1.14, one product decision) explicitly Not started with a stated reason, not silently skipped',
+	},
+]
+
+type IssueStatus = {
+	num: number
+	title: string
+	type: 'Bug' | 'Task'
+	layer: string
+}
+
+// Snapshot as of 2026-09-23 - all filed OPEN, confirmed via `gh issue list`. Re-check
+// https://github.com/weareinreach/InReach/issues for current open/closed state; this list exists so
+// you don't have to ask what was found, not as a live status feed.
+const KNOWN_ISSUES: IssueStatus[] = [
+	{
+		num: 2058,
+		title: 'Search results page 500s on a malformed URL instead of showing an error',
+		type: 'Bug',
+		layer: 'search UI',
+	},
+	{
+		num: 2059,
+		title: 'Search results page 500s on a non-numeric ?page= value instead of falling back to page 1',
+		type: 'Bug',
+		layer: 'search UI',
+	},
+	{
+		num: 2060,
+		title: 'SearchBox: a failed geocoding lookup fails silently, no error shown to the user',
+		type: 'Bug',
+		layer: 'search UI',
+	},
+	{
+		num: 2061,
+		title: 'Search results page shows infinite loading skeletons if the results query fails, no error state',
+		type: 'Bug',
+		layer: 'search UI',
+	},
+	{
+		num: 2062,
+		title: 'Save/favorite state relies on an unenforced API contract (Boolean([]) is truthy)',
+		type: 'Task',
+		layer: 'search UI',
+	},
+	{
+		num: 2063,
+		title: 'resultCount reports 0 at an out-of-range search results page, even when real matches exist',
+		type: 'Bug',
+		layer: 'search UI',
+	},
+	{
+		num: 2064,
+		title:
+			"ServiceFilter checkboxes don't visually reflect selection state (parent/child react-hook-form subscriptions desync)",
+		type: 'Bug',
+		layer: 'search UI',
+	},
+	{
+		num: 2065,
+		title: 'Search results page-2 prefetch never fires on a fresh search (no ?page= in URL)',
+		type: 'Bug',
+		layer: 'search UI',
+	},
+	{
+		num: 2066,
+		title: 'Search results page has a 500-768px dead zone with no sidebar and no mobile sort controls',
+		type: 'Bug',
+		layer: 'search UI',
+	},
+	{
+		num: 2067,
+		title: "intl/[country] page doesn't uppercase the country code before Intl.DisplayNames.of()",
+		type: 'Task',
+		layer: 'search UI',
+	},
+	{
+		num: 2068,
+		title: "Cookie-consent banner overlaps the anti-hate modal's Accept button on mobile",
+		type: 'Bug',
+		layer: 'site chrome',
+	},
+	{
+		num: 2069,
+		title: 'No navbar renders at all at exactly the 768px sm breakpoint',
+		type: 'Bug',
+		layer: 'site chrome',
+	},
+	{
+		num: 2070,
+		title: 'Entire footer collapses to zero size on any viewport at or below 768px',
+		type: 'Bug',
+		layer: 'site chrome',
+	},
+	{
+		num: 2071,
+		title: "Footer's Powered by Vercel link opens in the same tab, unlike every other external link",
+		type: 'Bug',
+		layer: 'site chrome',
+	},
+	{
+		num: 2074,
+		title: "savedList.shareUrl / unShareUrl let any user share or unshare another user's saved list",
+		type: 'Bug',
+		layer: 'search API',
+	},
+	{
+		num: 2075,
+		title: "geo.autocomplete's error-status handling is dead code against real Google API error responses",
+		type: 'Task',
+		layer: 'search API',
+	},
+	{
+		num: 2076,
+		title: 'organization.getAlerts can emit a text-less alert entry, unlike location.getAlerts',
+		type: 'Task',
+		layer: 'search API',
+	},
+	{
+		num: 2077,
+		title: 'Search results at exactly zero distance show distance: null instead of 0',
+		type: 'Bug',
+		layer: 'search API',
+	},
+]
+
+const KNOWN_GAPS: string[] = [
+	'No Playwright authenticated-session fixture exists anywhere in the repo - blocks most of site-chrome §3d/§3e (account menu, logged-in states) and tests/crud entirely.',
+	"packages/api's tests - old and new, mocked and real-DB alike - don't run in CI at all. .github/workflows/test.yml only runs packages/ui.",
+	'No data-portal/edit-side test-case inventory doc exists yet - staff-facing org/service editing has no structured tracking (separate from the org-table-filter feature merged in from dev, which this effort never tested).',
+	'§1.5 (combined services+attributes filter), §1.7 (ServiceArea/national-match real-DB cases), §1.14 (V1/V2/V3 router dispatch) in search-api-test-inventory - not started, needs more fixture setup.',
+]
 
 const ROWS: Row[] = [
 	{
@@ -156,17 +319,78 @@ const ROWS: Row[] = [
 		results: 'apps/app/reports/crud/results',
 		coverage: null,
 	},
+	{
+		id: 'full-coverage-api',
+		label:
+			'Real source coverage - packages/api (router/** + lib/**, every file counted whether any test imports it or not)',
+		section: 'Code Coverage',
+		cwd: 'packages/api',
+		cmd: 'pnpm',
+		args: [
+			'exec',
+			'vitest',
+			'run',
+			'--coverage',
+			'--coverage.include=router/**/*.ts',
+			'--coverage.include=lib/**/*.ts',
+			'--coverage.exclude=**/*.test.ts',
+			'--coverage.exclude=**/*.schema.ts',
+			'--reporter=html',
+			'--outputFile.html=reports/full-coverage/results/index.html',
+			'--coverage.reportsDirectory=reports/full-coverage/coverage',
+		],
+		results: 'packages/api/reports/full-coverage/results',
+		coverage: 'packages/api/reports/full-coverage/coverage',
+		parseCoverage: true,
+	},
+	{
+		id: 'full-coverage-ui',
+		label:
+			'Real source coverage - packages/ui (components/modals/hooks/etc, every file counted whether any test imports it or not)',
+		section: 'Code Coverage',
+		cwd: 'packages/ui',
+		cmd: 'pnpm',
+		args: [
+			'exec',
+			'vitest',
+			'run',
+			'--coverage',
+			'--coverage.include={components,modals,hooks,providers,theme,lib,utils,icon,layouts,loading-states,store,types}/**/*.{ts,tsx}',
+			'--coverage.exclude=**/*.test.{ts,tsx}',
+			'--coverage.exclude=**/*.stories.tsx',
+			'--coverage.exclude=**/*.d.ts',
+			'--reporter=html',
+			'--outputFile.html=reports/full-coverage/results/index.html',
+			'--coverage.reportsDirectory=reports/full-coverage/coverage',
+		],
+		results: 'packages/ui/reports/full-coverage/results',
+		coverage: 'packages/ui/reports/full-coverage/coverage',
+		parseCoverage: true,
+	},
 ]
+
+type CoverageSummary = {
+	statementsPct: number
+	branchesPct: number
+	functionsPct: number
+	linesPct: number
+	totalFiles: number
+	zeroCoverageCount: number
+}
 
 type RunState = {
 	running: boolean
 	lastExitCode: number | null
 	lastRunAt: string | null
 	lastOutputTail: string
+	coverageSummary: CoverageSummary | null
 }
 
 const state = new Map<string, RunState>(
-	ROWS.map((r) => [r.id, { running: false, lastExitCode: null, lastRunAt: null, lastOutputTail: '' }])
+	ROWS.map((r) => [
+		r.id,
+		{ running: false, lastExitCode: null, lastRunAt: null, lastOutputTail: '', coverageSummary: null },
+	])
 )
 const procs = new Map<string, ChildProcess>()
 
@@ -179,6 +403,53 @@ const MIME: Record<string, string> = {
 	'.svg': 'image/svg+xml',
 	'.ico': 'image/x-icon',
 	'.gz': 'application/octet-stream',
+}
+
+type CoverageMetric = { total: number; covered: number; skipped: number; pct: number | 'Unknown' }
+type CoverageFileEntry = {
+	statements: CoverageMetric
+	branches: CoverageMetric
+	functions: CoverageMetric
+	lines: CoverageMetric
+}
+type CoverageSummaryJson = Record<string, CoverageFileEntry> & { total: CoverageFileEntry }
+
+/**
+ * Reads the v8 coverage-summary.json a `parseCoverage` row just produced, computes the overall % and every
+ * file at exactly 0% statement coverage (imported by nothing under test, not just weakly tested), and writes
+ * that file list out as plain text next to the report so it's linkable without bloating the dashboard page
+ * itself.
+ */
+const parseCoverageSummary = (row: Row): CoverageSummary | null => {
+	if (!row.coverage) return null
+	const summaryPath = path.join(ROOT, row.coverage, 'coverage-summary.json')
+	if (!existsSync(summaryPath)) return null
+	let json: CoverageSummaryJson
+	try {
+		json = JSON.parse(readFileSync(summaryPath, 'utf-8')) as CoverageSummaryJson
+	} catch {
+		return null
+	}
+	const fileKeys = Object.keys(json).filter((k) => k !== 'total')
+	const zeroCoverageFiles = fileKeys
+		.filter((k) => json[k]?.statements.pct === 0)
+		.map((k) => path.relative(path.join(ROOT, row.cwd), k))
+		.sort()
+
+	writeFileSync(
+		path.join(ROOT, row.coverage, 'zero-coverage-files.txt'),
+		`${zeroCoverageFiles.length} of ${fileKeys.length} files have zero test coverage (nothing under test imports them):\n\n${zeroCoverageFiles.join('\n')}\n`
+	)
+
+	const pctOf = (m: CoverageMetric) => (typeof m.pct === 'number' ? m.pct : 0)
+	return {
+		statementsPct: pctOf(json.total.statements),
+		branchesPct: pctOf(json.total.branches),
+		functionsPct: pctOf(json.total.functions),
+		linesPct: pctOf(json.total.lines),
+		totalFiles: fileKeys.length,
+		zeroCoverageCount: zeroCoverageFiles.length,
+	}
 }
 
 const runRow = (row: Row) => {
@@ -201,6 +472,9 @@ const runRow = (row: Row) => {
 		st.running = false
 		st.lastExitCode = code
 		st.lastRunAt = new Date().toISOString()
+		if (row.parseCoverage) {
+			st.coverageSummary = parseCoverageSummary(row)
+		}
 		procs.delete(row.id)
 	})
 }
@@ -212,6 +486,69 @@ const sendFile = (res: http.ServerResponse, absPath: string) => {
 		'Cache-Control': 'no-store',
 	})
 	createReadStream(absPath).pipe(res)
+}
+
+const escapeHtml = (s: string) =>
+	s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+
+const renderStatusOverview = () => {
+	const docsHtml = DOCS.map(
+		(d) => `
+		<tr>
+			<td>${escapeHtml(d.label)}</td>
+			<td>${escapeHtml(d.summary)}</td>
+			<td><a href="/docs/${d.file}" target="_blank">view doc</a></td>
+		</tr>`
+	).join('')
+
+	const issuesHtml = KNOWN_ISSUES.map(
+		(i) => `
+		<tr>
+			<td><a href="https://github.com/weareinreach/InReach/issues/${i.num}" target="_blank">#${i.num}</a></td>
+			<td><span class="badge badge-${i.type.toLowerCase()}">${i.type}</span></td>
+			<td>${escapeHtml(i.layer)}</td>
+			<td>${escapeHtml(i.title)}</td>
+		</tr>`
+	).join('')
+
+	const gapsHtml = KNOWN_GAPS.map((g) => `<li>${escapeHtml(g)}</li>`).join('')
+
+	const coverageRows = ROWS.filter((r) => r.parseCoverage)
+	const coverageHtml = coverageRows
+		.map((r) => {
+			const s = state.get(r.id)?.coverageSummary
+			return `
+			<tr id="cov-row-${r.id}">
+				<td>${escapeHtml(r.label)}</td>
+				<td id="cov-pct-${r.id}">${s ? `${s.statementsPct.toFixed(1)}% statements · ${s.branchesPct.toFixed(1)}% branches · ${s.functionsPct.toFixed(1)}% functions · ${s.linesPct.toFixed(1)}% lines` : '<span class="muted">not run yet</span>'}</td>
+				<td id="cov-zero-${r.id}" class="${s && s.zeroCoverageCount > 0 ? 'fail' : s ? 'ok' : ''}">${s ? `${s.zeroCoverageCount} / ${s.totalFiles} files at 0% coverage` : '<span class="muted">—</span>'}</td>
+				<td id="cov-link-${r.id}">${s ? `<a href="/reports/${r.id}/coverage/zero-coverage-files.txt" target="_blank">view list</a>` : '<span class="muted">run below to generate</span>'}</td>
+			</tr>`
+		})
+		.join('')
+
+	return `
+	<h2>Real source coverage <span class="note">— every file counted, not just ones a test happens to import; see "Code Coverage" section below to (re)run</span></h2>
+	<table>
+		<thead><tr><th>Package</th><th>Overall %</th><th>Zero-coverage files</th><th></th></tr></thead>
+		<tbody>${coverageHtml}</tbody>
+	</table>
+
+	<h2>Coverage docs</h2>
+	<table>
+		<thead><tr><th>Layer</th><th>Status</th><th></th></tr></thead>
+		<tbody>${docsHtml}</tbody>
+	</table>
+
+	<h2>Filed issues (${KNOWN_ISSUES.length}) <span class="note">— all open as of the last check; click through for current state</span></h2>
+	<table>
+		<thead><tr><th>#</th><th>Type</th><th>Layer</th><th>Title</th></tr></thead>
+		<tbody>${issuesHtml}</tbody>
+	</table>
+
+	<h2>Known gaps</h2>
+	<ul class="gaps">${gapsHtml}</ul>
+	`
 }
 
 const renderPage = () => {
@@ -256,11 +593,21 @@ const renderPage = () => {
 	.ok { color: #0a7a2a; }
 	.fail { color: #b00; }
 	.running { color: #b8860b; }
-	.note { color: #666; font-size: .85rem; }
+	.note { color: #666; font-size: .85rem; font-weight: normal; }
+	.badge { font-size: .78rem; padding: .1rem .45rem; border-radius: .75rem; font-weight: 600; }
+	.badge-bug { background: #fde2e2; color: #a11; }
+	.badge-task { background: #fff3cd; color: #8a6d00; }
+	ul.gaps { padding-left: 1.2rem; }
+	ul.gaps li { margin: .35rem 0; font-size: .92rem; }
+	.overview { background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 0 1.25rem 1.25rem; margin-bottom: 2.5rem; }
+	.overview h2:first-child { margin-top: 1.25rem; }
 </style>
 </head>
 <body>
 <h1>Test Dashboard</h1>
+<div class="overview">
+${renderStatusOverview()}
+</div>
 <p class="note">Click Run, wait for the status to update, then open Results/Coverage. Rows never clobber each other's reports - each has its own output directory.</p>
 ${rowsHtml}
 <script>
@@ -286,7 +633,21 @@ async function poll(id) {
 		if (s.lastExitCode === null) { el.textContent = '—'; el.className = '' }
 		else if (s.lastExitCode === 0) { el.textContent = 'passed ✓'; el.className = 'ok' }
 		else { el.textContent = 'failed ✗ (exit ' + s.lastExitCode + ')'; el.className = 'fail' }
+		if (document.getElementById('cov-pct-' + id)) refreshCoverageOverview(id)
 	}
+}
+async function refreshCoverageOverview(id) {
+	const res = await fetch('/coverage-summary/' + id, { cache: 'no-store' })
+	const s = await res.json()
+	if (!s) return
+	document.getElementById('cov-pct-' + id).textContent =
+		s.statementsPct.toFixed(1) + '% statements · ' + s.branchesPct.toFixed(1) + '% branches · ' +
+		s.functionsPct.toFixed(1) + '% functions · ' + s.linesPct.toFixed(1) + '% lines'
+	const zeroEl = document.getElementById('cov-zero-' + id)
+	zeroEl.textContent = s.zeroCoverageCount + ' / ' + s.totalFiles + ' files at 0% coverage'
+	zeroEl.className = s.zeroCoverageCount > 0 ? 'fail' : 'ok'
+	document.getElementById('cov-link-' + id).innerHTML =
+		'<a href="/reports/' + id + '/coverage/zero-coverage-files.txt" target="_blank">view list</a>'
 }
 ${ROWS.map((r) => `poll('${r.id}')`).join('\n')}
 </script>
@@ -317,11 +678,39 @@ const server = http.createServer((req, res) => {
 		return
 	}
 
+	if (url.pathname.startsWith('/coverage-summary/')) {
+		const id = url.pathname.slice('/coverage-summary/'.length)
+		const st = state.get(id)
+		res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
+		res.end(JSON.stringify(st?.coverageSummary ?? null))
+		return
+	}
+
 	if (url.pathname.startsWith('/status/')) {
 		const id = url.pathname.slice('/status/'.length)
 		const st = state.get(id)
 		res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
 		res.end(JSON.stringify(st ?? { running: false, lastExitCode: null, lastRunAt: null }))
+		return
+	}
+
+	if (url.pathname.startsWith('/docs/')) {
+		const file = url.pathname.slice('/docs/'.length)
+		// Restrict to known coverage docs only - no arbitrary path traversal into docs/Testing/.
+		const doc = DOCS.find((d) => d.file === file)
+		if (!doc) {
+			res.writeHead(404)
+			res.end('Not found - this dashboard only serves the three coverage docs it tracks.')
+			return
+		}
+		const filePath = path.join(ROOT, 'docs/Testing', doc.file)
+		if (!existsSync(filePath)) {
+			res.writeHead(404)
+			res.end('Doc file missing on disk.')
+			return
+		}
+		res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' })
+		createReadStream(filePath).pipe(res)
 		return
 	}
 
