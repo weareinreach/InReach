@@ -1,5 +1,11 @@
 import { MultiSelect, type MultiSelectProps, Text } from '@mantine/core'
-import { useCallback, useMemo } from 'react'
+import { type ReactNode, useCallback, useMemo } from 'react'
+
+// Shared tooltip content (see FilterHelp.tsx's `helpLines`) - the match semantics line applies to every
+// GroupedMultiSelect filter; the cascade line only applies where at least one group is `cascadable`.
+export const MULTISELECT_MATCH_HELP = 'Matches an organization that has at least one of the selected values.'
+export const MULTISELECT_CASCADE_HELP =
+	'An "All [Category]" row selects every value in that category at once.'
 
 export interface GroupedMultiSelectOption {
 	id: string
@@ -25,10 +31,17 @@ export interface GroupedMultiSelectGroup extends GroupedMultiSelectOption {
 
 export interface GroupedMultiSelectProps {
 	/**
-	 * Not rendered visibly - this control is meant to sit inside a `FilterChip`, which already shows the label
-	 * on its collapsed chip. Used only as the input's `aria-label`.
+	 * Used as the input's `aria-label` by default - not rendered visibly, since this control is meant to sit
+	 * inside a `FilterChip`, which already shows the label on its collapsed chip. Pass `visibleLabel` instead
+	 * for a permanent filter with no chip of its own (e.g. Bulk Search & Replace's Service Tags/Attributes,
+	 * styled like Status/Create Method).
 	 */
 	label: string
+	/**
+	 * Renders as this control's own visible label (Mantine's native `label` prop, above the input) instead of
+	 * the default hidden `aria-label` - see `label`'s own comment for when to use this.
+	 */
+	visibleLabel?: ReactNode
 	placeholder?: string
 	/**
 	 * `undefined` groups render as ungrouped flat options (e.g. Remote Options, which has nothing to group by)
@@ -85,6 +98,7 @@ type OptionRole = 'all' | 'child' | 'flat'
  */
 export const GroupedMultiSelect = ({
 	label,
+	visibleLabel,
 	placeholder = 'All',
 	groups,
 	value,
@@ -206,7 +220,7 @@ export const GroupedMultiSelect = ({
 	return (
 		<MultiSelect
 			size='xs'
-			aria-label={label}
+			{...(visibleLabel ? { label: visibleLabel } : { 'aria-label': label })}
 			placeholder={placeholder}
 			styles={COMPACT_MULTISELECT_STYLES}
 			data={data}

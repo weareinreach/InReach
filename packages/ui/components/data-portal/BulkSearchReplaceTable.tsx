@@ -3,12 +3,10 @@ import {
 	Badge,
 	Button,
 	Checkbox,
-	type ComboboxRenderPillInput,
 	Fieldset,
 	Group,
+	Menu,
 	Modal,
-	MultiSelect,
-	Pill,
 	Popover,
 	Select,
 	Stack,
@@ -43,7 +41,21 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
-import { TableToolbarToggle } from './TableToolbarToggle'
+import {
+	DELETED_FILTER_HELP,
+	DELETED_FILTER_OPTIONS,
+	deletedFilterToValue,
+	deletedValueToFilter,
+} from './deletedFilter'
+import { FilterChip } from './FilterChip'
+import { FilterLabel, helpLines } from './FilterHelp'
+import { GroupedMultiSelect } from './GroupedMultiSelect'
+import {
+	SERVICE_ATTRIBUTE_FILTER_HELP,
+	SERVICE_TAG_FILTER_HELP,
+	toServiceAttributeGroups,
+	toServiceTagGroups,
+} from './serviceFilterGroups'
 
 type OrgRow = ApiOutput['bulkSearchReplace']['search']['results'][number]
 type ServiceRow = OrgRow['services'][number]
@@ -337,6 +349,16 @@ const DEFAULT_SCOPE: TBulkSearchReplaceScope = {
 	serviceTags: false,
 }
 
+// Deleted is added/removed as needed via the toolbar's "+ Filter" menu, same opt-in pattern as the
+// Organization table - it doesn't start active. Hiding deleted rows by default is still a real, separate
+// behavior (see `columnFilters`' own initial value below); it just isn't a visible widget until someone
+// deliberately wants to change it. Service Tags/Service Attributes, by contrast, are permanent - always
+// shown with their own visible label, like Status/Create Method on the Organization table - not part of
+// this add/remove system at all. All three narrow the same results the search box/scope checkboxes above
+// already produced - they don't replace or re-run the search itself.
+type AddableFacetId = 'deleted'
+const ADDABLE_FACETS: { id: AddableFacetId; label: string }[] = [{ id: 'deleted', label: 'Deleted' }]
+
 interface BulkTarget {
 	kind: 'attribute' | 'tag'
 	id: string
@@ -527,42 +549,6 @@ const BulkEditDialog = ({
 }
 
 /**
- * Same pill renderer as OrganizationTable's Status MultiSelect - see that file's comment for why the remove
- * button's icon/size need overriding. Generic (not status-specific) since it's shared by the Service Tags and
- * Attributes toolbar filters below.
- */
-const renderFilterPill = ({ option, onRemove }: ComboboxRenderPillInput) => (
-	<Pill
-		size='xs'
-		withRemoveButton
-		onRemove={onRemove}
-		removeButtonProps={{
-			icon: <Icon icon='carbon:close' width={10} height={10} />,
-			children: null,
-			style: { minWidth: 16, width: 16, height: 16 },
-		}}
-	>
-		{option.label}
-	</Pill>
-)
-
-// Same as OrganizationTable's COMPACT_MULTISELECT_STYLES - see that file's comment for why `height: 'auto'`
-// is needed to escape the app-wide fixed-height Input override.
-const COMPACT_MULTISELECT_STYLES = {
-	input: { height: 'auto', minHeight: 30, fontSize: 'var(--mantine-font-size-xs)', padding: '2px 8px' },
-	label: { fontSize: 'var(--mantine-font-size-xs)' },
-	pill: { fontSize: 'var(--mantine-font-size-xs)' },
-}
-
-const deletedFilterLabel = (state: boolean | undefined): string => {
-	if (state) return 'Show all'
-	if (state === undefined) return 'Hide deleted'
-	return 'Show deleted'
-}
-const deletedFilterIcon = (): string => 'carbon:trash-can'
-const isDeletedFilterExcluded = (state: boolean | undefined): boolean => state === false
-
-/**
  * Bulk Search & Replace's results table - search organization/service names, descriptions, attributes, and
  * tags; edit a record inline; find-and-replace with a per-row review; or bulk-add/remove a service tag or
  * attribute across a selected set. See docs/DataPortal/Organizations/bulk-search-replace.md.
@@ -579,6 +565,26 @@ export const BulkSearchReplaceTable = () => {
 	// Default matches today's always-hide-deleted behavior - zero behavior change out of the box.
 	// Organization-level only, same as OrganizationTable; service-level deleted stays unconditional.
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([{ id: 'deleted', value: false }])
+	const [activeFacets, setActiveFacets] = useState<AddableFacetId[]>([])
+	// Tracks whether Deleted was just added via the "+ Filter" menu THIS session, so its chip can auto-open
+	// (see FilterChip's `defaultOpened`) rather than mounting pre-opened.
+	const [justAddedFacet, setJustAddedFacet] = useState<AddableFacetId | null>(null)
+
+	const addFacet = (id: AddableFacetId) => {
+		setActiveFacets((prev) => [...prev, id])
+		setJustAddedFacet(id)
+	}
+	// Removing a facet both hides its widget and clears whatever value it held - otherwise re-adding it
+	// later would resurface a stale filter the person never meant to keep applying.
+	const removeFacet = (id: AddableFacetId) => {
+		setActiveFacets((prev) => prev.filter((f) => f !== id))
+		switch (id) {
+			case 'deleted': {
+				setColumnFilters((prev) => prev.filter((f) => f.id !== 'deleted'))
+				break
+			}
+		}
+	}
 
 	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 	const serviceTagIdsFilter = columnFilters.find(({ id }) => id === 'serviceTagIds')?.value as
@@ -609,7 +615,7 @@ export const BulkSearchReplaceTable = () => {
 	// Unfiltered (not the bulk dialog's eligible-only subset) - the column needs every attached
 	// attribute's name, including ones ineligible for bulk-add. Cheap, non-paginated, same call shape.
 	const { data: allAttributes } = api.fieldOpt.attributesByCategory.useQuery({})
-	const { data: tagCategories } = api.component.ServiceSelect.useQuery()
+	const { data: tagCategories, isLoading: serviceTagsLoading } = api.component.ServiceSelect.useQuery()
 	const attributeLabelById = useMemo(() => {
 		const map = new Map<string, string>()
 		;(allAttributes ?? []).forEach((a) => map.set(a.attributeId, tAttr(a.attributeKey)))
@@ -621,21 +627,16 @@ export const BulkSearchReplaceTable = () => {
 		return map
 	}, [tagCategories, tSvc])
 
-	// Toolbar filter options - every known tag/attribute, not just ones present in the current results
-	// (same maps the Service Tags/Attributes columns use to resolve id -> name), sorted for scanability.
-	const serviceTagOptions = useMemo(
-		() =>
-			[...tagLabelById.entries()]
-				.map(([value, label]) => ({ value, label }))
-				.sort((a, b) => a.label.localeCompare(b.label)),
-		[tagLabelById]
-	)
-	const serviceAttributeOptions = useMemo(
-		() =>
-			[...attributeLabelById.entries()]
-				.map(([value, label]) => ({ value, label }))
-				.sort((a, b) => a.label.localeCompare(b.label)),
-		[attributeLabelById]
+	// Toolbar quick filters - same untranslated, category-grouped, cascadable-tags shape as the Organization
+	// table's Service Tags/Service Attributes filters (see serviceFilterGroups.ts), so both tables' filters
+	// look and behave identically. Deliberately separate from `tagLabelById`/`attributeLabelById` above,
+	// which the table's own columns use and which stay translated - only the filter widgets changed here.
+	const { data: serviceAttributeRows, isLoading: serviceAttributesLoading } =
+		api.fieldOpt.attributesForFilter.useQuery({ canAttachTo: ['SERVICE'] })
+	const serviceTagGroups = useMemo(() => toServiceTagGroups(tagCategories), [tagCategories])
+	const serviceAttributeGroups = useMemo(
+		() => toServiceAttributeGroups(serviceAttributeRows),
+		[serviceAttributeRows]
 	)
 
 	// Default: expand every org with matching services, and check every row with a replaceable match -
@@ -930,49 +931,100 @@ export const BulkSearchReplaceTable = () => {
 						isError={isError}
 						emptyMessage='No organizations or services matched.'
 						toolbarExtra={
-							<>
-								<MultiSelect
-									size='xs'
-									label='Service Tags'
-									styles={COMPACT_MULTISELECT_STYLES}
-									data={serviceTagOptions}
-									value={serviceTagIdsFilter ?? []}
-									onChange={(next) => {
-										setColumnFilters((prev) => {
-											const without = prev.filter(({ id }) => id !== 'serviceTagIds')
-											return next.length > 0 ? [...without, { id: 'serviceTagIds', value: next }] : without
-										})
-									}}
-									renderPill={renderFilterPill}
-									w={190}
-								/>
-								<MultiSelect
-									size='xs'
-									label='Attributes'
-									styles={COMPACT_MULTISELECT_STYLES}
-									data={serviceAttributeOptions}
-									value={serviceAttributeIdsFilter ?? []}
-									onChange={(next) => {
-										setColumnFilters((prev) => {
-											const without = prev.filter(({ id }) => id !== 'serviceAttributeIds')
-											return next.length > 0
-												? [...without, { id: 'serviceAttributeIds', value: next }]
-												: without
-										})
-									}}
-									renderPill={renderFilterPill}
-									w={190}
-								/>
-								<TableToolbarToggle
-									columnId='deleted'
-									columnFilters={columnFilters}
-									setColumnFilters={setColumnFilters}
-									cycle={[false, true, undefined]}
-									label={deletedFilterLabel}
-									icon={deletedFilterIcon}
-									slash={isDeletedFilterExcluded}
-								/>
-							</>
+							<Stack gap='xs' w='100%'>
+								{/* Service Tags/Attributes are permanent - always shown, own visible label, styled like
+								Status/Create Method on the Organization table - not part of the add/remove system
+								below (see AddableFacetId). */}
+								<Group gap='xs' wrap='nowrap' justify='flex-end'>
+									<GroupedMultiSelect
+										label='Service Tags'
+										visibleLabel={
+											<FilterLabel label='Service Tags' help={helpLines(SERVICE_TAG_FILTER_HELP)} />
+										}
+										groups={serviceTagGroups}
+										isLoading={serviceTagsLoading}
+										value={serviceTagIdsFilter ?? []}
+										onChange={(next) => {
+											setColumnFilters((prev) => {
+												const without = prev.filter(({ id }) => id !== 'serviceTagIds')
+												return next.length > 0 ? [...without, { id: 'serviceTagIds', value: next }] : without
+											})
+										}}
+									/>
+									<GroupedMultiSelect
+										label='Service Attributes'
+										visibleLabel={
+											<FilterLabel
+												label='Service Attributes'
+												help={helpLines(SERVICE_ATTRIBUTE_FILTER_HELP)}
+											/>
+										}
+										groups={serviceAttributeGroups}
+										isLoading={serviceAttributesLoading}
+										value={serviceAttributeIdsFilter ?? []}
+										onChange={(next) => {
+											setColumnFilters((prev) => {
+												const without = prev.filter(({ id }) => id !== 'serviceAttributeIds')
+												return next.length > 0
+													? [...without, { id: 'serviceAttributeIds', value: next }]
+													: without
+											})
+										}}
+									/>
+								</Group>
+								{/* Deleted is the only filter still added/removed via "+ Filter" - a second row, right-
+								aligned, keeps that distinction visible instead of blending into the permanent row above. */}
+								<Group gap='xs' wrap='wrap' justify='flex-end'>
+									{activeFacets.includes('deleted') && (
+										<FilterChip
+											label='Deleted'
+											summary={
+												DELETED_FILTER_OPTIONS.find((o) => o.value === deletedFilterToValue(deletedFilter))
+													?.label
+											}
+											onRemove={() => removeFacet('deleted')}
+											defaultOpened={justAddedFacet === 'deleted'}
+											help={helpLines(DELETED_FILTER_HELP)}
+										>
+											<Select
+												size='xs'
+												data={DELETED_FILTER_OPTIONS}
+												value={deletedFilterToValue(deletedFilter)}
+												onChange={(next) => {
+													setColumnFilters((prev) => {
+														const rest = prev.filter(({ id }) => id !== 'deleted')
+														const filterValue = deletedValueToFilter(next)
+														return filterValue === undefined
+															? rest
+															: [...rest, { id: 'deleted', value: filterValue }]
+													})
+												}}
+												allowDeselect={false}
+												w={150}
+											/>
+										</FilterChip>
+									)}
+									<Menu closeOnItemClick position='bottom-start'>
+										<Menu.Target>
+											<Tooltip label='Add filter'>
+												<ActionIcon variant='subtle' aria-label='Add filter'>
+													<Icon icon='carbon:add' />
+												</ActionIcon>
+											</Tooltip>
+										</Menu.Target>
+										<Menu.Dropdown>
+											{ADDABLE_FACETS.filter((facet) => !activeFacets.includes(facet.id)).map((facet) => (
+												<Menu.Item key={facet.id} onClick={() => addFacet(facet.id)}>
+													{facet.label}
+												</Menu.Item>
+											))}
+											{ADDABLE_FACETS.every((facet) => activeFacets.includes(facet.id)) && (
+												<Menu.Item disabled>All filters added</Menu.Item>
+											)}
+										</Menu.Dropdown>
+									</Menu>
+								</Group>
+							</Stack>
 						}
 					/>
 				</>

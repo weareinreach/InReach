@@ -36,13 +36,28 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
+import {
+	DELETED_FILTER_HELP,
+	DELETED_FILTER_OPTIONS,
+	deletedFilterToValue,
+	deletedValueToFilter,
+} from './deletedFilter'
 import { FilterChip } from './FilterChip'
+import { FilterLabel, helpLines } from './FilterHelp'
 import {
 	COMPACT_MULTISELECT_STYLES,
 	GroupedMultiSelect,
 	type GroupedMultiSelectGroup,
+	MULTISELECT_CASCADE_HELP,
+	MULTISELECT_MATCH_HELP,
 } from './GroupedMultiSelect'
 import { ResultCount } from './ResultCount'
+import {
+	SERVICE_ATTRIBUTE_FILTER_HELP,
+	SERVICE_TAG_FILTER_HELP,
+	toServiceAttributeGroups,
+	toServiceTagGroups,
+} from './serviceFilterGroups'
 
 type RowItem = ApiOutput['organization']['forOrganizationTable']['results'][number]
 type LocationRow = RowItem['locations'][number]
@@ -314,36 +329,6 @@ const getOrgTableRowStyle = (row: TableRow) => ({
 	textDecoration: (row as RowItem).deleted ? 'line-through' : undefined,
 })
 
-// Tri-state - a plain `Select` needs its own string values, unlike the `boolean | undefined` the rest of
-// the app stores this filter as (see `getOrgTableRowStyle`, ORG_SELECT's `deleted` field). 'all' is a real,
-// selectable option here (unlike Status/Create Method, whose "no filter" state is `clearable` back to
-// nothing) since there's no other value to fall back on: leaving this dropdown blank would be ambiguous
-// between "show all" and "hide deleted" (the actual default).
-const DELETED_FILTER_OPTIONS = [
-	{ value: 'hide', label: 'Hide deleted' },
-	{ value: 'show', label: 'Show deleted only' },
-	{ value: 'all', label: 'Show all' },
-]
-const deletedFilterToValue = (state: boolean | undefined): string =>
-	state === undefined ? 'all' : state ? 'show' : 'hide'
-const deletedValueToFilter = (value: string | null): boolean | undefined => {
-	if (value === 'show') return true
-	if (value === 'hide') return false
-	return undefined
-}
-
-/**
- * `ServiceCategory` has no plain display-name field, only a raw slug (e.g. "legal-aid") or a translated tsKey
- *
- * - Since translation isn't used in the data portal, this just turns the slug into something readable ("Legal
- *   Aid") rather than showing it verbatim.
- */
-const formatSlugLabel = (slug: string): string =>
-	slug
-		.split('-')
-		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(' ')
-
 /**
  * Resolves selected ids back to display labels for the "applied filters" summary. A group's own id is never
  * itself a selected value (see `GroupedMultiSelectGroup.cascadable`) except in the childless case, where the
@@ -448,20 +433,37 @@ const CREATE_METHOD_OPTIONS = [
 	{ value: 'internal', label: 'Internal' },
 ]
 
-const CREATE_METHOD_HELP_TEXT =
-	'All: every organization.' +
-	'Public: submitted through the public suggestion form by someone without Data Portal access.' +
-	'Internal: submitted by staff/volunteers with Data Portal access, or added ' +
-	'directly through the Data Portal.'
+const CREATE_METHOD_HELP = [
+	'All: every organization.',
+	'Public: submitted through the public suggestion form by someone without Data Portal access.',
+	'Internal: submitted by staff/volunteers with Data Portal access, or added directly through the Data Portal.',
+]
 
-const CreateMethodLabel = () => (
-	<Group gap={4} wrap='nowrap'>
-		<span>Create Method</span>
-		<Tooltip label={CREATE_METHOD_HELP_TEXT} multiline w={260}>
-			<Icon icon='carbon:information' width={14} height={14} style={{ cursor: 'help' }} />
-		</Tooltip>
-	</Group>
-)
+// Matches STATUS_FILTER_OPTIONS - "Published" is the only status that isn't an unpublished reason.
+const STATUS_HELP = [
+	'Published: currently live and publicly visible.',
+	'New / In Progress / Inactive / Unresponsive: unpublished, for that specific reason.',
+]
+
+// Matches ZRemoteOption's own comment in query.forOrganizationTable.schema.ts.
+const REMOTE_OPTIONS_HELP = [
+	'Remote (no location): a service with no physical location at all.',
+	'Remote (available at a location): tied to a location, but also offers remote access.',
+	'In-person only: tied to a location, with no remote option.',
+]
+
+// Leads with what the filter actually represents, not just the shared OR/cascade mechanics (which say
+// nothing about what a "Community" or "Leader Badge" attribute even is).
+const COMMUNITY_FILTER_HELP = [
+	'Community Focus attributes - the population(s) this organization specifically serves (e.g. a specific ethnic, religious, or identity community).',
+	MULTISELECT_MATCH_HELP,
+	MULTISELECT_CASCADE_HELP,
+]
+const LEADER_BADGE_FILTER_HELP = [
+	'Organization Leadership attributes - who leads or founded this organization (e.g. led by members of the community it serves).',
+	MULTISELECT_MATCH_HELP,
+	MULTISELECT_CASCADE_HELP,
+]
 
 // The app-wide Input/InputWrapper theme defaults hardcode a 48px height / 16px input font and a 16px
 // label font on every field regardless of `size` (see theme/components/Input.module.css and
@@ -643,38 +645,11 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 	const communityLabelById = useMemo(() => idsToLabelMap(communityOptions), [idsToLabelMap, communityOptions])
 	const leaderLabelById = useMemo(() => idsToLabelMap(leaderOptions), [idsToLabelMap, leaderOptions])
 
-	const serviceTagGroups = useMemo<GroupedMultiSelectGroup[]>(
-		() =>
-			(serviceTagCategories ?? [])
-				.filter((category) => category.services.length > 0)
-				.map((category) => ({
-					id: category.tsKey,
-					// `category` is a raw slug (e.g. "legal-aid") - there's no plain display-name field on
-					// ServiceCategory, only this slug or a translated tsKey, and translation isn't used here.
-					label: formatSlugLabel(category.category),
-					items: category.services.map((tag) => ({ id: tag.id, label: tag.name })),
-					// Matches the public search's "Filter by Service" behavior (a separate "All [Category]"
-					// checkbox, distinct from editing's plain non-interactive category grouping).
-					cascadable: true,
-				})),
-		[serviceTagCategories]
+	const serviceTagGroups = useMemo(() => toServiceTagGroups(serviceTagCategories), [serviceTagCategories])
+	const serviceAttributeGroups = useMemo(
+		() => toServiceAttributeGroups(serviceAttributeRows),
+		[serviceAttributeRows]
 	)
-
-	// No `cascadable` here - neither service-attribute editing nor any public-facing filter has a "select
-	// all in this category" precedent for plain attributes, unlike Community/Leader Badge/Service Tags.
-	const serviceAttributeGroups = useMemo<GroupedMultiSelectGroup[]>(() => {
-		const byCategory = new Map<string, GroupedMultiSelectGroup>()
-		for (const row of serviceAttributeRows ?? []) {
-			const group = byCategory.get(row.categoryId) ?? {
-				id: row.categoryId,
-				label: row.categoryName,
-				items: [],
-			}
-			group.items.push({ id: row.attributeId, label: row.attributeName })
-			byCategory.set(row.categoryId, group)
-		}
-		return [...byCategory.values()]
-	}, [serviceAttributeRows])
 
 	// id -> name, for the Service Tags/Service Attributes table columns' pill cells.
 	const serviceTagLabelById = useMemo(() => {
@@ -971,7 +946,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 						<Group gap='xs' wrap='nowrap' justify='flex-end'>
 							<MultiSelect
 								size='xs'
-								label='Status'
+								label={<FilterLabel label='Status' help={helpLines(STATUS_HELP)} />}
 								placeholder='All'
 								styles={COMPACT_MULTISELECT_STYLES}
 								data={STATUS_FILTER_OPTIONS}
@@ -988,7 +963,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 							/>
 							<Select
 								size='xs'
-								label={<CreateMethodLabel />}
+								label={<FilterLabel label='Create Method' help={helpLines(CREATE_METHOD_HELP)} />}
 								placeholder='All'
 								styles={COMPACT_SELECT_STYLES}
 								data={CREATE_METHOD_OPTIONS}
@@ -1016,6 +991,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 										DELETED_FILTER_OPTIONS.find((o) => o.value === deletedFilterToValue(deletedFilter))?.label
 									}
 									onRemove={() => removeFacet('deleted')}
+									help={helpLines(DELETED_FILTER_HELP)}
 								>
 									<Select
 										size='xs'
@@ -1041,6 +1017,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 									label='Community'
 									summary={communityFilter.length ? `${communityFilter.length} selected` : undefined}
 									onRemove={() => removeFacet('community')}
+									help={helpLines(COMMUNITY_FILTER_HELP)}
 								>
 									<GroupedMultiSelect
 										label='Community'
@@ -1056,6 +1033,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 									label='Leader Badge'
 									summary={leaderFilter.length ? `${leaderFilter.length} selected` : undefined}
 									onRemove={() => removeFacet('leaderBadge')}
+									help={helpLines(LEADER_BADGE_FILTER_HELP)}
 								>
 									<GroupedMultiSelect
 										label='Leader Badge'
@@ -1071,6 +1049,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 									label='Service Tags'
 									summary={serviceTagFilter.length ? `${serviceTagFilter.length} selected` : undefined}
 									onRemove={() => removeFacet('serviceTags')}
+									help={helpLines(SERVICE_TAG_FILTER_HELP)}
 								>
 									<GroupedMultiSelect
 										label='Service Tags'
@@ -1088,6 +1067,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 										serviceAttributeFilter.length ? `${serviceAttributeFilter.length} selected` : undefined
 									}
 									onRemove={() => removeFacet('serviceAttributes')}
+									help={helpLines(SERVICE_ATTRIBUTE_FILTER_HELP)}
 								>
 									<GroupedMultiSelect
 										label='Service Attributes'
@@ -1103,6 +1083,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 									label='Remote Options'
 									summary={remoteOptionsFilter.length ? `${remoteOptionsFilter.length} selected` : undefined}
 									onRemove={() => removeFacet('remoteOptions')}
+									help={helpLines(REMOTE_OPTIONS_HELP)}
 								>
 									<GroupedMultiSelect
 										label='Remote Options'
