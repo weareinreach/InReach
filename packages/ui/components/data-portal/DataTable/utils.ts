@@ -1,6 +1,7 @@
 import { type ColumnFiltersState, type SortingState } from '@tanstack/react-table'
+import { DateTime } from 'luxon'
 
-import { type DataTableColumn } from './types'
+import { type DataTableColumn, type DataTableFilter, type DataTableFilterValue } from './types'
 
 export const getColumnValue = <T>(row: T, column: DataTableColumn<T>) =>
 	column.accessorFn ? column.accessorFn(row) : (row as Record<string, unknown>)[column.id]
@@ -152,6 +153,70 @@ const compareValues = <T>(a: T, b: T, id: string, desc: boolean, columns: DataTa
 		return desc ? -1 : 1
 	}
 	return 0
+}
+
+const formatFilterDate = (date: Date) => DateTime.fromJSDate(date).toLocaleString(DateTime.DATE_SHORT)
+
+/**
+ * Turns one active column filter's raw value into a short, human-readable string for the "applied filters"
+ * summary above the table - e.g. a `multi-select` value is a list of raw option values, not the labels a
+ * person actually picked, so this looks those back up via the same `filter.options` the control itself
+ * renders from. Returns `null` for an empty/unset value so the caller can skip it entirely.
+ */
+export const describeFilterValue = (
+	filter: DataTableFilter,
+	value: DataTableFilterValue | undefined
+): string | null => {
+	if (value === undefined) {
+		return null
+	}
+	switch (filter.type) {
+		case 'text': {
+			return typeof value === 'string' && value ? value : null
+		}
+		case 'checkbox': {
+			if (typeof value !== 'boolean') {
+				return null
+			}
+			return value ? (filter.trueLabel ?? 'Yes') : (filter.falseLabel ?? 'No')
+		}
+		case 'select': {
+			if (typeof value !== 'string') {
+				return null
+			}
+			return filter.options.find((option) => option.value === value)?.label ?? value
+		}
+		case 'multi-select': {
+			if (!Array.isArray(value) || !value.length) {
+				return null
+			}
+			return (value as string[])
+				.map((v) => filter.options.find((option) => option.value === v)?.label ?? v)
+				.join(', ')
+		}
+		case 'date-range': {
+			if (!Array.isArray(value)) {
+				return null
+			}
+			const [from, to] = value as [Date | undefined, Date | undefined]
+			if (!from && !to) {
+				return null
+			}
+			if (from && to) {
+				return `${formatFilterDate(from)} – ${formatFilterDate(to)}`
+			}
+			return from ? `after ${formatFilterDate(from)}` : `before ${formatFilterDate(to as Date)}`
+		}
+		case 'user-search': {
+			if (!Array.isArray(value) || !value.length) {
+				return null
+			}
+			return (value as { id: string; label: string }[]).map((person) => person.label).join(', ')
+		}
+		default: {
+			return null
+		}
+	}
 }
 
 export const applySorting = <T>(rows: T[], sorting: SortingState, columns: DataTableColumn<T>[]): T[] => {

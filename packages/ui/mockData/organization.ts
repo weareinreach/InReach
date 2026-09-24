@@ -149,7 +149,7 @@ const filterFakeOrgs = (
 	deleted: boolean | undefined,
 	search: string | undefined,
 	createMethod: 'public' | 'internal' | undefined,
-	createdByUserId: string | undefined
+	createdByUserIds: string[] | undefined
 ): ForOrgTableRow[] =>
 	orgs.filter((org) => {
 		// Multi-select - matching any one of the chosen values is enough (union/OR), same as the real handler.
@@ -165,7 +165,7 @@ const filterFakeOrgs = (
 		if (createMethod && !matchesCreateMethod(org, createMethod)) {
 			return false
 		}
-		if (createdByUserId && org.suggestions[0]?.suggestedBy?.id !== createdByUserId) {
+		if (createdByUserIds?.length && !createdByUserIds.includes(org.suggestions[0]?.suggestedBy?.id ?? '')) {
 			return false
 		}
 		return true
@@ -226,7 +226,7 @@ export const organization = {
 				input.deleted,
 				input.search,
 				input.createMethod,
-				input.createdByUserId
+				input.createdByUserIds
 			)
 			const sorting = input.sorting?.length ? input.sorting : [{ id: 'name' as const, desc: false }]
 			const sorted = sortFakeOrgs(filtered, sorting)

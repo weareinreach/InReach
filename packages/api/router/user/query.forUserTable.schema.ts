@@ -21,6 +21,9 @@ export const ZForUserTableSchema = z.object({
 	search: z.string().optional(),
 	createdAt: ZDateRange.optional(),
 	updatedAt: ZDateRange.optional(),
+	emailVerified: ZDateRange.optional(),
+	/** Filters to exactly these user accounts - the Email column's type-ahead multi-select filter. */
+	userIds: z.array(z.string()).optional(),
 	sorting: ZSortingState.optional(),
 	/** Data portal access level(s) to filter by - `'none'` means "no data portal access at all". */
 	permissionNames: z.array(z.string()).optional(),

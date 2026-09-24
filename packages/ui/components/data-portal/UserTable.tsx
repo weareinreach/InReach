@@ -270,6 +270,8 @@ export const UserTable = () => {
 
 	const permissionNamesFilter = columnFilters.find((f) => f.id === 'permissionName')?.value as
 		string[] | undefined
+	const emailFilter = columnFilters.find((f) => f.id === 'email')?.value as
+		{ id: string; label: string }[] | undefined
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
@@ -282,6 +284,10 @@ export const UserTable = () => {
 			updatedAt: dateFilter('updatedAt')
 				? { from: dateFilter('updatedAt')?.[0], to: dateFilter('updatedAt')?.[1] }
 				: undefined,
+			emailVerified: dateFilter('emailVerified')
+				? { from: dateFilter('emailVerified')?.[0], to: dateFilter('emailVerified')?.[1] }
+				: undefined,
+			userIds: emailFilter?.map((person) => person.id),
 			sorting: sorting.map(({ id, desc }) => ({
 				id: id as UserSortableColumnId,
 				desc,
@@ -315,10 +321,15 @@ export const UserTable = () => {
 				cell: IdCell,
 			},
 			{ id: 'name', header: 'Name' },
-			{ id: 'email', header: 'Email' },
+			{
+				id: 'email',
+				header: 'Email',
+				filter: { type: 'user-search' },
+			},
 			{
 				id: 'emailVerified',
 				header: 'Verified',
+				filter: { type: 'date-range' },
 				cell: EmailVerifiedCell,
 			},
 			{

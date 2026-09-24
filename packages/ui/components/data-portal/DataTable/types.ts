@@ -7,8 +7,9 @@ export type DataTableFilter =
 	| { type: 'multi-select'; options: { value: string; label: string }[] }
 	| { type: 'date-range' }
 	/**
-	 * Async type-ahead against `user.searchTypeahead` - value is the selected user's id, kept alongside a
-	 * display label since the id alone can't be turned back into a name/email without a lookup.
+	 * Async multi-select type-ahead against `user.searchTypeahead` - value is the selected users' ids, each
+	 * kept alongside a display label since an id alone can't be turned back into a name/email without a
+	 * lookup.
 	 */
 	| { type: 'user-search' }
 
@@ -17,7 +18,7 @@ export type DataTableFilter =
  * `ColumnFiltersState`; each `ColumnFilterControl` branch owns interpreting its own value's real shape.
  */
 export type DataTableFilterValue =
-	string | boolean | string[] | [Date | undefined, Date | undefined] | { id: string; label: string }
+	string | boolean | string[] | [Date | undefined, Date | undefined] | { id: string; label: string }[]
 
 export interface DataTableCellContext<T> {
 	row: T

@@ -283,17 +283,16 @@ const deletedFilterIcon = (): string => 'carbon:trash-can'
 
 const isDeletedFilterExcluded = (state: boolean | undefined): boolean => state === false
 
-// Options for the toolbar's Status dropdown - supersedes the old Publish Status (All/Published/
-// Unpublished) filter. The reason rows are derived from STATUS_FILTER_TO_REASON (the same hyphenated
-// wire-format -> enum map the real handler and mock data use) so a new reason only needs adding there
-// and to ORG_UNPUBLISHED_REASON_LABELS, not a third time here. Deliberately NOT built from REASON_OPTIONS,
-// which uses the raw OrgUnpublishedReason enum keys ('NEW', 'IN_PROGRESS', ...) for the popover's own
-// mutation input - two different vocabularies that happen to share labels; conflating them sends the
-// wrong value. "All" is a real, exclusive option here (not a placeholder) - selecting it clears any other
-// selection, and selecting a real status while "All" is active drops "All." Never sent to the backend as
-// a filter value itself - it just means the columnFilters entry for 'status' is empty/absent.
+// Options for the Status filter - shared by the toolbar MultiSelect below and the Status column's own
+// header filter, both of which read/write the same `columnFilters` 'status' entry. The reason rows are
+// derived from STATUS_FILTER_TO_REASON (the same hyphenated wire-format -> enum map the real handler and
+// mock data use) so a new reason only needs adding there and to ORG_UNPUBLISHED_REASON_LABELS, not a third
+// time here. Deliberately NOT built from REASON_OPTIONS, which uses the raw OrgUnpublishedReason enum keys
+// ('NEW', 'IN_PROGRESS', ...) for the popover's own mutation input - two different vocabularies that happen
+// to share labels; conflating them sends the wrong value. No "All" entry - picking zero statuses already
+// means "show all," same convention every other filter in the app uses; the toolbar widget shows "All" as
+// a placeholder (see its `placeholder` prop below) rather than a real, selectable value.
 const STATUS_FILTER_OPTIONS = [
-	{ value: 'all', label: 'All' },
 	{ value: 'published', label: 'Published' },
 	...Object.entries(STATUS_FILTER_TO_REASON).map(([value, reason]) => ({
 		value,
@@ -324,11 +323,14 @@ const renderStatusPill = ({ option, onRemove }: ComboboxRenderPillInput) => (
 	</Pill>
 )
 
-// Options for the toolbar's Create Method dropdown - see createMethodWhere in
-// query.forOrganizationTable.handler.ts for how each category maps to source/creatorHadDpAccess.
-// 'internal' unions suggested-with-access and data-portal-added - both mean "not the public."
+// Options for the Create Method filter - shared by the toolbar Select below and the Create Method
+// column's own header filter, both of which read/write the same `columnFilters` 'createMethod' entry. See
+// createMethodWhere in query.forOrganizationTable.handler.ts for how each category maps to
+// source/creatorHadDpAccess. 'internal' unions suggested-with-access and data-portal-added - both mean "not
+// actually the public." No "All" entry - both widgets are `clearable`, which is the plain-filter
+// equivalent; the toolbar widget shows "All" as a placeholder (see its `placeholder` prop below) rather
+// than a real, selectable value.
 const CREATE_METHOD_OPTIONS = [
-	{ value: 'all', label: 'All' },
 	{ value: 'public', label: 'Public' },
 	{ value: 'internal', label: 'Internal' },
 ]
@@ -372,6 +374,11 @@ const COMPACT_MULTISELECT_STYLES = {
 	// pill's own font-size, so without this it renders noticeably larger than xs-sized content
 	// elsewhere (e.g. the selected-option checkmark in the dropdown, which does scale with size).
 	pill: { fontSize: 'var(--mantine-font-size-xs)' },
+	// Mantine's clear/chevron section spans the full input height and centers itself within it - once
+	// wrapped pills make the input taller than one line, that centering drops it into whatever empty space
+	// is left partway down, looking like a stray extra pill. Pinning it to the top keeps it level with the
+	// first row instead.
+	section: { alignItems: 'flex-start' as const, paddingTop: 6 },
 }
 
 export interface OrganizationTableProps {
@@ -407,7 +414,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 	const createMethodFilter = columnFilters.find(({ id }) => id === 'createMethod')?.value as
 		'public' | 'internal' | undefined
 	const createdByFilter = columnFilters.find(({ id }) => id === 'createdBy')?.value as
-		{ id: string; label: string } | undefined
+		{ id: string; label: string }[] | undefined
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
@@ -416,7 +423,7 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 			status: statusFilter,
 			deleted: deletedFilter,
 			createMethod: createMethodFilter,
-			createdByUserId: createdByFilter?.id,
+			createdByUserIds: createdByFilter?.map((person) => person.id),
 			search: debouncedGlobalFilter || undefined,
 			lastVerified: dateFilter('lastVerified')
 				? { from: dateFilter('lastVerified')?.[0], to: dateFilter('lastVerified')?.[1] }
@@ -463,11 +470,14 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 			},
 			{
 				// Derived, not stored - reads published/unpublishedReason straight off the row. Supersedes the
-				// old hidden 'published' column entirely; see the toolbar's Status filter below.
+				// old hidden 'published' column entirely. Also filterable directly from this column's own
+				// header icon, not just the toolbar's Status dropdown below - both write the same
+				// `columnFilters` entry, so either one stays in sync with the other.
 				id: 'status',
 				header: 'Status',
 				size: 160,
 				enableSorting: false,
+				filter: { type: 'multi-select', options: STATUS_FILTER_OPTIONS },
 				cell: ({ row }) => {
 					const org = row as RowItem
 					if (org.published) return 'Published'
@@ -516,14 +526,15 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 				cell: CreatedByCell,
 			},
 			{
-				// Display-only - the actual filter is a standalone toolbar dropdown (see toolbarExtra
-				// below), not this column's own header filter, since hiddenByDefault columns don't render
-				// a header at all (so a column-scoped filter icon would be just as hidden as the column).
+				// Hidden by default (see the Show/Hide Columns menu) since the toolbar dropdown already
+				// covers this at a glance for most people - but once shown, this column's own header filter
+				// icon works too, writing the same `columnFilters` entry as the toolbar control below.
 				id: 'createMethod',
 				header: 'Create Method',
 				hiddenByDefault: true,
 				enableSorting: false,
 				enableGlobalFilter: false,
+				filter: { type: 'select', options: CREATE_METHOD_OPTIONS },
 				// Matches the toolbar filter's own two categories - same source/creatorHadDpAccess logic as
 				// createMethodWhere in query.forOrganizationTable.handler.ts.
 				cell: ({ row }) => {
@@ -565,45 +576,36 @@ export const OrganizationTable = ({ locationPhoneCleanupOnly }: OrganizationTabl
 						<MultiSelect
 							size='xs'
 							label='Status'
+							placeholder='All'
 							styles={COMPACT_MULTISELECT_STYLES}
 							data={STATUS_FILTER_OPTIONS}
-							value={statusFilter?.length ? statusFilter : ['all']}
+							value={statusFilter ?? []}
 							onChange={(next) => {
 								setColumnFilters((prev) => {
-									const withoutStatus = prev.filter(({ id }) => id !== 'status')
-									const wasShowingAll = !statusFilter?.length
-									// "All" is exclusive: picking it while real statuses were selected clears them;
-									// picking a real status while "All" was showing drops "All."
-									const resolved =
-										next.includes('all') && next.length > 1
-											? wasShowingAll
-												? next.filter((v) => v !== 'all')
-												: ['all']
-											: next
-									const realValues = resolved.filter((v) => v !== 'all')
-									return realValues.length > 0
-										? [...withoutStatus, { id: 'status', value: realValues }]
-										: withoutStatus
+									const rest = prev.filter(({ id }) => id !== 'status')
+									return next.length ? [...rest, { id: 'status', value: next }] : rest
 								})
 							}}
 							renderPill={renderStatusPill}
+							clearable
 							w={190}
 						/>
 						<Select
 							size='xs'
 							label={<CreateMethodLabel />}
+							placeholder='All'
 							styles={COMPACT_SELECT_STYLES}
 							data={CREATE_METHOD_OPTIONS}
-							value={createMethodFilter ?? 'all'}
+							value={createMethodFilter ?? null}
 							onChange={(next) => {
 								setColumnFilters((prev) => {
-									const withoutCreateMethod = prev.filter(({ id }) => id !== 'createMethod')
+									const rest = prev.filter(({ id }) => id !== 'createMethod')
 									return next === 'public' || next === 'internal'
-										? [...withoutCreateMethod, { id: 'createMethod', value: next }]
-										: withoutCreateMethod
+										? [...rest, { id: 'createMethod', value: next }]
+										: rest
 								})
 							}}
-							allowDeselect={false}
+							clearable
 							w={110}
 						/>
 						<TableToolbarToggle

@@ -80,22 +80,23 @@ const ORG_SELECT = {
 } satisfies Prisma.OrganizationSelect
 
 /**
- * Org ids whose earliest `Suggestion` record was submitted by this user. `createOrgSuggestion` (shared by
- * both the public "Suggest an Organization" form and the Data Portal's "Add an Organization" modal) always
- * writes exactly one `Suggestion` row in the same transaction as a brand-new `Organization` row; any later
- * Suggestion for that same org can only come from someone suggesting an edit to an org that already exists
- * (it requires `existingOrgId`, see createOrgSuggestion.ts). So the oldest Suggestion per org is always its
- * creation record, regardless of how many edit-suggestions came after it. Orgs predating this flow (or
- * inserted outside it, e.g. a seed/import script) have no Suggestion at all and won't match any user.
+ * Org ids whose earliest `Suggestion` record was submitted by any of these users. `createOrgSuggestion`
+ * (shared by both the public "Suggest an Organization" form and the Data Portal's "Add an Organization"
+ * modal) always writes exactly one `Suggestion` row in the same transaction as a brand-new `Organization`
+ * row; any later Suggestion for that same org can only come from someone suggesting an edit to an org that
+ * already exists (it requires `existingOrgId`, see createOrgSuggestion.ts). So the oldest Suggestion per org
+ * is always its creation record, regardless of how many edit-suggestions came after it. Orgs predating this
+ * flow (or inserted outside it, e.g. a seed/import script) have no Suggestion at all and won't match any
+ * user.
  */
-const creatorOrgIds = async (userId: string): Promise<string[]> => {
+const creatorOrgIds = async (userIds: string[]): Promise<string[]> => {
 	const rows = await prisma.$queryRaw<{ id: string }[]>`
 		SELECT o.id
 		FROM "Organization" o
 		WHERE EXISTS (
 			SELECT 1 FROM "Suggestion" s
 			WHERE s."organizationId" = o.id
-			AND s."suggestedById" = ${userId}
+			AND s."suggestedById" = ANY(${userIds})
 			AND s."createdAt" = (
 				SELECT MIN(s2."createdAt") FROM "Suggestion" s2 WHERE s2."organizationId" = o.id
 			)
@@ -104,38 +105,42 @@ const creatorOrgIds = async (userId: string): Promise<string[]> => {
 	return rows.map((row) => row.id)
 }
 
+// Built as top-level `AND` conditions (each its own object) rather than assigning multiple keys directly on
+// `where` - `status` and `createMethod` each need their own `OR`, and a plain JS object can only hold one
+// `OR` key, so assigning the second after the first silently clobbered it instead of combining (Status +
+// Create Method together was actually just Create Method - see user/query.forUserTable.handler.ts for the
+// same pattern/reasoning).
 const buildWhere = (
 	input: TForOrganizationTableSchema,
 	idFilters: string[][]
 ): Prisma.OrganizationWhereInput => {
-	const where: Prisma.OrganizationWhereInput = {}
+	const and: Prisma.OrganizationWhereInput[] = []
 	const statusClause = statusWhere(input.status)
 	if (statusClause) {
-		Object.assign(where, statusClause)
+		and.push(statusClause)
 	}
 	if (input.deleted !== undefined) {
-		where.deleted = input.deleted
+		and.push({ deleted: input.deleted })
 	}
 	const createMethodClause = createMethodWhere(input.createMethod)
 	if (createMethodClause) {
-		Object.assign(where, createMethodClause)
+		and.push(createMethodClause)
 	}
 	if (input.lastVerified) {
-		where.lastVerified = { gte: input.lastVerified.from, lte: input.lastVerified.to }
+		and.push({ lastVerified: { gte: input.lastVerified.from, lte: input.lastVerified.to } })
 	}
 	if (input.updatedAt) {
-		where.updatedAt = { gte: input.updatedAt.from, lte: input.updatedAt.to }
+		and.push({ updatedAt: { gte: input.updatedAt.from, lte: input.updatedAt.to } })
 	}
 	if (input.createdAt) {
-		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
+		and.push({ createdAt: { gte: input.createdAt.from, lte: input.createdAt.to } })
 	}
-	// Each id list (location-phone cleanup, created-by) becomes its own `AND` clause rather than
-	// intersecting them by hand - Prisma implicitly ANDs every entry, and the two filters are independent
-	// enough that they'll rarely both be active at once anyway.
-	if (idFilters.length) {
-		where.AND = idFilters.map((ids) => ({ id: { in: ids } }))
+	// Each id list (location-phone cleanup, created-by) becomes its own `AND` entry rather than
+	// intersecting them by hand - Prisma implicitly ANDs every entry in the array.
+	for (const ids of idFilters) {
+		and.push({ id: { in: ids } })
 	}
-	return where
+	return and.length ? { AND: and } : {}
 }
 
 /**
@@ -321,7 +326,7 @@ const forOrganizationTable = async ({
 
 	const [cleanupIds, createdByOrgIds] = await Promise.all([
 		input.needsLocationPhoneCleanup ? locationPhoneCleanupIds() : undefined,
-		input.createdByUserId ? creatorOrgIds(input.createdByUserId) : undefined,
+		input.createdByUserIds?.length ? creatorOrgIds(input.createdByUserIds) : undefined,
 	])
 	if (cleanupIds?.length === 0 || createdByOrgIds?.length === 0) {
 		return { results: [], total: 0 }

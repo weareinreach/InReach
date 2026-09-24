@@ -88,10 +88,46 @@ const DateRangeFilter = ({
 }
 
 /**
- * Type-ahead against `user.searchTypeahead` - type a name or email, pick a match. The committed value keeps
- * both the user's id (what actually filters) and a display label (so the selected user still shows once the
- * dropdown's own result list, which depends on the current search text, no longer contains them).
+ * Multi-select type-ahead against `user.searchTypeahead` - type a name or email, pick one or more matches.
+ * Each committed entry keeps both the user's id (what actually filters) and a display label, so a
+ * previously-picked user stays visible/checked even once the dropdown's own result list - which depends on
+ * the current search text - no longer contains them.
  */
+const EMPTY_SELECTED: { id: string; label: string }[] = []
+
+// Every filter control in this file (plain `select`/`multi-select` options and the async user-search
+// MultiSelect alike) gets the same fixed width - without one, a `Select`/`MultiSelect` with no explicit
+// width sizes to its own content inside the Popover.Dropdown (which itself just shrinks/grows to fit),
+// so longer option labels (e.g. "In Progress", "Unaffirming") or several picked pills got clipped instead
+// of the box just being comfortably wide enough to read.
+const FILTER_INPUT_WIDTH = 240
+
+// Without a fixed width, a MultiSelect (and the Popover.Dropdown wrapping it, which otherwise sizes to its
+// content) just kept growing wider as more values were picked - each pill sat on one line rather than
+// wrapping, so the whole filter popover crept sideways with every selection. `height: 'auto'` (overriding
+// the app-wide Input theme default that hardcodes `height: 48px` on every input, same override
+// OrganizationTable's own compact MultiSelects need) lets pills wrap onto their own lines instead within
+// `FILTER_INPUT_WIDTH`; `maxHeight`/`overflowY` cap how tall that can grow before it scrolls, for someone
+// who picks a long list of values.
+const COMPACT_MULTISELECT_WRAP_STYLES = {
+	input: {
+		height: 'auto',
+		minHeight: 30,
+		maxHeight: 120,
+		overflowY: 'auto' as const,
+		fontSize: 'var(--mantine-font-size-xs)',
+	},
+	label: { fontSize: 'var(--mantine-font-size-xs)' },
+	pill: { fontSize: 'var(--mantine-font-size-xs)' },
+	// Mantine's clear/chevron section is absolutely positioned to span the *entire* input top-to-bottom and
+	// centers itself within that span - fine for a single-line input, but once pills wrap onto a second or
+	// third line (making the input taller than one line), centering within the full height drops it into
+	// whatever empty space is left in the middle, looking like a stray extra pill floating in the box.
+	// Pinning it to the top instead keeps it level with the first row of pills, where it reads as a control
+	// on the input, not a mystery item among the selections.
+	section: { alignItems: 'flex-start' as const, paddingTop: 6 },
+}
+
 const UserSearchFilter = ({
 	label,
 	value,
@@ -101,20 +137,17 @@ const UserSearchFilter = ({
 	value: DataTableFilterValue | undefined
 	onChange: (value: DataTableFilterValue | undefined) => void
 }) => {
-	const selected =
-		value && typeof value === 'object' && !Array.isArray(value)
-			? (value as { id: string; label: string })
-			: undefined
-	const [search, setSearch] = useState(selected?.label ?? '')
+	// A stable empty-array fallback (rather than a fresh `[]` literal per render) so `selected`'s identity
+	// only changes when the underlying filter value actually does - otherwise the `options` useMemo below
+	// would see a "changed" dependency and recompute on every render whenever no user is selected.
+	const selected = Array.isArray(value) ? (value as { id: string; label: string }[]) : EMPTY_SELECTED
+	const [search, setSearch] = useState('')
 	const [debouncedSearch] = useDebouncedValue(search, 300)
 	const trimmedSearch = debouncedSearch.trim()
 
 	const { data } = api.user.searchTypeahead.useQuery(
 		{ search: trimmedSearch },
-		{
-			enabled: trimmedSearch.length >= 2 && trimmedSearch !== selected?.label,
-			placeholderData: keepPreviousData,
-		}
+		{ enabled: trimmedSearch.length >= 2, placeholderData: keepPreviousData }
 	)
 
 	const options = useMemo(() => {
@@ -122,49 +155,55 @@ const UserSearchFilter = ({
 			value: user.id,
 			label: user.name ? `${user.name} (${user.email})` : user.email,
 		}))
-		// Keeps the currently-selected user selectable/visible even once their name/email no longer
+		// Keeps every already-selected user selectable/checked even once their name/email no longer
 		// matches whatever's since been typed into the search box.
-		if (selected && !matches.some((option) => option.value === selected.id)) {
-			matches.unshift({ value: selected.id, label: selected.label })
+		for (const person of selected) {
+			if (!matches.some((option) => option.value === person.id)) {
+				matches.unshift({ value: person.id, label: person.label })
+			}
 		}
 		return matches
 	}, [data, selected])
 
 	const handleChange = useCallback(
-		(nextId: string | null) => {
-			if (!nextId) {
+		(nextIds: string[]) => {
+			if (!nextIds.length) {
 				onChange(undefined)
-				setSearch('')
 				return
 			}
-			const match = options.find((option) => option.value === nextId)
-			if (match) {
-				onChange({ id: match.value, label: match.label })
-				setSearch(match.label)
-			}
+			// `options` always contains every currently-selected id (see the unshift above), so this never
+			// silently drops a still-selected entry just because it fell out of the latest search results.
+			const next = nextIds
+				.map((id) => options.find((option) => option.value === id))
+				.filter((option): option is { value: string; label: string } => Boolean(option))
+				.map((option) => ({ id: option.value, label: option.label }))
+			onChange(next)
+			setSearch('')
 		},
 		[onChange, options]
 	)
 
 	return (
-		<Select
+		<MultiSelect
 			label={label}
 			placeholder='Search by name or email'
 			data={options}
-			value={selected?.id ?? null}
+			value={selected.map((person) => person.id)}
 			searchable
 			searchValue={search}
 			onSearchChange={setSearch}
 			onChange={handleChange}
 			clearable
 			size='xs'
+			w={280}
+			styles={COMPACT_MULTISELECT_WRAP_STYLES}
 			nothingFoundMessage={trimmedSearch.length < 2 ? 'Type at least 2 characters' : 'No users found'}
-			// Same fix as DateRangeFilter above, same reason: this Select's own dropdown is itself nested
-			// inside the *outer* filter Popover. By default it portals to document.body, landing outside
-			// that outer Popover's DOM subtree - so clicking an option registered as an "outside click" on
-			// the outer Popover and could close the whole filter UI before the click's own selection
-			// handler finished running, intermittently dropping the click depending on timing. Rendering
-			// inline (no portal) keeps it a real descendant of the outer Popover.Dropdown.
+			// Same fix as DateRangeFilter above, same reason: this MultiSelect's own dropdown is itself
+			// nested inside the *outer* filter Popover. By default it portals to document.body, landing
+			// outside that outer Popover's DOM subtree - so clicking an option registered as an "outside
+			// click" on the outer Popover and could close the whole filter UI before the click's own
+			// selection handler finished running, intermittently dropping the click depending on timing.
+			// Rendering inline (no portal) keeps it a real descendant of the outer Popover.Dropdown.
 			comboboxProps={{ withinPortal: false }}
 		/>
 	)
@@ -230,6 +269,14 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 					onChange={handleSelectChange}
 					clearable
 					size='xs'
+					w={FILTER_INPUT_WIDTH}
+					// Same fix as DateRangeFilter/UserSearchFilter above, same reason: this Select's own
+					// dropdown is nested inside the *outer* filter Popover and by default portals to
+					// document.body, landing outside that Popover's DOM subtree - so clicking an option
+					// registered as an "outside click" on the outer Popover and could close the whole filter
+					// UI before the click's own selection handler finished running, intermittently dropping
+					// the click depending on timing.
+					comboboxProps={{ withinPortal: false }}
 				/>
 			)
 		}
@@ -242,6 +289,10 @@ export const ColumnFilterControl = ({ label, filter, value, onChange }: ColumnFi
 					onChange={handleMultiSelectChange}
 					clearable
 					size='xs'
+					w={FILTER_INPUT_WIDTH}
+					styles={COMPACT_MULTISELECT_WRAP_STYLES}
+					// Same portal fix as the 'select' case above.
+					comboboxProps={{ withinPortal: false }}
 				/>
 			)
 		}

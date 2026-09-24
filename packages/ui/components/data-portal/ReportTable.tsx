@@ -510,7 +510,7 @@ export const ReportTable = () => {
 	const issueTypeFilter = columnFilters.find(({ id }) => id === 'issueType')?.value as string[] | undefined
 	const informedFilter = columnFilters.find(({ id }) => id === 'informed')?.value as boolean | undefined
 	const createdByFilter = columnFilters.find(({ id }) => id === 'reportedBy')?.value as
-		{ id: string; label: string } | undefined
+		{ id: string; label: string }[] | undefined
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
@@ -519,7 +519,7 @@ export const ReportTable = () => {
 			status: statusFilter,
 			issueType: issueTypeFilter as ReportIssueType[] | undefined,
 			informed: informedFilter,
-			createdByUserId: createdByFilter?.id,
+			createdByUserIds: createdByFilter?.map((person) => person.id),
 			search: debouncedGlobalFilter || undefined,
 			createdAt: dateFilter('createdAt')
 				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }

@@ -9,7 +9,7 @@ export default {
 	component: UserTable,
 
 	beforeEach({ msw }) {
-		msw.use(user.forUserTable)
+		msw.use(user.forUserTable, user.searchTypeahead)
 	},
 
 	parameters: {

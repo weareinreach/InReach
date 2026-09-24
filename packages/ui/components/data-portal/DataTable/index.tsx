@@ -13,6 +13,7 @@ import {
 	Text,
 	TextInput,
 	Tooltip,
+	UnstyledButton,
 	useMantineTheme,
 } from '@mantine/core'
 import {
@@ -36,7 +37,13 @@ import { Icon } from '~ui/icon'
 import { ColumnFilterControl } from './ColumnFilterControl'
 import classes from './DataTable.module.css'
 import { type DataTableColumn, type DataTableDataMode, type DataTableFilterValue } from './types'
-import { applyColumnFilters, applyGlobalFilter, applySorting, getColumnValue } from './utils'
+import {
+	applyColumnFilters,
+	applyGlobalFilter,
+	applySorting,
+	describeFilterValue,
+	getColumnValue,
+} from './utils'
 
 export type { DataTableCellContext, DataTableColumn, DataTableFilter } from './types'
 export type {
@@ -202,6 +209,27 @@ export const DataTable = <T,>({
 	const [columnSizing, setColumnSizing] = useState<ColumnSizingState>({})
 	const showSelectionColumn = Boolean(onRowSelectionChange)
 
+	// Drives the "applied filters" summary above the table - one entry per active columnFilters entry that
+	// still resolves to a real, filterable column and a non-empty value (a stale entry for a column that's
+	// since been removed, or one a toolbar toggle just cleared back to `undefined`, is silently skipped
+	// rather than showing a blank/broken chip).
+	const filterSummary = useMemo(() => {
+		return columnFilters
+			.map((activeFilter) => {
+				const column = columns.find((col) => col.id === activeFilter.id)
+				if (!column?.filter) {
+					return null
+				}
+				const valueLabel = describeFilterValue(column.filter, activeFilter.value as DataTableFilterValue)
+				if (!valueLabel) {
+					return null
+				}
+				const label = typeof column.header === 'string' ? column.header : column.id
+				return { id: activeFilter.id, label, valueLabel }
+			})
+			.filter((entry): entry is { id: string; label: string; valueLabel: string } => entry !== null)
+	}, [columnFilters, columns])
+
 	// Client mode does the filtering/sorting/pagination math itself, over the full `data` array; server
 	// mode trusts the caller to have already sent back exactly the right page.
 	const { pageRows, rowCount } = useMemo(() => {
@@ -254,6 +282,8 @@ export const DataTable = <T,>({
 		},
 		[columnFilters, onColumnFiltersChange]
 	)
+
+	const handleClearAllFilters = useCallback(() => onColumnFiltersChange([]), [onColumnFiltersChange])
 
 	const handleGlobalFilterChange = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => onGlobalFilterChange(event.currentTarget.value),
@@ -417,6 +447,35 @@ export const DataTable = <T,>({
 			{alertBanner}
 			<Progress value={100} size={2} striped animated style={{ opacity: isFetching || isLoading ? 1 : 0 }} />
 
+			{filterSummary.length > 0 && (
+				<Group justify='flex-end' mb={4}>
+					<Tooltip label='Clear all filters'>
+						<UnstyledButton
+							onClick={handleClearAllFilters}
+							aria-label='Clear all filters'
+							// Matches the SideNav's selected-item background exactly - both just read the theme's
+							// primary-color "light" variant, which is what Mantine's own NavLink uses internally
+							// for its active state (see NavLink's CSS: `--nl-bg: var(--mantine-primary-color-light)`).
+							style={{
+								display: 'flex',
+								alignItems: 'center',
+								gap: 6,
+								backgroundColor: 'var(--mantine-primary-color-light)',
+								color: 'var(--mantine-primary-color-light-color)',
+								borderRadius: 'var(--mantine-radius-sm)',
+								padding: '4px 10px',
+							}}
+						>
+							<Text size='xs' fw={500} c='inherit'>
+								Filtered by:{' '}
+								{filterSummary.map(({ label, valueLabel }) => `${label}: ${valueLabel}`).join('; ')}
+							</Text>
+							<Icon icon='carbon:close' height={12} />
+						</UnstyledButton>
+					</Tooltip>
+				</Group>
+			)}
+
 			<Table.ScrollContainer minWidth={minWidth} maxHeight={maxHeight}>
 				<Table
 					striped={striped}
@@ -493,8 +552,26 @@ export const DataTable = <T,>({
 																variant={activeFilter ? 'light' : 'subtle'}
 																size='sm'
 																aria-label={`Filter ${columnDef.id}`}
+																// Every ActionIcon in the app defaults to the same pale blue (see the
+																// theme's ActionIcon.defaultProps) - fine normally, but it means an
+																// "active" filter icon only differs from an inactive one by a faint
+																// background tint of that same color, easy to miss. Overriding just the
+																// active state to the app's green "something is filtered" accent (same
+																// one the Filtered-by summary and sidenav selection use) makes it
+																// actually read as on at a glance.
+																style={
+																	activeFilter
+																		? { backgroundColor: 'var(--mantine-primary-color-light)' }
+																		: undefined
+																}
 															>
-																<Icon icon='carbon:filter' height={14} />
+																<Icon
+																	icon='carbon:filter'
+																	height={14}
+																	color={
+																		activeFilter ? 'var(--mantine-primary-color-light-color)' : undefined
+																	}
+																/>
 															</ActionIcon>
 														</Popover.Target>
 														<Popover.Dropdown>

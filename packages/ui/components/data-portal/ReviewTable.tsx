@@ -24,10 +24,18 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
 import { ResultCount } from './ResultCount'
-import { TableToolbarToggle } from './TableToolbarToggle'
 
 type ReviewRecord = ApiOutput['review']['forReviewTable']['results'][number]
 type ReviewSortColumn = 'createdAt' | 'rating' | 'reviewText' | 'userName' | 'userEmail' | 'organization'
+
+// Matches the Status column's own badges (StatusCell below) and ZReviewStatusFilter in
+// query.forReviewTable.schema.ts - independent of, and additive with, the toolbar's plain Visible/Deleted
+// toggles further down.
+const REVIEW_STATUS_OPTIONS = [
+	{ value: 'active', label: 'Active' },
+	{ value: 'hidden', label: 'Hidden' },
+	{ value: 'deleted', label: 'Deleted' },
+]
 
 const getReviewTargetUrl = (row: ReviewRecord): Route => {
 	const org = row.organization
@@ -212,40 +220,6 @@ const CreatedAtCell = ({ value }: { value: unknown }) => {
 	return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
 }
 
-const getVisibleFilterLabel = (state: boolean | undefined) => {
-	if (state) {
-		return 'Show only hidden reviews'
-	}
-	if (state === undefined) {
-		return 'Show only visible reviews'
-	}
-	return 'Show all reviews'
-}
-
-const getVisibleFilterIcon = (state: boolean | undefined) => {
-	if (state) {
-		return 'carbon:view-filled'
-	}
-	if (state === undefined) {
-		return 'carbon:view'
-	}
-	return 'carbon:view-off-filled'
-}
-
-const getDeletedFilterLabel = (state: boolean | undefined) => {
-	if (state) {
-		return 'Show all reviews'
-	}
-	if (state === undefined) {
-		return 'Hide deleted reviews'
-	}
-	return 'Show deleted reviews'
-}
-
-const getDeletedFilterIcon = () => 'carbon:trash-can'
-
-const isDeletedFilterSlashed = (state: boolean | undefined) => state === false
-
 export const ReviewTable = () => {
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
@@ -279,26 +253,35 @@ export const ReviewTable = () => {
 		}
 	}
 
-	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([{ id: 'deleted', value: false }])
+	// Deleted reviews are hidden by default - matches the old toolbar toggle's own default before it was
+	// replaced by this column filter as the sole way to control review status.
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
+		{ id: 'status', value: ['active', 'hidden'] },
+	])
 	const [globalFilter, setGlobalFilter] = useState('')
 	const [debouncedGlobalFilter] = useDebouncedValue(globalFilter, 300)
 	const [sorting, setSorting] = useState<SortingState>([{ id: 'createdAt', desc: true }])
 	const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 })
 
-	const visibleFilter = columnFilters.find(({ id }) => id === 'visible')?.value as boolean | undefined
-	const deletedFilter = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
-	const ratingFilter = columnFilters.find(({ id }) => id === 'rating')?.value as string | undefined
-	const createdByFilter = columnFilters.find(({ id }) => id === 'userEmail')?.value as
-		{ id: string; label: string } | undefined
+	const statusFilter = columnFilters.find(({ id }) => id === 'status')?.value as
+		('active' | 'hidden' | 'deleted')[] | undefined
+	const ratingFilter = columnFilters.find(({ id }) => id === 'rating')?.value as string[] | undefined
+	const userNameFilter = columnFilters.find(({ id }) => id === 'userName')?.value as
+		{ id: string; label: string }[] | undefined
+	const userEmailFilter = columnFilters.find(({ id }) => id === 'userEmail')?.value as
+		{ id: string; label: string }[] | undefined
+	// The User Name and User Email columns are two separate filter icons over the same underlying
+	// concept (which reviewer to show), so picking someone from either one - or both, e.g. one person by
+	// name and another by email - just widens the same OR-filter rather than needing to stay in sync.
+	const createdByUserIds = [...(userNameFilter ?? []), ...(userEmailFilter ?? [])].map((person) => person.id)
 	const dateFilter = (id: string) =>
 		columnFilters.find((f) => f.id === id)?.value as [Date | undefined, Date | undefined] | undefined
 
 	const { data, isLoading, isError, isFetching } = api.review.forReviewTable.useQuery(
 		{
-			visible: visibleFilter,
-			deleted: deletedFilter,
-			rating: ratingFilter ? Number(ratingFilter) : undefined,
-			createdByUserId: createdByFilter?.id,
+			status: statusFilter?.length ? statusFilter : undefined,
+			rating: ratingFilter?.length ? ratingFilter.map(Number) : undefined,
+			createdByUserIds: createdByUserIds.length ? [...new Set(createdByUserIds)] : undefined,
 			search: debouncedGlobalFilter || undefined,
 			createdAt: dateFilter('createdAt')
 				? { from: dateFilter('createdAt')?.[0], to: dateFilter('createdAt')?.[1] }
@@ -345,6 +328,7 @@ export const ReviewTable = () => {
 				header: 'User Name',
 				size: 160,
 				accessorFn: (row) => row.user?.name || 'Anonymous',
+				filter: { type: 'user-search' },
 				cell: UserNameCell,
 			},
 			{
@@ -360,7 +344,7 @@ export const ReviewTable = () => {
 				header: 'Rating',
 				size: 120,
 				filter: {
-					type: 'select',
+					type: 'multi-select',
 					options: [1, 2, 3, 4, 5].map((n) => ({
 						value: String(n),
 						label: `${n} star${n === 1 ? '' : 's'}`,
@@ -387,6 +371,7 @@ export const ReviewTable = () => {
 				size: 220,
 				enableSorting: false,
 				enableGlobalFilter: false,
+				filter: { type: 'multi-select', options: REVIEW_STATUS_OPTIONS },
 				accessorFn: () => undefined,
 				cell: StatusCell,
 			},
@@ -421,27 +406,6 @@ export const ReviewTable = () => {
 				isLoading={isLoading}
 				isFetching={isFetching}
 				isError={isError}
-				toolbarExtra={
-					<>
-						<TableToolbarToggle
-							columnId='visible'
-							columnFilters={columnFilters}
-							setColumnFilters={setColumnFilters}
-							cycle={[undefined, true, false]}
-							label={getVisibleFilterLabel}
-							icon={getVisibleFilterIcon}
-						/>
-						<TableToolbarToggle
-							columnId='deleted'
-							columnFilters={columnFilters}
-							setColumnFilters={setColumnFilters}
-							cycle={[false, true, undefined]}
-							label={getDeletedFilterLabel}
-							icon={getDeletedFilterIcon}
-							slash={isDeletedFilterSlashed}
-						/>
-					</>
-				}
 			/>
 		</Stack>
 	)

@@ -33,11 +33,11 @@ export const ZForReportsTableSchema = z.object({
 	organizationId: z.string().optional(),
 	informed: z.boolean().optional(),
 	/**
-	 * Filters to reports submitted by this exact user account - the "Created By" type-ahead filter. Only
-	 * matches reports from a signed-in reporter; anonymous reports (`userEmail`/`userName` only) aren't tied to
-	 * a user id and won't match.
+	 * Filters to reports submitted by any of these user accounts - the "Created By" type-ahead filter
+	 * (multi-select). Only matches reports from a signed-in reporter; anonymous reports (`userEmail`/
+	 * `userName` only) aren't tied to a user id and won't match.
 	 */
-	createdByUserId: z.string().optional(),
+	createdByUserIds: z.array(z.string()).optional(),
 	search: z.string().optional(),
 	createdAt: ZDateRange.optional(),
 	updatedAt: ZDateRange.optional(),

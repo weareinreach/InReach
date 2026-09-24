@@ -20,6 +20,12 @@ const buildWhere = (input: TForUserTableSchema): Prisma.UserWhereInput => {
 	if (input.updatedAt) {
 		and.push({ updatedAt: { gte: input.updatedAt.from, lte: input.updatedAt.to } })
 	}
+	if (input.emailVerified) {
+		and.push({ emailVerified: { gte: input.emailVerified.from, lte: input.emailVerified.to } })
+	}
+	if (input.userIds?.length) {
+		and.push({ id: { in: input.userIds } })
+	}
 	if (input.search) {
 		and.push({
 			OR: [
