@@ -9,7 +9,9 @@
  */
 export const swallowListOwnershipRejection = () => {
 	process.on('unhandledRejection', (reason) => {
-		if (reason instanceof Error && reason.message === 'List does not belong to user') return
+		if (reason instanceof Error && reason.message === 'List does not belong to user') {
+			return
+		}
 		throw reason
 	})
 }

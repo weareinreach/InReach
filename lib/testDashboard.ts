@@ -1,8 +1,8 @@
-import { type ChildProcess, spawn } from 'child_process'
-import { createReadStream, existsSync, readFileSync, statSync, writeFileSync } from 'fs'
-import http from 'http'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { spawn } from 'node:child_process'
+import { createReadStream, existsSync, readFileSync, statSync, writeFileSync } from 'node:fs'
+import http from 'node:http'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 /**
  * Local test dashboard: one page, organized by feature area (not package), with a Run button per row that
@@ -392,8 +392,6 @@ const state = new Map<string, RunState>(
 		{ running: false, lastExitCode: null, lastRunAt: null, lastOutputTail: '', coverageSummary: null },
 	])
 )
-const procs = new Map<string, ChildProcess>()
-
 const MIME: Record<string, string> = {
 	'.html': 'text/html; charset=utf-8',
 	'.js': 'application/javascript; charset=utf-8',
@@ -421,9 +419,13 @@ type CoverageSummaryJson = Record<string, CoverageFileEntry> & { total: Coverage
  * itself.
  */
 const parseCoverageSummary = (row: Row): CoverageSummary | null => {
-	if (!row.coverage) return null
+	if (!row.coverage) {
+		return null
+	}
 	const summaryPath = path.join(ROOT, row.coverage, 'coverage-summary.json')
-	if (!existsSync(summaryPath)) return null
+	if (!existsSync(summaryPath)) {
+		return null
+	}
 	let json: CoverageSummaryJson
 	try {
 		json = JSON.parse(readFileSync(summaryPath, 'utf-8')) as CoverageSummaryJson
@@ -434,7 +436,7 @@ const parseCoverageSummary = (row: Row): CoverageSummary | null => {
 	const zeroCoverageFiles = fileKeys
 		.filter((k) => json[k]?.statements.pct === 0)
 		.map((k) => path.relative(path.join(ROOT, row.cwd), k))
-		.sort()
+		.sort((a, b) => a.localeCompare(b))
 
 	writeFileSync(
 		path.join(ROOT, row.coverage, 'zero-coverage-files.txt'),
@@ -454,7 +456,9 @@ const parseCoverageSummary = (row: Row): CoverageSummary | null => {
 
 const runRow = (row: Row) => {
 	const st = state.get(row.id)
-	if (!st || st.running) return
+	if (!st || st.running) {
+		return
+	}
 	st.running = true
 	st.lastOutputTail = ''
 	const child = spawn(row.cmd, row.args, {
@@ -462,7 +466,6 @@ const runRow = (row: Row) => {
 		env: { ...process.env, ...row.env },
 		shell: false,
 	})
-	procs.set(row.id, child)
 	const capture = (chunk: Buffer) => {
 		st.lastOutputTail = (st.lastOutputTail + chunk.toString()).slice(-4000)
 	}
@@ -475,7 +478,6 @@ const runRow = (row: Row) => {
 		if (row.parseCoverage) {
 			st.coverageSummary = parseCoverageSummary(row)
 		}
-		procs.delete(row.id)
 	})
 }
 
@@ -517,11 +519,15 @@ const renderStatusOverview = () => {
 	const coverageHtml = coverageRows
 		.map((r) => {
 			const s = state.get(r.id)?.coverageSummary
+			let zeroCoverageClass = ''
+			if (s) {
+				zeroCoverageClass = s.zeroCoverageCount > 0 ? 'fail' : 'ok'
+			}
 			return `
 			<tr id="cov-row-${r.id}">
 				<td>${escapeHtml(r.label)}</td>
 				<td id="cov-pct-${r.id}">${s ? `${s.statementsPct.toFixed(1)}% statements · ${s.branchesPct.toFixed(1)}% branches · ${s.functionsPct.toFixed(1)}% functions · ${s.linesPct.toFixed(1)}% lines` : '<span class="muted">not run yet</span>'}</td>
-				<td id="cov-zero-${r.id}" class="${s && s.zeroCoverageCount > 0 ? 'fail' : s ? 'ok' : ''}">${s ? `${s.zeroCoverageCount} / ${s.totalFiles} files at 0% coverage` : '<span class="muted">—</span>'}</td>
+				<td id="cov-zero-${r.id}" class="${zeroCoverageClass}">${s ? `${s.zeroCoverageCount} / ${s.totalFiles} files at 0% coverage` : '<span class="muted">—</span>'}</td>
 				<td id="cov-link-${r.id}">${s ? `<a href="/reports/${r.id}/coverage/zero-coverage-files.txt" target="_blank">view list</a>` : '<span class="muted">run below to generate</span>'}</td>
 			</tr>`
 		})
@@ -655,91 +661,127 @@ ${ROWS.map((r) => `poll('${r.id}')`).join('\n')}
 </html>`
 }
 
+type RouteHandler = (req: http.IncomingMessage, res: http.ServerResponse, url: URL) => boolean
+
+// Each route lives in its own small function - `server`'s own request handler is then just a flat
+// sequence of "did this route claim the request" checks, kept simple enough to stay under the linter's
+// cognitive-complexity limit rather than one large branching function.
+
+const handleHome: RouteHandler = (_req, res, url) => {
+	if (url.pathname !== '/') {
+		return false
+	}
+	res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+	res.end(renderPage())
+	return true
+}
+
+const handleRun: RouteHandler = (req, res, url) => {
+	if (!url.pathname.startsWith('/run/') || req.method !== 'POST') {
+		return false
+	}
+	const id = url.pathname.slice('/run/'.length)
+	const row = ROWS.find((r) => r.id === id)
+	if (!row) {
+		res.writeHead(404)
+		res.end()
+		return true
+	}
+	runRow(row)
+	res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
+	res.end(JSON.stringify({ started: true }))
+	return true
+}
+
+const handleCoverageSummary: RouteHandler = (_req, res, url) => {
+	if (!url.pathname.startsWith('/coverage-summary/')) {
+		return false
+	}
+	const id = url.pathname.slice('/coverage-summary/'.length)
+	const st = state.get(id)
+	res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
+	res.end(JSON.stringify(st?.coverageSummary ?? null))
+	return true
+}
+
+const handleStatus: RouteHandler = (_req, res, url) => {
+	if (!url.pathname.startsWith('/status/')) {
+		return false
+	}
+	const id = url.pathname.slice('/status/'.length)
+	const st = state.get(id)
+	res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
+	res.end(JSON.stringify(st ?? { running: false, lastExitCode: null, lastRunAt: null }))
+	return true
+}
+
+const handleDocs: RouteHandler = (_req, res, url) => {
+	if (!url.pathname.startsWith('/docs/')) {
+		return false
+	}
+	const file = url.pathname.slice('/docs/'.length)
+	// Restrict to known coverage docs only - no arbitrary path traversal into docs/Testing/.
+	const doc = DOCS.find((d) => d.file === file)
+	if (!doc) {
+		res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' })
+		res.end('Not found - this dashboard only serves the three coverage docs it tracks.')
+		return true
+	}
+	const filePath = path.join(ROOT, 'docs/Testing', doc.file)
+	if (!existsSync(filePath)) {
+		res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' })
+		res.end('Doc file missing on disk.')
+		return true
+	}
+	res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' })
+	createReadStream(filePath).pipe(res)
+	return true
+}
+
+const handleReports: RouteHandler = (_req, res, url) => {
+	if (!url.pathname.startsWith('/reports/')) {
+		return false
+	}
+	const rest = url.pathname.slice('/reports/'.length) // "<rowId>/<results|coverage>/..."
+	const [id, kind, ...fileParts] = rest.split('/')
+	const row = ROWS.find((r) => r.id === id)
+	const baseRel = kind === 'coverage' ? row?.coverage : row?.results
+	if (!row || !baseRel) {
+		// Deliberately generic, not reflecting `kind`/`id` back - both come straight from the URL path.
+		res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' })
+		res.end('Not found - this row has no report of that kind.')
+		return true
+	}
+	const base = path.join(ROOT, baseRel)
+	let filePath = path.join(base, ...fileParts)
+	if (fileParts.length === 0 || fileParts.at(-1) === '') {
+		filePath = path.join(filePath, 'index.html')
+	}
+	if (!existsSync(filePath) || !statSync(filePath).isFile()) {
+		res.writeHead(404, { 'Content-Type': 'text/html' })
+		res.end('<p>No report yet - click Run first.</p>')
+		return true
+	}
+	sendFile(res, filePath)
+	return true
+}
+
+const ROUTES: RouteHandler[] = [
+	handleHome,
+	handleRun,
+	handleCoverageSummary,
+	handleStatus,
+	handleDocs,
+	handleReports,
+]
+
 const server = http.createServer((req, res) => {
 	const url = new URL(req.url ?? '/', `http://localhost:${PORT}`)
-
-	if (url.pathname === '/') {
-		res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
-		res.end(renderPage())
-		return
+	const handled = ROUTES.some((route) => route(req, res, url))
+	if (!handled) {
+		res.writeHead(404)
+		res.end()
 	}
-
-	if (url.pathname.startsWith('/run/') && req.method === 'POST') {
-		const id = url.pathname.slice('/run/'.length)
-		const row = ROWS.find((r) => r.id === id)
-		if (!row) {
-			res.writeHead(404)
-			res.end()
-			return
-		}
-		runRow(row)
-		res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
-		res.end(JSON.stringify({ started: true }))
-		return
-	}
-
-	if (url.pathname.startsWith('/coverage-summary/')) {
-		const id = url.pathname.slice('/coverage-summary/'.length)
-		const st = state.get(id)
-		res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
-		res.end(JSON.stringify(st?.coverageSummary ?? null))
-		return
-	}
-
-	if (url.pathname.startsWith('/status/')) {
-		const id = url.pathname.slice('/status/'.length)
-		const st = state.get(id)
-		res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
-		res.end(JSON.stringify(st ?? { running: false, lastExitCode: null, lastRunAt: null }))
-		return
-	}
-
-	if (url.pathname.startsWith('/docs/')) {
-		const file = url.pathname.slice('/docs/'.length)
-		// Restrict to known coverage docs only - no arbitrary path traversal into docs/Testing/.
-		const doc = DOCS.find((d) => d.file === file)
-		if (!doc) {
-			res.writeHead(404)
-			res.end('Not found - this dashboard only serves the three coverage docs it tracks.')
-			return
-		}
-		const filePath = path.join(ROOT, 'docs/Testing', doc.file)
-		if (!existsSync(filePath)) {
-			res.writeHead(404)
-			res.end('Doc file missing on disk.')
-			return
-		}
-		res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' })
-		createReadStream(filePath).pipe(res)
-		return
-	}
-
-	if (url.pathname.startsWith('/reports/')) {
-		const rest = url.pathname.slice('/reports/'.length) // "<rowId>/<results|coverage>/..."
-		const [id, kind, ...fileParts] = rest.split('/')
-		const row = ROWS.find((r) => r.id === id)
-		const baseRel = kind === 'coverage' ? row?.coverage : row?.results
-		if (!row || !baseRel) {
-			res.writeHead(404)
-			res.end('Not found - this row has no ' + kind + ' report.')
-			return
-		}
-		const base = path.join(ROOT, baseRel)
-		let filePath = path.join(base, ...fileParts)
-		if (fileParts.length === 0 || fileParts[fileParts.length - 1] === '') {
-			filePath = path.join(filePath, 'index.html')
-		}
-		if (!existsSync(filePath) || !statSync(filePath).isFile()) {
-			res.writeHead(404, { 'Content-Type': 'text/html' })
-			res.end('<p>No report yet - click Run first.</p>')
-			return
-		}
-		sendFile(res, filePath)
-		return
-	}
-
-	res.writeHead(404)
-	res.end()
 })
 
 server.listen(PORT, () => {
