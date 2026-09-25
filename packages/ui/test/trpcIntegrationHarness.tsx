@@ -1,5 +1,6 @@
 /* eslint-disable node/no-process-env */
 import { MantineProvider } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 import { QueryClient } from '@tanstack/react-query'
 import { httpLink, TRPCClientError } from '@trpc/client'
 import { type CreateTRPCReact } from '@trpc/react-query'
@@ -1457,6 +1458,11 @@ export const buildTrpcTestWrapper = (
 			<trpc.Provider client={client} queryClient={queryClient}>
 				<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
 					<I18nextProvider i18n={testI18n}>
+						{/* Matches `apps/app/src/pages/_app.tsx`, which mounts this once at the root - without
+						it, `showNotification()` (used by every drawer's `useNewNotification`) pushes to
+						Mantine's internal store with nothing subscribed to render it, so a toast a test
+						expects to see in the DOM (e.g. a save-failure warning) would silently never appear. */}
+						<Notifications />
 						<SearchStateProvider initState={{ params: [] }}>{children as ReactElement}</SearchStateProvider>
 					</I18nextProvider>
 				</MantineProvider>

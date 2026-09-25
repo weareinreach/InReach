@@ -1,6 +1,8 @@
+import { cleanNotifications } from '@mantine/notifications'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
+import { http, HttpResponse } from 'msw'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
@@ -44,6 +46,11 @@ beforeAll(() => {
 beforeEach(() => {
 	backend = createFakeLocationBackend()
 	server.resetHandlers(...backend.handlers)
+	// `@mantine/notifications`' store is module-level global state, not scoped to any one render - a
+	// "Saved" toast from an earlier test in this file stays queued and can still be on screen (or
+	// pushed out of the default 5-slot `limit`) when a later test asserts on a *different*
+	// notification's text.
+	cleanNotifications()
 })
 afterAll(() => server.close())
 
@@ -106,6 +113,112 @@ describe('VisitCard + AddressDrawer - real cache: edit, save, see it without ref
 		await waitFor(() => {
 			expect(screen.getByRole('textbox', { name: /^city$/i })).toHaveValue('Updated City')
 		})
+	})
+})
+
+describe('AddressDrawer - clearing street1/street2 must actually clear them, not revert to the old value', () => {
+	/**
+	 * Live report: clear the street address, save - the old street address is still displayed. Same for
+	 * clearing the suite/apt number (street2). Root cause: `patchAddressCaches`'s `forVisitCardEdits` patch
+	 * used `rawAddress?.street1 ?? old.street1` (and the same for street2/city/postCode/latitude/longitude) -
+	 * `??` can't distinguish "no data available, fall back to old" from "the field is legitimately `null`
+	 * because the user just cleared it," so a genuine clear silently reverted to the stale value.
+	 */
+	it('removes the street address and suite number from the display once cleared and saved', async () => {
+		backend.seedLocation({
+			id: LOCATION.id,
+			name: 'Test Location',
+			city: 'Test City',
+			street1: '123 Main St',
+			street2: 'Suite 5',
+			countryId: country.id,
+			govDistId: country.govDist[0].id,
+			addressVisibility: 'FULL',
+		})
+		renderCard()
+
+		await openDrawer(/123 main st/i)
+		const street1Input = screen.getByRole('textbox', { name: /^address$/i })
+		await waitFor(() => expect(street1Input).toHaveValue('123 Main St'))
+
+		await userEvent.clear(street1Input)
+		await clickSave()
+		await waitFor(() =>
+			expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument()
+		)
+
+		// The card must no longer show the cleared street address - it must not silently keep
+		// displaying the pre-clear value.
+		expect(screen.queryByText(/123 main st/i)).not.toBeInTheDocument()
+		await screen.findByText(/suite 5/i)
+
+		await openDrawer(/suite 5/i)
+		const street2Input = document.querySelector<HTMLInputElement>('[data-path="data.street2"]')
+		if (!street2Input) {
+			throw new Error('street2 input not found')
+		}
+		await waitFor(() => expect(street2Input).toHaveValue('Suite 5'))
+
+		await userEvent.clear(street2Input)
+		await clickSave()
+		await waitFor(() =>
+			expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument()
+		)
+
+		expect(screen.queryByText(/suite 5/i)).not.toBeInTheDocument()
+	})
+})
+
+describe('AddressDrawer - a failed save must not corrupt the cache', () => {
+	/**
+	 * See PhoneNumbers.realCache.test.tsx's identical test for the full incident writeup - same mechanism, same
+	 * fix (#2087: `onError` now shows a visible warning notification, using the real `<Notifications />` portal
+	 * added to the test harness for this), for `location.update`.
+	 */
+	it('does not corrupt the card or edit, and shows a visible error, when the save fails', async () => {
+		backend.seedLocation({
+			id: LOCATION.id,
+			name: 'Test Location',
+			city: 'Original City',
+			street1: '123 Main St',
+			countryId: country.id,
+			govDistId: country.govDist[0].id,
+			addressVisibility: 'FULL',
+		})
+		renderCard()
+
+		await openDrawer(/original city/i)
+		const cityInput = screen.getByRole('textbox', { name: /^city$/i })
+		await waitFor(() => expect(cityInput).toHaveValue('Original City'))
+
+		await userEvent.clear(cityInput)
+		await userEvent.type(cityInput, 'Updated City')
+
+		server.use(
+			http.post('http://localhost/trpc/location.update', () =>
+				HttpResponse.json(
+					{
+						error: {
+							message: 'Simulated server failure',
+							code: -32603,
+							data: { code: 'INTERNAL_SERVER_ERROR', httpStatus: 500 },
+						},
+					},
+					{ status: 500 }
+				)
+			)
+		)
+
+		await clickSave()
+
+		await waitFor(() => expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled())
+		expect(screen.getByRole('heading', { name: 'Edit Location' })).toBeInTheDocument()
+		expect(cityInput).toHaveValue('Updated City')
+
+		expect(screen.getByText(/original city/i)).toBeInTheDocument()
+		expect(screen.queryByText(/updated city/i)).not.toBeInTheDocument()
+
+		await screen.findByText(/something went wrong saving this address/i)
 	})
 })
 

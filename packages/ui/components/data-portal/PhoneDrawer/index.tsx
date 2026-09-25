@@ -26,6 +26,7 @@ import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { isCountryCode } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
@@ -68,6 +69,10 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		}, [createNew, id, drawerOpened])
 		const { id: orgId } = useOrgInfo()
 		const apiUtils = api.useUtils()
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this phone number. Please try again.',
+			icon: 'warning',
+		})
 		const { data: initialData, isFetching } = api.orgPhone.forEditDrawer.useQuery(
 			{ id: phoneId, orgId: orgId ?? '' },
 			{
@@ -352,6 +357,9 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				}
 				modalHandler.close()
 				drawerHandler.close()
+			},
+			onError: () => {
+				notifySaveError()
 			},
 		})
 		const unlinkFromLocation = api.orgPhone.locationLink.useMutation({

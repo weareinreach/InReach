@@ -1,7 +1,7 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import compact from 'just-compact'
 import { useTranslation } from 'next-i18next/pages'
-import { type ReactElement, useCallback, useMemo } from 'react'
+import { type ReactElement, useCallback, useMemo, useRef } from 'react'
 import invariant from 'tiny-invariant'
 
 import { productEvent } from '@weareinreach/analytics/events'
@@ -288,50 +288,69 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		return item
 	})
 
-	const addOrLink = isLocation ? (
-		<Menu keepMounted withinPortal>
-			<Menu.Target>
-				<Link variant={variants.Link.inlineInverted}>
-					<Group wrap='nowrap' gap={4}>
-						<Icon icon='carbon:document-add' height={20} />
-						<Text variant={variants.Text.utility3}>Link or create new...</Text>
-					</Group>
-				</Link>
-			</Menu.Target>
-			<Menu.Dropdown>
-				{linkableEmails?.map(({ id, deleted, description, email, firstName, lastName, published }) => {
-					const emailTextVariant = getTextVariant('email', published, deleted)
-					const descTextVariant = getTextVariant('desc', published, deleted)
+	const createNewTriggerRef = useRef<HTMLButtonElement>(null)
+	const handleCreateNewClick = useCallback(() => createNewTriggerRef.current?.click(), [])
 
-					return (
-						<Menu.Item
-							key={id}
-							onClick={handleLinkToLocation({ orgLocationId: parentId, orgEmailId: id, action: 'link' })}
-						>
-							<Group wrap='nowrap'>
-								<Icon icon='carbon:link' />
-								<Stack gap={0}>
-									<Text variant={emailTextVariant}>{email}</Text>
-									{(Boolean(firstName) || Boolean(lastName)) && (
-										<Text variant={descTextVariant}>{compact([firstName, lastName]).join(' ')}</Text>
-									)}
-									<Text variant={descTextVariant}>{description}</Text>
-								</Stack>
-							</Group>
-						</Menu.Item>
-					)
-				})}
-				<Menu.Divider />
-				<Menu.Item key='new'>
-					<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+	const addOrLink = isLocation ? (
+		<>
+			<Menu keepMounted withinPortal>
+				<Menu.Target>
+					<Link variant={variants.Link.inlineInverted}>
+						<Group wrap='nowrap' gap={4}>
+							<Icon icon='carbon:document-add' height={20} />
+							<Text variant={variants.Text.utility3}>Link or create new...</Text>
+						</Group>
+					</Link>
+				</Menu.Target>
+				<Menu.Dropdown>
+					{linkableEmails?.map(({ id, deleted, description, email, firstName, lastName, published }) => {
+						const emailTextVariant = getTextVariant('email', published, deleted)
+						const descTextVariant = getTextVariant('desc', published, deleted)
+
+						return (
+							<Menu.Item
+								key={id}
+								onClick={handleLinkToLocation({ orgLocationId: parentId, orgEmailId: id, action: 'link' })}
+							>
+								<Group wrap='nowrap'>
+									<Icon icon='carbon:link' />
+									<Stack gap={0}>
+										<Text variant={emailTextVariant}>{email}</Text>
+										{(Boolean(firstName) || Boolean(lastName)) && (
+											<Text variant={descTextVariant}>{compact([firstName, lastName]).join(' ')}</Text>
+										)}
+										<Text variant={descTextVariant}>{description}</Text>
+									</Stack>
+								</Group>
+							</Menu.Item>
+						)
+					})}
+					<Menu.Divider />
+					{/* Deliberately just a plain click-through, not an EmailDrawer nested inside this item -
+					    see PhoneNumbers.tsx's identical fix for the full incident writeup. Nesting the
+					    drawer's whole component tree (its own trigger button/anchor, then its portal-rendered
+					    Drawer.Root) inside this Menu.Item put an interactive element inside another
+					    interactive element (invalid HTML) and raced Mantine's Menu's own close-on-item-click
+					    handling against the Drawer's just-opened focus trap - the drawer would visibly open
+					    but nothing inside it (not even Close) would respond to clicks. The real "Create new"
+					    EmailDrawer now lives outside the Menu entirely (see below, visually hidden) and this
+					    item just clicks its trigger by ref, so the drawer's whole subtree never lives inside
+					    the menu's component tree at all. */}
+					<Menu.Item key='new' onClick={handleCreateNewClick}>
 						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
-					</EmailDrawer>
-				</Menu.Item>
-			</Menu.Dropdown>
-		</Menu>
+					</Menu.Item>
+				</Menu.Dropdown>
+			</Menu>
+			{/* `aria-hidden` and no visible-text-duplicating label: this is a functional trigger only,
+			    clicked programmatically by the Menu.Item above, never meant to be discovered by assistive
+			    tech, focus order, or a query for the visible "Create new" text. */}
+			<EmailDrawer ref={createNewTriggerRef} createNew style={{ display: 'none' }} aria-hidden tabIndex={-1}>
+				(hidden create-new trigger)
+			</EmailDrawer>
+		</>
 	) : (
 		<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
 			<Group wrap='nowrap'>

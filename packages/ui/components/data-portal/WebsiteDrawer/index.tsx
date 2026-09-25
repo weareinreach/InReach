@@ -89,6 +89,10 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 		const apiUtils = api.useUtils()
 
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this website. Please try again.',
+			icon: 'warning',
+		})
 
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
@@ -171,6 +175,9 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 				if (createNew) {
 					reset({ id: generateId('orgWebsite') })
 				}
+			},
+			onError: () => {
+				notifySaveError()
 			},
 		})
 

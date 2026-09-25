@@ -1,6 +1,8 @@
+import { cleanNotifications } from '@mantine/notifications'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
+import { http, HttpResponse } from 'msw'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
@@ -8,6 +10,7 @@ import {
 	buildTrpcTestWrapper,
 	createFakeOrgEmailBackend,
 	createMswServer,
+	LOCATION,
 	ORG,
 } from '~ui/test/trpcIntegrationHarness'
 
@@ -48,6 +51,11 @@ beforeEach(() => {
 	backend = createFakeOrgEmailBackend()
 	server.resetHandlers(...backend.handlers)
 	forEditDrawerRequestCount = 0
+	// `@mantine/notifications`' store is module-level global state, not scoped to any one render - a
+	// "Saved" toast from an earlier test in this file stays queued and can still be on screen (or
+	// pushed out of the default 5-slot `limit`) when a later test asserts on a *different*
+	// notification's text.
+	cleanNotifications()
 })
 afterAll(() => server.close())
 
@@ -200,6 +208,50 @@ describe('Emails + EmailDrawer - real cache: reusing the Create new trigger for 
 	})
 })
 
+describe('Emails + EmailDrawer - real cache: a failed save must not corrupt the cache', () => {
+	/**
+	 * See PhoneNumbers.realCache.test.tsx's identical test for the full incident writeup - same mechanism, same
+	 * fix (#2087: `onError` now shows a visible warning notification, using the real `<Notifications />` portal
+	 * added to the test harness for this), for orgEmail's `update`.
+	 */
+	it('does not corrupt the list or edit, and shows a visible error, when the save fails', async () => {
+		backend.seedOrgEmail({ email: 'original@example.org', published: true })
+		renderList()
+
+		await openDrawerFor('original@example.org')
+		await waitFor(() => expect(emailField()).toHaveValue('original@example.org'))
+
+		await userEvent.clear(emailField())
+		await userEvent.type(emailField(), 'updated@example.org')
+
+		server.use(
+			http.post('http://localhost/trpc/orgEmail.update', () =>
+				HttpResponse.json(
+					{
+						error: {
+							message: 'Simulated server failure',
+							code: -32603,
+							data: { code: 'INTERNAL_SERVER_ERROR', httpStatus: 500 },
+						},
+					},
+					{ status: 500 }
+				)
+			)
+		)
+
+		await clickSave()
+
+		await waitFor(() => expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled())
+		expect(screen.getByRole('heading', { name: /Edit/ })).toBeInTheDocument()
+		expect(emailField()).toHaveValue('updated@example.org')
+
+		expect(screen.getByText('original@example.org')).toBeInTheDocument()
+		expect(screen.queryByText('updated@example.org')).not.toBeInTheDocument()
+
+		await screen.findByText(/something went wrong saving this email/i)
+	})
+})
+
 describe('Emails + EmailDrawer - real cache: edit, discard, reopen shows the original (unedited) data', () => {
 	/**
 	 * See PhoneNumbers.realCache.test.tsx's identical test for the full reasoning - same verified,
@@ -223,6 +275,33 @@ describe('Emails + EmailDrawer - real cache: edit, discard, reopen shows the ori
 		await openDrawerFor('original@example.org')
 		await waitFor(() => {
 			expect(emailField()).toHaveValue('original@example.org')
+		})
+	})
+})
+
+describe('Emails + EmailDrawer - real cache: "Create new" from a location\'s "Link or create new..." menu', () => {
+	/**
+	 * See Websites.realCache.test.tsx's identical test for the full incident writeup - same mechanism, same fix
+	 * (a real `EmailDrawer` was nested directly inside a `Menu.Item`, racing Mantine's `Menu` close-on-
+	 * item-click against the Drawer's own focus trap - PhoneNumbers.tsx already had the fix this file's
+	 * `Emails.tsx` never got), for orgEmail.
+	 */
+	it('opens an interactive drawer - the email field and Close both actually work', async () => {
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(<Emails edit parentId={LOCATION.id} />, { wrapper: Wrapper })
+
+		await userEvent.click(await screen.findByText(/link or create new/i))
+		await userEvent.click(await screen.findByRole('menuitem', { name: /^create new$/i }))
+		await screen.findByRole('heading', { name: /Add New/i })
+
+		await userEvent.type(emailField(), 'new-location-contact@example.org')
+		await waitFor(() => expect(emailField()).toHaveValue('new-location-contact@example.org'))
+
+		await userEvent.click(screen.getByRole('button', { name: /close/i }))
+		await screen.findByRole('dialog', { name: 'Unsaved Changes' })
+		await userEvent.click(screen.getByRole('button', { name: /discard/i }))
+		await waitFor(() => {
+			expect(screen.queryByRole('heading', { name: /Add New/i })).not.toBeInTheDocument()
 		})
 	})
 })

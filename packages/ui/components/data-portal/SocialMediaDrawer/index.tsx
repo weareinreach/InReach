@@ -113,6 +113,10 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 		const { isDirty: formIsDirty } = formState
 		const [isSaved, setIsSaved] = useState(formIsDirty)
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this social media link. Please try again.',
+			icon: 'warning',
+		})
 		const hasLocationId = typeof router.query.orgLocationId === 'string' ? router.query.orgLocationId : null
 
 		// `upsert`'s response is the raw DB row (`serviceId` as a bare FK, no resolved name/icon) - it
@@ -218,6 +222,9 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 				if (createNew) {
 					reset({ id: generateId('orgSocialMedia') })
 				}
+			},
+			onError: () => {
+				notifySaveError()
 			},
 		})
 		const unlinkFromLocation = api.orgSocialMedia.locationLink.useMutation({

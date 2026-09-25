@@ -216,6 +216,10 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const apiUtils = api.useUtils()
 
 	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+	const notifySaveError = useNewNotification({
+		displayText: 'Something went wrong saving this address. Please try again.',
+		icon: 'warning',
+	})
 
 	// #region Get country/gov dist selection items
 	const { data: countryOptions, isSuccess: countryOptionsLoaded } =
@@ -441,12 +445,16 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 					...(addressVisibility !== undefined && {
 						addressVisibility: addressVisibility as typeof old.addressVisibility,
 					}),
-					street1: rawAddress?.street1 ?? old.street1,
-					street2: rawAddress?.street2 ?? old.street2,
-					city: rawAddress?.city ?? old.city,
-					postCode: rawAddress?.postCode ?? old.postCode,
-					latitude: rawAddress?.latitude ?? old.latitude,
-					longitude: rawAddress?.longitude ?? old.longitude,
+					// `rawAddress` itself (not each field) is the only thing that should ever fall back to
+					// `old` - `??` on each field individually was wrong here: a field the user just
+					// cleared is legitimately `null` in `rawAddress`, and `??` treats that the same as
+					// "no data available," silently reverting the display back to the pre-clear value.
+					street1: rawAddress ? rawAddress.street1 : old.street1,
+					street2: rawAddress ? rawAddress.street2 : old.street2,
+					city: rawAddress ? rawAddress.city : old.city,
+					postCode: rawAddress ? rawAddress.postCode : old.postCode,
+					latitude: rawAddress ? rawAddress.latitude : old.latitude,
+					longitude: rawAddress ? rawAddress.longitude : old.longitude,
 				}
 
 				return applyAddressVisibilityEditMode(addressVisibility ?? old.addressVisibility, merged)
@@ -475,6 +483,9 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			setIsSaved(true)
 			notifySave()
 			setTimeout(() => handler.close(), 500)
+		},
+		onError: () => {
+			notifySaveError()
 		},
 	})
 	const handleUpdate = useCallback(() => {

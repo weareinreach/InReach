@@ -1,3 +1,4 @@
+import { cleanNotifications } from '@mantine/notifications'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
@@ -9,6 +10,7 @@ import {
 	buildTrpcTestWrapper,
 	createFakeOrgSocialMediaBackend,
 	createMswServer,
+	LOCATION,
 	ORG,
 	SOCIAL_MEDIA_SERVICES,
 } from '~ui/test/trpcIntegrationHarness'
@@ -51,6 +53,11 @@ beforeEach(() => {
 	backend = createFakeOrgSocialMediaBackend()
 	server.resetHandlers(...backend.handlers)
 	forEditDrawerRequestCount = 0
+	// `@mantine/notifications`' store is module-level global state, not scoped to any one render - a
+	// "Saved" toast from an earlier test in this file stays queued and can still be on screen (or
+	// pushed out of the default 5-slot `limit`) when a later test asserts on a *different*
+	// notification's text.
+	cleanNotifications()
 })
 afterAll(() => server.close())
 
@@ -227,7 +234,8 @@ describe('SocialMedia + SocialMediaDrawer - real cache: a failed save must not w
 	 * that actually succeeds. `onSettled` used to call `reset()` unconditionally, which fires on failure too -
 	 * a save that failed server-side wiped the user's just-typed, never-saved edit back to blank (this form has
 	 * no `defaultValues` configured) with no error shown and no way to recover it. Confirmed by simulating a
-	 * real 500 from `orgSocialMedia.upsert`.
+	 * real 500 from `orgSocialMedia.upsert`. Also covers #2087: `onError` now shows a visible warning
+	 * notification, using the real `<Notifications />` portal added to the test harness for this.
 	 */
 	it('keeps the typed values in the form when the save fails, instead of silently clearing them', async () => {
 		renderList()
@@ -271,6 +279,8 @@ describe('SocialMedia + SocialMediaDrawer - real cache: a failed save must not w
 
 		// Nothing should have been added to the list either.
 		expect(screen.queryByText('(willfail)')).not.toBeInTheDocument()
+
+		await screen.findByText(/something went wrong saving this social media link/i)
 	})
 })
 
@@ -306,5 +316,33 @@ describe('SocialMedia + SocialMediaDrawer - real cache: edit, discard, reopen sh
 			expect(usernameField()).toHaveValue('original')
 		})
 		expect(screen.getByRole('textbox', { name: /website url/i })).toHaveValue('https://facebook.com/original')
+	})
+})
+
+describe('SocialMedia + SocialMediaDrawer - real cache: "Create new" from a location\'s "Link or create new..." menu', () => {
+	/**
+	 * See Websites.realCache.test.tsx's identical test for the full incident writeup - same mechanism, same fix
+	 * (a real `SocialMediaDrawer` was nested directly inside a `Menu.Item`, racing Mantine's `Menu`
+	 * close-on-item-click against the Drawer's own focus trap - PhoneNumbers.tsx already had the fix this
+	 * file's `SocialMedia.tsx` never got), for orgSocialMedia.
+	 */
+	it('opens an interactive drawer - the URL field and Close both actually work', async () => {
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(<SocialMedia edit parentId={LOCATION.id} />, { wrapper: Wrapper })
+
+		await userEvent.click(await screen.findByText(/link or create new/i))
+		await userEvent.click(await screen.findByRole('menuitem', { name: /^create new$/i }))
+		await screen.findByRole('heading', { name: /Add New/i })
+
+		const urlInput = screen.getByRole('textbox', { name: /website url/i })
+		await userEvent.type(urlInput, 'https://facebook.com/newlocationentry')
+		await waitFor(() => expect(urlInput).toHaveValue('https://facebook.com/newlocationentry'))
+
+		await userEvent.click(screen.getByRole('button', { name: /close/i }))
+		await screen.findByRole('dialog', { name: 'Unsaved Changes' })
+		await userEvent.click(screen.getByRole('button', { name: /discard/i }))
+		await waitFor(() => {
+			expect(screen.queryByRole('heading', { name: /Add New/i })).not.toBeInTheDocument()
+		})
 	})
 })

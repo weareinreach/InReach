@@ -1,3 +1,4 @@
+import { cleanNotifications } from '@mantine/notifications'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
@@ -50,6 +51,11 @@ beforeAll(() => {
 beforeEach(() => {
 	backend = createFakeOrgPhoneBackend()
 	server.resetHandlers(...backend.handlers)
+	// `@mantine/notifications`' store is module-level global state, not scoped to any one render - a
+	// leftover toast from an earlier test in this file stays queued and can still be on screen (or
+	// pushed out of the default 5-slot `limit`) when a later test asserts on a *different*
+	// notification's text.
+	cleanNotifications()
 })
 afterAll(() => server.close())
 
@@ -263,6 +269,9 @@ describe('PhoneNumbers + PhoneDrawer - real cache: a failed save must not corrup
 		// The list must still show the ORIGINAL (last actually-persisted) number, not the failed edit.
 		expect(screen.getByText('(202) 555-0100')).toBeInTheDocument()
 		expect(screen.queryByText('(202) 555-0199')).not.toBeInTheDocument()
+
+		// #2087: a failed save must be visibly reported, not just silently leave the drawer open.
+		await screen.findByText(/something went wrong saving this phone number/i)
 	})
 })
 

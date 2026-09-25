@@ -80,6 +80,10 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 		)
 		const apiUtils = api.useUtils()
 		const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this email. Please try again.',
+			icon: 'warning',
+		})
 
 		const {
 			control,
@@ -183,6 +187,9 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 				notifySave()
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
+			},
+			onError: () => {
+				notifySaveError()
 			},
 		})
 		const unlinkFromLocation = api.orgEmail.locationLink.useMutation({

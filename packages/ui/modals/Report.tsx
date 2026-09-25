@@ -51,13 +51,11 @@ const ReportModalBody = forwardRef<HTMLButtonElement, ReportModalProps>(
 					onClick={(event: React.MouseEvent) => {
 						// 1. If there's an onClick passed from the parent (like Mantine Menu), run it
 						props.onClick?.(event)
-
-						// 2. Open the modal!
-						// We use a small timeout to let the Menu's "closing" state finish
-						// so it doesn't fight the Modal for focus.
-						setTimeout(() => {
-							handler.open()
-						}, 50)
+						// 2. Open the modal - `OverflowMenu` (the only place this could ever be nested
+						// inside a Menu) now proxies clicks to this, the real, always-normally-mounted
+						// instance, rather than rendering a second live copy of this component inside its
+						// own Menu.Item, so there's no menu-closing/modal-opening race left to delay around.
+						handler.open()
 					}}
 				/>
 			</>

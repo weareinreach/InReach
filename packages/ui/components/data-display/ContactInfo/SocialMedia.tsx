@@ -1,6 +1,6 @@
 import { Group, List, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { Link } from '~ui/components/core/Link'
@@ -118,55 +118,77 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 		[linkToLocation]
 	)
 
-	const addOrLink = isLocation ? (
-		<Menu keepMounted withinPortal>
-			<Menu.Target>
-				<Link variant={variants.Link.inlineInverted}>
-					<Group wrap='nowrap' gap={4}>
-						<Icon icon='carbon:document-add' height={20} />
-						<Text variant={variants.Text.utility3}>Link or create new...</Text>
-					</Group>
-				</Link>
-			</Menu.Target>
-			<Menu.Dropdown>
-				{linkableSocials?.map(({ id, deleted, service, published, url }) => {
-					const { social: socialTextVariant, desc: descTextVariant } = getTextVariants({ published, deleted })
-					return (
-						<Menu.Item
-							key={id}
-							onClick={handleLinkToLocation({ orgLocationId: parentId, orgSocialMediaId: id })}
-						>
-							<Group wrap='nowrap'>
-								<Icon icon='carbon:link' />
-								<Stack gap={0}>
-									<Group wrap='nowrap' gap={8}>
-										<Icon icon={service.logoIcon} />
-										<Text variant={socialTextVariant}>{service.name}</Text>
-									</Group>
+	const createNewTriggerRef = useRef<HTMLButtonElement>(null)
+	const handleCreateNewClick = useCallback(() => createNewTriggerRef.current?.click(), [])
 
-									<Text variant={descTextVariant}>{url}</Text>
-								</Stack>
-							</Group>
-						</Menu.Item>
-					)
-				})}
-				<Menu.Divider />
-				<Menu.Item key='new'>
-					<SocialMediaDrawer
-						key='new'
-						component={Link}
-						external
-						variant={variants.Link.inlineInverted}
-						createNew
-					>
+	const addOrLink = isLocation ? (
+		<>
+			<Menu keepMounted withinPortal>
+				<Menu.Target>
+					<Link variant={variants.Link.inlineInverted}>
+						<Group wrap='nowrap' gap={4}>
+							<Icon icon='carbon:document-add' height={20} />
+							<Text variant={variants.Text.utility3}>Link or create new...</Text>
+						</Group>
+					</Link>
+				</Menu.Target>
+				<Menu.Dropdown>
+					{linkableSocials?.map(({ id, deleted, service, published, url }) => {
+						const { social: socialTextVariant, desc: descTextVariant } = getTextVariants({
+							published,
+							deleted,
+						})
+						return (
+							<Menu.Item
+								key={id}
+								onClick={handleLinkToLocation({ orgLocationId: parentId, orgSocialMediaId: id })}
+							>
+								<Group wrap='nowrap'>
+									<Icon icon='carbon:link' />
+									<Stack gap={0}>
+										<Group wrap='nowrap' gap={8}>
+											<Icon icon={service.logoIcon} />
+											<Text variant={socialTextVariant}>{service.name}</Text>
+										</Group>
+
+										<Text variant={descTextVariant}>{url}</Text>
+									</Stack>
+								</Group>
+							</Menu.Item>
+						)
+					})}
+					<Menu.Divider />
+					{/* Deliberately just a plain click-through, not a SocialMediaDrawer nested inside this
+					    item - see PhoneNumbers.tsx's identical fix for the full incident writeup. Nesting the
+					    drawer's whole component tree (its own trigger button/anchor, then its portal-rendered
+					    Drawer.Root) inside this Menu.Item put an interactive element inside another
+					    interactive element (invalid HTML) and raced Mantine's Menu's own close-on-item-click
+					    handling against the Drawer's just-opened focus trap - the drawer would visibly open
+					    but nothing inside it (not even Close) would respond to clicks. The real "Create new"
+					    SocialMediaDrawer now lives outside the Menu entirely (see below, visually hidden) and
+					    this item just clicks its trigger by ref, so the drawer's whole subtree never lives
+					    inside the menu's component tree at all. */}
+					<Menu.Item key='new' onClick={handleCreateNewClick}>
 						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
-					</SocialMediaDrawer>
-				</Menu.Item>
-			</Menu.Dropdown>
-		</Menu>
+					</Menu.Item>
+				</Menu.Dropdown>
+			</Menu>
+			{/* `aria-hidden` and no visible-text-duplicating label: this is a functional trigger only,
+			    clicked programmatically by the Menu.Item above, never meant to be discovered by assistive
+			    tech, focus order, or a query for the visible "Create new" text. */}
+			<SocialMediaDrawer
+				ref={createNewTriggerRef}
+				createNew
+				style={{ display: 'none' }}
+				aria-hidden
+				tabIndex={-1}
+			>
+				(hidden create-new trigger)
+			</SocialMediaDrawer>
+		</>
 	) : (
 		<SocialMediaDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
 			<Group wrap='nowrap'>

@@ -1,6 +1,8 @@
+import { cleanNotifications } from '@mantine/notifications'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
+import { http, HttpResponse } from 'msw'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
@@ -8,6 +10,7 @@ import {
 	buildTrpcTestWrapper,
 	createFakeOrgWebsiteBackend,
 	createMswServer,
+	LOCATION,
 	ORG,
 } from '~ui/test/trpcIntegrationHarness'
 
@@ -49,6 +52,11 @@ beforeEach(() => {
 	backend = createFakeOrgWebsiteBackend()
 	server.resetHandlers(...backend.handlers)
 	forEditDrawerRequestCount = 0
+	// `@mantine/notifications`' store is module-level global state, not scoped to any one render - a
+	// "Saved" toast from an earlier test in this file stays queued and can still be on screen (or
+	// pushed out of the default 5-slot `limit`) when a later test asserts on a *different*
+	// notification's text.
+	cleanNotifications()
 })
 afterAll(() => server.close())
 
@@ -210,6 +218,50 @@ describe('Websites + WebsiteDrawer - real cache: reusing the Create new trigger 
 	})
 })
 
+describe('Websites + WebsiteDrawer - real cache: a failed save must not corrupt the cache', () => {
+	/**
+	 * See PhoneNumbers.realCache.test.tsx's identical test for the full incident writeup - same mechanism, same
+	 * fix (#2087: `onError` now shows a visible warning notification, using the real `<Notifications />` portal
+	 * added to the test harness for this), for orgWebsite's `upsert`.
+	 */
+	it('does not corrupt the list or edit, and shows a visible error, when the save fails', async () => {
+		backend.seedOrgWebsite({ url: 'https://original.example.org', published: true })
+		renderList()
+
+		await openDrawerFor(/original\.example\.org/)
+		await waitFor(() => expect(urlField()).toHaveValue('https://original.example.org'))
+
+		await userEvent.clear(urlField())
+		await userEvent.type(urlField(), 'https://updated.example.org')
+
+		server.use(
+			http.post('http://localhost/trpc/orgWebsite.upsert', () =>
+				HttpResponse.json(
+					{
+						error: {
+							message: 'Simulated server failure',
+							code: -32603,
+							data: { code: 'INTERNAL_SERVER_ERROR', httpStatus: 500 },
+						},
+					},
+					{ status: 500 }
+				)
+			)
+		)
+
+		await clickSave()
+
+		await waitFor(() => expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled())
+		expect(screen.getByRole('heading', { name: /Edit/ })).toBeInTheDocument()
+		expect(urlField()).toHaveValue('https://updated.example.org')
+
+		expect(screen.getByText(/original\.example\.org/)).toBeInTheDocument()
+		expect(screen.queryByText(/updated\.example\.org/)).not.toBeInTheDocument()
+
+		await screen.findByText(/something went wrong saving this website/i)
+	})
+})
+
 describe('Websites + WebsiteDrawer - real cache: edit, discard, reopen shows the original (unedited) data', () => {
 	/**
 	 * See PhoneNumbers.realCache.test.tsx's identical test for the full reasoning - same verified,
@@ -233,6 +285,40 @@ describe('Websites + WebsiteDrawer - real cache: edit, discard, reopen shows the
 		await openDrawerFor(/original\.example\.org/)
 		await waitFor(() => {
 			expect(urlField()).toHaveValue('https://original.example.org')
+		})
+	})
+})
+
+describe('Websites + WebsiteDrawer - real cache: "Create new" from a location\'s "Link or create new..." menu', () => {
+	/**
+	 * Live report: from a location's edit page (`parentId` is a real `orgLocation` id, not an organization id -
+	 * `isIdFor('orgLocation', parentId)` is true, so this renders the "Link or create new..." `Menu` branch,
+	 * not the plain direct trigger the other tests in this file exercise), clicking "Create new" opened the
+	 * drawer but nothing inside it responded to clicks - not the URL field, not even Close. Root cause: the
+	 * real `WebsiteDrawer` (its own trigger button/anchor, then its portal-rendered `Drawer.Root`) was nested
+	 * directly inside the `Menu.Item`, an interactive element inside another interactive element, racing
+	 * Mantine's `Menu`'s own close-on-item-click handling against the newly-opened Drawer's focus trap.
+	 * `PhoneNumbers.tsx` had already hit and fixed this identical bug (see its own comment on the equivalent
+	 * code) - `Websites.tsx`/`Emails.tsx`/`SocialMedia.tsx` just never got the same fix. No existing test in
+	 * this file (or `Emails`/`SocialMedia`'s equivalents) ever rendered with a location `parentId` at all, so
+	 * this path had zero coverage.
+	 */
+	it('opens an interactive drawer - the URL field and Close both actually work', async () => {
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(<Websites edit parentId={LOCATION.id} />, { wrapper: Wrapper })
+
+		await userEvent.click(await screen.findByText(/link or create new/i))
+		await userEvent.click(await screen.findByRole('menuitem', { name: /^create new$/i }))
+		await screen.findByRole('heading', { name: /Add New/i })
+
+		await userEvent.type(urlField(), 'https://new-location-site.example.org')
+		await waitFor(() => expect(urlField()).toHaveValue('https://new-location-site.example.org'))
+
+		await userEvent.click(screen.getByRole('button', { name: /close/i }))
+		await screen.findByRole('dialog', { name: 'Unsaved Changes' })
+		await userEvent.click(screen.getByRole('button', { name: /discard/i }))
+		await waitFor(() => {
+			expect(screen.queryByRole('heading', { name: /Add New/i })).not.toBeInTheDocument()
 		})
 	})
 })
