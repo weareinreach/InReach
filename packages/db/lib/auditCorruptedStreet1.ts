@@ -11,7 +11,8 @@
  * it also matches completely legitimate streets that happen to be named after their city (e.g. "1091 West
  * South Jordan Parkway" in South Jordan), which are common and not this bug. Requiring the city to be its own
  * `, City,`/`, City$` segment - the shape Google's "main_text, secondary_text" duplication actually produces
- * - avoids that class of false positive.
+ *
+ * - Avoids that class of false positive.
  *
  * Run with: pnpm --filter @weareinreach/db db:audit-street1
  */
