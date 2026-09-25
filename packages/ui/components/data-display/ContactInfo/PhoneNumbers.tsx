@@ -142,7 +142,21 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		}
 	)
 	const linkToLocation = api.orgPhone.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate({ parentId }),
+		onSuccess: (_data, variables) => {
+			apiUtils.orgPhone.forContactInfoEdit.invalidate({ parentId })
+			// None of these three was invalidated at all before - the public (non-edit) list never
+			// reflected a link/unlink, reopening the linked phone's own drawer showed its pre-link
+			// location association until an unrelated refetch happened to correct it, and (found via a
+			// deliberate audit for this same class of gap, not a live report) this "Link or create
+			// new..." menu's own options list kept offering the phone actually chosen here as if it
+			// were still linkable, since nothing ever told it that link had just happened.
+			apiUtils.orgPhone.forContactInfo.invalidate()
+			apiUtils.orgPhone.forEditDrawer.invalidate(
+				{ id: variables.orgPhoneId, orgId: orgId?.id ?? '' },
+				{ refetchType: 'none' }
+			)
+			apiUtils.orgPhone.getLinkOptions.invalidate()
+		},
 	})
 	const getTextVariant = useCallback(
 		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {

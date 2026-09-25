@@ -619,11 +619,14 @@ describe('PhoneDrawer - create success side effects', () => {
 			options.onSuccess?.()
 		})
 
-		// The list is never force-refetched from the server for this - only patched directly, then
-		// marked stale for whenever it's next naturally reloaded.
-		expect(utilsStub.orgPhone.forContactInfoEdit.invalidate).toHaveBeenCalledWith(undefined, {
-			refetchType: 'none',
-		})
+		// The list is never force-refetched from the server for this - only patched directly. It's
+		// also never marked stale either (a later fix from the original version of this comment):
+		// live-confirmed that doing so lets a later, unrelated re-enable of this same query (e.g.
+		// reopening this exact phone's drawer) trigger an automatic react-query refetch, which reads
+		// from the same lagging database and can silently overwrite this correct patch with a stale
+		// response. Leaving it unmarked keeps the patched value authoritative for the normal
+		// staleTime window instead.
+		expect(utilsStub.orgPhone.forContactInfoEdit.invalidate).not.toHaveBeenCalled()
 
 		const setDataCall = utilsStub.orgPhone.forContactInfoEdit.setData.mock.calls.find(
 			(call) => (call[0] as { parentId: string }).parentId === 'organization_test'
