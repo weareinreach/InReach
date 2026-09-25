@@ -35,7 +35,9 @@ export const KPI_DATA_QUALITY_STATUS_CASE_SQL = Prisma.sql`
 
 export type KpiDataQualityStatus = 'good' | 'needs_review' | 'critical'
 
-/** Filter helper - `WHERE ${kpiDataQualityStatusWhere('critical')}` against a query aliasing Organization as
-`o`. */
+/**
+ * Filter helper - `WHERE ${kpiDataQualityStatusWhere('critical')}` against a query aliasing Organization as
+ * `o`.
+ */
 export const kpiDataQualityStatusWhere = (status: KpiDataQualityStatus) =>
 	Prisma.sql`(${KPI_DATA_QUALITY_STATUS_CASE_SQL}) = ${status}`
