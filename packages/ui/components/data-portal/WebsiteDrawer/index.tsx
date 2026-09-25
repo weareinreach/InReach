@@ -164,7 +164,13 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 				notifySave()
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
-				reset({ id: generateId('orgWebsite') })
+				// Only "Create new" needs a fresh id primed for a possible next creation - doing this
+				// unconditionally on every save also fired on a plain edit, blanking the just-saved
+				// form's fields (url/published/etc. fall back to `defaultValues`, not the row just
+				// written) in the half-second before the drawer's own close timeout above fires.
+				if (createNew) {
+					reset({ id: generateId('orgWebsite') })
+				}
 			},
 		})
 

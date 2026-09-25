@@ -211,7 +211,13 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 				notifySave()
 				modalHandler.close()
 				setTimeout(() => drawerHandler.close(), 500)
-				reset({ id: generateId('orgSocialMedia') })
+				// Only "Create new" needs a fresh id primed for a possible next creation - doing this
+				// unconditionally on every save also fired on a plain edit, blanking the just-saved
+				// form's fields (no `defaultValues` configured for this form, so they fall back to
+				// empty/false) in the half-second before the drawer's own close timeout above fires.
+				if (createNew) {
+					reset({ id: generateId('orgSocialMedia') })
+				}
 			},
 		})
 		const unlinkFromLocation = api.orgSocialMedia.locationLink.useMutation({
