@@ -106,8 +106,46 @@ model User {
   userSOGIdentity     UserSOGLink[]
   savedLists          UserSavedList[]
   orgAssociations     UserToOrganization[]
+  kpiRegionMappings   KpiRegionMapping[]
+  kpiManualMetrics    DashboardManualMetric[]
 
   @@index([userTypeId])
+}
+
+/// KPI Board - admin-managed geographic region groupings (e.g. "Northeast", or timezone-based
+/// buckets), used to group organizations/services for reporting. Falls back to grouping by
+/// Country when no rows exist for a given country. See docs/Dashboards/KpiBoard/README.md.
+model KpiRegionMapping {
+  id          String   @id @default(cuid())
+  label       String
+  sortOrder   Int      @default(0)
+  countryIds  String[] @default([])
+  govDistIds  String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  updatedById String
+  updatedBy   User     @relation(fields: [updatedById], references: [id])
+
+  @@index([countryIds], type: Gin)
+  @@index([govDistIds], type: Gin)
+}
+
+/// KPI Board - generic manually-entered metric (e.g. monthly donations or grant totals), used
+/// where no live data source exists yet. Not donation-specific - metricKey distinguishes future
+/// manual metrics without a schema migration. See docs/Dashboards/KpiBoard/README.md.
+model DashboardManualMetric {
+  id          String   @id @default(cuid())
+  metricKey   String
+  periodStart DateTime
+  value       Int
+  breakdown   Json?
+  note        String?
+  enteredById String
+  enteredBy   User     @relation(fields: [enteredById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([metricKey, periodStart])
 }
 
 /// User Role - Contains array of granular permissions
