@@ -65,7 +65,21 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 		}
 	)
 	const linkToLocation = api.orgSocialMedia.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgSocialMedia.forContactInfoEdits.invalidate({ parentId }),
+		onSuccess: (_data, variables) => {
+			apiUtils.orgSocialMedia.forContactInfoEdits.invalidate({ parentId })
+			// None of these three was invalidated at all before - the public (non-edit) list never
+			// reflected a link/unlink, reopening the linked social media entry's own drawer showed its
+			// pre-link location association until an unrelated refetch happened to correct it, and
+			// (found via a deliberate audit for this same class of gap, not a live report) this "Link or
+			// create new..." menu's own options list kept offering the entry actually chosen here as if
+			// it were still linkable, since nothing ever told it that link had just happened.
+			apiUtils.orgSocialMedia.forContactInfo.invalidate()
+			apiUtils.orgSocialMedia.forEditDrawer.invalidate(
+				{ id: variables.orgSocialMediaId },
+				{ refetchType: 'none' }
+			)
+			apiUtils.orgSocialMedia.getLinkOptions.invalidate()
+		},
 	})
 	const getTextVariants = useCallback(
 		({ published, deleted }: { published: boolean; deleted: boolean }) => {

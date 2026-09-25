@@ -164,7 +164,18 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		}
 	)
 	const linkToLocation = api.orgEmail.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgEmail.forContactInfoEdit.invalidate({ parentId }),
+		onSuccess: (_data, variables) => {
+			apiUtils.orgEmail.forContactInfoEdit.invalidate({ parentId })
+			// None of these three was invalidated at all before - the public (non-edit) list never
+			// reflected a link/unlink, reopening the linked/unlinked email's own drawer showed its
+			// pre-link location association until an unrelated refetch happened to correct it, and
+			// (found via a deliberate audit for this same class of gap, not a live report) this "Link or
+			// create new..." menu's own options list kept offering the email actually chosen here as if
+			// it were still linkable, since nothing ever told it that link had just happened.
+			apiUtils.orgEmail.forContactInfo.invalidate()
+			apiUtils.orgEmail.forEditDrawer.invalidate({ id: variables.orgEmailId }, { refetchType: 'none' })
+			apiUtils.orgEmail.getLinkOptions.invalidate()
+		},
 	})
 	const getTextVariant = useCallback(
 		(kind: 'email' | 'desc', published: boolean, deleted: boolean) => {

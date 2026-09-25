@@ -25,8 +25,10 @@ import filterObject from 'just-filter-object'
 import { useTranslation } from 'next-i18next/pages'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
+import { type z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { type ZUpdateSchema } from '@weareinreach/api/router/location/mutation.update.schema'
 import { AddressVisibility } from '@weareinreach/db/enums'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
@@ -44,6 +46,37 @@ import classes from './styles.module.css'
 import { MultiSelectPopover } from '../MultiSelectPopover'
 
 type AutocompleteResult = ApiOutput['geo']['autocomplete']['results'][number]
+
+/**
+ * Mirrors `packages/api/router/location/lib.formatAddressVisibility.ts`'s `isEditMode: true` branch (the one
+ * `query.forVisitCardEdits.handler.ts` actually uses) - that file lives in the API package and isn't
+ * reachable from here, so the rule is reproduced rather than imported: FULL passes through untouched; PARTIAL
+ * and HIDDEN both null out street1/street2/postCode/latitude/longitude, but - unlike the public (non-edit)
+ * variant - never null `city`/`govDist`, since an editor needs to see those regardless of what a visitor
+ * would.
+ */
+const applyAddressVisibilityEditMode = <
+	T extends {
+		street1: string | null
+		street2: string | null
+		postCode: string | null
+		latitude: number | null
+		longitude: number | null
+	},
+>(
+	// A plain `string` rather than the `AddressVisibility` enum type itself - the value flowing in here
+	// at the one call site below is inferred from `forVisitCardEdits`'s Prisma-generated output type,
+	// a structurally-identical but nominally distinct enum from this file's own `AddressVisibility`
+	// import (same member names, different declaration), so TS rejects it against the stricter type.
+	// Comparing against `AddressVisibility.FULL` below still works fine across that boundary.
+	visibility: string,
+	address: T
+): T => {
+	if (visibility === AddressVisibility.FULL) {
+		return address
+	}
+	return { ...address, street1: null, street2: null, postCode: null, latitude: null, longitude: null }
+}
 
 const matchText = (result: string, textToMatch: string | undefined | null) => {
 	if (!textToMatch) {
@@ -189,6 +222,12 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 						label: t(tsKey, { ns: tsNs }),
 						value: govDistId,
 						abbrev,
+						// Raw (untranslated) key kept alongside the display `label` - needed to patch
+						// `forVisitCardEdits`'s cache below, which stores `govDist` as `{abbrev, tsKey,
+						// tsNs}` and translates it at render time via `useFormattedAddress`, not as
+						// pre-translated text.
+						tsKey,
+						tsNs,
 					})),
 				})),
 		})
@@ -263,9 +302,155 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	// #endregion
 
 	// #region Mutation handling
+	// `location.update`'s handler only ever returns `{ id }` (a `select: { id: true }` on the Prisma
+	// call) - there's no full row to seed a cache from the way PhoneDrawer seeds its detail cache from
+	// `upsert`'s response. Every field needed to patch the two caches this drawer's own trigger sits
+	// next to on the page - `getAddress` (this drawer's own detail query) and `forVisitCardEdits` (the
+	// address text VisitCard renders right beside it) - is already available in what was actually
+	// submitted (`variables`, the second `onSuccess` argument) plus this component's own already-loaded
+	// `countryOptions` lookup, so there's no need to wait on a fresh server read for either.
+	const patchAddressCaches = useCallback(
+		// Typed off the server schema's own pre-transform (client-facing) input, `z.input<typeof
+		// ZUpdateSchema>` - NOT `TUpdateSchema` (that name is deceptive here: `ZUpdateSchema`'s
+		// `.transform()` turns it into a Prisma `OrgLocationUpdateArgs` shape via `z.infer`, not the
+		// `{id, data}` shape actually sent over the wire and handed to `onSuccess` below).
+		(submitted: z.input<typeof ZUpdateSchema>) => {
+			const { id, data } = submitted
+			// Real fields this mutation accepts that don't appear in either `getAddress`'s or
+			// `forVisitCardEdits`'s own output shape at all: `primary`, `geoJSON`, `geoWKT`, `deleted`,
+			// `checkMigration`. Destructuring only the ones both caches actually have keeps the merges
+			// below from ever handing react-query's `setData` an object carrying keys its declared
+			// type doesn't have - a fresh object literal with extra keys fails typechecking outright,
+			// not just a lint nit.
+			const {
+				name,
+				street1,
+				street2,
+				city,
+				postCode,
+				countryId,
+				govDistId,
+				latitude,
+				longitude,
+				mailOnly,
+				published,
+				addressVisibility,
+				accessible,
+				services,
+			} = data
+
+			apiUtils.location.getAddress.setData(id, (old) => {
+				if (!old) {
+					return old
+				}
+				const nextData: typeof old.data = {
+					...old.data,
+					...(name !== undefined && { name }),
+					...(street1 !== undefined && { street1 }),
+					...(street2 !== undefined && { street2 }),
+					...(city !== undefined && { city }),
+					...(postCode !== undefined && { postCode }),
+					// `countryId` is a required (non-nullable) column - unlike every other field here,
+					// the schema still technically allows sending `null` to disconnect it. That's not
+					// a real, supported case for this form (a location always has a country), so a
+					// `null` is just left unpatched here rather than forced into a field whose real
+					// type can't hold it; the background invalidate below still corrects this cache
+					// for the rare case it actually happens.
+					...(countryId !== undefined && countryId !== null && { countryId }),
+					...(govDistId !== undefined && { govDistId }),
+					...(latitude !== undefined && { latitude }),
+					...(longitude !== undefined && { longitude }),
+					...(mailOnly !== undefined && { mailOnly }),
+					...(published !== undefined && { published }),
+					// Cast: `addressVisibility` here is typed via this file's own `AddressVisibility`
+					// import (`@weareinreach/db/enums`), while `old.data.addressVisibility` is typed via
+					// Prisma's own generated `$Enums.AddressVisibility` - structurally identical (same
+					// member names/values), but TS enums are nominal, so the two aren't assignable
+					// without this.
+					...(addressVisibility !== undefined && {
+						addressVisibility: addressVisibility as typeof old.data.addressVisibility,
+					}),
+					...(services !== undefined && { services }),
+					// `accessible` is its own partial sub-object on both sides - a plain top-level
+					// spread would replace it outright instead of merging, dropping whichever half
+					// (`supplementId`/`boolean`) wasn't part of this particular save.
+					accessible:
+						accessible !== undefined ? { ...old.data.accessible, ...accessible } : old.data.accessible,
+				}
+				return { ...old, data: nextData }
+			})
+
+			// Read back *after* the `getAddress` patch above, not before - `getAddress` is never
+			// visibility-filtered (confirmed against its handler), so it's the only place the real
+			// street1/street2/postCode/latitude/longitude still exist once `forVisitCardEdits`'s own
+			// cache has ever nulled them out for a less-than-FULL visibility. Falling back to
+			// `forVisitCardEdits`'s own previous value here (as an earlier version of this function
+			// did) is exactly what caused a real reported bug: switching visibility from HIDDEN to
+			// FULL without also re-touching street1 patched the new visibility in correctly, but left
+			// street1 permanently `null` - there was no unfiltered value left anywhere to restore it
+			// from, since the only cache that had ever seen it was itself the one doing the nulling.
+			const rawAddress = apiUtils.location.getAddress.getData(id)?.data
+
+			apiUtils.location.forVisitCardEdits.setData(id, (old) => {
+				if (!old) {
+					return old
+				}
+				// Only re-resolved when the corresponding id actually changed - resolving a
+				// still-selected country/gov-dist to the very same value it already has costs nothing
+				// per se, but doing it unconditionally would also (harmlessly) fire for every save
+				// that touches neither field, at which point it's just noise.
+				const nextCountry =
+					countryId !== undefined ? countryOptions?.find((c) => c.value === countryId) : undefined
+				const nextGovDist =
+					govDistId !== undefined
+						? govDistId === null
+							? null
+							: (countryOptions ?? []).flatMap((c) => c.govDist).find((g) => g.value === govDistId)
+						: undefined
+
+				const merged = {
+					...old,
+					...(name !== undefined && { name }),
+					...(nextCountry && { country: { cca2: nextCountry.cca2 } }),
+					...(nextGovDist !== undefined && {
+						govDist: nextGovDist
+							? { abbrev: nextGovDist.abbrev, tsKey: nextGovDist.tsKey, tsNs: nextGovDist.tsNs }
+							: null,
+					}),
+					...(addressVisibility !== undefined && {
+						addressVisibility: addressVisibility as typeof old.addressVisibility,
+					}),
+					street1: rawAddress?.street1 ?? old.street1,
+					street2: rawAddress?.street2 ?? old.street2,
+					city: rawAddress?.city ?? old.city,
+					postCode: rawAddress?.postCode ?? old.postCode,
+					latitude: rawAddress?.latitude ?? old.latitude,
+					longitude: rawAddress?.longitude ?? old.longitude,
+				}
+
+				return applyAddressVisibilityEditMode(addressVisibility ?? old.addressVisibility, merged)
+			})
+		},
+		[apiUtils, countryOptions]
+	)
+
 	const updateLocation = api.location.update.useMutation({
-		onSuccess: () => {
-			apiUtils.location.invalidate()
+		onSuccess: (_data, variables) => {
+			patchAddressCaches(variables)
+			// Deliberately NOT invalidating `getAddress`/`forVisitCardEdits` - live-confirmed real bug
+			// this used to cause elsewhere (Phone/Email/Website/SocialMedia drawers): marking a query
+			// stale doesn't refetch it immediately, but the *next* time react-query naturally
+			// re-checks it (a re-enable, a remount, a window-focus refetch) it refetches
+			// automatically because the data is stale - and that refetch reads from the same database
+			// confirmed to lag behind its own writes, silently overwriting the just-patched, correct
+			// cache with a still-lagging response. The patch above is already the authoritative,
+			// correct value; leaving these two unmarked keeps them "fresh" for the normal staleTime
+			// window (~10 minutes, ~ui/lib/trpcClient.ts) instead of inviting that race. The three
+			// below are different - none of them are patched at all, so they still need an eventual
+			// (soft) refetch to pick up this change at all.
+			apiUtils.location.forVisitCard.invalidate(undefined, { refetchType: 'none' })
+			apiUtils.location.forLocationCard.invalidate(undefined, { refetchType: 'none' })
+			apiUtils.location.forLocationPageEdits.invalidate(undefined, { refetchType: 'none' })
 			setIsSaved(true)
 			notifySave()
 			setTimeout(() => handler.close(), 500)

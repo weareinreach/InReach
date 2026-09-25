@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
+import { http, HttpResponse } from 'msw'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
@@ -8,6 +9,7 @@ import {
 	buildTrpcTestWrapper,
 	createFakeOrgPhoneBackend,
 	createMswServer,
+	LOCATION,
 	ORG,
 } from '~ui/test/trpcIntegrationHarness'
 
@@ -22,7 +24,12 @@ import {
  */
 
 vi.mock('next/router', () => ({
-	useRouter: () => ({ query: { slug: ORG.slug }, pathname: '', push: vi.fn() }),
+	// `orgLocationId` included so `PhoneDrawer`'s `hasLocationId` (which reads it straight from the
+	// route, not from the `parentId` prop the rest of this file's tests already exercise) resolves
+	// correctly for the location-context "unlink" test below - none of the other tests in this file
+	// assert anything about it being absent, so this is safe to set globally rather than needing a
+	// per-test router override.
+	useRouter: () => ({ query: { slug: ORG.slug, orgLocationId: LOCATION.id }, pathname: '', push: vi.fn() }),
 }))
 
 const trpc = createTRPCReact<AppRouter>()
@@ -199,5 +206,124 @@ describe('PhoneNumbers + PhoneDrawer - real cache: edit, save, reopen shows the 
 			expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0199')
 		})
 		expect(screen.getByRole('checkbox', { name: /published/i })).not.toBeChecked()
+	})
+})
+
+describe('PhoneNumbers + PhoneDrawer - real cache: a failed save must not corrupt the cache', () => {
+	/**
+	 * Adversarial coverage the happy-path tests above can't surface: every test in this file simulates a save
+	 * that actually succeeds. `onSettled` fires on failure too, and it used to patch the list and detail caches
+	 * from `variables` (what the user _submitted_) unconditionally - meaning a save that failed server-side
+	 * (network error, permission error, anything) still showed up in the UI as successfully saved, with nothing
+	 * to ever correct it since these caches are deliberately never force-refetched. Confirmed by simulating a
+	 * real 500 from `orgPhone.upsert`.
+	 */
+	it('does not add a phone to the list, and does not wipe the edit, when the save fails', async () => {
+		backend.seedOrgPhone({ number: '+12025550100', countryId: 'country_us', published: true })
+		renderList()
+
+		await openDrawerFor('(202) 555-0100')
+		await waitFor(() => {
+			expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0100')
+		})
+
+		fireEvent.change(screen.getByRole('textbox', { name: /phone number/i }), {
+			target: { value: '2025550199' },
+		})
+		await waitFor(() => {
+			expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0199')
+		})
+
+		server.use(
+			http.post('http://localhost/trpc/orgPhone.upsert', () =>
+				HttpResponse.json(
+					{
+						error: {
+							message: 'Simulated server failure',
+							code: -32603,
+							data: { code: 'INTERNAL_SERVER_ERROR', httpStatus: 500 },
+						},
+					},
+					{ status: 500 }
+				)
+			)
+		)
+
+		await waitFor(() => {
+			expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled()
+		})
+		await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
+
+		// The failed save must not silently look like a success: the drawer stays open (no
+		// close-after-save), and the user's edit is still there, not wiped or reverted.
+		await waitFor(() => expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled())
+		expect(screen.getByRole('heading', { name: /Edit/ })).toBeInTheDocument()
+		expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0199')
+
+		// The list must still show the ORIGINAL (last actually-persisted) number, not the failed edit.
+		expect(screen.getByText('(202) 555-0100')).toBeInTheDocument()
+		expect(screen.queryByText('(202) 555-0199')).not.toBeInTheDocument()
+	})
+})
+
+describe('PhoneNumbers + PhoneDrawer - real cache: edit, discard, reopen shows the original (unedited) data', () => {
+	/**
+	 * Adversarial coverage prompted by an audit that suspected (incorrectly, verified before acting on it) that
+	 * Discard would leave the reopened form blank - `Drawer.Root`'s `keepMounted` means the component never
+	 * unmounts between opens, and `handleCloseNoSave`'s `reset(undefined, { keepDirtyValues: false })` could
+	 * plausibly fall back to this form's blank `defaultValues` instead of the real data. It doesn't: this form
+	 * uses react-hook-form's `values` option (not just `defaultValues`), and `reset()` with no explicit values
+	 * re-syncs from the current `values` (the still-correct, never-mutated cache) rather than discarding it.
+	 * Kept as a regression test since this behavior is easy to break by accident (e.g. switching away from
+	 * `values` to a one-time `defaultValues` seed).
+	 */
+	it('discarding an edit and reopening the same item shows the real saved data, not blank/default fields', async () => {
+		backend.seedOrgPhone({ number: '+12025550100', countryId: 'country_us', published: true })
+		renderList()
+
+		await openDrawerFor('(202) 555-0100')
+		await waitFor(() => {
+			expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0100')
+		})
+
+		await userEvent.type(screen.getByRole('textbox', { name: /extension/i }), '999')
+
+		await userEvent.click(screen.getByRole('button', { name: /close/i }))
+		await screen.findByRole('dialog', { name: 'Unsaved Changes' })
+		await userEvent.click(screen.getByRole('button', { name: /discard/i }))
+		await waitFor(() => expect(screen.queryByText('Unsaved Changes')).not.toBeInTheDocument())
+		await waitFor(() => expect(screen.queryByRole('heading', { name: /Edit/ })).not.toBeInTheDocument())
+
+		await openDrawerFor('(202) 555-0100')
+		await waitFor(() => {
+			expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0100')
+		})
+		expect(screen.getByRole('textbox', { name: /extension/i })).toHaveValue('')
+	})
+})
+
+describe('PhoneNumbers + PhoneDrawer - real cache: unlinking makes the item relinkable without a refresh', () => {
+	/**
+	 * Adversarial coverage found via a deliberate audit (not a live report), then verified: confirmed
+	 * `orgPhone.getLinkOptions` (the "Link or create new..." menu's own data) was never invalidated by any link
+	 * or unlink mutation, anywhere in this codebase - grepped for it directly. Consequence: right after
+	 * unlinking a phone from a location, that same phone's own "Link or create new..." menu kept omitting it as
+	 * if it were still linked, so there was no way to relink it without a refresh.
+	 */
+	it('shows the phone in the "Link or create new..." menu immediately after unlinking it, with no refresh', async () => {
+		const phone = backend.seedOrgPhone({ number: '+12025550100', countryId: 'country_us', published: true })
+		backend.linkToLocation(LOCATION.id, phone.id)
+
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(<PhoneNumbers edit parentId={LOCATION.id} />, { wrapper: Wrapper })
+
+		await openDrawerFor('(202) 555-0100')
+		await userEvent.click(screen.getByRole('button', { name: /unlink from this location/i }))
+		await waitFor(() => expect(screen.queryByRole('heading', { name: /Edit/ })).not.toBeInTheDocument())
+
+		await userEvent.click(screen.getByText(/link or create new/i))
+		await waitFor(() => {
+			expect(screen.getByText('(202) 555-0100')).toBeInTheDocument()
+		})
 	})
 })

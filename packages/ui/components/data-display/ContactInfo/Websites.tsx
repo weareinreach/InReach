@@ -138,7 +138,18 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		{ enabled: isLocation }
 	)
 	const linkToLocation = api.orgWebsite.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgWebsite.forContactInfoEdit.invalidate({ parentId }),
+		onSuccess: (_data, variables) => {
+			apiUtils.orgWebsite.forContactInfoEdit.invalidate({ parentId })
+			// None of these three was invalidated at all before - the public (non-edit) list never
+			// reflected a link/unlink, reopening the linked website's own drawer showed its pre-link
+			// location association until an unrelated refetch happened to correct it, and (found via a
+			// deliberate audit for this same class of gap, not a live report) this "Link or create
+			// new..." menu's own options list kept offering the website actually chosen here as if it
+			// were still linkable, since nothing ever told it that link had just happened.
+			apiUtils.orgWebsite.forContactInfo.invalidate()
+			apiUtils.orgWebsite.forEditDrawer.invalidate({ id: variables.orgWebsiteId }, { refetchType: 'none' })
+			apiUtils.orgWebsite.getLinkOptions.invalidate()
+		},
 	})
 	const getTextVariant = useCallback(
 		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {
