@@ -1224,13 +1224,44 @@ export type SeedLocation = Partial<OrgLocationRow> & { city: string; countryId: 
  * `createFakeOrgPhoneBackend` above does for orgPhone - verified directly against the real handlers on
  * 2026-09-24 (packages/api/router/location/{query.getAddress,query.forVisitCardEdits,
  * mutation.update,lib.formatAddressVisibility}.handler.ts, fieldOpt/query.govDistsByCountryNoSub).
- * Deliberately out of scope: `geo.autocomplete`/`geo.geoByPlaceId` (no handlers registered - tests using this
- * backend must not type into the address-autocomplete field, only plain fields like City under FULL
- * visibility) and `location.forLocationCard`/`forLocationPageEdits`/`forVisitCard` (not rendered by anything
+ * `geo.autocomplete`/`geo.geoByPlaceId` are also faked (seed with `seedAutocomplete`/`seedGeocode`), keyed on
+ * the exact debounce-settled `search` string / `placeId` a test expects the component to request - a test
+ * that types into the address-autocomplete field without seeding a matching entry gets an empty
+ * results/ZERO_RESULTS response rather than an unhandled-request failure. Deliberately out of scope:
+ * `location.forLocationCard`/`forLocationPageEdits`/`forVisitCard` (not rendered by anything
  * `AddressDrawer`/`VisitCard`'s own tests mount).
  */
+export interface FakeAutocompleteResult {
+	value: string
+	label: string
+	subheading?: string
+	placeId: string
+}
+
+interface FakeGeocodeResult {
+	streetNumber?: string
+	streetName?: string
+	street2?: string
+	city?: string
+	govDist?: string
+	postCode?: string
+	country?: string
+	lat: number
+	lng: number
+}
+
 export const createFakeLocationBackend = () => {
 	const locations = new Map<string, OrgLocationRow>()
+	const autocompleteResults = new Map<string, FakeAutocompleteResult[]>()
+	const geocodeResults = new Map<string, FakeGeocodeResult>()
+
+	/** Keyed on the exact `search` string the component will debounce-settle on. */
+	const seedAutocomplete = (search: string, results: FakeAutocompleteResult[]) => {
+		autocompleteResults.set(search, results)
+	}
+	const seedGeocode = (placeId: string, result: FakeGeocodeResult) => {
+		geocodeResults.set(placeId, result)
+	}
 
 	const seedLocation = (seed: SeedLocation) => {
 		const row: OrgLocationRow = {
@@ -1321,6 +1352,23 @@ export const createFakeLocationBackend = () => {
 
 	const govDistsByCountryNoSub = () => GEO_COUNTRIES.map((c) => ({ ...c, govDist: [...c.govDist] }))
 
+	// Mirrors the real `geo.autocomplete` handler's output shape (`packages/api/schemas/thirdParty/
+	// googleGeo.ts`'s `autocompleteResponse` transform) closely enough for `AddressDrawer`'s own
+	// `AddressAutocompleteField`/`AddressAutocomplete`'s consumption - only `results` is ever read.
+	const autocomplete = (input: { search: string }) => ({
+		status: 'OK' as const,
+		results: autocompleteResults.get(input.search) ?? [],
+	})
+	// Mirrors `geo.geoByPlaceId`'s output shape - only `result` (and its presence/absence) is read.
+	const geoByPlaceId = (placeId: string) => {
+		const result = geocodeResults.get(placeId)
+		if (!result) {
+			return { status: 'ZERO_RESULTS' as const, result: undefined }
+		}
+		const { lat, lng, ...rest } = result
+		return { status: 'OK' as const, result: { ...rest, geometry: { location: { lat, lng } } } }
+	}
+
 	const handlers = [
 		http.get(`${BASE_URL}/location.getAddress`, ({ request }) =>
 			respond(request, (input) => getAddress(input as string))
@@ -1335,9 +1383,15 @@ export const createFakeLocationBackend = () => {
 			respond(request, govDistsByCountryNoSub)
 		),
 		http.get(`${BASE_URL}/service.getNames`, ({ request }) => respond(request, () => [])),
+		http.get(`${BASE_URL}/geo.autocomplete`, ({ request }) =>
+			respond(request, (input) => autocomplete(input as { search: string }))
+		),
+		http.get(`${BASE_URL}/geo.geoByPlaceId`, ({ request }) =>
+			respond(request, (input) => geoByPlaceId(input as string))
+		),
 	]
 
-	return { handlers, locations, seedLocation }
+	return { handlers, locations, seedLocation, seedAutocomplete, seedGeocode }
 }
 
 /** Parses a single (non-batched) tRPC `httpLink` GET request's `?input=` query param. */

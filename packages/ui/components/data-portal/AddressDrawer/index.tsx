@@ -132,7 +132,12 @@ const AddressAutocompleteField = ({
 			const item = (results ?? []).find((result) => result.value === optionValue)
 			if (item) {
 				handleAutocompleteSelection(item)
-				form.setFieldValue(fieldName, item.value)
+				// `item.value` is the full "main_text, secondary_text" prediction text (only used above to
+				// identify which option was picked) - it already contains city/state/country, so writing
+				// it into street1 (or city) duplicates those once the address is composed for display.
+				// `item.label` is Google's `structured_formatting.main_text` alone - just the street or
+				// just the city, matching what this field is actually supposed to hold.
+				form.setFieldValue(fieldName, item.label)
 			}
 			addressCombobox.closeDropdown()
 		},
@@ -187,6 +192,10 @@ const AddressAutocompleteField = ({
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
 	const [coordModalOpen, coordModalHandler] = useDisclosure(false)
+	// Every other contact-info drawer (Phone/Email/Website/SocialMedia) confirms before discarding an
+	// in-progress edit - this one didn't: its close button went straight to `handler.close()` with no
+	// dirty-check at all, silently discarding whatever was being edited.
+	const [unsavedModalOpen, unsavedModalHandler] = useDisclosure(false)
 	const [searchTerm, setSearchTerm] = useState<string>('')
 	const [search] = useDebouncedValue(searchTerm, 200)
 	const [results, setResults] = useState<ApiOutput['geo']['autocomplete']['results']>()
@@ -269,20 +278,32 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			},
 		}),
 	})
+	// Pulled out of the load effect below so "Discard" (added alongside the rest of this drawer's
+	// unsaved-changes handling) can revert to the same last-loaded server data instead of wiping to
+	// blank - unlike the other four contact-info drawers, this one previously had no Discard path at
+	// all, so there was nothing to match here until now.
+	const applyLoadedDataToForm = useCallback(() => {
+		if (!data) {
+			return
+		}
+		const { accessible, ...restData } = data.data
+		const accessibleBoolean =
+			accessible?.boolean === undefined ? 'null' : accessible.boolean ? 'true' : 'false'
+		// FormSchema's inferred type reflects boolOrNull's post-transform output (boolean | null),
+		// but Radio.Group requires the pre-transform string values ('true' | 'false' | 'null'),
+		// which boolOrNull also accepts as input and converts back to boolean | null on submit.
+		const formValues = {
+			...data,
+			data: { ...restData, accessible: { ...accessible, boolean: accessibleBoolean } },
+		} as unknown as typeof data
+		form.setValues(formValues)
+		form.resetDirty(formValues)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data])
+
 	useEffect(() => {
 		if (data && !isLoading) {
-			const { accessible, ...restData } = data.data
-			const accessibleBoolean =
-				accessible?.boolean === undefined ? 'null' : accessible.boolean ? 'true' : 'false'
-			// FormSchema's inferred type reflects boolOrNull's post-transform output (boolean | null),
-			// but Radio.Group requires the pre-transform string values ('true' | 'false' | 'null'),
-			// which boolOrNull also accepts as input and converts back to boolean | null on submit.
-			const formValues = {
-				...data,
-				data: { ...restData, accessible: { ...accessible, boolean: accessibleBoolean } },
-			} as unknown as typeof data
-			form.setValues(formValues)
-			form.resetDirty(formValues)
+			applyLoadedDataToForm()
 			setIsSaved(false)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -464,6 +485,27 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		)
 	}, [form, updateLocation])
 
+	// Matches the other four contact-info drawers' close-button behavior: only prompt when there's
+	// actually something to lose.
+	const handleClose = useCallback(() => {
+		if (form.isDirty()) {
+			unsavedModalHandler.open()
+		} else {
+			handler.close()
+		}
+	}, [form, unsavedModalHandler, handler])
+
+	const handleModalSave = useCallback(() => {
+		handleUpdate()
+		unsavedModalHandler.close()
+	}, [handleUpdate, unsavedModalHandler])
+
+	const handleDiscard = useCallback(() => {
+		applyLoadedDataToForm()
+		unsavedModalHandler.close()
+		handler.close()
+	}, [applyLoadedDataToForm, unsavedModalHandler, handler])
+
 	useEffect(() => {
 		if (isSaved && isSaved === form.isDirty()) {
 			setIsSaved(false)
@@ -623,12 +665,12 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 
 	return (
 		<>
-			<Drawer.Root onClose={handler.close} opened={opened} position='right'>
+			<Drawer.Root onClose={handleClose} opened={opened} position='right'>
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<Drawer.Header>
 						<Group wrap='nowrap' justify='space-between' w='100%'>
-							<Breadcrumb option='close' onClick={handler.close} />
+							<Breadcrumb option='close' onClick={handleClose} />
 							<Button
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
@@ -735,6 +777,24 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 				<Stack>
 					<Text>Please ensure that the full address is correct to get the correct coordinates</Text>
 					<Button onClick={coordModalHandler.close}>Close</Button>
+				</Stack>
+			</Modal>
+			<Modal opened={unsavedModalOpen} onClose={unsavedModalHandler.close} title='Unsaved Changes'>
+				<Stack align='center'>
+					<Text>You have unsaved changes</Text>
+					<Group wrap='nowrap'>
+						<Button
+							variant='primary-icon'
+							leftIcon={<Icon icon='carbon:save' />}
+							loading={updateLocation.isPending}
+							onClick={handleModalSave}
+						>
+							Save
+						</Button>
+						<Button variant='secondaryLg' onClick={handleDiscard}>
+							Discard
+						</Button>
+					</Group>
 				</Stack>
 			</Modal>
 
