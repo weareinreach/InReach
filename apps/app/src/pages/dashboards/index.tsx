@@ -21,6 +21,12 @@ const DASHBOARDS = [
 		description: 'Triage organizations that need an unpublished reason set.',
 		icon: 'carbon:tag',
 	},
+	{
+		href: '/dashboards/kpi-board',
+		title: 'KPI Board',
+		description: 'Reach, data quality, and impact metrics for the org/service directory.',
+		icon: 'carbon:dashboard',
+	},
 ] as const
 
 const DashboardsIndex: NextPageWithOptions = () => {
@@ -38,7 +44,7 @@ const DashboardsIndex: NextPageWithOptions = () => {
 					<Card
 						key={dashboard.href}
 						component={Link}
-						href={{ pathname: dashboard.href }}
+						href={dashboard.href}
 						withBorder
 						padding='xl'
 						radius='lg'

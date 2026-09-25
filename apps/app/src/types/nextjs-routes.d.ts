@@ -25,6 +25,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/api/i18n/webhook">
     | DynamicRoute<"/api/trpc/[trpc]", { "trpc": string }>
     | StaticRoute<"/dashboards">
+    | StaticRoute<"/dashboards/kpi-board">
     | StaticRoute<"/dashboards/unpublished-status">
     | StaticRoute<"/dashboards/unpublished-status/list">
     | StaticRoute<"/data-portal">
