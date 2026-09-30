@@ -10,6 +10,7 @@ import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDraw
 import { WebsiteDrawer } from '~ui/components/data-portal/WebsiteDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useEditMode } from '~ui/hooks/useEditMode'
+import { useMenuItemCreateTrigger } from '~ui/hooks/useMenuItemCreateTrigger'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
 import { nsFormatter } from '~ui/lib/nsFormatter'
@@ -138,7 +139,18 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		{ enabled: isLocation }
 	)
 	const linkToLocation = api.orgWebsite.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgWebsite.forContactInfoEdit.invalidate({ parentId }),
+		onSuccess: (_data, variables) => {
+			apiUtils.orgWebsite.forContactInfoEdit.invalidate({ parentId })
+			// None of these three was invalidated at all before - the public (non-edit) list never
+			// reflected a link/unlink, reopening the linked website's own drawer showed its pre-link
+			// location association until an unrelated refetch happened to correct it, and (found via a
+			// deliberate audit for this same class of gap, not a live report) this "Link or create
+			// new..." menu's own options list kept offering the website actually chosen here as if it
+			// were still linkable, since nothing ever told it that link had just happened.
+			apiUtils.orgWebsite.forContactInfo.invalidate()
+			apiUtils.orgWebsite.forEditDrawer.invalidate({ id: variables.orgWebsiteId }, { refetchType: 'none' })
+			apiUtils.orgWebsite.getLinkOptions.invalidate()
+		},
 	})
 	const getTextVariant = useCallback(
 		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {
@@ -210,43 +222,60 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		[linkToLocation, parentId]
 	)
 
+	const { triggerRef: createNewTriggerRef, handleMenuItemClick: handleCreateNewClick } =
+		useMenuItemCreateTrigger()
+
 	const addOrLink = isLocation ? (
-		<Menu keepMounted withinPortal>
-			<Menu.Target>
-				<Link variant={variants.Link.inlineInverted}>
-					<Group wrap='nowrap' gap={4}>
-						<Icon icon='carbon:document-add' height={20} />
-						<Text variant={variants.Text.utility3}>Link or create new...</Text>
-					</Group>
-				</Link>
-			</Menu.Target>
-			<Menu.Dropdown>
-				{linkableWebsites?.map(({ id, deleted, description, url, published }) => {
-					const urlTextVariant = getTextVariant('value', published, deleted)
-					const descTextVariant = getTextVariant('desc', published, deleted)
-					return (
-						<Menu.Item key={id} onClick={handleLinkLocation(id)}>
-							<Group wrap='nowrap'>
-								<Icon icon='carbon:link' />
-								<Stack gap={0}>
-									<Text variant={urlTextVariant}>{url}</Text>
-									<Text variant={descTextVariant}>{description}</Text>
-								</Stack>
-							</Group>
-						</Menu.Item>
-					)
-				})}
-				<Menu.Divider />
-				<Menu.Item key='new'>
-					<WebsiteDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+		<>
+			<Menu keepMounted withinPortal>
+				<Menu.Target>
+					<Link variant={variants.Link.inlineInverted}>
+						<Group wrap='nowrap' gap={4}>
+							<Icon icon='carbon:document-add' height={20} />
+							<Text variant={variants.Text.utility3}>Link or create new...</Text>
+						</Group>
+					</Link>
+				</Menu.Target>
+				<Menu.Dropdown>
+					{linkableWebsites?.map(({ id, deleted, description, url, published }) => {
+						const urlTextVariant = getTextVariant('value', published, deleted)
+						const descTextVariant = getTextVariant('desc', published, deleted)
+						return (
+							<Menu.Item key={id} onClick={handleLinkLocation(id)}>
+								<Group wrap='nowrap'>
+									<Icon icon='carbon:link' />
+									<Stack gap={0}>
+										<Text variant={urlTextVariant}>{url}</Text>
+										<Text variant={descTextVariant}>{description}</Text>
+									</Stack>
+								</Group>
+							</Menu.Item>
+						)
+					})}
+					<Menu.Divider />
+					{/* See useMenuItemCreateTrigger's doc comment for why this isn't just a WebsiteDrawer
+					    rendered here directly. */}
+					<Menu.Item key='new' onClick={handleCreateNewClick}>
 						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
-					</WebsiteDrawer>
-				</Menu.Item>
-			</Menu.Dropdown>
-		</Menu>
+					</Menu.Item>
+				</Menu.Dropdown>
+			</Menu>
+			{/* `aria-hidden` and no visible-text-duplicating label: this is a functional trigger only,
+			    clicked programmatically by the Menu.Item above, never meant to be discovered by assistive
+			    tech, focus order, or a query for the visible "Create new" text. */}
+			<WebsiteDrawer
+				ref={createNewTriggerRef}
+				createNew
+				style={{ display: 'none' }}
+				aria-hidden
+				tabIndex={-1}
+			>
+				(hidden create-new trigger)
+			</WebsiteDrawer>
+		</>
 	) : (
 		<WebsiteDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
 			<Group wrap='nowrap'>

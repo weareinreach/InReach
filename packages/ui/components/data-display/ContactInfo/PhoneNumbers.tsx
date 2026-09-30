@@ -1,6 +1,6 @@
 import { Group, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
-import { type ReactElement, useCallback, useRef } from 'react'
+import { type ReactElement, useCallback } from 'react'
 
 import { productEvent } from '@weareinreach/analytics/events'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
@@ -9,6 +9,7 @@ import { PhoneDrawer } from '~ui/components/data-portal/PhoneDrawer'
 import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useEditMode } from '~ui/hooks/useEditMode'
+import { useMenuItemCreateTrigger } from '~ui/hooks/useMenuItemCreateTrigger'
 import { isExtension, parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
@@ -126,9 +127,6 @@ const PhoneNumbersDisplay = ({ parentId = '', passedData, direct, locationOnly }
 const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
-	// Triggers the real "Create new" PhoneDrawer, which is rendered as a sibling of the Menu below
-	// (not nested inside a Menu.Item) - see the comment at that PhoneDrawer for why.
-	const createNewTriggerRef = useRef<HTMLButtonElement>(null)
 	const slug = useSlug()
 	const apiUtils = api.useUtils()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
@@ -142,7 +140,21 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 		}
 	)
 	const linkToLocation = api.orgPhone.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate({ parentId }),
+		onSuccess: (_data, variables) => {
+			apiUtils.orgPhone.forContactInfoEdit.invalidate({ parentId })
+			// None of these three was invalidated at all before - the public (non-edit) list never
+			// reflected a link/unlink, reopening the linked phone's own drawer showed its pre-link
+			// location association until an unrelated refetch happened to correct it, and (found via a
+			// deliberate audit for this same class of gap, not a live report) this "Link or create
+			// new..." menu's own options list kept offering the phone actually chosen here as if it
+			// were still linkable, since nothing ever told it that link had just happened.
+			apiUtils.orgPhone.forContactInfo.invalidate()
+			apiUtils.orgPhone.forEditDrawer.invalidate(
+				{ id: variables.orgPhoneId, orgId: orgId?.id ?? '' },
+				{ refetchType: 'none' }
+			)
+			apiUtils.orgPhone.getLinkOptions.invalidate()
+		},
 	})
 	const getTextVariant = useCallback(
 		(kind: 'value' | 'desc', published: boolean, deleted: boolean) => {
@@ -181,7 +193,8 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 			linkToLocation.mutate({ orgLocationId, orgPhoneId, action: 'link' }),
 		[linkToLocation]
 	)
-	const handleCreateNewClick = useCallback(() => createNewTriggerRef.current?.click(), [])
+	const { triggerRef: createNewTriggerRef, handleMenuItemClick: handleCreateNewClick } =
+		useMenuItemCreateTrigger()
 	const output = data?.map((phone) => {
 		const { country, ext, number, phoneType, primary: _primary, description } = phone
 		const parsedPhone = parsePhoneNumber(number, country)
