@@ -71,9 +71,9 @@
 		"cost-financial-assistance-available": "有经济援助",
 		"cost-sliding-scale": "在滑动规模上确定的成本",
 		"cost-free": "免费的",
-		"cost-from": "From {{price}}",
-		"cost-upTo": "Up to {{price}}",
-		"cost-range": "{{price}}"
+		"cost-from": "从\n",
+		"cost-upTo": "到",
+		"cost-range": "价格，价格范围"
 	},
 	"crisis-support-community": {
 		"elders": "年长者",
