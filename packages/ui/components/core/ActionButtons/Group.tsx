@@ -135,7 +135,11 @@ export const ActionButtonGroup = ({ children }: ActionButtonGroupProps) => {
 					</Box>
 				)
 			})}
-			<OverflowMenu visibilityMap={visibilityMap} className={classes.overflowStyle as string}>
+			<OverflowMenu
+				visibilityMap={visibilityMap}
+				itemRefs={itemRefs}
+				className={classes.overflowStyle as string}
+			>
 				{children}
 			</OverflowMenu>
 		</Box>
