@@ -7,10 +7,12 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vites
 import { type AppRouter } from '@weareinreach/api'
 import {
 	buildTrpcTestWrapper,
+	clickSave,
 	createFakeOrgSocialMediaBackend,
 	createMswServer,
 	LOCATION,
 	mockMutationFailure,
+	openDrawerFor,
 	ORG,
 	SOCIAL_MEDIA_SERVICES,
 } from '~ui/test/trpcIntegrationHarness'
@@ -65,19 +67,6 @@ const renderList = () => {
 	const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
 	const view = render(<SocialMedia edit parentId={ORG.id} />, { wrapper: Wrapper })
 	return view
-}
-
-const openDrawerFor = async (name: string | RegExp) => {
-	const trigger = await screen.findByText(name)
-	await userEvent.click(trigger)
-	return screen.findByRole('heading', { name: /Add New|Edit/ })
-}
-
-const clickSave = async () => {
-	await waitFor(() => {
-		expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled()
-	})
-	await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
 }
 
 // See Emails.realCache.test.tsx for why role-based queries (not getByLabelText) are required here -

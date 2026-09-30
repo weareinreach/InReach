@@ -7,12 +7,15 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vites
 import { type AppRouter } from '@weareinreach/api'
 import {
 	buildTrpcTestWrapper,
+	clickSave,
 	createFakeLocationBackend,
 	createMswServer,
 	GEO_COUNTRIES,
 	LOCATION,
 	mockMutationFailure,
+	openDrawerFor,
 	ORG,
+	type SeedLocation,
 } from '~ui/test/trpcIntegrationHarness'
 
 /**
@@ -60,30 +63,24 @@ const renderCard = () => {
 	return view
 }
 
-const openDrawer = async (addressText: string | RegExp) => {
-	const trigger = await screen.findByText(addressText)
-	await userEvent.click(trigger)
-	return screen.findByRole('heading', { name: 'Edit Location' })
-}
+const openDrawer = (addressText: string | RegExp) => openDrawerFor(addressText, 'Edit Location')
 
-const clickSave = async () => {
-	await waitFor(() => {
-		expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled()
+/** The standard test location most tests in this file need - override just the fields that differ. */
+const seedTestLocation = (overrides: Partial<SeedLocation> = {}) =>
+	backend.seedLocation({
+		id: LOCATION.id,
+		name: 'Test Location',
+		city: 'Original City',
+		street1: '123 Main St',
+		countryId: country.id,
+		govDistId: country.govDist[0].id,
+		addressVisibility: 'FULL',
+		...overrides,
 	})
-	await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
-}
 
 describe('VisitCard + AddressDrawer - real cache: edit, save, see it without refreshing, reopen shows latest', () => {
 	it('reflects a city edit in both the visit card and the reopened form, never reverting to the earlier value', async () => {
-		backend.seedLocation({
-			id: LOCATION.id,
-			name: 'Test Location',
-			city: 'Original City',
-			street1: '123 Main St',
-			countryId: country.id,
-			govDistId: country.govDist[0].id,
-			addressVisibility: 'FULL',
-		})
+		seedTestLocation()
 		renderCard()
 
 		// Baseline: the card shows the seeded address.
@@ -125,16 +122,7 @@ describe('AddressDrawer - clearing street1/street2 must actually clear them, not
 	 * because the user just cleared it," so a genuine clear silently reverted to the stale value.
 	 */
 	it('removes the street address and suite number from the display once cleared and saved', async () => {
-		backend.seedLocation({
-			id: LOCATION.id,
-			name: 'Test Location',
-			city: 'Test City',
-			street1: '123 Main St',
-			street2: 'Suite 5',
-			countryId: country.id,
-			govDistId: country.govDist[0].id,
-			addressVisibility: 'FULL',
-		})
+		seedTestLocation({ city: 'Test City', street2: 'Suite 5' })
 		renderCard()
 
 		await openDrawer(/123 main st/i)
@@ -176,15 +164,7 @@ describe('AddressDrawer - a failed save must not corrupt the cache', () => {
 	 * added to the test harness for this), for `location.update`.
 	 */
 	it('does not corrupt the card or edit, and shows a visible error, when the save fails', async () => {
-		backend.seedLocation({
-			id: LOCATION.id,
-			name: 'Test Location',
-			city: 'Original City',
-			street1: '123 Main St',
-			countryId: country.id,
-			govDistId: country.govDist[0].id,
-			addressVisibility: 'FULL',
-		})
+		seedTestLocation()
 		renderCard()
 
 		await openDrawer(/original city/i)
@@ -211,15 +191,7 @@ describe('AddressDrawer - a failed save must not corrupt the cache', () => {
 
 describe('AddressDrawer - address autocomplete does not duplicate city/state into street1', () => {
 	it('writes only the street portion of the picked suggestion, not the full "street, city, state, country" prediction text', async () => {
-		backend.seedLocation({
-			id: LOCATION.id,
-			name: 'Test Location',
-			city: 'Original City',
-			street1: '123 Main St',
-			countryId: country.id,
-			govDistId: country.govDist[0].id,
-			addressVisibility: 'FULL',
-		})
+		seedTestLocation()
 		// No `placeId` on this fixture - `handleAutocompleteSelection` early-returns without one, so the
 		// async geocode-correction lookup (`geo.geoByPlaceId`) never fires. This isolates exactly the
 		// code path that was buggy (the synchronous write on option-submit) from the separate, best-effort
@@ -269,15 +241,7 @@ describe('AddressDrawer - address autocomplete does not duplicate city/state int
 
 describe('AddressDrawer - unsaved changes confirmation (#2090)', () => {
 	it('prompts before discarding an in-progress edit, and reverts to the last-saved value on discard', async () => {
-		backend.seedLocation({
-			id: LOCATION.id,
-			name: 'Test Location',
-			city: 'Original City',
-			street1: '123 Main St',
-			countryId: country.id,
-			govDistId: country.govDist[0].id,
-			addressVisibility: 'FULL',
-		})
+		seedTestLocation()
 		renderCard()
 
 		await openDrawer(/original city/i)
@@ -310,15 +274,7 @@ describe('AddressDrawer - unsaved changes confirmation (#2090)', () => {
 	})
 
 	it('closes without prompting when there are no unsaved changes', async () => {
-		backend.seedLocation({
-			id: LOCATION.id,
-			name: 'Test Location',
-			city: 'Original City',
-			street1: '123 Main St',
-			countryId: country.id,
-			govDistId: country.govDist[0].id,
-			addressVisibility: 'FULL',
-		})
+		seedTestLocation()
 		renderCard()
 
 		await openDrawer(/original city/i)

@@ -2,6 +2,8 @@
 import { MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { QueryClient } from '@tanstack/react-query'
+import { screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { httpLink, TRPCClientError } from '@trpc/client'
 import { type CreateTRPCReact } from '@trpc/react-query'
 import parsePhoneNumberFrom, { isSupportedCountry } from 'libphonenumber-js'
@@ -9,6 +11,7 @@ import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { type ReactElement, type ReactNode, StrictMode } from 'react'
 import { I18nextProvider } from 'react-i18next'
+import { expect } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
 import { generateId } from '@weareinreach/db/lib/idGen'
@@ -1456,6 +1459,83 @@ export const mockMutationFailure = (procedurePath: string) =>
 			{ status: 500 }
 		)
 	)
+
+/**
+ * Clicks whatever trigger shows `triggerText` (a list row, or "Create new") and waits for the drawer's own
+ * heading to confirm it actually opened - shared across every `*.realCache.test.tsx` file since each one's
+ * drawer-opening interaction is identical, only the heading text differs (contact-info drawers title
+ * themselves "Add New X"/"Edit X"; `AddressDrawer` always titles itself "Edit Location").
+ *
+ * `findByText` (not `getByText`) because the target row is often not there yet - the list's own query, and
+ * any invalidate-triggered refetch after a save, are real (fake-network) async round trips here, unlike
+ * per-hook-mocked tests elsewhere that hand back data synchronously. Contact-info drawers' triggers render as
+ * a plain `<a>` with no `href` (a polymorphic `component={Link}` with no navigation target) - an anchor
+ * without `href` gets no implicit ARIA role, so `getByRole('link', ...)` can't find it; matching by visible
+ * text and relying on the click bubbling to the real handler works regardless.
+ */
+export const openDrawerFor = async (
+	triggerText: string | RegExp,
+	headingName: string | RegExp = /Add New|Edit/
+) => {
+	const trigger = await screen.findByText(triggerText)
+	await userEvent.click(trigger)
+	return screen.findByRole('heading', { name: headingName })
+}
+
+/**
+ * Waits for a drawer's header Save button to become enabled, then clicks it. The header Save button is
+ * typically `disabled={!formIsDirty}` - dirty-tracking updates asynchronously relative to the triggering
+ * interaction (a checkbox toggle, a masked-input change), so clicking Save immediately after can land on a
+ * button that hasn't re-enabled yet. Re-queries inside `waitFor` (not a single captured reference) for the
+ * same reason `openDrawerFor` does: the element can get re-rendered while waiting, and clicking a
+ * stale/detached node from an earlier render is a silent no-op that looks identical to a real click but never
+ * reaches the form.
+ */
+export const clickSave = async () => {
+	await waitFor(() => {
+		expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled()
+	})
+	await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
+}
+
+/**
+ * Direct regression test for a live report: click "Create new", the drawer opened but then couldn't be
+ * closed. Root cause: the "Create new" trigger stays mounted across multiple creates (only its own drawer's
+ * open state toggles), and its detail-query id never changed on reopen - harmless before `onSettled` started
+ * patching `forEditDrawer`'s cache, but once that patch exists, a second "Create new" open reused the first
+ * item's own id and read back its already-saved data instead of starting blank. Shared across
+ * Email/Website/SocialMedia's `*.realCache.test.tsx` files (identical steps, only the field being typed into
+ * and its value differ) - `renderList` and `getField` are each file's own local helpers, since the component
+ * under test and its field query differ per contact-info type.
+ */
+export const testCreateNewTriggerReuse = async (
+	renderList: () => void,
+	getField: () => HTMLElement,
+	fillValue: string
+) => {
+	renderList()
+	await screen.findByText(/create new/i)
+
+	await openDrawerFor(/create new/i)
+	await userEvent.type(getField(), fillValue)
+	await clickSave()
+	await waitFor(() => expect(screen.queryByRole('heading', { name: /Add New/ })).not.toBeInTheDocument())
+
+	await openDrawerFor(/^create new$/i)
+	await screen.findByRole('heading', { name: /Add New|Edit/ })
+
+	// Contract 1: the reopened "Create new" form is blank, not the first item's data.
+	await waitFor(() => {
+		expect(getField()).toHaveValue('')
+	})
+
+	// Contract 2: with nothing typed, the drawer is not dirty and Close actually closes it.
+	await userEvent.click(screen.getByRole('button', { name: /close/i }))
+	await waitFor(() => {
+		expect(screen.queryByRole('heading', { name: /Add New|Edit/ })).not.toBeInTheDocument()
+	})
+	expect(screen.queryByText('Unsaved Changes')).not.toBeInTheDocument()
+}
 
 /**
  * Builds a render wrapper backed by a real `QueryClient` (same stale/gc times as production - see

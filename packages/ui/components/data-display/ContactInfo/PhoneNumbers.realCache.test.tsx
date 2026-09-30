@@ -7,10 +7,12 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vites
 import { type AppRouter } from '@weareinreach/api'
 import {
 	buildTrpcTestWrapper,
+	clickSave,
 	createFakeOrgPhoneBackend,
 	createMswServer,
 	LOCATION,
 	mockMutationFailure,
+	openDrawerFor,
 	ORG,
 } from '~ui/test/trpcIntegrationHarness'
 
@@ -63,35 +65,6 @@ const renderList = () => {
 	const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
 	const view = render(<PhoneNumbers edit parentId={ORG.id} />, { wrapper: Wrapper })
 	return view
-}
-
-// PhoneNumbersEdit renders every trigger (each list row, and "Create new") through `PhoneDrawer`'s
-// polymorphic `component={Link}`, and `Link` renders a plain `<a>` with no `href` for this
-// drawer-opening use case - an anchor without `href` gets no implicit ARIA role, so `getByRole('link',
-// ...)` can't find it. `getByText` (the same pattern the existing PhoneNumbers.test.tsx already uses)
-// finds the element by its visible text instead and relies on the click bubbling to the real handler.
-// `findByText` (not `getByText`) because the target row is often not there yet - the list's own
-// query, and any invalidate-triggered refetch after a save, are real (fake-network) async round trips
-// here, unlike the per-hook-mocked tests elsewhere that hand back data synchronously.
-const openDrawerFor = async (name: string | RegExp) => {
-	const trigger = await screen.findByText(name)
-	await userEvent.click(trigger)
-	return screen.findByRole('heading', { name: /Add New|Edit/ })
-}
-
-// The header Save button is `disabled={!formIsDirty}` - react-hook-form's own dirty-tracking updates
-// asynchronously relative to the triggering interaction (a checkbox toggle, a masked-input change),
-// so clicking Save immediately after can land on a button that hasn't re-enabled yet. Waiting for it
-// to become enabled first makes the click meaningful instead of a no-op on a disabled button.
-// Re-queries inside `waitFor` (not a single captured reference) for the same reason `openDrawerFor`
-// does: this element can get re-rendered while waiting, and clicking a stale/detached node from an
-// earlier render is a silent no-op - it looks identical to a real click but never reaches the form,
-// which is exactly what produced a false "drawer didn't close" failure here once already.
-const clickSave = async () => {
-	await waitFor(() => {
-		expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled()
-	})
-	await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
 }
 
 describe('PhoneNumbers + PhoneDrawer - real cache: create, save, see it without refreshing', () => {

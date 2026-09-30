@@ -7,11 +7,14 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vites
 import { type AppRouter } from '@weareinreach/api'
 import {
 	buildTrpcTestWrapper,
+	clickSave,
 	createFakeOrgWebsiteBackend,
 	createMswServer,
 	LOCATION,
 	mockMutationFailure,
+	openDrawerFor,
 	ORG,
+	testCreateNewTriggerReuse,
 } from '~ui/test/trpcIntegrationHarness'
 
 /**
@@ -64,19 +67,6 @@ const renderList = () => {
 	const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
 	const view = render(<Websites edit parentId={ORG.id} />, { wrapper: Wrapper })
 	return view
-}
-
-const openDrawerFor = async (name: string | RegExp) => {
-	const trigger = await screen.findByText(name)
-	await userEvent.click(trigger)
-	return screen.findByRole('heading', { name: /Add New|Edit/ })
-}
-
-const clickSave = async () => {
-	await waitFor(() => {
-		expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled()
-	})
-	await userEvent.click(screen.getByRole('button', { name: /^Save$/ }))
 }
 
 // See Emails.realCache.test.tsx for why role-based queries (not getByLabelText) are required here -
@@ -189,33 +179,11 @@ describe('Websites + WebsiteDrawer - real cache: reopening after a save does not
 
 describe('Websites + WebsiteDrawer - real cache: reusing the Create new trigger for a second item', () => {
 	/**
-	 * See SocialMedia.realCache.test.tsx's identical test for the full incident writeup - same mechanism, same
-	 * fix, same regression coverage, for orgWebsite's `forEditDrawer`.
+	 * See trpcIntegrationHarness.tsx's `testCreateNewTriggerReuse` for the full incident writeup - same
+	 * mechanism, same fix, same regression coverage, for orgWebsite's `forEditDrawer`.
 	 */
-	it('reopening "Create new" after saving one item shows a blank form and closes normally', async () => {
-		renderList()
-		await screen.findByText(/create new/i)
-
-		await openDrawerFor(/create new/i)
-		await userEvent.type(urlField(), 'https://first.example.org')
-		await clickSave()
-		await waitFor(() => expect(screen.queryByRole('heading', { name: /Add New/ })).not.toBeInTheDocument())
-
-		await openDrawerFor(/^create new$/i)
-		await screen.findByRole('heading', { name: /Add New|Edit/ })
-
-		// Contract 1: the reopened "Create new" form is blank, not the first item's data.
-		await waitFor(() => {
-			expect(urlField()).toHaveValue('')
-		})
-
-		// Contract 2: with nothing typed, the drawer is not dirty and Close actually closes it.
-		await userEvent.click(screen.getByRole('button', { name: /close/i }))
-		await waitFor(() => {
-			expect(screen.queryByRole('heading', { name: /Add New|Edit/ })).not.toBeInTheDocument()
-		})
-		expect(screen.queryByText('Unsaved Changes')).not.toBeInTheDocument()
-	})
+	it('reopening "Create new" after saving one item shows a blank form and closes normally', () =>
+		testCreateNewTriggerReuse(renderList, urlField, 'https://first.example.org'))
 })
 
 describe('Websites + WebsiteDrawer - real cache: a failed save must not corrupt the cache', () => {
