@@ -2,7 +2,6 @@ import { cleanNotifications } from '@mantine/notifications'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
-import { http, HttpResponse } from 'msw'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
@@ -11,6 +10,7 @@ import {
 	createFakeOrgWebsiteBackend,
 	createMswServer,
 	LOCATION,
+	mockMutationFailure,
 	ORG,
 } from '~ui/test/trpcIntegrationHarness'
 
@@ -234,20 +234,7 @@ describe('Websites + WebsiteDrawer - real cache: a failed save must not corrupt 
 		await userEvent.clear(urlField())
 		await userEvent.type(urlField(), 'https://updated.example.org')
 
-		server.use(
-			http.post('http://localhost/trpc/orgWebsite.upsert', () =>
-				HttpResponse.json(
-					{
-						error: {
-							message: 'Simulated server failure',
-							code: -32603,
-							data: { code: 'INTERNAL_SERVER_ERROR', httpStatus: 500 },
-						},
-					},
-					{ status: 500 }
-				)
-			)
-		)
+		server.use(mockMutationFailure('orgWebsite.upsert'))
 
 		await clickSave()
 

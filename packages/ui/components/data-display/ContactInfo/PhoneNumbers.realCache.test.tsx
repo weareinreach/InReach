@@ -2,7 +2,6 @@ import { cleanNotifications } from '@mantine/notifications'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
-import { http, HttpResponse } from 'msw'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
@@ -11,6 +10,7 @@ import {
 	createFakeOrgPhoneBackend,
 	createMswServer,
 	LOCATION,
+	mockMutationFailure,
 	ORG,
 } from '~ui/test/trpcIntegrationHarness'
 
@@ -240,20 +240,7 @@ describe('PhoneNumbers + PhoneDrawer - real cache: a failed save must not corrup
 			expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0199')
 		})
 
-		server.use(
-			http.post('http://localhost/trpc/orgPhone.upsert', () =>
-				HttpResponse.json(
-					{
-						error: {
-							message: 'Simulated server failure',
-							code: -32603,
-							data: { code: 'INTERNAL_SERVER_ERROR', httpStatus: 500 },
-						},
-					},
-					{ status: 500 }
-				)
-			)
-		)
+		server.use(mockMutationFailure('orgPhone.upsert'))
 
 		await waitFor(() => {
 			expect(screen.getByRole('button', { name: /^Save$/ })).toBeEnabled()

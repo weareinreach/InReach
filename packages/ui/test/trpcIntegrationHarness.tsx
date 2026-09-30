@@ -1438,6 +1438,26 @@ export const createMswServer = (handlers: ReturnType<typeof createFakeOrgPhoneBa
 	setupServer(...handlers)
 
 /**
+ * A `server.use(...)` override that fails a single tRPC procedure with a real 500 response, matching what a
+ * real backend error looks like on the wire - for a mutation's failure-path regression test (each
+ * contact-info drawer's `onError` handler, #2087). `procedurePath` is the same dotted name used everywhere
+ * else in this harness, e.g. `'orgPhone.upsert'`/`'location.update'`.
+ */
+export const mockMutationFailure = (procedurePath: string) =>
+	http.post(`${BASE_URL}/${procedurePath}`, () =>
+		HttpResponse.json(
+			{
+				error: {
+					message: 'Simulated server failure',
+					code: -32603,
+					data: { code: 'INTERNAL_SERVER_ERROR', httpStatus: 500 },
+				},
+			},
+			{ status: 500 }
+		)
+	)
+
+/**
  * Builds a render wrapper backed by a real `QueryClient` (same stale/gc times as production - see
  * `~ui/lib/trpcClient.ts` - so this genuinely exercises the same staleness window prod code relies on) and
  * the real `trpc.Provider` for whichever `createTRPCReact` instance the test file's

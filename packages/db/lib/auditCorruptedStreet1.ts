@@ -1,24 +1,13 @@
 /**
- * Read-only audit for GH issue #2093 (address autocomplete duplicated city/state/country into street1, fixed
- * in packages/ui/components/data-portal/{AddressDrawer,AddressAutocomplete}/index.tsx). The fix stops new
- * corruption from being written going forward - it does nothing for `street1` values that were already saved
- * corrupted before the fix existed.
- *
- * This does not modify anything. It just reports which `OrgLocation` rows currently have a `street1` where
- * the location's own `city` appears as its own comma-delimited segment - the specific, distinctive
- * fingerprint the bug left behind (e.g. `street1 = "1 Bethany Road, Hazlet, NJ, USA"` for a location whose
- * `city` is "Hazlet"). A plain substring check (does `street1` contain the city name anywhere) is too loose -
- * it also matches completely legitimate streets that happen to be named after their city (e.g. "1091 West
- * South Jordan Parkway" in South Jordan), which are common and not this bug. Requiring the city to be its own
- * `, City,`/`, City$` segment - the shape Google's "main_text, secondary_text" duplication actually produces
- *
- * - Avoids that class of false positive.
+ * Read-only audit for GH issue #2093 (address autocomplete duplicated city/state/country into street1). This
+ * does not modify anything - it just reports which `OrgLocation` rows currently look corrupted and what
+ * they'd become if cleaned (see detectCorruptedStreet1.ts for the detection/fix logic, shared with the actual
+ * cleanup migration).
  *
  * Run with: pnpm --filter @weareinreach/db db:audit-street1
  */
 import { prisma } from '~db/client'
-
-const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+import { findCleanedStreet1 } from '~db/lib/detectCorruptedStreet1'
 
 const run = async () => {
 	const candidates = await prisma.orgLocation.findMany({
@@ -39,17 +28,8 @@ const run = async () => {
 
 	const affected = candidates
 		.map((loc) => {
-			if (!loc.street1 || !loc.city) {
-				return null
-			}
-			const cityAsOwnSegment = new RegExp(`,\\s*${escapeRegex(loc.city)}\\s*(,|$)`, 'i')
-			if (!cityAsOwnSegment.test(loc.street1)) {
-				return null
-			}
-			// Same fix as the UI: everything from the city's own comma-delimited segment onward is
-			// the duplicated "city, state, country" tail - the true street is just what's before it.
-			const cleaned = loc.street1.split(cityAsOwnSegment)[0]?.trim()
-			return { ...loc, cleaned }
+			const cleaned = findCleanedStreet1(loc.street1, loc.city)
+			return cleaned ? { ...loc, cleaned } : null
 		})
 		.filter((loc): loc is NonNullable<typeof loc> => loc !== null)
 

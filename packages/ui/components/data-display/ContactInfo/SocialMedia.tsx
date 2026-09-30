@@ -1,12 +1,13 @@
 import { Group, List, Menu, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next/pages'
-import { useCallback, useRef } from 'react'
+import { useCallback } from 'react'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { Link } from '~ui/components/core/Link'
 import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { SocialMediaDrawer } from '~ui/components/data-portal/SocialMediaDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useMenuItemCreateTrigger } from '~ui/hooks/useMenuItemCreateTrigger'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -118,8 +119,8 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 		[linkToLocation]
 	)
 
-	const createNewTriggerRef = useRef<HTMLButtonElement>(null)
-	const handleCreateNewClick = useCallback(() => createNewTriggerRef.current?.click(), [])
+	const { triggerRef: createNewTriggerRef, handleMenuItemClick: handleCreateNewClick } =
+		useMenuItemCreateTrigger()
 
 	const addOrLink = isLocation ? (
 		<>
@@ -158,16 +159,8 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 						)
 					})}
 					<Menu.Divider />
-					{/* Deliberately just a plain click-through, not a SocialMediaDrawer nested inside this
-					    item - see PhoneNumbers.tsx's identical fix for the full incident writeup. Nesting the
-					    drawer's whole component tree (its own trigger button/anchor, then its portal-rendered
-					    Drawer.Root) inside this Menu.Item put an interactive element inside another
-					    interactive element (invalid HTML) and raced Mantine's Menu's own close-on-item-click
-					    handling against the Drawer's just-opened focus trap - the drawer would visibly open
-					    but nothing inside it (not even Close) would respond to clicks. The real "Create new"
-					    SocialMediaDrawer now lives outside the Menu entirely (see below, visually hidden) and
-					    this item just clicks its trigger by ref, so the drawer's whole subtree never lives
-					    inside the menu's component tree at all. */}
+					{/* See useMenuItemCreateTrigger's doc comment for why this isn't just a
+					    SocialMediaDrawer rendered here directly. */}
 					<Menu.Item key='new' onClick={handleCreateNewClick}>
 						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />

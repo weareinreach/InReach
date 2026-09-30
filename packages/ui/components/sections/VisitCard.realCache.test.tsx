@@ -2,7 +2,6 @@ import { cleanNotifications } from '@mantine/notifications'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
-import { http, HttpResponse } from 'msw'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
@@ -12,6 +11,7 @@ import {
 	createMswServer,
 	GEO_COUNTRIES,
 	LOCATION,
+	mockMutationFailure,
 	ORG,
 } from '~ui/test/trpcIntegrationHarness'
 
@@ -194,20 +194,7 @@ describe('AddressDrawer - a failed save must not corrupt the cache', () => {
 		await userEvent.clear(cityInput)
 		await userEvent.type(cityInput, 'Updated City')
 
-		server.use(
-			http.post('http://localhost/trpc/location.update', () =>
-				HttpResponse.json(
-					{
-						error: {
-							message: 'Simulated server failure',
-							code: -32603,
-							data: { code: 'INTERNAL_SERVER_ERROR', httpStatus: 500 },
-						},
-					},
-					{ status: 500 }
-				)
-			)
-		)
+		server.use(mockMutationFailure('location.update'))
 
 		await clickSave()
 

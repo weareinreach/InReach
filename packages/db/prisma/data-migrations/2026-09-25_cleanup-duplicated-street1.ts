@@ -1,3 +1,4 @@
+import { findCleanedStreet1 } from '~db/lib/detectCorruptedStreet1'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef } from '~db/prisma/jobPreRun'
 
@@ -15,8 +16,6 @@ const jobDef: JobDef = {
 		'it) back out of any street1 that already has it duplicated in, for every row written before the ' +
 		'fix existed. Detection/preview: pnpm --filter @weareinreach/db db:audit-street1.',
 }
-
-const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 /**
  * Job export - this variable MUST be UNIQUE
@@ -38,19 +37,8 @@ export const job20260925_cleanupDuplicatedStreet1 = {
 
 		let updated = 0
 		for (const loc of candidates) {
-			if (!loc.street1 || !loc.city) {
-				continue
-			}
-			// Same detection/fix as db:audit-street1 (packages/db/lib/auditCorruptedStreet1.ts) and the
-			// UI fix itself - the city appearing as its own comma-delimited segment is the fingerprint
-			// this specific bug leaves behind; a plain substring match would also catch legitimate
-			// streets named after their own city (e.g. "South Jordan Parkway" in South Jordan).
-			const cityAsOwnSegment = new RegExp(`,\\s*${escapeRegex(loc.city)}\\s*(,|$)`, 'i')
-			if (!cityAsOwnSegment.test(loc.street1)) {
-				continue
-			}
-			const cleaned = loc.street1.split(cityAsOwnSegment)[0]?.trim()
-			if (!cleaned || cleaned === loc.street1) {
+			const cleaned = findCleanedStreet1(loc.street1, loc.city)
+			if (!cleaned) {
 				continue
 			}
 			await prisma.orgLocation.update({ where: { id: loc.id }, data: { street1: cleaned } })
