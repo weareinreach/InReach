@@ -320,6 +320,7 @@
 		"include-remote": "Jumuisha huduma za mbali",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "Ingiza jiji au msimbo wa zip...",
 		"location-placeholder-searchby": "Tafuta kwa jiji au msimbo wa posta...",
 		"locality-label": "Locality",

@@ -320,6 +320,7 @@
 		"include-remote": "Inclure les services à distance",
 		"local": "Locale",
 		"local-description": "Ressources Locales (18 - 40 kilomètres)",
+		"location-error": "Une erreur s'est produite lors de la recherche de cet emplacement. Veuillez réessayer.",
 		"location-placeholder": "Entrer la ville ou le code postal...",
 		"location-placeholder-searchby": "Chercher par ville ou par code postal...",
 		"locality-label": "Localité",

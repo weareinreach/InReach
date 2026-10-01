@@ -322,6 +322,7 @@
 		"include-remote": "Uwzględnij usługi zdalne",
 		"local": "Lokalny",
 		"local-description": "Zasoby lokalne (11-25 mil)",
+		"location-error": "Coś poszło nie tak podczas szukania tej lokalizacji. Spróbuj ponownie.",
 		"location-placeholder": "Wpisz miasto lub kod pocztowy...",
 		"location-placeholder-searchby": "Szukaj według miasta lub kodu pocztowego...",
 		"locality-label": "Miejscowość",

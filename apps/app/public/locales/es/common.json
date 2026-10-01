@@ -320,6 +320,7 @@
 		"include-remote": "Incluye servicios remotos",
 		"local": "Local",
 		"local-description": "Recursos locales (11 - 25 millas)",
+		"location-error": "Algo salió mal buscando esa ubicación. Por favor, inténtalo de nuevo.",
 		"location-placeholder": "Introduzca la ciudad o código postal...",
 		"location-placeholder-searchby": "Buscar por código postal o ciudad...",
 		"locality-label": "Localidad",

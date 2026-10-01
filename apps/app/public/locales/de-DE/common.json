@@ -320,6 +320,7 @@
 		"include-remote": "Remote-Dienste einbeziehen",
 		"local": "Lokal",
 		"local-description": "Lokale Ressourcen (11 - 25 Meilen)",
+		"location-error": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
 		"location-placeholder": "Stadt oder Postleitzahl eingeben...",
 		"location-placeholder-searchby": "Suche nach Stadt oder Postleitzahl ...",
 		"locality-label": "Ort",
