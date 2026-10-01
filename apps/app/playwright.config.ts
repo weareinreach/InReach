@@ -53,11 +53,26 @@ const config: PlaywrightTestConfig = {
 	 * assumptions that were never written with mobile/tablet in mind. */
 	projects: [
 		{
+			name: 'setup',
+			testMatch: /tests\/crud\/auth\.setup\.ts/,
+		},
+		{
 			name: 'chromium',
 			use: {
 				...devices['Desktop Chrome'],
 			},
-			testIgnore: /device-flow\.spec\.ts/,
+			// `tests/crud/*` runs under its own `crud` project below, authenticated - excluded here so it
+			// doesn't also run logged-out under this project.
+			testIgnore: [/device-flow\.spec\.ts/, /tests\/crud\//],
+		},
+		{
+			name: 'crud',
+			use: {
+				...devices['Desktop Chrome'],
+				storageState: 'tests/crud/.auth/test-user.json',
+			},
+			testMatch: /tests\/crud\/.*\.spec\.ts/,
+			dependencies: ['setup'],
 		},
 		{
 			name: 'mobile',

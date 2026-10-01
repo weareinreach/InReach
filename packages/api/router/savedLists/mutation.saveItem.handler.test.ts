@@ -1,9 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { swallowListOwnershipRejection } from '~api/test/swallowListOwnershipRejection'
-
-swallowListOwnershipRejection()
-
 // `isIdFor` is left real (unmocked) - it's a pure prefix/ULID-shape check, no DB needed, and using the
 // real implementation is what actually proves the org-vs-service branch selection works for real ids.
 vi.mock('@weareinreach/db', async (importOriginal) => {
@@ -12,10 +8,13 @@ vi.mock('@weareinreach/db', async (importOriginal) => {
 		...(actual as object),
 		prisma: { userSavedList: { findUniqueOrThrow: vi.fn() } },
 		getAuditedClient: vi.fn(),
+		// errorHandler.ts checks `error instanceof Prisma.PrismaClientKnownRequestError` - needs a real
+		// class here (not just `{}`) or that check throws a TypeError instead of returning false.
+		Prisma: { PrismaClientKnownRequestError: class PrismaClientKnownRequestError extends Error {} },
 	}
 })
 
-const { prisma, getAuditedClient } = await import('@weareinreach/db')
+const { prisma, getAuditedClient, Prisma } = await import('@weareinreach/db')
 const { default: saveItem } = await import('./mutation.saveItem.handler')
 
 const findListMock = vi.mocked(prisma.userSavedList.findUniqueOrThrow)
@@ -69,25 +68,32 @@ describe('savedLists.saveItem', () => {
 	})
 
 	/**
-	 * NOT exploitable the same way as shareUrl/unShareUrl (#2074), despite the identical unawaited
-	 * `checkListOwnership(...)` call - confirmed here rather than assumed, because this handler's own
-	 * `update()` where clause independently includes `ownedById: ctx.session.user.id`. Prisma's `update` throws
-	 * (record-to-update-not-found) when a non-unique extra where condition doesn't match, so a non-owner's save
-	 * attempt is rejected by the query itself - the unawaited ownership check is redundant/dead here, not a
-	 * live hole. Still worth the `await` for consistency and to avoid an unhandled rejection on every
-	 * legitimate-looking-but-wrong-owner attempt.
+	 * `checkListOwnership(...)` is now properly awaited (previously fire-and-forget, same bug class as #2074's
+	 * shareUrl/unShareUrl - never exploitable here specifically, since `update()`'s own where clause
+	 * independently requires `ownedById` to match, but still worth the `await` so the real, intentional check
+	 * is what rejects a non-owner's save, not an incidental Prisma "not found"). Confirms `update()` is never
+	 * even called once ownership fails - the check now short-circuits first.
 	 */
-	it("7.4c: a non-owner's save is still rejected, because update()'s own where clause requires ownedById to match", async () => {
+	it("7.4c: a non-owner's save is rejected by checkListOwnership before update() ever runs", async () => {
 		findListMock.mockResolvedValueOnce({ id: 'list_1', ownedById: 'someone-else' } as never)
-		updateMock.mockRejectedValueOnce(
-			new Error(
-				'An operation failed because it depends on one or more records that were required but not found. Record to update not found.'
-			)
-		)
 
-		await expect(saveItem({ ctx, input: { id: 'list_1', itemId: ORG_ID } } as never)).rejects.toThrow()
-		expect(updateMock).toHaveBeenCalledWith(
-			expect.objectContaining({ where: { id: 'list_1', ownedById: 'user_owner' } })
+		await expect(saveItem({ ctx, input: { id: 'list_1', itemId: ORG_ID } } as never)).rejects.toMatchObject({
+			code: 'UNAUTHORIZED',
+		})
+		expect(updateMock).not.toHaveBeenCalled()
+	})
+
+	/** A list id that doesn't exist at all surfaces as a clean NOT_FOUND, not a raw Prisma error. */
+	it('a list id that does not exist surfaces as NOT_FOUND, not a raw Prisma error', async () => {
+		const notFoundError = new Prisma.PrismaClientKnownRequestError(
+			'An operation failed because it depends on one or more records that were required but not found.',
+			{ code: 'P2025', clientVersion: 'test' }
 		)
+		;(notFoundError as unknown as { code: string }).code = 'P2025'
+		findListMock.mockRejectedValueOnce(notFoundError)
+
+		await expect(
+			saveItem({ ctx, input: { id: 'list_missing', itemId: ORG_ID } } as never)
+		).rejects.toMatchObject({ code: 'NOT_FOUND' })
 	})
 })
