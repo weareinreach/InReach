@@ -1,17 +1,12 @@
-import { expect, type Page, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+
+import { dismissAntiHate } from './helpers'
 
 /**
  * Section 4 of docs/Testing/site-chrome-test-inventory.md - the footer (`Footer`,
  * packages/ui/components/sections/Footer.tsx, rendered unconditionally in `_app.tsx`), against the real
  * running app.
  */
-const dismissAntiHate = async (page: Page) => {
-	const dialog = page.locator('[role="dialog"]').filter({ hasText: 'Anti-hate commitment' })
-	if (await dialog.isVisible().catch(() => false)) {
-		await dialog.getByRole('button', { name: 'Accept' }).dispatchEvent('click')
-		await expect(dialog).not.toBeVisible()
-	}
-}
 
 test.beforeEach(async ({ context }) => {
 	await context.clearCookies()
@@ -149,17 +144,18 @@ test('4.11: the footer column layout adapts between mobile and desktop without o
 	// Side-by-side columns on desktop - Connect should be to the right of Support, same row.
 	expect(desktopConnectBox?.x).toBeGreaterThan(desktopSupportBox?.x ?? 0)
 
-	// Correctly fails: confirms a real, high-impact bug, not just a layout nit. Below (and
-	// including) the `sm` breakpoint (768px), the entire footer container collapses to a 0x0
-	// bounding box - not merely restyled or reflowed, genuinely zero width and height - confirmed
-	// directly across 768px, 600px, and 400px, and on both `/` and the search results page. Root
-	// cause not fully traced to a specific rule (`Footer.tsx`'s own CSS module has no `sm`-keyed
-	// rule at all - the collapse appears to originate further up the layout tree), but the effect
-	// itself is unambiguous and easy to reproduce. Filed as
-	// https://github.com/weareinreach/InReach/issues/2070.
+	// By design, the footer is hidden on true mobile - its information is surfaced elsewhere there
+	// (e.g. the mobile nav's own "Support" tab). It should still show at tablet widths and up, down
+	// to (and including) the `sm` breakpoint itself (768px) - confirmed via #2070/#2069's shared
+	// off-by-one: `max-width: $mantine-breakpoint-sm` is inclusive of exactly 768px, so without the
+	// `calc(... - 1px)` adjustment the footer also disappeared at the tablet boundary itself, not
+	// just below it.
+	await page.setViewportSize({ width: 768, height: 1200 })
+	const supportHeadingTablet = footer.getByText('Support', { exact: true })
+	const connectHeadingTablet = footer.getByText('Connect', { exact: true })
+	await expect(supportHeadingTablet).toBeVisible()
+	await expect(connectHeadingTablet).toBeVisible()
+
 	await page.setViewportSize({ width: 400, height: 1200 })
-	const supportHeadingMobile = footer.getByText('Support', { exact: true })
-	const connectHeadingMobile = footer.getByText('Connect', { exact: true })
-	await expect(supportHeadingMobile).toBeVisible()
-	await expect(connectHeadingMobile).toBeVisible()
+	await expect(footer).toBeHidden()
 })

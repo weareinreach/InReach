@@ -1,20 +1,13 @@
 import { expect, type Page, test } from '@playwright/test'
 
+import { antiHateDialog, dismissAntiHate } from './helpers'
+
 /**
  * Section 2 of docs/Testing/site-chrome-test-inventory.md - the analytics/cookie consent banner
  * (`react-hook-consent`, wired in apps/app/src/providers/index.tsx), against the real running app. Persisted
  * to `localStorage['react-hook-consent']` as `{"consent": string[], "hash": string, "updated": string}` -
  * confirmed directly, not assumed from the library's docs.
  */
-
-const antiHateDialog = (page: Page) =>
-	page.locator('[role="dialog"]').filter({ hasText: 'Anti-hate commitment' })
-
-const dismissAntiHate = async (page: Page) => {
-	const dialog = antiHateDialog(page)
-	await dialog.getByRole('button', { name: 'Accept' }).click()
-	await expect(dialog).not.toBeVisible()
-}
 
 type StoredConsent = { consent: string[]; hash: string; updated: string }
 
@@ -184,36 +177,11 @@ test('2.10: on a fresh visit, the anti-hate modal and the consent banner can bot
 	}
 })
 
-test("2.10b: on a mobile viewport, the consent banner does not overlap the anti-hate modal's Accept button", async ({
-	page,
-}) => {
-	// Correctly fails: confirms a real bug, distinct from 2.10 (which passes - no overlap at a
-	// desktop width). At a mobile viewport, the anti-hate modal renders as a fixed-height
-	// (`AntiHateMessage.module.css`: 340px) sheet vertically centered in the available space, and
-	// the consent banner (also fixed near the bottom) can end up overlapping its Accept button
-	// specifically - confirmed directly via bounding boxes at 400px width: the banner's box starts
-	// (y=560) before the Accept button's box ends (y=604), covering most of its height. This isn't
-	// just a visual nit - it can make the button genuinely hard or impossible to tap on a real
-	// phone, and is exactly what made `.click()` (without `force: true`) on this button flaky in
-	// other tests at this viewport size. Filed as
-	// https://github.com/weareinreach/InReach/issues/2068.
-	await page.setViewportSize({ width: 400, height: 900 })
-	await page.goto('/')
-
-	const acceptButton = antiHateDialog(page).getByRole('button', { name: 'Accept' })
-	const banner = page.locator('.rhc-banner')
-	await expect(acceptButton).toBeVisible()
-	await expect(banner).toBeVisible()
-
-	const acceptBox = await acceptButton.boundingBox()
-	const bannerBox = await banner.boundingBox()
-	expect(acceptBox).toBeTruthy()
-	expect(bannerBox).toBeTruthy()
-	if (acceptBox && bannerBox) {
-		const overlapsVertically =
-			acceptBox.y < bannerBox.y + bannerBox.height && bannerBox.y < acceptBox.y + acceptBox.height
-		const overlapsHorizontally =
-			acceptBox.x < bannerBox.x + bannerBox.width && bannerBox.x < acceptBox.x + acceptBox.width
-		expect(overlapsVertically && overlapsHorizontally).toBe(false)
-	}
-})
+// 2.10b ("on a mobile viewport, the consent banner does not overlap the anti-hate modal's Accept
+// button") removed - #2068, the bug it was written to confirm, was reviewed and explicitly closed
+// as will-not-address: the overlap only ever affects a first-time mobile visitor, only until they
+// make a consent choice (never recurs after), and a real fix (responsive repositioning, or a
+// proper blocking scrim with correct inert/focus handling) was judged disproportionate to that
+// one-time, largely-recoverable friction. A permanently-red test confirming an accepted, won't-fix
+// state has no ongoing value here - removed rather than left failing or rewritten to assert the
+// overlap as "expected."
