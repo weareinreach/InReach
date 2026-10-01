@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/nextjs'
 import { createNextApiHandler } from '@trpc/server/adapters/next'
 
 import { appRouter, createContext } from '@weareinreach/api'
-import { getSkipCache } from '@weareinreach/api/lib/context'
+import { getCacheControlHeader, getSkipCache } from '@weareinreach/api/lib/context'
 import { createLoggerInstance } from '@weareinreach/util/logger'
 
 const log = createLoggerInstance('tRPC')
@@ -43,18 +43,16 @@ export default createNextApiHandler({
 	responseMeta(opts) {
 		const { ctx, errors, type } = opts
 
-		const shouldSkip = getSkipCache(ctx?.res)
-		const allOk = errors.length === 0
-		const isQuery = type === 'query'
+		const cacheControl = getCacheControlHeader({
+			hasSession: Boolean(ctx?.session),
+			shouldSkip: getSkipCache(ctx?.res),
+			allOk: errors.length === 0,
+			isQuery: type === 'query',
+		})
 
-		if (ctx?.res && !shouldSkip && allOk && isQuery) {
+		if (ctx?.res && cacheControl) {
 			console.debug('[tRPC] Setting Cache headers in response.')
-			const ONE_DAY_IN_SECONDS = 60 * 60 * 24
-			return {
-				headers: {
-					'cache-control': `s-maxage=1, public, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
-				},
-			}
+			return { headers: { 'cache-control': cacheControl } }
 		}
 		return {}
 	},
