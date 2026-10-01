@@ -320,6 +320,7 @@
 		"include-remote": "Mete sèvis aleka",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "Antre nan vil la oswa kòd postal...",
 		"location-placeholder-searchby": "Chèche pa vil oswa kòd postal...",
 		"locality-label": "Locality",

@@ -320,6 +320,7 @@
 		"include-remote": "شامل خدمات از راه دور",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "شهر یا کد پستی را وارد کنید...",
 		"location-placeholder-searchby": "جستجو بر اساس شهر یا کد پستی...",
 		"locality-label": "Locality",

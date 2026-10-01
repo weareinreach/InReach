@@ -320,6 +320,7 @@
 		"include-remote": "Sluit afgeleë dienste in",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "Voer stad of poskode in...",
 		"location-placeholder-searchby": "Soek volgens stad of poskode...",
 		"locality-label": "Locality",

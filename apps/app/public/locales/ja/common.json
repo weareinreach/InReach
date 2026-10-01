@@ -319,6 +319,7 @@
 		"include-remote": "リモートサービスを含む",
 		"local": "ローカル",
 		"local-description": "ローカルリソース (11 - 25 マイル)",
+		"location-error": "場所を検索中に問題が発生しました。もう一度やり直してください。",
 		"location-placeholder": "都市または郵便番号を入力...",
 		"location-placeholder-searchby": "都市または郵便番号で検索...",
 		"locality-label": "地域",
