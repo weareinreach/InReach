@@ -1,19 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { swallowListOwnershipRejection } from '~api/test/swallowListOwnershipRejection'
-
-swallowListOwnershipRejection()
-
 vi.mock('@weareinreach/db', async (importOriginal) => {
 	const actual = await importOriginal()
 	return {
 		...(actual as object),
 		prisma: { userSavedList: { findUniqueOrThrow: vi.fn() } },
 		getAuditedClient: vi.fn(),
+		// errorHandler.ts checks `error instanceof Prisma.PrismaClientKnownRequestError` - needs a real
+		// class here (not just `{}`) or that check throws a TypeError instead of returning false.
+		Prisma: { PrismaClientKnownRequestError: class PrismaClientKnownRequestError extends Error {} },
 	}
 })
 
-const { prisma, getAuditedClient } = await import('@weareinreach/db')
+const { prisma, getAuditedClient, Prisma } = await import('@weareinreach/db')
 const { default: deleteItem } = await import('./mutation.deleteItem.handler')
 
 const findListMock = vi.mocked(prisma.userSavedList.findUniqueOrThrow)
@@ -46,14 +45,32 @@ describe('savedLists.deleteItem', () => {
 		)
 	})
 
-	/** Same redundant-but-safe pattern confirmed for saveItem in mutation.saveItem.handler.test.ts's 7.4c. */
-	it("7.7: a non-owner's delete is still rejected via update()'s own ownedById where clause", async () => {
+	/**
+	 * `checkListOwnership(...)` is now properly awaited (previously fire-and-forget, same bug class as #2074).
+	 * Not exploitable here specifically even before the fix, since `update()`'s own where clause independently
+	 * requires `ownedById` to match - but now the real check is what rejects a non-owner's delete, and
+	 * `update()` is never even called.
+	 */
+	it("7.7: a non-owner's delete is rejected by checkListOwnership before update() ever runs", async () => {
 		findListMock.mockResolvedValueOnce({ id: 'list_1', ownedById: 'someone-else' } as never)
-		updateMock.mockRejectedValueOnce(new Error('Record to update not found.'))
 
-		await expect(deleteItem({ ctx, input: { id: 'list_1', itemId: ORG_ID } } as never)).rejects.toThrow()
-		expect(updateMock).toHaveBeenCalledWith(
-			expect.objectContaining({ where: { id: 'list_1', ownedById: 'user_owner' } })
+		await expect(deleteItem({ ctx, input: { id: 'list_1', itemId: ORG_ID } } as never)).rejects.toMatchObject(
+			{ code: 'UNAUTHORIZED' }
 		)
+		expect(updateMock).not.toHaveBeenCalled()
+	})
+
+	/** A list id that doesn't exist at all surfaces as a clean NOT_FOUND, not a raw Prisma error. */
+	it('a list id that does not exist surfaces as NOT_FOUND, not a raw Prisma error', async () => {
+		const notFoundError = new Prisma.PrismaClientKnownRequestError(
+			'An operation failed because it depends on one or more records that were required but not found.',
+			{ code: 'P2025', clientVersion: 'test' }
+		)
+		;(notFoundError as unknown as { code: string }).code = 'P2025'
+		findListMock.mockRejectedValueOnce(notFoundError)
+
+		await expect(
+			deleteItem({ ctx, input: { id: 'list_missing', itemId: ORG_ID } } as never)
+		).rejects.toMatchObject({ code: 'NOT_FOUND' })
 	})
 })

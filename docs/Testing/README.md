@@ -42,8 +42,7 @@ data-portal-specific ones - see `lib/testDashboard.ts` for exactly how each row 
   `SearchBox`/`SearchResultCard`/etc. (see the search inventory doc)
 - **Edit / Data-Portal** - three rows: `packages/ui`'s data-portal-specific components,
   `packages/api`'s entire suite (all of it - not "some"), and the `tests/crud` Playwright suite
-  (currently empty, so this row will show a failed run with "No tests found" until the auth
-  fixture exists - that's accurate, not a bug in the dashboard)
+  (now has real specs, running against the authenticated `crud` project - see "How It Works" below)
 
 Each row writes to its own isolated report directory - `packages/ui/reports/<row>/{results,coverage}`
 via Vitest's `--outputFile.html`/`--coverage.reportsDirectory` flags, `apps/app/reports/<row>/results`
@@ -95,7 +94,8 @@ gotcha behind them).
    `packages/api` handler/permission tests)
 2. `pnpm test:e2e` - full Playwright suite (`apps/app`, both `tests/search/` and `tests/crud/`)
 3. `pnpm test:e2e:search` - just the search/view e2e suite
-4. `pnpm test:e2e:crud` - just the CRUD/edit e2e suite (currently empty - see the Plan section)
+4. `pnpm test:e2e:crud` - just the CRUD/edit e2e suite (runs the `setup` + `crud` Playwright
+   projects - see "The auth fixture" in the Plan section)
 5. `pnpm test && pnpm test:e2e` - everything, one after another
 
 **See the test report and code coverage together, for both Vitest suites (one run produces
@@ -191,13 +191,11 @@ browser session isn't part of this setup):
       originally tried `findByRole('option')` and failed exactly this way before being rewritten.
 - **End-to-end tests**: `apps/app/playwright.config.ts` + `apps/app/tests/**/*.spec.ts`, split
   into `tests/search/` (public search/view, no auth) and `tests/crud/` (authenticated
-  data-entry/edit, currently empty - see the Plan below) per the read/write split. Run
-  everything with `pnpm test:e2e` (or `pnpm test:e2e:ui` for Playwright's UI mode), or just
-  one suite with `pnpm test:e2e:search` / `pnpm test:e2e:crud`. Chromium only for now - add
-  firefox/webkit later if a real cross-browser bug ever shows up, not preemptively. Two specs
-  exist in `tests/search/` today (`home.spec.ts`, `visual.spec.ts` - see below) - no CRUD/edit
-  e2e coverage and no authenticated session fixture exist yet; both are the near-term plan
-  below.
+  data-entry/edit, runs under its own `crud` Playwright project - see "The auth fixture" below)
+  per the read/write split. Run everything with `pnpm test:e2e` (or `pnpm test:e2e:ui` for
+  Playwright's UI mode), or just one suite with `pnpm test:e2e:search` / `pnpm test:e2e:crud`.
+  Chromium only for now - add firefox/webkit later if a real cross-browser bug ever shows up,
+  not preemptively.
 - **Page-level visual regression**: `apps/app/tests/search/visual.spec.ts`, run via
   `pnpm test:e2e:visual`. Uses Playwright's built-in `toHaveScreenshot()` against real,
   assembled pages - this is the layer that catches a full-page layout/composition bug Chromatic
@@ -301,35 +299,66 @@ around that split rather than by page/route:
   (both specs), or just `pnpm test:e2e:visual` for the screenshot suite alone.
 - **`tests/crud/`** - authenticated data-entry/edit flows, organized further by entity (org,
   location, etc. - matching where the recent real bugs have actually been: title/description
-  save, phone number CRUD). Currently empty - blocked on the auth fixture below. Each test
-  needs to create its own fixture data and clean up after itself, since these tests mutate
-  state - slower and more setup-heavy than the search suite, but that isolation is required
-  once tests are writing data. Run in isolation with `pnpm test:e2e:crud`.
+  save, phone number CRUD). Each test needs to create its own fixture data and clean up after
+  itself, since these tests mutate state - slower and more setup-heavy than the search suite,
+  but that isolation is required once tests are writing data. Run in isolation with
+  `pnpm test:e2e:crud`.
 
 Why this split and not one flat `tests/` directory: read-only search tests can share fixtures
 and run in full parallel safely; CRUD tests can't (test A's writes are test B's stale read).
 Mixing both under one flat suite drags the fast, safe read-only tests down to the slower,
 stateful pace the write tests need. The two `pnpm test:e2e:*` scripts also mean you're not
-stuck running the slower CRUD suite (once it exists) just to check a search-only change, or
-vice versa.
+stuck running the slower CRUD suite just to check a search-only change, or vice versa.
 
-**Known gap blocking `tests/crud/`**: there's no authenticated-session fixture for Playwright
-yet (no `storageState` setup, no login helper). That's the first piece of infrastructure
-needed before any CRUD e2e spec can be written - solving it once (e.g. a Playwright global
-setup that logs in and saves `storageState`, reused via `test.use({ storageState })`) unblocks
-every CRUD spec after it, rather than each spec reinventing auth.
+### The auth fixture
+
+`tests/crud/` needs a real authenticated session, and this app's session validation makes that
+harder than a typical NextAuth app: every session check (not just login) re-verifies the user's
+access token against live Cognito (`packages/auth/next-auth/auth-options.ts`'s `jwt` callback
+calls `decodeCognitoAccessJwt`, a real cryptographic JWKS check) - there's no way to fake a
+session that survives even one page load without a real, confirmed Cognito account behind it.
+
+**The fixture, concretely:**
+
+- **The account**: a single, dedicated test user - `diana+local-test@inreach.org` - created the
+  same way a real signup does (`packages/api/router/user/mutation.create.handler.ts`, a
+  one-time provisioning run via `ZCreateSchema` + the handler directly, not through the browser),
+  which creates both the local `User` row and a real Cognito user via `signUp()` (sends a real
+  confirmation email - confirmed once by hand). It's a real account in the shared Cognito pool,
+  clearly named (`name: 'Playwright Test Account'`), with no special permissions.
+- **Credentials**: `PLAYWRIGHT_TEST_USER_EMAIL` / `PLAYWRIGHT_TEST_USER_PASSWORD` in `.env`
+  (gitignored; placeholders in the root `.env.example`).
+- **Login, in `tests/crud/auth.setup.ts`**: hits NextAuth's credentials callback directly
+  (`POST /api/auth/callback/cognito` - note the path is the provider's `id` ("cognito"), not the
+  generic `credentials`), rather than driving the login modal's UI. Two gotchas hit while
+  building this, worth knowing before touching it again:
+  - The callback path must match the provider's configured `id` (`cognitoCredentialProvider`'s
+    `id: 'cognito'` in `packages/auth/providers/cognito.ts`), not the provider type.
+    `/api/auth/callback/credentials` 400s with "This action with HTTP POST is not supported."
+  - Form values must be properly URL-encoded. A literal `+` in the test email decodes as a space
+    under `application/x-www-form-urlencoded` if sent raw - Playwright's own `form:` option
+    encodes correctly by default, but a manual `curl -d` (vs. `--data-urlencode`) reproduction of
+    this will silently mangle the email and produce a generic "Incorrect username or password"
+    error that has nothing to do with the real password.
+- **Reuse**: `playwright.config.ts` has a `setup` project (runs `auth.setup.ts` once) and a
+  `crud` project (`dependencies: ['setup']`, `storageState: 'tests/crud/.auth/test-user.json'`)
+  - every spec under `tests/crud/` picks up the cached session automatically; nothing per-spec.
+    The `chromium` project explicitly excludes `tests/crud/*` so those specs don't also run
+    logged-out under it.
+
+**First real spec**: `tests/crud/saved-lists.spec.ts`, written alongside the fix for a real bug
+(`/account/saved/[listId].tsx` crashed instead of redirecting when `savedList.getById` resolved
+to `null` for a nonexistent/foreign list id) - confirmed to actually fail against the pre-fix
+code before being trusted as a real regression test, not just written and assumed correct.
 
 **Suggested order of work**, following the "add coverage where you're already touching real
 bugs" pattern rather than a big up-front push:
 
-1. Build the Playwright auth fixture (unblocks everything else in `tests/crud/`).
-2. ~~Move `home.spec.ts` into `tests/search/`~~ done - add one or two more search-surface
-   specs from the inventory above.
-3. Add `tests/crud/org.spec.ts` covering the save/see-without-refresh/reopen contract at the
+1. Add `tests/crud/org.spec.ts` covering the save/see-without-refresh/reopen contract at the
    e2e level for the org edit page - the same contract already covered at the component level
    in `orgEditFormDefaultValues.test.tsx` and the real-cache harness, but from a real browser
    against a real (or realistically seeded) backend.
-4. Revisit CI wiring (see Known Issues) once there are enough CRUD specs to justify the
+2. Revisit CI wiring (see Known Issues) once there are enough CRUD specs to justify the
    Postgres/Redis infrastructure decision.
 
 ## Known Issues / Gotchas
@@ -351,8 +380,6 @@ bugs" pattern rather than a big up-front push:
   up is a separate, bigger piece of infrastructure work than adding the local test suite
   itself, worth doing once there are enough e2e specs (particularly `tests/crud/` specs) to
   justify it.
-- **No Playwright auth fixture yet.** Blocks any authenticated/CRUD e2e spec - see the Plan
-  section above.
 - **Real-cache harness is per-repo convention, not enforced by tooling.** Nothing fails CI if
   a new create/edit test uses only per-hook mocks and skips the save/reopen contract - it
   relies on this doc and code review to catch it until/unless it's worth automating (e.g. a
@@ -394,5 +421,5 @@ bugs" pattern rather than a big up-front push:
 
 ---
 
-_Last verified against code: 2026-09-21. If you change any file listed above, update this
+_Last verified against code: 2026-10-01. If you change any file listed above, update this
 doc in the same PR and bump this date._

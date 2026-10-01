@@ -1,15 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { swallowListOwnershipRejection } from '~api/test/swallowListOwnershipRejection'
-
-swallowListOwnershipRejection()
-
 vi.mock('@weareinreach/db', () => ({
 	prisma: { userSavedList: { findUniqueOrThrow: vi.fn() } },
 	getAuditedClient: vi.fn(),
+	// errorHandler.ts checks `error instanceof Prisma.PrismaClientKnownRequestError` - needs a real
+	// class here (not just `{}`) or that check throws a TypeError instead of returning false.
+	Prisma: { PrismaClientKnownRequestError: class PrismaClientKnownRequestError extends Error {} },
 }))
 
-const { prisma, getAuditedClient } = await import('@weareinreach/db')
+const { prisma, getAuditedClient, Prisma } = await import('@weareinreach/db')
 const { default: unShareUrl } = await import('./mutation.unShareUrl.handler')
 
 const findListMock = vi.mocked(prisma.userSavedList.findUniqueOrThrow)
@@ -46,5 +45,24 @@ describe('savedLists.unShareUrl', () => {
 		updateMock.mockResolvedValueOnce({ id: 'list_1', name: "Someone Else's List", sharedLinkKey: null })
 
 		await expect(unShareUrl({ ctx, input: { id: 'list_1' } } as never)).rejects.toThrow()
+	})
+
+	/**
+	 * Confirms `checkListOwnership`'s `findUniqueOrThrow` miss (a raw Prisma P2025) now comes out through
+	 * `handleError` as a clean `NOT_FOUND`, instead of bubbling up as an unhandled, unmapped Prisma error.
+	 */
+	it('a list id that does not exist surfaces as NOT_FOUND, not a raw Prisma error', async () => {
+		// The mocked class above is a plain `class extends Error {}` - it doesn't actually assign `.code`
+		// from the options object the way real Prisma errors do, so it's set explicitly here.
+		const notFoundError = new Prisma.PrismaClientKnownRequestError(
+			'An operation failed because it depends on one or more records that were required but not found.',
+			{ code: 'P2025', clientVersion: 'test' }
+		)
+		;(notFoundError as unknown as { code: string }).code = 'P2025'
+		findListMock.mockRejectedValueOnce(notFoundError)
+
+		await expect(unShareUrl({ ctx, input: { id: 'list_missing' } } as never)).rejects.toMatchObject({
+			code: 'NOT_FOUND',
+		})
 	})
 })
