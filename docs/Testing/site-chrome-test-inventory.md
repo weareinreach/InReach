@@ -70,11 +70,14 @@ not a test to write against current behavior.
 | 3a.5 | Viewport at a tablet width (e.g. iPad portrait, 768px+) | Page renders              | Desktop nav bar shows, not the mobile tab bar - the navbar has no separate "tablet" state, `sm` is the one cutover point, so tablet always gets the desktop nav by design. This is a confirmation case, not a gap: verify tablet width actually looks right in the desktop nav (enough horizontal room for logo + menu + safety exit), since it's real screen space that's narrower than a typical desktop | Playwright | Covered (`tests/site-chrome/navbar-desktop.spec.ts`)                                                                                                                                                                               |
 | 3a.6 | Viewport exactly at the `sm` boundary (768px)           | Page renders              | Confirm which side of the boundary wins (desktop nav shown or mobile nav shown) - worth a dedicated boundary test since §3b's mobile nav uses the same cutover and an off-by-one between the two could leave both or neither visible                                                                                                                                                                       | Playwright | Covered (`tests/site-chrome/navbar-desktop.spec.ts`) - **failing, confirms a real bug, filed as [#2069](https://github.com/weareinreach/InReach/issues/2069)**                                                                     |
 
-**Extra finding while writing this section, filed as [#2068](https://github.com/weareinreach/InReach/issues/2068)**:
+**Extra finding while writing this section, filed as [#2068](https://github.com/weareinreach/InReach/issues/2068), closed will-not-address**:
 on a mobile viewport, the cookie-consent banner (§2) visually overlaps the anti-hate modal's (§1)
-own Accept button, which can make it genuinely hard to tap on a real phone - covered in
-`tests/site-chrome/cookie-consent.spec.ts`'s case `2.10b`, since it's really about §2's banner, not
-this section.
+own Accept button, which can make it harder to tap on a real phone. Reviewed and accepted as-is:
+the overlap only affects a first-time mobile visitor, and only until they make a consent choice
+(it never recurs after), so the fix cost (responsive repositioning, or a proper blocking scrim with
+correct inert/focus handling) wasn't judged worth it for that one-time, largely-recoverable
+friction. The regression test that confirmed this (`tests/site-chrome/cookie-consent.spec.ts`'s
+`2.10b`) was removed rather than left permanently failing.
 
 ### 3b. Mobile nav (`MobileNav`, shown < `sm` breakpoint)
 

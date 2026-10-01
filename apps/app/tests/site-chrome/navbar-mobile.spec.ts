@@ -1,4 +1,6 @@
-import { expect, type Page, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+
+import { dismissAntiHate } from './helpers'
 
 /**
  * Section 3b of docs/Testing/site-chrome-test-inventory.md - the mobile nav (`MobileNav`,
@@ -8,14 +10,6 @@ import { expect, type Page, test } from '@playwright/test'
  * environment, unrelated to anything this section is testing.
  */
 test.use({ viewport: { width: 400, height: 900 } })
-
-const dismissAntiHate = async (page: Page) => {
-	const dialog = page.locator('[role="dialog"]').filter({ hasText: 'Anti-hate commitment' })
-	if (await dialog.isVisible().catch(() => false)) {
-		await dialog.getByRole('button', { name: 'Accept' }).dispatchEvent('click')
-		await expect(dialog).not.toBeVisible()
-	}
-}
 
 test.beforeEach(async ({ context }) => {
 	await context.clearCookies()

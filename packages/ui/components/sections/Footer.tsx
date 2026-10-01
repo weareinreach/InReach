@@ -108,7 +108,11 @@ export const Footer = () => {
 									defaults='Seek LGBTQ+ resources.<br/>Reach safety.<br/>Find belonging.'
 								/>
 							</Title>
-							<a href='https://vercel.com/?utm_source=in-reach&utm_campaign=oss' style={{ margin: 0 }}>
+							<Link
+								href='https://vercel.com/?utm_source=in-reach&utm_campaign=oss'
+								external
+								style={{ margin: 0 }}
+							>
 								<Image
 									src={Vercel}
 									alt={t('powered-by-vercel', { defaultValue: 'Powered by Vercel' })}
@@ -116,7 +120,7 @@ export const Footer = () => {
 									height={48}
 									style={{ marginBottom: 0, marginLeft: -2, marginTop: 8 }}
 								/>
-							</a>
+							</Link>
 						</Stack>
 						<Text className={classes.copyrightText}>
 							{t('inreach-copyright', {

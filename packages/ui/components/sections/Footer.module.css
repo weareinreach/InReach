@@ -13,7 +13,7 @@
 	background-color: var(--ir-color-tertiary-footer);
 	padding: rem(40px) 0;
 }
-@media (max-width: $mantine-breakpoint-sm) {
+@media (max-width: calc($mantine-breakpoint-sm - 1px)) {
 	.background {
 		display: none;
 	}
