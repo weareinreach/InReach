@@ -33,7 +33,7 @@ const SortResults = dynamic(
 
 const QuerySchema = z.object({ country: z.string().length(2) })
 
-const notBlank = (value?: string) => !!value && value.length > 0
+const notBlank = (value?: string): value is string => !!value && value.length > 0
 
 const OutsideServiceArea = () => {
 	const [loading, setLoading] = useState(false)
@@ -43,6 +43,13 @@ const OutsideServiceArea = () => {
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 	const isAdvanced = true
 	const router = useRouter<'/search/intl/[country]'>()
+
+	// Single source of truth for the normalized code, reused everywhere below - `proxy.ts` already
+	// redirects a mistyped-case URL to the canonical uppercase form before this page ever renders
+	// (see #2067), but this stays case-safe and blank-safe on its own too rather than depending on
+	// that redirect alone for correctness.
+	const countryCode =
+		typeof router.query.country === 'string' ? router.query.country.toUpperCase() : undefined
 
 	useEffect(() => {
 		setMounted(true)
@@ -54,20 +61,17 @@ const OutsideServiceArea = () => {
 	}, [router.isReady, loading])
 
 	useEffect(() => {
-		if (mounted && router.isReady && typeof router.query.country === 'string') {
-			const country = router.query.country.toUpperCase()
-			if (['US', 'CA', 'MX'].includes(country)) {
-				void router.replace({
-					pathname: '/search/[...params]',
-					query: { params: [country, '0', '0', '0', 'mi'] },
-				})
-			}
+		if (mounted && router.isReady && countryCode && ['US', 'CA', 'MX'].includes(countryCode)) {
+			void router.replace({
+				pathname: '/search/[...params]',
+				query: { params: [countryCode, '0', '0', '0', 'mi'] },
+			})
 		}
-	}, [mounted, router.isReady, router.query.country, router])
+	}, [mounted, router.isReady, countryCode, router])
 
 	const { data } = api.organization.getIntlCrisis.useQuery(
-		{ cca2: router.query.country ?? '' },
-		{ enabled: notBlank(router.query.country) }
+		{ cca2: countryCode ?? '' },
+		{ enabled: notBlank(countryCode) }
 	)
 	useEffect(() => {
 		if (data) {
@@ -125,7 +129,11 @@ const OutsideServiceArea = () => {
 						<Title order={2}>
 							<Skeleton visible={loading}>
 								{t('common:crisis-support.outside-service-area', {
-									country: countryTranslate.of(router.query.country ?? ''),
+									// `Intl.DisplayNames.of()` requires an uppercase region code and throws for a
+									// blank one (confirmed directly: `.of('')` throws `invalid_argument`,
+									// `.of('de')` silently returns 'de' instead of resolving it) - `countryCode` is
+									// already uppercase, so only the blank case needs guarding here.
+									country: notBlank(countryCode) ? countryTranslate.of(countryCode) : '',
 								})}
 							</Skeleton>
 						</Title>
