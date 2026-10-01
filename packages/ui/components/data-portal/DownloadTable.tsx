@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useMemo, useState } from 'react'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
+import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
 import { CsvDownload } from '~ui/components/data-portal/CsvDownload'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -192,7 +193,7 @@ export const DownloadTable = () => {
 
 	const userPerms = session?.user?.permissions || []
 	const canViewDownloads = userPerms.some((p) =>
-		['root', 'sysadmin', 'system', 'dataPortalAdmin', 'dataPortalManager'].includes(p)
+		[...ROOT_TIER_PERMISSIONS, 'dataPortalAdmin', 'dataPortalManager'].includes(p)
 	)
 
 	const sections = useMemo<DownloadTableRow[]>(() => {
