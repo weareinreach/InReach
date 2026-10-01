@@ -69,13 +69,19 @@ describe('ServiceFilter', () => {
 		// the time userEvent's click resolves - the modal container can still be genuinely
 		// empty for a tick, confirmed by first trying getByLabelText here and seeing an empty
 		// `<div class="mantine-Modal-root" />` in the failure's DOM dump.
+		// The category accordion starts collapsed (no `defaultValue`/`value` on <Accordion>), same
+		// as real usage - a user always expands it before a sub-service checkbox is even visible
+		// to click, so this test does too rather than reaching the (still-in-the-DOM-but-collapsed)
+		// input directly.
+		await userEvent.setup().click(await screen.findByRole('button', { name: 'Abortion Care' }))
 		await userEvent.setup().click(await screen.findByLabelText('Abortion providers'))
 
-		// Correctly fails: confirms https://github.com/weareinreach/InReach/issues/2064. The
-		// click goes through Checkbox.Group/Checkbox.Item's own useController subscription to the
-		// 'selected' field, which never re-renders to checked - even though the click does write
-		// through to searchState (confirmed via the count badge, and by polling `.checked` for 3s
-		// with no change - not just a slow round trip).
+		// Was: confirms https://github.com/weareinreach/InReach/issues/2064. The click goes through
+		// Checkbox.Group/Checkbox.Item's own useController subscription to the 'selected' field,
+		// which never re-renders to checked even though the click does write through to searchState
+		// (confirmed via the count badge, and by polling `.checked` for 3s with no change - not just
+		// a slow round trip). Fixed by keying the Checkbox.Group block on the category's own actual
+		// selection, forcing a fresh subscription whenever it changes (index.tsx).
 		await waitFor(() => expect(screen.getByLabelText('Abortion providers')).toBeChecked())
 		expect(screen.getByLabelText('Financial assistance')).not.toBeChecked()
 	})
@@ -85,16 +91,17 @@ describe('ServiceFilter', () => {
 
 		renderWithServices(<ServiceFilter resultCount={0} />)
 		await userEvent.setup().click(screen.getByRole('button', { name: /Filter by services/i }))
+		await userEvent.setup().click(await screen.findByRole('button', { name: 'Abortion Care' }))
 		// Real rendered label (index.tsx line ~316): t('all-service-category', { serviceCategory:
 		// `$t(${label})` }) - a nested i18next `$t(services:...)` reference resolved via the
 		// `services` namespace, not the raw translation key text. "Abortion Care" is
 		// services.json's real `abortion-care.CATEGORYNAME` value.
 		await userEvent.setup().click(await screen.findByLabelText('All Abortion Care'))
 
-		// Correctly fails: confirms https://github.com/weareinreach/InReach/issues/2064, same root
-		// cause as 7.2 in the other direction - "select all" updates via the top-level form's own
-		// `setValue`, which the sub-service checkboxes' own separate Checkbox.Group subscription
-		// never picks up.
+		// Was: confirms https://github.com/weareinreach/InReach/issues/2064, same root cause as 7.2
+		// in the other direction - "select all" updates via the top-level form's own `setValue`,
+		// which the sub-service checkboxes' own separate Checkbox.Group subscription never picked
+		// up. Fixed the same way as 7.2.
 		await waitFor(() => expect(screen.getByLabelText('Abortion providers')).toBeChecked())
 		expect(screen.getByLabelText('Financial assistance')).toBeChecked()
 		const selectAll = screen.getByLabelText('All Abortion Care') as HTMLInputElement
@@ -107,13 +114,24 @@ describe('ServiceFilter', () => {
 
 		renderWithServices(<ServiceFilter resultCount={0} />, ['svtg_providers'])
 		await userEvent.setup().click(screen.getByRole('button', { name: /Filter by services/i }))
+		// Expanding the category is required here for a reason beyond matching real usage (see
+		// 7.2's comment): Mantine's Accordion.Panel doesn't appear to commit a collapsed panel's
+		// children through React's normal effect-running lifecycle in this test environment -
+		// confirmed directly (a bare ref callback on a checkbox inside a never-expanded panel
+		// never fires at all, even via `process.stdout.write`, with no exception thrown) - so
+		// `indeterminate` (set via Mantine's own effect) can never apply to a checkbox inside a
+		// panel that's never been opened. Real users never see this: the checkbox isn't visible or
+		// clickable until the category is expanded anyway.
+		// Partial match, not 'Abortion Care' exactly: this test seeds an existing selection, so the
+		// category header's own count badge (categorySelectedCountIcon) is part of its accessible
+		// name too (e.g. "Abortion Care 1").
+		await userEvent.setup().click(await screen.findByRole('button', { name: /Abortion Care/ }))
 
-		// Correctly fails: confirms https://github.com/weareinreach/InReach/issues/2064. The
-		// individual sub-service checkbox (via Checkbox.Group's own useController) correctly
-		// shows checked for the seeded selection - but this "select all" checkbox's
-		// checked/indeterminate come from ServiceFilter's own top-level `useWatch`, a *separate*
-		// subscription to the same field that never reflects the seeded value (confirmed by
-		// polling for 3s with no change, not just a brief mount-time lag).
+		// Was: confirms https://github.com/weareinreach/InReach/issues/2064. The individual
+		// sub-service checkbox (via Checkbox.Group's own useController) correctly shows checked for
+		// the seeded selection - but this "select all" checkbox's checked/indeterminate come from
+		// ServiceFilter's own top-level `useWatch`, a *separate* subscription to the same field that
+		// never reflects the seeded value. Fixed the same way as 7.2/7.3.
 		const selectAll = (await screen.findByLabelText('All Abortion Care')) as HTMLInputElement
 		await waitFor(() => expect(selectAll.indeterminate).toBe(true))
 		expect(selectAll.checked).toBe(false)
