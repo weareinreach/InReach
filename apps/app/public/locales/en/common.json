@@ -295,6 +295,7 @@
 		"include-remote": "Include remote services",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "Enter city or zip code...",
 		"location-placeholder-searchby": "Search by city or zip code...",
 		"locality-label": "Locality",
