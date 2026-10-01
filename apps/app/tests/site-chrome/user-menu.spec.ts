@@ -1,24 +1,19 @@
-import { expect, type Page, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+
+import { dismissAntiHate } from './helpers'
 
 /**
  * Section 3d of docs/Testing/site-chrome-test-inventory.md - the avatar/account menu (`UserMenu`,
  * packages/ui/components/core/UserMenu.tsx), against the real running app.
  *
  * Only the logged-out state (3d.1) is covered here. Every other case in this section (3d.2-3d.8: avatar menu
- * contents, admin options, edit-page entry, sign-out) needs a real authenticated session - there's no
- * Playwright auth fixture in this repo yet (same reason `tests/crud` is still empty; see
- * docs/Testing/README.md). 3d.9 (session still loading) was investigated via delaying `/api/auth/session`,
- * but didn't reliably produce an observable "disabled menu" window in this app's architecture (likely
- * resolved server-side before the client ever shows a loading state) - not pursued further given it's a
- * narrow edge case in a section that's mostly blocked on the same missing fixture anyway.
+ * contents, admin options, edit-page entry, sign-out) needs a real authenticated session - a Playwright auth
+ * fixture now exists (`tests/crud/auth.setup.ts`, the `crud` project in playwright.config.ts) but these cases
+ * haven't been migrated to use it yet. 3d.9 (session still loading) was investigated via delaying
+ * `/api/auth/session`, but didn't reliably produce an observable "disabled menu" window in this app's
+ * architecture (likely resolved server-side before the client ever shows a loading state) - not pursued
+ * further given it's a narrow edge case.
  */
-const dismissAntiHate = async (page: Page) => {
-	const dialog = page.locator('[role="dialog"]').filter({ hasText: 'Anti-hate commitment' })
-	if (await dialog.isVisible().catch(() => false)) {
-		await dialog.getByRole('button', { name: 'Accept' }).dispatchEvent('click')
-		await expect(dialog).not.toBeVisible()
-	}
-}
 
 test.beforeEach(async ({ context }) => {
 	await context.clearCookies()

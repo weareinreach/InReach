@@ -1,20 +1,13 @@
 import { expect, type Page, test } from '@playwright/test'
 
+import { antiHateDialog, dismissAntiHate } from './helpers'
+
 /**
  * Section 2 of docs/Testing/site-chrome-test-inventory.md - the analytics/cookie consent banner
  * (`react-hook-consent`, wired in apps/app/src/providers/index.tsx), against the real running app. Persisted
  * to `localStorage['react-hook-consent']` as `{"consent": string[], "hash": string, "updated": string}` -
  * confirmed directly, not assumed from the library's docs.
  */
-
-const antiHateDialog = (page: Page) =>
-	page.locator('[role="dialog"]').filter({ hasText: 'Anti-hate commitment' })
-
-const dismissAntiHate = async (page: Page) => {
-	const dialog = antiHateDialog(page)
-	await dialog.getByRole('button', { name: 'Accept' }).click()
-	await expect(dialog).not.toBeVisible()
-}
 
 type StoredConsent = { consent: string[]; hash: string; updated: string }
 

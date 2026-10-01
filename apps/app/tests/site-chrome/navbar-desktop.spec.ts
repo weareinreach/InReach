@@ -1,24 +1,11 @@
-import { expect, type Page, test } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+
+import { dismissAntiHate } from './helpers'
 
 /**
  * Section 3a of docs/Testing/site-chrome-test-inventory.md - the desktop navbar (`Navbar`,
  * packages/ui/components/sections/Navbar.tsx, shown >= `sm` breakpoint), against the real running app.
  */
-
-const dismissAntiHate = async (page: Page) => {
-	const dialog = page.locator('[role="dialog"]').filter({ hasText: 'Anti-hate commitment' })
-	if (await dialog.isVisible().catch(() => false)) {
-		// `dispatchEvent`, not `click`: on a narrow/mobile viewport, the cookie-consent banner
-		// visually overlaps this button (#2068, reviewed and closed will-not-address - see
-		// docs/Testing/site-chrome-test-inventory.md's §3a callout). Even `click({ force: true })`
-		// still dispatches at the button's on-screen coordinates (so it can land on the banner
-		// instead) - dispatching the event directly to the button element sidesteps that, keeping
-		// this file's own tests (about the navbar, not this overlap) from being incidentally flaky
-		// because of it.
-		await dialog.getByRole('button', { name: 'Accept' }).dispatchEvent('click')
-		await expect(dialog).not.toBeVisible()
-	}
-}
 
 test.beforeEach(async ({ context }) => {
 	await context.clearCookies()
