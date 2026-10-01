@@ -20,19 +20,18 @@ test("13.1: a country InReach doesn't serve shows its localized name and interna
 	await expect(page.getByText('InReach does not operate in Japan')).toBeVisible()
 })
 
-test("13.1b: a lowercase country code doesn't resolve to a display name", async ({ page }) => {
-	// Correctly fails: confirms a real (if narrow) gap. `[country].tsx`'s
-	// `QuerySchema = z.object({ country: z.string().length(2) })` accepts any 2-char string,
-	// case included, but the heading calls `Intl.DisplayNames.of(router.query.country)` on the
-	// RAW query value with no normalization - `Intl.DisplayNames` requires an uppercase (or
-	// otherwise canonical) region subtag and silently echoes back an unrecognized one instead of
-	// resolving it (confirmed directly: `Intl.DisplayNames('en',{type:'region'}).of('jp')` returns
-	// the literal string "jp", not "Japan"). Not reachable through the app's own normal flow
-	// (apps/app/src/proxy.ts always uppercases before building this URL), but reachable by anyone
-	// who reaches this route directly with a lowercase code in the URL. Filed as
-	// https://github.com/weareinreach/InReach/issues/2067.
+test('13.1b: a lowercase country code redirects to the uppercase form', async ({ page }) => {
+	// #2067 - a direct visit to a lowercase `/search/intl/<code>` (not reachable through any of the
+	// app's own links; only via a typed/bookmarked/shared URL) used to reach [country].tsx as-is,
+	// which had no normalization: `Intl.DisplayNames.of('jp')` silently returns the literal string
+	// "jp" instead of resolving it to "Japan", and the same raw value fed a case-sensitive DB
+	// lookup that would've silently matched zero crisis-support orgs for ANY lowercase code, not
+	// just a wrong heading. Fixed at the edge (`apps/app/src/proxy.ts`) with the same
+	// redirect-to-canonical-uppercase pattern already used for the sibling `/search/<code>` route,
+	// so the page itself never sees a bad-case value for any real visit.
 	await page.goto('/search/intl/jp')
 
+	await expect(page).toHaveURL(/\/search\/intl\/JP$/)
 	await expect(page.getByText('InReach does not operate in Japan')).toBeVisible()
 })
 
