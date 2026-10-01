@@ -15,7 +15,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure, useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next/pages'
-import { Fragment, type MouseEvent, type ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
+import { type MouseEvent, type ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 
@@ -318,35 +318,19 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 							className={classes.itemParent}
 						/>
 					)}
-					{/* #2064 - the individual sub-service checkboxes, via Checkbox.Group's own
-					    `useController` subscription to `selected`, can desync from this category's actual
-					    selection regardless of which direction caused the change (a click inside this
-					    group, or this category's own "select all" calling `form.setValue` from outside
-					    it) - the same child-subscription-misses-an-update class of bug as PhoneDrawer's
-					    remount-via-key fix (see [[project-rhf-child-watch-bug]]). Keying this block on the
-					    category's own actual selection remounts it fresh from the authoritative
-					    `selectedValues` whenever that selection changes, instead of relying on the
-					    subscription to propagate on its own. */}
-					<Fragment
-						key={services
-							.map(({ value }) => value)
-							.filter((value) => selectedValues.includes(value))
-							.join(',')}
-					>
-						<Checkbox.Group name='selected' control={form.control}>
-							{services.map((item) => {
-								return (
-									<Checkbox.Item
-										className={classes.itemChild}
-										label={t(item.label)}
-										value={item.value}
-										key={item.value}
-										onClick={handleToggleChild(item, label)}
-									/>
-								)
-							})}
-						</Checkbox.Group>
-					</Fragment>
+					<Checkbox.Group name='selected' control={form.control}>
+						{services.map((item) => {
+							return (
+								<Checkbox.Item
+									className={classes.itemChild}
+									label={t(item.label)}
+									value={item.value}
+									key={item.value}
+									onClick={handleToggleChild(item, label)}
+								/>
+							)
+						})}
+					</Checkbox.Group>
 				</Accordion.Panel>
 			</Accordion.Item>
 		)

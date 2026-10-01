@@ -76,12 +76,14 @@ describe('ServiceFilter', () => {
 		await userEvent.setup().click(await screen.findByRole('button', { name: 'Abortion Care' }))
 		await userEvent.setup().click(await screen.findByLabelText('Abortion providers'))
 
-		// Was: confirms https://github.com/weareinreach/InReach/issues/2064. The click goes through
-		// Checkbox.Group/Checkbox.Item's own useController subscription to the 'selected' field,
-		// which never re-renders to checked even though the click does write through to searchState
-		// (confirmed via the count badge, and by polling `.checked` for 3s with no change - not just
-		// a slow round trip). Fixed by keying the Checkbox.Group block on the category's own actual
-		// selection, forcing a fresh subscription whenever it changes (index.tsx).
+		// #2064 was filed as "the click doesn't visually check the box" - that did reproduce here,
+		// but only because this test (like 7.3/7.4) wasn't expanding the accordion category before
+		// interacting with what's inside it. Once the test does that (matching how a real user
+		// always has to, since the checkbox isn't visible until expanded), this passes with no
+		// production code change - confirmed by removing the once-applied index.tsx fix entirely and
+		// re-running: still green. Not reproducible in production either (manually confirmed). Kept
+		// as regression coverage for the real, narrower thing this guards: a collapsed-panel test
+		// gap producing a false bug report.
 		await waitFor(() => expect(screen.getByLabelText('Abortion providers')).toBeChecked())
 		expect(screen.getByLabelText('Financial assistance')).not.toBeChecked()
 	})
@@ -98,10 +100,8 @@ describe('ServiceFilter', () => {
 		// services.json's real `abortion-care.CATEGORYNAME` value.
 		await userEvent.setup().click(await screen.findByLabelText('All Abortion Care'))
 
-		// Was: confirms https://github.com/weareinreach/InReach/issues/2064, same root cause as 7.2
-		// in the other direction - "select all" updates via the top-level form's own `setValue`,
-		// which the sub-service checkboxes' own separate Checkbox.Group subscription never picked
-		// up. Fixed the same way as 7.2.
+		// Same note as 7.2 - the expand-the-category click above is what makes this pass, not a
+		// production code change.
 		await waitFor(() => expect(screen.getByLabelText('Abortion providers')).toBeChecked())
 		expect(screen.getByLabelText('Financial assistance')).toBeChecked()
 		const selectAll = screen.getByLabelText('All Abortion Care') as HTMLInputElement
@@ -127,11 +127,6 @@ describe('ServiceFilter', () => {
 		// name too (e.g. "Abortion Care 1").
 		await userEvent.setup().click(await screen.findByRole('button', { name: /Abortion Care/ }))
 
-		// Was: confirms https://github.com/weareinreach/InReach/issues/2064. The individual
-		// sub-service checkbox (via Checkbox.Group's own useController) correctly shows checked for
-		// the seeded selection - but this "select all" checkbox's checked/indeterminate come from
-		// ServiceFilter's own top-level `useWatch`, a *separate* subscription to the same field that
-		// never reflects the seeded value. Fixed the same way as 7.2/7.3.
 		const selectAll = (await screen.findByLabelText('All Abortion Care')) as HTMLInputElement
 		await waitFor(() => expect(selectAll.indeterminate).toBe(true))
 		expect(selectAll.checked).toBe(false)
