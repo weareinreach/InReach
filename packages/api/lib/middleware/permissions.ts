@@ -37,8 +37,8 @@ export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 			const reqPerms = Array.isArray(meta?.hasPerm) ? meta.hasPerm : meta?.hasPerm ? [meta.hasPerm] : []
 
 			// Blocklist: If the endpoint specifically requires Root strings
-			const systemPerms = [...ROOT_TIER_PERMISSIONS, 'adminPermissions']
-			if (reqPerms.some((p) => systemPerms.includes(p))) {
+			const systemPerms = new Set([...ROOT_TIER_PERMISSIONS, 'adminPermissions'])
+			if (reqPerms.some((p) => systemPerms.has(p))) {
 				return false
 			}
 

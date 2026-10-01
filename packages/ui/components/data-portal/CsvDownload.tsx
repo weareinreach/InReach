@@ -21,7 +21,9 @@ interface CsvDownloadProps {
 // Helper to check permissions with hierarchy support (Additive Permissions)
 const checkHierarchyPermission = (userPerms: string[], requiredPerm: string) => {
 	// Root/System bypass
-	if (userPerms.some((p) => ROOT_TIER_PERMISSIONS.includes(p))) return true
+	if (userPerms.some((p) => ROOT_TIER_PERMISSIONS.includes(p))) {
+		return true
+	}
 
 	// Hierarchy: Admin > Manager > Basic
 	if (requiredPerm === 'dataPortalManager') {
