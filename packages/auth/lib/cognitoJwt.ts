@@ -5,7 +5,7 @@ import { getEnv } from '@weareinreach/env'
 
 const verifier = (tokenUse: 'access' | 'id') =>
 	CognitoJwtVerifier.create({
-		userPoolId: 'us-east-1_06XOmcvrs',
+		userPoolId: getEnv('COGNITO_USER_POOL_ID'),
 		clientId: getEnv('COGNITO_CLIENT_ID'),
 		tokenUse,
 	})

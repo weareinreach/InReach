@@ -17,6 +17,7 @@ import { type Route } from 'nextjs-routes'
 import { useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
@@ -227,7 +228,7 @@ export const ReviewTable = () => {
 	const userPerms = session?.user?.permissions || []
 
 	const isManagerOrHigher = userPerms.some((p) =>
-		['root', 'sysadmin', 'system', 'dataPortalAdmin', 'dataPortalManager'].includes(p)
+		[...ROOT_TIER_PERMISSIONS, 'dataPortalAdmin', 'dataPortalManager'].includes(p)
 	)
 
 	const apiUtils = api.useUtils()

@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useCallback, useEffect } from 'react'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
+import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
 import { useCsvDownload } from '~ui/hooks/useCsvDownload'
 import { Icon } from '~ui/icon'
 
@@ -20,7 +21,9 @@ interface CsvDownloadProps {
 // Helper to check permissions with hierarchy support (Additive Permissions)
 const checkHierarchyPermission = (userPerms: string[], requiredPerm: string) => {
 	// Root/System bypass
-	if (userPerms.some((p) => ['root', 'sysadmin', 'system'].includes(p))) return true
+	if (userPerms.some((p) => ROOT_TIER_PERMISSIONS.includes(p))) {
+		return true
+	}
 
 	// Hierarchy: Admin > Manager > Basic
 	if (requiredPerm === 'dataPortalManager') {

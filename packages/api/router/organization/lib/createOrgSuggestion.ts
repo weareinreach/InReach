@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server'
 import { addSingleKeyFromNestedFreetextCreate, buildContextUrl } from '@weareinreach/crowdin/api'
 import { generateId, generateNestedFreeText, generateUniqueSlug, getAuditedClient } from '@weareinreach/db'
 import { OrgUnpublishedReason, type SourceType } from '@weareinreach/db/enums'
+import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateNewSuggestionSchema } from '../mutation.createNewSuggestion.schema'
@@ -21,9 +22,7 @@ const DATA_PORTAL_PERMISSIONS = [
 	'dataPortalBasic',
 	'dataPortalManager',
 	'dataPortalAdmin',
-	'root',
-	'sysadmin',
-	'system',
+	...ROOT_TIER_PERMISSIONS,
 ]
 
 // Mirrors packages/auth/lib/genUserSession.ts's exact permission derivation (both the role-derived path
