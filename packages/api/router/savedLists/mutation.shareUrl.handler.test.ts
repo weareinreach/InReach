@@ -1,18 +1,17 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { swallowListOwnershipRejection } from '~api/test/swallowListOwnershipRejection'
-
-swallowListOwnershipRejection()
-
 // `~api/lib/checkListOwnership` is deliberately left real (not mocked) - the whole point of these
 // tests is whether the handler actually waits for and acts on what that function decides.
 vi.mock('@weareinreach/db', () => ({
 	prisma: { userSavedList: { findUniqueOrThrow: vi.fn(), findUnique: vi.fn() } },
 	getAuditedClient: vi.fn(),
+	// errorHandler.ts checks `error instanceof Prisma.PrismaClientKnownRequestError` - needs a real
+	// class here (not just `{}`) or that check throws a TypeError instead of returning false.
+	Prisma: { PrismaClientKnownRequestError: class PrismaClientKnownRequestError extends Error {} },
 }))
 vi.mock('~api/lib/nanoIdUrl', () => ({ nanoUrl: vi.fn(() => 'generated-slug') }))
 
-const { prisma, getAuditedClient } = await import('@weareinreach/db')
+const { prisma, getAuditedClient, Prisma } = await import('@weareinreach/db')
 const { default: shareUrl } = await import('./mutation.shareUrl.handler')
 
 const findListMock = vi.mocked(prisma.userSavedList.findUniqueOrThrow)
@@ -60,5 +59,24 @@ describe('savedLists.shareUrl', () => {
 		})
 
 		await expect(shareUrl({ ctx, input: { id: 'list_1' } } as never)).rejects.toThrow()
+	})
+
+	/**
+	 * Confirms `checkListOwnership`'s `findUniqueOrThrow` miss (a raw Prisma P2025) now comes out through
+	 * `handleError` as a clean `NOT_FOUND`, instead of bubbling up as an unhandled, unmapped Prisma error.
+	 */
+	it('a list id that does not exist surfaces as NOT_FOUND, not a raw Prisma error', async () => {
+		// The mocked class above is a plain `class extends Error {}` - it doesn't actually assign `.code`
+		// from the options object the way real Prisma errors do, so it's set explicitly here.
+		const notFoundError = new Prisma.PrismaClientKnownRequestError(
+			'An operation failed because it depends on one or more records that were required but not found.',
+			{ code: 'P2025', clientVersion: 'test' }
+		)
+		;(notFoundError as unknown as { code: string }).code = 'P2025'
+		findListMock.mockRejectedValueOnce(notFoundError)
+
+		await expect(shareUrl({ ctx, input: { id: 'list_missing' } } as never)).rejects.toMatchObject({
+			code: 'NOT_FOUND',
+		})
 	})
 })
