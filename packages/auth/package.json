@@ -83,7 +83,7 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "9.39.5",
-		"next": "16.3.1",
+		"next": "16.3.6",
 		"next-auth": "4.24.15",
 		"react": "19.2.8",
 		"react-dom": "19.2.8",
@@ -91,7 +91,7 @@
 		"vitest": "4.1.10"
 	},
 	"peerDependencies": {
-		"next": "16.3.1",
+		"next": "16.3.6",
 		"next-auth": "4.24.12",
 		"react": "19.2.8",
 		"react-dom": "19.2.8"
