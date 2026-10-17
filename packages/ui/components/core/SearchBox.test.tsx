@@ -7,8 +7,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { SearchStateProvider } from '~ui/providers/SearchState'
 import { testI18n } from '~ui/test/i18nTestInstance'
-import { render, screen } from '~ui/test/test-utils'
-import { storybookTheme } from '~ui/theme/storybook'
+import { render, screen, waitFor } from '~ui/test/test-utils'
+import { testTheme } from '~ui/test/testTheme'
 
 import { SearchBox } from './SearchBox'
 
@@ -53,7 +53,15 @@ const loadingManager = { isLoading: false, setLoading: vi.fn() }
 const typeAndWaitForDebounce = async (input: HTMLElement, text: string) => {
 	const user = userEvent.setup()
 	await user.type(input, text)
-	await new Promise((resolve) => setTimeout(resolve, 450))
+	// SearchBox debounces the typed value (400ms) before it reaches the queries. Wait for that to actually
+	// happen rather than sleeping a fixed time, which a slow/contended runner can outlast. Both queries
+	// receive the same `search` on every render (only `enabled` differs by mode), so either mock works.
+	await waitFor(() =>
+		expect(autocompleteMock).toHaveBeenLastCalledWith(
+			expect.objectContaining({ search: text }),
+			expect.anything()
+		)
+	)
 }
 
 describe('SearchBox (location mode)', () => {
@@ -66,7 +74,7 @@ describe('SearchBox (location mode)', () => {
 		const input = screen.getByRole('textbox')
 		await typeAndWaitForDebounce(input, 'Los')
 
-		expect(document.querySelector('.mantine-Loader-root')).toBeInTheDocument()
+		await waitFor(() => expect(document.querySelector('.mantine-Loader-root')).toBeInTheDocument())
 	})
 
 	it('2.3: shows a no-results message, not an empty dropdown, when nothing matches', async () => {
@@ -133,6 +141,8 @@ describe('SearchBox (location mode)', () => {
 		render(<SearchBox type='location' loadingManager={loadingManager} />)
 		const input = screen.getByRole('textbox')
 		await typeAndWaitForDebounce(input, 'Los Gatos')
+		// Enter submits the top suggestion, so it has to actually be there first.
+		await screen.findByRole('option', { name: /Los Gatos/ })
 
 		expect(pushMock).not.toHaveBeenCalled()
 		await userEvent.setup().keyboard('{Enter}')
@@ -170,7 +180,7 @@ describe('SearchBox (location mode)', () => {
 		render(<SearchBox type='location' loadingManager={loadingManager} />)
 		const input = screen.getByRole('textbox')
 		await typeAndWaitForDebounce(input, 'Los Gatos')
-		await userEvent.setup().click(screen.getByText('Los Gatos'))
+		await userEvent.setup().click(await screen.findByText('Los Gatos'))
 
 		expect(await screen.findByText(/error|try again|something went wrong/i)).toBeInTheDocument()
 		expect(pushMock).not.toHaveBeenCalled()
@@ -246,15 +256,7 @@ describe('SearchBox (organization mode)', () => {
 		render(<SearchBox type='organization' loadingManager={loadingManager} />)
 		const input = screen.getByRole('textbox')
 		await typeAndWaitForDebounce(input, 'Whitman')
-		// Not a click on the rendered option: Mantine's Combobox.Dropdown never actually
-		// flips to `display: block` in jsdom (its position/visibility depends on layout
-		// measurement jsdom doesn't perform), so the option exists in the DOM but
-		// getByRole('option') correctly treats it as accessibility-hidden and won't find it
-		// (confirmed via the DOM dump on first attempt - the option was there, its ancestor
-		// dropdown had `style="display: none"`). Same underlying mechanism as 2.6 (Enter
-		// submits `results[0]` directly, independent of the dropdown's visual open state) -
-		// reused here rather than reaching for `{ hidden: true }` to paper over it.
-		await userEvent.setup().keyboard('{Enter}')
+		await userEvent.setup().click(await screen.findByRole('option', { name: 'Whitman-Walker Health' }))
 
 		expect(pushMock).toHaveBeenCalledWith({ pathname: '/org/[slug]', query: { slug: 'whitman-walker' } })
 	})
@@ -269,7 +271,7 @@ describe('SearchBox (organization mode)', () => {
 		// searchTerm via SearchStateProvider's initState, so this genuinely exercises the guard
 		// instead of just confirming an already-empty default.
 		const WithLeftoverSearchTerm = ({ children }: { children: ReactNode }) => (
-			<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+			<MantineProvider theme={testTheme} defaultColorScheme='light'>
 				<I18nextProvider i18n={testI18n}>
 					<SearchStateProvider initState={{ params: [], searchTerm: 'Los Gatos' }}>
 						{children}

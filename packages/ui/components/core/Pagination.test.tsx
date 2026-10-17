@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { testI18n } from '~ui/test/i18nTestInstance'
 import { screen } from '~ui/test/test-utils'
-import { storybookTheme } from '~ui/theme/storybook'
+import { testTheme } from '~ui/test/testTheme'
 
 import { Pagination } from './Pagination'
 
@@ -20,7 +20,7 @@ vi.mock('next/router', () => ({
 const renderPagination = (total: number, page = '1') => {
 	routerQuery.current = { page }
 	return rtlRender(
-		<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+		<MantineProvider theme={testTheme} defaultColorScheme='light'>
 			<I18nextProvider i18n={testI18n}>
 				<Pagination total={total} />
 			</I18nextProvider>

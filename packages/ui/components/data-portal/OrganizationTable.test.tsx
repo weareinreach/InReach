@@ -103,18 +103,14 @@ const pickReason = async (
 	reasonValue: string
 ) => {
 	await user.click(screen.getByRole('button', { name: 'Set status' }))
-	// Same jsdom/floating-ui quirk covered in UnpublishReasonPopover.test.tsx - the dropdown's content
-	// doesn't land in the DOM until a real macrotask runs, which `findByRole`'s own polling never
-	// observes on its own.
 	await user.click(await screen.findByPlaceholderText('Choose a reason'))
-	await new Promise((resolve) => setTimeout(resolve, 50))
 	// The toolbar's own Status filter has an option with this same label (lowercase `value`, e.g.
 	// "new") - disambiguate by `value`, same as BulkSearchReplaceTable.test.tsx does for this exact
 	// kind of same-label, different-dropdown collision.
-	const options = screen.getAllByRole('option', { name: reasonLabel, hidden: true })
+	const options = await screen.findAllByRole('option', { name: reasonLabel })
 	const option = options.find((el) => el.getAttribute('value') === reasonValue)
 	await user.click(option!)
-	await user.click(screen.getByRole('button', { name: 'Done', hidden: true }))
+	await user.click(await screen.findByRole('button', { name: 'Done' }))
 }
 
 describe('OrganizationTable - "Set status" row action', () => {
@@ -189,16 +185,12 @@ describe('OrganizationTable - "+ Filter" menu', () => {
 		renderTable({ ...ORG_ROW })
 
 		await user.click(screen.getByRole('button', { name: 'Add filter' }))
-		// Mantine's Menu positions its dropdown via floating-ui, which resolves the item into the DOM a
-		// tick or two after the click rather than synchronously - same documented CI-timing issue as
-		// BulkSearchReplaceTable.test.tsx's "Show/hide columns" menu (this has been seen to take longer
-		// than the default 1000ms `findBy` wait under CI's slower/contended runners).
-		await user.click(await screen.findByRole('menuitem', { name: 'Community' }, { timeout: 15000 }))
+		await user.click(await screen.findByRole('menuitem', { name: 'Community' }))
 
 		// Disambiguates from the table's own (now auto-shown) "Community" column header - this checks that
 		// the toolbar widget itself rendered, not just that the word "Community" appears somewhere.
 		expect(await screen.findByRole('button', { name: 'Remove Community filter' })).toBeInTheDocument()
-	}, 20000)
+	})
 })
 
 describe('OrganizationTable - locationPhoneCleanupOnly', () => {

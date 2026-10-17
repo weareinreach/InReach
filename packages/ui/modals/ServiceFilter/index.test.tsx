@@ -8,7 +8,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { SearchStateProvider } from '~ui/providers/SearchState'
 import { testI18n } from '~ui/test/i18nTestInstance'
 import { render, screen, waitFor } from '~ui/test/test-utils'
-import { storybookTheme } from '~ui/theme/storybook'
+import { testTheme } from '~ui/test/testTheme'
 
 import { ServiceFilter } from './index'
 
@@ -42,7 +42,7 @@ const mockFilterOptions = [
  */
 const renderWithServices = (ui: ReactNode, initialServices: string[] = []) => {
 	const Wrapper = ({ children }: { children: ReactNode }) => (
-		<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+		<MantineProvider theme={testTheme} defaultColorScheme='light'>
 			<I18nextProvider i18n={testI18n}>
 				<SearchStateProvider initState={{ params: [], s: initialServices }}>{children}</SearchStateProvider>
 			</I18nextProvider>
