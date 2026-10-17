@@ -324,6 +324,7 @@
 		"include-remote": "تضمين الخدمات عن بعد",
 		"local": "محلي",
 		"local-description": "الموارد المحلية (11-25 ميلاً)",
+		"location-error": "حدث خطأ في البحث عن هذا الموقع. الرجاء المحاولة مرة أخرى.",
 		"location-placeholder": "أدخل الكود البريدي للولاية، أو المدينة، أو البريد...",
 		"location-placeholder-searchby": "البحث حسب رمز المدينة أو البريد...",
 		"locality-label": "المحلة",

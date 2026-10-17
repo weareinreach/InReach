@@ -319,6 +319,7 @@
 		"include-remote": "包括远程服务",
 		"local": "本地",
 		"local-description": "当地资源（11-25英里）",
+		"location-error": "查找该位置时出错。请重试。",
 		"location-placeholder": "输入城市或邮政编码...",
 		"location-placeholder-searchby": "通过城市或邮政编码搜索...",
 		"locality-label": "地点",
