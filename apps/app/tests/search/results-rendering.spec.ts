@@ -34,6 +34,11 @@ test('4.2: zero results shows empty-state messaging and crisis resources, sideba
 		page.getByText('No results found for your search. Try adjusting your selected location or filters.')
 	).toBeVisible()
 
+	// The crisis resources this test is named for. Search URLs carry a lowercase country code and
+	// getNatlCrisis matched it case-sensitively against uppercase DB values, so this list was always
+	// empty for /search/us/... - unnoticed because this test never actually checked for it.
+	await expect(page.getByText('988 Suicide and Crisis Lifeline')).toBeVisible()
+
 	// Sidebar's embedded org-name SearchBox is still present even in the zero-results branch -
 	// distinct placeholder from the main location SearchBox confirms it's specifically the
 	// sidebar instance, not the page's primary search box.
@@ -90,7 +95,11 @@ test('4.4: a failed results request shows an error with Retry, not endless loadi
 		.getByRole('alert')
 		.filter({ hasText: 'Something went wrong loading search results' })
 	await expect(errorMessage).toBeVisible({ timeout: 20_000 })
-	await expect(page.getByTestId('search-results-list').locator('.mantine-Skeleton-root')).toHaveCount(0)
+	// `data-visible` only while a Skeleton is actually showing - the crisis cards shown under the error
+	// wrap their content in a Skeleton that stays in the DOM after loading.
+	await expect(
+		page.getByTestId('search-results-list').locator('.mantine-Skeleton-root[data-visible]')
+	).toHaveCount(0)
 
 	// Retry actually recovers once the backend responds again.
 	failPageTwo = false
