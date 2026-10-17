@@ -434,7 +434,14 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	req,
 	res,
 }) => {
-	const [country, lon, lat, dist, unit] = SearchParamsSchema.parse(query.params)
+	// A malformed or stale search URL (missing segment, non-numeric lat/lon) would otherwise throw a ZodError
+	// here and surface as a raw 500. The 404 page has its own location/organization search boxes, so the
+	// visitor gets a way to start over instead of a dead end (#2058).
+	const params = SearchParamsSchema.safeParse(query.params)
+	if (!params.success) {
+		return { notFound: true }
+	}
+	const [country, lon, lat, dist, unit] = params.data
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient({ req, res })

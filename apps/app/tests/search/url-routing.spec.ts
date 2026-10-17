@@ -10,12 +10,13 @@ const GOOD_URL = '/search/us/-122.1/37.4/50/mi'
 test('1.2: a malformed route does not crash the whole page', async ({ page }) => {
 	const response = await page.goto('/search/us/abc/xyz/50/mi')
 
-	// getServerSideProps calls SearchParamsSchema.parse(query.params) - the throwing variant,
-	// not .safeParse() - so an invalid tuple currently produces an uncaught ZodError and a raw
-	// Next.js 500 page, never reaching the client-side safeParse/"Error" text fallback that
-	// exists in the page component. Confirmed against the real app before writing this
-	// assertion (curl on the same URL returned 500 with a ZodError body).
-	expect(response?.status()).toBeLessThan(500)
+	// getServerSideProps used to call SearchParamsSchema.parse(query.params) - the throwing
+	// variant - so an invalid tuple produced an uncaught ZodError and a raw Next.js 500 page
+	// (#2058). It now returns notFound, which renders the app's 404 page.
+	expect(response?.status()).toBe(404)
+	// The point of the 404 over a bare error: the visitor gets a way back into search, not a
+	// dead end. The 404 page's location SearchBox is the first textbox on the page.
+	await expect(page.getByRole('textbox').first()).toBeVisible()
 })
 
 test('1.3: navigating directly to ?page=3 shows page 3 as active, not page 1', async ({ page }) => {
