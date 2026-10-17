@@ -87,7 +87,10 @@ const SearchResultSidebar = dynamic(
 	{ ssr: false }
 )
 
-const PageIndexSchema = z.coerce.number().default(1)
+// `.catch(1)`, not `.default(1)`: default only covers a missing `?page=`. A non-numeric value (stale or
+// hand-edited link) coerces to NaN and made `.parse()` throw - a raw 500 from getServerSideProps (#2059).
+// int/min(1) also send `?page=0`, negatives and fractions to page 1 instead of a negative `skip`.
+const PageIndexSchema = z.coerce.number().int().min(1).catch(1)
 
 const NoResults = memo(
 	({ crisisData }: { crisisData: NonNullable<ApiOutput['organization']['getNatlCrisis']> }) => {

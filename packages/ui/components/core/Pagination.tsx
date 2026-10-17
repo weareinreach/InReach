@@ -71,7 +71,10 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 	const router = useRouter()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
-	const currentPage = typeof router.query.page === 'string' ? parseInt(router.query.page) : 1
+	// Same fallback as the search page's PageIndexSchema: anything that isn't a whole number >= 1 is page 1.
+	// parseInt('abc') is NaN, which left no page marked active (#2059).
+	const requestedPage = typeof router.query.page === 'string' ? Number(router.query.page) : 1
+	const currentPage = Number.isInteger(requestedPage) && requestedPage >= 1 ? requestedPage : 1
 	const [page, setPage] = useState(currentPage)
 
 	const pageChangeHandler = useCallback(

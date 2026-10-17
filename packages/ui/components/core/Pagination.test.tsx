@@ -52,4 +52,19 @@ describe('Pagination', () => {
 		expect(screen.getByText('Prev')).toBeVisible()
 		expect(screen.getByText('Next')).toBeVisible()
 	})
+
+	// #2059: a stale or hand-edited ?page= value must land on page 1, same as no ?page= at all. "Prev" is
+	// only marked disabled when page 1 is the active page - with parseInt('abc') = NaN, no page was active.
+	it.each(['abc', '0', '-2', '1.5'])('1.4: ?page=%s falls back to page 1 as the active page', (page) => {
+		renderPagination(8, page)
+
+		expect(screen.getByText('Prev')).toHaveAttribute('data-disabled', 'true')
+		expect(screen.getByText('Next')).not.toHaveAttribute('data-disabled')
+	})
+
+	it('a valid ?page= is still honored (page 3 of 8 is active, Prev enabled)', () => {
+		renderPagination(8, '3')
+
+		expect(screen.getByText('Prev')).not.toHaveAttribute('data-disabled')
+	})
 })

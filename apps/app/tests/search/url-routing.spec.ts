@@ -31,11 +31,11 @@ test('1.3: navigating directly to ?page=3 shows page 3 as active, not page 1', a
 test('1.4: a non-numeric ?page= value does not crash the page', async ({ page }) => {
 	const response = await page.goto(`${GOOD_URL}?page=abc`)
 
-	// PageIndexSchema = z.coerce.number().default(1) - the .default(1) only applies when the
-	// param is absent. When present but non-numeric, z.coerce.number() produces NaN, which
-	// zod's number validator rejects, and .parse() throws rather than falling back to 1.
-	// Confirmed against the real app (curl returned 500) before writing this assertion.
-	expect(response?.status()).toBeLessThan(500)
+	// PageIndexSchema used to be z.coerce.number().default(1) - the default only applies when the
+	// param is absent, so a non-numeric value coerced to NaN and .parse() threw a 500 (#2059). It
+	// should behave exactly like no ?page= at all: a normal results page with page 1 active.
+	expect(response?.status()).toBe(200)
+	await expect(page.getByText('1', { exact: true }).first()).toHaveClass(/paginationActive/)
 })
 
 test('1.5: clicking a pagination link updates ?page= via a shallow route change', async ({ page }) => {
