@@ -86,6 +86,13 @@ const user = {
 	updateUserRole: 'adminRoles',
 } satisfies PermissionDefs
 
+// KPI Board dashboard - see docs/Dashboards/KpiBoard/README.md. Reads reuse the existing
+// dataPortalManager key directly (permissionedProcedure('dataPortalManager')); region-mapping
+// writes are one tier stricter since it's a shared setting affecting every viewer.
+const kpiBoard = {
+	kpiBoardRegionMappingWrite: 'dataPortalAdmin',
+} satisfies PermissionDefs
+
 const permissions = {
 	...locations,
 	...organizations,
@@ -99,6 +106,7 @@ const permissions = {
 	...reviews,
 	...system,
 	...user,
+	...kpiBoard,
 } satisfies PermissionDefs
 
 /**
