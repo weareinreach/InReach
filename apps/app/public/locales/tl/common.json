@@ -320,6 +320,7 @@
 		"include-remote": "Isama ang mga remote na serbisyo",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "Ipasok ang lungsod o zip code...",
 		"location-placeholder-searchby": "Maghanap ayon sa lungsod o zip code...",
 		"locality-label": "Locality",

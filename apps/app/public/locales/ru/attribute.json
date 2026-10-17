@@ -71,7 +71,7 @@
 		"cost-financial-assistance-available": "Доступна финансовая помощь",
 		"cost-sliding-scale": "Расходы, определяемые по скользящей шкале",
 		"cost-free": "Бесплатно",
-		"cost-from": "С {{price}}",
+		"cost-from": "От {{price}}",
 		"cost-upTo": "До  {{price}}",
 		"cost-range": "{{price}}"
 	},

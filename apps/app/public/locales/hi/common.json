@@ -320,6 +320,7 @@
 		"include-remote": "रिमोट सेवाओं को शामिल करें",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "शहर या ज़िप कोड डालें...",
 		"location-placeholder-searchby": "शहर अथवा पिन कोड द्वारा खोजें...",
 		"locality-label": "Locality",
