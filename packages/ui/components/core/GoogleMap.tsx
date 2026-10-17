@@ -7,7 +7,11 @@ import { useEditMode } from '~ui/hooks/useEditMode'
 import { useGoogleMaps, useGoogleMapSetup } from '~ui/hooks/useGoogleMaps'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const MapRenderer = memo(({ height, width }: MapRendererProps) => {
+/**
+ * Exported for reuse by other map-rendering components (e.g. the KPI Board's map) that need the bare
+ * map+InfoWindow canvas without this component's locationIds-driven data fetching.
+ */
+export const MapRenderer = memo(({ height, width }: MapRendererProps) => {
 	const { setMap, setInfoWindow, mapEvents } = useGoogleMapSetup()
 	const mapRef = useRef<HTMLDivElement>(null)
 
