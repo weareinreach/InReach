@@ -307,10 +307,10 @@ const SearchResults = () => {
 	)
 
 	useEffect(() => {
-		if (
-			router.query.page &&
-			PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)
-		) {
+		// No truthiness check on `router.query.page`: a fresh search has no `?page=` at all, which is the
+		// common case, and that check meant page 2 was never prefetched from page 1 (#2065).
+		// PageIndexSchema already treats a missing page as 1.
+		if (PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)) {
 			apiUtils.organization.searchDistance.prefetch({
 				lat,
 				lon,
