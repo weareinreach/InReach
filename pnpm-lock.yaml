@@ -1344,8 +1344,8 @@ importers:
         specifier: 11.11.0
         version: 11.11.0
       '@faker-js/faker':
-        specifier: 8.4.1
-        version: 8.4.1
+        specifier: 10.5.0
+        version: 10.5.0
       '@hookform/devtools':
         specifier: 4.4.0
         version: 4.4.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -2930,9 +2930,9 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@faker-js/faker@8.4.1':
-    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+  '@faker-js/faker@10.5.0':
+    resolution: {integrity: sha512-bsxD8WLS5lIj7aaoCx1YJkktqYj5vlBUE6HWzu2Q51ksrGJ0H737ECCKlFU7Yf8Br45z9t99frBp/J7kzbMPAg==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@figspec/components@2.1.0':
     resolution: {integrity: sha512-PFKBX2oFz+vhThKTNsu7Mh4ZT3X7YCiM694UkAMT36j/p0tdmXs9Je0Sf88stTEcMgwYvNv9TZtvniYmgaE+bw==}
@@ -16009,7 +16009,7 @@ snapshots:
 
   '@exodus/bytes@1.15.1': {}
 
-  '@faker-js/faker@8.4.1': {}
+  '@faker-js/faker@10.5.0': {}
 
   '@figspec/components@2.1.0': {}
 
