@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { SearchStateProvider } from '~ui/providers/SearchState'
 import { testI18n } from '~ui/test/i18nTestInstance'
 import { screen } from '~ui/test/test-utils'
-import { storybookTheme } from '~ui/theme/storybook'
+import { testTheme } from '~ui/test/testTheme'
 
 import { SortResults } from './SortResults'
 
@@ -32,7 +32,7 @@ const loadingManager = { isLoading: false, setLoading: vi.fn() }
 
 const renderSortResults = (props: Partial<Parameters<typeof SortResults>[0]> = {}) => {
 	const Wrapper = ({ children }: { children: ReactNode }) => (
-		<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+		<MantineProvider theme={testTheme} defaultColorScheme='light'>
 			<I18nextProvider i18n={testI18n}>
 				<SearchStateProvider initState={{ params: [] }}>{children}</SearchStateProvider>
 			</I18nextProvider>

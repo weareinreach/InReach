@@ -8,7 +8,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { SearchStateProvider } from '~ui/providers/SearchState'
 import { testI18n } from '~ui/test/i18nTestInstance'
 import { screen, waitFor } from '~ui/test/test-utils'
-import { storybookTheme } from '~ui/theme/storybook'
+import { testTheme } from '~ui/test/testTheme'
 
 import { MoreFilter, type MoreFilterProps } from './MoreFilter'
 
@@ -58,7 +58,7 @@ const mockAttributeOptions = [
  */
 const renderWithAttributes = (ui: ReactNode, initialAttributes: string[] = []) => {
 	const Wrapper = ({ children }: { children: ReactNode }) => (
-		<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+		<MantineProvider theme={testTheme} defaultColorScheme='light'>
 			<I18nextProvider i18n={testI18n}>
 				<SearchStateProvider initState={{ params: [], a: initialAttributes }}>{children}</SearchStateProvider>
 			</I18nextProvider>

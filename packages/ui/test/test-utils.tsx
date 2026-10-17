@@ -4,12 +4,12 @@ import { type ReactElement, type ReactNode } from 'react'
 import { I18nextProvider } from 'react-i18next'
 
 import { SearchStateProvider } from '~ui/providers/SearchState'
-import { storybookTheme } from '~ui/theme/storybook'
+import { testTheme } from '~ui/test/testTheme'
 
 import { testI18n } from './i18nTestInstance'
 
 const Providers = ({ children }: { children: ReactNode }) => (
-	<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+	<MantineProvider theme={testTheme} defaultColorScheme='light'>
 		<I18nextProvider i18n={testI18n}>
 			{/* Breadcrumb (used by ModalTitle and elsewhere) reads this context unconditionally -
 			    real, self-contained provider, not worth mocking per-test. */}

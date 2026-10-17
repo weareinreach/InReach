@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./**/*.ts, exclude: ['**/{!,___}*.ts']}
+// codegen:start {preset: barrel, include: ./**/*.ts, exclude: ['**/{!,___}*.ts', '**/*.test.ts']}
 export * from './2024-03-21_attribute-supplement-schemas'
 export * from './2024-04-03_access-instruction-schemas'
 export * from './2024-04-24_update-crowdin-ids'

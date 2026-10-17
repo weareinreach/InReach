@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { testI18n } from '~ui/test/i18nTestInstance'
 import { screen } from '~ui/test/test-utils'
-import { storybookTheme } from '~ui/theme/storybook'
+import { testTheme } from '~ui/test/testTheme'
 
 import { LocationBasedAlertBanner } from './index'
 
@@ -18,7 +18,7 @@ const { trpc } = await import('~ui/lib/trpcClient')
 const useQueryMock = vi.mocked(trpc.component.LocationBasedAlertBanner.useQuery)
 
 const Wrapper = ({ children }: { children: ReactNode }) => (
-	<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+	<MantineProvider theme={testTheme} defaultColorScheme='light'>
 		<I18nextProvider i18n={testI18n}>{children}</I18nextProvider>
 	</MantineProvider>
 )

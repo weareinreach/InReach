@@ -1,8 +1,36 @@
 /* eslint-disable node/no-process-env */
 import '@testing-library/jest-dom/vitest'
 
+import { getIcons } from '@iconify/utils'
+import { _api, addCollection } from '@iconify-icon/react'
+import { icons as carbonIcons } from '@iconify-json/carbon'
+import { icons as fluentIcons } from '@iconify-json/fluent-mdl2'
+import { icons as mdiIcons } from '@iconify-json/mdi'
+import { icons as phIcons } from '@iconify-json/ph'
+import { icons as simpleIcons } from '@iconify-json/simple-icons'
 import { cleanup } from '@testing-library/react'
 import { afterEach, vi } from 'vitest'
+
+// `<Icon>` (iconify-icon) has no icon data registered under test, so every icon it renders is fetched
+// from api.iconify.design and drawn from a later `setTimeout`. When that response lands after a test
+// file's jsdom has been torn down, the draw throws `ReferenceError: document is not defined` as an
+// unhandled error - which fails the whole CI run even with every test passing (seen on #2130). Register
+// the same icon set `icon/iconCollection.ts` defines (which `iconList.ts`, and so `validateIcon`, is
+// generated from) so every icon resolves synchronously, and refuse network fetches outright so a test
+// can never depend on, or be slowed by, the real Iconify API.
+addCollection(carbonIcons)
+for (const subset of [
+	getIcons(simpleIcons, ['tiktok']),
+	getIcons(phIcons, ['map-pin-fill']),
+	getIcons(mdiIcons, ['map-marker', 'content-save']),
+	getIcons(fluentIcons, ['remove-from-trash']),
+]) {
+	if (subset !== null) addCollection(subset)
+}
+_api.setFetch(((input: RequestInfo | URL) =>
+	Promise.reject(
+		new Error(`Network access is disabled in tests (iconify fetch: ${String(input)})`)
+	)) as typeof fetch)
 
 // Testing Library's auto-cleanup between tests relies on detecting a *global* afterEach - this
 // project's vitest config sets `globals: false`, so that auto-detection never fires and every

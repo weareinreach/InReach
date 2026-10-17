@@ -17,7 +17,7 @@ import { type AppRouter } from '@weareinreach/api'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { transformer } from '@weareinreach/util/transformer'
 import { SearchStateProvider } from '~ui/providers/SearchState'
-import { storybookTheme } from '~ui/theme/storybook'
+import { testTheme } from '~ui/test/testTheme'
 
 import { testI18n } from './i18nTestInstance'
 
@@ -1556,7 +1556,7 @@ export const buildTrpcTestWrapper = (
 	const Wrapper = ({ children }: { children: ReactNode }) => {
 		const tree = (
 			<trpc.Provider client={client} queryClient={queryClient}>
-				<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+				<MantineProvider theme={testTheme} defaultColorScheme='light'>
 					<I18nextProvider i18n={testI18n}>
 						{/* Matches `apps/app/src/pages/_app.tsx`, which mounts this once at the root - without
 						it, `showNotification()` (used by every drawer's `useNewNotification`) pushes to
