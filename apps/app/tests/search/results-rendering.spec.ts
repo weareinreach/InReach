@@ -64,3 +64,37 @@ test('4.3: a tier-header divider appears once per new proximity tier, not once p
 	const localBox = await page.getByText('Local Resources (11 - 25 miles)').boundingBox()
 	expect(neighborhoodBox?.y).toBeLessThan(localBox?.y ?? Infinity)
 })
+
+test('4.4: a failed results request shows an error with Retry, not endless loading placeholders', async ({
+	page,
+}) => {
+	// Page 1 is server-rendered from a prefetch, so fail page 2 instead: both its background prefetch
+	// and the request made when the visitor clicks it. Every attempt (including react-query's own
+	// retries) is aborted until `failPageTwo` is switched off.
+	let failPageTwo = true
+	await page.route('**/api/trpc/**', async (route) => {
+		const url = route.request().url()
+		if (failPageTwo && url.includes('organization.searchDistance') && url.includes('%22skip%22%3A10')) {
+			await route.abort()
+			return
+		}
+		await route.continue()
+	})
+
+	await page.goto('/search/us/-122.1/37.4/50/mi')
+	await page.getByText('2', { exact: true }).first().click()
+
+	// The page used to have no error branch at all, so the 10 loading placeholders stayed forever
+	// (#2061). react-query retries 3 times with backoff (about 7 seconds) before reporting the error.
+	const errorMessage = page
+		.getByRole('alert')
+		.filter({ hasText: 'Something went wrong loading search results' })
+	await expect(errorMessage).toBeVisible({ timeout: 20_000 })
+	await expect(page.getByTestId('search-results-list').locator('.mantine-Skeleton-root')).toHaveCount(0)
+
+	// Retry actually recovers once the backend responds again.
+	failPageTwo = false
+	await page.getByRole('button', { name: 'Retry' }).click()
+	await expect(errorMessage).toBeHidden()
+	await expect(page.getByText('2', { exact: true }).first()).toHaveClass(/paginationActive/)
+})

@@ -14,6 +14,7 @@ import { z } from 'zod'
 import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
+import { Button } from '@weareinreach/ui/components/core/Button'
 import { LocationBasedAlertBanner } from '@weareinreach/ui/components/core/LocationBasedAlertBanner'
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
@@ -108,6 +109,41 @@ const NoResults = memo(
 	}
 )
 NoResults.displayName = 'NoResults'
+
+// Shown in place of the results list when the search request has failed (after react-query's own retries).
+// Without it the page kept its loading placeholders forever (#2061). Crisis lines stay visible, same as
+// NoResults - a visitor who can't get results may need them most.
+const SearchError = memo(
+	({
+		onRetry,
+		isRetrying,
+		crisisData,
+	}: {
+		onRetry: () => void
+		isRetrying: boolean
+		crisisData?: ApiOutput['organization']['getNatlCrisis']
+	}) => {
+		const { t } = useTranslation('common')
+		return (
+			<Stack className={classes.noResultsStack}>
+				<Stack gap={16} align='flex-start'>
+					<Text role='alert'>{t('search.results-error')}</Text>
+					<Button variant='secondary' onClick={onRetry} loading={isRetrying}>
+						{t('retry')}
+					</Button>
+				</Stack>
+				{crisisData?.length ? (
+					<CrisisSupport role='national'>
+						{crisisData.map((result) => (
+							<CrisisSupport.National data={result} key={result.id} />
+						))}
+					</CrisisSupport>
+				) : null}
+			</Stack>
+		)
+	}
+)
+SearchError.displayName = 'SearchError'
 
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
@@ -409,7 +445,13 @@ const SearchResults = () => {
 				/>
 			</Grid.Col>
 			<Grid.Col span={{ base: 12, sm: 8, md: 8 }} data-testid='search-results-list'>
-				{data?.resultCount === 0 && crisisResults ? (
+				{searchQuery.isError ? (
+					<SearchError
+						onRetry={() => void searchQuery.refetch()}
+						isRetrying={searchIsFetching}
+						crisisData={crisisResults}
+					/>
+				) : data?.resultCount === 0 && crisisResults ? (
 					<NoResults crisisData={crisisResults} />
 				) : (
 					<>
