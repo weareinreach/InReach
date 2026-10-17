@@ -319,6 +319,7 @@
 		"include-remote": "원격 서비스 포함하기",
 		"local": "현지",
 		"local-description": "현지 자원 (11-25마일)",
+		"location-error": "그 위치를 찾는 중에 문제가 발생했습니다.다시 시도해 주세요.",
 		"location-placeholder": "도시/우편번호 입력하세요...",
 		"location-placeholder-searchby": "도시/우편번호로 검색하세요...",
 		"locality-label": "소재지",

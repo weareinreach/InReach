@@ -320,6 +320,7 @@
 		"include-remote": "لیرې خدمتونه شامل کړئ",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "ښار یا زپ کوډ دننه کړئ...",
 		"location-placeholder-searchby": "د ښار یا زپ کوډ لخوا لټون وکړئ ...",
 		"locality-label": "Locality",
