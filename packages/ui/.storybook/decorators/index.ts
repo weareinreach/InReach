@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./*.tsx}
+// codegen:start {preset: barrel, include: ./*.tsx, exclude: "*.{stories,test}.*"}
 export * from './GoogleMaps'
 export * from './I18Next'
 export * from './Layouts'
