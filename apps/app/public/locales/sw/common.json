@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
+		"tab-manage-users": "Manage users",
 		"tab-downloads": "Downloads",
 		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
@@ -459,6 +460,7 @@
 	"user-menu": {
 		"admin-options": "Chaguzi za Msimamizi",
 		"csv-downloads": "CSV Downloads",
+		"dashboards": "Dashboards",
 		"data-portal": "Nyumbani mwa Tovuti ya Data",
 		"edit-page": "Hariri ukurasa huu",
 		"user-options": "Chaguzi za Mtumiaji",
@@ -517,6 +519,7 @@
 		"search": "Tafuta",
 		"service-hours": "Saa za huduma",
 		"services": "Services",
+		"set-status": "Set status",
 		"settings": "Mipangilio",
 		"share": "Shiriki",
 		"sign-up": "Ishara ya juu",

@@ -115,6 +115,18 @@ const SavedLists = () => {
 		)
 	}
 
+	// `getById` resolves to `null` (not an error) for a list id that doesn't exist, or that exists but
+	// isn't owned by or shared with the current user - the effect above redirects away in that case, but
+	// effects only run after this render commits. Render a loader for that one render instead of falling
+	// through to the content below, which assumes `queryResult` is non-null.
+	if (!isLoading && queryResult === null) {
+		return (
+			<Center>
+				<Loader />
+			</Center>
+		)
+	}
+
 	let organizationsContent
 	if (isLoading) {
 		organizationsContent = <SavedResultLoading />

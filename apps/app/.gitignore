@@ -41,6 +41,8 @@ yarn-error.log*
 /test-results/
 /playwright-report/
 /playwright/.cache/
+# Playwright auth fixture - contains a real session cookie, never commit
+/tests/crud/.auth/
 
 # Sentry Auth Token
 .sentryclirc

@@ -31,6 +31,9 @@ vi.mock('~ui/lib/trpcClient', () => ({
 		},
 		fieldOpt: {
 			attributesByCategory: { useQuery: vi.fn() },
+			// Backs the Service Attributes toolbar quick filter - see OrganizationTable.test.tsx's identical
+			// comment for why this needs its own default even in tests that never touch this filter.
+			attributesForFilter: { useQuery: vi.fn() },
 		},
 		component: {
 			ServiceSelect: { useQuery: vi.fn() },
@@ -50,6 +53,7 @@ const useBulkDetachTagsMock = vi.mocked(trpc.service.bulkDetachTags.useMutation)
 const useBulkAttachAttributeMock = vi.mocked(trpc.service.bulkAttachAttribute.useMutation)
 const useBulkDetachAttributeMock = vi.mocked(trpc.service.bulkDetachAttribute.useMutation)
 const useAttributesByCategoryMock = vi.mocked(trpc.fieldOpt.attributesByCategory.useQuery)
+const useAttributesForFilterMock = vi.mocked(trpc.fieldOpt.attributesForFilter.useQuery)
 const useServiceSelectMock = vi.mocked(trpc.component.ServiceSelect.useQuery)
 const useUtilsMock = vi.mocked(trpc.useUtils)
 
@@ -103,6 +107,7 @@ describe('BulkSearchReplaceTable', () => {
 		useBulkAttachAttributeMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
 		useBulkDetachAttributeMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
 		useAttributesByCategoryMock.mockReturnValue({ data: [] } as never)
+		useAttributesForFilterMock.mockReturnValue({ data: [], isLoading: false } as never)
 		useServiceSelectMock.mockReturnValue({ data: [] } as never)
 		useUtilsMock.mockReturnValue({ bulkSearchReplace: { search: { invalidate: vi.fn() } } } as never)
 	})
@@ -372,7 +377,12 @@ describe('BulkSearchReplaceTable', () => {
 		} as never)
 		useServiceSelectMock.mockReturnValue({
 			data: [
-				{ tsKey: 'cat', active: true, services: [{ id: 'tag_lookup', tsKey: 'Food pantry', active: true }] },
+				{
+					tsKey: 'cat',
+					category: 'cat',
+					active: true,
+					services: [{ id: 'tag_lookup', tsKey: 'Food pantry', name: 'Food pantry', active: true }],
+				},
 			],
 		} as never)
 		render(<BulkSearchReplaceTable />)
@@ -417,27 +427,20 @@ describe('BulkSearchReplaceTable', () => {
 		// Mantine's Menu positions its dropdown via floating-ui, which resolves the item into the DOM
 		// a tick or two after the click rather than synchronously - this has been seen to take longer
 		// than 5000ms under CI's slower/contended runners (worse as the suite grows and more test files
-		// run concurrently), so it's widened well past that observed failure point here.
+		// run concurrently - it hit 15625ms and timed out against the previous 15000ms budget once this
+		// suite grew further), so it's widened well past that observed failure point here.
 		await user.click(screen.getByRole('button', { name: 'Show/hide columns' }))
-		await user.click(await screen.findByRole('menuitem', { name: 'Status' }, { timeout: 15000 }))
+		await user.click(await screen.findByRole('menuitem', { name: 'Status' }, { timeout: 25000 }))
 
 		const table = within(screen.getByRole('table'))
 		expect(table.getByText('New')).toBeInTheDocument()
 		expect(table.getByText('Unpublished')).toBeInTheDocument()
 		const orgRow = screen.getByText('Riverside Community Health Center').closest('tr')
 		expect(orgRow).toHaveStyle({ textDecoration: 'line-through' })
-	}, 20000)
+	}, 30000)
 
-	it('defaults to hiding deleted organizations, and the Service Tags/Attributes filters feed the search query', async () => {
+	it('defaults to hiding deleted organizations', async () => {
 		const user = userEvent.setup()
-		useAttributesByCategoryMock.mockReturnValue({
-			data: [{ attributeId: 'attr_filter', attributeKey: 'attr.filter' }],
-		} as never)
-		useServiceSelectMock.mockReturnValue({
-			data: [
-				{ tsKey: 'cat', active: true, services: [{ id: 'tag_filter', tsKey: 'tag.filter', active: true }] },
-			],
-		} as never)
 		render(<BulkSearchReplaceTable />)
 
 		await user.type(screen.getByLabelText('Search for'), 'COVID-19')
@@ -446,7 +449,26 @@ describe('BulkSearchReplaceTable', () => {
 			expect.objectContaining({ deleted: false, serviceTagIds: undefined, serviceAttributeIds: undefined }),
 			expect.anything()
 		)
+	})
 
+	it('the Service Tags filter (visible by default) feeds the search query', async () => {
+		const user = userEvent.setup()
+		useServiceSelectMock.mockReturnValue({
+			data: [
+				{
+					tsKey: 'cat',
+					category: 'cat',
+					active: true,
+					services: [{ id: 'tag_filter', tsKey: 'tag.filter', name: 'tag.filter', active: true }],
+				},
+			],
+		} as never)
+		render(<BulkSearchReplaceTable />)
+
+		await user.type(screen.getByLabelText('Search for'), 'COVID-19')
+		await user.click(screen.getByRole('button', { name: 'Search' }))
+
+		// Permanent (unlike Deleted, still opt-in via "+ Filter") - its own visible label, no chip to open.
 		// MultiSelect renders both the visible combobox input and a hidden form-value mirror, both
 		// sharing the same label - the hidden one (`data-type="hidden"`) isn't the one to click.
 		const tagsInput = screen
@@ -458,9 +480,30 @@ describe('BulkSearchReplaceTable', () => {
 			expect.objectContaining({ serviceTagIds: ['tag_filter'] }),
 			expect.anything()
 		)
+	})
+
+	it('the Service Attributes filter (visible by default) feeds the search query', async () => {
+		const user = userEvent.setup()
+		// Backs the toolbar's Service Attributes filter (see serviceFilterGroups.ts) - a separate data
+		// source from attributesByCategory, which only backs the table's own translated column.
+		useAttributesForFilterMock.mockReturnValue({
+			data: [
+				{
+					attributeId: 'attr_filter',
+					attributeName: 'attr.filter',
+					categoryId: 'cat1',
+					categoryName: 'Cat 1',
+				},
+			],
+			isLoading: false,
+		} as never)
+		render(<BulkSearchReplaceTable />)
+
+		await user.type(screen.getByLabelText('Search for'), 'COVID-19')
+		await user.click(screen.getByRole('button', { name: 'Search' }))
 
 		const attributesInput = screen
-			.getAllByLabelText('Attributes')
+			.getAllByLabelText('Service Attributes')
 			.find((el) => el.getAttribute('data-type') !== 'hidden')
 		await user.click(attributesInput!)
 		await user.click(await screen.findByRole('option', { name: 'attr.filter', hidden: true }))

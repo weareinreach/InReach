@@ -1,35 +1,56 @@
 import { type Prisma, prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-import { type TForReviewTableSchema } from './query.forReviewTable.schema'
+import { type TForReviewTableSchema, type TReviewStatusFilter } from './query.forReviewTable.schema'
 
+// See ZReviewStatusFilter's comment - 'deleted' is checked as its own bucket regardless of `visible` so a
+// hidden-and-deleted review still matches "Deleted," same as the Status column's own badges (which can
+// show both at once).
+const REVIEW_STATUS_WHERE: Record<TReviewStatusFilter, Prisma.OrgReviewWhereInput> = {
+	active: { visible: true, deleted: false },
+	hidden: { visible: false, deleted: false },
+	deleted: { deleted: true },
+}
+
+// Built as top-level `AND` conditions (each its own object) rather than assigning multiple keys directly
+// on `where` - `status` and `search` each need their own `OR`, and a plain JS object can only hold one
+// `OR` key, so a second assignment would silently clobber the first (see user/query.forUserTable.handler.ts
+// for the same pattern/reasoning).
 const buildWhere = (input: TForReviewTableSchema): Prisma.OrgReviewWhereInput => {
-	const where: Prisma.OrgReviewWhereInput = {}
+	const and: Prisma.OrgReviewWhereInput[] = []
 	if (input.visible !== undefined) {
-		where.visible = input.visible
+		and.push({ visible: input.visible })
 	}
 	if (input.deleted !== undefined) {
-		where.deleted = input.deleted
+		and.push({ deleted: input.deleted })
 	}
-	if (input.rating !== undefined) {
-		where.rating = input.rating
+	if (input.status?.length) {
+		and.push({ OR: input.status.map((status) => REVIEW_STATUS_WHERE[status]) })
+	}
+	if (input.rating?.length) {
+		and.push({ rating: { in: input.rating } })
+	}
+	if (input.createdByUserIds?.length) {
+		and.push({ userId: { in: input.createdByUserIds } })
 	}
 	if (input.createdAt) {
-		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
+		and.push({ createdAt: { gte: input.createdAt.from, lte: input.createdAt.to } })
 	}
 	if (input.updatedAt) {
-		where.updatedAt = { gte: input.updatedAt.from, lte: input.updatedAt.to }
+		and.push({ updatedAt: { gte: input.updatedAt.from, lte: input.updatedAt.to } })
 	}
 	if (input.search) {
-		where.OR = [
-			{ reviewText: { contains: input.search, mode: 'insensitive' } },
-			{ user: { name: { contains: input.search, mode: 'insensitive' } } },
-			{ user: { email: { contains: input.search, mode: 'insensitive' } } },
-			{ organization: { name: { contains: input.search, mode: 'insensitive' } } },
-			{ orgLocation: { name: { contains: input.search, mode: 'insensitive' } } },
-		]
+		and.push({
+			OR: [
+				{ reviewText: { contains: input.search, mode: 'insensitive' } },
+				{ user: { name: { contains: input.search, mode: 'insensitive' } } },
+				{ user: { email: { contains: input.search, mode: 'insensitive' } } },
+				{ organization: { name: { contains: input.search, mode: 'insensitive' } } },
+				{ orgLocation: { name: { contains: input.search, mode: 'insensitive' } } },
+			],
+		})
 	}
-	return where
+	return and.length ? { AND: and } : {}
 }
 
 // Sortable columns are whitelisted by the Zod schema (ZSortableColumn) before they ever reach here.

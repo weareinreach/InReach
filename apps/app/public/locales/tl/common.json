@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizations",
 		"tab-reports": "Reports",
 		"tab-users": "Users",
+		"tab-manage-users": "Manage users",
 		"tab-downloads": "Downloads",
 		"no-access-message": "You do not have permission to access any sections of the admin dashboard."
 	},
@@ -459,6 +460,7 @@
 	"user-menu": {
 		"admin-options": "Mga Opsyon sa Admin",
 		"csv-downloads": "CSV Downloads",
+		"dashboards": "Dashboards",
 		"data-portal": "Home ng Data Portal",
 		"edit-page": "I-edit ang page na ito",
 		"user-options": "Mga Pagpipilian sa Gumagamit",
@@ -517,6 +519,7 @@
 		"search": "Paghahanap",
 		"service-hours": "Mga oras ng serbisyo",
 		"services": "Services",
+		"set-status": "Set status",
 		"settings": "Mga Setting",
 		"share": "Ibahagi",
 		"sign-up": "Mag-sign up",

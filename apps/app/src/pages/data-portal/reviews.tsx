@@ -6,23 +6,11 @@ import { useTranslation } from 'next-i18next/pages'
 
 import { checkServerPermissions } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
+import { organizationsSideNav } from '@weareinreach/ui/components/data-portal/organizationsSideNav'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
 import { ReviewTable } from '@weareinreach/ui/components/data-portal/ReviewTable'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
-
-const organizationsSideNav = {
-	heading: 'Organizations',
-	items: [
-		{ label: 'Organizations', href: { pathname: '/data-portal/organizations' as const } },
-		{ label: 'Reviews', href: { pathname: '/data-portal/reviews' as const }, active: true },
-		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const } },
-		{ label: 'Downloads', href: { pathname: '/data-portal/downloads' as const } },
-		{ label: 'Bulk Search & Replace', href: { pathname: '/data-portal/bulk-search-replace' as const } },
-		// TEMPORARY - see location-phone-cleanup.tsx; remove this entry once that review is done.
-		{ label: 'Location Phone Cleanup', href: { pathname: '/data-portal/location-phone-cleanup' as const } },
-	],
-}
 
 const DataPortalReviews: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
@@ -33,7 +21,7 @@ const DataPortalReviews: NextPageWithOptions = () => {
 			<Head>
 				<title>{t('page-title.base', { title })}</title>
 			</Head>
-			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
+			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav('Reviews')}>
 				<PageHeading title={title} />
 				<ReviewTable />
 			</DataPortalPageShell>

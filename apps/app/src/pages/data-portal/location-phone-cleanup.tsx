@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next/pages'
 
 import { checkServerPermissions } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
+import { organizationsSideNav } from '@weareinreach/ui/components/data-portal/organizationsSideNav'
 import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
 import { type NextPageWithOptions } from '~app/pages/_app'
@@ -15,24 +16,8 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 // only to help staff review orgs affected by the location-phone display fix (see
 // orgPhone/query.forContactInfo.handler.ts and OrganizationTable's `locationPhoneCleanupOnly` prop) -
 // a multi-location org's main page no longer automatically shows a number that's also linked to one of
-// its locations. Safe to delete this page, the sidebar entries pointing to it, and the
+// its locations. Safe to delete this page, the sidebar entry for it in organizationsSideNav.ts, and the
 // `locationPhoneCleanupOnly`/`needsLocationPhoneCleanup` plumbing behind it once that review is done.
-const organizationsSideNav = {
-	heading: 'Organizations',
-	items: [
-		{ label: 'Organizations', href: { pathname: '/data-portal/organizations' as const } },
-		{ label: 'Reviews', href: { pathname: '/data-portal/reviews' as const } },
-		{ label: 'Reports', href: { pathname: '/data-portal/reports' as const } },
-		{ label: 'Downloads', href: { pathname: '/data-portal/downloads' as const } },
-		{ label: 'Bulk Search & Replace', href: { pathname: '/data-portal/bulk-search-replace' as const } },
-		{
-			label: 'Location Phone Cleanup',
-			href: { pathname: '/data-portal/location-phone-cleanup' as const },
-			active: true,
-		},
-	],
-}
-
 const DataPortalLocationPhoneCleanup: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
 	const title = t('admin.tab-location-phone-cleanup', 'Location Phone Cleanup')
@@ -42,7 +27,10 @@ const DataPortalLocationPhoneCleanup: NextPageWithOptions = () => {
 			<Head>
 				<title>{t('page-title.base', { title })}</title>
 			</Head>
-			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav}>
+			<DataPortalPageShell
+				activeSection='organizations'
+				sideNav={organizationsSideNav('Location Phone Cleanup')}
+			>
 				<PageHeading title={title} />
 				<OrganizationTable locationPhoneCleanupOnly />
 			</DataPortalPageShell>

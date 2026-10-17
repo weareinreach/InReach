@@ -16,6 +16,8 @@ visual-diff-output/
 # testing
 coverage
 packages/*/html/
+packages/*/reports/
+apps/*/reports/
 test/cypress/videos
 test/cypress/screenshots
 test-results.html

@@ -155,13 +155,14 @@ export const Save = forwardRef<HTMLButtonElement, ActionButtonSaveProps>(
 			onSuccess: () => {
 				notifications.deleted()
 				productEvent.itemSave(itemId, itemName, 'unsave')
-				utils.savedList.isSaved.invalidate(itemId)
-				utils.savedList.getAll.invalidate()
+				// Whole-router invalidate, not just isSaved/getAll: a list's own contents
+				// (savedList.getById) need to refresh too, same as ListItem's save path below.
+				utils.savedList.invalidate()
 			},
 			onError: notifications.errorDelete,
 		})
 
-		const isSaved = Boolean(savedToLists)
+		const isSaved = Array.isArray(savedToLists) && savedToLists.length > 0
 		const isLoggedIn = sessionStatus === 'authenticated'
 		const buttonIcon = isSaved ? 'carbon:favorite-filled' : 'carbon:favorite'
 		const savedToSingleList = savedToLists && savedToLists.length === 1

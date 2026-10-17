@@ -1,6 +1,8 @@
 import { TRPCError } from '@trpc/server'
 import invariant from 'tiny-invariant'
 
+import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
+
 import { type Context, markSkipCache } from '../context'
 import { type Meta, t } from '../initTRPC'
 
@@ -19,7 +21,7 @@ export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 
 		// 1. ROOT / SYSADMIN (God Tier)
 		// Goal: Can see and do everything. Full access, no further checks.
-		const isRoot = userPerms.some((p) => ['root', 'sysadmin', 'system'].includes(p))
+		const isRoot = userPerms.some((p) => ROOT_TIER_PERMISSIONS.includes(p))
 		const isValidRoot = isRoot && email.endsWith('@inreach.org')
 
 		if (isValidRoot) {
@@ -35,8 +37,8 @@ export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 			const reqPerms = Array.isArray(meta?.hasPerm) ? meta.hasPerm : meta?.hasPerm ? [meta.hasPerm] : []
 
 			// Blocklist: If the endpoint specifically requires Root strings
-			const systemPerms = ['root', 'sysadmin', 'system', 'adminPermissions']
-			if (reqPerms.some((p) => systemPerms.includes(p))) {
+			const systemPerms = new Set([...ROOT_TIER_PERMISSIONS, 'adminPermissions'])
+			if (reqPerms.some((p) => systemPerms.has(p))) {
 				return false
 			}
 
@@ -80,9 +82,7 @@ export const checkStaffPermissions = (userPermissions: string[]) => {
 		'dataPortalBasic',
 		'dataPortalManager',
 		'dataPortalAdmin',
-		'sysadmin',
-		'system',
-		'root',
+		...ROOT_TIER_PERMISSIONS,
 	]
 	return userPermissions.some((perm) => staffPermissions.includes(perm))
 }
@@ -96,7 +96,7 @@ export const isAdmin = t.middleware(({ ctx, next }) => {
 
 	const { permissions, email } = ctx.session.user
 	const isDataPortalAdmin = permissions.includes('dataPortalAdmin')
-	const isRoot = permissions.some((p) => ['root', 'sysadmin', 'system'].includes(p))
+	const isRoot = permissions.some((p) => ROOT_TIER_PERMISSIONS.includes(p))
 	const isValidRoot = isRoot && email.endsWith('@inreach.org')
 
 	if (!(isDataPortalAdmin || isValidRoot)) {

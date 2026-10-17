@@ -12,6 +12,8 @@ export default {
 	decorators: [StorybookGridDouble],
 	parameters: {
 		layout: 'fullscreen',
+		// See docs/Testing/search-test-inventory.md §12, case 12.3.
+		chromatic: { viewports: [500, 768, 1024, 1440] },
 	},
 	argTypes: {
 		loading: {

@@ -302,7 +302,11 @@ export const AddressAutocomplete = <T extends AddressSchema>({
 			const item = autoCompleteSearch?.results.find((result) => result.value === value)
 			if (item) {
 				handleAutocompleteSelection(item)
-				street1Controller.field.onChange(item.value)
+				// `item.value` is the full "street, city, state, country" prediction text (used only to
+				// identify which Combobox option was picked) - writing it into street1 duplicates
+				// city/state/country once the address is later composed with those fields for display.
+				// `item.label` is Google's `structured_formatting.main_text`, i.e. the street-only portion.
+				street1Controller.field.onChange(item.label ?? item.value)
 			}
 			street1Combobox.closeDropdown()
 		},

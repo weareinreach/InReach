@@ -13,6 +13,9 @@ const ServiceSelect = async ({ ctx: _ctx }: TRPCHandlerParams) => {
 				// id: true,
 				tsKey: true,
 				// tsNs: true,
+				// Raw slug, not translated - added for the data-portal's Service Tags quick filter, which
+				// (unlike this query's original RHF-drawer consumer) shows plain, untranslated labels.
+				category: true,
 				active: true,
 				services: {
 					where: {
@@ -24,6 +27,8 @@ const ServiceSelect = async ({ ctx: _ctx }: TRPCHandlerParams) => {
 							select: {
 								id: true,
 								tsKey: true,
+								// Same reasoning as `category` above - plain name for the data-portal consumer.
+								name: true,
 								active: true,
 								// tsNs: true,
 							},

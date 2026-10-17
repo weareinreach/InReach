@@ -95,14 +95,12 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 				await utils.savedList.getAll.cancel()
 				return insertOptimisticList(name)
 			},
-			onSuccess: async (
-				_,
-				{ organizationId: savedOrgId, serviceId: savedServiceId, itemId: savedItemId }
-			) => {
-				await Promise.all([
-					utils.savedList.getAll.invalidate(),
-					utils.savedList.isSaved.invalidate(savedItemId ?? savedServiceId ?? savedOrgId),
-				])
+			onSuccess: async () => {
+				// Whole-router invalidate, not just getAll/isSaved: this list is brand new, so
+				// there's no stale savedList.getById cache entry to clear today, but a narrower
+				// invalidate here was exactly the shape of gap that let a list's own contents go
+				// stale elsewhere (see ActionButtons/Save.tsx's removeItem).
+				await utils.savedList.invalidate()
 				newListNotification()
 				resourceSavedNotification()
 				handler.close()

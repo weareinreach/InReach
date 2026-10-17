@@ -39,6 +39,13 @@ export const UserMenu = ({ className }: UserMenuProps) => {
 		permissions: ['dataPortalBasic', 'dataPortalAdmin', 'dataPortalManager'],
 		has: 'some',
 	})
+	// Stricter than `canAccessDataPortal` - Dashboards is manager-and-above only, matching each dashboard
+	// page's own `getServerSideProps` gate (see apps/app/src/pages/dashboards/index.tsx).
+	const canAccessDashboards = checkPermissions({
+		session,
+		permissions: ['dataPortalManager', 'dataPortalAdmin'],
+		has: 'some',
+	})
 	const editablePaths: (typeof router.pathname)[] = [
 		'/org/[slug]',
 		'/org/[slug]/[orgLocationId]',
@@ -108,6 +115,11 @@ export const UserMenu = ({ className }: UserMenuProps) => {
 							{canAccessDataPortal && (
 								<>
 									<Menu.Label>{t('user-menu.admin-options')}</Menu.Label>
+									{canAccessDashboards && (
+										<Menu.Item component={Link} href='/dashboards' target='_self'>
+											{t('user-menu.dashboards')}
+										</Menu.Item>
+									)}
 									<Menu.Item component={Link} href='/data-portal' target='_self'>
 										{t('user-menu.data-portal')}
 									</Menu.Item>
@@ -157,6 +169,7 @@ export const UserMenu = ({ className }: UserMenuProps) => {
 			</>
 		)
 	}, [
+		canAccessDashboards,
 		canAccessDataPortal,
 		handleEditModeEntry,
 		handleSignout,

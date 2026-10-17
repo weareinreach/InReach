@@ -1,4 +1,4 @@
-import { defineRouter, importHandler, publicProcedure } from '~api/lib/trpc'
+import { defineRouter, importHandler, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 
 import * as schema from './schemas'
 
@@ -43,6 +43,17 @@ export const fieldOptRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	// Staff-only, untranslated counterpart to attributesByCategory (see its docstring) - used by the
+	// Organization table's Service Attributes quick filter.
+	attributesForFilter: permissionedProcedure('viewAllOrganizations')
+		.input(schema.ZAttributesForFilterSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(
+				namespaced('attributesForFilter'),
+				() => import('./query.attributesForFilter.handler')
+			)
+			return handler(opts)
+		}),
 	attributeCategories: publicProcedure.input(schema.ZAttributeCategoriesSchema).query(async (opts) => {
 		const handler = await importHandler(
 			namespaced('attributeCategories'),

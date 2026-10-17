@@ -29,6 +29,34 @@ export const markSkipCache = (res?: NextApiResponse) => {
 export const getSkipCache = (res?: NextApiResponse) =>
 	Boolean((res as ResponseWithSkipCache | undefined)?.skipCache)
 
+const ONE_DAY_IN_SECONDS = 60 * 60 * 24
+
+/**
+ * The actual cache-control decision `responseMeta` applies, pulled out as a pure function so it can be unit
+ * tested directly instead of only through a real HTTP request.
+ *
+ * `hasSession` is checked independently of `shouldSkip` (`getSkipCache`'s value) rather than instead of it:
+ * `shouldSkip` is set by auth/permission middleware via `markSkipCache`, which only runs once a procedure
+ * actually starts executing - with `httpBatchStreamLink` (the only link this app uses), tRPC generates
+ * response headers eagerly, before awaiting the procedure chain, so `shouldSkip` can still read `false` here
+ * for a protected procedure whose middleware hasn't run yet. Every middleware that calls `markSkipCache`
+ * requires `ctx.session` to already be set (see isAuthed/isAdmin/isStaff/hasPermissions), and `session` is
+ * already fully resolved by `createContext` before `responseMeta` ever runs - so checking it directly here
+ * catches every case `shouldSkip` was meant to, without depending on that timing.
+ */
+export const getCacheControlHeader = (params: {
+	hasSession: boolean
+	shouldSkip: boolean
+	allOk: boolean
+	isQuery: boolean
+}): string | undefined => {
+	const { hasSession, shouldSkip, allOk, isQuery } = params
+	if (shouldSkip || hasSession || !allOk || !isQuery) {
+		return undefined
+	}
+	return `s-maxage=1, public, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`
+}
+
 /**
  * Use this helper for:
  *

@@ -1,5 +1,6 @@
 import { getAuditedClient, prisma as prismaRead } from '@weareinreach/db'
 import { checkListOwnership } from '~api/lib/checkListOwnership'
+import { handleError } from '~api/lib/errorHandler'
 import { nanoUrl } from '~api/lib/nanoIdUrl'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -18,19 +19,23 @@ const generateUniqueSlug = async (): Promise<string> => {
 	return slug
 }
 const shareUrl = async ({ ctx, input }: TRPCHandlerParams<TShareUrlSchema, 'protected'>) => {
-	const prisma = getAuditedClient(ctx.actorId)
-	const urlSlug = await generateUniqueSlug()
-	checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
+	try {
+		const prisma = getAuditedClient(ctx.actorId)
+		const urlSlug = await generateUniqueSlug()
+		await checkListOwnership({ listId: input.id, userId: ctx.session.user.id })
 
-	const result = await prisma.userSavedList.update({
-		where: input,
-		data: { sharedLinkKey: urlSlug },
-		select: {
-			id: true,
-			name: true,
-			sharedLinkKey: true,
-		},
-	})
-	return result
+		const result = await prisma.userSavedList.update({
+			where: input,
+			data: { sharedLinkKey: urlSlug },
+			select: {
+				id: true,
+				name: true,
+				sharedLinkKey: true,
+			},
+		})
+		return result
+	} catch (error) {
+		return handleError(error)
+	}
 }
 export default shareUrl

@@ -26,6 +26,7 @@ import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { isCountryCode } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
@@ -68,6 +69,10 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 		}, [createNew, id, drawerOpened])
 		const { id: orgId } = useOrgInfo()
 		const apiUtils = api.useUtils()
+		const notifySaveError = useNewNotification({
+			displayText: 'Something went wrong saving this phone number. Please try again.',
+			icon: 'warning',
+		})
 		const { data: initialData, isFetching } = api.orgPhone.forEditDrawer.useQuery(
 			{ id: phoneId, orgId: orgId ?? '' },
 			{
@@ -302,29 +307,48 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' }),
 		})
 		const siteUpdate = api.orgPhone.upsert.useMutation({
-			onSettled: (data, _error, variables) => {
-				patchContactListCaches(variables)
-				seedEditDrawerCache(variables)
-				// `refetchType: 'none'` everywhere below, always - a forced immediate refetch reads
-				// from the same database the patches above are specifically working around, and could
-				// silently overwrite what was just written with a still-lagging response that's
-				// missing it. These still mark everything stale so the next natural mount/load picks
-				// up the fully correct server data (exact phone-type translation key, etc.) once the
-				// database has caught up.
-				apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' })
+			onSettled: (data, error, variables) => {
+				// Guarded on success - `onSettled` fires on failure too, and patching from `variables`
+				// (what the user *submitted*) rather than a server response means an unguarded call here
+				// would show the edit as saved even when the write never reached the database at all,
+				// with nothing to ever correct it since the caches are deliberately never force-refetched
+				// (see the reasoning below). Email/Website/SocialMedia's equivalent patches already guard
+				// the same way (they key off the mutation's own response, which is naturally `undefined`
+				// on failure) - this one has to check `error` explicitly since it patches from the
+				// request instead.
+				if (!error) {
+					patchContactListCaches(variables)
+					seedEditDrawerCache(variables)
+				}
+				// Deliberately NOT invalidating `forContactInfoEdit`/`forEditDrawer` here, even with
+				// `refetchType: 'none'` - live-confirmed real bug this used to cause: marking a query
+				// stale doesn't itself refetch anything, but the *next* time it's naturally re-enabled
+				// (e.g. `forEditDrawer` going disabled→enabled on this same drawer's next open, since
+				// its query is gated by `drawerOpened`) react-query refetches automatically because the
+				// data is stale - and that refetch reads from the same database confirmed to lag behind
+				// its own writes. Unlike a refetch fired *immediately* after this save (already avoided,
+				// see below), this one can happen anywhere from seconds to minutes later - reopening the
+				// very drawer just saved - and was observed silently overwriting the just-patched,
+				// correct cache with a still-lagging (pre-write) response, undoing the patch entirely.
+				// The patch above is already the authoritative, correct value; leaving these two
+				// unmarked lets them stay "fresh" for the normal staleTime window (~10 minutes,
+				// ~ui/lib/trpcClient.ts) instead of inviting that race on every reopen. `forContactInfo`
+				// below is different - it's never patched at all, so it has nothing to protect and
+				// still needs an eventual (soft) refetch to pick up this change at all.
 				apiUtils.orgPhone.forContactInfo.invalidate(undefined, { refetchType: 'none' })
-				apiUtils.orgPhone.forEditDrawer.invalidate(
-					{ id: phoneId, orgId: orgId ?? '' },
-					{ refetchType: 'none' }
-				)
-				// The mutation returns the raw DB row, where an uncategorized/custom phone's
-				// `phoneTypeId` is a genuine `null` - re-coerced to `''` here for the same reason as
-				// the `select` on the query above (Mantine's `Select` can't use `null` as a real
-				// option's selected value).
+				// Guarded on success - `reset()` (with or without a values argument) replaces the form's
+				// current values outright, and calling it unconditionally here meant a failed save wiped
+				// the user's just-typed, never-saved edit back to `defaultValues` with no way to recover
+				// it, on top of giving no indication anything had gone wrong. On success, the mutation
+				// returns the raw DB row, where an uncategorized/custom phone's `phoneTypeId` is a
+				// genuine `null` - re-coerced to `''` here for the same reason as the `select` on the
+				// query above (Mantine's `Select` can't use `null` as a real option's selected value).
 				// `keepDirtyValues: false` overrides the form-level default (set below, to stop a
 				// background refetch from clobbering an in-progress edit) - this reset is different:
 				// it's applying what the user just successfully saved, so it should always win outright.
-				reset(data ? { ...data, phoneTypeId: data.phoneTypeId ?? '' } : data, { keepDirtyValues: false })
+				if (data) {
+					reset({ ...data, phoneTypeId: data.phoneTypeId ?? '' }, { keepDirtyValues: false })
+				}
 			},
 			onSuccess: () => {
 				setIsSaved(true)
@@ -334,11 +358,26 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 				modalHandler.close()
 				drawerHandler.close()
 			},
+			onError: () => {
+				notifySaveError()
+			},
 		})
 		const unlinkFromLocation = api.orgPhone.locationLink.useMutation({
 			onSuccess: () => {
 				drawerHandler.close()
 				apiUtils.orgPhone.forContactInfoEdit.invalidate()
+				// None of these three was invalidated at all before - the public (non-edit) list never
+				// reflected an unlink, reopening this same phone's own drawer showed its pre-unlink
+				// location association until an unrelated refetch happened to correct it, and (found via
+				// a deliberate audit for this same class of gap, not a live report) the "Link or create
+				// new..." menu kept omitting this phone from its options as if it were still linked,
+				// since nothing ever told it the unlink had just happened.
+				apiUtils.orgPhone.forContactInfo.invalidate()
+				apiUtils.orgPhone.forEditDrawer.invalidate(
+					{ id: phoneId, orgId: orgId ?? '' },
+					{ refetchType: 'none' }
+				)
+				apiUtils.orgPhone.getLinkOptions.invalidate()
 			},
 		})
 		// Runs on every open of a "Create new" trigger (not just at mount) - resets the form back to

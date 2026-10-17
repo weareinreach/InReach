@@ -229,6 +229,7 @@
 		"sonarlint.output.showVerboseLogs": false,
 		"i18n-ally.localesPaths": ["public/locales", "src/pages/api/i18n"],
 		"i18n-ally.keystyle": "nested",
+		"liveServer.settings.multiRootWorkspaceName": "📦 tRPC API (@weareinreach/api)",
 	},
 	"launch": {
 		"configurations": [

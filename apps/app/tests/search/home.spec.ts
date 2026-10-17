@@ -32,11 +32,20 @@ test('search by location triggers results', async ({ page }) => {
 	// First-visit modal blocks interaction with the rest of the page until dismissed.
 	await page.getByRole('dialog').getByRole('button', { name: 'Accept' }).click()
 
-	const searchInput = page.getByRole('combobox', { name: /search by city or zip/i })
+	// Mantine's `Combobox.Target` only sets `role="combobox"` on its child input when
+	// `withExpandedAttribute` is passed - `SearchBox.tsx` doesn't pass it, so the input's real
+	// accessible role stays the implicit `textbox` a plain `<input>` gets. Confirmed against the
+	// installed @mantine/core 9.5.1 source (`use-combobox-target-props.mjs`), not assumed.
+	const searchInput = page.getByRole('textbox', { name: /search by city or zip/i })
 	await searchInput.fill('Los Gatos')
 
 	// The autocomplete dropdown populates from a debounced geocoding API call, not instantly.
-	const firstOption = page.getByRole('option').first()
+	// While that's in flight, `SearchBox` renders a single loading-placeholder option (a bare
+	// `Loader`, no text - see SearchBox.tsx's `fetching` branch) that also satisfies
+	// `getByRole('option')`. Its `value` is just the raw typed text, which won't match any real
+	// result once the API responds, so clicking it silently does nothing (no error, no nav) -
+	// filtering for text content targets a real result instead of that transient placeholder.
+	const firstOption = page.getByRole('option').filter({ hasText: /\w/ }).first()
 	await expect(firstOption).toBeVisible({ timeout: 10_000 })
 	await firstOption.click()
 

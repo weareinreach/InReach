@@ -16,7 +16,7 @@ The portal uses a **Cascading Hierarchy**. Each level inherits the permissions o
 
 When a procedure is called, the logic evaluates the user's highest role.
 
-1.  **Root Bypass:** If the user is `root`, `sysadmin`, or `system` AND has an `@inreach.org` email, all checks return `true`.
+1.  **Root Bypass:** If the user holds `root` (`ROOT_TIER_PERMISSIONS` in `packages/db/lib/rootTierPermissions.ts`) AND has an `@inreach.org` email, all checks return `true`. This used to also check for `sysadmin`/`system`, three independently-maintained copies of the same literal array - neither was ever a real row in the `Permission` table, so neither could ever actually be held by a user. Centralized and the two dead names dropped per #2107/#2114.
 2.  **The Blocklists (Restricted Access):**
     - **System Blocklist:** (`adminPermissions`, `root`) - Only **Root** passes.
     - **Admin Blocklist:** (`adminRoles`, `dataPortalAdmin`) - Only **Admin & Root** pass.
@@ -39,6 +39,7 @@ When a procedure is called, the logic evaluates the user's highest role.
 
 - **Capabilities:** Everything. The only role that can assign the `dataPortalAdmin` role or perform a "Hard Purge" of the archives.
 - **Requirement:** `root` permission + `@inreach.org` email domain.
+- **`sysadmin`/`system` are not separate roles:** these names used to appear alongside `root` in every "God tier" check, but were never real permissions - carried forward from an older role-based system (pre-dating the current permission-string model), not roles with capabilities of their own. Dropped from the permission checks (#2107/#2114). `UserType`'s `sysadmin`/`system` values (a separate, signup-time account-category field, unrelated to this permission system) are untouched by this and remain just account labels.
 
 ### 🟡 Admin ("The Operations Chief")
 

@@ -2,6 +2,7 @@ import { type Meta } from '@storybook/nextjs'
 import { useEffect, useState } from 'react'
 import { action } from 'storybook/actions'
 
+import { WithSearchState } from '~ui/.storybook/decorators/SearchState'
 import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
 import { attribute } from '~ui/mockData/attribute'
 
@@ -48,3 +49,20 @@ export default {
 } satisfies Meta<typeof MoreFilterWrapper>
 
 export const MoreFilterExample = {}
+
+/**
+ * With an attribute pre-selected, so the count badge (same `.count` class as ServiceFilter - white text,
+ * black circle) actually renders for Chromatic to snapshot. Unlike ServiceFilter, `MoreFilter` has no direct
+ * "current selections" prop - it reads `searchState.attributes` via `useSearchState()`, so this needs the
+ * `WithSearchState` decorator seeding the provider, rather than an `args` override. See
+ * docs/Testing/search-test-inventory.md §8, case 8.6.
+ */
+export const MoreFilterWithSelections = {
+	decorators: [WithSearchState],
+	parameters: {
+		// additional.has-confidentiality-policy (INCLUDE) - a real id from
+		// mockData/json/attribute.getFilterOptions.json. Raw provider state uses the short keys
+		// (`a`/`s`), not the `attributes`/`services` names exposed by the `useSearchState()` hook.
+		searchContext: { params: [], a: ['attr_01GW2HHFV3BADK80TG0DXXFPMM'] },
+	},
+}

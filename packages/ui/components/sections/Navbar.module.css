@@ -9,7 +9,8 @@
 	z-index: 150;
 	background-color: var(--ir-color-secondary-white);
 }
-@media (max-width: $mantine-breakpoint-sm) {
+
+@media (max-width: calc($mantine-breakpoint-sm - 1px)) {
 	.desktopNav {
 		display: none;
 	}
@@ -18,6 +19,7 @@
 .mobileNav {
 	/* v6's theme.fn.largerThan('sm') hid this above the `sm` breakpoint */
 }
+
 @media (min-width: $mantine-breakpoint-sm) {
 	.mobileNav {
 		display: none;
@@ -42,15 +44,18 @@
 	padding: rem(4px) rem(8px);
 	border-radius: rem(8px);
 }
+
 @media (hover: hover) {
 	.editBarButtonText:hover {
 		background-color: var(--ir-color-secondary-white);
 	}
 }
+
 .editBarButtonText:disabled {
 	color: var(--ir-color-secondary-dark-gray);
 	cursor: not-allowed;
 }
+
 @media (hover: hover) {
 	.editBarButtonText:disabled:hover {
 		background-color: var(--ir-color-primary-light-gray);

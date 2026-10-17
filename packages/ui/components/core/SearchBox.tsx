@@ -44,6 +44,8 @@ const DEFAULT_RADIUS = 200
 const DEFAULT_UNIT = 'mi'
 /** Sentinel option value for the "suggest a resource" row appended to org search results. */
 const SUGGEST_VALUE = '__suggest-resource__'
+/** Sentinel option value for the "try again" row shown when geocoding a selected location fails. */
+const RETRY_LOCATION_VALUE = '__retry-location__'
 
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
@@ -147,9 +149,25 @@ export const SearchBox = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
 
-	const { data: locationResult } = api.geo.geoByPlaceId.useQuery(locationSearch, {
+	const {
+		data: locationResult,
+		isError: locationLookupFailed,
+		refetch: retryLocationLookup,
+	} = api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: notBlank(locationSearch) && !isOrgSearch,
 	})
+
+	useEffect(() => {
+		if (locationLookupFailed) {
+			setLoading(false)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [locationLookupFailed])
+
+	const handleRetryLocationLookup = useCallback(() => {
+		setLoading(true)
+		void retryLocationLookup()
+	}, [retryLocationLookup, setLoading])
 
 	useEffect(() => {
 		if (!locationResult?.result) {
@@ -297,12 +315,16 @@ export const SearchBox = ({
 				router.push('/suggest')
 				return
 			}
+			if (value === RETRY_LOCATION_VALUE) {
+				handleRetryLocationLookup()
+				return
+			}
 			const item = results.find((result) => result.value === value)
 			if (item) {
 				selectionHandler(item)
 			}
 		},
-		[results, selectionHandler, form.values.search, router]
+		[results, selectionHandler, form.values.search, router, handleRetryLocationLookup]
 	)
 
 	const { onChange: searchOnChange, ...searchFieldProps } = form.getInputProps('search')
@@ -401,6 +423,14 @@ export const SearchBox = ({
 							<Combobox.Empty>
 								<Text variant={variants.Text.utility1}>{t('search.no-results')}</Text>
 							</Combobox.Empty>
+						)}
+						{!isOrgSearch && locationLookupFailed && (
+							<Combobox.Option value={RETRY_LOCATION_VALUE} className={classes.itemComponent}>
+								<Group gap={4} wrap='nowrap'>
+									<Icon icon='carbon:warning-filled' color={theme.other.colors.tertiary.red} />
+									<Text c={theme.other.colors.tertiary.red}>{t('search.location-error')}</Text>
+								</Group>
+							</Combobox.Option>
 						)}
 						{isOrgSearch && !orgSearchLoading && notBlank(search) && (
 							<Combobox.Option value={SUGGEST_VALUE} className={classes.itemComponent}>

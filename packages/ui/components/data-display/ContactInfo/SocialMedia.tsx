@@ -7,6 +7,7 @@ import { Link } from '~ui/components/core/Link'
 import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { SocialMediaDrawer } from '~ui/components/data-portal/SocialMediaDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useMenuItemCreateTrigger } from '~ui/hooks/useMenuItemCreateTrigger'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -65,7 +66,21 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 		}
 	)
 	const linkToLocation = api.orgSocialMedia.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgSocialMedia.forContactInfoEdits.invalidate({ parentId }),
+		onSuccess: (_data, variables) => {
+			apiUtils.orgSocialMedia.forContactInfoEdits.invalidate({ parentId })
+			// None of these three was invalidated at all before - the public (non-edit) list never
+			// reflected a link/unlink, reopening the linked social media entry's own drawer showed its
+			// pre-link location association until an unrelated refetch happened to correct it, and
+			// (found via a deliberate audit for this same class of gap, not a live report) this "Link or
+			// create new..." menu's own options list kept offering the entry actually chosen here as if
+			// it were still linkable, since nothing ever told it that link had just happened.
+			apiUtils.orgSocialMedia.forContactInfo.invalidate()
+			apiUtils.orgSocialMedia.forEditDrawer.invalidate(
+				{ id: variables.orgSocialMediaId },
+				{ refetchType: 'none' }
+			)
+			apiUtils.orgSocialMedia.getLinkOptions.invalidate()
+		},
 	})
 	const getTextVariants = useCallback(
 		({ published, deleted }: { published: boolean; deleted: boolean }) => {
@@ -104,55 +119,69 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 		[linkToLocation]
 	)
 
-	const addOrLink = isLocation ? (
-		<Menu keepMounted withinPortal>
-			<Menu.Target>
-				<Link variant={variants.Link.inlineInverted}>
-					<Group wrap='nowrap' gap={4}>
-						<Icon icon='carbon:document-add' height={20} />
-						<Text variant={variants.Text.utility3}>Link or create new...</Text>
-					</Group>
-				</Link>
-			</Menu.Target>
-			<Menu.Dropdown>
-				{linkableSocials?.map(({ id, deleted, service, published, url }) => {
-					const { social: socialTextVariant, desc: descTextVariant } = getTextVariants({ published, deleted })
-					return (
-						<Menu.Item
-							key={id}
-							onClick={handleLinkToLocation({ orgLocationId: parentId, orgSocialMediaId: id })}
-						>
-							<Group wrap='nowrap'>
-								<Icon icon='carbon:link' />
-								<Stack gap={0}>
-									<Group wrap='nowrap' gap={8}>
-										<Icon icon={service.logoIcon} />
-										<Text variant={socialTextVariant}>{service.name}</Text>
-									</Group>
+	const { triggerRef: createNewTriggerRef, handleMenuItemClick: handleCreateNewClick } =
+		useMenuItemCreateTrigger()
 
-									<Text variant={descTextVariant}>{url}</Text>
-								</Stack>
-							</Group>
-						</Menu.Item>
-					)
-				})}
-				<Menu.Divider />
-				<Menu.Item key='new'>
-					<SocialMediaDrawer
-						key='new'
-						component={Link}
-						external
-						variant={variants.Link.inlineInverted}
-						createNew
-					>
+	const addOrLink = isLocation ? (
+		<>
+			<Menu keepMounted withinPortal>
+				<Menu.Target>
+					<Link variant={variants.Link.inlineInverted}>
+						<Group wrap='nowrap' gap={4}>
+							<Icon icon='carbon:document-add' height={20} />
+							<Text variant={variants.Text.utility3}>Link or create new...</Text>
+						</Group>
+					</Link>
+				</Menu.Target>
+				<Menu.Dropdown>
+					{linkableSocials?.map(({ id, deleted, service, published, url }) => {
+						const { social: socialTextVariant, desc: descTextVariant } = getTextVariants({
+							published,
+							deleted,
+						})
+						return (
+							<Menu.Item
+								key={id}
+								onClick={handleLinkToLocation({ orgLocationId: parentId, orgSocialMediaId: id })}
+							>
+								<Group wrap='nowrap'>
+									<Icon icon='carbon:link' />
+									<Stack gap={0}>
+										<Group wrap='nowrap' gap={8}>
+											<Icon icon={service.logoIcon} />
+											<Text variant={socialTextVariant}>{service.name}</Text>
+										</Group>
+
+										<Text variant={descTextVariant}>{url}</Text>
+									</Stack>
+								</Group>
+							</Menu.Item>
+						)
+					})}
+					<Menu.Divider />
+					{/* See useMenuItemCreateTrigger's doc comment for why this isn't just a
+					    SocialMediaDrawer rendered here directly. */}
+					<Menu.Item key='new' onClick={handleCreateNewClick}>
 						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
-					</SocialMediaDrawer>
-				</Menu.Item>
-			</Menu.Dropdown>
-		</Menu>
+					</Menu.Item>
+				</Menu.Dropdown>
+			</Menu>
+			{/* `aria-hidden` and no visible-text-duplicating label: this is a functional trigger only,
+			    clicked programmatically by the Menu.Item above, never meant to be discovered by assistive
+			    tech, focus order, or a query for the visible "Create new" text. */}
+			<SocialMediaDrawer
+				ref={createNewTriggerRef}
+				createNew
+				style={{ display: 'none' }}
+				aria-hidden
+				tabIndex={-1}
+			>
+				(hidden create-new trigger)
+			</SocialMediaDrawer>
+		</>
 	) : (
 		<SocialMediaDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
 			<Group wrap='nowrap'>

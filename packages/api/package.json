@@ -13,8 +13,8 @@
 		"lint:fix": "eslint --cache --fix .",
 		"test": "vitest run",
 		"test:coverage": "vitest run --coverage",
-		"test:report": "vitest run --reporter=html",
-		"test:report:view": "vitest run --reporter=html; npx serve html",
+		"test:report": "vitest run --reporter=html --coverage",
+		"test:report:view": "vitest run --reporter=html --coverage; npx serve html",
 		"test:watch": "vitest",
 		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
@@ -69,6 +69,7 @@
 		"@vitest/ui": "4.1.10",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
+		"dotenv": "16.4.5",
 		"dotenv-cli": "7.4.2",
 		"eslint": "9.39.5",
 		"i18next": "23.16.3",

@@ -3,39 +3,49 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForReportsTableSchema } from './query.forReportsTable.schema'
 
+// Built as top-level `AND` conditions (each its own object) rather than assigning multiple keys directly
+// on `where` - only `search` needs its own `OR` today, but this keeps the same shape as the Organization/
+// Review/User table handlers so a future `OR`-based filter added here (a bucketed Status, say) can't
+// silently clobber another one the way Organization's Status + Create Method briefly did (a plain JS
+// object can only hold one `OR` key - see user/query.forUserTable.handler.ts for the same reasoning).
 const buildWhere = (input: TForReportsTableSchema): Prisma.ReportWhereInput => {
-	const where: Prisma.ReportWhereInput = {}
+	const and: Prisma.ReportWhereInput[] = []
 	if (input.id) {
-		where.id = input.id
+		and.push({ id: input.id })
 	}
 	if (input.status) {
-		where.status = input.status
+		and.push({ status: input.status })
 	}
 	if (input.issueType?.length) {
-		where.issueType = { in: input.issueType }
+		and.push({ issueType: { in: input.issueType } })
 	}
 	if (input.organizationId) {
-		where.organizationId = input.organizationId
+		and.push({ organizationId: input.organizationId })
 	}
 	if (input.informed !== undefined) {
-		where.informed = input.informed
+		and.push({ informed: input.informed })
+	}
+	if (input.createdByUserIds?.length) {
+		and.push({ reportedById: { in: input.createdByUserIds } })
 	}
 	if (input.createdAt) {
-		where.createdAt = { gte: input.createdAt.from, lte: input.createdAt.to }
+		and.push({ createdAt: { gte: input.createdAt.from, lte: input.createdAt.to } })
 	}
 	if (input.updatedAt) {
-		where.updatedAt = { gte: input.updatedAt.from, lte: input.updatedAt.to }
+		and.push({ updatedAt: { gte: input.updatedAt.from, lte: input.updatedAt.to } })
 	}
 	if (input.search) {
-		where.OR = [
-			{ orgNameSnapshot: { contains: input.search, mode: 'insensitive' } },
-			{ serviceNameSnapshot: { contains: input.search, mode: 'insensitive' } },
-			{ userName: { contains: input.search, mode: 'insensitive' } },
-			{ userEmail: { contains: input.search, mode: 'insensitive' } },
-			{ userNote: { contains: input.search, mode: 'insensitive' } },
-		]
+		and.push({
+			OR: [
+				{ orgNameSnapshot: { contains: input.search, mode: 'insensitive' } },
+				{ serviceNameSnapshot: { contains: input.search, mode: 'insensitive' } },
+				{ userName: { contains: input.search, mode: 'insensitive' } },
+				{ userEmail: { contains: input.search, mode: 'insensitive' } },
+				{ userNote: { contains: input.search, mode: 'insensitive' } },
+			],
+		})
 	}
-	return where
+	return and.length ? { AND: and } : {}
 }
 
 // Sortable columns are whitelisted by the Zod schema (ZSortableColumn) before they ever reach here.

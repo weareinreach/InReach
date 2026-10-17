@@ -5,12 +5,12 @@ import { getEnv } from '@weareinreach/env'
 
 const verifier = (tokenUse: 'access' | 'id') =>
 	CognitoJwtVerifier.create({
-		userPoolId: 'us-east-1_06XOmcvrs',
+		userPoolId: getEnv('COGNITO_USER_POOL_ID'),
 		clientId: getEnv('COGNITO_CLIENT_ID'),
 		tokenUse,
 	})
 
-const AccessTokenSchema = z
+export const AccessTokenSchema = z
 	.object({
 		sub: z.guid(),
 		iss: z.string(),
@@ -25,7 +25,7 @@ const AccessTokenSchema = z
 	})
 	.passthrough()
 
-const IdTokenSchema = z
+export const IdTokenSchema = z
 	.object({
 		sub: z.guid(),
 		email_verified: z.boolean(),

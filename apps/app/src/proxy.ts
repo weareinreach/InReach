@@ -33,6 +33,27 @@ export const proxy: NextProxy = async (req: NextRequest) => {
 			return redirected
 		}
 	}
+
+	// A direct visit to `/search/intl/<code>` (a typed/bookmarked/shared URL, not something this app
+	// ever links to itself) bypasses the redirect above entirely, since that block explicitly excludes
+	// `/search/intl` paths. Without this, a lowercase or mixed-case code reaches
+	// `search/intl/[country].tsx` as-is, which doesn't normalize it before using it for the page's own
+	// display name (`Intl.DisplayNames.of()`, case-sensitive) or its crisis-resource lookup (`cca2`
+	// equality match against the DB, also case-sensitive) - see #2067.
+	if (req.nextUrl.pathname.startsWith('/search/intl/')) {
+		const pathParts = req.nextUrl.pathname.split('/')
+		const searchedCountry = pathParts[3]
+		if (searchedCountry?.length === 2 && searchedCountry !== searchedCountry.toUpperCase()) {
+			const url = req.nextUrl.clone()
+			url.pathname = `/search/intl/${searchedCountry.toUpperCase()}`
+			const redirected = NextResponse.redirect(url)
+			if (session) {
+				redirected.cookies.set('inreach-session', session.value)
+			}
+
+			return redirected
+		}
+	}
 	return res
 }
 

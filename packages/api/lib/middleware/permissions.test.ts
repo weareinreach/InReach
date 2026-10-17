@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
+import { permissions as realPermissions } from '@weareinreach/db/generated/permission'
+import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
+
 import { type Context } from '../context'
 import { type Meta } from '../initTRPC'
-import { checkPermissions } from './permissions'
+import { checkPermissions, checkStaffPermissions } from './permissions'
 
 /**
  * Regression coverage for a real defect found while scoping Bulk Search & Replace:
@@ -96,5 +99,51 @@ describe('Organizations table permission gating (viewAllOrganizations)', () => {
 				session: { user: { permissions: ['root'], email: 'staff@inreach.org' } },
 			} as unknown as Context)
 		).toBe(true)
+	})
+})
+
+/**
+ * #2107/#2114 - `checkPermissions`' root check, its `systemPerms` blocklist, and `checkStaffPermissions`' own
+ * list all used to independently re-type the literal array `['root', 'sysadmin', 'system']` (plus a 4th copy
+ * in `isAdmin`, identical logic to the first). Nothing caught a future edit to one copy missing the others.
+ * `sysadmin`/`system` were never real `Permission` rows (confirmed below) and were deliberately dropped
+ * rather than kept as permanent no-ops, so these now all build from the shared `ROOT_TIER_PERMISSIONS`
+ * constant (`packages/db/lib/rootTierPermissions.ts`), currently just `['root']`. This guards two things:
+ * that every call site still agrees with the shared constant (drift), and that `sysadmin`/`system`
+ * specifically grant nothing (the #2114 decision, not just an absence of a positive test).
+ */
+describe('ROOT_TIER_PERMISSIONS (#2107/#2114)', () => {
+	it.each(ROOT_TIER_PERMISSIONS)(
+		'checkPermissions: %s + an inreach.org email bypasses every blocklist',
+		(perm) => {
+			const meta: Meta = { hasPerm: ['dataPortalAdmin', 'adminRoles'] }
+			expect(
+				checkPermissions(meta, {
+					session: { user: { permissions: [perm], email: 'staff@inreach.org' } },
+				} as unknown as Context)
+			).toBe(true)
+		}
+	)
+
+	it.each(ROOT_TIER_PERMISSIONS)(
+		'checkStaffPermissions: %s alone is enough to enter the dashboard',
+		(perm) => {
+			expect(checkStaffPermissions([perm])).toBe(true)
+		}
+	)
+
+	it('sysadmin and system grant nothing - dropped per #2114, not an oversight', () => {
+		expect(checkStaffPermissions(['sysadmin'])).toBe(false)
+		expect(checkStaffPermissions(['system'])).toBe(false)
+		expect(
+			checkPermissions({ hasPerm: ['dataPortalAdmin'] }, {
+				session: { user: { permissions: ['sysadmin'], email: 'staff@inreach.org' } },
+			} as unknown as Context)
+		).toBe(false)
+	})
+
+	it('neither sysadmin nor system can currently be a real Permission value', () => {
+		expect(realPermissions).not.toContain('sysadmin')
+		expect(realPermissions).not.toContain('system')
 	})
 })

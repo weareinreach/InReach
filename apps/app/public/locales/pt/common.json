@@ -12,6 +12,7 @@
 		"tab-organizations": "Organizações",
 		"tab-reports": "relatórios",
 		"tab-users": "Utilizadores",
+		"tab-manage-users": "Gerenciar usuários",
 		"tab-downloads": "Downloads",
 		"no-access-message": "Você não tem permissão para acessar nenhuma seção do Painel de Administração."
 	},
@@ -459,6 +460,7 @@
 	"user-menu": {
 		"admin-options": "Opções de Administração",
 		"csv-downloads": "Downloads CSV",
+		"dashboards": "Painéis",
 		"data-portal": "Início do Portal de Dados",
 		"edit-page": "Editar esta página",
 		"user-options": "Opções do Usuário",
@@ -517,6 +519,7 @@
 		"search": "Procurar",
 		"service-hours": "Horário de atendimento",
 		"services": "Serviços",
+		"set-status": "Definir status",
 		"settings": "Configurações",
 		"share": "Compartilhar",
 		"sign-up": "Cadastre-se",

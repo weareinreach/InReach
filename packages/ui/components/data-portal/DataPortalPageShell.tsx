@@ -2,6 +2,8 @@ import { Box, Group, Stack } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 import { type ReactNode } from 'react'
 
+import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
+
 import { DataPortalHeaderBar, type DataPortalSection } from './DataPortalHeaderBar'
 import { SideNav, type SideNavItem } from './SideNav'
 
@@ -27,7 +29,7 @@ export interface DataPortalPageShellProps {
 export const DataPortalPageShell = ({ activeSection, sideNav, children }: DataPortalPageShellProps) => {
 	const { data: session } = useSession()
 	const userPerms = session?.user?.permissions ?? []
-	const systemEnabled = userPerms.some((p) => ['root', 'sysadmin', 'system'].includes(p))
+	const systemEnabled = userPerms.some((p) => ROOT_TIER_PERMISSIONS.includes(p))
 
 	return (
 		<Box>

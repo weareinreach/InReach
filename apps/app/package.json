@@ -22,7 +22,11 @@
 		"lint:fix": "eslint --cache --fix .",
 		"start": "next start",
 		"test:e2e": "playwright test",
+		"test:e2e:crud": "playwright test tests/crud",
+		"test:e2e:search": "playwright test tests/search",
 		"test:e2e:ui": "playwright test --ui",
+		"test:e2e:visual": "playwright test tests/search/visual.spec.ts",
+		"test:e2e:visual:update": "playwright test tests/search/visual.spec.ts --update-snapshots",
 		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
 	},

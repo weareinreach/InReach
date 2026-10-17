@@ -11,6 +11,7 @@ import { EmailDrawer } from '~ui/components/data-portal/EmailDrawer'
 import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useEditMode } from '~ui/hooks/useEditMode'
+import { useMenuItemCreateTrigger } from '~ui/hooks/useMenuItemCreateTrigger'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
@@ -164,7 +165,18 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		}
 	)
 	const linkToLocation = api.orgEmail.locationLink.useMutation({
-		onSuccess: () => apiUtils.orgEmail.forContactInfoEdit.invalidate({ parentId }),
+		onSuccess: (_data, variables) => {
+			apiUtils.orgEmail.forContactInfoEdit.invalidate({ parentId })
+			// None of these three was invalidated at all before - the public (non-edit) list never
+			// reflected a link/unlink, reopening the linked/unlinked email's own drawer showed its
+			// pre-link location association until an unrelated refetch happened to correct it, and
+			// (found via a deliberate audit for this same class of gap, not a live report) this "Link or
+			// create new..." menu's own options list kept offering the email actually chosen here as if
+			// it were still linkable, since nothing ever told it that link had just happened.
+			apiUtils.orgEmail.forContactInfo.invalidate()
+			apiUtils.orgEmail.forEditDrawer.invalidate({ id: variables.orgEmailId }, { refetchType: 'none' })
+			apiUtils.orgEmail.getLinkOptions.invalidate()
+		},
 	})
 	const getTextVariant = useCallback(
 		(kind: 'email' | 'desc', published: boolean, deleted: boolean) => {
@@ -277,50 +289,61 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 		return item
 	})
 
-	const addOrLink = isLocation ? (
-		<Menu keepMounted withinPortal>
-			<Menu.Target>
-				<Link variant={variants.Link.inlineInverted}>
-					<Group wrap='nowrap' gap={4}>
-						<Icon icon='carbon:document-add' height={20} />
-						<Text variant={variants.Text.utility3}>Link or create new...</Text>
-					</Group>
-				</Link>
-			</Menu.Target>
-			<Menu.Dropdown>
-				{linkableEmails?.map(({ id, deleted, description, email, firstName, lastName, published }) => {
-					const emailTextVariant = getTextVariant('email', published, deleted)
-					const descTextVariant = getTextVariant('desc', published, deleted)
+	const { triggerRef: createNewTriggerRef, handleMenuItemClick: handleCreateNewClick } =
+		useMenuItemCreateTrigger()
 
-					return (
-						<Menu.Item
-							key={id}
-							onClick={handleLinkToLocation({ orgLocationId: parentId, orgEmailId: id, action: 'link' })}
-						>
-							<Group wrap='nowrap'>
-								<Icon icon='carbon:link' />
-								<Stack gap={0}>
-									<Text variant={emailTextVariant}>{email}</Text>
-									{(Boolean(firstName) || Boolean(lastName)) && (
-										<Text variant={descTextVariant}>{compact([firstName, lastName]).join(' ')}</Text>
-									)}
-									<Text variant={descTextVariant}>{description}</Text>
-								</Stack>
-							</Group>
-						</Menu.Item>
-					)
-				})}
-				<Menu.Divider />
-				<Menu.Item key='new'>
-					<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
+	const addOrLink = isLocation ? (
+		<>
+			<Menu keepMounted withinPortal>
+				<Menu.Target>
+					<Link variant={variants.Link.inlineInverted}>
+						<Group wrap='nowrap' gap={4}>
+							<Icon icon='carbon:document-add' height={20} />
+							<Text variant={variants.Text.utility3}>Link or create new...</Text>
+						</Group>
+					</Link>
+				</Menu.Target>
+				<Menu.Dropdown>
+					{linkableEmails?.map(({ id, deleted, description, email, firstName, lastName, published }) => {
+						const emailTextVariant = getTextVariant('email', published, deleted)
+						const descTextVariant = getTextVariant('desc', published, deleted)
+
+						return (
+							<Menu.Item
+								key={id}
+								onClick={handleLinkToLocation({ orgLocationId: parentId, orgEmailId: id, action: 'link' })}
+							>
+								<Group wrap='nowrap'>
+									<Icon icon='carbon:link' />
+									<Stack gap={0}>
+										<Text variant={emailTextVariant}>{email}</Text>
+										{(Boolean(firstName) || Boolean(lastName)) && (
+											<Text variant={descTextVariant}>{compact([firstName, lastName]).join(' ')}</Text>
+										)}
+										<Text variant={descTextVariant}>{description}</Text>
+									</Stack>
+								</Group>
+							</Menu.Item>
+						)
+					})}
+					<Menu.Divider />
+					{/* See useMenuItemCreateTrigger's doc comment for why this isn't just an EmailDrawer
+					    rendered here directly. */}
+					<Menu.Item key='new' onClick={handleCreateNewClick}>
 						<Group wrap='nowrap'>
 							<Icon icon='carbon:add-alt' />
 							<Text variant={variants.Text.utility3}>Create new</Text>
 						</Group>
-					</EmailDrawer>
-				</Menu.Item>
-			</Menu.Dropdown>
-		</Menu>
+					</Menu.Item>
+				</Menu.Dropdown>
+			</Menu>
+			{/* `aria-hidden` and no visible-text-duplicating label: this is a functional trigger only,
+			    clicked programmatically by the Menu.Item above, never meant to be discovered by assistive
+			    tech, focus order, or a query for the visible "Create new" text. */}
+			<EmailDrawer ref={createNewTriggerRef} createNew style={{ display: 'none' }} aria-hidden tabIndex={-1}>
+				(hidden create-new trigger)
+			</EmailDrawer>
+		</>
 	) : (
 		<EmailDrawer key='new' component={Link} external variant={variants.Link.inlineInverted} createNew>
 			<Group wrap='nowrap'>
