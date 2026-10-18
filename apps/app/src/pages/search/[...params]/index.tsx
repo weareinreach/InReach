@@ -150,7 +150,11 @@ const SearchResults = () => {
 	const { searchState, searchStateActions } = useSearchState()
 	const theme = useMantineTheme()
 	const [mounted, setMounted] = useState(false)
-	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
+	// "Mobile" is defined as exactly the widths where `.hideMobile` (module CSS, `min-width: sm`) hides the
+	// desktop sidebar, so at any width - fractional ones from browser zoom included - one of the two sort/
+	// count UIs is showing. This used to check `xs` (500px), leaving 500-768px with neither (#2066). Starts
+	// as desktop (`true`) so the server render and first paint match the previous desktop-first behavior.
+	const isMobile = !useMediaQuery(`(min-width: ${theme.breakpoints.sm})`, true)
 	const isAdvanced = true
 	// Lazy initializer (not useEffect) so this reads synchronously on the very first client render
 	// instead of one render/effect cycle later - a user with a saved preference gets their (still

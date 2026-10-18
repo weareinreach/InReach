@@ -34,7 +34,11 @@ const OutsideServiceArea = () => {
 	const [loading, setLoading] = useState(false)
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
-	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	// Same rule as the other search pages: "mobile" is exactly the widths where `.hideMobile` (module CSS,
+	// `min-width: sm`) hides the desktop sidebar, so the result count shows in one place at every width. This
+	// used an inclusive `max-width: sm`, which showed it twice at exactly 768px (#2066). Starts as desktop
+	// (`true`) so the server render and first paint match the previous behavior.
+	const isMobile = !useMediaQuery(`(min-width: ${theme.breakpoints.sm})`, true)
 	const router = useRouter()
 
 	useEffect(() => {
@@ -72,7 +76,7 @@ const OutsideServiceArea = () => {
 							{t('more.filters')}
 						</MoreFilter>
 					</Group>
-					{isTablet && (
+					{isMobile && (
 						<>
 							<Divider w='100%' />
 							<Skeleton visible={typeof resultCount !== 'number'}>

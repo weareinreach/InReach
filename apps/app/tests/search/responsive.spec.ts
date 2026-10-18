@@ -10,7 +10,7 @@ import { expect, test } from '@playwright/test'
  */
 const GOOD_URL = '/search/us/-122.1/37.4/50/mi'
 
-test('12.1: below the xs breakpoint (500px), the mobile-only result count row and sort button render', async ({
+test('12.1: below the sm breakpoint (768px), the mobile-only result count row and sort button render', async ({
 	page,
 }) => {
 	await page.setViewportSize({ width: 400, height: 800 })
@@ -23,7 +23,7 @@ test('12.1: below the xs breakpoint (500px), the mobile-only result count row an
 	await expect(page.getByText(/^\d+ results?$/).first()).toBeVisible()
 })
 
-test('12.2: at/above the xs breakpoint, the desktop sidebar renders as a persistent column with no sort-drawer trigger', async ({
+test('12.2: at/above the sm breakpoint, the desktop sidebar renders as a persistent column with no sort-drawer trigger', async ({
 	page,
 }) => {
 	await page.setViewportSize({ width: 900, height: 900 })
@@ -33,23 +33,39 @@ test('12.2: at/above the xs breakpoint, the desktop sidebar renders as a persist
 	await expect(page.getByRole('button', { name: 'Sort results' })).not.toBeVisible()
 })
 
-test('12.dead-zone: between 500px and 768px, neither the desktop sidebar nor the mobile sort controls render', async ({
-	page,
-}) => {
-	// Correctly fails: confirms a real gap. The mobile-only result-count row and sort button are
-	// gated on the JS `isMobile` check (`useMediaQuery('(max-width: ${theme.breakpoints.xs})')` -
-	// 500px), but the desktop sidebar's `Grid.Col` is hidden via a *different*, CSS-only
-	// breakpoint (`.hideMobile` in the page's own module.css, `@media (min-width:
-	// $mantine-breakpoint-sm)` - 768px). Between those two thresholds, `isMobile` is already
-	// `false` (so the mobile-only elements don't render) but the CSS breakpoint hasn't been
-	// crossed yet either (so the sidebar stays `display: none`) - a dead zone with no way to
-	// sort/filter by community focus at all. Confirmed live at 600px, a common tablet-portrait /
-	// large-phone-landscape width.
+// #2066: the mobile controls were gated on `xs` (500px) in JS while the sidebar is shown from `sm`
+// (768px) in CSS, so 500-768px had neither - no way to sort by community focus at all. Both now switch
+// at 768px, matching the navbar (#2069). Checks each side of that exact boundary, plus a common
+// tablet-portrait / large-phone-landscape width that used to be in the gap.
+for (const { width, expected } of [
+	{ width: 600, expected: 'mobile' },
+	{ width: 767, expected: 'mobile' },
+	{ width: 768, expected: 'desktop' },
+] as const) {
+	test(`12.dead-zone: at ${width}px, exactly one of the sidebar or the mobile sort controls renders (${expected})`, async ({
+		page,
+	}) => {
+		await page.setViewportSize({ width, height: 900 })
+		await page.goto(GOOD_URL)
+
+		const sidebar = page.getByText('Sort by LGBTQ+ community focus')
+		const sortButton = page.getByRole('button', { name: 'Sort results' })
+
+		if (expected === 'mobile') {
+			await expect(sortButton).toBeVisible()
+			await expect(sidebar).not.toBeVisible()
+		} else {
+			await expect(sidebar).toBeVisible()
+			await expect(sortButton).not.toBeVisible()
+		}
+	})
+}
+
+test('12.dead-zone (intl): the out-of-service-area page uses the same 768px switch', async ({ page }) => {
+	// apps/app/src/pages/search/intl/[country].tsx had the identical xs-vs-sm mismatch.
 	await page.setViewportSize({ width: 600, height: 900 })
-	await page.goto(GOOD_URL)
+	await page.goto('/search/intl/JP')
 
-	const sidebar = page.getByText('Sort by LGBTQ+ community focus')
-	const sortButton = page.getByRole('button', { name: 'Sort results' })
-
-	await expect(sidebar.or(sortButton)).toBeVisible()
+	await expect(page.getByRole('button', { name: 'Sort results' })).toBeVisible()
+	await expect(page.getByText('Sort by LGBTQ+ community focus')).not.toBeVisible()
 })
