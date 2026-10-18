@@ -213,7 +213,9 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 						deleted: false,
 						organizationId,
 						orgLocationId: hasLocationId,
-						orgLocationOnly: false,
+						// Created from a location's contact panel = belongs to that location only, so it stays
+						// off the organization's own page (#2101). Same as SocialMediaDrawer.
+						orgLocationOnly: hasLocationId !== null,
 					},
 					{ keepDirtyValues: false }
 				)

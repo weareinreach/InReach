@@ -796,10 +796,14 @@ export const createFakeOrgWebsiteBackend = () => {
 				if (row.deleted || !row.published) {
 					return false
 				}
-				if (orgLinks.get(row.id) !== input.parentId && !locationLinks.has(`${input.parentId}:${row.id}`)) {
+				// Mirrors the real handler (#2101): location-only items never show on the org's own page; a
+				// location page shows everything linked to it unless asked for only location-only items.
+				const onOrgPage = orgLinks.get(row.id) === input.parentId
+				const onLocationPage = locationLinks.has(`${input.parentId}:${row.id}`)
+				if (onOrgPage ? row.orgLocationOnly : !onLocationPage) {
 					return false
 				}
-				if (input.locationOnly !== undefined && row.orgLocationOnly !== input.locationOnly) {
+				if (onLocationPage && input.locationOnly && !row.orgLocationOnly) {
 					return false
 				}
 				return true
@@ -1078,10 +1082,14 @@ export const createFakeOrgSocialMediaBackend = () => {
 			if (row.deleted || !row.published) {
 				return false
 			}
-			if (orgLinks.get(row.id) !== input.parentId && !locationLinks.has(`${input.parentId}:${row.id}`)) {
+			// Mirrors the real handler (#2101): location-only items never show on the org's own page; a
+			// location page shows everything linked to it unless asked for only location-only items.
+			const onOrgPage = orgLinks.get(row.id) === input.parentId
+			const onLocationPage = locationLinks.has(`${input.parentId}:${row.id}`)
+			if (onOrgPage ? row.orgLocationOnly : !onLocationPage) {
 				return false
 			}
-			if (input.locationOnly !== undefined && row.orgLocationOnly !== input.locationOnly) {
+			if (onLocationPage && input.locationOnly && !row.orgLocationOnly) {
 				return false
 			}
 			return true
