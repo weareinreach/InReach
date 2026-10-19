@@ -47,15 +47,20 @@ describe('geo.geoByPlaceId', () => {
 	})
 
 	/**
-	 * Same root cause as #2075 (filed for geo.autocomplete) - `geocodeByPlaceIdResponse`'s `results` field is
-	 * required, not optional, so a real Google error response (REQUEST_DENIED etc., which wouldn't include
-	 * `results` at all) fails schema validation before `googleAPIResponseHandler`'s typed-error switch ever
-	 * runs. Not re-filed as a separate issue - #2075 already flags checking the other geocode-response schemas
-	 * for this same pattern.
+	 * #2075: the real Google client rejects an error status (here OVER_QUERY_LIMIT) as an AxiosError carrying
+	 * Google's body - it never resolves with it as data, which is what the previous 4.5c mocked. It should
+	 * become a typed TRPCError, not a generic 500.
 	 */
-	it('4.5c: a realistic Google error response (status, no results field) throws a raw parse error, matching the geo.autocomplete finding in #2075', async () => {
-		geocodeMock.mockResolvedValueOnce({ data: { status: 'OVER_QUERY_LIMIT' } } as never)
+	it('4.5c: a Google OVER_QUERY_LIMIT response becomes a TOO_MANY_REQUESTS TRPCError', async () => {
+		geocodeMock.mockRejectedValueOnce(
+			Object.assign(new Error('Request failed with status code 429'), {
+				isAxiosError: true,
+				response: { status: 429, data: { status: 'OVER_QUERY_LIMIT' } },
+			})
+		)
 
-		await expect(geoByPlaceId({ input: 'place_id_123' } as never)).rejects.toBeTruthy()
+		await expect(geoByPlaceId({ input: 'place_id_123' } as never)).rejects.toMatchObject({
+			code: 'TOO_MANY_REQUESTS',
+		})
 	})
 })

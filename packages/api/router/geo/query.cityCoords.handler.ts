@@ -4,7 +4,7 @@ import { TRPCError } from '@trpc/server'
 import { prisma } from '@weareinreach/db'
 import { googleMapsApi } from '~api/google'
 import { handleError } from '~api/lib/errorHandler'
-import { googleAPIResponseHandler } from '~api/lib/googleHandler'
+import { googleAPIResponseHandler, googleRequest } from '~api/lib/googleHandler'
 import { geocodeByStringResponse } from '~api/schemas/thirdParty/googleGeo'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -39,15 +39,17 @@ const cityCoords = async ({ input }: TRPCHandlerParams<TCityCoordsSchema>) => {
 		}
 		const searchGovDist = govDist ? govDistMap.get(govDist) : undefined
 		const searchString = [city, searchGovDist, searchCountry].filter(Boolean).join(', ')
-		const { data } = await googleMapsApi.geocode({
-			params: {
-				// eslint-disable-next-line node/no-process-env
-				key: process.env.GOOGLE_PLACES_API_KEY as string,
-				address: searchString,
-				components: PlaceAutocompleteType.cities,
-				region: searchCountry,
-			},
-		})
+		const data = await googleRequest(() =>
+			googleMapsApi.geocode({
+				params: {
+					// eslint-disable-next-line node/no-process-env
+					key: process.env.GOOGLE_PLACES_API_KEY as string,
+					address: searchString,
+					components: PlaceAutocompleteType.cities,
+					region: searchCountry,
+				},
+			})
+		)
 
 		const parsedData = geocodeByStringResponse.parse(data)
 
