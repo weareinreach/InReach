@@ -21,14 +21,17 @@ const { default: socialForContactInfo } = await import('../orgSocialMedia/query.
  * - Location page: everything linked to that location, location-only and org-wide alike
  * - Location page with `locationOnly: true`: only that location's location-only items
  *
- * An org-wide item that staff link to locations ("Link or create new...") stays on the org page.
+ * An org-wide item that staff link to locations ("Link or create new...") stays on the org page. A
+ * single-location org is the exception (same as orgPhone): its page shows its one location inline and no
+ * separate location page is ever reached, so its page shows location-only items too.
  */
 let orgId: string
 let locationA: string
 let locationB: string
+let singleOrgId: string
 const ids = {
-	website: { locationOnly: '', orgWideLinked: '', orgOnly: '' },
-	social: { locationOnly: '', orgWideLinked: '', orgOnly: '' },
+	website: { locationOnly: '', orgWideLinked: '', orgOnly: '', singleOrgLocationOnly: '' },
+	social: { locationOnly: '', orgWideLinked: '', orgOnly: '', singleOrgLocationOnly: '' },
 }
 
 beforeAll(async () => {
@@ -62,10 +65,15 @@ beforeAll(async () => {
 		locationIds.length
 			? { locations: { create: locationIds.map((orgLocationId) => ({ orgLocationId })) } }
 			: {}
-	const createWebsite = async (url: string, orgLocationOnly: boolean, locationIds: string[]) => {
+	const createWebsite = async (
+		url: string,
+		orgLocationOnly: boolean,
+		locationIds: string[],
+		onOrg = orgId
+	) => {
 		const id = generateId('orgWebsite')
 		await prisma.orgWebsite.create({
-			data: { id, url, orgLocationOnly, organizationId: orgId, ...websiteLinks(locationIds) },
+			data: { id, url, orgLocationOnly, organizationId: onOrg, ...websiteLinks(locationIds) },
 		})
 		return id
 	}
@@ -76,7 +84,12 @@ beforeAll(async () => {
 	])
 	ids.website.orgOnly = await createWebsite('https://org-only.example.org', false, [])
 
-	const createSocial = async (username: string, orgLocationOnly: boolean, locationIds: string[]) => {
+	const createSocial = async (
+		username: string,
+		orgLocationOnly: boolean,
+		locationIds: string[],
+		onOrg = orgId
+	) => {
 		const id = generateId('orgSocialMedia')
 		await prisma.orgSocialMedia.create({
 			data: {
@@ -85,7 +98,7 @@ beforeAll(async () => {
 				url: `https://social.example.org/${username}`,
 				serviceId: socialService.id,
 				orgLocationOnly,
-				organizationId: orgId,
+				organizationId: onOrg,
 				...websiteLinks(locationIds),
 			},
 		})
@@ -94,11 +107,31 @@ beforeAll(async () => {
 	ids.social.locationOnly = await createSocial('location-a', true, [locationA])
 	ids.social.orgWideLinked = await createSocial('org-wide', false, [locationA, locationB])
 	ids.social.orgOnly = await createSocial('org-only', false, [])
+
+	singleOrgId = generateId('organization')
+	const soloLocation = generateId('orgLocation')
+	await prisma.organization.create({
+		data: {
+			id: singleOrgId,
+			name: 'Contact rule test org (single location)',
+			slug: `test-org-${singleOrgId.slice(-10).toLowerCase()}`,
+			sourceId: source.id,
+			published: true,
+			locations: { create: [{ id: soloLocation, city: 'Solo', countryId: country.id, published: true }] },
+		},
+	})
+	ids.website.singleOrgLocationOnly = await createWebsite(
+		'https://solo-location.example.org',
+		true,
+		[soloLocation],
+		singleOrgId
+	)
+	ids.social.singleOrgLocationOnly = await createSocial('solo-location', true, [soloLocation], singleOrgId)
 })
 
 afterAll(async () => {
 	// Websites/social media, locations and their link rows all cascade-delete with the organization.
-	await prisma.organization.deleteMany({ where: { id: orgId } })
+	await prisma.organization.deleteMany({ where: { id: { in: [orgId, singleOrgId] } } })
 })
 
 const listIds = async (
@@ -139,6 +172,10 @@ describe.each([
 			const { locationOnly } = getIds()
 
 			expect(await listIds(getHandler(), locationA, true)).toEqual([locationOnly])
+		})
+
+		it("a single-location org's page still shows its location's location-only items", async () => {
+			expect(await listIds(getHandler(), singleOrgId, false)).toEqual([getIds().singleOrgLocationOnly])
 		})
 	}
 )

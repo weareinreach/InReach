@@ -294,7 +294,9 @@ describe('Websites + WebsiteDrawer - a website created from a location stays on 
 		routerState.orgLocationId = undefined
 	})
 
-	it("shows on the location's public list but not on the organization's", async () => {
+	// The fake backend models a multi-location org; a single-location org's page shows location-only items
+	// too (covered against the real DB in orgWebsite/query.forContactInfo.realdb.test.ts).
+	it("shows on the location's public list but not on the organization's (multi-location org)", async () => {
 		routerState.orgLocationId = LOCATION.id
 		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
 		const editView = render(<Websites edit parentId={LOCATION.id} />, { wrapper: Wrapper })

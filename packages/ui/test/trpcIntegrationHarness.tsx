@@ -796,8 +796,10 @@ export const createFakeOrgWebsiteBackend = () => {
 				if (row.deleted || !row.published) {
 					return false
 				}
-				// Mirrors the real handler (#2101): location-only items never show on the org's own page; a
-				// location page shows everything linked to it unless asked for only location-only items.
+				// Mirrors the real handler's multi-location rule (#2101): location-only items never show on the
+				// org's own page; a location page shows everything linked to it unless asked for only
+				// location-only items. (The real handler's single-location exception isn't modeled here - it's
+				// covered against the real DB in orgWebsite/query.forContactInfo.realdb.test.ts.)
 				const onOrgPage = orgLinks.get(row.id) === input.parentId
 				const onLocationPage = locationLinks.has(`${input.parentId}:${row.id}`)
 				if (onOrgPage ? row.orgLocationOnly : !onLocationPage) {
@@ -1082,8 +1084,7 @@ export const createFakeOrgSocialMediaBackend = () => {
 			if (row.deleted || !row.published) {
 				return false
 			}
-			// Mirrors the real handler (#2101): location-only items never show on the org's own page; a
-			// location page shows everything linked to it unless asked for only location-only items.
+			// Mirrors the real handler's multi-location rule (#2101) - see the website fake above.
 			const onOrgPage = orgLinks.get(row.id) === input.parentId
 			const onLocationPage = locationLinks.has(`${input.parentId}:${row.id}`)
 			if (onOrgPage ? row.orgLocationOnly : !onLocationPage) {
