@@ -10,7 +10,8 @@ const namespaced = (s: string) => `${NAMESPACE}.${s}`
 
 export const reportRouter = defineRouter({
 	// #region Queries
-	forReportsTable: permissionedProcedure('dataPortalManager')
+	// Basic+ can view the table (#2106); `update` below stays Manager+.
+	forReportsTable: permissionedProcedure('viewAllReports')
 		.input(ZForReportsTableSchema)
 		.query(async (opts) => {
 			const handler = await importHandler(

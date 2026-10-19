@@ -180,7 +180,7 @@ built are noted inline.
 **Phase B — layer in the new table-level elements, only once Phase A is proven working end to end:**
 
 5. Extend `DataTable` with the net-new capabilities — toolbar quick-filter dropdowns, the leading status-indicator column, bulk-select + contextual "…" menu, and the (mostly-disabled) Saved Views shell — as additive/opt-in props so tables not yet touched are unaffected.
-6. Apply the approved Reports permission split.
+6. ✅ **Done (2026-10-19, #2106)**: Applied the approved Reports permission split - `report.forReportsTable` is Basic+ (`viewAllReports`), `report.update` stays Manager+, and the details modal is read-only below Manager.
 7. Roll the new elements out per table, applying the grayed-out-when-unbacked rule as each one lands.
 8. Regression pass across all permission tiers, then update the five per-tab reference docs (`Organizations/README.md`, `Admin/ManageUsers/README.md`, `Organizations/Reviews/README.md`, `Organizations/Reports/README.md`, `Organizations/Downloads/README.md`) with their new reality and bumped "Last verified" dates.
 

@@ -33,11 +33,9 @@ DataPortalReports.omitGrid = true
 
 export default DataPortalReports
 
-// NOTE: tab-visibility is intentionally left at Basic+ here, matching current /admin behavior exactly.
-// The underlying `report.forReportsTable`/`report.update` procedures still require dataPortalManager+,
-// so a Basic-tier user reaching this page hits the same authorization error they do today - this is a
-// known, pre-existing mismatch (see docs/DataPortal/Reports/README.md), not something this relocation
-// fixes. The approved fix is deferred to Phase B (see docs/DataPortal/2026-Redesign/UI_elements.md).
+// Basic+ can open this page and view the table (`report.forReportsTable` is `viewAllReports`, Basic+);
+// changing a report stays Manager+ (`report.update`), and ReportTable's details modal is read-only below
+// Manager. Same view-vs-act split as Reviews (#2106, docs/DataPortal/Organizations/Reports/README.md).
 export const getServerSideProps: GetServerSideProps = async ({ locale, req, res }) => {
 	const session = await checkServerPermissions({
 		ctx: { req, res },
