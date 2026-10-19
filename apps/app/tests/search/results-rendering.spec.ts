@@ -107,3 +107,22 @@ test('4.4: a failed results request shows an error with Retry, not endless loadi
 	await expect(errorMessage).toBeHidden()
 	await expect(page.getByText('2', { exact: true }).first()).toHaveClass(/paginationActive/)
 })
+
+test('4.5: a page past the last result moves to the last page instead of showing no results', async ({
+	page,
+}) => {
+	// #2063: the API reported resultCount 0 for any page past the end, so a stale or hand-edited ?page= showed
+	// "no results" plus the crisis block even though this search has hundreds of matches.
+	await page.goto('/search/us/-122.1/37.4/50/mi?page=999')
+
+	await expect(page).not.toHaveURL(/[?&]page=999/)
+	const lastPage = new URL(page.url()).searchParams.get('page') ?? ''
+	expect(Number(lastPage)).toBeGreaterThan(1)
+
+	await expect(
+		page.getByText('No results found for your search. Try adjusting your selected location or filters.')
+	).toBeHidden()
+	await expect(page.getByTestId('search-results-list').locator('a[href*="/org/"]').first()).toBeVisible()
+	// The pagination bar agrees with the URL about which page is showing.
+	await expect(page.getByText(lastPage, { exact: true }).first()).toHaveClass(/paginationActive/)
+})

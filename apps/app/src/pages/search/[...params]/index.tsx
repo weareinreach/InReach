@@ -341,6 +341,24 @@ const SearchResults = () => {
 		}
 	}, [router.query.page, searchState.page, searchStateActions])
 
+	// A page past the last result (a stale or hand-edited `?page=`, or filters that shrank the results) would
+	// otherwise show an empty list. The API reports the real resultCount even there (#2063), so move to the
+	// last page that has results, the same shallow way the pagination bar changes pages.
+	useEffect(() => {
+		const response = searchQuery.data
+		if (!response || response.orgs.length > 0) {
+			return
+		}
+		const lastPage = getSearchResultPageCount(response.resultCount)
+		if (lastPage > 0 && PageIndexSchema.parse(router.query.page) > lastPage) {
+			void router.replace(
+				{ query: { ...router.query, page: lastPage.toString(), params: router.query.params } },
+				undefined,
+				{ shallow: true }
+			)
+		}
+	}, [searchQuery.data, router])
+
 	const nextSkip = useMemo(
 		() => PageIndexSchema.parse(router.query.page) * SEARCH_RESULT_PAGE_SIZE,
 		[router.query.page]

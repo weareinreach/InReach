@@ -17,15 +17,17 @@ vi.mock('next/router', () => ({
 	useRouter: () => ({ query: routerQuery.current, replace: vi.fn() }),
 }))
 
+const paginationTree = (total: number) => (
+	<MantineProvider theme={testTheme} defaultColorScheme='light'>
+		<I18nextProvider i18n={testI18n}>
+			<Pagination total={total} />
+		</I18nextProvider>
+	</MantineProvider>
+)
+
 const renderPagination = (total: number, page = '1') => {
 	routerQuery.current = { page }
-	return rtlRender(
-		<MantineProvider theme={testTheme} defaultColorScheme='light'>
-			<I18nextProvider i18n={testI18n}>
-				<Pagination total={total} />
-			</I18nextProvider>
-		</MantineProvider>
-	)
+	return rtlRender(paginationTree(total))
 }
 
 describe('Pagination', () => {
@@ -66,5 +68,17 @@ describe('Pagination', () => {
 		renderPagination(8, '3')
 
 		expect(screen.getByText('Prev')).not.toHaveAttribute('data-disabled')
+	})
+
+	// #2063: the search page moves a visitor on a page past the end to the last page by changing ?page=. The
+	// bar used to keep its own copy of the page from when it first rendered, so it kept highlighting the old one.
+	it('follows ?page= when it changes after the bar has rendered', () => {
+		const view = renderPagination(8, '3')
+		expect(screen.getByText('Prev')).not.toHaveAttribute('data-disabled')
+
+		routerQuery.current = { page: '1' }
+		view.rerender(paginationTree(8))
+
+		expect(screen.getByText('Prev')).toHaveAttribute('data-disabled', 'true')
 	})
 })

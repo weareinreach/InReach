@@ -136,6 +136,33 @@ describe('organization.searchDistance (v3) - real local Postgres+PostGIS', () =>
 		expect(match?.distance).toBe(0)
 	})
 
+	/**
+	 * #2063: `total` was read from `COUNT(*) OVER ()` on the returned rows, so a page past the last result (a
+	 * stale or hand-edited `?page=`) came back with 0 - the search page then showed "no results" and crisis
+	 * lines even though matches existed. Compared against the same search's page-1 count rather than a fixed
+	 * number, so real data near the fixture point can't break it.
+	 */
+	it.each([
+		['v3', () => searchDistanceV3, {}],
+		['v2', () => searchDistanceV2, { version: 'v2' as const }],
+	] as const)(
+		'4.5 (%s): a page past the last result keeps the real resultCount',
+		async (_v, getHandler, extra) => {
+			await createTestOrg({ name: 'Count Test Org A', lat: -20.0, lon: -140.0 })
+			await createTestOrg({ name: 'Count Test Org B', lat: -20.002, lon: -140.0 })
+			const input = { ...baseInput, ...extra, lat: -20.0, lon: -140.0, dist: 10 }
+
+			const firstPage = await getHandler()({ input: { ...input, skip: 0 } } as never)
+			const pastTheEnd = await getHandler()({
+				input: { ...input, skip: firstPage.resultCount + 50 },
+			} as never)
+
+			expect(firstPage.resultCount).toBeGreaterThanOrEqual(2)
+			expect(pastTheEnd.orgs).toEqual([])
+			expect(pastTheEnd.resultCount).toBe(firstPage.resultCount)
+		}
+	)
+
 	it('1.6b (v2): the v2 search reports distance 0, not null, for an org at the search point', async () => {
 		const { orgId } = await createTestOrg({ name: 'Exact Match Org v2', lat: -20.0, lon: -140.0 })
 

@@ -10,7 +10,7 @@ import {
 import { usePagination } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next/pages'
-import { forwardRef, useCallback, useState } from 'react'
+import { forwardRef, useCallback } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
 import { cx } from '~ui/lib/cx'
@@ -75,11 +75,12 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 	// parseInt('abc') is NaN, which left no page marked active (#2059).
 	const requestedPage = typeof router.query.page === 'string' ? Number(router.query.page) : 1
 	const currentPage = Number.isInteger(requestedPage) && requestedPage >= 1 ? requestedPage : 1
-	const [page, setPage] = useState(currentPage)
 
+	// The URL is the only source of the current page - no local copy. A copy set once on mount went stale
+	// whenever something other than this bar changed `?page=`, e.g. the search page moving a visitor from a
+	// page past the end to the last page (#2063), leaving the wrong page highlighted.
 	const pageChangeHandler = useCallback(
 		(pageNum: number) => {
-			setPage(pageNum)
 			router.replace(
 				{ query: { ...router.query, page: pageNum.toString(), params: router.query.params } },
 				undefined,
@@ -97,12 +98,12 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 		onChange: pageChangeHandler,
 		boundaries: 1,
 		siblings: 1,
-		initialPage: currentPage,
+		page: currentPage,
 	})
 	const { active: activePage } = paginationController
 
 	return (
-		<MantinePagination.Root value={page} onChange={pageChangeHandler} defaultValue={currentPage} {...props}>
+		<MantinePagination.Root value={currentPage} onChange={pageChangeHandler} {...props}>
 			<Group ref={ref} gap={24} justify='space-between'>
 				<Items paginationController={paginationController} />
 				<Group>
