@@ -16,6 +16,10 @@ const base = z
 		locationOnly: z.boolean(),
 		serviceOnly: z.boolean(),
 		description: z.string().nullable(),
+		// Create only: the location the phone was added from. Linked in the same transaction as the create,
+		// so the phone can't end up saved without it (#2100). Ignored on update - linking or unlinking an
+		// existing phone goes through `orgPhone.locationLink`.
+		orgLocationId: prefixedId('orgLocation').nullable(),
 	})
 	.partial()
 

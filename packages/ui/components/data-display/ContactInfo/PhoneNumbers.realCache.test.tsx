@@ -296,3 +296,42 @@ describe('PhoneNumbers + PhoneDrawer - real cache: unlinking makes the item reli
 		})
 	})
 })
+
+describe('PhoneNumbers + PhoneDrawer - real cache: "Create new" from a location links it in the same save (#2100)', () => {
+	/**
+	 * The phone used to be saved first and linked to the location by a second, separate `locationLink` request
+	 *
+	 * - If that one failed, the phone silently stayed org-only. Now the location goes with the save itself, so a
+	 *   successful save always means a linked phone, and there's no second request to fail.
+	 */
+	it('the saved phone is linked to the location, with no separate locationLink request', async () => {
+		const requestedProcedures: string[] = []
+		const onRequest = ({ request }: { request: Request }) => {
+			requestedProcedures.push(new URL(request.url).pathname.split('/').pop() ?? '')
+		}
+		server.events.on('request:start', onRequest)
+
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(<PhoneNumbers edit parentId={LOCATION.id} />, { wrapper: Wrapper })
+
+		await userEvent.click(await screen.findByText(/link or create new/i))
+		await userEvent.click(await screen.findByRole('menuitem', { name: /^create new$/i }))
+		await screen.findByRole('heading', { name: /Add New/i })
+		fireEvent.change(screen.getByRole('textbox', { name: /phone number/i }), {
+			target: { value: '+12025550123' },
+		})
+		await waitFor(() => {
+			expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0123')
+		})
+		await clickSave()
+		await waitFor(() => expect(screen.queryByRole('heading', { name: /Add New/ })).not.toBeInTheDocument())
+
+		await screen.findByText('(202) 555-0123')
+		const saved = [...backend.phones.values()].find((row) => row.number.endsWith('2025550123'))
+		expect(saved).toBeDefined()
+		expect(backend.locationLinks.has(`${LOCATION.id}:${saved?.id}`)).toBe(true)
+		expect(requestedProcedures.filter((name) => name.includes('orgPhone.locationLink'))).toEqual([])
+
+		server.events.removeListener('request:start', onRequest)
+	})
+})

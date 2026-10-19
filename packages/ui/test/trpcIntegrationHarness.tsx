@@ -103,6 +103,7 @@ type UpsertInput = {
 	locationOnly?: boolean
 	serviceOnly?: boolean
 	description?: string | null
+	orgLocationId?: string | null
 }
 
 const cca2ForCountryId = (countryId: string | undefined) => COUNTRIES.find((c) => c.id === countryId)?.cca2
@@ -192,6 +193,10 @@ export const createFakeOrgPhoneBackend = () => {
 				},
 				{ orgId: input.orgId }
 			)
+			// Same transaction as the create in the real handler (#2100).
+			if (input.orgLocationId) {
+				linkToLocation(input.orgLocationId, row.id)
+			}
 			return row
 		}
 

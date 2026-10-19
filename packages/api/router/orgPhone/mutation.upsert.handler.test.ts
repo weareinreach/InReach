@@ -199,3 +199,52 @@ describe('orgPhone.upsert - update', () => {
 		expect(data.country).toEqual({ connect: { id: 'country_ca' } })
 	})
 })
+
+/**
+ * #2100: a phone created from a location's "Create new" used to be linked to that location by a second,
+ * separate mutation the drawer fired after the create succeeded - with no error handling, so a failure there
+ * left the phone silently org-only. The location now travels with the create and is linked in the same
+ * transaction.
+ */
+describe('orgPhone.upsert - location link (#2100)', () => {
+	const createInput = {
+		operation: 'create',
+		number: '+15555550100',
+		countryId: 'country_test',
+		orgId: 'organization_test',
+	}
+
+	it('links the new phone to the location in the same create when orgLocationId is passed', async () => {
+		const { orgPhoneCreate } = makeTx()
+
+		await upsert({ ctx, input: { ...createInput, orgLocationId: 'orgLocation_test' } } as never)
+
+		const [{ data }] = orgPhoneCreate.mock.calls[0] as [{ data: Record<string, unknown> }]
+		expect(data.locations).toEqual({ create: { orgLocationId: 'orgLocation_test' } })
+		expect(data.organization).toEqual({ create: { organizationId: 'organization_test' } })
+		// Not left in the scalar fields, where Prisma would reject it as an unknown column.
+		expect(data).not.toHaveProperty('orgLocationId')
+	})
+
+	it('creates no location link for a plain org-level create', async () => {
+		const { orgPhoneCreate } = makeTx()
+
+		await upsert({ ctx, input: createInput } as never)
+
+		const [{ data }] = orgPhoneCreate.mock.calls[0] as [{ data: Record<string, unknown> }]
+		expect(data.locations).toBeUndefined()
+	})
+
+	it('ignores orgLocationId on update - existing phones are linked through orgPhone.locationLink', async () => {
+		const { orgPhoneUpdate } = makeTx()
+
+		await upsert({
+			ctx,
+			input: { operation: 'update', id: 'orgPhone_test', orgLocationId: 'orgLocation_test' },
+		} as never)
+
+		const [{ data }] = orgPhoneUpdate.mock.calls[0] as [{ data: Record<string, unknown> }]
+		expect(data).not.toHaveProperty('locations')
+		expect(data).not.toHaveProperty('orgLocationId')
+	})
+})

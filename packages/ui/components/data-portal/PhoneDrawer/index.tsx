@@ -297,15 +297,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			[apiUtils, orgId, phoneId, countryCca2ById]
 		)
 
-		// `orgPhone.upsert`'s `create` operation only ever connects the new phone to `organization` -
-		// there's no location field on that schema at all, so creating this from a location's "Create
-		// new" trigger needs a second, separate mutation to actually attach it to `orgLocationPhone`.
-		// Without this, the new phone was only ever visible under the organization's own phone list,
-		// never the location's, even though `hasLocationId`/`linkLocationId` looked like they already
-		// captured that intent. Declared before `siteUpdate` below since its `onSuccess` calls this.
-		const linkToLocation = api.orgPhone.locationLink.useMutation({
-			onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' }),
-		})
 		const siteUpdate = api.orgPhone.upsert.useMutation({
 			onSettled: (data, error, variables) => {
 				// Guarded on success - `onSettled` fires on failure too, and patching from `variables`
@@ -352,9 +343,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			},
 			onSuccess: () => {
 				setIsSaved(true)
-				if (createNew && hasLocationId !== null) {
-					linkToLocation.mutate({ orgPhoneId: phoneId, orgLocationId: hasLocationId, action: 'link' })
-				}
 				modalHandler.close()
 				drawerHandler.close()
 			},
@@ -446,9 +434,13 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 					operation: createNew ? 'create' : 'update',
 					...data,
 					phoneTypeId: data.phoneTypeId || null,
+					// Created from a location's "Create new": linked to that location in the same save, so it
+					// can't end up saved but unlinked. This used to be a second, separate mutation after the
+					// create succeeded, with no error handling if it failed (#2100).
+					...(createNew && hasLocationId !== null ? { orgLocationId: hasLocationId } : {}),
 				})
 			},
-			[createNew, orgId, siteUpdate]
+			[createNew, orgId, siteUpdate, hasLocationId]
 		)
 
 		const handleSaveButton = useCallback(

@@ -11,6 +11,7 @@ import {
 	connectOne,
 	connectOneRequired,
 	connectOrDisconnectId,
+	createOne,
 	createOneRequired,
 } from '~api/schemas/nestedOps'
 import { type TRPCHandlerParams } from '~api/types/handler'
@@ -24,7 +25,16 @@ type CreateData = Pick<
 const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
-		const { operation, id: passedId, countryId, description: desc, orgId, phoneTypeId, ...data } = input
+		const {
+			operation,
+			id: passedId,
+			countryId,
+			description: desc,
+			orgId,
+			phoneTypeId,
+			orgLocationId,
+			...data
+		} = input
 
 		const isCreateData = (op: 'create' | 'update', inputData: typeof data): inputData is CreateData =>
 			op === 'create'
@@ -118,6 +128,7 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 						country: connectOneRequired(countryId, 'id'),
 						phoneType: connectOne(phoneTypeId, 'id'),
 						organization: createOneRequired(orgId, 'organizationId'),
+						locations: createOne(orgLocationId, 'orgLocationId'),
 					},
 				})
 			}
