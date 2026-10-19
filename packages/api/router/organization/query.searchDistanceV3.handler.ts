@@ -194,7 +194,8 @@ const searchOrgByRelevance = async (params: TSearchDistanceV3Schema) => {
 		}
 		return {
 			id: result.id,
-			distMeters: result.distance ? parseInt(result.distance) : null,
+			// Not a truthiness check: an org at the search point is 0 meters away, and 0 is falsy (#2077).
+			distMeters: result.distance !== null ? parseInt(result.distance) : null,
 			relevanceScore: result.relevance_score, // Passing back to help frontend debugging
 			isLocal: result.isLocal,
 			tier: result.tier,
@@ -350,12 +351,17 @@ const searchDistanceV3 = async ({ input }: TRPCHandlerParams<TSearchDistanceV3Sc
 	})[] = []
 
 	orgs.results.forEach(({ id, distMeters, relevanceScore, isLocal, tier, national }) => {
-		const distance = distMeters ? (unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934) : null
+		const distance =
+			typeof distMeters === 'number'
+				? unit === 'km'
+					? distMeters / 1000
+					: distMeters / 1000 / 1.60934
+				: null
 		const sort = results.find((result) => result.id === id)
 		if (sort) {
 			orderedResults.push({
 				...sort,
-				distance: distance ? +distance.toFixed(2) : null,
+				distance: typeof distance === 'number' ? +distance.toFixed(2) : null,
 				unit,
 				relevanceScore,
 				isLocal,
