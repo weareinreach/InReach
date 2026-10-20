@@ -268,41 +268,12 @@ const buildWhere = (
 	if (input.createdAt) {
 		and.push({ createdAt: { gte: input.createdAt.from, lte: input.createdAt.to } })
 	}
-	// Each id list (location-phone cleanup, created-by) becomes its own `AND` entry rather than
+	// Each id list (created-by, community, leader, services) becomes its own `AND` entry rather than
 	// intersecting them by hand - Prisma implicitly ANDs every entry in the array.
 	for (const ids of idFilters) {
 		and.push({ id: { in: ids } })
 	}
 	return and.length ? { AND: and } : {}
-}
-
-/**
- * Org ids needing the location-phone display-fix cleanup pass: more than one published, non-deleted location,
- * with at least one phone also linked to one of those locations. Before
- * orgPhone/query.forContactInfo.handler.ts's fix, a location-linked number always also showed on the org's
- * own main page; now it only does for a single-location org. Staff use this to find any number on a
- * multi-location org they actually want to keep visible on the main page too, and re-add it there as a
- * separate, plain org-level entry (see the "Location Phone Cleanup" data-portal page). Computed as raw SQL
- * since Prisma's relation filters can express "has at least one" but not "has more than one" without a
- * `_count` aggregate, which isn't usable inside a `where` on a `findMany`.
- */
-const locationPhoneCleanupIds = async (): Promise<string[]> => {
-	const rows = await prisma.$queryRaw<{ id: string }[]>`
-		SELECT o.id
-		FROM "Organization" o
-		WHERE (
-			SELECT count(*) FROM "OrgLocation" l
-			WHERE l."orgId" = o.id AND l.published = true AND l.deleted = false
-		) > 1
-		AND EXISTS (
-			SELECT 1
-			FROM "OrganizationPhone" op
-			JOIN "OrgLocationPhone" olp ON olp."phoneId" = op."phoneId"
-			JOIN "OrgLocation" ol ON ol.id = olp."orgLocationId"
-			WHERE op."organizationId" = o.id AND ol.published = true AND ol.deleted = false
-		)
-	`
-	return rows.map((row) => row.id)
 }
 
 // Sortable columns are whitelisted by the Zod schema (ZSortableColumn) before they ever reach here.
@@ -457,8 +428,7 @@ const forOrganizationTable = async ({
 }: TRPCHandlerParams<TForOrganizationTableSchema, 'protected'>) => {
 	const search = input.search?.trim()
 
-	const [cleanupIds, createdByOrgIds, communityOrgIds, leaderOrgIds, serviceIds] = await Promise.all([
-		input.needsLocationPhoneCleanup ? locationPhoneCleanupIds() : undefined,
+	const [createdByOrgIds, communityOrgIds, leaderOrgIds, serviceIds] = await Promise.all([
 		input.createdByUserIds?.length ? creatorOrgIds(input.createdByUserIds) : undefined,
 		input.communityAttributeIds?.length
 			? orgIdsByAttributes(input.communityAttributeIds, input.communityMatchMode)
@@ -468,7 +438,7 @@ const forOrganizationTable = async ({
 			: undefined,
 		serviceGroupOrgIds(input),
 	])
-	const computedIdFilters = [cleanupIds, createdByOrgIds, communityOrgIds, leaderOrgIds, serviceIds]
+	const computedIdFilters = [createdByOrgIds, communityOrgIds, leaderOrgIds, serviceIds]
 	if (computedIdFilters.some((ids) => ids?.length === 0)) {
 		return { results: [], total: 0 }
 	}
