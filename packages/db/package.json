@@ -11,6 +11,7 @@
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"clean:zod": "rm -rf ./zod-schemas/* || true",
 		"crowdin:sync-context": "pnpm with-env tsx ./lib/syncCrowdinContext.ts",
+		"db:audit-location-contacts": "pnpm with-env tsx ./lib/auditLocationContacts.ts",
 		"db:audit-street1": "pnpm with-env tsx ./lib/auditCorruptedStreet1.ts",
 		"db:dataMigrate": "pnpm with-env tsx ./prisma/dataMigrationRunner.ts",
 		"db:deploy": "pnpm with-env prisma migrate deploy",
