@@ -63,6 +63,10 @@ const renderCard = () => {
 	return view
 }
 
+// The drawer closes 500ms after a successful save, on top of the save's own round trip - longer than
+// waitFor's 1s default once HARNESS_NETWORK_JITTER_MS adds realistic network delay.
+const LONG_WAIT = { timeout: 5000 }
+
 const openDrawer = (addressText: string | RegExp) => openDrawerFor(addressText, 'Edit Location')
 
 /** The standard test location most tests in this file need - override just the fields that differ. */
@@ -93,8 +97,9 @@ describe('VisitCard + AddressDrawer - real cache: edit, save, see it without ref
 		await userEvent.clear(cityInput)
 		await userEvent.type(cityInput, 'Updated City')
 		await clickSave()
-		await waitFor(() =>
-			expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument()
+		await waitFor(
+			() => expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument(),
+			LONG_WAIT
 		)
 
 		// Contract 1: the visit card reflects the new city without any refresh - only React Query's
@@ -131,8 +136,9 @@ describe('AddressDrawer - clearing street1/street2 must actually clear them, not
 
 		await userEvent.clear(street1Input)
 		await clickSave()
-		await waitFor(() =>
-			expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument()
+		await waitFor(
+			() => expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument(),
+			LONG_WAIT
 		)
 
 		// The card must no longer show the cleared street address - it must not silently keep
@@ -149,8 +155,9 @@ describe('AddressDrawer - clearing street1/street2 must actually clear them, not
 
 		await userEvent.clear(street2Input)
 		await clickSave()
-		await waitFor(() =>
-			expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument()
+		await waitFor(
+			() => expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument(),
+			LONG_WAIT
 		)
 
 		expect(screen.queryByText(/suite 5/i)).not.toBeInTheDocument()
@@ -258,8 +265,9 @@ describe('AddressDrawer - unsaved changes confirmation (#2090)', () => {
 
 		await userEvent.click(screen.getByRole('button', { name: /^discard$/i }))
 
-		await waitFor(() =>
-			expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument()
+		await waitFor(
+			() => expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument(),
+			LONG_WAIT
 		)
 
 		// The card itself must not show the discarded, never-saved edit.
@@ -281,8 +289,111 @@ describe('AddressDrawer - unsaved changes confirmation (#2090)', () => {
 		await userEvent.click(screen.getByRole('button', { name: /close/i }))
 
 		expect(screen.queryByRole('heading', { name: 'Unsaved Changes' })).not.toBeInTheDocument()
-		await waitFor(() =>
-			expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument()
+		await waitFor(
+			() => expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument(),
+			LONG_WAIT
 		)
 	})
+})
+
+describe('AddressDrawer - postal code from a picked address suggestion (#2089)', () => {
+	/**
+	 * Report: delete the street address, pick the Google suggestion (which fills in the postal code), save,
+	 * reopen - the postal code was gone. That exact flow saves correctly (first test below, also under
+	 * HARNESS_NETWORK_JITTER_MS). What did fail: picking the _same_ suggestion again on the same page left the
+	 * postal code (and every other field Google fills in) unchanged, because the details were only applied when
+	 * the cached place lookup returned new data - a repeat pick returns the same cached result.
+	 */
+	const SUGGESTION = '1 Bethany Road, Hazlet, NJ, USA'
+
+	const seedPlace = () => {
+		backend.seedAutocomplete('1 Bethany Road', [
+			{ value: SUGGESTION, label: '1 Bethany Road', subheading: 'Hazlet, NJ, USA', placeId: 'place_bethany' },
+		])
+		backend.seedGeocode('place_bethany', {
+			streetNumber: '1',
+			streetName: 'Bethany Road',
+			city: 'Hazlet',
+			govDist: country.govDist[0].abbrev,
+			postCode: '07730',
+			country: country.cca2,
+			lat: 40.42,
+			lng: -74.17,
+		})
+	}
+
+	const postCodeInput = () => {
+		const input = document.querySelector<HTMLInputElement>('[data-path="data.postCode"]')
+		if (!input) {
+			throw new Error('postal code input not found')
+		}
+		return input
+	}
+
+	// See the autocomplete test above for why this uses `fireEvent.click` on the DOM option directly.
+	const pickSuggestion = async () => {
+		const street1Input = screen.getByRole('textbox', { name: /^address$/i })
+		await userEvent.clear(street1Input)
+		await userEvent.type(street1Input, '1 Bethany Road')
+		const optionSelector = `[role="option"][value="${SUGGESTION}"]`
+		await waitFor(() => expect(document.querySelector(optionSelector)).not.toBeNull())
+		const option = document.querySelector(optionSelector)
+		if (!option) {
+			throw new Error('autocomplete option never rendered')
+		}
+		fireEvent.click(option)
+	}
+
+	const saveAndWaitForClose = async () => {
+		await clickSave()
+		await waitFor(
+			() => expect(screen.queryByRole('heading', { name: 'Edit Location' })).not.toBeInTheDocument(),
+			LONG_WAIT
+		)
+	}
+
+	it.each([
+		['no postal code', null],
+		['a different postal code', '99999'],
+	])('saves the picked postal code over %s, and shows it on reopen', async (_label, seededPostCode) => {
+		seedTestLocation({ postCode: seededPostCode })
+		seedPlace()
+		renderCard()
+
+		await openDrawer(/original city/i)
+		await waitFor(() =>
+			expect(screen.getByRole('textbox', { name: /^address$/i })).toHaveValue('123 Main St')
+		)
+		await pickSuggestion()
+		await waitFor(() => expect(postCodeInput()).toHaveValue('07730'), LONG_WAIT)
+		await saveAndWaitForClose()
+
+		expect(backend.locations.get(LOCATION.id)?.postCode).toBe('07730')
+
+		await openDrawer(/hazlet/i)
+		await waitFor(() => expect(postCodeInput()).toHaveValue('07730'), LONG_WAIT)
+	})
+
+	it('fills the postal code in again when the same suggestion is picked a second time', async () => {
+		seedTestLocation({ postCode: null })
+		seedPlace()
+		renderCard()
+
+		await openDrawer(/original city/i)
+		await waitFor(() =>
+			expect(screen.getByRole('textbox', { name: /^address$/i })).toHaveValue('123 Main St')
+		)
+		await pickSuggestion()
+		await waitFor(() => expect(postCodeInput()).toHaveValue('07730'), LONG_WAIT)
+		await saveAndWaitForClose()
+
+		await openDrawer(/hazlet/i)
+		await waitFor(() => expect(postCodeInput()).toHaveValue('07730'), LONG_WAIT)
+		await userEvent.clear(postCodeInput())
+		await pickSuggestion()
+
+		await waitFor(() => expect(postCodeInput()).toHaveValue('07730'), LONG_WAIT)
+		await saveAndWaitForClose()
+		expect(backend.locations.get(LOCATION.id)?.postCode).toBe('07730')
+	}, 30_000)
 })
