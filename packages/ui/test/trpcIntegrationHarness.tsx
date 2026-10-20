@@ -1421,6 +1421,50 @@ export const createFakeLocationBackend = () => {
 	return { handlers, locations, seedLocation, seedAutocomplete, seedGeocode }
 }
 
+export interface FakeReviewRow {
+	type: 'phone' | 'email' | 'website' | 'socialMedia'
+	id: string
+	value: string
+	showOnOrgPage: boolean
+	org: { id: string; name: string; slug: string; locationCount: number; mainPageHasPhone: boolean }
+	locations: { id: string; name: string }[]
+}
+
+/**
+ * Fakes `locationContactReview.list`/`decide` (packages/api/router/locationContactReview), matching the real
+ * handlers' contracts: `list` returns every undecided row, `decide` records the decision and takes the row
+ * off the list. `decisions` exposes what was decided, for assertions.
+ */
+export const createFakeLocationContactReviewBackend = () => {
+	const rows = new Map<string, FakeReviewRow>()
+	const decisions: { type: string; id: string; choice: string }[] = []
+
+	const seedRow = (row: FakeReviewRow) => {
+		rows.set(row.id, row)
+		return row
+	}
+
+	const decide = (input: { type: FakeReviewRow['type']; id: string; choice: string }) => {
+		if (!rows.has(input.id)) {
+			throw new TRPCClientError(`review item ${input.id} not found`)
+		}
+		rows.delete(input.id)
+		decisions.push(input)
+		return input
+	}
+
+	const handlers = [
+		http.get(`${BASE_URL}/locationContactReview.list`, ({ request }) =>
+			respond(request, () => [...rows.values()])
+		),
+		http.post(`${BASE_URL}/locationContactReview.decide`, ({ request }) =>
+			respond(request, (input) => decide(input as Parameters<typeof decide>[0]))
+		),
+	]
+
+	return { handlers, rows, decisions, seedRow }
+}
+
 /** Parses a single (non-batched) tRPC `httpLink` GET request's `?input=` query param. */
 const parseGetInput = (request: Request) => {
 	const raw = new URL(request.url).searchParams.get('input')

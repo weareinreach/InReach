@@ -31,11 +31,6 @@ export type Classification =
 	/** Can't tell from the data whether it's the location's own or an org item linked to it. A person decides. */
 	| 'needsReview'
 
-export const AUTO_MARK: ReadonlySet<Classification> = new Set([
-	'duplicateOfOrgItem',
-	'emailAddedFromLocation',
-])
-
 /**
  * Internal notes the cleanup leaves on contact items (`InternalNote.orgPhoneId`/`orgEmailId`/`orgWebsiteId`/
  * `orgSocialMediaId`). They record what the migration did and which items still need a person, so the data
@@ -53,7 +48,21 @@ export const CLEANUP_NOTE = {
 	markedNeedsReviewPhone:
 		"[location-contact-cleanup] Marked location-only until reviewed, so the org's page stays as it was " +
 		'(multi-location org pages already hid phones linked to a location).',
+	/** Every note a data manager's decision leaves starts with this - the review list leaves those items out. */
+	reviewedPrefix: '[location-contact-cleanup] Reviewed:',
+	reviewed: (choice: ReviewChoice) =>
+		({
+			orgAndLocations:
+				"[location-contact-cleanup] Reviewed: the organization's - shown on its page and its linked location(s).",
+			locationsOnly:
+				"[location-contact-cleanup] Reviewed: the location's own - shown on its linked location(s), not the organization's page.",
+			orgOnly:
+				"[location-contact-cleanup] Reviewed: the organization's only - shown on its page; removed from its location(s).",
+		})[choice],
 } as const
+
+/** A data manager's answer for one review-list item (see the locationContactReview API router). */
+export type ReviewChoice = 'orgAndLocations' | 'locationsOnly' | 'orgOnly'
 
 // --- Matching rules: two items "are the same" when these keys match. ---
 
