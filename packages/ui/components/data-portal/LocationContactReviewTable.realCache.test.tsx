@@ -47,6 +47,7 @@ const phoneRow: FakeReviewRow = {
 	showOnOrgPage: false,
 	org,
 	locations: [{ id: LOCATION.id, name: 'Mi Centro' }],
+	services: 0,
 }
 const emailRow: FakeReviewRow = {
 	type: 'email',
@@ -55,6 +56,7 @@ const emailRow: FakeReviewRow = {
 	showOnOrgPage: true,
 	org,
 	locations: [{ id: LOCATION.id, name: 'Mi Centro' }],
+	services: 0,
 }
 
 beforeAll(() => {
@@ -136,17 +138,47 @@ describe('LocationContactReviewTable - real cache', () => {
 		}
 	)
 
-	it('"Organization page only" on a phone clears the organization\'s "main page has no phone number" note', async () => {
+	it.each([
+		['Organization page only', false],
+		['Organization page and location(s)', false],
+		['Location(s) only', true],
+	] as const)(
+		'"%s" on a phone: the "main page has no phone number" note still showing = %s',
+		async (label, noteStays) => {
+			renderTable()
+			await rowFor('· main page has no phone number')
+
+			await userEvent.click((await rowFor('3232867224')).getByRole('button', { name: label }))
+
+			await waitFor(() => expect(screen.queryByText('3232867224')).not.toBeInTheDocument())
+			expect(Boolean(screen.queryByText('· main page has no phone number'))).toBe(noteStays)
+			expect(screen.getByText('info@example.org')).toBeInTheDocument()
+		}
+	)
+
+	it('an item with no location offers two choices and says where it shows', async () => {
+		backend.seedRow({
+			type: 'phone',
+			id: 'ophn_review_nowhere',
+			value: '2133857800',
+			showOnOrgPage: true,
+			org,
+			locations: [],
+			services: 7,
+		})
 		renderTable()
-		await rowFor('· main page has no phone number')
 
-		await userEvent.click(
-			(await rowFor('3232867224')).getByRole('button', { name: 'Organization page only' })
-		)
+		const row = await rowFor('2133857800')
+		expect(row.getByText('Organization page and 7 services')).toBeInTheDocument()
+		expect(row.getAllByRole('button').map((button) => button.getAttribute('aria-label'))).toEqual([
+			'Organization page',
+			'Not on the organization page',
+		])
 
-		await waitFor(() => expect(screen.queryByText('3232867224')).not.toBeInTheDocument())
-		expect(screen.queryByText('· main page has no phone number')).not.toBeInTheDocument()
-		expect(screen.getByText('info@example.org')).toBeInTheDocument()
+		await userEvent.click(row.getByRole('button', { name: 'Not on the organization page' }))
+
+		await waitFor(() => expect(screen.queryByText('2133857800')).not.toBeInTheDocument())
+		expect(backend.decisions).toEqual([{ type: 'phone', id: 'ophn_review_nowhere', choice: 'locationsOnly' }])
 	})
 
 	it('a failed save keeps the row on the list and shows an error', async () => {

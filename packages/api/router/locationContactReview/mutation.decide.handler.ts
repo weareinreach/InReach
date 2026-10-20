@@ -1,5 +1,3 @@
-import { TRPCError } from '@trpc/server'
-
 import { generateId, getAuditedClient } from '@weareinreach/db'
 import { CLEANUP_NOTE } from '@weareinreach/db/lib/locationContactCleanup'
 import { type TRPCHandlerParams } from '~api/types/handler'
@@ -8,7 +6,10 @@ import { type TDecideSchema } from './mutation.decide.schema'
 
 type Tx = Parameters<Parameters<ReturnType<typeof getAuditedClient>['$transaction']>[0]>[0]
 
-/** The organization a review-list item belongs to, read from the locations it's linked to. */
+/**
+ * The organization a review-list item belongs to, read from the locations it's linked to - or undefined when
+ * it isn't linked to any (an item marked location-only with no location; it's already stored under its org).
+ */
 const findOrgId = async (tx: Tx, type: TDecideSchema['type'], id: string) => {
 	const where = { location: { published: true, deleted: false } }
 	const select = { location: { select: { orgId: true } } }
@@ -24,11 +25,7 @@ const findOrgId = async (tx: Tx, type: TDecideSchema['type'], id: string) => {
 							select,
 							take: 1,
 						})
-	const orgId = links[0]?.location.orgId
-	if (!orgId) {
-		throw new TRPCError({ code: 'NOT_FOUND', message: `${type} ${id} isn't linked to a published location` })
-	}
-	return orgId
+	return links[0]?.location.orgId
 }
 
 /**
@@ -106,7 +103,10 @@ const decide = async ({ ctx, input }: TRPCHandlerParams<TDecideSchema, 'protecte
 
 	await prisma.$transaction(async (tx) => {
 		if (choice === 'orgOnly') {
-			await moveToOrgOnly(tx, type, id, await findOrgId(tx, type, id))
+			const orgId = await findOrgId(tx, type, id)
+			if (orgId) {
+				await moveToOrgOnly(tx, type, id, orgId)
+			}
 		}
 		await setLocationOnly(tx, type, id, choice === 'locationsOnly')
 		await tx.internalNote.create({

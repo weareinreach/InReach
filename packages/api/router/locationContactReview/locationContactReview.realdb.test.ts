@@ -103,6 +103,8 @@ beforeAll(async () => {
 		data: {
 			id: ids.notFlagged,
 			number: '5555550199',
+			// A location's own number, already marked - so the org's main page has no phone.
+			locationOnly: true,
 			countryId: country.id,
 			organization: { create: { organizationId: orgId } },
 			...onLocationA,
@@ -187,6 +189,7 @@ describe('locationContactReview - real local Postgres', () => {
 			showOnOrgPage: false,
 			org: expect.objectContaining({ id: orgId, locationCount: 2, mainPageHasPhone: false }),
 			locations: [{ id: locationA, name: 'Location A' }],
+			services: 0,
 		})
 		expect(rows.find(({ id }) => id === ids.email)?.showOnOrgPage).toBe(true)
 	})
@@ -247,7 +250,7 @@ describe('locationContactReview - real local Postgres', () => {
 	it('"Organization page only" on a phone makes it show on the org page right away', async () => {
 		const orgPagePhones = async () =>
 			(await phonesForContactInfo({ input: { parentId: orgId } } as never)).map(({ id }) => id)
-		// Hidden now: today's phone rule keeps a multi-location org's page free of location-linked numbers.
+		// Hidden now: it's marked location-only (how the cleanup leaves an undecided phone).
 		expect(await orgPagePhones()).not.toContain(ids.phoneOrgOnly)
 
 		await manager().decide({ type: 'phone', id: ids.phoneOrgOnly, choice: 'orgOnly' })

@@ -31,17 +31,18 @@ const TYPE_LABEL: Record<ContactType, string> = {
 const CLASS_LABEL: Record<Classification, string> = {
 	duplicateOfOrgItem: 'Would mark location-only: duplicates an org-level item',
 	emailAddedFromLocation: 'Would mark location-only: email added from a location (no org link)',
-	linkedToEveryLocation: 'Leave alone: linked to every location (org-wide)',
 	alreadyLocationOnly: 'Leave alone: already location-only',
 	singleLocationOrg: 'Leave alone: single-location org (its page shows everything either way)',
+	locationOnlyWithoutLocation:
+		'Needs a person: marked location-only but linked to no location (mark cleared until reviewed)',
 	needsReview: 'Needs a person (review list; phones also marked location-only until reviewed)',
 }
 const ORDER: Classification[] = [
 	'duplicateOfOrgItem',
 	'emailAddedFromLocation',
-	'linkedToEveryLocation',
 	'alreadyLocationOnly',
 	'singleLocationOrg',
+	'locationOnlyWithoutLocation',
 	'needsReview',
 ]
 
@@ -97,6 +98,7 @@ const run = async () => {
 	const reviewOrgs = new Set(plan.needsReview.map(({ orgId }) => orgId))
 	console.log('What the migration would write:')
 	console.log(`  Mark location-only (each with a note saying why): ${plan.mark.length}`)
+	console.log(`  Clear the location-only mark (each with a note saying why): ${plan.unmark.length}`)
 	console.log(`  "Needs review" notes: ${plan.needsReview.length}, across ${reviewOrgs.size} organizations`)
 
 	if (process.env.CSV) {

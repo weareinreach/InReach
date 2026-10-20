@@ -19,8 +19,6 @@ export type Classification =
 	| 'duplicateOfOrgItem'
 	/** An email added from a location (linked to the location, never to the org). Safe to mark automatically. */
 	| 'emailAddedFromLocation'
-	/** Linked to every one of the org's published locations - almost certainly org-wide. Leave unmarked. */
-	| 'linkedToEveryLocation'
 	/** Already marked location only. Nothing to do. */
 	| 'alreadyLocationOnly'
 	/**
@@ -28,6 +26,12 @@ export type Classification =
 	 * nothing for a person to decide. Leave unmarked.
 	 */
 	| 'singleLocationOrg'
+	/**
+	 * Marked location-only, stored under a multi-location organization, but linked to no location at all - so
+	 * "location only" can't be right, yet nothing says whether it's meant for the main page (it may be one of
+	 * its services' numbers). A person decides; until then it keeps showing on the main page as it did.
+	 */
+	| 'locationOnlyWithoutLocation'
 	/** Can't tell from the data whether it's the location's own or an org item linked to it. A person decides. */
 	| 'needsReview'
 
@@ -49,6 +53,9 @@ export const CLEANUP_NOTE = {
 		"[location-contact-cleanup] Marked location-only until reviewed, so the org's page stays as it was " +
 		'(multi-location org pages already hid phones linked to a location).',
 	/** Every note a data manager's decision leaves starts with this - the review list leaves those items out. */
+	unmarkedWithoutLocation:
+		"[location-contact-cleanup] Location-only mark cleared until reviewed: it isn't linked to any location, " +
+		"and clearing it keeps the organization's page as it was.",
 	reviewedPrefix: '[location-contact-cleanup] Reviewed:',
 	reviewed: (choice: ReviewChoice) =>
 		({
@@ -134,7 +141,10 @@ const isPublic = { published: true, deleted: false }
 const locationSelect = { id: true, orgId: true, published: true, deleted: true } as const
 type LinkedLocation = { location: { id: string; orgId: string; published: boolean; deleted: boolean } }
 
-/** Loads every published contact item that's linked to at least one published location, plus their orgs. */
+/**
+ * Loads every published contact item with the organization it belongs to and its location links, plus those
+ * orgs.
+ */
 export const loadLocationLinkedContacts = async (prisma: PrismaClient) => {
 	const [phones, emails, websites, socials] = await Promise.all([
 		prisma.orgPhone.findMany({
@@ -264,25 +274,30 @@ export const classifyLocationContacts = (items: ContactItem[], orgs: Map<string,
 	const classified: ClassifiedItem[] = []
 	for (const item of items) {
 		const org = orgs.get(item.orgId)
-		if (!org || item.locationIds.length === 0) {
+		if (!org) {
+			continue
+		}
+		if (item.locationIds.length === 0) {
+			// Linked only to unpublished/deleted locations: it stays with them (hidden) - nothing to do. Linked
+			// to no location at all yet marked location-only: a person decides.
+			if (item.locationOnly && item.hasOrgLink && !item.hasAnyLocationLink && org.locations.length > 1) {
+				classified.push({ ...item, classification: 'locationOnlyWithoutLocation' })
+			}
 			continue
 		}
 		const orgCopy = orgLevelByKey.get(`${item.orgId}|${item.type}|${item.key}`)
 		const isMultiLocation = org.locations.length > 1
-		const linkedToAll = isMultiLocation && org.locations.every(({ id }) => item.locationIds.includes(id))
 
 		let classification: Classification
 		if (item.locationOnly) {
 			classification = 'alreadyLocationOnly'
 		} else if (orgCopy && orgCopy.id !== item.id) {
-			// Checked before "linked to every location": a location copy of an org-level item would otherwise
-			// show twice on the org's page once phones use the location-only flag.
 			classification = 'duplicateOfOrgItem'
-		} else if (linkedToAll) {
-			classification = 'linkedToEveryLocation'
 		} else if (item.type === 'email' && !item.hasOrgLink) {
 			classification = 'emailAddedFromLocation'
 		} else if (isMultiLocation) {
+			// Including an item listed at every location: being at every location doesn't make it the
+			// organization's - only a person can say whether it was also meant for the org's main page.
 			classification = 'needsReview'
 		} else {
 			classification = 'singleLocationOrg'
@@ -299,7 +314,9 @@ export const classifyLocationContacts = (items: ContactItem[], orgs: Map<string,
 export interface CleanupPlan {
 	/** Items to mark location-only, each with the note recording why. */
 	mark: { item: ClassifiedItem; note: string }[]
-	/** Items for a person to decide - each gets the "needs review" note (and is also in `mark` if a phone). */
+	/** Items whose location-only mark is cleared, each with the note recording why. */
+	unmark: { item: ClassifiedItem; note: string }[]
+	/** Items for a person to decide - each gets the "needs review" note (and may also be in `mark`/`unmark`). */
 	needsReview: ClassifiedItem[]
 }
 
@@ -309,10 +326,11 @@ export interface CleanupPlan {
  *
  * Undecided items keep the org page looking the way it does today: phones are marked location-only (a
  * multi-location org's page already hides phones linked to a location), while emails, websites and social
- * media stay unmarked (their org pages already show them).
+ * media stay unmarked (their org pages already show them). An item marked location-only but linked to no
+ * location showed on the main page, so its mark is cleared until someone decides.
  */
 export const planCleanup = (classified: ClassifiedItem[]): CleanupPlan => {
-	const plan: CleanupPlan = { mark: [], needsReview: [] }
+	const plan: CleanupPlan = { mark: [], unmark: [], needsReview: [] }
 	for (const item of classified) {
 		switch (item.classification) {
 			case 'duplicateOfOrgItem': {
@@ -328,6 +346,11 @@ export const planCleanup = (classified: ClassifiedItem[]): CleanupPlan => {
 				if (item.type === 'phone') {
 					plan.mark.push({ item, note: CLEANUP_NOTE.markedNeedsReviewPhone })
 				}
+				break
+			}
+			case 'locationOnlyWithoutLocation': {
+				plan.needsReview.push(item)
+				plan.unmark.push({ item, note: CLEANUP_NOTE.unmarkedWithoutLocation })
 				break
 			}
 			default: {

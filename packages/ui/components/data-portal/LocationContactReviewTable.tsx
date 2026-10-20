@@ -53,13 +53,15 @@ const joinNames = (names: string[]) =>
  * The three answers. `label`/`help` are the generic wording for the instructions above the table; `forRow`
  * spells the same answer out with that row's own organization and location names, for its icon's tooltip.
  */
-const CHOICES: {
+interface ChoiceOption {
 	choice: Choice
-	icon: 'carbon:building' | 'carbon:location-company' | 'carbon:location'
+	icon: 'carbon:building' | 'carbon:location-company' | 'carbon:location' | 'carbon:close-outline'
 	label: string
 	help: string
 	forRow: (org: string, locations: string) => string
-}[] = [
+}
+
+const CHOICES: ChoiceOption[] = [
 	{
 		choice: 'orgOnly',
 		icon: 'carbon:building',
@@ -84,10 +86,40 @@ const CHOICES: {
 ]
 
 /**
+ * The two answers for an item that isn't linked to any location (marked location-only with no location -
+ * often one of the organization's services' numbers). `locations` is the "N services" wording here.
+ */
+const NO_LOCATION_CHOICES: ChoiceOption[] = [
+	{
+		choice: 'orgOnly',
+		icon: 'carbon:building',
+		label: 'Organization page',
+		help: "Display on the organization's main page.",
+		forRow: (org) => `${org} page`,
+	},
+	{
+		choice: 'locationsOnly',
+		icon: 'carbon:close-outline',
+		label: 'Not on the organization page',
+		help: "Don't display it on the organization's main page (it still shows on any services it's linked to).",
+		forRow: (org, services) => `Not on the ${org} page${services ? ` - only on its ${services}` : ''}`,
+	},
+]
+
+const servicesText = (count: number) => (count ? `${count} ${count === 1 ? 'service' : 'services'}` : '')
+
+/**
  * Where the item shows today, as a sentence: "Organization page and Flagship Cafe location", "Only Flagship
  * Cafe location" or "Only Downtown and Midtown locations".
  */
 const showsNow = (row: ReviewRow) => {
+	if (!row.locations.length) {
+		const services = servicesText(row.services)
+		if (row.showOnOrgPage) {
+			return services ? `Organization page and ${services}` : 'Organization page'
+		}
+		return services ? `Only ${services}` : 'Not displayed'
+	}
 	const locations = `${joinNames(row.locations.map(({ name }) => `"${name}"`))} ${row.locations.length === 1 ? 'location' : 'locations'}`
 	return row.showOnOrgPage ? `Organization page and ${locations}` : `Only ${locations}`
 }
@@ -112,17 +144,18 @@ interface ChoiceActionsProps {
 }
 
 /**
- * On each item row: the three answers, in the same small icon-button style as the other Data Portal tables'
- * Actions columns (ReportTable, OrganizationTable).
+ * On each item row: the three answers (two for an item with no location), in the same small icon-button style
+ * as the other Data Portal tables' Actions columns (ReportTable, OrganizationTable).
  */
 const ChoiceActions = ({ row, theme, pendingId, onDecide }: ChoiceActionsProps) => {
 	const isPending = pendingId === row.id
 	const isBlocked = pendingId !== null && !isPending
-	const locations = joinNames(row.locations.map(({ name }) => name))
+	const hasLocations = row.locations.length > 0
+	const where = hasLocations ? joinNames(row.locations.map(({ name }) => name)) : servicesText(row.services)
 	return (
 		<Group wrap='nowrap' gap={4}>
-			{CHOICES.map(({ choice, icon, label, forRow }) => (
-				<Tooltip key={choice} label={forRow(row.org.name, locations)} multiline w={260}>
+			{(hasLocations ? CHOICES : NO_LOCATION_CHOICES).map(({ choice, icon, label, forRow }) => (
+				<Tooltip key={choice} label={forRow(row.org.name, where)} multiline w={260}>
 					<ActionIcon
 						variant='subtle'
 						aria-label={label}
@@ -216,12 +249,12 @@ export const LocationContactReviewTable = () => {
 	const decide = api.locationContactReview.decide.useMutation({
 		onSuccess: ({ id, type, choice }) => {
 			// Patched in the cached list directly rather than refetched - same reason as the contact
-			// drawers: a read right after a write can come back without the change. A phone moved to the
-			// organization's page only (taken off its locations) is now on the main page, which clears that
-			// organization's "main page has no phone number" note.
+			// drawers: a read right after a write can come back without the change. A phone now shown on the
+			// organization's main page (either "Organization page" choice) clears that organization's "main
+			// page has no phone number" note.
 			apiUtils.locationContactReview.list.setData(undefined, (old) => {
 				const decided = old?.find((row) => row.id === id)
-				const addsMainPagePhone = type === 'phone' && choice === 'orgOnly' && decided
+				const addsMainPagePhone = type === 'phone' && choice !== 'locationsOnly' && decided
 				return old
 					?.filter((row) => row.id !== id)
 					.map((row) =>
@@ -316,8 +349,8 @@ export const LocationContactReviewTable = () => {
 					Previously, contact info added on a location&apos;s page was also shown on the organization&apos;s
 					main page, sometimes resulting in duplicate information being displayed. That has been fixed for new
 					entries. For most older contact info, the system could work out what should be displayed where - for
-					example when the organization already had its own separate copy, or when the information was listed
-					at every location as well as the organization.
+					example when the organization already had its own separate copy, or when an email was only ever
+					stored under a location.
 				</Text>
 				<Text size='sm'>
 					For the items below, it could not. Each one is stored once, under both the organization and some of
@@ -340,6 +373,11 @@ export const LocationContactReviewTable = () => {
 					Phone numbers are also listed when every one of an organization&apos;s numbers is at a location and
 					none is on its main page - the system can&apos;t tell whether one of them should be the
 					organization&apos;s main number. These organizations are marked &quot;{NO_MAIN_PAGE_PHONE}&quot;.
+				</Text>
+				<Text size='sm'>
+					A few items aren&apos;t listed at any location - for example a number used by the
+					organization&apos;s services. They have just two choices: keep it on the organization&apos;s main
+					page, or not (it still shows on its services).
 				</Text>
 				<Text size='sm'>
 					For each item, pick where it belongs using the icons in the Actions column (hover an icon to see

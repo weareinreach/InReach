@@ -82,7 +82,7 @@ describe('classifyLocationContacts', () => {
 		expect(of('loc_copy')).toBe('needsReview')
 	})
 
-	it('linked to every location is left alone as org-wide - after the duplicate check, before the email rule', () => {
+	it("being listed at every location doesn't make an item the organization's - a person still decides", () => {
 		const everywhere = { locationIds: ['loc_a', 'loc_b', 'loc_c'] }
 		const of = classify([
 			item({ id: 'phone_everywhere', ...everywhere }),
@@ -91,8 +91,9 @@ describe('classifyLocationContacts', () => {
 			item({ id: 'dup_everywhere', key: 'dup', ...everywhere }),
 		])
 
-		expect(of('phone_everywhere')).toBe('linkedToEveryLocation')
-		expect(of('email_everywhere')).toBe('linkedToEveryLocation')
+		expect(of('phone_everywhere')).toBe('needsReview')
+		// Still never attached to the org, wherever it's listed.
+		expect(of('email_everywhere')).toBe('emailAddedFromLocation')
 		expect(of('dup_everywhere')).toBe('duplicateOfOrgItem')
 	})
 
@@ -112,6 +113,20 @@ describe('classifyLocationContacts', () => {
 		const of = classify([item({ id: 'marked', locationOnly: true })])
 
 		expect(of('marked')).toBe('alreadyLocationOnly')
+	})
+
+	it('marked location-only but linked to no location: a person decides', () => {
+		const noLocation = { locationIds: [], hasAnyLocationLink: false, locationOnly: true }
+		const of = classify([
+			item({ id: 'phone_nowhere', ...noLocation }),
+			// Linked only to an unpublished location: it stays with that location - nothing to decide.
+			item({ id: 'phone_unpublished_location', ...noLocation, hasAnyLocationLink: true }),
+			item({ id: 'solo_nowhere', ...noLocation, orgId: singleOrg.id }),
+		])
+
+		expect(of('phone_nowhere')).toBe('locationOnlyWithoutLocation')
+		expect(of('phone_unpublished_location')).toBeUndefined()
+		expect(of('solo_nowhere')).toBeUndefined()
 	})
 
 	it('on a multi-location org, an org-linked item on some locations needs a person', () => {
@@ -153,13 +168,22 @@ describe('planCleanup', () => {
 		])
 	})
 
+	it('clears the mark on a location-only item with no location, keeping the org page as it was, and flags it', () => {
+		const plan = planCleanup([classified({ id: 'nowhere', classification: 'locationOnlyWithoutLocation' })])
+
+		expect(plan.unmark).toEqual([
+			{ item: expect.objectContaining({ id: 'nowhere' }), note: CLEANUP_NOTE.unmarkedWithoutLocation },
+		])
+		expect(plan.needsReview.map(({ id }) => id)).toEqual(['nowhere'])
+		expect(plan.mark).toEqual([])
+	})
+
 	it('writes nothing for items it leaves alone', () => {
 		const plan = planCleanup([
 			classified({ id: 'a', classification: 'alreadyLocationOnly' }),
-			classified({ id: 'b', classification: 'linkedToEveryLocation' }),
 			classified({ id: 'c', classification: 'singleLocationOrg' }),
 		])
 
-		expect(plan).toEqual({ mark: [], needsReview: [] })
+		expect(plan).toEqual({ mark: [], unmark: [], needsReview: [] })
 	})
 })

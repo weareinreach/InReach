@@ -255,13 +255,13 @@ export const createFakeOrgPhoneBackend = () => {
 			if (row.deleted || !row.published) {
 				return false
 			}
-			if (orgLinks.get(row.id) !== input.parentId && !locationLinks.has(`${input.parentId}:${row.id}`)) {
-				return false
+			// Mirrors the real handler: a location page shows everything linked to it (only location-only ones
+			// when asked); the org page leaves out location-only phones. This harness's org has no locations of
+			// its own, so it's never the single-location exception.
+			if (isIdFor('orgLocation', input.parentId)) {
+				return locationLinks.has(`${input.parentId}:${row.id}`) && (!input.locationOnly || row.locationOnly)
 			}
-			if (input.locationOnly !== undefined && row.locationOnly !== input.locationOnly) {
-				return false
-			}
-			return true
+			return orgLinks.get(row.id) === input.parentId && !row.locationOnly
 		})
 		return rows.map((row) => {
 			const phoneType = phoneTypeToKey(row.phoneTypeId)
@@ -1428,6 +1428,7 @@ export interface FakeReviewRow {
 	showOnOrgPage: boolean
 	org: { id: string; name: string; slug: string; locationCount: number; mainPageHasPhone: boolean }
 	locations: { id: string; name: string }[]
+	services: number
 }
 
 /**
