@@ -248,3 +248,49 @@ describe('orgPhone.upsert - location link (#2100)', () => {
 		expect(data).not.toHaveProperty('orgLocationId')
 	})
 })
+
+/**
+ * A phone added from a location's page belongs to that location, so it's created location-only - the same as
+ * emails, websites and social media created from a location. Before this, phones were never marked, so the
+ * only way to keep one off the org's page was orgPhone.forContactInfo's "linked to any location" rule.
+ */
+describe('orgPhone.upsert - created from a location is location-only', () => {
+	const createInput = {
+		operation: 'create',
+		number: '+15555550100',
+		countryId: 'country_test',
+		orgId: 'organization_test',
+		// The drawer always sends this for a new phone.
+		locationOnly: false,
+	}
+
+	it("marks a phone added from a location's page location-only", async () => {
+		const { orgPhoneCreate } = makeTx()
+
+		await upsert({ ctx, input: { ...createInput, orgLocationId: 'orgLocation_test' } } as never)
+
+		const [{ data }] = orgPhoneCreate.mock.calls[0] as [{ data: Record<string, unknown> }]
+		expect(data.locationOnly).toBe(true)
+	})
+
+	it("leaves a phone added from the org's page as sent", async () => {
+		const { orgPhoneCreate } = makeTx()
+
+		await upsert({ ctx, input: createInput } as never)
+
+		const [{ data }] = orgPhoneCreate.mock.calls[0] as [{ data: Record<string, unknown> }]
+		expect(data.locationOnly).toBe(false)
+	})
+
+	it('does not change locationOnly when an existing phone is saved from a location page', async () => {
+		const { orgPhoneUpdate } = makeTx()
+
+		await upsert({
+			ctx,
+			input: { operation: 'update', id: 'orgPhone_test', orgLocationId: 'orgLocation_test' },
+		} as never)
+
+		const [{ data }] = orgPhoneUpdate.mock.calls[0] as [{ data: Record<string, unknown> }]
+		expect(data).not.toHaveProperty('locationOnly')
+	})
+})

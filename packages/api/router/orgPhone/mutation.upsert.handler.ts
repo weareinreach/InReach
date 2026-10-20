@@ -124,6 +124,9 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 					data: {
 						id,
 						...data,
+						// Added from a location's page: it belongs to that location, so mark it location-only - the
+						// same thing orgEmail/orgWebsite/orgSocialMedia do for items created from a location.
+						...(orgLocationId ? { locationOnly: true } : {}),
 						description: description?.prisma,
 						country: connectOneRequired(countryId, 'id'),
 						phoneType: connectOne(phoneTypeId, 'id'),

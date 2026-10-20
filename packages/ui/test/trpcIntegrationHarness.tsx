@@ -187,7 +187,8 @@ export const createFakeOrgPhoneBackend = () => {
 					published: input.published ?? true,
 					deleted: input.deleted ?? false,
 					phoneTypeId: input.phoneTypeId ?? null,
-					locationOnly: input.locationOnly ?? false,
+					// Real handler: a phone created from a location is always marked location-only.
+					locationOnly: input.orgLocationId ? true : (input.locationOnly ?? false),
 					serviceOnly: input.serviceOnly ?? false,
 					descriptionText: input.description ?? null,
 				},
