@@ -14,7 +14,7 @@ import { I18nextProvider } from 'react-i18next'
 import { expect } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
-import { generateId } from '@weareinreach/db/lib/idGen'
+import { generateId, isIdFor } from '@weareinreach/db/lib/idGen'
 import { transformer } from '@weareinreach/util/transformer'
 import { SearchStateProvider } from '~ui/providers/SearchState'
 import { testTheme } from '~ui/test/testTheme'
@@ -475,7 +475,8 @@ export const createFakeOrgEmailBackend = () => {
 						primary: input.primary ?? false,
 						titleId: input.titleId ?? null,
 						descriptionText: input.description ?? null,
-						locationOnly: input.locationOnly ?? false,
+						// Real handler: a location-context create is always marked location-only.
+						locationOnly: input.linkLocationId ? true : (input.locationOnly ?? false),
 						serviceOnly: input.serviceOnly ?? false,
 						published: input.published ?? true,
 						deleted: input.deleted ?? false,
@@ -561,10 +562,17 @@ export const createFakeOrgEmailBackend = () => {
 				if (row.deleted || !row.published) {
 					return false
 				}
-				if (orgLinks.get(row.id) !== input.parentId && !locationLinks.has(`${input.parentId}:${row.id}`)) {
-					return false
-				}
-				if (input.locationOnly !== undefined && row.locationOnly !== input.locationOnly) {
+				// Mirrors the real handler: the org page leaves out location-only emails, a location page shows
+				// everything linked to it (only location-only ones when asked). The single-location-org exception
+				// isn't modeled - this harness's org has no locations of its own.
+				if (isIdFor('orgLocation', input.parentId)) {
+					if (!locationLinks.has(`${input.parentId}:${row.id}`)) {
+						return false
+					}
+					if (input.locationOnly && !row.locationOnly) {
+						return false
+					}
+				} else if (orgLinks.get(row.id) !== input.parentId || row.locationOnly) {
 					return false
 				}
 				if (input.serviceOnly !== undefined && row.serviceOnly !== input.serviceOnly) {

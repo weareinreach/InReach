@@ -64,6 +64,9 @@ const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protecte
 						id,
 						email,
 						...record,
+						// Added from a location's page: it belongs to that location, so mark it location-only - the
+						// same thing orgWebsite/orgSocialMedia do for items created from a location.
+						...(linkLocationId ? { locationOnly: true } : {}),
 						description: updateDescriptionText ? { create: updateDescriptionText.upsert.create } : undefined,
 						...(linkLocationId
 							? {
