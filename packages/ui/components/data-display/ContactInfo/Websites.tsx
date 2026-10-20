@@ -5,6 +5,7 @@ import invariant from 'tiny-invariant'
 
 import { productEvent } from '@weareinreach/analytics/events'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
+import { withUrlScheme } from '@weareinreach/util/url'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
 import { WebsiteDrawer } from '~ui/components/data-portal/WebsiteDrawer'
@@ -58,7 +59,9 @@ const WebsitesDisplay = ({
 		let showDirectHeading = false
 
 		for (const website of componentData) {
-			const { id, url, orgLocationOnly, description, isPrimary } = website
+			const { id, url: savedUrl, orgLocationOnly, description, isPrimary } = website
+			// Links saved before `https://` was added automatically (e.g. `www.example.org`) still work.
+			const url = withUrlScheme(savedUrl)
 			const urlMatch = url.match(domainExtract)
 			const urlBase = urlMatch?.length ? urlMatch[1] : undefined
 

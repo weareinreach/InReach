@@ -57,6 +57,14 @@ const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protecte
 	}
 
 	const result = await prisma.$transaction(async (tx) => {
+		// A description sent as empty means "remove it" (same as orgPhone.upsert) - only when one exists, since a
+		// nested delete of a missing record throws.
+		const clearDescription =
+			(description === null || description === '') &&
+			Boolean(
+				(await tx.orgEmail.findUnique({ where: { id }, select: { descriptionId: true } }))?.descriptionId
+			)
+		const descriptionUpdate = updateDescriptionText ?? (clearDescription ? { delete: true } : undefined)
 		const updated = email
 			? await tx.orgEmail.upsert({
 					where: { id },
@@ -80,7 +88,7 @@ const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protecte
 					},
 					update: {
 						...record,
-						description: updateDescriptionText,
+						description: descriptionUpdate,
 						title: titleId ? { connect: { id: titleId } } : undefined,
 					},
 					select,
@@ -89,7 +97,7 @@ const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protecte
 					where: { id },
 					data: {
 						...record,
-						description: updateDescriptionText,
+						description: descriptionUpdate,
 						title: titleId ? { connect: { id: titleId } } : undefined,
 					},
 					select,

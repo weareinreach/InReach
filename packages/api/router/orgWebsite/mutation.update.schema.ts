@@ -1,12 +1,13 @@
 import { z } from 'zod'
 
 import { prefixedId } from '~api/schemas/idPrefix'
+import { webUrlString } from '~api/schemas/webUrl'
 
 export const ZUpdateSchema = z.object({
 	id: prefixedId('orgWebsite'),
 	data: z
 		.object({
-			url: z.string(),
+			url: webUrlString(),
 			isPrimary: z.boolean(),
 			published: z.boolean(),
 			deleted: z.boolean(),

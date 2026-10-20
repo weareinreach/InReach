@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
+import { withUrlScheme } from '@weareinreach/util/url'
 import { Link } from '~ui/components/core/Link'
 import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { SocialMediaDrawer } from '~ui/components/data-portal/SocialMediaDrawer'
@@ -42,7 +43,8 @@ const SocialMediaDisplay = ({ parentId = '', passedData, locationOnly }: SocialM
 		}
 		items.push({
 			icon,
-			href: item.url,
+			// Links saved before `https://` was added automatically (e.g. `www.example.org`) still work.
+			href: withUrlScheme(item.url),
 			title: item.username,
 		})
 	}

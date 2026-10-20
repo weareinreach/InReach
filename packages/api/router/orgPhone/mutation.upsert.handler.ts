@@ -135,13 +135,21 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 					},
 				})
 			}
+			// A description sent as empty means "remove it". It used to be skipped (only a non-empty one was
+			// ever written), so a cleared description came back on the next load. Only deleted when one
+			// exists - a nested delete of a missing record throws.
+			const clearDescription =
+				(desc === null || desc === '') &&
+				Boolean(
+					(await tx.orgPhone.findUnique({ where: { id }, select: { descriptionId: true } }))?.descriptionId
+				)
 			return await tx.orgPhone.update({
 				where: { id },
 				data: {
 					...data,
 					country: connectOne(countryId, 'id'),
 					phoneType: connectOrDisconnectId(phoneTypeId),
-					description: description?.prisma,
+					description: clearDescription ? { delete: true } : description?.prisma,
 				},
 			})
 		})
