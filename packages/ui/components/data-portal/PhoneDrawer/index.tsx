@@ -25,6 +25,7 @@ import { type TUpsertSchema } from '@weareinreach/api/router/orgPhone/mutation.u
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { contactEditListPlacement } from '~ui/components/data-portal/contactEditListPlacement'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
@@ -207,6 +208,16 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 							return old
 						}
 						const existingIndex = old.findIndex((item) => item.id === submitted.id)
+						// A phone created from a location is saved location-only by the server (orgPhone.upsert),
+						// whatever the form sent.
+						const locationOnly =
+							existingIndex === -1 && hasLocationId
+								? true
+								: (submitted.locationOnly ?? old[existingIndex]?.locationOnly ?? false)
+						const { include, linkedFromOrg } = contactEditListPlacement(parentId, locationOnly)
+						if (!include) {
+							return old.filter((item) => item.id !== submitted.id)
+						}
 						const next =
 							existingIndex === -1
 								? [
@@ -216,7 +227,8 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 											number: submitted.number ?? '',
 											ext: submitted.ext ?? null,
 											primary: submitted.primary ?? false,
-											locationOnly: submitted.locationOnly ?? false,
+											locationOnly,
+											linkedFromOrg,
 											published: submitted.published ?? true,
 											deleted: submitted.deleted ?? false,
 											// Falls back to '' only if `countryCca2ById` genuinely hasn't loaded a match
@@ -243,7 +255,8 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 													number: submitted.number ?? item.number,
 													ext: submitted.ext ?? item.ext,
 													primary: submitted.primary ?? item.primary,
-													locationOnly: submitted.locationOnly ?? item.locationOnly,
+													locationOnly,
+													linkedFromOrg,
 													published: submitted.published ?? item.published,
 													deleted: submitted.deleted ?? item.deleted,
 													country: cca2 ?? item.country,

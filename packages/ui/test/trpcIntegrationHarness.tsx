@@ -227,10 +227,12 @@ export const createFakeOrgPhoneBackend = () => {
 	const forContactInfoEdit = (input: { parentId: string }) => {
 		const rows = [...phones.values()]
 			.filter((row) => {
-				if (orgLinks.get(row.id) === input.parentId) {
-					return true
+				// Mirrors the real handler: a location's edit list holds everything linked to it; the
+				// organization's holds only its own items, never location-only ones.
+				if (isIdFor('orgLocation', input.parentId)) {
+					return locationLinks.has(`${input.parentId}:${row.id}`)
 				}
-				return locationLinks.has(`${input.parentId}:${row.id}`)
+				return orgLinks.get(row.id) === input.parentId && !row.locationOnly
 			})
 			.sort((a, b) => Number(b.published) - Number(a.published) || Number(a.deleted) - Number(b.deleted))
 		return rows.map((row) => {
@@ -241,6 +243,7 @@ export const createFakeOrgPhoneBackend = () => {
 				ext: row.ext,
 				primary: row.primary,
 				locationOnly: row.locationOnly,
+				linkedFromOrg: isIdFor('orgLocation', input.parentId) && !row.locationOnly,
 				published: row.published,
 				deleted: row.deleted,
 				country: cca2ForCountryId(row.countryId),
@@ -534,10 +537,12 @@ export const createFakeOrgEmailBackend = () => {
 	const forContactInfoEdit = (input: { parentId: string }) => {
 		const rows = [...emails.values()]
 			.filter((row) => {
-				if (orgLinks.get(row.id) === input.parentId) {
-					return true
+				// Mirrors the real handler: a location's edit list holds everything linked to it; the
+				// organization's holds only its own items, never location-only ones.
+				if (isIdFor('orgLocation', input.parentId)) {
+					return locationLinks.has(`${input.parentId}:${row.id}`)
 				}
-				return locationLinks.has(`${input.parentId}:${row.id}`)
+				return orgLinks.get(row.id) === input.parentId && !row.locationOnly
 			})
 			.sort((a, b) => Number(b.published) - Number(a.published) || Number(a.deleted) - Number(b.deleted))
 		return rows.map((row) => ({
@@ -551,6 +556,7 @@ export const createFakeOrgEmailBackend = () => {
 				? { key: `emailDesc_${row.id}`, defaultText: row.descriptionText }
 				: null,
 			locationOnly: row.locationOnly,
+			linkedFromOrg: isIdFor('orgLocation', input.parentId) && !row.locationOnly,
 			serviceOnly: row.serviceOnly,
 			published: row.published,
 			deleted: row.deleted,
@@ -787,15 +793,19 @@ export const createFakeOrgWebsiteBackend = () => {
 	const forContactInfoEdit = (input: { parentId: string }) => {
 		const rows = [...websites.values()]
 			.filter((row) => {
-				if (orgLinks.get(row.id) === input.parentId) {
-					return true
+				// Mirrors the real handler: a location's edit list holds everything linked to it; the
+				// organization's holds only its own items, never location-only ones.
+				if (isIdFor('orgLocation', input.parentId)) {
+					return locationLinks.has(`${input.parentId}:${row.id}`)
 				}
-				return locationLinks.has(`${input.parentId}:${row.id}`)
+				return orgLinks.get(row.id) === input.parentId && !row.orgLocationOnly
 			})
 			.sort((a, b) => Number(b.published) - Number(a.published) || Number(a.deleted) - Number(b.deleted))
 		return rows.map((row) => ({
 			id: row.id,
 			url: row.url,
+			orgLocationOnly: row.orgLocationOnly,
+			linkedFromOrg: isIdFor('orgLocation', input.parentId) && !row.orgLocationOnly,
 			description: row.descriptionText
 				? { key: `websiteDesc_${row.id}`, defaultText: row.descriptionText }
 				: null,
@@ -1073,10 +1083,12 @@ export const createFakeOrgSocialMediaBackend = () => {
 
 	const forContactInfoEdits = (input: { parentId: string }) => {
 		const rows = [...socials.values()].filter((row) => {
-			if (orgLinks.get(row.id) === input.parentId) {
-				return true
+			// Mirrors the real handler: a location's edit list holds everything linked to it; the
+			// organization's holds only its own items, never location-only ones.
+			if (isIdFor('orgLocation', input.parentId)) {
+				return locationLinks.has(`${input.parentId}:${row.id}`)
 			}
-			return locationLinks.has(`${input.parentId}:${row.id}`)
+			return orgLinks.get(row.id) === input.parentId && !row.orgLocationOnly
 		})
 		return rows.map((row) => {
 			const service = serviceFor(row.serviceId)
@@ -1085,6 +1097,7 @@ export const createFakeOrgSocialMediaBackend = () => {
 				url: row.url,
 				username: row.username,
 				orgLocationOnly: row.orgLocationOnly,
+				linkedFromOrg: isIdFor('orgLocation', input.parentId) && !row.orgLocationOnly,
 				published: row.published,
 				deleted: row.deleted,
 				service: service?.name,

@@ -17,6 +17,7 @@ import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import classes from './common.module.css'
+import { LinkedFromOrgNote } from './LinkedFromOrgNote'
 import { type WebsitesProps } from './types'
 
 const formatNs = nsFormatter(['common'])
@@ -176,7 +177,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	const domainExtract = /https?:\/\/([^:/\n?]+)/
 
 	const output = data?.map((website) => {
-		const { id, url, description, published, deleted } = website
+		const { id, url, description, published, deleted, linkedFromOrg } = website
 		const urlMatch = url.match(domainExtract)
 		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
 		if (!isExternal(url)) {
@@ -208,6 +209,20 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 			}
 		}
 
+		// The organization's website linked to this location: changed only on the organization's page.
+		if (linkedFromOrg) {
+			return (
+				<Stack gap={4} key={id}>
+					{renderItem()}
+					<LinkedFromOrgNote
+						onUnlink={() =>
+							linkToLocation.mutate({ orgWebsiteId: id, orgLocationId: parentId, action: 'unlink' })
+						}
+						unlinking={linkToLocation.isPending}
+					/>
+				</Stack>
+			)
+		}
 		const item = (
 			<WebsiteDrawer component={Link} external key={id} id={id} variant={variants.Link.inline}>
 				{renderItem()}

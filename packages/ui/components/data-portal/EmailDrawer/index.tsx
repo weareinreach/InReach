@@ -21,6 +21,7 @@ import { type ApiOutput } from '@weareinreach/api'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { contactEditListPlacement } from '~ui/components/data-portal/contactEditListPlacement'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
@@ -127,8 +128,13 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 							return old
 						}
 						const existingIndex = old.findIndex((item) => item.id === row.id)
+						const { include, linkedFromOrg } = contactEditListPlacement(parentId, row.locationOnly)
+						if (!include) {
+							return old.filter((item) => item.id !== row.id)
+						}
 						const patchedItem = {
 							id: row.id,
+							linkedFromOrg,
 							email: row.email,
 							firstName: row.firstName,
 							lastName: row.lastName,

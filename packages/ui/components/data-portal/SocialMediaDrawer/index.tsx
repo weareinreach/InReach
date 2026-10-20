@@ -25,6 +25,7 @@ import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { contactEditListPlacement } from '~ui/components/data-portal/contactEditListPlacement'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
@@ -160,11 +161,16 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 						}
 						const existingIndex = old.findIndex((item) => item.id === row.id)
 						const existing = old[existingIndex]
+						const { include, linkedFromOrg } = contactEditListPlacement(parentId, row.orgLocationOnly)
+						if (!include) {
+							return old.filter((item) => item.id !== row.id)
+						}
 						const patchedItem = {
 							id: row.id,
 							url: row.url,
 							username: row.username,
 							orgLocationOnly: row.orgLocationOnly,
+							linkedFromOrg,
 							published: row.published,
 							deleted: row.deleted,
 							// Neither field is nullable here - falls back to whatever this row already
