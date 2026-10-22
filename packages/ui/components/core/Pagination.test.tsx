@@ -17,15 +17,17 @@ vi.mock('next/router', () => ({
 	useRouter: () => ({ query: routerQuery.current, replace: vi.fn() }),
 }))
 
+const paginationTree = (total: number) => (
+	<MantineProvider theme={testTheme} defaultColorScheme='light'>
+		<I18nextProvider i18n={testI18n}>
+			<Pagination total={total} />
+		</I18nextProvider>
+	</MantineProvider>
+)
+
 const renderPagination = (total: number, page = '1') => {
 	routerQuery.current = { page }
-	return rtlRender(
-		<MantineProvider theme={testTheme} defaultColorScheme='light'>
-			<I18nextProvider i18n={testI18n}>
-				<Pagination total={total} />
-			</I18nextProvider>
-		</MantineProvider>
-	)
+	return rtlRender(paginationTree(total))
 }
 
 describe('Pagination', () => {
@@ -51,5 +53,32 @@ describe('Pagination', () => {
 		expect(screen.getByText('1')).toBeVisible()
 		expect(screen.getByText('Prev')).toBeVisible()
 		expect(screen.getByText('Next')).toBeVisible()
+	})
+
+	// #2059: a stale or hand-edited ?page= value must land on page 1, same as no ?page= at all. "Prev" is
+	// only marked disabled when page 1 is the active page - with parseInt('abc') = NaN, no page was active.
+	it.each(['abc', '0', '-2', '1.5'])('1.4: ?page=%s falls back to page 1 as the active page', (page) => {
+		renderPagination(8, page)
+
+		expect(screen.getByText('Prev')).toHaveAttribute('data-disabled', 'true')
+		expect(screen.getByText('Next')).not.toHaveAttribute('data-disabled')
+	})
+
+	it('a valid ?page= is still honored (page 3 of 8 is active, Prev enabled)', () => {
+		renderPagination(8, '3')
+
+		expect(screen.getByText('Prev')).not.toHaveAttribute('data-disabled')
+	})
+
+	// #2063: the search page moves a visitor on a page past the end to the last page by changing ?page=. The
+	// bar used to keep its own copy of the page from when it first rendered, so it kept highlighting the old one.
+	it('follows ?page= when it changes after the bar has rendered', () => {
+		const view = renderPagination(8, '3')
+		expect(screen.getByText('Prev')).not.toHaveAttribute('data-disabled')
+
+		routerQuery.current = { page: '1' }
+		view.rerender(paginationTree(8))
+
+		expect(screen.getByText('Prev')).toHaveAttribute('data-disabled', 'true')
 	})
 })

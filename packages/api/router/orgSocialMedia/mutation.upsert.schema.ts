@@ -1,12 +1,13 @@
 import { z } from 'zod'
 
 import { prefixedId } from '~api/schemas/idPrefix'
+import { webUrlString } from '~api/schemas/webUrl'
 
 const base = z
 	.object({
 		id: prefixedId('orgSocialMedia'),
 		username: z.string(),
-		url: z.string(),
+		url: webUrlString(),
 		published: z.boolean(),
 		deleted: z.boolean(),
 		serviceId: z.string(),

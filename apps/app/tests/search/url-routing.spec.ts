@@ -10,12 +10,13 @@ const GOOD_URL = '/search/us/-122.1/37.4/50/mi'
 test('1.2: a malformed route does not crash the whole page', async ({ page }) => {
 	const response = await page.goto('/search/us/abc/xyz/50/mi')
 
-	// getServerSideProps calls SearchParamsSchema.parse(query.params) - the throwing variant,
-	// not .safeParse() - so an invalid tuple currently produces an uncaught ZodError and a raw
-	// Next.js 500 page, never reaching the client-side safeParse/"Error" text fallback that
-	// exists in the page component. Confirmed against the real app before writing this
-	// assertion (curl on the same URL returned 500 with a ZodError body).
-	expect(response?.status()).toBeLessThan(500)
+	// getServerSideProps used to call SearchParamsSchema.parse(query.params) - the throwing
+	// variant - so an invalid tuple produced an uncaught ZodError and a raw Next.js 500 page
+	// (#2058). It now returns notFound, which renders the app's 404 page.
+	expect(response?.status()).toBe(404)
+	// The point of the 404 over a bare error: the visitor gets a way back into search, not a
+	// dead end. The 404 page's location SearchBox is the first textbox on the page.
+	await expect(page.getByRole('textbox').first()).toBeVisible()
 })
 
 test('1.3: navigating directly to ?page=3 shows page 3 as active, not page 1', async ({ page }) => {
@@ -30,11 +31,11 @@ test('1.3: navigating directly to ?page=3 shows page 3 as active, not page 1', a
 test('1.4: a non-numeric ?page= value does not crash the page', async ({ page }) => {
 	const response = await page.goto(`${GOOD_URL}?page=abc`)
 
-	// PageIndexSchema = z.coerce.number().default(1) - the .default(1) only applies when the
-	// param is absent. When present but non-numeric, z.coerce.number() produces NaN, which
-	// zod's number validator rejects, and .parse() throws rather than falling back to 1.
-	// Confirmed against the real app (curl returned 500) before writing this assertion.
-	expect(response?.status()).toBeLessThan(500)
+	// PageIndexSchema used to be z.coerce.number().default(1) - the default only applies when the
+	// param is absent, so a non-numeric value coerced to NaN and .parse() threw a 500 (#2059). It
+	// should behave exactly like no ?page= at all: a normal results page with page 1 active.
+	expect(response?.status()).toBe(200)
+	await expect(page.getByText('1', { exact: true }).first()).toHaveClass(/paginationActive/)
 })
 
 test('1.5: clicking a pagination link updates ?page= via a shallow route change', async ({ page }) => {

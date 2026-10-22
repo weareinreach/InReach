@@ -32,5 +32,6 @@ export * from './2025-03-05_update-nationwide-locationbased-alert'
 export * from './2025-12-10_add_mexico_city_as_state'
 export * from './2026-06-11_add-italian-language'
 export * from './2026-09-25_cleanup-duplicated-street1'
+export * from './2026-10-19_location-contact-cleanup'
 export * from './20260611000000_backfill_search_arrays'
 // codegen:end

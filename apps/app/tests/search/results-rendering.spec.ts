@@ -34,6 +34,11 @@ test('4.2: zero results shows empty-state messaging and crisis resources, sideba
 		page.getByText('No results found for your search. Try adjusting your selected location or filters.')
 	).toBeVisible()
 
+	// The crisis resources this test is named for. Search URLs carry a lowercase country code and
+	// getNatlCrisis matched it case-sensitively against uppercase DB values, so this list was always
+	// empty for /search/us/... - unnoticed because this test never actually checked for it.
+	await expect(page.getByText('988 Suicide and Crisis Lifeline')).toBeVisible()
+
 	// Sidebar's embedded org-name SearchBox is still present even in the zero-results branch -
 	// distinct placeholder from the main location SearchBox confirms it's specifically the
 	// sidebar instance, not the page's primary search box.
@@ -63,4 +68,61 @@ test('4.3: a tier-header divider appears once per new proximity tier, not once p
 	const neighborhoodBox = await page.getByText('Neighborhood Resources (<= 10 miles)').boundingBox()
 	const localBox = await page.getByText('Local Resources (11 - 25 miles)').boundingBox()
 	expect(neighborhoodBox?.y).toBeLessThan(localBox?.y ?? Infinity)
+})
+
+test('4.4: a failed results request shows an error with Retry, not endless loading placeholders', async ({
+	page,
+}) => {
+	// Page 1 is server-rendered from a prefetch, so fail page 2 instead: both its background prefetch
+	// and the request made when the visitor clicks it. Every attempt (including react-query's own
+	// retries) is aborted until `failPageTwo` is switched off.
+	let failPageTwo = true
+	await page.route('**/api/trpc/**', async (route) => {
+		const url = route.request().url()
+		if (failPageTwo && url.includes('organization.searchDistance') && url.includes('%22skip%22%3A10')) {
+			await route.abort()
+			return
+		}
+		await route.continue()
+	})
+
+	await page.goto('/search/us/-122.1/37.4/50/mi')
+	await page.getByText('2', { exact: true }).first().click()
+
+	// The page used to have no error branch at all, so the 10 loading placeholders stayed forever
+	// (#2061). react-query retries 3 times with backoff (about 7 seconds) before reporting the error.
+	const errorMessage = page
+		.getByRole('alert')
+		.filter({ hasText: 'Something went wrong loading search results' })
+	await expect(errorMessage).toBeVisible({ timeout: 20_000 })
+	// `data-visible` only while a Skeleton is actually showing - the crisis cards shown under the error
+	// wrap their content in a Skeleton that stays in the DOM after loading.
+	await expect(
+		page.getByTestId('search-results-list').locator('.mantine-Skeleton-root[data-visible]')
+	).toHaveCount(0)
+
+	// Retry actually recovers once the backend responds again.
+	failPageTwo = false
+	await page.getByRole('button', { name: 'Retry' }).click()
+	await expect(errorMessage).toBeHidden()
+	await expect(page.getByText('2', { exact: true }).first()).toHaveClass(/paginationActive/)
+})
+
+test('4.5: a page past the last result moves to the last page instead of showing no results', async ({
+	page,
+}) => {
+	// #2063: the API reported resultCount 0 for any page past the end, so a stale or hand-edited ?page= showed
+	// "no results" plus the crisis block even though this search has hundreds of matches.
+	await page.goto('/search/us/-122.1/37.4/50/mi?page=999')
+
+	await expect(page).not.toHaveURL(/[?&]page=999/)
+	const lastPage = new URL(page.url()).searchParams.get('page') ?? ''
+	expect(Number(lastPage)).toBeGreaterThan(1)
+
+	await expect(
+		page.getByText('No results found for your search. Try adjusting your selected location or filters.')
+	).toBeHidden()
+	await expect(page.getByTestId('search-results-list').locator('a[href*="/org/"]').first()).toBeVisible()
+	// The pagination bar agrees with the URL about which page is showing.
+	await expect(page.getByText(lastPage, { exact: true }).first()).toHaveClass(/paginationActive/)
 })

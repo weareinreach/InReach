@@ -281,6 +281,9 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 		postalCountry: data.country,
 		administrativeArea: adminArea,
 	}).join(', ')
+	// A HIDDEN address isn't shown publicly. In edit mode staff see what the API returns for it - city and
+	// district only, street still redacted - so they can tell locations apart (#2011).
+	const showAddress = data.addressVisibility !== 'HIDDEN' || Boolean(edit)
 
 	const primaryPhone = data.phones.find((phone) => Boolean(phone.primary)) ?? data.phones[0]
 
@@ -320,9 +323,9 @@ export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps
 							{!data.published && <Icon icon='carbon:view-off-filled' />}
 							{data.deleted && <Icon icon='carbon:trash-can' />}
 						</Group>
-						{((data.addressVisibility !== 'HIDDEN' && formattedAddress) || formattedPhone) && (
+						{((showAddress && formattedAddress) || formattedPhone) && (
 							<List {...listProps}>
-								{data.addressVisibility !== 'HIDDEN' && <List.Item>{formattedAddress}</List.Item>}
+								{showAddress && <List.Item>{formattedAddress}</List.Item>}
 								{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
 							</List>
 						)}

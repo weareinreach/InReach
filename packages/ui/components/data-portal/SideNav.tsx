@@ -33,7 +33,7 @@ export interface SideNavItem {
 }
 
 // The permission level shared by every manager-and-above data-portal page (Downloads, Bulk Search &
-// Replace, Location Phone Cleanup) - one array instead of each page's nav entry hand-copying it. `root`
+// Replace, Contact Cleanup) - one array instead of each page's nav entry hand-copying it. `root`
 // isn't listed since `checkPermissions` already bypasses it unconditionally.
 export const MANAGER_AND_ABOVE_PERMISSIONS: Permission[] = ['dataPortalManager', 'dataPortalAdmin']
 
@@ -56,10 +56,10 @@ export const DOWNLOADS_NAV_HELP =
 export const BULK_SEARCH_REPLACE_NAV_HELP =
 	'Search across organization and service text/taxonomy fields for a term, and replace every eligible ' +
 	'match at once instead of editing each record by hand.'
-export const LOCATION_PHONE_CLEANUP_HELP =
-	'Temporary review tool: lists organizations whose main-page phone number might also be individually ' +
-	'linked to one of their own locations - a display duplicate left over from a past bug fix. Safe to ' +
-	'remove once this review is done.'
+export const LOCATION_CONTACT_CLEANUP_HELP =
+	"Temporary review tool: phones, emails, websites and social media linked to some of an organization's " +
+	"locations, where it's unclear whether they belong on the organization page too. Decide each one; " +
+	'safe to remove once the list is empty.'
 
 export interface SideNavProps {
 	/** The section this nav belongs to, e.g. "Organizations", "Admin", "Tasks", "System". */

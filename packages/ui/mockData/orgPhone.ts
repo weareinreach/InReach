@@ -38,7 +38,8 @@ export const orgPhone = {
 		type: 'query',
 		response: async () => {
 			const { default: data } = await import('./json/orgPhone.forContactInfoEdit.json')
-			return data
+			// Saved before the edit lists gained `linkedFromOrg` (an organization's edit list never flags it).
+			return data.map((row) => ({ ...row, linkedFromOrg: false }))
 		},
 	}),
 } satisfies MockHandlerObject<'orgPhone'>

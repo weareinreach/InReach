@@ -16,7 +16,8 @@ export const orgSocialMedia = {
 		type: 'query',
 		response: async () => {
 			const { default: data } = await import('./json/orgSocialMedia.forContactInfoEdits.json')
-			return data
+			// Saved before the edit lists gained `linkedFromOrg` (an organization's edit list never flags it).
+			return data.map((row) => ({ ...row, linkedFromOrg: false }))
 		},
 	}),
 	getServiceTypes: getTRPCMock({

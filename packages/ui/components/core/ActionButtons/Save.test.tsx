@@ -1,8 +1,9 @@
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { render, screen } from '~ui/test/test-utils'
 
+import { ActionButtonGroup } from './Group'
 import { Save } from './Save'
 
 vi.mock('next/router', () => ({
@@ -152,5 +153,58 @@ describe('ActionButtons.Save', () => {
 		await userEvent.setup().click(screen.getByRole('button', { name: /save/i }))
 
 		expect(await screen.findByText(/retry/i)).toBeInTheDocument()
+	})
+
+	describe('in the overflow menu (#2108)', () => {
+		const originalResizeObserver = window.ResizeObserver
+		afterEach(() => {
+			window.ResizeObserver = originalResizeObserver
+		})
+
+		/**
+		 * #2108: at mobile/tablet widths Save sits in ActionButtonGroup's overflow menu, and the report was that
+		 * a signed-in user's tap never opened Save's own list picker. Since #2095 the overflow item passes the
+		 * tap to the real (hidden) Save button rather than nesting a live one, so this checks that whole path:
+		 * overflow menu -> Save item -> list picker -> pick a list -> saved.
+		 */
+		it('signed in: tapping Save in the overflow menu opens the list picker and saves to the picked list', async () => {
+			// Same narrow-width stand-in as Group.test.tsx: forces every action into the overflow menu.
+			class NarrowResizeObserver {
+				callback: ResizeObserverCallback
+				constructor(callback: ResizeObserverCallback) {
+					this.callback = callback
+				}
+				observe = () => {
+					const entry = { contentRect: { width: 40 } }
+					this.callback([entry as ResizeObserverEntry], this as unknown as ResizeObserver)
+				}
+				unobserve = () => {}
+				disconnect = () => {}
+			}
+			window.ResizeObserver = NarrowResizeObserver as unknown as typeof ResizeObserver
+
+			sessionMock.mockReturnValue({ status: 'authenticated', data: { user: {} } })
+			isSavedMock.mockReturnValue({ data: null } as never)
+			getAllMock.mockReturnValue({ data: [{ id: 'list_1', name: 'My List' }], isError: false } as never)
+			const saveMutate = vi.fn()
+			saveItemMock.mockReturnValue({ mutate: saveMutate, isPending: false } as never)
+			deleteItemMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
+			createMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
+			createAndSaveItemMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
+
+			render(
+				<ActionButtonGroup>
+					<Save data-targetid='save' itemId='item_1' itemName='Test Org' />
+				</ActionButtonGroup>
+			)
+			const user = userEvent.setup()
+
+			// The overflow toggle is icon-only (no accessible name); the toolbar's own Save is hidden.
+			await user.click(screen.getByRole('button', { name: '' }))
+			await user.click(await screen.findByRole('menuitem', { name: /^save$/i }))
+
+			await user.click(await screen.findByRole('menuitem', { name: 'My List' }))
+			expect(saveMutate).toHaveBeenCalledWith({ id: 'list_1', itemId: 'item_1' })
+		})
 	})
 })

@@ -130,4 +130,18 @@ describe('SearchResultCard', () => {
 			})
 		)
 	})
+
+	it('#2077: a result at the search point reports distanceMeters 0 to analytics, not missing', async () => {
+		profileViewMock.mockClear()
+		render(<SearchResultCard index={0} result={{ ...baseOrg, distance: 0 }} isAdvanced />)
+
+		const [titleLink] = screen.getAllByRole('link', { name: /Arlington Food Assistance Center/i })
+		await userEvent.setup().click(titleLink as HTMLElement)
+
+		expect(profileViewMock).toHaveBeenCalledWith(
+			'orgn_test123',
+			'Arlington Food Assistance Center',
+			expect.objectContaining({ distanceMeters: 0 })
+		)
+	})
 })

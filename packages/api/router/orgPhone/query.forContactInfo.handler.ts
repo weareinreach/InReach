@@ -8,16 +8,22 @@ const isPublic = globalWhere.isPublic()
 const getWhereId = (input: TForContactInfoSchema, isSingleLoc: boolean): Prisma.OrgPhoneWhereInput => {
 	switch (true) {
 		case isIdFor('organization', input.parentId): {
+			// Same rule as orgEmail/orgWebsite/orgSocialMedia: a multi-location org's main page shows its phones
+			// except location-only ones. Every phone is stored under its organization (even one added from a
+			// location), so the location-only flag - not the location links - is what says it belongs to a
+			// location: an org number that's also linked to locations still shows here, and a number listed at
+			// every location but marked location-only doesn't. A single-location org has no separate public
+			// location page a visitor would ever reach, so it keeps showing everything.
 			const ownedByOrg = { organization: { organization: { id: input.parentId, ...isPublic } } }
-			// A multi-location org's main page only shows phones that aren't also scoped to one of its
-			// (public) locations - a location-linked phone shows on that location's own page instead, so
-			// it doesn't end up listed on both at once with no way to unpublish it from just one. A
-			// single-location org has no separate public location page a visitor would ever reach, so it
-			// keeps showing everything, same as before.
-			return isSingleLoc ? ownedByOrg : { ...ownedByOrg, locations: { none: { location: { ...isPublic } } } }
+			return isSingleLoc ? ownedByOrg : { ...ownedByOrg, locationOnly: false }
 		}
 		case isIdFor('orgLocation', input.parentId): {
-			return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
+			// A location page shows everything linked to it - its own location-only phones and org phones
+			// linked to it - unless the caller asks for only the location-only ones.
+			return {
+				locations: { some: { location: { id: input.parentId, ...isPublic } } },
+				...(input.locationOnly ? { locationOnly: true } : {}),
+			}
 		}
 		case isIdFor('orgService', input.parentId): {
 			return { services: { some: { service: { id: input.parentId, ...isPublic } } } }
@@ -42,7 +48,6 @@ const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema
 		where: {
 			...isPublic,
 			...whereId,
-			...(input.locationOnly !== undefined ? { locationOnly: input.locationOnly } : {}),
 		},
 		select: {
 			id: true,

@@ -26,13 +26,14 @@ import {
  * different instance reads via the shared cache can actually be caught here.
  */
 
+// Which page the drawers think they're on (they read `orgLocationId` straight from the route, not from the
+// `parentId` prop). The organization's edit page by default; tests on a location's page set `orgLocationId`.
+const routerQuery = vi.hoisted(() => {
+	const current: Record<string, string> = {}
+	return { current }
+})
 vi.mock('next/router', () => ({
-	// `orgLocationId` included so `PhoneDrawer`'s `hasLocationId` (which reads it straight from the
-	// route, not from the `parentId` prop the rest of this file's tests already exercise) resolves
-	// correctly for the location-context "unlink" test below - none of the other tests in this file
-	// assert anything about it being absent, so this is safe to set globally rather than needing a
-	// per-test router override.
-	useRouter: () => ({ query: { slug: ORG.slug, orgLocationId: LOCATION.id }, pathname: '', push: vi.fn() }),
+	useRouter: () => ({ query: routerQuery.current, pathname: '', push: vi.fn() }),
 }))
 
 const trpc = createTRPCReact<AppRouter>()
@@ -53,6 +54,7 @@ beforeAll(() => {
 beforeEach(() => {
 	backend = createFakeOrgPhoneBackend()
 	server.resetHandlers(...backend.handlers)
+	routerQuery.current = { slug: ORG.slug }
 	// `@mantine/notifications`' store is module-level global state, not scoped to any one render - a
 	// leftover toast from an earlier test in this file stays queued and can still be on screen (or
 	// pushed out of the default 5-slot `limit`) when a later test asserts on a *different*
@@ -280,7 +282,14 @@ describe('PhoneNumbers + PhoneDrawer - real cache: unlinking makes the item reli
 	 * if it were still linked, so there was no way to relink it without a refresh.
 	 */
 	it('shows the phone in the "Link or create new..." menu immediately after unlinking it, with no refresh', async () => {
-		const phone = backend.seedOrgPhone({ number: '+12025550100', countryId: 'country_us', published: true })
+		routerQuery.current = { slug: ORG.slug, orgLocationId: LOCATION.id }
+		// The location's own phone - unlinked from inside its drawer.
+		const phone = backend.seedOrgPhone({
+			number: '+12025550100',
+			countryId: 'country_us',
+			published: true,
+			locationOnly: true,
+		})
 		backend.linkToLocation(LOCATION.id, phone.id)
 
 		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
@@ -295,4 +304,89 @@ describe('PhoneNumbers + PhoneDrawer - real cache: unlinking makes the item reli
 			expect(screen.getByText('(202) 555-0100')).toBeInTheDocument()
 		})
 	})
+})
+
+describe('PhoneNumbers + PhoneDrawer - real cache: "Create new" from a location links it in the same save (#2100)', () => {
+	/**
+	 * The phone used to be saved first and linked to the location by a second, separate `locationLink` request
+	 *
+	 * - If that one failed, the phone silently stayed org-only. Now the location goes with the save itself, so a
+	 *   successful save always means a linked phone, and there's no second request to fail.
+	 */
+	it('the saved phone is linked to the location, with no separate locationLink request', async () => {
+		routerQuery.current = { slug: ORG.slug, orgLocationId: LOCATION.id }
+		const requestedProcedures: string[] = []
+		const onRequest = ({ request }: { request: Request }) => {
+			requestedProcedures.push(new URL(request.url).pathname.split('/').pop() ?? '')
+		}
+		server.events.on('request:start', onRequest)
+
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(<PhoneNumbers edit parentId={LOCATION.id} />, { wrapper: Wrapper })
+
+		await userEvent.click(await screen.findByText(/link or create new/i))
+		await userEvent.click(await screen.findByRole('menuitem', { name: /^create new$/i }))
+		await screen.findByRole('heading', { name: /Add New/i })
+		fireEvent.change(screen.getByRole('textbox', { name: /phone number/i }), {
+			target: { value: '+12025550123' },
+		})
+		await waitFor(() => {
+			expect(screen.getByRole('textbox', { name: /phone number/i })).toHaveValue('(202) 555-0123')
+		})
+		await clickSave()
+		await waitFor(() => expect(screen.queryByRole('heading', { name: /Add New/ })).not.toBeInTheDocument())
+
+		await screen.findByText('(202) 555-0123')
+		const saved = [...backend.phones.values()].find((row) => row.number.endsWith('2025550123'))
+		expect(saved).toBeDefined()
+		expect(backend.locationLinks.has(`${LOCATION.id}:${saved?.id}`)).toBe(true)
+		expect(requestedProcedures.filter((name) => name.includes('orgPhone.locationLink'))).toEqual([])
+
+		server.events.removeListener('request:start', onRequest)
+	})
+})
+
+describe("PhoneNumbers - an organization's phone on a location's edit page", () => {
+	/**
+	 * It's one record shown on the organization's page and the location's, so it's changed only on the
+	 * organization's page: on the location's edit page it's labeled, has no drawer, and can only be unlinked.
+	 */
+	it('is labeled "Linked from organization page", links to the org edit page, and can be unlinked here', async () => {
+		routerQuery.current = { slug: ORG.slug, orgLocationId: LOCATION.id }
+		const phone = backend.seedOrgPhone({ number: '+12025550177', countryId: 'country_us', published: true })
+		backend.linkToLocation(LOCATION.id, phone.id)
+
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(<PhoneNumbers edit parentId={LOCATION.id} />, { wrapper: Wrapper })
+
+		await screen.findByText('Linked from organization page', undefined, { timeout: 5000 })
+		expect(screen.getByText('(202) 555-0177').closest('a')).toBeNull()
+		expect(screen.getByRole('link', { name: 'Edit on organization page' })).toHaveAttribute(
+			'href',
+			expect.stringContaining(ORG.slug)
+		)
+
+		await userEvent.click(screen.getByRole('button', { name: 'Unlink from this location' }))
+
+		await waitFor(() => expect(screen.queryByText('(202) 555-0177')).not.toBeInTheDocument(), {
+			timeout: 5000,
+		})
+		expect(backend.locationLinks.has(`${LOCATION.id}:${phone.id}`)).toBe(false)
+	}, 20_000)
+
+	it("doesn't list it on the organization's edit page when it's a location's own phone", async () => {
+		const phone = backend.seedOrgPhone({
+			number: '+12025550188',
+			countryId: 'country_us',
+			published: true,
+			locationOnly: true,
+		})
+		backend.linkToLocation(LOCATION.id, phone.id)
+		backend.seedOrgPhone({ number: '+12025550199', countryId: 'country_us', published: true })
+
+		renderList()
+
+		await screen.findByText('(202) 555-0199', undefined, { timeout: 5000 })
+		expect(screen.queryByText('(202) 555-0188')).not.toBeInTheDocument()
+	}, 20_000)
 })

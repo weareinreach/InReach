@@ -4,17 +4,13 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForContactInfoEditSchema } from './query.forContactInfoEdit.schema'
 
-const getWhereId = (input: TForContactInfoEditSchema, isSingleLoc?: boolean): Prisma.OrgPhoneWhereInput => {
+const getWhereId = (input: TForContactInfoEditSchema): Prisma.OrgPhoneWhereInput => {
 	switch (true) {
 		case isIdFor('organization', input.parentId): {
-			return isSingleLoc
-				? {
-						OR: [
-							{ organization: { organization: { id: input.parentId } } },
-							{ locations: { some: { location: { organization: { id: input.parentId } } } } },
-						],
-					}
-				: { organization: { organization: { id: input.parentId } } }
+			// The organization's edit page lists only the organization's own items - not ones marked location-only,
+			// which are edited on their location's page. Every phone/website/social item is stored under its
+			// organization even when added from a location, so the flag (not the org link) is what tells them apart.
+			return { organization: { organization: { id: input.parentId } }, locationOnly: false }
 		}
 		case isIdFor('orgLocation', input.parentId): {
 			return { locations: { some: { location: { id: input.parentId } } } }
@@ -29,14 +25,8 @@ const getWhereId = (input: TForContactInfoEditSchema, isSingleLoc?: boolean): Pr
 }
 
 const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
-	const locCount = isIdFor('organization', input.parentId)
-		? await prisma.orgLocation.count({
-				where: { organization: { id: input.parentId } },
-			})
-		: 0
-	const isSingleLoc = locCount === 1
-
-	const whereId = getWhereId(input, isSingleLoc)
+	const whereId = getWhereId(input)
+	const isLocationPage = isIdFor('orgLocation', input.parentId)
 
 	const result = await prisma.orgPhone.findMany({
 		where: {
@@ -58,6 +48,7 @@ const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContactInfoSc
 	})
 	const transformed = result.map(({ description, phoneType, country, ...record }) => ({
 		...record,
+		linkedFromOrg: isLocationPage && !record.locationOnly,
 		country: country?.cca2,
 		phoneType: phoneType ? { key: phoneType?.key?.key, defaultText: phoneType?.key?.text } : null,
 		description: description ? { key: description?.tsKey?.key, defaultText: description?.tsKey?.text } : null,

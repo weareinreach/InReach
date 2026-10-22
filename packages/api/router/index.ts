@@ -12,6 +12,7 @@ import { fieldOptRouter } from './fieldOpt'
 import { geoRouter } from './geo'
 import { internalNoteRouter } from './internalNote'
 import { locationRouter } from './location'
+import { locationContactReviewRouter } from './locationContactReview'
 import { miscRouter } from './misc'
 import { orgRouter } from './organization'
 import { orgEmailRouter } from './orgEmail'
@@ -41,6 +42,7 @@ export const appRouter = defineRouter({
 	geo: geoRouter,
 	internalNote: internalNoteRouter,
 	location: locationRouter,
+	locationContactReview: locationContactReviewRouter,
 	misc: miscRouter,
 	organization: orgRouter,
 	orgEmail: orgEmailRouter,

@@ -22,7 +22,12 @@ const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) => {
 		})
 		const reformatted = compact(
 			dbResult.flatMap(({ text, attribute }) => {
-				return { ...text?.tsKey, ...attribute }
+				// An alert with no text has nothing to show - skip it, same as location.getAlerts. Spreading a
+				// missing tsKey left `{ tag, icon }` with no key/text, which `compact` keeps (#2076).
+				if (!text?.tsKey) {
+					return null
+				}
+				return { ...text.tsKey, ...attribute }
 			})
 		)
 		return reformatted

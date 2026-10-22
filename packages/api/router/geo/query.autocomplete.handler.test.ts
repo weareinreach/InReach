@@ -59,33 +59,41 @@ describe('geo.autocomplete', () => {
 		)
 	})
 
-	it('4.4a: a non-OK Google status WITH a valid (possibly empty) predictions array throws a typed TRPCError', async () => {
-		// `autocompleteResponse`'s Zod schema requires `predictions` unconditionally (not optional) -
-		// this is the one shape of non-OK response that actually reaches googleAPIResponseHandler's
-		// status switch. See 4.4b for what a real Google error response actually looks like.
-		placeAutocompleteMock.mockResolvedValueOnce({
-			data: { status: 'REQUEST_DENIED', predictions: [] },
-		} as never)
+	/**
+	 * #2075: the real Google client never returns an error status as data - its HTTP adapter turns
+	 * OVER_QUERY_LIMIT, REQUEST_DENIED etc. into an HTTP 4xx/5xx and rejects with an AxiosError carrying
+	 * Google's response body. These mocks reject the same way (the previous 4.4a/4.4b resolved with error data,
+	 * a path the real client never takes). Each status should become a typed TRPCError instead of a generic
+	 * 500.
+	 */
+	const googleRejection = (httpStatus: number, status: string, errorMessage?: string) =>
+		Object.assign(new Error(`Request failed with status code ${httpStatus}`), {
+			isAxiosError: true,
+			response: {
+				status: httpStatus,
+				data: { status, ...(errorMessage ? { error_message: errorMessage } : {}) },
+			},
+		})
 
-		await expect(autocomplete({ input: { search: 'test' } } as never)).rejects.toThrow(TRPCError)
+	it.each([
+		[429, 'OVER_QUERY_LIMIT', 'TOO_MANY_REQUESTS'],
+		[429, 'OVER_DAILY_LIMIT', 'TOO_MANY_REQUESTS'],
+		[400, 'INVALID_REQUEST', 'BAD_REQUEST'],
+		[403, 'REQUEST_DENIED', 'INTERNAL_SERVER_ERROR'],
+		[500, 'UNKNOWN_ERROR', 'INTERNAL_SERVER_ERROR'],
+	])('4.4: a Google %s %s response becomes a TRPCError with code %s', async (httpStatus, status, code) => {
+		placeAutocompleteMock.mockRejectedValueOnce(googleRejection(httpStatus, status, 'from Google'))
+
+		const error = await autocomplete({ input: { search: 'test' } } as never).catch((e: unknown) => e)
+
+		expect(error).toBeInstanceOf(TRPCError)
+		expect(error).toMatchObject({ code, message: 'from Google' })
 	})
 
-	/**
-	 * Correctly fails against the naive expectation (a typed TRPCError) - confirms a real gap, not a test
-	 * mistake. Google's actual documented error responses (REQUEST_DENIED, OVER_QUERY_LIMIT, INVALID_REQUEST)
-	 * do NOT include a `predictions` field - there's nothing to predict when the request itself was rejected.
-	 * But `autocompleteResponse`'s Zod schema requires `predictions` as a non-optional array, so a real Google
-	 * error response fails schema validation and throws a raw ZodError _before_ `googleAPIResponseHandler`'s
-	 * status-based switch (which DOES produce clean typed TRPCErrors for these exact codes, per 4.4a) ever
-	 * runs. In effect, that switch's REQUEST_DENIED / OVER_QUERY_LIMIT / INVALID_REQUEST / UNKNOWN_ERROR
-	 * branches are dead code for this endpoint against any response Google would actually send back in an error
-	 * case. Same downstream user impact as #2060 (SearchBox never surfaces a geocoding failure to the user) -
-	 * this is a second, independent reason a real Google-side failure wouldn't produce a clean, catchable error
-	 * client-side.
-	 */
-	it('4.4b: a realistic Google error response (status + no predictions field, matching real API behavior) throws a raw ZodError, not the typed TRPCError googleAPIResponseHandler would otherwise produce', async () => {
-		placeAutocompleteMock.mockResolvedValueOnce({ data: { status: 'REQUEST_DENIED' } } as never)
+	it('4.4: a failure that is not a Google error response (e.g. the network) is rethrown unchanged', async () => {
+		const networkError = new Error('socket hang up')
+		placeAutocompleteMock.mockRejectedValueOnce(networkError)
 
-		await expect(autocomplete({ input: { search: 'test' } } as never)).rejects.not.toBeInstanceOf(TRPCError)
+		await expect(autocomplete({ input: { search: 'test' } } as never)).rejects.toBe(networkError)
 	})
 })

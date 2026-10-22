@@ -10,19 +10,15 @@ internal notes as they resolve it. Lives at `/data-portal/reports` (previously t
 
 ## Access
 
-This page is reachable at `dataPortalBasic` and above in its own
-`getServerSideProps` (`apps/app/src/pages/data-portal/reports.tsx` — previously
-this check lived in the shared `apps/app/src/pages/admin/index.tsx`), but **both
-the list query and the update mutation actually require `dataPortalManager`+**
-(`permissionedProcedure('dataPortalManager')` in
-`packages/api/router/report/index.ts`). A Basic-tier user reaches the page and
-sees an empty/error state, not usable data — this is a pre-existing
-page-visibility/server-permission mismatch, not intentional partial access, and
-it was **deliberately not fixed as part of the `/admin` → `/data-portal`
-relocation** (fixing it requires a backend permission change, which that
-relocation pass excluded — see
-[`docs/DataPortal/2026-Redesign/UI_elements.md`](../../2026-Redesign/UI_elements.md),
-"Implementation Constraints for This Pass"). See Known Issues.
+Basic and above can open the page and view the table: `report.forReportsTable`
+uses the `viewAllReports` permission (`dataPortalBasic`, in
+`packages/api/lib/permissions.ts`). Changing a report - its status, the "User
+Informed" flag, internal notes - stays at `dataPortalManager`+ (`report.update`).
+Below Manager, the details modal opens read-only: status and "User Informed" show
+as text, and the note field and Save button are replaced by a line saying only
+Managers and above can update a report. This is the same view-vs-act split as
+Reviews, and closes #2106 (previously the page was reachable at Basic but both
+procedures required Manager, so Basic users got an authorization error).
 
 ## How It Works
 
@@ -72,13 +68,6 @@ relocation pass excluded — see
 
 ## Known Issues / Gotchas
 
-- **Page-visibility vs. server-permission mismatch**: the page is reachable for
-  Basic+, but the query/mutation require Manager+. A Basic-tier account should
-  either be excluded from the page entirely, or the server-side permission should
-  be relaxed to match — as-is, Basic users hit an authorization error. This is
-  the approved fix for a later phase of the 2026 redesign (splitting the view
-  permission to Basic+ while keeping the mutate/action permission at Manager+) —
-  see `docs/DataPortal/2026-Redesign/UI_elements.md`.
 - **No shared page chrome yet** — this page currently renders standalone, not yet
   inside the new redesign's header bar/side-nav/page-heading shell (in the target
   design this page becomes a side-nav item under Organizations) — that's a later
@@ -97,4 +86,4 @@ relocation pass excluded — see
 
 ---
 
-_Last verified against code: 2026-08-30._
+_Last verified against code: 2026-10-19._

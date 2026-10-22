@@ -22,7 +22,7 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 			op === 'create'
 		const isCreate = operation === 'create'
 
-		const id = isCreate ? (passedId ?? generateId('orgEmail')) : passedId
+		const id = isCreate ? (passedId ?? generateId('orgWebsite')) : passedId
 
 		const generateDescription = (): GeneratedDescription | undefined => {
 			if (!desc || !organizationId) {
@@ -103,6 +103,13 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 						where: { id },
 						data: {
 							...(description && { description: description.prisma }),
+							// A description sent as empty means "remove it" (same as orgPhone.upsert) - only when one
+							// exists, since a nested delete of a missing record throws.
+							...((desc === null || desc === '') &&
+							(await tx.orgWebsite.findUnique({ where: { id }, select: { descriptionId: true } }))
+								?.descriptionId
+								? { description: { delete: true } }
+								: {}),
 							...data,
 						},
 					})

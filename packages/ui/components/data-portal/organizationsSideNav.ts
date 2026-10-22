@@ -1,7 +1,7 @@
 import {
 	BULK_SEARCH_REPLACE_NAV_HELP,
 	DOWNLOADS_NAV_HELP,
-	LOCATION_PHONE_CLEANUP_HELP,
+	LOCATION_CONTACT_CLEANUP_HELP,
 	MANAGER_AND_ABOVE_PERMISSIONS,
 	ORGANIZATIONS_NAV_HELP,
 	REPORTS_NAV_HELP,
@@ -10,7 +10,7 @@ import {
 } from './SideNav'
 
 type OrganizationsSideNavLabel =
-	'Organizations' | 'Reviews' | 'Reports' | 'Downloads' | 'Bulk Search & Replace' | 'Location Phone Cleanup'
+	'Organizations' | 'Reviews' | 'Reports' | 'Downloads' | 'Bulk Search & Replace' | 'Contact Cleanup'
 
 // One definition instead of six pages (organizations.tsx, reviews.tsx, reports.tsx, downloads.tsx,
 // bulk-search-replace.tsx, location-phone-cleanup.tsx) each hand-copying this same array, differing only in
@@ -34,9 +34,9 @@ const ORGANIZATIONS_SIDE_NAV_ITEMS: SideNavItem[] = [
 	},
 	// TEMPORARY - see location-phone-cleanup.tsx; remove this entry once that review is done.
 	{
-		label: 'Location Phone Cleanup',
+		label: 'Contact Cleanup',
 		href: { pathname: '/data-portal/location-phone-cleanup' },
-		help: LOCATION_PHONE_CLEANUP_HELP,
+		help: LOCATION_CONTACT_CLEANUP_HELP,
 		permissions: MANAGER_AND_ABOVE_PERMISSIONS,
 	},
 ]

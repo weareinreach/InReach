@@ -1,11 +1,12 @@
 import { z } from 'zod'
 
 import { emptyStringToNull, prefixedId } from '~api/schemas/idPrefix'
+import { webUrl } from '~api/schemas/webUrl'
 
 const base = z
 	.object({
 		id: prefixedId('orgWebsite'),
-		url: z.string().url('Invalid URL. Must start with either "https://" or "http://"'),
+		url: webUrl('Invalid URL. Must start with either "https://" or "http://"'),
 		description: z.string().nullable(),
 		isPrimary: z.boolean(),
 		published: z.boolean(),

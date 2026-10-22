@@ -40,7 +40,11 @@ const OutsideServiceArea = () => {
 	const [mounted, setMounted] = useState(false)
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
-	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
+	// "Mobile" is defined as exactly the widths where `.hideMobile` (module CSS, `min-width: sm`) hides the
+	// desktop sidebar, so at any width - fractional ones from browser zoom included - one of the two sort/
+	// count UIs is showing. This used to check `xs` (500px), leaving 500-768px with neither (#2066). Starts
+	// as desktop (`true`) so the server render and first paint match the previous desktop-first behavior.
+	const isMobile = !useMediaQuery(`(min-width: ${theme.breakpoints.sm})`, true)
 	const isAdvanced = true
 	const router = useRouter<'/search/intl/[country]'>()
 

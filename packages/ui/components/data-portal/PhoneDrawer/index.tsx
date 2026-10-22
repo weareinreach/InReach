@@ -25,6 +25,7 @@ import { type TUpsertSchema } from '@weareinreach/api/router/orgPhone/mutation.u
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { contactEditListPlacement } from '~ui/components/data-portal/contactEditListPlacement'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
@@ -207,6 +208,16 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 							return old
 						}
 						const existingIndex = old.findIndex((item) => item.id === submitted.id)
+						// A phone created from a location is saved location-only by the server (orgPhone.upsert),
+						// whatever the form sent.
+						const locationOnly =
+							existingIndex === -1 && hasLocationId
+								? true
+								: (submitted.locationOnly ?? old[existingIndex]?.locationOnly ?? false)
+						const { include, linkedFromOrg } = contactEditListPlacement(parentId, locationOnly)
+						if (!include) {
+							return old.filter((item) => item.id !== submitted.id)
+						}
 						const next =
 							existingIndex === -1
 								? [
@@ -216,7 +227,8 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 											number: submitted.number ?? '',
 											ext: submitted.ext ?? null,
 											primary: submitted.primary ?? false,
-											locationOnly: submitted.locationOnly ?? false,
+											locationOnly,
+											linkedFromOrg,
 											published: submitted.published ?? true,
 											deleted: submitted.deleted ?? false,
 											// Falls back to '' only if `countryCca2ById` genuinely hasn't loaded a match
@@ -243,7 +255,8 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 													number: submitted.number ?? item.number,
 													ext: submitted.ext ?? item.ext,
 													primary: submitted.primary ?? item.primary,
-													locationOnly: submitted.locationOnly ?? item.locationOnly,
+													locationOnly,
+													linkedFromOrg,
 													published: submitted.published ?? item.published,
 													deleted: submitted.deleted ?? item.deleted,
 													country: cca2 ?? item.country,
@@ -297,15 +310,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			[apiUtils, orgId, phoneId, countryCca2ById]
 		)
 
-		// `orgPhone.upsert`'s `create` operation only ever connects the new phone to `organization` -
-		// there's no location field on that schema at all, so creating this from a location's "Create
-		// new" trigger needs a second, separate mutation to actually attach it to `orgLocationPhone`.
-		// Without this, the new phone was only ever visible under the organization's own phone list,
-		// never the location's, even though `hasLocationId`/`linkLocationId` looked like they already
-		// captured that intent. Declared before `siteUpdate` below since its `onSuccess` calls this.
-		const linkToLocation = api.orgPhone.locationLink.useMutation({
-			onSuccess: () => apiUtils.orgPhone.forContactInfoEdit.invalidate(undefined, { refetchType: 'none' }),
-		})
 		const siteUpdate = api.orgPhone.upsert.useMutation({
 			onSettled: (data, error, variables) => {
 				// Guarded on success - `onSettled` fires on failure too, and patching from `variables`
@@ -352,9 +356,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 			},
 			onSuccess: () => {
 				setIsSaved(true)
-				if (createNew && hasLocationId !== null) {
-					linkToLocation.mutate({ orgPhoneId: phoneId, orgLocationId: hasLocationId, action: 'link' })
-				}
 				modalHandler.close()
 				drawerHandler.close()
 			},
@@ -446,9 +447,13 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(
 					operation: createNew ? 'create' : 'update',
 					...data,
 					phoneTypeId: data.phoneTypeId || null,
+					// Created from a location's "Create new": linked to that location in the same save, so it
+					// can't end up saved but unlinked. This used to be a second, separate mutation after the
+					// create succeeded, with no error handling if it failed (#2100).
+					...(createNew && hasLocationId !== null ? { orgLocationId: hasLocationId } : {}),
 				})
 			},
-			[createNew, orgId, siteUpdate]
+			[createNew, orgId, siteUpdate, hasLocationId]
 		)
 
 		const handleSaveButton = useCallback(

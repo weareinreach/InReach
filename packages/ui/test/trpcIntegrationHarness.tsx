@@ -14,7 +14,7 @@ import { I18nextProvider } from 'react-i18next'
 import { expect } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
-import { generateId } from '@weareinreach/db/lib/idGen'
+import { generateId, isIdFor } from '@weareinreach/db/lib/idGen'
 import { transformer } from '@weareinreach/util/transformer'
 import { SearchStateProvider } from '~ui/providers/SearchState'
 import { testTheme } from '~ui/test/testTheme'
@@ -103,6 +103,7 @@ type UpsertInput = {
 	locationOnly?: boolean
 	serviceOnly?: boolean
 	description?: string | null
+	orgLocationId?: string | null
 }
 
 const cca2ForCountryId = (countryId: string | undefined) => COUNTRIES.find((c) => c.id === countryId)?.cca2
@@ -186,12 +187,17 @@ export const createFakeOrgPhoneBackend = () => {
 					published: input.published ?? true,
 					deleted: input.deleted ?? false,
 					phoneTypeId: input.phoneTypeId ?? null,
-					locationOnly: input.locationOnly ?? false,
+					// Real handler: a phone created from a location is always marked location-only.
+					locationOnly: input.orgLocationId ? true : (input.locationOnly ?? false),
 					serviceOnly: input.serviceOnly ?? false,
 					descriptionText: input.description ?? null,
 				},
 				{ orgId: input.orgId }
 			)
+			// Same transaction as the create in the real handler (#2100).
+			if (input.orgLocationId) {
+				linkToLocation(input.orgLocationId, row.id)
+			}
 			return row
 		}
 
@@ -221,10 +227,12 @@ export const createFakeOrgPhoneBackend = () => {
 	const forContactInfoEdit = (input: { parentId: string }) => {
 		const rows = [...phones.values()]
 			.filter((row) => {
-				if (orgLinks.get(row.id) === input.parentId) {
-					return true
+				// Mirrors the real handler: a location's edit list holds everything linked to it; the
+				// organization's holds only its own items, never location-only ones.
+				if (isIdFor('orgLocation', input.parentId)) {
+					return locationLinks.has(`${input.parentId}:${row.id}`)
 				}
-				return locationLinks.has(`${input.parentId}:${row.id}`)
+				return orgLinks.get(row.id) === input.parentId && !row.locationOnly
 			})
 			.sort((a, b) => Number(b.published) - Number(a.published) || Number(a.deleted) - Number(b.deleted))
 		return rows.map((row) => {
@@ -235,6 +243,7 @@ export const createFakeOrgPhoneBackend = () => {
 				ext: row.ext,
 				primary: row.primary,
 				locationOnly: row.locationOnly,
+				linkedFromOrg: isIdFor('orgLocation', input.parentId) && !row.locationOnly,
 				published: row.published,
 				deleted: row.deleted,
 				country: cca2ForCountryId(row.countryId),
@@ -249,13 +258,13 @@ export const createFakeOrgPhoneBackend = () => {
 			if (row.deleted || !row.published) {
 				return false
 			}
-			if (orgLinks.get(row.id) !== input.parentId && !locationLinks.has(`${input.parentId}:${row.id}`)) {
-				return false
+			// Mirrors the real handler: a location page shows everything linked to it (only location-only ones
+			// when asked); the org page leaves out location-only phones. This harness's org has no locations of
+			// its own, so it's never the single-location exception.
+			if (isIdFor('orgLocation', input.parentId)) {
+				return locationLinks.has(`${input.parentId}:${row.id}`) && (!input.locationOnly || row.locationOnly)
 			}
-			if (input.locationOnly !== undefined && row.locationOnly !== input.locationOnly) {
-				return false
-			}
-			return true
+			return orgLinks.get(row.id) === input.parentId && !row.locationOnly
 		})
 		return rows.map((row) => {
 			const phoneType = phoneTypeToKey(row.phoneTypeId)
@@ -470,7 +479,8 @@ export const createFakeOrgEmailBackend = () => {
 						primary: input.primary ?? false,
 						titleId: input.titleId ?? null,
 						descriptionText: input.description ?? null,
-						locationOnly: input.locationOnly ?? false,
+						// Real handler: a location-context create is always marked location-only.
+						locationOnly: input.linkLocationId ? true : (input.locationOnly ?? false),
 						serviceOnly: input.serviceOnly ?? false,
 						published: input.published ?? true,
 						deleted: input.deleted ?? false,
@@ -527,10 +537,12 @@ export const createFakeOrgEmailBackend = () => {
 	const forContactInfoEdit = (input: { parentId: string }) => {
 		const rows = [...emails.values()]
 			.filter((row) => {
-				if (orgLinks.get(row.id) === input.parentId) {
-					return true
+				// Mirrors the real handler: a location's edit list holds everything linked to it; the
+				// organization's holds only its own items, never location-only ones.
+				if (isIdFor('orgLocation', input.parentId)) {
+					return locationLinks.has(`${input.parentId}:${row.id}`)
 				}
-				return locationLinks.has(`${input.parentId}:${row.id}`)
+				return orgLinks.get(row.id) === input.parentId && !row.locationOnly
 			})
 			.sort((a, b) => Number(b.published) - Number(a.published) || Number(a.deleted) - Number(b.deleted))
 		return rows.map((row) => ({
@@ -544,6 +556,7 @@ export const createFakeOrgEmailBackend = () => {
 				? { key: `emailDesc_${row.id}`, defaultText: row.descriptionText }
 				: null,
 			locationOnly: row.locationOnly,
+			linkedFromOrg: isIdFor('orgLocation', input.parentId) && !row.locationOnly,
 			serviceOnly: row.serviceOnly,
 			published: row.published,
 			deleted: row.deleted,
@@ -556,10 +569,17 @@ export const createFakeOrgEmailBackend = () => {
 				if (row.deleted || !row.published) {
 					return false
 				}
-				if (orgLinks.get(row.id) !== input.parentId && !locationLinks.has(`${input.parentId}:${row.id}`)) {
-					return false
-				}
-				if (input.locationOnly !== undefined && row.locationOnly !== input.locationOnly) {
+				// Mirrors the real handler: the org page leaves out location-only emails, a location page shows
+				// everything linked to it (only location-only ones when asked). The single-location-org exception
+				// isn't modeled - this harness's org has no locations of its own.
+				if (isIdFor('orgLocation', input.parentId)) {
+					if (!locationLinks.has(`${input.parentId}:${row.id}`)) {
+						return false
+					}
+					if (input.locationOnly && !row.locationOnly) {
+						return false
+					}
+				} else if (orgLinks.get(row.id) !== input.parentId || row.locationOnly) {
 					return false
 				}
 				if (input.serviceOnly !== undefined && row.serviceOnly !== input.serviceOnly) {
@@ -773,15 +793,19 @@ export const createFakeOrgWebsiteBackend = () => {
 	const forContactInfoEdit = (input: { parentId: string }) => {
 		const rows = [...websites.values()]
 			.filter((row) => {
-				if (orgLinks.get(row.id) === input.parentId) {
-					return true
+				// Mirrors the real handler: a location's edit list holds everything linked to it; the
+				// organization's holds only its own items, never location-only ones.
+				if (isIdFor('orgLocation', input.parentId)) {
+					return locationLinks.has(`${input.parentId}:${row.id}`)
 				}
-				return locationLinks.has(`${input.parentId}:${row.id}`)
+				return orgLinks.get(row.id) === input.parentId && !row.orgLocationOnly
 			})
 			.sort((a, b) => Number(b.published) - Number(a.published) || Number(a.deleted) - Number(b.deleted))
 		return rows.map((row) => ({
 			id: row.id,
 			url: row.url,
+			orgLocationOnly: row.orgLocationOnly,
+			linkedFromOrg: isIdFor('orgLocation', input.parentId) && !row.orgLocationOnly,
 			description: row.descriptionText
 				? { key: `websiteDesc_${row.id}`, defaultText: row.descriptionText }
 				: null,
@@ -796,10 +820,16 @@ export const createFakeOrgWebsiteBackend = () => {
 				if (row.deleted || !row.published) {
 					return false
 				}
-				if (orgLinks.get(row.id) !== input.parentId && !locationLinks.has(`${input.parentId}:${row.id}`)) {
+				// Mirrors the real handler's multi-location rule (#2101): location-only items never show on the
+				// org's own page; a location page shows everything linked to it unless asked for only
+				// location-only items. (The real handler's single-location exception isn't modeled here - it's
+				// covered against the real DB in orgWebsite/query.forContactInfo.realdb.test.ts.)
+				const onOrgPage = orgLinks.get(row.id) === input.parentId
+				const onLocationPage = locationLinks.has(`${input.parentId}:${row.id}`)
+				if (onOrgPage ? row.orgLocationOnly : !onLocationPage) {
 					return false
 				}
-				if (input.locationOnly !== undefined && row.orgLocationOnly !== input.locationOnly) {
+				if (onLocationPage && input.locationOnly && !row.orgLocationOnly) {
 					return false
 				}
 				return true
@@ -1053,10 +1083,12 @@ export const createFakeOrgSocialMediaBackend = () => {
 
 	const forContactInfoEdits = (input: { parentId: string }) => {
 		const rows = [...socials.values()].filter((row) => {
-			if (orgLinks.get(row.id) === input.parentId) {
-				return true
+			// Mirrors the real handler: a location's edit list holds everything linked to it; the
+			// organization's holds only its own items, never location-only ones.
+			if (isIdFor('orgLocation', input.parentId)) {
+				return locationLinks.has(`${input.parentId}:${row.id}`)
 			}
-			return locationLinks.has(`${input.parentId}:${row.id}`)
+			return orgLinks.get(row.id) === input.parentId && !row.orgLocationOnly
 		})
 		return rows.map((row) => {
 			const service = serviceFor(row.serviceId)
@@ -1065,6 +1097,7 @@ export const createFakeOrgSocialMediaBackend = () => {
 				url: row.url,
 				username: row.username,
 				orgLocationOnly: row.orgLocationOnly,
+				linkedFromOrg: isIdFor('orgLocation', input.parentId) && !row.orgLocationOnly,
 				published: row.published,
 				deleted: row.deleted,
 				service: service?.name,
@@ -1078,10 +1111,13 @@ export const createFakeOrgSocialMediaBackend = () => {
 			if (row.deleted || !row.published) {
 				return false
 			}
-			if (orgLinks.get(row.id) !== input.parentId && !locationLinks.has(`${input.parentId}:${row.id}`)) {
+			// Mirrors the real handler's multi-location rule (#2101) - see the website fake above.
+			const onOrgPage = orgLinks.get(row.id) === input.parentId
+			const onLocationPage = locationLinks.has(`${input.parentId}:${row.id}`)
+			if (onOrgPage ? row.orgLocationOnly : !onLocationPage) {
 				return false
 			}
-			if (input.locationOnly !== undefined && row.orgLocationOnly !== input.locationOnly) {
+			if (onLocationPage && input.locationOnly && !row.orgLocationOnly) {
 				return false
 			}
 			return true
@@ -1396,6 +1432,51 @@ export const createFakeLocationBackend = () => {
 	]
 
 	return { handlers, locations, seedLocation, seedAutocomplete, seedGeocode }
+}
+
+export interface FakeReviewRow {
+	type: 'phone' | 'email' | 'website' | 'socialMedia'
+	id: string
+	value: string
+	showOnOrgPage: boolean
+	org: { id: string; name: string; slug: string; locationCount: number; mainPageHasPhone: boolean }
+	locations: { id: string; name: string }[]
+	services: number
+}
+
+/**
+ * Fakes `locationContactReview.list`/`decide` (packages/api/router/locationContactReview), matching the real
+ * handlers' contracts: `list` returns every undecided row, `decide` records the decision and takes the row
+ * off the list. `decisions` exposes what was decided, for assertions.
+ */
+export const createFakeLocationContactReviewBackend = () => {
+	const rows = new Map<string, FakeReviewRow>()
+	const decisions: { type: string; id: string; choice: string }[] = []
+
+	const seedRow = (row: FakeReviewRow) => {
+		rows.set(row.id, row)
+		return row
+	}
+
+	const decide = (input: { type: FakeReviewRow['type']; id: string; choice: string }) => {
+		if (!rows.has(input.id)) {
+			throw new TRPCClientError(`review item ${input.id} not found`)
+		}
+		rows.delete(input.id)
+		decisions.push(input)
+		return input
+	}
+
+	const handlers = [
+		http.get(`${BASE_URL}/locationContactReview.list`, ({ request }) =>
+			respond(request, () => [...rows.values()])
+		),
+		http.post(`${BASE_URL}/locationContactReview.decide`, ({ request }) =>
+			respond(request, (input) => decide(input as Parameters<typeof decide>[0]))
+		),
+	]
+
+	return { handlers, rows, decisions, seedRow }
 }
 
 /** Parses a single (non-batched) tRPC `httpLink` GET request's `?input=` query param. */

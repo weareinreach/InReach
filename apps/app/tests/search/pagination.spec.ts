@@ -18,13 +18,9 @@ test("11.2: while below the last page, the next page's data is prefetched in the
 	// SEARCH_RESULT_PAGE_SIZE` (10), i.e. the *next* page's offset. On page 1 of this 352-result
 	// search (36 pages), that's skip=10.
 	//
-	// Correctly fails: confirms a real bug. The effect's guard is
-	// `if (router.query.page && PageIndexSchema.parse(router.query.page) < ...)` - `router.query.page`
-	// is `undefined` (falsy) on a fresh search with no `?page=` in the URL, which is the normal,
-	// overwhelmingly common case (nobody arrives at a first search with `?page=1` already in the
-	// URL) - so the prefetch never fires here. Confirmed the mechanism itself does work: navigating
-	// with an explicit `?page=1` in the URL does trigger the prefetch (skip=10 visible in the
-	// request), isolating the guard's falsy-check as the root cause, not the prefetch logic itself.
+	// The URL deliberately has no `?page=` - a fresh search, the overwhelmingly common case. The
+	// effect's guard used to start with `router.query.page &&`, which is falsy here, so the
+	// prefetch never fired from page 1 (#2065).
 	const prefetchRequest = page.waitForRequest(
 		(req) => req.url().includes('organization.searchDistance') && req.url().includes('%22skip%22%3A10'),
 		{ timeout: 5000 }
@@ -33,6 +29,22 @@ test("11.2: while below the last page, the next page's data is prefetched in the
 	await page.goto(GOOD_URL)
 
 	await expect(prefetchRequest).resolves.toBeTruthy()
+
+	// The point of the prefetch: clicking page 2 is served from the cache (queries are fresh for 10
+	// minutes - staleTime in apps/app/src/utils/api.ts) instead of waiting on a second request.
+	let page2Requests = 0
+	page.on('request', (req) => {
+		if (req.url().includes('organization.searchDistance') && req.url().includes('%22skip%22%3A10')) {
+			page2Requests++
+		}
+	})
+	await page.getByText('2', { exact: true }).first().click()
+	await expect(page).toHaveURL(/[?&]page=2/)
+	await expect(page.getByText('2', { exact: true }).first()).toHaveClass(/paginationActive/)
+	// Proving a request does *not* happen needs an observation window; 'networkidle' never settles
+	// on this page (background polling), so give a background refetch a bounded chance to show up.
+	await page.waitForTimeout(2000)
+	expect(page2Requests).toBe(0)
 })
 
 test('11.3: clicking a pagination link scrolls the page to top', async ({ page }) => {

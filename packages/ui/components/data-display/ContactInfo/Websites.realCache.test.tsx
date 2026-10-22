@@ -1,8 +1,8 @@
 import { cleanNotifications } from '@mantine/notifications'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createTRPCReact } from '@trpc/react-query'
-import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { type AppRouter } from '@weareinreach/api'
 import {
@@ -25,8 +25,18 @@ import {
  * the network boundary faked.
  */
 
+// `orgLocationId` is only in the query on a location's own edit page (/org/[slug]/[orgLocationId]/edit) -
+// WebsiteDrawer reads it from there, not from `parentId`. Tests that act as that page set it.
+const routerState = vi.hoisted(() => ({ orgLocationId: undefined as string | undefined }))
 vi.mock('next/router', () => ({
-	useRouter: () => ({ query: { slug: ORG.slug }, pathname: '', push: vi.fn() }),
+	useRouter: () => ({
+		query: {
+			slug: ORG.slug,
+			...(routerState.orgLocationId ? { orgLocationId: routerState.orgLocationId } : {}),
+		},
+		pathname: '',
+		push: vi.fn(),
+	}),
 }))
 
 vi.mock('~ui/hooks/useOrgInfo', () => ({
@@ -37,6 +47,7 @@ const trpc = createTRPCReact<AppRouter>()
 vi.mock('~ui/lib/trpcClient', () => ({ trpc }))
 
 const { Websites } = await import('./Websites')
+const { EditModeProvider } = await import('~ui/providers/EditMode')
 
 let backend: ReturnType<typeof createFakeOrgWebsiteBackend>
 const server = createMswServer([])
@@ -275,5 +286,75 @@ describe('Websites + WebsiteDrawer - real cache: "Create new" from a location\'s
 		await waitFor(() => {
 			expect(screen.queryByRole('heading', { name: /Add New/i })).not.toBeInTheDocument()
 		})
+	})
+})
+
+describe('Websites + WebsiteDrawer - a website created from a location stays on that location (#2101)', () => {
+	afterEach(() => {
+		routerState.orgLocationId = undefined
+	})
+
+	// The fake backend models a multi-location org; a single-location org's page shows location-only items
+	// too (covered against the real DB in orgWebsite/query.forContactInfo.realdb.test.ts).
+	it("shows on the location's public list but not on the organization's (multi-location org)", async () => {
+		routerState.orgLocationId = LOCATION.id
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		const editView = render(<Websites edit parentId={LOCATION.id} />, { wrapper: Wrapper })
+
+		await userEvent.click(await screen.findByText(/link or create new/i))
+		await userEvent.click(await screen.findByRole('menuitem', { name: /^create new$/i }))
+		await screen.findByRole('heading', { name: /Add New/i })
+		await userEvent.type(urlField(), 'https://location-site.example.org')
+		await clickSave()
+		await waitFor(() => expect(screen.queryByRole('heading', { name: /Add New/i })).not.toBeInTheDocument())
+		editView.unmount()
+
+		// The public pages, in a fresh cache - what a visitor would load next.
+		const { Wrapper: PublicWrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(
+			<EditModeProvider>
+				<div data-testid='location-page'>
+					<Websites parentId={LOCATION.id} />
+				</div>
+				<div data-testid='org-page'>
+					<Websites parentId={ORG.id} />
+				</div>
+			</EditModeProvider>,
+			{ wrapper: PublicWrapper }
+		)
+
+		expect(
+			await within(screen.getByTestId('location-page')).findByRole('link', {
+				name: 'location-site.example.org',
+			})
+		).toBeInTheDocument()
+		// Both lists have loaded by now (they share one batched request), so an absence here is real.
+		expect(
+			within(screen.getByTestId('org-page')).queryByRole('link', { name: 'location-site.example.org' })
+		).not.toBeInTheDocument()
+	})
+
+	it("an org website linked to a location still shows on the organization's page", async () => {
+		const orgSite = backend.seedOrgWebsite({ url: 'https://main-site.example.org' })
+		backend.linkToLocation(LOCATION.id, orgSite.id)
+		const { Wrapper } = buildTrpcTestWrapper(trpc, { strictMode: true })
+		render(
+			<EditModeProvider>
+				<div data-testid='location-page'>
+					<Websites parentId={LOCATION.id} />
+				</div>
+				<div data-testid='org-page'>
+					<Websites parentId={ORG.id} />
+				</div>
+			</EditModeProvider>,
+			{ wrapper: Wrapper }
+		)
+
+		expect(
+			await within(screen.getByTestId('org-page')).findByRole('link', { name: 'main-site.example.org' })
+		).toBeInTheDocument()
+		expect(
+			await within(screen.getByTestId('location-page')).findByRole('link', { name: 'main-site.example.org' })
+		).toBeInTheDocument()
 	})
 })

@@ -27,7 +27,7 @@ import { type TSearchDistanceV3Schema } from './query.searchDistanceV3.schema'
  * covering all three ServiceArea linkage types (org/location/service-level) - identical results and ordering,
  * 4x-12x faster.
  */
-const searchOrgByRelevance = async (params: TSearchDistanceV3Schema) => {
+const runSearch = async (params: TSearchDistanceV3Schema) => {
 	const { lat, lon, dist, skip, take, services, attributes, focuses, sortBias, unit } = params
 
 	const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
@@ -194,7 +194,8 @@ const searchOrgByRelevance = async (params: TSearchDistanceV3Schema) => {
 		}
 		return {
 			id: result.id,
-			distMeters: result.distance ? parseInt(result.distance) : null,
+			// Not a truthiness check: an org at the search point is 0 meters away, and 0 is falsy (#2077).
+			distMeters: result.distance !== null ? parseInt(result.distance) : null,
 			relevanceScore: result.relevance_score, // Passing back to help frontend debugging
 			isLocal: result.isLocal,
 			tier: result.tier,
@@ -202,6 +203,21 @@ const searchOrgByRelevance = async (params: TSearchDistanceV3Schema) => {
 		}
 	})
 	return { results: formattedResults, total }
+}
+
+/**
+ * `total` comes from `COUNT(*) OVER ()` on the returned rows, so a page past the last result (a stale or
+ * hand-edited `?page=`, or filters that shrank the result set) has no row to read it from and reported 0 -
+ * the page then showed "no results" and crisis lines even though there were matches (#2063). Only in that
+ * case, ask for the first row of the same search to get the real total.
+ */
+const searchOrgByRelevance = async (params: TSearchDistanceV3Schema) => {
+	const page = await runSearch(params)
+	if (page.results.length === 0 && params.skip > 0) {
+		const { total } = await runSearch({ ...params, skip: 0, take: 1 })
+		return { results: page.results, total }
+	}
+	return page
 }
 
 type SearchResult = {
@@ -350,12 +366,17 @@ const searchDistanceV3 = async ({ input }: TRPCHandlerParams<TSearchDistanceV3Sc
 	})[] = []
 
 	orgs.results.forEach(({ id, distMeters, relevanceScore, isLocal, tier, national }) => {
-		const distance = distMeters ? (unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934) : null
+		const distance =
+			typeof distMeters === 'number'
+				? unit === 'km'
+					? distMeters / 1000
+					: distMeters / 1000 / 1.60934
+				: null
 		const sort = results.find((result) => result.id === id)
 		if (sort) {
 			orderedResults.push({
 				...sort,
-				distance: distance ? +distance.toFixed(2) : null,
+				distance: typeof distance === 'number' ? +distance.toFixed(2) : null,
 				unit,
 				relevanceScore,
 				isLocal,

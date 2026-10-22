@@ -14,6 +14,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../../../.env') })
 const { prisma, generateId, createGeoFields } = await import('@weareinreach/db')
 const { updateGeo } = await import('~api/lib/prismaRaw/updateGeo')
 const { default: searchDistanceV3 } = await import('./query.searchDistanceV3.handler')
+const { default: searchDistanceV2 } = await import('./query.searchDistanceV2.handler')
 
 let usCountryId: string
 let sourceId: string
@@ -117,20 +118,14 @@ describe('organization.searchDistance (v3) - real local Postgres+PostGIS', () =>
 	})
 
 	/**
-	 * Correctly fails - a real bug, found directly by this real-DB test, not from reading code first.
-	 * `query.searchDistanceV3.handler.ts`'s `formattedResults.map(...)` computes `distMeters: result.distance ?
-	 * parseInt(result.distance) : null` - a classic falsy-zero bug. When an org's straight-line distance rounds
-	 * to exactly 0 meters (the org is essentially at the search coordinates - a plausible real case, e.g.
-	 * someone searching from an address that's also a listed org location), the raw SQL correctly computes
-	 * `distance = 0`, but the JS ternary treats `0` as falsy and nulls it out. The result is an internally
-	 * inconsistent API response: `isLocal: true` and `tier: 'NEIGHBORHOOD'` (both computed independently, in
-	 * SQL, from the same real 0-distance value) alongside `distance: null` - the exact combination a
-	 * national/remote result would have for `isLocal`/`tier`, but paired with `isLocal: true`, which a national
-	 * result never has. A frontend reading `distance` to decide how to label a result (`"0 mi away"` vs a
-	 * national/remote badge) would show the wrong thing for the single closest possible match a search can
-	 * return.
+	 * #2077 - found by this real-DB test. When an org is essentially at the search coordinates (e.g. someone
+	 * searching from an address that's also a listed org location), the SQL computes `distance = 0`, and three
+	 * truthiness checks in the handler turned that 0 into `null`: the raw row, the meters-to-unit conversion,
+	 * and the rounding. The response was internally inconsistent - `isLocal: true` and `tier: 'NEIGHBORHOOD'`
+	 * (computed in SQL from the same 0) next to `distance: null`, which is what a remote/national result has.
+	 * The same three checks were in V2.
 	 */
-	it('1.6b: an org at exactly zero distance from the search point loses its distance value entirely (should be 0, not null)', async () => {
+	it('1.6b: an org at exactly zero distance from the search point reports distance 0, not null', async () => {
 		const { orgId } = await createTestOrg({ name: 'Exact Match Org', lat: -20.0, lon: -140.0 })
 
 		const result = await searchDistanceV3({
@@ -138,6 +133,45 @@ describe('organization.searchDistance (v3) - real local Postgres+PostGIS', () =>
 		} as never)
 
 		const match = result.orgs.find((org) => org.id === orgId)
+		expect(match?.distance).toBe(0)
+	})
+
+	/**
+	 * #2063: `total` was read from `COUNT(*) OVER ()` on the returned rows, so a page past the last result (a
+	 * stale or hand-edited `?page=`) came back with 0 - the search page then showed "no results" and crisis
+	 * lines even though matches existed. Compared against the same search's page-1 count rather than a fixed
+	 * number, so real data near the fixture point can't break it.
+	 */
+	it.each([
+		['v3', () => searchDistanceV3, {}],
+		['v2', () => searchDistanceV2, { version: 'v2' as const }],
+	] as const)(
+		'4.5 (%s): a page past the last result keeps the real resultCount',
+		async (_v, getHandler, extra) => {
+			await createTestOrg({ name: 'Count Test Org A', lat: -20.0, lon: -140.0 })
+			await createTestOrg({ name: 'Count Test Org B', lat: -20.002, lon: -140.0 })
+			const input = { ...baseInput, ...extra, lat: -20.0, lon: -140.0, dist: 10 }
+
+			const firstPage = await getHandler()({ input: { ...input, skip: 0 } } as never)
+			const pastTheEnd = await getHandler()({
+				input: { ...input, skip: firstPage.resultCount + 50 },
+			} as never)
+
+			expect(firstPage.resultCount).toBeGreaterThanOrEqual(2)
+			expect(pastTheEnd.orgs).toEqual([])
+			expect(pastTheEnd.resultCount).toBe(firstPage.resultCount)
+		}
+	)
+
+	it('1.6b (v2): the v2 search reports distance 0, not null, for an org at the search point', async () => {
+		const { orgId } = await createTestOrg({ name: 'Exact Match Org v2', lat: -20.0, lon: -140.0 })
+
+		const result = await searchDistanceV2({
+			input: { ...baseInput, version: 'v2' as const, lat: -20.0, lon: -140.0, dist: 10 },
+		} as never)
+
+		const match = result.orgs.find((org) => org.id === orgId)
+		expect(match).toBeDefined()
 		expect(match?.distance).toBe(0)
 	})
 

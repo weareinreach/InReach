@@ -68,9 +68,11 @@ const SearchResultData = ({ result, index, isAdvanced }: SearchResultHasData) =>
 			searchTermContext: JSON.stringify(searchState.params),
 			position: index,
 			searchVersion: isAdvanced ? 'v2' : 'v1',
-			distanceMeters: result.distance
-				? Math.round(result.unit === 'mi' ? result.distance * 1609.34 : result.distance * 1000)
-				: undefined,
+			// A result at the search point is 0 away - a truthiness check recorded it as no distance (#2077).
+			distanceMeters:
+				typeof result.distance === 'number'
+					? Math.round(result.unit === 'mi' ? result.distance * 1609.34 : result.distance * 1000)
+					: undefined,
 			relevanceScore: (result as SearchResultV2Metadata).relevanceScore,
 			proximityTier: (result as SearchResultV2Metadata).tier,
 		})

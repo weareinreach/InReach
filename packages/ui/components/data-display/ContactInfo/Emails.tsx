@@ -19,6 +19,7 @@ import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import classes from './common.module.css'
+import { LinkedFromOrgNote } from './LinkedFromOrgNote'
 import { type EmailsProps } from './types'
 
 const formatNs = nsFormatter(['common', 'user-title'])
@@ -223,6 +224,7 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 			published,
 			deleted,
 			id,
+			linkedFromOrg,
 		} = email
 
 		const desc = (() => {
@@ -278,6 +280,19 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 			}
 		}
 
+		// The organization's email linked to this location: changed only on the organization's page.
+		if (linkedFromOrg) {
+			return (
+				<Stack gap={4} key={id}>
+					{renderItem().email}
+					{renderItem().desc}
+					<LinkedFromOrgNote
+						onUnlink={handleLinkToLocation({ orgLocationId: parentId, orgEmailId: id, action: 'unlink' })}
+						unlinking={linkToLocation.isPending}
+					/>
+				</Stack>
+			)
+		}
 		const item = (
 			<Stack gap={4} key={id}>
 				<EmailDrawer id={id} external component={Link} variant={variants.Link.inlineInverted}>
