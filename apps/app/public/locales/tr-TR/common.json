@@ -338,6 +338,7 @@
 		"region-extended-description": "Genişletilmiş Bölgesel Kaynaklar (51 - 200 mil)",
 		"remote-national": "Uzaktan",
 		"remote-national-description": "Aşağıdaki öğeler filtrelerinizle eşleşir, ancak fiziksel konumunuz ne olursa olsun size sunulan uzak/ulusal kaynaklardır.",
+		"results-error": "Arama sonuçlarını yüklerken bir şeyler ters gitti. Lütfen tekrar deneyin.",
 		"suggest-resource": "Bulamıyor musunuz? <strong>Dahil edilmesi gerektiğini düşündüğünüz bir kuruluş</strong> önerin.",
 		"tier-label": "Seviye"
 	},

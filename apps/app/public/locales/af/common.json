@@ -338,6 +338,7 @@
 		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
 		"remote-national": "Remote",
 		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"results-error": "Something went wrong loading search results. Please try again.",
 		"suggest-resource": "Kan jy dit nie vind nie? <1>Stel 'n organisasie</1> voor wat u dink ingesluit moet word.",
 		"tier-label": "Tier"
 	},

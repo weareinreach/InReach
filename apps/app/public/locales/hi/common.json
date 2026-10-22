@@ -338,6 +338,7 @@
 		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
 		"remote-national": "रिमोट",
 		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"results-error": "Something went wrong loading search results. Please try again.",
 		"suggest-resource": "यह नहीं मिल रहा है? <1>एक ऐसे संगठन का सुझाव दें जो</1> आपको लगता है कि इसमें शामिल किया जाना चाहिए।",
 		"tier-label": "Tier"
 	},

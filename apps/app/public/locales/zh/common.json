@@ -337,6 +337,7 @@
 		"region-extended-description": "扩展的区域资源（51-200英里）",
 		"remote-national": "远程",
 		"remote-national-description": "下面的条目与您的过滤器匹配，但是是您可以使用的远程/国家资源，不管您的实际位置如何。",
+		"results-error": "加载搜索结果出错。请重试。",
 		"suggest-resource": "找不到？<1>建议一个你认为应该包括的组织</1>。",
 		"tier-label": "层"
 	},

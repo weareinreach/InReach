@@ -319,7 +319,7 @@
 		"include-remote": "원격 서비스 포함하기",
 		"local": "현지",
 		"local-description": "현지 자원 (11-25마일)",
-		"location-error": "그 위치를 찾는 중에 문제가 발생했습니다.다시 시도해 주세요.",
+		"location-error": "위치를 찾는 중에 문제가 발생했어요. 다시 시도해 주세요.",
 		"location-placeholder": "도시/우편번호 입력하세요...",
 		"location-placeholder-searchby": "도시/우편번호로 검색하세요...",
 		"locality-label": "소재지",
@@ -337,6 +337,7 @@
 		"region-extended-description": "확장 지역 자원 (51-200마일)",
 		"remote-national": "원격의",
 		"remote-national-description": "아래 항목은 필터 조건에 부합하지만, 실제 위치와 관계없이 이용 가능한 원격/국가 자원입니다.",
+		"results-error": "검색 결과를 불러오는 중에 문제가 발생했어요. 다시 시도해 주세요.",
 		"suggest-resource": "찾은 내용을 찾을 수 없나요? <strong>새로운 단체를 제안하세요</strong>.",
 		"tier-label": "등급"
 	},
