@@ -21,6 +21,7 @@ import { type TUpsertSchema, ZUpsertSchema } from '@weareinreach/api/router/orgW
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { contactEditListPlacement } from '~ui/components/data-portal/contactEditListPlacement'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
@@ -115,9 +116,15 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 						}
 						const existingIndex = old.findIndex((item) => item.id === row.id)
 						const existingDescription = old[existingIndex]?.description
+						const { include, linkedFromOrg } = contactEditListPlacement(parentId, row.orgLocationOnly)
+						if (!include) {
+							return old.filter((item) => item.id !== row.id)
+						}
 						const patchedItem = {
 							id: row.id,
 							url: row.url,
+							orgLocationOnly: row.orgLocationOnly,
+							linkedFromOrg,
 							published: row.published,
 							deleted: row.deleted,
 							description:
@@ -213,7 +220,9 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 						deleted: false,
 						organizationId,
 						orgLocationId: hasLocationId,
-						orgLocationOnly: false,
+						// Created from a location's contact panel = belongs to that location only, so it stays
+						// off the organization's own page (#2101). Same as SocialMediaDrawer.
+						orgLocationOnly: hasLocationId !== null,
 					},
 					{ keepDirtyValues: false }
 				)

@@ -2,8 +2,8 @@ import { ActionIcon, Group, Modal, Text, Tooltip, useMantineTheme } from '@manti
 import { useDisclosure } from '@mantine/hooks'
 import { type ReactNode, useCallback, useMemo } from 'react'
 
-import { isIdFor } from '@weareinreach/db/lib/idGen'
 import { Button } from '~ui/components/core/Button'
+import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalText } from '~ui/modals/Service/ModalText'
@@ -12,22 +12,21 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 	const theme = useMantineTheme()
 	const [confirmModalOpen, confirmModalHandler] = useDisclosure(false)
 	const apiUtils = api.useUtils()
+	const notifyError = useNewNotification({
+		displayText: 'Something went wrong updating this item. Please try again.',
+		icon: 'warning',
+	})
+	// `id` is always an attribute supplement's id. That includes the phone/email/website rows in a service's
+	// "Get help" section (ContactInfo with `passedData`): those are access instructions stored as supplements,
+	// not OrgPhone/OrgEmail/OrgWebsite records (see modals/Service/processors). Both views that render this
+	// wrapper - the service edit drawer and the service modal - read the same supplements, so both refresh.
 	const toggleOrDeleteAttribute = api.component.AttributeEditWrapper.useMutation({
-		// `id` can belong to a phone/email/website row (when this wrapper is used from
-		// ContactInfo) or a service attribute (its original use in ServiceEditDrawer) --
-		// invalidate whichever router's cache actually holds the record that changed.
-		onSuccess: () => {
-			if (isIdFor('orgPhone', id)) {
-				return apiUtils.orgPhone.invalidate()
-			}
-			if (isIdFor('orgEmail', id)) {
-				return apiUtils.orgEmail.invalidate()
-			}
-			if (isIdFor('orgWebsite', id)) {
-				return apiUtils.orgWebsite.invalidate()
-			}
-			return apiUtils.service.forServiceEditDrawer.invalidate()
-		},
+		onSuccess: () =>
+			Promise.all([
+				apiUtils.service.forServiceEditDrawer.invalidate(),
+				apiUtils.service.forServiceModal.invalidate(),
+			]),
+		onError: () => notifyError(),
 	})
 	const handleToggle = useCallback(
 		() => toggleOrDeleteAttribute.mutate({ id, action: 'toggleActive' }),
@@ -44,7 +43,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		if (editable) {
 			return (
 				<Tooltip label='Edit'>
-					<ActionIcon variant='subtle' onClick={handleEdit}>
+					<ActionIcon variant='subtle' onClick={handleEdit} aria-label='Edit'>
 						<Icon icon='carbon:edit' color={theme.other.colors.primary.allyGreen} />
 					</ActionIcon>
 				</Tooltip>
@@ -52,7 +51,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		}
 		return (
 			<Tooltip label='Not Editable'>
-				<ActionIcon variant='subtle' disabled>
+				<ActionIcon variant='subtle' disabled aria-label='Not Editable'>
 					<Icon icon='carbon:edit-off' />
 				</ActionIcon>
 			</Tooltip>
@@ -63,7 +62,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		if (active) {
 			return (
 				<Tooltip label='Deactivate'>
-					<ActionIcon variant='subtle' onClick={handleToggle}>
+					<ActionIcon variant='subtle' onClick={handleToggle} aria-label='Deactivate'>
 						<Icon icon='carbon:view' color={theme.other.colors.primary.allyGreen} />
 					</ActionIcon>
 				</Tooltip>
@@ -71,7 +70,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 		}
 		return (
 			<Tooltip label='Activate'>
-				<ActionIcon variant='subtle' onClick={handleToggle}>
+				<ActionIcon variant='subtle' onClick={handleToggle} aria-label='Activate'>
 					<Icon icon='carbon:view-off' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
@@ -94,7 +93,7 @@ export const AttributeEditWrapper = ({ active, id, children, editable }: Attribu
 					</Group>
 				</Modal>
 				<Tooltip label='Delete'>
-					<ActionIcon variant='subtle' onClick={confirmModalHandler.open}>
+					<ActionIcon variant='subtle' onClick={confirmModalHandler.open} aria-label='Delete'>
 						<Icon icon='carbon:trash-can' color={theme.other.colors.tertiary.red} />
 					</ActionIcon>
 				</Tooltip>

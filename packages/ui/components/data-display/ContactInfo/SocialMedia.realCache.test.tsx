@@ -322,3 +322,44 @@ describe('SocialMedia + SocialMediaDrawer - real cache: "Create new" from a loca
 		})
 	})
 })
+
+describe('SocialMedia + SocialMediaDrawer - real cache: a plain edit never flashes the old values (#2092)', () => {
+	/**
+	 * After a successful edit the drawer stays open ~500ms before closing. #2092 suspected a bare `reset()` in
+	 * the save's `onSettled` flashed the pre-save values in that window; checked directly (recording every
+	 * value React wrote to the field), it never did - React applied it in the same render as the cache re-sync.
+	 * This guards that the saved value stays on screen for the whole window; it passed before the `reset()` was
+	 * removed too.
+	 */
+	it('keeps showing the saved value from Save until the drawer closes', async () => {
+		backend.seedOrgSocialMedia({
+			url: 'https://facebook.com/flash-check',
+			username: 'flash-check',
+			serviceId: facebookService.id,
+			published: true,
+		})
+		renderList()
+
+		await openDrawerFor('(flash-check)')
+		await waitFor(() => expect(screen.getByRole('checkbox', { name: /published/i })).toBeChecked())
+		await userEvent.click(screen.getByRole('checkbox', { name: /published/i }))
+		expect(screen.getByRole('checkbox', { name: /published/i })).not.toBeChecked()
+
+		await clickSave()
+		const observed: boolean[] = []
+		await waitFor(
+			() => {
+				const checkbox = screen.queryByRole('checkbox', { name: /published/i })
+				if (checkbox) {
+					observed.push((checkbox as HTMLInputElement).checked)
+				}
+				expect(screen.queryByRole('heading', { name: /Edit/ })).not.toBeInTheDocument()
+			},
+			{ interval: 15, timeout: 3000 }
+		)
+
+		expect(observed.length).toBeGreaterThan(0)
+		// Every sample while the drawer was still open shows the saved (unpublished) state.
+		expect(observed).not.toContain(true)
+	})
+})

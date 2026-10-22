@@ -200,6 +200,9 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const [search] = useDebouncedValue(searchTerm, 200)
 	const [results, setResults] = useState<ApiOutput['geo']['autocomplete']['results']>()
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
+	// Bumped on every suggestion pick, so picking the same place again re-applies its details (#2089) - the
+	// geocode result is cached per place id, so a repeat pick alone never changes `geoCodedAddress`.
+	const [placePickCount, setPlacePickCount] = useState(0)
 	const [isSaved, setIsSaved] = useState(false)
 	const form = useForm<FormSchema>({
 		validate: schemaResolver(FormSchema, { sync: true }),
@@ -584,7 +587,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			})
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [geoCodedAddress])
+	}, [geoCodedAddress, placePickCount])
 
 	const getGoogleMapCheckDistanceURL = useCallback(
 		(formValues: typeof form.values) => {
@@ -617,6 +620,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 				return
 			}
 			setGooglePlaceId(item.placeId)
+			setPlacePickCount((count) => count + 1)
 		},
 		[setGooglePlaceId]
 	)

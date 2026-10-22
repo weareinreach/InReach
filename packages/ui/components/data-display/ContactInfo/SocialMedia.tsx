@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next/pages'
 import { useCallback } from 'react'
 
 import { isIdFor } from '@weareinreach/db/lib/idGen'
+import { withUrlScheme } from '@weareinreach/util/url'
 import { Link } from '~ui/components/core/Link'
 import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { SocialMediaDrawer } from '~ui/components/data-portal/SocialMediaDrawer'
@@ -13,6 +14,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import classes from './common.module.css'
+import { LinkedFromOrgNote } from './LinkedFromOrgNote'
 import { type SocialMediaProps } from './types'
 
 export const SocialMedia = ({ edit, ...props }: SocialMediaProps) =>
@@ -41,7 +43,8 @@ const SocialMediaDisplay = ({ parentId = '', passedData, locationOnly }: SocialM
 		}
 		items.push({
 			icon,
-			href: item.url,
+			// Links saved before `https://` was added automatically (e.g. `www.example.org`) still work.
+			href: withUrlScheme(item.url),
 			title: item.username,
 		})
 	}
@@ -236,6 +239,26 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 							}
 						}
 
+						// The organization's account linked to this location: changed only on the organization's page.
+						if (link.linkedFromOrg) {
+							return (
+								<List.Item key={link.id}>
+									<Stack gap={4}>
+										{renderItem()}
+										<LinkedFromOrgNote
+											onUnlink={() =>
+												linkToLocation.mutate({
+													orgLocationId: parentId,
+													orgSocialMediaId: link.id,
+													action: 'unlink',
+												})
+											}
+											unlinking={linkToLocation.isPending}
+										/>
+									</Stack>
+								</List.Item>
+							)
+						}
 						return (
 							<List.Item key={link.id}>
 								<SocialMediaDrawer

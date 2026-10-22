@@ -76,10 +76,13 @@ test('13.6: an invalid (non-2-char) country param returns a real 404', async ({ 
 	expect(response?.status()).toBe(404)
 })
 
-test("13.7/13.8/13.9: intl/index.tsx's own tablet-only (sm, 768px) result-count row", async ({ page }) => {
-	// This is the one genuine tablet-only JS branch anywhere in the search surface - distinct from
-	// every other search page's `xs` (500px) mobile check. `useMediaQuery` uses a `max-width`
-	// query, so 768px itself should still match (inclusive upper bound) - 13.9's boundary check.
+test("13.7/13.8/13.9: intl/index.tsx's mobile-only result-count row switches at 768px like every search page", async ({
+	page,
+}) => {
+	// All three search pages now share one rule (#2066): the mobile-only count row shows exactly
+	// where the CSS hides the desktop sidebar (below `sm`, 768px). This page used an inclusive
+	// `max-width: sm`, so at exactly 768px the count showed twice - 13.9's boundary check now
+	// expects the desktop layout there.
 	//
 	// Scoped to `.searchControls` (index.module.css/index.tsx), not a bare text search: the
 	// desktop sidebar (SearchResultSidebar, always in the DOM, CSS-hidden below its own 768px
@@ -95,7 +98,12 @@ test("13.7/13.8/13.9: intl/index.tsx's own tablet-only (sm, 768px) result-count 
 	await page.reload()
 	await expect(countRow).toBeVisible()
 
-	await page.setViewportSize({ width: 768, height: 900 })
+	await page.setViewportSize({ width: 767, height: 900 })
 	await page.reload()
 	await expect(countRow).toBeVisible()
+
+	await page.setViewportSize({ width: 768, height: 900 })
+	await page.reload()
+	await expect(countRow).not.toBeVisible()
+	await expect(page.getByText('Sort by LGBTQ+ community focus')).toBeVisible()
 })

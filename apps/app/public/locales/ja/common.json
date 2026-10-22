@@ -319,6 +319,7 @@
 		"include-remote": "リモートサービスを含む",
 		"local": "ローカル",
 		"local-description": "ローカルリソース (11 - 25 マイル)",
+		"location-error": "場所を検索中に問題が発生しました。もう一度やり直してください。",
 		"location-placeholder": "都市または郵便番号を入力...",
 		"location-placeholder-searchby": "都市または郵便番号で検索...",
 		"locality-label": "地域",
@@ -336,6 +337,7 @@
 		"region-extended-description": "拡張地域資源（51 - 200マイル）",
 		"remote-national": "リモート",
 		"remote-national-description": "以下の項目はフィルタに一致しますが、物理的な場所に関係なく、リモート/ナショナルリソースが利用できます。",
+		"results-error": "検索結果の読み込み中に問題が発生しました。もう一度やり直してください。",
 		"suggest-resource": "見つかりませんか？ <strong>掲載すべき組織</strong> を提案してください。",
 		"tier-label": "段階"
 	},

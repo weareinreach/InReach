@@ -19,11 +19,13 @@ import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { ReportIssueType, ReportStatus } from '@weareinreach/db/enums'
+import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -60,14 +62,26 @@ const getInternalHistoryStyle = (theme: MantineTheme) => ({
 
 // --- Helper Components ---
 
+const STATUS_OPTIONS = [
+	{ value: ReportStatus.PENDING, label: 'Pending' },
+	{ value: ReportStatus.ACKNOWLEDGED, label: 'Acknowledged' },
+	{ value: ReportStatus.RESOLVED, label: 'Resolved' },
+]
+
 const ReportDetailsModal = ({
 	report,
 	opened,
 	onClose,
+	canTriage,
 }: {
 	report: ReportRecord
 	opened: boolean
 	onClose: () => void
+	/**
+	 * Manager+ can change a report's status/informed flag and add notes (`report.update` is Manager+). Basic
+	 * staff can view the table and a report's details, read-only (#2106).
+	 */
+	canTriage: boolean
 }) => {
 	const [status, setStatus] = useState<ReportStatus>(report.status as ReportStatus)
 	const [informed, setInformed] = useState<boolean>(report.informed)
@@ -196,24 +210,39 @@ const ReportDetailsModal = ({
 
 				<Divider />
 
-				<Group grow align='flex-end'>
-					<Select
-						label='Status'
-						data={[
-							{ value: ReportStatus.PENDING, label: 'Pending' },
-							{ value: ReportStatus.ACKNOWLEDGED, label: 'Acknowledged' },
-							{ value: ReportStatus.RESOLVED, label: 'Resolved' },
-						]}
-						value={status}
-						onChange={(val) => setStatus(val as ReportStatus)}
-					/>
-					<Checkbox
-						label='User Informed'
-						checked={informed}
-						onChange={(event) => setInformed(event.currentTarget.checked)}
-						mb={10}
-					/>
-				</Group>
+				{canTriage ? (
+					<Group grow align='flex-end'>
+						<Select
+							label='Status'
+							data={STATUS_OPTIONS}
+							value={status}
+							onChange={(val) => setStatus(val as ReportStatus)}
+						/>
+						<Checkbox
+							label='User Informed'
+							checked={informed}
+							onChange={(event) => setInformed(event.currentTarget.checked)}
+							mb={10}
+						/>
+					</Group>
+				) : (
+					<Group grow align='flex-start'>
+						<Stack gap={4}>
+							<Text size='xs' c='dimmed' tt='uppercase' fw={700}>
+								Status
+							</Text>
+							<Text size='sm'>
+								{STATUS_OPTIONS.find(({ value }) => value === report.status)?.label ?? report.status}
+							</Text>
+						</Stack>
+						<Stack gap={4}>
+							<Text size='xs' c='dimmed' tt='uppercase' fw={700}>
+								User Informed
+							</Text>
+							<Text size='sm'>{report.informed ? 'Yes' : 'No'}</Text>
+						</Stack>
+					</Group>
+				)}
 
 				{/* Reported Content Section */}
 				{report.incorrectFields && report.incorrectFields.length > 0 && (
@@ -268,28 +297,38 @@ const ReportDetailsModal = ({
 				<Divider />
 
 				{/* Admin Actions */}
-				<Textarea
-					label={status === ReportStatus.RESOLVED ? 'Resolution Note (Required)' : 'Internal Note'}
-					placeholder={
-						status === ReportStatus.RESOLVED
-							? 'Describe how this was resolved...'
-							: 'Add any internal notes here...'
-					}
-					value={newNote}
-					onChange={(e) => setNewNote(e.currentTarget.value)}
-					minRows={3}
-				/>
+				{canTriage ? (
+					<>
+						<Textarea
+							label={status === ReportStatus.RESOLVED ? 'Resolution Note (Required)' : 'Internal Note'}
+							placeholder={
+								status === ReportStatus.RESOLVED
+									? 'Describe how this was resolved...'
+									: 'Add any internal notes here...'
+							}
+							value={newNote}
+							onChange={(e) => setNewNote(e.currentTarget.value)}
+							minRows={3}
+						/>
 
-				<Group justify='flex-end' mt='md'>
-					<Button
-						variant='primary'
-						onClick={() => updateMutation.mutate({ id: report.id, status, informed, internalNotes: newNote })}
-						loading={updateMutation.isPending}
-						disabled={!canSave}
-					>
-						Save Changes
-					</Button>
-				</Group>
+						<Group justify='flex-end' mt='md'>
+							<Button
+								variant='primary'
+								onClick={() =>
+									updateMutation.mutate({ id: report.id, status, informed, internalNotes: newNote })
+								}
+								loading={updateMutation.isPending}
+								disabled={!canSave}
+							>
+								Save Changes
+							</Button>
+						</Group>
+					</>
+				) : (
+					<Text size='sm' c='dimmed'>
+						Only Data Portal Managers and above can update a report.
+					</Text>
+				)}
 			</Stack>
 		</Modal>
 	)
@@ -485,6 +524,11 @@ export const ReportTable = () => {
 	const variants = useCustomVariant()
 	const router = useRouter()
 	const { reportId } = router.query
+	const { data: session } = useSession()
+	// Same tier check as ReviewTable - the details modal is read-only below Manager (#2106).
+	const isManagerOrHigher = (session?.user?.permissions ?? []).some((p) =>
+		[...ROOT_TIER_PERMISSIONS, 'dataPortalAdmin', 'dataPortalManager'].includes(p)
+	)
 
 	const [selectedReport, setSelectedReport] = useState<ReportRecord | null>(null)
 	const [detailsOpened, { open: openDetails, close: closeDetails }] = useDisclosure(false)
@@ -665,7 +709,12 @@ export const ReportTable = () => {
 				isError={isError}
 			/>
 			{selectedReport && (
-				<ReportDetailsModal report={selectedReport} opened={detailsOpened} onClose={handleCloseDetails} />
+				<ReportDetailsModal
+					report={selectedReport}
+					opened={detailsOpened}
+					onClose={handleCloseDetails}
+					canTriage={isManagerOrHigher}
+				/>
 			)}
 		</Stack>
 	)

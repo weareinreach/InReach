@@ -322,6 +322,7 @@
 		"include-remote": "Uwzględnij usługi zdalne",
 		"local": "Lokalny",
 		"local-description": "Zasoby lokalne (11-25 mil)",
+		"location-error": "Coś poszło nie tak podczas szukania tej lokalizacji. Spróbuj ponownie.",
 		"location-placeholder": "Wpisz miasto lub kod pocztowy...",
 		"location-placeholder-searchby": "Szukaj według miasta lub kodu pocztowego...",
 		"locality-label": "Miejscowość",
@@ -339,6 +340,7 @@
 		"region-extended-description": "Rozszerzone zasoby regionalne (51-200 mil)",
 		"remote-national": "Zdalny",
 		"remote-national-description": "Poniższe elementy pasują do Twoich filtrów, ale są zdalnymi/krajowymi zasobami dostępnymi dla Ciebie niezależnie od Twojej fizycznej lokalizacji.",
+		"results-error": "Coś poszło nie tak podczas ładowania wyników wyszukiwania. Spróbuj ponownie.",
 		"suggest-resource": "Nie możesz go znaleźć? <1>Zaproponuj organizację, która</1> Twoim zdaniem powinna zostać uwzględniona.",
 		"tier-label": "Poziom"
 	},

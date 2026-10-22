@@ -87,4 +87,25 @@ describe('geo.cityCoords', () => {
 
 		expect(prisma.country.findMany).toHaveBeenCalledTimes(1)
 	})
+
+	it('#2075: a Google REQUEST_DENIED response comes back as a typed server error, not a generic one', async () => {
+		vi.mocked(prisma.country.findMany).mockResolvedValueOnce([{ id: 'ctry_us', cca2: 'US' }] as never)
+		vi.mocked(googleMapsApi.geocode).mockRejectedValueOnce(
+			Object.assign(new Error('Request failed with status code 403'), {
+				isAxiosError: true,
+				response: {
+					status: 403,
+					data: { status: 'REQUEST_DENIED', error_message: 'The provided API key is invalid.' },
+				},
+			})
+		)
+
+		// cityCoords wraps its body in handleError, which passes a TRPCError through unchanged.
+		await expect(
+			cityCoords({ input: { city: 'Springfield', country: 'ctry_us' } } as never)
+		).rejects.toMatchObject({
+			code: 'INTERNAL_SERVER_ERROR',
+			message: 'The provided API key is invalid.',
+		})
+	})
 })

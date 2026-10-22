@@ -42,17 +42,12 @@ describe('organization.getAlerts', () => {
 	})
 
 	/**
-	 * Correctly fails - confirms a real asymmetry vs. location.getAlerts (see query.getAlerts.handler.test.ts
-	 * in packages/api/router/location, case 5.3), not a test mistake. `location.getAlerts` explicitly guards
-	 * `if (!text?.tsKey) return null` before spreading, so a supplement row with a `text` relation but no
-	 * `tsKey` is cleanly dropped by `compact()`. This handler has no equivalent guard - it spreads `{
-	 * ...text?.tsKey, ...attribute }` unconditionally, so a missing `tsKey` just means the tsKey fields are
-	 * omitted from the spread, not that the whole entry drops out. The result is a non-empty, truthy object
-	 * either way, so `compact()` never removes it - this handler emits an alert entry with only `{ tag, icon }`
-	 * and no display text at all, instead of omitting it the way the location-level handler does for the
-	 * identical input shape.
+	 * #2076: location.getAlerts guards `if (!text?.tsKey) return null` before spreading, so a supplement with a
+	 * `text` relation but no `tsKey` drops out. This handler spread `{ ...text?.tsKey, ...attribute }`
+	 * unconditionally, leaving a truthy `{ tag, icon }` with no display text that `compact()` kept. It now has
+	 * the same guard.
 	 */
-	it('5.3: a supplement with a `text` relation but no `tsKey` should be omitted, matching location.getAlerts - it is not', async () => {
+	it('5.3: a supplement with a `text` relation but no `tsKey` is omitted, matching location.getAlerts', async () => {
 		findManyMock.mockResolvedValueOnce([
 			{
 				text: { tsKey: null },

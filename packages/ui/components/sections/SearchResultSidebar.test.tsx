@@ -9,7 +9,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { SearchStateProvider } from '~ui/providers/SearchState'
 import { testI18n } from '~ui/test/i18nTestInstance'
 import { screen, waitFor } from '~ui/test/test-utils'
-import { storybookTheme } from '~ui/theme/storybook'
+import { testTheme } from '~ui/test/testTheme'
 
 import { SearchResultSidebar } from './SearchResultSidebar'
 
@@ -64,7 +64,7 @@ const loadingManager = { isLoading: false, setLoading: vi.fn() }
 
 const renderSidebar = (props: Partial<Parameters<typeof SearchResultSidebar>[0]> = {}) => {
 	const Wrapper = ({ children }: { children: ReactNode }) => (
-		<MantineProvider theme={storybookTheme} defaultColorScheme='light'>
+		<MantineProvider theme={testTheme} defaultColorScheme='light'>
 			<I18nextProvider i18n={testI18n}>
 				{/* Only needed when onlySort=false renders SearchBox, which reads this context
 				    unconditionally - included for every case for a single consistent wrapper. */}

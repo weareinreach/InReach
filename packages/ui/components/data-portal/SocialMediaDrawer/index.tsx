@@ -25,6 +25,7 @@ import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { contactEditListPlacement } from '~ui/components/data-portal/contactEditListPlacement'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
@@ -160,11 +161,16 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 						}
 						const existingIndex = old.findIndex((item) => item.id === row.id)
 						const existing = old[existingIndex]
+						const { include, linkedFromOrg } = contactEditListPlacement(parentId, row.orgLocationOnly)
+						if (!include) {
+							return old.filter((item) => item.id !== row.id)
+						}
 						const patchedItem = {
 							id: row.id,
 							url: row.url,
 							username: row.username,
 							orgLocationOnly: row.orgLocationOnly,
+							linkedFromOrg,
 							published: row.published,
 							deleted: row.deleted,
 							// Neither field is nullable here - falls back to whatever this row already
@@ -202,13 +208,11 @@ const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>
 				// it's never patched at all, so it still needs an eventual (soft) refetch to pick up
 				// this change at all.
 				apiUtils.orgSocialMedia.forContactInfo.invalidate(undefined, { refetchType: 'none' })
-				// Guarded on success - this used to run unconditionally, which meant a failed save wiped
-				// the user's just-typed, never-saved edit back to blank (no `defaultValues` are
-				// configured for this form) with no way to recover it, on top of giving no indication
-				// anything had gone wrong.
-				if (data) {
-					reset()
-				}
+				// No `reset()` here (same as WebsiteDrawer). The patched `forEditDrawer` cache above re-syncs
+				// the form to the saved values through `values`; a "Create new" save gets its fresh id from
+				// `onSuccess` below; a failed save keeps the typed edit. A bare `reset()` used to sit here and
+				// was suspected of flashing the pre-save values (#2092), but React applied it in the same
+				// render as that re-sync, so it never reached the screen - removed as redundant.
 			},
 			onSuccess: () => {
 				setIsSaved(true)

@@ -320,6 +320,7 @@
 		"include-remote": "شامل خدمات از راه دور",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "شهر یا کد پستی را وارد کنید...",
 		"location-placeholder-searchby": "جستجو بر اساس شهر یا کد پستی...",
 		"locality-label": "Locality",
@@ -337,6 +338,7 @@
 		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
 		"remote-national": "Remote",
 		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"results-error": "Something went wrong loading search results. Please try again.",
 		"suggest-resource": "نمی توانید آن را پیدا کنید؟ <1>پیشنهاد یک سازمان</1> شما فکر می کنم باید شامل شود.",
 		"tier-label": "Tier"
 	},

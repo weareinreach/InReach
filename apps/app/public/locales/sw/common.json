@@ -320,6 +320,7 @@
 		"include-remote": "Jumuisha huduma za mbali",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "Ingiza jiji au msimbo wa zip...",
 		"location-placeholder-searchby": "Tafuta kwa jiji au msimbo wa posta...",
 		"locality-label": "Locality",
@@ -337,6 +338,7 @@
 		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
 		"remote-national": "Remote",
 		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"results-error": "Something went wrong loading search results. Please try again.",
 		"suggest-resource": "Haiwezi kuipata? <1>Pendekeza shirika unalofikiria</1> linapaswa kujumuishwa.",
 		"tier-label": "Tier"
 	},

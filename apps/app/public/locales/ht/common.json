@@ -320,6 +320,7 @@
 		"include-remote": "Mete sèvis aleka",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "Antre nan vil la oswa kòd postal...",
 		"location-placeholder-searchby": "Chèche pa vil oswa kòd postal...",
 		"locality-label": "Locality",
@@ -337,6 +338,7 @@
 		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
 		"remote-national": "Tele travay",
 		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"results-error": "Something went wrong loading search results. Please try again.",
 		"suggest-resource": "Pa ka jwenn li? <1>Sijere yon òganizasyon</1> ou panse yo ta dwe enkli.",
 		"tier-label": "Tier"
 	},

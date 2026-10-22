@@ -7,7 +7,10 @@ import { type TForContactInfoEditsSchema } from './query.forContactInfoEdits.sch
 const whereId = (input: TForContactInfoEditsSchema): Prisma.OrgSocialMediaWhereInput => {
 	switch (true) {
 		case isIdFor('organization', input.parentId): {
-			return { organization: { id: input.parentId } }
+			// The organization's edit page lists only the organization's own items - not ones marked location-only,
+			// which are edited on their location's page. Every phone/website/social item is stored under its
+			// organization even when added from a location, so the flag (not the org link) is what tells them apart.
+			return { organization: { id: input.parentId }, orgLocationOnly: false }
 		}
 		case isIdFor('orgLocation', input.parentId): {
 			return { locations: { some: { location: { id: input.parentId } } } }
@@ -31,8 +34,10 @@ const forContactInfoEdits = async ({ input }: TRPCHandlerParams<TForContactInfoE
 				deleted: true,
 			},
 		})
+		const isLocationPage = isIdFor('orgLocation', input.parentId)
 		const transformed = result.map(({ service, ...record }) => ({
 			...record,
+			linkedFromOrg: isLocationPage && !record.orgLocationOnly,
 			service: service?.name,
 			serviceIcon: service?.logoIcon,
 		}))

@@ -57,16 +57,27 @@ test('12.5/12.6: search, apply a filter, open a result, and reach the save promp
 	// still real (kept mounted with `visibility: hidden`, not `display: none`, so it can be
 	// measured), so `data-targetid="save"` alone isn't enough to find the *tappable* one at a
 	// narrow width; it may need the overflow menu opened first.
-	let saveButton = page.locator('[data-targetid="save"]')
-	if (!(await saveButton.isVisible())) {
-		// The overflow-menu trigger (Menu.tsx) has no accessible name at all - an icon-only
-		// `<Button>` with no `aria-label` - so it has to be targeted by its icon instead of role.
-		await page.locator('button:has(iconify-icon[icon="carbon:overflow-menu-horizontal"])').click()
-		saveButton = page.locator('[data-targetid="save"]:visible')
-	}
-	await expect(saveButton).toBeVisible()
-	await saveButton.click()
+	// The overflow-menu trigger (Menu.tsx) has no accessible name at all - an icon-only `<Button>` with
+	// no `aria-label` - so it has to be targeted by its icon instead of role.
+	const overflowTrigger = page.locator('button:has(iconify-icon[icon="carbon:overflow-menu-horizontal"])')
+	// Tap the menu item itself, as a user does: the Save button shown inside it is a decorative,
+	// `pointer-events: none` copy (#2095), and the item passes the tap on to the real Save button (#2108 -
+	// this used to click the copy, which the item's label correctly intercepts).
+	const saveMenuItem = page.getByRole('menuitem', { name: /^save$/i })
+	const loginPrompt = page.getByRole('heading', { name: 'You need to log in to do that.' })
 
-	// Unauthenticated - QuickPromotionModal.tsx prompts to log in or sign up rather than saving.
-	await expect(page.getByRole('heading', { name: 'You need to log in to do that.' })).toBeVisible()
+	// Retried as a whole: the group measures itself after first render, so Save can be visible in the
+	// toolbar for a moment and then move into the overflow menu - a one-time check can pick the wrong path.
+	await expect(async () => {
+		if (await overflowTrigger.isVisible()) {
+			if (!(await saveMenuItem.isVisible())) {
+				await overflowTrigger.click({ timeout: 2000 })
+			}
+			await saveMenuItem.click({ timeout: 2000 })
+		} else {
+			await page.locator('[data-targetid="save"]').click({ timeout: 2000 })
+		}
+		// Unauthenticated - QuickPromotionModal.tsx prompts to log in or sign up rather than saving.
+		await expect(loginPrompt).toBeVisible({ timeout: 2000 })
+	}).toPass({ timeout: 15_000 })
 })

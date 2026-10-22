@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { createGeoFields, generateId, generateNestedFreeText, Prisma } from '@weareinreach/db'
 import { prefixedId } from '~api/schemas/idPrefix'
 import { createManyOptional } from '~api/schemas/nestedOps'
+import { webUrl } from '~api/schemas/webUrl'
 
 export const ZCreateNewQuickSchema = z
 	.object({
@@ -55,7 +56,7 @@ export const ZCreateNewQuickSchema = z
 		websites: z
 			.object({
 				id: prefixedId('orgWebsite').optional().default(generateId('orgWebsite')),
-				url: z.string().url(),
+				url: webUrl(),
 			})
 			.array()
 			.optional(),
@@ -63,7 +64,7 @@ export const ZCreateNewQuickSchema = z
 			.object({
 				id: prefixedId('orgSocialMedia').optional().default(generateId('orgSocialMedia')),
 				username: z.string(),
-				url: z.string().url(),
+				url: webUrl(),
 				published: z.boolean().default(false),
 				serviceId: z.string(),
 			})

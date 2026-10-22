@@ -320,6 +320,7 @@
 		"include-remote": "Remote-Dienste einbeziehen",
 		"local": "Lokal",
 		"local-description": "Lokale Ressourcen (11 - 25 Meilen)",
+		"location-error": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.",
 		"location-placeholder": "Stadt oder Postleitzahl eingeben...",
 		"location-placeholder-searchby": "Suche nach Stadt oder Postleitzahl ...",
 		"locality-label": "Ort",
@@ -337,6 +338,7 @@
 		"region-extended-description": "Erweiterte regionale Ressourcen (51 - 200 Meilen)",
 		"remote-national": "Entfernt",
 		"remote-national-description": "Die folgenden Artikel stimmen mit Ihren Filtern überein, sind aber unabhängig von Ihrem physikalischen Standort für Sie verfügbar/nationale Ressourcen verfügbar.",
+		"results-error": "Beim Laden der Suchergebnisse ist etwas schief gelaufen. Bitte versuchen Sie es erneut.",
 		"suggest-resource": "Sie finden es nicht? <strong>schlagen Sie eine Organisation</strong> vor, die Ihrer Meinung nach enthalten sein sollte.",
 		"tier-label": "Stufe"
 	},

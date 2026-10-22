@@ -1,6 +1,8 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vitest/config'
 
+import { fileURLToPath } from 'node:url'
+
 export default defineConfig({
 	resolve: {
 		tsconfigPaths: true,
@@ -10,7 +12,20 @@ export default defineConfig({
 		// `next-i18next/pages`'s `useTranslation` is a thin wrapper around `react-i18next`'s own hook of
 		// the same signature - aliasing directly to it works against the real `I18nextProvider`
 		// `test-utils.tsx` already sets up, for every component test that needs this import, not just one.
-		alias: { 'next-i18next/pages': 'react-i18next' },
+		//
+		// `@weareinreach/auth`'s root export has a `browser` condition (`index.browser.ts` - just
+		// `checkPermissions`) that Next's client bundle uses, but Vitest resolves the `default` (server)
+		// entry - which re-exports `getServerSession`, pulling in `auth-options.ts` -> `@weareinreach/db` ->
+		// the generated Prisma client. CI installs with `--ignore-scripts` (no generated client), so any
+		// test reaching a component that imports `checkPermissions` (e.g. via UserMenu) crashed at import
+		// time. Aliasing the exact bare specifier to the browser entry matches what the browser really loads.
+		alias: [
+			{ find: 'next-i18next/pages', replacement: 'react-i18next' },
+			{
+				find: /^@weareinreach\/auth$/,
+				replacement: fileURLToPath(new URL('../auth/index.browser.ts', import.meta.url)),
+			},
+		],
 	},
 	plugins: [react()],
 	test: {

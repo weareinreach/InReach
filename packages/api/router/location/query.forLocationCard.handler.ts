@@ -55,7 +55,9 @@ const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCar
 
 		const transformed = {
 			...result,
-			...formatAddressVisiblity(result),
+			// Staff in edit mode see a HIDDEN address's city/district, like forVisitCardEdits (#2011). Keyed on
+			// `canSeeAll`, not the caller-supplied `isEditMode`, so a public request can't unmask it.
+			...formatAddressVisiblity(result, canSeeAll),
 			country: result.country.cca2,
 			phones: result.phones.map(({ phone }) => ({ ...phone, country: phone.country.cca2 })),
 			attributes: result.attributes

@@ -320,6 +320,7 @@
 		"include-remote": "Includi servizi remoti",
 		"local": "Locale",
 		"local-description": "Risorse locali (11-25 miglia)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "Inserisci la città o codice zip...",
 		"location-placeholder-searchby": "Cerca per città o codice zip...",
 		"locality-label": "Località",
@@ -337,6 +338,7 @@
 		"region-extended-description": "Risorse regionali estese (da 51 a 200 miglia)",
 		"remote-national": "Remoto",
 		"remote-national-description": "Gli elementi seguenti corrispondono ai filtri selezionati, ma si tratta di risorse remote/nazionali a tua disposizione indipendentemente dalla tua posizione geografica.",
+		"results-error": "Something went wrong loading search results. Please try again.",
 		"suggest-resource": "Non riesci a trovarlo? <strong>Suggerisci un'organizzazione</strong> che ritieni debba essere inclusa.",
 		"tier-label": "Livello"
 	},

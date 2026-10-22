@@ -17,6 +17,7 @@ import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import classes from './common.module.css'
+import { LinkedFromOrgNote } from './LinkedFromOrgNote'
 import { type PhoneNumbersProps } from './types'
 
 const formatNs = nsFormatter(['common', 'phone-type'])
@@ -245,6 +246,21 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 
 		const itemDisplay = renderItem()
 
+		// The organization's phone linked to this location: changed only on the organization's page.
+		if (phone.linkedFromOrg) {
+			return (
+				<Stack gap={4} key={phone.id}>
+					{itemDisplay.number}
+					{itemDisplay.desc}
+					<LinkedFromOrgNote
+						onUnlink={() =>
+							linkToLocation.mutate({ orgLocationId: parentId, orgPhoneId: phone.id, action: 'unlink' })
+						}
+						unlinking={linkToLocation.isPending}
+					/>
+				</Stack>
+			)
+		}
 		const item = (
 			<Stack gap={4} key={phone.id}>
 				<PhoneDrawer id={phone.id} component={Link} variant={variants.Link.inlineInverted}>

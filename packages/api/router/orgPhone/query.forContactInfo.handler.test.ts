@@ -58,22 +58,12 @@ describe('orgPhone.forContactInfo - public visibility', () => {
 		})
 	})
 
-	it('omits the locationOnly filter when not specified', async () => {
-		await forContactInfo({ input: { parentId: 'organization_test' } } as never)
-		const { where } = lastCallArgs()
-		expect(where).not.toHaveProperty('locationOnly')
-	})
+	it('a location page shows every phone linked to it unless asked for only location-only ones', async () => {
+		await forContactInfo({ input: { parentId: 'orgLocation_test' } } as never)
+		expect(lastCallArgs().where).not.toHaveProperty('locationOnly')
 
-	it('applies the locationOnly filter when explicitly true', async () => {
-		await forContactInfo({ input: { parentId: 'organization_test', locationOnly: true } } as never)
-		const { where } = lastCallArgs()
-		expect(where.locationOnly).toBe(true)
-	})
-
-	it('applies the locationOnly filter when explicitly false', async () => {
-		await forContactInfo({ input: { parentId: 'organization_test', locationOnly: false } } as never)
-		const { where } = lastCallArgs()
-		expect(where.locationOnly).toBe(false)
+		await forContactInfo({ input: { parentId: 'orgLocation_test', locationOnly: true } } as never)
+		expect(lastCallArgs().where.locationOnly).toBe(true)
 	})
 
 	/**
@@ -89,38 +79,33 @@ describe('orgPhone.forContactInfo - public visibility', () => {
 	})
 })
 
-describe('orgPhone.forContactInfo - location-linked numbers are excluded from a multi-location org page', () => {
+describe("orgPhone.forContactInfo - a multi-location org's main page leaves out location-only phones", () => {
 	/**
-	 * Reported issue: a phone listed on a location page also always showed up on the org's main page, with no
-	 * way to unpublish it from just one - because the org-page query only ever checked "does this phone belong
-	 * to the org" (true for every phone, since that relation is required), never "is this phone also scoped to
-	 * one of the org's locations". Fixed by excluding phones that have a link to any public location, but only
-	 * when the org actually has more than one - a single-location org has no separate public location page a
-	 * visitor would ever reach, so it still shows everything.
+	 * Same rule as orgEmail/orgWebsite/orgSocialMedia. Every phone is stored under its organization - even one
+	 * added from a location - so being linked to locations says nothing about whether it's the org's number;
+	 * the location-only flag does. This replaced an earlier rule that hid every phone linked to any location,
+	 * which also hid an org's own number once someone linked it to a location.
 	 */
-	it('excludes phones linked to a public location when the org has more than one location', async () => {
+	it('leaves out location-only phones when the org has more than one location', async () => {
 		locationCountMock.mockResolvedValueOnce(2)
 		await forContactInfo({ input: { parentId: 'organization_test' } } as never)
 		const { where } = lastCallArgs()
-		expect(where.locations).toEqual({ none: { location: { published: true, deleted: false } } })
-	})
-
-	it('does not exclude anything when the org has exactly one location', async () => {
-		locationCountMock.mockResolvedValueOnce(1)
-		await forContactInfo({ input: { parentId: 'organization_test' } } as never)
-		const { where } = lastCallArgs()
+		expect(where.locationOnly).toBe(false)
+		// Location links no longer matter: an org number also linked to locations still shows.
 		expect(where).not.toHaveProperty('locations')
 	})
 
-	/**
-	 * Zero locations isn't "single location", so the exclusion clause is still applied - it's just a no-op in
-	 * practice, since an org with no locations at all can't have any location-linked phones.
-	 */
-	it('still applies the (functionally inert) exclusion clause when the org has no locations at all', async () => {
-		locationCountMock.mockResolvedValueOnce(0)
+	it('shows everything when the org has exactly one location', async () => {
+		locationCountMock.mockResolvedValueOnce(1)
 		await forContactInfo({ input: { parentId: 'organization_test' } } as never)
 		const { where } = lastCallArgs()
-		expect(where.locations).toEqual({ none: { location: { published: true, deleted: false } } })
+		expect(where).not.toHaveProperty('locationOnly')
+		expect(where).not.toHaveProperty('locations')
+	})
+
+	it('ignores a locationOnly input on the org page - the rule decides', async () => {
+		await forContactInfo({ input: { parentId: 'organization_test', locationOnly: true } } as never)
+		expect(lastCallArgs().where.locationOnly).toBe(false)
 	})
 
 	it('counts only published, non-deleted locations toward the single-location check', async () => {

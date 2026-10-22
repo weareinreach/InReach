@@ -14,6 +14,7 @@ import { z } from 'zod'
 import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
+import { Button } from '@weareinreach/ui/components/core/Button'
 import { LocationBasedAlertBanner } from '@weareinreach/ui/components/core/LocationBasedAlertBanner'
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
@@ -87,7 +88,10 @@ const SearchResultSidebar = dynamic(
 	{ ssr: false }
 )
 
-const PageIndexSchema = z.coerce.number().default(1)
+// `.catch(1)`, not `.default(1)`: default only covers a missing `?page=`. A non-numeric value (stale or
+// hand-edited link) coerces to NaN and made `.parse()` throw - a raw 500 from getServerSideProps (#2059).
+// int/min(1) also send `?page=0`, negatives and fractions to page 1 instead of a negative `skip`.
+const PageIndexSchema = z.coerce.number().int().min(1).catch(1)
 
 const NoResults = memo(
 	({ crisisData }: { crisisData: NonNullable<ApiOutput['organization']['getNatlCrisis']> }) => {
@@ -106,12 +110,51 @@ const NoResults = memo(
 )
 NoResults.displayName = 'NoResults'
 
+// Shown in place of the results list when the search request has failed (after react-query's own retries).
+// Without it the page kept its loading placeholders forever (#2061). Crisis lines stay visible, same as
+// NoResults - a visitor who can't get results may need them most.
+const SearchError = memo(
+	({
+		onRetry,
+		isRetrying,
+		crisisData,
+	}: {
+		onRetry: () => void
+		isRetrying: boolean
+		crisisData?: ApiOutput['organization']['getNatlCrisis']
+	}) => {
+		const { t } = useTranslation('common')
+		return (
+			<Stack className={classes.noResultsStack}>
+				<Stack gap={16} align='flex-start'>
+					<Text role='alert'>{t('search.results-error')}</Text>
+					<Button variant='secondary' onClick={onRetry} loading={isRetrying}>
+						{t('retry')}
+					</Button>
+				</Stack>
+				{crisisData?.length ? (
+					<CrisisSupport role='national'>
+						{crisisData.map((result) => (
+							<CrisisSupport.National data={result} key={result.id} />
+						))}
+					</CrisisSupport>
+				) : null}
+			</Stack>
+		)
+	}
+)
+SearchError.displayName = 'SearchError'
+
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
 	const { searchState, searchStateActions } = useSearchState()
 	const theme = useMantineTheme()
 	const [mounted, setMounted] = useState(false)
-	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
+	// "Mobile" is defined as exactly the widths where `.hideMobile` (module CSS, `min-width: sm`) hides the
+	// desktop sidebar, so at any width - fractional ones from browser zoom included - one of the two sort/
+	// count UIs is showing. This used to check `xs` (500px), leaving 500-768px with neither (#2066). Starts
+	// as desktop (`true`) so the server render and first paint match the previous desktop-first behavior.
+	const isMobile = !useMediaQuery(`(min-width: ${theme.breakpoints.sm})`, true)
 	const isAdvanced = true
 	// Lazy initializer (not useEffect) so this reads synchronously on the very first client render
 	// instead of one render/effect cycle later - a user with a saved preference gets their (still
@@ -298,16 +341,34 @@ const SearchResults = () => {
 		}
 	}, [router.query.page, searchState.page, searchStateActions])
 
+	// A page past the last result (a stale or hand-edited `?page=`, or filters that shrank the results) would
+	// otherwise show an empty list. The API reports the real resultCount even there (#2063), so move to the
+	// last page that has results, the same shallow way the pagination bar changes pages.
+	useEffect(() => {
+		const response = searchQuery.data
+		if (!response || response.orgs.length > 0) {
+			return
+		}
+		const lastPage = getSearchResultPageCount(response.resultCount)
+		if (lastPage > 0 && PageIndexSchema.parse(router.query.page) > lastPage) {
+			void router.replace(
+				{ query: { ...router.query, page: lastPage.toString(), params: router.query.params } },
+				undefined,
+				{ shallow: true }
+			)
+		}
+	}, [searchQuery.data, router])
+
 	const nextSkip = useMemo(
 		() => PageIndexSchema.parse(router.query.page) * SEARCH_RESULT_PAGE_SIZE,
 		[router.query.page]
 	)
 
 	useEffect(() => {
-		if (
-			router.query.page &&
-			PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)
-		) {
+		// No truthiness check on `router.query.page`: a fresh search has no `?page=` at all, which is the
+		// common case, and that check meant page 2 was never prefetched from page 1 (#2065).
+		// PageIndexSchema already treats a missing page as 1.
+		if (PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)) {
 			apiUtils.organization.searchDistance.prefetch({
 				lat,
 				lon,
@@ -406,7 +467,13 @@ const SearchResults = () => {
 				/>
 			</Grid.Col>
 			<Grid.Col span={{ base: 12, sm: 8, md: 8 }} data-testid='search-results-list'>
-				{data?.resultCount === 0 && crisisResults ? (
+				{searchQuery.isError ? (
+					<SearchError
+						onRetry={() => void searchQuery.refetch()}
+						isRetrying={searchIsFetching}
+						crisisData={crisisResults}
+					/>
+				) : data?.resultCount === 0 && crisisResults ? (
 					<NoResults crisisData={crisisResults} />
 				) : (
 					<>
@@ -434,7 +501,14 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	req,
 	res,
 }) => {
-	const [country, lon, lat, dist, unit] = SearchParamsSchema.parse(query.params)
+	// A malformed or stale search URL (missing segment, non-numeric lat/lon) would otherwise throw a ZodError
+	// here and surface as a raw 500. The 404 page has its own location/organization search boxes, so the
+	// visitor gets a way to start over instead of a dead end (#2058).
+	const params = SearchParamsSchema.safeParse(query.params)
+	if (!params.success) {
+		return { notFound: true }
+	}
+	const [country, lon, lat, dist, unit] = params.data
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient({ req, res })

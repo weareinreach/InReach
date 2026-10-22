@@ -5,6 +5,7 @@ import invariant from 'tiny-invariant'
 
 import { productEvent } from '@weareinreach/analytics/events'
 import { isIdFor } from '@weareinreach/db/lib/idGen'
+import { withUrlScheme } from '@weareinreach/util/url'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { AttributeEditWrapper } from '~ui/components/data-portal/ServiceEditDrawer/AttributeEditWrapper'
 import { WebsiteDrawer } from '~ui/components/data-portal/WebsiteDrawer'
@@ -17,6 +18,7 @@ import { nsFormatter } from '~ui/lib/nsFormatter'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import classes from './common.module.css'
+import { LinkedFromOrgNote } from './LinkedFromOrgNote'
 import { type WebsitesProps } from './types'
 
 const formatNs = nsFormatter(['common'])
@@ -57,7 +59,9 @@ const WebsitesDisplay = ({
 		let showDirectHeading = false
 
 		for (const website of componentData) {
-			const { id, url, orgLocationOnly, description, isPrimary } = website
+			const { id, url: savedUrl, orgLocationOnly, description, isPrimary } = website
+			// Links saved before `https://` was added automatically (e.g. `www.example.org`) still work.
+			const url = withUrlScheme(savedUrl)
 			const urlMatch = url.match(domainExtract)
 			const urlBase = urlMatch?.length ? urlMatch[1] : undefined
 
@@ -176,7 +180,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	const domainExtract = /https?:\/\/([^:/\n?]+)/
 
 	const output = data?.map((website) => {
-		const { id, url, description, published, deleted } = website
+		const { id, url, description, published, deleted, linkedFromOrg } = website
 		const urlMatch = url.match(domainExtract)
 		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
 		if (!isExternal(url)) {
@@ -208,6 +212,20 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 			}
 		}
 
+		// The organization's website linked to this location: changed only on the organization's page.
+		if (linkedFromOrg) {
+			return (
+				<Stack gap={4} key={id}>
+					{renderItem()}
+					<LinkedFromOrgNote
+						onUnlink={() =>
+							linkToLocation.mutate({ orgWebsiteId: id, orgLocationId: parentId, action: 'unlink' })
+						}
+						unlinking={linkToLocation.isPending}
+					/>
+				</Stack>
+			)
+		}
 		const item = (
 			<WebsiteDrawer component={Link} external key={id} id={id} variant={variants.Link.inline}>
 				{renderItem()}

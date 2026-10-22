@@ -11,6 +11,7 @@ import {
 	connectOne,
 	connectOneRequired,
 	connectOrDisconnectId,
+	createOne,
 	createOneRequired,
 } from '~api/schemas/nestedOps'
 import { type TRPCHandlerParams } from '~api/types/handler'
@@ -24,7 +25,16 @@ type CreateData = Pick<
 const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protected'>) => {
 	try {
 		const prisma = getAuditedClient(ctx.actorId)
-		const { operation, id: passedId, countryId, description: desc, orgId, phoneTypeId, ...data } = input
+		const {
+			operation,
+			id: passedId,
+			countryId,
+			description: desc,
+			orgId,
+			phoneTypeId,
+			orgLocationId,
+			...data
+		} = input
 
 		const isCreateData = (op: 'create' | 'update', inputData: typeof data): inputData is CreateData =>
 			op === 'create'
@@ -114,20 +124,32 @@ const upsert = async ({ ctx, input }: TRPCHandlerParams<TUpsertSchema, 'protecte
 					data: {
 						id,
 						...data,
+						// Added from a location's page: it belongs to that location, so mark it location-only - the
+						// same thing orgEmail/orgWebsite/orgSocialMedia do for items created from a location.
+						...(orgLocationId ? { locationOnly: true } : {}),
 						description: description?.prisma,
 						country: connectOneRequired(countryId, 'id'),
 						phoneType: connectOne(phoneTypeId, 'id'),
 						organization: createOneRequired(orgId, 'organizationId'),
+						locations: createOne(orgLocationId, 'orgLocationId'),
 					},
 				})
 			}
+			// A description sent as empty means "remove it". It used to be skipped (only a non-empty one was
+			// ever written), so a cleared description came back on the next load. Only deleted when one
+			// exists - a nested delete of a missing record throws.
+			const clearDescription =
+				(desc === null || desc === '') &&
+				Boolean(
+					(await tx.orgPhone.findUnique({ where: { id }, select: { descriptionId: true } }))?.descriptionId
+				)
 			return await tx.orgPhone.update({
 				where: { id },
 				data: {
 					...data,
 					country: connectOne(countryId, 'id'),
 					phoneType: connectOrDisconnectId(phoneTypeId),
-					description: description?.prisma,
+					description: clearDescription ? { delete: true } : description?.prisma,
 				},
 			})
 		})

@@ -320,6 +320,7 @@
 		"include-remote": "لیرې خدمتونه شامل کړئ",
 		"local": "Local",
 		"local-description": "Local Resources (11 - 25 miles)",
+		"location-error": "Something went wrong looking up that location. Please try again.",
 		"location-placeholder": "ښار یا زپ کوډ دننه کړئ...",
 		"location-placeholder-searchby": "د ښار یا زپ کوډ لخوا لټون وکړئ ...",
 		"locality-label": "Locality",
@@ -337,6 +338,7 @@
 		"region-extended-description": "Extended Regional Resources (51 - 200 miles)",
 		"remote-national": "Remote",
 		"remote-national-description": "The items below match your filters but are remote/national resources available to you regardless of your physical location.",
+		"results-error": "Something went wrong loading search results. Please try again.",
 		"suggest-resource": "دا نشي موندلی؟ <1>هغه سازمان وړاندیز</1> کړئ چې تاسو فکر کوئ باید پکې شامل شي.",
 		"tier-label": "Tier"
 	},

@@ -72,6 +72,12 @@ const reviews = {
 	viewAllReviews: 'dataPortalBasic',
 } satisfies PermissionDefs
 
+// Basic+ can view the Reports table; changing a report (status, informed, notes) stays at dataPortalManager -
+// same view-vs-act split as Reviews (#2106).
+const reports = {
+	viewAllReports: 'dataPortalBasic',
+} satisfies PermissionDefs
+
 const system = {
 	createPermission: 'adminPermissions',
 	getDetails: 'dataPortalBasic',
@@ -97,6 +103,7 @@ const permissions = {
 	...orgSocialMedia,
 	...orgWebsite,
 	...reviews,
+	...reports,
 	...system,
 	...user,
 } satisfies PermissionDefs

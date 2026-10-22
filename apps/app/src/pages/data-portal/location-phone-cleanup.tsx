@@ -6,33 +6,30 @@ import { useTranslation } from 'next-i18next/pages'
 
 import { checkServerPermissions } from '@weareinreach/auth'
 import { DataPortalPageShell } from '@weareinreach/ui/components/data-portal/DataPortalPageShell'
+import { LocationContactReviewTable } from '@weareinreach/ui/components/data-portal/LocationContactReviewTable'
 import { organizationsSideNav } from '@weareinreach/ui/components/data-portal/organizationsSideNav'
-import { OrganizationTable } from '@weareinreach/ui/components/data-portal/OrganizationTable'
 import { PageHeading } from '@weareinreach/ui/components/data-portal/PageHeading'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-// TEMPORARY: this whole page (and its sidebar entry in the other Organizations-section pages) exists
-// only to help staff review orgs affected by the location-phone display fix (see
-// orgPhone/query.forContactInfo.handler.ts and OrganizationTable's `locationPhoneCleanupOnly` prop) -
-// a multi-location org's main page no longer automatically shows a number that's also linked to one of
-// its locations. Safe to delete this page, the sidebar entry for it in organizationsSideNav.ts, and the
-// `locationPhoneCleanupOnly`/`needsLocationPhoneCleanup` plumbing behind it once that review is done.
+// TEMPORARY: this whole page (and its sidebar entry in the other Organizations-section pages) exists only for
+// data managers to work through the location-vs-organization contact cleanup - the phones, emails, websites
+// and social media the 2026-10-19_location-contact-cleanup data migration couldn't decide on by itself (see
+// LocationContactReviewTable and the locationContactReview API router). Kept at its original
+// location-phone-cleanup URL. Safe to delete this page, its sidebar entry in organizationsSideNav.ts, the
+// table and the router once the list is empty.
 const DataPortalLocationPhoneCleanup: NextPageWithOptions = () => {
 	const { t } = useTranslation(['common'])
-	const title = t('admin.tab-location-phone-cleanup', 'Location Phone Cleanup')
+	const title = t('admin.tab-contact-cleanup', 'Contact Cleanup')
 
 	return (
 		<>
 			<Head>
 				<title>{t('page-title.base', { title })}</title>
 			</Head>
-			<DataPortalPageShell
-				activeSection='organizations'
-				sideNav={organizationsSideNav('Location Phone Cleanup')}
-			>
+			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav('Contact Cleanup')}>
 				<PageHeading title={title} />
-				<OrganizationTable locationPhoneCleanupOnly />
+				<LocationContactReviewTable />
 			</DataPortalPageShell>
 		</>
 	)

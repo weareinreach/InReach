@@ -105,8 +105,6 @@ const setup = (initial: FakeRecord, unsaved = false) => {
 	return { record, ...rendered }
 }
 
-// Same jsdom/floating-ui quirk as UnpublishReasonPopover.test.tsx: the option elements don't land in the
-// DOM until a real macrotask runs, which `findByRole`'s own polling never observes on its own.
 const chooseReasonAndSave = async (
 	user: ReturnType<typeof userEvent.setup>,
 	triggerName: string,
@@ -114,9 +112,8 @@ const chooseReasonAndSave = async (
 ) => {
 	await user.click(screen.getByRole('button', { name: triggerName }))
 	await user.click(await screen.findByPlaceholderText('Choose a reason'))
-	await new Promise((resolve) => setTimeout(resolve, 50))
-	await user.click(screen.getByRole('option', { name: reasonLabel, hidden: true }))
-	await user.click(screen.getByRole('button', { name: 'Done', hidden: true }))
+	await user.click(await screen.findByRole('option', { name: reasonLabel }))
+	await user.click(await screen.findByRole('button', { name: 'Done' }))
 }
 
 describe('EditModeBar (Navbar in edit mode)', () => {
@@ -265,7 +262,7 @@ describe('EditModeBar (Navbar in edit mode)', () => {
 		await user.click(screen.getByRole('button', { name: 'Unpublish' }))
 		await screen.findByPlaceholderText('Choose a reason')
 
-		expect(screen.getByRole('button', { name: 'Done', hidden: true })).toBeDisabled()
+		expect(await screen.findByRole('button', { name: 'Done' })).toBeDisabled()
 	})
 
 	it('3f.8: clicking "Exit edit mode" replaces to the non-edit pathname', async () => {
@@ -286,8 +283,7 @@ describe('EditModeBar (Navbar in edit mode)', () => {
 
 		await user.click(screen.getByRole('button', { name: 'Set status' }))
 		await user.click(await screen.findByPlaceholderText('Choose a reason'))
-		await new Promise((resolve) => setTimeout(resolve, 50))
-		await user.click(screen.getByRole('option', { name: 'Inactive', hidden: true }))
+		await user.click(await screen.findByRole('option', { name: 'Inactive' }))
 
 		// Overridden after `setup()`, not before - `setup()`'s own `wireFakeBackend` call would
 		// otherwise immediately clobber this with its synchronous-success mock. Bypassing it here
@@ -304,11 +300,11 @@ describe('EditModeBar (Navbar in edit mode)', () => {
 			}
 			return mutation as never
 		})
-		await user.click(screen.getByRole('button', { name: 'Done', hidden: true }))
+		await user.click(await screen.findByRole('button', { name: 'Done' }))
 
 		// Still open and showing a loading state - the mutation hasn't resolved yet.
 		expect(screen.getByPlaceholderText('Choose a reason')).toBeInTheDocument()
-		expect(screen.getByRole('button', { name: 'Done', hidden: true })).toHaveAttribute('data-loading', 'true')
+		expect(await screen.findByRole('button', { name: 'Done' })).toHaveAttribute('data-loading', 'true')
 
 		fireSuccess?.()
 		await waitFor(() => expect(screen.queryByPlaceholderText('Choose a reason')).not.toBeInTheDocument())
