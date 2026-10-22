@@ -338,6 +338,7 @@
 		"region-extended-description": "Ressources régionales étendues (82 - 321 kilomètres)",
 		"remote-national": "À distance",
 		"remote-national-description": "Les éléments ci-dessous correspondent à vos filtres mais sont des ressources à distance ou nationales disponibles pour vous, quel que soit votre emplacement physique.",
+		"results-error": "Une erreur s'est produite lors du chargement des résultats de recherche. Veuillez réessayer.",
 		"suggest-resource": "Vous ne le trouvez pas ? <strong>Proposez une organisation</strong> qui devrait être incluse.",
 		"tier-label": "Niveau"
 	},

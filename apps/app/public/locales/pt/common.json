@@ -338,6 +338,7 @@
 		"region-extended-description": "Recursos Regionais Estendidos (51 a 200 milhas)",
 		"remote-national": "Oferece serviços remotos",
 		"remote-national-description": "Os itens abaixo correspondem aos seus filtros, mas são recursos remotos/nacionais disponíveis para você, independentemente da sua localização física.",
+		"results-error": "Ocorreu um erro ao carregar os resultados da busca. Por favor, tente novamente.",
 		"suggest-resource": "Não consegue encontrá-lo? <1>Sugira uma organização</1> que você acha que deveria ser incluída.",
 		"tier-label": "Camada"
 	},
