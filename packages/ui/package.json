@@ -180,7 +180,7 @@
 		"react-refresh-typescript": "2.0.12",
 		"resolve-url-loader": "5.0.0",
 		"slugify": "1.6.9",
-		"storybook": "10.5.8",
+		"storybook": "10.6.2",
 		"storybook-addon-pseudo-states": "10.5.8",
 		"style-loader": "3.3.4",
 		"swc-loader": "0.2.7",
@@ -188,7 +188,7 @@
 		"tsx": "4.23.12",
 		"type-fest": "4.26.1",
 		"typescript": "5.6.3",
-		"vite": "8.2.1",
+		"vite": "8.2.4",
 		"vitest": "4.1.11",
 		"webpack": "5.109.2",
 		"zod": "4.4.3"
