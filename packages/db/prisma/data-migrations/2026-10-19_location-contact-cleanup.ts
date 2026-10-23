@@ -77,13 +77,20 @@ export const job20261019_locationContactCleanup = {
 		}
 		const types: ContactType[] = ['phone', 'email', 'website', 'socialMedia']
 
-		// One transaction: either every flag and note is written, or none are.
+		// One transaction: either every flag and note is written, or none are. Prisma's default
+		// transaction timeout is 5000ms - comfortably enough for local/dev data volumes, but
+		// production has far more location-linked contact rows than this was ever tested against
+		// and exceeded it (5601ms observed), which aborts the whole transaction. 60s gives a wide
+		// margin without weakening the atomicity guarantee.
 		const counts = (
-			await prisma.$transaction([
-				...types.map((type) => flag(type, toMark, true)),
-				...types.map((type) => flag(type, toUnmark, false)),
-				prisma.internalNote.createMany({ data: notes }),
-			])
+			await prisma.$transaction(
+				[
+					...types.map((type) => flag(type, toMark, true)),
+					...types.map((type) => flag(type, toUnmark, false)),
+					prisma.internalNote.createMany({ data: notes }),
+				],
+				{ timeout: 60_000 }
+			)
 		).map(({ count }) => count)
 		const [phones = 0, emails = 0, websites = 0, socials = 0] = counts
 		const unmarked = counts.slice(types.length, types.length * 2).reduce((sum, count) => sum + count, 0)
