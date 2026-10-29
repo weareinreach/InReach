@@ -58,12 +58,7 @@ export const ExistingUser = {
 			getTRPCMock({
 				path: ['user', 'forgotPassword'],
 				type: 'mutation',
-				response: {
-					CodeDeliveryDetails: {
-						DeliveryMedium: 'EMAIL',
-					},
-					$metadata: {},
-				},
+				response: { success: true },
 			})
 		)
 	},

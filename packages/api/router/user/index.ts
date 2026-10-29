@@ -71,6 +71,26 @@ export const userRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	// Staff-only equivalents of resendCode/forgotPassword above - same Manager+ gate as forUserTable,
+	// return the real Cognito outcome instead of the public endpoints' deliberately-generic response.
+	adminResendCode: permissionedProcedure('viewAllUsers')
+		.input(schema.ZAdminResendCodeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('adminResendCode'),
+				() => import('./mutation.adminResendCode.handler')
+			)
+			return handler(opts)
+		}),
+	adminResetPassword: permissionedProcedure('viewAllUsers')
+		.input(schema.ZAdminResetPasswordSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('adminResetPassword'),
+				() => import('./mutation.adminResetPassword.handler')
+			)
+			return handler(opts)
+		}),
 	confirmAccount: publicProcedure.input(schema.ZConfirmAccountSchema).mutation(async (opts) => {
 		const handler = await importHandler(
 			namespaced('confirmAccount'),

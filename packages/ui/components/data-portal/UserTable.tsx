@@ -142,7 +142,7 @@ const PasswordResetAction = ({ email }: { email: string }) => {
 	const theme = useMantineTheme()
 	const [opened, handler] = useDisclosure(false)
 	const { t } = useTranslation('common')
-	const resetPw = api.user.forgotPassword.useMutation({
+	const resetPw = api.user.adminResetPassword.useMutation({
 		onSettled: handler.close,
 	})
 	const cognitoSubject = t('password-reset.email-subject')
@@ -171,6 +171,42 @@ const PasswordResetAction = ({ email }: { email: string }) => {
 			<Tooltip label='Reset Password'>
 				<ActionIcon variant='subtle' onClick={handler.open}>
 					<Icon icon='carbon:password' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+		</>
+	)
+}
+
+const ResendVerificationAction = ({ email }: { email: string }) => {
+	const theme = useMantineTheme()
+	const [opened, handler] = useDisclosure(false)
+	const resendCode = api.user.adminResendCode.useMutation({
+		onSettled: handler.close,
+	})
+
+	const createResendHandler = useCallback(
+		(email: string) => () => {
+			resendCode.mutate({ email })
+		},
+		[resendCode]
+	)
+
+	return (
+		<>
+			<Modal opened={opened} onClose={handler.close} title='Resend Verification Code'>
+				<Text mb='md'>Are you sure you want to resend this user&apos;s verification code?</Text>
+				<Group wrap='nowrap'>
+					<Button onClick={createResendHandler(email)} loading={resendCode.isPending}>
+						Yes
+					</Button>
+					<Button variant='secondaryLg' onClick={handler.close}>
+						No
+					</Button>
+				</Group>
+			</Modal>
+			<Tooltip label='Resend Verification Code'>
+				<ActionIcon variant='subtle' onClick={handler.open}>
+					<Icon icon='carbon:send-alt' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 		</>
@@ -221,6 +257,7 @@ interface UserActionsCellProps extends DataTableCellContext<UserDataRecord> {
 const UserActionsCell = ({ row, loggedInUserPermissions }: UserActionsCellProps) => (
 	<Group wrap='nowrap' gap={8}>
 		<PasswordResetAction email={row.email} />
+		<ResendVerificationAction email={row.email} />
 		<ManageAccessAction
 			activePermissionName={row.permissionName}
 			userId={row.id}

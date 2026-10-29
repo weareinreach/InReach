@@ -14,12 +14,7 @@ export default {
 			getTRPCMock({
 				path: ['user', 'forgotPassword'],
 				type: 'mutation',
-				response: {
-					CodeDeliveryDetails: {
-						DeliveryMedium: 'EMAIL',
-					},
-					$metadata: {},
-				},
+				response: { success: true },
 			})
 		)
 	},
