@@ -40,6 +40,9 @@
 		"./server": {
 			"default": "./server.ts"
 		},
+		"./troubleLoggingIn": {
+			"default": "./lib/troubleLoggingIn.ts"
+		},
 		"./userLogin": {
 			"default": "./lib/userLogin.ts"
 		},

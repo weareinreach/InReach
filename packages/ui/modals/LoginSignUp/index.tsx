@@ -38,9 +38,9 @@ import {
 	FormServiceProvider,
 	LanguageSelect,
 } from './fields'
-import { ForgotPasswordModal } from '../ForgotPassword'
 import { ModalTitle } from '../ModalTitle'
 import { PrivacyStatementModal } from '../PrivacyStatement'
+import { TroubleLoggingInModal } from '../TroubleLoggingIn'
 
 // #region Signup
 type RichTranslateProps = {
@@ -412,9 +412,9 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 			<Title order={1}>🧐</Title>
 			<Title order={2}>{t('sign-up.user-exists-header')}</Title>
 			<Text variant={variants.Text.utility1darkGray}>{t('sign-up.user-exists-body')}</Text>
-			<ForgotPasswordModal component={Link} variant={variants.Button.primaryLg}>
-				{t('forgot-password')}
-			</ForgotPasswordModal>
+			<TroubleLoggingInModal component={Link} variant={variants.Button.primaryLg}>
+				{t('trouble-logging-in')}
+			</TroubleLoggingInModal>
 		</>
 	)
 
@@ -469,9 +469,15 @@ interface LoginBodyProps {
 export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 	({ activateShake, modalHandler, hideTitle, callbackUrl }, ref) => {
 		const [isLoading, setLoading] = useState(false)
+		// Set to the email just attempted when `signIn` fails specifically because the account isn't
+		// confirmed yet (see providers/cognito.ts's `authorize`) - lets this form offer a targeted
+		// "resend the verification email" fix instead of the generic wrong-password message, right at
+		// the point someone actually hits the problem.
+		const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null)
 		const variants = useCustomVariant()
 		const { t } = useTranslation(['common'])
 		const router = useRouter()
+		const resendCode = api.user.resendCode.useMutation()
 		const loginErrors = new Map([[401, t('login.error-username-password')]])
 		const LoginSchema = z.object({
 			email: z.string().email({ message: t('form-error-enter-valid-email') }),
@@ -487,11 +493,17 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 		const loginHandle = async (email: string, password: string) => {
 			try {
 				setLoading(true)
+				setUnconfirmedEmail(null)
 				if (!form.isValid()) return
 				const result = await signIn('cognito', { email, password, redirect: false })
 				if (result?.error) {
-					const message = loginErrors.get(result.status)
-					form.setFieldError('password', message ?? t('login.error-generic'))
+					if (result.error === 'UserNotConfirmed') {
+						setUnconfirmedEmail(email)
+						form.setFieldError('password', t('login.error-not-confirmed'))
+					} else {
+						const message = loginErrors.get(result.status)
+						form.setFieldError('password', message ?? t('login.error-generic'))
+					}
 					if (typeof activateShake === 'function') {
 						activateShake()
 					}
@@ -532,6 +544,19 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 				>
 					{t('log-in')}
 				</Button>
+				{unconfirmedEmail &&
+					(resendCode.isSuccess ? (
+						<Text variant={variants.Text.utility3}>{t('login.resend-sent')}</Text>
+					) : (
+						<Button
+							onClick={() => resendCode.mutate({ email: unconfirmedEmail })}
+							variant='secondaryLg'
+							fullWidth
+							loading={resendCode.isPending}
+						>
+							{t('errors.resend-code')}
+						</Button>
+					))}
 				<Text variant={variants.Text.utility4darkGray}>
 					<Trans
 						i18nKey='agree-disclaimer'
@@ -558,7 +583,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 					/>
 				</Text>
 				<Stack gap={0} align='center'>
-					<ForgotPasswordModal component={Link}>{t('forgot-password')}</ForgotPasswordModal>
+					<TroubleLoggingInModal component={Link}>{t('trouble-logging-in')}</TroubleLoggingInModal>
 					<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
 				</Stack>
 			</Stack>

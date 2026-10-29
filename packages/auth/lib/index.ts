@@ -13,6 +13,7 @@ export * from './logger'
 export * from './refreshSession'
 export * from './resendCode'
 export * from './resetPassword'
+export * from './troubleLoggingIn'
 export * from './userLogin'
 export * from './userLogout'
 // codegen:end

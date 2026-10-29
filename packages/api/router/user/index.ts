@@ -91,6 +91,13 @@ export const userRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	troubleLoggingIn: publicProcedure.input(schema.ZTroubleLoggingInSchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('troubleLoggingIn'),
+			() => import('./mutation.troubleLoggingIn.handler')
+		)
+		return handler(opts)
+	}),
 	confirmAccount: publicProcedure.input(schema.ZConfirmAccountSchema).mutation(async (opts) => {
 		const handler = await importHandler(
 			namespaced('confirmAccount'),

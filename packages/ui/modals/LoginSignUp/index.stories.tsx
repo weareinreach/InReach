@@ -56,7 +56,7 @@ export const ExistingUser = {
 				},
 			}),
 			getTRPCMock({
-				path: ['user', 'forgotPassword'],
+				path: ['user', 'troubleLoggingIn'],
 				type: 'mutation',
 				response: { success: true },
 			})
