@@ -6,16 +6,18 @@ vi.mock('~ui/lib/trpcClient', () => ({
 		user: {
 			adminResetPassword: { useMutation: vi.fn() },
 			adminResendCode: { useMutation: vi.fn() },
+			adminConfirmUser: { useMutation: vi.fn() },
 		},
 	},
 }))
 
 const { trpc } = await import('~ui/lib/trpcClient')
 const { render, screen } = await import('~ui/test/test-utils')
-const { PasswordResetAction, ResendVerificationAction } = await import('./UserTable')
+const { PasswordResetAction, ResendVerificationAction, ConfirmUserAction } = await import('./UserTable')
 
 const adminResetPasswordMock = vi.mocked(trpc.user.adminResetPassword.useMutation)
 const adminResendCodeMock = vi.mocked(trpc.user.adminResendCode.useMutation)
+const adminConfirmUserMock = vi.mocked(trpc.user.adminConfirmUser.useMutation)
 
 const EMAIL = 'staff-target@example.com'
 
@@ -93,6 +95,42 @@ describe('ResendVerificationAction', () => {
 
 	it('does not call the mutation when the confirm dialog is dismissed', async () => {
 		render(<ResendVerificationAction email={EMAIL} />)
+		const user = userEvent.setup()
+		await user.click(screen.getByRole('button'))
+		await user.click(await screen.findByRole('button', { name: 'No' }))
+
+		expect(mutate).not.toHaveBeenCalled()
+	})
+})
+
+describe('ConfirmUserAction', () => {
+	const mutate = vi.fn()
+
+	beforeEach(() => {
+		mutate.mockClear()
+		adminConfirmUserMock.mockReturnValue({ mutate, isPending: false } as never)
+	})
+
+	it('does not call the mutation until the confirm dialog is accepted', async () => {
+		render(<ConfirmUserAction email={EMAIL} />)
+		await userEvent.setup().click(screen.getByRole('button'))
+
+		expect(await screen.findByText(/sure you want to confirm/i)).toBeInTheDocument()
+		expect(mutate).not.toHaveBeenCalled()
+	})
+
+	it('calls adminConfirmUser with exactly the target email once confirmed (no extra fields)', async () => {
+		render(<ConfirmUserAction email={EMAIL} />)
+		const user = userEvent.setup()
+		await user.click(screen.getByRole('button'))
+		await user.click(await screen.findByRole('button', { name: 'Yes' }))
+
+		expect(mutate).toHaveBeenCalledTimes(1)
+		expect(mutate).toHaveBeenCalledWith({ email: EMAIL })
+	})
+
+	it('does not call the mutation when the confirm dialog is dismissed', async () => {
+		render(<ConfirmUserAction email={EMAIL} />)
 		const user = userEvent.setup()
 		await user.click(screen.getByRole('button'))
 		await user.click(await screen.findByRole('button', { name: 'No' }))

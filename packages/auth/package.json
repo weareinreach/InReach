@@ -11,6 +11,9 @@
 		"./*": {
 			"default": "./*"
 		},
+		"./adminConfirmUser": {
+			"default": "./lib/adminConfirmUser.ts"
+		},
 		"./confirmAccount": {
 			"default": "./lib/confirmAccount.ts"
 		},

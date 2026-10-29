@@ -1,4 +1,5 @@
 // codegen:start {preset: barrel, include: ./*.schema.ts}
+export * from './mutation.adminConfirmUser.schema'
 export * from './mutation.adminCreate.schema'
 export * from './mutation.adminResendCode.schema'
 export * from './mutation.adminResetPassword.schema'

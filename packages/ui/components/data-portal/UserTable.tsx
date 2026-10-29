@@ -213,6 +213,44 @@ export const ResendVerificationAction = ({ email }: { email: string }) => {
 	)
 }
 
+export const ConfirmUserAction = ({ email }: { email: string }) => {
+	const theme = useMantineTheme()
+	const [opened, handler] = useDisclosure(false)
+	const confirmUser = api.user.adminConfirmUser.useMutation({
+		onSettled: handler.close,
+	})
+
+	const createConfirmHandler = useCallback(
+		(email: string) => () => {
+			confirmUser.mutate({ email })
+		},
+		[confirmUser]
+	)
+
+	return (
+		<>
+			<Modal opened={opened} onClose={handler.close} title='Confirm User'>
+				<Text mb='md'>
+					Are you sure you want to confirm this user&apos;s account? This skips email verification entirely.
+				</Text>
+				<Group wrap='nowrap'>
+					<Button onClick={createConfirmHandler(email)} loading={confirmUser.isPending}>
+						Yes
+					</Button>
+					<Button variant='secondaryLg' onClick={handler.close}>
+						No
+					</Button>
+				</Group>
+			</Modal>
+			<Tooltip label='Confirm User'>
+				<ActionIcon variant='subtle' onClick={handler.open}>
+					<Icon icon='carbon:checkmark-outline' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+		</>
+	)
+}
+
 const ManageAccessAction = ({
 	activePermissionName,
 	userId,
@@ -258,6 +296,7 @@ const UserActionsCell = ({ row, loggedInUserPermissions }: UserActionsCellProps)
 	<Group wrap='nowrap' gap={8}>
 		<PasswordResetAction email={row.email} />
 		<ResendVerificationAction email={row.email} />
+		<ConfirmUserAction email={row.email} />
 		<ManageAccessAction
 			activePermissionName={row.permissionName}
 			userId={row.id}
@@ -342,7 +381,7 @@ export const UserTable = () => {
 				id: 'actions',
 				header: 'Actions',
 				pin: 'left',
-				size: 90,
+				size: 150,
 				enableSorting: false,
 				enableGlobalFilter: false,
 				hideable: false,
