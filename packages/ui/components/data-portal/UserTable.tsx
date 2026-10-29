@@ -138,7 +138,7 @@ const DataPortalAccessSelect = ({
 	)
 }
 
-const PasswordResetAction = ({ email }: { email: string }) => {
+export const PasswordResetAction = ({ email }: { email: string }) => {
 	const theme = useMantineTheme()
 	const [opened, handler] = useDisclosure(false)
 	const { t } = useTranslation('common')
@@ -177,7 +177,7 @@ const PasswordResetAction = ({ email }: { email: string }) => {
 	)
 }
 
-const ResendVerificationAction = ({ email }: { email: string }) => {
+export const ResendVerificationAction = ({ email }: { email: string }) => {
 	const theme = useMantineTheme()
 	const [opened, handler] = useDisclosure(false)
 	const resendCode = api.user.adminResendCode.useMutation({
