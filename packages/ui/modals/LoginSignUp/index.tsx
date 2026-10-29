@@ -474,10 +474,19 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 		// "resend the verification email" fix instead of the generic wrong-password message, right at
 		// the point someone actually hits the problem.
 		const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null)
+		// Set when `signIn` comes back with Cognito's NEW_PASSWORD_REQUIRED challenge - a staff-set
+		// temporary password (see UserTable's "Set Temporary Password" action) rather than a normal
+		// failure. The password just typed above *was* the temporary one; it's needed again to complete
+		// the challenge (see `completeNewPasswordChallenge`), so it's captured here rather than re-asked.
+		const [newPasswordChallenge, setNewPasswordChallenge] = useState<{
+			email: string
+			temporaryPassword: string
+		} | null>(null)
 		const variants = useCustomVariant()
 		const { t } = useTranslation(['common'])
 		const router = useRouter()
 		const resendCode = api.user.resendCode.useMutation()
+		const completeNewPasswordChallenge = api.user.completeNewPasswordChallenge.useMutation()
 		const loginErrors = new Map([[401, t('login.error-username-password')]])
 		const LoginSchema = z.object({
 			email: z.string().email({ message: t('form-error-enter-valid-email') }),
@@ -490,6 +499,34 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 			// until typed into, tripping React's uncontrolled-to-controlled input warning.
 			initialValues: { email: '', password: '' },
 		})
+		const NewPasswordSchema = z.object({
+			// Same policy as sign-up's password field (context.ts's SignUpSchema) - this is setting a real
+			// account password subject to the identical Cognito requirements.
+			newPassword: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
+				message: t('form-error-password-req'),
+			}),
+		})
+		const newPasswordForm = useForm<{ newPassword: string }>({
+			validate: schemaResolver(NewPasswordSchema, { sync: true }),
+			validateInputOnBlur: true,
+			initialValues: { newPassword: '' },
+		})
+		const completeSignIn = async (email: string, password: string) => {
+			const result = await signIn('cognito', { email, password, redirect: false })
+			if (result?.ok) {
+				userEvent.login()
+				// Falls back to the normal login view rather than leaving the "set new password" step
+				// stuck on screen, for the rarer non-modal case (no modalHandler/callbackUrl to navigate
+				// away via).
+				setNewPasswordChallenge(null)
+				if (modalHandler) {
+					modalHandler.close()
+				} else if (callbackUrl) {
+					router.push(callbackUrl)
+				}
+			}
+			return result
+		}
 		const loginHandle = async (email: string, password: string) => {
 			try {
 				setLoading(true)
@@ -500,6 +537,8 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 					if (result.error === 'UserNotConfirmed') {
 						setUnconfirmedEmail(email)
 						form.setFieldError('password', t('login.error-not-confirmed'))
+					} else if (result.error === 'NewPasswordRequired') {
+						setNewPasswordChallenge({ email, temporaryPassword: password })
 					} else {
 						const message = loginErrors.get(result.status)
 						form.setFieldError('password', message ?? t('login.error-generic'))
@@ -519,6 +558,48 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 			} finally {
 				setLoading(false)
 			}
+		}
+		const submitNewPassword = async (newPassword: string) => {
+			if (!newPasswordChallenge || !newPasswordForm.isValid()) return
+			try {
+				setLoading(true)
+				await completeNewPasswordChallenge.mutateAsync({
+					email: newPasswordChallenge.email,
+					temporaryPassword: newPasswordChallenge.temporaryPassword,
+					newPassword,
+				})
+				const result = await completeSignIn(newPasswordChallenge.email, newPassword)
+				if (result?.error) {
+					newPasswordForm.setFieldError('newPassword', t('login.new-password-error'))
+				}
+			} catch {
+				newPasswordForm.setFieldError('newPassword', t('login.new-password-error'))
+			} finally {
+				setLoading(false)
+			}
+		}
+		if (newPasswordChallenge) {
+			return (
+				<Stack align='center' gap={24} ref={ref}>
+					{hideTitle ? null : <Title order={2}>{t('login.new-password-title')}</Title>}
+					<Text variant={variants.Text.utility1darkGray}>{t('login.new-password-message')}</Text>
+					<PasswordInput
+						label={t('login.new-password-label')}
+						placeholder={t('enter-password-placeholder')}
+						required
+						{...newPasswordForm.getInputProps('newPassword')}
+					/>
+					<Button
+						onClick={async () => await submitNewPassword(newPasswordForm.values.newPassword)}
+						variant='primary-icon'
+						fullWidth
+						type='submit'
+						loading={isLoading}
+					>
+						{t('login.new-password-submit')}
+					</Button>
+				</Stack>
+			)
 		}
 		return (
 			<Stack align='center' gap={24} ref={ref}>

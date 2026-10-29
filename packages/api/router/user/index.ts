@@ -100,6 +100,26 @@ export const userRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
+	adminSetTemporaryPassword: permissionedProcedure('viewAllUsers')
+		.input(schema.ZAdminSetTemporaryPasswordSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('adminSetTemporaryPassword'),
+				() => import('./mutation.adminSetTemporaryPassword.handler')
+			)
+			return handler(opts)
+		}),
+	// Public - completes the NEW_PASSWORD_REQUIRED challenge from the temporary password above. Requires
+	// knowing the temporary password itself, so (unlike resendCode/forgotPassword) no enumeration risk.
+	completeNewPasswordChallenge: publicProcedure
+		.input(schema.ZCompleteNewPasswordChallengeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('completeNewPasswordChallenge'),
+				() => import('./mutation.completeNewPasswordChallenge.handler')
+			)
+			return handler(opts)
+		}),
 	troubleLoggingIn: publicProcedure.input(schema.ZTroubleLoggingInSchema).mutation(async (opts) => {
 		const handler = await importHandler(
 			namespaced('troubleLoggingIn'),

@@ -9,7 +9,7 @@ import {
 	Tooltip,
 	useMantineTheme,
 } from '@mantine/core'
-import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { useClipboard, useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
@@ -138,6 +138,14 @@ const DataPortalAccessSelect = ({
 	)
 }
 
+/**
+ * The four staff account-recovery actions below are organized as two pairs - a preferred, email-dependent
+ * path and an escalation that bypasses email entirely - for each of the two problems a user can get stuck on:
+ * an unverified account, or a password they can't get back. Each modal's body states which pair it belongs to
+ * and when to reach for it, so a data manager can pick the right one without needing to understand Cognito,
+ * SES, or why an email might silently fail to arrive.
+ */
+
 export const PasswordResetAction = ({ email }: { email: string }) => {
 	const theme = useMantineTheme()
 	const [opened, handler] = useDisclosure(false)
@@ -157,7 +165,12 @@ export const PasswordResetAction = ({ email }: { email: string }) => {
 
 	return (
 		<>
-			<Modal opened={opened} onClose={handler.close} title='Reset Password'>
+			<Modal opened={opened} onClose={handler.close} title='Send Password Reset Link'>
+				<Text size='sm' c='dimmed' mb='sm'>
+					Preferred way to help a user reset their password. Only works if they can actually receive email -
+					if they've already tried this and say nothing arrived, use &quot;Set Temporary Password&quot;
+					instead.
+				</Text>
 				<Text mb='md'>Are you sure you want to reset this user&apos;s password?</Text>
 				<Group wrap='nowrap'>
 					<Button onClick={createResetHandler(email)} loading={resetPw.isPending}>
@@ -168,9 +181,76 @@ export const PasswordResetAction = ({ email }: { email: string }) => {
 					</Button>
 				</Group>
 			</Modal>
-			<Tooltip label='Reset Password'>
+			<Tooltip label='Send Password Reset Link'>
 				<ActionIcon variant='subtle' onClick={handler.open}>
 					<Icon icon='carbon:password' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+		</>
+	)
+}
+
+export const SetTemporaryPasswordAction = ({ email }: { email: string }) => {
+	const theme = useMantineTheme()
+	const [opened, handler] = useDisclosure(false)
+	const clipboard = useClipboard({ timeout: 1000 })
+	const setTempPassword = api.user.adminSetTemporaryPassword.useMutation()
+
+	const handleClose = useCallback(() => {
+		handler.close()
+		setTempPassword.reset()
+	}, [handler, setTempPassword])
+
+	const createSetHandler = useCallback(
+		(email: string) => () => {
+			setTempPassword.mutate({ email })
+		},
+		[setTempPassword]
+	)
+
+	return (
+		<>
+			<Modal opened={opened} onClose={handleClose} title='Set Temporary Password'>
+				{setTempPassword.data ? (
+					<>
+						<Text mb='xs'>
+							Share this password with the user directly - phone, verified chat, in person. Never by email.
+							They&apos;ll be required to choose their own password the next time they log in.
+						</Text>
+						<Group wrap='nowrap' mb='md'>
+							<Text ff='monospace' size='lg' fw={700}>
+								{setTempPassword.data.temporaryPassword}
+							</Text>
+							<Button
+								variant='secondaryLg'
+								onClick={() => clipboard.copy(setTempPassword.data.temporaryPassword)}
+							>
+								{clipboard.copied ? 'Copied' : 'Copy'}
+							</Button>
+						</Group>
+						<Button onClick={handleClose}>Done</Button>
+					</>
+				) : (
+					<>
+						<Text size='sm' c='dimmed' mb='sm'>
+							Use this only if the user says a password reset email never arrived. Generates a one-time
+							password with no email involved - you&apos;ll need to share it with them yourself.
+						</Text>
+						<Text mb='md'>Are you sure you want to set a temporary password for this user?</Text>
+						<Group wrap='nowrap'>
+							<Button onClick={createSetHandler(email)} loading={setTempPassword.isPending}>
+								Yes
+							</Button>
+							<Button variant='secondaryLg' onClick={handleClose}>
+								No
+							</Button>
+						</Group>
+					</>
+				)}
+			</Modal>
+			<Tooltip label='Set Temporary Password'>
+				<ActionIcon variant='subtle' onClick={handler.open}>
+					<Icon icon='carbon:key' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 		</>
@@ -193,8 +273,13 @@ export const ResendVerificationAction = ({ email }: { email: string }) => {
 
 	return (
 		<>
-			<Modal opened={opened} onClose={handler.close} title='Resend Verification Code'>
-				<Text mb='md'>Are you sure you want to resend this user&apos;s verification code?</Text>
+			<Modal opened={opened} onClose={handler.close} title='Resend Verification Link'>
+				<Text size='sm' c='dimmed' mb='sm'>
+					Preferred way to get a new verification link to the user. Only works if they can actually receive
+					email - if they've already tried this and say nothing arrived, use &quot;Force Verification&quot;
+					instead.
+				</Text>
+				<Text mb='md'>Are you sure you want to resend this user&apos;s verification link?</Text>
 				<Group wrap='nowrap'>
 					<Button onClick={createResendHandler(email)} loading={resendCode.isPending}>
 						Yes
@@ -204,7 +289,7 @@ export const ResendVerificationAction = ({ email }: { email: string }) => {
 					</Button>
 				</Group>
 			</Modal>
-			<Tooltip label='Resend Verification Code'>
+			<Tooltip label='Resend Verification Link'>
 				<ActionIcon variant='subtle' onClick={handler.open}>
 					<Icon icon='carbon:send-alt' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
@@ -213,7 +298,7 @@ export const ResendVerificationAction = ({ email }: { email: string }) => {
 	)
 }
 
-export const ConfirmUserAction = ({ email }: { email: string }) => {
+export const ForceVerificationAction = ({ email }: { email: string }) => {
 	const theme = useMantineTheme()
 	const [opened, handler] = useDisclosure(false)
 	const confirmUser = api.user.adminConfirmUser.useMutation({
@@ -229,10 +314,12 @@ export const ConfirmUserAction = ({ email }: { email: string }) => {
 
 	return (
 		<>
-			<Modal opened={opened} onClose={handler.close} title='Confirm User'>
-				<Text mb='md'>
-					Are you sure you want to confirm this user&apos;s account? This skips email verification entirely.
+			<Modal opened={opened} onClose={handler.close} title='Force Verification'>
+				<Text size='sm' c='dimmed' mb='sm'>
+					Use this only if the user says a verification email never arrived. Confirms the account directly,
+					skipping email entirely - no code or link needed.
 				</Text>
+				<Text mb='md'>Are you sure you want to confirm this user&apos;s account?</Text>
 				<Group wrap='nowrap'>
 					<Button onClick={createConfirmHandler(email)} loading={confirmUser.isPending}>
 						Yes
@@ -242,7 +329,7 @@ export const ConfirmUserAction = ({ email }: { email: string }) => {
 					</Button>
 				</Group>
 			</Modal>
-			<Tooltip label='Confirm User'>
+			<Tooltip label='Force Verification'>
 				<ActionIcon variant='subtle' onClick={handler.open}>
 					<Icon icon='carbon:checkmark-outline' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
@@ -295,8 +382,9 @@ interface UserActionsCellProps extends DataTableCellContext<UserDataRecord> {
 const UserActionsCell = ({ row, loggedInUserPermissions }: UserActionsCellProps) => (
 	<Group wrap='nowrap' gap={8}>
 		<PasswordResetAction email={row.email} />
+		<SetTemporaryPasswordAction email={row.email} />
 		<ResendVerificationAction email={row.email} />
-		<ConfirmUserAction email={row.email} />
+		<ForceVerificationAction email={row.email} />
 		<ManageAccessAction
 			activePermissionName={row.permissionName}
 			userId={row.id}
@@ -381,7 +469,7 @@ export const UserTable = () => {
 				id: 'actions',
 				header: 'Actions',
 				pin: 'left',
-				size: 150,
+				size: 190,
 				enableSorting: false,
 				enableGlobalFilter: false,
 				hideable: false,

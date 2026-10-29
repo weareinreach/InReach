@@ -5,6 +5,7 @@ vi.mock('~ui/lib/trpcClient', () => ({
 	trpc: {
 		user: {
 			adminResetPassword: { useMutation: vi.fn() },
+			adminSetTemporaryPassword: { useMutation: vi.fn() },
 			adminResendCode: { useMutation: vi.fn() },
 			adminConfirmUser: { useMutation: vi.fn() },
 		},
@@ -13,9 +14,11 @@ vi.mock('~ui/lib/trpcClient', () => ({
 
 const { trpc } = await import('~ui/lib/trpcClient')
 const { render, screen } = await import('~ui/test/test-utils')
-const { PasswordResetAction, ResendVerificationAction, ConfirmUserAction } = await import('./UserTable')
+const { PasswordResetAction, SetTemporaryPasswordAction, ResendVerificationAction, ForceVerificationAction } =
+	await import('./UserTable')
 
 const adminResetPasswordMock = vi.mocked(trpc.user.adminResetPassword.useMutation)
+const adminSetTemporaryPasswordMock = vi.mocked(trpc.user.adminSetTemporaryPassword.useMutation)
 const adminResendCodeMock = vi.mocked(trpc.user.adminResendCode.useMutation)
 const adminConfirmUserMock = vi.mocked(trpc.user.adminConfirmUser.useMutation)
 
@@ -67,6 +70,66 @@ describe('PasswordResetAction', () => {
 	})
 })
 
+describe('SetTemporaryPasswordAction', () => {
+	const mutate = vi.fn()
+	const reset = vi.fn()
+
+	beforeEach(() => {
+		mutate.mockClear()
+		reset.mockClear()
+		adminSetTemporaryPasswordMock.mockReturnValue({
+			mutate,
+			isPending: false,
+			data: undefined,
+			reset,
+		} as never)
+	})
+
+	it('does not call the mutation until the confirm dialog is accepted', async () => {
+		render(<SetTemporaryPasswordAction email={EMAIL} />)
+		await userEvent.setup().click(screen.getByRole('button'))
+
+		expect(await screen.findByText(/sure you want to set a temporary password/i)).toBeInTheDocument()
+		expect(mutate).not.toHaveBeenCalled()
+	})
+
+	it('calls adminSetTemporaryPassword with exactly the target email once confirmed (no extra fields)', async () => {
+		render(<SetTemporaryPasswordAction email={EMAIL} />)
+		const user = userEvent.setup()
+		await user.click(screen.getByRole('button'))
+		await user.click(await screen.findByRole('button', { name: 'Yes' }))
+
+		expect(mutate).toHaveBeenCalledTimes(1)
+		expect(mutate).toHaveBeenCalledWith({ email: EMAIL })
+	})
+
+	it('does not call the mutation when the confirm dialog is dismissed', async () => {
+		render(<SetTemporaryPasswordAction email={EMAIL} />)
+		const user = userEvent.setup()
+		await user.click(screen.getByRole('button'))
+		await user.click(await screen.findByRole('button', { name: 'No' }))
+
+		expect(mutate).not.toHaveBeenCalled()
+	})
+
+	// The modal deliberately doesn't close on success (unlike the other three actions) - staff need to
+	// read/copy the generated password before it's gone, so it's shown in place of the confirm prompt.
+	it('shows the generated password (not the confirm prompt) once the mutation has succeeded', async () => {
+		adminSetTemporaryPasswordMock.mockReturnValue({
+			mutate,
+			isPending: false,
+			data: { temporaryPassword: 'Ab3%cdEfGh' },
+			reset,
+		} as never)
+		render(<SetTemporaryPasswordAction email={EMAIL} />)
+		await userEvent.setup().click(screen.getByRole('button'))
+
+		expect(await screen.findByText('Ab3%cdEfGh')).toBeInTheDocument()
+		expect(screen.queryByText(/sure you want to set a temporary password/i)).not.toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Copy' })).toBeInTheDocument()
+	})
+})
+
 describe('ResendVerificationAction', () => {
 	const mutate = vi.fn()
 
@@ -103,7 +166,7 @@ describe('ResendVerificationAction', () => {
 	})
 })
 
-describe('ConfirmUserAction', () => {
+describe('ForceVerificationAction', () => {
 	const mutate = vi.fn()
 
 	beforeEach(() => {
@@ -112,7 +175,7 @@ describe('ConfirmUserAction', () => {
 	})
 
 	it('does not call the mutation until the confirm dialog is accepted', async () => {
-		render(<ConfirmUserAction email={EMAIL} />)
+		render(<ForceVerificationAction email={EMAIL} />)
 		await userEvent.setup().click(screen.getByRole('button'))
 
 		expect(await screen.findByText(/sure you want to confirm/i)).toBeInTheDocument()
@@ -120,7 +183,7 @@ describe('ConfirmUserAction', () => {
 	})
 
 	it('calls adminConfirmUser with exactly the target email once confirmed (no extra fields)', async () => {
-		render(<ConfirmUserAction email={EMAIL} />)
+		render(<ForceVerificationAction email={EMAIL} />)
 		const user = userEvent.setup()
 		await user.click(screen.getByRole('button'))
 		await user.click(await screen.findByRole('button', { name: 'Yes' }))
@@ -130,7 +193,7 @@ describe('ConfirmUserAction', () => {
 	})
 
 	it('does not call the mutation when the confirm dialog is dismissed', async () => {
-		render(<ConfirmUserAction email={EMAIL} />)
+		render(<ForceVerificationAction email={EMAIL} />)
 		const user = userEvent.setup()
 		await user.click(screen.getByRole('button'))
 		await user.click(await screen.findByRole('button', { name: 'No' }))

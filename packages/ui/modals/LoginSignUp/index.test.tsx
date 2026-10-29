@@ -8,14 +8,16 @@ vi.mock('next/router', () => ({
 }))
 
 const resendCodeUseMutation = vi.fn()
+const completeNewPasswordChallengeUseMutation = vi.fn()
 // `LoginBody` sits in the same render tree as sibling modals eagerly mounted alongside it (the
 // signup form's `api.user.create`, `TroubleLoggingInModal`'s `api.user.troubleLoggingIn`, etc.) -
 // none of that is under test here, so every `trpc.<namespace>.<procedure>.useQuery`/`useMutation`
-// gets a safe no-op default via this Proxy, and only `user.resendCode` is overridden below with a
-// controllable mock.
+// gets a safe no-op default via this Proxy, and only `user.resendCode`/`user.completeNewPasswordChallenge`
+// are overridden below with controllable mocks.
 vi.mock('~ui/lib/trpcClient', () => {
 	const noopResult = {
 		mutate: vi.fn(),
+		mutateAsync: vi.fn().mockResolvedValue(undefined),
 		isPending: false,
 		isSuccess: false,
 		data: undefined,
@@ -25,8 +27,13 @@ vi.mock('~ui/lib/trpcClient', () => {
 		get: (_t, prop) => (prop === 'useMutation' || prop === 'useQuery' ? () => noopResult : undefined),
 	}
 	const userHandler: ProxyHandler<object> = {
-		get: (_t, prop) =>
-			prop === 'resendCode' ? { useMutation: resendCodeUseMutation } : new Proxy({}, leafHandler),
+		get: (_t, prop) => {
+			if (prop === 'resendCode') return { useMutation: resendCodeUseMutation }
+			if (prop === 'completeNewPasswordChallenge') {
+				return { useMutation: completeNewPasswordChallengeUseMutation }
+			}
+			return new Proxy({}, leafHandler)
+		},
 	}
 	const trpcHandler: ProxyHandler<object> = {
 		get: (_t, prop) => (prop === 'user' ? new Proxy({}, userHandler) : new Proxy({}, leafHandler)),
@@ -39,6 +46,8 @@ const { LoginBody } = await import('./index')
 
 const resendCodeMock = resendCodeUseMutation
 const resendCodeMutate = vi.fn()
+const completeNewPasswordChallengeMock = completeNewPasswordChallengeUseMutation
+const completeNewPasswordChallengeMutateAsync = vi.fn()
 
 const EMAIL = 'someone@example.com'
 const PASSWORD = 'correct-password'
@@ -121,5 +130,69 @@ describe('LoginBody - UserNotConfirmed handling', () => {
 		await fillAndSubmit(container)
 
 		expect(screen.queryByRole('button', { name: 'Request a new code' })).not.toBeInTheDocument()
+	})
+})
+
+/**
+ * Regression coverage for the "set temporary password" staff action (UserTable's
+ * `SetTemporaryPasswordAction`, backed by Cognito's AdminSetUserPassword with Permanent: false). Logging in
+ * with that temporary password doesn't succeed or fail - it comes back as a NEW_PASSWORD_REQUIRED challenge,
+ * which the login form must surface as a "choose your new password" step rather than a generic error.
+ */
+describe('LoginBody - NewPasswordRequired handling', () => {
+	beforeEach(() => {
+		completeNewPasswordChallengeMutateAsync.mockClear()
+		completeNewPasswordChallengeMock.mockReturnValue({
+			mutateAsync: completeNewPasswordChallengeMutateAsync,
+			isPending: false,
+		} as never)
+	})
+
+	it('shows the set-new-password step instead of a generic error', async () => {
+		signInMock.mockResolvedValueOnce({ error: 'NewPasswordRequired', status: 401, ok: false, url: null })
+		const { container } = render(<LoginBody />)
+		await fillAndSubmit(container)
+
+		expect(await screen.findByText(/temporary password/i)).toBeInTheDocument()
+		expect(screen.queryByText('Incorrect username or password.')).not.toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Set New Password' })).toBeInTheDocument()
+	})
+
+	it('completes the challenge with the email and original (temporary) password, then signs in with the new one', async () => {
+		signInMock.mockResolvedValueOnce({ error: 'NewPasswordRequired', status: 401, ok: false, url: null })
+		completeNewPasswordChallengeMutateAsync.mockResolvedValueOnce(undefined)
+		signInMock.mockResolvedValueOnce({ ok: true, error: null, status: 200, url: null })
+		const { container } = render(<LoginBody />)
+		await fillAndSubmit(container)
+
+		const user = userEvent.setup()
+		const newPasswordInput = screen.getByLabelText(/^New Password/)
+		await user.type(newPasswordInput, 'Br4nd-New-Password')
+		await user.click(screen.getByRole('button', { name: 'Set New Password' }))
+
+		expect(completeNewPasswordChallengeMutateAsync).toHaveBeenCalledWith({
+			email: EMAIL,
+			temporaryPassword: PASSWORD,
+			newPassword: 'Br4nd-New-Password',
+		})
+		expect(signInMock).toHaveBeenLastCalledWith('cognito', {
+			email: EMAIL,
+			password: 'Br4nd-New-Password',
+			redirect: false,
+		})
+	})
+
+	it('shows an error and stays on the step if completing the challenge fails', async () => {
+		signInMock.mockResolvedValueOnce({ error: 'NewPasswordRequired', status: 401, ok: false, url: null })
+		completeNewPasswordChallengeMutateAsync.mockRejectedValueOnce(new Error('Temporary password expired'))
+		const { container } = render(<LoginBody />)
+		await fillAndSubmit(container)
+
+		const user = userEvent.setup()
+		await user.type(screen.getByLabelText(/^New Password/), 'Br4nd-New-Password')
+		await user.click(screen.getByRole('button', { name: 'Set New Password' }))
+
+		expect(await screen.findByText(/temporary password may have expired/i)).toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Set New Password' })).toBeInTheDocument()
 	})
 })

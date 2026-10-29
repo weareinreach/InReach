@@ -21,6 +21,12 @@ export const cognitoCredentialProvider: Provider = Credentials({
 			if (cognitoSession.success === true) {
 				return cognitoSession.user
 			}
+			// Staff-set temporary password (AdminSetUserPassword with Permanent: false) - Cognito doesn't
+			// fail the login, it challenges it. The password the user just typed was the temporary one;
+			// the login form re-sends it along with their chosen new password to complete the challenge.
+			if (cognitoSession.success === undefined && cognitoSession.challengeName === 'NEW_PASSWORD_REQUIRED') {
+				throw new Error('NewPasswordRequired')
+			}
 			throw new Error('CredentialsSignin')
 		} catch (err) {
 			// NextAuth v4 passes a thrown Error's `.message` straight through to the client as

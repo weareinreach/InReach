@@ -14,6 +14,12 @@
 		"./adminConfirmUser": {
 			"default": "./lib/adminConfirmUser.ts"
 		},
+		"./adminSetTemporaryPassword": {
+			"default": "./lib/adminSetTemporaryPassword.ts"
+		},
+		"./completeNewPasswordChallenge": {
+			"default": "./lib/completeNewPasswordChallenge.ts"
+		},
 		"./confirmAccount": {
 			"default": "./lib/confirmAccount.ts"
 		},
