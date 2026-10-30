@@ -7,6 +7,7 @@ import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
 import { normalizeFullUrl, normalizeToDomain } from '@weareinreach/util/url'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { findMatchingException } from '../../orgUrlDuplicateException/lib/findMatchingException'
 import { type TCreateNewSuggestionSchema } from '../mutation.createNewSuggestion.schema'
 
 const DATA_PORTAL_PERMISSIONS = [
@@ -82,15 +83,13 @@ export const createOrgSuggestion = async ({
 			(candidate) => normalizeToDomain(candidate.url) === normalizedWebsite
 		)
 
-		// A base domain on the exceptions list (e.g. a shared professional-directory site) is only exempt
-		// when the full URL actually differs from every existing match - the exact same URL submitted twice
-		// is still a real duplicate even under an exception.
+		// A base URL on the exceptions list (a bare domain or a deeper path prefix, e.g. a shared
+		// professional-directory site) is only exempt when the full URL actually differs from every existing
+		// match - the exact same URL submitted twice is still a real duplicate even under an exception.
 		let isDuplicate = exactDomainMatches.length > 0
 		if (isDuplicate) {
-			const exception = await prisma.orgUrlDuplicateException.findUnique({
-				where: { baseUrl: normalizedWebsite },
-			})
-			if (exception?.active) {
+			const exception = await findMatchingException(normalizedInputUrl)
+			if (exception) {
 				isDuplicate = exactDomainMatches.some(
 					(candidate) => normalizeFullUrl(candidate.url) === normalizedInputUrl
 				)

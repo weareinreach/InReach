@@ -5,22 +5,31 @@ vi.mock('@weareinreach/db', () => ({
 	generateNestedFreeText: vi.fn(),
 	generateUniqueSlug: vi.fn().mockResolvedValue('test-org'),
 	getAuditedClient: vi.fn(),
+	prisma: { orgUrlDuplicateException: { findMany: vi.fn() } },
 }))
 vi.mock('@weareinreach/crowdin/api', () => ({
 	addSingleKeyFromNestedFreetextCreate: vi.fn(),
 	buildContextUrl: vi.fn(),
 }))
 
-const { getAuditedClient } = await import('@weareinreach/db')
+const { getAuditedClient, prisma } = await import('@weareinreach/db')
 const { createOrgSuggestion } = await import('./createOrgSuggestion')
 
 const getAuditedClientMock = vi.mocked(getAuditedClient)
+const findExceptionsMock = vi.mocked(prisma.orgUrlDuplicateException.findMany)
 
 /**
  * Minimal mock covering every call createOrgSuggestion makes past the duplicate check, for the "allowed" test
  * cases that need to run all the way through to a successful create.
+ *
+ * `exceptions` are plain `{baseUrl, active}` rows, same shape as the real table - `findMatchingException`
+ * queries them via `baseUrl: {in: [...]}`, so the mock just filters by that instead of re-implementing the
+ * prefix logic under test.
  */
-const mockAllowingPrisma = (orgWebsiteUrls: string[], exception: { active: boolean } | null = null) => {
+const mockAllowingPrisma = (
+	orgWebsiteUrls: string[],
+	exceptions: { baseUrl: string; active: boolean }[] = []
+) => {
 	const txCreateOperations = {
 		organization: { create: vi.fn() },
 		suggestion: { create: vi.fn() },
@@ -28,12 +37,13 @@ const mockAllowingPrisma = (orgWebsiteUrls: string[], exception: { active: boole
 	}
 	getAuditedClientMock.mockReturnValue({
 		orgWebsite: { findMany: vi.fn().mockResolvedValue(orgWebsiteUrls.map((url) => ({ url }))) },
-		orgUrlDuplicateException: { findUnique: vi.fn().mockResolvedValue(exception) },
 		user: { findUnique: vi.fn().mockResolvedValue(null) },
 		$transaction: vi.fn(async (callback: (tx: typeof txCreateOperations) => unknown) =>
 			callback(txCreateOperations)
 		),
 	} as never)
+	findExceptionsMock.mockImplementation((async (args: { where: { baseUrl: { in: string[] } } }) =>
+		exceptions.filter((exception) => args.where.baseUrl.in.includes(exception.baseUrl))) as never)
 }
 
 const baseInput = {
@@ -67,8 +77,11 @@ describe('createOrgSuggestion - website duplicate check with exceptions', () => 
 		).rejects.toThrow('This website is already associated with an existing organization')
 	})
 
-	it('allows a duplicate domain under an active exception when the full URL differs', async () => {
-		mockAllowingPrisma(['https://psychologytoday.com/personA'], { active: true })
+	it('allows a duplicate domain under an active domain-wide exception when the full URL differs', async () => {
+		mockAllowingPrisma(
+			['https://psychologytoday.com/personA'],
+			[{ baseUrl: 'psychologytoday.com', active: true }]
+		)
 
 		await expect(
 			createOrgSuggestion({
@@ -81,7 +94,10 @@ describe('createOrgSuggestion - website duplicate check with exceptions', () => 
 	})
 
 	it('still blocks the literal same URL even under an active exception', async () => {
-		mockAllowingPrisma(['https://psychologytoday.com/personA'], { active: true })
+		mockAllowingPrisma(
+			['https://psychologytoday.com/personA'],
+			[{ baseUrl: 'psychologytoday.com', active: true }]
+		)
 
 		await expect(
 			createOrgSuggestion({
@@ -94,7 +110,10 @@ describe('createOrgSuggestion - website duplicate check with exceptions', () => 
 	})
 
 	it('blocks a duplicate under a deactivated (deleted) exception', async () => {
-		mockAllowingPrisma(['https://psychologytoday.com/personA'], { active: false })
+		mockAllowingPrisma(
+			['https://psychologytoday.com/personA'],
+			[{ baseUrl: 'psychologytoday.com', active: false }]
+		)
 
 		await expect(
 			createOrgSuggestion({
@@ -117,5 +136,52 @@ describe('createOrgSuggestion - website duplicate check with exceptions', () => 
 				sourceType: 'OTHER',
 			} as never)
 		).resolves.toEqual({ id: 'organization_generated', slug: 'test-org' })
+	})
+
+	it('allows a duplicate under a narrower active path-prefix exception when the full URL differs', async () => {
+		mockAllowingPrisma(
+			['https://healthgrades.com/doctors/personA'],
+			[{ baseUrl: 'healthgrades.com/doctors', active: true }]
+		)
+
+		await expect(
+			createOrgSuggestion({
+				ctx,
+				input: { ...baseInput, orgWebsite: 'https://healthgrades.com/doctors/personB' },
+				sourceValue: 'suggestion',
+				sourceType: 'OTHER',
+			} as never)
+		).resolves.toEqual({ id: 'organization_generated', slug: 'test-org' })
+	})
+
+	it('does not let a narrower path-prefix exception cover a sibling path on the same domain', async () => {
+		mockAllowingPrisma(
+			['https://healthgrades.com/doctors/personA'],
+			[{ baseUrl: 'healthgrades.com/doctors', active: true }]
+		)
+
+		await expect(
+			createOrgSuggestion({
+				ctx,
+				// Same domain (so still a domain-level duplicate match), but under a different path than the
+				// exception covers - the exception must not leak coverage to the rest of the domain.
+				input: { ...baseInput, orgWebsite: 'https://healthgrades.com/lawyers/personA' },
+				sourceValue: 'suggestion',
+				sourceType: 'OTHER',
+			} as never)
+		).rejects.toThrow('This website is already associated with an existing organization')
+	})
+
+	it('respects path-segment boundaries - "test.com/dr" is not covered by a "test.com/drs" exception', async () => {
+		mockAllowingPrisma(['https://test.com/drs/personA'], [{ baseUrl: 'test.com/drs', active: true }])
+
+		await expect(
+			createOrgSuggestion({
+				ctx,
+				input: { ...baseInput, orgWebsite: 'https://test.com/dr' },
+				sourceValue: 'suggestion',
+				sourceType: 'OTHER',
+			} as never)
+		).rejects.toThrow('This website is already associated with an existing organization')
 	})
 })

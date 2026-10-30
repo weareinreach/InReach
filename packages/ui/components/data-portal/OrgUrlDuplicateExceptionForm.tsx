@@ -71,7 +71,7 @@ export const OrgUrlDuplicateExceptionForm = ({
 				<TextInput
 					label='Base URL'
 					placeholder='example.com'
-					description="Domain only - any path, e.g. '/profileA', is ignored and stripped automatically, since the exception applies to the whole domain."
+					description="Enter just the domain to exempt the whole site, or add a path to exempt only that section, e.g. 'example.com/doctors'."
 					required
 					{...form.getInputProps('baseUrl')}
 				/>

@@ -492,7 +492,8 @@ model OrgWebsite {
 /// where each org's own full URL - the path after the domain - still differs).
 model OrgUrlDuplicateException {
   id            String         @id @default(cuid())
-  /// Normalized bare domain, e.g. "psychologytoday.com" - no protocol, "www.", or path.
+  /// Normalized domain or path prefix, e.g. "psychologytoday.com" or "healthgrades.com/doctors" - no
+  /// protocol, "www.", or trailing slash. Matching respects path-segment boundaries (see `urlMatchesPrefix`).
   baseUrl       String         @unique
   description   String
   active        Boolean        @default(true)
