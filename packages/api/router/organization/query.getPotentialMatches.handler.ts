@@ -1,19 +1,11 @@
 import compact from 'just-compact'
 
 import { Prisma, prisma } from '@weareinreach/db'
+import { normalizeFullUrl, normalizeToDomain } from '@weareinreach/util/url'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetPotentialMatchesSchema } from './query.getPotentialMatches.schema'
-
-// Reduces a URL to its bare domain - strips protocol, "www.", and everything from the first /, ?, or #
-// onward - so "https://www.example.org/donate" and "example.org" are treated as the same organization.
-const normalizeToDomain = (url: string) =>
-	url
-		.trim()
-		.toLowerCase()
-		.replace(/^https?:\/\//, '')
-		.replace(/^www\./, '')
-		.split(/[/?#]/)[0] ?? ''
+import { findMatchingException } from '../orgUrlDuplicateException/lib/findMatchingException'
 
 const levenshteinDistance = (a: string, b: string) => {
 	const rows = Array.from({ length: a.length + 1 }, (_, i) =>
@@ -87,12 +79,21 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 			: Prisma.sql`ARRAY[]::text[]`
 
 	const normalizedWebsite = website ? normalizeToDomain(website) : undefined
+	const normalizedInputUrl = website ? normalizeFullUrl(website) : undefined
 
 	// Website duplicates: a broad substring pre-filter in SQL (via Prisma's query builder, not raw SQL),
 	// then an exact domain comparison in JS - avoids hand-rolling regex/backreference logic in raw SQL,
 	// which proved fragile (both a SQL syntax error and a silent false-negative in practice).
+	//
+	// A base URL on the exceptions list (a bare domain or a deeper path prefix, e.g. a shared
+	// professional-directory site) only suppresses the match when the full URL actually differs from the
+	// existing one - two orgs both using the exact same URL is still a real duplicate even if that URL is
+	// otherwise exempted.
 	let websiteMatchOrgIds = new Set<string>()
-	if (normalizedWebsite) {
+	if (normalizedWebsite && normalizedInputUrl) {
+		const exception = await findMatchingException(normalizedInputUrl)
+		const isActiveException = exception !== null
+
 		const candidates = await prisma.orgWebsite.findMany({
 			where: { url: { contains: normalizedWebsite, mode: 'insensitive' } },
 			select: { url: true, organizationId: true },
@@ -100,6 +101,7 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 		websiteMatchOrgIds = new Set(
 			candidates
 				.filter((candidate) => normalizeToDomain(candidate.url) === normalizedWebsite)
+				.filter((candidate) => !isActiveException || normalizeFullUrl(candidate.url) === normalizedInputUrl)
 				.map((candidate) => candidate.organizationId)
 				.filter((id): id is string => Boolean(id))
 		)

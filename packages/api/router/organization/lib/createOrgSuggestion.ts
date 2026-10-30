@@ -4,19 +4,11 @@ import { addSingleKeyFromNestedFreetextCreate, buildContextUrl } from '@weareinr
 import { generateId, generateNestedFreeText, generateUniqueSlug, getAuditedClient } from '@weareinreach/db'
 import { OrgUnpublishedReason, type SourceType } from '@weareinreach/db/enums'
 import { ROOT_TIER_PERMISSIONS } from '@weareinreach/db/lib/rootTierPermissions'
+import { normalizeFullUrl, normalizeToDomain } from '@weareinreach/util/url'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { findMatchingException } from '../../orgUrlDuplicateException/lib/findMatchingException'
 import { type TCreateNewSuggestionSchema } from '../mutation.createNewSuggestion.schema'
-
-// Reduces a URL to its bare domain - strips protocol, "www.", and everything from the first /, ?, or #
-// onward - so "https://www.example.org/donate" and "example.org" are treated as the same organization.
-const normalizeToDomain = (url: string) =>
-	url
-		.trim()
-		.toLowerCase()
-		.replace(/^https?:\/\//, '')
-		.replace(/^www\./, '')
-		.split(/[/?#]/)[0] ?? ''
 
 const DATA_PORTAL_PERMISSIONS = [
 	'dataPortalBasic',
@@ -82,11 +74,28 @@ export const createOrgSuggestion = async ({
 		// A broad substring pre-filter narrows the candidates cheaply, then the exact domain comparison
 		// happens in JS - this avoids hand-rolling regex/backreference logic in raw SQL.
 		const normalizedWebsite = normalizeToDomain(orgWebsite)
+		const normalizedInputUrl = normalizeFullUrl(orgWebsite)
 		const candidates = await prisma.orgWebsite.findMany({
 			where: { url: { contains: normalizedWebsite, mode: 'insensitive' } },
 			select: { url: true },
 		})
-		const isDuplicate = candidates.some((candidate) => normalizeToDomain(candidate.url) === normalizedWebsite)
+		const exactDomainMatches = candidates.filter(
+			(candidate) => normalizeToDomain(candidate.url) === normalizedWebsite
+		)
+
+		// A base URL on the exceptions list (a bare domain or a deeper path prefix, e.g. a shared
+		// professional-directory site) is only exempt when the full URL actually differs from every existing
+		// match - the exact same URL submitted twice is still a real duplicate even under an exception.
+		let isDuplicate = exactDomainMatches.length > 0
+		if (isDuplicate) {
+			const exception = await findMatchingException(normalizedInputUrl)
+			if (exception) {
+				isDuplicate = exactDomainMatches.some(
+					(candidate) => normalizeFullUrl(candidate.url) === normalizedInputUrl
+				)
+			}
+		}
+
 		if (isDuplicate) {
 			throw new TRPCError({
 				code: 'CONFLICT',

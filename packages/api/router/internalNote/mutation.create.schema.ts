@@ -28,6 +28,7 @@ export const ZCreateSchema = z
 		orgReviewId: prefixedId('orgReview').optional(),
 		orgServiceId: prefixedId('orgService').optional(),
 		orgSocialMediaId: prefixedId('orgSocialMedia').optional(),
+		orgUrlDuplicateExceptionId: prefixedId('orgUrlDuplicateException').optional(),
 		orgWebsiteId: prefixedId('orgWebsite').optional(),
 		outsideApiId: prefixedId('outsideAPI').optional(),
 		permissionId: prefixedId('permission').optional(),

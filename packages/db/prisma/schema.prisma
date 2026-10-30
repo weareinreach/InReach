@@ -61,51 +61,52 @@ model VerificationToken {
 
 /// NextAuth User
 model User {
-  id                  String                   @id @default(cuid())
-  name                String?
-  email               String                   @unique
-  emailVerified       DateTime?
-  image               String?
+  id                    String                     @id @default(cuid())
+  name                  String?
+  email                 String                     @unique
+  emailVerified         DateTime?
+  image                 String?
   /// old ID from MongoDB
-  legacyId            String?                  @unique
-  active              Boolean                  @default(true)
-  currentCity         String?
-  currentGovDistId    String?
-  currentCountryId    String?
-  legacyHash          String?
-  legacySalt          String?
-  migrateDate         DateTime?
-  userTypeId          String
-  langPrefId          String?
-  sourceId            String?
-  createdAt           DateTime                 @default(now())
-  updatedAt           DateTime                 @updatedAt
-  signupData          Json?
-  accounts            Account[]                @relation("Account")
-  roles               AssignedRole[]
-  attributes          AttributeSupplement[]
-  fieldVisibility     FieldVisibility?
-  internalNotes       InternalNote[]
-  listsSharedWithUser ListSharedWith[]
-  locationPermission  LocationPermission[]
-  reviews             OrgReview[]
-  orgPermission       OrganizationPermission[]
-  reportsHandled      Report[]                 @relation("handledBy")
-  reportsReported     Report[]                 @relation("reportedBy")
-  sessions            Session[]
-  Suggestion          Suggestion[]
-  currentCountry      Country?                 @relation("currentCountry", fields: [currentCountryId], references: [id])
-  currentGovDist      GovDist?                 @relation(fields: [currentGovDistId], references: [id])
-  langPref            Language?                @relation(fields: [langPrefId], references: [id])
-  source              Source?                  @relation("userSource", fields: [sourceId], references: [id])
-  userType            UserType                 @relation(fields: [userTypeId], references: [id])
-  communities         UserCommunityLink[]
-  mailSent            UserMail[]               @relation("mailFrom")
-  mailReceived        UserMail[]               @relation("mailTo")
-  permissions         UserPermission[]
-  userSOGIdentity     UserSOGLink[]
-  savedLists          UserSavedList[]
-  orgAssociations     UserToOrganization[]
+  legacyId              String?                    @unique
+  active                Boolean                    @default(true)
+  currentCity           String?
+  currentGovDistId      String?
+  currentCountryId      String?
+  legacyHash            String?
+  legacySalt            String?
+  migrateDate           DateTime?
+  userTypeId            String
+  langPrefId            String?
+  sourceId              String?
+  createdAt             DateTime                   @default(now())
+  updatedAt             DateTime                   @updatedAt
+  signupData            Json?
+  accounts              Account[]                  @relation("Account")
+  roles                 AssignedRole[]
+  attributes            AttributeSupplement[]
+  fieldVisibility       FieldVisibility?
+  internalNotes         InternalNote[]
+  listsSharedWithUser   ListSharedWith[]
+  locationPermission    LocationPermission[]
+  reviews               OrgReview[]
+  orgPermission         OrganizationPermission[]
+  orgUrlExceptionsAdded OrgUrlDuplicateException[] @relation("OrgUrlDuplicateExceptionCreatedBy")
+  reportsHandled        Report[]                   @relation("handledBy")
+  reportsReported       Report[]                   @relation("reportedBy")
+  sessions              Session[]
+  Suggestion            Suggestion[]
+  currentCountry        Country?                   @relation("currentCountry", fields: [currentCountryId], references: [id])
+  currentGovDist        GovDist?                   @relation(fields: [currentGovDistId], references: [id])
+  langPref              Language?                  @relation(fields: [langPrefId], references: [id])
+  source                Source?                    @relation("userSource", fields: [sourceId], references: [id])
+  userType              UserType                   @relation(fields: [userTypeId], references: [id])
+  communities           UserCommunityLink[]
+  mailSent              UserMail[]                 @relation("mailFrom")
+  mailReceived          UserMail[]                 @relation("mailTo")
+  permissions           UserPermission[]
+  userSOGIdentity       UserSOGLink[]
+  savedLists            UserSavedList[]
+  orgAssociations       UserToOrganization[]
 
   @@index([userTypeId])
 }
@@ -484,6 +485,25 @@ model OrgWebsite {
 
   @@index([organizationId])
   @@index([id, published(sort: Desc), deleted])
+}
+
+/// Base URLs allowed to repeat across organizations without being flagged as a duplicate during the
+/// org-creation duplicate check (e.g. shared professional-directory domains like psychologytoday.com,
+/// where each org's own full URL - the path after the domain - still differs).
+model OrgUrlDuplicateException {
+  id            String         @id @default(cuid())
+  /// Normalized domain or path prefix, e.g. "psychologytoday.com" or "healthgrades.com/doctors" - no
+  /// protocol, "www.", or trailing slash. Matching respects path-segment boundaries (see `urlMatchesPrefix`).
+  baseUrl       String         @unique
+  description   String
+  active        Boolean        @default(true)
+  createdById   String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  internalNotes InternalNote[]
+  createdBy     User           @relation("OrgUrlDuplicateExceptionCreatedBy", fields: [createdById], references: [id])
+
+  @@index([baseUrl])
 }
 
 /// Org location information
@@ -1328,6 +1348,7 @@ model InternalNote {
   orgReviewId                     String?
   orgServiceId                    String?
   orgSocialMediaId                String?
+  orgUrlDuplicateExceptionId      String?
   orgWebsiteId                    String?
   outsideApiId                    String?
   outsideAPIServiceService        String?
@@ -1363,6 +1384,7 @@ model InternalNote {
   orgReview                       OrgReview?                     @relation(fields: [orgReviewId], references: [id], onDelete: Cascade)
   orgService                      OrgService?                    @relation(fields: [orgServiceId], references: [id], onDelete: Cascade)
   orgSocialMedia                  OrgSocialMedia?                @relation(fields: [orgSocialMediaId], references: [id], onDelete: Cascade)
+  orgUrlDuplicateException        OrgUrlDuplicateException?      @relation(fields: [orgUrlDuplicateExceptionId], references: [id], onDelete: Cascade)
   orgWebsite                      OrgWebsite?                    @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade)
   organization                    Organization?                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   outsideAPIService               OutsideAPIService?             @relation(fields: [outsideAPIServiceService], references: [service], onDelete: Cascade)

@@ -39,6 +39,7 @@ export const idPrefix = {
 	orgReview: 'orev',
 	orgService: 'osvc',
 	orgSocialMedia: 'osmd',
+	orgUrlDuplicateException: 'dupe',
 	orgWebsite: 'oweb',
 	outsideAPI: 'oapi',
 	permission: 'perm',

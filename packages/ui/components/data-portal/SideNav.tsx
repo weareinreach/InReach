@@ -60,6 +60,9 @@ export const LOCATION_CONTACT_CLEANUP_HELP =
 	"Temporary review tool: phones, emails, websites and social media linked to some of an organization's " +
 	"locations, where it's unclear whether they belong on the organization page too. Decide each one; " +
 	'safe to remove once the list is empty.'
+export const ORG_URL_DUPLICATE_CHECK_EXCEPTIONS_NAV_HELP =
+	'Base URLs (e.g. shared professional-directory sites) that are allowed to repeat across organizations ' +
+	"without being flagged as a duplicate, as long as each org's full URL is actually different."
 
 export interface SideNavProps {
 	/** The section this nav belongs to, e.g. "Organizations", "Admin", "Tasks", "System". */

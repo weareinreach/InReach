@@ -46,15 +46,16 @@ Permission is hierarchical (`root` > `dataPortalAdmin` > `dataPortalManager` >
 `apps/app/src/pages/admin/index.tsx`; now each page under
 `apps/app/src/pages/data-portal/` owns its own):
 
-| Section       | Page                                             | Route                        | Gated at | Notes                                                                  |
-| ------------- | ------------------------------------------------ | ---------------------------- | -------- | ---------------------------------------------------------------------- |
-| Tasks         | —                                                | —                            | —        | No page yet                                                            |
-| Organizations | [Organizations](./Organizations/README.md)       | `/data-portal/organizations` | Basic+   | Default landing page — `/data-portal` redirects here                   |
-| Organizations | [Reviews](./Organizations/Reviews/README.md)     | `/data-portal/reviews`       | Basic+   |                                                                        |
-| Organizations | [Reports](./Organizations/Reports/README.md)     | `/data-portal/reports`       | Basic+   | **Server still requires Manager+** — see that doc's Known Issues       |
-| Organizations | [Downloads](./Organizations/Downloads/README.md) | `/data-portal/downloads`     | Manager+ | Corrected from Admin+ as part of the route move — see that doc's notes |
-| Admin         | [Manage Users](./Admin/ManageUsers/README.md)    | `/data-portal/manage-users`  | Manager+ | Renamed from "Users" to match the redesign's naming                    |
-| System        | [Quicklink](./System/Quicklink/README.md)        | `/data-portal/quicklink/*`   | `root`   | Cross-org data-integrity tooling                                       |
+| Section       | Page                                                          | Route                                             | Gated at | Notes                                                                     |
+| ------------- | ------------------------------------------------------------- | ------------------------------------------------- | -------- | ------------------------------------------------------------------------- |
+| Tasks         | —                                                             | —                                                 | —        | No page yet                                                               |
+| Organizations | [Organizations](./Organizations/README.md)                    | `/data-portal/organizations`                      | Basic+   | Default landing page — `/data-portal` redirects here                      |
+| Organizations | [Reviews](./Organizations/Reviews/README.md)                  | `/data-portal/reviews`                            | Basic+   |                                                                           |
+| Organizations | [Reports](./Organizations/Reports/README.md)                  | `/data-portal/reports`                            | Basic+   | **Server still requires Manager+** — see that doc's Known Issues          |
+| Organizations | [Downloads](./Organizations/Downloads/README.md)              | `/data-portal/downloads`                          | Manager+ | Corrected from Admin+ as part of the route move — see that doc's notes    |
+| Organizations | [URL Exceptions](./Organizations/url-duplicate-exceptions.md) | `/data-portal/org-url-duplicate-check-exceptions` | Manager+ | Base-URL list exempting shared-directory domains from the duplicate check |
+| Admin         | [Manage Users](./Admin/ManageUsers/README.md)                 | `/data-portal/manage-users`                       | Manager+ | Renamed from "Users" to match the redesign's naming                       |
+| System        | [Quicklink](./System/Quicklink/README.md)                     | `/data-portal/quicklink/*`                        | `root`   | Cross-org data-integrity tooling                                          |
 
 Reports still has a UI-level permission that doesn't match what the underlying
 tRPC procedure enforces (documented in its own file, since the fix belongs with the
@@ -78,6 +79,10 @@ part of an earlier relocation, since it only required a frontend threshold chang
   precomputed organization/service aggregate views. See
   [`Downloads/summary.md`](./Organizations/Downloads/summary.md) for the exact SQL
   and sample output of every report.
+- **[URL Exceptions](./Organizations/url-duplicate-exceptions.md)** — staff-managed list of base
+  URLs (a domain or a deeper path prefix) exempt from the org-creation duplicate check, for cases
+  like a shared professional-directory domain where different real organizations legitimately
+  share a site.
 - **[Manage Users](./Admin/ManageUsers/README.md)** — manage staff accounts' Data
   Portal permission tier and trigger password resets.
 - **[Quicklink](./System/Quicklink/README.md)** — root-only bulk data-integrity

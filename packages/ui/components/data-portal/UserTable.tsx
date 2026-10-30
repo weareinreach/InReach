@@ -1,27 +1,18 @@
-import {
-	ActionIcon,
-	Group,
-	Modal,
-	Popover,
-	Select,
-	Stack,
-	Text,
-	Tooltip,
-	useMantineTheme,
-} from '@mantine/core'
+import { ActionIcon, Group, Popover, Select, Stack, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { useClipboard, useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { keepPreviousData } from '@tanstack/react-query'
 import { type ColumnFiltersState, type PaginationState, type SortingState } from '@tanstack/react-table'
 import { DateTime } from 'luxon'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next/pages'
-import { type ReactNode, useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import { ActionItem, ConfirmBody } from './ActionItem'
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
 import { ResultCount } from './ResultCount'
 
@@ -143,84 +134,9 @@ const DataPortalAccessSelect = ({
  * path and an escalation that bypasses email entirely - for each of the two problems a user can get stuck on:
  * an unverified account, or a password they can't get back. Each tooltip states which pair it belongs to and
  * when to reach for it, so a data manager can pick the right one without needing to understand Cognito, SES,
- * or why an email might silently fail to arrive.
+ * or why an email might silently fail to arrive. `ActionItem`/`ConfirmBody` (the icon+tooltip+confirm-modal
+ * shell shared by all four) live in ./ActionItem.tsx - also used by OrgUrlDuplicateExceptionTable.
  */
-
-/**
- * Shared shell for the four actions above: a tooltip-labeled icon that opens a confirm modal. Open/close
- * state is owned by the caller (passed in as props) rather than internally via `useDisclosure` here, so each
- * action's own handlers - which need to close the modal once a mutation settles - can be real top-level
- * `useCallback`s instead of arrow functions recreated inline in JSX on every render.
- */
-const ActionItem = ({
-	tooltipLabel,
-	modalTitle,
-	icon,
-	opened,
-	onOpen,
-	onClose,
-	children,
-}: {
-	tooltipLabel: string
-	modalTitle: string
-	icon: string
-	opened: boolean
-	onOpen: () => void
-	onClose: () => void
-	children: ReactNode
-}) => {
-	const theme = useMantineTheme()
-
-	return (
-		<>
-			<Modal opened={opened} onClose={onClose} title={modalTitle}>
-				{children}
-			</Modal>
-			<Tooltip multiline maw={240} label={tooltipLabel}>
-				<ActionIcon variant='subtle' onClick={onOpen}>
-					<Icon icon={icon} color={theme.other.colors.primary.allyGreen} />
-				</ActionIcon>
-			</Tooltip>
-		</>
-	)
-}
-
-/**
- * The common body shape for all four actions: a "when to use" explanation, then the confirm question on its
- * own line, then Yes/No. `SetTemporaryPasswordAction` only uses this for its pre-confirm state - its
- * post-success state (revealing the generated password) is a different body entirely.
- */
-const ConfirmBody = ({
-	explanation,
-	confirmText,
-	isPending,
-	onConfirm,
-	onCancel,
-}: {
-	explanation: string
-	confirmText: string
-	isPending: boolean
-	onConfirm: () => void
-	onCancel: () => void
-}) => (
-	// This app defaults Text to `component: 'span'` (inline) app-wide (see theme/common.tsx's Text
-	// defaultProps), so two bare sibling <Text> elements flow together with no line break between them.
-	// Stack forces each child onto its own line regardless of Text's own inline rendering.
-	<Stack gap='sm'>
-		<Text size='sm' c='dimmed'>
-			{explanation}
-		</Text>
-		<Text>{confirmText}</Text>
-		<Group wrap='nowrap'>
-			<Button onClick={onConfirm} loading={isPending}>
-				Yes
-			</Button>
-			<Button variant='secondaryLg' onClick={onCancel}>
-				No
-			</Button>
-		</Group>
-	</Stack>
-)
 
 export const PasswordResetAction = ({ email }: { email: string }) => {
 	const { t } = useTranslation('common')

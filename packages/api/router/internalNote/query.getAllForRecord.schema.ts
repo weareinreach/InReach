@@ -24,6 +24,7 @@ export const ZGetAllForRecordSchema = z.union([
 	z.object({ orgReviewId: prefixedId('orgReview') }),
 	z.object({ orgServiceId: prefixedId('orgService') }),
 	z.object({ orgSocialMediaId: prefixedId('orgSocialMedia') }),
+	z.object({ orgUrlDuplicateExceptionId: prefixedId('orgUrlDuplicateException') }),
 	z.object({ orgWebsiteId: prefixedId('orgWebsite') }),
 	z.object({ outsideApiId: prefixedId('outsideAPI') }),
 	z.object({ permissionId: prefixedId('permission') }),
