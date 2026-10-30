@@ -56,11 +56,12 @@ The page renders inside
 [`DataPortalPageShell`](../../../packages/ui/components/data-portal/DataPortalPageShell.tsx)
 (header bar + left side nav, `activeSection='organizations'`) — the shared chrome
 the redesign called for has landed and is in use here and on every other
-Organizations-section page (Reviews, Reports, Downloads). One rough edge: each of
-those pages defines its own local `organizationsSideNav` array rather than
-importing one shared config — identical except for which item is marked `active` —
-so adding, renaming, or reordering a nav item currently means editing every page
-file, not one source of truth.
+Organizations-section page (Reviews, Reports, Downloads, Bulk Search & Replace,
+Contact Cleanup, URL Exceptions). Every one of those pages now imports the same
+shared [`organizationsSideNav`](../../../packages/ui/components/data-portal/organizationsSideNav.ts)
+config and just passes which item is `active` — a single source of truth for
+adding, renaming, or reordering a nav item. (This used to be duplicated verbatim
+across page files; that's since been consolidated.)
 
 ## How to Use It
 
@@ -70,7 +71,10 @@ file, not one source of truth.
   re-sorting.
 - Use the **"Add an organization"** button next to the page heading (`AddOrgModal`)
   to create a new org without leaving this page — the same fields/duplicate-check
-  as the public Suggest-an-Org form, with three save behaviors across the bottom
+  as the public Suggest-an-Org form (including the
+  [URL Exceptions](../url-duplicate-exceptions.md) list — a known shared-directory domain won't
+  block a new org whose full address genuinely differs from an existing match), with three save
+  behaviors across the bottom
   of the modal: **Save** (`carbon:save` — just create it), **Save & Edit**
   (`carbon:edit` — create, then jump to the org's edit page), **Save & New**
   (`carbon:add` — create, then reopen a blank form for another entry; this
@@ -150,30 +154,31 @@ file, not one source of truth.
 
 ## Related Files
 
-| Path                                                                                                                                                                  | Purpose                                                                                                                     |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| [`apps/app/src/pages/data-portal/organizations.tsx`](../../../apps/app/src/pages/data-portal/organizations.tsx)                                                       | Page: permission gate, renders `OrganizationTable`                                                                          |
-| [`packages/ui/components/data-portal/OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)                                       | Table UI, column definitions, toolbar filters                                                                               |
-| [`packages/ui/components/data-portal/DataTable/`](../../../packages/ui/components/data-portal/DataTable/index.tsx)                                                    | Shared table engine used by every Data Portal table                                                                         |
-| [`packages/ui/components/data-portal/DataPortalPageShell.tsx`](../../../packages/ui/components/data-portal/DataPortalPageShell.tsx)                                   | Header bar + side-nav chrome this page renders inside                                                                       |
-| [`packages/ui/components/data-portal/AddOrgModal.tsx`](../../../packages/ui/components/data-portal/AddOrgModal.tsx)                                                   | "Add an organization" button + modal, rendered next to this page's heading                                                  |
-| [`packages/ui/components/sections/Navbar.tsx`](../../../packages/ui/components/sections/Navbar.tsx)                                                                   | `EditModeBar` — the org edit page's Publish/Unpublish toggle, the second surface for setting a status (see "How to Use It") |
-| [`packages/api/router/component/mutation.EditModeBarPublish.schema.ts`](../../../packages/api/router/component/mutation.EditModeBarPublish.schema.ts) / `.handler.ts` | Backend shared by both status-setting surfaces                                                                              |
-| [`packages/ui/components/core/UnpublishReasonPopover.tsx`](../../../packages/ui/components/core/UnpublishReasonPopover.tsx)                                           | The reason-picker popover shared by both surfaces                                                                           |
-| [`bulk-search-replace.md`](./bulk-search-replace.md)                                                                                                                  | Implemented sibling feature: cross-org/service content search, inline edit, find & replace, and bulk attribute/tag editing  |
-| [`duplicate-service.md`](./duplicate-service.md)                                                                                                                      | Implemented sibling feature: clone an existing service, reached from a service's edit drawer (not this table directly)      |
-| [`packages/db/enums/labels.ts`](../../../packages/db/enums/labels.ts)                                                                                                 | `ORG_UNPUBLISHED_REASON_LABELS` — human labels for each `OrgUnpublishedReason` value                                        |
-| [`docs/Dashboards/UnpublishedStatus/README.md`](../../Dashboards/UnpublishedStatus/README.md)                                                                         | Manual backfill triage worklist for pre-existing unpublished orgs with no reason set                                        |
-| [`packages/api/router/organization/index.ts`](../../../packages/api/router/organization/index.ts)                                                                     | tRPC route registration                                                                                                     |
-| [`packages/api/router/organization/query.forOrganizationTable.handler.ts`](../../../packages/api/router/organization/query.forOrganizationTable.handler.ts)           | Prisma query, `where`/`orderBy` builders, fuzzy-search path                                                                 |
-| [`packages/api/router/organization/query.forOrganizationTable.schema.ts`](../../../packages/api/router/organization/query.forOrganizationTable.schema.ts)             | Input schema (filters, sorting, `take`/`skip`)                                                                              |
-| [`packages/api/router/organization/query.forOrgPageEdits.handler.ts`](../../../packages/api/router/organization/query.forOrgPageEdits.handler.ts)                     | Existing pattern for deriving real publish/last-updated dates from `AuditTrail`                                             |
-| [`packages/ui/components/data-portal/Action.tsx`](../../../packages/ui/components/data-portal/Action.tsx)                                                             | Existing notes/audit-log row actions, also wired into the org edit page                                                     |
-| `packages/db/prisma/schema.prisma` (`Organization` model, `~L304-354`)                                                                                                | Schema + indexes                                                                                                            |
-| [`packages/api/router/organization/lib/createOrgSuggestion.ts`](../../../packages/api/router/organization/lib/createOrgSuggestion.ts)                                 | Computes `creatorHadDpAccess` at org-creation time                                                                          |
-| [`docs/Database/organization_creator_had_dp_access.md`](../../Database/organization_creator_had_dp_access.md)                                                         | How `creatorHadDpAccess` / the Create Method filter works, incl. backfill                                                   |
-| [`docs/Database/SQLScripts/backfill-organization-creator-had-dp-access.sql`](../../Database/SQLScripts/backfill-organization-creator-had-dp-access.sql)               | One-time historical backfill for `creatorHadDpAccess`                                                                       |
+| Path                                                                                                                                                                  | Purpose                                                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`apps/app/src/pages/data-portal/organizations.tsx`](../../../apps/app/src/pages/data-portal/organizations.tsx)                                                       | Page: permission gate, renders `OrganizationTable`                                                                                             |
+| [`packages/ui/components/data-portal/OrganizationTable.tsx`](../../../packages/ui/components/data-portal/OrganizationTable.tsx)                                       | Table UI, column definitions, toolbar filters                                                                                                  |
+| [`packages/ui/components/data-portal/DataTable/`](../../../packages/ui/components/data-portal/DataTable/index.tsx)                                                    | Shared table engine used by every Data Portal table                                                                                            |
+| [`packages/ui/components/data-portal/DataPortalPageShell.tsx`](../../../packages/ui/components/data-portal/DataPortalPageShell.tsx)                                   | Header bar + side-nav chrome this page renders inside                                                                                          |
+| [`packages/ui/components/data-portal/AddOrgModal.tsx`](../../../packages/ui/components/data-portal/AddOrgModal.tsx)                                                   | "Add an organization" button + modal, rendered next to this page's heading                                                                     |
+| [`packages/ui/components/sections/Navbar.tsx`](../../../packages/ui/components/sections/Navbar.tsx)                                                                   | `EditModeBar` — the org edit page's Publish/Unpublish toggle, the second surface for setting a status (see "How to Use It")                    |
+| [`packages/api/router/component/mutation.EditModeBarPublish.schema.ts`](../../../packages/api/router/component/mutation.EditModeBarPublish.schema.ts) / `.handler.ts` | Backend shared by both status-setting surfaces                                                                                                 |
+| [`packages/ui/components/core/UnpublishReasonPopover.tsx`](../../../packages/ui/components/core/UnpublishReasonPopover.tsx)                                           | The reason-picker popover shared by both surfaces                                                                                              |
+| [`bulk-search-replace.md`](./bulk-search-replace.md)                                                                                                                  | Implemented sibling feature: cross-org/service content search, inline edit, find & replace, and bulk attribute/tag editing                     |
+| [`duplicate-service.md`](./duplicate-service.md)                                                                                                                      | Implemented sibling feature: clone an existing service, reached from a service's edit drawer (not this table directly)                         |
+| [`url-duplicate-exceptions.md`](./url-duplicate-exceptions.md)                                                                                                        | Implemented sibling feature: Manager+ page for base-URL duplicate-check exceptions, shared by `AddOrgModal` and the public Suggest-an-Org form |
+| [`packages/db/enums/labels.ts`](../../../packages/db/enums/labels.ts)                                                                                                 | `ORG_UNPUBLISHED_REASON_LABELS` — human labels for each `OrgUnpublishedReason` value                                                           |
+| [`docs/Dashboards/UnpublishedStatus/README.md`](../../Dashboards/UnpublishedStatus/README.md)                                                                         | Manual backfill triage worklist for pre-existing unpublished orgs with no reason set                                                           |
+| [`packages/api/router/organization/index.ts`](../../../packages/api/router/organization/index.ts)                                                                     | tRPC route registration                                                                                                                        |
+| [`packages/api/router/organization/query.forOrganizationTable.handler.ts`](../../../packages/api/router/organization/query.forOrganizationTable.handler.ts)           | Prisma query, `where`/`orderBy` builders, fuzzy-search path                                                                                    |
+| [`packages/api/router/organization/query.forOrganizationTable.schema.ts`](../../../packages/api/router/organization/query.forOrganizationTable.schema.ts)             | Input schema (filters, sorting, `take`/`skip`)                                                                                                 |
+| [`packages/api/router/organization/query.forOrgPageEdits.handler.ts`](../../../packages/api/router/organization/query.forOrgPageEdits.handler.ts)                     | Existing pattern for deriving real publish/last-updated dates from `AuditTrail`                                                                |
+| [`packages/ui/components/data-portal/Action.tsx`](../../../packages/ui/components/data-portal/Action.tsx)                                                             | Existing notes/audit-log row actions, also wired into the org edit page                                                                        |
+| `packages/db/prisma/schema.prisma` (`Organization` model, `~L304-354`)                                                                                                | Schema + indexes                                                                                                                               |
+| [`packages/api/router/organization/lib/createOrgSuggestion.ts`](../../../packages/api/router/organization/lib/createOrgSuggestion.ts)                                 | Computes `creatorHadDpAccess` at org-creation time                                                                                             |
+| [`docs/Database/organization_creator_had_dp_access.md`](../../Database/organization_creator_had_dp_access.md)                                                         | How `creatorHadDpAccess` / the Create Method filter works, incl. backfill                                                                      |
+| [`docs/Database/SQLScripts/backfill-organization-creator-had-dp-access.sql`](../../Database/SQLScripts/backfill-organization-creator-had-dp-access.sql)               | One-time historical backfill for `creatorHadDpAccess`                                                                                          |
 
 ---
 
-_Last verified against code: 2026-09-04._
+_Last verified against code: 2026-10-30._
