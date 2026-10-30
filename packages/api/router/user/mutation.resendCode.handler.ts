@@ -9,7 +9,7 @@ import { type TResendCodeSchema } from './mutation.resendCode.schema'
  * against). Staff needing the real outcome for a specific user should use `user.adminResendCode` instead,
  * which is permissioned and returns the actual result.
  */
-const resendCode = async ({ input }: TRPCHandlerParams<TResendCodeSchema>) => {
+const resendCode = ({ input }: TRPCHandlerParams<TResendCodeSchema>) => {
 	return resendVerificationCodeSafe(input.email)
 }
 export default resendCode

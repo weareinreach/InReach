@@ -9,7 +9,7 @@ import { type TForgotPasswordSchema } from './mutation.forgotPassword.schema'
  * out to. Staff needing the real outcome for a specific user should use `user.adminResetPassword` instead,
  * which is permissioned and returns the actual result.
  */
-const forgotPassword = async ({ input }: TRPCHandlerParams<TForgotPasswordSchema>) => {
+const forgotPassword = ({ input }: TRPCHandlerParams<TForgotPasswordSchema>) => {
 	return forgotPasswordSafe(input)
 }
 export default forgotPassword

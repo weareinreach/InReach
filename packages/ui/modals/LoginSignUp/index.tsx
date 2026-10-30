@@ -522,7 +522,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 				if (modalHandler) {
 					modalHandler.close()
 				} else if (callbackUrl) {
-					router.push(callbackUrl)
+					void router.push(callbackUrl)
 				}
 			}
 			return result
@@ -552,7 +552,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 					if (modalHandler) {
 						modalHandler.close()
 					} else if (callbackUrl) {
-						router.push(callbackUrl)
+						void router.push(callbackUrl)
 					}
 				}
 			} finally {
@@ -560,7 +560,9 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 			}
 		}
 		const submitNewPassword = async (newPassword: string) => {
-			if (!newPasswordChallenge || !newPasswordForm.isValid()) return
+			if (!newPasswordChallenge || !newPasswordForm.isValid()) {
+				return
+			}
 			try {
 				setLoading(true)
 				await completeNewPasswordChallenge.mutateAsync({

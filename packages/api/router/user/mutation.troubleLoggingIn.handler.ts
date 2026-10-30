@@ -8,7 +8,7 @@ import { type TTroubleLoggingInSchema } from './mutation.troubleLoggingIn.schema
  * `troubleLoggingIn` for the full account-state handling. Deliberately never reveals which of the three real
  * states (no account / unconfirmed / confirmed) was true.
  */
-const troubleLoggingInHandler = async ({ input }: TRPCHandlerParams<TTroubleLoggingInSchema>) => {
+const troubleLoggingInHandler = ({ input }: TRPCHandlerParams<TTroubleLoggingInSchema>) => {
 	return troubleLoggingIn(input.email)
 }
 export default troubleLoggingInHandler
