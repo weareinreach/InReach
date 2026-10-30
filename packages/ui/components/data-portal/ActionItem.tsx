@@ -8,8 +8,9 @@ import { Icon } from '~ui/icon'
  * Shared shell for a tooltip-labeled icon that opens a confirm modal - originally built for UserTable's four
  * account-recovery actions, now also used by OrgUrlDuplicateExceptionTable. Open/close state is owned by the
  * caller (passed in as props) rather than internally via `useDisclosure` here, so each action's own handlers
- * - which need to close the modal once a mutation settles - can be real top-level `useCallback`s instead of
- * arrow functions recreated inline in JSX on every render.
+ *
+ * - Which need to close the modal once a mutation settles - can be real top-level `useCallback`s instead of
+ *   arrow functions recreated inline in JSX on every render.
  */
 export const ActionItem = ({
 	tooltipLabel,

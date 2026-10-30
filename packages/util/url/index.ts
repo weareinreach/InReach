@@ -14,9 +14,10 @@ export const withUrlScheme = (url: string) => {
 
 /**
  * Reduces a URL to its bare domain - strips protocol, "www.", and everything from the first /, ?, or # onward
- * - so "https://www.example.org/donate" and "example.org" are treated as the same organization. Previously
- * copy-pasted identically in `query.getPotentialMatches.handler.ts` and `createOrgSuggestion.ts`; also used
- * by the org-URL duplicate-check exceptions list, which stores base URLs in this same normalized form.
+ *
+ * - So "https://www.example.org/donate" and "example.org" are treated as the same organization. Previously
+ *   copy-pasted identically in `query.getPotentialMatches.handler.ts` and `createOrgSuggestion.ts`; also used
+ *   by the org-URL duplicate-check exceptions list, which stores base URLs in this same normalized form.
  */
 export const normalizeToDomain = (url: string) =>
 	url
