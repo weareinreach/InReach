@@ -1,0 +1,9 @@
+/* Without this, ModalTitle's inner Box (maw='70%') truncates the "Close" breadcrumb text down to a
+single character inside a Drawer's default (narrower) title container - see
+InternalNotesDrawer.module.css, where this same fix was first needed. */
+.drawerTitleWrapper {
+	max-width: 100% !important;
+}
+.drawerTitleWrapper div:global(.mantine-Group-root) > div:first-of-type {
+	max-width: 100% !important;
+}

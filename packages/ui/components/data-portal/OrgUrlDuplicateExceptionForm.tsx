@@ -68,7 +68,13 @@ export const OrgUrlDuplicateExceptionForm = ({
 	return (
 		<form onSubmit={handleSubmit}>
 			<Stack gap='sm'>
-				<TextInput label='Base URL' placeholder='example.com' required {...form.getInputProps('baseUrl')} />
+				<TextInput
+					label='Base URL'
+					placeholder='example.com'
+					description="Domain only - any path, e.g. '/profileA', is ignored and stripped automatically, since the exception applies to the whole domain."
+					required
+					{...form.getInputProps('baseUrl')}
+				/>
 				<Textarea
 					label='Description'
 					placeholder="Why is this domain's duplicate check being exempted?"

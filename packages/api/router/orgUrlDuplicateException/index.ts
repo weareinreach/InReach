@@ -13,6 +13,12 @@ export const orgUrlDuplicateExceptionRouter = defineRouter({
 			const handler = await importHandler(namespaced('forTable'), () => import('./query.forTable.handler'))
 			return handler(opts)
 		}),
+	auditLog: permissionedProcedure('viewOrgUrlDuplicateExceptions')
+		.input(schema.ZAuditLogSchema)
+		.query(async (opts) => {
+			const handler = await importHandler(namespaced('auditLog'), () => import('./query.auditLog.handler'))
+			return handler(opts)
+		}),
 	create: permissionedProcedure('createOrgUrlDuplicateException')
 		.input(schema.ZCreateSchema)
 		.mutation(async (opts) => {

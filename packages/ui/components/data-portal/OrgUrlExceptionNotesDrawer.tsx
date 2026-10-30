@@ -6,6 +6,8 @@ import { Button } from '~ui/components/core/Button'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
+import classes from './OrgUrlExceptionNotesDrawer.module.css'
+
 const noteSchema = z.object({ note: z.string().min(1, 'Note cannot be empty') })
 type FormFields = z.infer<typeof noteSchema>
 
@@ -59,6 +61,7 @@ export const OrgUrlExceptionNotesDrawer = ({
 			padding='md'
 			withCloseButton={false}
 			title={<ModalTitle breadcrumb={{ option: 'close', onClick: onClose }} />}
+			classNames={{ title: classes.drawerTitleWrapper }}
 		>
 			<Stack align='center' pt={rem(24)}>
 				<Title order={3}>Internal Notes</Title>

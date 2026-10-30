@@ -12,6 +12,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { ActionItem, ConfirmBody } from './ActionItem'
 import { DataTable, type DataTableCellContext, type DataTableColumn } from './DataTable'
 import { OrgUrlDuplicateExceptionForm } from './OrgUrlDuplicateExceptionForm'
+import { OrgUrlExceptionAuditDrawer } from './OrgUrlExceptionAuditDrawer'
 import { OrgUrlExceptionNotesDrawer } from './OrgUrlExceptionNotesDrawer'
 import { ResultCount } from './ResultCount'
 
@@ -61,7 +62,7 @@ const DeleteRestoreAction = ({ row }: { row: RowItem }) => {
 		<ActionItem
 			tooltipLabel={row.active ? 'Delete' : 'Restore'}
 			modalTitle={row.active ? 'Delete Base URL Exception' : 'Restore Base URL Exception'}
-			icon={row.active ? 'carbon:trash-can' : 'carbon:renew'}
+			icon={row.active ? 'carbon:subtract-alt' : 'carbon:renew'}
 			opened={opened}
 			onOpen={handler.open}
 			onClose={handler.close}
@@ -95,7 +96,28 @@ const NotesAction = ({ row }: { row: RowItem }) => {
 			/>
 			<Tooltip label='View Internal Notes'>
 				<ActionIcon variant='subtle' onClick={handler.open}>
-					<Icon icon='carbon:document' color={theme.other.colors.primary.allyGreen} />
+					<Icon icon='carbon:notebook' color={theme.other.colors.primary.allyGreen} />
+				</ActionIcon>
+			</Tooltip>
+		</>
+	)
+}
+
+const AuditLogAction = ({ row }: { row: RowItem }) => {
+	const [opened, handler] = useDisclosure(false)
+	const theme = useMantineTheme()
+
+	return (
+		<>
+			<OrgUrlExceptionAuditDrawer
+				opened={opened}
+				onClose={handler.close}
+				exceptionId={row.id}
+				baseUrl={row.baseUrl}
+			/>
+			<Tooltip label='View Activity Log'>
+				<ActionIcon variant='subtle' onClick={handler.open}>
+					<Icon icon='carbon:time' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
 		</>
@@ -111,6 +133,7 @@ const ActionsCell = ({ row }: DataTableCellContext<TableRow>) => {
 		<Group wrap='nowrap' gap={8}>
 			<EditAction row={row} />
 			<DeleteRestoreAction row={row} />
+			<AuditLogAction row={row} />
 			<NotesAction row={row} />
 		</Group>
 	)
@@ -186,7 +209,7 @@ export const OrgUrlDuplicateExceptionTable = () => {
 				id: 'actions',
 				header: 'Actions',
 				pin: 'left',
-				size: 140,
+				size: 180,
 				enableSorting: false,
 				enableGlobalFilter: false,
 				hideable: false,
