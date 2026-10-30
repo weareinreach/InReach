@@ -57,7 +57,7 @@ describe('PasswordResetAction', () => {
 		await user.click(await screen.findByRole('button', { name: 'Yes' }))
 
 		expect(mutate).toHaveBeenCalledTimes(1)
-		expect(mutate).toHaveBeenCalledWith(expect.objectContaining({ email: EMAIL }))
+		expect(mutate.mock.calls[0]?.[0]).toEqual(expect.objectContaining({ email: EMAIL }))
 	})
 
 	it('does not call the mutation when the confirm dialog is dismissed', async () => {
@@ -139,7 +139,7 @@ describe('ResendVerificationAction', () => {
 	})
 
 	it('does not call the mutation until the confirm dialog is accepted', async () => {
-		render(<ResendVerificationAction email={EMAIL} />)
+		render(<ResendVerificationAction email={EMAIL} isVerified={false} />)
 		await userEvent.setup().click(screen.getByRole('button'))
 
 		expect(await screen.findByText(/sure you want to resend/i)).toBeInTheDocument()
@@ -147,17 +147,17 @@ describe('ResendVerificationAction', () => {
 	})
 
 	it('calls adminResendCode with exactly the target email once confirmed (no extra fields)', async () => {
-		render(<ResendVerificationAction email={EMAIL} />)
+		render(<ResendVerificationAction email={EMAIL} isVerified={false} />)
 		const user = userEvent.setup()
 		await user.click(screen.getByRole('button'))
 		await user.click(await screen.findByRole('button', { name: 'Yes' }))
 
 		expect(mutate).toHaveBeenCalledTimes(1)
-		expect(mutate).toHaveBeenCalledWith({ email: EMAIL })
+		expect(mutate.mock.calls[0]?.[0]).toEqual({ email: EMAIL })
 	})
 
 	it('does not call the mutation when the confirm dialog is dismissed', async () => {
-		render(<ResendVerificationAction email={EMAIL} />)
+		render(<ResendVerificationAction email={EMAIL} isVerified={false} />)
 		const user = userEvent.setup()
 		await user.click(screen.getByRole('button'))
 		await user.click(await screen.findByRole('button', { name: 'No' }))
@@ -175,7 +175,7 @@ describe('ForceVerificationAction', () => {
 	})
 
 	it('does not call the mutation until the confirm dialog is accepted', async () => {
-		render(<ForceVerificationAction email={EMAIL} />)
+		render(<ForceVerificationAction email={EMAIL} isVerified={false} />)
 		await userEvent.setup().click(screen.getByRole('button'))
 
 		expect(await screen.findByText(/sure you want to confirm/i)).toBeInTheDocument()
@@ -183,17 +183,17 @@ describe('ForceVerificationAction', () => {
 	})
 
 	it('calls adminConfirmUser with exactly the target email once confirmed (no extra fields)', async () => {
-		render(<ForceVerificationAction email={EMAIL} />)
+		render(<ForceVerificationAction email={EMAIL} isVerified={false} />)
 		const user = userEvent.setup()
 		await user.click(screen.getByRole('button'))
 		await user.click(await screen.findByRole('button', { name: 'Yes' }))
 
 		expect(mutate).toHaveBeenCalledTimes(1)
-		expect(mutate).toHaveBeenCalledWith({ email: EMAIL })
+		expect(mutate.mock.calls[0]?.[0]).toEqual({ email: EMAIL })
 	})
 
 	it('does not call the mutation when the confirm dialog is dismissed', async () => {
-		render(<ForceVerificationAction email={EMAIL} />)
+		render(<ForceVerificationAction email={EMAIL} isVerified={false} />)
 		const user = userEvent.setup()
 		await user.click(screen.getByRole('button'))
 		await user.click(await screen.findByRole('button', { name: 'No' }))
@@ -235,18 +235,39 @@ describe('Tooltip guidance (reachable without clicking)', () => {
 	})
 
 	it('ResendVerificationAction tooltip explains it is the preferred, email-dependent option', async () => {
-		render(<ResendVerificationAction email={EMAIL} />)
+		render(<ResendVerificationAction email={EMAIL} isVerified={false} />)
 		await userEvent.setup().hover(screen.getByRole('button'))
 
 		expect(await screen.findByText(/preferred.*receive email/i, {}, { timeout: 2000 })).toBeInTheDocument()
 	})
 
 	it('ForceVerificationAction tooltip explains it is the no-email escalation', async () => {
-		render(<ForceVerificationAction email={EMAIL} />)
+		render(<ForceVerificationAction email={EMAIL} isVerified={false} />)
 		await userEvent.setup().hover(screen.getByRole('button'))
 
 		expect(
 			await screen.findByText(/verification email never arrived/i, {}, { timeout: 2000 })
 		).toBeInTheDocument()
+	})
+
+	// Neither action is disabled when `isVerified` is true (see ForceVerificationAction's comment on why -
+	// the signal itself can be stale/wrong, and this is the one tool meant to fix that mismatch) - it's a
+	// hint, not a lock, so these only check the tooltip text changes, not that the button becomes inert.
+	it('ResendVerificationAction tooltip warns the user is already verified, but stays clickable', async () => {
+		render(<ResendVerificationAction email={EMAIL} isVerified={true} />)
+		const button = screen.getByRole('button')
+		await userEvent.setup().hover(button)
+
+		expect(await screen.findByText(/already verified/i, {}, { timeout: 2000 })).toBeInTheDocument()
+		expect(button).toBeEnabled()
+	})
+
+	it('ForceVerificationAction tooltip warns the user is already verified, but stays clickable', async () => {
+		render(<ForceVerificationAction email={EMAIL} isVerified={true} />)
+		const button = screen.getByRole('button')
+		await userEvent.setup().hover(button)
+
+		expect(await screen.findByText(/already verified/i, {}, { timeout: 2000 })).toBeInTheDocument()
+		expect(button).toBeEnabled()
 	})
 })
