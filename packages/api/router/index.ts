@@ -20,6 +20,7 @@ import { orgHoursRouter } from './orgHours'
 import { orgPhoneRouter } from './orgPhone'
 import { orgPhotoRouter } from './orgPhoto'
 import { orgSocialMediaRouter } from './orgSocialMedia'
+import { orgUrlDuplicateExceptionRouter } from './orgUrlDuplicateException'
 import { orgWebsiteRouter } from './orgWebsite'
 import { quickLinkRouter } from './quicklink'
 import { reportRouter } from './report'
@@ -51,6 +52,7 @@ export const appRouter = defineRouter({
 	orgPhoto: orgPhotoRouter,
 	orgWebsite: orgWebsiteRouter,
 	orgSocialMedia: orgSocialMediaRouter,
+	orgUrlDuplicateException: orgUrlDuplicateExceptionRouter,
 	page: pageRouter,
 	quicklink: quickLinkRouter,
 	report: reportRouter,

@@ -63,6 +63,15 @@ const orgWebsite = {
 	updateOrgWebsite: 'editSingleOrg',
 } satisfies PermissionDefs
 
+// Manager+ for everything, same tier as the table it's accessed from (Organizations side-nav, matching
+// Downloads/Bulk Search & Replace/Contact Cleanup's existing manager-and-above gating).
+const orgUrlDuplicateExceptions = {
+	viewOrgUrlDuplicateExceptions: 'dataPortalManager',
+	createOrgUrlDuplicateException: 'dataPortalManager',
+	updateOrgUrlDuplicateException: 'dataPortalManager',
+	deleteOrgUrlDuplicateException: 'dataPortalManager',
+} satisfies PermissionDefs
+
 const reviews = {
 	viewUserReviews: 'viewUserReviews',
 	hideUserReview: 'hideUserReview',
@@ -102,6 +111,7 @@ const permissions = {
 	...orgService,
 	...orgSocialMedia,
 	...orgWebsite,
+	...orgUrlDuplicateExceptions,
 	...reviews,
 	...reports,
 	...system,

@@ -32,6 +32,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/data-portal/downloads">
     | StaticRoute<"/data-portal/location-phone-cleanup">
     | StaticRoute<"/data-portal/manage-users">
+    | StaticRoute<"/data-portal/org-url-duplicate-check-exceptions">
     | StaticRoute<"/data-portal/organizations">
     | StaticRoute<"/data-portal/quicklink">
     | StaticRoute<"/data-portal/quicklink/email">

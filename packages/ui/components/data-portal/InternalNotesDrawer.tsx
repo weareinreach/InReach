@@ -100,6 +100,7 @@ export const InternalNotesDrawer = ({
 				orgReviewId: null,
 				orgServiceId: null,
 				orgSocialMediaId: null,
+				orgUrlDuplicateExceptionId: null,
 				orgWebsiteId: null,
 				outsideApiId: null,
 				outsideAPIServiceService: null,

@@ -3,6 +3,7 @@ import {
 	DOWNLOADS_NAV_HELP,
 	LOCATION_CONTACT_CLEANUP_HELP,
 	MANAGER_AND_ABOVE_PERMISSIONS,
+	ORG_URL_DUPLICATE_CHECK_EXCEPTIONS_NAV_HELP,
 	ORGANIZATIONS_NAV_HELP,
 	REPORTS_NAV_HELP,
 	REVIEWS_NAV_HELP,
@@ -10,7 +11,13 @@ import {
 } from './SideNav'
 
 type OrganizationsSideNavLabel =
-	'Organizations' | 'Reviews' | 'Reports' | 'Downloads' | 'Bulk Search & Replace' | 'Contact Cleanup'
+	| 'Organizations'
+	| 'Reviews'
+	| 'Reports'
+	| 'Downloads'
+	| 'Bulk Search & Replace'
+	| 'Contact Cleanup'
+	| 'Org URL Duplicate Check Exceptions'
 
 // One definition instead of six pages (organizations.tsx, reviews.tsx, reports.tsx, downloads.tsx,
 // bulk-search-replace.tsx, location-phone-cleanup.tsx) each hand-copying this same array, differing only in
@@ -37,6 +44,12 @@ const ORGANIZATIONS_SIDE_NAV_ITEMS: SideNavItem[] = [
 		label: 'Contact Cleanup',
 		href: { pathname: '/data-portal/location-phone-cleanup' },
 		help: LOCATION_CONTACT_CLEANUP_HELP,
+		permissions: MANAGER_AND_ABOVE_PERMISSIONS,
+	},
+	{
+		label: 'Org URL Duplicate Check Exceptions',
+		href: { pathname: '/data-portal/org-url-duplicate-check-exceptions' },
+		help: ORG_URL_DUPLICATE_CHECK_EXCEPTIONS_NAV_HELP,
 		permissions: MANAGER_AND_ABOVE_PERMISSIONS,
 	},
 ]
