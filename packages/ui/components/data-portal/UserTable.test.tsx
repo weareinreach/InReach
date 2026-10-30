@@ -201,3 +201,52 @@ describe('ForceVerificationAction', () => {
 		expect(mutate).not.toHaveBeenCalled()
 	})
 })
+
+/**
+ * A data manager deciding between these four actions needs to know when to reach for each one _before_
+ * clicking - the confirm dialogs' own explanatory text (covered above via `findByText(/sure you want.../)`)
+ * only appears after a click, which doesn't help with the decision. These confirm the same guidance is
+ * reachable via hover on each icon, with no click at all.
+ */
+describe('Tooltip guidance (reachable without clicking)', () => {
+	beforeEach(() => {
+		adminResetPasswordMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
+		adminSetTemporaryPasswordMock.mockReturnValue({
+			mutate: vi.fn(),
+			isPending: false,
+			data: undefined,
+		} as never)
+		adminResendCodeMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
+		adminConfirmUserMock.mockReturnValue({ mutate: vi.fn(), isPending: false } as never)
+	})
+
+	it('PasswordResetAction tooltip explains it is the preferred, email-dependent option', async () => {
+		render(<PasswordResetAction email={EMAIL} />)
+		await userEvent.setup().hover(screen.getByRole('button'))
+
+		expect(await screen.findByText(/preferred.*receive email/i, {}, { timeout: 2000 })).toBeInTheDocument()
+	})
+
+	it('SetTemporaryPasswordAction tooltip explains it is the no-email escalation', async () => {
+		render(<SetTemporaryPasswordAction email={EMAIL} />)
+		await userEvent.setup().hover(screen.getByRole('button'))
+
+		expect(await screen.findByText(/reset email never arrived/i, {}, { timeout: 2000 })).toBeInTheDocument()
+	})
+
+	it('ResendVerificationAction tooltip explains it is the preferred, email-dependent option', async () => {
+		render(<ResendVerificationAction email={EMAIL} />)
+		await userEvent.setup().hover(screen.getByRole('button'))
+
+		expect(await screen.findByText(/preferred.*receive email/i, {}, { timeout: 2000 })).toBeInTheDocument()
+	})
+
+	it('ForceVerificationAction tooltip explains it is the no-email escalation', async () => {
+		render(<ForceVerificationAction email={EMAIL} />)
+		await userEvent.setup().hover(screen.getByRole('button'))
+
+		expect(
+			await screen.findByText(/verification email never arrived/i, {}, { timeout: 2000 })
+		).toBeInTheDocument()
+	})
+})

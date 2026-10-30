@@ -181,7 +181,11 @@ export const PasswordResetAction = ({ email }: { email: string }) => {
 					</Button>
 				</Group>
 			</Modal>
-			<Tooltip label='Send Password Reset Link'>
+			<Tooltip
+				multiline
+				maw={240}
+				label='Send Password Reset Link - preferred. Only works if the user can receive email.'
+			>
 				<ActionIcon variant='subtle' onClick={handler.open}>
 					<Icon icon='carbon:password' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
@@ -248,7 +252,11 @@ export const SetTemporaryPasswordAction = ({ email }: { email: string }) => {
 					</>
 				)}
 			</Modal>
-			<Tooltip label='Set Temporary Password'>
+			<Tooltip
+				multiline
+				maw={240}
+				label='Set Temporary Password - escalation. Use only if the user says a reset email never arrived.'
+			>
 				<ActionIcon variant='subtle' onClick={handler.open}>
 					<Icon icon='carbon:key' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
@@ -289,7 +297,11 @@ export const ResendVerificationAction = ({ email }: { email: string }) => {
 					</Button>
 				</Group>
 			</Modal>
-			<Tooltip label='Resend Verification Link'>
+			<Tooltip
+				multiline
+				maw={240}
+				label='Resend Verification Link - preferred. Only works if the user can receive email.'
+			>
 				<ActionIcon variant='subtle' onClick={handler.open}>
 					<Icon icon='carbon:send-alt' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
@@ -329,7 +341,11 @@ export const ForceVerificationAction = ({ email }: { email: string }) => {
 					</Button>
 				</Group>
 			</Modal>
-			<Tooltip label='Force Verification'>
+			<Tooltip
+				multiline
+				maw={240}
+				label='Force Verification - escalation. Use only if the user says a verification email never arrived.'
+			>
 				<ActionIcon variant='subtle' onClick={handler.open}>
 					<Icon icon='carbon:checkmark-outline' color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
