@@ -1,7 +1,11 @@
 import { z } from 'zod'
 
+import { createLoggerInstance } from '@weareinreach/util/logger'
+
 import { ClientId, cognito, generateHash } from './cognitoClient'
 import { getBaseUrl } from './getBaseUrl'
+
+const logger = createLoggerInstance('Cognito forgotPassword')
 
 const ForgotPasswordSchema = z.object({
 	email: z.string().email().toLowerCase(),
@@ -19,6 +23,21 @@ export const forgotPassword = async (data: ForgotPasswordParams) => {
 	})
 
 	return response
+}
+
+/**
+ * Public, unauthenticated self-service entry point - never throws, never reveals whether the email has no
+ * account, an unconfirmed account (Cognito refuses to reset a password for one), or a confirmed account that
+ * the reset actually went out to. See `resendCode.ts`'s `resendVerificationCodeSafe` for the same pattern
+ * applied to the sibling endpoint.
+ */
+export const forgotPasswordSafe = async (data: ForgotPasswordParams): Promise<{ success: true }> => {
+	try {
+		await forgotPassword(data)
+	} catch (err) {
+		logger.error(err)
+	}
+	return { success: true }
 }
 
 type ForgotPasswordParams = {

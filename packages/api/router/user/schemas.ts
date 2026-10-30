@@ -1,5 +1,10 @@
 // codegen:start {preset: barrel, include: ./*.schema.ts}
+export * from './mutation.adminConfirmUser.schema'
 export * from './mutation.adminCreate.schema'
+export * from './mutation.adminResendCode.schema'
+export * from './mutation.adminResetPassword.schema'
+export * from './mutation.adminSetTemporaryPassword.schema'
+export * from './mutation.completeNewPasswordChallenge.schema'
 export * from './mutation.confirmAccount.schema'
 export * from './mutation.create.schema'
 export * from './mutation.deleteAccount.schema'
@@ -8,6 +13,7 @@ export * from './mutation.resendCode.schema'
 export * from './mutation.resetPassword.schema'
 export * from './mutation.submitSurvey.schema'
 export * from './mutation.toggleDataPortalAccess.schema'
+export * from './mutation.troubleLoggingIn.schema'
 export * from './query.forUserTable.schema'
 export * from './query.searchTypeahead.schema'
 // codegen:end

@@ -1,7 +1,10 @@
 // codegen:start {preset: barrel, include: ./*.ts, exclude: ./*.test.ts}
+export * from './adminConfirmUser'
+export * from './adminSetTemporaryPassword'
 export * from './changePassword'
 export * from './cognitoClient'
 export * from './cognitoJwt'
+export * from './completeNewPasswordChallenge'
 export * from './confirmAccount'
 export * from './constants'
 export * from './createUser'
@@ -13,6 +16,7 @@ export * from './logger'
 export * from './refreshSession'
 export * from './resendCode'
 export * from './resetPassword'
+export * from './troubleLoggingIn'
 export * from './userLogin'
 export * from './userLogout'
 // codegen:end

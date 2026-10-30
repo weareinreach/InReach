@@ -71,6 +71,62 @@ export const userRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
+	// Staff-only equivalents of resendCode/forgotPassword above - same Manager+ gate as forUserTable,
+	// return the real Cognito outcome instead of the public endpoints' deliberately-generic response.
+	adminConfirmUser: permissionedProcedure('viewAllUsers')
+		.input(schema.ZAdminConfirmUserSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('adminConfirmUser'),
+				() => import('./mutation.adminConfirmUser.handler')
+			)
+			return handler(opts)
+		}),
+	adminResendCode: permissionedProcedure('viewAllUsers')
+		.input(schema.ZAdminResendCodeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('adminResendCode'),
+				() => import('./mutation.adminResendCode.handler')
+			)
+			return handler(opts)
+		}),
+	adminResetPassword: permissionedProcedure('viewAllUsers')
+		.input(schema.ZAdminResetPasswordSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('adminResetPassword'),
+				() => import('./mutation.adminResetPassword.handler')
+			)
+			return handler(opts)
+		}),
+	adminSetTemporaryPassword: permissionedProcedure('viewAllUsers')
+		.input(schema.ZAdminSetTemporaryPasswordSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('adminSetTemporaryPassword'),
+				() => import('./mutation.adminSetTemporaryPassword.handler')
+			)
+			return handler(opts)
+		}),
+	// Public - completes the NEW_PASSWORD_REQUIRED challenge from the temporary password above. Requires
+	// knowing the temporary password itself, so (unlike resendCode/forgotPassword) no enumeration risk.
+	completeNewPasswordChallenge: publicProcedure
+		.input(schema.ZCompleteNewPasswordChallengeSchema)
+		.mutation(async (opts) => {
+			const handler = await importHandler(
+				namespaced('completeNewPasswordChallenge'),
+				() => import('./mutation.completeNewPasswordChallenge.handler')
+			)
+			return handler(opts)
+		}),
+	troubleLoggingIn: publicProcedure.input(schema.ZTroubleLoggingInSchema).mutation(async (opts) => {
+		const handler = await importHandler(
+			namespaced('troubleLoggingIn'),
+			() => import('./mutation.troubleLoggingIn.handler')
+		)
+		return handler(opts)
+	}),
 	confirmAccount: publicProcedure.input(schema.ZConfirmAccountSchema).mutation(async (opts) => {
 		const handler = await importHandler(
 			namespaced('confirmAccount'),

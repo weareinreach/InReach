@@ -11,6 +11,15 @@
 		"./*": {
 			"default": "./*"
 		},
+		"./adminConfirmUser": {
+			"default": "./lib/adminConfirmUser.ts"
+		},
+		"./adminSetTemporaryPassword": {
+			"default": "./lib/adminSetTemporaryPassword.ts"
+		},
+		"./completeNewPasswordChallenge": {
+			"default": "./lib/completeNewPasswordChallenge.ts"
+		},
 		"./confirmAccount": {
 			"default": "./lib/confirmAccount.ts"
 		},
@@ -39,6 +48,9 @@
 		},
 		"./server": {
 			"default": "./server.ts"
+		},
+		"./troubleLoggingIn": {
+			"default": "./lib/troubleLoggingIn.ts"
 		},
 		"./userLogin": {
 			"default": "./lib/userLogin.ts"
