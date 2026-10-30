@@ -197,11 +197,14 @@ const ConfirmBody = ({
 	onConfirm: () => void
 	onCancel: () => void
 }) => (
-	<>
-		<Text size='sm' c='dimmed' mb='sm'>
+	// This app defaults Text to `component: 'span'` (inline) app-wide (see theme/common.tsx's Text
+	// defaultProps), so two bare sibling <Text> elements flow together with no line break between them.
+	// Stack forces each child onto its own line regardless of Text's own inline rendering.
+	<Stack gap='sm'>
+		<Text size='sm' c='dimmed'>
 			{explanation}
 		</Text>
-		<Text mb='md'>{confirmText}</Text>
+		<Text>{confirmText}</Text>
 		<Group wrap='nowrap'>
 			<Button onClick={onConfirm} loading={isPending}>
 				Yes
@@ -210,7 +213,7 @@ const ConfirmBody = ({
 				No
 			</Button>
 		</Group>
-	</>
+	</Stack>
 )
 
 export const PasswordResetAction = ({ email }: { email: string }) => {
