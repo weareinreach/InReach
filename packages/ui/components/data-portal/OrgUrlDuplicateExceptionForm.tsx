@@ -37,8 +37,24 @@ export const OrgUrlDuplicateExceptionForm = ({
 		onSettled()
 	}, [apiUtils, onSettled])
 
-	const create = api.orgUrlDuplicateException.create.useMutation({ onSuccess: handleSettled })
-	const update = api.orgUrlDuplicateException.update.useMutation({ onSuccess: handleSettled })
+	// Without this, a failed mutation (e.g. the base URL is already on the list, or any other server error)
+	// was completely silent - the submit button just stopped loading, with nothing telling the user it
+	// didn't actually work.
+	const handleError = useCallback(
+		(error: { message: string }) => {
+			form.setFieldError('baseUrl', error.message)
+		},
+		[form]
+	)
+
+	const create = api.orgUrlDuplicateException.create.useMutation({
+		onSuccess: handleSettled,
+		onError: handleError,
+	})
+	const update = api.orgUrlDuplicateException.update.useMutation({
+		onSuccess: handleSettled,
+		onError: handleError,
+	})
 	const isPending = existing ? update.isPending : create.isPending
 
 	const handleSubmit = form.onSubmit((values) => {

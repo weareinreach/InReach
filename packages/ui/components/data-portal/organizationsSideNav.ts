@@ -17,7 +17,7 @@ type OrganizationsSideNavLabel =
 	| 'Downloads'
 	| 'Bulk Search & Replace'
 	| 'Contact Cleanup'
-	| 'Org URL Duplicate Check Exceptions'
+	| 'URL Exceptions'
 
 // One definition instead of six pages (organizations.tsx, reviews.tsx, reports.tsx, downloads.tsx,
 // bulk-search-replace.tsx, location-phone-cleanup.tsx) each hand-copying this same array, differing only in
@@ -47,7 +47,7 @@ const ORGANIZATIONS_SIDE_NAV_ITEMS: SideNavItem[] = [
 		permissions: MANAGER_AND_ABOVE_PERMISSIONS,
 	},
 	{
-		label: 'Org URL Duplicate Check Exceptions',
+		label: 'URL Exceptions',
 		href: { pathname: '/data-portal/org-url-duplicate-check-exceptions' },
 		help: ORG_URL_DUPLICATE_CHECK_EXCEPTIONS_NAV_HELP,
 		permissions: MANAGER_AND_ABOVE_PERMISSIONS,

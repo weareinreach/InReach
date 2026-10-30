@@ -22,10 +22,7 @@ const DataPortalOrgUrlDuplicateCheckExceptions: NextPageWithOptions = () => {
 			<Head>
 				<title>{t('page-title.base', { title })}</title>
 			</Head>
-			<DataPortalPageShell
-				activeSection='organizations'
-				sideNav={organizationsSideNav('Org URL Duplicate Check Exceptions')}
-			>
+			<DataPortalPageShell activeSection='organizations' sideNav={organizationsSideNav('URL Exceptions')}>
 				<PageHeading
 					title={title}
 					// eslint-disable-next-line i18next/no-literal-string -- Data Portal is internal-only, no i18n needed
