@@ -224,7 +224,7 @@ export const PasswordResetAction = ({ email }: { email: string }) => {
 
 	return (
 		<ActionItem
-			tooltipLabel='Send Password Reset Link - preferred. Only works if the user can receive email.'
+			tooltipLabel='Send Password Reset Link - Preferred. This works if the user can receive the email.'
 			modalTitle='Send Password Reset Link'
 			icon='carbon:password'
 		>
@@ -232,7 +232,7 @@ export const PasswordResetAction = ({ email }: { email: string }) => {
 				<ConfirmBody
 					explanation={
 						'This is the preferred way to help a user reset their password, however it only works if they can actually receive ' +
-						'email - if they (or staff) already tried this and the user says nothing arrived, use the "Set Temporary Password" action instead.'
+						'email - if they (or staff) already tried this and the user says no email arrived, use the "Set Temporary Password" action instead.'
 					}
 					confirmText="Are you sure you want to reset this user's password?"
 					isPending={resetPw.isPending}
@@ -299,16 +299,16 @@ export const ResendVerificationAction = ({ email, isVerified }: { email: string;
 	const resendCode = api.user.adminResendCode.useMutation()
 	// Not disabled - see ForceVerificationAction's comment on why this stays clickable regardless.
 	const tooltipLabel = isVerified
-		? 'Resend Verification Link - this user is already verified.'
-		: 'Resend Verification Link - preferred. Only works if the user can receive email.'
+		? 'Resend Verification Link - This user is already verified.'
+		: 'Resend Verification Link - Preferred. This only works if the user can receive the email.'
 
 	return (
 		<ActionItem tooltipLabel={tooltipLabel} modalTitle='Resend Verification Link' icon='carbon:send-alt'>
 			{({ close }) => (
 				<ConfirmBody
 					explanation={
-						'This is the preferred way to send a new emailverification link to the user, however it only works if they can actually ' +
-						'receive email - if they (or staff) have already tried this and the user says nothing arrived, use the "Force Verification" action instead.'
+						'This is the preferred way to send a new email verification link to the user, however it only works if they can actually ' +
+						'receive email - if they (or staff) have already tried this and user says no email arrived, use the "Force Verification" action instead.'
 					}
 					confirmText="Are you sure you want to resend this user's verification link?"
 					isPending={resendCode.isPending}
@@ -334,7 +334,7 @@ export const ForceVerificationAction = ({ email, isVerified }: { email: string; 
 		<ActionItem tooltipLabel={tooltipLabel} modalTitle='Force Verification' icon='carbon:checkmark-outline'>
 			{({ close }) => (
 				<ConfirmBody
-					explanation='Use this only if the user says a verification email never arrived. Confirms the account directly, skipping email entirely - no code or link needed.'
+					explanation='Use this only if the user says a verification email never arrived. This action confirms the account directly without sending an email - no code or link needed.'
 					confirmText="Are you sure you want to confirm this user's account?"
 					isPending={confirmUser.isPending}
 					onConfirm={() => confirmUser.mutate({ email }, { onSettled: close })}
