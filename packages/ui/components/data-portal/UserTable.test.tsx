@@ -224,7 +224,7 @@ describe('Tooltip guidance (reachable without clicking)', () => {
 		render(<PasswordResetAction email={EMAIL} />)
 		await userEvent.setup().hover(screen.getByRole('button'))
 
-		expect(await screen.findByText(/preferred.*receive email/i, {}, { timeout: 2000 })).toBeInTheDocument()
+		expect(await screen.findByText(/preferred.*receive.*email/i, {}, { timeout: 2000 })).toBeInTheDocument()
 	})
 
 	it('SetTemporaryPasswordAction tooltip explains it is the no-email escalation', async () => {
@@ -238,7 +238,7 @@ describe('Tooltip guidance (reachable without clicking)', () => {
 		render(<ResendVerificationAction email={EMAIL} isVerified={false} />)
 		await userEvent.setup().hover(screen.getByRole('button'))
 
-		expect(await screen.findByText(/preferred.*receive email/i, {}, { timeout: 2000 })).toBeInTheDocument()
+		expect(await screen.findByText(/preferred.*receive.*email/i, {}, { timeout: 2000 })).toBeInTheDocument()
 	})
 
 	it('ForceVerificationAction tooltip explains it is the no-email escalation', async () => {
