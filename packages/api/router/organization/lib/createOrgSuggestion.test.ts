@@ -56,6 +56,11 @@ const baseInput = {
 
 const ctx = { actorId: 'user_test000000000000000000' } as unknown as never
 
+// Shared between the two "healthgrades.com/doctors" cases below - both submissions are checked
+// against the exact same existing org and the exact same exception.
+const healthgradesDoctorsExisting = ['https://healthgrades.com/doctors/personA']
+const healthgradesDoctorsException = [{ baseUrl: 'healthgrades.com/doctors', active: true }]
+
 type DuplicateCheckCase = {
 	name: string
 	/** Existing `OrgWebsite.url` rows already in the system. */
@@ -112,8 +117,8 @@ const cases: DuplicateCheckCase[] = [
 	},
 	{
 		name: 'allows a duplicate under a narrower active path-prefix exception when the full URL differs',
-		existing: ['https://healthgrades.com/doctors/personA'],
-		exceptions: [{ baseUrl: 'healthgrades.com/doctors', active: true }],
+		existing: healthgradesDoctorsExisting,
+		exceptions: healthgradesDoctorsException,
 		orgWebsite: 'https://healthgrades.com/doctors/personB',
 		outcome: 'allowed',
 	},
@@ -121,8 +126,8 @@ const cases: DuplicateCheckCase[] = [
 		// Same domain (so still a domain-level duplicate match), but under a different path than the
 		// exception covers - the exception must not leak coverage to the rest of the domain.
 		name: 'does not let a narrower path-prefix exception cover a sibling path on the same domain',
-		existing: ['https://healthgrades.com/doctors/personA'],
-		exceptions: [{ baseUrl: 'healthgrades.com/doctors', active: true }],
+		existing: healthgradesDoctorsExisting,
+		exceptions: healthgradesDoctorsException,
 		orgWebsite: 'https://healthgrades.com/lawyers/personA',
 		outcome: 'blocked',
 	},
