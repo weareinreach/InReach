@@ -231,8 +231,8 @@ export const PasswordResetAction = ({ email }: { email: string }) => {
 			{({ close }) => (
 				<ConfirmBody
 					explanation={
-						'Preferred way to help a user reset their password. Only works if they can actually receive ' +
-						'email - if they\'ve already tried this and say nothing arrived, use "Set Temporary Password" instead.'
+						'This is the preferred way to help a user reset their password, however it only works if they can actually receive ' +
+						'email - if they (or staff) already tried this and the user says nothing arrived, use the "Set Temporary Password" action instead.'
 					}
 					confirmText="Are you sure you want to reset this user's password?"
 					isPending={resetPw.isPending}
@@ -307,8 +307,8 @@ export const ResendVerificationAction = ({ email, isVerified }: { email: string;
 			{({ close }) => (
 				<ConfirmBody
 					explanation={
-						'Preferred way to get a new verification link to the user. Only works if they can actually ' +
-						'receive email - if they\'ve already tried this and say nothing arrived, use "Force Verification" instead.'
+						'This is the preferred way to send a new emailverification link to the user, however it only works if they can actually ' +
+						'receive email - if they (or staff) have already tried this and the user says nothing arrived, use the "Force Verification" action instead.'
 					}
 					confirmText="Are you sure you want to resend this user's verification link?"
 					isPending={resendCode.isPending}
