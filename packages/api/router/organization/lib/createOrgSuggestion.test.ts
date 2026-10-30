@@ -184,4 +184,55 @@ describe('createOrgSuggestion - website duplicate check with exceptions', () => 
 			} as never)
 		).rejects.toThrow('This website is already associated with an existing organization')
 	})
+
+	it('blocks a bare domain when only a narrower path-prefix exception exists for that domain', async () => {
+		mockAllowingPrisma(['https://test.com/drs'], [{ baseUrl: 'test.com/drs', active: true }])
+
+		// A narrower exception ("test.com/drs") doesn't reach upward to cover the bare domain above it -
+		// confirmed as the intended (not buggy) behavior after walking through it with the product owner.
+		await expect(
+			createOrgSuggestion({
+				ctx,
+				input: { ...baseInput, orgWebsite: 'https://test.com' },
+				sourceValue: 'suggestion',
+				sourceType: 'OTHER',
+			} as never)
+		).rejects.toThrow('This website is already associated with an existing organization')
+	})
+
+	it('allows a bare domain as the very first use of that domain, even with only a narrower exception listed', async () => {
+		mockAllowingPrisma([], [{ baseUrl: 'test.com/drs', active: true }])
+
+		// Nothing exists yet on this domain, so there's no duplicate to suppress in the first place - the
+		// exceptions list never even gets consulted.
+		await expect(
+			createOrgSuggestion({
+				ctx,
+				input: { ...baseInput, orgWebsite: 'https://test.com' },
+				sourceValue: 'suggestion',
+				sourceType: 'OTHER',
+			} as never)
+		).resolves.toEqual({ id: 'organization_generated', slug: 'test-org' })
+	})
+
+	it('lets a domain-wide exception dominate when a narrower exception for the same domain also exists', async () => {
+		mockAllowingPrisma(
+			['https://test.com/drs/personA'],
+			[
+				{ baseUrl: 'test.com', active: true },
+				{ baseUrl: 'test.com/drs', active: true },
+			]
+		)
+
+		// The domain-wide exception already covers everything the narrower one does, including paths outside
+		// "/drs" - the two entries don't conflict, the broader one just makes the narrower one redundant.
+		await expect(
+			createOrgSuggestion({
+				ctx,
+				input: { ...baseInput, orgWebsite: 'https://test.com/lawyers/personA' },
+				sourceValue: 'suggestion',
+				sourceType: 'OTHER',
+			} as never)
+		).resolves.toEqual({ id: 'organization_generated', slug: 'test-org' })
+	})
 })
