@@ -147,31 +147,37 @@ const DataPortalAccessSelect = ({
  */
 
 /**
- * Shared shell for the four actions above: a tooltip-labeled icon that opens a confirm modal. `children` is a
- * render prop (not a plain node) so callers can close the modal themselves after a mutation settles, or - as
- * `SetTemporaryPasswordAction` does - swap the modal's body entirely once the mutation has a result.
+ * Shared shell for the four actions above: a tooltip-labeled icon that opens a confirm modal. Open/close
+ * state is owned by the caller (passed in as props) rather than internally via `useDisclosure` here, so each
+ * action's own handlers - which need to close the modal once a mutation settles - can be real top-level
+ * `useCallback`s instead of arrow functions recreated inline in JSX on every render.
  */
 const ActionItem = ({
 	tooltipLabel,
 	modalTitle,
 	icon,
+	opened,
+	onOpen,
+	onClose,
 	children,
 }: {
 	tooltipLabel: string
 	modalTitle: string
 	icon: string
-	children: (helpers: { close: () => void }) => ReactNode
+	opened: boolean
+	onOpen: () => void
+	onClose: () => void
+	children: ReactNode
 }) => {
 	const theme = useMantineTheme()
-	const [opened, handler] = useDisclosure(false)
 
 	return (
 		<>
-			<Modal opened={opened} onClose={handler.close} title={modalTitle}>
-				{children({ close: handler.close })}
+			<Modal opened={opened} onClose={onClose} title={modalTitle}>
+				{children}
 			</Modal>
 			<Tooltip multiline maw={240} label={tooltipLabel}>
-				<ActionIcon variant='subtle' onClick={handler.open}>
+				<ActionIcon variant='subtle' onClick={onOpen}>
 					<Icon icon={icon} color={theme.other.colors.primary.allyGreen} />
 				</ActionIcon>
 			</Tooltip>
@@ -218,109 +224,134 @@ const ConfirmBody = ({
 
 export const PasswordResetAction = ({ email }: { email: string }) => {
 	const { t } = useTranslation('common')
+	const [opened, handler] = useDisclosure(false)
 	const resetPw = api.user.adminResetPassword.useMutation()
 	const cognitoSubject = t('password-reset.email-subject')
 	const cognitoMessage = t('password-reset.email-body')
+
+	const handleConfirm = useCallback(() => {
+		resetPw.mutate({ email, cognitoSubject, cognitoMessage }, { onSettled: handler.close })
+	}, [resetPw, email, cognitoSubject, cognitoMessage, handler.close])
 
 	return (
 		<ActionItem
 			tooltipLabel='Send Password Reset Link - Preferred. This works if the user can receive the email.'
 			modalTitle='Send Password Reset Link'
 			icon='carbon:password'
+			opened={opened}
+			onOpen={handler.open}
+			onClose={handler.close}
 		>
-			{({ close }) => (
-				<ConfirmBody
-					explanation={
-						'This is the preferred way to help a user reset their password, however it only works if they can actually receive ' +
-						'email - if they (or staff) already tried this and the user says no email arrived, use the "Set Temporary Password" action instead.'
-					}
-					confirmText="Are you sure you want to reset this user's password?"
-					isPending={resetPw.isPending}
-					onConfirm={() => resetPw.mutate({ email, cognitoSubject, cognitoMessage }, { onSettled: close })}
-					onCancel={close}
-				/>
-			)}
+			<ConfirmBody
+				explanation={
+					'This is the preferred way to help a user reset their password, however it only works if they can actually receive ' +
+					'email - if they (or staff) already tried this and the user says no email arrived, use the "Set Temporary Password" action instead.'
+				}
+				confirmText="Are you sure you want to reset this user's password?"
+				isPending={resetPw.isPending}
+				onConfirm={handleConfirm}
+				onCancel={handler.close}
+			/>
 		</ActionItem>
 	)
 }
 
 export const SetTemporaryPasswordAction = ({ email }: { email: string }) => {
+	const [opened, handler] = useDisclosure(false)
 	const clipboard = useClipboard({ timeout: 1000 })
 	const setTempPassword = api.user.adminSetTemporaryPassword.useMutation()
+	const temporaryPassword = setTempPassword.data?.temporaryPassword
+
+	const handleClose = useCallback(() => {
+		handler.close()
+		setTempPassword.reset()
+	}, [handler, setTempPassword])
+
+	const handleConfirm = useCallback(() => {
+		setTempPassword.mutate({ email })
+	}, [setTempPassword, email])
+
+	const handleCopy = useCallback(() => {
+		if (temporaryPassword) {
+			clipboard.copy(temporaryPassword)
+		}
+	}, [clipboard, temporaryPassword])
 
 	return (
 		<ActionItem
 			tooltipLabel='Set Temporary Password - escalation. Use only if the user says a reset email never arrived.'
 			modalTitle='Set Temporary Password'
 			icon='carbon:key'
+			opened={opened}
+			onOpen={handler.open}
+			onClose={handleClose}
 		>
-			{({ close }) => {
-				const handleClose = () => {
-					close()
-					setTempPassword.reset()
-				}
-				if (setTempPassword.data) {
-					return (
-						<>
-							<Text mb='xs'>
-								Share this password with the user directly - phone, verified chat, in person. Never by email.
-								They&apos;ll be required to choose their own password the next time they log in.
-							</Text>
-							<Group wrap='nowrap' mb='md'>
-								<Text ff='monospace' size='lg' fw={700}>
-									{setTempPassword.data.temporaryPassword}
-								</Text>
-								<Button
-									variant='secondaryLg'
-									onClick={() => clipboard.copy(setTempPassword.data.temporaryPassword)}
-								>
-									{clipboard.copied ? 'Copied' : 'Copy'}
-								</Button>
-							</Group>
-							<Button onClick={handleClose}>Done</Button>
-						</>
-					)
-				}
-				return (
-					<ConfirmBody
-						explanation="Use this only if the user says a password reset email never arrived. Generates a one-time password with no email involved - you'll need to share it with them yourself."
-						confirmText='Are you sure you want to set a temporary password for this user?'
-						isPending={setTempPassword.isPending}
-						onConfirm={() => setTempPassword.mutate({ email })}
-						onCancel={handleClose}
-					/>
-				)
-			}}
-		</ActionItem>
-	)
-}
-
-export const ResendVerificationAction = ({ email, isVerified }: { email: string; isVerified: boolean }) => {
-	const resendCode = api.user.adminResendCode.useMutation()
-	// Not disabled - see ForceVerificationAction's comment on why this stays clickable regardless.
-	const tooltipLabel = isVerified
-		? 'Resend Verification Link - This user is already verified.'
-		: 'Resend Verification Link - Preferred. This only works if the user can receive the email.'
-
-	return (
-		<ActionItem tooltipLabel={tooltipLabel} modalTitle='Resend Verification Link' icon='carbon:send-alt'>
-			{({ close }) => (
+			{temporaryPassword ? (
+				<>
+					<Text mb='xs'>
+						Share this password with the user directly - phone, verified chat, in person. Never by email.
+						They&apos;ll be required to choose their own password the next time they log in.
+					</Text>
+					<Group wrap='nowrap' mb='md'>
+						<Text ff='monospace' size='lg' fw={700}>
+							{temporaryPassword}
+						</Text>
+						<Button variant='secondaryLg' onClick={handleCopy}>
+							{clipboard.copied ? 'Copied' : 'Copy'}
+						</Button>
+					</Group>
+					<Button onClick={handleClose}>Done</Button>
+				</>
+			) : (
 				<ConfirmBody
-					explanation={
-						'This is the preferred way to send a new email verification link to the user, however it only works if they can actually ' +
-						'receive email - if they (or staff) have already tried this and user says no email arrived, use the "Force Verification" action instead.'
-					}
-					confirmText="Are you sure you want to resend this user's verification link?"
-					isPending={resendCode.isPending}
-					onConfirm={() => resendCode.mutate({ email }, { onSettled: close })}
-					onCancel={close}
+					explanation="Use this only if the user says a password reset email never arrived. Generates a one-time password with no email involved - you'll need to share it with them yourself."
+					confirmText='Are you sure you want to set a temporary password for this user?'
+					isPending={setTempPassword.isPending}
+					onConfirm={handleConfirm}
+					onCancel={handleClose}
 				/>
 			)}
 		</ActionItem>
 	)
 }
 
+export const ResendVerificationAction = ({ email, isVerified }: { email: string; isVerified: boolean }) => {
+	const [opened, handler] = useDisclosure(false)
+	const resendCode = api.user.adminResendCode.useMutation()
+	// Not disabled - see ForceVerificationAction's comment on why this stays clickable regardless.
+	const tooltipLabel = isVerified
+		? 'Resend Verification Link - This user is already verified.'
+		: 'Resend Verification Link - Preferred. This only works if the user can receive the email.'
+
+	const handleConfirm = useCallback(() => {
+		resendCode.mutate({ email }, { onSettled: handler.close })
+	}, [resendCode, email, handler.close])
+
+	return (
+		<ActionItem
+			tooltipLabel={tooltipLabel}
+			modalTitle='Resend Verification Link'
+			icon='carbon:send-alt'
+			opened={opened}
+			onOpen={handler.open}
+			onClose={handler.close}
+		>
+			<ConfirmBody
+				explanation={
+					'This is the preferred way to send a new email verification link to the user, however it only works if they can actually ' +
+					'receive email - if they (or staff) have already tried this and user says no email arrived, use the "Force Verification" action instead.'
+				}
+				confirmText="Are you sure you want to resend this user's verification link?"
+				isPending={resendCode.isPending}
+				onConfirm={handleConfirm}
+				onCancel={handler.close}
+			/>
+		</ActionItem>
+	)
+}
+
 export const ForceVerificationAction = ({ email, isVerified }: { email: string; isVerified: boolean }) => {
+	const [opened, handler] = useDisclosure(false)
 	const confirmUser = api.user.adminConfirmUser.useMutation()
 	// Intentionally not disabled when already verified: `isVerified` reflects the app's own DB
 	// (emailVerified), which can drift from Cognito's actual confirmation state - the exact kind of
@@ -330,17 +361,26 @@ export const ForceVerificationAction = ({ email, isVerified }: { email: string; 
 		? 'Force Verification - this user is already verified.'
 		: 'Force Verification - escalation. Use only if the user says a verification email never arrived.'
 
+	const handleConfirm = useCallback(() => {
+		confirmUser.mutate({ email }, { onSettled: handler.close })
+	}, [confirmUser, email, handler.close])
+
 	return (
-		<ActionItem tooltipLabel={tooltipLabel} modalTitle='Force Verification' icon='carbon:checkmark-outline'>
-			{({ close }) => (
-				<ConfirmBody
-					explanation='Use this only if the user says a verification email never arrived. This action confirms the account directly without sending an email - no code or link needed.'
-					confirmText="Are you sure you want to confirm this user's account?"
-					isPending={confirmUser.isPending}
-					onConfirm={() => confirmUser.mutate({ email }, { onSettled: close })}
-					onCancel={close}
-				/>
-			)}
+		<ActionItem
+			tooltipLabel={tooltipLabel}
+			modalTitle='Force Verification'
+			icon='carbon:checkmark-outline'
+			opened={opened}
+			onOpen={handler.open}
+			onClose={handler.close}
+		>
+			<ConfirmBody
+				explanation='Use this only if the user says a verification email never arrived. This action confirms the account directly without sending an email - no code or link needed.'
+				confirmText="Are you sure you want to confirm this user's account?"
+				isPending={confirmUser.isPending}
+				onConfirm={handleConfirm}
+				onCancel={handler.close}
+			/>
 		</ActionItem>
 	)
 }

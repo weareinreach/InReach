@@ -486,6 +486,11 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 		const { t } = useTranslation(['common'])
 		const router = useRouter()
 		const resendCode = api.user.resendCode.useMutation()
+		const handleResendCode = useCallback(() => {
+			if (unconfirmedEmail) {
+				resendCode.mutate({ email: unconfirmedEmail })
+			}
+		}, [resendCode, unconfirmedEmail])
 		const completeNewPasswordChallenge = api.user.completeNewPasswordChallenge.useMutation()
 		const loginErrors = new Map([[401, t('login.error-username-password')]])
 		const LoginSchema = z.object({
@@ -511,22 +516,25 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 			validateInputOnBlur: true,
 			initialValues: { newPassword: '' },
 		})
-		const completeSignIn = async (email: string, password: string) => {
-			const result = await signIn('cognito', { email, password, redirect: false })
-			if (result?.ok) {
-				userEvent.login()
-				// Falls back to the normal login view rather than leaving the "set new password" step
-				// stuck on screen, for the rarer non-modal case (no modalHandler/callbackUrl to navigate
-				// away via).
-				setNewPasswordChallenge(null)
-				if (modalHandler) {
-					modalHandler.close()
-				} else if (callbackUrl) {
-					void router.push(callbackUrl)
+		const completeSignIn = useCallback(
+			async (email: string, password: string) => {
+				const result = await signIn('cognito', { email, password, redirect: false })
+				if (result?.ok) {
+					userEvent.login()
+					// Falls back to the normal login view rather than leaving the "set new password" step
+					// stuck on screen, for the rarer non-modal case (no modalHandler/callbackUrl to navigate
+					// away via).
+					setNewPasswordChallenge(null)
+					if (modalHandler) {
+						modalHandler.close()
+					} else if (callbackUrl) {
+						void router.push(callbackUrl)
+					}
 				}
-			}
-			return result
-		}
+				return result
+			},
+			[modalHandler, callbackUrl, router]
+		)
 		const loginHandle = async (email: string, password: string) => {
 			try {
 				setLoading(true)
@@ -559,27 +567,33 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 				setLoading(false)
 			}
 		}
-		const submitNewPassword = async (newPassword: string) => {
-			if (!newPasswordChallenge || !newPasswordForm.isValid()) {
-				return
-			}
-			try {
-				setLoading(true)
-				await completeNewPasswordChallenge.mutateAsync({
-					email: newPasswordChallenge.email,
-					temporaryPassword: newPasswordChallenge.temporaryPassword,
-					newPassword,
-				})
-				const result = await completeSignIn(newPasswordChallenge.email, newPassword)
-				if (result?.error) {
-					newPasswordForm.setFieldError('newPassword', t('login.new-password-error'))
+		const submitNewPassword = useCallback(
+			async (newPassword: string) => {
+				if (!newPasswordChallenge || !newPasswordForm.isValid()) {
+					return
 				}
-			} catch {
-				newPasswordForm.setFieldError('newPassword', t('login.new-password-error'))
-			} finally {
-				setLoading(false)
-			}
-		}
+				try {
+					setLoading(true)
+					await completeNewPasswordChallenge.mutateAsync({
+						email: newPasswordChallenge.email,
+						temporaryPassword: newPasswordChallenge.temporaryPassword,
+						newPassword,
+					})
+					const result = await completeSignIn(newPasswordChallenge.email, newPassword)
+					if (result?.error) {
+						newPasswordForm.setFieldError('newPassword', t('login.new-password-error'))
+					}
+				} catch {
+					newPasswordForm.setFieldError('newPassword', t('login.new-password-error'))
+				} finally {
+					setLoading(false)
+				}
+			},
+			[newPasswordChallenge, newPasswordForm, completeNewPasswordChallenge, completeSignIn, t]
+		)
+		const handleSubmitNewPassword = useCallback(() => {
+			void submitNewPassword(newPasswordForm.values.newPassword)
+		}, [submitNewPassword, newPasswordForm.values.newPassword])
 		if (newPasswordChallenge) {
 			return (
 				<Stack align='center' gap={24} ref={ref}>
@@ -592,7 +606,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 						{...newPasswordForm.getInputProps('newPassword')}
 					/>
 					<Button
-						onClick={async () => await submitNewPassword(newPasswordForm.values.newPassword)}
+						onClick={handleSubmitNewPassword}
 						variant='primary-icon'
 						fullWidth
 						type='submit'
@@ -631,12 +645,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 					(resendCode.isSuccess ? (
 						<Text variant={variants.Text.utility3}>{t('login.resend-sent')}</Text>
 					) : (
-						<Button
-							onClick={() => resendCode.mutate({ email: unconfirmedEmail })}
-							variant='secondaryLg'
-							fullWidth
-							loading={resendCode.isPending}
-						>
+						<Button onClick={handleResendCode} variant='secondaryLg' fullWidth loading={resendCode.isPending}>
 							{t('errors.resend-code')}
 						</Button>
 					))}
