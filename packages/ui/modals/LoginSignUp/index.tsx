@@ -530,6 +530,8 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 						form.setFieldError('password', t('login.error-not-confirmed'))
 					} else if (result.error === 'NewPasswordRequired') {
 						setNewPasswordChallenge({ email, temporaryPassword: password })
+					} else if (result.error === 'TooManyRequests') {
+						form.setFieldError('password', t('login.error-too-many-attempts'))
 					} else {
 						const message = loginErrors.get(result.status)
 						form.setFieldError('password', message ?? t('login.error-generic'))

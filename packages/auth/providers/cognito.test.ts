@@ -1,8 +1,13 @@
 import { UserNotConfirmedException } from '@aws-sdk/client-cognito-identity-provider'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const userLoginMock = vi.fn()
 vi.mock('~auth/lib/userLogin', () => ({ userLogin: (...args: unknown[]) => userLoginMock(...args) }))
+
+const checkRateLimitMock = vi.fn().mockResolvedValue(true)
+vi.mock('@weareinreach/util/rateLimit', () => ({
+	checkRateLimit: (...args: unknown[]) => checkRateLimitMock(...args),
+}))
 
 const { cognitoCredentialProvider } = await import('./cognito')
 
@@ -26,6 +31,11 @@ const CREDENTIALS = { email: 'user@example.com', password: 'whatever-was-typed' 
  * tests that mock `signIn` itself and never actually run this function.
  */
 describe('cognitoCredentialProvider.authorize', () => {
+	beforeEach(() => {
+		checkRateLimitMock.mockReset().mockResolvedValue(true)
+		userLoginMock.mockClear()
+	})
+
 	it('returns null without calling userLogin when email is missing', async () => {
 		await expect(authorize({ email: '', password: 'x' }, {})).resolves.toBeNull()
 		expect(userLoginMock).not.toHaveBeenCalled()
@@ -90,5 +100,16 @@ describe('cognitoCredentialProvider.authorize', () => {
 		userLoginMock.mockRejectedValueOnce('not even an Error instance')
 
 		await expect(authorize(CREDENTIALS, {})).rejects.toThrow('CredentialsSignin')
+	})
+
+	/**
+	 * Regression: there was previously no app-level throttling on login at all - nothing stopped unlimited
+	 * password guesses against a known email.
+	 */
+	it('throws "TooManyRequests" and never calls userLogin once the rate limit is exceeded', async () => {
+		checkRateLimitMock.mockResolvedValueOnce(false)
+
+		await expect(authorize(CREDENTIALS, {})).rejects.toThrow('TooManyRequests')
+		expect(userLoginMock).not.toHaveBeenCalled()
 	})
 })

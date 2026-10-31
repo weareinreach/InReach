@@ -6,6 +6,7 @@ import {
 	ExpiredCodeException,
 } from '@weareinreach/auth/confirmAccount'
 import { prisma } from '@weareinreach/db'
+import { checkRateLimit } from '@weareinreach/util/rateLimit'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TConfirmAccountSchema } from './mutation.confirmAccount.schema'
@@ -13,6 +14,17 @@ import { type TConfirmAccountSchema } from './mutation.confirmAccount.schema'
 const confirmAccount = async ({ input }: TRPCHandlerParams<TConfirmAccountSchema>) => {
 	try {
 		const { code, email } = input
+		// Public, unauthenticated - a caller who knows an email can otherwise submit unlimited codes.
+		const allowed = await checkRateLimit(`ratelimit:confirmAccount:${email.toLowerCase()}`, {
+			max: 5,
+			windowSeconds: 15 * 60,
+		})
+		if (!allowed) {
+			throw new TRPCError({
+				code: 'TOO_MANY_REQUESTS',
+				message: 'Too many attempts. Please try again later.',
+			})
+		}
 		const response = await cognitoConfirmAccount(email, code)
 
 		const { id } = await prisma.user.findFirstOrThrow({
