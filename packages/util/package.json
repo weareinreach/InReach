@@ -9,6 +9,8 @@
 		"format": "prettier --write --cache --cache-strategy metadata --ignore-unknown .",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
 	},
@@ -23,9 +25,11 @@
 		"@types/eslint": "9.6.1",
 		"@types/luxon": "3.7.4",
 		"@types/node": "20.17.0",
+		"@vitest/coverage-v8": "4.1.11",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"eslint": "9.39.5",
-		"typescript": "5.6.3"
+		"typescript": "5.6.3",
+		"vitest": "4.1.11"
 	}
 }
