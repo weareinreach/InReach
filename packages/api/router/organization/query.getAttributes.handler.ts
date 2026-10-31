@@ -6,8 +6,16 @@ import { type TGetAttributesSchema } from './query.getAttributes.schema'
 
 const getAttributesFromDb = async (input: TGetAttributesSchema) => {
 	const { id, slug, category, includeUnsupported } = input
+	// Previously no visibility check on the org at all - a hidden/unpublished/deleted org's attribute badges
+	// were fetchable by anyone who had its id/slug.
 	const orgId =
-		id ?? (await prisma.organization.findUniqueOrThrow({ where: { slug }, select: { id: true } })).id
+		id ??
+		(
+			await prisma.organization.findUniqueOrThrow({
+				where: { slug, published: true, deleted: false },
+				select: { id: true },
+			})
+		).id
 	const result = await prisma.attributeSupplement.findMany({
 		where: {
 			attribute: {
@@ -15,7 +23,7 @@ const getAttributesFromDb = async (input: TGetAttributesSchema) => {
 				...(!includeUnsupported ? { tag: { not: 'incompatible-info' } } : {}),
 				categories: { some: { category: { active: true, tag: category } } },
 			},
-			organization: { id: orgId },
+			organization: { id: orgId, published: true, deleted: false },
 			active: true,
 		},
 		select: {

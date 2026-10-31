@@ -8,9 +8,11 @@ import { type TGetAlertsSchema } from './query.getAlerts.schema'
 
 const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) => {
 	try {
+		// Previously no visibility check on the location at all - a hidden/unpublished/deleted location's
+		// alert banner text was fetchable by anyone who had its id.
 		const dbResult = await prisma.attributeSupplement.findMany({
 			where: {
-				locationId: input.id,
+				location: { id: input.id, published: true, deleted: false },
 				attribute: { active: true, categories: { some: { category: { active: true, tag: 'alerts' } } } },
 				active: true,
 			},
