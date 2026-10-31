@@ -452,11 +452,6 @@ interface LoginBodyProps {
 export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 	({ activateShake, modalHandler, hideTitle, callbackUrl }, ref) => {
 		const [isLoading, setLoading] = useState(false)
-		// Set to the email just attempted when `signIn` fails specifically because the account isn't
-		// confirmed yet (see providers/cognito.ts's `authorize`) - lets this form offer a targeted
-		// "resend the verification email" fix instead of the generic wrong-password message, right at
-		// the point someone actually hits the problem.
-		const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null)
 		// Set when `signIn` comes back with Cognito's NEW_PASSWORD_REQUIRED challenge - a staff-set
 		// temporary password (see UserTable's "Set Temporary Password" action) rather than a normal
 		// failure. The password just typed above *was* the temporary one; it's needed again to complete
@@ -468,12 +463,6 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 		const variants = useCustomVariant()
 		const { t } = useTranslation(['common'])
 		const router = useRouter()
-		const resendCode = api.user.resendCode.useMutation()
-		const handleResendCode = useCallback(() => {
-			if (unconfirmedEmail) {
-				resendCode.mutate({ email: unconfirmedEmail })
-			}
-		}, [resendCode, unconfirmedEmail])
 		const completeNewPasswordChallenge = api.user.completeNewPasswordChallenge.useMutation()
 		const loginErrors = new Map([[401, t('login.error-username-password')]])
 		const LoginSchema = z.object({
@@ -521,14 +510,16 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 		const loginHandle = async (email: string, password: string) => {
 			try {
 				setLoading(true)
-				setUnconfirmedEmail(null)
 				if (!form.isValid()) return
 				const result = await signIn('cognito', { email, password, redirect: false })
 				if (result?.error) {
-					if (result.error === 'UserNotConfirmed') {
-						setUnconfirmedEmail(email)
-						form.setFieldError('password', t('login.error-not-confirmed'))
-					} else if (result.error === 'NewPasswordRequired') {
+					// Deliberately no special case for an unconfirmed account here (unlike NewPasswordRequired/
+					// TooManyRequests below, neither of which reveal anything about account existence) - showing
+					// a distinct message for "this account isn't confirmed" let an anonymous caller enumerate
+					// account state, the same thing resendCode/forgotPassword/troubleLoggingIn are built to avoid.
+					// Falls through to the generic message below instead; the always-visible "Trouble logging
+					// in?" link (troubleLoggingIn, already enumeration-safe) is the actual fix for this case.
+					if (result.error === 'NewPasswordRequired') {
 						setNewPasswordChallenge({ email, temporaryPassword: password })
 					} else if (result.error === 'TooManyRequests') {
 						form.setFieldError('password', t('login.error-too-many-attempts'))
@@ -626,14 +617,6 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 				>
 					{t('log-in')}
 				</Button>
-				{unconfirmedEmail &&
-					(resendCode.isSuccess ? (
-						<Text variant={variants.Text.utility3}>{t('login.resend-sent')}</Text>
-					) : (
-						<Button onClick={handleResendCode} variant='secondaryLg' fullWidth loading={resendCode.isPending}>
-							{t('errors.resend-code')}
-						</Button>
-					))}
 				<Text variant={variants.Text.utility4darkGray}>
 					<Trans
 						i18nKey='agree-disclaimer'
