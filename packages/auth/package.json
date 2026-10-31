@@ -29,6 +29,9 @@
 		"./deleteAccount": {
 			"default": "./lib/deleteAccount.ts"
 		},
+		"./deleteCognitoUser": {
+			"default": "./lib/deleteCognitoUser.ts"
+		},
 		"./forgotPassword": {
 			"default": "./lib/forgotPassword.ts"
 		},

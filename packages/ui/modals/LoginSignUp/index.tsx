@@ -130,7 +130,6 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 		string
 	> | null>(null)
 	const [successMessage, setSuccessMessage] = useState(false)
-	const [userExists, setUserExists] = useState(false)
 
 	const [lcrElig, setLcrElig] = useState<Record<'1' | '2' | '3', boolean | undefined>>({
 		1: undefined,
@@ -144,14 +143,12 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 
 	const variants = useCustomVariant()
 	const signUpAction = api.user.create.useMutation({
+		// The mutation always resolves the same way whether or not the email already had an account - see
+		// mutation.create.handler.ts - so this is always the "check your email" confirmation, never a
+		// distinct "this email is taken" state.
 		onSuccess: (_data, variables) => {
 			userEvent.signup(variables.userType)
 			setSuccessMessage(true)
-		},
-		onError: (error) => {
-			if (error.message === 'User already exists') {
-				setUserExists(true)
-			}
 		},
 	})
 	const router = useRouter()
@@ -407,23 +404,9 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 			</Button> */}
 		</>
 	)
-	const userExistsBody = (
-		<>
-			<Title order={1}>🧐</Title>
-			<Title order={2}>{t('sign-up.user-exists-header')}</Title>
-			<Text variant={variants.Text.utility1darkGray}>{t('sign-up.user-exists-body')}</Text>
-			<TroubleLoggingInModal component={Link} variant={variants.Button.primaryLg}>
-				{t('trouble-logging-in')}
-			</TroubleLoggingInModal>
-		</>
-	)
-
 	const modalBody = () => {
 		if (successMessage) {
 			return successBody
-		}
-		if (userExists) {
-			return userExistsBody
 		}
 		return signupBody
 	}
