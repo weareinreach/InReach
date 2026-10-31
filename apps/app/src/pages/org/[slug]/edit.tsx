@@ -19,6 +19,7 @@ import { DataToolbar } from '@weareinreach/ui/components/sections/DataToolbar'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
 import { useEditMode } from '@weareinreach/ui/hooks/useEditMode'
+import { useRevalidatePage } from '@weareinreach/ui/hooks/useRevalidatePage'
 import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { api } from '~app/utils/api'
@@ -44,7 +45,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		status,
 		isFetching: _isFetching,
 	} = api.organization.forOrgPageEdits.useQuery({ slug: pageSlug }, { enabled: router.isReady })
-	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
+	const revalidatePage = useRevalidatePage()
 	const updateBasic = api.organization.updateBasic.useMutation({
 		// Optimistically update the UI with the new data
 		onMutate: async (newData) => {

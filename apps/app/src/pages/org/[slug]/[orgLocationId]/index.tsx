@@ -219,7 +219,10 @@ export const getStaticProps: GetStaticProps<
 
 		return {
 			props,
-			revalidate: 60 * 30, // 30 minutes
+			// Same reasoning as the org page (apps/app/src/pages/org/[slug]/index.tsx) - cached address
+			// fields need to stop showing reasonably quickly once hidden, not sit for up to half an hour in
+			// the worst case where the explicit on-save revalidation didn't fire.
+			revalidate: 60 * 5,
 		}
 	} catch (error) {
 		const TRPCError = (await import('@trpc/server')).TRPCError
