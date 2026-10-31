@@ -7,6 +7,7 @@ import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForGoogleMapsSchema } from './query.forGoogleMaps.schema'
+import { DATA_PORTAL_PERMISSIONS } from '../organization/lib/createOrgSuggestion'
 
 const getBoundary = (coords: { latitude: number; longitude: number }[]): google.maps.LatLngBoundsLiteral => {
 	const bounds = getBounds(coords)
@@ -25,7 +26,11 @@ const getCenter = (coords: { latitude: number; longitude: number }[]): google.ma
 const forGoogleMaps = async ({ input, ctx }: TRPCHandlerParams<TForGoogleMapsSchema>) => {
 	try {
 		const { locationIds, isEditMode } = input
-		const canSeeAll = isEditMode && !!ctx.session?.user?.permissions
+		// Previously `!!ctx.session?.user?.permissions` - true for any logged-in user regardless of whether
+		// they held any actual permission, since `permissions` is always a (possibly empty) array.
+		const canSeeAll = Boolean(
+			isEditMode && ctx.session?.user?.permissions.some((p) => DATA_PORTAL_PERMISSIONS.includes(p))
+		)
 		const result = await prisma.orgLocation.findMany({
 			where: {
 				...(!canSeeAll && globalWhere.isPublic()),

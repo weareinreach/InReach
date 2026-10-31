@@ -4,10 +4,17 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TByOrgLocationIdSchema } from './query.byOrgLocationId.schema'
 import { select } from './selects'
+import { redactReviewFieldVisibility, visibleReviewSelect } from '../review/lib/reviewSelect'
 
 const byOrgLocationId = async ({ input }: TRPCHandlerParams<TByOrgLocationIdSchema>) => {
 	const results = await prisma.orgService.findMany({
-		where: { locations: { some: input } },
+		// Previously no visibility check at all - any hidden/unpublished/deleted service linked to this
+		// location was returned in full, and even an otherwise-visible service showed every location it's
+		// linked to (not just the requested one) with no check that THOSE were visible either.
+		where: {
+			...globalWhere.isPublic(),
+			locations: { some: { ...input, location: globalWhere.isPublic() } },
+		},
 		select: {
 			serviceName: globalSelect.freeText(),
 			services: {
@@ -65,26 +72,14 @@ const byOrgLocationId = async ({ input }: TRPCHandlerParams<TByOrgLocationIdSche
 					tz: true,
 				},
 			},
+			// Previously selected lcrCountry/lcrGovDist directly with no field-visibility check at all - same
+			// reviewer-location leak already fixed for service.byId, using the same shared select/redaction.
 			reviews: {
 				where: {
 					visible: true,
 					deleted: false,
 				},
-				select: {
-					language: globalSelect.language(),
-					lcrCountry: globalSelect.country(),
-					lcrGovDist: globalSelect.govDistExpanded(),
-					translatedText: {
-						select: {
-							text: true,
-							language: {
-								select: {
-									localeCode: true,
-								},
-							},
-						},
-					},
-				},
+				select: visibleReviewSelect,
 			},
 			attributes: {
 				where: { attribute: { active: true, categories: { some: { category: { active: true } } } } },
@@ -139,6 +134,6 @@ const byOrgLocationId = async ({ input }: TRPCHandlerParams<TByOrgLocationIdSche
 			description: globalSelect.freeText(),
 		},
 	})
-	return results
+	return results.map((result) => ({ ...result, reviews: result.reviews.map(redactReviewFieldVisibility) }))
 }
 export default byOrgLocationId
