@@ -61,3 +61,34 @@ describe('service.byId - redacts reviewer location per their own field-visibilit
 		expect(result.reviews[0]?.user.name).toBe('Jane Doe')
 	})
 })
+
+/**
+ * Regression: the service's own published/deleted status was never checked - every nested relation (phones,
+ * emails, locations) filtered on visibility, but the service record itself didn't, so an unpublished or
+ * soft-deleted service's full details were fetchable by anyone who had its id.
+ */
+describe('service.byId - only returns a published, non-deleted service', () => {
+	it('includes published/deleted in the where clause', async () => {
+		findUniqueOrThrowMock.mockResolvedValue({
+			id: 'osvc_test',
+			serviceName: null,
+			services: [],
+			serviceAreas: [],
+			hours: [],
+			reviews: [],
+			attributes: [],
+			phones: [],
+			emails: [],
+			locations: [],
+			description: null,
+		} as never)
+
+		await byId({ input: { id: 'osvc_test' } } as never)
+
+		expect(findUniqueOrThrowMock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				where: { id: 'osvc_test', published: true, deleted: false },
+			})
+		)
+	})
+})

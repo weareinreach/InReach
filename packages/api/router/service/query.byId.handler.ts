@@ -8,7 +8,10 @@ import { redactReviewFieldVisibility, visibleReviewSelect } from '../review/lib/
 
 const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
 	const result = await prisma.orgService.findUniqueOrThrow({
-		where: input,
+		// Previously unfiltered - the service's own published/deleted status was never checked, unlike every
+		// nested relation below it, so an unpublished or soft-deleted service's full details were public to
+		// anyone who had its id.
+		where: { ...input, ...globalWhere.isPublic() },
 		select: {
 			serviceName: globalSelect.freeText(),
 			services: {
