@@ -4,6 +4,7 @@ import { Prisma, prisma } from '@weareinreach/db'
 import { normalizeFullUrl, normalizeToDomain } from '@weareinreach/util/url'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { DATA_PORTAL_PERMISSIONS } from './lib/createOrgSuggestion'
 import { type TGetPotentialMatchesSchema } from './query.getPotentialMatches.schema'
 import { findMatchingException } from '../orgUrlDuplicateException/lib/findMatchingException'
 
@@ -47,10 +48,19 @@ type MatchRow = {
 	published: boolean
 }
 
-const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMatchesSchema>) => {
+const getPotentialMatches = async ({ ctx, input }: TRPCHandlerParams<TGetPotentialMatchesSchema>) => {
 	const { name, website } = input
 
 	if (!name && !website) return []
+
+	// This endpoint is public (the Suggest-an-Org form needs it with no login), but it's also reused by the
+	// Data Portal's internal "Add an organization" modal, which legitimately needs to see unpublished/pending
+	// matches too (e.g. an existing suggestion still awaiting review). An anonymous caller only ever gets
+	// published, non-deleted results - otherwise this would reveal that an unpublished org exists just by
+	// trying its name/website.
+	const callerHasDataPortalAccess = Boolean(
+		ctx.session?.user?.permissions.some((p) => DATA_PORTAL_PERMISSIONS.includes(p))
+	)
 
 	const searchTerm = name?.trim() ?? ''
 	let uniqueExpandedTerms: string[] = []
@@ -95,7 +105,10 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 		const isActiveException = exception !== null
 
 		const candidates = await prisma.orgWebsite.findMany({
-			where: { url: { contains: normalizedWebsite, mode: 'insensitive' } },
+			where: {
+				url: { contains: normalizedWebsite, mode: 'insensitive' },
+				...(callerHasDataPortalAccess ? {} : { organization: { published: true } }),
+			},
 			select: { url: true, organizationId: true },
 		})
 		websiteMatchOrgIds = new Set(
@@ -106,6 +119,12 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
 				.filter((id): id is string => Boolean(id))
 		)
 	}
+
+	// Same visibility rule as the website check above - an anonymous caller's name search must not surface
+	// unpublished/deleted orgs either.
+	const nameVisibilityFilter = callerHasDataPortalAccess
+		? Prisma.empty
+		: Prisma.sql`AND o.published = true AND o.deleted = false`
 
 	/**
 	 * Raw SQL query leveraging Trigram similarity and synonym expansion for fuzzy name matching - there's no
@@ -125,16 +144,19 @@ const getPotentialMatches = async ({ input }: TRPCHandlerParams<TGetPotentialMat
     LEFT JOIN "OrgLocation" l ON l."orgId" = o.id AND l.primary = true
     LEFT JOIN "GovDist" gd ON l."govDistId" = gd.id
     WHERE
-      -- 1. Expanded Term Matching (Synonyms and substrings)
-      lower(public.immutable_unaccent(regexp_replace(o.name, '[^a-zA-Z0-9 ]', '', 'g'))) ILIKE ANY(
-        ${expandedTermsSql}
+      (
+        -- 1. Expanded Term Matching (Synonyms and substrings)
+        lower(public.immutable_unaccent(regexp_replace(o.name, '[^a-zA-Z0-9 ]', '', 'g'))) ILIKE ANY(
+          ${expandedTermsSql}
+        )
+        OR
+        -- 2. Trigram similarity for typos
+        similarity(
+          lower(public.immutable_unaccent(regexp_replace(o.name, '[^a-zA-Z0-9 ]', '', 'g'))),
+          lower(public.immutable_unaccent(regexp_replace(${searchTerm}, '[^a-zA-Z0-9 ]', '', 'g')))
+        ) > 0.3
       )
-      OR
-      -- 2. Trigram similarity for typos
-      similarity(
-        lower(public.immutable_unaccent(regexp_replace(o.name, '[^a-zA-Z0-9 ]', '', 'g'))),
-        lower(public.immutable_unaccent(regexp_replace(${searchTerm}, '[^a-zA-Z0-9 ]', '', 'g')))
-      ) > 0.3
+      ${nameVisibilityFilter}
     ORDER BY
       similarity(o.name, ${searchTerm}) DESC
     LIMIT 5;

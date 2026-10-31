@@ -52,12 +52,12 @@ describe('location.forLocationPage - org/location ownership', () => {
 	it('rejects when the location does not belong to the given organization', async () => {
 		// Mirrors Prisma's real behavior: a `where` requiring both the location id and a specific orgId
 		// finds no row when they don't actually match, and findUniqueOrThrow throws.
-		findMock.mockImplementation(async ({ where }: { where: { id: string; orgId: string } }) => {
+		findMock.mockImplementation((async ({ where }: { where: { id: string; orgId: string } }) => {
 			if (where.id === location.id && where.orgId === 'orgn_correct') {
-				return location as never
+				return location
 			}
 			throw new Error('No OrgLocation found')
-		})
+		}) as never)
 
 		await expect(
 			forLocationPage({ input: { id: 'oloc_test', organizationId: 'orgn_wrong' } } as never)
