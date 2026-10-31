@@ -451,14 +451,21 @@ export const orgSearchSelect = {
 	slug: true,
 	attributes: selectAttrib,
 	description: freeText,
-	services: selectServ,
+	// Previously no `where` at all on either of these two to-many relations - a search match on a visible org
+	// pulled in every one of its services and locations regardless of their own published/deleted status, and
+	// every service linked to each of THOSE locations too (OrgLocationService.service is a to-one relation,
+	// which can't be filtered directly - so the filter goes on its to-many parent, `locations.services`,
+	// instead).
+	services: { where: isPublic, select: selectServ.select },
 	locations: {
+		where: isPublic,
 		select: {
 			city: true,
 			latitude: true,
 			longitude: true,
 			addressVisibility: true,
 			services: {
+				where: { service: isPublic },
 				select: {
 					service: selectServ,
 				},
