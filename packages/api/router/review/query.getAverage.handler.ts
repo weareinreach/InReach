@@ -28,7 +28,10 @@ const getAverage = async ({ input }: TRPCHandlerParams<TGetAverageSchema>) => {
 		_count: {
 			rating: true,
 		},
-		where: whereId(),
+		// Previously no visible/deleted filter at all - the average/count included hidden and soft-deleted
+		// reviews, and the endpoint could be probed with a hidden org/location/service id to confirm reviews
+		// exist for it. Same review-level filter already used by getByOrg/getByLocation/getByService.
+		where: { ...whereId(), visible: true, deleted: false },
 	})
 	return { average: result._avg.rating, count: result._count.rating }
 }
