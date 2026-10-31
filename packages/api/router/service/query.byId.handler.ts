@@ -4,6 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TByIdSchema } from './query.byId.schema'
 import { select } from './selects'
+import { redactReviewFieldVisibility, visibleReviewSelect } from '../review/lib/reviewSelect'
 
 const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
 	const result = await prisma.orgService.findUniqueOrThrow({
@@ -65,26 +66,15 @@ const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
 					tz: true,
 				},
 			},
+			// Previously selected lcrCountry/lcrGovDist directly with no field-visibility check at all - a real
+			// reviewer-location leak for any reviewer who'd chosen to hide it. Uses the same select +
+			// redaction every other review list in this app uses (packages/api/router/review/lib/reviewSelect.ts).
 			reviews: {
 				where: {
 					visible: true,
 					deleted: false,
 				},
-				select: {
-					language: globalSelect.language(),
-					lcrCountry: globalSelect.country(),
-					lcrGovDist: globalSelect.govDistExpanded(),
-					translatedText: {
-						select: {
-							text: true,
-							language: {
-								select: {
-									localeCode: true,
-								},
-							},
-						},
-					},
-				},
+				select: visibleReviewSelect,
 			},
 			attributes: {
 				where: { attribute: { active: true, categories: { some: { category: { active: true } } } } },
@@ -138,6 +128,6 @@ const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
 			description: globalSelect.freeText(),
 		},
 	})
-	return result
+	return { ...result, reviews: result.reviews.map(redactReviewFieldVisibility) }
 }
 export default byId
