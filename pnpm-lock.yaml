@@ -17,7 +17,7 @@ overrides:
   follow-redirects: 1.16.1
   i18next-fs-backend: 2.6.6
   image-size: 2.0.3
-  joi: 17.13.7
+  joi: 17.13.9
   js-yaml@3: 3.15.2
   js-yaml@4: 4.3.2
   jsonwebtoken: 9.0.0
@@ -129,7 +129,7 @@ importers:
         version: 11.11.0
       '@hookform/resolvers':
         specifier: 5.9.0
-        version: 5.9.0(@sinclair/typebox@0.34.52)(@standard-schema/spec@1.1.0)(ajv-errors@3.0.0(ajv@8.20.0))(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(effect@3.21.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(joi@17.13.7)(react-hook-form@7.85.0(react@19.2.8))(superstruct@2.0.2)(valibot@1.4.2(typescript@5.6.3))(zod@4.4.3)
+        version: 5.9.0(@sinclair/typebox@0.34.52)(@standard-schema/spec@1.1.0)(ajv-errors@3.0.0(ajv@8.20.0))(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(effect@3.21.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(joi@17.13.9)(react-hook-form@7.85.0(react@19.2.8))(superstruct@2.0.2)(valibot@1.4.2(typescript@5.6.3))(zod@4.4.3)
       '@mantine/carousel':
         specifier: 9.5.1
         version: 9.5.1(@mantine/core@9.5.1(@mantine/hooks@9.5.1(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(@mantine/hooks@9.5.1(react@19.2.8))(embla-carousel-react@8.6.0(react@19.2.8))(embla-carousel@8.6.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -1379,7 +1379,7 @@ importers:
         version: 2.0.1(react-dom@19.2.8(react@19.2.8))(react-hook-form@7.85.0(react@19.2.8))(react@19.2.8)
       '@hookform/resolvers':
         specifier: 5.9.0
-        version: 5.9.0(@sinclair/typebox@0.34.52)(@standard-schema/spec@1.1.0)(ajv-errors@3.0.0(ajv@8.20.0))(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(effect@3.21.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(joi@17.13.7)(react-hook-form@7.85.0(react@19.2.8))(superstruct@2.0.2)(valibot@1.2.0(typescript@5.6.3))(zod@4.4.3)
+        version: 5.9.0(@sinclair/typebox@0.34.52)(@standard-schema/spec@1.1.0)(ajv-errors@3.0.0(ajv@8.20.0))(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(effect@3.21.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(joi@17.13.9)(react-hook-form@7.85.0(react@19.2.8))(superstruct@2.0.2)(valibot@1.2.0(typescript@5.6.3))(zod@4.4.3)
       '@iconify-icon/react':
         specifier: 2.1.0
         version: 2.1.0(react@19.2.8)
@@ -3032,7 +3032,7 @@ packages:
       fluentvalidation-ts: ^3.0.0
       fp-ts: ^2.7.0
       io-ts: ^2.0.0
-      joi: 17.13.7
+      joi: 17.13.9
       nope-validator: '>=0.12.0'
       react-hook-form: ^7.55.0
       superstruct: '>=0.12.0'
@@ -5088,6 +5088,7 @@ packages:
   '@smithy/core@3.33.2':
     resolution: {integrity: sha512-CUGXpnPkVdjUCbix+83sWLW9VFgQOm44MDOx/ihITJMAnOZKvL8YYIc7DR9pP/tZ8CIRvMiON/TucvygqbHO3w==}
     engines: {node: '>=18.0.0'}
+    deprecated: Deprecated due to a bug in custom logger data redaction. See https://github.com/aws/aws-sdk-js-v3/issues/8393.
 
   '@smithy/credential-provider-imds@4.5.2':
     resolution: {integrity: sha512-A9uSdn72ozbRUSit0eib0TW7nXuNPlaeM0zcGkJ+nE6tFcSDbnmtwoxbTCFBukVQcszDAyvsd7+rTduPTXpygg==}
@@ -10066,8 +10067,8 @@ packages:
     resolution: {integrity: sha512-9FzQjJ7MATs1tSpnco1K6ayiYE3figslrXA72G2HQ/n76RzvYlofyi5QM+iX4YRs/pu3yzxlVQSST23+dMDknw==}
     engines: {node: '>= 0.6.0'}
 
-  joi@17.13.7:
-    resolution: {integrity: sha512-MF80Dm5Y2veNy8QWVx9Bj3ui4mo7+VPSPsR1M+oaHXV0Gx6zGX9a2F+OZG3Blby9tOlzU9Rs5FUimlEhbKtfnQ==}
+  joi@17.13.9:
+    resolution: {integrity: sha512-llFCT2rVtfwgBCaIqxtjim+iHqrgss4ONiGSYiiGH9jnjWq90ppSRffqmqKvwpa8W+YfILyQV6XyGcegXX2T4g==}
 
   jose@4.15.9:
     resolution: {integrity: sha512-1vUQX+IdDMVPj4k8kOxgUqlcK518yluMuGZwqlr44FS1ppZB/5GWh4rZG89erpOBOJjU/OBsnCVFfapsRz6nEA==}
@@ -16181,7 +16182,7 @@ snapshots:
       react-dom: 19.2.8(react@19.2.8)
       react-hook-form: 7.85.0(react@19.2.8)
 
-  '@hookform/resolvers@5.9.0(@sinclair/typebox@0.34.52)(@standard-schema/spec@1.1.0)(ajv-errors@3.0.0(ajv@8.20.0))(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(effect@3.21.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(joi@17.13.7)(react-hook-form@7.85.0(react@19.2.8))(superstruct@2.0.2)(valibot@1.2.0(typescript@5.6.3))(zod@4.4.3)':
+  '@hookform/resolvers@5.9.0(@sinclair/typebox@0.34.52)(@standard-schema/spec@1.1.0)(ajv-errors@3.0.0(ajv@8.20.0))(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(effect@3.21.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(joi@17.13.9)(react-hook-form@7.85.0(react@19.2.8))(superstruct@2.0.2)(valibot@1.2.0(typescript@5.6.3))(zod@4.4.3)':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.85.0(react@19.2.8)
@@ -16194,12 +16195,12 @@ snapshots:
       effect: 3.21.0
       fp-ts: 2.16.11
       io-ts: 2.2.22(fp-ts@2.16.11)
-      joi: 17.13.7
+      joi: 17.13.9
       superstruct: 2.0.2
       valibot: 1.2.0(typescript@5.6.3)
       zod: 4.4.3
 
-  '@hookform/resolvers@5.9.0(@sinclair/typebox@0.34.52)(@standard-schema/spec@1.1.0)(ajv-errors@3.0.0(ajv@8.20.0))(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(effect@3.21.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(joi@17.13.7)(react-hook-form@7.85.0(react@19.2.8))(superstruct@2.0.2)(valibot@1.4.2(typescript@5.6.3))(zod@4.4.3)':
+  '@hookform/resolvers@5.9.0(@sinclair/typebox@0.34.52)(@standard-schema/spec@1.1.0)(ajv-errors@3.0.0(ajv@8.20.0))(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(effect@3.21.0)(fp-ts@2.16.11)(io-ts@2.2.22(fp-ts@2.16.11))(joi@17.13.9)(react-hook-form@7.85.0(react@19.2.8))(superstruct@2.0.2)(valibot@1.4.2(typescript@5.6.3))(zod@4.4.3)':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.85.0(react@19.2.8)
@@ -16212,7 +16213,7 @@ snapshots:
       effect: 3.21.0
       fp-ts: 2.16.11
       io-ts: 2.2.22(fp-ts@2.16.11)
-      joi: 17.13.7
+      joi: 17.13.9
       superstruct: 2.0.2
       valibot: 1.4.2(typescript@5.6.3)
       zod: 4.4.3
@@ -24230,7 +24231,7 @@ snapshots:
 
   jmespath@0.16.0: {}
 
-  joi@17.13.7:
+  joi@17.13.9:
     dependencies:
       '@hapi/hoek': 9.3.0
       '@hapi/topo': 5.1.0
@@ -29052,7 +29053,7 @@ snapshots:
   wait-on@7.2.0:
     dependencies:
       axios: 1.20.0
-      joi: 17.13.7
+      joi: 17.13.9
       lodash: 4.18.1
       minimist: 1.2.8
       rxjs: 7.8.2
