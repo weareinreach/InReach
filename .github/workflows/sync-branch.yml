@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
-      - uses: connor-baer/action-sync-branch@4f44fe844a1a3f53676699cfe74453820a38ca65 # main
+      - uses: connor-baer/action-sync-branch@ca23eb33bec114488bb3a2ff088cb748acc70251 # main
         with:
           branch: dev
           token: ${{ secrets.GH_ACT_PAT }}
