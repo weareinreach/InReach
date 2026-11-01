@@ -24,7 +24,6 @@ const getAllForOrg = async ({ input }: TRPCHandlerParams<TGetAllForOrgSchema, 'p
 		prisma.auditTrail.findMany({
 			where: { recordId: { hasSome: recordIds } },
 			orderBy: { timestamp: 'desc' },
-			skip,
 			take: pageSize,
 			select: {
 				id: true,
@@ -35,6 +34,7 @@ const getAllForOrg = async ({ input }: TRPCHandlerParams<TGetAllForOrgSchema, 'p
 				new: true,
 				table: true,
 			},
+			skip,
 		}),
 		prisma.auditTrail.count({ where: { recordId: { hasSome: recordIds } } }),
 	])

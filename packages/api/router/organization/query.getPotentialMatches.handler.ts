@@ -48,6 +48,122 @@ type MatchRow = {
 	published: boolean
 }
 
+/** Expands a search term with known synonyms (if any), for the trigram/ILIKE name match below. */
+const buildExpandedSearchTerms = async (searchTerm: string): Promise<string[]> => {
+	if (!searchTerm) return []
+	const words = searchTerm.toLowerCase().split(/\s+/)
+	// Defensive check: Ensure prisma.searchSynonym is available before calling findMany
+	const synonymClusters = prisma.searchSynonym
+		? await prisma.searchSynonym.findMany({
+				where: {
+					terms: { hasSome: words.filter((w) => w.length > 1) }, // Ignore single letters in expansion
+				},
+			})
+		: []
+	// Flatten all synonyms into a single list for the SQL query, then remove duplicates and normalize
+	const expandedTerms = compact([searchTerm, ...synonymClusters.flatMap((c) => c.terms)])
+	return [...new Set(expandedTerms.map((t) => t.toLowerCase()))]
+}
+
+/**
+ * Website duplicates: a broad substring pre-filter in SQL (via Prisma's query builder, not raw SQL), then an
+ * exact domain comparison in JS - avoids hand-rolling regex/backreference logic in raw SQL, which proved
+ * fragile (both a SQL syntax error and a silent false-negative in practice).
+ *
+ * A base URL on the exceptions list (a bare domain or a deeper path prefix, e.g. a shared
+ * professional-directory site) only suppresses the match when the full URL actually differs from the existing
+ * one - two orgs both using the exact same URL is still a real duplicate even if that URL is otherwise
+ * exempted.
+ */
+const getWebsiteMatchOrgIds = async (
+	normalizedWebsite: string,
+	normalizedInputUrl: string,
+	callerHasDataPortalAccess: boolean
+): Promise<Set<string>> => {
+	const exception = await findMatchingException(normalizedInputUrl)
+	const isActiveException = exception !== null
+
+	const candidates = await prisma.orgWebsite.findMany({
+		where: {
+			url: { contains: normalizedWebsite, mode: 'insensitive' },
+			...(callerHasDataPortalAccess ? {} : { organization: { published: true } }),
+		},
+		select: { url: true, organizationId: true },
+	})
+	return new Set(
+		candidates
+			.filter((candidate) => normalizeToDomain(candidate.url) === normalizedWebsite)
+			.filter((candidate) => !isActiveException || normalizeFullUrl(candidate.url) === normalizedInputUrl)
+			.map((candidate) => candidate.organizationId)
+			.filter((id): id is string => Boolean(id))
+	)
+}
+
+/** Orgs whose website matched but whose name didn't - a pure website-only duplicate still needs display info. */
+const getExtraOrgsForWebsiteOnlyMatches = async (missingIds: string[]): Promise<MatchRow[]> => {
+	if (!missingIds.length) return []
+	const orgs = await prisma.organization.findMany({
+		where: { id: { in: missingIds } },
+		select: {
+			id: true,
+			name: true,
+			slug: true,
+			deleted: true,
+			published: true,
+			locations: {
+				where: { primary: true },
+				take: 1,
+				select: { city: true, govDist: { select: { abbrev: true } } },
+			},
+		},
+	})
+	return orgs.map((org) => ({
+		id: org.id,
+		name: org.name,
+		slug: org.slug,
+		deleted: org.deleted,
+		published: org.published,
+		city: org.locations[0]?.city ?? null,
+		state: org.locations[0]?.govDist?.abbrev ?? null,
+	}))
+}
+
+/**
+ * Near-miss website check: only against orgs whose NAME already matched (a strong prior), and only those that
+ * aren't already an exact website match. Two independent signals catch two different typo shapes: edit
+ * distance catches a dropped/extra/swapped letter (e.g. "aclu.or" vs "aclu.org"), while the
+ * same-name-different-TLD check catches a wrong-but-valid TLD (e.g. "aclu.com" vs "aclu.org") - those can
+ * differ by 3+ characters, well past the edit-distance threshold, despite being an obvious mistake once you
+ * notice the name part is identical.
+ */
+const getNearMissWebsiteMatches = async (
+	normalizedWebsite: string,
+	nameMatchIdsWithoutExactWebsite: string[]
+): Promise<Map<string, string>> => {
+	const nearMissByOrgId = new Map<string, string>()
+	if (!nameMatchIdsWithoutExactWebsite.length) return nearMissByOrgId
+
+	const inputDomain = splitDomain(normalizedWebsite)
+	const candidateWebsites = await prisma.orgWebsite.findMany({
+		where: { organizationId: { in: nameMatchIdsWithoutExactWebsite } },
+		select: { organizationId: true, url: true },
+	})
+	for (const candidate of candidateWebsites) {
+		if (!candidate.organizationId || nearMissByOrgId.has(candidate.organizationId)) continue
+		const candidateDomain = normalizeToDomain(candidate.url)
+		const candidateSplit = splitDomain(candidateDomain)
+		const distance = levenshteinDistance(normalizedWebsite, candidateDomain)
+		const sameNameDifferentTld =
+			inputDomain.name !== '' &&
+			inputDomain.name === candidateSplit.name &&
+			inputDomain.tld !== candidateSplit.tld
+		if ((distance > 0 && distance <= NEAR_MISS_MAX_DISTANCE) || sameNameDifferentTld) {
+			nearMissByOrgId.set(candidate.organizationId, candidateDomain)
+		}
+	}
+	return nearMissByOrgId
+}
+
 const getPotentialMatches = async ({ ctx, input }: TRPCHandlerParams<TGetPotentialMatchesSchema>) => {
 	const { name, website } = input
 
@@ -63,25 +179,7 @@ const getPotentialMatches = async ({ ctx, input }: TRPCHandlerParams<TGetPotenti
 	)
 
 	const searchTerm = name?.trim() ?? ''
-	let uniqueExpandedTerms: string[] = []
-
-	if (searchTerm) {
-		const words = searchTerm.toLowerCase().split(/\s+/)
-		let synonymClusters: { terms: string[] }[] = []
-		// Defensive check: Ensure prisma.searchSynonym is available before calling findMany
-		if (prisma.searchSynonym) {
-			synonymClusters = await prisma.searchSynonym.findMany({
-				where: {
-					terms: { hasSome: words.filter((w) => w.length > 1) }, // Ignore single letters in expansion
-				},
-			})
-		}
-
-		// Flatten all synonyms into a single list for the SQL query
-		const expandedTerms = compact([searchTerm, ...synonymClusters.flatMap((c) => c.terms)])
-		// Remove duplicates and normalize for SQL
-		uniqueExpandedTerms = [...new Set(expandedTerms.map((t) => t.toLowerCase()))]
-	}
+	const uniqueExpandedTerms = await buildExpandedSearchTerms(searchTerm)
 
 	const expandedTermsSql =
 		searchTerm && uniqueExpandedTerms.length > 0
@@ -91,34 +189,10 @@ const getPotentialMatches = async ({ ctx, input }: TRPCHandlerParams<TGetPotenti
 	const normalizedWebsite = website ? normalizeToDomain(website) : undefined
 	const normalizedInputUrl = website ? normalizeFullUrl(website) : undefined
 
-	// Website duplicates: a broad substring pre-filter in SQL (via Prisma's query builder, not raw SQL),
-	// then an exact domain comparison in JS - avoids hand-rolling regex/backreference logic in raw SQL,
-	// which proved fragile (both a SQL syntax error and a silent false-negative in practice).
-	//
-	// A base URL on the exceptions list (a bare domain or a deeper path prefix, e.g. a shared
-	// professional-directory site) only suppresses the match when the full URL actually differs from the
-	// existing one - two orgs both using the exact same URL is still a real duplicate even if that URL is
-	// otherwise exempted.
-	let websiteMatchOrgIds = new Set<string>()
-	if (normalizedWebsite && normalizedInputUrl) {
-		const exception = await findMatchingException(normalizedInputUrl)
-		const isActiveException = exception !== null
-
-		const candidates = await prisma.orgWebsite.findMany({
-			where: {
-				url: { contains: normalizedWebsite, mode: 'insensitive' },
-				...(callerHasDataPortalAccess ? {} : { organization: { published: true } }),
-			},
-			select: { url: true, organizationId: true },
-		})
-		websiteMatchOrgIds = new Set(
-			candidates
-				.filter((candidate) => normalizeToDomain(candidate.url) === normalizedWebsite)
-				.filter((candidate) => !isActiveException || normalizeFullUrl(candidate.url) === normalizedInputUrl)
-				.map((candidate) => candidate.organizationId)
-				.filter((id): id is string => Boolean(id))
-		)
-	}
+	const websiteMatchOrgIds =
+		normalizedWebsite && normalizedInputUrl
+			? await getWebsiteMatchOrgIds(normalizedWebsite, normalizedInputUrl, callerHasDataPortalAccess)
+			: new Set<string>()
 
 	// Same visibility rule as the website check above - an anonymous caller's name search must not surface
 	// unpublished/deleted orgs either.
@@ -166,33 +240,7 @@ const getPotentialMatches = async ({ ctx, input }: TRPCHandlerParams<TGetPotenti
 	// If the website matched an organization the name search didn't already surface (different/unrelated
 	// name, same domain), fetch its display info too, so a pure website-only duplicate still gets flagged.
 	const missingIds = [...websiteMatchOrgIds].filter((id) => !nameResults.some((r) => r.id === id))
-	const extraOrgs: MatchRow[] = missingIds.length
-		? (
-				await prisma.organization.findMany({
-					where: { id: { in: missingIds } },
-					select: {
-						id: true,
-						name: true,
-						slug: true,
-						deleted: true,
-						published: true,
-						locations: {
-							where: { primary: true },
-							take: 1,
-							select: { city: true, govDist: { select: { abbrev: true } } },
-						},
-					},
-				})
-			).map((org) => ({
-				id: org.id,
-				name: org.name,
-				slug: org.slug,
-				deleted: org.deleted,
-				published: org.published,
-				city: org.locations[0]?.city ?? null,
-				state: org.locations[0]?.govDist?.abbrev ?? null,
-			}))
-		: []
+	const extraOrgs = await getExtraOrgsForWebsiteOnlyMatches(missingIds)
 
 	// No cap here beyond nameResults' own `LIMIT 5` (already applied in its SQL query above) - a website
 	// exact match must never be silently dropped just because 5 unrelated name-similarity suggestions
@@ -200,38 +248,12 @@ const getPotentialMatches = async ({ ctx, input }: TRPCHandlerParams<TGetPotenti
 	// duplicate is one specific org), so this doesn't risk an unbounded list.
 	const merged = [...nameResults, ...extraOrgs]
 
-	// Near-miss website check: only against orgs whose NAME already matched (a strong prior), and only
-	// those that aren't already an exact website match. Two independent signals catch two different typo
-	// shapes: edit distance catches a dropped/extra/swapped letter (e.g. "aclu.or" vs "aclu.org"), while
-	// the same-name-different-TLD check catches a wrong-but-valid TLD (e.g. "aclu.com" vs "aclu.org") -
-	// those can differ by 3+ characters, well past the edit-distance threshold, despite being an obvious
-	// mistake once you notice the name part is identical.
-	const nearMissByOrgId = new Map<string, string>()
-	if (normalizedWebsite) {
-		const inputDomain = splitDomain(normalizedWebsite)
-		const nameMatchIdsWithoutExactWebsite = nameResults
-			.map((r) => r.id)
-			.filter((id) => !websiteMatchOrgIds.has(id))
-		if (nameMatchIdsWithoutExactWebsite.length > 0) {
-			const candidateWebsites = await prisma.orgWebsite.findMany({
-				where: { organizationId: { in: nameMatchIdsWithoutExactWebsite } },
-				select: { organizationId: true, url: true },
-			})
-			for (const candidate of candidateWebsites) {
-				if (!candidate.organizationId || nearMissByOrgId.has(candidate.organizationId)) continue
-				const candidateDomain = normalizeToDomain(candidate.url)
-				const candidateSplit = splitDomain(candidateDomain)
-				const distance = levenshteinDistance(normalizedWebsite, candidateDomain)
-				const sameNameDifferentTld =
-					inputDomain.name !== '' &&
-					inputDomain.name === candidateSplit.name &&
-					inputDomain.tld !== candidateSplit.tld
-				if ((distance > 0 && distance <= NEAR_MISS_MAX_DISTANCE) || sameNameDifferentTld) {
-					nearMissByOrgId.set(candidate.organizationId, candidateDomain)
-				}
-			}
-		}
-	}
+	const nameMatchIdsWithoutExactWebsite = nameResults
+		.map((r) => r.id)
+		.filter((id) => !websiteMatchOrgIds.has(id))
+	const nearMissByOrgId = normalizedWebsite
+		? await getNearMissWebsiteMatches(normalizedWebsite, nameMatchIdsWithoutExactWebsite)
+		: new Map<string, string>()
 
 	return merged.map((r) => ({
 		...r,

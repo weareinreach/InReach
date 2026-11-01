@@ -6,7 +6,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TGetParentNameSchema } from './query.getParentName.schema'
 import { DATA_PORTAL_PERMISSIONS } from '../organization/lib/createOrgSuggestion'
 
-const getParentName = async ({ input, ctx }: TRPCHandlerParams<TGetParentNameSchema>) => {
+const getParentName = ({ input, ctx }: TRPCHandlerParams<TGetParentNameSchema>) => {
 	const { slug, orgLocationId } = input
 	// Previously no visibility check at all on either branch - a hidden/unpublished/deleted org or location's
 	// name was fetchable by anyone who had its slug/id.

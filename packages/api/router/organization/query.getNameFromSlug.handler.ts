@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { DATA_PORTAL_PERMISSIONS } from './lib/createOrgSuggestion'
 import { type TGetNameFromSlugSchema } from './query.getNameFromSlug.schema'
 
-const getNameFromSlug = async ({ input, ctx }: TRPCHandlerParams<TGetNameFromSlugSchema>) => {
+const getNameFromSlug = ({ input, ctx }: TRPCHandlerParams<TGetNameFromSlugSchema>) => {
 	// Previously no visibility check at all - a hidden/unpublished/deleted org's name was fetchable by
 	// anyone who had its slug.
 	const callerHasDataPortalAccess = Boolean(
