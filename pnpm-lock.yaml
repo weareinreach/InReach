@@ -22,7 +22,7 @@ overrides:
   js-yaml@4: 4.3.2
   jsonwebtoken: 9.0.0
   lodash: 4.18.1
-  mysql2: 3.22.0
+  mysql2: 3.23.1
   proxy-addr: 2.0.8
   smol-toml: 1.7.1
   source-map-js: 1.2.2
@@ -1047,7 +1047,7 @@ importers:
         version: 2.2.0
       kysely-codegen:
         specifier: 0.20.0
-        version: 0.20.0(kysely@0.29.5)(mysql2@3.22.0(@types/node@20.17.0))(pg@8.23.0)(typescript@5.6.3)
+        version: 0.20.0(kysely@0.29.5)(mysql2@3.23.1(@types/node@20.17.0))(pg@8.23.0)(typescript@5.6.3)
       libphonenumber-js:
         specifier: 1.13.11
         version: 1.13.11
@@ -5088,6 +5088,7 @@ packages:
   '@smithy/core@3.33.2':
     resolution: {integrity: sha512-CUGXpnPkVdjUCbix+83sWLW9VFgQOm44MDOx/ihITJMAnOZKvL8YYIc7DR9pP/tZ8CIRvMiON/TucvygqbHO3w==}
     engines: {node: '>=18.0.0'}
+    deprecated: Deprecated due to a bug in custom logger data redaction. See https://github.com/aws/aws-sdk-js-v3/issues/8393.
 
   '@smithy/credential-provider-imds@4.5.2':
     resolution: {integrity: sha512-A9uSdn72ozbRUSit0eib0TW7nXuNPlaeM0zcGkJ+nE6tFcSDbnmtwoxbTCFBukVQcszDAyvsd7+rTduPTXpygg==}
@@ -10248,7 +10249,7 @@ packages:
       kysely: '>=0.27.0 <1.0.0'
       kysely-bun-sqlite: '>=0.3.2 <1.0.0'
       kysely-bun-worker: '>=1.2.0 <2.0.0'
-      mysql2: 3.22.0
+      mysql2: 3.23.1
       pg: '>=8.8.0 <9.0.0'
       tarn: '>=3.0.0 <4.0.0'
       tedious: '>=18.0.0 <20.0.0'
@@ -11096,8 +11097,8 @@ packages:
     resolution: {integrity: sha512-dkEJPVvun4FryqBmZ5KhDo0K9iDXAwn08tMLDinNdRBNPcYEDiWYysLcc6k3mjTMlbP9KyylvRpd4wFtwrT9rw==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  mysql2@3.22.0:
-    resolution: {integrity: sha512-4jaJYBObj7FhD3lnZhqX1yDMuZN4mQNz+IolDySDXT7fbozMBpeGQNcuWXKUqo4ahkAEfkjUHPjnwuDI0/6VKw==}
+  mysql2@3.23.1:
+    resolution: {integrity: sha512-tTuRnC7qCet2IOfSNMYZ5SwXuBnfvBPAcIA28P0gtruXyZlU1LMxA6uha32kYypoFgyYklMqhLWwt4laYwXR/Q==}
     engines: {node: '>= 8.0'}
     peerDependencies:
       '@types/node': '>= 8'
@@ -24416,7 +24417,7 @@ snapshots:
 
   kolorist@1.8.0: {}
 
-  kysely-codegen@0.20.0(kysely@0.29.5)(mysql2@3.22.0(@types/node@20.17.0))(pg@8.23.0)(typescript@5.6.3):
+  kysely-codegen@0.20.0(kysely@0.29.5)(mysql2@3.23.1(@types/node@20.17.0))(pg@8.23.0)(typescript@5.6.3):
     dependencies:
       chalk: 4.1.2
       cosmiconfig: 9.0.2(typescript@5.6.3)
@@ -24429,7 +24430,7 @@ snapshots:
       pluralize: 8.0.0
       zod: 4.4.3
     optionalDependencies:
-      mysql2: 3.22.0(@types/node@20.17.0)
+      mysql2: 3.23.1(@types/node@20.17.0)
       pg: 8.23.0
     transitivePeerDependencies:
       - typescript
@@ -25586,7 +25587,7 @@ snapshots:
 
   mute-stream@3.0.0: {}
 
-  mysql2@3.22.0(@types/node@20.17.0):
+  mysql2@3.23.1(@types/node@20.17.0):
     dependencies:
       '@types/node': 20.17.0
       aws-ssl-profiles: 1.1.2
@@ -26705,7 +26706,7 @@ snapshots:
       '@prisma/dev': 0.24.17(typescript@5.6.3)
       '@prisma/engines': 7.9.1
       '@prisma/studio-core': 0.33.0(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      mysql2: 3.22.0(@types/node@20.17.0)
+      mysql2: 3.23.1(@types/node@20.17.0)
       postgres: 3.4.7
     optionalDependencies:
       typescript: 5.6.3
