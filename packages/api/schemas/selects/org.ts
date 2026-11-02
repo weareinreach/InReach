@@ -260,7 +260,9 @@ const photoSelect = {
 } satisfies Prisma.OrgLocation$photosArgs
 
 const userListSelect = (ctx: Omit<Context, 'prisma'>) => {
-	if (!ctx.session?.user?.id) return undefined
+	if (!ctx.session?.user?.id) {
+		return undefined
+	}
 	return {
 		where: {
 			list: {

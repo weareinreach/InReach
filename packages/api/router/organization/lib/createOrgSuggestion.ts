@@ -35,7 +35,9 @@ const hasDataPortalAccess = async (
 			permissions: { select: { permission: { select: { name: true } } } },
 		},
 	})
-	if (!user) return false
+	if (!user) {
+		return false
+	}
 	const permissionNames = new Set([
 		...user.roles.flatMap(({ role }) => role.permissions.map(({ permission }) => permission.name)),
 		...user.permissions.map(({ permission }) => permission.name),

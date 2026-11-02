@@ -16,7 +16,9 @@ const levenshteinDistance = (a: string, b: string) => {
 		for (let j = 1; j <= b.length; j++) {
 			const row = rows[i]
 			const prevRow = rows[i - 1]
-			if (!row || !prevRow) continue
+			if (!row || !prevRow) {
+				continue
+			}
 			row[j] =
 				a[i - 1] === b[j - 1]
 					? (prevRow[j - 1] ?? 0)
@@ -155,7 +157,9 @@ const getNearMissWebsiteMatches = async (
 		select: { organizationId: true, url: true },
 	})
 	for (const candidate of candidateWebsites) {
-		if (!candidate.organizationId || nearMissByOrgId.has(candidate.organizationId)) continue
+		if (!candidate.organizationId || nearMissByOrgId.has(candidate.organizationId)) {
+			continue
+		}
 		const candidateDomain = normalizeToDomain(candidate.url)
 		const candidateSplit = splitDomain(candidateDomain)
 		const distance = levenshteinDistance(normalizedWebsite, candidateDomain)
@@ -173,7 +177,9 @@ const getNearMissWebsiteMatches = async (
 const getPotentialMatches = async ({ ctx, input }: TRPCHandlerParams<TGetPotentialMatchesSchema>) => {
 	const { name, website } = input
 
-	if (!name && !website) return []
+	if (!name && !website) {
+		return []
+	}
 
 	// This endpoint is public (the Suggest-an-Org form needs it with no login), but it's also reused by the
 	// Data Portal's internal "Add an organization" modal, which legitimately needs to see unpublished/pending

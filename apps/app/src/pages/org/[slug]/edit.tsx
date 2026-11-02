@@ -58,7 +58,9 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			// Optimistically update to the new value
 			// @ts-expect-error - The description object is intentionally missing the `ns` property in this specific case.
 			apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, (oldData) => {
-				if (!oldData) return undefined
+				if (!oldData) {
+					return undefined
+				}
 				return {
 					...oldData,
 					name: newData.name ?? oldData.name, // Optimistically update the name
@@ -128,7 +130,9 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		newAttributes: NonNullable<typeof data>['attributes']
 	) => {
 		apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, (oldData) => {
-			if (!oldData) return oldData
+			if (!oldData) {
+				return oldData
+			}
 			const otherAttributes = oldData.attributes.filter(
 				({ attribute }) => !attribute.categories.some(({ category }) => category.tag === badgeType)
 			)

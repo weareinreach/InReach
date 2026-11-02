@@ -15,7 +15,9 @@ export const cognitoCredentialProvider: Provider = Credentials({
 	},
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	authorize: async (credentials, req) => {
-		if (!credentials?.email || !credentials?.password) return null
+		if (!credentials?.email || !credentials?.password) {
+			return null
+		}
 
 		const normalizedEmail = credentials.email.toLowerCase()
 		// No app-level throttling previously existed on login at all - a caller could submit unlimited

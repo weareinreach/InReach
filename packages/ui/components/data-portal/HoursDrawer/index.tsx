@@ -106,7 +106,9 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const hoursObjects = useFieldArray({ control: form.control, name: 'data', keyName: 'id' })
 	const formData = form.getValues('data') ?? []
 	const groupedData = () => {
-		if (!formData) return
+		if (!formData) {
+			return
+		}
 		const grouped = groupBy(
 			formData.map((item, idx) => ({ ...item, idx })),
 			({ dayIndex }) => dayIndex

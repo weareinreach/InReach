@@ -181,12 +181,18 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 	})
 
 	const userTypeChange = (step: string | null) => {
-		if (!step) return
+		if (!step) {
+			return
+		}
 
 		setStepOption(step)
-		if (step === 'provider') form.setFieldValue('userType', 'provider')
-		else if (step === 'lcr') form.setFieldValue('userType', 'lcr')
-		else form.setFieldValue('userType', 'individual')
+		if (step === 'provider') {
+			form.setFieldValue('userType', 'provider')
+		} else if (step === 'lcr') {
+			form.setFieldValue('userType', 'lcr')
+		} else {
+			form.setFieldValue('userType', 'individual')
+		}
 	}
 
 	const breadcrumbProps: ModalTitleBreadcrumb =
@@ -510,7 +516,9 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 		const loginHandle = async (email: string, password: string) => {
 			try {
 				setLoading(true)
-				if (!form.isValid()) return
+				if (!form.isValid()) {
+					return
+				}
 				const result = await signIn('cognito', { email, password, redirect: false })
 				if (result?.error) {
 					// Deliberately no special case for an unconfirmed account here (unlike NewPasswordRequired/
