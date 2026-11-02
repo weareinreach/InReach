@@ -50,7 +50,9 @@ type MatchRow = {
 
 /** Expands a search term with known synonyms (if any), for the trigram/ILIKE name match below. */
 const buildExpandedSearchTerms = async (searchTerm: string): Promise<string[]> => {
-	if (!searchTerm) return []
+	if (!searchTerm) {
+		return []
+	}
 	const words = searchTerm.toLowerCase().split(/\s+/)
 	// Defensive check: Ensure prisma.searchSynonym is available before calling findMany
 	const synonymClusters = prisma.searchSynonym
@@ -101,7 +103,9 @@ const getWebsiteMatchOrgIds = async (
 
 /** Orgs whose website matched but whose name didn't - a pure website-only duplicate still needs display info. */
 const getExtraOrgsForWebsiteOnlyMatches = async (missingIds: string[]): Promise<MatchRow[]> => {
-	if (!missingIds.length) return []
+	if (!missingIds.length) {
+		return []
+	}
 	const orgs = await prisma.organization.findMany({
 		where: { id: { in: missingIds } },
 		select: {
@@ -141,7 +145,9 @@ const getNearMissWebsiteMatches = async (
 	nameMatchIdsWithoutExactWebsite: string[]
 ): Promise<Map<string, string>> => {
 	const nearMissByOrgId = new Map<string, string>()
-	if (!nameMatchIdsWithoutExactWebsite.length) return nearMissByOrgId
+	if (!nameMatchIdsWithoutExactWebsite.length) {
+		return nearMissByOrgId
+	}
 
 	const inputDomain = splitDomain(normalizedWebsite)
 	const candidateWebsites = await prisma.orgWebsite.findMany({
