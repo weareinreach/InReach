@@ -20,7 +20,7 @@
 		"@t3-oss/env-nextjs": "0.13.11",
 		"@weareinreach/util": "workspace:*",
 		"chromatic": "11.15.0",
-		"zod": "4.4.3"
+		"zod": "4.6.6"
 	},
 	"devDependencies": {
 		"@types/eslint": "9.6.1",

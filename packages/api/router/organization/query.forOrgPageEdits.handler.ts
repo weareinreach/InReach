@@ -1,17 +1,25 @@
 import { prisma } from '@weareinreach/db'
-import { freeText } from '~api/schemas/selects/common'
+import { freeText, isPublic } from '~api/schemas/selects/common'
 import { attributesForOrgEdit } from '~api/schemas/selects/org'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { DATA_PORTAL_PERMISSIONS } from './lib/createOrgSuggestion'
 import { type TForOrgPageEditsSchema } from './query.forOrgPageEdits.schema'
 import { formatAddressVisiblity } from '../location/lib.formatAddressVisibility'
 
-const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEditsSchema>) => {
+const forOrgPageEdits = async ({ input, ctx }: TRPCHandlerParams<TForOrgPageEditsSchema>) => {
 	const { slug } = input
+	// publicProcedure despite the name - its only real callers are staff-gated edit pages, but the API
+	// itself had no check of its own, so a hidden/unpublished/deleted org's full edit-context data (every
+	// location regardless of status, attributes) was fetchable by anyone who had its slug.
+	const callerHasDataPortalAccess = Boolean(
+		ctx.session?.user?.permissions.some((p) => DATA_PORTAL_PERMISSIONS.includes(p))
+	)
 
 	const org = await prisma.organization.findUniqueOrThrow({
 		where: {
 			slug,
+			...(callerHasDataPortalAccess ? {} : isPublic),
 		},
 		select: {
 			id: true,
@@ -28,6 +36,7 @@ const forOrgPageEdits = async ({ input }: TRPCHandlerParams<TForOrgPageEditsSche
 				select: { id: true },
 			},
 			locations: {
+				where: callerHasDataPortalAccess ? {} : isPublic,
 				select: {
 					id: true,
 					street1: true,

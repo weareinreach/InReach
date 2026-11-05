@@ -3,11 +3,16 @@ import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForServiceInfoCardSchema } from './query.forServiceInfoCard.schema'
+import { DATA_PORTAL_PERMISSIONS } from '../organization/lib/createOrgSuggestion'
 
 const forServiceInfoCard = async ({ input, ctx }: TRPCHandlerParams<TForServiceInfoCardSchema>) => {
 	const { parentId, isEditMode, remoteOnly } = input
 
-	const canSeeAll = isEditMode && ctx.session?.user
+	// Previously `ctx.session?.user` - true for any logged-in user at all, not just staff, since it never
+	// checked for an actual permission.
+	const canSeeAll = Boolean(
+		isEditMode && ctx.session?.user?.permissions.some((p) => DATA_PORTAL_PERMISSIONS.includes(p))
+	)
 	const recordVisiblity = { ...(!canSeeAll && globalWhere.isPublic()) }
 
 	const result = await prisma.orgService.findMany({

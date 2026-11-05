@@ -3,16 +3,24 @@ import { handleError } from '~api/lib/errorHandler'
 import { attributes, freeText, isPublic } from '~api/schemas/selects/common'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { DATA_PORTAL_PERMISSIONS } from './lib/createOrgSuggestion'
 import { type TForOrgPageSchema } from './query.forOrgPage.schema'
 import { formatAddressVisiblity } from '../location/lib.formatAddressVisibility'
 
-const forOrgPage = async ({ input }: TRPCHandlerParams<TForOrgPageSchema>) => {
+const forOrgPage = async ({ input, ctx }: TRPCHandlerParams<TForOrgPageSchema>) => {
 	try {
 		const { slug, includeArchived } = input
+		// `includeArchived` is client-supplied input on a public procedure - only staff with Data Portal
+		// access may actually bypass the published/deleted filter with it. Anonymous and regular callers
+		// always get the public-only view regardless of what they send.
+		const callerHasDataPortalAccess = Boolean(
+			ctx.session?.user?.permissions.some((p) => DATA_PORTAL_PERMISSIONS.includes(p))
+		)
+		const skipPublicFilter = includeArchived && callerHasDataPortalAccess
 		const org = await prisma.organization.findUniqueOrThrow({
 			where: {
 				slug,
-				...(includeArchived ? {} : isPublic),
+				...(skipPublicFilter ? {} : isPublic),
 			},
 			select: {
 				id: true,
@@ -28,7 +36,7 @@ const forOrgPage = async ({ input }: TRPCHandlerParams<TForOrgPageSchema>) => {
 					select: { id: true },
 				},
 				locations: {
-					where: includeArchived ? {} : isPublic,
+					where: skipPublicFilter ? {} : isPublic,
 					select: {
 						id: true,
 						street1: true,

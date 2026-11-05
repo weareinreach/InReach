@@ -19,6 +19,7 @@ import { DataToolbar } from '@weareinreach/ui/components/sections/DataToolbar'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
 import { useEditMode } from '@weareinreach/ui/hooks/useEditMode'
+import { useRevalidatePage } from '@weareinreach/ui/hooks/useRevalidatePage'
 import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { api } from '~app/utils/api'
@@ -44,7 +45,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		status,
 		isFetching: _isFetching,
 	} = api.organization.forOrgPageEdits.useQuery({ slug: pageSlug }, { enabled: router.isReady })
-	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
+	const revalidatePage = useRevalidatePage()
 	const updateBasic = api.organization.updateBasic.useMutation({
 		// Optimistically update the UI with the new data
 		onMutate: async (newData) => {
@@ -57,7 +58,9 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			// Optimistically update to the new value
 			// @ts-expect-error - The description object is intentionally missing the `ns` property in this specific case.
 			apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, (oldData) => {
-				if (!oldData) return undefined
+				if (!oldData) {
+					return undefined
+				}
 				return {
 					...oldData,
 					name: newData.name ?? oldData.name, // Optimistically update the name
@@ -127,7 +130,9 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		newAttributes: NonNullable<typeof data>['attributes']
 	) => {
 		apiUtils.organization.forOrgPageEdits.setData({ slug: pageSlug }, (oldData) => {
-			if (!oldData) return oldData
+			if (!oldData) {
+				return oldData
+			}
 			const otherAttributes = oldData.attributes.filter(
 				({ attribute }) => !attribute.categories.some(({ category }) => category.tag === badgeType)
 			)

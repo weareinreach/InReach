@@ -43,10 +43,28 @@ describe('location.getAlerts', () => {
 		expect(findManyMock).toHaveBeenCalledWith(
 			expect.objectContaining({
 				where: {
-					locationId: 'oloc_1',
+					location: { id: 'oloc_1', published: true, deleted: false },
 					attribute: { active: true, categories: { some: { category: { active: true, tag: 'alerts' } } } },
 					active: true,
 				},
+			})
+		)
+	})
+
+	/**
+	 * Regression: no visibility check on the location at all - a hidden/unpublished/deleted location's alert
+	 * banner text was fetchable by anyone who had its id.
+	 */
+	it('only returns alerts for a published, non-deleted location', async () => {
+		findManyMock.mockResolvedValueOnce([])
+
+		await getAlerts({ input: { id: 'oloc_1' } } as never)
+
+		expect(findManyMock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				where: expect.objectContaining({
+					location: expect.objectContaining({ published: true, deleted: false }),
+				}),
 			})
 		)
 	})

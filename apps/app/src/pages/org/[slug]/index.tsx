@@ -259,7 +259,12 @@ export const getStaticProps: GetStaticProps<
 
 		return {
 			props,
-			revalidate: 60 * 30, // 30 minutes
+			// This page's cached props include address fields (street/city/postcode/coordinates), which
+			// staff can hide via addressVisibility - an explicit revalidate is already triggered on save
+			// (see useRevalidatePage), but this is the fallback for cases that don't go through that path.
+			// Shortened from 30 minutes since address visibility is exactly the kind of thing that should
+			// take effect quickly, not sit cached for half an hour in the worst case.
+			revalidate: 60 * 5,
 		}
 	} catch (error) {
 		const TRPCError = (await import('@trpc/server')).TRPCError

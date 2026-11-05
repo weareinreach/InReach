@@ -199,7 +199,14 @@
 	"log-out": "Oturumu kapat",
 	"login": {
 		"error-generic": "Bir şeyler ters gitti, lütfen tekrar deneyin.",
-		"error-username-password": "Yanlış kullanıcı adı veya şifre."
+		"error-not-confirmed": "Bu hesap henüz doğrulanmadı.",
+		"error-username-password": "Yanlış kullanıcı adı veya şifre.",
+		"new-password-error": "Bu işe yaramadı - geçici şifrenin süresi dolmuş olabilir. Lütfen tekrar oturum açmayı deneyin.",
+		"new-password-label": "Yeni Şifre",
+		"new-password-message": "Geçici bir şifre ile oturum açıyorsunuz. Oturum açmayı bitirmek için yeni bir şifre seçin.",
+		"new-password-submit": "Yeni Şifre Ayarla",
+		"new-password-title": "Yeni Bir Şifre Ayarla",
+		"resend-sent": "Yeni bir doğrulama e-postası yolda."
 	},
 	"message_text": "Mesaj metni",
 	"message_title": "Mesaj başlığı",
@@ -457,6 +464,9 @@
 		"thank-you-message": "Paylaştığınız bilgiler ürünümüzü geliştirmemize yardımcı olur."
 	},
 	"take-action": "Harekete Geçin",
+	"trouble-logging-in": "Oturum açmada sorun mu yaşıyorsunuz?",
+	"trouble-logging-in-message": "E-postanızı girin, hesabınıza geri dönmenize yardımcı olalım.",
+	"trouble-logging-in-sent": "Bu e-posta için bir hesap varsa, ona sonraki adımları gönderdik.",
 	"uncheck-all": "Tümünün işaretini kaldırın",
 	"user-avatar": "Kullanıcı avatarı",
 	"user-menu": {

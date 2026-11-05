@@ -51,3 +51,13 @@ export const normalizeFullUrl = (url: string) =>
  */
 export const urlMatchesPrefix = (url: string, prefix: string) =>
 	url === prefix || url.startsWith(`${prefix}/`)
+
+/**
+ * Whether `pathname` is safe to redirect a browser to as a same-origin, relative path - i.e. not something
+ * that would actually navigate off-site. Guards against the three shapes that look "relative" but aren't: an
+ * absolute URL with a scheme (`https://evil.com`), a protocol-relative URL (`//evil.com` - browsers treat the
+ * double slash as "same scheme, different host"), and the backslash variant of the same trick (`/\evil.com` -
+ * some browsers normalize a leading `\` to `/`, turning it into `//evil.com`).
+ */
+export const isSafeRelativePath = (pathname: string) =>
+	pathname.startsWith('/') && !pathname.startsWith('//') && !pathname.startsWith('/\\')

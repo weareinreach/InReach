@@ -199,7 +199,14 @@
 	"log-out": "Log",
 	"login": {
 		"error-generic": "Yon bagay ale mal, tanpri eseye ankò.",
-		"error-username-password": "Non itilizatè oswa modpas inkòrèk."
+		"error-not-confirmed": "This account hasn't been verified yet.",
+		"error-username-password": "Non itilizatè oswa modpas inkòrèk.",
+		"new-password-error": "That didn't work - the temporary password may have expired. Please try logging in again.",
+		"new-password-label": "New Password",
+		"new-password-message": "You're signing in with a temporary password. Choose a new password to finish logging in.",
+		"new-password-submit": "Set New Password",
+		"new-password-title": "Set a New Password",
+		"resend-sent": "A new verification email is on its way."
 	},
 	"message_text": "Tèks mesaj la",
 	"message_title": "Tit mesaj la",
@@ -457,6 +464,9 @@
 		"thank-you-message": "Enfòmasyon ou pataje a ede nou amelyore pwodwi nou yo."
 	},
 	"take-action": "Fe Aksyon",
+	"trouble-logging-in": "Trouble logging in?",
+	"trouble-logging-in-message": "Enter your email and we'll help you get back into your account.",
+	"trouble-logging-in-sent": "If an account exists for that email, we've sent next steps to it.",
 	"uncheck-all": "Dezaktive tout",
 	"user-avatar": "Itilizatè avatar",
 	"user-menu": {

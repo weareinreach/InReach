@@ -10,6 +10,7 @@ const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSche
 	const location = await prisma.orgLocation.findUniqueOrThrow({
 		where: {
 			id: input.id,
+			orgId: input.organizationId,
 			...globalWhere.isPublic(),
 		},
 		select: {
