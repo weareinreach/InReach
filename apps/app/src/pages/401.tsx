@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next/pages'
 import { type Route } from 'nextjs-routes'
 import { z } from 'zod'
 
+import { isSafeRelativePath } from '@weareinreach/util/url'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { LoginBody } from '@weareinreach/ui/modals/Login'
 
@@ -14,18 +15,28 @@ const LoginBody = dynamic(() => import('@weareinreach/ui/modals/LoginSignUp').th
 })
 
 const RouteSchema = z.object({
-	pathname: z.string(),
+	// Must be a same-origin relative path - without this, a crafted `callbackUrl` could redirect a user
+	// off-site immediately after they sign in (`pathname` otherwise accepts any string, including a full
+	// `https://attacker.example` URL, which `router.push` happily navigates to).
+	pathname: z.string().refine(isSafeRelativePath, 'pathname must be a relative, same-origin path'),
 	query: z.record(z.string(), z.string()).optional(),
 	locale: z.string().optional(),
 })
+
+/** `callbackUrl` is attacker-controlled query input - never let a parse failure throw during render. */
+const parseCallbackUrl = (raw: string) => {
+	try {
+		return RouteSchema.safeParse(JSON.parse(Buffer.from(raw, 'base64').toString('utf-8')))
+	} catch {
+		return undefined
+	}
+}
 
 const Unauthorized = () => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
 	const callback =
-		typeof router.query.callbackUrl === 'string'
-			? RouteSchema.safeParse(JSON.parse(Buffer.from(router.query.callbackUrl, 'base64').toString('utf-8')))
-			: undefined
+		typeof router.query.callbackUrl === 'string' ? parseCallbackUrl(router.query.callbackUrl) : undefined
 
 	return (
 		<Container>

@@ -28,22 +28,33 @@ const findExceptionsMock = vi.mocked(prisma.orgUrlDuplicateException.findMany)
  */
 const mockAllowingPrisma = (
 	orgWebsiteUrls: string[],
-	exceptions: { baseUrl: string; active: boolean }[] = []
+	exceptions: { baseUrl: string; active: boolean }[] = [],
+	actorHasDataPortalAccess = false
 ) => {
 	const txCreateOperations = {
 		organization: { create: vi.fn() },
 		suggestion: { create: vi.fn() },
 		orgWebsite: { create: vi.fn() },
 	}
+	const findManyMock = vi.fn().mockResolvedValue(orgWebsiteUrls.map((url) => ({ url })))
 	getAuditedClientMock.mockReturnValue({
-		orgWebsite: { findMany: vi.fn().mockResolvedValue(orgWebsiteUrls.map((url) => ({ url }))) },
-		user: { findUnique: vi.fn().mockResolvedValue(null) },
+		orgWebsite: { findMany: findManyMock },
+		user: {
+			findUnique: vi
+				.fn()
+				.mockResolvedValue(
+					actorHasDataPortalAccess
+						? { roles: [], permissions: [{ permission: { name: 'dataPortalManager' } }] }
+						: null
+				),
+		},
 		$transaction: vi.fn(async (callback: (tx: typeof txCreateOperations) => unknown) =>
 			callback(txCreateOperations)
 		),
 	} as never)
 	findExceptionsMock.mockImplementation((async (args: { where: { baseUrl: { in: string[] } } }) =>
 		exceptions.filter((exception) => args.where.baseUrl.in.includes(exception.baseUrl))) as never)
+	return findManyMock
 }
 
 const baseInput = {
@@ -187,5 +198,64 @@ describe('createOrgSuggestion - website duplicate check with exceptions', () => 
 		} else {
 			await expect(result).resolves.toEqual({ id: 'organization_generated', slug: 'test-org' })
 		}
+	})
+})
+
+/**
+ * The duplicate-website check must never reveal that an unpublished org exists - it only compares against
+ * published organizations' websites, for every caller (public or staff). Unlike getPotentialMatches's live
+ * preview (which does show staff unpublished/pending matches, so they can avoid creating accidental dupes),
+ * this is the hard block at actual submission time - keeping it simple and unconditional closes the
+ * information-disclosure vector without weakening anything staff can't already see directly in the Data
+ * Portal's own org table.
+ */
+describe('createOrgSuggestion - duplicate check only matches published organizations', () => {
+	it('filters the website lookup to published organizations only', async () => {
+		const findManyMock = mockAllowingPrisma([], [])
+
+		await createOrgSuggestion({
+			ctx,
+			input: { ...baseInput, orgWebsite: 'https://example.org' },
+			sourceValue: 'suggestion',
+			sourceType: 'OTHER',
+		} as never)
+
+		expect(findManyMock).toHaveBeenCalledWith(
+			expect.objectContaining({ where: expect.objectContaining({ organization: { published: true } }) })
+		)
+	})
+})
+
+/**
+ * `existingOrgId` lets a caller attach a new website/location to an org that already exists, instead of
+ * creating one - with no ownership check, this let any signed-in user inject live, published-by-default data
+ * onto an arbitrary org id. It's restricted to staff with real Data Portal access until a real design exists
+ * for who else should be allowed to do this.
+ */
+describe('createOrgSuggestion - existingOrgId requires Data Portal access', () => {
+	it('blocks a caller with no Data Portal access from using existingOrgId', async () => {
+		mockAllowingPrisma([], [], false)
+
+		await expect(
+			createOrgSuggestion({
+				ctx,
+				input: { ...baseInput, orgWebsite: 'https://example.org', existingOrgId: 'orgn_target' },
+				sourceValue: 'suggestion',
+				sourceType: 'OTHER',
+			} as never)
+		).rejects.toMatchObject({ code: 'FORBIDDEN' })
+	})
+
+	it('allows a staff caller with Data Portal access to use existingOrgId', async () => {
+		mockAllowingPrisma([], [], true)
+
+		await expect(
+			createOrgSuggestion({
+				ctx,
+				input: { ...baseInput, orgWebsite: 'https://example.org', existingOrgId: 'orgn_target' },
+				sourceValue: 'data-portal',
+				sourceType: 'SYSTEM',
+			} as never)
+		).resolves.toEqual({ id: 'orgn_target', slug: 'test-org' })
 	})
 })

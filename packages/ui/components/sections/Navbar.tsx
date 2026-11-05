@@ -15,6 +15,7 @@ import { UserMenu } from '~ui/components/core/UserMenu'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useEditMode } from '~ui/hooks/useEditMode'
 import { useNewNotification } from '~ui/hooks/useNewNotification'
+import { useRevalidatePage } from '~ui/hooks/useRevalidatePage'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -29,7 +30,7 @@ const EditModeBar = () => {
 		'/org/[slug]/edit' | '/org/[slug]/[orgLocationId]/edit' | '/org/[slug]/remote/edit'
 	>()
 	const { orgLocationId, slug, orgServiceId } = router.query
-	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
+	const revalidatePage = useRevalidatePage()
 	// This bar's actions target a single org/location/service record, keyed off whichever route
 	// param is present. `/org/[slug]/remote/edit` has none of those - it lists services across the
 	// whole org - so there's no correct record for Save/Reverify/Publish/Delete to act on here.

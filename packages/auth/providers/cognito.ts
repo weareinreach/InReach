@@ -2,6 +2,7 @@ import { UserNotConfirmedException } from '@aws-sdk/client-cognito-identity-prov
 import Credentials from 'next-auth/providers/credentials'
 import { type Provider } from 'next-auth/providers/index'
 
+import { checkRateLimit } from '@weareinreach/util/rateLimit'
 import { userLogin } from '~auth/lib/userLogin'
 
 export const cognitoCredentialProvider: Provider = Credentials({
@@ -14,10 +15,23 @@ export const cognitoCredentialProvider: Provider = Credentials({
 	},
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	authorize: async (credentials, req) => {
-		if (!credentials?.email || !credentials?.password) return null
+		if (!credentials?.email || !credentials?.password) {
+			return null
+		}
+
+		const normalizedEmail = credentials.email.toLowerCase()
+		// No app-level throttling previously existed on login at all - a caller could submit unlimited
+		// password guesses against a known email with nothing in this codebase slowing them down.
+		const allowed = await checkRateLimit(`ratelimit:login:${normalizedEmail}`, {
+			max: 10,
+			windowSeconds: 15 * 60,
+		})
+		if (!allowed) {
+			throw new Error('TooManyRequests')
+		}
 
 		try {
-			const cognitoSession = await userLogin(credentials.email.toLowerCase(), credentials.password)
+			const cognitoSession = await userLogin(normalizedEmail, credentials.password)
 			if (cognitoSession.success === true) {
 				return cognitoSession.user
 			}

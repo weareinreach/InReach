@@ -28,7 +28,7 @@ export const AuditDrawer = ({
 
 	// Use the tRPC hook to fetch the audit trail data, including pagination parameters.
 	const { data, isLoading, error } = api.auditTrail.getAllForOrg.useQuery(
-		{ slug: recordId, page, pageSize },
+		{ organizationId: recordId, page, pageSize },
 		{
 			enabled: !!recordId && opened,
 		}

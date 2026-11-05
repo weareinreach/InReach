@@ -198,7 +198,14 @@
 	"log-out": "ログアウト",
 	"login": {
 		"error-generic": "問題が発生しました。もう一度やり直してください。",
-		"error-username-password": "ユーザー名またはパスワードが正しくありません。"
+		"error-not-confirmed": "このアカウントはまだ認証されていません。",
+		"error-username-password": "ユーザー名またはパスワードが正しくありません。",
+		"new-password-error": "動作しませんでした - 一時パスワードの有効期限が切れている可能性があります。再度ログインしてください。",
+		"new-password-label": "新しいパスワード",
+		"new-password-message": "一時的なパスワードでサインインしています。ログインを完了するには、新しいパスワードを選択してください。",
+		"new-password-submit": "新しいパスワードを設定",
+		"new-password-title": "新しいパスワードを設定",
+		"resend-sent": "新しい確認メールが届いています。"
 	},
 	"message_text": "メッセージの本文",
 	"message_title": "メッセージタイトル",
@@ -456,6 +463,9 @@
 		"thank-you-message": "共有された情報は、情報の改善に役立ちます。"
 	},
 	"take-action": "行動を起こす",
+	"trouble-logging-in": "ログインできませんか？",
+	"trouble-logging-in-message": "メールアドレスを入力してください。アカウントに戻る手助けをします。",
+	"trouble-logging-in-sent": "そのメールにアカウントが存在する場合は、次のステップを送信します。",
 	"uncheck-all": "すべてのチェックを外す",
 	"user-avatar": "ユーザーのアバター",
 	"user-menu": {

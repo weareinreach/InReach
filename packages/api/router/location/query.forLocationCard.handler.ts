@@ -5,12 +5,18 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { formatAddressVisiblity } from './lib.formatAddressVisibility'
 import { type TForLocationCardSchema } from './query.forLocationCard.schema'
+import { DATA_PORTAL_PERMISSIONS } from '../organization/lib/createOrgSuggestion'
 
 const forLocationCard = async ({ input, ctx }: TRPCHandlerParams<TForLocationCardSchema>) => {
 	try {
 		const { id, isEditMode } = input
 
-		const canSeeAll = isEditMode && !!ctx.session?.user?.permissions
+		// Previously `!!ctx.session?.user?.permissions` - `permissions` is always a (possibly empty) array for
+		// any signed-in session, so this was true for any logged-in user, not just staff. Any registered
+		// account could pass isEditMode: true and see a hidden location's full address/phone numbers.
+		const canSeeAll = Boolean(
+			isEditMode && ctx.session?.user?.permissions.some((p) => DATA_PORTAL_PERMISSIONS.includes(p))
+		)
 
 		const result = await prisma.orgLocation.findUniqueOrThrow({
 			where: {

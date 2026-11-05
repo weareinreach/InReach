@@ -1,10 +1,28 @@
 import { Interval } from 'luxon'
 
-import { getAuditedClient } from '@weareinreach/db'
+import { getAuditedClient, isIdFor } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TProcessDrawerSchema } from './mutation.processDrawer.schema'
+
+/** Mirrors query.forHoursDrawer's own whereId dispatch, for the same entityId shape. */
+const entityLink = (entityId: string) => {
+	switch (true) {
+		case isIdFor('organization', entityId): {
+			return { organizationId: entityId }
+		}
+		case isIdFor('orgLocation', entityId): {
+			return { orgLocId: entityId }
+		}
+		case isIdFor('orgService', entityId): {
+			return { orgServiceId: entityId }
+		}
+		default: {
+			return {}
+		}
+	}
+}
 
 const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDrawerSchema, 'protected'>) => {
 	const prisma = getAuditedClient(ctx.actorId)
@@ -15,6 +33,7 @@ const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDrawerSch
 			deleted: 0,
 		}
 		if (input.createdVals) {
+			const link = entityLink(input.entityId)
 			const prepped = input.createdVals.map(({ interval, ...rest }) => {
 				const { start, end } = Interval.fromISO(interval)
 				if (!start || !end) {
@@ -22,6 +41,7 @@ const processDrawer = async ({ input, ctx }: TRPCHandlerParams<TProcessDrawerSch
 				}
 				return {
 					...rest,
+					...link,
 					start: start.toJSDate(),
 					end: end.toJSDate(),
 				}
