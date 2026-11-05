@@ -137,3 +137,4 @@ const defineSentryConfig = (nextConfig) =>
 	})
 
 export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
+// trigger rebuild
