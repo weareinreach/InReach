@@ -48,8 +48,9 @@ export const orgHoursRouter = defineRouter({
 		)
 		return handler(opts)
 	}),
-	forHoursDrawer: publicProcedure
-		// permissionedProcedure('updateHours')
+	// Previously publicProcedure with this gate commented out - no visibility filter either, so anyone could
+	// fetch the full hours schedule for any org/location/service by id with no login at all.
+	forHoursDrawer: permissionedProcedure('updateHours')
 		.input(schema.ZForHoursDrawerSchema)
 		.query(async (opts) => {
 			const handler = await importHandler(

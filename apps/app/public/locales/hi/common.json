@@ -199,7 +199,14 @@
 	"log-out": "लॉग आउट करें",
 	"login": {
 		"error-generic": "कुछ गलत हुआ है, कृपया फिर से कोशिश करें।",
-		"error-username-password": "गलत यूज़रनेम या पासवर्ड।"
+		"error-not-confirmed": "This account hasn't been verified yet.",
+		"error-username-password": "गलत यूज़रनेम या पासवर्ड।",
+		"new-password-error": "That didn't work - the temporary password may have expired. Please try logging in again.",
+		"new-password-label": "New Password",
+		"new-password-message": "You're signing in with a temporary password. Choose a new password to finish logging in.",
+		"new-password-submit": "Set New Password",
+		"new-password-title": "Set a New Password",
+		"resend-sent": "A new verification email is on its way."
 	},
 	"message_text": "संदेश पाठ",
 	"message_title": "संदेश का शीर्षक",
@@ -457,6 +464,9 @@
 		"thank-you-message": "आपके द्वारा साझा की गई जानकारी हमारे उत्पाद को बेहतर बनाने में हमारी मदद करती है।"
 	},
 	"take-action": "कार्रवाई करें",
+	"trouble-logging-in": "Trouble logging in?",
+	"trouble-logging-in-message": "Enter your email and we'll help you get back into your account.",
+	"trouble-logging-in-sent": "If an account exists for that email, we've sent next steps to it.",
 	"uncheck-all": "सभी को अनचेक करें",
 	"user-avatar": "यूज़र अवतार",
 	"user-menu": {

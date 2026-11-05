@@ -4,12 +4,8 @@ import { getAuditedClient } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { DATA_PORTAL_ROLE_NAMES, getBestRoleIndex, getRoleIndex } from './lib/dataPortalRoleHierarchy'
 import { type TToggleDataPortalAccessSchema } from './mutation.toggleDataPortalAccess.schema'
-
-/**
- * Define the hierarchy explicitly. Index 0 is the most powerful.
- */
-const DATA_PORTAL_ROLE_NAMES = ['root', 'dataPortalAdmin', 'dataPortalManager', 'dataPortalBasic']
 
 const toggleDataPortalAccess = async ({
 	ctx,
@@ -43,14 +39,11 @@ const toggleDataPortalAccess = async ({
 		 */
 		const currentUserPerms = ctx.session.user.permissions
 		const currentUserEmail = ctx.session.user.email
-
-		const getRoleIndex = (role: string) => {
-			const idx = DATA_PORTAL_ROLE_NAMES.indexOf(role)
-			return idx === -1 ? 999 : idx
-		}
+		const isActorRoot = currentUserPerms.includes('root')
+		const isActorInternal = currentUserEmail.endsWith('@inreach.org')
 
 		// Determine the highest rank of the person making the request
-		const userBestIndex = Math.min(...currentUserPerms.map(getRoleIndex))
+		const userBestIndex = getBestRoleIndex(currentUserPerms)
 		// Determine the rank of the permission they are trying to assign
 		const targetIndex = permissionNameInput ? getRoleIndex(permissionNameInput) : 999
 
@@ -62,18 +55,16 @@ const toggleDataPortalAccess = async ({
 			})
 		}
 
-		// B: Strict Root Lock
-		// Only a user with 'root' AND an '@inreach.org' email can grant 'root' access.
-		if (permissionNameInput === 'root') {
-			const isActorRoot = currentUserPerms.includes('root')
-			const isActorInternal = currentUserEmail.endsWith('@inreach.org')
-
-			if (!isActorRoot || !isActorInternal) {
-				throw new TRPCError({
-					code: 'FORBIDDEN',
-					message: 'Only internal Root administrators can grant Root access.',
-				})
-			}
+		// B: Strict Root Lock - only a user with 'root' AND an '@inreach.org' email can grant root access.
+		// This alone isn't enough: it only looked at the role being newly *assigned*, so a non-root Admin
+		// could still strip root from someone by denying access entirely or downgrading to a lower tier,
+		// neither of which passes a permissionName of 'root'. The check below (right before the write)
+		// closes that by looking at the target's *current* role instead.
+		if (permissionNameInput === 'root' && (!isActorRoot || !isActorInternal)) {
+			throw new TRPCError({
+				code: 'FORBIDDEN',
+				message: 'Only internal Root administrators can grant Root access.',
+			})
 		}
 
 		let permissionIdToSet: string | undefined
@@ -93,6 +84,26 @@ const toggleDataPortalAccess = async ({
 		 * DATABASE TRANSACTION We clear all existing portal roles first to prevent "Role Stacking"
 		 */
 		await prisma.$transaction(async (tx) => {
+			// Locks the target's own row for the rest of this transaction, so a second concurrent call for
+			// the same target (e.g. two admins acting on the same account at once) can't read the
+			// pre-this-transaction role, both pass the root-removal check below, and both proceed - the
+			// second call blocks here until the first commits, then re-reads the now-current role.
+			await tx.$queryRaw`SELECT id FROM "User" WHERE id = ${targetUserId} FOR UPDATE`
+
+			// C: Strict Root Removal Lock - re-check against the target's CURRENT role, read inside this
+			// locked transaction, not the role being requested. Only root can take root away, whether that's
+			// an explicit deny or an allow to some lower tier.
+			const currentTargetPermission = await tx.userPermission.findFirst({
+				where: { userId: targetUserId, authorized: true, permissionId: { in: hierarchyIds } },
+				select: { permission: { select: { name: true } } },
+			})
+			if (currentTargetPermission?.permission?.name === 'root' && (!isActorRoot || !isActorInternal)) {
+				throw new TRPCError({
+					code: 'FORBIDDEN',
+					message: 'Only internal Root administrators can remove Root access.',
+				})
+			}
+
 			// Remove any existing Data Portal roles from the target user
 			await tx.userPermission.deleteMany({
 				where: {

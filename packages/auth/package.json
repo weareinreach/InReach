@@ -29,6 +29,9 @@
 		"./deleteAccount": {
 			"default": "./lib/deleteAccount.ts"
 		},
+		"./deleteCognitoUser": {
+			"default": "./lib/deleteCognitoUser.ts"
+		},
 		"./forgotPassword": {
 			"default": "./lib/forgotPassword.ts"
 		},
@@ -83,7 +86,7 @@
 		"aws-jwt-verify": "4.0.1",
 		"tiny-invariant": "1.3.3",
 		"tslog": "4.9.3",
-		"zod": "4.4.3"
+		"zod": "4.6.6"
 	},
 	"devDependencies": {
 		"@types/eslint": "9.6.1",

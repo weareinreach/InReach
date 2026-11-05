@@ -25,6 +25,7 @@ import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { useEditMode } from '@weareinreach/ui/hooks/useEditMode'
 import { useNewNotification } from '@weareinreach/ui/hooks/useNewNotification'
+import { useRevalidatePage } from '@weareinreach/ui/hooks/useRevalidatePage'
 import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -50,7 +51,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 	const [loading, setLoading] = useState(true)
 	const notifySave = useNewNotification({ displayText: 'Saved', icon: 'success' })
 	const { data, status } = api.location.forLocationPageEdits.useQuery({ id: orgLocationId })
-	const { mutate: revalidatePage } = api.misc.revalidatePage.useMutation()
+	const revalidatePage = useRevalidatePage()
 
 	const { data: _alertData } = api.location.getAlerts.useQuery(
 		{ id: orgLocationId },

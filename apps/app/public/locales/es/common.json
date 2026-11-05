@@ -199,7 +199,14 @@
 	"log-out": "Cerrar sesión",
 	"login": {
 		"error-generic": "Algo salió mal, por favor inténtalo de nuevo.",
-		"error-username-password": "Nombre de usuario o contraseña incorrectos."
+		"error-not-confirmed": "Esta cuenta aún no ha sido verificada.",
+		"error-username-password": "Nombre de usuario o contraseña incorrectos.",
+		"new-password-error": "Eso no funcionó - la contraseña temporal puede haber expirado. Por favor, intente iniciar sesión de nuevo.",
+		"new-password-label": "Nueva contraseña",
+		"new-password-message": "Estás iniciando sesión con una contraseña temporal. Elige una nueva contraseña para terminar de iniciar sesión.",
+		"new-password-submit": "Establecer nueva contraseña",
+		"new-password-title": "Establecer una nueva contraseña",
+		"resend-sent": "Un nuevo correo electrónico de verificación está en camino."
 	},
 	"message_text": "Texto del mensaje",
 	"message_title": "Título del mensaje",
@@ -457,6 +464,9 @@
 		"thank-you-message": "La información que usted comparte nos ayuda a mejorar nuestro producto."
 	},
 	"take-action": "Tomar acción",
+	"trouble-logging-in": "¿Problemas al iniciar sesión?",
+	"trouble-logging-in-message": "Introduce tu correo electrónico y te ayudaremos a volver a tu cuenta.",
+	"trouble-logging-in-sent": "Si existe una cuenta para ese correo electrónico, le hemos enviado los siguientes pasos.",
 	"uncheck-all": "Desmarcar todo",
 	"user-avatar": "Avatar de usuario",
 	"user-menu": {

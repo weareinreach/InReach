@@ -100,7 +100,11 @@ export const userRouter = defineRouter({
 			)
 			return handler(opts)
 		}),
-	adminSetTemporaryPassword: permissionedProcedure('viewAllUsers')
+	// Admin+, not Manager - unlike the other staff-only auth actions above, this one can act on another
+	// staff member's own account, so it needs the stricter gate plus the target-rank check inside the
+	// handler (a Manager being able to set any account's password, including an Admin's, was a real
+	// privilege-escalation path).
+	adminSetTemporaryPassword: adminProcedure
 		.input(schema.ZAdminSetTemporaryPasswordSchema)
 		.mutation(async (opts) => {
 			const handler = await importHandler(

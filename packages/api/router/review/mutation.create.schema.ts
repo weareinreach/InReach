@@ -6,9 +6,10 @@ export const ZCreateSchema = z.object({
 	rating: z.number(),
 	reviewText: z.string().optional(),
 	visible: z.boolean().optional(),
-	toxicity: z.number().optional(),
+	// toxicity/langConfidence are deliberately NOT accepted here - they're meant to be computed server-side
+	// by a moderation service (see the `toxicity` column's doc comment, "From https://perspectiveapi.com/"),
+	// never supplied by whoever is submitting the review.
 	lcrCity: z.string().optional(),
-	langConfidence: z.number().optional(),
 	organizationId: prefixedId('organization'),
 	orgServiceId: prefixedId('orgService').optional(),
 	orgLocationId: prefixedId('orgLocation').optional(),
