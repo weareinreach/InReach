@@ -55,7 +55,7 @@
 		"pg": "8.23.0",
 		"sql-bricks": "3.0.1",
 		"superjson": "2.2.6",
-		"zod": "4.4.3"
+		"zod": "4.6.6"
 	},
 	"devDependencies": {
 		"@octokit/core": "5.2.0",

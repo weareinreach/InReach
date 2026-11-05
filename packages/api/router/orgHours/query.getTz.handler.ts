@@ -6,16 +6,21 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetTzSchema } from './query.getTz.schema'
 
+// Every branch also requires the matched location itself (and, for the org/service branches, the related
+// org/service) to be published and not deleted - without this, the timezone helper worked from a hidden
+// location exactly as if it were public, which could reveal something about a location whose whole point was
+// to not be shown.
 const whereId = (input: TGetTzSchema): Prisma.OrgLocationWhereInput => {
+	const visible = { published: true, deleted: false }
 	switch (true) {
 		case isIdFor('organization', input): {
-			return { organization: { id: input } }
+			return { organization: { id: input, ...visible }, ...visible }
 		}
 		case isIdFor('orgLocation', input): {
-			return { id: input }
+			return { id: input, ...visible }
 		}
 		case isIdFor('orgService', input): {
-			return { services: { some: { serviceId: input } } }
+			return { services: { some: { serviceId: input, service: visible } }, ...visible }
 		}
 		default: {
 			return {}

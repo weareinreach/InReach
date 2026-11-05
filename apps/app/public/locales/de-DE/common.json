@@ -199,7 +199,14 @@
 	"log-out": "Abmelden",
 	"login": {
 		"error-generic": "Etwas ist schief gelaufen, bitte versuche es erneut.",
-		"error-username-password": "Benutzername oder Passwort falsch."
+		"error-not-confirmed": "Dieses Konto wurde noch nicht verifiziert.",
+		"error-username-password": "Benutzername oder Passwort falsch.",
+		"new-password-error": "Das hat nicht funktioniert - das temporäre Passwort ist möglicherweise abgelaufen. Bitte versuchen Sie sich erneut anzumelden.",
+		"new-password-label": "Neues Passwort",
+		"new-password-message": "Sie melden sich mit einem temporären Passwort an. Wählen Sie ein neues Passwort aus, um die Anmeldung abzuschließen.",
+		"new-password-submit": "Neues Passwort setzen",
+		"new-password-title": "Neues Passwort festlegen",
+		"resend-sent": "Eine neue Bestätigungs-E-Mail ist auf dem Weg."
 	},
 	"message_text": "Nachrichtentext",
 	"message_title": "Titel der Nachricht",
@@ -457,6 +464,9 @@
 		"thank-you-message": "Die Informationen, die Sie uns mitgeteilt haben, helfen uns, unser Produkt zu verbessern."
 	},
 	"take-action": "Aktion ergreifen",
+	"trouble-logging-in": "Probleme beim Anmelden?",
+	"trouble-logging-in-message": "Geben Sie Ihre E-Mail ein und wir helfen Ihnen bei der Rückkehr in Ihr Konto.",
+	"trouble-logging-in-sent": "Wenn ein Konto für diese E-Mail existiert, haben wir die nächsten Schritte an sie gesendet.",
 	"uncheck-all": "Alles abwählen",
 	"user-avatar": "Benutzer Avatar",
 	"user-menu": {

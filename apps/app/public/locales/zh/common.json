@@ -198,7 +198,14 @@
 	"log-out": "登出",
 	"login": {
 		"error-generic": "出了点问题，请再试一次。",
-		"error-username-password": "用户名或密码不正确。"
+		"error-not-confirmed": "此帐户尚未验证。",
+		"error-username-password": "用户名或密码不正确。",
+		"new-password-error": "无法正常工作-临时密码可能已过期。请重新登录。",
+		"new-password-label": "新密码",
+		"new-password-message": "您正在使用临时密码登录。请选择一个新密码来完成登录。",
+		"new-password-submit": "设置新密码",
+		"new-password-title": "设置新密码",
+		"resend-sent": "新的验证电子邮件正在进行中。"
 	},
 	"message_text": "消息文本",
 	"message_title": "消息标题",
@@ -456,6 +463,9 @@
 		"thank-you-message": "您分享的信息有助于我们改进产品。"
 	},
 	"take-action": "采取行动",
+	"trouble-logging-in": "登录时遇到问题？",
+	"trouble-logging-in-message": "输入您的电子邮件，我们会帮助您回到您的帐户。",
+	"trouble-logging-in-sent": "如果存在该电子邮件的帐户，我们已经向它发送了下一个步骤。",
 	"uncheck-all": "全部取消选中",
 	"user-avatar": "用户头像",
 	"user-menu": {

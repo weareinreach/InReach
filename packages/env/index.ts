@@ -24,6 +24,10 @@ export const env = createEnv({
 		COGNITO_USER_POOL_ID: z.string(),
 		GOOGLE_PLACES_API_KEY: z.string(),
 		CROWDIN_TOKEN: z.string().optional(),
+		// Optional, not required, so a missing value fails closed (the webhook route rejects every request)
+		// rather than crashing the whole app's env validation at build/boot time before anyone's had a chance
+		// to actually set it in Vercel.
+		CROWDIN_WEBHOOK_SECRET: z.string().optional(),
 		OTEL_SERVER: z.string().url().optional(),
 		CRON_KEY: z.string(),
 		NEXT_RUNTIME: z.enum(['nodejs', 'edge']),

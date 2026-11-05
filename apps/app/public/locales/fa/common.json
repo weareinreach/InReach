@@ -199,7 +199,14 @@
 	"log-out": "از سیستم خارج شوید",
 	"login": {
 		"error-generic": "مشکلی پیش آمد، لطفاً دوباره امتحان کنید.",
-		"error-username-password": "نام کاربری یا رمز عبور نادرست"
+		"error-not-confirmed": "This account hasn't been verified yet.",
+		"error-username-password": "نام کاربری یا رمز عبور نادرست",
+		"new-password-error": "That didn't work - the temporary password may have expired. Please try logging in again.",
+		"new-password-label": "New Password",
+		"new-password-message": "You're signing in with a temporary password. Choose a new password to finish logging in.",
+		"new-password-submit": "Set New Password",
+		"new-password-title": "Set a New Password",
+		"resend-sent": "A new verification email is on its way."
 	},
 	"message_text": "متن پیام",
 	"message_title": "عنوان پیام",
@@ -457,6 +464,9 @@
 		"thank-you-message": "اطلاعاتی که به اشتراک گذاشته اید به ما کمک می کند تا محصول خود را بهبود بخشیم."
 	},
 	"take-action": "اقدام کنید",
+	"trouble-logging-in": "Trouble logging in?",
+	"trouble-logging-in-message": "Enter your email and we'll help you get back into your account.",
+	"trouble-logging-in-sent": "If an account exists for that email, we've sent next steps to it.",
 	"uncheck-all": "علامت همه را بردارید",
 	"user-avatar": "آواتار کاربر",
 	"user-menu": {

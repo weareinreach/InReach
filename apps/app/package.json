@@ -96,7 +96,7 @@
 		"react-hook-form-mantine": "4.0.1",
 		"react-i18next": "17.0.11",
 		"react-toggle": "4.1.3",
-		"zod": "4.4.3"
+		"zod": "4.6.6"
 	},
 	"devDependencies": {
 		"@hookform/devtools": "4.4.0",

@@ -36,7 +36,27 @@ describe('organization.getAlerts', () => {
 
 		expect(findManyMock).toHaveBeenCalledWith(
 			expect.objectContaining({
-				where: expect.objectContaining({ organization: { id: 'orgn_1', slug: undefined } }),
+				where: expect.objectContaining({
+					organization: { id: 'orgn_1', slug: undefined, published: true, deleted: false },
+				}),
+			})
+		)
+	})
+
+	/**
+	 * Regression: no visibility check on the org at all - a hidden/unpublished/deleted org's alert banner text
+	 * was fetchable by anyone who had its id/slug.
+	 */
+	it('only returns alerts for a published, non-deleted org', async () => {
+		findManyMock.mockResolvedValueOnce([])
+
+		await getAlerts({ input: { id: 'orgn_1' } } as never)
+
+		expect(findManyMock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				where: expect.objectContaining({
+					organization: expect.objectContaining({ published: true, deleted: false }),
+				}),
 			})
 		)
 	})
