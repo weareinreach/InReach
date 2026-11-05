@@ -10,7 +10,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { findMatchingException } from '../../orgUrlDuplicateException/lib/findMatchingException'
 import { type TCreateNewSuggestionSchema } from '../mutation.createNewSuggestion.schema'
 
-const DATA_PORTAL_PERMISSIONS = [
+export const DATA_PORTAL_PERMISSIONS = [
 	'dataPortalBasic',
 	'dataPortalManager',
 	'dataPortalAdmin',
@@ -35,7 +35,9 @@ const hasDataPortalAccess = async (
 			permissions: { select: { permission: { select: { name: true } } } },
 		},
 	})
-	if (!user) return false
+	if (!user) {
+		return false
+	}
 	const permissionNames = new Set([
 		...user.roles.flatMap(({ role }) => role.permissions.map(({ permission }) => permission.name)),
 		...user.permissions.map(({ permission }) => permission.name),
@@ -68,15 +70,31 @@ export const createOrgSuggestion = async ({
 	const prisma = getAuditedClient(ctx.actorId)
 	const { countryId, orgName, orgSlug, communityFocus, orgAddress, orgWebsite, existingOrgId } = input
 
+	// `existingOrgId` has no live UI caller on either side of this shared function today (see the comment
+	// further down) - it exists so a future "suggest an addition to an existing org" flow has something to
+	// build on, but as written it let ANY signed-in user (the public form's procedure requires nothing more)
+	// attach a brand-new, published-by-default website and address to an arbitrary existing org id with no
+	// ownership check at all. Until a real design exists for who's allowed to add to an existing org, require
+	// the same Data Portal access the staff-only "Add an organization" path already needs.
+	if (existingOrgId && !(await hasDataPortalAccess(prisma, ctx.actorId))) {
+		throw new TRPCError({
+			code: 'FORBIDDEN',
+			message: 'You are not authorized to add information to an existing organization.',
+		})
+	}
+
 	if (!existingOrgId) {
 		// Normalize down to the bare domain, the same way query.getPotentialMatches does, so
 		// "already flagged while typing" and "blocked on submit" agree on what counts as a duplicate.
 		// A broad substring pre-filter narrows the candidates cheaply, then the exact domain comparison
 		// happens in JS - this avoids hand-rolling regex/backreference logic in raw SQL.
+		//
+		// Only published organizations count as a match - otherwise this (and query.getPotentialMatches)
+		// would reveal that an unpublished org exists just by trying to submit its website again.
 		const normalizedWebsite = normalizeToDomain(orgWebsite)
 		const normalizedInputUrl = normalizeFullUrl(orgWebsite)
 		const candidates = await prisma.orgWebsite.findMany({
-			where: { url: { contains: normalizedWebsite, mode: 'insensitive' } },
+			where: { url: { contains: normalizedWebsite, mode: 'insensitive' }, organization: { published: true } },
 			select: { url: true },
 		})
 		const exactDomainMatches = candidates.filter(

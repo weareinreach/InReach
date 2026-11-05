@@ -18,7 +18,12 @@ const deleteAccount = async ({ ctx, input }: TRPCHandlerParams<TDeleteAccountSch
 				where: { email },
 				data: { active: false },
 			})
-			await userSignOut(email)
+			// userSignOut looks up the user_access_token view by the real user id, not by email - passing
+			// email here meant the lookup never matched anything, this threw every time, and account
+			// deletion failed for every user regardless of credentials. ctx.actorId is the real id (same
+			// value this exact function is called with correctly elsewhere, e.g. auth-options.ts's signOut
+			// callback).
+			await userSignOut(ctx.actorId)
 			await cognitoDeleteAccount(email)
 			return true
 		})

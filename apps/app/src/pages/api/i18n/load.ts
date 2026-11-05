@@ -16,9 +16,20 @@ export const config = {
 	runtime: 'edge',
 }
 
+// Unauthenticated by design (translations are public content), but previously had no cap on how many
+// space-separated values either list could contain - a single request could fan out to `langs.length *
+// namespaces.length` separate upstream Crowdin calls and arbitrary Redis cache-key writes. These caps are
+// generous relative to real usage (a page loads a handful of namespaces for one locale at a time) while
+// ruling out that kind of amplification.
 const QuerySchema = z.object({
-	lng: z.string().transform((s) => s.split(' ')),
-	ns: z.string().transform((s) => s.split(' ')),
+	lng: z
+		.string()
+		.transform((s) => s.split(' '))
+		.pipe(z.array(z.string()).max(5)),
+	ns: z
+		.string()
+		.transform((s) => s.split(' '))
+		.pipe(z.array(z.string()).max(30)),
 })
 const tracer = trace.getTracer('inreach-app')
 const log = createLoggerInstance('i18n Loader')

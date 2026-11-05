@@ -7,13 +7,12 @@ vi.mock('next/router', () => ({
 	useRouter: () => ({ locale: 'en', query: {}, push: vi.fn(), replace: vi.fn() }),
 }))
 
-const resendCodeUseMutation = vi.fn()
 const completeNewPasswordChallengeUseMutation = vi.fn()
 // `LoginBody` sits in the same render tree as sibling modals eagerly mounted alongside it (the
 // signup form's `api.user.create`, `TroubleLoggingInModal`'s `api.user.troubleLoggingIn`, etc.) -
 // none of that is under test here, so every `trpc.<namespace>.<procedure>.useQuery`/`useMutation`
-// gets a safe no-op default via this Proxy, and only `user.resendCode`/`user.completeNewPasswordChallenge`
-// are overridden below with controllable mocks.
+// gets a safe no-op default via this Proxy, and only `user.completeNewPasswordChallenge` is
+// overridden below with a controllable mock.
 vi.mock('~ui/lib/trpcClient', () => {
 	const noopResult = {
 		mutate: vi.fn(),
@@ -28,7 +27,6 @@ vi.mock('~ui/lib/trpcClient', () => {
 	}
 	const userHandler: ProxyHandler<object> = {
 		get: (_t, prop) => {
-			if (prop === 'resendCode') return { useMutation: resendCodeUseMutation }
 			if (prop === 'completeNewPasswordChallenge') {
 				return { useMutation: completeNewPasswordChallengeUseMutation }
 			}
@@ -44,8 +42,6 @@ vi.mock('~ui/lib/trpcClient', () => {
 const { render, screen, within } = await import('~ui/test/test-utils')
 const { LoginBody } = await import('./index')
 
-const resendCodeMock = resendCodeUseMutation
-const resendCodeMutate = vi.fn()
 const completeNewPasswordChallengeMock = completeNewPasswordChallengeUseMutation
 const completeNewPasswordChallengeMutateAsync = vi.fn()
 
@@ -72,67 +68,47 @@ const fillAndSubmit = async (container: HTMLElement) => {
 }
 
 /**
- * Regression coverage for the login form's `UserNotConfirmed` handling (providers/cognito.ts's `authorize`
- * re-throws this specific Error so NextAuth passes it through as `signIn()`'s `result.error`). Before this,
- * every `authorize` failure - wrong password or an unconfirmed account - showed the identical generic
- * "incorrect username or password" message, giving someone with an unverified account no way to tell what was
- * actually wrong.
+ * Regression: the login form used to special-case Cognito's `UserNotConfirmed` result with a distinct
+ * "account not verified" message and a "resend code" button - which let an anonymous caller tell "this
+ * account exists but isn't confirmed" apart from a simple wrong password, the same account-enumeration
+ * pattern resendCode/forgotPassword/troubleLoggingIn are built to avoid. It must now show the identical
+ * generic message as any other failure; the always-visible "Trouble logging in?" link (already
+ * enumeration-safe) is the real fix for someone in this state, not a special login-form branch.
  */
-describe('LoginBody - UserNotConfirmed handling', () => {
-	beforeEach(() => {
-		resendCodeMutate.mockClear()
-		resendCodeMock.mockReturnValue({ mutate: resendCodeMutate, isPending: false, isSuccess: false } as never)
-	})
-
-	it('shows the account-not-verified message (not the generic one) and a resend button', async () => {
+describe('LoginBody - does not reveal an unconfirmed account at login', () => {
+	it('shows the same generic message for UserNotConfirmed as for a wrong password', async () => {
 		signInMock.mockResolvedValueOnce({ error: 'UserNotConfirmed', status: 401, ok: false, url: null })
 		const { container } = render(<LoginBody />)
 		await fillAndSubmit(container)
 
-		expect(await screen.findByText(/hasn't been verified yet/i)).toBeInTheDocument()
-		expect(screen.queryByText('Incorrect username or password.')).not.toBeInTheDocument()
-		expect(screen.getByRole('button', { name: 'Request a new code' })).toBeInTheDocument()
+		expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument()
+		expect(screen.queryByText(/hasn't been verified yet/i)).not.toBeInTheDocument()
 	})
 
-	it('still shows the generic message for every other failure, with no resend button', async () => {
+	it('does not show a resend-code button for UserNotConfirmed', async () => {
+		signInMock.mockResolvedValueOnce({ error: 'UserNotConfirmed', status: 401, ok: false, url: null })
+		const { container } = render(<LoginBody />)
+		await fillAndSubmit(container)
+
+		await screen.findByText('Incorrect username or password.')
+		expect(screen.queryByRole('button', { name: 'Request a new code' })).not.toBeInTheDocument()
+	})
+
+	it('still shows the generic message for every other failure the same way', async () => {
 		signInMock.mockResolvedValueOnce({ error: 'CredentialsSignin', status: 401, ok: false, url: null })
 		const { container } = render(<LoginBody />)
 		await fillAndSubmit(container)
 
 		expect(await screen.findByText('Incorrect username or password.')).toBeInTheDocument()
-		expect(screen.queryByRole('button', { name: 'Request a new code' })).not.toBeInTheDocument()
 	})
 
-	it('clicking "Request a new code" resends to the exact email that was just attempted', async () => {
+	it('always shows the "Trouble logging in?" link regardless of the error', async () => {
 		signInMock.mockResolvedValueOnce({ error: 'UserNotConfirmed', status: 401, ok: false, url: null })
 		const { container } = render(<LoginBody />)
 		await fillAndSubmit(container)
 
-		await userEvent.setup().click(await screen.findByRole('button', { name: 'Request a new code' }))
-
-		expect(resendCodeMutate).toHaveBeenCalledTimes(1)
-		expect(resendCodeMutate).toHaveBeenCalledWith({ email: EMAIL })
-	})
-
-	it('shows a confirmation once the code has been resent', async () => {
-		signInMock.mockResolvedValueOnce({ error: 'UserNotConfirmed', status: 401, ok: false, url: null })
-		resendCodeMock.mockReturnValue({ mutate: resendCodeMutate, isPending: false, isSuccess: true } as never)
-		const { container } = render(<LoginBody />)
-		await fillAndSubmit(container)
-
-		expect(await screen.findByText(/new verification email is on its way/i)).toBeInTheDocument()
-	})
-
-	it('clears the unconfirmed-account state on a fresh login attempt', async () => {
-		signInMock.mockResolvedValueOnce({ error: 'UserNotConfirmed', status: 401, ok: false, url: null })
-		const { container } = render(<LoginBody />)
-		await fillAndSubmit(container)
-		expect(await screen.findByRole('button', { name: 'Request a new code' })).toBeInTheDocument()
-
-		signInMock.mockResolvedValueOnce({ ok: true, error: null, status: 200, url: null })
-		await fillAndSubmit(container)
-
-		expect(screen.queryByRole('button', { name: 'Request a new code' })).not.toBeInTheDocument()
+		await screen.findByText('Incorrect username or password.')
+		expect(screen.getByText('Trouble logging in?')).toBeInTheDocument()
 	})
 })
 

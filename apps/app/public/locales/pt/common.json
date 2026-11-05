@@ -199,7 +199,14 @@
 	"log-out": "Sair",
 	"login": {
 		"error-generic": "Algo deu errado, tente novamente.",
-		"error-username-password": "Nome de usuário ou senha incorretos."
+		"error-not-confirmed": "Esta conta ainda não foi verificada.",
+		"error-username-password": "Nome de usuário ou senha incorretos.",
+		"new-password-error": "Isso não funcionou - a senha temporária pode ter expirado. Por favor, tente fazer o login novamente.",
+		"new-password-label": "Nova Palavra-Passe",
+		"new-password-message": "Você está logando com uma senha temporária. Escolha uma nova senha para finalizar o login.",
+		"new-password-submit": "Definir nova senha",
+		"new-password-title": "Definir uma nova senha",
+		"resend-sent": "Um novo e-mail de verificação está a caminho."
 	},
 	"message_text": "Texto da mensagem",
 	"message_title": "Título da mensagem",
@@ -457,6 +464,9 @@
 		"thank-you-message": "As informações que você compartilhou nos ajudam a melhorar nosso produto."
 	},
 	"take-action": "Participe",
+	"trouble-logging-in": "Problemas para acessar?",
+	"trouble-logging-in-message": "Digite seu e-mail e ajudaremos você a entrar de volta em sua conta.",
+	"trouble-logging-in-sent": "Se existir uma conta para esse e-mail, nós enviamos os próximos passos.",
 	"uncheck-all": "Desmarque tudo",
 	"user-avatar": "Avatar do usuário",
 	"user-menu": {

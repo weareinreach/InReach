@@ -199,7 +199,14 @@
 	"log-out": "Se déconnecter",
 	"login": {
 		"error-generic": "Une erreur s'est produite, veuillez réessayer.",
-		"error-username-password": "Nom d'utilisateur ou mot de passe incorrect."
+		"error-not-confirmed": "Ce compte n'a pas encore été vérifié.",
+		"error-username-password": "Nom d'utilisateur ou mot de passe incorrect.",
+		"new-password-error": "Cela n'a pas fonctionné - le mot de passe temporaire a peut-être expiré. Veuillez essayer de vous connecter à nouveau.",
+		"new-password-label": "Nouveau mot de passe",
+		"new-password-message": "Vous vous connectez avec un mot de passe temporaire. Choisissez un nouveau mot de passe pour terminer la connexion.",
+		"new-password-submit": "Définir un nouveau mot de passe",
+		"new-password-title": "Définir un nouveau mot de passe",
+		"resend-sent": "Un nouvel e-mail de vérification est en route."
 	},
 	"message_text": "Texte du message",
 	"message_title": "Titre du message",
@@ -457,6 +464,9 @@
 		"thank-you-message": "Les informations que vous avez partagées nous aident à améliorer notre produit."
 	},
 	"take-action": "Passer à l'action",
+	"trouble-logging-in": "Problème de connexion ?",
+	"trouble-logging-in-message": "Entrez votre adresse e-mail et nous vous aiderons à retrouver votre compte.",
+	"trouble-logging-in-sent": "Si un compte existe pour cet e-mail, nous vous avons envoyé les prochaines étapes.",
 	"uncheck-all": "Décocher tout",
 	"user-avatar": "Avatar de l'utilisateur",
 	"user-menu": {

@@ -46,7 +46,12 @@ const OrgLocationPage: NextPage = () => {
 		status,
 		isError: pageFetchIsError,
 		error: pageFetchError,
-	} = api.location.forLocationPage.useQuery({ id: orgLocationId }, { enabled: router.isReady })
+	} = api.location.forLocationPage.useQuery(
+		{ id: orgLocationId, organizationId: orgData?.id ?? '' },
+		// Waits on orgData (resolved from the slug) rather than firing in parallel with it, so this can
+		// never fetch a real location's data under an org id that hasn't actually been confirmed to own it.
+		{ enabled: router.isReady && orgDataStatus === 'success' && !!orgData?.id }
+	)
 
 	const servicesRef = useRef<HTMLDivElement>(null)
 	const photosRef = useRef<HTMLDivElement>(null)
@@ -203,7 +208,7 @@ export const getStaticProps: GetStaticProps<
 
 		const [i18n] = await Promise.allSettled([
 			getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', 'user', orgId.id]),
-			ssg.location.forLocationPage.prefetch({ id: orgLocationId }),
+			ssg.location.forLocationPage.prefetch({ id: orgLocationId, organizationId: orgId.id }),
 			ssg.organization.forLocationPage.prefetch({ slug }),
 			ssg.location.getAlerts.prefetch({ id: orgLocationId }),
 		])
@@ -214,7 +219,10 @@ export const getStaticProps: GetStaticProps<
 
 		return {
 			props,
-			revalidate: 60 * 30, // 30 minutes
+			// Same reasoning as the org page (apps/app/src/pages/org/[slug]/index.tsx) - cached address
+			// fields need to stop showing reasonably quickly once hidden, not sit for up to half an hour in
+			// the worst case where the explicit on-save revalidation didn't fire.
+			revalidate: 60 * 5,
 		}
 	} catch (error) {
 		const TRPCError = (await import('@trpc/server')).TRPCError
