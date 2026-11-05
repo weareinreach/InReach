@@ -201,7 +201,14 @@
 	"log-out": "Wyloguj",
 	"login": {
 		"error-generic": "Coś poszło nie tak, spróbuj ponownie.",
-		"error-username-password": "Nieprawidłowa nazwa użytkownika lub hasło."
+		"error-not-confirmed": "To konto nie zostało jeszcze zweryfikowane.",
+		"error-username-password": "Nieprawidłowa nazwa użytkownika lub hasło.",
+		"new-password-error": "To nie działało - tymczasowe hasło mogło wygasnąć. Spróbuj zalogować się ponownie.",
+		"new-password-label": "Nowe hasło",
+		"new-password-message": "Logujesz się przy użyciu tymczasowego hasła. Wybierz nowe hasło, aby zakończyć logowanie.",
+		"new-password-submit": "Ustaw nowe hasło",
+		"new-password-title": "Ustaw nowe hasło",
+		"resend-sent": "Nowy e-mail weryfikacyjny jest w drodze."
 	},
 	"message_text": "Tekst wiadomości",
 	"message_title": "Tytuł wiadomości",
@@ -459,6 +466,9 @@
 		"thank-you-message": "Udostępnione przez Ciebie informacje pomagają nam ulepszyć nasz produkt."
 	},
 	"take-action": "Podejmij działania",
+	"trouble-logging-in": "Problemy z logowaniem?",
+	"trouble-logging-in-message": "Wprowadź swój adres e-mail, a my pomożemy Ci wrócić do Twojego konta.",
+	"trouble-logging-in-sent": "Jeśli istnieje konto dla tego e-maila, wysłaliśmy do niego kolejne kroki.",
 	"uncheck-all": "Odznacz wszystkie",
 	"user-avatar": "Avatar użytkownika",
 	"user-menu": {

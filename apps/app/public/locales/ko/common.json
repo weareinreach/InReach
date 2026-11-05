@@ -198,7 +198,14 @@
 	"log-out": "로그아웃",
 	"login": {
 		"error-generic": "오류가 발생됐습니다. 다시 시도해 주세요.",
-		"error-username-password": "사용자명 혹은 비밀번호가 올바르지 않습니다."
+		"error-not-confirmed": "이 계정은 아직 확인되지 않았습니다.",
+		"error-username-password": "사용자명 혹은 비밀번호가 올바르지 않습니다.",
+		"new-password-error": "작동하지 않았습니다. 임시 비밀번호가 만료되었을 수 있습니다.다시 로그인해 보세요.",
+		"new-password-label": "새 비밀번호",
+		"new-password-message": "임시 비밀번호로 로그인하고 있습니다.새 비밀번호를 선택하여 로그인을 완료하세요.",
+		"new-password-submit": "새 암호 설정",
+		"new-password-title": "새 암호 설정",
+		"resend-sent": "새 인증 이메일이 발송되고 있습니다."
 	},
 	"message_text": "메시지 글",
 	"message_title": "메시지 제목",
@@ -456,6 +463,9 @@
 		"thank-you-message": "공유한 정보는 InReach의 서비스를 개선하는 데 도움이 됩니다."
 	},
 	"take-action": "조치하세요",
+	"trouble-logging-in": "로그인에 문제가 있나요?",
+	"trouble-logging-in-message": "이메일을 입력하시면 계정에 다시 로그인할 수 있도록 도와드리겠습니다.",
+	"trouble-logging-in-sent": "해당 이메일에 대한 계정이 있는 경우 해당 이메일에 대한 다음 단계를 진행했습니다.",
 	"uncheck-all": "모두 선택 취소하기",
 	"user-avatar": "사용자 아바타",
 	"user-menu": {
