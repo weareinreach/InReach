@@ -84,6 +84,22 @@ const nextConfig = {
 					{ key: 'Access-Control-Allow-Headers', value: 'sentry-trace' },
 					{ key: 'Access-Control-Allow-Headers', value: 'baggage' },
 					{ key: 'Document-Policy', value: 'js-profiling' },
+					// X-Frame-Options is the legacy/widely-supported way to block framing; Content-Security-
+					// Policy's frame-ancestors is its modern replacement (and wins over X-Frame-Options in
+					// browsers that support both) - sending both covers browsers on either side of that
+					// transition. Deliberately no script-src/other CSP directives here - those would need
+					// testing against everything this app actually loads (Sentry, Crowdin OTA, analytics,
+					// Google Maps/Places, etc.), which hasn't been done.
+					{ key: 'X-Frame-Options', value: 'DENY' },
+					{ key: 'Content-Security-Policy', value: "frame-ancestors 'none'" },
+					{ key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+					{ key: 'X-Content-Type-Options', value: 'nosniff' },
+					// Only the ones this app genuinely never uses - a real guess at every policy this browser
+					// supports would risk blocking something a future feature or third-party script needs.
+					{
+						key: 'Permissions-Policy',
+						value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+					},
 				],
 			},
 		]

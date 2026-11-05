@@ -9,6 +9,24 @@ const getServiceArea = async ({ input }: TRPCHandlerParams<TGetServiceAreaSchema
 		const result = await prisma.serviceArea.findUnique({
 			where: {
 				id: input,
+				active: true,
+				// Exactly one of organization/orgLocation/orgService is ever set on a given row - whichever
+				// one it is must itself be published and not deleted (and, for a location/service, its parent
+				// org too), or this leaked whether a hidden org/location/service exists by still returning its
+				// service area data.
+				OR: [
+					{ organization: { is: { published: true, deleted: false } } },
+					{
+						orgLocation: {
+							is: { published: true, deleted: false, organization: { published: true, deleted: false } },
+						},
+					},
+					{
+						orgService: {
+							is: { published: true, deleted: false, organization: { published: true, deleted: false } },
+						},
+					},
+				],
 			},
 			select: {
 				id: true,

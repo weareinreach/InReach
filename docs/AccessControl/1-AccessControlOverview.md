@@ -84,3 +84,33 @@ Currently, hierarchy is enforced via logical "blocklists" in the middleware. The
 2.  **Logic Refactor:** Update `checkPermissions` to compare numeric weights. Access is granted if `userRank >= requiredProcedureRank`.
 3.  **Security Auditing:** Implement a decorator for all sensitive procedures to log `actorId`, `targetId`, and `action` into a dedicated `AuditLog` table.
 4.  **UI Consistency:** Utilize the hierarchy-aware `DataPortalAccessSelect` across all user-facing management tools to ensure visual consistency with backend enforcement.
+
+---
+
+## 5. Known Gap: The Scoped Gate Is Not Actually Scoped
+
+`hasPermissions` (the "Scoped Gate" in the table above) is unused in production today - no account
+exists that reaches it without also holding a Data Portal role, and the only way to create one
+(`user.adminCreate`'s `orgPermission`/`locationPermission` input) has no UI calling it. The two gaps
+below are not live security issues under the current system, but they must be closed before any
+external Org Owner/Associate account feature is built on top of this gate - otherwise every such
+account would inherit them from day one.
+
+1.  **No actual org/location scoping.** `checkPermissions` only checks whether a permission string
+    (e.g. `editSingleOrg`) exists anywhere on the account - it never compares against the specific
+    `organizationId`/`orgLocationId` in the request. The `OrganizationPermission`/`LocationPermission`
+    tables exist for exactly this purpose but are never read by the authorization check. Before any
+    external account relies on this gate, it must verify the request's target org/location against
+    those tables, not just the presence of the permission string.
+
+2.  **Unverified AND/OR semantics for list-shaped permissions.** When a permission requirement is an
+    array (e.g. `attachOrgAttributes: ['editTeamOrg', 'editAnyOrg', 'editSingleOrg']`), the Scoped
+    Gate currently requires the account to hold _all_ of them (`.every()`). This logic predates the
+    Basic/Manager/Admin role system and has had no live caller - and therefore no real-world
+    verification - since that system was introduced. Given these permission names read as alternative
+    scope tiers (single org vs. a group vs. any org) rather than capabilities a single account would
+    hold simultaneously, "any one of these" (`.some()`) is the more likely intended behavior, but this
+    needs to be decided and tested deliberately when this gate is built out, not assumed.
+
+**Before shipping Org Owner/Associate accounts:** resolve both items above together, and add test
+coverage for the Scoped Gate branch of `checkPermissions` (currently has none).

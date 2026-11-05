@@ -1401,6 +1401,13 @@ model InternalNote {
   translation                     TranslationKey?                @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: Cascade)
   translationNamespace            TranslationNamespace?          @relation(fields: [translationNamespaceName], references: [name], onDelete: Cascade)
   user                            User?                          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Postgres doesn't index foreign keys automatically (unlike MySQL) - internalNote.getAllForRecord's lookup
+  // was a full table scan on every call. Only indexing the two fields actually queried in the app today
+  // (InternalNotesDrawer / OrgUrlExceptionNotesDrawer) - the other ~28 columns this table could theoretically
+  // be filtered by have no real caller, so indexing them now would just add write overhead for no benefit.
+  @@index([organizationId])
+  @@index([orgUrlDuplicateExceptionId])
 }
 
 model AuditTrail {
