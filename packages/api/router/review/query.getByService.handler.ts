@@ -1,6 +1,7 @@
 import { prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
+import { redactReviewFieldVisibility, visibleReviewSelect } from './lib/reviewSelect'
 import { type TGetByServiceSchema } from './query.getByService.schema'
 
 const getByService = async ({ input }: TRPCHandlerParams<TGetByServiceSchema>) => {
@@ -8,8 +9,11 @@ const getByService = async ({ input }: TRPCHandlerParams<TGetByServiceSchema>) =
 		where: {
 			organizationId: input.orgId,
 			orgServiceId: input.serviceId,
+			visible: true,
+			deleted: false,
 		},
+		select: visibleReviewSelect,
 	})
-	return reviews
+	return reviews.map(redactReviewFieldVisibility)
 }
 export default getByService

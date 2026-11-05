@@ -106,7 +106,9 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const hoursObjects = useFieldArray({ control: form.control, name: 'data', keyName: 'id' })
 	const formData = form.getValues('data') ?? []
 	const groupedData = () => {
-		if (!formData) return
+		if (!formData) {
+			return
+		}
 		const grouped = groupBy(
 			formData.map((item, idx) => ({ ...item, idx })),
 			({ dayIndex }) => dayIndex
@@ -145,11 +147,16 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		if (!initialData) {
 			throw new Error('Missing initial data')
 		}
+		if (!locationId) {
+			throw new Error('Missing locationId')
+		}
 		const initial = initialData.data
 		const current = form.getValues().data
 		const diffed = compareObjectVals([initial, current], 'id')
 		// TODO: Double check validation
-		mutationApi.mutate(diffed)
+		// entityId links any newly-created hours to this location - previously missing, so hours created
+		// here were orphans with no location/service/org link at all.
+		mutationApi.mutate({ ...diffed, entityId: locationId })
 	}
 
 	const DayWrap = ({ dayIndex }: { dayIndex: DayIndex }) => {
