@@ -149,13 +149,16 @@ Next.js based projects will be available at `http://localhost:3000`
 Storybook will be available at `http://localhost:6006`
 
 ## Integrations
+
 ### Crowdin
+
 InReach integrates with **Crowdin** to manage multilingual translations for both **common UI content** and **dynamic org-data**.
 
 - **Common translations** (`common`, `landingPage`, `services`) are static JSON files. Updates are made via PR merges after Crowdin export.
 - **Org-data translations** (`orgn_*` namespaces) are dynamic and always live. They are fetched via the **OTA (Over-The-Air) system**, ensuring the latest translations are immediately available in the app.
 
 **OTA Flow:**
+
 1. Crowdin exports translations for both common and database-backed namespaces.
 2. OTA generates a manifest file (`manifest.json`) that tracks the latest version of each namespace.
 3. The app calls the **Edge API** endpoint `/api/i18n/load` with the requested language (`lng`) and namespaces (`ns`).
@@ -177,45 +180,48 @@ The Crowdin integration in InReach involves a set of packages and files that han
 
 ### 1. Crowdin Client Package (`@weareinreach/crowdin`)
 
-| File | Purpose |
-|------|---------|
-| `ota/index.ts` | Fetches OTA manifests from Crowdin and downloads translation files or keys. |
-| `ota/edge.ts` | Provides edge-compatible functions for OTA, suitable for Next.js Edge runtime. |
-| `cache/index.ts` | Handles Redis caching of translations to reduce repeated network calls. |
-| `api/index.ts` | REST API wrapper for Crowdin interactions (if needed). |
+| File             | Purpose                                                                        |
+| ---------------- | ------------------------------------------------------------------------------ |
+| `ota/index.ts`   | Fetches OTA manifests from Crowdin and downloads translation files or keys.    |
+| `ota/edge.ts`    | Provides edge-compatible functions for OTA, suitable for Next.js Edge runtime. |
+| `cache/index.ts` | Handles Redis caching of translations to reduce repeated network calls.        |
+| `api/index.ts`   | REST API wrapper for Crowdin interactions (if needed).                         |
 
 ---
 
 ### 2. App Layer (`@weareinreach/app`)
 
-| File | Purpose |
-|------|---------|
+| File                         | Purpose                                                                                                                           |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | `src/pages/api/i18n/load.ts` | Next.js API Edge route that serves translation data to the app. It reads from Redis cache and falls back to OTA for missing keys. |
 
 ---
 
 ### 3. DB / Static Migration Layer (`@weareinreach/db`)
 
-| File | Purpose |
-|------|---------|
-| `prisma/data-migrations/*` | Static migration jobs that run once to update translation keys or other data in the database. |
-| `prisma/dataMigrationRunner.ts` | Runner that executes all pending migration jobs against the Prisma database. |
+| File                            | Purpose                                                                                       |
+| ------------------------------- | --------------------------------------------------------------------------------------------- |
+| `prisma/data-migrations/*`      | Static migration jobs that run once to update translation keys or other data in the database. |
+| `prisma/dataMigrationRunner.ts` | Runner that executes all pending migration jobs against the Prisma database.                  |
 
 ---
 
 ### Summary of Flow
 
-1. **Crowdin** produces translation files and an OTA manifest.  
-2. **Crowdin Client (`ota`)** downloads translations and keys, using Redis cache to minimize network calls.  
-3. **App (`i18n/load.ts`)** fetches translations for requested languages and namespaces, reading from cache or OTA as needed.  
+1. **Crowdin** produces translation files and an OTA manifest.
+2. **Crowdin Client (`ota`)** downloads translations and keys, using Redis cache to minimize network calls.
+3. **App (`i18n/load.ts`)** fetches translations for requested languages and namespaces, reading from cache or OTA as needed.
 4. **Database (`data-migrations`)** is updated only for static migration jobs via `dataMigrationRunner.ts`. OTA updates for org-data happen dynamically at runtime; static translations are applied once via migrations.
 
 ### Crowdin Costs:
+
 **Crowdin Usage Overview (from Billing info)**
-- Managers: InReach has 10 users with the ability to manage translations. The plan allows up to 1,000,000 managers, before hitting a limit. 
+
+- Managers: InReach has 10 users with the ability to manage translations. The plan allows up to 1,000,000 managers, before hitting a limit.
 - Words: Inreach has used 28,188,094 words of a 100,000,000-word allowance. Crowdin tracks all words in the project, including source strings and translations.
 
 **Implications:**
+
 - InReach is using the open-source plan, which has very high limits for managers and words.
 - Crowdin doesn’t charge based on how the app fetches translations (OTA or PRs). They charge based on words in the translation project and the number of managers.
 
@@ -274,5 +280,3 @@ See [LICENSE](LICENSE) for more information.
 [![Powered by Vercel](.github/images/powered-by-vercel.svg)](https://vercel.com/?utm_source=in-reach&utm_campaign=oss)
 
 [![built with Codeium](https://codeium.com/badges/main)](https://codeium.com)
-
-
