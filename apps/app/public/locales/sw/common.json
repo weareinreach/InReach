@@ -199,7 +199,14 @@
 	"log-out": "Ondoka",
 	"login": {
 		"error-generic": "Kitu kilienda vibaya, tafadhali jaribu tena.",
-		"error-username-password": "Jina la mtumiaji au nenosiri lisilo sahihi."
+		"error-not-confirmed": "This account hasn't been verified yet.",
+		"error-username-password": "Jina la mtumiaji au nenosiri lisilo sahihi.",
+		"new-password-error": "That didn't work - the temporary password may have expired. Please try logging in again.",
+		"new-password-label": "New Password",
+		"new-password-message": "You're signing in with a temporary password. Choose a new password to finish logging in.",
+		"new-password-submit": "Set New Password",
+		"new-password-title": "Set a New Password",
+		"resend-sent": "A new verification email is on its way."
 	},
 	"message_text": "Nakala ya ujumbe",
 	"message_title": "Kichwa cha ujumbe",
@@ -457,6 +464,9 @@
 		"thank-you-message": "Maelezo uliyoshiriki hutusaidia kuboresha bidhaa zetu."
 	},
 	"take-action": "Chukua Hatua",
+	"trouble-logging-in": "Trouble logging in?",
+	"trouble-logging-in-message": "Enter your email and we'll help you get back into your account.",
+	"trouble-logging-in-sent": "If an account exists for that email, we've sent next steps to it.",
 	"uncheck-all": "Ondoa alama zote",
 	"user-avatar": "Avatar ya mtumiaji",
 	"user-menu": {
