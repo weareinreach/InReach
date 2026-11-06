@@ -26,7 +26,7 @@ overrides:
   lodash: 4.18.1
   mysql2: 3.23.1
   proxy-addr: 2.0.8
-  smol-toml: 1.7.1
+  smol-toml: 1.9.0
   source-map-js: 1.2.2
   sourcemap-codec: npm:@jridgewell/sourcemap-codec
   tmp: 0.2.7
@@ -13001,8 +13001,8 @@ packages:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
     engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
 
-  smol-toml@1.7.1:
-    resolution: {integrity: sha512-PPlsspAZ4jbMBu5DMFhfUGDQLu/vrL4SyBROVS37x8ynnVmFIs1VPBz1Co8Xks3TvpIaZXmU85y4DrQ+UyVFoQ==}
+  smol-toml@1.9.0:
+    resolution: {integrity: sha512-hpd+HLON7HdZXqYchMM/+LaTTbdK0AU3NngIJ4KVyWbY9bfQqdL9cD+4yf6dUoU2Ap4VsU0JkQi6FxAI1B2mXQ==}
     engines: {node: '>= 18'}
 
   social-links@1.15.1:
@@ -24423,7 +24423,7 @@ snapshots:
       picocolors: 1.1.1
       picomatch: 4.0.5
       pretty-ms: 9.3.0
-      smol-toml: 1.7.1
+      smol-toml: 1.9.0
       strip-json-comments: 5.0.1
       summary: 2.1.0
       typescript: 5.6.3
@@ -27807,7 +27807,7 @@ snapshots:
 
   smart-buffer@4.2.0: {}
 
-  smol-toml@1.7.1: {}
+  smol-toml@1.9.0: {}
 
   social-links@1.15.1(patch_hash=e4d8d2b59921b17a215f01b90b0d67a957b5841bbf06bde212704377a8ff7467): {}
 
