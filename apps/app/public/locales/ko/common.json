@@ -199,6 +199,7 @@
 	"login": {
 		"error-generic": "오류가 발생됐습니다. 다시 시도해 주세요.",
 		"error-not-confirmed": "이 계정은 아직 확인되지 않았습니다.",
+		"error-too-many-attempts": "시도가 너무 많습니다.다시 시도하기 전에 잠시 기다려 주세요.",
 		"error-username-password": "사용자명 혹은 비밀번호가 올바르지 않습니다.",
 		"new-password-error": "작동하지 않았습니다. 임시 비밀번호가 만료되었을 수 있습니다.다시 로그인해 보세요.",
 		"new-password-label": "새 비밀번호",

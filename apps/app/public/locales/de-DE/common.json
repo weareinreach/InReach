@@ -200,6 +200,7 @@
 	"login": {
 		"error-generic": "Etwas ist schief gelaufen, bitte versuche es erneut.",
 		"error-not-confirmed": "Dieses Konto wurde noch nicht verifiziert.",
+		"error-too-many-attempts": "Zu viele Versuche. Bitte warten Sie eine Weile, bevor Sie es erneut versuchen.",
 		"error-username-password": "Benutzername oder Passwort falsch.",
 		"new-password-error": "Das hat nicht funktioniert - das temporäre Passwort ist möglicherweise abgelaufen. Bitte versuchen Sie sich erneut anzumelden.",
 		"new-password-label": "Neues Passwort",
