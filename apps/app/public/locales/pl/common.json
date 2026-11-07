@@ -202,6 +202,7 @@
 	"login": {
 		"error-generic": "Coś poszło nie tak, spróbuj ponownie.",
 		"error-not-confirmed": "To konto nie zostało jeszcze zweryfikowane.",
+		"error-too-many-attempts": "Zbyt wiele prób. Proszę poczekać chwilę przed ponowną próbą.",
 		"error-username-password": "Nieprawidłowa nazwa użytkownika lub hasło.",
 		"new-password-error": "To nie działało - tymczasowe hasło mogło wygasnąć. Spróbuj zalogować się ponownie.",
 		"new-password-label": "Nowe hasło",

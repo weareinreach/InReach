@@ -200,6 +200,7 @@
 	"login": {
 		"error-generic": "Une erreur s'est produite, veuillez réessayer.",
 		"error-not-confirmed": "Ce compte n'a pas encore été vérifié.",
+		"error-too-many-attempts": "Trop de tentatives. Veuillez patienter un moment avant de réessayer.",
 		"error-username-password": "Nom d'utilisateur ou mot de passe incorrect.",
 		"new-password-error": "Cela n'a pas fonctionné - le mot de passe temporaire a peut-être expiré. Veuillez essayer de vous connecter à nouveau.",
 		"new-password-label": "Nouveau mot de passe",

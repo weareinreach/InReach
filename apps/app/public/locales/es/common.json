@@ -200,6 +200,7 @@
 	"login": {
 		"error-generic": "Algo salió mal, por favor inténtalo de nuevo.",
 		"error-not-confirmed": "Esta cuenta aún no ha sido verificada.",
+		"error-too-many-attempts": "Demasiados intentos. Por favor, espera un rato antes de intentarlo de nuevo.",
 		"error-username-password": "Nombre de usuario o contraseña incorrectos.",
 		"new-password-error": "Eso no funcionó - la contraseña temporal puede haber expirado. Por favor, intente iniciar sesión de nuevo.",
 		"new-password-label": "Nueva contraseña",

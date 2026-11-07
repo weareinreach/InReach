@@ -199,6 +199,7 @@
 	"login": {
 		"error-generic": "問題が発生しました。もう一度やり直してください。",
 		"error-not-confirmed": "このアカウントはまだ認証されていません。",
+		"error-too-many-attempts": "試行回数が多すぎます。再試行する前にしばらくお待ちください。",
 		"error-username-password": "ユーザー名またはパスワードが正しくありません。",
 		"new-password-error": "動作しませんでした - 一時パスワードの有効期限が切れている可能性があります。再度ログインしてください。",
 		"new-password-label": "新しいパスワード",

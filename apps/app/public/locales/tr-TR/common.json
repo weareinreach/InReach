@@ -200,6 +200,7 @@
 	"login": {
 		"error-generic": "Bir şeyler ters gitti, lütfen tekrar deneyin.",
 		"error-not-confirmed": "Bu hesap henüz doğrulanmadı.",
+		"error-too-many-attempts": "Çok fazla deneme. Lütfen tekrar denemeden önce biraz bekleyin.",
 		"error-username-password": "Yanlış kullanıcı adı veya şifre.",
 		"new-password-error": "Bu işe yaramadı - geçici şifrenin süresi dolmuş olabilir. Lütfen tekrar oturum açmayı deneyin.",
 		"new-password-label": "Yeni Şifre",

@@ -200,6 +200,7 @@
 	"login": {
 		"error-generic": "Iets het verkeerd geloop, probeer asseblief weer.",
 		"error-not-confirmed": "This account hasn't been verified yet.",
+		"error-too-many-attempts": "Too many attempts. Please wait a while before trying again.",
 		"error-username-password": "Verkeerde gebruikersnaam of wagwoord.",
 		"new-password-error": "That didn't work - the temporary password may have expired. Please try logging in again.",
 		"new-password-label": "New Password",

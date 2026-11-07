@@ -199,6 +199,7 @@
 	"login": {
 		"error-generic": "出了点问题，请再试一次。",
 		"error-not-confirmed": "此帐户尚未验证。",
+		"error-too-many-attempts": "尝试次数过多。请稍候一段时间后再试。",
 		"error-username-password": "用户名或密码不正确。",
 		"new-password-error": "无法正常工作-临时密码可能已过期。请重新登录。",
 		"new-password-label": "新密码",
